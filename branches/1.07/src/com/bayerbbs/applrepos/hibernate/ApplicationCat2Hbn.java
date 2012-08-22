@@ -35,6 +35,7 @@ public class ApplicationCat2Hbn {
 			dto.setApplicationCat2Id(data.getId());
 			dto.setApplicationCat1Id(data.getAnwendungKat1Id());
 			dto.setApplicationCat2Text(data.getAnwendungKat2Text());
+			dto.setGuiSAPNameWizard(data.getGuiSAPNameWizard());
 			if (null != data.getSort()) {
 				dto.setSort(data.getSort());
 			}
