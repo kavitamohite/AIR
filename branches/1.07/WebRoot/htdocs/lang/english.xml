@@ -149,11 +149,12 @@
 		<contactsPanelTitle>Contacts</contactsPanelTitle>
 			<contactsApplicationOwner>Application Owner</contactsApplicationOwner>
 			<applicationOwner>Primary Person</applicationOwner>
-			<applicationOwnerDelegate>Steward/Delegate</applicationOwnerDelegate>
+			<applicationOwnerDelegate>Delegate</applicationOwnerDelegate>
+			<applicationSteward>Steward</applicationSteward>
 			<contactsCIOwner>CI Owner</contactsCIOwner>
 			<contactsCIOwnerApplication>Application Manager</contactsCIOwnerApplication>
 				<ciResponsible>Primary Person</ciResponsible>
-				<ciSubResponsible>Delegate Person/Group</ciSubResponsible>
+				<ciSubResponsible>Delegate</ciSubResponsible>
 			<contactsGPSC>GPSC contacts</contactsGPSC>
 				<gpsccontactResponsibleAtCustomerSide>Responsible at Customer Side</gpsccontactResponsibleAtCustomerSide>
 				<gpsccontactSupportGroup>Support Group</gpsccontactSupportGroup>

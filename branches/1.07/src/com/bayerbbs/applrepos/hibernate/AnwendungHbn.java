@@ -394,6 +394,10 @@ public class AnwendungHbn {
 							application.setApplicationOwner(dto.getApplicationOwnerHidden());
 						}
 						
+						if (null != dto.getApplicationStewardHidden()) {
+							application.setApplicationSteward(dto.getApplicationStewardHidden());
+						}
+						
 						if (null != dto.getApplicationOwnerDelegateHidden()) {
 							application.setApplicationOwnerDelegate(dto.getApplicationOwnerDelegateHidden());
 						}
@@ -1328,6 +1332,7 @@ public class AnwendungHbn {
 		sql.append("		  , anw.cwid_verantw_betr");
 		sql.append("		  , anw.sub_responsible");
 		sql.append("		  , anw.application_owner");
+		sql.append("		  , anw.application_steward");
 		sql.append("		  , anw.application_owner_delegate");
 		sql.append("		  , anw.itset");
 		sql.append("		  , itsverb.it_verbund_name");
@@ -1507,11 +1512,15 @@ public class AnwendungHbn {
 
 				applicationDTO.setApplicationOwner(rsMessage
 						.getString("APPLICATION_OWNER"));
+				applicationDTO.setApplicationSteward(rsMessage
+						.getString("APPLICATION_STEWARD"));
 				applicationDTO.setApplicationOwnerDelegate(rsMessage
 						.getString("APPLICATION_OWNER_DELEGATE"));
 				
 				applicationDTO.setApplicationOwnerHidden(rsMessage
 						.getString("APPLICATION_OWNER"));
+				applicationDTO.setApplicationStewardHidden(rsMessage
+						.getString("APPLICATION_STEWARD"));
 				applicationDTO.setApplicationOwnerDelegateHidden(rsMessage
 						.getString("APPLICATION_OWNER_DELEGATE"));
 				

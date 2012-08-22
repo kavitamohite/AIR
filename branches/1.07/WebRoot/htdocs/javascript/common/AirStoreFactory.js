@@ -1228,6 +1228,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'contactsApplicationOwner'},
 			        {name: 'applicationOwner'},        
 			        {name: 'applicationOwnerDelegate'},
+			        {name: 'applicationSteward'},
 			        {name: 'contactsGPSC'},
 			        {name: 'gpsccontactResponsibleAtCustomerSide'},
 			        {name: 'gpsccontactSupportGroup'},
@@ -2360,6 +2361,12 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'applicationOwnerDelegateHidden',
 				mapping : 'applicationDTO > applicationOwnerDelegateHidden'
+			}, {
+				name : 'applicationSteward',
+				mapping : 'applicationDTO > applicationSteward'
+			}, {
+				name : 'applicationStewardHidden',
+				mapping : 'applicationDTO > applicationStewardHidden'
 			}, {
 				name : 'itset',
 				mapping : 'applicationDTO > itset'

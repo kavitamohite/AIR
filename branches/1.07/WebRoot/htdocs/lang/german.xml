@@ -151,12 +151,13 @@
 		
 		<contactsPanelTitle>Kontakte</contactsPanelTitle>
 			<contactsApplicationOwner>Application Owner</contactsApplicationOwner>
-				<applicationOwner>Primary Person</applicationOwner>
-				<applicationOwnerDelegate>Steward/Delegate</applicationOwnerDelegate>
+			<applicationOwner>Primary Person</applicationOwner>
+			<applicationOwnerDelegate>Delegate</applicationOwnerDelegate>
+			<applicationSteward>Steward</applicationSteward>
 			<contactsCIOwner>CI Owner</contactsCIOwner>
 			<contactsCIOwnerApplication>Application Manager</contactsCIOwnerApplication>
 				<ciResponsible>Primary Person</ciResponsible>
-				<ciSubResponsible>Delegate Person/Group</ciSubResponsible>
+				<ciSubResponsible>Delegate</ciSubResponsible>
 			<contactsGPSC>GPSC Kontakte</contactsGPSC>
 				<gpsccontactResponsibleAtCustomerSide>Responsible at Customer Side</gpsccontactResponsibleAtCustomerSide>
 				<gpsccontactSupportGroup>Support Group</gpsccontactSupportGroup>
@@ -304,7 +305,7 @@
 			<wizardapplicationNameSAP>Name</wizardapplicationNameSAP>
 			<wizardapplicationNameSAP1>System</wizardapplicationNameSAP1>
 			<wizardapplicationNameSAP2>Mandant</wizardapplicationNameSAP2>
-			<wizardapplicationNameSAP3>Teilkonzern</wizardapplicationNameSAP3>
+			<wizardapplicationNameSAP3>Gesellschaft</wizardapplicationNameSAP3>
 			<wizardapplicationAlias>Alias</wizardapplicationAlias>
 			<wizardcomments>Description</wizardcomments>
 			<wizardRelevance>Relevanz</wizardRelevance>

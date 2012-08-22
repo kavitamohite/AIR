@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.domain;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ public class ApplicationCat2 implements Serializable {
 	private Long sort;
 	private Long anwendungKat1Id;
 	private String guiSAPNameWizard;
+	
+	private Date delTimestamp;
 
 	public ApplicationCat2() {
 	}
@@ -66,5 +69,14 @@ public class ApplicationCat2 implements Serializable {
 	public void setGuiSAPNameWizard(String guiSAPNameWizard) {
 		this.guiSAPNameWizard = guiSAPNameWizard;
 	}
+
+	@Column(name = "DEL_TIMESTAMP")
+	public Date getDelTimestamp() {
+		return delTimestamp;
+	}
+	public void setDelTimestamp(Date delTimestamp) {
+		this.delTimestamp = delTimestamp;
+	}
+
 	
 }

@@ -63,8 +63,7 @@ public class ApplicationCat2Hbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<ApplicationCat2> values = session.createQuery(
-					"select h from ApplicationCat2 as h").list();
+			List<ApplicationCat2> values = session.createQuery("select h from ApplicationCat2 as h where h.delTimestamp is null").list();
 			
 			listResult = getDTOList(values);
 			

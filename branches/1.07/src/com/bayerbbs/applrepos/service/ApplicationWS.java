@@ -417,9 +417,11 @@ public class ApplicationWS {
 		dto.setSubResponsibleHidden(editInput.getSubResponsibleHidden());
 
 		dto.setApplicationOwner(editInput.getApplicationOwner());
+		dto.setApplicationSteward(editInput.getApplicationSteward());
 		dto.setApplicationOwnerDelegate(editInput.getApplicationOwnerDelegate());
 
 		dto.setApplicationOwnerHidden(editInput.getApplicationOwnerHidden());
+		dto.setApplicationStewardHidden(editInput.getApplicationStewardHidden());
 		dto.setApplicationOwnerDelegateHidden(editInput.getApplicationOwnerDelegateHidden());
 		
 		dto.setGpsccontactSupportGroupHidden(editInput.getGpsccontactSupportGroupHidden());
@@ -774,6 +776,14 @@ public class ApplicationWS {
 					if (null != listPers && 1 == listPers.size()) {
 						PersonsDTO tempPers = listPers.get(0);
 						dto.setApplicationOwner(tempPers.getDisplayNameFull());
+					}
+				}
+				
+				if (StringUtils.isNotNullOrEmpty(dto.getApplicationSteward())) {
+					List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(dto.getApplicationSteward());
+					if (null != listPers && 1 == listPers.size()) {
+						PersonsDTO tempPers = listPers.get(0);
+						dto.setApplicationSteward(tempPers.getDisplayNameFull());
 					}
 				}
 

@@ -36,6 +36,9 @@ public class ApplicationEditParameterInput {
 	private String applicationOwner;
 	private String applicationOwnerHidden;
 	
+	private String applicationSteward;
+	private String applicationStewardHidden;
+	
 	private String applicationOwnerDelegate;
 	private String applicationOwnerDelegateHidden;
 	
@@ -860,6 +863,20 @@ public class ApplicationEditParameterInput {
 
 	public void setApplicationOwnerHidden(String applicationOwnerHidden) {
 		this.applicationOwnerHidden = applicationOwnerHidden;
+	}
+	
+	public String getApplicationSteward() {
+		return applicationSteward;
+	}
+	public void setApplicationSteward(String applicationSteward) {
+		this.applicationSteward = applicationSteward;
+	}
+	public String getApplicationStewardHidden() {
+		return applicationStewardHidden;
+	}
+
+	public void setApplicationStewardHidden(String applicationStewardHidden) {
+		this.applicationStewardHidden = applicationStewardHidden;
 	}
 
 

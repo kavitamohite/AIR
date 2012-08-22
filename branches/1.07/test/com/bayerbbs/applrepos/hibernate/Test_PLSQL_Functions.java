@@ -4,6 +4,7 @@ package com.bayerbbs.applrepos.hibernate;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -12,6 +13,8 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.bayerbbs.applrepos.domain.ApplicationCat2;
 
 public class Test_PLSQL_Functions {
 	Session session = null;
@@ -41,7 +44,14 @@ public class Test_PLSQL_Functions {
 		
 	}
 	
-	
+	@Test
+	public void testDefault() { 
+		List<ApplicationCat2> values = session.createQuery("select h from ApplicationCat2 as h where h.delTimestamp is null").list();
+		for(ApplicationCat2 value : values)
+			System.out.println(value.getAnwendungKat2Text() + " :: " + value.getDelTimestamp());
+		
+		System.out.println(values.size());
+	}
 
 	@After
 	public void tearDown() throws Exception {

@@ -185,8 +185,10 @@ public class ApplicationDTO implements Serializable {
 	// owner
 	private String applicationOwner;
 	private String applicationOwnerDelegate;
+	private String applicationSteward;
 	private String applicationOwnerHidden;
 	private String applicationOwnerDelegateHidden;
+	private String applicationStewardHidden;
 	
 	private Long categoryBusinessId;
 	private String categoryBusiness;
@@ -1193,6 +1195,13 @@ public class ApplicationDTO implements Serializable {
 	public void setApplicationOwnerDelegate(String applicationOwnerDelegate) {
 		this.applicationOwnerDelegate = applicationOwnerDelegate;
 	}
+	
+	public String getApplicationSteward() {
+		return applicationSteward;
+	}
+	public void setApplicationSteward(String applicationSteward) {
+		this.applicationSteward = applicationSteward;
+	}
 
 	public String getApplicationOwnerHidden() {
 		return applicationOwnerHidden;
@@ -1206,11 +1215,18 @@ public class ApplicationDTO implements Serializable {
 		return applicationOwnerDelegateHidden;
 	}
 
-	public void setApplicationOwnerDelegateHidden(
-			String applicationOwnerDelegateHidden) {
+	public void setApplicationOwnerDelegateHidden(String applicationOwnerDelegateHidden) {
 		this.applicationOwnerDelegateHidden = applicationOwnerDelegateHidden;
 	}
 
+	public String getApplicationStewardHidden() {
+		return applicationStewardHidden;
+	}
+
+	public void setApplicationStewardHidden(String applicationStewardHidden) {
+		this.applicationStewardHidden = applicationStewardHidden;
+	}
+	
 	public Long getCategoryBusinessId() {
 		return categoryBusinessId;
 	}

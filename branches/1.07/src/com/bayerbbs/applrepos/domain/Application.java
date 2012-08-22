@@ -80,6 +80,7 @@ public class Application extends DeletableRevisionInfo {
 	
 	private String applicationOwner;
 	private String applicationOwnerDelegate;
+	private String applicationSteward;
 	
 	private Long categoryBusiness;
 
@@ -844,6 +845,15 @@ public class Application extends DeletableRevisionInfo {
 	 */
 	public void setApplicationOwnerDelegate(String applicationOwnerDelegate) {
 		this.applicationOwnerDelegate = applicationOwnerDelegate;
+	}
+	
+	
+	@Column(name = "APPLICATION_STEWARD")
+	public String getApplicationSteward() {
+		return applicationSteward;
+	}
+	public void setApplicationSteward(String applicationSteward) {
+		this.applicationSteward = applicationSteward;
 	}
 
 	/**
