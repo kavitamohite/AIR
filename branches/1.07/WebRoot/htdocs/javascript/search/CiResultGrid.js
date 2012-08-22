@@ -5,7 +5,15 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 	boxReady: false,
 	
 	initComponent: function() {
+	    var expander = new Ext.ux.grid.RowExpander({
+	        tpl: new Ext.Template(
+	            '<p><b>Lifecycle status:</b> {applicationCat2Txt}</p>'
+	        )
+	    });
+	    
+//	    MyPlaceTabView.updateLabels() nicht vergessen
 		var columns = [
+//		    expander,
 			{ header: 'Name', dataIndex: 'applicationName', width: 150, sortable: true},//, menuDisabled: true
 			{ header: 'Alias', dataIndex: 'applicationAlias', width: 150, sortable: true},//, menuDisabled: true
 			{ header: 'Type', dataIndex: 'applicationCat1Txt', width: 150, sortable: true}//, menuDisabled: true
@@ -49,6 +57,8 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 			autoScroll: true,
 			stripeRows: true,
 			stateful: true,
+//			plugins: expander,
+
 			
 			viewConfig: {
 				emptyText : 'Nothing found'
