@@ -12,13 +12,14 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 			padding: 10,//bodyStyle: {}
 			
 			items: [{
-				xtype: 'combo',
+				xtype: 'filterCombo',
 				id: 'cbAppCat1W',//wizardobjectType
 			    fieldLabel: 'Type',
 			    
 			    valueField: 'id',
 		        displayField: 'english',
 		        editable: false,
+		        lastQuery: '',
 		        
 //		        typeAhead: true,
 //		        forceSelection: true,
@@ -37,7 +38,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		        
 			    store: AIR.AirStoreManager.getStoreByName('applicationCat1ListStore')
 		    },{
-				xtype: 'combo',
+				xtype: 'filterCombo',
 				id: 'cbAppCat2W',
 			    fieldLabel: 'Category',
 			    
@@ -95,7 +96,13 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbAppCat2W = this.getComponent('cbAppCat2W');
 		cbAppCat2W.on('select', this.onAppCat2Select, this);
-		cbAppCat2W.getStore().filter('applicationCat1Id', cbAppCat1W.getValue());//AC.APP_CAT1_APPLICATION
+		cbAppCat2W.on('change', this.onAppCat2Change, this);
+//		cbAppCat2W.getStore().filter('applicationCat1Id', cbAppCat1W.getValue());//AC.APP_CAT1_APPLICATION
+		var filterData = {
+			applicationCat1Id: cbAppCat1W.getValue()
+		};
+		cbAppCat2W.filterByData(filterData);
+		
 		cbAppCat2W.setValue(AC.APP_CAT2_DEFAULT_UNKOWN);
 		this.switchNameFields(false);
 		
@@ -126,6 +133,9 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.isCat2Sap = record.get('guiSAPNameWizard') === 'Y';
 
 		this.switchNameFields();
+	},
+	onAppCat2Change: function(combo, newValue, oldValue) {
+		this.isComboValueValid(combo, newValue, oldValue);
 	},
 	switchNameFields: function() {
 		var ciCreateApplicationView = this.getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView');
