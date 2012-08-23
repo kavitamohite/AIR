@@ -141,6 +141,10 @@ public class AccessRightChecker {
 				isRelevanceOperational = true;
 			}
 			
+			if (!isRelevanceOperational && cwid.equals(application.getApplicationSteward())) {
+				isRelevanceOperational = true;
+			}
+			
 			if (!isRelevanceOperational && StringUtils.isNotNullOrEmpty(application
 					.getSubResponsible())) {
 				if (!ApplreposConstants.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(
@@ -166,6 +170,10 @@ public class AccessRightChecker {
 			}
 			
 			if (!isRelevanceStrategic && cwid.equals(application.getApplicationOwnerDelegate())) {
+				isRelevanceStrategic = true;
+			}
+
+			if (!isRelevanceStrategic && cwid.equals(application.getApplicationSteward())) {
 				isRelevanceStrategic = true;
 			}
 			
