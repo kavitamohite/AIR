@@ -117,8 +117,16 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		var labels = AIR.AirApplicationManager.getLabels();
 		var errorData = [];
 		
-		if(params.applicationName.length === 0)
-			errorData.push(labels.wizardapplicationName);
+		if(this.isSAPApplication()) {
+			if(params.applicationName.match(AC.REGEX_SAP_NAME) == null)
+				errorData.push(labels.wizardapplicationName);
+		} else {
+			if(params.applicationName.length === 0)
+				errorData.push(labels.wizardapplicationName);
+			else if(params.applicationName.match(AC.REGEX_SAP_NAME) != null) {
+				errorData.push(labels.wizardapplicationNameSAPillegal.replace('{0}', this.getComponent('ciCreateWizardP1').getComponent('cbAppCat1W').getRawValue()).replace('{1}', this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getRawValue()));
+			}
+		}
 		
 		if(params.comments.length === 0)
 			errorData.push(labels.comments);
@@ -334,6 +342,13 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 	
 	isWizardStarted: function() {
 		return this.wizardStarted;
+	},
+	
+	isSAPApplication: function() {
+		var cat2Id = this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getValue();
+		var isSapCat2 = this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getStore().getById(cat2Id).get('guiSAPNameWizard') === 'Y';//AC.CI_CAT1_SAP_CAT2_ID.indexOf(cat2Id) > -1;
+		
+		return isSapCat2;
 	},
 	
 	updateLabels: function(labels) {

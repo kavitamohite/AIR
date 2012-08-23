@@ -1131,6 +1131,8 @@ AIR.AirStoreFactory = function() {
 			             
 			        {name: 'general_yes'},
 			        {name: 'general_no'},
+			        {name: 'indefinite_article'},
+			        {name: 'indefinite_article_no'},
 			        
 			        {name: 'dynamicWindowOKButtonText'},
 			        {name: 'objectType'},
@@ -1414,6 +1416,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'wizardisTemplate'},
 			        {name: 'tfApplicationIdW'},
 			        {name: 'labeltfApplicationOwnerCompanyW'},
+			        {name: 'wizardapplicationNameSAPillegal'},
 			        
 			        
 			        {name: 'ciCreateWizardPage2'},

@@ -351,18 +351,19 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
     },
 	onApplicationCat2BeforeSelect: function(combo, record, index) {
 		var applicationName = AIR.AirApplicationManager.getAppDetail().applicationName;
-		var cat2Id = record.get('id');
+//		var cat2Id = record.get('id');
 		
-		var isSapCat2 = AC.CI_CAT1_SAP_CAT2_ID.indexOf(cat2Id) > -1;
+		var isSapCat2 = record.get('guiSAPNameWizard') === 'Y';//this.getComponent('applicationCat2').getStore().getById(cat2Id).get('guiSAPNameWizard') === 'Y';//AC.CI_CAT1_SAP_CAT2_ID.indexOf(cat2Id) > -1;
 		var isSapName = applicationName.match(AC.REGEX_SAP_NAME) != null;
 		
-		var isValidCat2 = isSapCat2 && !isSapName ? false : true;
+		var isValidCat2 = (isSapCat2 && !isSapName) || (!isSapCat2 && isSapName) ? false : true;
 		
 		if(!isValidCat2) {
 			var data = {
 				airErrorId: AC.AIR_ERROR_INVALID_CAT2_SAP,
 				applicationName: applicationName,
 				applicationCat1: AIR.AirApplicationManager.getAppDetail().applicationCat1Txt,
+				isSapApp: !isSapCat2 && isSapName,
 				applicationCat2: record.get('text')
 			};
 			this.fireEvent('airAction', this, 'airError', data);

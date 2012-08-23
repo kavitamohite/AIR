@@ -285,6 +285,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			
 			this.doLayout();
 			this.previousSelected = link;
+			this.fireEvent('airAction', this, 'clear');
 		}.createDelegate(this);
 		
 		if(!options) {

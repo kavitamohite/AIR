@@ -338,6 +338,9 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 	
 	reset: function() {
 		this.getComponent('tfCiNameW').reset();
+		this.getComponent('pSapNameW').getComponent('tfSapName1W').reset();
+		this.getComponent('pSapNameW').getComponent('tfSapName2W').reset();
+		this.getComponent('pSapNameW').getComponent('tfSapName3W').reset();
 		this.getComponent('taCiDescriptionW').reset();
 		this.getComponent('cbLifecycleStatusW').reset();
 		

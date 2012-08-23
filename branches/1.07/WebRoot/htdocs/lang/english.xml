@@ -7,6 +7,8 @@
 		<general_loggedinas>Logged in as</general_loggedinas>
 		<general_yes>Yes</general_yes>
 		<general_no>No</general_no>
+		<indefinite_article>a</indefinite_article>
+		<indefinite_article_no>no</indefinite_article_no>
 		
 		<general_button_save>Save</general_button_save>
 		<general_button_cancel>Cancel</general_button_cancel>
@@ -316,6 +318,8 @@ whereas "External" manages only the references to an compliance management outsi
 			<wizardisTemplate>Use as BYTsec-Template</wizardisTemplate>
 			<tfApplicationIdW>Bayer Application Registry ID</tfApplicationIdW>
 			<labeltfApplicationOwnerCompanyW>Application Owner Company</labeltfApplicationOwnerCompanyW>
+			<wizardapplicationNameSAPillegal>{0} CI mit Kategorie IT {1} darf keinen SAP Namen haben</wizardapplicationNameSAPillegal>
+			
 		
 		<ciCreateWizardPage2>Wizard - Step 2: Required</ciCreateWizardPage2><!-- Wizard - Step 2: Details -->
 			<wizardBasics>Basics</wizardBasics>
@@ -458,7 +462,8 @@ whereas "External" manages only the references to an compliance management outsi
 		<CiOuSearchViewOUSearchQueryMode>Incl. Sub Org. Units</CiOuSearchViewOUSearchQueryMode>
 		<CiOuSearchViewOUSearchOwnerType>Search Org. Unit as</CiOuSearchViewOUSearchOwnerType>
 		
-		<ToolbarInvalidCat2SAP>{0} {1} is no SAP Application. IT Category {2} is not valid</ToolbarInvalidCat2SAP>
+		
+		<ToolbarInvalidCat2SAP>{0} {1}   &lt;b&gt;is {2}&lt;/b&gt;   SAP Application. Therefore, IT Category {3} is not valid.</ToolbarInvalidCat2SAP>
 		<ToolbarInvalidTemplate>{0} {1} cannot have itself as a template</ToolbarInvalidTemplate>
 		<dynamicWindowCIreactivationPrompt>Your new CI cannot be saved because there is already such a CI marked as deleted with this name or alias. Do you want to reactivate this CI and override with the data you provided?</dynamicWindowCIreactivationPrompt>
 	</Items>

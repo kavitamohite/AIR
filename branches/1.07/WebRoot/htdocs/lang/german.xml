@@ -7,6 +7,8 @@
 		<general_loggedinas>Angemeldet als</general_loggedinas>
 		<general_yes>Ja</general_yes>
 		<general_no>Nein</general_no>
+		<indefinite_article>eine</indefinite_article>
+		<indefinite_article_no>keine</indefinite_article_no>
 		
 		<general_button_save>Speichern</general_button_save>
 		<general_button_cancel>Abbruch</general_button_cancel>
@@ -318,6 +320,7 @@
 			<wizardisTemplate>Ist BYTsec-Template</wizardisTemplate>
 			<tfApplicationIdW>Bayer Application Registry ID</tfApplicationIdW>
 			<labeltfApplicationOwnerCompanyW>Application Owner Company</labeltfApplicationOwnerCompanyW>
+			<wizardapplicationNameSAPillegal>{0} CI with Category IT {1} must have no SAP name</wizardapplicationNameSAPillegal>
 		
 		<ciCreateWizardPage2>Wizard - Schritt 2: Required</ciCreateWizardPage2><!-- Wizard - Schritt 2: Details -->
 			<wizardBasics>Basics</wizardBasics>
@@ -457,7 +460,8 @@
 		<CiOuSearchViewOUSearchQueryMode>Einschl. Sub Org. Einh.</CiOuSearchViewOUSearchQueryMode>
 		<CiOuSearchViewOUSearchOwnerType>Suche Org. Einh. als</CiOuSearchViewOUSearchOwnerType>
 		
-		<ToolbarInvalidCat2SAP>{0} {1} ist keine SAP Application. IT Kategorie {2} ist nicht gültig</ToolbarInvalidCat2SAP>
+		
+		<ToolbarInvalidCat2SAP>{0} {1}   &lt;b&gt;ist {2}&lt;/b&gt;   SAP Application. Daher ist IT Kategorie {3} nicht gültig.</ToolbarInvalidCat2SAP>
 		<ToolbarInvalidTemplate>{0} {1} kann nicht sich selbst als Vorlage haben</ToolbarInvalidTemplate>
 		<dynamicWindowCIreactivationPrompt>Ihr neues CI kann nicht gespeichert werden, weil schon ein löschmarkiertes CI mit diesem Namen oder Alias existiert. Soll dieses CI reaktiviert werden und mit den Daten die Sie eingegeben haben überschrieben werden?</dynamicWindowCIreactivationPrompt>
 	</Items>

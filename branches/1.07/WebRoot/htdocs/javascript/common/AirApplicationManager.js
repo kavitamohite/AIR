@@ -211,7 +211,8 @@ AIR.AirApplicationManager = function() {
 	
 			navigationView.on('navigation', ciInfoView.onNavigation, ciInfoView);
 			navigationView.on('navigation', ciCenterView.onNavigation, ciCenterView);
-			
+			navigationView.on('airAction', this.onAirAction, this);
+
 			
 			var ciTitleView = airViewport.getComponent('ciTitleView').getComponent('pCiTitleViewNorth');
 			var clLanguage = ciTitleView.getComponent('clLanguage');
@@ -327,7 +328,8 @@ AIR.AirApplicationManager = function() {
 					switch(data.airErrorId) {
 						case AC.AIR_ERROR_INVALID_CAT2_SAP:
 							message = this.getLabels().ToolbarInvalidCat2SAP;
-							message = message.replace('{0}', data.applicationCat1).replace('{1}', data.applicationName).replace('{2}', data.applicationCat2);
+							message = message.replace('{0}', data.applicationCat1).replace('{1}', data.applicationName).replace('{3}', data.applicationCat2);
+							message = message.replace('{2}', data.isSapApp ? this.getLabels().indefinite_article : this.getLabels().indefinite_article_no);
 							//data.applicationCat1 + ' ' + data.applicationName + ' is no SAP application. Therefore, the IT Category ' + data.applicationCat2 + ' is not valid';
 							break;
 						case AC.AIR_ERROR_INVALID_TEMPLATE:

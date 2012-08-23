@@ -160,13 +160,16 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView').setData(params);
 	},
 	
-	reset: function() {this.wizardStarted = true;
+	reset: function() {
+		this.wizardStarted = true;
 		this.getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView').reset();
 		this.isCat2Sap = false;
 		
 		//falls durch CI Auswahl mit Kat1 != Application eine für Application unpassende Kat2 Liste gefiltert wurde,
 		//für den Wizard wieder zurücksetzen:
 		this.getComponent('cbAppCat2W').getStore().filter('applicationCat1Id', this.getComponent('cbAppCat1W').getValue());
+		this.getComponent('cbAppCat2W').setValue(AC.APP_CAT2_DEFAULT_UNKOWN);
+		this.switchNameFields();
 	},
 	
 	updateLabels: function(labels) {
@@ -175,11 +178,12 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		//gehört hier eigentlich nicht hin. Da aber keine update Methode gibt und der IE diese cb zerschiesst 
 		//oder gar nicht darstellt wenn cb mit den Attributen disabled: true, und hideTrigger: true konfiguriert wird:
 		//AIR.AirAclManager.setAccessMode(this.getComponent('cbAppCat1W'), null); appDetail müsste übergeben werden, gibt es hier aber nicht
-		this.getComponent('cbAppCat1W').setHideTrigger(true);
-		if(Ext.isIE)
-			this.getComponent('cbAppCat1W').el.dom.disabled = true;//combo NOT shot in IE
-		else
-			this.getComponent('cbAppCat1W').disable();
+		Util.disableCombo(this.getComponent('cbAppCat1W'));
+//		this.getComponent('cbAppCat1W').setHideTrigger(true);
+//		if(Ext.isIE)
+//			this.getComponent('cbAppCat1W').el.dom.disabled = true;//combo NOT shot in IE
+//		else
+//			this.getComponent('cbAppCat1W').disable();
 				
 		
 		this.setFieldLabel(this.getComponent('cbAppCat1W'), labels.wizardobjectType);
