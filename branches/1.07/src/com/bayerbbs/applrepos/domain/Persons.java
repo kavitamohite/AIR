@@ -19,6 +19,7 @@ public class Persons extends DeletableRevisionInfo implements Serializable {
 	private String persNr;
 	private String lastname;
 	private String firstname;
+	private String mail;		// the internet email address
 	
 	private String inactive;	// inactive Y/N (or null)
 	private String pstat;		// "PRIMARY CWID", "SECONDARDY CWID", "MACHINE CWID"
@@ -187,6 +188,26 @@ public class Persons extends DeletableRevisionInfo implements Serializable {
 	 */
 	public void setPstat(String pstat) {
 		this.pstat = pstat;
+	}
+
+	/**
+	 * Returns the value of the field {@link #mail}.
+	 * 
+	 * @return Value of the {@link #mail} field.
+	 */
+	@Column(name = "MAIL")
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * Sets the value of the {@link #mail} field.
+	 * 
+	 * @param mail
+	 *            The value to set.
+	 */
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 
 }

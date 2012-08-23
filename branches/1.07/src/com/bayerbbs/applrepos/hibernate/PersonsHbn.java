@@ -36,6 +36,7 @@ public class PersonsHbn {
 			dto.setPersNr(data.getPersNr());
 			dto.setLastname(data.getLastname());
 			dto.setFirstname(data.getFirstname());
+			dto.setMail(data.getMail());
 
 			listDTO.add(dto);
 		}

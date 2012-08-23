@@ -23,6 +23,7 @@ import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.dto.ApplicationContact;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
+import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.ConnectionsViewDataDTO;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
 import com.bayerbbs.applrepos.dto.HistoryViewDataDTO;
@@ -338,16 +339,26 @@ public class AnwendungHbn {
 								application.setSeverityLevelId(dto.getSeverityLevelId());
 							}
 						}
+
+						boolean hasBusinessEssentialChanged = false;
 						if (null == dto.getBusinessEssentialId()) {
 							if (null == application.getBusinessEssentialId()) {
 								// set the default value
 								application
 								.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
+								hasBusinessEssentialChanged = true;
 							}
 						}
 						else {
-								application.setBusinessEssentialId(dto
+							if (null == application.getBusinessEssentialId() || application.getBusinessEssentialId().longValue() != dto.getBusinessEssentialId().longValue()) {
+								hasBusinessEssentialChanged = true;
+							}
+							application.setBusinessEssentialId(dto
 										.getBusinessEssentialId());
+						}
+						
+						if (hasBusinessEssentialChanged) {
+							sendBusinessEssentialChangedMail(application, dto);
 						}
 						// ----------
 						
@@ -3102,6 +3113,51 @@ public class AnwendungHbn {
 		HibernateUtil.close(tx, session, true);
 
 		return result;
+	}
+
+	public static void sendBusinessEssentialChangedMail(Application application, ApplicationDTO dto) {
+
+		String sendTo = null;
+		PersonsDTO personDTO = null;
+		
+		if (null != application.getApplicationOwner()) {
+			List<PersonsDTO> listPersonsDTO = PersonsHbn.findPersonByCWID(application.getApplicationOwner());
+			if (1 == listPersonsDTO.size()) {
+				personDTO = listPersonsDTO.get(0);
+				sendTo = personDTO.getMail();
+			}
+		}
+		
+		String businessEssentialNew = null;
+		List<BusinessEssentialDTO> listBE = BusinessEssentialHbn.listBusinessEssentialHbn();
+		Iterator<BusinessEssentialDTO> itBE = listBE.iterator();
+		boolean notFound = true;
+		while (notFound && itBE.hasNext()) {
+			BusinessEssentialDTO be = itBE.next();
+			if (be.getSeverityLevelId().longValue() == application.getBusinessEssentialId().longValue()) {
+				notFound = false;
+				businessEssentialNew = be.getSeverityLevel();
+			}
+		}
+		if (null == businessEssentialNew) {
+			businessEssentialNew = "---";
+		}
+		
+		
+		if (null != sendTo) {
+			String copyTo = null;
+			
+			String subject = "Topic: " + application.getApplicationName() + " Business Essential has changed";
+
+			StringBuffer sb = new StringBuffer();
+			sb.append("Dear ").append(personDTO.getFirstname()).append(" ").append(personDTO.getLastname()).append(",\r\n\r\n");
+			sb.append("your CI was set to the new Business Essential Value: ").append(businessEssentialNew).append("\r\n\r\n");
+			sb.append("If you have questions about this please contact ITILcenter@bayer.com.\r\n\r\n");
+			sb.append("Best Regards\r\n");
+			sb.append("ITILcenter Administration");
+			ApplReposHbn.sendMail(sendTo, copyTo, subject, sb.toString(), ApplreposConstants.APPLICATION_GUI_NAME);
+		}
+		
 	}
 
 }

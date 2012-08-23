@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -558,4 +559,93 @@ public class ApplReposHbn {
 		return resultMessage;
 	}
 	
+	public static void testmail() {
+		sendMail("udo.hoffmann@bayer.com", "udo.hoffmann@bayer.com", "subject", "body", "AIR");
+	}
+	
+	
+	/**
+	 * sends the email by calling an oracle function. 
+	 * @param sendTo
+	 * @param copyTo
+	 * @param subject
+	 * @param body
+	 * @param source
+	 */
+	public static void sendMail(String sendTo, String copyTo, String subject, String body, String source) {
+		
+		if (null != sendTo) {
+			
+			if (null == copyTo) {
+				copyTo = "";
+			}
+			
+			StringBuffer sb = new StringBuffer();
+			
+			sb = new StringBuffer();
+	
+			sb.append("DECLARE S VARCHAR2(4000); ");
+			
+			sb.append("BEGIN");
+			sb.append(" s:= pck_Mail.FV_CreateMail (");
+	
+			sb.append("'");
+			sb.append(sendTo);
+			sb.append("','");
+			sb.append(copyTo);
+			sb.append("','");
+			sb.append(subject);
+			sb.append("','");
+			sb.append(body);
+			sb.append("','");
+			sb.append(source);
+			sb.append("',");
+			sb.append("'Y',");	// Y = immediate, N = Not immediate
+			sb.append("'TEXT'");
+			sb.append(");");
+			sb.append(" END;");
+	
+			
+			Transaction tx = null;
+			Session session = HibernateUtil.getSession();
+	
+			Connection conn = null;
+			CallableStatement callableStmt = null;
+	
+			try {
+				tx = session.beginTransaction();
+	
+				conn = session.connection();
+	
+				callableStmt = conn.prepareCall(sb.toString());
+	
+				callableStmt.execute();
+	
+				if (null != callableStmt) {
+					callableStmt.close();
+				}
+				if (null != conn) {
+					conn.close();
+				}
+				tx.commit();
+			} catch (Exception e) {
+				
+				log.error(e.toString());
+				
+				if (tx != null && tx.isActive()) {
+					try {
+						// Second try catch as the rollback could fail as well
+						tx.rollback();
+					} catch (HibernateException e1) {
+						System.out.println("Error rolling back transaction");
+					}
+					// throw again the first exception
+					// throw e;
+				}
+	
+			}
+	
+		}
+	}	
 }
+

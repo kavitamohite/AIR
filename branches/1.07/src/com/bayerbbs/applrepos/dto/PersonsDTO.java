@@ -14,6 +14,7 @@ public class PersonsDTO {
 	private String persNr;
 	private String lastname;
 	private String firstname;
+	private String mail;
 	
 	public Long getPersonId() {
 		return personId;
@@ -45,8 +46,12 @@ public class PersonsDTO {
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-	
-	
+	public String getMail() {
+		return mail;
+	}
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
 	/**
 	 * returns the full name with cwid for display usage
 	 * 
