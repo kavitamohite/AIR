@@ -91,10 +91,14 @@
 			Individuals representing the Business’ interests in the CI
 		</applicationOwnerText>
 		
-		<applicationOwnerDelegate>Steward/Delegate</applicationOwnerDelegate>
+		<applicationSteward>Steward</applicationSteward>
+		<applicationStewardText>
+			Person who is responsible for maintaining the application data in the repository for all attributes. 
+		</applicationStewardText>
+
+		<applicationOwnerDelegate>Delegate</applicationOwnerDelegate>
 		<applicationOwnerDelegateText>
-			"Application Steward has been defined per legal entity and is resp. for data quality (company code) Will be defined by 
-			Application Owner Business."
+			Person who is responsible for maintaining the application data in the repository.
 		</applicationOwnerDelegateText>
 		
 		<ciResponsible>Primary Person</ciResponsible>

@@ -1483,6 +1483,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setTooltipData('labelciSubResponsible', toolTips.ciSubResponsible, toolTips.ciSubResponsibleText);
 		
 		this.setTooltipData(this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner').getComponent('labelapplicationOwner'), toolTips.applicationOwner, toolTips.applicationOwnerText);
+		this.setTooltipData(this.getComponent('contactsApplicationOwner').getComponent('pApplicationSteward').getComponent('labelapplicationSteward'), toolTips.applicationSteward, toolTips.applicationStewardText);
 		this.setTooltipData(this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('labelapplicationOwnerDelegate'), toolTips.applicationOwnerDelegate, toolTips.applicationOwnerDelegateText);
 				
 		

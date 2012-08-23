@@ -1382,6 +1382,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'searchResultResponsible'},
 			        {name: 'searchResultSubResponsible'},
 			        {name: 'searchResultAppOwner'},
+			        {name: 'searchResultAppSteward'},
 			        {name: 'searchResultAppOwnerDelegate'},
 			        
 			        // wizard
@@ -1610,6 +1611,8 @@ AIR.AirStoreFactory = function() {
 			        // contacts
 			        {name: 'applicationOwner'},
 			        {name: 'applicationOwnerText'},
+			        {name: 'applicationSteward'},
+			        {name: 'applicationStewardText'},
 			        {name: 'applicationOwnerDelegate'},
 			        {name: 'applicationOwnerDelegateText'},
 			        

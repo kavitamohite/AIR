@@ -112,7 +112,8 @@
 		<searchResultResponsible>CI Owner / Application Manager</searchResultResponsible>
 		<searchResultSubResponsible>CI Owner Delegate</searchResultSubResponsible>
 		<searchResultAppOwner>Application Owner</searchResultAppOwner>
-		<searchResultAppOwnerDelegate>Application Steward</searchResultAppOwnerDelegate>
+		<searchResultAppSteward>Application Steward</searchResultAppSteward>
+		<searchResultAppOwnerDelegate>Application Delegate</searchResultAppOwnerDelegate>
 
 		
 		<!-- Validation Messages -->

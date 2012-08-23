@@ -352,6 +352,7 @@ public class CiEntitesHbn {
 		String responsible = null;
 		String subResponsible = null;
 		String applicationOwner = null;
+		String applicationSteward = null;
 		String applicationOwnerDelegate = null;
 		Long ci_id = null;
 		String category = null;
@@ -370,6 +371,14 @@ public class CiEntitesHbn {
 			applicationOwnerDelegate = rset.getString("APP_OWNER_DELEGATE");
 			tableId = rset.getLong("TABLE_ID");
 			deleted = rset.getString("DELETED");
+			
+			
+			try {
+				applicationSteward = rset.getString("APP_STEWARD");	
+			} catch (Exception e) {
+				//TODO DWH Entity - nothing da noch nicht in DWH Entity
+			}
+			
 			
 			
 		} catch (SQLException e1) {
@@ -397,6 +406,7 @@ public class CiEntitesHbn {
 		anw.setApplicationName(name);
 		anw.setApplicationAlias(assetIdOrAlias);
 		anw.setResponsible(responsible);
+		anw.setApplicationSteward(applicationSteward);
 		anw.setSubResponsible(subResponsible);
 		anw.setApplicationCat1Txt(type);
 		anw.setApplicationCat2Txt(category);
