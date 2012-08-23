@@ -139,7 +139,7 @@
 		<specificsPanelTitle>Spezifisches</specificsPanelTitle>
 			<applicationName>Name</applicationName>
 			<applicationAlias>Alias</applicationAlias>
-			<barApplicationId>BAR Ident</barApplicationId>
+			<barApplicationId>Bayer Application Registry ID</barApplicationId>
 			<applicationVersion>Version</applicationVersion>
 			<applicationCat2>IT-Kategorie / Technologie</applicationCat2>
 			<lifecycleStatus>Betriebsstatus</lifecycleStatus>

@@ -18,9 +18,9 @@
 			A secondary name for an application by which it is also known.
 		</applicationAliasText>
 
-		<barApplicationId>BAR Ident</barApplicationId>
+		<barApplicationId>Bayer Application Registry ID</barApplicationId>
 		<barApplicationIdText>
-			The application ident for an application defined by the Bayer Application Register.
+			Unique Identifier created automatically by Bayer-Group Application Register during the Registration process
 		</barApplicationIdText>
 
 		<version>Version</version>
@@ -62,8 +62,7 @@
 
 		<comments>Description</comments>
 		<commentsText>
-			Information that cannot be placed into other attributes
-			but which carries valuable details, even in an unstructured form.
+			The description / purpose is what the application is supposed to do in Bayer
 		</commentsText>
 
 		<applicationBusinessCat>Business Categorie</applicationBusinessCat>
@@ -87,7 +86,7 @@
 		
 		<applicationOwner>Primary Person</applicationOwner>
 		<applicationOwnerText>
-			Individuals representing the Business’ interests in the CI
+			Person who is responsible for the application from the business side
 		</applicationOwnerText>
 		
 		<applicationSteward>Steward</applicationSteward>
