@@ -1,9 +1,6 @@
 Ext.namespace('AIR');
 
-//var alreadyInWindow = true;
-
 AIR.AirBootstrap = Ext.extend(Object, {
-	
 	run: function() {
 //		if(Ext.isIE) {
 //			Ext.Msg.show({
@@ -54,82 +51,18 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		Ext.isSecure = true;
 		Ext.Ajax.timeout = 3000000;
 		
-		//TODO make opsolete/regroup
-		selectedCiCat1Id = 5;
+
 		myLoadMask = new Ext.LoadMask(Ext.getBody(), {msg: 'Loading'});//labels['gerneral_message_loading']
 		mySaveMask = new Ext.LoadMask(Ext.getBody(), {msg: 'Saving'});//labels['gerneral_message_saving']
 		
 		//disable F5,F6
 		if(Ext.isIE) {
-			document.attachEvent('onkeydown', this.disableInvalidKeys, true);//onkeydown onkeypress
-			document.attachEvent('onunload', this.disableInvalidKeys, true);
+			document.attachEvent('onkeydown', AIR.AirApplicationManager.disableInvalidKeys, true);//onkeydown onkeypress
+			document.attachEvent('onunload', AIR.AirApplicationManager.disableInvalidKeys, true);
 		} else {
-			document.addEventListener('keypress', this.disableInvalidKeys, true);
-			document.addEventListener('unload', this.disableInvalidKeys, true);
+			document.addEventListener('keypress', AIR.AirApplicationManager.disableInvalidKeys, true);
+			document.addEventListener('unload', AIR.AirApplicationManager.disableInvalidKeys, true);
 		}
-		
-//		Ext.getBody().on('unload', this.disableInvalidKeys ,this);//unload beforeunload
-		
-//		window.onbeforeload = this.test();
-//		window.onbeforeunload = this.test();
-		
-//		document.addEventListener('load', this.disableBack, true);
-//		document.addEventListener('onpageshow', this.disableBack2.createDelegate(this), true);
-//		document.addEventListener('onunload', function() { void(0); }, true);
-	},
-	
-//	disableBack: function(event) {
-//		window.history.forward();
-//	},
-//	
-//	disableBack2: function(event) {
-//		if(event.persisted)
-//			this.disableBack();
-//	},
-	
-//	test: function(e) {
-////		return false;
-//		
-//		e = e || window.event;
-//		
-//		// For IE and Firefox prior to version 4
-//		if(e)
-//			e.returnValue = 'Any string';
-//		else alert('test');
-//		
-////		return "You have attempted to leave this page.  If you have made any changes to the fields without clicking the Save button, your changes will be lost.  Are you sure you want to exit this page?";
-//	},
-	
-	disableInvalidKeys: function(event, el, options) {
-		var keyCode = event.keyCode;//Ext.isIE ? event.charCode : event.keyCode;
-		
-		switch(keyCode) {
-			case 116: //F5
-			case 117: //F6
-				// Standard DOM (Mozilla): 
-				if(event.preventDefault)
-					event.preventDefault(); 
-//				
-				//IE (exclude Opera with !event.preventDefault): 
-				if(document.all && window.event && !event.preventDefault) {
-//					event.cancelBubble = true;
-//					event.returnValue = false;
-					event.keyCode = 0;//WHY IS THIS NECESSARY ??
-				} 
-				return false;
-			
-			case 8: //backspace
-				var tagName = Ext.isIE ? event.srcElement.tagName : event.target.tagName;
-				
-	            if(tagName == 'BODY' || tagName == 'HTML' || tagName == 'DIV') {//event.originalTarget.id.indexOf('tf') == -1
-					if(event.preventDefault)
-						event.preventDefault(); 
-	            
-	                return false;
-	            }
-		};
-		
-		return true;
 	},
 	
 	onLogin: function(cwid, password) {

@@ -2179,6 +2179,7 @@ AIR.AirStoreFactory = function() {
 			    {name: 'responsible'},
 			    {name: 'subResponsible'},
 			    {name: 'applicationOwner'},
+			    {name: 'applicationSteward'},
 			    {name: 'applicationOwnerDelegate'},
 			    {name: 'tableId'}
 			]);
@@ -2204,6 +2205,7 @@ AIR.AirStoreFactory = function() {
 					'applicationCat2Txt',
 					'applicationCat1Txt',
 					'applicationOwner',
+					'applicationSteward',
 					'applicationOwnerDelegate',
 					'tableId'
 				],

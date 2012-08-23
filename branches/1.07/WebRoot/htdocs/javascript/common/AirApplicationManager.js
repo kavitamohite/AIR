@@ -1,6 +1,6 @@
 Ext.namespace('AIR');
 
-AIR.AirApplicationManager = function() {//ExtJS3 Singleton
+AIR.AirApplicationManager = function() {
 	
 	return {
 		DATE_FORMAT_DE: 'd.m.Y',
@@ -252,7 +252,7 @@ AIR.AirApplicationManager = function() {//ExtJS3 Singleton
 			
 			
 			ciCenterView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
-//        	Ext.History.init();
+//        	Ext.History.init(); //Fehler in IE bei ext-all-debug.js Z. 32840: iframe existiert nicht --> Laufzeitfehler
 //        	Ext.History.on('change', ciCenterView.onBackForwardClick, ciCenterView);
 			//----------------------------------------------------------------------------------------------------
 			
@@ -605,8 +605,41 @@ AIR.AirApplicationManager = function() {//ExtJS3 Singleton
 			var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
 			var index = rolePersonListStore.findExact('roleName', roleName);
 			return index > -1;
-		}
+		},
 		//RFC 8231 Einrichten der Rolle "Administrator"
+		
+		
+		disableInvalidKeys: function(event, el, options) {
+			var keyCode = event.keyCode;//Ext.isIE ? event.charCode : event.keyCode;
+			
+			switch(keyCode) {
+				case 116: //F5
+				case 117: //F6
+					// Standard DOM (Mozilla): 
+					if(event.preventDefault)
+						event.preventDefault(); 
+//					
+					//IE (exclude Opera with !event.preventDefault): 
+					if(document.all && window.event && !event.preventDefault) {
+//						event.cancelBubble = true;
+//						event.returnValue = false;
+						event.keyCode = 0;//WHY IS THIS NECESSARY ??
+					} 
+					return false;
+				
+				case 8: //backspace
+					var tagName = Ext.isIE ? event.srcElement.tagName : event.target.tagName;
+					
+		            if(tagName == 'BODY' || tagName == 'HTML' || tagName == 'DIV') {//event.originalTarget.id.indexOf('tf') == -1
+						if(event.preventDefault)
+							event.preventDefault(); 
+		            
+		                return false;
+		            }
+			};
+			
+			return true;
+		}
 	};
 }();
 

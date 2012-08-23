@@ -101,7 +101,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 	},
 	
 	loadMyOwnCIsGrid: function(searchAction) {
-		var params = { 
+		var params = {
 			start: 0,
 			limit: 20,
 			cwid: AIR.AirApplicationManager.getCwid(),
@@ -121,7 +121,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 	},
 	
 	loadDelegateCIsGrid: function(searchAction) {
-		var params = { 
+		var params = {
 			start: 0,
 			limit: 20,
 			cwid: AIR.AirApplicationManager.getCwid(),
@@ -203,7 +203,8 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(4, labels.searchResultResponsible);
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(5, labels.searchResultSubResponsible);
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(6, labels.searchResultAppOwner);
-		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(7, labels.searchResultAppOwnerDelegate);
+		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(7, labels.searchResultAppSteward);
+		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(8, labels.searchResultAppOwnerDelegate);
 
 		
 		var myDelegateCisView = this.getComponent('card-myapps').getComponent('myDelegateCisView');
@@ -216,7 +217,8 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(4, labels.searchResultResponsible);
 		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(5, labels.searchResultSubResponsible);
 		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(6, labels.searchResultAppOwner);
-		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(7, labels.searchResultAppOwnerDelegate);
+		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(7, labels.searchResultAppSteward);
+		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(8, labels.searchResultAppOwnerDelegate);
 	}
 	
 });

@@ -24,6 +24,7 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 			columns.push({ header: 'Responsible', dataIndex: 'responsible', width: 150, sortable: true});//, menuDisabled: true
 			columns.push({ header: 'Sub responsible', dataIndex: 'subResponsible', width: 150, sortable: true});//, menuDisabled: true
 			columns.push({ header: 'App owner', dataIndex: 'applicationOwner', width: 150, sortable: true});//, menuDisabled: true
+			columns.push({ header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});//, menuDisabled: true
 			columns.push({ header: 'App owner delegate', dataIndex: 'applicationOwnerDelegate', width: 150, sortable: true});//, menuDisabled: true
 		}
 		

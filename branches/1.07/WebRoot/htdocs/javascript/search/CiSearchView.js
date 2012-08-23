@@ -514,7 +514,8 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		ciSearchGrid.getColumnModel().setColumnHeader(4, labels.searchResultResponsible);
 		ciSearchGrid.getColumnModel().setColumnHeader(5, labels.searchResultSubResponsible);
 		ciSearchGrid.getColumnModel().setColumnHeader(6, labels.searchResultAppOwner);
-		ciSearchGrid.getColumnModel().setColumnHeader(7, labels.searchResultAppOwnerDelegate);
+		ciSearchGrid.getColumnModel().setColumnHeader(7, labels.searchResultAppSteward);
+		ciSearchGrid.getColumnModel().setColumnHeader(8, labels.searchResultAppOwnerDelegate);
 		
 		
 		var ciStandardSearchView = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView');
