@@ -408,6 +408,7 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		
 		
 		params.responsibleHidden = this.getComponent('fsCiOwnerW').getComponent('pCiOwnerW').getComponent('tfResponsibleWHidden').getValue();
+		params.responsible = this.getComponent('fsCiOwnerW').getComponent('pCiOwnerW').getComponent('tfResponsibleW').getValue();
 		params.gpsccontactSupportGroupHidden = this.getComponent('fsContactsGPSCW').getComponent('pGPSCSupportGroup').getComponent('taGPSCSupportGroupHidden').getValue();
 		params.gpsccontactSupportGroup = this.getComponent('fsContactsGPSCW').getComponent('pGPSCSupportGroup').getComponent('taGPSCSupportGroup').getValue();
 		params.gpsccontactOwningBusinessGroupHidden = this.getComponent('fsContactsGPSCW').getComponent('pGPSCOwningBusinessGroup').getComponent('taGPSCOwningBusinessGroupHidden').getValue();
@@ -475,8 +476,8 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		AIR.AirAclManager.setNecessity(this.getComponent('tfApplicationAliasW'));
 		AIR.AirAclManager.setNecessity(this.getComponent('pBusinessW').getComponent('labeltaBusinessProcessW'));
 		
-		
-		this.getComponent('fsCiOwnerW').setTitle(labels.contactsApplicationOwner);
+//		labels.contactsCIOwnerApplication : labels.contactsCIOwner
+//		this.getComponent('fsCiOwnerW').setTitle(labels.contactsCIOwnerApplication);
 		this.getComponent('fsCiOwnerW').getComponent('pCiOwnerW').getComponent('labeltfResponsibleW').setText(labels.ciResponsible);
 		AIR.AirAclManager.setNecessity(this.getComponent('fsCiOwnerW').getComponent('pCiOwnerW').getComponent('labeltfResponsibleW'));
 		

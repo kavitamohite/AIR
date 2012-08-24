@@ -819,6 +819,10 @@ public class AnwendungHbn {
 							application.setApplicationOwner(dto.getApplicationOwnerHidden());
 						}
 						
+						if (null != dto.getApplicationStewardHidden()) {
+							application.setApplicationSteward(dto.getApplicationStewardHidden());
+						}
+						
 						if (null != dto.getApplicationOwnerDelegateHidden()) {
 							application.setApplicationOwnerDelegate(dto.getApplicationOwnerDelegateHidden());
 						}

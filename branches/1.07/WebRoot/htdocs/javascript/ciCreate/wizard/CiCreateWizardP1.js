@@ -179,12 +179,6 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		//oder gar nicht darstellt wenn cb mit den Attributen disabled: true, und hideTrigger: true konfiguriert wird:
 		//AIR.AirAclManager.setAccessMode(this.getComponent('cbAppCat1W'), null); appDetail müsste übergeben werden, gibt es hier aber nicht
 		Util.disableCombo(this.getComponent('cbAppCat1W'));
-//		this.getComponent('cbAppCat1W').setHideTrigger(true);
-//		if(Ext.isIE)
-//			this.getComponent('cbAppCat1W').el.dom.disabled = true;//combo NOT shot in IE
-//		else
-//			this.getComponent('cbAppCat1W').disable();
-				
 		
 		this.setFieldLabel(this.getComponent('cbAppCat1W'), labels.wizardobjectType);
 		this.setFieldLabel(this.getComponent('cbAppCat2W'), labels.label_details_category);

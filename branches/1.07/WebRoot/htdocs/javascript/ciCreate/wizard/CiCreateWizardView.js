@@ -73,7 +73,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		var bNextW = this.getFooterToolbar().getComponent('bNextW');
 		bNextW.setVisible(true);
 		
-		this.setHeight(360);//360 400
+		this.setHeight(420);//360 400
 	},
 	
 	onCancel: function(button, event) {
@@ -92,6 +92,11 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 	
 	onNext: function(button, event) {
 		this.page++;
+		
+		var labels = AIR.AirApplicationManager.getLabels();
+		var title = this.getComponent('ciCreateWizardP1').getComponent('cbAppCat1W').getValue() === AC.APP_CAT1_APPLICATION ? labels.contactsCIOwnerApplication : labels.contactsCIOwner;
+		
+		this.getComponent('ciCreateWizardP2').getComponent('ciCreateAppRequiredView').getComponent('fsCiOwnerW').setTitle(title);
 		this.getLayout().setActiveItem(this.page);
 		button.setVisible(false);
 		
@@ -136,6 +141,9 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		
 		if(params.applicationOwnerHidden.length === 0)
 			errorData.push(labels.applicationOwner);
+		
+		if(params.applicationStewardHidden.length === 0)
+			errorData.push(labels.applicationSteward);
 		
 		if(params.applicationOwnerDelegateHidden.length === 0)
 			errorData.push(labels.applicationOwnerDelegate);

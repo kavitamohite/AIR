@@ -132,142 +132,142 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		        lazyInit: false,
 		        mode: 'local'
 		    },{
-		    	xtype: 'panel',
-				id: 'pApplicationOwnerW',
-				border: false,
-				
-				layout: 'column',//toolbar hbox
+		        xtype: 'fieldset',
+		        id: 'fsApplicationOwnerW',
+		        title: 'Application Owner',
+		        labelWidth: 200,
+		        width: 600,
+		        
+//		        layout: 'form',//fit
 		        style: {
 		        	marginTop: 20
 		        },
-				
+		        
 				items: [{
-					xtype: 'label',
-					id: 'labeltfApplicationOwnerW',
+			    	xtype: 'panel',
+					id: 'pApplicationOwnerW',
+					border: false,
 					
-					width: 255,//205 185
-					style: {
-						fontSize: 12.5
-					}
-	    		},{
-					xtype: 'textfield',
-			        width: 250,
-			        id: 'tfApplicationOwnerW',//value: 'Pepping, Simon (ERCVA)',
-			        readOnly: true
-			    },{
-					xtype: 'hidden',
-			        id: 'tfApplicationOwnerWHidden' //value: 'ERCVA'
-			    },{
-			    	xtype: 'commandlink',
-			    	id: 'clApplicationOwnerAdd',
-			    	img: img_AddPerson
-			    },{
-			    	xtype: 'commandlink',
-			    	id: 'clApplicationOwnerRemove',
-			    	img: img_RemovePerson
-			    }]
-			},{
-				xtype: 'panel',
-				id: 'pApplicationOwnerDelegateW',
-				border: false,
-				
-				layout: 'column',//toolbar hbox
-				style: {
-					marginTop: 5
-				},
-				
-				items: [{
-					xtype: 'label',
-					id: 'labeltfApplicationOwnerDelegateW',
+					layout: 'column',//toolbar hbox
 					
-					width: 255,//205 185
-					style: {
-						fontSize: 12.5
-					}
-	    		},{
-					xtype: 'textfield',
-			        width: 250,
-			        id: 'tfApplicationOwnerDelegateW',//value: 'Pepping, Simon (ERCVA)',
-			        readOnly: true
-			    },{
-					xtype: 'hidden',
-			        id: 'tfApplicationOwnerDelegateWHidden'//,value: 'ERCVA'
-			    },{
-			    	xtype: 'commandlink',
-			    	id: 'clApplicationOwnerDelegateAdd',
-			    	img: img_AddPerson
-			    },{
-			    	xtype: 'commandlink',
-			    	id: 'clApplicationOwnerDelegateAddGroup',
-			    	img: img_AddGroup
-			    },{
-			    	xtype: 'commandlink',
-			    	id: 'clApplicationOwnerDelegateRemove',
-			    	img: img_RemovePerson
-			    }]
-			}/*,{
-		    	xtype: 'panel',
-				id: 'pApplicationOwnerCompanyW',
-				border: false,
-				
-				layout: 'column',//toolbar hbox
-		        style: {
-		        	marginTop: 5,
-					marginBottom: 20
-		        },
-				
-				items: [{
-					xtype: 'label',
-					id: 'labeltfApplicationOwnerCompanyW',
+					items: [{
+						xtype: 'label',
+						id: 'labeltfApplicationOwnerW',
+						
+						width: 245,//255 205 185
+						style: {
+							fontSize: 12.5
+						}
+		    		},{
+						xtype: 'textfield',
+				        width: 250,
+				        id: 'tfApplicationOwnerW'//value: 'Pepping, Simon (ERCVA)',
+//				        readOnly: true
+				    },{
+						xtype: 'hidden',
+				        id: 'tfApplicationOwnerWHidden' //value: 'ERCVA'
+				    },{
+				    	xtype: 'commandlink',
+				    	id: 'clApplicationOwnerAdd',
+				    	img: img_AddPerson
+				    },{
+				    	xtype: 'commandlink',
+				    	id: 'clApplicationOwnerRemove',
+				    	img: img_RemovePerson
+				    }]
+				},{
+					xtype: 'panel',
+					id: 'pApplicationStewardW',
+					border: false,
 					
-					width: 205,//185
+					layout: 'column',//toolbar hbox
 					style: {
-						fontSize: 12.5
-					}
-	    		},{
-					xtype: 'textfield',
-			        width: 250,
-			        id: 'tfApplicationOwnerCompanyW',
-			        readOnly: true
-			    },{
-					xtype: 'hidden',
-			        id: 'tfApplicationOwnerCompanyWHidden'
-			    },{
-			    	xtype: 'commandlink',
-			    	id: 'clApplicationOwnerCompanyAdd',
-			    	img: img_AddPerson
-			    },{
-			    	xtype: 'commandlink',
-			    	id: 'clApplicationOwnerCompanyAddGroup',
-			    	img: img_AddGroup
-			    },{
-			    	xtype: 'commandlink',
-			    	id: 'clApplicationOwnerCompanyRemove',
-			    	img: img_RemovePerson
-			    }]
-			}*//*,{
-		    	xtype: 'textfield',
-		        id: 'tfApplicationIdW',
-
-		        width: 250,
-		        fieldLabel: 'Application ID',
-
-		        allowBlank: true,
-		        msgTarget: 'under'
-			}*/]
+						marginTop: 5
+					},
+					
+					items: [{
+						xtype: 'label',
+						id: 'labeltfApplicationStewardW',
+						
+						width: 245,//255 205 185
+						style: {
+							fontSize: 12.5
+						}
+		    		},{
+						xtype: 'textfield',
+				        width: 250,
+				        id: 'tfApplicationStewardW'
+//				        readOnly: true
+				    },{
+						xtype: 'hidden',
+				        id: 'tfApplicationStewardWHidden'
+				    },{
+				    	xtype: 'commandlink',
+				    	id: 'clApplicationStewardAdd',
+				    	img: img_AddPerson
+				    },{
+				    	xtype: 'commandlink',
+				    	id: 'clApplicationStewardRemove',
+				    	img: img_RemovePerson
+				    }]
+				},{
+					xtype: 'panel',
+					id: 'pApplicationOwnerDelegateW',
+					border: false,
+					
+					layout: 'column',//toolbar hbox
+					style: {
+						marginTop: 5
+					},
+					
+					items: [{
+						xtype: 'label',
+						id: 'labeltfApplicationOwnerDelegateW',
+						
+						width: 245,//255 205 185
+						style: {
+							fontSize: 12.5
+						}
+		    		},{
+						xtype: 'textfield',
+				        width: 250,
+				        id: 'tfApplicationOwnerDelegateW'//value: 'Pepping, Simon (ERCVA)',
+//				        readOnly: true
+				    },{
+						xtype: 'hidden',
+				        id: 'tfApplicationOwnerDelegateWHidden'//,value: 'ERCVA'
+				    },{
+				    	xtype: 'commandlink',
+				    	id: 'clApplicationOwnerDelegateAdd',
+				    	img: img_AddPerson
+				    },{
+				    	xtype: 'commandlink',
+				    	id: 'clApplicationOwnerDelegateAddGroup',
+				    	img: img_AddGroup
+				    },{
+				    	xtype: 'commandlink',
+				    	id: 'clApplicationOwnerDelegateRemove',
+				    	img: img_RemovePerson
+				    }]
+				}]
+			}]
 		});
 		
 		AIR.CiCreateAppMandatoryView.superclass.initComponent.call(this);
 		
-		var clApplicationOwnerAdd = this.getComponent('pApplicationOwnerW').getComponent('clApplicationOwnerAdd');
-		var clApplicationOwnerRemove = this.getComponent('pApplicationOwnerW').getComponent('clApplicationOwnerRemove');
+		var clApplicationOwnerAdd = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('clApplicationOwnerAdd');
+		var clApplicationOwnerRemove = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('clApplicationOwnerRemove');
 		clApplicationOwnerAdd.on('click', this.onApplicationOwnerAdd, this);
 		clApplicationOwnerRemove.on('click', this.onApplicationOwnerRemove, this);
 		
+		var clApplicationStewardAdd = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('clApplicationStewardAdd');
+		var clApplicationStewardRemove = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('clApplicationStewardRemove');
+		clApplicationStewardAdd.on('click', this.onApplicationStewardAdd, this);
+		clApplicationStewardRemove.on('click', this.onApplicationStewardRemove, this);
 		
-		var clApplicationOwnerDelegateAdd = this.getComponent('pApplicationOwnerDelegateW').getComponent('clApplicationOwnerDelegateAdd');
-		var clApplicationOwnerDelegateAddGroup = this.getComponent('pApplicationOwnerDelegateW').getComponent('clApplicationOwnerDelegateAddGroup');
-		var clApplicationOwnerDelegateRemove = this.getComponent('pApplicationOwnerDelegateW').getComponent('clApplicationOwnerDelegateRemove');
+		var clApplicationOwnerDelegateAdd = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('clApplicationOwnerDelegateAdd');
+		var clApplicationOwnerDelegateAddGroup = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('clApplicationOwnerDelegateAddGroup');
+		var clApplicationOwnerDelegateRemove = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('clApplicationOwnerDelegateRemove');
 		clApplicationOwnerDelegateAdd.on('click', this.onApplicationOwnerDelegateAdd, this);
 		clApplicationOwnerDelegateAddGroup.on('click', this.onApplicationOwnerDelegateAddGroup, this);
 		clApplicationOwnerDelegateRemove.on('click', this.onApplicationOwnerDelegateRemove, this);
@@ -282,21 +282,29 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 	},
 	
 	onApplicationOwnerAdd: function(link, event) {
-		AIR.AirPickerManager.openPersonPicker(null, this.getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW'), event);
+		AIR.AirPickerManager.openPersonPicker(null, this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW'), event);
 	},
 	onApplicationOwnerRemove: function(link, event) {
-		AIR.AirPickerManager.openRemovePicker(null, this.getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW'), event);
+		AIR.AirPickerManager.openRemovePicker(null, this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW'), event);
+	},
+	
+	
+	onApplicationStewardAdd: function(link, event) {
+		AIR.AirPickerManager.openPersonPicker(null, this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW'), event);
+	},
+	onApplicationStewardRemove: function(link, event) {
+		AIR.AirPickerManager.openRemovePicker(null, this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW'), event);
 	},
 	
 	
 	onApplicationOwnerDelegateAdd: function(link, event) {
-		AIR.AirPickerManager.openPersonPicker(null, this.getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW'), event);
+		AIR.AirPickerManager.openPersonPicker(null, this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW'), event);
 	},
 	onApplicationOwnerDelegateAddGroup: function(link, event) {
-		AIR.AirPickerManager.openGroupPicker(null, this.getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW'), event, 'none');
+		AIR.AirPickerManager.openGroupPicker(null, this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW'), event, 'none');
 	},
 	onApplicationOwnerDelegateRemove: function(link, event) {
-		AIR.AirPickerManager.openRemovePicker(null, this.getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW'), event);
+		AIR.AirPickerManager.openRemovePicker(null, this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW'), event);
 	},
 	
 	
@@ -326,10 +334,12 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 			
 			params.comments = this.getComponent('taCiDescriptionW').getValue();
 			params.lifecycleStatusId = this.getComponent('cbLifecycleStatusW').getValue();
-			params.applicationOwnerHidden = this.getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerWHidden').getValue();
-			params.applicationOwner = this.getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').getValue();
-			params.applicationOwnerDelegateHidden = this.getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateWHidden').getValue();
-			params.applicationOwnerDelegate = this.getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW').getValue();
+			params.applicationOwnerHidden = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerWHidden').getValue();
+			params.applicationOwner = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').getValue();
+			params.applicationStewardHidden = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').getValue();
+			params.applicationSteward = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW').getValue();
+			params.applicationOwnerDelegateHidden = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateWHidden').getValue();
+			params.applicationOwnerDelegate = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW').getValue();
 			delete params.isCat2Sap;
 //				break;
 //		}
@@ -344,10 +354,10 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		this.getComponent('taCiDescriptionW').reset();
 		this.getComponent('cbLifecycleStatusW').reset();
 		
-		this.getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').reset();
-		this.getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerWHidden').reset();
-		this.getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW').reset();
-		this.getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateWHidden').reset();
+		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').reset();
+		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerWHidden').reset();
+		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW').reset();
+		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateWHidden').reset();
 		
 //		this.getComponent('pApplicationOwnerCompanyW').getComponent('tfApplicationOwnerCompanyW').reset();
 //		this.getComponent('tfApplicationIdW').reset();
@@ -372,26 +382,14 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		this.setFieldLabel(this.getComponent('cbLifecycleStatusW'), labels.lifecycleStatus);
 		AIR.AirAclManager.setNecessity(this.getComponent('cbLifecycleStatusW'));
 		
-		
-		this.getComponent('pApplicationOwnerW').getComponent('labeltfApplicationOwnerW').setText(labels.applicationOwner);//.el.dom.innerHTML = labels.applicationOwner;
-		this.getComponent('pApplicationOwnerDelegateW').getComponent('labeltfApplicationOwnerDelegateW').setText(labels.applicationOwnerDelegate);//.el.dom.innerHTML = labels.applicationOwnerDelegate;
+		this.getComponent('fsApplicationOwnerW').setTitle(labels.contactsApplicationOwner);
+		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('labeltfApplicationOwnerW').setText(labels.applicationOwner);//.el.dom.innerHTML = labels.applicationOwner;
+		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('labeltfApplicationStewardW').setText(labels.applicationSteward);//.el.dom.innerHTML = labels.applicationOwner;
+		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('labeltfApplicationOwnerDelegateW').setText(labels.applicationOwnerDelegate);//.el.dom.innerHTML = labels.applicationOwnerDelegate;
 
-		AIR.AirAclManager.setNecessity(this.getComponent('pApplicationOwnerW').getComponent('labeltfApplicationOwnerW'));
-		AIR.AirAclManager.setNecessity(this.getComponent('pApplicationOwnerDelegateW').getComponent('labeltfApplicationOwnerDelegateW'));
-		
-		
-//		this.getComponent('pApplicationOwnerCompanyW').getComponent('labeltfApplicationOwnerCompanyW').setText(labels.labeltfApplicationOwnerCompanyW);
-//		this.setFieldLabel(this.getComponent('tfApplicationIdW'), labels.tfApplicationIdW);
-		
-//		AIR.AirAclManager.setNecessity(this.getComponent('pApplicationOwnerCompanyW').getComponent('labeltfApplicationOwnerCompanyW'));
-//		AIR.AirAclManager.setNecessity(this.getComponent('tfApplicationIdW'));
-
-		
-		
-//		var sapNameLabel = labels.wizardapplicationNameSAP1 + ', ' + labels.wizardapplicationNameSAP2 + ', ' + labels.wizardapplicationNameSAP3;
-//		this.setFieldLabel(this.getComponent('wizardapplicationNameSAP'), sapNameLabel);
-//		this.setFieldLabel(this.getComponent('wizardapplicationName'), labels.wizardapplicationName);
-//		this.getComponent('wizardapplicationName').validate();
+		AIR.AirAclManager.setNecessity(this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('labeltfApplicationOwnerW'));
+		AIR.AirAclManager.setNecessity(this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('labeltfApplicationStewardW'));
+		AIR.AirAclManager.setNecessity(this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('labeltfApplicationOwnerDelegateW'));
 	}
 
 

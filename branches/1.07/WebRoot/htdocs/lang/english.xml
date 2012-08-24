@@ -43,7 +43,7 @@
 		<!-- Label: Menu -->
 		<label_menu_myplacemenuitem>My Place</label_menu_myplacemenuitem>
 		<label_menu_myplacemycismenuitem>I'm Owner/Manager</label_menu_myplacemycismenuitem>
-		<label_menu_myplacemycissubsmenuitem>I'm Delegate</label_menu_myplacemycissubsmenuitem>
+		<label_menu_myplacemycissubsmenuitem>I'm Steward/Delegate</label_menu_myplacemycissubsmenuitem>
 		
 		<label_myplace_user>User</label_myplace_user>
 		<label_myplace_cwid>CWID</label_myplace_cwid>

@@ -44,7 +44,7 @@
 		<!-- Label: Menu -->
 		<label_menu_myplacemenuitem>Arbeitsplatz</label_menu_myplacemenuitem>
 		<label_menu_myplacemycismenuitem>Ich bin Owner/Manager</label_menu_myplacemycismenuitem>
-		<label_menu_myplacemycissubsmenuitem>Ich bin Delegate</label_menu_myplacemycissubsmenuitem>
+		<label_menu_myplacemycissubsmenuitem>Ich bin Steward/Delegate</label_menu_myplacemycissubsmenuitem>
 		
 		<label_myplace_user>Anwender</label_myplace_user>
 		<label_myplace_cwid>CWID</label_myplace_cwid>
