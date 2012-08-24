@@ -353,7 +353,8 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 //				tableIdSource: this.CI_TYPE_APPLICATION
 			};
 			
-			if(this.applicationCat2 == this.SAP_APP_CAT1 || this.applicationCat2 == this.SAP_APP_CAT2) {//implement as Business Rule!
+//			if(this.applicationCat2 == this.SAP_APP_CAT1 || this.applicationCat2 == this.SAP_APP_CAT2) {//implement as Business Rule!
+			if(this.isSAPApplication(this.applicationCat2)) {
 				var tfSapNameCopyFrom1 = pName.getComponent('pSapName').getComponent('tfSapNameCopyFrom1');
 				var tfSapNameCopyFrom2 = pName.getComponent('pSapName').getComponent('tfSapNameCopyFrom2');
 				var tfSapNameCopyFrom3 = pName.getComponent('pSapName').getComponent('tfSapNameCopyFrom3');
@@ -382,8 +383,9 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	
-	update: function(applicationName, applicationCat2) {
+	update: function(applicationName, applicationCat1, applicationCat2) {
 		this.applicationCat2 = applicationCat2;
+		this.applicationCat1 = applicationCat1;
 		var pName = this.getComponent('p1CopyFrom').getComponent('p11CopyFrom').getComponent('p111CopyFrom');
 		
 //		var pCopyFromTemplate = this.getComponent('pCopyFromTemplate');
@@ -397,7 +399,8 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var labels = AIR.AirApplicationManager.getLabels();
 		
-		if(this.applicationCat2 == this.SAP_APP_CAT1 || this.applicationCat2 == this.SAP_APP_CAT2) {
+//		if(this.applicationCat2 == this.SAP_APP_CAT1 || this.applicationCat2 == this.SAP_APP_CAT2) {
+		if(this.isSAPApplication(applicationCat2)) {
 			pName.getLayout().setActiveItem(0);
 			
 			var tfSapNameCopyFrom1 = pName.getComponent('pSapName').getComponent('tfSapNameCopyFrom1');
@@ -425,7 +428,8 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var p111CopyFrom = this.getComponent('p1CopyFrom').getComponent('p11CopyFrom').getComponent('p111CopyFrom');
 		
-		if(this.applicationCat2 == this.SAP_APP_CAT1 || this.applicationCat2 == this.SAP_APP_CAT2) {
+//		if(this.applicationCat2 == this.SAP_APP_CAT1 || this.applicationCat2 == this.SAP_APP_CAT2) {
+		if(this.isSAPApplication(this.applicationCat2)) {
 			var tfSapNameCopyFrom1 = p111CopyFrom.getComponent('pSapName').getComponent('tfSapNameCopyFrom1');
 			var tfSapNameCopyFrom2 = p111CopyFrom.getComponent('pSapName').getComponent('tfSapNameCopyFrom2');
 			var tfSapNameCopyFrom3 = p111CopyFrom.getComponent('pSapName').getComponent('tfSapNameCopyFrom3');
@@ -449,6 +453,11 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 				if(errorFields.length > 0)
 					errorFields += '<br/>';
 				errorFields += 'Name';
+			} else if(tfCopyFromApplicationName.getValue().match(AC.REGEX_SAP_NAME) != null) {
+				if(errorFields.length > 0)
+					errorFields += '<br/>';
+				
+				errorFields += AIR.AirApplicationManager.getLabels().wizardapplicationNameSAPillegal.replace('{0}', this.applicationCat1).replace('{1}', this.applicationCat2);
 			}
 		}
 		
@@ -476,6 +485,13 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		return value.length <= this.MAX_NUMBER_LENGTH && value.length > 0;
+	},
+	
+	isSAPApplication: function(applicationCat2Txt) {
+		var store = AIR.AirStoreManager.getStoreByName('applicationCat2ListStore');
+		var isSapCat2 = store.getAt(store.findExact('text', applicationCat2Txt)).get('guiSAPNameWizard') === 'Y';//this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getStore().getById(cat2Id).get('guiSAPNameWizard') === 'Y';//AC.CI_CAT1_SAP_CAT2_ID.indexOf(cat2Id) > -1;
+		
+		return isSapCat2;
 	},
 	
 	updateLabels: function(labels) {

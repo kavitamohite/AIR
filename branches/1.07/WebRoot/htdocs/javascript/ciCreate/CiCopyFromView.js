@@ -230,7 +230,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 //		ciCreatePagesView.getLayout().setActiveItem('CiCopyFromDetailView');
 		
 		var ciCopyFromDetailView = this.getComponent('CiCopyFromDetailView');
-		ciCopyFromDetailView.update(this.applicationName, this.applicationCat2);
+		ciCopyFromDetailView.update(this.applicationName, this.applicationCat1, this.applicationCat2);
 		
 		this.getLayout().setActiveItem(1);
 	},
