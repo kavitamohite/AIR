@@ -93,7 +93,7 @@ AIR.AirRecordPicker = Ext.extend(Ext.Tip, {
 				singleSelect: false,
 				emptyText: '',
 				autoScroll: true,
-				height: 95,
+				height: 200,
 				loadingText: '&nbsp;',
 				emptyText: 'No records found.',
 				
