@@ -2821,7 +2821,7 @@ public class AnwendungHbn {
 						applicationTarget.setSubResponsible(applicationSource.getSubResponsible());
 
 						applicationTarget.setApplicationOwner(applicationSource.getApplicationOwner());
-						
+						applicationTarget.setApplicationSteward(applicationSource.getApplicationSteward());
 						applicationTarget.setApplicationOwnerDelegate(applicationSource.getApplicationOwnerDelegate());
 						
 						
