@@ -318,7 +318,7 @@ whereas "External" manages only the references to an compliance management outsi
 			<wizardisTemplate>Use as BYTsec-Template</wizardisTemplate>
 			<tfApplicationIdW>Bayer Application Registry ID</tfApplicationIdW>
 			<labeltfApplicationOwnerCompanyW>Application Owner Company</labeltfApplicationOwnerCompanyW>
-			<wizardapplicationNameSAPillegal>{0} CI mit Kategorie IT {1} darf keinen SAP Namen haben</wizardapplicationNameSAPillegal>
+			<wizardapplicationNameSAPillegal>{0} CI with Category IT {1} must have no SAP name</wizardapplicationNameSAPillegal>
 			
 		
 		<ciCreateWizardPage2>Wizard - Step 2: Required</ciCreateWizardPage2><!-- Wizard - Step 2: Details -->

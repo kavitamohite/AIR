@@ -320,7 +320,8 @@
 			<wizardisTemplate>Ist BYTsec-Template</wizardisTemplate>
 			<tfApplicationIdW>Bayer Application Registry ID</tfApplicationIdW>
 			<labeltfApplicationOwnerCompanyW>Application Owner Company</labeltfApplicationOwnerCompanyW>
-			<wizardapplicationNameSAPillegal>{0} CI with Category IT {1} must have no SAP name</wizardapplicationNameSAPillegal>
+			<wizardapplicationNameSAPillegal>{0} CI mit Kategorie IT {1} darf keinen SAP Namen haben</wizardapplicationNameSAPillegal>
+
 		
 		<ciCreateWizardPage2>Wizard - Schritt 2: Required</ciCreateWizardPage2><!-- Wizard - Schritt 2: Details -->
 			<wizardBasics>Basics</wizardBasics>

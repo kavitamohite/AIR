@@ -161,8 +161,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		    		},{
 						xtype: 'textfield',
 				        width: 250,
-				        id: 'tfApplicationOwnerW'//value: 'Pepping, Simon (ERCVA)',
-//				        readOnly: true
+				        id: 'tfApplicationOwnerW',//value: 'Pepping, Simon (ERCVA)',
+				        readOnly: true
 				    },{
 						xtype: 'hidden',
 				        id: 'tfApplicationOwnerWHidden' //value: 'ERCVA'
@@ -196,8 +196,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		    		},{
 						xtype: 'textfield',
 				        width: 250,
-				        id: 'tfApplicationStewardW'
-//				        readOnly: true
+				        id: 'tfApplicationStewardW',
+				        readOnly: true
 				    },{
 						xtype: 'hidden',
 				        id: 'tfApplicationStewardWHidden'
@@ -231,8 +231,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		    		},{
 						xtype: 'textfield',
 				        width: 250,
-				        id: 'tfApplicationOwnerDelegateW'//value: 'Pepping, Simon (ERCVA)',
-//				        readOnly: true
+				        id: 'tfApplicationOwnerDelegateW',//value: 'Pepping, Simon (ERCVA)',
+				        readOnly: true
 				    },{
 						xtype: 'hidden',
 				        id: 'tfApplicationOwnerDelegateWHidden'//,value: 'ERCVA'
@@ -356,6 +356,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').reset();
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerWHidden').reset();
+		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW').reset();
+		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').reset();
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW').reset();
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateWHidden').reset();
 		

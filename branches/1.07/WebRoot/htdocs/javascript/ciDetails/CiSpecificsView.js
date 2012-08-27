@@ -350,8 +350,10 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
     	this.fireEvent('ciChange', this, combo, record);
     },
 	onApplicationCat2BeforeSelect: function(combo, record, index) {
+		return this.checkSapName(record);		
+		
+		/*
 		var applicationName = AIR.AirApplicationManager.getAppDetail().applicationName;
-//		var cat2Id = record.get('id');
 		
 		var isSapCat2 = record.get('guiSAPNameWizard') === 'Y';//this.getComponent('applicationCat2').getStore().getById(cat2Id).get('guiSAPNameWizard') === 'Y';//AC.CI_CAT1_SAP_CAT2_ID.indexOf(cat2Id) > -1;
 		var isSapName = applicationName.match(AC.REGEX_SAP_NAME) != null;
@@ -370,13 +372,45 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 			//error message || fire AIR action to display error on bottom toolbar
 		
-		return isValidCat2;
+		return isValidCat2;*/
     },
     onApplicationCat2Change: function(combo, newValue, oldValue) {
-    	if(this.isComboValueValid(combo, newValue, oldValue))
-    		this.fireEvent('ciChange', this, combo, newValue);
+    	if(this.isComboValueValid(combo, newValue, oldValue)) {
+//    		var record = combo.getStore().getById(newValue);
+//    		if(!record)
+//    			combo.getStore().getAt(combo.getStore().findExact('text', newValue));
+    		
+    		var record = combo.getStore().getById(newValue) || combo.getStore().getAt(combo.getStore().findExact('text', newValue));
+    		
+    		if(record)
+    			if(this.checkSapName(record))
+    				this.fireEvent('ciChange', this, combo, newValue);
+    			else
+    				combo.setValue(oldValue);//record.get('id')
+    	}
     },
-	
+    
+    checkSapName: function(record) {
+    	var applicationName = AIR.AirApplicationManager.getAppDetail().applicationName;
+    	
+		var isSapCat2 = record.get('guiSAPNameWizard') === 'Y';//this.getComponent('applicationCat2').getStore().getById(cat2Id).get('guiSAPNameWizard') === 'Y';//AC.CI_CAT1_SAP_CAT2_ID.indexOf(cat2Id) > -1;
+		var isSapName = applicationName.match(AC.REGEX_SAP_NAME) != null;
+		
+		var isValidCat2 = (isSapCat2 && !isSapName) || (!isSapCat2 && isSapName) ? false : true;
+		
+		if(!isValidCat2) {
+			var data = {
+				airErrorId: AC.AIR_ERROR_INVALID_CAT2_SAP,
+				applicationName: applicationName,
+				applicationCat1: AIR.AirApplicationManager.getAppDetail().applicationCat1Txt,
+				isSapApp: !isSapCat2 && isSapName,
+				applicationCat2: record.get('text')
+			};
+			this.fireEvent('airAction', this, 'airError', data);
+		}
+		
+		return isValidCat2;
+    },
     
     onLifecycleStatusSelect: function(combo, record, index) {
     	this.fireEvent('ciChange', this, combo, record);

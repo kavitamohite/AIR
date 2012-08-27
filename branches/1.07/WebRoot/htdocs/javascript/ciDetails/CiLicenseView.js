@@ -638,21 +638,6 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 				tfApplicationUsingRegions.setValue(licenseUsingRegions.replace(/,/g,'\n'));//data.licenseUsingRegions.replace(',','\n')
 			}
 		}
-		
-		
-		
-//		var lvApplicationUsingRegions = this.getComponent('licenseusingregions').getComponent('applicationUsingRegions');
-//		
-//		lvApplicationUsingRegions.enable();
-//		lvApplicationUsingRegions.clearSelections(true);
-//		
-//		selectedUsingRegions = data.licenseUsingRegions;
-//		
-//		lvApplicationUsingRegions.clearSelections(true);
-//		
-//		Ext.each(selectedUsingRegions.split(','), function(item, index, all) {
-//			lvApplicationUsingRegions.select(lvApplicationUsingRegions.store.getById(item), true, true);
-//		});
 	},
 	
 	updateAccessMode: function(data) {

@@ -459,7 +459,7 @@ AIR.AirApplicationManager = function() {
 		getDefaultCurrency: function() {
 			var itsecUserOptionListStore = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
 			var index = itsecUserOptionListStore.findExact('itsecUserOptionName', 'AIR_CURRENCY');
-			var defaultCurrencyId = itsecUserOptionListStore.getAt(index).data.itsecUserOptionValue;//index > -1 ? itsecUserOptionListStore.getAt(index).data.itsecUserOptionValue : '';
+			var defaultCurrencyId = index > -1 ? itsecUserOptionListStore.getAt(index).data.itsecUserOptionValue : '';
 			
 //			var defaultCurrencyId = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore').data.items[0].data.itsecUserOptionValue;
 			return defaultCurrencyId;

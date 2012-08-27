@@ -367,6 +367,19 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 		dynamicWindow.show();
 	},
 	
+	reset: function() {
+		this.getLayout().setActiveItem(0);
+		
+		var grid = this.getComponent('pCopyFromSearchCard').getComponent('CiSearchWizzardResultGrid');
+		grid.getStore().removeAll();
+		
+		var bCopyFromNext = this.getComponent('pCopyFromSearchCard').getComponent('pCopyFromCiSearch').getComponent('bCopyFromNext');
+		bCopyFromNext.hide();
+		
+		var tfCopyFromCiSearch = this.getComponent('pCopyFromSearchCard').getComponent('pCopyFromCiSearch').getComponent('tfCopyFromCiSearch');
+		tfCopyFromCiSearch.reset();
+	},
+	
 	updateLabels: function(labels) {
 		this.setTitle(labels.ciCopyFromViewTitle);
 		

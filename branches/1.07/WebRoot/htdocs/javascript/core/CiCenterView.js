@@ -412,7 +412,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					ciCreatePagesView.getLayout().setActiveItem('CiCopyFromView');
 					
 					var ciCopyFromView = ciCreatePagesView.getComponent('CiCopyFromView');
-					ciCopyFromView.getLayout().setActiveItem(0);
+					ciCopyFromView.reset();
+//					ciCopyFromView.getLayout().setActiveItem(0);
 
 					if(options && options.callback)
 						options.callback();
