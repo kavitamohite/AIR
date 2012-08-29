@@ -221,7 +221,7 @@ public class ItsecHbn {
 						dto.setProbOccurenceText(rsSet.getString("PROB_OCCURENCE_T"));
 						dto.setDamageText(rsSet.getString("DAMAGE_T"));
 						dto.setMitigationPotentialText(rsSet.getString("MITIGATION_POTENTIAL_T"));
-						dto.setRiskAnalysesAsFreetext(rsSet.getLong("RISK_ANALYSIS_AS_FREETEXT"));
+						dto.setRiskAnalysisAsFreetext(rsSet.getLong("RISK_ANALYSIS_AS_FREETEXT"));
 						dto.setGapEndDateIncreased(rsSet.getLong("GAP_END_DATE_INCREASED"));
 						dto.setCurrency(rsSet.getString("CURRENCY"));
 						
@@ -336,7 +336,7 @@ public class ItsecHbn {
 						dto.setProbOccurenceText(rsSet.getString("PROB_OCCURENCE_T"));
 						dto.setDamageText(rsSet.getString("DAMAGE_T"));
 						dto.setMitigationPotentialText(rsSet.getString("MITIGATION_POTENTIAL_T"));
-						dto.setRiskAnalysesAsFreetext(rsSet.getLong("RISK_ANALYSIS_AS_FREETEXT"));
+						dto.setRiskAnalysisAsFreetext(rsSet.getLong("RISK_ANALYSIS_AS_FREETEXT"));
 						dto.setGapEndDateIncreased(rsSet.getLong("GAP_END_DATE_INCREASED"));
 						dto.setCurrency(rsSet.getString("CURRENCY"));
 						

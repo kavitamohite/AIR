@@ -3208,7 +3208,7 @@ AIR.AirStoreFactory = function() {
 		
 		createItsecMassnahmeDetailStore: function() {
 			var itsecMassnahmeDetailRecord = Ext.data.Record.create([
-		        'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapMeasure','gapPriority','gapEndDate','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency'
+		        'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency'
 		    ]);
 		
 		    var itsecitsecMassnahmeDetailReader = new Ext.data.XmlReader({
@@ -3220,7 +3220,7 @@ AIR.AirStoreFactory = function() {
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: [ 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapMeasure','gapPriority','gapEndDate','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency' ],
+		      	fields: [ 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency' ],
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
 		      		url: webcontext + '/ItsecMassnahmenWSPort',

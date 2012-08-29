@@ -74,7 +74,7 @@ public class ItsecMassnahmeStatusHbn {
 			dto.setProbOccurenceText(status.getProbOccucrenceT());
 			dto.setDamageText(status.getDamageT());
 			dto.setMitigationPotentialText(status.getMitigationPotentialT());
-			dto.setRiskAnalysesAsFreetext(status.getRiskAnalysesAsFreetext());
+			dto.setRiskAnalysisAsFreetext(status.getRiskAnalysisAsFreetext());
 			dto.setGapEndDateIncreased(status.getGapEndDateIncreased());
 			dto.setCurrency(status.getCurrency());
 			dto.setTemplateException(status.getTemplateException());
@@ -160,7 +160,7 @@ public class ItsecMassnahmeStatusHbn {
 				status.setProbOccucrenceT(dto.getProbOccurenceText());
 				status.setDamageT(dto.getDamageText());
 				status.setMitigationPotentialT(dto.getMitigationPotentialText());
-				status.setRiskAnalysesAsFreetext(dto.getRiskAnalysesAsFreetext());
+				status.setRiskAnalysisAsFreetext(dto.getRiskAnalysisAsFreetext());
 				status.setGapEndDateIncreased(dto.getGapEndDateIncreased());
 				status.setCurrency(dto.getCurrency());
 				status.setTemplateException(dto.getTemplateException());

@@ -53,7 +53,7 @@ public class ItsecMassnahmeDetailDTO {
 	private String signee;
 	private Long gapClassApproved;//String
 	
-	private Long riskAnalysesAsFreetext;
+	private Long riskAnalysisAsFreetext;
 	private Long gapEndDateIncreased;
 	private String currency;
 
@@ -276,12 +276,12 @@ public class ItsecMassnahmeDetailDTO {
 		this.mitigationPotentialText = mitigationPotentialText;
 	}
 
-	public Long getRiskAnalysesAsFreetext() {
-		return riskAnalysesAsFreetext;
+	public Long getRiskAnalysisAsFreetext() {
+		return riskAnalysisAsFreetext;
 	}
 
-	public void setRiskAnalysesAsFreetext(Long riskAnalysesAsFreetext) {
-		this.riskAnalysesAsFreetext = riskAnalysesAsFreetext;
+	public void setRiskAnalysisAsFreetext(Long riskAnalysisAsFreetext) {
+		this.riskAnalysisAsFreetext = riskAnalysisAsFreetext;
 	}
 
 	public Long getGapEndDateIncreased() {

@@ -40,7 +40,7 @@ public class ItsecMassnahmeStatus implements Serializable {
 	private String probOccucrenceT;
 	private String damageT;
 	private String mitigationPotentialT;
-	private Long riskAnalysesAsFreetext;
+	private Long riskAnalysisAsFreetext;
 	private Long gapEndDateIncreased;
 	private String currency;
 	private Long templateException;
@@ -309,12 +309,12 @@ public class ItsecMassnahmeStatus implements Serializable {
 	}
 
 	@Column(name = "RISK_ANALYSIS_AS_FREETEXT")
-	public Long getRiskAnalysesAsFreetext() {
-		return riskAnalysesAsFreetext;
+	public Long getRiskAnalysisAsFreetext() {
+		return riskAnalysisAsFreetext;
 	}
 
-	public void setRiskAnalysesAsFreetext(Long riskAnalysesAsFreetext) {
-		this.riskAnalysesAsFreetext = riskAnalysesAsFreetext;
+	public void setRiskAnalysisAsFreetext(Long riskAnalysisAsFreetext) {
+		this.riskAnalysisAsFreetext = riskAnalysisAsFreetext;
 	}
 
 	@Column(name = "GAP_END_DATE_INCREASED")
