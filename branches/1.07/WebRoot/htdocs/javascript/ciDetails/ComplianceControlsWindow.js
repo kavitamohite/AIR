@@ -1063,7 +1063,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		//wenn CompliantStatus geändert ist, die gapClass (-1) zurückzusetzen, auch wenn die Massnahme zuvor ein CompliantStatus hatte,
 		//der eine gapClass ermöglichte.
-		this.updateGapRelevance(record.data.itsecMassnahmenWertId, '-1');
+		var gapClass = this.editedMassnahmen[this.previousSelection].gapPriority;
+		this.updateGapRelevance(record.data.itsecMassnahmenWertId, gapClass);//'-1'
 		
 		this.onMassnahmeChange();
 	},
@@ -1083,8 +1084,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var newIndex = grid.getStore().indexOfId(itsecMassnahmenStatusId);
 		
 		this.editedMassnahmen[this.previousSelection].statusId = parseInt(combo.getValue());// record.data.id;
-		this.editedMassnahmen[newIndex] = this.editedMassnahmen[this.previousSelection];
+		var massnahme = this.editedMassnahmen[this.previousSelection];
 		delete this.editedMassnahmen[this.previousSelection];
+		this.editedMassnahmen[newIndex] = massnahme;
 		this.previousSelection = newIndex;
 	},
 	
@@ -1130,7 +1132,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					fsGap.setVisible(true);
 					break;
 				default:
-					var massnahme = /*this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] :*/ this.loadedMassnahme;
+					var massnahme = /*this.editedMassnahmen[this.getCurrentSelection()]  this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] :*/ this.loadedMassnahme;
 					this.deleteGapValues(massnahme, compliantStatusId);
 					this.deleteRiskAnalysisAndMgmtValues(massnahme, '-1');
 					
@@ -1150,8 +1152,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				this.getComponent('pLayout').getComponent('pMassnahmeDetails').doLayout();//true, true
 		}
 		
-		if(gapClassId.length == 0)
-			gapClassId = '-1';
+//		if(gapClassId.length == 0)
+//			gapClassId = '-1';
 		
 		
 		this.updateRiskAnalysisAndMgmt(gapClassId, compliantStatusId);
@@ -1322,15 +1324,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	//Hier this.editedMassnahmen[i].mitigationPotential und Datumsfelder/-werte this.editedMassnahmen[i].dateOfApproval,targetDate
 	//Zusatz: eine Statusbar mit Meldung welche editierten Massnahmen fehlerhafte Werte enthalten, z.B. Ident: Masnhamen 06.004, 11.651 enthalten Fehler
 	checkDataValid: function() {
-		//A)
-		//Fehler: wenn erste Massnahme gespeichert wird, werden danch keine Ändeurngen gesichert weil diese Methode false zurückgibt. 
-		//Neue Werte derselben Massnahme würden erst gespeichert, wenn true zurückgegeben wird. Henne Ei Problem
-//		if(!this.editedMassnahmen[this.previousSelection])
-			this.saveMassnahme(this.previousSelection);
+		//gerade gmachte Änderungen der aktuell ausgewählten Massnahme nach der letzen und vor der nächsten Massnahmenauswahl sichern
+		this.saveMassnahme(this.getCurrentSelection());
 		
 		
 		var invalidMassnahmen = [];
-//		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 		
 		for(var key in this.editedMassnahmen) {
 			var massnahme = this.editedMassnahmen[key];
@@ -1348,8 +1346,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				}
 				
 				if(massnahme.gapPriority == '4' || massnahme.gapPriority == '5') {
-					var chbRiskAnalysisType = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisType').getComponent('chbRiskAnalysisType');
-					var isChecked = chbRiskAnalysisType.getValue();
+//					var chbRiskAnalysisType = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisType').getComponent('chbRiskAnalysisType');
+					var isChecked = massnahme.riskAnalysisAsFreetext == '-1' ? true : false;//chbRiskAnalysisType.getValue();
 					
 					if(!isChecked) {
 						if(massnahme.probOccurence.length === 0 || massnahme.damage.length === 0 || massnahme.currency.length === 0 || 
@@ -1390,7 +1388,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			}*/
 		}
 		
-		//outline controls with errors
+
 		var sInvalidMassnahmen = '';
 		
 		if(invalidMassnahmen.length > 0) {
@@ -1420,6 +1418,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		var dfTargetDate = fsGapElimination.getComponent('pTargetDate').getComponent('dfTargetDate');
 //		
 //		return tfMitigationPotential.isValid() && dfDateOfApproval.isValid() && dfTargetDate.isValid();
+	},
+	
+	getCurrentSelection: function() {
+		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
+		var rowIndex = grid.getStore().indexOfId(grid.getSelectionModel().getSelected().get('itsecMassnahmenStatusId'));
+		
+		return rowIndex;
 	},
 	
 	addInvalidMassnahme: function(invalidMassnahmen, massnahme) {
@@ -1712,7 +1717,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var cbCompliantStatus = fsComplianceStatement.getComponent('pCompliantStatus').getComponent('cbCompliantStatus');
 		
 		this.updateRiskAnalysisAndMgmt(combo.getValue(), cbCompliantStatus.getValue());
-		var massnahme = this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] : this.loadedMassnahme;
+		var massnahme = /*this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] :*/ this.loadedMassnahme;
 		this.deleteRiskAnalysisAndMgmtValues(massnahme, combo.getValue());
 		
 		this.onMassnahmeChange();
