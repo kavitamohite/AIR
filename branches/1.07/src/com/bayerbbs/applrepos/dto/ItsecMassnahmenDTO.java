@@ -13,6 +13,7 @@ public class ItsecMassnahmenDTO {
 	private Long massnahmeGstoolId;
 	private Long zobId;
 	
+	private String massnahmeLink;
 	
 	
 	public Long getItsecMassnahmenStatusId() {
@@ -56,6 +57,12 @@ public class ItsecMassnahmenDTO {
 	}
 	public void setStatusWertId(Long statusWertId) {
 		this.statusWertId = statusWertId;
+	}
+	public String getMassnahmeLink() {
+		return massnahmeLink;
+	}
+	public void setMassnahmeLink(String massnahmeLink) {
+		this.massnahmeLink = massnahmeLink;
 	}
 	
 }

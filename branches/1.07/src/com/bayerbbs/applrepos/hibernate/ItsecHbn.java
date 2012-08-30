@@ -80,6 +80,7 @@ public class ItsecHbn {
 						dto.setStatusWertId(rsSet.getLong("STATUS_WERT_ID"));
 						dto.setMassnahmeGstoolId(rsSet.getLong("MASSNAHME_GSTOOLID"));
 						dto.setZobId(rsSet.getLong("ZOB_ID"));
+						dto.setMassnahmeLink(rsSet.getString("Link"));
 						listDTO.add(dto);
 					}
 				}
