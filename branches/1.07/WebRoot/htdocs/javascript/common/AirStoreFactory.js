@@ -1531,6 +1531,10 @@ AIR.AirStoreFactory = function() {
 			        {name: 'complianceWindowRiskMitigation'},
 			        {name: 'complianceWindowSignee'},
 			        {name: 'complianceWindowDateOfApproval'},
+			        {name: 'complianceRiskAnalysisAndMgmtTypeSelectTitle'},
+			        {name: 'complianceRiskAnalysisAndMgmtTypeSelectMessage'},
+			        {name: 'complianceRiskAnalysisAndMgmtTypeFreeText'},
+			        {name: 'complianceRiskAnalysisAndMgmtTypeNonFreeText'},
 			        
 			        
 			        {name: 'CiConnectionsViewTitle'},

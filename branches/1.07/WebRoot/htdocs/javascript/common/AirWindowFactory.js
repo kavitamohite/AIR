@@ -272,6 +272,7 @@ AIR.AirWindowFactory = function() {//{//
 					
 					break;
 				case 'CONFIRM_ITSEC_GROUP_SAVE':
+				case 'RISK_ANALYSIS_AND_MGMT_TYPE_SELECT':
 				case 'GENERIC_YES_NO':
 					var windowTitle = title;
 					var windowText = message;
@@ -280,14 +281,20 @@ AIR.AirWindowFactory = function() {//{//
 					var buttonConfigs = [{
 						text: labels.general_yes,
 						handler: function() {
-							var callback = callbackMap['yes'];
+							var callback = callbackMap.yes;
 							callback();
 							dynamicWindow.close();
 						}
 					}, {
 						text: labels.general_no,
 						handler: function() {
-							dynamicWindow.close();
+							var callback = callbackMap.no;
+							if(callback) {
+								callback();
+//								dynamicWindow.close();
+							} else {
+								dynamicWindow.close();
+							}
 						}
 					}];
 					break;

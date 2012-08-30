@@ -1428,9 +1428,15 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	addInvalidMassnahme: function(invalidMassnahmen, massnahme) {
-		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
-		var ident = grid.getStore().getById(massnahme.itsecMassnahmenStatusId).data.ident;
+//		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
+//		var ident = grid.getStore().getById(massnahme.itsecMassnahmenStatusId).data.ident;
+		var ident = this.getMassnahmeHeaderValueByAttr(massnahme, 'ident');
 		invalidMassnahmen.push(ident);
+	},
+	getMassnahmeHeaderValueByAttr: function(massnahme, attr) {
+		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
+		var attrValue = grid.getStore().getById(massnahme.itsecMassnahmenStatusId).data[attr];
+		return attrValue;
 	},
 	
 	
@@ -1701,15 +1707,52 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	//-----------------------------------------------------------------------------------------------------------------------
 	onRiskAnalysisTypeCheck: function(checkbox, isChecked) {
-		var pRiskAnalysisAndMgmtCard = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
+		var fsRiskAnalysisAndMgmt = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt');
 		
-		if(isChecked) {
-			pRiskAnalysisAndMgmtCard.getLayout().setActiveItem('pRiskAnalysisAndMgmtFreeText');
-		} else {
-			pRiskAnalysisAndMgmtCard.getLayout().setActiveItem('pRiskAnalysisAndMgmtNonFreeText');
-		}
+		var massnahme = /*this.editedMassnahmen[this.getCurrentSelection()] ||*/ this.loadedMassnahme;
 		
-		this.onMassnahmeChange();
+		var yesCallback = function() {
+			this.deleteRiskAnalysisAndMgmtDamageData(massnahme, isChecked);
+			
+			if(isChecked) {
+				this.clearPanelItemValues(fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard').getComponent('pRiskAnalysisAndMgmtNonFreeText'));
+				fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard').getLayout().setActiveItem('pRiskAnalysisAndMgmtFreeText');
+			} else {
+				this.clearPanelItemValues(fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard').getComponent('pRiskAnalysisAndMgmtFreeText'));
+				fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard').getLayout().setActiveItem('pRiskAnalysisAndMgmtNonFreeText');
+			}
+			
+			this.onMassnahmeChange();
+		};
+		
+		var noCallback = function() {
+			fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisType').getComponent('chbRiskAnalysisType').el.dom.checked = !isChecked;
+			fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisType').getComponent('chbRiskAnalysisType').checked = !isChecked;
+			riskAnalysisAndMgmtTypeSelectWindow.close();
+		};
+		
+		var callbackMap = {
+			yes: yesCallback.createDelegate(this),
+			no: noCallback.createDelegate(this)
+		};
+		
+		var labels = AIR.AirApplicationManager.getLabels();
+		var complianceRiskAnalysisAndMgmtTypeSelectMessage = labels.complianceRiskAnalysisAndMgmtTypeSelectMessage.replace('{0}', isChecked ? labels.complianceRiskAnalysisAndMgmtTypeNonFreeText : labels.complianceRiskAnalysisAndMgmtTypeFreeText).replace('{1}', this.getMassnahmeHeaderValueByAttr(massnahme, 'ident'));
+		var complianceRiskAnalysisAndMgmtTypeSelectTitle = labels.complianceRiskAnalysisAndMgmtTypeSelectTitle;
+		
+		var riskAnalysisAndMgmtTypeSelectWindow = AIR.AirWindowFactory.createDynamicMessageWindow('RISK_ANALYSIS_AND_MGMT_TYPE_SELECT', callbackMap, complianceRiskAnalysisAndMgmtTypeSelectMessage, complianceRiskAnalysisAndMgmtTypeSelectTitle);
+		riskAnalysisAndMgmtTypeSelectWindow.show();
+		
+		
+//		var pRiskAnalysisAndMgmtCard = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
+//		
+//		if(isChecked) {
+//			pRiskAnalysisAndMgmtCard.getLayout().setActiveItem('pRiskAnalysisAndMgmtFreeText');
+//		} else {
+//			pRiskAnalysisAndMgmtCard.getLayout().setActiveItem('pRiskAnalysisAndMgmtNonFreeText');
+//		}
+//		
+//		this.onMassnahmeChange();
 	},
 	
 	onGapClassSelect: function(combo, record, index) {
@@ -1751,16 +1794,18 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			case '2':
 			case '3':
 				delete massnahme.riskAnalysisAsFreetext;
-				delete massnahme.probOccurence;
-				delete massnahme.damage;
-				delete massnahme.currency;
-				delete massnahme.mitigationPotential;
-				delete massnahme.expense;
 				
-				delete massnahme.probOccurenceText;
-				delete massnahme.damageText;
-				delete massnahme.mitigationPotentialText;
-				delete massnahme.expenseText;
+//				delete massnahme.currency;
+//				delete massnahme.probOccurence;
+//				delete massnahme.damage;
+//				delete massnahme.mitigationPotential;
+//				delete massnahme.expense;
+//				
+//				delete massnahme.probOccurenceText;
+//				delete massnahme.damageText;
+//				delete massnahme.mitigationPotentialText;
+//				delete massnahme.expenseText;
+				this.deleteRiskAnalysisAndMgmtDamageData(massnahme);
 				
 				delete massnahme.signee;
 				delete massnahme.gapClassApproved;
@@ -1771,6 +1816,23 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			default: break;
 		}
 	},
+	
+	deleteRiskAnalysisAndMgmtDamageData: function(massnahme, isChecked) {
+		if(isChecked !== true) {
+			delete massnahme.probOccurenceText;
+			delete massnahme.damageText;
+			delete massnahme.mitigationPotentialText;
+			delete massnahme.expenseText;
+		}
+		if(isChecked !== false) {
+			delete massnahme.currency;
+			delete massnahme.probOccurence;
+			delete massnahme.damage;
+			delete massnahme.mitigationPotential;
+			delete massnahme.expense;
+		}
+	},
+	
 
 	updateRiskAnalysisAndMgmt: function(gapClassId, compliantStatusId) {
 		var fsRiskAnalysisAndMgmt = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt');//.getComponent('pRiskAnalysisAndMgmtDetail');

@@ -429,7 +429,11 @@ whereas "External" manages only the references to an compliance management outsi
 		<complianceWindowRiskMitigation>Risk mitigation: expense per year</complianceWindowRiskMitigation>
 		<complianceWindowSignee>Signee</complianceWindowSignee>
 		<complianceWindowDateOfApproval>Date of approval</complianceWindowDateOfApproval>
-		
+		<complianceRiskAnalysisAndMgmtTypeSelectTitle>Switch risk analysis and management type</complianceRiskAnalysisAndMgmtTypeSelectTitle>
+		<complianceRiskAnalysisAndMgmtTypeSelectMessage>Switching means to loose the risk analysis and management {0} data of {1}. Are you sure?</complianceRiskAnalysisAndMgmtTypeSelectMessage>
+		<complianceRiskAnalysisAndMgmtTypeFreeText>free text</complianceRiskAnalysisAndMgmtTypeFreeText>
+		<complianceRiskAnalysisAndMgmtTypeNonFreeText>non free text</complianceRiskAnalysisAndMgmtTypeNonFreeText>
+
 		
 		<CiConnectionsViewTitle>Relationships</CiConnectionsViewTitle>
 		<CiConnectionsViewUpStreamConnections>UpStream</CiConnectionsViewUpStreamConnections>

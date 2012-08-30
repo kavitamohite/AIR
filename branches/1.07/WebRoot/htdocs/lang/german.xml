@@ -430,7 +430,10 @@
 		<complianceWindowRiskMitigation>Risikominderung: Kosten pro Jahr</complianceWindowRiskMitigation>
 		<complianceWindowSignee>Unterzeichner</complianceWindowSignee>
 		<complianceWindowDateOfApproval>Genehmigungsdatum</complianceWindowDateOfApproval>
-		
+		<complianceRiskAnalysisAndMgmtTypeSelectTitle>Wechsel des Risk Analysis and Management Typs</complianceRiskAnalysisAndMgmtTypeSelectTitle>
+		<complianceRiskAnalysisAndMgmtTypeSelectMessage>Wechseln hat den Verlust der Risk Analysis and Management {0} Daten von {1} zur Folge. Sind Sie sicher?</complianceRiskAnalysisAndMgmtTypeSelectMessage>
+		<complianceRiskAnalysisAndMgmtTypeFreeText>Freitext</complianceRiskAnalysisAndMgmtTypeFreeText>
+		<complianceRiskAnalysisAndMgmtTypeNonFreeText>nicht Freitext</complianceRiskAnalysisAndMgmtTypeNonFreeText>
 				
 		<CiConnectionsViewTitle>Verknüpfungen</CiConnectionsViewTitle>
 		<CiConnectionsViewUpStreamConnections>UpStream</CiConnectionsViewUpStreamConnections>
