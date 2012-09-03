@@ -402,9 +402,10 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			var data = {
 				airErrorId: AC.AIR_ERROR_INVALID_CAT2_SAP,
 				applicationName: applicationName,
-				applicationCat1: AIR.AirApplicationManager.getAppDetail().applicationCat1Txt,
+//				applicationCat1: AIR.AirApplicationManager.getAppDetail().applicationCat1Txt,
 				isSapApp: !isSapCat2 && isSapName,
-				applicationCat2: record.get('text')
+				sapApplicationCat2: isSapCat2 ? record.get('text') : AIR.AirApplicationManager.getAppDetail().applicationCat2Txt,
+				applicationCat2: isSapCat2 ? AIR.AirApplicationManager.getAppDetail().applicationCat2Txt : record.get('text')
 			};
 			this.fireEvent('airAction', this, 'airError', data);
 		}
@@ -533,6 +534,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			applicationCat1Id: data.applicationCat1Id
 		};
 		cbApplicationCat2.filterByData(filterData);
+		cbApplicationCat2.getStore().sort('text', 'ASC');
 		
 		if(data.applicationCat2 !== '0') cbApplicationCat2.setValue(data.applicationCat2);
 		else cbApplicationCat2.clearValue();

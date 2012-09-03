@@ -123,8 +123,11 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		var errorData = [];
 		
 		if(this.isSAPApplication()) {
-			if(params.applicationName.match(AC.REGEX_SAP_NAME) == null)
-				errorData.push(labels.wizardapplicationName);
+			if(params.applicationName.match(AC.REGEX_SAP_NAME) == null) {
+				var sapNameLabel = labels.wizardapplicationNameSAP + ' (' + labels.wizardapplicationNameSAP1 + ', ' + labels.wizardapplicationNameSAP2 + ', ' + labels.wizardapplicationNameSAP3 + ')';
+				errorData.push(sapNameLabel);
+//				errorData.push(labels.wizardapplicationName);
+			}
 		} else {
 			if(params.applicationName.length === 0)
 				errorData.push(labels.wizardapplicationName);

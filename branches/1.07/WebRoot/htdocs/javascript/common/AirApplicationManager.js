@@ -327,10 +327,14 @@ AIR.AirApplicationManager = function() {
 					
 					switch(data.airErrorId) {
 						case AC.AIR_ERROR_INVALID_CAT2_SAP:
-							message = this.getLabels().ToolbarInvalidCat2SAP;
-							message = message.replace('{0}', data.applicationCat1).replace('{1}', data.applicationName).replace('{3}', data.applicationCat2);
-							message = message.replace('{2}', data.isSapApp ? this.getLabels().indefinite_article : this.getLabels().indefinite_article_no);
-							//data.applicationCat1 + ' ' + data.applicationName + ' is no SAP application. Therefore, the IT Category ' + data.applicationCat2 + ' is not valid';
+							message = data.isSapApp ? this.getLabels().SAPNameToStandardNameInvalid : this.getLabels().StandardNameToSAPNameInvalid;
+							message = message.replace('{0}', data.applicationName).replace('{1}', data.sapApplicationCat2);//message.replace('{0}', data.applicationCat1).replace('{1}', data.applicationName);
+							if(data.isSapApp)
+								message = message.replace('{2}', data.applicationCat2);
+//							message = this.getLabels().ToolbarInvalidCat2SAP;
+//							message = message.replace('{0}', data.applicationCat1).replace('{1}', data.applicationName).replace('{3}', data.applicationCat2);
+//							message = message.replace('{2}', data.isSapApp ? this.getLabels().indefinite_article : this.getLabels().indefinite_article_no);
+//							//data.applicationCat1 + ' ' + data.applicationName + ' is no SAP application. Therefore, the IT Category ' + data.applicationCat2 + ' is not valid';
 							break;
 						case AC.AIR_ERROR_INVALID_TEMPLATE:
 							message = this.getLabels().ToolbarInvalidTemplate;

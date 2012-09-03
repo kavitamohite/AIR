@@ -186,7 +186,8 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 		grid.getColumnModel().setColumnHeader(4, labels.searchResultResponsible);
 		grid.getColumnModel().setColumnHeader(5, labels.searchResultSubResponsible);
 		grid.getColumnModel().setColumnHeader(6, labels.searchResultAppOwner);
-		grid.getColumnModel().setColumnHeader(7, labels.searchResultAppOwnerDelegate);
+		grid.getColumnModel().setColumnHeader(7, labels.searchResultAppSteward);
+		grid.getColumnModel().setColumnHeader(8, labels.searchResultAppOwnerDelegate);
 	},
 	
 	reset: function() {

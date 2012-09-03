@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,6 +11,12 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 	private static SessionFactory sessionFactory;
+	
+	public static final int DATASOURCE_ID_GSTOOL = 0x4711;
+	public static final int DATASOURCE_ID_TRANSBASE = 0x0815;
+	
+	private static final Map<Integer, SessionFactory> sessionFactories = new HashMap<Integer, SessionFactory>();
+	
 
 	static {
 		try {
@@ -22,6 +31,35 @@ public class HibernateUtil {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	public static SessionFactory getSessionFactory(int dataSourceId) {
+		SessionFactory sf = sessionFactories.get(dataSourceId);
+		
+		if(sf == null) {
+			Configuration config = null;
+			
+			switch(dataSourceId) {
+				case DATASOURCE_ID_GSTOOL:
+					config = new AnnotationConfiguration().configure("hibernate.gstool.cfg.xml");
+					break;
+				case DATASOURCE_ID_TRANSBASE:
+					config = new AnnotationConfiguration().configure();
+					break;
+				default: break;
+			}
+			
+			sf = config.buildSessionFactory();
+			sessionFactories.put(dataSourceId, sf);
+		}
+		
+		return sf;
+	}
+	
+	public static Session getSession(int dataSourceId) {
+		Session session = getSessionFactory(dataSourceId).openSession();
+		return session;
+	}
+	
 
 	public static SessionFactory getSessionFactory() {
 		if (null == sessionFactory) {

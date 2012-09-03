@@ -102,6 +102,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 			applicationCat1Id: cbAppCat1W.getValue()
 		};
 		cbAppCat2W.filterByData(filterData);
+		cbAppCat2W.getStore().sort('text', 'ASC');
 		
 		cbAppCat2W.setValue(AC.APP_CAT2_DEFAULT_UNKOWN);
 		this.switchNameFields(false);

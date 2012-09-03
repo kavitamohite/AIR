@@ -123,6 +123,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							
 							items: [{
 								icon: 'images/Info_16x16.png'
+//								handler: function(grid, rowIndex, colIndex) {
+//									var x;
+//								}
 							}
 //							{
 //								getClass: function(v, meta, record) {
@@ -1702,7 +1705,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	onMassnahmeInfoClick: function(column, grid, rowIndex, event) {
 		var massnahme = grid.getStore().getAt(rowIndex);
-		var x;
+		
+		window.open('/AIR/massnbeschreibung?massnahmeGstoolId='+massnahme.get('massnahmeGstoolId'));
 	},
 	
 	//-----------------------------------------------------------------------------------------------------------------------

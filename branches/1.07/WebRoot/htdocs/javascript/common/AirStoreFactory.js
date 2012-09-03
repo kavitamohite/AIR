@@ -1564,6 +1564,9 @@ AIR.AirStoreFactory = function() {
 			        {name: 'CiOuSearchViewOUSearchOwnerType'},
 			        
 			        {name: 'ToolbarInvalidCat2SAP'},
+			        {name: 'SAPNameToStandardNameInvalid'},
+			        {name: 'StandardNameToSAPNameInvalid'},
+			        
 					{name: 'ToolbarInvalidTemplate'},
 			        {name: 'dynamicWindowCIreactivationPrompt'}
 			    ]
@@ -3180,7 +3183,7 @@ AIR.AirStoreFactory = function() {
 		
 		createItsecMassnahmenStore: function() {//statusWertDisplayField
 			var itsecMassnahmenRecord = Ext.data.Record.create([
-		        'ident', 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'massnahmeTitel', 'statusWert', 'statusWertId', 'zobId'//'statusWert' statusWertDisplayField
+		        'ident', 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'massnahmeTitel', 'statusWert', 'statusWertId', 'zobId', 'massnahmeLink'//'statusWert' statusWertDisplayField
 		    ]);
 		
 		    var itsecMassnahmenReader = new Ext.data.XmlReader({
@@ -3192,7 +3195,7 @@ AIR.AirStoreFactory = function() {
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: [ 'ident', 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'massnahmeTitel', 'statusWert', 'statusWertId', 'zobId' ],//'statusWert' statusWertDisplayField
+		      	fields: [ 'ident', 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'massnahmeTitel', 'statusWert', 'statusWertId', 'zobId', 'massnahmeLink' ],//'statusWert' statusWertDisplayField
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
 		      		url: webcontext + '/ItsecMassnahmenWSPort',

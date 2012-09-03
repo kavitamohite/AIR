@@ -111,11 +111,24 @@
   		com.bayerbbs.applrepos.servlet.AirCiExcelExportServlet
   	</servlet-class>
   	<load-on-startup>1</load-on-startup>
-  </servlet>  
-  
+  </servlet>
   <servlet-mapping>
   	<servlet-name>AirCiExcelExportServlet</servlet-name>
   	<url-pattern>/excelexport</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+  	<description>GsToolMassnahmenBeschreibungServlet</description>
+  	<servlet-name>GsToolMassnahmenBeschreibungServlet</servlet-name>
+  	<servlet-class>
+  		com.bayerbbs.applrepos.servlet.GsToolMassnahmenBeschreibungServlet
+  	</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GsToolMassnahmenBeschreibungServlet</servlet-name>
+  	<url-pattern>/massnbeschreibung</url-pattern>
   </servlet-mapping>
   
   
