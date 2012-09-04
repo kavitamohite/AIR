@@ -26,6 +26,7 @@ import com.bayerbbs.applrepos.dto.LicenseTypeDTO;
 import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
 import com.bayerbbs.applrepos.dto.LoadClassDTO;
 import com.bayerbbs.applrepos.dto.OperationalStatusDTO;
+import com.bayerbbs.applrepos.dto.OrganisationalScopeDTO;
 import com.bayerbbs.applrepos.dto.PriorityLevelDTO;
 import com.bayerbbs.applrepos.dto.ProcessDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
@@ -113,6 +114,22 @@ public class AIRToolsWS {
 		};
 		
 		return gxpFlags; 
+	}
+	
+	public OrganisationalScopeDTO[] getOrganisationalScopeList() {
+		OrganisationalScopeDTO[] orgScopes = {
+				new OrganisationalScopeDTO(""),
+				new OrganisationalScopeDTO("BHC"),
+				new OrganisationalScopeDTO("BCS"),
+				new OrganisationalScopeDTO("BMS"),
+				new OrganisationalScopeDTO("BBS"),
+				new OrganisationalScopeDTO("BTS"),
+				new OrganisationalScopeDTO("CUR"),
+				new OrganisationalScopeDTO("BAG"),
+				new OrganisationalScopeDTO("Bayer Group")
+		};
+		
+		return orgScopes;
 	}
 	
 	public ServiceModelDTO[] getServiceModelList() {
