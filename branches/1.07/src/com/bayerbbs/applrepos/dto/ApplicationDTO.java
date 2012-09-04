@@ -203,7 +203,7 @@ public class ApplicationDTO implements Serializable {
 	
 	private String serviceModel;
 	
-	private String OrganisationalScope;
+	private String organisationalScope;
 	
 	
 	// compliance request
@@ -1411,11 +1411,11 @@ public class ApplicationDTO implements Serializable {
 	}
 
 	public String getOrganisationalScope() {
-		return OrganisationalScope;
+		return organisationalScope;
 	}
 
 	public void setOrganisationalScope(String organisationalScope) {
-		OrganisationalScope = organisationalScope;
+		this.organisationalScope = organisationalScope;
 	}
 	
 }
