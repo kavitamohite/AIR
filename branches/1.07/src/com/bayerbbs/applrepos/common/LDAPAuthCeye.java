@@ -21,13 +21,17 @@ public class LDAPAuthCeye {
 
 	private static final String LDAP_FACTORY = "com.sun.jndi.ldap.LdapCtxFactory";
 
-	private static final String MASCHINE_USER = "MXSNT";
-
+	// private static final String MASCHINE_USER = "MXSNT";
+	private static final String MASCHINE_USER = "CN=MXSNT,OU=Non-PersonalMailboxAccounts,OU=Resources,OU=_DomainOperations,DC=DE,DC=bayer,DC=cnb";
+	
+	
 	private static final String MASCHINE_USER_PWD = "isbb2007";
 
-	private static final String MX_SEARCH_CONTEXT = "ou=itaccounts,o=bayer";
+	// private static final String MX_SEARCH_CONTEXT = "ou=itaccounts,o=bayer"; // IBM LDAP Service
+	private static final String MX_SEARCH_CONTEXT = "";
 
-	private static final String ldapURL = "ldaps://ldaps.bayer-ag.com:636/";
+	// private static final String ldapURL = "ldaps://ldaps.bayer-ag.com:636/";	// IBM LDAP Service
+	private static final String ldapURL = "ldaps://bayer.cnb:3269/";			// Microsoft AD (über LDAP)
 
 	private Hashtable<String, String> env = new Hashtable<String, String>();
 
@@ -75,8 +79,10 @@ public class LDAPAuthCeye {
 			env.put(Context.INITIAL_CONTEXT_FACTORY, LDAP_FACTORY);
 			env.put(Context.PROVIDER_URL, ldapURL);
 
-			env.put(Context.SECURITY_PRINCIPAL, "uid=" + MASCHINE_USER + ","
-					+ MX_SEARCH_CONTEXT);
+//			env.put(Context.SECURITY_PRINCIPAL, "uid=" + MASCHINE_USER + ","
+//					+ MX_SEARCH_CONTEXT);	// IBM LDAP Service
+
+			env.put(Context.SECURITY_PRINCIPAL, MASCHINE_USER);
 			env.put(Context.SECURITY_CREDENTIALS, MASCHINE_USER_PWD);
 
 			// Create the initial context
@@ -84,8 +90,9 @@ public class LDAPAuthCeye {
 
 			SearchControls controls = new SearchControls(
 					SearchControls.SUBTREE_SCOPE, 0, 0, null, false, false);
-			String searchString = "(uid=" + cwid + ")";
-
+			// String searchString = "(uid=" + cwid + ")";		// IBM LDAP Service
+			String searchString = "(cn=" + cwid + ")";
+			
 			NamingEnumeration<SearchResult> answer = ctx.search("",
 					searchString, controls);
 			if (answer.hasMore()) {
