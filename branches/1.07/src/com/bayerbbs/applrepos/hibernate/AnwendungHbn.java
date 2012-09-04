@@ -3199,7 +3199,7 @@ public class AnwendungHbn {
 
 			StringBuffer sb = new StringBuffer();
 			sb.append("Dear ").append(personDTO.getFirstname()).append(" ").append(personDTO.getLastname()).append(",\r\n\r\n");
-			sb.append("your CI was set from ").append(businessEssentialOld).append(" to ").append(businessEssentialNew).append("\r\n\r\n");
+			sb.append("your CI was set from \"").append(businessEssentialOld).append("\" to \"").append(businessEssentialNew).append("\"\r\n\r\n");
 			sb.append("If you have questions about this please contact ITILcenter@bayer.com.\r\n\r\n");
 			sb.append("Best Regards\r\n");
 			sb.append("ITILcenter Administration");
