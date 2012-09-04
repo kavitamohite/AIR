@@ -21,6 +21,7 @@ import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.domain.Application;
+import com.bayerbbs.applrepos.dto.ApplicationCat2DTO;
 import com.bayerbbs.applrepos.dto.ApplicationContact;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
 import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
@@ -341,6 +342,7 @@ public class AnwendungHbn {
 						}
 
 						boolean hasBusinessEssentialChanged = false;
+						Long businessEssentialIdOld = application.getBusinessEssentialId();
 						if (null == dto.getBusinessEssentialId()) {
 							if (null == application.getBusinessEssentialId()) {
 								// set the default value
@@ -358,7 +360,7 @@ public class AnwendungHbn {
 						}
 						
 						if (hasBusinessEssentialChanged) {
-							sendBusinessEssentialChangedMail(application, dto);
+							sendBusinessEssentialChangedMail(application, dto, businessEssentialIdOld);
 						}
 						// ----------
 						
@@ -3136,7 +3138,7 @@ public class AnwendungHbn {
 		return result;
 	}
 
-	public static void sendBusinessEssentialChangedMail(Application application, ApplicationDTO dto) {
+	public static void sendBusinessEssentialChangedMail(Application application, ApplicationDTO dto, Long businessEssentialIdOld) {
 
 		String sendTo = null;
 		PersonsDTO personDTO = null;
@@ -3149,34 +3151,59 @@ public class AnwendungHbn {
 			}
 		}
 		
+		String cat2TXT = null;
+		
+		List<ApplicationCat2DTO> listCat2 = ApplicationCat2Hbn.listApplicationCat2Hbn();
+		Iterator<ApplicationCat2DTO> itCat2 = listCat2.iterator();
+		while (null == cat2TXT && itCat2.hasNext()) {
+			ApplicationCat2DTO cat2 = itCat2.next();
+			if (cat2.getApplicationCat2Id() == application.getApplicationCat2Id().longValue()) {
+				cat2TXT = cat2.getApplicationCat2Text();
+			}
+		}
+		if (null == cat2TXT) {
+			cat2TXT = "" + application.getApplicationCat2Id().longValue();
+		}
+		
+		
 		String businessEssentialNew = null;
+		String businessEssentialOld = null;
 		List<BusinessEssentialDTO> listBE = BusinessEssentialHbn.listBusinessEssentialHbn();
 		Iterator<BusinessEssentialDTO> itBE = listBE.iterator();
-		boolean notFound = true;
-		while (notFound && itBE.hasNext()) {
+		while (itBE.hasNext()) {
 			BusinessEssentialDTO be = itBE.next();
 			if (be.getSeverityLevelId().longValue() == application.getBusinessEssentialId().longValue()) {
-				notFound = false;
 				businessEssentialNew = be.getSeverityLevel();
+			}
+			if (be.getSeverityLevelId().longValue() == businessEssentialIdOld.longValue()) {
+				businessEssentialOld = be.getSeverityLevel();
 			}
 		}
 		if (null == businessEssentialNew) {
 			businessEssentialNew = "---";
 		}
+		if (null == businessEssentialOld) {
+			businessEssentialOld = "---";
+		}
 		
 		
 		if (null != sendTo) {
-			String copyTo = null;
+			String copyTo = "itilcenter@bayer.com";
 			
-			String subject = "Topic: " + application.getApplicationName() + " Business Essential has changed";
+			StringBuffer sbSubject = new StringBuffer();
+			sbSubject.append(cat2TXT);
+			sbSubject.append(" ");
+			sbSubject.append(application.getApplicationName());
+			sbSubject.append(" is ");
+			sbSubject.append(businessEssentialNew);
 
 			StringBuffer sb = new StringBuffer();
 			sb.append("Dear ").append(personDTO.getFirstname()).append(" ").append(personDTO.getLastname()).append(",\r\n\r\n");
-			sb.append("your CI was set to the new Business Essential Value: ").append(businessEssentialNew).append("\r\n\r\n");
+			sb.append("your CI was set from ").append(businessEssentialOld).append(" to ").append(businessEssentialNew).append("\r\n\r\n");
 			sb.append("If you have questions about this please contact ITILcenter@bayer.com.\r\n\r\n");
 			sb.append("Best Regards\r\n");
 			sb.append("ITILcenter Administration");
-			ApplReposHbn.sendMail(sendTo, copyTo, subject, sb.toString(), ApplreposConstants.APPLICATION_GUI_NAME);
+			ApplReposHbn.sendMail(sendTo, copyTo, sbSubject.toString(), sb.toString(), ApplreposConstants.APPLICATION_GUI_NAME);
 		}
 		
 	}
