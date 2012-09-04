@@ -3030,7 +3030,7 @@ public class AnwendungHbn {
 		boolean toCommit = false;
 		try {
 				if (null != applicationTarget
-						&& null != applicationTarget.getDeleteTimestamp()) {
+						&& null == applicationTarget.getDeleteTimestamp()) {
 					applicationTarget.setBarApplicationId(barApplicationId);
 					session.saveOrUpdate(applicationTarget);
 					session.flush();
