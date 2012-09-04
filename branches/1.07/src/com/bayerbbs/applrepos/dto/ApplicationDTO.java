@@ -203,6 +203,8 @@ public class ApplicationDTO implements Serializable {
 	
 	private String serviceModel;
 	
+	private String OrganisationalScope;
+	
 	
 	// compliance request
 	private String relevanceGR1435;
@@ -1406,6 +1408,14 @@ public class ApplicationDTO implements Serializable {
 
 	public void setServiceModel(String serviceModel) {
 		this.serviceModel = serviceModel;
+	}
+
+	public String getOrganisationalScope() {
+		return OrganisationalScope;
+	}
+
+	public void setOrganisationalScope(String organisationalScope) {
+		OrganisationalScope = organisationalScope;
 	}
 	
 }

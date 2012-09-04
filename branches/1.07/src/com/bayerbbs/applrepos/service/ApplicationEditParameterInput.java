@@ -24,6 +24,8 @@ public class ApplicationEditParameterInput {
 	private Long lifecycleStatusId;
 
 	private Long operationalStatusId;
+	
+	private String organisationalScope;
 
 	// contacts
 	private String responsible;
@@ -1163,6 +1165,16 @@ public class ApplicationEditParameterInput {
 
 	public Boolean getForceOverride() {
 		return forceOverride;
+	}
+
+
+	public String getOrganisationalScope() {
+		return organisationalScope;
+	}
+
+
+	public void setOrganisationalScope(String organisationalScope) {
+		this.organisationalScope = organisationalScope;
 	}
 	
 }

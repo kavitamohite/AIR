@@ -613,6 +613,16 @@ public class AnwendungHbn {
 								application.setServiceModel(dto.getServiceModel());
 							}
 						}
+						
+						if (null != dto.getOrganisationalScope()) {
+							if (" ".equals(dto.getOrganisationalScope())) {
+								application.setOrganisationalScope(null);
+							}
+							else {
+								application.setOrganisationalScope(dto.getOrganisationalScope());
+							}
+						}
+						
 					}
 
 					boolean toCommit = false;
@@ -1066,6 +1076,7 @@ public class AnwendungHbn {
 			application.setClassInformationExplanation(null);
 			
 			application.setServiceModel(null);
+			application.setOrganisationalScope(null);
 			// ==============================
 		}
 
@@ -1378,6 +1389,7 @@ public class AnwendungHbn {
 		sql.append("		  , anw.accessing_user_count_measured");
 		sql.append("		  , anw.load_class");
 		sql.append("		  , anw.service_model");
+		sql.append("		  , anw.ORG_SCOPE");
 		sql.append("		  , anw.version");
 		sql.append("		  , anw.cost_run_pa");
 		sql.append("		  , anw.cost_change_pa");
@@ -1620,6 +1632,8 @@ public class AnwendungHbn {
 				applicationDTO.setLoadClass(rsMessage.getString("LOAD_CLASS"));
 				
 				applicationDTO.setServiceModel(rsMessage.getString("SERVICE_MODEL"));
+				
+				applicationDTO.setOrganisationalScope(rsMessage.getString("ORG_SCOPE"));
 				
 				applicationDTO.setVersion(rsMessage.getString("VERSION"));
 
@@ -2878,6 +2892,9 @@ public class AnwendungHbn {
 						applicationTarget.setClassInformationExplanation(applicationSource.getClassInformationExplanation());
 						
 						applicationTarget.setServiceModel(applicationSource.getServiceModel());
+						
+						applicationTarget.setOrganisationalScope(applicationSource.getOrganisationalScope());
+						
 					}
 
 					boolean toCommit = false;

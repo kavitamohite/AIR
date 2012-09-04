@@ -91,6 +91,8 @@ public class Application extends DeletableRevisionInfo {
 	
 	private String serviceModel;
 	
+	private String organisationalScope;
+	
 	/**
 	 * default constructor - for jpa
 	 */
@@ -945,6 +947,16 @@ public class Application extends DeletableRevisionInfo {
 	 */
 	public void setServiceModel(String serviceModel) {
 		this.serviceModel = serviceModel;
+	}
+
+	@Column(name = "ORG_SCOPE")
+	public String getOrganisationalScope() {
+		return organisationalScope;
+	}
+
+
+	public void setOrganisationalScope(String organisationalScope) {
+		this.organisationalScope = organisationalScope;
 	}
 
 }

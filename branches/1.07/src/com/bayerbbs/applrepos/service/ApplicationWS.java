@@ -471,6 +471,7 @@ public class ApplicationWS {
 		dto.setAccessingUserCountMeasured(editInput.getAccessingUserCountMeasured());
 		dto.setLoadClass(editInput.getLoadClass());
 		dto.setServiceModel(editInput.getServiceModel());
+		dto.setOrganisationalScope(editInput.getOrganisationalScope());
 
 		dto.setCostRunPa(editInput.getCostRunPa());
 		dto.setCostChangePa(editInput.getCostChangePa());
