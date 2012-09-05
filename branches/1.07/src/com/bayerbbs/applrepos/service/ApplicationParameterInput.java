@@ -42,6 +42,7 @@ public class ApplicationParameterInput implements Serializable {
 	String advsearchappdelegate;
 	String advsearchciowner;
 	String advsearchcidelegate;
+	String advsearchsteward;
 	String advsearchdescription;
 	
 	/** advanced search plus parameters */
@@ -337,6 +338,14 @@ public class ApplicationParameterInput implements Serializable {
 
 	public void setCiOwnerType(String ciOwnerType) {
 		this.ciOwnerType = ciOwnerType;
+	}
+
+	public String getAdvsearchsteward() {
+		return advsearchsteward;
+	}
+
+	public void setAdvsearchsteward(String advsearchsteward) {
+		this.advsearchsteward = advsearchsteward;
 	}
 	
 }

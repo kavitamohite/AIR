@@ -2378,7 +2378,8 @@ public class AnwendungHbn {
 	Long advsearchapplicationcat2id,
 	Long advsearchlifecyclestatusid,
 	Long advsearchprocessid,
-	String template
+	String template,
+	String advsearchsteward
 	) {
 //		String advsearchcountry;
 //		String advsearchsite;
@@ -2401,6 +2402,9 @@ public class AnwendungHbn {
 		}
 		if (null != advsearchcidelegate) {
 			advsearchcidelegate = advsearchcidelegate.replace("*", "%");
+		}
+		if (null != advsearchsteward) {
+			advsearchsteward = advsearchsteward.replace("*", "%");
 		}
 		
 		ArrayList<ApplicationDTO> listResult = new ArrayList<ApplicationDTO>();
@@ -2468,6 +2472,10 @@ public class AnwendungHbn {
 		
 		if (StringUtils.isNotNullOrEmpty(advsearchcidelegate)) {
 			sql.append(" and UPPER(anw.SUB_RESPONSIBLE) like '").append(advsearchcidelegate.toUpperCase()).append("'");
+		}
+
+		if (StringUtils.isNotNullOrEmpty(advsearchsteward)) {
+			sql.append(" and UPPER(anw.APPLICATION_STEWARD) like '").append(advsearchsteward.toUpperCase()).append("'");
 		}
 
 		if (StringUtils.isNotNullOrEmpty(advsearchdescription)) {
