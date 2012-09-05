@@ -120,12 +120,13 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        xtype: 'combo',
 		        width: 230,
 //		        anchor: '70%',//siehe (*1)
-		        fieldLabel: 'Organisational Scope',
+//		        fieldLabel: 'Organisational Scope',
 		        
 		        id: 'organisationalScope',
 		        store: AIR.AirStoreManager.getStoreByName('organisationalScopeListStore'),
 		        valueField: 'id',
-		        displayField: 'text',
+		        displayField: 'name',
+		        editable: false,
 		        
 //		        typeAhead: true,
 //		        forceSelection: true,
@@ -297,7 +298,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbLifecycleStatus.on('change', this.onLifecycleStatusChange, this);
 		
 		cbOrganisationalScope.on('select', this.onOrganisationalScopeSelect, this);
-		cbOrganisationalScope.on('change', this.onOrganisationalScopeChange, this);
+//		cbOrganisationalScope.on('change', this.onOrganisationalScopeChange, this);
 		
 		cbOperationalStatus.on('select', this.onOperationalStatusSelect, this);
 		cbOperationalStatus.on('change', this.onOperationalStatusChange, this);
@@ -445,10 +446,10 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
     onOrganisationalScopeSelect: function(combo, record, index) {
     	this.fireEvent('ciChange', this, combo, record);
     },
-    onOrganisationalScopeChange: function (combo, newValue, oldValue) {
-    	if(this.isComboValueValid(combo, newValue, oldValue))
-    		this.fireEvent('ciChange', this, combo, newValue);
-    },
+//    onOrganisationalScopeChange: function (combo, newValue, oldValue) {
+//    	if(this.isComboValueValid(combo, newValue, oldValue))
+//    		this.fireEvent('ciChange', this, combo, newValue);
+//    },
     
     
     onOperationalStatusSelect: function(combo, record, index) {
@@ -595,6 +596,12 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			this.getComponent('lifecycleStatus').setValue('');
 		}
 		
+		if (data.organisationalScope && data.organisationalScope != 0) {
+			this.getComponent('organisationalScope').setValue(data.organisationalScope);
+		} else {
+			this.getComponent('organisationalScope').setValue('');
+		}
+		
 //		selectedOperationalStatusId = data.operationalStatusId;
 		if (data.operationalStatusId && data.operationalStatusId != 0) {
 			this.getComponent('operationalStatus').setValue(data.operationalStatusId);
@@ -720,6 +727,13 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			else 
 				data.lifecycleStatusId = -1;
 		
+		field = this.getComponent('organisationalScope');
+		if(!field.disabled)
+			if(field.getValue().length > 0)
+				data.organisationalScope = field.getValue();
+			else 
+				data.organisationalScope = -1;
+		
 		field = this.getComponent('operationalStatus');
 		if(!field.disabled)
 			if(field.getValue().length > 0)
@@ -750,6 +764,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setFieldLabel(this.getComponent('applicationVersion'), labels.applicationVersion);
 		this.setFieldLabel(this.getComponent('applicationCat2'), labels.applicationCat2);
 		this.setFieldLabel(this.getComponent('lifecycleStatus'), labels.lifecycleStatus);
+		this.setFieldLabel(this.getComponent('organisationalScope'), labels.organisationalScope);
 		this.setFieldLabel(this.getComponent('operationalStatus'), labels.operationalStatus);
 		this.setFieldLabel(this.getComponent('comments'), labels.comments);
 		

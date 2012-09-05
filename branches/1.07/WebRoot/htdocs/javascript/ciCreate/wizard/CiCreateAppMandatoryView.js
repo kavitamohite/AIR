@@ -132,6 +132,26 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		        lazyInit: false,
 		        mode: 'local'
 		    },{
+		        xtype: 'combo',
+		        width: 250,
+//		        anchor: '70%',//siehe (*1)
+//		        fieldLabel: 'Organisational Scope',
+		        
+		        id: 'cbOrganisationalScopeW',
+		        store: AIR.AirStoreManager.getStoreByName('organisationalScopeListStore'),
+		        valueField: 'id',
+		        displayField: 'name',
+		        editable: false,
+		        
+//		        typeAhead: true,
+//		        forceSelection: true,
+//		        autoSelect: false,
+		        
+		        triggerAction: 'all',//all query
+		        lazyRender: true,
+		        lazyInit: false,
+		        mode: 'local'
+		    },{
 		        xtype: 'fieldset',
 		        id: 'fsApplicationOwnerW',
 		        title: 'Application Owner',
@@ -341,6 +361,7 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 			
 			params.comments = this.getComponent('taCiDescriptionW').getValue();
 			params.lifecycleStatusId = this.getComponent('cbLifecycleStatusW').getValue();
+			params.organisationalScope = this.getComponent('cbOrganisationalScopeW').getValue();
 			params.applicationOwnerHidden = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerWHidden').getValue();
 			params.applicationOwner = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').getValue();
 			params.applicationStewardHidden = this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').getValue();//fsApplicationOwnerW
@@ -360,6 +381,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		this.getComponent('pSapNameW').getComponent('tfSapName3W').reset();
 		this.getComponent('taCiDescriptionW').reset();
 		this.getComponent('cbLifecycleStatusW').reset();
+		this.getComponent('cbOrganisationalScopeW').reset();
+		
 		
 		
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').reset();
@@ -393,6 +416,9 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		
 		this.setFieldLabel(this.getComponent('cbLifecycleStatusW'), labels.lifecycleStatus);
 		AIR.AirAclManager.setNecessity(this.getComponent('cbLifecycleStatusW'));
+		
+		this.setFieldLabel(this.getComponent('cbOrganisationalScopeW'), labels.organisationalScope);
+		AIR.AirAclManager.setNecessity(this.getComponent('cbOrganisationalScopeW'));
 		
 		this.getComponent('fsApplicationOwnerW').setTitle(labels.contactsApplicationOwner);
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('labeltfApplicationOwnerW').setText(labels.applicationOwner);//.el.dom.innerHTML = labels.applicationOwner;

@@ -92,7 +92,7 @@
 	<Identifier>
 		<id>organisationalScope</id>
 		<Mandatory>mandatory</Mandatory>
-		<Relevance>operational</Relevance>
+		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
 		<UseInWizard>Y</UseInWizard>
@@ -1189,6 +1189,17 @@
 		<id>cbLifecycleStatusW</id>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
+		<id>cbOrganisationalScopeW</id>
+		<Mandatory>mandatory</Mandatory>
+		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
 		<UseInWizard>Y</UseInWizard>

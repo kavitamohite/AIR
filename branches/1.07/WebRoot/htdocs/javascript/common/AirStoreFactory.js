@@ -1141,6 +1141,7 @@ AIR.AirStoreFactory = function() {
 //			        {name: 'applicationManager'},
 			        {name: 'both'},
 			        {name: 'lifecycleStatus'},
+			        {name: 'organisationalScope'},
 			        {name: 'operationalStatus'},
 			        {name: 'applicationCat2'},
 			        {name: 'businessProcess'},
@@ -1973,7 +1974,7 @@ AIR.AirStoreFactory = function() {
 		createOrganisationalScopeListStore: function() {
 			var organisationalScopeListRecord = Ext.data.Record.create([
  			     { name: 'id', mapping: 'organisationalScopeId' },
- 			     { name: 'text', mapping: 'organisationalScopeTxt' }
+ 			     { name: 'name', mapping: 'organisationalScopeTxt' }
  			]);
  			
  			var organisationalScopeListReader = new Ext.data.XmlReader({
@@ -1993,7 +1994,7 @@ AIR.AirStoreFactory = function() {
  					reader: organisationalScopeListReader
  				}),
  				
- 				fields: [ 'id', 'text' ],
+ 				fields: [ 'id', 'name' ],
 
  				reader: organisationalScopeListReader
  			});
@@ -2378,6 +2379,9 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'lifecycleStatusTxt',
 				mapping : 'applicationDTO > lifecycleStatusTxt'
+			}, {
+				name : 'organisationalScope',
+				mapping : 'applicationDTO > organisationalScope'
 			}, {
 				name : 'operationalStatusId',
 				mapping : 'applicationDTO > operationalStatusId'
