@@ -882,6 +882,9 @@ public class AnwendungHbn {
 						if (StringUtils.isNotNullOrEmpty(dto.getItSecSbAvailabilityDescription())) {
 							application.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
 						}
+						if (StringUtils.isNotNullOrEmpty(dto.getOrganisationalScope())) {
+							application.setOrganisationalScope(dto.getOrganisationalScope());
+						}
 						
 						boolean toCommit = false;
 						try {
