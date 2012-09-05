@@ -40,6 +40,14 @@ Util = {
 			combo.el.dom.disabled = true;
 		else
 			combo.disable();
+	},
+	
+	isCWID: function(value) {
+		var isNoCWID = value.indexOf(',') > -1;//value.match(AC.REGEX_CWID) != null;
+		if(isNoCWID)
+			return -1;
+		
+		return value.length > 2 && value.length < 6 ? 0 : 1;//value.length > 2 && value.length < 6 && value.match(AC.REGEX_CWID) != null
 	}
 	
 	/*

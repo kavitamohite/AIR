@@ -97,6 +97,7 @@
 		<advsearchappownerdelegate>App Delegate</advsearchappownerdelegate>
 		<advsearchciowner>CI Owner</advsearchciowner>
 		<advsearchcidelegate>CI Delegate</advsearchcidelegate>
+		<advsearchsteward>Steward</advsearchsteward>
 		
 		<advsearchplusfieldset>Enhanced Options</advsearchplusfieldset>		
 		
@@ -142,6 +143,7 @@
 			<applicationVersion>Version</applicationVersion>
 			<applicationCat2>IT Category / Technology</applicationCat2>
 			<lifecycleStatus>Lifecycle Status</lifecycleStatus>
+			<organisationalScope>Organisational scope</organisationalScope>
 			<operationalStatus>General Usage</operationalStatus>
 			<comments>Description</comments>
 			<specificsCategory>Business</specificsCategory>
@@ -318,7 +320,7 @@ whereas "External" manages only the references to an compliance management outsi
 			<wizardisTemplate>Use as BYTsec-Template</wizardisTemplate>
 			<tfApplicationIdW>Bayer Application Registry ID</tfApplicationIdW>
 			<labeltfApplicationOwnerCompanyW>Application Owner Company</labeltfApplicationOwnerCompanyW>
-			<wizardapplicationNameSAPillegal>{0} with Category IT {1} must have no name with SAP nomenclature</wizardapplicationNameSAPillegal>
+			<wizardapplicationNameSAPillegal>{0} with Category IT "{1}" must have no name with SAP nomenclature</wizardapplicationNameSAPillegal>
 			
 		
 		<ciCreateWizardPage2>Wizard - Step 2: Required</ciCreateWizardPage2><!-- Wizard - Step 2: Details -->
@@ -468,8 +470,8 @@ whereas "External" manages only the references to an compliance management outsi
 		
 		
 		<ToolbarInvalidCat2SAP>{0} {1}   &lt;b&gt;is {2}&lt;/b&gt;   SAP Application. Therefore, IT Category {3} is not valid.</ToolbarInvalidCat2SAP>
-		<SAPNameToStandardNameInvalid>According to the SAP name nomenclature, the name {0} is bound to IT-Category {1}. Therefore, the IT-Category cannot be changed into {2}</SAPNameToStandardNameInvalid>
-		<StandardNameToSAPNameInvalid>The name {0} does not comply with the SAP name nomenclature for the designated IT-Category {1}</StandardNameToSAPNameInvalid>
+		<SAPNameToStandardNameInvalid>According to the SAP name nomenclature, the name "{0}" is bound to IT-Category "{1}". Therefore, the IT-Category cannot be changed into "{2}"</SAPNameToStandardNameInvalid>
+		<StandardNameToSAPNameInvalid>The name "{0}" does not comply with the SAP name nomenclature for the designated IT-Category "{1}"</StandardNameToSAPNameInvalid>
 		<ToolbarInvalidTemplate>{0} {1} cannot have itself as a template</ToolbarInvalidTemplate>
 		<dynamicWindowCIreactivationPrompt>Your new CI cannot be saved because there is already such a CI marked as deleted with this name or alias. Do you want to reactivate this CI and override with the data you provided?</dynamicWindowCIreactivationPrompt>
 	</Items>

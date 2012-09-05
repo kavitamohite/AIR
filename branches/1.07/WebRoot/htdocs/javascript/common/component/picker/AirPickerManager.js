@@ -23,6 +23,8 @@ AIR.AirPickerManager = function() {
 			
 			if(listener)
 				personPicker.on('personAdd', listener);
+//			else
+//				personPicker.mun(personPicker, 'personAdd');
 			
 			
 			personPicker.showAt([ event.xy[0], event.xy[1] ]);

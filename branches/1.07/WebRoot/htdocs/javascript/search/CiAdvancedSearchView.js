@@ -93,7 +93,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							xtype: 'textfield',
 					        width: 230,
 					        id: 'advsearchappowner',
-					        allowBlank: true
+					        allowBlank: true,
+					        
+					        maskRe: /[a-zA-Z]/
 //					        disabled: false,
 //					        readOnly: true
 					    },{
@@ -134,7 +136,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							xtype: 'textfield',
 					        width: 230,
 					        id: 'advsearchappownerdelegate',
-					        allowBlank: true
+					        allowBlank: true,
+					        
+					        maskRe: /[a-zA-Z]/
 //					        disabled: false,
 //					        readOnly: true
 					    },{
@@ -175,7 +179,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							xtype: 'textfield',
 					        width: 230,
 					        id: 'advsearchciowner',
-					        allowBlank: true
+					        allowBlank: true,
+					        
+					        maskRe: /[a-zA-Z]/
 //					        disabled: false,
 //					        readOnly: true
 					    },{
@@ -216,7 +222,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							xtype: 'textfield',
 					        width: 230,
 					        id: 'advsearchcidelegate',
-					        allowBlank: true
+					        allowBlank: true,
+					        
+					        maskRe: /[a-zA-Z]/
 //					        disabled: false,
 //					        readOnly: true
 					    },{
@@ -311,6 +319,51 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			                }
 			            }
 			        }*/]
+		        }, {
+			        xtype: 'fieldset',
+			        id: 'fsAdvSearchSteward',
+			        
+//			        layout: 'form',//kein Layout form fit
+			        labelWidth: 130,
+//			        height: 300,
+			        
+			        
+					items: [{
+						xtype: 'container',
+						id: 'pAdvSearchSteward',
+						
+						layout: 'column',
+						style: {
+							marginBottom: 5
+						},
+						
+						items: [{
+							xtype: 'label',
+							id: 'labeltfAdvSearchSteward',
+							text: 'x',
+							
+							width: 130,
+							style: {
+								fontSize: 12
+							}
+			    		},{
+							xtype: 'textfield',
+					        width: 230,
+					        id: 'tfAdvSearchSteward',
+					        allowBlank: true,
+					        
+					        maskRe: /[a-zA-Z]/
+//					        disabled: false,
+//					        readOnly: true
+					    },{
+							xtype: 'hidden',
+					        id: 'tfAdvSearchStewardHidden'
+					    },{
+					    	xtype: 'commandlink',
+					    	id: 'clAdvSearchStewardAddPerson',
+					    	img: img_AddPerson
+					    }]
+					}]
 		        }]
 		    }, {
 			    xtype: 'fieldset',
@@ -318,24 +371,19 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			    title: 'Advanced Search Plus',
 			    
 //				columnWidth: 0.33,//0.45
-			    width: 430,
+			    width: 530,
 
 			    padding: 10,
 			    hidden: true,
 			    
 			    layout: 'form',//form fit
 			    labelWidth: 180,
-//			    width: 300,
-			    
-			    /*style: {
-			    	marginLeft: 10
-			    },*/
 			    
 				items: [{
 					xtype: 'combo',
 					id: 'advsearchoperationalStatus',
 				    store: AIR.AirStoreManager.getStoreByName('operationalStatusListStore'),
-			        width: 200,
+			        width: 300,
 
 				    fieldLabel: 'Operational Status',
 				    valueField: 'id',
@@ -353,7 +401,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					xtype: 'filterCombo',//combo
 					id: 'advsearchcategory',
 				    store: AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),
-			        width: 200,
+			        width: 300,
 
 					lastQuery: '',
 				    fieldLabel: 'Category',
@@ -372,7 +420,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					xtype: 'combo',
 					id: 'advsearchlifecyclestatus',
 				    store: AIR.AirStoreManager.getStoreByName('lifecycleStatusListStore'),
-			        width: 200,
+			        width: 300,
 					
 				    fieldLabel: 'Lifecycle status',
 				    valueField: 'id',
@@ -390,8 +438,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					xtype: 'combo',
 					id: 'advsearchprocess',
 				    store: AIR.AirStoreManager.getStoreByName('processListStore'),
-			        width: 200,
+			        width: 300,
 
+			        tpl: '<tpl for="."><div ext:qtip="{text}" class="x-combo-list-item">{text}</div></tpl>',
 				    fieldLabel: 'Business Prozess',
 				    valueField: 'id',
 			        displayField: 'text',
@@ -422,7 +471,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		var pAdvSearchAppOwnerDelegate = this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwnerDelegate');
 		var pAdvSearchCiOwner = this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwner');
 		var pAdvSearchCiOwnerDelegate = this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwnerDelegate');
-		
+		var pAdvSearchSteward = this.getComponent('pAdvancedSearch').getComponent('fsAdvSearchSteward').getComponent('pAdvSearchSteward');		
 		
 		var clAdvSearchAppOwnerAddPerson = pAdvSearchAppOwner.getComponent('clAdvSearchAppOwnerAddPerson');
 		var clAdvSearchAppOwnerDelegateAddPerson = pAdvSearchAppOwnerDelegate.getComponent('clAdvSearchAppOwnerDelegateAddPerson');
@@ -432,6 +481,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		var clAdvSearchCiOwnerDelegateAddPerson = pAdvSearchCiOwnerDelegate.getComponent('clAdvSearchCiOwnerDelegateAddPerson');
 		var clAdvSearchCiOwnerDelegateAddGroup = pAdvSearchCiOwnerDelegate.getComponent('clAdvSearchCiOwnerDelegateAddGroup');
 		
+		var clAdvSearchStewardAddPerson = pAdvSearchSteward.getComponent('clAdvSearchStewardAddPerson');
 
 		
 		clAdvSearchAppOwnerAddPerson.on('click', this.onAdvSearchAppOwnerAddPerson, this);
@@ -441,6 +491,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		clAdvSearchCiOwnerAddPerson.on('click', this.onAdvSearchCiOwnerAddPerson, this);
 		clAdvSearchCiOwnerDelegateAddPerson.on('click', this.onAdvSearchCiOwnerDelegateAddPerson, this);
 		clAdvSearchCiOwnerDelegateAddGroup.on('click', this.onAdvSearchCiOwnerDelegateAddGroup, this);
+		
+		clAdvSearchStewardAddPerson.on('click', this.onAdvSearchStewardAddPerson, this);
 	},
 	
 	onCat1Select: function(store, record, options) {
@@ -468,11 +520,11 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	
 	onAdvSearchAppOwnerAddPerson: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(
-			this.onPersonAdded, this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwner').getComponent('advsearchappowner'), event);
+			null /*this.onPersonAdded*/, this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwner').getComponent('advsearchappowner'), event);
 	},
 	onAdvSearchAppOwnerDelegateAddPerson: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(
-			this.onPersonAdded, this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwnerDelegate').getComponent('advsearchappownerdelegate'), event);
+			null /*this.onPersonAdded*/, this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwnerDelegate').getComponent('advsearchappownerdelegate'), event);
 	},
 	onAdvSearchAppOwnerDelegateAddGroup: function(link, event) {
 		AIR.AirPickerManager.openGroupPicker(
@@ -482,15 +534,20 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	
 	onAdvSearchCiOwnerAddPerson: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(
-			this.onPersonAdded, this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwner').getComponent('advsearchciowner'), event);
+			null /*this.onPersonAdded*/, this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwner').getComponent('advsearchciowner'), event);
 	},
 	onAdvSearchCiOwnerDelegateAddPerson: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(
-			this.onPersonAdded, this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwnerDelegate').getComponent('advsearchcidelegate'), event);
+			null /*this.onPersonAdded*/, this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwnerDelegate').getComponent('advsearchcidelegate'), event);
 	},
 	onAdvSearchCiOwnerDelegateAddGroup: function(link, event) {
 		AIR.AirPickerManager.openGroupPicker(
 			null, this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwnerDelegate').getComponent('advsearchcidelegate'), event, 'none');
+	},
+	
+	onAdvSearchStewardAddPerson: function(link, event) {
+		AIR.AirPickerManager.openPersonPicker(
+			null /*this.onPersonAdded*/, this.getComponent('pAdvancedSearch').getComponent('fsAdvSearchSteward').getComponent('pAdvSearchSteward').getComponent('tfAdvSearchSteward'), event);
 	},
 	
 	onPersonAdded: function(record, element, hiddenElement) {
@@ -509,17 +566,19 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //		this.getComponent('pAdvancedSearch').getComponent('advsearchowner')
 		//pAdvancedSearch/advsearchowner
 		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').setTitle(labels.advsearchowner);
-//		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('advsearchappowner'), labels.advsearchappowner);
-//		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('advsearchappownerdelegate'), labels.advsearchappownerdelegate);
-//		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('advsearchciowner'), labels.advsearchciowner);
-//		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('advsearchcidelegate'), labels.advsearchcidelegate);
-
+		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwner').getComponent('labeladvsearchappowner').setText(labels.advsearchappowner);
+		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwnerDelegate').getComponent('labeladvsearchappownerdelegate').setText(labels.advsearchappownerdelegate);
+		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwner').getComponent('labeladvsearchciowner').setText(labels.advsearchciowner);
+		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwnerDelegate').getComponent('labeladvsearchcidelegate').setText(labels.advsearchcidelegate);
+		this.getComponent('pAdvancedSearch').getComponent('fsAdvSearchSteward').getComponent('pAdvSearchSteward').getComponent('labeltfAdvSearchSteward').setText(labels.advsearchsteward);
+		
 		
 		this.getComponent('advsearchplusfieldset').setTitle(labels.advsearchplusfieldset);
 		this.setFieldLabel(this.getComponent('advsearchplusfieldset').getComponent('advsearchlifecyclestatus'), labels.lifecycleStatus);
 		this.setFieldLabel(this.getComponent('advsearchplusfieldset').getComponent('advsearchoperationalStatus'), labels.operationalStatus);
 		this.setFieldLabel(this.getComponent('advsearchplusfieldset').getComponent('advsearchcategory'), labels.applicationCat2);
 		this.setFieldLabel(this.getComponent('advsearchplusfieldset').getComponent('advsearchprocess'), labels.businessProcess);
+		
 	}
 });
 Ext.reg('AIR.CiAdvancedSearchView', AIR.CiAdvancedSearchView);

@@ -62,7 +62,7 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 
 			
 			viewConfig: {
-				emptyText : 'Nothing found'
+				emptyText: 'Nothing found'
 			},
 			
 		    bbar: pagingBar

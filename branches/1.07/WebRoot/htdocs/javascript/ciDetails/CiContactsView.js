@@ -77,41 +77,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				    }]
 				},{
 					xtype: 'panel',
-					id: 'pApplicationSteward',
-					border: false,
-					
-					layout: 'column',//toolbar hbox
-					style: {
-						marginTop: 5
-					},
-					
-					items: [{
-						xtype: 'label',
-						id: 'labelapplicationSteward',
-						
-						width: 200,
-						style: {
-							fontSize: 12
-						}
-		    		},{
-						xtype: 'textfield',
-				        width: 230,
-				        id: 'applicationSteward',
-				        readOnly: true
-				    },{
-						xtype: 'hidden',
-				        id: 'applicationStewardHidden'
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'applicationStewardaddimg',
-				    	img: img_AddPerson
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'applicationStewardremoveimg',
-				    	img: img_RemovePerson
-				    }]
-				},{
-					xtype: 'panel',
 					id: 'pApplicationOwnerDelegate',
 					border: false,
 					
@@ -147,6 +112,47 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				    },{
 				    	xtype: 'commandlink',
 				    	id: 'applicationOwnerDelegateremoveimg',
+				    	img: img_RemovePerson
+				    }]
+				}]
+			},{
+		        xtype: 'fieldset',
+		        id: 'fsApplicationSteward',//pContactsApplicationOwner
+		        labelWidth: 200,
+		        
+				items: [{
+					xtype: 'panel',
+					id: 'pApplicationSteward',
+					border: false,
+					
+					layout: 'column',//toolbar hbox
+					style: {
+						marginTop: 5
+					},
+					
+					items: [{
+						xtype: 'label',
+						id: 'labelapplicationSteward',
+						
+						width: 200,
+						style: {
+							fontSize: 12
+						}
+		    		},{
+						xtype: 'textfield',
+				        width: 230,
+				        id: 'applicationSteward',
+				        readOnly: true
+				    },{
+						xtype: 'hidden',
+				        id: 'applicationStewardHidden'
+				    },{
+				    	xtype: 'commandlink',
+				    	id: 'applicationStewardaddimg',
+				    	img: img_AddPerson
+				    },{
+				    	xtype: 'commandlink',
+				    	id: 'applicationStewardremoveimg',
 				    	img: img_RemovePerson
 				    }]
 				}]
@@ -787,7 +793,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		clApplicationOwnerAdd.on('click', this.onApplicationOwnerAdd, this);
 		clApplicationOwnerRemove.on('click', this.onApplicationOwnerRemove, this);
 		
-		var pApplicationSteward = this.getComponent('contactsApplicationOwner').getComponent('pApplicationSteward');
+		var pApplicationSteward = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward');//contactsApplicationOwner
 		var clApplicationStewardAdd = pApplicationSteward.getComponent('applicationStewardaddimg');
 		var clApplicationStewardRemove = pApplicationSteward.getComponent('applicationStewardremoveimg');
 		clApplicationStewardAdd.on('click', this.onApplicationStewardAdd, this);
@@ -1021,7 +1027,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	onGpsccontactCiOwnerAdd: function(link, event) {
 //		createGroupPickerTip(event, 'gpsccontactCiOwner', 'ciOwner');
 		AIR.AirPickerManager.openGroupPicker(
-			this.onGroupAdded.createDelegate(this), this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner'), event, 'none');
+			this.onGroupAdded.createDelegate(this), this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner'), event, 'ciOwner');
 	},
 	onGpsccontactCiOwnerRemove: function(link, event) {
 //		removeValueFromField(event, 'gpsccontactCiOwner');
@@ -1089,11 +1095,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	onApplicationStewardAdd: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(
-			this.onPersonAdded.createDelegate(this), this.getComponent('contactsApplicationOwner').getComponent('pApplicationSteward').getComponent('applicationSteward'), event);
+			this.onPersonAdded.createDelegate(this), this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), event);//contactsApplicationOwner
 	},
 	onApplicationStewardRemove: function(link, event) {
 		AIR.AirPickerManager.openRemovePicker(
-			this.onRecordRemoved.createDelegate(this), this.getComponent('contactsApplicationOwner').getComponent('pApplicationSteward').getComponent('applicationSteward'), event);
+			this.onRecordRemoved.createDelegate(this), this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), event);//contactsApplicationOwner
 	},
 	
 
@@ -1148,7 +1154,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			pContactsApplicationOwner.getComponent('applicationOwner').setValue('');
 		}
 		
-		var pApplicationSteward = this.getComponent('contactsApplicationOwner').getComponent('pApplicationSteward');
+		var pApplicationSteward = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward');//contactsApplicationOwner
 		if(data.applicationStewardHidden) {// && data.applicationStewardHidden != 0
 			pApplicationSteward.getComponent('applicationStewardHidden').setValue(data.applicationStewardHidden);
 			pApplicationSteward.getComponent('applicationSteward').setValue(data.applicationSteward);
@@ -1209,7 +1215,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	updateAccessMode: function(data) {
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner').getComponent('applicationOwner'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('contactsApplicationOwner').getComponent('pApplicationSteward').getComponent('applicationSteward'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), data);//contactsApplicationOwner
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), data);
 		
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsCIOwner').getComponent('pContactsCIOwner').getComponent('ciResponsible'), data);
@@ -1246,7 +1252,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			data.applicationOwnerHidden = field.getValue();
 		}
 		
-		var field = this.getComponent('contactsApplicationOwner').getComponent('pApplicationSteward').getComponent('applicationStewardHidden');
+		var field = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationStewardHidden');//contactsApplicationOwner
 		if (!field.disabled) {
 			data.applicationSteward = field.getValue();
 			data.applicationStewardHidden = field.getValue();
@@ -1457,7 +1463,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 		
 		this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner').getComponent('labelapplicationOwner').setText(labels.applicationOwner);//.el.dom.innerHTML = labels.applicationOwner;
-		this.getComponent('contactsApplicationOwner').getComponent('pApplicationSteward').getComponent('labelapplicationSteward').setText(labels.applicationSteward);//.el.dom.innerHTML = labels.applicationOwnerDelegate;
+		this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('labelapplicationSteward').setText(labels.applicationSteward);//contactsApplicationOwner
 		this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('labelapplicationOwnerDelegate').setText(labels.applicationOwnerDelegate);//.el.dom.innerHTML = labels.applicationOwnerDelegate;
 
 		this.getComponent('contactsCIOwner').getComponent('pContactsCIOwner').getComponent('labelciResponsible').setText(labels.ciResponsible);
@@ -1483,7 +1489,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setTooltipData('labelciSubResponsible', toolTips.ciSubResponsible, toolTips.ciSubResponsibleText);
 		
 		this.setTooltipData(this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner').getComponent('labelapplicationOwner'), toolTips.applicationOwner, toolTips.applicationOwnerText);
-		this.setTooltipData(this.getComponent('contactsApplicationOwner').getComponent('pApplicationSteward').getComponent('labelapplicationSteward'), toolTips.applicationSteward, toolTips.applicationStewardText);
+		this.setTooltipData(this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('labelapplicationSteward'), toolTips.applicationSteward, toolTips.applicationStewardText);//contactsApplicationOwner
 		this.setTooltipData(this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('labelapplicationOwnerDelegate'), toolTips.applicationOwnerDelegate, toolTips.applicationOwnerDelegateText);
 				
 		

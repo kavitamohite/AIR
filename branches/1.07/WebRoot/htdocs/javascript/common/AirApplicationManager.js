@@ -141,7 +141,8 @@ AIR.AirApplicationManager = function() {
 				gxpFlagListStore: null,
 				loadClassListStore: null,
 				serviceModelListStore: null,
-				dedicatedListStore: null
+				dedicatedListStore: null,
+				organisationalScopeListStore: null
 			};
 			
 			this.storeCount = 0;
@@ -513,11 +514,21 @@ AIR.AirApplicationManager = function() {
 		
 		setUserName: function(userName) {
 			this.userName = userName;
+			var array = userName.split(' ');
+			this.firstName = array[0];
+			this.lastName = array[1];
 		},
 		
 		getUserName: function() {
 			return this.userName;
 		},
+		getFirstName: function() {
+			return this.firstName;
+		},
+		getLastName: function() {
+			return this.lastName;
+		},
+		
 		
 		setLastLogon: function(lastLogon) {
 			this.lastLogon = lastLogon;

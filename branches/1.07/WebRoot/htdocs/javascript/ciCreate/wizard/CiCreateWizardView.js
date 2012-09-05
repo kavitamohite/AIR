@@ -73,7 +73,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		var bNextW = this.getFooterToolbar().getComponent('bNextW');
 		bNextW.setVisible(true);
 		
-		this.setHeight(420);//360 400
+		this.setHeight(440);//420 360 400
 	},
 	
 	onCancel: function(button, event) {
@@ -83,7 +83,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		};
 
 		var callbackMap = {
-			'yes': yesCallback.createDelegate(this)
+			yes: yesCallback.createDelegate(this)
 		};
 		
 		var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CANCEL_WIZARD', callbackMap);

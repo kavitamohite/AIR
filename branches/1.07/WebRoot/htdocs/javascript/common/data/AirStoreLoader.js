@@ -13,7 +13,7 @@ AIR.AirStoreLoader = Ext.extend(Ext.util.Observable, {
     	this.storeMap = {};
     	this.storeIds = storeIds;
     	
-        this.storeCounter = storeCounter - 1;//storeIds.length - 1;
+        this.storeCounter = storeCounter;// - 1;//storeIds.length - 1;
         this.loadCount = 0;
     	
     	for(var storeId in this.storeIds) {
@@ -43,10 +43,11 @@ AIR.AirStoreLoader = Ext.extend(Ext.util.Observable, {
     
     onLoad: function(store, records, options) {
     	this.fireEvent('storeLoaded', store, records, options);
-    	if(store.storeId === 'itsecUserOptionListStore')
-    		Util.log('itsecUserOptionListStore loaded');
+    	if(store.storeId === 'organisationalScopeListStore')
+    		Util.log('organisationalScopeListStore loaded');
+//    	Util.log(store.storeId+' loaded');
         
-        if(this.loadCount == this.storeCounter) {  
+        if(this.loadCount == this.storeCounter) {
             this.fireEvent('storesLoaded', this, this.storeMap);
         } else {
         	this.loadCount++;

@@ -96,9 +96,10 @@
 		
 		<advsearchowner>Eigentümer</advsearchowner>
 		<advsearchappowner>App Owner</advsearchappowner>
-		<advsearchappownerdelegate>App Steward</advsearchappownerdelegate>
+		<advsearchappownerdelegate>App Delegate</advsearchappownerdelegate>
 		<advsearchciowner>CI Owner</advsearchciowner>
-		<advsearchcidelegate>CI Delegate</advsearchcidelegate>		
+		<advsearchcidelegate>CI Delegate</advsearchcidelegate>
+		<advsearchsteward>Steward</advsearchsteward>
 
 		<advsearchplusfieldset>Erweiterte Optionen</advsearchplusfieldset>
 		
@@ -145,6 +146,7 @@
 			<applicationVersion>Version</applicationVersion>
 			<applicationCat2>IT-Kategorie / Technologie</applicationCat2>
 			<lifecycleStatus>Betriebsstatus</lifecycleStatus>
+			<organisationalScope>Organisational scope</organisationalScope>
 			<operationalStatus>Allgemeine Verwendung</operationalStatus>
 			<comments>Beschreibung</comments>
 			<specificsCategory>Business</specificsCategory>
@@ -320,7 +322,7 @@
 			<wizardisTemplate>Ist BYTsec-Template</wizardisTemplate>
 			<tfApplicationIdW>Bayer Application Registry ID</tfApplicationIdW>
 			<labeltfApplicationOwnerCompanyW>Application Owner Company</labeltfApplicationOwnerCompanyW>
-			<wizardapplicationNameSAPillegal>{0} mit Kategorie IT {1} darf keinen Namen mit SAP Nomenklatur haben</wizardapplicationNameSAPillegal>
+			<wizardapplicationNameSAPillegal>{0} mit Kategorie IT "{1}" darf keinen Namen mit SAP Nomenklatur haben</wizardapplicationNameSAPillegal>
 
 		
 		<ciCreateWizardPage2>Wizard - Schritt 2: Required</ciCreateWizardPage2><!-- Wizard - Schritt 2: Details -->
@@ -466,8 +468,8 @@
 		
 		
 		<ToolbarInvalidCat2SAP>{0} {1}   &lt;b&gt;ist {2}&lt;/b&gt;   SAP Application. Daher ist IT Kategorie {3} nicht gültig.</ToolbarInvalidCat2SAP>
-		<SAPNameToStandardNameInvalid>Der Name {0} ist gemäß Nomenklatur an die IT-Kategorie {1} gebunden. Daher kann die IT-Kategorie nicht in {2} geändert werden</SAPNameToStandardNameInvalid>
-		<StandardNameToSAPNameInvalid>Der Name {0} erfüllt nicht die Nomenklatur für die gewünschte IT-Kategorie {1}</StandardNameToSAPNameInvalid>
+		<SAPNameToStandardNameInvalid>Der Name "{0}" ist gemäß Nomenklatur an die IT-Kategorie "{1}" gebunden. Daher kann die IT-Kategorie nicht in "{2}" geändert werden</SAPNameToStandardNameInvalid>
+		<StandardNameToSAPNameInvalid>Der Name "{0}" erfüllt nicht die Nomenklatur für die gewünschte IT-Kategorie "{1}"</StandardNameToSAPNameInvalid>
 		<ToolbarInvalidTemplate>{0} {1} kann nicht sich selbst als Vorlage haben</ToolbarInvalidTemplate>
 		<dynamicWindowCIreactivationPrompt>Ihr neues CI kann nicht gespeichert werden, weil schon ein löschmarkiertes CI mit diesem Namen oder Alias existiert. Soll dieses CI reaktiviert werden und mit den Daten die Sie eingegeben haben überschrieben werden?</dynamicWindowCIreactivationPrompt>
 	</Items>

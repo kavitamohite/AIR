@@ -503,7 +503,7 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.getComponent('pCopyFromDetailsSouthRegion').getComponent('bCopyFromCancel').setText(labels.button_general_cancel);
 		this.getComponent('pCopyFromDetailsSouthRegion').getComponent('bCopyFromCopy').setText(labels.button_general_copy);
 		
-		if(this.applicationCat2 == this.SAP_APP_CAT1 || this.applicationCat2 == this.SAP_APP_CAT2) {
+		if(this.applicationCat2 && this.isSAPApplication(this.applicationCat2)) {
 			var sapNameLabel = labels.wizardapplicationNameSAP1 + ', ' + labels.wizardapplicationNameSAP2 + ', ' + labels.wizardapplicationNameSAP3;
 			this.getComponent('p1CopyFrom').getComponent('p11CopyFrom').getComponent('l11CopyFrom').setText(sapNameLabel);
 		} else {

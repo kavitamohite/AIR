@@ -130,11 +130,13 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 		var pagingBar = grid.getBottomToolbar();
 		var clExcelExport = pagingBar.getComponent('ciCopyFromSearchGrid_clExcelExport');
 		clExcelExport.on('click', this.onExcelExport, this);
+		
+		var tfCopyFromCiSearch = this.getComponent('pCopyFromSearchCard').getComponent('pCopyFromCiSearch').getComponent('tfCopyFromCiSearch');
+		tfCopyFromCiSearch.on('keyup', this.onSearchChange, this);
 	},
 	
 	onExcelExport: function(link, event) {
 		var tfCopyFromCiSearch = this.getComponent('pCopyFromSearchCard').getComponent('pCopyFromCiSearch').getComponent('tfCopyFromCiSearch');
-		
 //		var exportWindow = window.open('/AIR/excelexport?query='+tfCopyFromCiSearch.getValue()+'&cwid='+AIR.AirApplicationManager.getCwid()+'&searchPoint=Search');
 		
 		
@@ -153,6 +155,9 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 	},
 	
 	onSearch: function(button, event) {
+		var bCopyFromNext = this.getComponent('pCopyFromSearchCard').getComponent('pCopyFromCiSearch').getComponent('bCopyFromNext');
+		bCopyFromNext.hide();
+		
 		this.query = this.getComponent('pCopyFromSearchCard').getComponent('pCopyFromCiSearch').getComponent('tfCopyFromCiSearch').getValue().trim();
 
 		if(this.query.length > 0) {
@@ -190,6 +195,11 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 			delete params.limit;
 			grid.setPagingParams(params);
 		}
+	},
+	
+	onSearchChange: function() {
+		var bCopyFromNext = this.getComponent('pCopyFromSearchCard').getComponent('pCopyFromCiSearch').getComponent('bCopyFromNext');
+		bCopyFromNext.hide();
 	},
 	
 	onRowClick: function(grid, rowIndex, e) {

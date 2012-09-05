@@ -1368,6 +1368,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'advsearchappownerdelegate'},
 			        {name: 'advsearchciowner'},
 			        {name: 'advsearchcidelegate'},
+			        {name: 'advsearchsteward'},
 			        
 			        {name: 'advsearchplusfieldset'},
 			        
@@ -1940,8 +1941,8 @@ AIR.AirStoreFactory = function() {
 		
 		createDedicatedListStore: function() {
 			var dedicatedListRecord = Ext.data.Record.create([
-			     {name: 'text', mapping: 'dedicatedTxt'},
-			     {name: 'id', mapping: 'dedicatedId'}
+			     { name: 'text', mapping: 'dedicatedTxt' },
+			     { name: 'id', mapping: 'dedicatedId' }
 			]);
 			
 			var dedicatedListReader = new Ext.data.XmlReader({
@@ -1963,11 +1964,42 @@ AIR.AirStoreFactory = function() {
 				
 				fields: [ 'id', 'text' ],
 
-				reader : dedicatedListReader
+				reader: dedicatedListReader
 			});
 			
 			return dedicatedListStore;
 		},
+		
+		createOrganisationalScopeListStore: function() {
+			var organisationalScopeListRecord = Ext.data.Record.create([
+ 			     { name: 'id', mapping: 'organisationalScopeId' },
+ 			     { name: 'text', mapping: 'organisationalScopeTxt' }
+ 			]);
+ 			
+ 			var organisationalScopeListReader = new Ext.data.XmlReader({
+ 			    record: 'return',
+ 			    idProperty: 'id'
+ 			}, organisationalScopeListRecord); 
+ 			
+ 			var organisationalScopeListStore = new Ext.data.XmlStore({
+ 			    autoDestroy: true,
+ 			    storeId: 'organisationalScopeListStore',
+ 			    autoLoad: false,
+ 			    
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext +'/AIRToolsWSPort',
+ 					loadMethod: 'getOrganisationalScopeList',
+ 					timeout: 120000,
+ 					reader: organisationalScopeListReader
+ 				}),
+ 				
+ 				fields: [ 'id', 'text' ],
+
+ 				reader: organisationalScopeListReader
+ 			});
+ 			
+ 			return organisationalScopeListStore;
+ 		},
 		
 		createLoadClassListStore: function() {
 			var loadClassListRecord = Ext.data.Record.create([

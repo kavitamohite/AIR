@@ -177,41 +177,6 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 				    }]
 				},{
 					xtype: 'panel',
-					id: 'pApplicationStewardW',
-					border: false,
-					
-					layout: 'column',//toolbar hbox
-					style: {
-						marginTop: 5
-					},
-					
-					items: [{
-						xtype: 'label',
-						id: 'labeltfApplicationStewardW',
-						
-						width: 245,//255 205 185
-						style: {
-							fontSize: 12.5
-						}
-		    		},{
-						xtype: 'textfield',
-				        width: 250,
-				        id: 'tfApplicationStewardW',
-				        readOnly: true
-				    },{
-						xtype: 'hidden',
-				        id: 'tfApplicationStewardWHidden'
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'clApplicationStewardAdd',
-				    	img: img_AddPerson
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'clApplicationStewardRemove',
-				    	img: img_RemovePerson
-				    }]
-				},{
-					xtype: 'panel',
 					id: 'pApplicationOwnerDelegateW',
 					border: false,
 					
@@ -250,6 +215,48 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 				    	img: img_RemovePerson
 				    }]
 				}]
+			},{
+		        xtype: 'fieldset',
+		        id: 'fsApplicationStewardW',
+		        labelWidth: 200,
+		        width: 600,
+				
+				items: [{
+					xtype: 'panel',
+					id: 'pApplicationStewardW',
+					border: false,
+					
+					layout: 'column',//toolbar hbox
+					style: {
+						marginTop: 5
+					},
+					
+					items: [{
+						xtype: 'label',
+						id: 'labeltfApplicationStewardW',
+						
+						width: 245,//255 205 185
+						style: {
+							fontSize: 12.5
+						}
+		    		},{
+						xtype: 'textfield',
+				        width: 250,
+				        id: 'tfApplicationStewardW',
+				        readOnly: true
+				    },{
+						xtype: 'hidden',
+				        id: 'tfApplicationStewardWHidden'
+				    },{
+				    	xtype: 'commandlink',
+				    	id: 'clApplicationStewardAdd',
+				    	img: img_AddPerson
+				    },{
+				    	xtype: 'commandlink',
+				    	id: 'clApplicationStewardRemove',
+				    	img: img_RemovePerson
+				    }]
+				}]
 			}]
 		});
 		
@@ -260,8 +267,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		clApplicationOwnerAdd.on('click', this.onApplicationOwnerAdd, this);
 		clApplicationOwnerRemove.on('click', this.onApplicationOwnerRemove, this);
 		
-		var clApplicationStewardAdd = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('clApplicationStewardAdd');
-		var clApplicationStewardRemove = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('clApplicationStewardRemove');
+		var clApplicationStewardAdd = this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('clApplicationStewardAdd');//fsApplicationOwnerW
+		var clApplicationStewardRemove = this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('clApplicationStewardRemove');//fsApplicationOwnerW
 		clApplicationStewardAdd.on('click', this.onApplicationStewardAdd, this);
 		clApplicationStewardRemove.on('click', this.onApplicationStewardRemove, this);
 		
@@ -290,10 +297,10 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 	
 	
 	onApplicationStewardAdd: function(link, event) {
-		AIR.AirPickerManager.openPersonPicker(null, this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW'), event);
+		AIR.AirPickerManager.openPersonPicker(null, this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW'), event);//fsApplicationOwnerW
 	},
 	onApplicationStewardRemove: function(link, event) {
-		AIR.AirPickerManager.openRemovePicker(null, this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW'), event);
+		AIR.AirPickerManager.openRemovePicker(null, this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW'), event);//fsApplicationOwnerW
 	},
 	
 	
@@ -336,8 +343,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 			params.lifecycleStatusId = this.getComponent('cbLifecycleStatusW').getValue();
 			params.applicationOwnerHidden = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerWHidden').getValue();
 			params.applicationOwner = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').getValue();
-			params.applicationStewardHidden = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').getValue();
-			params.applicationSteward = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW').getValue();
+			params.applicationStewardHidden = this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').getValue();//fsApplicationOwnerW
+			params.applicationSteward = this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW').getValue();//fsApplicationOwnerW
 			params.applicationOwnerDelegateHidden = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateWHidden').getValue();
 			params.applicationOwnerDelegate = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW').getValue();
 			delete params.isCat2Sap;
@@ -354,15 +361,18 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		this.getComponent('taCiDescriptionW').reset();
 		this.getComponent('cbLifecycleStatusW').reset();
 		
+		
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').reset();
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerWHidden').reset();
-		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW').reset();
-		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').reset();
+		this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW').setValue(AIR.AirApplicationManager.getLastName() + ', ' + AIR.AirApplicationManager.getFirstName() + ' (' + AIR.AirApplicationManager.getCwid().toUpperCase()+')');//fsApplicationOwnerW
+		this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').setValue(AIR.AirApplicationManager.getCwid());//fsApplicationOwnerW
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW').reset();
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateWHidden').reset();
 		
 //		this.getComponent('pApplicationOwnerCompanyW').getComponent('tfApplicationOwnerCompanyW').reset();
 //		this.getComponent('tfApplicationIdW').reset();
+		
+		
 	},
 	
 	updateLabels: function(labels) {
@@ -386,11 +396,11 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		
 		this.getComponent('fsApplicationOwnerW').setTitle(labels.contactsApplicationOwner);
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('labeltfApplicationOwnerW').setText(labels.applicationOwner);//.el.dom.innerHTML = labels.applicationOwner;
-		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('labeltfApplicationStewardW').setText(labels.applicationSteward);//.el.dom.innerHTML = labels.applicationOwner;
+		this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('labeltfApplicationStewardW').setText(labels.applicationSteward);//fsApplicationOwnerW
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('labeltfApplicationOwnerDelegateW').setText(labels.applicationOwnerDelegate);//.el.dom.innerHTML = labels.applicationOwnerDelegate;
 
 		AIR.AirAclManager.setNecessity(this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('labeltfApplicationOwnerW'));
-		AIR.AirAclManager.setNecessity(this.getComponent('fsApplicationOwnerW').getComponent('pApplicationStewardW').getComponent('labeltfApplicationStewardW'));
+		AIR.AirAclManager.setNecessity(this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('labeltfApplicationStewardW'));//fsApplicationOwnerW
 		AIR.AirAclManager.setNecessity(this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('labeltfApplicationOwnerDelegateW'));
 	}
 

@@ -120,6 +120,25 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        xtype: 'combo',
 		        width: 230,
 //		        anchor: '70%',//siehe (*1)
+		        fieldLabel: 'Organisational Scope',
+		        
+		        id: 'organisationalScope',
+		        store: AIR.AirStoreManager.getStoreByName('organisationalScopeListStore'),
+		        valueField: 'id',
+		        displayField: 'text',
+		        
+//		        typeAhead: true,
+//		        forceSelection: true,
+//		        autoSelect: false,
+		        
+		        triggerAction: 'all',//all query
+		        lazyRender: true,
+		        lazyInit: false,
+		        mode: 'local'
+		    },{
+		        xtype: 'combo',
+		        width: 230,
+//		        anchor: '70%',//siehe (*1)
 		        fieldLabel: 'Operational status',
 //		        name: 'operationalStatus',
 		        
@@ -252,6 +271,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbApplicationCat2 = this.getComponent('applicationCat2');
 		var cbLifecycleStatus = this.getComponent('lifecycleStatus');
+		var cbOrganisationalScope = this.getComponent('organisationalScope');
 		var cbOperationalStatus = this.getComponent('operationalStatus');
 		
 		var tfComments = this.getComponent('comments');
@@ -275,17 +295,17 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		cbLifecycleStatus.on('select', this.onLifecycleStatusSelect, this);
 		cbLifecycleStatus.on('change', this.onLifecycleStatusChange, this);
-//		cbLifecycleStatus.on('blur', this.onLifecycleStatusChange, this);
+		
+		cbOrganisationalScope.on('select', this.onOrganisationalScopeSelect, this);
+		cbOrganisationalScope.on('change', this.onOrganisationalScopeChange, this);
 		
 		cbOperationalStatus.on('select', this.onOperationalStatusSelect, this);
 		cbOperationalStatus.on('change', this.onOperationalStatusChange, this);
-//		cbOperationalStatus.on('blur', this.onOperationalStatusChange, this);
 		
 		tfComments.on('change', this.onCommentsChange, this);
 		
 		cbApplicationBusinessCat.on('select', this.onApplicationBusinessCatSelect, this);
 		cbApplicationBusinessCat.on('change', this.onApplicationBusinessCatChange, this);
-//		cbApplicationBusinessCat.on('blur', this.onApplicationBusinessCatBlur, this);
 		
 		cbDataClass.on('select', this.onDataClassSelect, this);
 		cbDataClass.on('change', this.onDataClassChange, this);
@@ -417,6 +437,15 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
     	this.fireEvent('ciChange', this, combo, record);
     },
     onLifecycleStatusChange: function (combo, newValue, oldValue) {
+    	if(this.isComboValueValid(combo, newValue, oldValue))
+    		this.fireEvent('ciChange', this, combo, newValue);
+    },
+    
+    
+    onOrganisationalScopeSelect: function(combo, record, index) {
+    	this.fireEvent('ciChange', this, combo, record);
+    },
+    onOrganisationalScopeChange: function (combo, newValue, oldValue) {
     	if(this.isComboValueValid(combo, newValue, oldValue))
     		this.fireEvent('ciChange', this, combo, newValue);
     },
@@ -596,6 +625,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationVersion'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationCat2'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('lifecycleStatus'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('organisationalScope'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('operationalStatus'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('comments'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('specificsCategory').getComponent('cbApplicationBusinessCat'), data);
