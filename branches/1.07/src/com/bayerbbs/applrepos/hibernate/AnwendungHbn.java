@@ -2587,6 +2587,7 @@ public class AnwendungHbn {
 					String applicationCat1Txt = rset.getString("anwendung_kat1_en");
 					String applicationOwner = rset.getString("APPLICATION_OWNER");
 					String applicationOwnerDelegate = rset.getString("APPLICATION_OWNER_DELEGATE");
+					String applicationSteward = rset.getString("APPLICATION_STEWARD");
 					
 					ApplicationDTO anw = new ApplicationDTO();
 					anw.setApplicationId(anwendungId);
@@ -2599,6 +2600,7 @@ public class AnwendungHbn {
 					anw.setApplicationCat2Txt(applicationCat2Txt);
 					anw.setApplicationOwner(applicationOwner);
 					anw.setApplicationOwnerDelegate(applicationOwnerDelegate);
+					anw.setApplicationSteward(applicationSteward);
 					anw.setTableId(ApplreposConstants.TABELLEN_ID_APPLICATION);
 					listResult.add(anw);
 				}
