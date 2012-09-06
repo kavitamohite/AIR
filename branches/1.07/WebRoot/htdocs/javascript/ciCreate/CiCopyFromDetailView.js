@@ -4,7 +4,6 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 	SAP_APP_CAT1: 'SAP Application only',
 	SAP_APP_CAT2: 'SAP other',
 	
-	MAX_NUMBER_LENGTH: 4,
 	
 	initComponent: function() {
 		this.objectNameAllowedStore = AIR.AirStoreFactory.createObjectNameAllowedStore();//getObjectNameAllowedStore
@@ -15,8 +14,9 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		
 		Ext.apply(Ext.form.VTypes, {
-			numberLength: this.validateNumberLength.createDelegate(this)
-			//numberLengthText: 'Wert muss eine Dezimalzahl sein'//language Datei!
+			sapNamePart2_3: this.validateSapNamePart2_3.createDelegate(this),
+			sapNamePart1: this.validateSapNamePart1.createDelegate(this)
+			//sapNamePart2_3Text: 'Wert muss eine Dezimalzahl sein'//language Datei!
 		});
 		
 		Ext.apply(this, {
@@ -118,7 +118,8 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        		  xtype: 'textfield',
 				        		  id: 'tfSapNameCopyFrom1',
 				        		  
-				        		  maskRe: /[0-9a-zA-Z#=\+\-\_\/\\. ]/,
+				        		  maskRe: /[0-9A-Z]/, // /[0-9a-zA-Z#=\+\-\_\/\\. ]/,
+				        		  vtype: 'sapNamePart1',
 				        		  allowBlank: false,
 				        		  
 			        			  width: 100
@@ -132,7 +133,7 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        		  id: 'tfSapNameCopyFrom2',
 				        		  
 				        		  maskRe: /[0-9]/,
-				        		  vtype: 'numberLength',
+				        		  vtype: 'sapNamePart2_3',
 				        		  allowBlank: false,
 				        		  
 			        			  width: 50
@@ -146,7 +147,7 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        		  id: 'tfSapNameCopyFrom3',
 				        		  
 				        		  maskRe: /[0-9]/,
-				        		  vtype: 'numberLength',
+				        		  vtype: 'sapNamePart2_3',
 				        		  allowBlank: false,
 				        		  
 			        			  width: 50
@@ -478,13 +479,22 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		var tfCopyFromApplicationAlias = this.getComponent('tfCopyFromApplicationAlias');
 	},
 	
-	validateNumberLength: function(value, field) {
-		if(value.length > this.MAX_NUMBER_LENGTH) {
-			value = value.substring(0, this.MAX_NUMBER_LENGTH);
+	validateSapNamePart1: function(value, field) {
+		if(value.length > AC.REGEX_SAP_NAME_PART_1) {
+			value = value.substring(0, AC.REGEX_SAP_NAME_PART_1);
 			field.setRawValue(value);
 		}
 		
-		return value.length <= this.MAX_NUMBER_LENGTH && value.length > 0;
+		return value.length <= AC.REGEX_SAP_NAME_PART_1 && value.length > 0;
+	},
+	
+	validateSapNamePart2_3: function(value, field) {
+		if(value.length > AC.REGEX_SAP_NAME_PART_2_3) {
+			value = value.substring(0, AC.REGEX_SAP_NAME_PART_2_3);
+			field.setRawValue(value);
+		}
+		
+		return value.length <= AC.REGEX_SAP_NAME_PART_2_3 && value.length > 0;
 	},
 	
 	isSAPApplication: function(applicationCat2Txt) {

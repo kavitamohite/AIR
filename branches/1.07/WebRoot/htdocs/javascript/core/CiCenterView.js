@@ -89,6 +89,9 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					id: 'hadvsearchappdelegate'
 				},{
 					xtype: 'hidden',
+					id: 'hadvsearchsteward'
+				},{
+					xtype: 'hidden',
 					id: 'hadvsearchciowner'
 				},{
 					xtype: 'hidden',

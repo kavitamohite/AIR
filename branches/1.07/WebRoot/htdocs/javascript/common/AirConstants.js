@@ -48,7 +48,10 @@ AIR.AirConstants = {
 	AIR_ERROR_INVALID_TEMPLATE: 'AIR_ERROR_INVALID_TEMPLATE',
 	
 	REGEX_CWID: '[a-zA-Z]+',
-	REGEX_SAP_NAME: '[0-9a-zA-Z#=\+\-\_\/\\. ]+M[0-9]+C[0-9]+',
+	REGEX_SAP_NAME: '[0-9a-zA-Z]+M[0-9]+C[0-9]+',//'[0-9a-zA-Z#=\+\-\_\/\\. ]+M[0-9]+C[0-9]+',
+	REGEX_SAP_NAME_PART_1: 3,
+	REGEX_SAP_NAME_PART_2_3: 4,
+	
 	CI_CAT1_SAP_CAT2_ID: '457',
 	
 	CI_GROUP_ID_DEFAULT_ITSEC: '10136',

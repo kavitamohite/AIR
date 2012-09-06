@@ -69,7 +69,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 	        		xtype: 'textfield',
 	        		id: 'tfSapName1W',
 	        		  
-	        		maskRe: /[0-9a-zA-Z#=\+\-\_\/\\. ]/,
+	        		maskRe: /[0-9A-Z]/, // /[0-9a-zA-Z#=\+\-\_\/\\. ]/,
+	        		vtype: 'sapNamePart1',
 	        		allowBlank: false,
 	        		  
 	    			width: 110
@@ -83,7 +84,7 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 	        		id: 'tfSapName2W',
 	        		  
 	        		maskRe: /[0-9]/,
-	        		vtype: 'numberLength',
+	        		vtype: 'sapNamePart2_3',
 	        		allowBlank: false,
 	        		  
 	    			width: 50
@@ -97,7 +98,7 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 	        		id: 'tfSapName3W',
 	        		  
 	        		maskRe: /[0-9]/,
-	        		vtype: 'numberLength',
+	        		vtype: 'sapNamePart2_3',
 	        		allowBlank: false,
 	        		  
 	    			width: 50

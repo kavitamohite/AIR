@@ -1652,8 +1652,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //				cbSignee.value = massnahme.signee;
 				
 				//orig
-
-				cbSignee.setValue(massnahme.signee.length == 0 ? massnahme.signee : this.getSigneeValueByCwid(cbSignee, massnahme.signee));//setRawValue
+				if(massnahme.signee.length > 0)
+					cbSignee.setValue(this.getSigneeValueByCwid(cbSignee, massnahme.signee));//setRawValue
 				var isSigneeUser = cbSignee.getStore().getById(AIR.AirApplicationManager.getCwid());
 				if(isSigneeUser && !this.config.hasTemplate) {
 //					Util.enableCombo(cbSignee);
@@ -2065,7 +2065,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	getSigneeValueByCwid: function(combo, cwid) {
 		var r = combo.getStore().getById(cwid);
-		var userName = r.data.lastname + ', '+r.data.firstname;
+		//falls r undefined Warnmeldung auf Statusbar, dass signee cwid zu dieser Massnahme nicht mehr gültig ist, da nicht
+		//(mehr) von PersonsWSPort.findPersonByFunctionSignee geliefert wird?
+		var userName = r ? r.data.lastname + ', '+r.data.firstname : cwid;
 		
 //		var index = combo.view.getSelectedIndexes()[0];
 //		var userName = combo.getStore().getAt(index).data.lastname + ', '+combo.getStore().getAt(index).data.firstname;
