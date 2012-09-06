@@ -2850,7 +2850,11 @@ public class AnwendungHbn {
 						applicationTarget.setSubResponsible(applicationSource.getSubResponsible());
 
 						applicationTarget.setApplicationOwner(applicationSource.getApplicationOwner());
-						applicationTarget.setApplicationSteward(applicationSource.getApplicationSteward());
+						
+						// RFC 8539 
+						// applicationTarget.setApplicationSteward(applicationSource.getApplicationSteward());
+						applicationTarget.setApplicationSteward(cwid);
+						
 						applicationTarget.setApplicationOwnerDelegate(applicationSource.getApplicationOwnerDelegate());
 						
 						
