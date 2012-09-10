@@ -37,6 +37,12 @@ AIR.AirApplicationManager = function() {
 		},
 		
 		init: function(loginData) {
+			Ext.apply(Ext.form.VTypes, {
+				sapNamePart2_3: this.validateSapNamePart2_3.createDelegate(this),
+				sapNamePart1: this.validateSapNamePart1.createDelegate(this)
+				//sapNamePart2_3Text: 'Wert muss eine Dezimalzahl sein'//language Datei!
+			});
+			
         	AIR.AirApplicationManager.setCwid(loginData.cwid);
         	AIR.AirApplicationManager.setToken(loginData.token);
         	AIR.AirApplicationManager.setUserName(loginData.username);
@@ -656,6 +662,24 @@ AIR.AirApplicationManager = function() {
 			};
 			
 			return true;
+		},
+		
+		validateSapNamePart1: function(value, field) {
+			if(value.length > AC.REGEX_SAP_NAME_PART_1) {
+				value = value.substring(0, AC.REGEX_SAP_NAME_PART_1);
+				field.setRawValue(value);
+			}
+			
+			return value.length <= AC.REGEX_SAP_NAME_PART_1 && value.length > 0;
+		},
+		
+		validateSapNamePart2_3: function(value, field) {
+			if(value.length > AC.REGEX_SAP_NAME_PART_2_3) {
+				value = value.substring(0, AC.REGEX_SAP_NAME_PART_2_3);
+				field.setRawValue(value);
+			}
+			
+			return value.length <= AC.REGEX_SAP_NAME_PART_2_3 && value.length > 0;
 		}
 	};
 }();

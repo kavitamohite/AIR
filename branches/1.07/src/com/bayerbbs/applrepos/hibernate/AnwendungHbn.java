@@ -617,7 +617,7 @@ public class AnwendungHbn {
 						}
 						
 						if (null != dto.getOrganisationalScope()) {
-							if (" ".equals(dto.getOrganisationalScope())) {
+							if ("-1".equals(dto.getOrganisationalScope())) {
 								application.setOrganisationalScope(null);
 							}
 							else {

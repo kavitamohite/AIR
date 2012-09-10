@@ -113,10 +113,12 @@
 		<searchResultType>Typ</searchResultType>
 		<searchResultCategory>IT Kategorie / Technologie</searchResultCategory>
 		<searchResultResponsible>CI Owner / Application Manager</searchResultResponsible>
-		<searchResultSubResponsible>CI Owner Delegate</searchResultSubResponsible>
+		<searchResultSubResponsible>CI Owner / Application Manager Delegate</searchResultSubResponsible>
 		<searchResultAppOwner>Application Owner</searchResultAppOwner>
 		<searchResultAppSteward>Application Steward</searchResultAppSteward>
 		<searchResultAppOwnerDelegate>Application Delegate</searchResultAppOwnerDelegate>
+		<applicationManager>Application Manager</applicationManager>
+		<applicationManagerDelegate>Application Manager Delegate</applicationManagerDelegate>
 
 		
 		<!-- Validation Messages -->

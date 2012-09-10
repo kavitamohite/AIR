@@ -13,11 +13,11 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.objectAliasAllowedStore.on('load', this.onAliasValidated, this);
 		
 		
-		Ext.apply(Ext.form.VTypes, {
-			sapNamePart2_3: this.validateSapNamePart2_3.createDelegate(this),
-			sapNamePart1: this.validateSapNamePart1.createDelegate(this)
-			//sapNamePart2_3Text: 'Wert muss eine Dezimalzahl sein'//language Datei!
-		});
+//		Ext.apply(Ext.form.VTypes, {
+//			sapNamePart2_3: this.validateSapNamePart2_3.createDelegate(this),
+//			sapNamePart1: this.validateSapNamePart1.createDelegate(this)
+//			//sapNamePart2_3Text: 'Wert muss eine Dezimalzahl sein'//language Datei!
+//		});
 		
 		Ext.apply(this, {
 //	    	layout: 'fit',////(*1)
@@ -479,23 +479,23 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		var tfCopyFromApplicationAlias = this.getComponent('tfCopyFromApplicationAlias');
 	},
 	
-	validateSapNamePart1: function(value, field) {
-		if(value.length > AC.REGEX_SAP_NAME_PART_1) {
-			value = value.substring(0, AC.REGEX_SAP_NAME_PART_1);
-			field.setRawValue(value);
-		}
-		
-		return value.length <= AC.REGEX_SAP_NAME_PART_1 && value.length > 0;
-	},
-	
-	validateSapNamePart2_3: function(value, field) {
-		if(value.length > AC.REGEX_SAP_NAME_PART_2_3) {
-			value = value.substring(0, AC.REGEX_SAP_NAME_PART_2_3);
-			field.setRawValue(value);
-		}
-		
-		return value.length <= AC.REGEX_SAP_NAME_PART_2_3 && value.length > 0;
-	},
+//	validateSapNamePart1: function(value, field) {
+//		if(value.length > AC.REGEX_SAP_NAME_PART_1) {
+//			value = value.substring(0, AC.REGEX_SAP_NAME_PART_1);
+//			field.setRawValue(value);
+//		}
+//		
+//		return value.length <= AC.REGEX_SAP_NAME_PART_1 && value.length > 0;
+//	},
+//	
+//	validateSapNamePart2_3: function(value, field) {
+//		if(value.length > AC.REGEX_SAP_NAME_PART_2_3) {
+//			value = value.substring(0, AC.REGEX_SAP_NAME_PART_2_3);
+//			field.setRawValue(value);
+//		}
+//		
+//		return value.length <= AC.REGEX_SAP_NAME_PART_2_3 && value.length > 0;
+//	},
 	
 	isSAPApplication: function(applicationCat2Txt) {
 		var store = AIR.AirStoreManager.getStoreByName('applicationCat2ListStore');

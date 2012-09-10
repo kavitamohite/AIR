@@ -39,6 +39,11 @@
 			existence, from planning to scrapping.&lt;br&gt;
 			The lifecycle status can be subdivided into lifecycle substatuses.
 		</lifecycleStatusText>
+		
+		<organisationalScope>Organisational scope</organisationalScope>
+		<organisationalScopeText>
+			Describes the organizational scope (BHC, BCS, BMS, BBS, BTS,  CUR, BAG, Bayer Group) of the application
+		</organisationalScopeText>
 
 		<operationalStatus>Allgemeine Verwendung</operationalStatus>
 		<operationalStatusText>

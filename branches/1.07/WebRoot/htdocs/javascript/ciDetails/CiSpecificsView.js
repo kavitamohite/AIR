@@ -117,6 +117,57 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        lazyInit: false,
 		        mode: 'local'
 		    },{
+//		        xtype: 'fieldset',
+//		        id: 'fsOrganisationalScope',
+//		        title: ' ',
+//		        labelWidth: 5,//5 200
+////		        anchor: '60%',
+//		        width: 120,
+//		        
+//		        style: {
+//		    		marginTop: 20
+//		    	},
+//		        
+//				items: [{
+			        xtype: 'listview',//grid
+			        width: 80,
+			        //height: 170,//150
+	//		        frame: true,
+			        border: false,
+			        fieldLabel: 'Organisational scope',
+
+//			        style: {
+//			    		marginBottom: 20
+//			    	},
+			        
+			        id: 'organisationalScope',
+			        store: AIR.AirStoreManager.getStoreByName('organisationalScopeListStore'),
+			        
+			        singleSelect: false,
+			        multiSelect: true,
+			        simpleSelect: true,
+			        hideHeaders: true,
+			        
+			        columns: [
+						{dataIndex: 'id', hidden: true, hideLabel: true, width: .001},
+						{dataIndex: 'name'}
+			        ]
+		    	},{
+		    		//because listview applicationUsingRegions is still editable when using applicationUsingRegions.disable();
+		    		xtype: 'textarea',
+		        	id: 'organisationalScopeHidden',
+		        	fieldLabel: 'Organisational scope',		    		
+
+//			        style: {
+//			    		marginBottom: 20
+//			    	},
+			        
+		        	width: 80,
+		        	height: 130,
+		        	hidden: true,
+		        	disabled: true
+//		    	}]
+	        }/*,{
 		        xtype: 'combo',
 		        width: 230,
 //		        anchor: '70%',//siehe (*1)
@@ -136,12 +187,15 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        lazyRender: true,
 		        lazyInit: false,
 		        mode: 'local'
-		    },{
+		    }*/,{
 		        xtype: 'combo',
 		        width: 230,
 //		        anchor: '70%',//siehe (*1)
 		        fieldLabel: 'Operational status',
-//		        name: 'operationalStatus',
+
+//		        style: {
+//		    		marginTop: 20
+//		    	},
 		        
 		        id: 'operationalStatus',
 		        store: AIR.AirStoreManager.getStoreByName('operationalStatusListStore'),//operationalStatusListStore,
@@ -272,7 +326,9 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbApplicationCat2 = this.getComponent('applicationCat2');
 		var cbLifecycleStatus = this.getComponent('lifecycleStatus');
-		var cbOrganisationalScope = this.getComponent('organisationalScope');
+//		var cbOrganisationalScope = this.getComponent('organisationalScope');
+		var lvOrganisationalScope = this.getComponent('organisationalScope');//.getComponent('fsOrganisationalScope')
+		lvOrganisationalScope.on('selectionchange', this.onOrganisationalScopeChange, this);
 		var cbOperationalStatus = this.getComponent('operationalStatus');
 		
 		var tfComments = this.getComponent('comments');
@@ -297,7 +353,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbLifecycleStatus.on('select', this.onLifecycleStatusSelect, this);
 		cbLifecycleStatus.on('change', this.onLifecycleStatusChange, this);
 		
-		cbOrganisationalScope.on('select', this.onOrganisationalScopeSelect, this);
+//		cbOrganisationalScope.on('select', this.onOrganisationalScopeSelect, this);
 //		cbOrganisationalScope.on('change', this.onOrganisationalScopeChange, this);
 		
 		cbOperationalStatus.on('select', this.onOperationalStatusSelect, this);
@@ -317,6 +373,24 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var clBusinessProcessRemove = pBusiness.getComponent('businessProcessremoveimg');
 		clBusinessProcessAdd.on('click', this.onBusinessProcessAdd, this);
 		clBusinessProcessRemove.on('click', this.onBusinessProcessRemove, this);
+	},
+	
+	onOrganisationalScopeChange: function(listview, selections) {
+		var scopeRecords = listview.getSelectedRecords();
+
+		var firstRecord = scopeRecords[0];
+		var lastRecord = scopeRecords[scopeRecords.length - 1];
+		
+		if(scopeRecords.length > 0 && (firstRecord.get('name') === AC.ORG_SCOPE_DEFAULT || lastRecord.get('name') === AC.ORG_SCOPE_DEFAULT)) {
+			var defaultRecord = firstRecord;
+			if(defaultRecord.get('name') !== AC.ORG_SCOPE_DEFAULT)
+				defaultRecord = lastRecord;
+				
+			listview.clearSelections();
+			listview.select(defaultRecord, true, true);
+		}
+		
+		this.fireEvent('ciChange', this, listview, selections);
 	},
 	
 	onApplicationNameChange: function(textfield, newValue, oldValue) {
@@ -443,9 +517,9 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
     },
     
     
-    onOrganisationalScopeSelect: function(combo, record, index) {
-    	this.fireEvent('ciChange', this, combo, record);
-    },
+//    onOrganisationalScopeSelect: function(combo, record, index) {
+//    	this.fireEvent('ciChange', this, combo, record);
+//    },
 //    onOrganisationalScopeChange: function (combo, newValue, oldValue) {
 //    	if(this.isComboValueValid(combo, newValue, oldValue))
 //    		this.fireEvent('ciChange', this, combo, newValue);
@@ -596,11 +670,39 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			this.getComponent('lifecycleStatus').setValue('');
 		}
 		
-		if (data.organisationalScope && data.organisationalScope != 0) {
-			this.getComponent('organisationalScope').setValue(data.organisationalScope);
-		} else {
-			this.getComponent('organisationalScope').setValue('');
+//		if (data.organisationalScope && data.organisationalScope != 0) {
+//			this.getComponent('organisationalScope').setValue(data.organisationalScope);
+//		} else {
+//			this.getComponent('organisationalScope').setValue('');
+//		}
+		
+		var lvOrganisationalScope = this.getComponent('organisationalScope');//.getComponent('fsOrganisationalScope')
+		lvOrganisationalScope.clearSelections(true);
+		var taOrganisationalScope = this.getComponent('organisationalScopeHidden');//.getComponent('fsOrganisationalScope')
+		taOrganisationalScope.reset();
+		
+		if(data.organisationalScope.length > 0) {
+			var scopes = data.organisationalScope.split(',');
+			var store = lvOrganisationalScope.getStore();
+			
+			
+			if(AIR.AirAclManager.isRelevance(lvOrganisationalScope, data)) {//lvApplicationUsingRegions.isVisible()
+				Ext.each(scopes, function(item, index, all) {
+					var r = store.getAt(store.findExact('name', item));
+					lvOrganisationalScope.select(r, true, true);//r
+				});
+			} else {
+				var organisationalScope = data.organisationalScope;
+				
+				Ext.each(scopes, function(item, index, all) {
+					var r = store.getAt(store.findExact('name', item));
+					organisationalScope = organisationalScope.replace(item, r.data.name);
+				});
+				taOrganisationalScope.setValue(organisationalScope.replace(/,/g,'\n'));//data.licenseUsingRegions.replace(',','\n')
+			}
 		}
+		
+		
 		
 //		selectedOperationalStatusId = data.operationalStatusId;
 		if (data.operationalStatusId && data.operationalStatusId != 0) {
@@ -632,7 +734,14 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationVersion'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationCat2'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('lifecycleStatus'), data);
+		
+//		AIR.AirAclManager.setAccessMode(this.getComponent('fsOrganisationalScope').getComponent('organisationalScope'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('organisationalScope'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('organisationalScopeHidden'), data);
+//		AIR.AirAclManager.setNecessity(this.getComponent('organisationalScopeHidden'));
+		AIR.AirAclManager.setNecessityInternal(this.getComponent('organisationalScopeHidden').label, 'mandatory');
+		
+		
 		AIR.AirAclManager.setAccessMode(this.getComponent('operationalStatus'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('comments'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('specificsCategory').getComponent('cbApplicationBusinessCat'), data);
@@ -727,12 +836,27 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			else 
 				data.lifecycleStatusId = -1;
 		
-		field = this.getComponent('organisationalScope');
-		if(!field.disabled)
-			if(field.getValue().length > 0)
-				data.organisationalScope = field.getValue();
-			else 
-				data.organisationalScope = -1;
+//		field = this.getComponent('organisationalScope');
+//		if(!field.disabled)
+//			if(field.getValue().length > 0)
+//				data.organisationalScope = field.getValue();
+//			else 
+//				data.organisationalScope = -1;
+		var lvOrganisationalScope = this.getComponent('organisationalScope');//.getComponent('fsOrganisationalScope')
+		if(!lvOrganisationalScope.disabled) {
+			var scopeRecords = lvOrganisationalScope.getSelectedRecords();
+			var scopes = '';
+			for(var i = 0; i < scopeRecords.length; i++) {
+				if(scopes.length > 0)
+					scopes += ',';
+				
+				scopes += scopeRecords[i].get('id');
+			}
+			if(scopes.length > 0)
+				data.organisationalScope = scopes;
+			else
+				data.organisationalScope = '-1';
+		}
 		
 		field = this.getComponent('operationalStatus');
 		if(!field.disabled)
@@ -764,7 +888,11 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setFieldLabel(this.getComponent('applicationVersion'), labels.applicationVersion);
 		this.setFieldLabel(this.getComponent('applicationCat2'), labels.applicationCat2);
 		this.setFieldLabel(this.getComponent('lifecycleStatus'), labels.lifecycleStatus);
+		
+//		this.getComponent('fsOrganisationalScope').setTitle(labels.organisationalScope);
 		this.setFieldLabel(this.getComponent('organisationalScope'), labels.organisationalScope);
+		this.setFieldLabel(this.getComponent('organisationalScopeHidden'), labels.organisationalScope);
+		
 		this.setFieldLabel(this.getComponent('operationalStatus'), labels.operationalStatus);
 		this.setFieldLabel(this.getComponent('comments'), labels.comments);
 		
@@ -776,11 +904,13 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	updateToolTips: function(toolTips) {
 //		this.setTooltipData(this.getComponent('applicationName').label,  toolTips.applicationName,  toolTips.applicationNameText);
-		this.setTooltipData(this.getComponent('applicationAlias').label,  toolTips.applicationAlias,  toolTips.applicationAliasText);
-		this.setTooltipData(this.getComponent('barApplicationId').label,  toolTips.barApplicationId,  toolTips.barApplicationIdText);
+		this.setTooltipData(this.getComponent('applicationAlias').label,  toolTips.applicationAlias, toolTips.applicationAliasText);
+		this.setTooltipData(this.getComponent('barApplicationId').label,  toolTips.barApplicationId, toolTips.barApplicationIdText);
       	this.setTooltipData(this.getComponent('applicationVersion').label, toolTips.version, toolTips.versionText);
-		this.setTooltipData(this.getComponent('applicationCat2').label,  toolTips.applicationCat2,  toolTips.applicationCat2Text);
+		this.setTooltipData(this.getComponent('applicationCat2').label,  toolTips.applicationCat2, toolTips.applicationCat2Text);
 		this.setTooltipData(this.getComponent('lifecycleStatus').label, toolTips.lifecycleStatus, toolTips.lifecycleStatusText);
+		this.setTooltipData(this.getComponent('organisationalScope').label, toolTips.organisationalScope, toolTips.organisationalScopeText);
+		this.setTooltipData(this.getComponent('organisationalScopeHidden').label, toolTips.organisationalScope, toolTips.organisationalScopeText);
 		this.setTooltipData(this.getComponent('operationalStatus').label, toolTips.operationalStatus, toolTips.operationalStatusText);
 		this.setTooltipData(this.getComponent('comments').label, toolTips.comments, toolTips.commentsText);
 		this.setTooltipData(this.getComponent('specificsCategory').getComponent('cbApplicationBusinessCat').label, toolTips.applicationBusinessCat, toolTips.applicationBusinessCatText);

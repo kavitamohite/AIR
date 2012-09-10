@@ -3,7 +3,7 @@ Ext.namespace('AIR');
 AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 	
 	initComponent: function() {
-		this.index = 1;
+		this.index = 0;//1
 			    	
 	    Ext.apply(this, {
 		    width: 300,
@@ -129,6 +129,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		
 		var cwid = this.getComponent('pAirLoginWindow').getComponent('tfCwid').getValue();
 		var password = this.getComponent('pAirLoginWindow').getComponent('tfPassword').getValue();
+
 		
 		this.fireEvent('login', cwid, password);
 	},

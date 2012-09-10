@@ -398,6 +398,17 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 		bCopyFromSearch.setText(labels.button_general_search);
 		bCopyFromNext.setText(labels.button_general_next);
 		
+		var grid = this.getComponent('pCopyFromSearchCard').getComponent('CiSearchWizzardResultGrid');
+		grid.getColumnModel().setColumnHeader(0, labels.searchResultName);
+		grid.getColumnModel().setColumnHeader(1, labels.searchResultAlias);
+		grid.getColumnModel().setColumnHeader(2, labels.searchResultType);
+		grid.getColumnModel().setColumnHeader(3, labels.searchResultCategory);
+		grid.getColumnModel().setColumnHeader(4, labels.applicationManager);
+		grid.getColumnModel().setColumnHeader(5, labels.applicationManagerDelegate);
+		grid.getColumnModel().setColumnHeader(6, labels.searchResultAppOwner);
+		grid.getColumnModel().setColumnHeader(7, labels.searchResultAppSteward);
+		grid.getColumnModel().setColumnHeader(8, labels.searchResultAppOwnerDelegate);
+		
 		var ciCopyFromDetailView = this.getComponent('CiCopyFromDetailView');
 		ciCopyFromDetailView.updateLabels(labels);
 	}

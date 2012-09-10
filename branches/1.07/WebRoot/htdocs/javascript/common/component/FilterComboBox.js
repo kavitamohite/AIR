@@ -900,7 +900,7 @@ AIR.FilterComboBox = Ext.extend(Ext.form.ComboBox, {
 			return true;
 		}.createDelegate(this);
 		this.getStore().filterBy(filterFn);
-	},
+	}
     
 
 });

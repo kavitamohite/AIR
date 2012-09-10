@@ -2088,7 +2088,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	update: function() {
-		if(this.config.hasTemplate) {
+//		if(this.config.hasTemplate) {
 			var cbCompliantStatus = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement').getComponent('pCompliantStatus').getComponent('cbCompliantStatus');
 			var taJustification = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement').getComponent('pJustification').getComponent('taJustification');
 			var taGapDescription = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('pGapDescription').getComponent('taGapDescription');
@@ -2165,7 +2165,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			Util.disableCombo(cbSignee);
 			dfDateOfApproval.disable();
 			dfDateOfApproval.setHideTrigger(true);
-		}
+//		}
 	},
 	
 	updateToolbar: function(message) {

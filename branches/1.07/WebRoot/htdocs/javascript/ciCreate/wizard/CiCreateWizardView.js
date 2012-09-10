@@ -73,7 +73,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		var bNextW = this.getFooterToolbar().getComponent('bNextW');
 		bNextW.setVisible(true);
 		
-		this.setHeight(470);//440 420 360 400
+		this.setHeight(620);//470 440 420 360 400
 	},
 	
 	onCancel: function(button, event) {

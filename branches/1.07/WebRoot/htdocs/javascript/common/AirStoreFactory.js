@@ -1388,6 +1388,8 @@ AIR.AirStoreFactory = function() {
 			        {name: 'searchResultAppOwner'},
 			        {name: 'searchResultAppSteward'},
 			        {name: 'searchResultAppOwnerDelegate'},
+			        {name: 'applicationManager'},
+			        {name: 'applicationManagerDelegate'},
 			        
 			        // wizard
 			        {name: 'createpanelheader'},
@@ -1608,6 +1610,8 @@ AIR.AirStoreFactory = function() {
 			        {name: 'applicationCat2Text'},
 			        {name: 'lifecycleStatus'},
 			        {name: 'lifecycleStatusText'},
+			        {name: 'organisationalScope'},
+			        {name: 'organisationalScopeText'},
 			        {name: 'operationalStatus'},
 			        {name: 'operationalStatusText'},
 			        {name: 'comments'},

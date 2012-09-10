@@ -100,6 +100,17 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+	<!--<Identifier>
+		<id>organisationalScopeHidden</id>
+		<Mandatory>mandatory</Mandatory>
+		<Relevance>operational and strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>-->
 
 	<Identifier>
 		<id>operationalStatus</id>
@@ -1197,7 +1208,7 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	<Identifier>
-		<id>cbOrganisationalScopeW</id>
+		<id>lvOrganisationalScopeW</id>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>

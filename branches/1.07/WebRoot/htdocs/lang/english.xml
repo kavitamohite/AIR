@@ -111,10 +111,12 @@
 		<searchResultType>Type</searchResultType>
 		<searchResultCategory>IT Category/Technology</searchResultCategory>
 		<searchResultResponsible>CI Owner / Application Manager</searchResultResponsible>
-		<searchResultSubResponsible>CI Owner Delegate</searchResultSubResponsible>
+		<searchResultSubResponsible>CI Owner / Application Manager Delegate</searchResultSubResponsible>
 		<searchResultAppOwner>Application Owner</searchResultAppOwner>
 		<searchResultAppSteward>Application Steward</searchResultAppSteward>
 		<searchResultAppOwnerDelegate>Application Delegate</searchResultAppOwnerDelegate>
+		<applicationManager>Application Manager</applicationManager>
+		<applicationManagerDelegate>Application Manager Delegate</applicationManagerDelegate>
 
 		<!-- Validation Messages -->
 		<editDataNotValid>Information given for ## are not valid. Please update marked fields.</editDataNotValid>

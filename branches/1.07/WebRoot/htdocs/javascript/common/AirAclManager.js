@@ -160,14 +160,17 @@ AIR.AirAclManager = function() {
 						if(item.label.dom.className.indexOf('x-form-text-required') == -1)
 							item.label.dom.className += ' x-form-text-required';					
 					}
-				break;
+					break;
 				case 'listview'://grid
 					var fieldsetItem = item.findParentByType('fieldset');
-					fieldsetItem.el.dom.firstChild.firstChild.style.fontWeight = 'bolder';
-					if(fieldsetItem.el.dom.firstChild.firstChild.className.indexOf('x-form-text-required') == -1)
-						fieldsetItem.el.dom.firstChild.firstChild.className += ' x-form-text-required';
-					
-				break;
+					if(fieldsetItem) {
+						fieldsetItem.el.dom.firstChild.firstChild.style.fontWeight = 'bolder';
+						if(fieldsetItem.el.dom.firstChild.firstChild.className.indexOf('x-form-text-required') == -1)
+							fieldsetItem.el.dom.firstChild.firstChild.className += ' x-form-text-required';
+					} else {
+						this.setNecessity(item);
+					}
+					break;
 			}
 		},
 
@@ -192,15 +195,17 @@ AIR.AirAclManager = function() {
 							item.label.dom.className += ' x-form-text-required';
 						}
 					}
-				break;
+					break;
 				case 'listview'://grid
 					var fieldsetItem = item.findParentByType('fieldset');
 					if(fieldsetItem) {
 						fieldsetItem.el.dom.firstChild.firstChild.style.fontWeight = 'bold';
 						if(fieldsetItem.el.dom.firstChild.firstChild.className.indexOf('x-form-text-required') == -1)
 							fieldsetItem.el.dom.firstChild.firstChild.className += ' x-form-text-required';
+					} else {
+						this.setNecessity(item);
 					}
-				break;
+					break;
 			}
 		},
 
@@ -221,11 +226,9 @@ AIR.AirAclManager = function() {
 								for(var x=0;x<cls.length;++x)
 									if(cls[x]!=='x-form-text-required')
 										labelItem.el.dom.className += ' '+ cls[x];
-									
 								
 							}
-						} 
-						
+						}
 					} else {
 						item.label.dom.style.fontWeight = 'normal';
 						if(item.label.dom.className.indexOf('x-form-text-required')>-1) {
@@ -239,7 +242,7 @@ AIR.AirAclManager = function() {
 							
 						}
 					}
-				break;
+					break;
 				case 'grid': 
 					fieldsetItem = item.findParentByType('fieldset');
 					fieldsetItem.el.dom.firstChild.firstChild.style.fontWeight = 'bold';
@@ -369,6 +372,8 @@ AIR.AirAclManager = function() {
 //				this.setFormElementEnable(item, false);
 //			}
 
+			if(item.id === 'organisationalScope')
+				var x;
 			this.setFormElementEnable(item, this.isEditable(item));
 		},
 
@@ -574,11 +579,12 @@ AIR.AirAclManager = function() {
 //		},
 //		
 		listRequiredFields: function() {
-			incompleteFieldList = '';
+			var incompleteFieldList = '';
 			var records = this.aclStore.getRange();
+			var labels = AIR.AirApplicationManager.getLabels();
 			
 			Ext.each(records, function(item, index, allItems) {
-				if(item.data.Mandatory === 'mandatory') { //'required'
+				if(item.data.Mandatory === 'mandatory' && item.data.id.charAt(item.data.id.length - 1) !== 'W') { //'required'
 					var reqItemCmp = Ext.getCmp(item.data.id);
 					
 					if(reqItemCmp) {
@@ -587,22 +593,24 @@ AIR.AirAclManager = function() {
 							case 'textarea':
 							case 'combo':
 							case 'filterCombo':
+							
 								//if(!reqItemCmp.disabled && (reqItemCmp.getValue()===undefined || reqItemCmp.getValue()==='')) {
-								if(!reqItemCmp.disabled && (!reqItemCmp.getValue() || reqItemCmp.getValue().length === 0)) {
-									rec = AIR.AirApplicationManager.getLabels();
-									if(rec[reqItemCmp.id] !== undefined)
-										incompleteFieldList += rec[reqItemCmp.id] + ', ' ;
-									
-								}
-							break;
+								if(!reqItemCmp.disabled && (!reqItemCmp.getValue() || reqItemCmp.getValue().length === 0))
+									if(labels[reqItemCmp.id] !== undefined)
+										incompleteFieldList += labels[reqItemCmp.id] + ', ';
+								break;
+							case 'listview':
+								if(!reqItemCmp.disabled && reqItemCmp.getSelectedRecords().length === 0)
+									incompleteFieldList += labels[reqItemCmp.id] + ', ';
+								break;
 						}
 					}
 				}
 			});
 			
-			if(incompleteFieldList.length > 2) {
+			if(incompleteFieldList.length > 2)
 				incompleteFieldList = incompleteFieldList.substring(0, incompleteFieldList.length - 2);
-			}
+			
 			
 			return incompleteFieldList;
 		},
@@ -615,7 +623,7 @@ AIR.AirAclManager = function() {
 			
 			this.setEditable(uiElement);//editableIfSource and isAdmin check
 			
-			if(!uiElement.disabled) {
+//			if(!uiElement.disabled) {
 				this.setRelevance(uiElement, appDetail);
 				
 				
@@ -631,7 +639,7 @@ AIR.AirAclManager = function() {
 					accessMode.data.attributeMask,
 					accessMode.data.Mandatory
 				);
-			}
+//			}
 		},
 		
 //		onAclLoaded: function(store, records, options) {

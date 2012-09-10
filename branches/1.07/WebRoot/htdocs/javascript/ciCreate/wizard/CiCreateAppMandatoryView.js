@@ -133,12 +133,32 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		        lazyInit: false,
 		        mode: 'local'
 		    },{
+		        xtype: 'listview',//grid
+		        width: 80,
+		        //height: 170,//150
+//		        frame: true,
+		        border: false,
+		        fieldLabel: 'Organisational scope',
+		        
+		        id: 'lvOrganisationalScopeW',
+		        store: AIR.AirStoreManager.getStoreByName('organisationalScopeListStore'),
+		        
+		        singleSelect: false,
+		        multiSelect: true,
+		        simpleSelect: true,
+		        hideHeaders: true,
+		        
+		        columns: [
+					{ dataIndex: 'id', hidden: true, hideLabel: true, width: .001 },
+					{ dataIndex: 'name' }
+		        ]
+	    	}/*,{
 		        xtype: 'combo',
 		        width: 250,
 //		        anchor: '70%',//siehe (*1)
 //		        fieldLabel: 'Organisational Scope',
 		        
-		        id: 'cbOrganisationalScopeW',
+		        id: 'cbOrganisationalScopeW',//cbOrganisationalScopeW
 		        store: AIR.AirStoreManager.getStoreByName('organisationalScopeListStore'),
 		        valueField: 'id',
 		        displayField: 'name',
@@ -152,7 +172,7 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		        lazyRender: true,
 		        lazyInit: false,
 		        mode: 'local'
-		    },{
+		    }*/,{
 		        xtype: 'fieldset',
 		        id: 'fsApplicationOwnerW',
 		        title: 'Application Owner',
@@ -307,6 +327,27 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 //		clApplicationOwnerCompanyAdd.on('click', this.onApplicationOwnerCompanyAdd, this);
 //		clApplicationOwnerCompanyAddGroup.on('click', this.onApplicationOwnerCompanyAddGroup, this);
 //		clApplicationOwnerCompanyRemove.on('click', this.onApplicationOwnerCompanyRemove, this);
+		
+		var lvOrganisationalScope = this.getComponent('lvOrganisationalScopeW');
+		lvOrganisationalScope.on('selectionchange', this.onOrganisationalScopeChange, this);
+	},
+	
+	onOrganisationalScopeChange: function(listview, selections) {
+		var scopeRecords = listview.getSelectedRecords();
+
+		var firstRecord = scopeRecords[0];
+		var lastRecord = scopeRecords[scopeRecords.length - 1];
+		
+		if(scopeRecords.length > 0 && (firstRecord.get('name') === AC.ORG_SCOPE_DEFAULT || lastRecord.get('name') === AC.ORG_SCOPE_DEFAULT)) {
+			var defaultRecord = firstRecord;
+			if(defaultRecord.get('name') !== AC.ORG_SCOPE_DEFAULT)
+				defaultRecord = lastRecord;
+				
+			listview.clearSelections();
+			listview.select(defaultRecord, true, true);
+		}
+		
+		this.fireEvent('ciChange', this, listview, selections);
 	},
 	
 	onApplicationOwnerAdd: function(link, event) {
@@ -362,7 +403,7 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 			
 			params.comments = this.getComponent('taCiDescriptionW').getValue();
 			params.lifecycleStatusId = this.getComponent('cbLifecycleStatusW').getValue();
-			params.organisationalScope = this.getComponent('cbOrganisationalScopeW').getValue();
+//			params.organisationalScope = this.getComponent('cbOrganisationalScopeW').getValue();
 			params.applicationOwnerHidden = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerWHidden').getValue();
 			params.applicationOwner = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').getValue();
 			params.applicationStewardHidden = this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').getValue();//fsApplicationOwnerW
@@ -370,6 +411,21 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 			params.applicationOwnerDelegateHidden = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateWHidden').getValue();
 			params.applicationOwnerDelegate = this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW').getValue();
 			delete params.isCat2Sap;
+			
+			var lvOrganisationalScopeW = this.getComponent('lvOrganisationalScopeW');
+			var scopeRecords = lvOrganisationalScopeW.getSelectedRecords();
+			var scopes = '';
+			
+			for(var i = 0; i < scopeRecords.length; i++) {
+				if(scopes.length > 0)
+					scopes += ',';
+				
+				scopes += scopeRecords[i].get('id');
+			}
+			
+			if(scopes.length > 0)
+				params.organisationalScope = scopes;
+
 //				break;
 //		}
 		
@@ -382,7 +438,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		this.getComponent('pSapNameW').getComponent('tfSapName3W').reset();
 		this.getComponent('taCiDescriptionW').reset();
 		this.getComponent('cbLifecycleStatusW').reset();
-		this.getComponent('cbOrganisationalScopeW').reset();
+//		this.getComponent('cbOrganisationalScopeW').reset();
+		this.getComponent('lvOrganisationalScopeW').clearSelections();
 		
 		
 		
@@ -418,8 +475,10 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		this.setFieldLabel(this.getComponent('cbLifecycleStatusW'), labels.lifecycleStatus);
 		AIR.AirAclManager.setNecessity(this.getComponent('cbLifecycleStatusW'));
 		
-		this.setFieldLabel(this.getComponent('cbOrganisationalScopeW'), labels.organisationalScope);
-		AIR.AirAclManager.setNecessity(this.getComponent('cbOrganisationalScopeW'));
+//		this.setFieldLabel(this.getComponent('cbOrganisationalScopeW'), labels.organisationalScope);
+//		AIR.AirAclManager.setNecessity(this.getComponent('cbOrganisationalScopeW'));
+		this.setFieldLabel(this.getComponent('lvOrganisationalScopeW'), labels.organisationalScope);
+		AIR.AirAclManager.setNecessity(this.getComponent('lvOrganisationalScopeW'));
 		
 		this.getComponent('fsApplicationOwnerW').setTitle(labels.contactsApplicationOwner);
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('labeltfApplicationOwnerW').setText(labels.applicationOwner);//.el.dom.innerHTML = labels.applicationOwner;
