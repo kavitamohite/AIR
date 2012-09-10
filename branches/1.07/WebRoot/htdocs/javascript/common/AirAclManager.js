@@ -33,14 +33,14 @@ AIR.AirAclManager = function() {
 						break;
 					case 'textfield':
 					case 'textarea':
-						if(Ext.getCmp(item.id + 'addimg')!==undefined)
-							Ext.getCmp(item.id + 'addimg').show();
+						if(Ext.getCmp(item.id + 'Add'))
+							Ext.getCmp(item.id + 'Add').show();
 						
-						if(Ext.getCmp(item.id + 'addgroupimg')!==undefined)
-							Ext.getCmp(item.id + 'addgroupimg').show();
+						if(Ext.getCmp(item.id + 'AddGroup'))
+							Ext.getCmp(item.id + 'AddGroup').show();
 						
-						if(Ext.getCmp(item.id + 'removeimg')!==undefined)
-							Ext.getCmp(item.id + 'removeimg').show();
+						if(Ext.getCmp(item.id + 'Remove'))
+							Ext.getCmp(item.id + 'Remove').show();
 						
 						break;
 					case 'combo':
@@ -82,14 +82,14 @@ AIR.AirAclManager = function() {
 				switch (item.getXType()) {
 					case 'textfield':
 					case 'textarea':
-						if(Ext.getCmp(item.id + 'addimg')!==undefined)
-							Ext.getCmp(item.id + 'addimg').hide();
+						if(Ext.getCmp(item.id + 'Add'))
+							Ext.getCmp(item.id + 'Add').hide();
 						
-						if(Ext.getCmp(item.id + 'addgroupimg')!==undefined)
-							Ext.getCmp(item.id + 'addgroupimg').hide();
+						if(Ext.getCmp(item.id + 'AddGroup'))
+							Ext.getCmp(item.id + 'AddGroup').hide();
 						
-						if(Ext.getCmp(item.id + 'removeimg')!==undefined)
-							Ext.getCmp(item.id + 'removeimg').hide();
+						if(Ext.getCmp(item.id + 'Remove'))
+							Ext.getCmp(item.id + 'Remove').hide();
 						
 						item.clearInvalid();
 						item.disable();
@@ -218,7 +218,7 @@ AIR.AirAclManager = function() {
 				case 'filterCombo':
 					if(item.label===undefined) {
 						var labelItem = Ext.getCmp('label' + item.id);
-						if(labelItem!==undefined) {
+						if(labelItem) {
 							labelItem.el.dom.style.fontWeight = 'normal';
 							if(labelItem.el.dom.className.indexOf('x-form-text-required')>-1) {
 								var cls = labelItem.el.dom.className.split(' ');
@@ -238,8 +238,6 @@ AIR.AirAclManager = function() {
 							for(var x=0;x<cls.length;++x)
 								if(cls[x]!=='x-form-text-required')
 									item.label.dom.className += ' '+ cls[x];
-								
-							
 						}
 					}
 					break;
@@ -366,14 +364,6 @@ AIR.AirAclManager = function() {
 		},
 
 		setEditable: function(item) {
-//			if(this.isEditable(item)) {
-//				this.setFormElementEnable(item, true);
-//			} else {
-//				this.setFormElementEnable(item, false);
-//			}
-
-			if(item.id === 'organisationalScope')
-				var x;
 			this.setFormElementEnable(item, this.isEditable(item));
 		},
 

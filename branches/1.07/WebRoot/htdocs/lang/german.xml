@@ -116,7 +116,7 @@
 		<searchResultSubResponsible>CI Owner / Application Manager Delegate</searchResultSubResponsible>
 		<searchResultAppOwner>Application Owner</searchResultAppOwner>
 		<searchResultAppSteward>Application Steward</searchResultAppSteward>
-		<searchResultAppOwnerDelegate>Application Delegate</searchResultAppOwnerDelegate>
+		<searchResultAppOwnerDelegate>Application Owner Delegate</searchResultAppOwnerDelegate>
 		<applicationManager>Application Manager</applicationManager>
 		<applicationManagerDelegate>Application Manager Delegate</applicationManagerDelegate>
 
@@ -157,7 +157,7 @@
 				<businessProcess>Prozess</businessProcess>
 		
 		<contactsPanelTitle>Kontakte</contactsPanelTitle>
-			<contactsApplicationOwner>Application Owner</contactsApplicationOwner>
+			<fsApplicationOwner>Application Owner</fsApplicationOwner>
 			<applicationOwner>Primary Person</applicationOwner>
 			<applicationOwnerDelegate>Delegate</applicationOwnerDelegate>
 			<applicationSteward>Steward</applicationSteward>

@@ -2,10 +2,6 @@ Ext.namespace('AIR');
 
 AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	initComponent: function() {
-		
-		//Bestätigungsabfrage beim Löschen über den AirRemoverPicker gibt es nicht mehr
-		//War ursprünglich vorhanden in commonfunctions.js::removeValueFromField() 
-		
 		this.gpscContactsMap = [
     	    '', // 0 not mapped
            	'gpsccontactSupportGroup', // 1
@@ -25,7 +21,10 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
            	'gpsccontactBusinessOwnerRepresentative' //15
        	];
 		
-		var taWidth = Ext.isIE ? 224 : 230;//230 224 wegen IE und index.html DOCTYPE! Dies hat Auswirkungen auf die Breite der textarea ??!!
+		var taWidth = Ext.isIE ? 224 : 230;//230 224 wegen IE und index.html DOCTYPE! Dies hat Auswirkungen auf die Breite der textarea
+		
+		
+//		var appOwnerStewardFieldsets = AIR.AirUiFactory.createAppOwnerStewardFieldsets('');
 		
 		Ext.apply(this, {
 		    title: 'Contacts',
@@ -35,9 +34,12 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    bodyStyle: 'padding:10px',
 //		    autoScroll: true,
 		    
-		    items: [{
+		    items: [
+//		        appOwnerStewardFieldsets.fsApplicationOwner,
+//		        appOwnerStewardFieldsets.fsApplicationSteward,
+            {
 		        xtype: 'fieldset',
-		        id: 'contactsApplicationOwner',
+		        id: 'fsApplicationOwner',
 		        title: 'Application Owner',
 		        labelWidth: 200,
 		        
@@ -45,7 +47,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        
 				items: [{
 					xtype: 'panel',
-					id: 'pContactsApplicationOwner',
+					id: 'pApplicationOwner',
 					border: false,
 					
 					layout: 'column',//toolbar hbox
@@ -68,11 +70,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'applicationOwnerHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'applicationOwneraddimg',
+				    	id: 'applicationOwnerAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'applicationOwnerremoveimg',
+				    	id: 'applicationOwnerRemove',
 				    	img: img_RemovePerson
 				    }]
 				},{
@@ -103,21 +105,21 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'applicationOwnerDelegateHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'applicationOwnerDelegateaddimg',
+				    	id: 'applicationOwnerDelegateAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'applicationOwnerDelegateaddgroupimg',
+				    	id: 'applicationOwnerDelegateAddGroup',
 				    	img: img_AddGroup
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'applicationOwnerDelegateremoveimg',
+				    	id: 'applicationOwnerDelegateRemove',
 				    	img: img_RemovePerson
 				    }]
 				}]
 			},{
 		        xtype: 'fieldset',
-		        id: 'fsApplicationSteward',//pContactsApplicationOwner
+		        id: 'fsApplicationSteward',//pApplicationOwner
 		        labelWidth: 200,
 		        
 				items: [{
@@ -148,23 +150,23 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'applicationStewardHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'applicationStewardaddimg',
+				    	id: 'applicationStewardAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'applicationStewardremoveimg',
+				    	id: 'applicationStewardRemove',
 				    	img: img_RemovePerson
 				    }]
 				}]
 			},{
 		        xtype:'fieldset',
-		        id: 'contactsCIOwner',
+		        id: 'fsCIOwner',
 		        title: 'CI Owner',
 		        labelWidth: 200,
 		        
 				items: [{
 					xtype: 'container',
-					id: 'pContactsCIOwner',
+					id: 'pCIOwner',
 					
 					layout: 'column',//toolbar
 //					width: 500,
@@ -188,11 +190,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'ciResponsibleHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'ciResponsibleaddimg',
+				    	id: 'ciResponsibleAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'ciResponsibleremoveimg',
+				    	id: 'ciResponsibleRemove',
 				    	img: img_RemovePerson
 				    }]
 				},{
@@ -226,15 +228,15 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'ciSubResponsibleHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'ciSubResponsibleaddimg',
+				    	id: 'ciSubResponsibleAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'ciSubResponsibleaddgroupimg',
+				    	id: 'ciSubResponsibleAddGroup',
 				    	img: img_AddGroup
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'ciSubResponsibleremoveimg',
+				    	id: 'ciSubResponsibleRemove',
 				    	img: img_RemovePerson
 				    }]
 				}]
@@ -277,11 +279,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactResponsibleAtCustomerSideHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactResponsibleAtCustomerSideaddimg',
+				    	id: 'gpsccontactResponsibleAtCustomerSideAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactResponsibleAtCustomerSideremoveimg',
+				    	id: 'gpsccontactResponsibleAtCustomerSideRemove',
 				    	img: img_RemovePerson
 				    }]
 				},{
@@ -318,11 +320,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //				    {xtype: 'tbtext', html:'&nbsp;'},
 				    {
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactCiOwneraddimg',
+				    	id: 'gpsccontactCiOwnerAdd',
 				    	img: img_AddGroup
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactCiOwnerremoveimg',
+				    	id: 'gpsccontactCiOwnerRemove',
 				    	img: img_RemoveGroup
 				    }]
 				},{
@@ -360,11 +362,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactSystemResponsibleHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactSystemResponsibleaddimg',
+				    	id: 'gpsccontactSystemResponsibleAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactSystemResponsibleremoveimg',
+				    	id: 'gpsccontactSystemResponsibleRemove',
 				    	img: img_RemovePerson
 				    }]
 				},{
@@ -399,11 +401,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactSupportGroupHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactSupportGroupaddimg',
+				    	id: 'gpsccontactSupportGroupAdd',
 				    	img: img_AddGroup
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactSupportGroupremoveimg',
+				    	id: 'gpsccontactSupportGroupRemove',
 				    	img: img_RemoveGroup
 				    }]
 				},{
@@ -438,11 +440,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactChangeTeamHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactChangeTeamaddimg',
+				    	id: 'gpsccontactChangeTeamAdd',
 				    	img: img_AddGroup
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactChangeTeamremoveimg',
+				    	id: 'gpsccontactChangeTeamRemove',
 				    	img: img_RemoveGroup
 				    }]
 				},{
@@ -480,11 +482,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactServiceCoordinatorHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactServiceCoordinatoraddimg',
+				    	id: 'gpsccontactServiceCoordinatorAdd',
 				    	img: img_AddGroup
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactServiceCoordinatorremoveimg',
+				    	id: 'gpsccontactServiceCoordinatorRemove',
 				    	img: img_RemoveGroup
 				    }]
 				},{
@@ -522,11 +524,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactServiceCoordinatorIndivHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactServiceCoordinatorIndivaddimg',
+				    	id: 'gpsccontactServiceCoordinatorIndivAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactServiceCoordinatorIndivremoveimg',
+				    	id: 'gpsccontactServiceCoordinatorIndivRemove',
 				    	img: img_RemovePerson
 				    }]
 				},{
@@ -562,11 +564,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactImplementationTeamHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactImplementationTeamaddimg',
+				    	id: 'gpsccontactImplementationTeamAdd',
 				    	img: img_AddGroup
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactImplementationTeamremoveimg',
+				    	id: 'gpsccontactImplementationTeamRemove',
 				    	img: img_RemoveGroup
 				    }]
 				},{
@@ -605,11 +607,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactEscalationHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactEscalationaddimg',
+				    	id: 'gpsccontactEscalationAdd',
 				    	img: img_AddGroup
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactEscalationremoveimg',
+				    	id: 'gpsccontactEscalationRemove',
 				    	img: img_RemoveGroup
 				    }]
 				},{
@@ -647,11 +649,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactEscalationIndivHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactEscalationIndivaddimg',
+				    	id: 'gpsccontactEscalationIndivAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactEscalationIndivremoveimg',
+				    	id: 'gpsccontactEscalationIndivRemove',
 				    	img: img_RemovePerson
 				    }]
 				},{
@@ -690,11 +692,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactImpactedBusinessHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactImpactedBusinessaddimg',
+				    	id: 'gpsccontactImpactedBusinessAdd',
 				    	img: img_AddGroup
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactImpactedBusinessremoveimg',
+				    	id: 'gpsccontactImpactedBusinessRemove',
 				    	img: img_RemoveGroup
 				    }]
 				},{
@@ -733,11 +735,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactOwningBusinessGroupHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactOwningBusinessGroupaddimg',
+				    	id: 'gpsccontactOwningBusinessGroupAdd',
 				    	img: img_AddGroup
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactOwningBusinessGroupremoveimg',
+				    	id: 'gpsccontactOwningBusinessGroupRemove',
 				    	img: img_RemoveGroup
 				    }]
 				},{
@@ -772,11 +774,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'gpsccontactBusinessOwnerRepresentativeHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactBusinessOwnerRepresentativeaddimg',
+				    	id: 'gpsccontactBusinessOwnerRepresentativeAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'gpsccontactBusinessOwnerRepresentativeremoveimg',
+				    	id: 'gpsccontactBusinessOwnerRepresentativeRemove',
 				    	img: img_RemovePerson
 				    }]
 				}]
@@ -787,118 +789,118 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		this.addEvents('ciBeforeChange', 'ciChange');
 		
-		var pContactsApplicationOwner = this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner');
-		var clApplicationOwnerAdd = pContactsApplicationOwner.getComponent('applicationOwneraddimg');
-		var clApplicationOwnerRemove = pContactsApplicationOwner.getComponent('applicationOwnerremoveimg');
+		var pApplicationOwner = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner');
+		var clApplicationOwnerAdd = pApplicationOwner.getComponent('applicationOwnerAdd');
+		var clApplicationOwnerRemove = pApplicationOwner.getComponent('applicationOwnerRemove');
 		clApplicationOwnerAdd.on('click', this.onApplicationOwnerAdd, this);
 		clApplicationOwnerRemove.on('click', this.onApplicationOwnerRemove, this);
 		
-		var pApplicationSteward = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward');//contactsApplicationOwner
-		var clApplicationStewardAdd = pApplicationSteward.getComponent('applicationStewardaddimg');
-		var clApplicationStewardRemove = pApplicationSteward.getComponent('applicationStewardremoveimg');
+		var pApplicationSteward = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward');//fsApplicationOwner
+		var clApplicationStewardAdd = pApplicationSteward.getComponent('applicationStewardAdd');
+		var clApplicationStewardRemove = pApplicationSteward.getComponent('applicationStewardRemove');
 		clApplicationStewardAdd.on('click', this.onApplicationStewardAdd, this);
 		clApplicationStewardRemove.on('click', this.onApplicationStewardRemove, this);
 		
 		
-		var pApplicationOwnerDelegate = this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate');
-		var clApplicationOwnerDelegateAdd = pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateaddimg');
-		var clApplicationOwnerDelegateAddgroup = pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateaddgroupimg');
-		var clApplicationOwnerDelegateRemove = pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateremoveimg');
+		var pApplicationOwnerDelegate = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate');
+		var clApplicationOwnerDelegateAdd = pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateAdd');
+		var clApplicationOwnerDelegateAddgroup = pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateAddGroup');
+		var clApplicationOwnerDelegateRemove = pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateRemove');
 		clApplicationOwnerDelegateAdd.on('click', this.onApplicationOwnerDelegateAdd, this);
 		clApplicationOwnerDelegateAddgroup.on('click', this.onApplicationOwnerDelegateAddgroup, this);
 		clApplicationOwnerDelegateRemove.on('click', this.onApplicationOwnerDelegateRemove, this);
 		
 		
-		var pContactsCIOwner = this.getComponent('contactsCIOwner').getComponent('pContactsCIOwner');
-		var clCiResponsibleAdd = pContactsCIOwner.getComponent('ciResponsibleaddimg');
-		var clCiResponsibleRemove = pContactsCIOwner.getComponent('ciResponsibleremoveimg');
+		var pCIOwner = this.getComponent('fsCIOwner').getComponent('pCIOwner');
+		var clCiResponsibleAdd = pCIOwner.getComponent('ciResponsibleAdd');
+		var clCiResponsibleRemove = pCIOwner.getComponent('ciResponsibleRemove');
 		clCiResponsibleAdd.on('click', this.onCiResponsibleAdd, this);
 		clCiResponsibleRemove.on('click', this.onCiResponsibleRemove, this);
 		
-		var pCiSubResponsible = this.getComponent('contactsCIOwner').getComponent('pCiSubResponsible');
-		var clCiSubResponsibleAdd = pCiSubResponsible.getComponent('ciSubResponsibleaddimg');
-		var clCiSubResponsibleAddgroup = pCiSubResponsible.getComponent('ciSubResponsibleaddgroupimg');
-		var clCiSubResponsibleRemove = pCiSubResponsible.getComponent('ciSubResponsibleremoveimg');
+		var pCiSubResponsible = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible');
+		var clCiSubResponsibleAdd = pCiSubResponsible.getComponent('ciSubResponsibleAdd');
+		var clCiSubResponsibleAddgroup = pCiSubResponsible.getComponent('ciSubResponsibleAddGroup');
+		var clCiSubResponsibleRemove = pCiSubResponsible.getComponent('ciSubResponsibleRemove');
 		clCiSubResponsibleAdd.on('click', this.onCiSubResponsibleAdd, this);
 		clCiSubResponsibleAddgroup.on('click', this.onCiSubResponsibleAddgroup, this);
 		clCiSubResponsibleRemove.on('click', this.onCiSubResponsibleRemove, this);
 		
 		
 		var pGpsccontactResponsibleAtCustomerSide = this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide');
-		var clGpsccontactResponsibleAtCustomerSideAdd = pGpsccontactResponsibleAtCustomerSide.getComponent('gpsccontactResponsibleAtCustomerSideaddimg');
-		var clGpsccontactResponsibleAtCustomerSideRemove = pGpsccontactResponsibleAtCustomerSide.getComponent('gpsccontactResponsibleAtCustomerSideremoveimg');
+		var clGpsccontactResponsibleAtCustomerSideAdd = pGpsccontactResponsibleAtCustomerSide.getComponent('gpsccontactResponsibleAtCustomerSideAdd');
+		var clGpsccontactResponsibleAtCustomerSideRemove = pGpsccontactResponsibleAtCustomerSide.getComponent('gpsccontactResponsibleAtCustomerSideRemove');
 		clGpsccontactResponsibleAtCustomerSideAdd.on('click', this.onGpsccontactResponsibleAtCustomerSideAdd, this);
 		clGpsccontactResponsibleAtCustomerSideRemove.on('click', this.onGpsccontactResponsibleAtCustomerSideRemove, this);
 		
 		var pGpsccontactCiOwner = this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner');
-		var clGpsccontactCiOwnerAdd = pGpsccontactCiOwner.getComponent('gpsccontactCiOwneraddimg');
-		var clGpsccontactCiOwnerRemove = pGpsccontactCiOwner.getComponent('gpsccontactCiOwnerremoveimg');
+		var clGpsccontactCiOwnerAdd = pGpsccontactCiOwner.getComponent('gpsccontactCiOwnerAdd');
+		var clGpsccontactCiOwnerRemove = pGpsccontactCiOwner.getComponent('gpsccontactCiOwnerRemove');
 		clGpsccontactCiOwnerAdd.on('click', this.onGpsccontactCiOwnerAdd, this);
 		clGpsccontactCiOwnerRemove.on('click', this.onGpsccontactCiOwnerRemove, this);
 		
 		var pGpsccontactSystemResponsible = this.getComponent('contactsGPSC').getComponent('pGpsccontactSystemResponsible');
-		var clGpsccontactSystemResponsibleAdd = pGpsccontactSystemResponsible.getComponent('gpsccontactSystemResponsibleaddimg');
-		var clGpsccontactSystemResponsibleRemove = pGpsccontactSystemResponsible.getComponent('gpsccontactSystemResponsibleremoveimg');
+		var clGpsccontactSystemResponsibleAdd = pGpsccontactSystemResponsible.getComponent('gpsccontactSystemResponsibleAdd');
+		var clGpsccontactSystemResponsibleRemove = pGpsccontactSystemResponsible.getComponent('gpsccontactSystemResponsibleRemove');
 		clGpsccontactSystemResponsibleAdd.on('click', this.onGpsccontactSystemResponsibleAdd, this);
 		clGpsccontactSystemResponsibleRemove.on('click', this.onGpsccontactSystemResponsibleRemove, this);
 		
 		var pGpsccontactSupportGroup = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup');
-		var clGpsccontactSupportGroupAdd = pGpsccontactSupportGroup.getComponent('gpsccontactSupportGroupaddimg');
-		var clGpsccontactSupportGroupRemove = pGpsccontactSupportGroup.getComponent('gpsccontactSupportGroupremoveimg');
+		var clGpsccontactSupportGroupAdd = pGpsccontactSupportGroup.getComponent('gpsccontactSupportGroupAdd');
+		var clGpsccontactSupportGroupRemove = pGpsccontactSupportGroup.getComponent('gpsccontactSupportGroupRemove');
 		clGpsccontactSupportGroupAdd.on('click', this.onGpsccontactSupportGroupAdd, this);
 		clGpsccontactSupportGroupRemove.on('click', this.onGpsccontactSupportGroupRemove, this);
 		
 		var pGpsccontactChangeTeam = this.getComponent('contactsGPSC').getComponent('pGpsccontactChangeTeam');
-		var clGpsccontactChangeTeamAdd = pGpsccontactChangeTeam.getComponent('gpsccontactChangeTeamaddimg');
-		var clGpsccontactChangeTeamRemove = pGpsccontactChangeTeam.getComponent('gpsccontactChangeTeamremoveimg');
+		var clGpsccontactChangeTeamAdd = pGpsccontactChangeTeam.getComponent('gpsccontactChangeTeamAdd');
+		var clGpsccontactChangeTeamRemove = pGpsccontactChangeTeam.getComponent('gpsccontactChangeTeamRemove');
 		clGpsccontactChangeTeamAdd.on('click', this.onGpsccontactChangeTeamAdd, this);
 		clGpsccontactChangeTeamRemove.on('click', this.onGpsccontactChangeTeamRemove, this);
 		
 		var pGpsccontactServiceCoordinator = this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinator');
-		var clGpsccontactServiceCoordinatorAdd = pGpsccontactServiceCoordinator.getComponent('gpsccontactServiceCoordinatoraddimg');
-		var clGpsccontactServiceCoordinatorRemove = pGpsccontactServiceCoordinator.getComponent('gpsccontactServiceCoordinatorremoveimg');
+		var clGpsccontactServiceCoordinatorAdd = pGpsccontactServiceCoordinator.getComponent('gpsccontactServiceCoordinatorAdd');
+		var clGpsccontactServiceCoordinatorRemove = pGpsccontactServiceCoordinator.getComponent('gpsccontactServiceCoordinatorRemove');
 		clGpsccontactServiceCoordinatorAdd.on('click', this.onGpsccontactServiceCoordinatorAdd, this);
 		clGpsccontactServiceCoordinatorRemove.on('click', this.onGpsccontactServiceCoordinatorRemove, this);
 		
 		var pGpsccontactServiceCoordinatorIndiv = this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinatorIndiv');
-		var clGpsccontactServiceCoordinatorIndivAdd = pGpsccontactServiceCoordinatorIndiv.getComponent('gpsccontactServiceCoordinatorIndivaddimg');
-		var clGpsccontactServiceCoordinatorIndivRemove = pGpsccontactServiceCoordinatorIndiv.getComponent('gpsccontactServiceCoordinatorIndivremoveimg');
+		var clGpsccontactServiceCoordinatorIndivAdd = pGpsccontactServiceCoordinatorIndiv.getComponent('gpsccontactServiceCoordinatorIndivAdd');
+		var clGpsccontactServiceCoordinatorIndivRemove = pGpsccontactServiceCoordinatorIndiv.getComponent('gpsccontactServiceCoordinatorIndivRemove');
 		clGpsccontactServiceCoordinatorIndivAdd.on('click', this.onGpsccontactServiceCoordinatorIndivAdd, this);
 		clGpsccontactServiceCoordinatorIndivRemove.on('click', this.onGpsccontactServiceCoordinatorIndivRemove, this);
 		
 		var pGpsccontactImplementationTeam = this.getComponent('contactsGPSC').getComponent('pGpsccontactImplementationTeam');
-		var clGpsccontactImplementationTeamAdd = pGpsccontactImplementationTeam.getComponent('gpsccontactImplementationTeamaddimg');
-		var clGpsccontactImplementationTeamRemove = pGpsccontactImplementationTeam.getComponent('gpsccontactImplementationTeamremoveimg');
+		var clGpsccontactImplementationTeamAdd = pGpsccontactImplementationTeam.getComponent('gpsccontactImplementationTeamAdd');
+		var clGpsccontactImplementationTeamRemove = pGpsccontactImplementationTeam.getComponent('gpsccontactImplementationTeamRemove');
 		clGpsccontactImplementationTeamAdd.on('click', this.onGpsccontactImplementationTeamAdd, this);
 		clGpsccontactImplementationTeamRemove.on('click', this.onGpsccontactImplementationTeamRemove, this);
 		
 		var pGpsccontactEscalation = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalation');
-		var clGpsccontactEscalationAdd = pGpsccontactEscalation.getComponent('gpsccontactEscalationaddimg');
-		var clGpsccontactEscalationRemove = pGpsccontactEscalation.getComponent('gpsccontactEscalationremoveimg');
+		var clGpsccontactEscalationAdd = pGpsccontactEscalation.getComponent('gpsccontactEscalationAdd');
+		var clGpsccontactEscalationRemove = pGpsccontactEscalation.getComponent('gpsccontactEscalationRemove');
 		clGpsccontactEscalationAdd.on('click', this.onGpsccontactEscalationAdd, this);
 		clGpsccontactEscalationRemove.on('click', this.onGpsccontactEscalationRemove, this);
 		
 		var pGpsccontactEscalationIndiv = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalationIndiv');
-		var clGpsccontactEscalationIndivAdd = pGpsccontactEscalationIndiv.getComponent('gpsccontactEscalationIndivaddimg');
-		var clGpsccontactEscalationIndivRemove = pGpsccontactEscalationIndiv.getComponent('gpsccontactEscalationIndivremoveimg');
+		var clGpsccontactEscalationIndivAdd = pGpsccontactEscalationIndiv.getComponent('gpsccontactEscalationIndivAdd');
+		var clGpsccontactEscalationIndivRemove = pGpsccontactEscalationIndiv.getComponent('gpsccontactEscalationIndivRemove');
 		clGpsccontactEscalationIndivAdd.on('click', this.onGpsccontactEscalationIndivAdd, this);
 		clGpsccontactEscalationIndivRemove.on('click', this.onGpsccontactEscalationIndivRemove, this);
 		
 		var pGpsccontactImpactedBusiness = this.getComponent('contactsGPSC').getComponent('pGpsccontactImpactedBusiness');
-		var clGpsccontactImpactedBusinessAdd = pGpsccontactImpactedBusiness.getComponent('gpsccontactImpactedBusinessaddimg');
-		var clGpsccontactImpactedBusinessRemove = pGpsccontactImpactedBusiness.getComponent('gpsccontactImpactedBusinessremoveimg');
+		var clGpsccontactImpactedBusinessAdd = pGpsccontactImpactedBusiness.getComponent('gpsccontactImpactedBusinessAdd');
+		var clGpsccontactImpactedBusinessRemove = pGpsccontactImpactedBusiness.getComponent('gpsccontactImpactedBusinessRemove');
 		clGpsccontactImpactedBusinessAdd.on('click', this.onGpsccontactImpactedBusinessAdd, this);
 		clGpsccontactImpactedBusinessRemove.on('click', this.onGpsccontactImpactedBusinessRemove, this);
 		
 		var pGpsccontactOwningBusinessGroup = this.getComponent('contactsGPSC').getComponent('pGpsccontactOwningBusinessGroup');
-		var clGpsccontactOwningBusinessGroupAdd = pGpsccontactOwningBusinessGroup.getComponent('gpsccontactOwningBusinessGroupaddimg');
-		var clGpsccontactOwningBusinessGroupRemove = pGpsccontactOwningBusinessGroup.getComponent('gpsccontactOwningBusinessGroupremoveimg');
+		var clGpsccontactOwningBusinessGroupAdd = pGpsccontactOwningBusinessGroup.getComponent('gpsccontactOwningBusinessGroupAdd');
+		var clGpsccontactOwningBusinessGroupRemove = pGpsccontactOwningBusinessGroup.getComponent('gpsccontactOwningBusinessGroupRemove');
 		clGpsccontactOwningBusinessGroupAdd.on('click', this.onGpsccontactOwningBusinessGroupAdd, this);
 		clGpsccontactOwningBusinessGroupRemove.on('click', this.onGpsccontactOwningBusinessGroupRemove, this);
 		
 		var pGpsccontactBusinessOwnerRepresentative = this.getComponent('contactsGPSC').getComponent('pGpsccontactBusinessOwnerRepresentative');
-		var clGpsccontactBusinessOwnerRepresentativeAdd = pGpsccontactBusinessOwnerRepresentative.getComponent('gpsccontactBusinessOwnerRepresentativeaddimg');
-		var clGpsccontactBusinessOwnerRepresentativeRemove = pGpsccontactBusinessOwnerRepresentative.getComponent('gpsccontactBusinessOwnerRepresentativeremoveimg');
+		var clGpsccontactBusinessOwnerRepresentativeAdd = pGpsccontactBusinessOwnerRepresentative.getComponent('gpsccontactBusinessOwnerRepresentativeAdd');
+		var clGpsccontactBusinessOwnerRepresentativeRemove = pGpsccontactBusinessOwnerRepresentative.getComponent('gpsccontactBusinessOwnerRepresentativeRemove');
 		clGpsccontactBusinessOwnerRepresentativeAdd.on('click', this.onGpsccontactBusinessOwnerRepresentativeAdd, this);
 		clGpsccontactBusinessOwnerRepresentativeRemove.on('click', this.onGpsccontactBusinessOwnerRepresentativeRemove, this);
 	},
@@ -1050,68 +1052,68 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	onCiSubResponsibleAdd: function(link, event) {
 //		createPersonPickerTip(event, 'ciSubResponsible');
 		AIR.AirPickerManager.openPersonPicker(
-			this.onPersonAdded.createDelegate(this), this.getComponent('contactsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), event);
+			this.onPersonAdded.createDelegate(this), this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), event);
 	},
 	onCiSubResponsibleAddgroup: function(link, event) {
 //		createGroupPickerTip(event, 'ciSubResponsible', 'none');
 		AIR.AirPickerManager.openGroupPicker(
-			this.onGroupAdded.createDelegate(this), this.getComponent('contactsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), event, 'none');
+			this.onGroupAdded.createDelegate(this), this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), event, 'none');
 	},
 	onCiSubResponsibleRemove: function(link, event) {
 //		removeValueFromField(event, 'ciSubResponsible');
 		AIR.AirPickerManager.openRemovePicker(
-			this.onRecordRemoved.createDelegate(this), this.getComponent('contactsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), event);
+			this.onRecordRemoved.createDelegate(this), this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), event);
 	},
 	
 	
 	onCiResponsibleAdd: function(link, event) {
 //		createPersonPickerTip(event, 'ciResponsible');
 		AIR.AirPickerManager.openPersonPicker(
-			this.onPersonAdded.createDelegate(this), this.getComponent('contactsCIOwner').getComponent('pContactsCIOwner').getComponent('ciResponsible'), event);
+			this.onPersonAdded.createDelegate(this), this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsible'), event);
 	},
 	onCiResponsibleRemove: function(link, event) {
 //		removeValueFromField(event, 'applicationOwnerDelegate');
 		AIR.AirPickerManager.openRemovePicker(
-			this.onRecordRemoved.createDelegate(this), this.getComponent('contactsCIOwner').getComponent('pContactsCIOwner').getComponent('ciResponsible'), event);
+			this.onRecordRemoved.createDelegate(this), this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsible'), event);
 	},
 	
 	
 	onApplicationOwnerDelegateAdd: function(link, event) {
 //		createPersonPickerTip(event, 'applicationOwnerDelegate');
 		AIR.AirPickerManager.openPersonPicker(
-			this.onPersonAdded.createDelegate(this), this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), event);
+			this.onPersonAdded.createDelegate(this), this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), event);
 	},
 	onApplicationOwnerDelegateAddgroup: function(link, event) {
 //		createGroupPickerTip(event, 'applicationOwnerDelegate', 'none');
 		AIR.AirPickerManager.openGroupPicker(
-			this.onPersonAdded.createDelegate(this), this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), event, 'none');
+			this.onPersonAdded.createDelegate(this), this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), event, 'none');
 	},
 	onApplicationOwnerDelegateRemove: function(link, event) {
 //		removeValueFromField(event, 'applicationOwnerDelegate');
 		AIR.AirPickerManager.openRemovePicker(
-			this.onRecordRemoved.createDelegate(this), this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), event);
+			this.onRecordRemoved.createDelegate(this), this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), event);
 	},
 	
 	
 	onApplicationStewardAdd: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(
-			this.onPersonAdded.createDelegate(this), this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), event);//contactsApplicationOwner
+			this.onPersonAdded.createDelegate(this), this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), event);//fsApplicationOwner
 	},
 	onApplicationStewardRemove: function(link, event) {
 		AIR.AirPickerManager.openRemovePicker(
-			this.onRecordRemoved.createDelegate(this), this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), event);//contactsApplicationOwner
+			this.onRecordRemoved.createDelegate(this), this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), event);//fsApplicationOwner
 	},
 	
 
 	onApplicationOwnerAdd: function(link, event) {
 //		createPersonPickerTip(event, 'applicationOwner');
 		AIR.AirPickerManager.openPersonPicker(
-			this.onPersonAdded.createDelegate(this), this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner').getComponent('applicationOwner'), event);
+			this.onPersonAdded.createDelegate(this), this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwner'), event);
 	},
 	onApplicationOwnerRemove: function(link, event) {
 //		removeValueFromField(event, 'applicationOwner');
 		AIR.AirPickerManager.openRemovePicker(
-			this.onRecordRemoved.createDelegate(this), this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner').getComponent('applicationOwner'), event);
+			this.onRecordRemoved.createDelegate(this), this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwner'), event);
 	},
 	
 	
@@ -1145,16 +1147,16 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	update: function(data) {
-		var pContactsApplicationOwner = this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner');
+		var pApplicationOwner = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner');
 		if(data.applicationOwnerHidden) {// && data.applicationOwnerHidden != 0
-			pContactsApplicationOwner.getComponent('applicationOwnerHidden').setValue(data.applicationOwnerHidden);
-			pContactsApplicationOwner.getComponent('applicationOwner').setValue(data.applicationOwner);
+			pApplicationOwner.getComponent('applicationOwnerHidden').setValue(data.applicationOwnerHidden);
+			pApplicationOwner.getComponent('applicationOwner').setValue(data.applicationOwner);
 		} else {
-			pContactsApplicationOwner.getComponent('applicationOwnerHidden').setValue('');
-			pContactsApplicationOwner.getComponent('applicationOwner').setValue('');
+			pApplicationOwner.getComponent('applicationOwnerHidden').setValue('');
+			pApplicationOwner.getComponent('applicationOwner').setValue('');
 		}
 		
-		var pApplicationSteward = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward');//contactsApplicationOwner
+		var pApplicationSteward = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward');//fsApplicationOwner
 		if(data.applicationStewardHidden) {// && data.applicationStewardHidden != 0
 			pApplicationSteward.getComponent('applicationStewardHidden').setValue(data.applicationStewardHidden);
 			pApplicationSteward.getComponent('applicationSteward').setValue(data.applicationSteward);
@@ -1163,7 +1165,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			pApplicationSteward.getComponent('applicationSteward').setValue('');
 		}
 		
-		var pApplicationOwnerDelegate = this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate');
+		var pApplicationOwnerDelegate = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate');
 		if(data.applicationOwnerDelegateHidden && data.applicationOwnerDelegateHidden != 0) {
 			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue(data.applicationOwnerDelegateHidden);
 			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue(data.applicationOwnerDelegate);
@@ -1174,16 +1176,16 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 		
 
-		var pContactsCIOwner = this.getComponent('contactsCIOwner').getComponent('pContactsCIOwner');
+		var pCIOwner = this.getComponent('fsCIOwner').getComponent('pCIOwner');
 		if(data.ciResponsible) {// && data.ciResponsible != 0
-			pContactsCIOwner.getComponent('ciResponsible').setValue(data.ciResponsible);
-			pContactsCIOwner.getComponent('ciResponsibleHidden').setValue(data.ciResponsibleHidden);
+			pCIOwner.getComponent('ciResponsible').setValue(data.ciResponsible);
+			pCIOwner.getComponent('ciResponsibleHidden').setValue(data.ciResponsibleHidden);
 		} else {
-			pContactsCIOwner.getComponent('ciResponsible').setValue('');
-			pContactsCIOwner.getComponent('ciResponsibleHidden').setValue('');
+			pCIOwner.getComponent('ciResponsible').setValue('');
+			pCIOwner.getComponent('ciResponsibleHidden').setValue('');
 		}
 		
-		var pCiSubResponsible = this.getComponent('contactsCIOwner').getComponent('pCiSubResponsible');
+		var pCiSubResponsible = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible');
 		if(data.ciSubResponsible) {// && data.ciSubResponsible != 0
 			pCiSubResponsible.getComponent('ciSubResponsible').setValue(data.ciSubResponsible);
 			pCiSubResponsible.getComponent('ciSubResponsibleHidden').setValue(data.ciSubResponsibleHidden);
@@ -1197,7 +1199,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 		var labels = AIR.AirApplicationManager.getLabels();
 		var label = data.applicationCat1Txt === 'Application' ? labels.applicationManager : labels.label_details_ciOwner;
-		this.getComponent('contactsCIOwner').setTitle(label);
+		this.getComponent('fsCIOwner').setTitle(label);
 		
 		var applicationContactsStore = AIR.AirStoreFactory.createApplicationContactsStore();
 		applicationContactsStore.on('load', this.applicationContactsLoaded, this);
@@ -1214,12 +1216,12 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	updateAccessMode: function(data) {
-		AIR.AirAclManager.setAccessMode(this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner').getComponent('applicationOwner'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), data);//contactsApplicationOwner
-		AIR.AirAclManager.setAccessMode(this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwner'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), data);//fsApplicationOwner
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), data);
 		
-		AIR.AirAclManager.setAccessMode(this.getComponent('contactsCIOwner').getComponent('pContactsCIOwner').getComponent('ciResponsible'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('contactsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsible'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), data);
 		
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSide'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner'), data);
@@ -1246,40 +1248,40 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	setData: function(data) {
 		//var data = {};
 		
-		var field = this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner').getComponent('applicationOwnerHidden');
+		var field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwnerHidden');
 		if (!field.disabled) {
 			data.applicationOwner = field.getValue();
 			data.applicationOwnerHidden = field.getValue();
 		}
 		
-		var field = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationStewardHidden');//contactsApplicationOwner
+		var field = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationStewardHidden');//fsApplicationOwner
 		if (!field.disabled) {
 			data.applicationSteward = field.getValue();
 			data.applicationStewardHidden = field.getValue();
 		}
 
-		field = this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegateHidden');
+		field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegateHidden');
 		if (!field.disabled) {
 			data.applicationOwnerDelegateHidden = field.getValue();
-			field = this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate');
+			field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate');
 			data.applicationOwnerDelegate = field.getValue();
 		}
 		
 		
 		
 
-		field = this.getComponent('contactsCIOwner').getComponent('pContactsCIOwner').getComponent('ciResponsibleHidden');
+		field = this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsibleHidden');
 		if (!field.disabled) {
 			data.responsible = field.getValue();
 			data.responsibleHidden = field.getValue();
 		}
 
 
-		field = this.getComponent('contactsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsibleHidden');
+		field = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsibleHidden');
 		if (!field.disabled) {
 			data.subResponsibleHidden = field.getValue();
 			// Sonderfall ciSubResponsible benötigt den Gruppennamen!
-			field = this.getComponent('contactsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible');
+			field = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible');
 			data.subResponsible = field.getValue();
 		}
 		
@@ -1451,23 +1453,23 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	updateLabels: function(labels) {
 		this.setTitle(labels.contactsPanelTitle);
-		this.getComponent('contactsApplicationOwner').setTitle(labels.contactsApplicationOwner);
+		this.getComponent('fsApplicationOwner').setTitle(labels.fsApplicationOwner);
 		
 //		var appDetail = AIR.AirApplicationManager.getAppDetail();
 //		if(appDetail) {
 //			var label = appDetail.applicationCat1Txt === 'Application' ? labels.applicationManager : labels.contactsCIOwner;
-//			this.getComponent('contactsCIOwner').setTitle(label);//labels.contactsCIOwner
+//			this.getComponent('fsCIOwner').setTitle(label);//labels.contactsCIOwner
 //		}
 		
 		this.getComponent('contactsGPSC').setTitle(labels.contactsGPSC);
 
 		
-		this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner').getComponent('labelapplicationOwner').setText(labels.applicationOwner);//.el.dom.innerHTML = labels.applicationOwner;
-		this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('labelapplicationSteward').setText(labels.applicationSteward);//contactsApplicationOwner
-		this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('labelapplicationOwnerDelegate').setText(labels.applicationOwnerDelegate);//.el.dom.innerHTML = labels.applicationOwnerDelegate;
+		this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('labelapplicationOwner').setText(labels.applicationOwner);//.el.dom.innerHTML = labels.applicationOwner;
+		this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('labelapplicationSteward').setText(labels.applicationSteward);//fsApplicationOwner
+		this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('labelapplicationOwnerDelegate').setText(labels.applicationOwnerDelegate);//.el.dom.innerHTML = labels.applicationOwnerDelegate;
 
-		this.getComponent('contactsCIOwner').getComponent('pContactsCIOwner').getComponent('labelciResponsible').setText(labels.ciResponsible);
-		this.getComponent('contactsCIOwner').getComponent('pCiSubResponsible').getComponent('labelciSubResponsible').setText(labels.ciSubResponsible);
+		this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('labelciResponsible').setText(labels.ciResponsible);
+		this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('labelciSubResponsible').setText(labels.ciSubResponsible);
 
 		this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('labelgpsccontactResponsibleAtCustomerSide').setText(labels.gpsccontactResponsibleAtCustomerSide);
 		this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('labelgpsccontactCiOwner').setText(labels.gpsccontactCiOwner);
@@ -1488,9 +1490,9 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setTooltipData('labelciResponsible', toolTips.ciResponsible, toolTips.ciResponsibleText);
 		this.setTooltipData('labelciSubResponsible', toolTips.ciSubResponsible, toolTips.ciSubResponsibleText);
 		
-		this.setTooltipData(this.getComponent('contactsApplicationOwner').getComponent('pContactsApplicationOwner').getComponent('labelapplicationOwner'), toolTips.applicationOwner, toolTips.applicationOwnerText);
-		this.setTooltipData(this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('labelapplicationSteward'), toolTips.applicationSteward, toolTips.applicationStewardText);//contactsApplicationOwner
-		this.setTooltipData(this.getComponent('contactsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('labelapplicationOwnerDelegate'), toolTips.applicationOwnerDelegate, toolTips.applicationOwnerDelegateText);
+		this.setTooltipData(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('labelapplicationOwner'), toolTips.applicationOwner, toolTips.applicationOwnerText);
+		this.setTooltipData(this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('labelapplicationSteward'), toolTips.applicationSteward, toolTips.applicationStewardText);//fsApplicationOwner
+		this.setTooltipData(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('labelapplicationOwnerDelegate'), toolTips.applicationOwnerDelegate, toolTips.applicationOwnerDelegateText);
 				
 		
 		this.setTooltipData(this.getComponent('contactsGPSC').getComponent('pGpsccontactImpactedBusiness').getComponent('labelgpsccontactImpactedBusiness'), toolTips.gpsccontactImpactedBusiness, toolTips.gpsccontactImpactedBusinessText);

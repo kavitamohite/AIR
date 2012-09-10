@@ -21,11 +21,11 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 		
 		if(this.complete) {
 			columns.push({ header: 'Category', dataIndex: 'applicationCat2Txt', width: 150, sortable: true});//, menuDisabled: true
+			columns.push({ header: 'App owner', dataIndex: 'applicationOwner', width: 150, sortable: true});//, menuDisabled: true
+			columns.push({ header: 'App owner delegate', dataIndex: 'applicationOwnerDelegate', width: 150, sortable: true});//, menuDisabled: true
+			columns.push({ header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});//, menuDisabled: true
 			columns.push({ header: 'Responsible', dataIndex: 'responsible', width: 150, sortable: true});//, menuDisabled: true
 			columns.push({ header: 'Sub responsible', dataIndex: 'subResponsible', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ header: 'App owner', dataIndex: 'applicationOwner', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ header: 'App owner delegate', dataIndex: 'applicationOwnerDelegate', width: 150, sortable: true});//, menuDisabled: true
 		}
 		
 		var colModel = new Ext.grid.ColumnModel(columns);

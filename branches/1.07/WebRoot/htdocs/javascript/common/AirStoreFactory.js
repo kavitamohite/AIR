@@ -1228,7 +1228,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'contactsCIOwnerApplication'}, // for applications only
 			        {name: 'ciResponsible'},
 			        {name: 'ciSubResponsible'},
-			        {name: 'contactsApplicationOwner'},
+			        {name: 'fsApplicationOwner'},
 			        {name: 'applicationOwner'},        
 			        {name: 'applicationOwnerDelegate'},
 			        {name: 'applicationSteward'},
