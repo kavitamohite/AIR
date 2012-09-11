@@ -20,7 +20,7 @@ AIR.AirUiFactory = function() {
 					
 					items: [{
 						xtype: 'label',
-						id: 'l' + ownerId + 'abelapplicationOwner',
+						id: 'label' + ownerId + 'applicationOwner',
 						
 						width: 200,
 						style: {
@@ -92,7 +92,7 @@ AIR.AirUiFactory = function() {
 		        
 				items: [{
 					xtype: 'panel',
-					id: 'pApplicationSteward',
+					id: 'p' + ownerId + 'ApplicationSteward',
 					border: false,
 					
 					layout: 'column',//toolbar hbox
@@ -102,7 +102,7 @@ AIR.AirUiFactory = function() {
 					
 					items: [{
 						xtype: 'label',
-						id: 'labelapplicationSteward',
+						id: 'label' + ownerId + 'applicationSteward',
 						
 						width: 200,
 						style: {
@@ -111,18 +111,18 @@ AIR.AirUiFactory = function() {
 		    		},{
 						xtype: 'textfield',
 				        width: 230,
-				        id: 'applicationSteward',
+				        id: ownerId + 'applicationSteward',
 				        readOnly: true
 				    },{
 						xtype: 'hidden',
-				        id: 'applicationStewardHidden'
+				        id: ownerId + 'applicationStewardHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'applicationStewardAdd',
+				    	id: ownerId + 'applicationStewardAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'applicationStewardRemove',
+				    	id: ownerId + 'applicationStewardRemove',
 				    	img: img_RemovePerson
 				    }]
 				}]
