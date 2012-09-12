@@ -441,19 +441,15 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 //		this.getComponent('cbOrganisationalScopeW').reset();
 		this.getComponent('lvOrganisationalScopeW').clearSelections();
 		
-		
-		
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').reset();
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerWHidden').reset();
 		this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW').setValue(AIR.AirApplicationManager.getLastName() + ', ' + AIR.AirApplicationManager.getFirstName() + ' (' + AIR.AirApplicationManager.getCwid().toUpperCase()+')');//fsApplicationOwnerW
-		this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').setValue(AIR.AirApplicationManager.getCwid());//fsApplicationOwnerW
+		this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').setValue(AIR.AirApplicationManager.getCwid().toUpperCase());//fsApplicationOwnerW
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW').reset();
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateWHidden').reset();
 		
 //		this.getComponent('pApplicationOwnerCompanyW').getComponent('tfApplicationOwnerCompanyW').reset();
 //		this.getComponent('tfApplicationIdW').reset();
-		
-		
 	},
 	
 	updateLabels: function(labels) {
@@ -480,7 +476,7 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		this.setFieldLabel(this.getComponent('lvOrganisationalScopeW'), labels.organisationalScope);
 		AIR.AirAclManager.setNecessity(this.getComponent('lvOrganisationalScopeW'));
 		
-		this.getComponent('fsApplicationOwnerW').setTitle(labels.contactsApplicationOwner);
+		this.getComponent('fsApplicationOwnerW').setTitle(labels.fsApplicationOwner);
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('labeltfApplicationOwnerW').setText(labels.applicationOwner);//.el.dom.innerHTML = labels.applicationOwner;
 		this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('labeltfApplicationStewardW').setText(labels.applicationSteward);//fsApplicationOwnerW
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('labeltfApplicationOwnerDelegateW').setText(labels.applicationOwnerDelegate);//.el.dom.innerHTML = labels.applicationOwnerDelegate;
