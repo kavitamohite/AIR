@@ -2218,16 +2218,16 @@ AIR.AirStoreFactory = function() {
 		
 		createApplicationListStore: function() {
 			var applicationListRecord = Ext.data.Record.create([
-			    {name: 'applicationId', mapping: 'applicationId'},
+			    {name: 'applicationId', mapping: 'applicationId'},//, mapping: 'applicationId'
 			    {name: 'applicationName'},
 			    {name: 'applicationAlias'},
 			    {name: 'applicationCat1Txt'},
 			    {name: 'applicationCat2Txt'},
+			    {name: 'applicationOwner'},
+			    {name: 'applicationOwnerDelegate'},
+			    {name: 'applicationSteward'},
 			    {name: 'responsible'},
 			    {name: 'subResponsible'},
-			    {name: 'applicationOwner'},
-			    {name: 'applicationSteward'},
-			    {name: 'applicationOwnerDelegate'},
 			    {name: 'tableId'}
 			]);
 	
@@ -2240,20 +2240,20 @@ AIR.AirStoreFactory = function() {
 			var applicationListStore = new Ext.data.GroupingStore({//XmlStore
 			    autoDestroy: true,
 			    autoLoad: false,
+//			    storeId: 'applicationStore'+Ext.id(),
 //			    remoteSort: true,
 			    
 				fields: [
-					'applicationId', 
-					'applicationName', 
+					'applicationId',
+					'applicationName',
 					'applicationAlias',
-					'advancedsearch',
-					'responsible', 
-					'subResponsible',
-					'applicationCat2Txt',
 					'applicationCat1Txt',
+					'applicationCat2Txt',
 					'applicationOwner',
-					'applicationSteward',
 					'applicationOwnerDelegate',
+					'applicationSteward',
+					'responsible',
+					'subResponsible',
 					'tableId'
 				],
 			    

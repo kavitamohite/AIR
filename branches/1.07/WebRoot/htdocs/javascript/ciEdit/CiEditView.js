@@ -389,7 +389,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		this.disableButtons();
 		
-		var panelMsg = AIR.AirAclManager.listRequiredFields();
+		var panelMsg = AIR.AirAclManager.listRequiredFields(AIR.AirApplicationManager.getAppDetail());
 		if(panelMsg.length > 0) {
 			this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
 		} else {
@@ -524,7 +524,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	enableButtons: function() {
-		var panelMsg = AIR.AirAclManager.listRequiredFields();
+		var panelMsg = AIR.AirAclManager.listRequiredFields(AIR.AirApplicationManager.getAppDetail());
 		
 		if(panelMsg.length == 0) {
 			this.setPanelMessage(panelMsg);

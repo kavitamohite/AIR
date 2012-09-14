@@ -1147,33 +1147,54 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	update: function(data) {
-		var pApplicationOwner = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner');
-		if(data.applicationOwnerHidden) {// && data.applicationOwnerHidden != 0
-			pApplicationOwner.getComponent('applicationOwnerHidden').setValue(data.applicationOwnerHidden);
-			pApplicationOwner.getComponent('applicationOwner').setValue(data.applicationOwner);
+		var fsApplicationOwner = this.getComponent('fsApplicationOwner');
+		var fsApplicationSteward = this.getComponent('fsApplicationSteward');
+		
+		if(data.applicationCat1Id === AC.APP_CAT1_APPLICATION) {
+			fsApplicationOwner.setVisible(true);
+			fsApplicationSteward.setVisible(true);
+			
+			var pApplicationOwner = fsApplicationOwner.getComponent('pApplicationOwner');
+			if(data.applicationOwnerHidden) {// && data.applicationOwnerHidden != 0
+				pApplicationOwner.getComponent('applicationOwnerHidden').setValue(data.applicationOwnerHidden);
+				pApplicationOwner.getComponent('applicationOwner').setValue(data.applicationOwner);
+			} else {
+				pApplicationOwner.getComponent('applicationOwnerHidden').setValue('');
+				pApplicationOwner.getComponent('applicationOwner').setValue('');
+			}
+			
+			var pApplicationSteward = fsApplicationSteward.getComponent('pApplicationSteward');
+			if(data.applicationStewardHidden) {// && data.applicationStewardHidden != 0
+				pApplicationSteward.getComponent('applicationStewardHidden').setValue(data.applicationStewardHidden);
+				pApplicationSteward.getComponent('applicationSteward').setValue(data.applicationSteward);
+			} else {
+				pApplicationSteward.getComponent('applicationStewardHidden').setValue('');
+				pApplicationSteward.getComponent('applicationSteward').setValue('');
+			}
+			
+			var pApplicationOwnerDelegate = fsApplicationOwner.getComponent('pApplicationOwnerDelegate');
+			if(data.applicationOwnerDelegateHidden && data.applicationOwnerDelegateHidden != 0) {
+				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue(data.applicationOwnerDelegateHidden);
+				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue(data.applicationOwnerDelegate);
+			} else {
+				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue('');
+				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue('');
+			}
 		} else {
+			fsApplicationOwner.setVisible(false);
+			fsApplicationSteward.setVisible(false);
+			
+			var pApplicationOwner = fsApplicationOwner.getComponent('pApplicationOwner');
+			var pApplicationOwnerDelegate = fsApplicationOwner.getComponent('pApplicationOwnerDelegate');
+			var pApplicationSteward = fsApplicationSteward.getComponent('pApplicationSteward');
+			
 			pApplicationOwner.getComponent('applicationOwnerHidden').setValue('');
 			pApplicationOwner.getComponent('applicationOwner').setValue('');
-		}
-		
-		var pApplicationSteward = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward');//fsApplicationOwner
-		if(data.applicationStewardHidden) {// && data.applicationStewardHidden != 0
-			pApplicationSteward.getComponent('applicationStewardHidden').setValue(data.applicationStewardHidden);
-			pApplicationSteward.getComponent('applicationSteward').setValue(data.applicationSteward);
-		} else {
+			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue('');
+			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue('');
 			pApplicationSteward.getComponent('applicationStewardHidden').setValue('');
 			pApplicationSteward.getComponent('applicationSteward').setValue('');
 		}
-		
-		var pApplicationOwnerDelegate = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate');
-		if(data.applicationOwnerDelegateHidden && data.applicationOwnerDelegateHidden != 0) {
-			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue(data.applicationOwnerDelegateHidden);
-			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue(data.applicationOwnerDelegate);
-		} else {
-			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue('');
-			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue('');
-		}
-
 		
 
 		var pCIOwner = this.getComponent('fsCIOwner').getComponent('pCIOwner');
@@ -1244,29 +1265,27 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	
-	//getData: function() {
 	setData: function(data) {
-		//var data = {};
-		
-		var field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwnerHidden');
-		if (!field.disabled) {
-			data.applicationOwner = field.getValue();
-			data.applicationOwnerHidden = field.getValue();
+		if(this.getComponent('fsApplicationOwner').isVisible() && this.getComponent('fsApplicationSteward').isVisible()) {//AIR.AirApplicationManager.getAppDetail().applicationCat1Id !== AC.APP_CAT1_APPLICATION
+			var field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwnerHidden');
+			if (!field.disabled) {
+				data.applicationOwner = field.getValue();
+				data.applicationOwnerHidden = field.getValue();
+			}
+			
+			field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegateHidden');
+			if (!field.disabled) {
+				data.applicationOwnerDelegateHidden = field.getValue();
+				field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate');
+				data.applicationOwnerDelegate = field.getValue();
+			}
+			
+			var field = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationStewardHidden');//fsApplicationOwner
+			if (!field.disabled) {
+				data.applicationSteward = field.getValue();
+				data.applicationStewardHidden = field.getValue();
+			}
 		}
-		
-		var field = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationStewardHidden');//fsApplicationOwner
-		if (!field.disabled) {
-			data.applicationSteward = field.getValue();
-			data.applicationStewardHidden = field.getValue();
-		}
-
-		field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegateHidden');
-		if (!field.disabled) {
-			data.applicationOwnerDelegateHidden = field.getValue();
-			field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate');
-			data.applicationOwnerDelegate = field.getValue();
-		}
-		
 		
 		
 

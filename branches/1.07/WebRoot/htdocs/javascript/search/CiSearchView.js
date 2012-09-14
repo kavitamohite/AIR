@@ -415,7 +415,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		if(ciStandardSearchView.getWidth() < 860)
 			ciStandardSearchView.setHeight(530);//470
 		else
-			ciStandardSearchView.setHeight(360);//300
+			ciStandardSearchView.setHeight(400);//360 300
 		
 		this.isAdvSearch = true;
 		this.isOuSearch = false;
@@ -501,6 +501,13 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	
 	
 	processSearch: function(params) {
+		/*if(Ext.isIE && !this.isMoved) {
+			this.isMoved = true; 
+			//-----------------
+			//ohne dies vertauscht der IE willkürlich Spalten
+			this.ciSearchGrid.getColumnModel().setConfig(this.ciSearchGrid.getDefaultColumnConfig());//this.myOwnCIsGrid.getColumnModel().config
+		}*/
+		
 	    this.ciSearchGrid.getStore().load({
 	    	params: params
 	    });

@@ -230,7 +230,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					myPlaceView.update(viewId);
 					myPlaceView.updateLabels(AIR.AirApplicationManager.getLabels());
 
-					
+					var cm = myPlaceTabView.myDelegateCIsGrid.getColumnModel();
 					myPlaceTabView.loadDelegateCIsGrid('myCisSubstitute');
 					
 					if(options && options.callback)

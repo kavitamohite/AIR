@@ -129,7 +129,36 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 			searchAction: searchAction//'myCisSubstitute'
 		};
 		
-
+		
+		/*
+		if(Ext.isIE) {
+			var x = this.myDelegateCIsGrid;
+//			var cm = this.myDelegateCIsGrid.getColumnModel();
+			this.myDelegateCIsGrid.colModel = this.myOwnCIsGrid.getColumnModel();
+//			cm = this.myDelegateCIsGrid.getColumnModel();
+			
+			this.myDelegateCIsGrid.bypass = true;
+			this.myDelegateCIsGrid.initComponent();
+		}
+		
+//		this.myDelegateCIsGrid.getStore().removeAll();*/
+		
+		if(Ext.isIE && !this.isMoved) {
+			this.isMoved = true; 
+			//-----------------
+			//ohne dies vertauscht der IE willkürlich Spalten
+			this.myDelegateCIsGrid.getColumnModel().setConfig(this.myOwnCIsGrid.getColumnModel().config);//this.myDelegateCIsGrid.getColumnModel().setConfig(this.myDelegateCIsGrid.getDefaultColumnConfig());//
+			
+			
+//			var cm = this.myDelegateCIsGrid.getColumnModel();
+//			
+//			var i1 = cm.getIndexById('applicationAlias');
+//			var i2 = cm.getIndexById('applicationOwner');
+//			
+//			this.myDelegateCIsGrid.getColumnModel().moveColumn(i2,i1);
+//			this.myDelegateCIsGrid.getColumnModel().moveColumn(i1,i2);
+		}
+		
 		this.myDelegateCIsGrid.getStore().load({
 			params: params
 		});		

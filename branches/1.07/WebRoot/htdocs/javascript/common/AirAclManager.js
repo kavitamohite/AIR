@@ -568,7 +568,7 @@ AIR.AirAclManager = function() {
 //			}
 //		},
 //		
-		listRequiredFields: function() {
+		listRequiredFields: function(data) {
 			var incompleteFieldList = '';
 			var records = this.aclStore.getRange();
 			var labels = AIR.AirApplicationManager.getLabels();
@@ -583,11 +583,14 @@ AIR.AirAclManager = function() {
 							case 'textarea':
 							case 'combo':
 							case 'filterCombo':
+								if(data.applicationCat1Id !== AC.APP_CAT1_APPLICATION && AC.APP_CAT1_ONLY_FIELDS.indexOf(reqItemCmp.getId()) > -1)
+									break;
 							
 								//if(!reqItemCmp.disabled && (reqItemCmp.getValue()===undefined || reqItemCmp.getValue()==='')) {
 								if(!reqItemCmp.disabled && (!reqItemCmp.getValue() || reqItemCmp.getValue().length === 0))
-									if(labels[reqItemCmp.id] !== undefined)
+									if(labels[reqItemCmp.id])											
 										incompleteFieldList += labels[reqItemCmp.id] + ', ';
+									
 								break;
 							case 'listview':
 								if(!reqItemCmp.disabled && reqItemCmp.getSelectedRecords().length === 0)

@@ -334,7 +334,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						
 						layout: 'column',
 						style: {
-							marginBottom: 5
+							marginTop: 5
 						},
 						
 						items: [{
