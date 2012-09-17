@@ -11,23 +11,32 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 	        )
 	    });
 	    
-//	    MyPlaceTabView.updateLabels() nicht vergessen
-		var columns = [
-//		    expander,
-			{ header: 'Name', dataIndex: 'applicationName', width: 150, sortable: true},//, menuDisabled: true
-			{ header: 'Alias', dataIndex: 'applicationAlias', width: 150, sortable: true},//, menuDisabled: true
-			{ header: 'Type', dataIndex: 'applicationCat1Txt', width: 150, sortable: true}//, menuDisabled: true
-		];
+	    /*
+	    var columns = [];
+	    
+//		var columns = [
+////		    expander,
+//			{ header: 'Name', dataIndex: 'applicationName', width: 150, sortable: true},//, menuDisabled: true
+//			{ header: 'Alias', dataIndex: 'applicationAlias', width: 150, sortable: true},//, menuDisabled: true
+//			{ header: 'Type', dataIndex: 'applicationCat1Txt', width: 150, sortable: true}//, menuDisabled: true
+//		];
+		
+		columns.push({ id: 'applicationName', header: 'Name', dataIndex: 'applicationName', width: 150, sortable: true});
+		columns.push({ id: 'applicationAlias', header: 'Alias', dataIndex: 'applicationAlias', width: 150, sortable: true});
+		columns.push({ id: 'applicationCat1Txt', header: 'Type', dataIndex: 'applicationCat1Txt', width: 150, sortable: true});
 		
 		if(this.complete) {
-			columns.push({ header: 'Category', dataIndex: 'applicationCat2Txt', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ header: 'App owner', dataIndex: 'applicationOwner', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ header: 'App owner delegate', dataIndex: 'applicationOwnerDelegate', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ header: 'Responsible', dataIndex: 'responsible', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ header: 'Sub responsible', dataIndex: 'subResponsible', width: 150, sortable: true});//, menuDisabled: true
-		}
+			columns.push({ id: 'applicationCat2Txt', header: 'Category', dataIndex: 'applicationCat2Txt', width: 150, sortable: true});//, menuDisabled: true
+			columns.push({ id: 'applicationOwner', header: 'App owner', dataIndex: 'applicationOwner', width: 150, sortable: true});//, menuDisabled: true
+			columns.push({ id: 'applicationOwnerDelegate', header: 'App owner delegate', dataIndex: 'applicationOwnerDelegate', width: 150, sortable: true});//, menuDisabled: true
+			columns.push({ id: 'applicationSteward', header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});//, menuDisabled: true
+			columns.push({ id: 'responsible', header: 'Responsible', dataIndex: 'responsible', width: 150, sortable: true});//, menuDisabled: true
+			columns.push({ id: 'subResponsible', header: 'Sub responsible', dataIndex: 'subResponsible', width: 150, sortable: true});//, menuDisabled: true
+		}*/
 		
+	    var columns = AIR.ConfigFactory.createCiResultGridConfig(this.complete);
+		this.defaultColumnConfig = columns;
+	    
 		var colModel = new Ext.grid.ColumnModel(columns);
 		var selModel = new Ext.grid.RowSelectionModel({
 			singleSelect: true
@@ -112,10 +121,10 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 		
 		switch(this.pageSize) {
 			case 10:
-				this.setHeight(265);
+				this.setHeight(280);
 				break;
 			case 20://25
-				this.setHeight(480);//595
+				this.setHeight(490);//595
 				break;
 			case 50:
 			case 100:
@@ -128,6 +137,10 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 		this.pagingParams = pagingParams;
 		var pagingBar = this.getBottomToolbar();
 		pagingBar.pagingParams = pagingParams;
+	},
+	
+	getDefaultColumnConfig: function() {
+		return this.defaultColumnConfig;
 	}
 });
 Ext.reg('AIR.CiResultGrid', AIR.CiResultGrid);

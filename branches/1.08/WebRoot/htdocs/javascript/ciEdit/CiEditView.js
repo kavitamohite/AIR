@@ -277,8 +277,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.ciModified = false;
 		
 		var appDetail = records[0].data;
-		if(appDetail.applicationCat1Id == '0')
-			appDetail.applicationCat1Id = '5';
+//		if(appDetail.applicationCat1Id == '0')
+//			appDetail.applicationCat1Id = '5';
 		AIR.AirApplicationManager.setAppDetail(appDetail);
 		
 		
@@ -389,7 +389,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		this.disableButtons();
 		
-		var panelMsg = AIR.AirAclManager.listRequiredFields();
+		var panelMsg = AIR.AirAclManager.listRequiredFields(AIR.AirApplicationManager.getAppDetail());
 		if(panelMsg.length > 0) {
 			this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
 		} else {
@@ -524,7 +524,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	enableButtons: function() {
-		var panelMsg = AIR.AirAclManager.listRequiredFields();
+		var panelMsg = AIR.AirAclManager.listRequiredFields(AIR.AirApplicationManager.getAppDetail());
 		
 		if(panelMsg.length == 0) {
 			this.setPanelMessage(panelMsg);

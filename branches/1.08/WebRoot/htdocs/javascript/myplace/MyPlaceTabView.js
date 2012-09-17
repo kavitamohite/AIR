@@ -109,6 +109,15 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 			searchAction: searchAction//'myCis'
 		};
 		
+		if(Ext.isIE && !this.isMoved2) {
+			this.isMoved2 = true; 
+
+			//ohne dies vertauscht der IE willkürlich Spalten
+//			this.myOwnCIsGrid.getColumnModel().setConfig(this.myOwnCIsGrid.getColumnModel().config);//this.myDelegateCIsGrid.getColumnModel().setConfig(this.myDelegateCIsGrid.getDefaultColumnConfig());//
+			
+			this.myOwnCIsGrid.getColumnModel().setConfig(AIR.ConfigFactory.createCiResultGridConfig(true));
+			this.updateLabels(AIR.AirApplicationManager.getLabels());
+		}
 		
 		this.myOwnCIsGrid.getStore().load({
 			params: params
@@ -128,6 +137,16 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 			token: AIR.AirApplicationManager.getToken(),
 			searchAction: searchAction//'myCisSubstitute'
 		};
+		
+		if(Ext.isIE && !this.isMoved) {
+			this.isMoved = true; 
+
+			//ohne dies vertauscht der IE willkürlich Spalten
+//			this.myDelegateCIsGrid.getColumnModel().setConfig(this.myOwnCIsGrid.getColumnModel().config);//this.myDelegateCIsGrid.getColumnModel().setConfig(this.myDelegateCIsGrid.getDefaultColumnConfig());//
+			
+			this.myDelegateCIsGrid.getColumnModel().setConfig(AIR.ConfigFactory.createCiResultGridConfig(true));
+			this.updateLabels(AIR.AirApplicationManager.getLabels());
+		}
 		
 
 		this.myDelegateCIsGrid.getStore().load({
@@ -194,7 +213,6 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 	
 	updateLabels: function(labels) {
 		var myOwnCisView = this.getComponent('card-mycis').getComponent('myOwnCisView');
-		
 		myOwnCisView.setTitle(labels.searchResultPanelTitle);
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(0, labels.searchResultName);
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(1, labels.searchResultAlias);
@@ -206,10 +224,8 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(7, labels.searchResultResponsible);
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(8, labels.searchResultSubResponsible);
 
-
 		
 		var myDelegateCisView = this.getComponent('card-myapps').getComponent('myDelegateCisView');
-		
 		myDelegateCisView.setTitle(labels.searchResultPanelTitle);
 		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(0, labels.searchResultName);
 		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(1, labels.searchResultAlias);

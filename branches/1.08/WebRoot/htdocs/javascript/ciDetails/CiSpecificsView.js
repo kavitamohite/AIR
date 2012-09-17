@@ -634,8 +634,8 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbApplicationCat2 = this.getComponent('applicationCat2');
 		//cbApplicationCat2.getStore().filter('applicationCat1Id', data.applicationCat1Id);
-		var filterData = {
-			applicationCat1Id: data.applicationCat1Id
+		var filterData = {//falls app w/o cat soll trotzdem die cat2 von cat1=Application auswählbar sein
+			applicationCat1Id: data.applicationCat1Id != '0' ? data.applicationCat1Id : AC.APP_CAT1_APPLICATION
 		};
 		cbApplicationCat2.filterByData(filterData);
 		cbApplicationCat2.getStore().sort('text', 'ASC');

@@ -24,7 +24,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var taWidth = Ext.isIE ? 224 : 230;//230 224 wegen IE und index.html DOCTYPE! Dies hat Auswirkungen auf die Breite der textarea
 		
 		
-//		var appOwnerStewardFieldsets = AIR.AirUiFactory.createAppOwnerStewardFieldsets('');
+		var appOwnerStewardFieldsets = AIR.AirUiFactory.createAppOwnerStewardFieldsets('');
 		
 		Ext.apply(this, {
 		    title: 'Contacts',
@@ -35,212 +35,10 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		    autoScroll: true,
 		    
 		    items: [
-//		        appOwnerStewardFieldsets.fsApplicationOwner,
-//		        appOwnerStewardFieldsets.fsApplicationSteward,
-            {
-		        xtype: 'fieldset',
-		        id: 'fsApplicationOwner',
-		        title: 'Application Owner',
-		        labelWidth: 200,
-		        
-//		        layout: 'form',//fit
-		        
-				items: [{
-					xtype: 'panel',
-					id: 'pApplicationOwner',
-					border: false,
-					
-					layout: 'column',//toolbar hbox
-					
-					items: [{
-						xtype: 'label',
-						id: 'labelapplicationOwner',
-						
-						width: 200,
-						style: {
-							fontSize: 12
-						}
-		    		},{
-						xtype: 'textfield',
-				        width: 230,
-				        id: 'applicationOwner',
-				        readOnly: true
-				    },{
-						xtype: 'hidden',
-				        id: 'applicationOwnerHidden'
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'applicationOwnerAdd',
-				    	img: img_AddPerson
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'applicationOwnerRemove',
-				    	img: img_RemovePerson
-				    }]
-				},{
-					xtype: 'panel',
-					id: 'pApplicationOwnerDelegate',
-					border: false,
-					
-					layout: 'column',//toolbar hbox
-					style: {
-						marginTop: 5
-					},
-					
-					items: [{
-						xtype: 'label',
-						id: 'labelapplicationOwnerDelegate',
-						
-						width: 200,
-						style: {
-							fontSize: 12
-						}
-		    		},{
-						xtype: 'textfield',
-				        width: 230,
-				        id: 'applicationOwnerDelegate',
-				        readOnly: true
-				    },{
-						xtype: 'hidden',
-				        id: 'applicationOwnerDelegateHidden'
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'applicationOwnerDelegateAdd',
-				    	img: img_AddPerson
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'applicationOwnerDelegateAddGroup',
-				    	img: img_AddGroup
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'applicationOwnerDelegateRemove',
-				    	img: img_RemovePerson
-				    }]
-				}]
-			},{
-		        xtype: 'fieldset',
-		        id: 'fsApplicationSteward',//pApplicationOwner
-		        labelWidth: 200,
-		        
-				items: [{
-					xtype: 'panel',
-					id: 'pApplicationSteward',
-					border: false,
-					
-					layout: 'column',//toolbar hbox
-					style: {
-						marginTop: 5
-					},
-					
-					items: [{
-						xtype: 'label',
-						id: 'labelapplicationSteward',
-						
-						width: 200,
-						style: {
-							fontSize: 12
-						}
-		    		},{
-						xtype: 'textfield',
-				        width: 230,
-				        id: 'applicationSteward',
-				        readOnly: true
-				    },{
-						xtype: 'hidden',
-				        id: 'applicationStewardHidden'
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'applicationStewardAdd',
-				    	img: img_AddPerson
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'applicationStewardRemove',
-				    	img: img_RemovePerson
-				    }]
-				}]
-			},{
-		        xtype:'fieldset',
-		        id: 'fsCIOwner',
-		        title: 'CI Owner',
-		        labelWidth: 200,
-		        
-				items: [{
-					xtype: 'container',
-					id: 'pCIOwner',
-					
-					layout: 'column',//toolbar
-//					width: 500,
-					
-					items: [{
-						xtype: 'label',
-						id: 'labelciResponsible',
-						
-						width: 200,
-						style: {
-							fontSize: 12
-						}
-		    		},{
-						xtype: 'textfield',
-				        width: 230,
-				        id: 'ciResponsible',
-				        readOnly: true
-				    },{
-						xtype: 'hidden',
-				        name: 'ciResponsibleHidden',
-				        id: 'ciResponsibleHidden'
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'ciResponsibleAdd',
-				    	img: img_AddPerson
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'ciResponsibleRemove',
-				    	img: img_RemovePerson
-				    }]
-				},{
-					xtype: 'container',
-					id: 'pCiSubResponsible',
-					
-					layout: 'column',//toolbar
-					style: {
-						marginTop: 5
-					},
-//					width: 500,
-					
-					items: [{
-						xtype: 'label',
-						id: 'labelciSubResponsible',
-						
-						width: 200,
-						style: {
-							fontSize: 12
-//							marginRight: 120
-						}
-		    		},{
-						xtype: 'textfield',
-				        width: 230,
-				        id: 'ciSubResponsible',
-				        allowBlank: true,
-				        disabled: false,
-				        readOnly: true
-				    },{
-						xtype: 'hidden',
-				        id: 'ciSubResponsibleHidden'
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'ciSubResponsibleAdd',
-				    	img: img_AddPerson
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'ciSubResponsibleAddGroup',
-				    	img: img_AddGroup
-				    },{
-				    	xtype: 'commandlink',
-				    	id: 'ciSubResponsibleRemove',
-				    	img: img_RemovePerson
-				    }]
-				}]
-			},{
+		        appOwnerStewardFieldsets.fsApplicationOwner,
+		        appOwnerStewardFieldsets.fsApplicationSteward,
+		        appOwnerStewardFieldsets.fsCIOwner,
+	        {
 		        xtype: 'fieldset',
 		        id: 'contactsGPSC',
 		        title: 'GPSC contacts',
@@ -1147,31 +945,53 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	update: function(data) {
-		var pApplicationOwner = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner');
-		if(data.applicationOwnerHidden) {// && data.applicationOwnerHidden != 0
-			pApplicationOwner.getComponent('applicationOwnerHidden').setValue(data.applicationOwnerHidden);
-			pApplicationOwner.getComponent('applicationOwner').setValue(data.applicationOwner);
+		var fsApplicationOwner = this.getComponent('fsApplicationOwner');
+		var fsApplicationSteward = this.getComponent('fsApplicationSteward');
+		
+		if(data.applicationCat1Id === AC.APP_CAT1_APPLICATION) {
+			fsApplicationOwner.setVisible(true);
+			fsApplicationSteward.setVisible(true);
+			
+			var pApplicationOwner = fsApplicationOwner.getComponent('pApplicationOwner');
+			if(data.applicationOwnerHidden) {// && data.applicationOwnerHidden != 0
+				pApplicationOwner.getComponent('applicationOwnerHidden').setValue(data.applicationOwnerHidden);
+				pApplicationOwner.getComponent('applicationOwner').setValue(data.applicationOwner);
+			} else {
+				pApplicationOwner.getComponent('applicationOwnerHidden').setValue('');
+				pApplicationOwner.getComponent('applicationOwner').setValue('');
+			}
+			
+			var pApplicationSteward = fsApplicationSteward.getComponent('pApplicationSteward');
+			if(data.applicationStewardHidden) {// && data.applicationStewardHidden != 0
+				pApplicationSteward.getComponent('applicationStewardHidden').setValue(data.applicationStewardHidden);
+				pApplicationSteward.getComponent('applicationSteward').setValue(data.applicationSteward);
+			} else {
+				pApplicationSteward.getComponent('applicationStewardHidden').setValue('');
+				pApplicationSteward.getComponent('applicationSteward').setValue('');
+			}
+			
+			var pApplicationOwnerDelegate = fsApplicationOwner.getComponent('pApplicationOwnerDelegate');
+			if(data.applicationOwnerDelegateHidden && data.applicationOwnerDelegateHidden != 0) {
+				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue(data.applicationOwnerDelegateHidden);
+				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue(data.applicationOwnerDelegate);
+			} else {
+				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue('');
+				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue('');
+			}
 		} else {
+			fsApplicationOwner.setVisible(false);
+			fsApplicationSteward.setVisible(false);
+			
+			var pApplicationOwner = fsApplicationOwner.getComponent('pApplicationOwner');
+			var pApplicationOwnerDelegate = fsApplicationOwner.getComponent('pApplicationOwnerDelegate');
+			var pApplicationSteward = fsApplicationSteward.getComponent('pApplicationSteward');
+			
 			pApplicationOwner.getComponent('applicationOwnerHidden').setValue('');
 			pApplicationOwner.getComponent('applicationOwner').setValue('');
-		}
-		
-		var pApplicationSteward = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward');//fsApplicationOwner
-		if(data.applicationStewardHidden) {// && data.applicationStewardHidden != 0
-			pApplicationSteward.getComponent('applicationStewardHidden').setValue(data.applicationStewardHidden);
-			pApplicationSteward.getComponent('applicationSteward').setValue(data.applicationSteward);
-		} else {
-			pApplicationSteward.getComponent('applicationStewardHidden').setValue('');
-			pApplicationSteward.getComponent('applicationSteward').setValue('');
-		}
-		
-		var pApplicationOwnerDelegate = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate');
-		if(data.applicationOwnerDelegateHidden && data.applicationOwnerDelegateHidden != 0) {
-			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue(data.applicationOwnerDelegateHidden);
-			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue(data.applicationOwnerDelegate);
-		} else {
 			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue('');
 			pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue('');
+			pApplicationSteward.getComponent('applicationStewardHidden').setValue('');
+			pApplicationSteward.getComponent('applicationSteward').setValue('');
 		}
 
 		
@@ -1244,27 +1064,26 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	
-	//getData: function() {
 	setData: function(data) {
-		//var data = {};
-		
-		var field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwnerHidden');
-		if (!field.disabled) {
-			data.applicationOwner = field.getValue();
-			data.applicationOwnerHidden = field.getValue();
-		}
-		
-		var field = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationStewardHidden');//fsApplicationOwner
-		if (!field.disabled) {
-			data.applicationSteward = field.getValue();
-			data.applicationStewardHidden = field.getValue();
-		}
-
-		field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegateHidden');
-		if (!field.disabled) {
-			data.applicationOwnerDelegateHidden = field.getValue();
-			field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate');
-			data.applicationOwnerDelegate = field.getValue();
+		if(this.getComponent('fsApplicationOwner').isVisible() && this.getComponent('fsApplicationSteward').isVisible()) {//AIR.AirApplicationManager.getAppDetail().applicationCat1Id !== AC.APP_CAT1_APPLICATION
+			var field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwnerHidden');
+			if (!field.disabled) {
+				data.applicationOwner = field.getValue();
+				data.applicationOwnerHidden = field.getValue();
+			}
+			
+			field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegateHidden');
+			if (!field.disabled) {
+				data.applicationOwnerDelegateHidden = field.getValue();
+				field = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate');
+				data.applicationOwnerDelegate = field.getValue();
+			}
+			
+			var field = this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationStewardHidden');//fsApplicationOwner
+			if (!field.disabled) {
+				data.applicationSteward = field.getValue();
+				data.applicationStewardHidden = field.getValue();
+			}
 		}
 		
 		

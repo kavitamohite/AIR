@@ -421,7 +421,7 @@
 		<complianceWindowGap>Gap</complianceWindowGap>
 		<complianceWindowGapDescription>Gap Beschreibung</complianceWindowGapDescription>
 		<complianceWindowGapElimination>Gap Beseitigung</complianceWindowGapElimination>
-		<complianceWindowGapResponsible>Verantwortlicher</complianceWindowGapResponsible>
+		<complianceWindowGapResponsible>Gap Verantwortlicher</complianceWindowGapResponsible>
 		<complianceWindowPlanOfAction>Vorgehensweise</complianceWindowPlanOfAction>
 		<complianceWindowGapClass>Gap Klasse</complianceWindowGapClass>
 		<complianceWindowTargetDate>Zieltermin</complianceWindowTargetDate>

@@ -3,6 +3,9 @@ Ext.namespace('AIR');
 AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	
 	initComponent: function() {
+		this.ownerId = 'AdvSearch';
+		var appOwnerStewardFieldsets = AIR.AirUiFactory.createAppOwnerStewardFieldsets(this.ownerId);
+		
 		Ext.apply(this, {
 			title: 'Advanced Search Options',
 		    padding: 10,
@@ -25,7 +28,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 				layout: 'form',
 				
 				border: false,
-				labelWidth: 130,
+				labelWidth: 100,
 				
 			    style: {
 			    	marginRight: 10
@@ -51,17 +54,275 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			        mode: 'local',
 			        
 			        width: 230
-			    }, {
+			    },{
+					xtype: 'combo',
+					id: 'cbAdvSearchITset',
+					store: AIR.AirStoreManager.getStoreByName('itSetListStore'),
+					
+				    fieldLabel: 'IT Set',
+				    valueField: 'id',
+			        displayField: 'text',
+			        
+//			        typeAhead: true,
+//			        autoSelect: false,
+//			        triggerAction: 'all',
+			        
+			        forceSelection: true,
+			        triggerAction: 'all',
+			        lazyRender: true,
+			        lazyInit: false,
+			        mode: 'local',
+			        
+			        width: 230
+			    }/*, {
 		        	xtype: 'textfield',
-//		        	fieldLabel: 'Description',
-//		        	name: 'advsearchdescription',
 		        	id: 'advsearchdescription',
 		        	
 		        	emptyText: '',
 		        	width: 230,
 		        	hidden: false,
 		        	hasSearch: false
-		        }, {
+		        }*/,
+		        appOwnerStewardFieldsets.fsApplicationOwner,
+		        appOwnerStewardFieldsets.fsApplicationSteward,
+		        appOwnerStewardFieldsets.fsCIOwner,
+		        
+		        {
+		        	xtype: 'panel',
+		        	id: 'pAdditionalSearchAttributes',
+		        	layout: 'column',
+		        	border: false,
+		        		
+		        	items: [{
+						xtype: 'fieldset',
+						id: 'fsCategoriesAndStatus',
+						title: 'Categories and Status',//Kategorien und Status; Advanced Search Plus
+						
+						layout: 'form',
+						width: 420,
+						padding: 10,
+	
+						//hidden: true,
+						
+						style: {
+							marginRight: 10,
+							marginBottom: 10
+						},
+						
+						layout: 'form',//form fit
+						labelWidth: 150,
+	//				    width: 300,
+						
+						items: [{
+							xtype: 'combo',
+							id: 'cbAdvSearchGeneralUsageW',
+							store: AIR.AirStoreManager.getStoreByName('operationalStatusListStore'),
+							width: 230,
+	
+							fieldLabel: 'General Usage',
+							valueField: 'id',
+							displayField: 'text',
+							
+	//				        typeAhead: true,
+	//				        forceSelection: true,
+	//				        autoSelect: false,
+							
+							triggerAction: 'all',
+							lazyRender: true,
+							lazyInit: false,
+							mode: 'local'
+						},{
+							xtype: 'combo',
+							id: 'cbAdvSearchITCategoryW',
+							store: AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),
+							width: 230,
+	
+							fieldLabel: 'IT Category',
+							valueField: 'id',
+							displayField: 'text',
+							
+	//				        typeAhead: true,
+	//				        forceSelection: true,
+	//				        autoSelect: false,
+							
+							triggerAction: 'all',
+							lazyRender: true,
+							lazyInit: false,
+							mode: 'local'
+						}, {
+							xtype: 'combo',
+							id: 'cbAdvSearchLifecycleStatusW',
+							store: AIR.AirStoreManager.getStoreByName('lifecycleStatusListStore'),
+							width: 230,
+							
+							fieldLabel: 'Lifecycle status',
+							valueField: 'id',
+							displayField: 'text',
+							
+	//				        typeAhead: true,
+	//				        forceSelection: true,
+	//				        autoSelect: false,
+							
+							triggerAction: 'all',
+							lazyRender: true,
+							lazyInit: false,
+							mode: 'local'
+						}]
+					},{
+						xtype: 'fieldset',
+						id: 'fsSpecialSearchAttributes',
+						title: 'Other Search Attributes',
+						
+						layout: 'form',
+		//				columnWidth: 0.33,//0.45
+						width: 480,
+
+						padding: 10,
+		//			    hidden: true,
+						
+						layout: 'form',//form fit
+						labelWidth: 120,
+		//			    width: 300,
+
+						
+						items: [{
+							xtype: 'combo',
+							id: 'cbAdvSearchITSecGroupW',
+							store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),
+							width: 300,
+
+							fieldLabel: 'ITSec Group',
+							valueField: 'id',
+							displayField: 'name',
+							
+		//			        typeAhead: true,
+		//			        forceSelection: true,
+		//			        autoSelect: false,
+							
+							triggerAction: 'all',
+							lazyRender: true,
+							lazyInit: false,
+							mode: 'local'
+						},{
+							xtype: 'combo',
+							id: 'cbAdvSearchProcessW',
+							store: AIR.AirStoreManager.getStoreByName('processListStore'),
+						    fieldLabel: 'Business Prozess',
+
+					        tpl: '<tpl for="."><div ext:qtip="{text}" class="x-combo-list-item">{text}</div></tpl>',
+							valueField: 'id',
+							displayField: 'text',
+							width: 300,
+
+		//			        typeAhead: true,
+		//			        forceSelection: true,
+		//			        autoSelect: false,
+							
+							triggerAction: 'all',
+							lazyRender: true,
+							lazyInit: false,
+							mode: 'local'
+						},{
+							xtype: 'combo',
+							id: 'cbAdvSearchOStypeW',
+							store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),
+							width: 300,
+
+							fieldLabel: 'OS type',
+							valueField: 'id',
+							displayField: 'name',
+							
+		//			        typeAhead: true,
+		//			        forceSelection: true,
+		//			        autoSelect: false,
+							
+							triggerAction: 'all',
+							lazyRender: true,
+							lazyInit: false,
+							mode: 'local'
+						},{
+							xtype: 'combo',
+							id: 'cbAdvSearchOSnameW',
+							store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),
+							width: 300,
+
+							fieldLabel: 'OS name',
+							valueField: 'id',
+							displayField: 'name',
+							
+		//			        typeAhead: true,
+		//			        forceSelection: true,
+		//			        autoSelect: false,
+							
+							triggerAction: 'all',
+							lazyRender: true,
+							lazyInit: false,
+							mode: 'local'
+						},{
+							xtype: 'combo',
+							id: 'cbAdvSearchSourceW',
+							store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),
+							width: 300,
+
+							fieldLabel: 'Source',
+							valueField: 'id',
+							displayField: 'name',
+							
+		//			        typeAhead: true,
+		//			        forceSelection: true,
+		//			        autoSelect: false,
+							
+							triggerAction: 'all',
+							lazyRender: true,
+							lazyInit: false,
+							mode: 'local'
+						},{
+							xtype: 'combo',
+							id: 'cbAdvSearchBusinessEssentialW',
+							store: AIR.AirStoreManager.getStoreByName('businessEssentialListStore'),
+							width: 300,
+
+							fieldLabel: 'Business Essential',
+							valueField: 'id',
+							displayField: 'text',
+							
+		//			        typeAhead: true,
+		//			        forceSelection: true,
+		//			        autoSelect: false,
+							
+							triggerAction: 'all',
+							lazyRender: true,
+							lazyInit: false,
+							mode: 'local'
+						},{
+							xtype: 'combo',
+							id: 'cbAdvSearchGapResponsibleW',
+							store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),
+							width: 300,
+
+							fieldLabel: 'Gap Responsible',
+							valueField: 'id',
+							displayField: 'name',
+							
+		//			        typeAhead: true,
+		//			        forceSelection: true,
+		//			        autoSelect: false,
+							
+							triggerAction: 'all',
+							lazyRender: true,
+							lazyInit: false,
+							mode: 'local'
+						},{
+							xtype: 'datefield',
+							id: 'dfAdvSearchTargetDate',
+							fieldLabel: 'Gap End Date',
+							width: 150
+						}]			
+					}]
+		        }
+		        	
+			    
+			    /*, {
 			        xtype: 'fieldset',
 			        id: 'advsearchowner',
 			        title: 'Owner',
@@ -105,15 +366,11 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					    	xtype: 'commandlink',
 					    	id: 'clAdvSearchAppOwnerAddPerson',
 					    	img: img_AddPerson
-					    }/*,{
-					    	xtype: 'commandlink',
-					    	id: 'clAdvSearchAppOwnerAddGroup',
-					    	img: img_AddGroup
 					    },{
 					    	xtype: 'commandlink',
 					    	id: 'clAdvSearchAppOwnerRemove',
 					    	img: img_RemovePerson
-					    }*/]
+					    }]
 					},{
 						xtype: 'container',
 						id: 'pAdvSearchAppOwnerDelegate',
@@ -152,11 +409,11 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					    	xtype: 'commandlink',
 					    	id: 'clAdvSearchAppOwnerDelegateAddGroup',
 					    	img: img_AddGroup
-					    }/*,{
+					    },{
 					    	xtype: 'commandlink',
 					    	id: 'clAdvSearchAppOwnerDelegateRemove',
 					    	img: img_RemovePerson
-					    }*/]
+					    }]
 					},{
 						xtype: 'container',
 						id: 'pAdvSearchCiOwner',
@@ -191,15 +448,11 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					    	xtype: 'commandlink',
 					    	id: 'clAdvSearchCiOwnerAddPerson',
 					    	img: img_AddPerson
-					    }/*,{
-					    	xtype: 'commandlink',
-					    	id: 'clAdvSearchCiOwnerAddGroup',
-					    	img: img_AddGroup
 					    },{
 					    	xtype: 'commandlink',
 					    	id: 'clAdvSearchCiOwnerRemove',
 					    	img: img_RemovePerson
-					    }*/]
+					    }]
 					},{
 						xtype: 'container',
 						id: 'pAdvSearchCiOwnerDelegate',
@@ -238,87 +491,12 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					    	xtype: 'commandlink',
 					    	id: 'clAdvSearchCiOwnerDelegateAddGroup',
 					    	img: img_AddGroup
-					    }/*,{
+					    },{
 					    	xtype: 'commandlink',
 					    	id: 'clAdvSearchAppOwnerDelegateRemove',
 					    	img: img_RemovePerson
-					    }*/]
-					}/*,{
-			        	xtype: 'textfield',
-			        	fieldLabel: 'App owner',
-			        	id: 'advsearchappowner',
-			        	
-//			        	anchor: '100%',
-			        	
-//			        	emptyText: '',
-			        	width: 200,
-			        	hasSearch: false,
-			        	
-			        	listeners: {
-			                specialkey: function(field, e) {
-			                    if (e.getKey() == e.ENTER) {
-//			                    	search();
-			                    }
-			                }
-			            }
-			        }, {
-			        	xtype: 'textfield',
-			        	fieldLabel: 'App owner delegate',
-//			        	name: 'advsearchappownerdelegate',
-			        	id: 'advsearchappownerdelegate',
-			        	
-//			        	anchor: '100%',
-			        	
-//			        	emptyText: '',
-			        	width: 200,
-			        	hasSearch: false,
-			        	
-			        	listeners: {
-			                specialkey: function(field, e) {
-			                    if (e.getKey() == e.ENTER) {
-//			                    	search();
-			                    }
-			                }
-			            }
-			        }, {
-			        	xtype: 'textfield',
-			        	fieldLabel: 'CI owner',
-//			        	name: 'advsearchciowner',
-			        	id: 'advsearchciowner',
-			        	
-//			        	anchor: '100%',
-			        	
-//			        	emptyText: '',
-			        	width: 200,
-			        	hasSearch: false,
-			        	
-			        	listeners: {
-			                specialkey: function(field, e) {
-			                    if (e.getKey() == e.ENTER) {
-//			                    	search();
-			                    }
-			                }
-			            }
-			        }, {
-			        	xtype: 'textfield',
-			        	fieldLabel: 'CI Delegate',
-//			        	name: 'advsearchcidelegate',
-			        	id: 'advsearchcidelegate',
-			        	
-//			        	anchor: '100%',
-			        	
-//			        	emptyText: '',
-			        	width: 200,
-			        	hasSearch: false,
-			        	
-			        	listeners: {
-			                specialkey: function(field, e) {
-			                    if (e.getKey() == e.ENTER) {
-//			                    	search();
-			                    }
-			                }
-			            }
-			        }*/]
+					    }]
+					}]
 		        }, {
 			        xtype: 'fieldset',
 			        id: 'fsAdvSearchSteward',
@@ -340,7 +518,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						items: [{
 							xtype: 'label',
 							id: 'labeltfAdvSearchSteward',
-							text: 'x',
+//							text: 'x',
 							
 							width: 130,
 							style: {
@@ -364,8 +542,11 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					    	img: img_AddPerson
 					    }]
 					}]
-		        }]
-		    }, {
+		        }*/]
+		    }
+		    
+		    
+		    /*, {
 			    xtype: 'fieldset',
 			    id: 'advsearchplusfieldset',
 			    title: 'Advanced Search Plus',
@@ -454,7 +635,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			        lazyInit: false,
 			        mode: 'local'
 			    }]
-		    }]
+		    }*/]
 		});
 		
 		AIR.CiAdvancedSearchView.superclass.initComponent.call(this);
@@ -463,8 +644,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		cbCat1.on('select', this.onCat1Select, this);
 		cbCat1.on('change', this.onCat1Change, this);
 		
+		/*
 		var cbCat2 = this.getComponent('advsearchplusfieldset').getComponent('advsearchcategory');
 		cbCat2.on('change', this.onCat2Change, this);
+		
 		
 		
 		var pAdvSearchAppOwner = this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwner');
@@ -493,6 +676,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		clAdvSearchCiOwnerDelegateAddGroup.on('click', this.onAdvSearchCiOwnerDelegateAddGroup, this);
 		
 		clAdvSearchStewardAddPerson.on('click', this.onAdvSearchStewardAddPerson, this);
+		*/
 	},
 	
 	onCat1Select: function(store, record, options) {
@@ -558,12 +742,35 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	updateLabels: function(labels) {
 		this.setTitle(labels.advsearchPanelTitle);
 		
-//		this.getComponent('pAdvancedSearch').getComponent('')
-		
 		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchObjectType'), labels.advsearchObjectType);
-		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchdescription'), labels.advsearchdescription);
+//		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchdescription'), labels.advsearchdescription);
 		
-//		this.getComponent('pAdvancedSearch').getComponent('advsearchowner')
+		
+		this.getComponent('pAdvancedSearch').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent('label' + this.ownerId + 'applicationOwner').setText(labels.applicationOwner);
+		this.getComponent('pAdvancedSearch').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent('label' + this.ownerId + 'applicationSteward').setText(labels.applicationSteward);
+		this.getComponent('pAdvancedSearch').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent('label' + this.ownerId + 'applicationOwnerDelegate').setText(labels.applicationOwnerDelegate);
+
+		this.getComponent('pAdvancedSearch').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent('label' + this.ownerId + 'ciResponsible').setText(labels.ciResponsible);
+		this.getComponent('pAdvancedSearch').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent('label' + this.ownerId + 'ciSubResponsible').setText(labels.ciSubResponsible);
+
+		var fsCategoriesAndStatus = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus');
+		var fsSpecialSearchAttributes = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes');
+		
+		this.setFieldLabel(fsCategoriesAndStatus.getComponent('cbAdvSearchGeneralUsageW'), labels.operationalStatus);
+		this.setFieldLabel(fsCategoriesAndStatus.getComponent('cbAdvSearchITCategoryW'), labels.applicationCat2);
+		this.setFieldLabel(fsCategoriesAndStatus.getComponent('cbAdvSearchLifecycleStatusW'), labels.lifecycleStatus);
+		
+		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchITSecGroupW'), labels.compliance1435WindowItSecGroup);
+		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchProcessW'), labels.businessProcess);
+//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW'), labels.lifecycleStatus);
+//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchOSnameW'), labels.operationalStatus);
+//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchSourceW'), labels.applicationCat2);
+		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchBusinessEssentialW'), labels.businessEssential);
+		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchGapResponsibleW'), labels.complianceWindowGapResponsible);
+//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('dfAdvSearchTargetDate'), labels.applicationCat2);
+		
+//		itsetName
+		/*
 		//pAdvancedSearch/advsearchowner
 		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').setTitle(labels.advsearchowner);
 		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwner').getComponent('labeladvsearchappowner').setText(labels.advsearchappowner);
@@ -578,7 +785,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		this.setFieldLabel(this.getComponent('advsearchplusfieldset').getComponent('advsearchoperationalStatus'), labels.operationalStatus);
 		this.setFieldLabel(this.getComponent('advsearchplusfieldset').getComponent('advsearchcategory'), labels.applicationCat2);
 		this.setFieldLabel(this.getComponent('advsearchplusfieldset').getComponent('advsearchprocess'), labels.businessProcess);
-		
+		*/
 	}
 });
 Ext.reg('AIR.CiAdvancedSearchView', AIR.CiAdvancedSearchView);

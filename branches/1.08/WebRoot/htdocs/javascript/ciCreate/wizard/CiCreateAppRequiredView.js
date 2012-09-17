@@ -206,8 +206,8 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
     			
     			items: [
 			        { boxLabel: 'GR1435', name: 'cbgWizardRegulationsW', width: 100 },
-			        { boxLabel: 'GR1775', name: 'cbgWizardRegulationsW', width: 100 },
 			        { boxLabel: 'GR1920', name: 'cbgWizardRegulationsW', width: 100 },
+			        { boxLabel: 'GR1775', name: 'cbgWizardRegulationsW', width: 100 },
 			        { boxLabel: 'GR2008', name: 'cbgWizardRegulationsW', width: 100 }
 		        ]
 	        },{

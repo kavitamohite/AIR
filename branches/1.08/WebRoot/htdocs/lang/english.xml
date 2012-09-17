@@ -420,7 +420,7 @@ whereas "External" manages only the references to an compliance management outsi
 		<complianceWindowGap>Gap</complianceWindowGap>
 		<complianceWindowGapDescription>Gap description</complianceWindowGapDescription>
 		<complianceWindowGapElimination>Gap elimination</complianceWindowGapElimination>
-		<complianceWindowGapResponsible>Responsible</complianceWindowGapResponsible>
+		<complianceWindowGapResponsible>Gap Responsible</complianceWindowGapResponsible>
 		<complianceWindowPlanOfAction>Plan of action</complianceWindowPlanOfAction>
 		<complianceWindowGapClass>Gap class</complianceWindowGapClass>
 		<complianceWindowTargetDate>Target date</complianceWindowTargetDate>

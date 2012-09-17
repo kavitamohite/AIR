@@ -1,6 +1,5 @@
 Ext.namespace('AIR');
 
-//var languagestore = null;
 
 AIR.AirConstants = {
 	HELP_ID_INFOTEXT: 'help_infotext',
@@ -40,6 +39,8 @@ AIR.AirConstants = {
 	APP_CAT1_APPLICATION_PLATFORM: '-10006',//'Application Platform',
 	APP_CAT1_COMMON_SERVICE: '-10013',//'Common Service',
 	APP_CAT1_MIDDLEWARE: '-10007',//'Middleware'
+	APP_CAT1_ONLY_FIELDS: 'applicationOwner,applicationOwnerDelegate,applicationSteward',
+
 	
 	APP_CAT2_DEFAULT_UNKOWN: '468',
 	APP_CAT2_SHAREPOINT: 'Sharepoint',

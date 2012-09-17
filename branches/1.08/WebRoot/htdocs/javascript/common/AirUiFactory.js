@@ -5,7 +5,7 @@ AIR.AirUiFactory = function() {
 		createAppOwnerStewardFieldsets: function(ownerId) {
 			var fsApplicationOwner = {
 		        xtype: 'fieldset',
-		        id: 'fsApplicationOwner',
+		        id: 'fs' + ownerId + 'ApplicationOwner',
 		        title: 'Application Owner',
 		        labelWidth: 200,
 		        
@@ -20,7 +20,7 @@ AIR.AirUiFactory = function() {
 					
 					items: [{
 						xtype: 'label',
-						id: 'l' + ownerId + 'abelapplicationOwner',
+						id: 'label' + ownerId + 'applicationOwner',
 						
 						width: 200,
 						style: {
@@ -87,12 +87,12 @@ AIR.AirUiFactory = function() {
 			
 			var fsApplicationSteward = {
 		        xtype: 'fieldset',
-		        id: 'fsApplicationSteward',//pApplicationOwner
+		        id: 'fs' + ownerId + 'ApplicationSteward',//pApplicationOwner
 		        labelWidth: 200,
 		        
 				items: [{
 					xtype: 'panel',
-					id: 'pApplicationSteward',
+					id: 'p' + ownerId + 'ApplicationSteward',
 					border: false,
 					
 					layout: 'column',//toolbar hbox
@@ -102,7 +102,7 @@ AIR.AirUiFactory = function() {
 					
 					items: [{
 						xtype: 'label',
-						id: 'labelapplicationSteward',
+						id: 'label' + ownerId + 'applicationSteward',
 						
 						width: 200,
 						style: {
@@ -111,18 +111,101 @@ AIR.AirUiFactory = function() {
 		    		},{
 						xtype: 'textfield',
 				        width: 230,
-				        id: 'applicationSteward',
+				        id: ownerId + 'applicationSteward',
 				        readOnly: true
 				    },{
 						xtype: 'hidden',
-				        id: 'applicationStewardHidden'
+				        id: ownerId + 'applicationStewardHidden'
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'applicationStewardAdd',
+				    	id: ownerId + 'applicationStewardAdd',
 				    	img: img_AddPerson
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'applicationStewardRemove',
+				    	id: ownerId + 'applicationStewardRemove',
+				    	img: img_RemovePerson
+				    }]
+				}]
+			};
+			
+			var fsCIOwner = {
+		        xtype: 'fieldset',
+		        id: 'fs' + ownerId + 'CIOwner',
+		        title: 'CI Owner',
+		        labelWidth: 200,
+		        
+				items: [{
+					xtype: 'container',
+					id: 'p' + ownerId + 'CIOwner',
+					
+					layout: 'column',//toolbar
+//					width: 500,
+					
+					items: [{
+						xtype: 'label',
+						id: 'label' + ownerId + 'ciResponsible',
+						
+						width: 200,
+						style: {
+							fontSize: 12
+						}
+		    		},{
+						xtype: 'textfield',
+				        width: 230,
+				        id: ownerId + 'ciResponsible',
+				        readOnly: true
+				    },{
+						xtype: 'hidden',
+				        id: ownerId + 'ciResponsibleHidden'
+				    },{
+				    	xtype: 'commandlink',
+				    	id: ownerId + 'ciResponsibleAdd',
+				    	img: img_AddPerson
+				    },{
+				    	xtype: 'commandlink',
+				    	id: ownerId + 'ciResponsibleRemove',
+				    	img: img_RemovePerson
+				    }]
+				},{
+					xtype: 'container',
+					id: 'p' + ownerId + 'CiSubResponsible',
+					
+					layout: 'column',//toolbar
+					style: {
+						marginTop: 5
+					},
+//					width: 500,
+					
+					items: [{
+						xtype: 'label',
+						id: 'label' + ownerId + 'ciSubResponsible',
+						
+						width: 200,
+						style: {
+							fontSize: 12
+//							marginRight: 120
+						}
+		    		},{
+						xtype: 'textfield',
+				        width: 230,
+				        id: ownerId + 'ciSubResponsible',
+				        allowBlank: true,
+				        disabled: false,
+				        readOnly: true
+				    },{
+						xtype: 'hidden',
+				        id: ownerId + 'ciSubResponsibleHidden'
+				    },{
+				    	xtype: 'commandlink',
+				    	id: ownerId + 'ciSubResponsibleAdd',
+				    	img: img_AddPerson
+				    },{
+				    	xtype: 'commandlink',
+				    	id: ownerId + 'ciSubResponsibleAddGroup',
+				    	img: img_AddGroup
+				    },{
+				    	xtype: 'commandlink',
+				    	id: ownerId + 'ciSubResponsibleRemove',
 				    	img: img_RemovePerson
 				    }]
 				}]
@@ -130,7 +213,8 @@ AIR.AirUiFactory = function() {
 			
 			var appOwnerStewardFieldsets = {
 				fsApplicationOwner: fsApplicationOwner,
-				fsApplicationSteward: fsApplicationSteward
+				fsApplicationSteward: fsApplicationSteward,
+				fsCIOwner: fsCIOwner
 			};
 			
 			return appOwnerStewardFieldsets;

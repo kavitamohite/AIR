@@ -446,7 +446,7 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerW').reset();
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerW').getComponent('tfApplicationOwnerWHidden').reset();
 		this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardW').setValue(AIR.AirApplicationManager.getLastName() + ', ' + AIR.AirApplicationManager.getFirstName() + ' (' + AIR.AirApplicationManager.getCwid().toUpperCase()+')');//fsApplicationOwnerW
-		this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').setValue(AIR.AirApplicationManager.getCwid());//fsApplicationOwnerW
+		this.getComponent('fsApplicationStewardW').getComponent('pApplicationStewardW').getComponent('tfApplicationStewardWHidden').setValue(AIR.AirApplicationManager.getCwid().toUpperCase());//fsApplicationOwnerW
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateW').reset();
 		this.getComponent('fsApplicationOwnerW').getComponent('pApplicationOwnerDelegateW').getComponent('tfApplicationOwnerDelegateWHidden').reset();
 		
