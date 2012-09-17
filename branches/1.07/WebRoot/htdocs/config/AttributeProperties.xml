@@ -127,7 +127,7 @@
 	<Identifier>
 		<id>comments</id>
 		<Mandatory>mandatory</Mandatory>
-		<Relevance>strategic</Relevance>
+		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
 		<UseInWizard>Y</UseInWizard>
