@@ -5,18 +5,13 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 	boxReady: false,
 	
 	initComponent: function() {
-		if(this.bypass) {
-			AIR.CiResultGrid.superclass.initComponent.call(this);
-			
-			return;
-		}
-	
 	    var expander = new Ext.ux.grid.RowExpander({
 	        tpl: new Ext.Template(
 	            '<p><b>Lifecycle status:</b> {applicationCat2Txt}</p>'
 	        )
 	    });
 	    
+	    /*
 	    var columns = [];
 	    
 //		var columns = [
@@ -37,8 +32,9 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 			columns.push({ id: 'applicationSteward', header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});//, menuDisabled: true
 			columns.push({ id: 'responsible', header: 'Responsible', dataIndex: 'responsible', width: 150, sortable: true});//, menuDisabled: true
 			columns.push({ id: 'subResponsible', header: 'Sub responsible', dataIndex: 'subResponsible', width: 150, sortable: true});//, menuDisabled: true
-		}
+		}*/
 		
+	    var columns = AIR.ConfigFactory.createCiResultGridConfig(this.complete);
 		this.defaultColumnConfig = columns;
 	    
 		var colModel = new Ext.grid.ColumnModel(columns);
