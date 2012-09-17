@@ -109,6 +109,15 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 			searchAction: searchAction//'myCis'
 		};
 		
+		if(Ext.isIE && !this.isMoved2) {
+			this.isMoved2 = true; 
+
+			//ohne dies vertauscht der IE willkürlich Spalten
+//			this.myOwnCIsGrid.getColumnModel().setConfig(this.myOwnCIsGrid.getColumnModel().config);//this.myDelegateCIsGrid.getColumnModel().setConfig(this.myDelegateCIsGrid.getDefaultColumnConfig());//
+			
+			this.myOwnCIsGrid.getColumnModel().setConfig(AIR.ConfigFactory.createCiResultGridConfig(true));
+			this.updateLabels(AIR.AirApplicationManager.getLabels());
+		}
 		
 		this.myOwnCIsGrid.getStore().load({
 			params: params
