@@ -115,7 +115,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 			//ohne dies vertauscht der IE willkürlich Spalten
 //			this.myOwnCIsGrid.getColumnModel().setConfig(this.myOwnCIsGrid.getColumnModel().config);//this.myDelegateCIsGrid.getColumnModel().setConfig(this.myDelegateCIsGrid.getDefaultColumnConfig());//
 			
-			this.myOwnCIsGrid.getColumnModel().setConfig(AIR.ConfigFactory.createCiResultGridConfig(true));
+			this.myOwnCIsGrid.getColumnModel().setConfig(AIR.AirConfigFactory.createCiResultGridConfig(true));
 			this.updateLabels(AIR.AirApplicationManager.getLabels());
 		}
 		
@@ -144,7 +144,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 			//ohne dies vertauscht der IE willkürlich Spalten
 //			this.myDelegateCIsGrid.getColumnModel().setConfig(this.myOwnCIsGrid.getColumnModel().config);//this.myDelegateCIsGrid.getColumnModel().setConfig(this.myDelegateCIsGrid.getDefaultColumnConfig());//
 			
-			this.myDelegateCIsGrid.getColumnModel().setConfig(AIR.ConfigFactory.createCiResultGridConfig(true));
+			this.myDelegateCIsGrid.getColumnModel().setConfig(AIR.AirConfigFactory.createCiResultGridConfig(true));
 			this.updateLabels(AIR.AirApplicationManager.getLabels());
 		}
 		

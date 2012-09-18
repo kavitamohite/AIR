@@ -11,7 +11,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    padding: 10,
 		    border: false,
 		    hidden: true,
-		    layout: 'column',
+//		    layout: 'column',
 			
 			autoScroll: true,
 
@@ -55,7 +55,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			        
 			        width: 230
 			    },{
-					xtype: 'combo',
+					xtype: 'filterCombo',
 					id: 'cbAdvSearchITset',
 					store: AIR.AirStoreManager.getStoreByName('itSetListStore'),
 					
@@ -90,8 +90,11 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		        {
 		        	xtype: 'panel',
 		        	id: 'pAdditionalSearchAttributes',
-		        	layout: 'column',
+		        	layout: 'column',//column hbox
 		        	border: false,
+		        	
+//		        	anchor: '100%',
+//		        	width: 900,
 		        		
 		        	items: [{
 						xtype: 'fieldset',
@@ -114,7 +117,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	//				    width: 300,
 						
 						items: [{
-							xtype: 'combo',
+							xtype: 'filterCombo',
 							id: 'cbAdvSearchGeneralUsageW',
 							store: AIR.AirStoreManager.getStoreByName('operationalStatusListStore'),
 							width: 230,
@@ -132,7 +135,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							lazyInit: false,
 							mode: 'local'
 						},{
-							xtype: 'combo',
+							xtype: 'filterCombo',
 							id: 'cbAdvSearchITCategoryW',
 							store: AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),
 							width: 230,
@@ -150,7 +153,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							lazyInit: false,
 							mode: 'local'
 						}, {
-							xtype: 'combo',
+							xtype: 'filterCombo',
 							id: 'cbAdvSearchLifecycleStatusW',
 							store: AIR.AirStoreManager.getStoreByName('lifecycleStatusListStore'),
 							width: 230,
@@ -186,9 +189,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 
 						
 						items: [{
-							xtype: 'combo',
+							xtype: 'filterCombo',
 							id: 'cbAdvSearchITSecGroupW',
-							store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),
+							store: AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),//new Ext.data.Store(),//
 							width: 300,
 
 							fieldLabel: 'ITSec Group',
@@ -204,7 +207,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							lazyInit: false,
 							mode: 'local'
 						},{
-							xtype: 'combo',
+							xtype: 'filterCombo',
 							id: 'cbAdvSearchProcessW',
 							store: AIR.AirStoreManager.getStoreByName('processListStore'),
 						    fieldLabel: 'Business Prozess',
@@ -223,9 +226,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							lazyInit: false,
 							mode: 'local'
 						},{
-							xtype: 'combo',
+							xtype: 'filterCombo',
 							id: 'cbAdvSearchOStypeW',
-							store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),
+							store: AIR.AirStoreManager.getStoreByName('sisoogleOsTypeListStore'),//new Ext.data.Store(),//
 							width: 300,
 
 							fieldLabel: 'OS type',
@@ -241,9 +244,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							lazyInit: false,
 							mode: 'local'
 						},{
-							xtype: 'combo',
+							xtype: 'filterCombo',
 							id: 'cbAdvSearchOSnameW',
-							store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),
+							store: AIR.AirStoreManager.getStoreByName('sisoogleOsNameListStore'),//new Ext.data.Store(),//
 							width: 300,
 
 							fieldLabel: 'OS name',
@@ -259,9 +262,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							lazyInit: false,
 							mode: 'local'
 						},{
-							xtype: 'combo',
+							xtype: 'filterCombo',
 							id: 'cbAdvSearchSourceW',
-							store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),
+							store: AIR.AirStoreManager.getStoreByName('sisoogleSourceListStore'),//new Ext.data.Store(),//
 							width: 300,
 
 							fieldLabel: 'Source',
@@ -277,7 +280,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							lazyInit: false,
 							mode: 'local'
 						},{
-							xtype: 'combo',
+							xtype: 'filterCombo',
 							id: 'cbAdvSearchBusinessEssentialW',
 							store: AIR.AirStoreManager.getStoreByName('businessEssentialListStore'),
 							width: 300,
@@ -295,9 +298,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							lazyInit: false,
 							mode: 'local'
 						},{
-							xtype: 'combo',
+							xtype: 'filterCombo',
 							id: 'cbAdvSearchGapResponsibleW',
-							store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),
+							store: AIR.AirStoreManager.getStoreByName('sisoogleGapResponsibleListStore'),//new Ext.data.Store(),//
 							width: 300,
 
 							fieldLabel: 'Gap Responsible',
@@ -644,12 +647,40 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		cbCat1.on('select', this.onCat1Select, this);
 		cbCat1.on('change', this.onCat1Change, this);
 		
+		var cbAdvSearchITset = this.getComponent('pAdvancedSearch').getComponent('cbAdvSearchITset');
+		cbAdvSearchITset.on('change', this.onComboChange, this);
+		
+
+		
+		var cbAdvSearchGeneralUsageW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchGeneralUsageW');
+		cbAdvSearchGeneralUsageW.on('change', this.onComboChange, this);
+
+		var cbCat2 = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchITCategoryW');
+		cbCat2.on('change', this.onComboChange, this);//onCat2Change
+		
+		var cbAdvSearchLifecycleStatusW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchLifecycleStatusW');
+		cbAdvSearchLifecycleStatusW.on('change', this.onComboChange, this);
+		
+		
+		var cbAdvSearchITSecGroupW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchITSecGroupW');
+		cbAdvSearchITSecGroupW.on('change', this.onComboChange, this);
+		var cbAdvSearchProcessW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchProcessW');
+		cbAdvSearchProcessW.on('change', this.onComboChange, this);
+		var cbAdvSearchOStypeW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchOStypeW');
+		cbAdvSearchOStypeW.on('change', this.onComboChange, this);
+		var cbAdvSearchOSnameW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchOSnameW');
+		cbAdvSearchOSnameW.on('change', this.onComboChange, this);
+		var cbAdvSearchSourceW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchSourceW');
+		cbAdvSearchSourceW.on('change', this.onComboChange, this);
+		var cbAdvSearchBusinessEssentialW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchBusinessEssentialW');
+		cbAdvSearchBusinessEssentialW.on('change', this.onComboChange, this);
+		var cbAdvSearchGapResponsibleW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchGapResponsibleW');
+		cbAdvSearchGapResponsibleW.on('change', this.onComboChange, this);
+		var dfAdvSearchTargetDate = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('dfAdvSearchTargetDate');
+		dfAdvSearchTargetDate.on('change', this.onComboChange, this);
+		
+		
 		/*
-		var cbCat2 = this.getComponent('advsearchplusfieldset').getComponent('advsearchcategory');
-		cbCat2.on('change', this.onCat2Change, this);
-		
-		
-		
 		var pAdvSearchAppOwner = this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwner');
 		var pAdvSearchAppOwnerDelegate = this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwnerDelegate');
 		var pAdvSearchCiOwner = this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwner');
@@ -680,7 +711,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	},
 	
 	onCat1Select: function(store, record, options) {
-		var cbCat2 = this.getComponent('advsearchplusfieldset').getComponent('advsearchcategory');
+		var cbCat2 = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchITCategoryW');
 		//cbCat2.getStore().filter('applicationCat1Id', record.get('id'));
 		var filterData = {
 			applicationCat1Id: record.get('id')
@@ -692,13 +723,13 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		this.isComboValueValid(combo, newValue, oldValue);
 		
     	if(newValue.length === 0) {
-    		var cbCat2 = this.getComponent('advsearchplusfieldset').getComponent('advsearchcategory');
+    		var cbCat2 = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchITCategoryW');
     		cbCat2.reset();
     		cbCat2.getStore().clearFilter();
     	}
 	},
 	
-	onCat2Change: function(combo, newValue, oldValue) {
+	onComboChange: function(combo, newValue, oldValue) {//onCat2Change
 		this.isComboValueValid(combo, newValue, oldValue);
 	},
 	
@@ -744,6 +775,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
 		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchObjectType'), labels.advsearchObjectType);
 //		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchdescription'), labels.advsearchdescription);
+		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('cbAdvSearchITset'), labels.itSet);
 		
 		
 		this.getComponent('pAdvancedSearch').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent('label' + this.ownerId + 'applicationOwner').setText(labels.applicationOwner);
@@ -768,8 +800,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchBusinessEssentialW'), labels.businessEssential);
 		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchGapResponsibleW'), labels.complianceWindowGapResponsible);
 //		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('dfAdvSearchTargetDate'), labels.applicationCat2);
-		
-//		itsetName
+		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW'), labels.osType);
+		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchOSnameW'), labels.osName);
+		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchSourceW'), labels.source);
+		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchGapResponsibleW'), labels.gapResponsible);
+        
+        
+        
+
 		/*
 		//pAdvancedSearch/advsearchowner
 		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').setTitle(labels.advsearchowner);

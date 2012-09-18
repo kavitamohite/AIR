@@ -27,6 +27,7 @@ import com.bayerbbs.applrepos.dto.OrganisationalScopeDTO;
 import com.bayerbbs.applrepos.dto.PriorityLevelDTO;
 import com.bayerbbs.applrepos.dto.ProcessDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
+import com.bayerbbs.applrepos.dto.SISoogleAttribute;
 import com.bayerbbs.applrepos.dto.ServiceModelDTO;
 import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
 import com.bayerbbs.applrepos.dto.SlaDTO;
@@ -48,6 +49,7 @@ import com.bayerbbs.applrepos.hibernate.LifecycleStatusHbn;
 import com.bayerbbs.applrepos.hibernate.OperationalStatusHbn;
 import com.bayerbbs.applrepos.hibernate.PriorityLevelHbn;
 import com.bayerbbs.applrepos.hibernate.ProcessHbn;
+import com.bayerbbs.applrepos.hibernate.SisoogleValuesHbn;
 import com.bayerbbs.applrepos.hibernate.SlaHbn;
 import com.bayerbbs.applrepos.hibernate.SlaServiceContractHbn;
 
@@ -240,5 +242,7 @@ public class AIRToolsWS {
 		return dto;
 	}
 
-	
+	public SISoogleAttribute[] getSISoogleAttributesByType(SisoogleAttributesInput input) {//String type
+		return SisoogleValuesHbn.getSISoogleAttributesByType(input.getType());//type
+	}
 }

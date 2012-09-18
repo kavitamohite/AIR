@@ -64,17 +64,6 @@ AIR.AirStoreFactory = function() {
 		      	fields: [ 'id', 'text' ],
 	
 		      	reader: licenseTypeListReader
-		      	
-//		      	isLoaded: false,
-//		      	listeners: {
-//			  		beforeload: function(store, options) {
-//			  			store.isLoaded = false;
-//			  			licenseTypeListStore.baseParams.licenseTypeId = selectedLicenseTypeId;
-//			  		}
-	//		  		load: function (store, recs, options) {
-	//		  			store.isLoaded = true;
-	//		  		}
-//			  	}
 			});
 		  
 			return licenseTypeListStore;
@@ -106,17 +95,6 @@ AIR.AirStoreFactory = function() {
 	        	fields: [ 'id', 'text' ],
 	
 	        	reader: changeAccountListReader
-	        	
-	        	/*isLoaded: false,
-	        	listeners: {
-	        		beforeload: function(store, options) {
-	        			store.isLoaded = false;
-	        			changeAccountListStore.baseParams.accountId = selectedChangeAccountId;
-	        		}
-	//        		load: function (store, recs, options) {
-	//        			store.isLoaded = true;
-	//        		}
-	        	}*/
 	        });
 	        
 	        return changeAccountListStore;
@@ -148,17 +126,6 @@ AIR.AirStoreFactory = function() {
 	         	fields: [ 'id', 'text' ],
 	
 	         	reader: runAccountListReader
-	         	
-	         	/*isLoaded: false,
-	         	listeners: {
-	         		beforeload: function(store, options) {
-	         			store.isLoaded = false;
-	         			runAccountListStore.baseParams.accountId = selectedRunAccountId;
-	         		}
-	//         		load: function(store, recs, options) {
-	//         			store.isLoaded = true;
-	//         		}
-	         	}*/
 	         });
 	         
 	         return runAccountListStore;
@@ -227,17 +194,6 @@ AIR.AirStoreFactory = function() {
 			   	fields: [ 'id', 'text' ],
 	
 			   	reader: itSecSBWerteListReader
-			   	
-			   	/*isLoaded: false,
-			   	listeners: {
-			   		beforeload: function(store, options) {
-			   			store.isLoaded = false;
-			   			itSecSBIntegrityListStore.baseParams.itSecSBWerteId = selectedItSecSbIntegrityId;
-			   		}
-	//		   		load: function (store, recs, options) {
-	//		   			store.isLoaded = true;
-	//		   		}
-			   	}*/
 			});
 			
 			return itSecSBIntegrityListStore;
@@ -261,17 +217,6 @@ AIR.AirStoreFactory = function() {
 				fields: [ 'id', 'text' ],
 	
 				reader : itSecSBWerteListReader
-				
-				/*isLoaded: false,
-				listeners: {
-					beforeload: function(store, options) {
-						store.isLoaded = false;
-						itSecSBAvailabilityListStore.baseParams.itSecSBWerteId = selectedItSecSbAvailabilityId;
-					}
-	//				load: function (store, recs, options) {
-	//					store.isLoaded = true;
-	//				}
-				}*/
 			});
 			
 			return itSecSBAvailabilityListStore;
@@ -295,17 +240,6 @@ AIR.AirStoreFactory = function() {
 				fields: [ 'id', 'text' ],
 	
 				reader: itSecSBWerteListReader
-				
-				/*isLoaded: false,
-				listeners: {
-					beforeload: function(store, options) {
-						store.isLoaded=false;
-						itSecSBConfidentialityListStore.baseParams.itSecSBWerteId = selectedItSecSbConfidentialityId;
-					}
-	//				load: function (store, recs, options) {
-	//					store.isLoaded = true;
-	//				}
-				}*/
 			});
 			
 			return itSecSBConfidentialityListStore;
@@ -338,16 +272,6 @@ AIR.AirStoreFactory = function() {
 	        	fields: [ 'id', 'text', 'classProtectionName' ],
 	
 	        	reader : classInformationListReader
-	        	
-	        	/*isLoaded: false,
-	        	listeners: {
-	        		beforeload: function(store, options) {
-	        			store.isLoaded = false;
-	        		}
-	//        		load: function (store, recs, options) {
-	//        			store.isLoaded = true;
-	//        		}
-	        	}*/
 	        });
 	        
 	        return classInformationListStore;
@@ -379,17 +303,6 @@ AIR.AirStoreFactory = function() {
 		      	fields: [ 'id', 'text' ],
 		
 		      	reader: slaListReader
-		      	
-		      	/*isLoaded: false,
-		      	listeners: {
-		      		beforeload: function(store, options) {
-		      			store.isLoaded = false;
-		      			slaListStore.baseParams.slaId = selectedSlaId;
-		      		}
-	//	      		load: function (store, recs, options) {
-	//	      			store.isLoaded = true;
-	//	      		}
-		      	}*/
 			});
 			
 			return slaListStore;
@@ -428,18 +341,6 @@ AIR.AirStoreFactory = function() {
 		      	fields: [ 'id', 'text' ],
 	
 		      	reader: serviceContractListReader
-				
-		      	/*isLoaded: false,
-		      	listeners: {
-		      		beforeload: function(store, options) {
-		      			store.isLoaded = false;
-		      			serviceContractListStore.baseParams.slaName = selectedSlaId;
-		      			serviceContractListStore.baseParams.serviceContract = selectedServiceContractId;
-		      		}
-	//	      		load: function (store, recs, options) {
-	//	      			store.isLoaded = true;
-	//	      		}
-		      	}*/
 			});
 			
 			return serviceContractListStore;
@@ -471,17 +372,6 @@ AIR.AirStoreFactory = function() {
 	        	fields: [ 'id', 'text' ],
 	
 	        	reader : priorityLevelListReader
-	        	
-	        	/*isLoaded: false,
-	        	listeners: {
-	        		beforeload: function(store, options) {
-	        			store.isLoaded = false;
-	        			priorityLevelListStore.baseParams.priorityLevelId = selectedPriorityLevelId;
-	        		}
-	//        		load: function (store, recs, options) {
-	//        			store.isLoaded = true;
-	//        		}
-	        	}*/
 	        });
 	        
 	        return priorityLevelListStore;
@@ -513,17 +403,6 @@ AIR.AirStoreFactory = function() {
 		    	fields: [ 'id', 'text' ],
 	
 		    	reader: severityLevelListReader
-				
-		    	/*isLoaded: false,
-		    	listeners: {
-		    		beforeload: function(store, options) {
-		    			store.isLoaded=false;
-		    			severityLevelListStore.baseParams.severityLevelId = selectedSeverityLevelId;
-		    		}
-	//	    		load: function (store, recs, options) {
-	//	    			store.isLoaded = true;
-	//	    		}
-		    	}*/
 		    });
 		    
 		    return severityLevelListStore;
@@ -555,17 +434,6 @@ AIR.AirStoreFactory = function() {
 	        	fields: [ 'id', 'text' ],
 	
 	        	reader : businessEssentialListReader
-	        	
-	        	/*isLoaded: false,
-	        	listeners: {
-	        		beforeload:  function(store, options) {
-	        			store.isLoaded = false;
-	        			businessEssentialListStore.baseParams.severityLevelId = selectedBusinessEssentialId;
-	        		}
-	//        		load: function (store, recs, options) {
-	//        			store.isLoaded = true;
-	//        		}
-	        	}*/
 	        });
 	        
 	        return businessEssentialListStore;
@@ -646,18 +514,7 @@ AIR.AirStoreFactory = function() {
 	          	
 	          	fields: [ 'id', 'text' ],
 	
-	          	reader: lifecycleStatusListReader,
-	          	
-	          	isLoaded: false,
-	          	listeners: {
-	          		beforeload: function(store, options) {
-	          			store.isLoaded = false;
-	          			lifecycleStatusListStore.baseParams.lifecycleStatusId = selectedLifecycleStatusId;
-	          		}
-	//          		load: function (store, recs, options) {
-	//          			store.isLoaded = true;
-	//          		}
-	          	}
+	          	reader: lifecycleStatusListReader
 	        });
 			
 			return lifecycleStatusListStore;
@@ -688,18 +545,7 @@ AIR.AirStoreFactory = function() {
 	        	
 	        	fields: [ 'id', 'text' ],
 	
-	        	reader: operationalStatusListReader,
-	        	
-	        	isLoaded: false,
-	        	listeners: {
-	        		beforeload: function(store, options) {
-	        			store.isLoaded = false;
-	        			operationalStatusListStore.baseParams.operationalStatusId = selectedOperationalStatusId;
-	        		}
-	//        		load: function (store, recs, options) {
-	//        			store.isLoaded = true;
-	//        		}
-	        	}
+	        	reader: operationalStatusListReader
 	        });
 	        
 	        return operationalStatusListStore;
@@ -768,21 +614,7 @@ AIR.AirStoreFactory = function() {
 	         	
 	         	fields: [ 'id', 'text' ],
 	
-	         	reader: dataClassListReader,
-	         	
-	         	isLoaded: false,
-	         	listeners: {
-	         		beforeload: function(store, options) {
-	         			store.isLoaded = false;
-	         			dataClassListStore.baseParams.categoryBusinessId = selectedCategoryBusinessId;
-	         			//siehe commonvars.js. Warum nicht in ClassDataHbn.findClassDataByCategoryBusiness() das select statement ohne
-	         			//where selectedCategoryBusinessId ausführen, um alle dataClasses zu kriegen? --> Udo fragen
-	         		}
-	//         		load: function (store, recs, options) {
-	//         			store.isLoaded = true;
-	//         			Ext.getCmp('cbDataClass').setValue(selectedDataClassId);
-	//         		}
-	     		}
+	         	reader: dataClassListReader
 			});
 	         
 			return dataClassListStore;
@@ -1072,38 +904,6 @@ AIR.AirStoreFactory = function() {
 			        {name: 'help_details_supportstuff'},
 			        {name: 'help_details_history'}
 			    ]
-			    
-//			    isLoaded: false,
-//			    
-//			    listeners: {
-//					beforeload: function(store, options) {
-//						if (null != urlLanguage) {
-//							languagehelpstore.proxy.api.read.url = urlLanguageHelp;
-//						}
-//					},
-//					load: function(store, records, options) {
-//						Ext.get('infotext').dom.innerHTML = records[0].data['help_infotext'];
-//						
-//						helpMyPlace = records[0].data['help_myplace'];
-//						helpMyPlaceMyCis = records[0].data['help_myplace'];
-//						helpMyPlaceMyCisSubstitute = records[0].data['help_myplace'];
-//						helpSearch = records[0].data['help_search'];
-//						helpAdvancedSearch = records[0].data['help_search_advanced'];
-//						helpNewCI = records[0].data['help_create_ci'];
-//						helpDetailsDetails = records[0].data['help_details_details'];
-//						helpDetailsSpecific = records[0].data['help_details_specific'];
-//						helpDetailsContacts = records[0].data['help_details_contacts'];
-//						helpDetailsAgreements = records[0].data['help_details_agreements'];
-//						helpDetailsProtection = records[0].data['help_details_protection'];
-//						helpDetailsCompliance = records[0].data['help_details_compliance'];
-//						helpDetailsLicenseCosts = records[0].data['help_details_licensecosts'];
-//						helpDetailsConnections = records[0].data['help_details_connections'];
-//						helpDetailsSupportStuff = records[0].data['help_details_supportstuff'];
-//						helpDetailsHistory = records[0].data['help_details_history'];
-//	
-//						isLoaded = true;
-//					}
-//			    }
 			});
 			
 			return languageHelpStore;
@@ -1145,6 +945,11 @@ AIR.AirStoreFactory = function() {
 			        {name: 'operationalStatus'},
 			        {name: 'applicationCat2'},
 			        {name: 'businessProcess'},
+			        {name: 'osType'},
+			        {name: 'osName'},
+			        {name: 'source'},
+			        {name: 'gapResponsible'},
+			        {name: 'itSet'},
 			        
 			        {name: 'label_menu_loggedinas'},
 			        {name: 'label_menu_myplacemenuitem'},
@@ -1915,30 +1720,6 @@ AIR.AirStoreFactory = function() {
 			    record: 'Identifier', // records will have an 'Identifier' tag
 			    
 			    fields: [ 'id', 'Mandatory', 'Relevance', 'EditableIfSource', 'attributeType', 'attributeLength', 'attributeMask', 'UseInWizard', 'rolesAllowed' ]//restrictionLevel
-			   	
-//			    fields: [
-//			        {name: 'id'},
-//			        {name: 'Mandatory'},
-//			        {name: 'Relevance'},
-//			        {name: 'EditableIfSource'},
-//			        {name: 'attributeType'},
-//					{name: 'attributeLength'},
-//					{name: 'attributeMask'},
-//					{name: 'UseInWizard'},
-//			    ],
-			    
-//			    isLoaded: false,
-//			    
-//			    listeners: {
-//			    	beforeload: function(store, options) {
-//			    		Util.log('aclStore beforeload');
-//			    		var x;
-//			    	},
-//			    	load: function(store, records, options) {
-//			    		Util.log('aclStore load: records='+records[0].data.length);
-//			    		var x;
-//			    	}
-//			    }
 			});
 			
 			return aclStore;
@@ -2123,18 +1904,7 @@ AIR.AirStoreFactory = function() {
 				
 				fields: [ 'id',	'text' ],
 	
-				reader : gxpFlagListReader,
-				isLoaded: false,
-				
-				listeners: {
-					beforeload: function(store, options) {
-						store.isLoaded = false;
-						gxpFlagListStore.baseParams.gxpFlagTxt = selectedGxpFlagTxt;
-					},
-					load: function (store, recs, options) {
-						store.isLoaded = true;
-					}
-				}
+				reader : gxpFlagListReader
 			});
 			
 			return gxpFlagListStore;
@@ -3217,6 +2987,58 @@ AIR.AirStoreFactory = function() {
 	//		});
 			
 			return store;
+		},
+		
+		createSisoogleOsTypeListStore: function() {
+			return this.createSisoogleAttributeListStore();
+		},
+		createSisoogleOsNameListStore: function() {
+			return this.createSisoogleAttributeListStore();
+		},
+		createSisoogleSourceListStore: function() {
+			return this.createSisoogleAttributeListStore();
+		},
+		createSisoogleGapResponsibleListStore: function() {
+			return this.createSisoogleAttributeListStore();
+		},
+		createSisoogleGapEndDateListStore: function() {
+			return this.createSisoogleAttributeListStore();
+		},
+		createSisoogleActiveStateListStore: function() {
+			return this.createSisoogleAttributeListStore();
+		},
+		createSisoogleGpscOwnerListStore: function() {
+			return this.createSisoogleAttributeListStore();
+		},
+		
+		createSisoogleAttributeListStore: function() {
+			var sisoogleAttributeListRecord = Ext.data.Record.create([
+		      	{ name: 'id' },
+		      	{ name: 'name' }
+		    ]);
+		
+		    var sisoogleAttributeListReader = new Ext.data.XmlReader({
+				record: 'return',
+				idProperty: 'id'
+		    }, sisoogleAttributeListRecord); 
+		
+		    var sisoogleAttributeListStore = new Ext.data.XmlStore({
+		    	autoDestroy: true,
+				autoLoad: false,
+				storeId: 'sisoogleAttributeListStore',
+				
+		      	proxy: new Ext.ux.soap.SoapProxy({
+		      		url: webcontext +'/AIRToolsWSPort',
+		      		loadMethod: 'getSISoogleAttributesByType',
+		      		timeout: 120000,
+		      		reader: sisoogleAttributeListReader
+		      	}),
+		      	fields: [ 'id', 'name' ],
+	
+		      	reader: sisoogleAttributeListReader
+		    });
+		    
+		    return sisoogleAttributeListStore;
 		},
 		
 		//==============================================================================================================================

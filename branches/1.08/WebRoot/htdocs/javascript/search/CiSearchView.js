@@ -450,13 +450,17 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		if(this.isAdvSearchExt) {
 			this.isAdvSearchExt = false;
 			link.updateText(AIR.AirApplicationManager.getLabels().advancedsearchminuslink);
-
-//			ciAdvancedSearchView.getComponent('advsearchplusfieldset').setVisible(true);//show();
+			 
+			ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').setVisible(true);
+			
+//			ciAdvancedSearchView.getComponent('advsearchplusfieldset').setVisible(true);//advsearchplusfieldset show();
 		} else {
 			this.isAdvSearchExt = true;
 			link.updateText(AIR.AirApplicationManager.getLabels().advancedsearchpluslink);
 
-//			ciAdvancedSearchView.getComponent('advsearchplusfieldset').setVisible(false);//hide();
+			ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').setVisible(false);
+			
+//			ciAdvancedSearchView.getComponent('advsearchplusfieldset').setVisible(false);//advsearchplusfieldset hide();
 //			ciAdvancedSearchView.getComponent('advsearchplusfieldset').getComponent('advsearchoperationalStatus').reset();
 //			ciAdvancedSearchView.getComponent('advsearchplusfieldset').getComponent('advsearchcategory').reset();
 //			ciAdvancedSearchView.getComponent('advsearchplusfieldset').getComponent('advsearchlifecyclestatus').reset();
@@ -531,7 +535,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 //			this.ciSearchGrid.getColumnModel().setConfig(this.ciSearchGrid.getDefaultColumnConfig());//this.myOwnCIsGrid.getColumnModel().config
 			
 			var ciSearchGrid = this.getComponent('ciSearchResultView').getComponent('ciSearchGrid');
-			ciSearchGrid.getColumnModel().setConfig(AIR.ConfigFactory.createCiResultGridConfig(true));
+			ciSearchGrid.getColumnModel().setConfig(AIR.AirConfigFactory.createCiResultGridConfig(true));
 			this.updateColumnLabels(AIR.AirApplicationManager.getLabels());
 		}
 		

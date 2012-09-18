@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.StringUtils;
+import com.bayerbbs.applrepos.dto.SISoogleAttribute;
 import com.bayerbbs.applrepos.service.SissogleParameterInput;
 
 
@@ -123,5 +127,63 @@ public class SisoogleValuesHbn {
 		
 		return sb.toString();
 	}
-	
+
+	public static SISoogleAttribute[] getSISoogleAttributesByType(String type) {
+		StringBuilder sql = new StringBuilder();
+		
+		sql.
+		append("SELECT DISTINCT ").append(type).
+		append(" FROM MV_SISOOGLE_VALUES ").
+		append("WHERE (UPPER(ACTIVE_Y_N) LIKE '%' OR ACTIVE_Y_N IS NULL) ").
+		append("AND (UPPER(ANWENDUNG_KAT2) LIKE '%' OR ANWENDUNG_KAT2 IS NULL) ").
+		append("AND (UPPER(CI_TYPE) LIKE '%' OR CI_TYPE IS NULL) ").
+		append("AND (TO_CHAR(GAP_END_DATE) <= '9999-12-31' OR GAP_END_DATE IS NULL) ").
+		append("AND (UPPER(GAP_RESPONSIBLE) LIKE '%' OR GAP_RESPONSIBLE IS NULL) ").
+		append("AND (UPPER(INSERT_QUELLE) LIKE '%' OR INSERT_QUELLE IS NULL) ").
+		append("AND (UPPER(IT_SET) LIKE '%' OR IT_SET IS NULL) ").
+		append("AND (UPPER(ITSEC_GROUP) LIKE '%' OR ITSEC_GROUP IS NULL) ").
+		append("AND (UPPER(LIFECYCLE) LIKE '%' OR LIFECYCLE IS NULL) ").
+		append("AND (UPPER(OPERATIONAL_STATUS) LIKE '%' OR OPERATIONAL_STATUS IS NULL) ").
+		append("AND (UPPER(OS_TYP) LIKE '%' OR OS_TYP IS NULL) ").
+		append("AND (UPPER(RELEVANCE_ICS) LIKE '%' OR RELEVANCE_ICS IS NULL) ").
+		append("AND (UPPER(RELEVANZ_ITSEC) LIKE '%' OR RELEVANZ_ITSEC IS NULL) ").
+		append("AND (UPPER(RESPONSIBLE) LIKE '%' OR RESPONSIBLE IS NULL) ").
+		append("AND (UPPER(RESPONSIBLE_OE) LIKE '%' OR RESPONSIBLE_OE IS NULL) ").
+		append("AND (UPPER(SEVERITY_LEVEL) LIKE '%' OR SEVERITY_LEVEL IS NULL) ").
+		append("AND (UPPER(SUB_RESPONSIBLE) LIKE '%' OR SUB_RESPONSIBLE IS NULL) ").
+		append("AND (UPPER(SUB_RESPONSIBLE_OE) LIKE '%' OR SUB_RESPONSIBLE_OE IS NULL) ").
+		append("ORDER BY ").append(type);
+		
+		Transaction ta = null;
+		Statement stmt = null;
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		List<SISoogleAttribute> siSoogleAttributes = new ArrayList<SISoogleAttribute>();
+		
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql.toString());
+			
+			int i = 7856;
+			while (rs.next())
+				siSoogleAttributes.add(new SISoogleAttribute(i++, rs.getString(1)));
+		
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		return siSoogleAttributes.toArray(new SISoogleAttribute[0]);
+	}
 }

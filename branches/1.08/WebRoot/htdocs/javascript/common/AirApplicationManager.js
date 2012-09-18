@@ -148,7 +148,15 @@ AIR.AirApplicationManager = function() {
 				loadClassListStore: null,
 				serviceModelListStore: null,
 				dedicatedListStore: null,
-				organisationalScopeListStore: null
+				organisationalScopeListStore: null,
+				
+				sisoogleOsTypeListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_OS_TYP } } },
+				sisoogleOsNameListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_OS_NAME } } },
+				sisoogleSourceListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_INSERT_QUELLE } } },
+				sisoogleGapResponsibleListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_GAP_RESPONSIBLE } } }
+//				sisoogleGapEndDateListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_GAP_END_DATE } } },
+//				sisoogleActiveStateListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_ACTIVE_Y_N } } },
+//				sisoogleGpscOwnerListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_GPSC_OWNER } } }
 			};
 			
 			this.storeCount = 0;

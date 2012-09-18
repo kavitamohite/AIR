@@ -38,7 +38,11 @@
 		<!-- <operationalStatus>Operational Status</operationalStatus> -->
 		<!-- <applicationCat2>Category IT</applicationCat2>Category IT/Technology -->
 		<!-- <businessProcess>Business Process</businessProcess> -->
-		
+		<osType>OS Type</osType>
+		<osName>OS Name</osName>
+		<source>Source</source>
+		<gapResponsible>Gap Responsible</gapResponsible>
+		<itSet>IT Set</itSet>
 		
 		<!-- Label: Menu -->
 		<label_menu_myplacemenuitem>My Place</label_menu_myplacemenuitem>

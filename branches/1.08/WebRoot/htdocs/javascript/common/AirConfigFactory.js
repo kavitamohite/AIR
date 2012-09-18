@@ -1,6 +1,6 @@
 Ext.namespace('AIR');
 
-AIR.ConfigFactory = function() {
+AIR.AirConfigFactory = function() {
 	return {
 		createCiResultGridConfig: function(isComplete) {
 		    var columnConfig = [];
@@ -23,4 +23,4 @@ AIR.ConfigFactory = function() {
 	};
 }();
 //};
-Ext.reg('AIR.ConfigFactory', AIR.ConfigFactory);
+Ext.reg('AIR.AirConfigFactory', AIR.AirConfigFactory);
