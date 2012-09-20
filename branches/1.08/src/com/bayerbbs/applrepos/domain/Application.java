@@ -55,6 +55,8 @@ public class Application extends DeletableRevisionInfo {
 	
 	private Long relevanceICS;
 	private Long relevanzITSEC;
+	private Long relevance1775;
+	private Long relevance2008;
 	private String gxpFlag;
 	// private String riskAnalysisYN;
 	
@@ -92,6 +94,8 @@ public class Application extends DeletableRevisionInfo {
 	private String serviceModel;
 	
 	private String organisationalScope;
+	
+	private String barRelevance;
 	
 	/**
 	 * default constructor - for jpa
@@ -463,6 +467,42 @@ public class Application extends DeletableRevisionInfo {
 	 */
 	public void setRelevanzITSEC(Long relevanzITSEC) {
 		this.relevanzITSEC = relevanzITSEC;
+	}
+
+	/**
+	 * @return the relevance1775
+	 */
+	@Column(name = "RELEVANCE_1775")
+	public Long getRelevance1775() {
+		return relevance1775;
+	}
+
+	/**
+	 * Sets the value of the {@link #relevance1775} field.
+	 * 
+	 * @param relevance1775
+	 *            The value to set.
+	 */
+	public void setRelevance1775(Long relevance1775) {
+		this.relevance1775 = relevance1775;
+	}
+
+	/**
+	 * @return the relevance2008
+	 */
+	@Column(name = "RELEVANCE_2008")
+	public Long getRelevance2008() {
+		return relevance2008;
+	}
+
+	/**
+	 * Sets the value of the {@link #relevance2008} field.
+	 * 
+	 * @param relevance2008
+	 *            The value to set.
+	 */
+	public void setRelevance2008(Long relevance2008) {
+		this.relevance2008 = relevance2008;
 	}
 
 	/**
@@ -957,6 +997,16 @@ public class Application extends DeletableRevisionInfo {
 
 	public void setOrganisationalScope(String organisationalScope) {
 		this.organisationalScope = organisationalScope;
+	}
+
+	@Column(name = "BAR_RELEVANCE_Y_N")
+	public String getBarRelevance() {
+		return barRelevance;
+	}
+
+
+	public void setBarRelevance(String barRelevance) {
+		this.barRelevance = barRelevance;
 	}
 
 }

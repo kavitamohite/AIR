@@ -67,6 +67,10 @@ public class ApplicationDTO implements Serializable {
 	
 	private Long relevanceICS;
 	
+	private Long relevance1775;
+	
+	private Long relevance2008;
+	
 	private Long template;
 	private String templateReferencedByItem; 
 	
@@ -205,6 +209,7 @@ public class ApplicationDTO implements Serializable {
 	
 	private String organisationalScope;
 	
+	private String barRelevance;
 	
 	// compliance request
 	private String relevanceGR1435;
@@ -1313,6 +1318,12 @@ public class ApplicationDTO implements Serializable {
 
 	public void setRelevanceGR1775(String relevanceGR1775) {
 		this.relevanceGR1775 = relevanceGR1775;
+		if ("Y".equals(relevanceGR1775)) {
+			setRelevance1775(new Long(-1));
+		}
+		else if ("N".equals(relevanceGR1775)) {
+			setRelevance1775(new Long(0));
+		}
 	}
 
 	public String getRelevanceGR1920() {
@@ -1327,7 +1338,6 @@ public class ApplicationDTO implements Serializable {
 		else if ("N".equals(relevanceGR1920)) {
 			setRelevanceICS(new Long(0));
 		}
-
 	}
 
 	public String getRelevanceGR2008() {
@@ -1336,6 +1346,12 @@ public class ApplicationDTO implements Serializable {
 
 	public void setRelevanceGR2008(String relevanceGR2008) {
 		this.relevanceGR2008 = relevanceGR2008;
+		if ("Y".equals(relevanceGR2008)) {
+			setRelevance2008(new Long(-1));
+		}
+		else if ("N".equals(relevanceGR2008)) {
+			setRelevance2008(new Long(0));
+		}
 	}
 
 	public Long getCiComplianceRequestId1435() {
@@ -1418,4 +1434,28 @@ public class ApplicationDTO implements Serializable {
 		this.organisationalScope = organisationalScope;
 	}
 	
+	public Long getRelevance1775() {
+		return relevance1775;
+	}
+
+	public void setRelevance1775(Long relevance1775) {
+		this.relevance1775 = relevance1775;
+	}
+
+	public Long getRelevance2008() {
+		return relevance2008;
+	}
+
+	public void setRelevance2008(Long relevance2008) {
+		this.relevance2008 = relevance2008;
+	}
+
+	public String getBarRelevance() {
+		return barRelevance;
+	}
+
+	public void setBarRelevance(String barRelevance) {
+		this.barRelevance = barRelevance;
+	}
+
 }

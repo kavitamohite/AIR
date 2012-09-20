@@ -11,6 +11,8 @@ public class ApplicationEditParameterInput {
 	private String applicationName;
 	private String applicationAlias;
 	
+	private String barRelevance;
+	
 	private String version;
 
 	private Long applicationCat2Id;
@@ -1175,6 +1177,16 @@ public class ApplicationEditParameterInput {
 
 	public void setOrganisationalScope(String organisationalScope) {
 		this.organisationalScope = organisationalScope;
+	}
+
+
+	public String getBarRelevance() {
+		return barRelevance;
+	}
+
+
+	public void setBarRelevance(String barRelevance) {
+		this.barRelevance = barRelevance;
 	}
 	
 }

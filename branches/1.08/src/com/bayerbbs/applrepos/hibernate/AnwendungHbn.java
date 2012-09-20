@@ -466,6 +466,13 @@ public class AnwendungHbn {
 							application.setRelevanzITSEC(dto.getRelevanzItsec());
 						}
 
+						if (null != dto.getRelevance1775()) {
+							application.setRelevance1775(dto.getRelevance1775());
+						}
+						if (null != dto.getRelevance2008()) {
+							application.setRelevance2008(dto.getRelevance2008());
+						}
+						
 						if (null == dto.getGxpFlagId()) {
 							//	we don't know, let the current value 
 						}
@@ -622,6 +629,13 @@ public class AnwendungHbn {
 							}
 							else {
 								application.setOrganisationalScope(dto.getOrganisationalScope());
+							}
+						}
+						
+						if (null != dto.getBarRelevance()) {
+							dto.setBarRelevance(dto.getBarRelevance().toUpperCase());
+							if ("Y".equals(dto.getBarRelevance()) || "N".equals(dto.getBarRelevance())) {
+								application.setBarRelevance(dto.getBarRelevance());
 							}
 						}
 						
@@ -862,11 +876,30 @@ public class AnwendungHbn {
 							}
 						}
 						
+						if (null == dto.getRelevance1775()) {
+							if ("Y".equals(dto.getRelevanceGR1775())) {
+								dto.setRelevance1775(new Long(-1));
+							}
+							else if ("N".equals(dto.getRelevanceGR1775())) {
+								dto.setRelevance1775(new Long(0));
+							}
+						}
+
+						if (null == dto.getRelevance2008()) {
+							if ("Y".equals(dto.getRelevanceGR2008())) {
+								dto.setRelevance2008(new Long(-1));
+							}
+							else if ("N".equals(dto.getRelevanceGR2008())) {
+								dto.setRelevance2008(new Long(0));
+							}
+						}
 						
 						// TODO
 						application.setTemplate(dto.getTemplate());
 						application.setRelevanzITSEC(dto.getRelevanzItsec());
 						application.setRelevanceICS(dto.getRelevanceICS());
+						application.setRelevance1775(dto.getRelevance1775());
+						application.setRelevance2008(dto.getRelevance2008());
 						application.setGxpFlag(dto.getGxpFlagId());
 						application.setSlaId(dto.getSlaId());
 						application.setServiceContractId(dto.getServiceContractId());
@@ -1368,6 +1401,8 @@ public class AnwendungHbn {
 		sql.append("		  , anw.itset");
 		sql.append("		  , itsverb.it_verbund_name");
 		sql.append("		  , anw.relevance_ics");
+		sql.append("		  , anw.relevance_1775");
+		sql.append("		  , anw.relevance_2008");
 		sql.append("		  , anw.gxp_flag");
 		sql.append("		  , anw.sla_id");
 		sql.append("		  , sla.sla_name");
@@ -1563,6 +1598,11 @@ public class AnwendungHbn {
 				Long relevanceICS = rsMessage.getLong("RELEVANCE_ICS");
 				applicationDTO.setRelevanceICS(relevanceICS);
 				
+				Long relevance1775 = rsMessage.getLong("RELEVANCE_1775");
+				applicationDTO.setRelevance1775(relevance1775);
+
+				Long relevance2008 = rsMessage.getLong("RELEVANCE_2008");
+				applicationDTO.setRelevance2008(relevance2008);
 
 				Long template = rsMessage.getLong("TEMPLATE");
 				if (-1 == template.longValue()) {

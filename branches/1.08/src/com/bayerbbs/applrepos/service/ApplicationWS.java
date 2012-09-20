@@ -14,29 +14,23 @@ import com.bayerbbs.applrepos.dto.ApplicationContactEntryDTO;
 import com.bayerbbs.applrepos.dto.ApplicationContactGroupDTO;
 import com.bayerbbs.applrepos.dto.ApplicationContactsDTO;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
-import com.bayerbbs.applrepos.dto.CiComplianceRequestDTO;
 import com.bayerbbs.applrepos.dto.CiSupportStuffDTO;
 import com.bayerbbs.applrepos.dto.ComplianceControlStatusDTO;
 import com.bayerbbs.applrepos.dto.HistoryViewDataDTO;
 import com.bayerbbs.applrepos.dto.InterfacesDTO;
-import com.bayerbbs.applrepos.dto.ItsecUserOptionDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
-import com.bayerbbs.applrepos.dto.RolePersonDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationApplicationHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationProcessHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationRegionHbn;
-import com.bayerbbs.applrepos.hibernate.CiComplianceRequestHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitesHbn;
 import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
 import com.bayerbbs.applrepos.hibernate.CiPersonsHbn;
 import com.bayerbbs.applrepos.hibernate.CiSupportStuffHbn;
 import com.bayerbbs.applrepos.hibernate.InterfacesHbn;
-import com.bayerbbs.applrepos.hibernate.ItsecUserOptionHbn;
 import com.bayerbbs.applrepos.hibernate.PersonsHbn;
-import com.bayerbbs.applrepos.validation.ValidationReader;
 
 public class ApplicationWS {
 
@@ -215,9 +209,6 @@ public class ApplicationWS {
 							dto.getCiSupportStuffDataDirectory(), dto.getCiSupportStuffProvidedServices(),
 							dto.getCiSupportStuffProvidedMachineUsers());
 
-					// Compliance Request
-					CiComplianceRequestHbn.saveCiComplianceRequestAll(editInput.getCwid(), ApplreposConstants.TABELLEN_ID_APPLICATION, dto.getApplicationId(), dto.getRelevanceGR1435(), dto.getRelevanceGR1775(), dto.getRelevanceGR1920(), dto.getRelevanceGR2008());
-					
 					
 					if (null != dto.getLicenseUsingRegions()) {
 						ApplicationRegionHbn.saveApplicationRegionsAll(editInput.getCwid(), dto.getApplicationId(),
@@ -312,8 +303,6 @@ public class ApplicationWS {
 					// update BAR APPLICATION ID
 					AnwendungHbn.updateBarApplicationId(ciId, "BAR-" + ciId);
 					
-					CiComplianceRequestHbn.saveCiComplianceRequestAll(editInput.getCwid(), ApplreposConstants.TABELLEN_ID_APPLICATION, ciId, editInput.getRelevanceGR1435(), editInput.getRelevanceGR1775(), editInput.getRelevanceGR1920(), editInput.getRelevanceGR2008());
-					
 					//--- neu seit Wizard RFC 8271 - required Attributes
 					
 					if (null != editInput.getGpsccontactSupportGroupHidden()) {
@@ -397,6 +386,7 @@ public class ApplicationWS {
 		dto.setLifecycleStatusId(editInput.getLifecycleStatusId());
 		dto.setOperationalStatusId(editInput.getOperationalStatusId());
 		dto.setComments(editInput.getComments());
+		dto.setBarRelevance(editInput.getBarRelevance());
 		// TODO business category
 
 		// Agreements
@@ -905,8 +895,9 @@ public class ApplicationWS {
 				// compliance
 				Long releItsec = dto.getRelevanzItsec();
 				Long releICS = dto.getRelevanceICS();
+				Long rele1775 = dto.getRelevance1775();
+				Long rele2008 = dto.getRelevance2008();
 				
-				readAndFillComplianceRequest(dto, application);
 				if (-1 == releItsec) {
 					dto.setRelevanceGR1435("Y");
 				}
@@ -918,6 +909,18 @@ public class ApplicationWS {
 				}
 				else if (0 == releICS) {
 					dto.setRelevanceGR1920("N");
+				}
+				if (-1 == rele1775) {
+					dto.setRelevanceGR1775("Y");
+				}
+				else if (0 == rele1775) {
+					dto.setRelevanceGR1775("N");
+				}
+				if (-1 == rele2008) {
+					dto.setRelevanceGR2008("Y");
+				}
+				else if (0 == rele2008) {
+					dto.setRelevanceGR2008("N");
 				}
 
 				
@@ -1247,58 +1250,4 @@ public class ApplicationWS {
 		return arrayHist;
 	}
 
-	/**
-	 * reads and fills the compliance request related data.
-	 * @param dto
-	 * @param application
-	 */
-	private void readAndFillComplianceRequest(ApplicationDTO dto, Application application) {
-		Long ciId = application.getApplicationId();
-		
-		CiComplianceRequestDTO complianceDTO = CiComplianceRequestHbn.findCiComplianceRequestByTableCiAndComplianceRequestId(ApplreposConstants.TABELLEN_ID_APPLICATION, ciId, ApplreposConstants.COMPLIANCE_REQUEST_GR1435);
-		if (null != complianceDTO) {
-			dto.setCiComplianceRequestId1435(complianceDTO.getCiComplianceRequestId());
-		}
-		if (null != complianceDTO && null != complianceDTO.getValue()) {
-			dto.setRelevanceGR1435(complianceDTO.getValue());
-		}
-		else {
-			dto.setRelevanceGR1435(ApplreposConstants.NO_SHORT);
-		}
-		
-		complianceDTO = CiComplianceRequestHbn.findCiComplianceRequestByTableCiAndComplianceRequestId(ApplreposConstants.TABELLEN_ID_APPLICATION, ciId, ApplreposConstants.COMPLIANCE_REQUEST_GR1775);
-		if (null != complianceDTO) {
-			dto.setCiComplianceRequestId1775(complianceDTO.getCiComplianceRequestId());
-		}
-		if (null != complianceDTO && null != complianceDTO.getValue()) {
-			dto.setRelevanceGR1775(complianceDTO.getValue());
-		}
-		else {
-			dto.setRelevanceGR1775(ApplreposConstants.NO_SHORT);
-		}
-
-		complianceDTO = CiComplianceRequestHbn.findCiComplianceRequestByTableCiAndComplianceRequestId(ApplreposConstants.TABELLEN_ID_APPLICATION, ciId, ApplreposConstants.COMPLIANCE_REQUEST_GR1920);
-		if (null != complianceDTO) {
-			dto.setCiComplianceRequestId1920(complianceDTO.getCiComplianceRequestId());
-		}
-		if (null != complianceDTO && null != complianceDTO.getValue()) {
-			dto.setRelevanceGR1920(complianceDTO.getValue());
-		}
-		else {
-			dto.setRelevanceGR1920(ApplreposConstants.NO_SHORT);
-		}
-
-		complianceDTO = CiComplianceRequestHbn.findCiComplianceRequestByTableCiAndComplianceRequestId(ApplreposConstants.TABELLEN_ID_APPLICATION, ciId, ApplreposConstants.COMPLIANCE_REQUEST_GR2008);
-		if (null != complianceDTO) {
-			dto.setCiComplianceRequestId2008(complianceDTO.getCiComplianceRequestId());
-		}
-		if (null != complianceDTO && null != complianceDTO.getValue()) {
-			dto.setRelevanceGR2008(complianceDTO.getValue());
-		}
-		else {
-			dto.setRelevanceGR2008(ApplreposConstants.NO_SHORT);
-		}
-
-	}
-	
 }
