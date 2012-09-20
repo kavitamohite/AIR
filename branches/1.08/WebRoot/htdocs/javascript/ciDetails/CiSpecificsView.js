@@ -6,10 +6,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		Ext.apply(this, {
 			labelWidth: 200, // label settings here cascade unless overridden
-//		    frame: true,
-//		    id: 'specificsPanel',
 		    title: 'Specifics',
-		    //bodyStyle:'padding:5px 5px 0',
 		    
 		    border: false,
 		    bodyStyle: 'padding:10px',
@@ -75,6 +72,19 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        	marginBottom: 10
 		        }
 		    },{
+	            xtype: 'radiogroup',
+    			id: 'rgBARrelevance',
+    			width: 220,
+    			fieldLabel: 'BAR relevant',
+    			
+    			columns: 3,
+
+	            items: [
+                    { id: 'rgBARrelevanceYes',		itemId: 'rgBARrelevanceYes', 		boxLabel: 'Yes',	name: 'rgBARrelevance', inputValue: 'Y', width: 80 },//, width: 80 wenn gedatscht
+	                { id: 'rgBARrelevanceNo',		itemId: 'rgBARrelevanceNo',			boxLabel: 'No',	name: 'rgBARrelevance', inputValue: 'N', width: 80 },
+	                { id: 'rgBARrelevanceUndefined',itemId: 'rgBARrelevanceUndefined', 	boxLabel: 'Undefined',	name: 'rgBARrelevance', inputValue: undefined, width: 80, checked: true }//, checked: true
+	            ]
+	        },{
 		        xtype: 'filterCombo',//combo
 		        width: 230,
 //		        anchor: '70%',//siehe (*1)
@@ -105,6 +115,29 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        
 		        id: 'lifecycleStatus',
 		        store: AIR.AirStoreManager.getStoreByName('lifecycleStatusListStore'),//lifecycleStatusListStore,
+		        valueField: 'id',
+		        displayField: 'text',
+		        
+//		        typeAhead: true,
+//		        forceSelection: true,
+//		        autoSelect: false,
+		        
+		        triggerAction: 'all',//all query
+		        lazyRender: true,
+		        lazyInit: false,
+		        mode: 'local'
+		    },{
+		        xtype: 'combo',
+		        width: 230,
+//		        anchor: '70%',//siehe (*1)
+		        fieldLabel: 'Operational status',
+
+//		        style: {
+//		    		marginTop: 20
+//		    	},
+		        
+		        id: 'operationalStatus',
+		        store: AIR.AirStoreManager.getStoreByName('operationalStatusListStore'),//operationalStatusListStore,
 		        valueField: 'id',
 		        displayField: 'text',
 		        
@@ -167,50 +200,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        	hidden: true,
 		        	disabled: true
 //		    	}]
-	        }/*,{
-		        xtype: 'combo',
-		        width: 230,
-//		        anchor: '70%',//siehe (*1)
-//		        fieldLabel: 'Organisational Scope',
-		        
-		        id: 'organisationalScope',
-		        store: AIR.AirStoreManager.getStoreByName('organisationalScopeListStore'),
-		        valueField: 'id',
-		        displayField: 'name',
-		        editable: false,
-		        
-//		        typeAhead: true,
-//		        forceSelection: true,
-//		        autoSelect: false,
-		        
-		        triggerAction: 'all',//all query
-		        lazyRender: true,
-		        lazyInit: false,
-		        mode: 'local'
-		    }*/,{
-		        xtype: 'combo',
-		        width: 230,
-//		        anchor: '70%',//siehe (*1)
-		        fieldLabel: 'Operational status',
-
-//		        style: {
-//		    		marginTop: 20
-//		    	},
-		        
-		        id: 'operationalStatus',
-		        store: AIR.AirStoreManager.getStoreByName('operationalStatusListStore'),//operationalStatusListStore,
-		        valueField: 'id',
-		        displayField: 'text',
-		        
-//		        typeAhead: true,
-//		        forceSelection: true,
-//		        autoSelect: false,
-		        
-		        triggerAction: 'all',//all query
-		        lazyRender: true,
-		        lazyInit: false,
-		        mode: 'local'
-		    },{
+	        },{
 		    	xtype: 'textarea',
 		        id: 'comments',
 
@@ -323,6 +313,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		var tfApplicationName = this.getComponent('applicationName');
 		var tfApplicationAlias = this.getComponent('applicationAlias');
 		var tfApplicationVersion = this.getComponent('applicationVersion');
+		var rgBARrelevance = this.getComponent('rgBARrelevance');
 		
 		var cbApplicationCat2 = this.getComponent('applicationCat2');
 		var cbLifecycleStatus = this.getComponent('lifecycleStatus');
@@ -340,6 +331,8 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		tfApplicationName.on('change', this.onApplicationNameChange, this);
 		tfApplicationAlias.on('change', this.onApplicationAliasChange, this);
 		tfApplicationVersion.on('change', this.onApplicationVersionChange, this);
+		
+		rgBARrelevance.on('change', this.onBARrelevanceChange, this);
 		
 		cbApplicationCat2.on('select', this.onApplicationCat2Select, this);
 		cbApplicationCat2.on('beforeselect', this.onApplicationCat2BeforeSelect, this);
@@ -432,6 +425,10 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	onApplicationVersionChange: function(textfield, newValue, oldValue) {
 		this.fireEvent('ciChange', this, textfield, newValue);
+	},
+	
+	onBARrelevanceChange: function(rgb, checkedRadio) {
+		this.fireEvent('ciChange', this, rgb, checkedRadio);
 	},
 
 	
@@ -731,6 +728,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	updateAccessMode: function(data) {
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationAlias'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('barApplicationId'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('rgBARrelevance'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationVersion'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationCat2'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('lifecycleStatus'), data);
@@ -885,6 +883,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		this.setFieldLabel(this.getComponent('applicationName'), labels.applicationName);
 		this.setFieldLabel(this.getComponent('applicationAlias'), labels.applicationAlias);
 		this.setFieldLabel(this.getComponent('barApplicationId'), labels.barApplicationId);
+		this.setFieldLabel(this.getComponent('rgBARrelevance'), labels.rgBARrelevance);
 		this.setFieldLabel(this.getComponent('applicationVersion'), labels.applicationVersion);
 		this.setFieldLabel(this.getComponent('applicationCat2'), labels.applicationCat2);
 		this.setFieldLabel(this.getComponent('lifecycleStatus'), labels.lifecycleStatus);

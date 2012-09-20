@@ -364,10 +364,14 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
         			hideLabel: true,
         			
         			items: [
-    			        { boxLabel: 'GR1435', name: 'cbgRegulations', width: 100 },
+//    			        { boxLabel: 'GR1435', name: 'cbgRegulations', width: 100 },
+//    			        { boxLabel: 'GR1775', name: 'cbgRegulations', width: 100 },
+//    			        { boxLabel: 'GR2008', name: 'cbgRegulations', width: 100 },
+//    			        { boxLabel: 'GR1920', name: 'cbgRegulations', width: 100 }
+						{ boxLabel: 'GR1435', name: 'cbgRegulations', width: 100 },
+    			        { boxLabel: 'GR1920', name: 'cbgRegulations', width: 100 },
     			        { boxLabel: 'GR1775', name: 'cbgRegulations', width: 100 },
-    			        { boxLabel: 'GR2008', name: 'cbgRegulations', width: 100 },
-    			        { boxLabel: 'GR1920', name: 'cbgRegulations', width: 100 }
+    			        { boxLabel: 'GR2008', name: 'cbgRegulations', width: 100 }
 			        ]
 		        }, {
 		        	xtype: 'panel',

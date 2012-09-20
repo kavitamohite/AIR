@@ -148,6 +148,7 @@ AIR.AirAclManager = function() {
 				case 'checkbox':
 				case 'combo':
 				case 'filterCombo':
+				case 'radiogroup':
 					if(item.label===undefined) {
 						var labelItem = Ext.getCmp('label' + item.id);
 						if(labelItem && labelItem.el) {//labelItem!==undefined
@@ -181,6 +182,7 @@ AIR.AirAclManager = function() {
 				case 'checkbox':
 				case 'combo':
 				case 'filterCombo':
+				case 'radiogroup':
 					if(item.label===undefined) {
 						var labelItem = Ext.getCmp('label' + item.id);
 						if(labelItem!==undefined) {
@@ -573,6 +575,8 @@ AIR.AirAclManager = function() {
 			var records = this.aclStore.getRange();
 			var labels = AIR.AirApplicationManager.getLabels();
 			
+			
+			
 			Ext.each(records, function(item, index, allItems) {
 				if(item.data.Mandatory === 'mandatory' && item.data.id.charAt(item.data.id.length - 1) !== 'W') { //'required'
 					var reqItemCmp = Ext.getCmp(item.data.id);
@@ -594,6 +598,11 @@ AIR.AirAclManager = function() {
 								break;
 							case 'listview':
 								if(!reqItemCmp.disabled && reqItemCmp.getSelectedRecords().length === 0)
+									incompleteFieldList += labels[reqItemCmp.id] + ', ';
+								break;
+							case 'radiogroup':
+								var selected = reqItemCmp.getValue();
+								if(!reqItemCmp.disabled && selected === null)
 									incompleteFieldList += labels[reqItemCmp.id] + ', ';
 								break;
 						}
@@ -744,6 +753,7 @@ AIR.AirAclManager = function() {
 				case 'combo':
 				case 'filterCombo':
 				case 'checkboxgroup':
+				case 'radiogroup':
 				case 'listview':
 					this.setNecessityInternal(item.label, necessity);
 					break;

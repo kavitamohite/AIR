@@ -271,48 +271,52 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    params.advsearchcidelegateHidden = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CiSubResponsible').getComponent(ciAdvancedSearchView.ownerId + 'ciSubResponsibleHidden').getValue();
 		
 	    if(!this.isAdvSearchExt) {
-			field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchGeneralUsageW');
+	    	var fsCategoriesAndStatus = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus');
+	    	var fsSpecialSearchAttributes = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes');
+	    	
+	    	
+			field = fsCategoriesAndStatus.getComponent('cbAdvSearchGeneralUsageW');
 			if(field.getValue().length > 0)
 				params.advsearchoperationalStatusid = field.getValue();
 			
-			field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchITCategoryW');
+			field = fsCategoriesAndStatus.getComponent('cbAdvSearchITCategoryW');
 			if(field.getValue().length > 0)
 				params.advsearchapplicationcat2id = field.getValue();
 			
-			field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchLifecycleStatusW');
+			field = fsCategoriesAndStatus.getComponent('cbAdvSearchLifecycleStatusW');
 			if(field.getValue().length > 0)
 				params.advsearchlifecyclestatusid = field.getValue();
 	    	
 	    	
-			field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchITSecGroupW');
+			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchITSecGroupW');
 			if(field.getValue().length > 0)
 				params.itsecGroup = field.getValue();
 			
-			field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchProcessW');
+			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchProcessW');
 			if(field.getValue().length > 0)
 				params.advsearchprocessid = field.getValue();
 			
-			field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchOStypeW');
+			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW');
 			if(field.getValue().length > 0)
 				params.osType = field.getValue();
 			
-			field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchOSnameW');
+			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOSnameW');
 			if(field.getValue().length > 0)
 				params.osName = field.getValue();
 			
-			field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchSourceW');
+			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchSourceW');
 			if(field.getValue().length > 0)
 				params.source = field.getValue();
 			
-			field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchBusinessEssentialW');
+			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchBusinessEssentialW');
 			if(field.getValue().length > 0)
 				params.businessEssential = field.getValue();
 			
-			field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchGapResponsibleW');
+			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchGapResponsibleW');
 			if(field.getValue().length > 0)
 				params.gapResponsible = field.getValue();
 			
-			field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('dfAdvSearchTargetDate');
+			field = fsSpecialSearchAttributes.getComponent('dfAdvSearchTargetDate');
 			if(field.getValue().length > 0)
 				params.gapEndDate = field.getValue();
 	    }
@@ -458,14 +462,14 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	
 	handleSearch: function() {
 		this.isOuSearch = false;
-		this.getComponent('ciSearchViewPages').getLayout().setActiveItem(0);
 		
-		//this.getComponent('ciSearchViewPages').setHeight(50);
-		this.getComponent('ciSearchViewPages').doLayout();
+		var ciSearchViewPages = this.getComponent('ciSearchViewPages');
+		var ciStandardSearchView = ciSearchViewPages.getComponent('ciStandardSearchView');
 		
-		var ciStandardSearchView = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView');
+		ciSearchViewPages.getLayout().setActiveItem(0);
 		ciStandardSearchView.setHeight(60);
-		this.getComponent('ciSearchViewPages').setHeight(60);//new
+		ciSearchViewPages.setHeight(60);
+		ciSearchViewPages.doLayout();
 		
 		
 		var link = ciStandardSearchView.getComponent('pSearchField').getComponent('clAdvancedSearch');//.getComponent('pSearchField').getComponent('clAdvancedSearch')

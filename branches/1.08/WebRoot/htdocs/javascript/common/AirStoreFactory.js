@@ -1015,6 +1015,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'applicationName'},
 			        {name: 'applicationAlias'},
 			        {name: 'barApplicationId'},
+			        {name: 'rgBARrelevance'},
 			        {name: 'applicationVersion'},
 			        {name: 'applicationCat2'},
 			        {name: 'lifecycleStatus'},

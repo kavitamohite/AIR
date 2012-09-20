@@ -149,10 +149,11 @@
 			<applicationName>Name</applicationName>
 			<applicationAlias>Alias</applicationAlias>
 			<barApplicationId>Bayer Application Registry ID</barApplicationId>
+			<rgBARrelevance>BAR relevant</rgBARrelevance>
 			<applicationVersion>Version</applicationVersion>
 			<applicationCat2>IT-Kategorie / Technologie</applicationCat2>
 			<lifecycleStatus>Betriebsstatus</lifecycleStatus>
-			<organisationalScope>Organisational scope</organisationalScope>
+			<organisationalScope>Organisational Scope</organisationalScope>
 			<operationalStatus>Allgemeine Verwendung</operationalStatus>
 			<comments>Beschreibung</comments>
 			<specificsCategory>Business</specificsCategory>

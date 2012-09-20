@@ -52,6 +52,19 @@
 		<attributeLength>656</attributeLength>
 		<attributeMask>/[0-9a-zA-Z#=\+\-\_\/\\. ]/g</attributeMask>
 	</Identifier>
+	<Identifier>
+		<id>rgBARrelevance</id>
+		<Mandatory>mandatory</Mandatory>
+		<Relevance>operational and strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	
+	
 
 	<Identifier>
 		<id>applicationVersion</id>
