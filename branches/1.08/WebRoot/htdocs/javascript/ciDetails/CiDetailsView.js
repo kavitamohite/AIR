@@ -120,9 +120,46 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		this.addEvents('ciBeforeChange', 'ciChange');
 	},
 	
-	update: function(detailsData) {
-//		this.fillDetailsInformation();
-//		var appDetail = AIR.AirApplicationManager.getAppDetail();
+	update: function(appDetail) {//detailsData
+		var store = AIR.AirStoreManager.getStoreByName('applicationCat2ListStore');
+		var applicationCat2 = appDetail.applicationCat2;
+		applicationCat2 = applicationCat2.length > 0 && applicationCat2 != '0' && store.getById(appDetail.applicationCat2) ? store.getById(appDetail.applicationCat2).data.text : '';
+		
+		store = AIR.AirStoreManager.getStoreByName('categoryBusinessListStore');
+		var categoryBusiness = appDetail.categoryBusinessId;
+		categoryBusiness = categoryBusiness.length > 0 && categoryBusiness != '0' && store.getById(appDetail.categoryBusinessId) ? store.getById(appDetail.categoryBusinessId).data.text : '';
+		
+		store = AIR.AirStoreManager.getStoreByName('slaListStore');
+		var slaName = appDetail.slaId;
+		slaName = slaName.length > 0 && slaName != '0' && store.getById(appDetail.slaId) ? store.getById(appDetail.slaId).data.text : '';
+
+		store = AIR.AirStoreManager.getStoreByName('businessEssentialListStore');
+		var businessEssential = appDetail.businessEssentialId;
+		businessEssential = businessEssential.length > 0 && businessEssential != '0' && store.getById(appDetail.businessEssentialId) ? store.getById(appDetail.businessEssentialId).data.text : '';
+
+		
+		var detailsData = {
+			applicationCat1Txt: appDetail.applicationCat1Txt,
+			applicationAlias: appDetail.applicationAlias,
+			barApplicationId: appDetail.barApplicationId,
+			applicationCat2: applicationCat2,
+			categoryBusiness: categoryBusiness,
+			ciResponsible: appDetail.ciResponsible,
+			applicationOwner: appDetail.applicationOwner,
+			slaName: slaName,//AIR.AirStoreManager.getStoreByName('slaListStore').getById(appDetail.slaId).data.text,
+			businessEssential: businessEssential,//AIR.AirStoreManager.getStoreByName('businessEssentialListStore').getById(appDetail.businessEssentialId).data.text,
+			
+			insertQuelle: appDetail.insertQuelle,
+			insertUser: appDetail.insertUser,
+			insertTimestamp: appDetail.insertTimestamp,
+			updateQuelle: appDetail.updateQuelle,
+			updateUser: appDetail.updateUser,
+			updateTimestamp: appDetail.updateTimestamp,
+			
+			//mailTemplate
+			applicationName: appDetail.applicationName,
+			ciSubResponsible: appDetail.ciSubResponsible
+		};
 		
 		
 		var field = this.getComponent('detailsApplicationAlias');

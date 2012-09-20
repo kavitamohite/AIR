@@ -74,7 +74,7 @@
 		<label_menu_delete>Löschen</label_menu_delete>
 		
 		<label_menu_detailsdetails>View &amp; Edit</label_menu_detailsdetails><!--Details, Ansehen &amp; Bearbeiten -->
-		<label_menu_detailsspecific>Spezifisches</label_menu_detailsspecific>
+		<label_menu_detailsspecific>CI Typ Spezifisches</label_menu_detailsspecific>
 		<label_menu_detailscontacts>Kontakte</label_menu_detailscontacts>
 		<label_menu_detailsagreements>Vereinbarungen</label_menu_detailsagreements>
 		<label_menu_detailsprotection>Schutzbedarf</label_menu_detailsprotection>

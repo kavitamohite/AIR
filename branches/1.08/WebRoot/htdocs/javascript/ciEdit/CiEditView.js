@@ -281,13 +281,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 //			appDetail.applicationCat1Id = '5';
 		AIR.AirApplicationManager.setAppDetail(appDetail);
 		
-		
-		//update all detail pages' textfield,textarea Elements. Rafac with findByXType('textfield') for if...
-		/*for(var k = 0; k < records[0].fields.keys.length; ++k)
-			if(Ext.getCmp(records[0].fields.keys[k]) !== undefined)
-				Ext.getCmp(records[0].fields.keys[k]).setValue(appDetail[records[0].fields.keys[k]]);*/
-		//update all detail pages' textfield,textarea(,combo?) Elements
-		
 
 		this.getComponent('editpanelheader').setText(appDetail.applicationName);
 		this.getComponent('editpanelsubheader').setText(appDetail.applicationCat1Txt);
@@ -295,74 +288,32 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		//---------------------------------------------------------------------------------------------------------
 		//AIR.AirAclManager.updateAcl(appDetail);// RFC 8225: added appDetail param
 		
-		
-		var store = AIR.AirStoreManager.getStoreByName('applicationCat2ListStore');
-		var applicationCat2 = AIR.AirApplicationManager.getAppDetail().applicationCat2;
-		applicationCat2 = applicationCat2.length > 0 && applicationCat2 != '0' && store.getById(AIR.AirApplicationManager.getAppDetail().applicationCat2) ? store.getById(AIR.AirApplicationManager.getAppDetail().applicationCat2).data.text : '';
-		
-		store = AIR.AirStoreManager.getStoreByName('categoryBusinessListStore');
-		var categoryBusiness = AIR.AirApplicationManager.getAppDetail().categoryBusinessId;
-		categoryBusiness = categoryBusiness.length > 0 && categoryBusiness != '0' && store.getById(AIR.AirApplicationManager.getAppDetail().categoryBusinessId) ? store.getById(AIR.AirApplicationManager.getAppDetail().categoryBusinessId).data.text : '';
-		
-		store = AIR.AirStoreManager.getStoreByName('slaListStore');
-		var slaName = AIR.AirApplicationManager.getAppDetail().slaId;
-		slaName = slaName.length > 0 && slaName != '0' && store.getById(AIR.AirApplicationManager.getAppDetail().slaId) ? store.getById(AIR.AirApplicationManager.getAppDetail().slaId).data.text : '';
-
-		store = AIR.AirStoreManager.getStoreByName('businessEssentialListStore');
-		var businessEssential = AIR.AirApplicationManager.getAppDetail().businessEssentialId;
-		businessEssential = businessEssential.length > 0 && businessEssential != '0' && store.getById(AIR.AirApplicationManager.getAppDetail().businessEssentialId) ? store.getById(AIR.AirApplicationManager.getAppDetail().businessEssentialId).data.text : '';
-
-		
-		var detailsData = {
-			applicationCat1Txt: AIR.AirApplicationManager.getAppDetail().applicationCat1Txt,
-			applicationAlias: AIR.AirApplicationManager.getAppDetail().applicationAlias,
-			barApplicationId: AIR.AirApplicationManager.getAppDetail().barApplicationId,
-			applicationCat2: applicationCat2,
-			categoryBusiness: categoryBusiness,
-			ciResponsible: AIR.AirApplicationManager.getAppDetail().ciResponsible,
-			applicationOwner: AIR.AirApplicationManager.getAppDetail().applicationOwner,
-			slaName: slaName,//AIR.AirStoreManager.getStoreByName('slaListStore').getById(AIR.AirApplicationManager.getAppDetail().slaId).data.text,
-			businessEssential: businessEssential,//AIR.AirStoreManager.getStoreByName('businessEssentialListStore').getById(AIR.AirApplicationManager.getAppDetail().businessEssentialId).data.text,
-			
-			insertQuelle: AIR.AirApplicationManager.getAppDetail().insertQuelle,
-			insertUser: AIR.AirApplicationManager.getAppDetail().insertUser,
-			insertTimestamp: AIR.AirApplicationManager.getAppDetail().insertTimestamp,
-			updateQuelle: AIR.AirApplicationManager.getAppDetail().updateQuelle,
-			updateUser: AIR.AirApplicationManager.getAppDetail().updateUser,
-			updateTimestamp: AIR.AirApplicationManager.getAppDetail().updateTimestamp,
-			
-			//mailTemplate
-			applicationName: AIR.AirApplicationManager.getAppDetail().applicationName,
-			ciSubResponsible: AIR.AirApplicationManager.getAppDetail().ciSubResponsible
-		};
-
-		
 		var ciDetailsView = this.getComponent('ciEditTabView').getComponent('clCiDetails');
-		ciDetailsView.update(detailsData);
+		ciDetailsView.update(appDetail);//detailsData
 		
 		var ciSpecificsView = this.getComponent('ciEditTabView').getComponent('clCiSpecifics');
-		ciSpecificsView.update(AIR.AirApplicationManager.getAppDetail());
+		ciSpecificsView.update(appDetail);
 		
 		var ciContactsView = this.getComponent('ciEditTabView').getComponent('clCiContacts');
-		ciContactsView.update(AIR.AirApplicationManager.getAppDetail());
+		ciContactsView.update(appDetail);
 		
 		var ciAgreementsView = this.getComponent('ciEditTabView').getComponent('clCiAgreements');
-		ciAgreementsView.update(AIR.AirApplicationManager.getAppDetail());
+		ciAgreementsView.update(appDetail);
 		
 		var ciProtectionView = this.getComponent('ciEditTabView').getComponent('clCiProtection');
-		ciProtectionView.update(AIR.AirApplicationManager.getAppDetail());
+		ciProtectionView.update(appDetail);
 
 		var ciLicenseView = this.getComponent('ciEditTabView').getComponent('clCiLicense');
-		ciLicenseView.update(AIR.AirApplicationManager.getAppDetail());
+		ciLicenseView.update(appDetail);
 		
 		var ciComplianceView = this.getComponent('ciEditTabView').getComponent('clCiCompliance');
-		ciComplianceView.update(AIR.AirApplicationManager.getAppDetail());
+		ciComplianceView.update(appDetail);
 		
 		var ciConnectionsView = this.getComponent('ciEditTabView').getComponent('clCiConnections');
-		ciConnectionsView.update(AIR.AirApplicationManager.getAppDetail());
+		ciConnectionsView.update(appDetail);
 		
 		var ciSupportStuff = this.getComponent('ciEditTabView').getComponent('clCiSupportStuff');
-		ciSupportStuff.update(AIR.AirApplicationManager.getAppDetail());
+		ciSupportStuff.update(appDetail);
 		
 		//var ciHistory = this.getComponent('ciEditTabView').getComponent('clCiHistory');
 		//ciHistory.update();
@@ -389,7 +340,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		this.disableButtons();
 		
-		var panelMsg = AIR.AirAclManager.listRequiredFields(AIR.AirApplicationManager.getAppDetail());
+		var panelMsg = AIR.AirAclManager.listRequiredFields(appDetail);
 		if(panelMsg.length > 0) {
 			this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
 		} else {
