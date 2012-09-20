@@ -636,8 +636,10 @@ public class AnwendungHbn {
 						
 						if (null != dto.getBarRelevance()) {
 							dto.setBarRelevance(dto.getBarRelevance().toUpperCase());
-							if ("Y".equals(dto.getBarRelevance()) || "N".equals(dto.getBarRelevance())) {
-								application.setBarRelevance(dto.getBarRelevance());
+							if (!"Y".equals(application.getBarRelevance())) {
+								if ("Y".equals(dto.getBarRelevance()) || "N".equals(dto.getBarRelevance())) {
+									application.setBarRelevance(dto.getBarRelevance());
+								}
 							}
 						}
 						
