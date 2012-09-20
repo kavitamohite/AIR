@@ -1360,6 +1360,7 @@ public class AnwendungHbn {
 		sql.append("select ");
 		sql.append("  anw.anwendung_id");
 		sql.append(", anw.BAR_APPLICATION_ID");
+		sql.append(", anw.BAR_RELEVANCE_Y_N");
 		sql.append(", anw.anwendung_name");
 		sql.append(", anw.anwendung_kat2_id");
 		sql.append(", kat2.anwendung_kat2_txt");
@@ -1506,6 +1507,7 @@ public class AnwendungHbn {
 				applicationDTO.setApplicationId(rsMessage
 						.getLong("ANWENDUNG_ID"));
 				applicationDTO.setBarApplicationId(rsMessage.getString("BAR_APPLICATION_ID"));
+				applicationDTO.setBarRelevance(rsMessage.getString("BAR_RELEVANCE_Y_N"));
 				applicationDTO.setApplicationName(rsMessage
 						.getString("ANWENDUNG_NAME"));
 				applicationDTO.setApplicationCat2Id(rsMessage
