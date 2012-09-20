@@ -254,8 +254,10 @@ public class AnwendungHbn {
 
 						// TODO aktuell wird die BAR-ID vorbelegt aus der Application ID
 						// if (null == dto.getBarApplicationId() || "".equals(dto.getBarApplicationId())) {
-						if (null == application.getBarApplicationId() || "".equals(application.getBarApplicationId())) {
-							application.setBarApplicationId("BAR-" + application.getApplicationId());
+						if ("Y".equals(application.getBarRelevance())) {
+							if (null == application.getBarApplicationId() || "".equals(application.getBarApplicationId())) {
+								application.setBarApplicationId("BAR-" + application.getApplicationId());
+							}
 						}
 						
 						if (null != dto.getApplicationName()) {
@@ -3107,11 +3109,13 @@ public class AnwendungHbn {
 
 		boolean toCommit = false;
 		try {
-				if (null != applicationTarget
-						&& null == applicationTarget.getDeleteTimestamp()) {
-					applicationTarget.setBarApplicationId(barApplicationId);
-					session.saveOrUpdate(applicationTarget);
-					session.flush();
+				if ("Y".equals(applicationTarget.getBarRelevance())) {
+					if (null != applicationTarget
+							&& null == applicationTarget.getDeleteTimestamp()) {
+						applicationTarget.setBarApplicationId(barApplicationId);
+						session.saveOrUpdate(applicationTarget);
+						session.flush();
+					}
 				}
 				toCommit = true;
 		} catch (Exception e) {
