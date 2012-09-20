@@ -629,6 +629,13 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 		this.getComponent('applicationVersion').setValue(data.applicationVersion);
 		
+		var rgBARrelevance = this.getComponent('rgBARrelevance');
+//		if(data.barRelevance)
+			rgBARrelevance.setValue(data.barRelevance);
+		if(data.barRelevance === 'Y')
+			rgBARrelevance.disable();
+		
+		
 		var cbApplicationCat2 = this.getComponent('applicationCat2');
 		//cbApplicationCat2.getStore().filter('applicationCat1Id', data.applicationCat1Id);
 		var filterData = {//falls app w/o cat soll trotzdem die cat2 von cat1=Application auswählbar sein
@@ -804,6 +811,10 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		field = this.getComponent('applicationVersion');
 		if(!field.disabled)
 			data.version = field.getValue();
+		
+		field = this.getComponent('rgBARrelevance');
+		if(!field.disabled)
+			data.barRelevance = field.getValue().inputValue;
 		
 
 		field = this.getComponent('specificsCategory').getComponent('cbApplicationBusinessCat');

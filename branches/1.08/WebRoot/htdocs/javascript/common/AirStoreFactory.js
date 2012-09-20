@@ -2113,6 +2113,9 @@ AIR.AirStoreFactory = function() {
 				name : 'barApplicationId',
 				mapping : 'applicationDTO > barApplicationId'
 			}, {
+				name : 'barRelevance',
+				mapping : 'applicationDTO > barRelevance'
+			}, {
 				name : 'applicationName',
 				mapping : 'applicationDTO > applicationName'
 			}, {
