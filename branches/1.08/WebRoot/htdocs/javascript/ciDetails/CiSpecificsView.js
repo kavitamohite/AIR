@@ -82,7 +82,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	            items: [
                     { id: 'rgBARrelevanceYes',		itemId: 'rgBARrelevanceYes', 		boxLabel: 'Yes',	name: 'rgBARrelevance', inputValue: 'Y', width: 80 },//, width: 80 wenn gedatscht
 	                { id: 'rgBARrelevanceNo',		itemId: 'rgBARrelevanceNo',			boxLabel: 'No',	name: 'rgBARrelevance', inputValue: 'N', width: 80 },
-	                { id: 'rgBARrelevanceUndefined',itemId: 'rgBARrelevanceUndefined', 	boxLabel: 'Undefined',	name: 'rgBARrelevance', inputValue: undefined, width: 80, checked: true }//, checked: true
+	                { id: 'rgBARrelevanceUndefined',itemId: 'rgBARrelevanceUndefined', 	boxLabel: 'Undefined',	name: 'rgBARrelevance', inputValue: 'U', width: 80, checked: true }//, checked: true
 	            ]
 	        },{
 		        xtype: 'filterCombo',//combo
@@ -630,10 +630,11 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.getComponent('applicationVersion').setValue(data.applicationVersion);
 		
 		var rgBARrelevance = this.getComponent('rgBARrelevance');
-//		if(data.barRelevance)
-			rgBARrelevance.setValue(data.barRelevance);
-		if(data.barRelevance === 'Y')
-			rgBARrelevance.disable();
+		if(data.barRelevance.length === 0)
+			data.barRelevance = 'U';
+
+		rgBARrelevance.setValue(data.barRelevance);
+
 		
 		
 		var cbApplicationCat2 = this.getComponent('applicationCat2');
@@ -722,6 +723,8 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		this.updateAccessMode(data);
+		if(data.barRelevance === 'Y')
+			rgBARrelevance.disable();
 		this.loadApplicationBusinessProcesses(data.applicationId);
 		
 		//kein Effekt zur Verhinderung der Verkleinerung der combo Breite nachdem wenn auf Contacts die Primary Person
