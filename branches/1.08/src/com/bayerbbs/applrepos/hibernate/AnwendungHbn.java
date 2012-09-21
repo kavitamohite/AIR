@@ -922,6 +922,15 @@ public class AnwendungHbn {
 						if (StringUtils.isNotNullOrEmpty(dto.getOrganisationalScope())) {
 							application.setOrganisationalScope(dto.getOrganisationalScope());
 						}
+
+						if (null != dto.getBarRelevance()) {
+							dto.setBarRelevance(dto.getBarRelevance().toUpperCase());
+							if (!"Y".equals(application.getBarRelevance())) {
+								if ("Y".equals(dto.getBarRelevance()) || "N".equals(dto.getBarRelevance())) {
+									application.setBarRelevance(dto.getBarRelevance());
+								}
+							}
+						}
 						
 						boolean toCommit = false;
 						try {
