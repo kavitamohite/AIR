@@ -74,7 +74,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    },{
 	            xtype: 'radiogroup',
     			id: 'rgBARrelevance',
-    			width: 220,
+    			width: 250,
     			fieldLabel: 'BAR relevant',
     			
     			columns: 3,

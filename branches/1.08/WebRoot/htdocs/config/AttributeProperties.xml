@@ -1401,4 +1401,16 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+	
+	<Identifier>
+		<id>rgBARrelevanceW</id>
+		<Mandatory>mandatory</Mandatory>
+		<Relevance>operational and strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
 </AttributePropertyItems>

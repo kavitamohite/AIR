@@ -73,7 +73,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		var bNextW = this.getFooterToolbar().getComponent('bNextW');
 		bNextW.setVisible(true);
 		
-		this.setHeight(620);//470 440 420 360 400
+		this.setHeight(640);//620 470 440 420 360 400
 	},
 	
 	onCancel: function(button, event) {
@@ -136,6 +136,9 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 			}
 		}
 		
+		if(!params.barRelevance)
+			errorData.push(labels.rgBARrelevance);
+		
 		if(params.comments.length === 0)
 			errorData.push(labels.comments);
 		
@@ -151,8 +154,6 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		if(params.applicationOwnerDelegateHidden.length === 0)
 			errorData.push(labels.applicationOwnerDelegate);
 		
-//		if(params.applicationOwnerCompanyHidden.length === 0)
-//			errorData.push(labels.labeltfApplicationOwnerCompanyW);
 		
 		if(errorData.length === 0) {
 			var checkParams = {};
