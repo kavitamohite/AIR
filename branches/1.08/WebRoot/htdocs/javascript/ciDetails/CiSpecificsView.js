@@ -428,6 +428,9 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onBARrelevanceChange: function(rgb, checkedRadio) {
+		if(checkedRadio.inputValue === 'U')
+			rgb.setValue(AIR.AirApplicationManager.getAppDetail().barRelevance);
+		
 		this.fireEvent('ciChange', this, rgb, checkedRadio);
 	},
 
@@ -898,6 +901,10 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setFieldLabel(this.getComponent('applicationAlias'), labels.applicationAlias);
 		this.setFieldLabel(this.getComponent('barApplicationId'), labels.barApplicationId);
 		this.setFieldLabel(this.getComponent('rgBARrelevance'), labels.rgBARrelevance);
+		this.setBoxLabel(this.getComponent('rgBARrelevance').items.items[0], labels.general_yes);
+		this.setBoxLabel(this.getComponent('rgBARrelevance').items.items[1], labels.general_no);
+		this.setBoxLabel(this.getComponent('rgBARrelevance').items.items[2], labels.complianceUndefined);
+		
 		this.setFieldLabel(this.getComponent('applicationVersion'), labels.applicationVersion);
 		this.setFieldLabel(this.getComponent('applicationCat2'), labels.applicationCat2);
 		this.setFieldLabel(this.getComponent('lifecycleStatus'), labels.lifecycleStatus);
