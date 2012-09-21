@@ -15,7 +15,7 @@ import com.bayerbbs.applrepos.hibernate.PersonOptionHbn;
 
 public class AIRWS {
 
-	public final static boolean usePersonOptions = false;	// RFC 8303
+	public final static boolean usePersonOptions = true;	// RFC 8303
 	
 	
 	/**

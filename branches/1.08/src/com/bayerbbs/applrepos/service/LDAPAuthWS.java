@@ -47,7 +47,6 @@ public class LDAPAuthWS {
 			int rcCode = ldapAuthCeye.login(cwid, password);
 			output.setRcCode(new Long(rcCode));
 	
-			String key = null;
 			if (1 == rcCode) {
 				// login successful
 				output.setResult(ApplreposConstants.RESULT_OK);
@@ -67,7 +66,7 @@ public class LDAPAuthWS {
 					sb.append(random.nextLong());
 					sb.append(random.nextFloat());
 	
-					key = cwid;
+					
 					String token = sb.toString();
 					
 					AppRepAuthData authData = new AppRepAuthData();
@@ -111,7 +110,7 @@ public class LDAPAuthWS {
 						
 					}
 					
-					Element element = new Element(key, authData);
+					Element element = new Element(getKeyname(cwid, token), authData);
 					myCache.put(element);
 					output.setToken(authData.getToken());
 					output.setCwid(authData.getCwid());
@@ -159,7 +158,7 @@ public class LDAPAuthWS {
 		
 			Cache myCache = (Cache) CacheManager.getInstance().getCache(CACHENAME);
 			if (null != myCache) {
-				Element element = myCache.get(username);
+				Element element = myCache.get(getKeyname(username, token));
 				if (null != element) {
 					
 					AppRepAuthData authData = (AppRepAuthData) element.getObjectValue();
@@ -179,7 +178,7 @@ public class LDAPAuthWS {
 						
 						if (withRefresh) {
 							// replace in Cache
-							Element tempElement = new Element(username, authData);
+							Element tempElement = new Element(getKeyname(username, token), authData);
 							myCache.put(tempElement);
 						}
 					}
@@ -201,7 +200,7 @@ public class LDAPAuthWS {
 			
 			Cache myCache = (Cache) CacheManager.getInstance().getCache(CACHENAME);
 			if (null != myCache) {
-				Element element = myCache.get(username);
+				Element element = myCache.get(getKeyname(username, token));
 				if (null != element) {
 					
 					AppRepAuthData authData = (AppRepAuthData) element.getObjectValue();
@@ -212,7 +211,7 @@ public class LDAPAuthWS {
 						isLoginValid = true;
 						
 						// replace in Cache to prevent timeouts
-						Element tempElement = new Element(username, authData);
+						Element tempElement = new Element(getKeyname(username, token), authData);
 						myCache.put(tempElement);
 					}
 				}
@@ -227,10 +226,10 @@ public class LDAPAuthWS {
 	 * 
 	 * @param username
 	 */
-	public void logout(String cwid) {
+	public void logout(String cwid, String token) {
 		Cache myCache = (Cache) CacheManager.getInstance().getCache(CACHENAME);
 		if (null != myCache) {
-			myCache.remove(cwid);
+			myCache.remove(getKeyname(cwid, token));
 		}
 
 		if (null != cwid && !"".equals(cwid)) {
@@ -242,5 +241,15 @@ public class LDAPAuthWS {
 				ItSecUserHbn.updateItSecUserLastLogoff(cwid);
 			}
 		}
+	}
+
+	
+	/**
+	 * @param cwid
+	 * @param token
+	 * @return
+	 */
+	private static String getKeyname(String cwid, String token) {
+		return cwid + ":" + token;
 	}
 }

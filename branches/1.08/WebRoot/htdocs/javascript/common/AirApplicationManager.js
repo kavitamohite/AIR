@@ -618,7 +618,7 @@ AIR.AirApplicationManager = function() {
 			Ext.state.Manager.clear('airCookie');
 
 			//alle stores leeren und alles andere delete/null setzen
-			window.location = '../logoutAction.jsp?cwid='+this.getCwid();
+			window.location = '../logoutAction.jsp?cwid='+this.getCwid()+'&token='+this.getToken();
 		},
 		
 		restoreUiState: function(airViewport) {
