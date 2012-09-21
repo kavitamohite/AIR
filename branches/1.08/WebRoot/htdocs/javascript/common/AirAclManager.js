@@ -576,7 +576,6 @@ AIR.AirAclManager = function() {
 			var labels = AIR.AirApplicationManager.getLabels();
 			
 			
-			
 			Ext.each(records, function(item, index, allItems) {
 				if(item.data.Mandatory === 'mandatory' && item.data.id.charAt(item.data.id.length - 1) !== 'W') { //'required'
 					var reqItemCmp = Ext.getCmp(item.data.id);
@@ -602,7 +601,7 @@ AIR.AirAclManager = function() {
 								break;
 							case 'radiogroup':
 								var selected = reqItemCmp.getValue();
-								if(!reqItemCmp.disabled && selected === null)
+								if(!reqItemCmp.disabled && (!selected || selected.inputValue === 'U'))//selected === null
 									incompleteFieldList += labels[reqItemCmp.id] + ', ';
 								break;
 						}

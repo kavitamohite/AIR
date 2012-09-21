@@ -136,7 +136,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 			}
 		}
 		
-		if(!params.barRelevance)
+		if(!params.barRelevance || params.barRelevance === 'U')
 			errorData.push(labels.rgBARrelevance);
 		
 		if(params.comments.length === 0)
