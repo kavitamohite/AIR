@@ -186,6 +186,10 @@
 		<agreementsPanelTitle>Agreements</agreementsPanelTitle>
 		<slaName>SLA</slaName>
 		<slaNameText>
+			All contract information between an IT service provider and a service recipient,
+			whether he is within the company (OLA) or outside (SLA).		
+			&lt;br&gt;
+			&lt;br&gt;		
 			An SLA is a core component in a contract between an IT
 			service provider and a service recipient, whether within the company
 			or outside.&lt;br&gt;
@@ -363,8 +367,9 @@
 		<licensePanelTitle>License</licensePanelTitle>
 		<licenseType>License Model</licenseType>
 		<licenseTypeText>
-			Specification of general properties of a license, the
-			extent or part of contractual provisions.
+			Specification of general properties of a license, e.g. with regard to the scope of validity
+			(e.g. legal entity or Bayer Group), the extend (e.g. per CPU or per named user)  
+			or part of contractual provisions.
 		</licenseTypeText>
 
 		<applicationAccessingUserCount>Accessing User Count</applicationAccessingUserCount>
@@ -398,10 +403,10 @@
 
 		<serviceModel>Service Model</serviceModel>
 		<serviceModelText>
-			Service model contains information of licensing and how the application is run. 
+			Service model contains information of licensing and how the application is operated. 
 			Example: Application Hosting or SaaS
 			Service model according definition of licencing community: The service model defines the responsibility concerning software licences between provider &amp; customer.
-			LCO has decided that this is a Bayer mandatory attribute.
+			License and Compliance Offiziers (LCO) has decided that this is a Bayer mandatory attribute.
         </serviceModelText>
 
 		<costRunPa>Cost run p.a.</costRunPa>
