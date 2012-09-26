@@ -146,7 +146,7 @@
 			<applicationName>Name</applicationName>
 			<applicationAlias>Alias</applicationAlias>
 			<barApplicationId>Bayer Application Registry ID</barApplicationId>
-			<rgBARrelevance>BAR relevant</rgBARrelevance>
+			<rgBARrelevance>Bayer Application Registry relevant</rgBARrelevance>
 			<applicationVersion>Version</applicationVersion>
 			<applicationCat2>IT Category / Technology</applicationCat2>
 			<lifecycleStatus>Lifecycle Status</lifecycleStatus>

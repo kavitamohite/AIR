@@ -17,6 +17,12 @@
 			A secondary name for an application by which it is also known.
 		</applicationAliasText>
 
+		<barApplicationRelevant>Bayer Application Registry relevant</barApplicationRelevant>
+		<barApplicationRelevantText>
+			Specifies whether an application is Bayer-Group Application Register relevant or
+			not.
+		</barApplicationRelevantText>
+
 		<barApplicationId>Bayer Application Registry ID</barApplicationId>
 		<barApplicationIdText>
 			Unique Identifier created automatically by Bayer-Group Application Register during the Registration process

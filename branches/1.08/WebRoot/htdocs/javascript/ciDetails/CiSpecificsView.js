@@ -40,16 +40,20 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        anchor: '70%',
 		        
 		        enableKeyEvents: true
-		    }*/,{
-		    	xtype: 'textfield',
-//		        width: 230,
-		        fieldLabel: 'Application Alias',
-		        anchor: '70%',
-		        
-		        cls: 'required',
-		        
-		        id: 'applicationAlias'
-//		        enableKeyEvents: true //Stop IE to always set the cursor at the end when pushing left/right or setting the cursor with the mouse
+		    }*/
+		    ,{
+	            xtype: 'radiogroup',
+    			id: 'rgBARrelevance',
+    			width: 250,
+    			fieldLabel: 'BAR relevant',
+    			
+    			columns: 3,
+
+	            items: [
+                    { id: 'rgBARrelevanceYes',		itemId: 'rgBARrelevanceYes', 		boxLabel: 'Yes',	name: 'rgBARrelevance', inputValue: 'Y', width: 80 },//, width: 80 wenn gedatscht
+	                { id: 'rgBARrelevanceNo',		itemId: 'rgBARrelevanceNo',			boxLabel: 'No',	name: 'rgBARrelevance', inputValue: 'N', width: 80 },
+	                { id: 'rgBARrelevanceUndefined',itemId: 'rgBARrelevanceUndefined', 	boxLabel: 'Undefined',	name: 'rgBARrelevance', inputValue: 'U', width: 80, checked: true }//, checked: true
+	            ]
 		    },{
 		    	xtype: 'textfield',
 //		        width: 230,
@@ -59,6 +63,16 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        cls: 'required',
 		        
 		        id: 'barApplicationId'
+	        },{
+		    	xtype: 'textfield',
+//		        width: 230,
+		        fieldLabel: 'Application Alias',
+		        anchor: '70%',
+		        
+		        cls: 'required',
+		        
+		        id: 'applicationAlias'
+//		        enableKeyEvents: true //Stop IE to always set the cursor at the end when pushing left/right or setting the cursor with the mouse
 		    },{
 		    	xtype: 'textfield',
 //		    	width: 230,
@@ -72,19 +86,6 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        	marginBottom: 10
 		        }
 		    },{
-	            xtype: 'radiogroup',
-    			id: 'rgBARrelevance',
-    			width: 250,
-    			fieldLabel: 'BAR relevant',
-    			
-    			columns: 3,
-
-	            items: [
-                    { id: 'rgBARrelevanceYes',		itemId: 'rgBARrelevanceYes', 		boxLabel: 'Yes',	name: 'rgBARrelevance', inputValue: 'Y', width: 80 },//, width: 80 wenn gedatscht
-	                { id: 'rgBARrelevanceNo',		itemId: 'rgBARrelevanceNo',			boxLabel: 'No',	name: 'rgBARrelevance', inputValue: 'N', width: 80 },
-	                { id: 'rgBARrelevanceUndefined',itemId: 'rgBARrelevanceUndefined', 	boxLabel: 'Undefined',	name: 'rgBARrelevance', inputValue: 'U', width: 80, checked: true }//, checked: true
-	            ]
-	        },{
 		        xtype: 'filterCombo',//combo
 		        width: 230,
 //		        anchor: '70%',//siehe (*1)
@@ -625,10 +626,10 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.getComponent('applicationId').setValue(data.applicationId);
 		this.getComponent('applicationAlias').setValue(data.applicationAlias);
 		
-		if(this.isBARrelevant(data))//as business rule: data.insertQuelle !== AC.INSERT_QUELLE_SHAREPOINT
-			this.getComponent('barApplicationId').setValue(data.barApplicationId);
-		else
-			this.getComponent('barApplicationId').setValue(AIR.AirApplicationManager.getLabels().notRelevant);
+//		if(this.isBARrelevant(data))//as business rule: data.insertQuelle !== AC.INSERT_QUELLE_SHAREPOINT
+//			this.getComponent('barApplicationId').setValue(data.barApplicationId);
+//		else
+//			this.getComponent('barApplicationId').setValue(AIR.AirApplicationManager.getLabels().notRelevant);
 			
 		this.getComponent('applicationVersion').setValue(data.applicationVersion);
 		
@@ -637,6 +638,15 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			data.barRelevance = 'U';
 
 		rgBARrelevance.setValue(data.barRelevance);
+		
+		this.getComponent('barApplicationId').setValue(data.barApplicationId);
+		
+		if ('Y' === rgBARrelevance.getValue()) {
+			// nothing
+		}
+		else {
+			this.getComponent('barApplicationId').setValue('');
+		}
 
 		
 		
@@ -734,9 +744,9 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		//gelöscht und wieder hinzugefügt wurde. (*1)
 	},
 	
-	isBARrelevant: function(data) {
-		return data.applicationCat2Txt.indexOf(AC.APP_CAT2_SHAREPOINT) === -1;
-	},
+//	isBARrelevant: function(data) {
+//		return data.applicationCat2Txt.indexOf(AC.APP_CAT2_SHAREPOINT) === -1;
+//	},
 	
 	updateAccessMode: function(data) {
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationAlias'), data);
@@ -925,6 +935,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	updateToolTips: function(toolTips) {
 //		this.setTooltipData(this.getComponent('applicationName').label,  toolTips.applicationName,  toolTips.applicationNameText);
 		this.setTooltipData(this.getComponent('applicationAlias').label,  toolTips.applicationAlias, toolTips.applicationAliasText);
+		this.setTooltipData(this.getComponent('rgBARrelevance').label,  toolTips.barApplicationRelevant, toolTips.barApplicationRelevantText);
 		this.setTooltipData(this.getComponent('barApplicationId').label,  toolTips.barApplicationId, toolTips.barApplicationIdText);
       	this.setTooltipData(this.getComponent('applicationVersion').label, toolTips.version, toolTips.versionText);
 		this.setTooltipData(this.getComponent('applicationCat2').label,  toolTips.applicationCat2, toolTips.applicationCat2Text);
