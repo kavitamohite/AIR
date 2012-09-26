@@ -146,7 +146,7 @@
 			<applicationName>Name</applicationName>
 			<applicationAlias>Alias</applicationAlias>
 			<barApplicationId>Bayer Application Registry ID</barApplicationId>
-			<rgBARrelevance>Bayer Application Registry relevant</rgBARrelevance>
+			<rgBARrelevance>BAR Relevance</rgBARrelevance>
 			<applicationVersion>Version</applicationVersion>
 			<applicationCat2>IT Category / Technology</applicationCat2>
 			<lifecycleStatus>Lifecycle Status</lifecycleStatus>
@@ -350,7 +350,7 @@ whereas "External" manages only the references to an compliance management outsi
 			<wizardCiowner>CI Owner</wizardCiowner>
 			<wizardCiownerApplication>Application Manager</wizardCiownerApplication>
 				<labelwizardciResponsible>Primary Person</labelwizardciResponsible>
-				<labelwizardciSubResponsible>Delegate Person/Group</labelwizardciSubResponsible>
+				<labelwizardciSubResponsible>Delegate</labelwizardciSubResponsible>
 		
 		<!-- Messages: Create a New CI
 		<wizardallowedNameText>"Name" {0} already exists as {1}. Please choose another name or ask ITILcenter@bayer.com for help to enable this name.</wizardallowedNameText>

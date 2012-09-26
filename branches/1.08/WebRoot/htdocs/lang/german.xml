@@ -149,7 +149,7 @@
 			<applicationName>Name</applicationName>
 			<applicationAlias>Alias</applicationAlias>
 			<barApplicationId>Bayer Application Registry ID</barApplicationId>
-			<rgBARrelevance>Bayer Application Registry relevant</rgBARrelevance>
+			<rgBARrelevance>BAR Relevance</rgBARrelevance>
 			<applicationVersion>Version</applicationVersion>
 			<applicationCat2>IT-Kategorie / Technologie</applicationCat2>
 			<lifecycleStatus>Betriebsstatus</lifecycleStatus>
@@ -351,7 +351,7 @@
 			<wizardCiowner>CI Owner</wizardCiowner>
 			<wizardCiownerApplication>Application Manager</wizardCiownerApplication>
 				<labelwizardciResponsible>Primary Person</labelwizardciResponsible>
-				<labelwizardciSubResponsible>Delegate Person/Group</labelwizardciSubResponsible>
+				<labelwizardciSubResponsible>Delegate</labelwizardciSubResponsible>
 		
 		<!-- Messages: Create a New CI
 		<wizardallowedNameText>"Name" {0} exisitiert bereits als {1}. Bitte geben Sie einen anderen Namen ein, oder fragen Sie ITILcenter@bayer.com um Hilfe diesen Namen verwenden zu können.</wizardallowedNameText>

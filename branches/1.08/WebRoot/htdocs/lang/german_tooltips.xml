@@ -17,10 +17,9 @@
 			A secondary name for an application by which it is also known.
 		</applicationAliasText>
 
-		<barApplicationRelevant>Bayer Application Registry relevant</barApplicationRelevant>
+		<barApplicationRelevant>BAR Relevance</barApplicationRelevant>
 		<barApplicationRelevantText>
-			Specifies whether an application is Bayer-Group Application Register relevant or
-			not.
+			BAR (Bayer Application Register) Relevance.
 		</barApplicationRelevantText>
 
 		<barApplicationId>Bayer Application Registry ID</barApplicationId>
@@ -98,29 +97,27 @@
 		
 		<applicationOwner>Primary Person</applicationOwner>
 		<applicationOwnerText>
-			Person who is responsible for the application from the business side
+			Person who is responsible for the application from the business side and responsible for the strategic attributes.
 		</applicationOwnerText>
 		
 		<applicationSteward>Steward</applicationSteward>
 		<applicationStewardText>
-			Person who is responsible for maintaining the application data in the repository for all attributes. 
+			Person who is responsible for maintaining the application data in the repository for all operational and strategic attributes. 
 		</applicationStewardText>
 
 		<applicationOwnerDelegate>Delegate</applicationOwnerDelegate>
 		<applicationOwnerDelegateText>
-			Person who is responsible for maintaining the application data in the repository.
+			Person or group delegated ("Substitute") by the Application Owner.
 		</applicationOwnerDelegateText>
 		
 		<ciResponsible>Primary Person</ciResponsible>
 		<ciResponsibleText>
-			Verantwortlich for the accuracy of the CI record
-			data either derived as manager of a team or as any other person.
+			Person who is responsible for the application from the operational side and responsible for the operational attributes.
 		</ciResponsibleText>
 
-		<ciSubResponsible>Delegate Person/Group</ciSubResponsible>
+		<ciSubResponsible>Delegate</ciSubResponsible>
 		<ciSubResponsibleText>
-			Person or group delegated ("Substitute") by the CI Owner to be
-			ciResponsible for the accuracy of the CI record data.
+			Person or group delegated ("Substitute") by the Application Manager.
 		</ciSubResponsibleText>
 
 		<gpsccontactCiOwner>CI Owner</gpsccontactCiOwner>
