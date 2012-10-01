@@ -262,10 +262,13 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('cbAdvSearchITset');
 	    params.itSetId = field.getValue();
 	    
-	    params.advsearchappowner = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerHidden').getValue();
-	    params.advsearchappdelegate = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwnerDelegate').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerDelegate').getValue();
-	    params.advsearchappdelegateHidden = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwnerDelegate').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerDelegateHidden').getValue();
-	    params.advsearchsteward = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent(ciAdvancedSearchView.ownerId + 'applicationStewardHidden').getValue();
+	    var cbCat1 = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('advsearchObjectType');
+	    if(cbCat1.getValue() === AC.APP_CAT1_APPLICATION) {
+		    params.advsearchappowner = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerHidden').getValue();
+		    params.advsearchappdelegate = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwnerDelegate').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerDelegate').getValue();
+		    params.advsearchappdelegateHidden = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwnerDelegate').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerDelegateHidden').getValue();
+		    params.advsearchsteward = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent(ciAdvancedSearchView.ownerId + 'applicationStewardHidden').getValue();
+	    }
 	    params.advsearchciowner = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent(ciAdvancedSearchView.ownerId + 'ciResponsibleHidden').getValue();
 	    params.advsearchcidelegate = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CiSubResponsible').getComponent(ciAdvancedSearchView.ownerId + 'ciSubResponsible').getValue();
 	    params.advsearchcidelegateHidden = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CiSubResponsible').getComponent(ciAdvancedSearchView.ownerId + 'ciSubResponsibleHidden').getValue();
@@ -488,10 +491,14 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		this.isAdvSearch = true;
 //		this.isAdvSearchExt = false;
 		
+		
+		
 		var ciSearchViewPages = this.getComponent('ciSearchViewPages');
 		var ciStandardSearchView = ciSearchViewPages.getComponent('ciStandardSearchView');
 		var ciAdvancedSearchView = ciStandardSearchView.getComponent('ciAdvancedSearchView');
 
+		ciAdvancedSearchView.reset(link);
+		
 //		this.updateAdvSearchHeight(ciSearchViewPages, ciStandardSearchView);
 		ciSearchViewPages.getLayout().setActiveItem(0);
 		
@@ -505,6 +512,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		}
 		
 		ciAdvancedSearchView.show();
+//		ciAdvancedSearchView.reset();
 		
 		if(this.isAdvSearchExt) {
 			this.isAdvSearchExt = false;

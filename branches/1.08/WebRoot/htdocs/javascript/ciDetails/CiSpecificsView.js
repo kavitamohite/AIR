@@ -626,11 +626,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.getComponent('applicationId').setValue(data.applicationId);
 		this.getComponent('applicationAlias').setValue(data.applicationAlias);
 		
-//		if(this.isBARrelevant(data))//as business rule: data.insertQuelle !== AC.INSERT_QUELLE_SHAREPOINT
-//			this.getComponent('barApplicationId').setValue(data.barApplicationId);
-//		else
-//			this.getComponent('barApplicationId').setValue(AIR.AirApplicationManager.getLabels().notRelevant);
-			
+
 		this.getComponent('applicationVersion').setValue(data.applicationVersion);
 		
 		var rgBARrelevance = this.getComponent('rgBARrelevance');
@@ -638,16 +634,6 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			data.barRelevance = 'U';
 
 		rgBARrelevance.setValue(data.barRelevance);
-		
-		this.getComponent('barApplicationId').setValue(data.barApplicationId);
-		
-		if ('Y' === rgBARrelevance.getValue()) {
-			// nothing
-		}
-		else {
-			this.getComponent('barApplicationId').setValue('');
-		}
-
 		
 		
 		var cbApplicationCat2 = this.getComponent('applicationCat2');
@@ -736,17 +722,21 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		this.updateAccessMode(data);
-		if(data.barRelevance === 'Y')
+		
+		
+		if(data.barRelevance === 'Y') {
+			this.getComponent('barApplicationId').setValue(data.barApplicationId);
 			rgBARrelevance.disable();
+		} else {
+			this.getComponent('barApplicationId').setValue('');
+		}
+		
+			
 		this.loadApplicationBusinessProcesses(data.applicationId);
 		
 		//kein Effekt zur Verhinderung der Verkleinerung der combo Breite nachdem wenn auf Contacts die Primary Person
 		//gelöscht und wieder hinzugefügt wurde. (*1)
 	},
-	
-//	isBARrelevant: function(data) {
-//		return data.applicationCat2Txt.indexOf(AC.APP_CAT2_SHAREPOINT) === -1;
-//	},
 	
 	updateAccessMode: function(data) {
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationAlias'), data);
