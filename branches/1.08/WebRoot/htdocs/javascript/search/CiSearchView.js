@@ -259,6 +259,9 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    params.advsearchObjectTypeId = field.getValue();
 	    params.advsearchObjectTypeText = field.getRawValue().trim();
 	    
+	    field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('advsearchdescription');
+	    params.advsearchdescription = field.getRawValue().trim();
+	    
 	    field = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('cbAdvSearchITset');
 	    params.itSetId = field.getValue();
 	    
@@ -549,13 +552,13 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	},
 	
 	updateAdvSearchHeight: function(ciSearchViewPages, ciStandardSearchView) {
-		var resolutionWidth = Ext.getBody().getWidth();
-		var height = 410;//50 + this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView').getHeight();//150;//200 300 400 630
+		var height = 430;//50 + this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView').getHeight();//150;//200 300 400 630
 
 		
 		if(this.isAdditionalSearchAttributesActive())
 			height += this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView').getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getHeight();// - 300;//300;//250
 		
+//		var resolutionWidth = Ext.getBody().getWidth();
 //		if(resolutionWidth <= 1024)//<=
 //			height += 100;//250 150
 		
@@ -583,7 +586,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		var rbgOUSearchOwnerType = this.getComponent('ciSearchViewPages').getComponent('ciOuSearchView').getComponent('pOrgUnit').getComponent('pOrgUnit2').getComponent('rbgOUSearchOwnerType');
 		var cbOuSearchObjectType = this.getComponent('ciSearchViewPages').getComponent('ciOuSearchView').getComponent('cbOuSearchObjectType');
 		
-	    var params = { 
+	    var params = {
     		start: 0,
     		limit: this.getComponent('ciSearchResultView').getComponent('ciSearchGrid').pageSize,//20,
     		
