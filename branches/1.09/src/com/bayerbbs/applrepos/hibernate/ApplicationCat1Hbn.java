@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +13,8 @@ import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.domain.ApplicationCat1;
 import com.bayerbbs.applrepos.dto.ApplicationCat1DTO;
+import com.bayerbbs.applrepos.dto.CiTypeDTO;
+import com.bayerbbs.applrepos.dto.SISoogleAttribute;
 
 public class ApplicationCat1Hbn {
 
@@ -68,4 +73,38 @@ public class ApplicationCat1Hbn {
 		return listResult;
 	}
 
+	public static CiTypeDTO[] getCiTypes() {
+		String sql = "SELECT * FROM TABLE (pck_air.ft_relatedtypeslist(''))";
+		
+		Transaction ta = null;
+		Statement stmt = null;
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		List<CiTypeDTO> ciTypes = new ArrayList<CiTypeDTO>();
+		
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while (rs.next())
+				ciTypes.add(new CiTypeDTO(rs.getString(1), rs.getString(2)));
+		
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		return ciTypes.toArray(new CiTypeDTO[0]);
+	}
 }

@@ -2,6 +2,7 @@ package com.bayerbbs.applrepos.service;
 
 import java.util.List;
 
+import com.bayerbbs.applrepos.dto.DwhEntityDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.CiEntitesHbn;
 
@@ -29,5 +30,15 @@ public class CiEntityWS {
 			}
 		}
 		return aViewDataDTO;
+	}
+	
+	public DwhEntityDTO[] findByTypeAndName(CiEntityParameterInput input) {//String ciType, String ciName
+		DwhEntityDTO[] dwhEntities = new DwhEntityDTO[0];
+		
+		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))
+			dwhEntities = CiEntitesHbn.findByTypeAndName(input.getType(), input.getQuery(), input.getStart(), input.getLimit());
+		
+		
+		return dwhEntities;
 	}
 }

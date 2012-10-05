@@ -416,6 +416,13 @@
 		
 		<complianceWindowTitle>Compliance Details </complianceWindowTitle>
 		<complianceWindowControls>Kontrollen</complianceWindowControls>
+		
+		<RelevanceICSSecurityManagement>Relevanz ICS Security Management</RelevanceICSSecurityManagement>
+		<RelevanceICSAccessManagement>Relevanz ICS Access Management</RelevanceICSAccessManagement>
+		<RelevanceICSITManagement>Relevanz ICS IT Management</RelevanceICSITManagement>
+		<LinkCiType>Verknüpfung - CI Typ</LinkCiType>
+		<LinkCi>Verknüpfung - CI</LinkCi>
+		
 		<complianceWindowStatement>Aussage</complianceWindowStatement>
 		<complianceWindowStatementUntreated>Unbehandelt</complianceWindowStatementUntreated>
 		<complianceWindowStatementDispensable>Überflüssig</complianceWindowStatementDispensable>

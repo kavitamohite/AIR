@@ -61,6 +61,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		
 		var labels = AIR.AirApplicationManager.getLabels();
+		var pComplianceLinkTypeConfig = AIR.AirUiFactory.createComplianceLinkTypeConfigPanel(labels);
 		
 		Ext.apply(this, {
 			plain: true,
@@ -153,7 +154,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					
 					height: 410,//420 540 840 620
 					
-					items: [{
+					items: [/*{
 						xtype: 'panel',
 						id: 'pComplianceStatementInfo',
 						layout: 'hbox',
@@ -161,11 +162,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						
 						border: false,
 						
-						items: [/*{
-							xtype: 'container',
-							height: 10,
-							anchor: '90%'
-						},*/{
+						items: [{
 							xtype: 'label',
 							id: 'lComplianceStatementInfo',
 							text: labels.complianceStatementInfo,
@@ -175,12 +172,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							style: {
 						    	fontSize: 12
 							}
-						}/*,{
-							xtype: 'container',
-							height: 10,
-							anchor: '90%'
-						}*/]
-					},{
+						}]
+					},*/
+				        pComplianceLinkTypeConfig
+		        	,{
 						xtype: 'fieldset',
 						id: 'fsComplianceStatement',
 						title: labels.complianceWindowStatement,
@@ -1295,8 +1290,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	onMassnahmenDetailLoaded: function(store, records, options) {
 		if(!this.windowRendered) {
-//			var fsComplianceStatement = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement');
-//			fsComplianceStatement.setVisible(true);
+			this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').setVisible(true);
 			
 			var fsComplianceStatement = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement');
 			fsComplianceStatement.setVisible(true);
@@ -2186,5 +2180,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('cbSignee');
 		
 		Util.setFieldLabel(cbSignee, labels.complianceWindowSignee);
+		
+		Util.setFieldLabel(this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').getComponent('cbLinkCiType'), labels.LinkCiType);
+		Util.setFieldLabel(this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').getComponent('cbLinkCi'), labels.LinkCi);
 	}
 });

@@ -74,7 +74,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			        mode: 'local',
 			        
 			        width: 230
-			    }/*, {
+			    }, {
 		        	xtype: 'textfield',
 		        	id: 'advsearchdescription',
 		        	
@@ -82,7 +82,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		        	width: 230,
 		        	hidden: false,
 		        	hasSearch: false
-		        }*/,
+		        },
 		        appOwnerStewardFieldsets.fsApplicationOwner,
 		        appOwnerStewardFieldsets.fsApplicationSteward,
 		        appOwnerStewardFieldsets.fsCIOwner,
@@ -425,9 +425,31 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	var fsApplicationOwner = this.getComponent('pAdvancedSearch').getComponent('fs' + this.ownerId + 'ApplicationOwner');
     	var fsApplicationSteward = this.getComponent('pAdvancedSearch').getComponent('fs' + this.ownerId + 'ApplicationSteward');
     	var label;
-		
-    	label = newValue === AC.APP_CAT1_APPLICATION ? labels.applicationManager : labels.label_details_ciOwner;
     	
+    	
+		fsApplicationOwner.setVisible(true);
+		fsApplicationSteward.setVisible(true);
+		label = labels.label_details_ciOwner;
+
+    	
+    	switch(newValue) {
+    		case '':
+	    		var cbCat2 = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchITCategoryW');
+	    		cbCat2.reset();
+	    		
+	    		break;
+    		case AC.APP_CAT1_APPLICATION:
+        		label = labels.applicationManager;
+    			break;
+    		default:
+        		fsApplicationOwner.setVisible(false);
+    			fsApplicationSteward.setVisible(false);
+    			break;
+    	}
+    
+    	/*
+    	label = newValue === AC.APP_CAT1_APPLICATION ? labels.applicationManager : labels.label_details_ciOwner;
+
     	if(newValue.length === 0 || newValue === AC.APP_CAT1_APPLICATION) {
     		if(newValue.length === 0) {
 	    		var cbCat2 = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchITCategoryW');
@@ -440,7 +462,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	} else {
     		fsApplicationOwner.setVisible(false);
     		fsApplicationSteward.setVisible(false);
-    	}
+    	}*/
     	
     	fsCIOwner.setTitle(label);
     	this.getComponent('pAdvancedSearch').doLayout();
@@ -517,7 +539,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		this.setTitle(labels.advsearchPanelTitle);
 		
 		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchObjectType'), labels.advsearchObjectType);
-//		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchdescription'), labels.advsearchdescription);
+		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('advsearchdescription'), labels.advsearchdescription);
 		this.setFieldLabel(this.getComponent('pAdvancedSearch').getComponent('cbAdvSearchITset'), labels.itSet);
 		
 		

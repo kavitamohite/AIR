@@ -218,6 +218,82 @@ AIR.AirUiFactory = function() {
 			};
 			
 			return appOwnerStewardFieldsets;
+		},
+		
+		createComplianceLinkTypeConfigPanel: function(labels) {
+			var pComplianceLinkTypeConfig = {
+				xtype: 'panel',
+				id: 'pComplianceLinkTypeConfig',
+				
+				layout: 'form',
+				border: false,
+				hidden: true,
+				
+				anchor: '95%',
+				labelWidth: 130,
+				
+				style: {
+					marginTop: 5
+				},
+				
+				items: [{
+		        	xtype: 'checkboxgroup',
+		        	id: 'cbgComplianceLinkTypeRelevance',
+		        	
+		        	columns: 1,//1 3
+//		        	fieldLabel: 'Relevance ICS',
+		        	
+//        			width: 200,
+		        	anchor: '100%',
+        			hideLabel: true,
+        			
+        			items: [
+    			        { boxLabel: labels.RelevanceICSSecurityManagement, name: 'cbgComplianceLinkTypeRelevance'},//, width: 100 
+    			        { boxLabel: labels.RelevanceICSAccessManagement, name: 'cbgComplianceLinkTypeRelevance'},//, width: 100 
+    			        { boxLabel: labels.RelevanceICSITManagement, name: 'cbgComplianceLinkTypeRelevance'}//, width: 100 
+			        ]
+				},{
+					xtype: 'combo',
+					id: 'cbLinkCiType',
+					store: new Ext.data.Store(),//AIR.AirStoreFactory.createItsecMassnahmenGapClassStore(),
+					
+					anchor: '100%',
+//					flex: 7,
+//					margins: '5 0 0 0',
+					
+					fieldLabel: labels.LinkCiType,
+//			        valueField: 'gapPriority',
+//			        displayField: this.gapClassDisplayField,
+			        
+			        mode: 'local',
+			        triggerAction: 'all',
+			        lazyRender: true,
+			        lazyInit: false,
+			        
+			        editable: false
+				},{
+					xtype: 'combo',
+					id: 'cbLinkCi',
+					store: new Ext.data.Store(),//AIR.AirStoreFactory.createItsecMassnahmenGapClassStore(),
+					
+					anchor: '100%',
+//					flex: 7,
+//					margins: '5 0 0 0',
+					
+					fieldLabel: labels.LinkCi,
+//			        valueField: 'gapPriority',
+//			        displayField: this.gapClassDisplayField,
+			        
+			        mode: 'local',
+			        triggerAction: 'all',
+			        lazyRender: true,
+			        lazyInit: false,
+			        
+			        editable: false
+				}]
+			};
+			
+			return pComplianceLinkTypeConfig;
 		}
 	};
 }();

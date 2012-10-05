@@ -231,17 +231,18 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    	}, {
 			    		xtype: 'combo',
 			    		id: 'cbConnectionsObjectType',
-			            store: AIR.AirStoreManager.getStoreByName('applicationCat1ListStore'),//applicationCat1ListStore,
-			    	    fieldLabel: 'Object Type',
-			    	    valueField: 'id',
-			            displayField: 'english',
+			            store: AIR.AirStoreManager.getStoreByName('ciTypeListStore'),// applicationCat1ListStore,
+			    	    
+			            fieldLabel: 'Object Type',
+			    	    valueField: 'ciTypeId',//id
+			            displayField: 'ciTypeName',//english
 			            mode: 'local',
+			            anchor: '100%',
+
 			            triggerAction: 'all',
 			            lazyRender: true,
 			            lazyInit: false,
-			            editable: false,
-			            
-			            anchor: '100%'
+			            editable: false
 			    	}, {
 			    		xtype: 'textfield',
 			    		id: 'tfConnectionsQuickSearch',
@@ -258,8 +259,8 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    		xtype: 'container',
 			    		height: 10
 			    	}, {
-						xtype: 'AIR.CiResultGrid',//soll hier nur applications anzeigen
-						id: 'CiConnectionsResultGrid',//load mask starten/stoppen
+						xtype: 'AIR.DwhEntityGrid',//CiResultGrid
+						id: 'CiConnectionsResultGrid',
 						anchor: '100%',
 						
 //						height: 250,//bringt nichts
@@ -342,10 +343,11 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbConnectionsObjectType = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('cbConnectionsObjectType');
 		var tfConnectionsQuickSearch = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('tfConnectionsQuickSearch');
 		
-		var connectionsObjectType = cbConnectionsObjectType.getValue();
+		var connectionsObjectType = cbConnectionsObjectType.getRawValue();//getValue
 		var connectionsQuickSearch = tfConnectionsQuickSearch.getValue();
 		
-		var params = {
+		
+		/*var params = {
 			start: 0,
 			limit: 20,
 			queryMode: 'CONTAINS',
@@ -356,7 +358,17 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		 	token: AIR.AirApplicationManager.getToken(),
 			query: '',//NOT NULL wenn advancedsearch: 'true',
 			template: 'N'
+		};*/
+		
+				
+		var params = {
+		 	cwid: AIR.AirApplicationManager.getCwid(),
+		 	token: AIR.AirApplicationManager.getToken(),
+			start: 0,
+			pageSize: 20,
+			type: connectionsObjectType
 		};
+
 		
 		if(connectionsQuickSearch.length > 0) {
 		    while(connectionsQuickSearch.indexOf('*') > -1)
@@ -367,6 +379,8 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		    params.query = connectionsQuickSearch;
 		}
+		
+
 		
 		var grid = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('CiConnectionsResultGrid');
 		grid.getStore().load({
@@ -443,9 +457,10 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var records = ddSource.dragData.selections;
 		
 		var newCiData = {
-			name: records[0].data.applicationName,
-			type: records[0].data.applicationCat1Txt,
-			id: records[0].data.applicationId//ciId
+			name: records[0].data.ciName,//applicationName
+			type: records[0].data.ciType,//applicationCat1Txt
+			id: records[0].data.ciId,//applicationId
+			source: records[0].data.source
 		};
 		
 		var newCiRecord = new this.CiUpDownStreamConnectionsRecord(newCiData);//, ciData.name ciData.ciId
@@ -461,7 +476,6 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		
 		var result = AIR.AirApplicationManager.validateCreateConnection(exists, ciType, ciName, newCiType, newCiName, direction);
-		
 		if(result.isSuccessful) {
 			var listView = this.getComponent('pConnectionsUpDownStreamV').getComponent(listViewId);
 			listView.getStore().add(newCiRecord);

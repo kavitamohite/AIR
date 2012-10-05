@@ -3,6 +3,7 @@ package com.bayerbbs.applrepos.service;
 import com.bayerbbs.applrepos.dto.AccountDTO;
 import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.CategoryBusinessDTO;
+import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.ClassInformationDTO;
 import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.DedicatedDTO;
@@ -25,6 +26,7 @@ import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
 import com.bayerbbs.applrepos.dto.SlaDTO;
 import com.bayerbbs.applrepos.dto.SlaServiceContractDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
+import com.bayerbbs.applrepos.hibernate.ApplicationCat1Hbn;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "AIRToolsWSService", portName = "AIRToolsWSPort")
 public class AIRToolsWSDelegate {
@@ -129,5 +131,9 @@ public class AIRToolsWSDelegate {
 
 	public SISoogleAttribute[] getSISoogleAttributesByType(SisoogleAttributesInput input) {//String type
 		return aIRToolsWS.getSISoogleAttributesByType(input);//type
+	}
+	
+	public CiTypeDTO[] getCiTypes() {
+		return aIRToolsWS.getCiTypes();
 	}
 }

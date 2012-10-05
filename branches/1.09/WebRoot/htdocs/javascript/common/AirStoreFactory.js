@@ -440,7 +440,7 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createApplicationCat2ListStore: function() {
-			var applicationCat2ListRecord = Ext.data.Record.create([ {
+			var applicationCat2ListRecord = Ext.data.Record.create([{
 				name: 'applicationCat1Id'
 			}, {
 				name: 'id',
@@ -1317,6 +1317,13 @@ AIR.AirStoreFactory = function() {
 			        
 			        {name: 'complianceWindowTitle'},
 			        {name: 'complianceWindowControls'},
+			        
+			        {name: 'RelevanceICSSecurityManagement'},
+			        {name: 'RelevanceICSAccessManagement'},
+			        {name: 'RelevanceICSITManagement'},
+			        {name: 'LinkCiType'},
+			        {name: 'LinkCi'},
+			        
 			        {name: 'complianceWindowStatement'},
 			        {name: 'complianceWindowStatementUntreated'},
 			        {name: 'complianceWindowStatementDispensable'},
@@ -1710,6 +1717,91 @@ AIR.AirStoreFactory = function() {
 			});
 			
 			return historyListStore;
+		},
+		
+		createCiTypeListStore: function() {
+			var ciTypeListRecord = Ext.data.Record.create([
+		        {name: 'ciTypeId'},
+		        {name: 'ciTypeName'}
+		    ]);
+		
+		    var ciTypeListReader = new Ext.data.XmlReader({
+		    	record: 'return',//return ciTypeDTO
+		        idProperty: 'ciTypeId',
+		        	
+		        fields: ['ciTypeId', 'ciTypeName']
+		    }, ciTypeListRecord); 
+			
+		    var ciTypeListStore = new Ext.data.XmlStore({
+		    	autoDestroy: true,
+		    	storeId: 'ciTypeListStore',
+		    	autoLoad: false,
+		    	
+		      	fields: ['ciTypeId', 'ciTypeName'],
+		      	
+		      	proxy: new Ext.ux.soap.SoapProxy({
+		      		url: webcontext + '/AIRToolsWSPort',
+		      		loadMethod: 'getCiTypes',
+		      		timeout: 120000,
+		      		reader: ciTypeListReader
+		      	}),
+		    	
+		      	reader: ciTypeListReader
+		    });
+		    
+		    return ciTypeListStore;
+		},
+		
+		createDwhEntityListStore: function() {
+			var dwhEntityListRecord = Ext.data.Record.create([
+		        {name: 'ciId'},
+		        {name: 'ciType'},
+		        {name: 'ciName'},
+		        {name: 'ciAlias'},
+		        {name: 'tableId'},
+		        {name: 'ciOwner'},
+		        {name: 'ciOwnerDelegate'},
+		        {name: 'appOwner'},
+		        {name: 'appOwnerDelegate'},
+		        {name: 'appSteward'},
+		        {name: 'operationalStatus'},
+		        {name: 'categoryIt'},
+		        {name: 'gxpRelevance'},
+		        {name: 'itSet'},
+		        {name: 'serviceContract'},
+		        {name: 'severityLevel'},
+		        {name: 'priorityLevel'},
+		        {name: 'sla'},
+		        {name: 'lifecycleStatus'},
+		        {name: 'source'},
+		        {name: 'businessEssential'},
+		        {name: 'template'}
+		    ]);
+		
+		    var dwhEntityListReader = new Ext.data.XmlReader({
+		    	record: 'return',//return ciTypeDTO
+		        idProperty: 'ciId',
+		        	
+		        fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel', 'sla', 'lifecycleStatus', 'source', 'businessEssential', 'template']
+		    }, dwhEntityListRecord); 
+			
+		    var dwhEntityListStore = new Ext.data.XmlStore({
+		    	autoDestroy: true,
+		    	autoLoad: false,
+		    	
+		      	fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel', 'sla', 'lifecycleStatus', 'source', 'businessEssential', 'template'],
+		      	
+		      	proxy: new Ext.ux.soap.SoapProxy({
+		      		url: webcontext + '/CiEntityWSPort',
+		      		loadMethod: 'findByTypeAndName',
+		      		timeout: 120000,
+		      		reader: dwhEntityListReader
+		      	}),
+		    	
+		      	reader: dwhEntityListReader
+		    });
+		    
+		    return dwhEntityListStore;
 		},
 		
 		//====================== initial stores ====================== var url = language == 'de' || language == 'DE' ? 'lang/german.xml' : 'lang/english.xml';

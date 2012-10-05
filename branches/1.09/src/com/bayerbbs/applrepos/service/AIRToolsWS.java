@@ -11,6 +11,7 @@ import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.dto.AccountDTO;
 import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.CategoryBusinessDTO;
+import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.ClassInformationDTO;
 import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.DedicatedDTO;
@@ -36,6 +37,7 @@ import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.AccountHbn;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
+import com.bayerbbs.applrepos.hibernate.ApplicationCat1Hbn;
 import com.bayerbbs.applrepos.hibernate.BusinessEssentialHbn;
 import com.bayerbbs.applrepos.hibernate.CategoryBusinessHbn;
 import com.bayerbbs.applrepos.hibernate.ClassInformationHbn;
@@ -129,14 +131,15 @@ public class AIRToolsWS {
 	
 	public ServiceModelDTO[] getServiceModelList() {
 		ServiceModelDTO[] serviceModels = {
-				new ServiceModelDTO(" "),
-				new ServiceModelDTO("Fully Integrated Business Service"),
-				new ServiceModelDTO("Full integrated IT Services"),
-				new ServiceModelDTO("SAAS (Software as a Service)"),
-				new ServiceModelDTO("Application Hosting"),
-				new ServiceModelDTO("Housing"),
-				new ServiceModelDTO("Client Application")
+			new ServiceModelDTO(" "),
+			new ServiceModelDTO("Fully Integrated Business Service"),
+			new ServiceModelDTO("Full integrated IT Services"),
+			new ServiceModelDTO("SAAS (Software as a Service)"),
+			new ServiceModelDTO("Application Hosting"),
+			new ServiceModelDTO("Housing"),
+			new ServiceModelDTO("Client Application")
 		};
+		
 		return serviceModels;
 	}
 	
@@ -244,5 +247,9 @@ public class AIRToolsWS {
 
 	public SISoogleAttribute[] getSISoogleAttributesByType(SisoogleAttributesInput input) {//String type
 		return SisoogleValuesHbn.getSISoogleAttributesByType(input.getType());//type
+	}
+	
+	public CiTypeDTO[] getCiTypes() {
+		return ApplicationCat1Hbn.getCiTypes();
 	}
 }

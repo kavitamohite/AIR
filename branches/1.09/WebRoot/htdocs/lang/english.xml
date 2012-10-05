@@ -414,6 +414,13 @@ whereas "External" manages only the references to an compliance management outsi
 		
 		<complianceWindowTitle>Compliance Details </complianceWindowTitle>
 		<complianceWindowControls>Controls</complianceWindowControls>
+		
+		<RelevanceICSSecurityManagement>Relevance ICS Security Management</RelevanceICSSecurityManagement>
+		<RelevanceICSAccessManagement>Relevance ICS Access Management</RelevanceICSAccessManagement>
+		<RelevanceICSITManagement>Relevance ICS IT Management</RelevanceICSITManagement>
+		<LinkCiType>Link - CI Type</LinkCiType>
+		<LinkCi>Link - CI</LinkCi>
+		
 		<complianceWindowStatement>Statement</complianceWindowStatement>
 		<complianceWindowStatementUntreated>Untreated</complianceWindowStatementUntreated>
 		<complianceWindowStatementDispensable>Dispensable</complianceWindowStatementDispensable>

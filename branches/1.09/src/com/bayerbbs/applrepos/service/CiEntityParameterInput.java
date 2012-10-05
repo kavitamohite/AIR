@@ -1,18 +1,14 @@
 package com.bayerbbs.applrepos.service;
 
 public class CiEntityParameterInput {
-
-	/** the cwid logged in*/
-	String cwid;
-
-	/** the token - session */
-	String token;
+	private String cwid;
+	private String token;
+	private String type;
+	private String query;
 	
-	/** the type of the entity */
-	String type;
-	
-	/** the query we are searching for */
-	String query;
+	private int start;
+	private int limit;
+
 
 	public String getCwid() {
 		return cwid;
@@ -46,5 +42,20 @@ public class CiEntityParameterInput {
 		this.query = query;
 	}
 
-	
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
 }
