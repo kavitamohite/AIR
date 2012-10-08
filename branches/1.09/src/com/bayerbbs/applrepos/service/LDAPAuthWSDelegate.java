@@ -37,8 +37,8 @@ public class LDAPAuthWSDelegate {
 		return lDAPAuthWS.isLoginValid(username, token);
 	}
 
-	public void logout(String username) {
-		lDAPAuthWS.logout(username);
+	public void logout(String username, String token) {
+		lDAPAuthWS.logout(username, token);
 	}
 
 }
