@@ -111,7 +111,7 @@ public class PersonOptionHbn {
 					.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
 			personOption.setUpdateTimestamp(ApplReposTS
 					.getCurrentTimestamp());
-			if (null == personOption.getId()) {
+			if (null == personOption.getId() || null == personOption.getInsertQuelle()) {
 				// Insert data
 				personOption.setInsertQuelle(personOption.getUpdateQuelle());
 				personOption.setInsertUser(personOption.getUpdateUser());
