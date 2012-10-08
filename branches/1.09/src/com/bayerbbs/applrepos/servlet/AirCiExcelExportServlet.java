@@ -166,8 +166,11 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					req.getParameter("hadvsearchlifecyclestatusid").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchlifecyclestatusid")) : null,
 					req.getParameter("hadvsearchprocessid").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchprocessid")) : null,
 					null/*req.getParameter("template?")*/,
-					req.getParameter("hadvsearchsteward")) :
-        		AnwendungHbn.findApplications(query, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null);
+					
+					// TODO Parameter ORG_SCOPE + BAR_RELEVANCE_Y_N
+					
+					req.getParameter("hadvsearchsteward"),null, null) :
+        		AnwendungHbn.findApplications(query, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null);
         } else if(searchAction.equals(SEARCH_POINT_MY_DELEGATE_CIS) || searchAction.equals(SEARCH_POINT_MY_CIS)) {
         	ApplicationParameterInput input = new ApplicationParameterInput();
         	input.setSearchAction(searchAction);

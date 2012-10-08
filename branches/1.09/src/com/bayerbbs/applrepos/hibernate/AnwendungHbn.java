@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -2429,7 +2430,9 @@ public class AnwendungHbn {
 	Long advsearchlifecyclestatusid,
 	Long advsearchprocessid,
 	String template,
-	String advsearchsteward
+	String advsearchsteward,
+	String barRelevance, 
+	String organisationalScope
 	) {
 //		String advsearchcountry;
 //		String advsearchsite;
@@ -2576,6 +2579,33 @@ public class AnwendungHbn {
 			sql.append(" and kat1.anwendung_kat1_id=").append(kat1Id); // TODO ANWENDUNG_KAT1
 		}
 
+		if (null != barRelevance && !"".equals(barRelevance)) {
+			if ("U".equals(barRelevance)) {
+				sql.append(" and anw.BAR_RELEVANCE_Y_N is null");
+			}
+			else {
+				sql.append(" and anw.BAR_RELEVANCE_Y_N='").append(barRelevance).append("'");
+			}
+		}
+		
+		if (null != organisationalScope && !"".equals(organisationalScope)) {
+			sql.append(" and (");
+			
+			int count = 0;
+			StringTokenizer tk = new StringTokenizer(organisationalScope, ",");
+			while (tk.hasMoreTokens()) {
+				String temp = tk.nextToken();
+				if (count != 0) {
+					sql.append(" or ");
+				}
+				sql.append("anw.ORG_SCOPE='").append(temp).append("'");
+				count++;
+			}
+			
+			sql.append(")");
+		}
+
+		
 		sql.append("  and anw.DEL_TIMESTAMP is null");
 		
 		if (StringUtils.isNotNullOrEmpty(sort)) {

@@ -135,7 +135,7 @@ public class ApplicationWS {
 							anwParamInp.getAdvsearchObjectTypeId(), anwParamInp.getSort(), anwParamInp.getDir(),
 							anwParamInp.getAdvsearchcitypeid(), anwParamInp.getAdvsearchdescription(),
 							anwParamInp.getAdvsearchoperationalstatusid(), anwParamInp.getAdvsearchapplicationcat2id(),
-							anwParamInp.getAdvsearchlifecyclestatusid(), anwParamInp.getAdvsearchprocessid(), anwParamInp.getTemplate(), anwParamInp.getAdvsearchsteward());
+							anwParamInp.getAdvsearchlifecyclestatusid(), anwParamInp.getAdvsearchprocessid(), anwParamInp.getTemplate(), anwParamInp.getAdvsearchsteward(), anwParamInp.getBarRelevance(), anwParamInp.getOrganisationalScope());
 				} else {
 					listAnwendungen = CiEntitesHbn.findCisByNameOrAlias(searchname, anwParamInp.getQueryMode(),
 							onlyApplications, anwParamInp.getSort(), anwParamInp.getDir());

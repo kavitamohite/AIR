@@ -66,6 +66,11 @@ public class ApplicationParameterInput implements Serializable {
 	String ciOwnerType;
 	String ouQueryMode;
 
+	// for the new advanced search
+	String barRelevance;	// Y, N, U =Undefined -> null in database
+
+	String organisationalScope;
+
 	
 	
 	
@@ -346,6 +351,22 @@ public class ApplicationParameterInput implements Serializable {
 
 	public void setAdvsearchsteward(String advsearchsteward) {
 		this.advsearchsteward = advsearchsteward;
+	}
+
+	public String getBarRelevance() {
+		return barRelevance;
+	}
+
+	public void setBarRelevance(String barRelevance) {
+		this.barRelevance = barRelevance;
+	}
+
+	public String getOrganisationalScope() {
+		return organisationalScope;
+	}
+
+	public void setOrganisationalScope(String organisationalScope) {
+		this.organisationalScope = organisationalScope;
 	}
 	
 }
