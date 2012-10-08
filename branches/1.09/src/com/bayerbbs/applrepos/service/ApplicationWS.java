@@ -300,9 +300,6 @@ public class ApplicationWS {
 					
 					Long ciId = listAnwendung.get(0).getApplicationId();
 					
-					// update BAR APPLICATION ID
-					AnwendungHbn.updateBarApplicationId(ciId, "BAR-" + ciId);
-					
 					//--- neu seit Wizard RFC 8271 - required Attributes
 					
 					if (null != editInput.getGpsccontactSupportGroupHidden()) {

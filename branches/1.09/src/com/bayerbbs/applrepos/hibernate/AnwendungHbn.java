@@ -252,14 +252,6 @@ public class AnwendungHbn {
 						// Basics
 						// ======
 
-						// TODO aktuell wird die BAR-ID vorbelegt aus der Application ID
-						// if (null == dto.getBarApplicationId() || "".equals(dto.getBarApplicationId())) {
-						if ("Y".equals(application.getBarRelevance())) {
-							if (null == application.getBarApplicationId() || "".equals(application.getBarApplicationId())) {
-								application.setBarApplicationId("BAR-" + application.getApplicationId());
-							}
-						}
-						
 						if (null != dto.getApplicationName()) {
 							application
 								.setApplicationName(dto.getApplicationName());
@@ -3104,49 +3096,7 @@ public class AnwendungHbn {
 		return listResult;
 	}
 
-	/**
-	 * sets the BAR Application ID
-	 * @param ciId
-	 * @param barApplicationId
-	 * @return
-	 */
-	public static boolean updateBarApplicationId(Long ciId, String barApplicationId) {
-		boolean result = false;
-		Session session = HibernateUtil.getSession();
-		Transaction tx = null;
-		tx = session.beginTransaction();
-		Application applicationTarget = (Application) session.get(
-				Application.class, ciId);
 
-		boolean toCommit = false;
-		try {
-				if ("Y".equals(applicationTarget.getBarRelevance())) {
-					if (null != applicationTarget
-							&& null == applicationTarget.getDeleteTimestamp()) {
-						applicationTarget.setBarApplicationId(barApplicationId);
-						session.saveOrUpdate(applicationTarget);
-						session.flush();
-					}
-				}
-				toCommit = true;
-		} catch (Exception e) {
-			
-			String message = e.getMessage();
-			log.error(message);
-			// handle exception
-			result = false;
-		} finally {
-			String hbnMessage = HibernateUtil.close(tx, session,
-					toCommit);
-			if (toCommit && null != applicationTarget) {
-				result = true;
-			}
-		}
-
-		return result;
-	}
-	
-	
 	/**
 	 * marks all actual references as deleted
 	 * @param cwid
