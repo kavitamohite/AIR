@@ -51,8 +51,8 @@ public class Test_PLSQL_Functions {
 	@Test
 	public void testFT_Findcis() throws HibernateException, SQLException {
 		String ciType = "Application";
-		String ciName = "emea";
-		int start = 20;
+		String ciName = "test";//emea
+		int start = 150;
 		int limit = 50;
 		
 		String sql = "SELECT * FROM TABLE (pck_air.ft_findcis('" + ciName + "', '" + ciType + "'))";
@@ -69,18 +69,23 @@ public class Test_PLSQL_Functions {
 		try {
 			ta = session.beginTransaction();
 			conn = session.connection();
-			stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);//prepareStatement(sql, | createStatement 
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			rs.absolute(start + 1);//relative
+//			System.out.println("testFT_Findcis FetchSize="+rs.getFetchSize());
+			rs.absolute(start + 1);//absolute relative
 			rs.setFetchSize(limit);
+//			System.out.println("testFT_Findcis FetchSize="+rs.getFetchSize());
 			
 			DwhEntityDTO dwhEntity = null;
-//			int i = 0;
+			int i = 0;
 			
 			while (rs.next()) {
-//				if(i == 50)
-//					break;
+				if(i == limit)
+					break;
+				
+				if(i == 0)
+					System.out.println(rs.getString("CI_ID"));
 				
 				dwhEntity = new DwhEntityDTO();
 				
@@ -110,7 +115,7 @@ public class Test_PLSQL_Functions {
 				//evtl. mehr
 				
 				ciTypes.add(dwhEntity);
-//				i++;
+				i++;
 			}
 			
 			rs.close();

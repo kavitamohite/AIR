@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ConnectionPropertyItems>
-
-	<!-- Applications -->
 	<Identifier>
 		<Source>Application</Source>
 		<Destination>Application</Destination>
@@ -9,7 +7,6 @@
 		<Upstream>Y</Upstream>
 		<Downstream>Y</Downstream>
 	</Identifier>
-	
 	<Identifier>
 		<Source>Application</Source>
 		<Destination>Application Platform</Destination>
@@ -17,7 +14,6 @@
 		<Upstream>Y</Upstream>
 		<Downstream>N</Downstream>
 	</Identifier>
-	
 	<Identifier>
 		<Source>Application</Source>
 		<Destination>Middleware</Destination>
@@ -25,7 +21,6 @@
 		<Upstream>Y</Upstream>
 		<Downstream>N</Downstream>
 	</Identifier>
-	
 	<Identifier>
 		<Source>Application</Source>
 		<Destination>Common Service</Destination>
@@ -33,23 +28,20 @@
 		<Upstream>Y</Upstream>
 		<Downstream>N</Downstream>
 	</Identifier>
-	
 	<Identifier>
 		<Source>Application</Source>
-		<Destination>System Platform</Destination>
+		<Destination>Transient System Platform</Destination>
 		<Relevance>operational and strategic</Relevance>
 		<Upstream>Y</Upstream>
 		<Downstream>Y</Downstream>
 	</Identifier>
-	
-	<Identifier>
+	<!--<Identifier>
 		<Source>Application</Source>
 		<Destination>Software</Destination>
 		<Relevance>operational</Relevance>
 		<Upstream></Upstream>
 		<Downstream></Downstream>
 	</Identifier>
-	
 	<Identifier>
 		<Source>Application</Source>
 		<Destination>Network Connection</Destination>
@@ -57,78 +49,257 @@
 		<Upstream></Upstream>
 		<Downstream></Downstream>
 	</Identifier>
-	
 	<Identifier>
 		<Source>Application</Source>
 		<Destination>Network Connection</Destination>
 		<Relevance>operational</Relevance>
 		<Upstream></Upstream>
 		<Downstream></Downstream>
-	</Identifier>
-	
-	<!-- System Platform -->
-	<Identifier>
-		<Source>System Platform</Source>
+	</Identifier>-->
+
+	<!--<Identifier>
+		<Source>Transient System Platform</Source>
 		<Destination>Application</Destination>
 		<Relevance>operational</Relevance>
 		<Upstream>Y</Upstream>
 		<Downstream>Y</Downstream>
 	</Identifier>
-	
 	<Identifier>
-		<Source>System Platform</Source>
-		<Destination>Application Platform</Destination>
+		<Source>Transient System Platform</Source>
+		<Destination>Transient Application Platform</Destination>
 		<Relevance>operational</Relevance>
 		<Upstream>N</Upstream>
 		<Downstream>Y</Downstream>
 	</Identifier>
-	
 	<Identifier>
-		<Source>System Platform</Source>
+		<Source>Transient System Platform</Source>
 		<Destination>Middleware</Destination>
 		<Relevance>operational</Relevance>
 		<Upstream>N</Upstream>
 		<Downstream>Y</Downstream>
 	</Identifier>
-	
 	<Identifier>
-		<Source>System Platform</Source>
+		<Source>Transient System Platform</Source>
 		<Destination>Common Service</Destination>
 		<Relevance>operational</Relevance>
 		<Upstream>N</Upstream>
 		<Downstream>Y</Downstream>
 	</Identifier>
-	
 	<Identifier>
-		<Source>System Platform</Source>
+		<Source>Transient System Platform</Source>
 		<Destination>System Platform</Destination>
 		<Relevance>operational</Relevance>
 		<Upstream>Y</Upstream>
 		<Downstream>Y</Downstream>
-	</Identifier>	
-
-	<Identifier>
-		<Source>System Platform</Source>
+	</Identifier>-->
+	<!--<Identifier>
+		<Source>Transient System Platform</Source>
 		<Destination>Hardware Component</Destination>
 		<Relevance>operational</Relevance>
 		<Upstream></Upstream>
 		<Downstream></Downstream>
 	</Identifier>
-	
 	<Identifier>
-		<Source>System Platform</Source>
+		<Source>Transient System Platform</Source>
 		<Destination>Software</Destination>
 		<Relevance>operational</Relevance>
 		<Upstream></Upstream>
 		<Downstream></Downstream>
 	</Identifier>
-	
 	<Identifier>
-		<Source>System Platform</Source>
+		<Source>Transient System Platform</Source>
 		<Destination>Network Connection</Destination>
 		<Relevance>operational</Relevance>
 		<Upstream></Upstream>
 		<Downstream></Downstream>
+	</Identifier>-->
+	
+	
+	
+	<Identifier>
+		<Source>Application Platform</Source>
+		<Destination>Application</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
 	</Identifier>
-		
+	<Identifier>
+		<Source>Application Platform</Source>
+		<Destination>Common Service</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Application Platform</Source>
+		<Destination>Hardware System</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Application Platform</Source>
+		<Destination>Middleware</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Application Platform</Source>
+		<Destination>Transient System Platform</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	
+	<Identifier>
+		<Source>Common Service</Source>
+		<Destination>Application</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Common Service</Source>
+		<Destination>Application Platform</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Common Service</Source>
+		<Destination></Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Common Service</Source>
+		<Destination>Hardware System</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Common Service</Source>
+		<Destination>Middleware</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Common Service</Source>
+		<Destination>Transient System Platform</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	
+	<Identifier>
+		<Source>Hardware System</Source>
+		<Destination>Application</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Hardware System</Source>
+		<Destination>Application Platform</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Hardware System</Source>
+		<Destination>Common Service</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Hardware System</Source>
+		<Destination>Middleware</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Hardware System</Source>
+		<Destination>Transient System Platform</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	
+	<Identifier>
+		<Source>Middleware</Source>
+		<Destination>Application</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Middleware</Source>
+		<Destination>Application Platform</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Middleware</Source>
+		<Destination>Common Service</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Middleware</Source>
+		<Destination>Hardware System</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Middleware</Source>
+		<Destination>Transient System Platform</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	
+	<Identifier>
+		<Source>Transient System Platform</Source>
+		<Destination>Application</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Transient System Platform</Source>
+		<Destination>Application Platform</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Transient System Platform</Source>
+		<Destination>Common Service</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Transient System Platform</Source>
+		<Destination>Hardware System</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Transient System Platform</Source>
+		<Destination>Middleware</Destination>
+		<Relevance>operational and strategic</Relevance>
+		<Upstream></Upstream>
+		<Downstream></Downstream>
+	</Identifier>
 </ConnectionPropertyItems>

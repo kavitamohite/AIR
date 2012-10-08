@@ -9,7 +9,9 @@ AIR.AirUiFactory = function() {
 		        title: 'Application Owner',
 		        labelWidth: 200,
 		        
-//			        layout: 'form',//fit
+		        style: {
+					marginTop: 5
+				},
 		        
 				items: [{
 					xtype: 'panel',

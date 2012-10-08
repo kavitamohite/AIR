@@ -13,9 +13,9 @@ import org.hibernate.Transaction;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
-import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
+import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
 
 public class CiEntitesHbn {
 
@@ -543,7 +543,7 @@ public class CiEntitesHbn {
 		return listeAnwendungen;
 	}
 	
-	public static DwhEntityDTO[] findByTypeAndName(String ciType, String ciName, int start, int limit) {
+	public static DwhEntityParameterOutput findByTypeAndName(String ciType, String ciName, int start, int limit) {
 		String sql = "SELECT * FROM TABLE (pck_air.ft_findcis('" + ciName + "', '" + ciType + "'))";
 		
 		Transaction ta = null;
@@ -553,7 +553,9 @@ public class CiEntitesHbn {
 		
 		boolean commit = false;
 
-		List<DwhEntityDTO> ciTypes = new ArrayList<DwhEntityDTO>();
+		List<DwhEntityDTO> dwhEntities = new ArrayList<DwhEntityDTO>();
+		DwhEntityParameterOutput output = new DwhEntityParameterOutput();
+		int i = 0;
 		
 		try {
 			ta = session.beginTransaction();
@@ -565,41 +567,40 @@ public class CiEntitesHbn {
 			rs.setFetchSize(limit);
 			
 			DwhEntityDTO dwhEntity = null;
-//			int i = 0;
 			
 			while (rs.next()) {
-//				if(i == 50)
-//					break;
+				if(i < limit) {
+					dwhEntity = new DwhEntityDTO();
+					
+					dwhEntity.setCiId(rs.getString("CI_ID"));
+					dwhEntity.setCiType(rs.getString("TYPE"));
+					dwhEntity.setCiName(rs.getString("NAME"));
+					dwhEntity.setCiAlias(rs.getString("ASSET_ID_OR_ALIAS"));
+					dwhEntity.setTableId(rs.getString("TABLE_ID"));
+					dwhEntity.setCiOwner(rs.getString("RESPONSIBLE"));
+					dwhEntity.setCiOwnerDelegate(rs.getString("SUB_RESPONSIBLE"));
+					dwhEntity.setAppOwner(rs.getString("APP_OWNER"));
+					dwhEntity.setAppOwnerDelegate(rs.getString("APP_OWNER_DELEGATE"));
+					dwhEntity.setAppSteward(rs.getString("APP_STEWARD"));
+					dwhEntity.setCategoryIt(rs.getString("CATEGORY"));
+					dwhEntity.setLifecycleStatus(rs.getString("LIFECYCLE"));
+					dwhEntity.setSource(rs.getString("SOURCE"));
+					dwhEntity.setTemplate(rs.getString("TEMPLATE"));
+	
+	//				dwhEntity.setOperationalStatus(rs.getString("OPERATIONAL_STATUS"));
+	//				dwhEntity.setGxpRelevance(rs.getString("GXP_RELEVANCE"));
+	//				dwhEntity.setItSet(rs.getString("ITSET"));
+	//				dwhEntity.setServiceContract(rs.getString("SERVICE_CONTRACT"));
+	//				dwhEntity.setSeverityLevel(rs.getString("SEVERITY_LEVEL"));
+	//				dwhEntity.setPriorityLevel(rs.getString("PRIORITY_LEVEL"));
+	//				dwhEntity.setSla(rs.getString("SLA"));
+	//				dwhEntity.setBusinessEssential(rs.getString("BUSINESS_ESSENTIAL"));
+					//evtl. mehr
+					
+					dwhEntities.add(dwhEntity);
+				}
 				
-				dwhEntity = new DwhEntityDTO();
-				
-				dwhEntity.setCiId(rs.getString("CI_ID"));
-				dwhEntity.setCiType(rs.getString("TYPE"));
-				dwhEntity.setCiName(rs.getString("NAME"));
-				dwhEntity.setCiAlias(rs.getString("ASSET_ID_OR_ALIAS"));
-				dwhEntity.setTableId(rs.getString("TABLE_ID"));
-				dwhEntity.setCiOwner(rs.getString("RESPONSIBLE"));
-				dwhEntity.setCiOwnerDelegate(rs.getString("SUB_RESPONSIBLE"));
-				dwhEntity.setAppOwner(rs.getString("APP_OWNER"));
-				dwhEntity.setAppOwnerDelegate(rs.getString("APP_OWNER_DELEGATE"));
-				dwhEntity.setAppSteward(rs.getString("APP_STEWARD"));
-				dwhEntity.setCategoryIt(rs.getString("CATEGORY"));
-				dwhEntity.setLifecycleStatus(rs.getString("LIFECYCLE"));
-				dwhEntity.setSource(rs.getString("SOURCE"));
-				dwhEntity.setTemplate(rs.getString("TEMPLATE"));
-
-//				dwhEntity.setOperationalStatus(rs.getString("OPERATIONAL_STATUS"));
-//				dwhEntity.setGxpRelevance(rs.getString("GXP_RELEVANCE"));
-//				dwhEntity.setItSet(rs.getString("ITSET"));
-//				dwhEntity.setServiceContract(rs.getString("SERVICE_CONTRACT"));
-//				dwhEntity.setSeverityLevel(rs.getString("SEVERITY_LEVEL"));
-//				dwhEntity.setPriorityLevel(rs.getString("PRIORITY_LEVEL"));
-//				dwhEntity.setSla(rs.getString("SLA"));
-//				dwhEntity.setBusinessEssential(rs.getString("BUSINESS_ESSENTIAL"));
-				//evtl. mehr
-				
-				ciTypes.add(dwhEntity);
-//				i++;
+				i++;
 			}
 			
 			rs.close();
@@ -608,13 +609,16 @@ public class CiEntitesHbn {
 			
 			commit = true;
 			
-			System.out.println("CiEntitesHbn::findByTypeAndName: ciTypes="+ciTypes.size());
+//			System.out.println("CiEntitesHbn::findByTypeAndName: ciTypes="+dwhEntities.size());
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		} finally {
 			HibernateUtil.close(ta, session, commit);
 		}
 		
-		return ciTypes.toArray(new DwhEntityDTO[0]);
+		output.setDwhEntityDTO(dwhEntities.toArray(new DwhEntityDTO[0]));
+		output.setTotal(i + start);
+		
+		return output;
 	}
 }

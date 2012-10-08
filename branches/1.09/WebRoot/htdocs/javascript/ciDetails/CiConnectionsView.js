@@ -52,7 +52,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    layout: 'hbox',//form hbox
 		    border: false,
 		    
-		    height: 650,//550
+		    height: 800,//650 550
 		    			
 		    items: [
 //		    {//connectionGrid
@@ -182,7 +182,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    	flex: 5,
 		    	
 		    	layout: 'form',//border form
-		    	height: 520,//450
+		    	height: 650,//520 450
 		    	margins: '10 0 0 15',
 		    	
 		    	items: [{
@@ -263,7 +263,6 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 						id: 'CiConnectionsResultGrid',
 						anchor: '100%',
 						
-//						height: 250,//bringt nichts
 						
 						enableDragDrop: true,
 						ddGroup: 'ddCiConnectionsGroup',
@@ -290,7 +289,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var grid = pConnectionsCiSearchV.getComponent('CiConnectionsResultGrid');
 		grid.getStore().on('beforeload', this.onGridBeforeLoaded , this);
 		grid.getStore().on('load', this.onGridLoaded, this);
-//		grid.setHeight(150);//bringt nichts
+		grid.updateHeight();
 		
 		var lvUpStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvUpStreamConnections');
 		var lvDownStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvDownStreamConnections');
@@ -365,7 +364,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		 	cwid: AIR.AirApplicationManager.getCwid(),
 		 	token: AIR.AirApplicationManager.getToken(),
 			start: 0,
-			pageSize: 20,
+			limit: 20,
 			type: connectionsObjectType
 		};
 
@@ -379,8 +378,6 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		    params.query = connectionsQuickSearch;
 		}
-		
-
 		
 		var grid = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('CiConnectionsResultGrid');
 		grid.getStore().load({
@@ -400,8 +397,6 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		myLoadMask.hide();
 		var grid = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('CiConnectionsResultGrid');
 		grid.setVisible(true);
-		
-		grid.setHeight(325);
 	},
 	
 	//muss nach dem Rendern in initComponent() von edittabpanel als Klasse(!) aufgerufen werden!!.

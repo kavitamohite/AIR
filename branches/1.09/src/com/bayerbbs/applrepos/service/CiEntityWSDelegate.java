@@ -1,6 +1,5 @@
 package com.bayerbbs.applrepos.service;
 
-import com.bayerbbs.applrepos.dto.DwhEntityDTO;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "CiEntityWSService", portName = "CiEntityWSPort")
 public class CiEntityWSDelegate {
@@ -11,7 +10,7 @@ public class CiEntityWSDelegate {
 		return ciEntityWS.findCiEntities(input);
 	}
 
-	public DwhEntityDTO[] findByTypeAndName(CiEntityParameterInput input) {
+	public DwhEntityParameterOutput findByTypeAndName(CiEntityParameterInput input) {
 		return ciEntityWS.findByTypeAndName(input);
 	}
 }

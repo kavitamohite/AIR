@@ -1779,7 +1779,8 @@ AIR.AirStoreFactory = function() {
 		    ]);
 		
 		    var dwhEntityListReader = new Ext.data.XmlReader({
-		    	record: 'return',//return ciTypeDTO
+		    	record: 'dwhEntityDTO',//return ciTypeDTO
+		    	totalProperty: 'total',
 		        idProperty: 'ciId',
 		        	
 		        fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel', 'sla', 'lifecycleStatus', 'source', 'businessEssential', 'template']
