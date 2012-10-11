@@ -39,4 +39,13 @@ public class CiEntityWS {
 		
 		return output;
 	}
+	
+	public DwhEntityParameterOutput getDwhEntityRelations(CiEntityParameterInput input) {
+		DwhEntityParameterOutput output = new DwhEntityParameterOutput();
+		
+		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))
+			output = CiEntitesHbn.getDwhEntityRelations(input.getTableId(), input.getCiId(), input.getDirection());
+		
+		return output;
+	}
 }

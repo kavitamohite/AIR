@@ -43,9 +43,9 @@ AIR.AirApplicationManager = function() {
 				//sapNamePart2_3Text: 'Wert muss eine Dezimalzahl sein'//language Datei!
 			});
 			
-        	AIR.AirApplicationManager.setCwid(loginData.cwid);
-        	AIR.AirApplicationManager.setToken(loginData.token);
-        	AIR.AirApplicationManager.setUserName(loginData.username);
+        	this.setCwid(loginData.cwid);
+        	this.setToken(loginData.token);
+        	this.setUserName(loginData.username);
         	
         	var lastlogon;
         	if(loginData.lastlogon) {
@@ -54,7 +54,7 @@ AIR.AirApplicationManager = function() {
         		var airCookie = Ext.state.Manager.get('airCookie');
         		lastlogon = airCookie.lastlogon;
         	}
-        	AIR.AirApplicationManager.setLastLogon(lastlogon);
+        	this.setLastLogon(lastlogon);
 			
 			this.initLoadMasks();
 			this.loadConnectionProperties();
@@ -130,9 +130,9 @@ AIR.AirApplicationManager = function() {
 				itSecGroupListStore: null,
 				referencesListStore: null,
 				
-				rolePersonListStore: { params: { params: { cwid: AIR.AirApplicationManager.getCwid() } } },
-				itsecUserOptionListStore: { params: { params: { cwid: AIR.AirApplicationManager.getCwid() } } },
-//				rolePersonBusinessEssentialListStore: { params: { params: { cwid: AIR.AirApplicationManager.getCwid() } } },//not used, wo zu verwenden?
+				rolePersonListStore: { params: { params: { cwid: this.getCwid() } } },
+				itsecUserOptionListStore: { params: { params: { cwid: this.getCwid() } } },
+//				rolePersonBusinessEssentialListStore: { params: { params: { cwid: this.getCwid() } } },//not used, wo zu verwenden?
 			
 				processListStore: null,
 				applicationCat1ListStore: null,
@@ -559,18 +559,28 @@ AIR.AirApplicationManager = function() {
 			return this.language;
 		},
 		
-		getToken: function() {
-			return this.token;
-		},
+		
 		
 		getCiId: function() {
 			return this.ciId;
-		},
-		
+		},		
 		setCiId: function(ciId) {
 			this.ciId = ciId;
 		},
+		getTableId: function() {
+			return this.tableId;
+		},
 		
+		setTableId: function(tableId) {
+			this.tableId = tableId;
+		},
+//		getCiData: function() {
+//			return this.ciData;
+//		},
+//		
+//		setCiData: function(ciData) {
+//			this.ciData = ciData;
+//		},
 		
 		
 		getHelpText: function(helpTextId) {
@@ -627,8 +637,10 @@ AIR.AirApplicationManager = function() {
 		restoreUiState: function(airViewport) {
 			var airCookie = Ext.state.Manager.get('airCookie');
 			
-			if(airCookie.ciId)
+			if(airCookie.ciId) {
 				this.setCiId(airCookie.ciId);
+				this.setTableId(airCookie.tableId);
+			}
 				
 			if(airCookie.navigation)
 				airViewport.fireEvent('externalNavigation', airViewport, null, airCookie.navigation);
@@ -695,4 +707,4 @@ AIR.AirApplicationManager = function() {
 	};
 }();
 
-//AAM = AIR.AirApplicationManager;
+AAM = AIR.AirApplicationManager;

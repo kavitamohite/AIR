@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -511,14 +512,14 @@ public class CiEntitesHbn {
 		ArrayList<ApplicationDTO> listeAnwendungen = new ArrayList<ApplicationDTO>();
 
 		boolean commit = false;
-		Transaction tx = null;
+		Transaction ta = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
 		Connection conn = null;
 		
 		try {
-
+			ta = session.beginTransaction();
 			conn = session.connection();
 			
 			selectStmt = conn.createStatement();
@@ -531,6 +532,7 @@ public class CiEntitesHbn {
 			}
 
 			// disconnect
+			ta.commit();
 			rset.close();
 			selectStmt.close();
 			conn.close();
@@ -538,7 +540,7 @@ public class CiEntitesHbn {
 			e.printStackTrace();
 		}
 		finally {
-			HibernateUtil.close(tx, session, commit);
+			HibernateUtil.close(ta, session, commit);
 		}
 		return listeAnwendungen;
 	}
@@ -564,7 +566,7 @@ public class CiEntitesHbn {
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			rs.absolute(start + 1);//relative
-			rs.setFetchSize(limit);
+//			rs.setFetchSize(limit);
 			
 			DwhEntityDTO dwhEntity = null;
 			
@@ -576,6 +578,7 @@ public class CiEntitesHbn {
 					dwhEntity.setCiType(rs.getString("TYPE"));
 					dwhEntity.setCiName(rs.getString("NAME"));
 					dwhEntity.setCiAlias(rs.getString("ASSET_ID_OR_ALIAS"));
+					dwhEntity.setDwhEntityId(rs.getString("ID"));
 					dwhEntity.setTableId(rs.getString("TABLE_ID"));
 					dwhEntity.setCiOwner(rs.getString("RESPONSIBLE"));
 					dwhEntity.setCiOwnerDelegate(rs.getString("SUB_RESPONSIBLE"));
@@ -603,6 +606,7 @@ public class CiEntitesHbn {
 				i++;
 			}
 			
+			ta.commit();
 			rs.close();
 			stmt.close();
 			conn.close();
@@ -617,8 +621,90 @@ public class CiEntitesHbn {
 		}
 		
 		output.setDwhEntityDTO(dwhEntities.toArray(new DwhEntityDTO[0]));
-		output.setTotal(i + start);
+		output.setTotal(i + 1 + start);
 		
 		return output;
 	}
+	
+	public static void saveCiRelations(Long tableId, Long ciId, String ciRelationsAddList, String ciRelationsDeleteList, String direction, String cwid) {
+		String sql = "{call pck_air.p_save_relations(?,?,?,?,?,?)}";//"begin pck_air.p_save_relations(?,?,?,?,?,?);//"EXEC pck_air.p_save_relations ("+tableId+", "+ciId+", "+ciRelationsAddList+", "+ciRelationsDeleteList+", "+direction+", "+cwid+")";
+		
+		Transaction ta = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+		
+		try {
+			ta = session.beginTransaction();
+			Connection conn = session.connection();
+			
+			CallableStatement stmt = conn.prepareCall(sql);
+			stmt.setLong(1, tableId);
+			stmt.setLong(2, ciId);
+			stmt.setString(3, ciRelationsAddList);
+			stmt.setString(4, ciRelationsDeleteList);
+			stmt.setString(5, direction);
+			stmt.setString(6, cwid);
+			stmt.executeUpdate();
+			ta.commit();
+			
+			stmt.close();
+			conn.close();
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+	}
+
+
+	public static DwhEntityParameterOutput getDwhEntityRelations(Long tableId, Long ciId, String direction) {
+		String sql = "SELECT * FROM TABLE (pck_air.ft_relatedcis("+tableId+","+ciId+",'"+direction+"'))";//"begin pck_air.p_save_relations(?,?,?,?,?,?);//"EXEC pck_air.p_save_relations ("+tableId+", "+ciId+", "+ciRelationsAddList+", "+ciRelationsDeleteList+", "+direction+", "+cwid+")";
+		
+		Transaction ta = null;
+		Statement stmt = null;
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		List<DwhEntityDTO> dwhEntities = new ArrayList<DwhEntityDTO>();
+		DwhEntityParameterOutput output = new DwhEntityParameterOutput();
+		
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			
+			DwhEntityDTO dwhEntity = null;
+			
+			while (rs.next()) {
+				dwhEntity = new DwhEntityDTO();
+				
+				dwhEntity.setCiId(rs.getString("CI_ID"));
+				dwhEntity.setCiType(rs.getString("TYPE"));
+				dwhEntity.setCiName(rs.getString("NAME"));
+//				dwhEntity.setCiAlias(rs.getString("ASSET_ID_OR_ALIAS"));
+				dwhEntity.setDwhEntityId(rs.getString("ID"));
+				dwhEntity.setSource(rs.getString("SOURCE"));
+				
+				dwhEntities.add(dwhEntity);
+			}
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		output.setDwhEntityDTO(dwhEntities.toArray(new DwhEntityDTO[0]));
+		
+		return output;
+	}
+	
 }

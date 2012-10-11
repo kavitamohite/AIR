@@ -150,7 +150,7 @@ public class ApplicationEditParameterInput {
 	private String downStreamDelete;
 	
 	private Boolean forceOverride;
-	
+	private long tableId;
 	
 	public ApplicationEditParameterInput() {
 	}
@@ -1188,5 +1188,12 @@ public class ApplicationEditParameterInput {
 	public void setBarRelevance(String barRelevance) {
 		this.barRelevance = barRelevance;
 	}
-	
+
+
+	public void setTableId(long tableId) {
+		this.tableId = tableId;
+	}
+	public long getTableId() {
+		return tableId;
+	}
 }

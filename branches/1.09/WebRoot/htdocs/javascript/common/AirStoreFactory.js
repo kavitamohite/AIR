@@ -1757,6 +1757,7 @@ AIR.AirStoreFactory = function() {
 		        {name: 'ciId'},
 		        {name: 'ciType'},
 		        {name: 'ciName'},
+		        {name: 'dwhEntityId'},
 		        {name: 'ciAlias'},
 		        {name: 'tableId'},
 		        {name: 'ciOwner'},
@@ -1783,14 +1784,14 @@ AIR.AirStoreFactory = function() {
 		    	totalProperty: 'total',
 		        idProperty: 'ciId',
 		        	
-		        fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel', 'sla', 'lifecycleStatus', 'source', 'businessEssential', 'template']
+		        fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel', 'sla', 'lifecycleStatus', 'source', 'businessEssential', 'template']
 		    }, dwhEntityListRecord); 
 			
 		    var dwhEntityListStore = new Ext.data.XmlStore({
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel', 'sla', 'lifecycleStatus', 'source', 'businessEssential', 'template'],
+		      	fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel', 'sla', 'lifecycleStatus', 'source', 'businessEssential', 'template'],
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
 		      		url: webcontext + '/CiEntityWSPort',
@@ -2931,43 +2932,45 @@ AIR.AirStoreFactory = function() {
 		    return genericIdNameStore;
 		},
 		
-		//TEMPLATE 2
-		createCiUpDownStreamConnectionsStore: function() {
-			//remote
-			var ciUpDownStreamConnectionsRecord = Ext.data.Record.create([
-		        {name: 'name'},
-		        {name: 'type'}, 
-		        {name: 'ciId'}
+		createCiConnectionsStore: function() {//isUpStream
+			var method = 'getDwhEntityRelations';//isUpStream ? 'getApplicationUpstream' : 'getApplicationDownstream';
+			
+			var ciConnectionsRecord = Ext.data.Record.create([
+		        {name: 'id'},
+		        {name: 'ciName'},//name
+		        {name: 'ciType'},//type
+		        {name: 'source'},
+		        {name: 'dwhEntityId'}
 		    ]);
 		
-		    var ciUpDownStreamConnectionsReader = new Ext.data.XmlReader({
-	//	        idProperty: 'ciId'//name
-		    }, ciUpDownStreamConnectionsRecord); 
-		    //remote
+		    var ciConnectionsReader = new Ext.data.XmlReader({
+		    	record: 'dwhEntityDTO',//viewdataDTO
+		        idProperty: 'dwhEntityId',//id
+		        	
+		        fields: ['id', 'ciName', 'ciType', 'source', 'dwhEntityId']//name type
+		    }, ciConnectionsRecord); 
 			
-		    var ciUpDownStreamConnectionsStore = new Ext.data.ArrayStore({
+		    var ciConnectionsStore = new Ext.data.XmlStore({
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: ['name', 'type', 'ciId'],
+		      	fields: ['id', 'ciName', 'ciType', 'source', 'dwhEntityId'],//name type
 	
 		      	
-		      	//remote
 		      	proxy: new Ext.ux.soap.SoapProxy({
-		      		url: webcontext +'/AIRToolsWSPort',
-		      		loadMethod: 'getItSecGroupList',
+		      		url: webcontext + '/CiEntityWSPort',//ApplicationWSPort
+		      		loadMethod: method,
 		      		timeout: 120000,
-		      		reader: ciUpDownStreamConnectionsReader
+		      		reader: ciConnectionsReader
 		      	}),
 		    	
-		      	reader: ciUpDownStreamConnectionsReader
-		      	//remote
+		      	reader: ciConnectionsReader
 		    });
 		    
-		    return ciUpDownStreamConnectionsStore;
+		    return ciConnectionsStore;
 		},
 		
-		
+		/*
 		createCiUpStreamConnectionsStore: function() {
 			var ciUpStreamConnectionsReader = Ext.data.Record.create([
 		        {name: 'id'},
@@ -2995,7 +2998,7 @@ AIR.AirStoreFactory = function() {
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: ['id', 'name', 'type'/*, 'deleteAction', 'alias', 'category', 'direction', 'responsible', 'subResponsible', 'tableId', 'ciId', 'groupsort'*/],
+		      	fields: ['id', 'name', 'type'],
 	
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
@@ -3015,7 +3018,8 @@ AIR.AirStoreFactory = function() {
 			var ciDownStreamConnectionsReader = Ext.data.Record.create([
 		        {name: 'id'},
 		        {name: 'name'},
-		        {name: 'type'}
+		        {name: 'type'},
+		        {name: 'source'}
 	//	        {name: 'deleteAction'},
 	//	        {name: 'alias'},
 	//	        {name: 'category'},
@@ -3031,14 +3035,14 @@ AIR.AirStoreFactory = function() {
 		    	record: 'viewdataDTO',//return
 		        idProperty: 'id',//name ciId
 		        	
-		        fields: ['id', 'name', 'type']//, 'deleteAction'
+		        fields: ['id', 'name', 'type', 'source']//, 'deleteAction'
 		    }, ciDownStreamConnectionsReader); 
 			
 		    var ciDownStreamConnectionsStore = new Ext.data.XmlStore({
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: ['id', 'name', 'type'/*, 'deleteAction', 'alias', 'category', 'direction', 'responsible', 'subResponsible', 'tableId', 'ciId', 'groupsort'*/],
+		      	fields: ['id', 'name', 'type', 'source'],
 	
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
@@ -3052,7 +3056,7 @@ AIR.AirStoreFactory = function() {
 		    });
 		    
 		    return ciDownStreamConnectionsStore;
-		},
+		},*/
 		
 		createConnectionPropertiesStore: function() {
 			

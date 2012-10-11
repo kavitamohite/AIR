@@ -5,6 +5,7 @@ public class DwhEntityDTO {
 	private String ciType;
 	private String ciName;
 	private String ciAlias;
+	private String dwhEntityId;
 	private String tableId;
 	private String ciOwner;
 	private String ciOwnerDelegate;
@@ -49,6 +50,12 @@ public class DwhEntityDTO {
 	}
 	public String getCiAlias() {
 		return ciAlias;
+	}
+	public void setDwhEntityId(String dwhEntityId) {
+		this.dwhEntityId = dwhEntityId;
+	}
+	public String getDwhEntityId() {
+		return dwhEntityId;
 	}
 	public String getTableId() {
 		return tableId;

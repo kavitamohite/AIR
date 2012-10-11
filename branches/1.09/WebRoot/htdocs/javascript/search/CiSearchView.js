@@ -1,8 +1,6 @@
 Ext.namespace('AIR');
 
 AIR.CiSearchView = Ext.extend(AIR.AirView, {
-	CI_TYPE_APPLICATION: 2,
-	
 	initComponent: function() {
 		Ext.apply(this, {
 		    border: false,
@@ -342,29 +340,29 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 			if(field.getValue().length > 0)
 				params.advsearchprocessid = field.getValue();
 			
-			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW');
-			if(field.getValue().length > 0)
-				params.osType = field.getValue();
-			
-			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOSnameW');
-			if(field.getValue().length > 0)
-				params.osName = field.getValue();
-			
-			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchSourceW');
-			if(field.getValue().length > 0)
-				params.source = field.getValue();
+//			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW');
+//			if(field.getValue().length > 0)
+//				params.osType = field.getValue();
+//			
+//			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOSnameW');
+//			if(field.getValue().length > 0)
+//				params.osName = field.getValue();
+//			
+//			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchSourceW');
+//			if(field.getValue().length > 0)
+//				params.source = field.getValue();
 			
 			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchBusinessEssentialW');
 			if(field.getValue().length > 0)
 				params.businessEssential = field.getValue();
 			
-			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchGapResponsibleW');
-			if(field.getValue().length > 0)
-				params.gapResponsible = field.getValue();
-			
-			field = fsSpecialSearchAttributes.getComponent('dfAdvSearchTargetDate');
-			if(field.getValue().length > 0)
-				params.gapEndDate = field.getValue();
+//			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchGapResponsibleW');
+//			if(field.getValue().length > 0)
+//				params.gapResponsible = field.getValue();
+//			
+//			field = fsSpecialSearchAttributes.getComponent('dfAdvSearchTargetDate');
+//			if(field.getValue().length > 0)
+//				params.gapEndDate = field.getValue();
 	    }
 	    
 		return params;
@@ -485,12 +483,14 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		var record = grid.getStore().getAt(rowIndex);
 		var ciId = record.id;
 		
-		if(record.data.tableId == this.CI_TYPE_APPLICATION) {
+		if(record.data.tableId == AC.TABLE_ID_APPLICATION) {
 //			selectedCIId = ciId;//grid.store.getAt(rowIndex).id;
 			AIR.AirApplicationManager.setCiId(ciId);
+			AIR.AirApplicationManager.setTableId(AC.TABLE_ID_APPLICATION);
 		} else {
 //			selectedCIId = -1;
 			AIR.AirApplicationManager.setCiId(-1);
+			AIR.AirApplicationManager.setTableId(-1);
 			
 //			if(Ext.isIE) {
 //				var windowTitle = labels.dynamicWindowCiTypeNotSupportedWarningTitle;//languagestore.data.items[0].data['dynamicWindowCiTypeNotSupportedWarningTitle']

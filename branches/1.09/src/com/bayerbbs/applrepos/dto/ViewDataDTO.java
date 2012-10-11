@@ -16,6 +16,9 @@ public class ViewDataDTO {
 	Long ciId;
 	
 	String groupsort;
+
+	String source;
+	String dwhEntityId;
 	
 	
 	public String getId() {
@@ -95,4 +98,16 @@ public class ViewDataDTO {
 		this.groupsort = groupsort;
 	}
 	
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
+	}
+	public String getDwhEntityId() {
+		return dwhEntityId;
+	}
+	public void setDwhEntityId(String dwhEntityId) {
+		this.dwhEntityId = dwhEntityId;
+	}	
 }

@@ -238,17 +238,24 @@ public class ApplicationWS {
 										 gpscContact);
 							}
 						}
-
 					}
 
-					// Connection higher/lower
-					String cwid = editInput.getCwid();
-					Long applicationId = dto.getApplicationId();
 					
-					ApplicationApplicationHbn.saveApplicationApplicationAll(cwid, null, applicationId, dto.getUpStreamAdd(), "ADD");
-					ApplicationApplicationHbn.saveApplicationApplicationAll(cwid, null, applicationId, dto.getUpStreamDelete(), "DELETE");
-					ApplicationApplicationHbn.saveApplicationApplicationAll(cwid, applicationId, null, dto.getDownStreamAdd(), "ADD");
-					ApplicationApplicationHbn.saveApplicationApplicationAll(cwid, applicationId, null, dto.getDownStreamDelete(), "DELETE");
+					if(dto.getUpStreamAdd() != null && dto.getUpStreamAdd().length() > 0 || dto.getUpStreamDelete() != null && dto.getUpStreamDelete().length() > 0)
+						CiEntitesHbn.saveCiRelations(editInput.getTableId(), dto.getApplicationId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
+					
+					if(dto.getDownStreamAdd() != null && dto.getDownStreamAdd().length() > 0 || dto.getDownStreamDelete() != null && dto.getDownStreamDelete().length() > 0)
+						CiEntitesHbn.saveCiRelations(editInput.getTableId(), dto.getApplicationId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", editInput.getCwid());
+					
+					
+					// Connection higher/lower
+//					String cwid = editInput.getCwid();
+//					Long applicationId = dto.getApplicationId();
+//
+//					ApplicationApplicationHbn.saveApplicationApplicationAll(cwid, null, applicationId, dto.getUpStreamAdd(), "ADD");
+//					ApplicationApplicationHbn.saveApplicationApplicationAll(cwid, null, applicationId, dto.getUpStreamDelete(), "DELETE");
+//					ApplicationApplicationHbn.saveApplicationApplicationAll(cwid, applicationId, null, dto.getDownStreamAdd(), "ADD");
+//					ApplicationApplicationHbn.saveApplicationApplicationAll(cwid, applicationId, null, dto.getDownStreamDelete(), "DELETE");
 					
 					// TODO Connections ITSystem
 					// Die heiﬂt pck_Sync_Tools.Support_Anwend_IT_System

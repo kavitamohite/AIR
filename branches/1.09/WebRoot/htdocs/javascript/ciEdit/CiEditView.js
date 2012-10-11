@@ -416,6 +416,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		var ciSupportStuffView = this.getComponent('ciEditTabView').getComponent('clCiSupportStuff');
 		ciSupportStuffView.setData(data);
+		
+		data.tableId = AIR.AirApplicationManager.getTableId();
 
 		var saveCallback = function() {
 			mySaveMask.show();

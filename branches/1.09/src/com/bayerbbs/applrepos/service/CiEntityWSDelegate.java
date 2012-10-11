@@ -13,4 +13,8 @@ public class CiEntityWSDelegate {
 	public DwhEntityParameterOutput findByTypeAndName(CiEntityParameterInput input) {
 		return ciEntityWS.findByTypeAndName(input);
 	}
+	
+	public DwhEntityParameterOutput getDwhEntityRelations(CiEntityParameterInput input) {
+		return ciEntityWS.getDwhEntityRelations(input);
+	}
 }

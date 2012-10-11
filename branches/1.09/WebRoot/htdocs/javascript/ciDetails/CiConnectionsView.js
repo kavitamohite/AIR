@@ -1,9 +1,6 @@
 Ext.namespace('AIR');
 
 AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
-	UPSTREAM: 'Upstream',
-	DOWNSTREAM: 'Downstream',
-	
 	toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="images/{icon}"/></td><td>{text}</td></tr><table>'),
 	toolbarEmptyMessage: '<table><tr><td>&nbsp;</td></tr><table>',
 	
@@ -90,7 +87,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    	},{
 					xtype: 'grid',//listview grid
 					id: 'lvUpStreamConnections',
-					store: AIR.AirStoreFactory.createCiUpStreamConnectionsStore(),//createCiUpDownStreamConnectionsStore(),
+					store: AIR.AirStoreFactory.createCiConnectionsStore(),//true createCiUpStreamConnectionsStore createCiUpDownStreamConnectionsStore(),
 					multiSelect: false,
 					singleSelect: true,
 					border: true,
@@ -101,13 +98,18 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			        					
 					columns: [{
 				        header: 'CI Name',
-				        dataIndex: 'name',
+				        dataIndex: 'ciName',//name
 				        width: 180,
 				        menuDisabled: true
 				    },{
 				        header: 'CI Type',
-				        dataIndex: 'type',
+				        dataIndex: 'ciType',//type
 				        width: 180,
+				        menuDisabled: true
+				    },{
+				        header: 'Source',
+				        dataIndex: 'source',
+				        width: 100,
 				        menuDisabled: true
 				    }, raDeleteUpStreamConnection],
 				    
@@ -138,7 +140,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    	},{
 					xtype: 'grid',//listview grid
 					id: 'lvDownStreamConnections',
-					store: AIR.AirStoreFactory.createCiDownStreamConnectionsStore(),//createCiUpDownStreamConnectionsStore(),
+					store: AIR.AirStoreFactory.createCiConnectionsStore(),//createCiDownStreamConnectionsStore createCiUpDownStreamConnectionsStore(),
 					multiSelect: false,
 					singleSelect: true,
 					border: true,
@@ -149,13 +151,18 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 								        
 					columns: [{
 				        header: 'CI Name',
-				        dataIndex: 'name',
+				        dataIndex: 'ciName',//name
 				        width: 180,//150
 				        menuDisabled: true
 				    },{
 				        header: 'CI Type',
-				        dataIndex: 'type',
+				        dataIndex: 'ciType',//type
 				        width: 180,
+				        menuDisabled: true
+				    },{
+				        header: 'Source',
+				        dataIndex: 'source',
+				        width: 100,
 				        menuDisabled: true
 				    }, raDeleteDownStreamConnection],
 				    
@@ -304,9 +311,11 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		lvDownStreamConnections.on('rowdblclick', this.onRowDoubleClick, this);
 		
 		this.CiUpDownStreamConnectionsRecord = new Ext.data.Record.create([
-			{ name: 'name' },
-			{ name: 'type' },
-			{ name: 'id' }//ciId
+			{ name: 'ciName' },
+			{ name: 'ciType' },
+			{ name: 'id' },//ciId
+			{ name: 'source' },
+			{ name: 'dwhEntityId' }	
 		]);
 		
 		
@@ -365,19 +374,19 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		 	token: AIR.AirApplicationManager.getToken(),
 			start: 0,
 			limit: 20,
-			type: connectionsObjectType
+			type: connectionsObjectType,
+			query: connectionsQuickSearch
 		};
 
 		
-		if(connectionsQuickSearch.length > 0) {
-		    while(connectionsQuickSearch.indexOf('*') > -1)
-		    	connectionsQuickSearch = connectionsQuickSearch.replace('*', '%');
+		if(params.query.length > 0) {
+		    while(params.query.indexOf('*') > -1)
+		    	params.query = params.query.replace('*', '%');
 		    
-		    while(connectionsQuickSearch.indexOf('?') > -1)
-		    	connectionsQuickSearch = connectionsQuickSearch.replace('?', '_');
-		
-		    params.query = connectionsQuickSearch;
+		    while(params.query.indexOf('?') > -1)
+		    	params.query = params.query.replace('?', '_');
 		}
+		
 		
 		var grid = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('CiConnectionsResultGrid');
 		grid.getStore().load({
@@ -435,7 +444,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onUpStreamConnectionAdded: function(ddSource, e, data) {
-		return this.addConnection(ddSource, e, data, 'lvUpStreamConnections', this.UPSTREAM);
+		return this.addConnection(ddSource, e, data, 'lvUpStreamConnections', AC.UPSTREAM);
 		
 //		lvUpStreamConnections.getStore().add(record);//breakpoint auf Ext.grid.GridView.onAdd() ! 
 		//this.fireEvent('add', this, records, index); //line 24034
@@ -445,32 +454,35 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onDownStreamConnectionAdded: function(ddSource, e, data) {
-		return this.addConnection(ddSource, e, data, 'lvDownStreamConnections', this.DOWNSTREAM);
+		return this.addConnection(ddSource, e, data, 'lvDownStreamConnections', AC.DOWNSTREAM);
 	},
 	
 	addConnection: function(ddSource, e, data, listViewId, direction) {
-		var records = ddSource.dragData.selections;
+		var record = ddSource.dragData.selections[0].data;
 		
 		var newCiData = {
-			name: records[0].data.ciName,//applicationName
-			type: records[0].data.ciType,//applicationCat1Txt
-			id: records[0].data.ciId,//applicationId
-			source: records[0].data.source
+			ciName: record.ciName,
+			ciType: record.ciType,
+			id: record.ciId,
+			source: record.source,
+			dwhEntityId: record.dwhEntityId
 		};
 		
-		var newCiRecord = new this.CiUpDownStreamConnectionsRecord(newCiData);//, ciData.name ciData.ciId
-		newCiRecord.id = newCiData.id;
+		var newCiRecord = new this.CiUpDownStreamConnectionsRecord(newCiData);
+//		newCiRecord.id = newCiData.id;
+		newCiRecord.dwhEntityId = newCiData.dwhEntityId;
 		
 		
-		var exists = this.isAlreadyUpDownStream(newCiRecord.data.id);//listView.getStore().getById(newCiRecord.data.id);
+		var exists = this.isAlreadyUpDownStream(newCiRecord.data.dwhEntityId);//newCiRecord.data.id listView.getStore().getById(newCiRecord.data.id);
 		var appDetail = AIR.AirApplicationManager.getAppDetail();//applicationDetailStore.data.items[0].data;//
-		var ciType = appDetail.applicationCat1Txt;
 		var ciName = appDetail.applicationName;
-		var newCiType = newCiRecord.data.type;
-		var newCiName = newCiRecord.data.name;
+		var ciType = appDetail.applicationCat1Txt;
+		var newCiName = newCiRecord.data.ciName;
+		var newCiType = newCiRecord.data.ciType;
 		
 		
-		var result = AIR.AirApplicationManager.validateCreateConnection(exists, ciType, ciName, newCiType, newCiName, direction);
+//		ORIG: var result = AIR.AirApplicationManager.validateCreateConnection(exists, ciType, ciName, newCiType, newCiName, direction);
+		var result = AIR.AirApplicationManager.validateCreateConnection(exists, newCiType, newCiName, ciType, ciName, direction);
 		if(result.isSuccessful) {
 			var listView = this.getComponent('pConnectionsUpDownStreamV').getComponent(listViewId);
 			listView.getStore().add(newCiRecord);
@@ -498,7 +510,6 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		activateButtonSaveApplication();//activateStandardButtons in editfunctions.js
 	},
 	
-	//FALSCH: nicht durch remove event des store aufgerufen, sondern durch contextmenu item oder delete button
 	onCiConnectionRemoved: function(store, record, index) {
         if (record.phantom) {//wenn record schon persistent war, geladen wurde
         	store.remove(record);
@@ -526,7 +537,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if(i > 0)
 				upStreamAdd += ',';
 			
-			upStreamAdd += newUpStreamRecords[i].data.id;
+			upStreamAdd += newUpStreamRecords[i].data.dwhEntityId;//id
 		}
 		if(upStreamAdd.length > 0)
 			data.upStreamAdd = upStreamAdd;
@@ -537,7 +548,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if(i > 0)
 				downStreamAdd += ',';
 			
-			downStreamAdd += newDownStreamRecords[i].data.id;
+			downStreamAdd += newDownStreamRecords[i].data.dwhEntityId;//id
 		}
 		if(downStreamAdd.length > 0)
 			data.downStreamAdd = downStreamAdd;
@@ -548,7 +559,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if(i > 0)
 				upStreamDelete += ',';
 			
-			upStreamDelete += deletedUpStreamRecords[i].data.id;
+			upStreamDelete += deletedUpStreamRecords[i].data.dwhEntityId;//id
 		}
 		if(upStreamDelete.length > 0)
 			data.upStreamDelete = upStreamDelete;
@@ -559,7 +570,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if(i > 0)
 				downStreamDelete += ',';
 			
-			downStreamDelete += deletedDownStreamRecords[i].data.id;
+			downStreamDelete += deletedDownStreamRecords[i].data.dwhEntityId;//id
 		}
 		if(downStreamDelete.length > 0)
 			data.downStreamDelete = downStreamDelete;
@@ -607,7 +618,11 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			params: {
 			 	cwid: AIR.AirApplicationManager.getCwid(),
 			 	token: AIR.AirApplicationManager.getToken(),
-				applicationId: AIR.AirApplicationManager.getCiId()//selectedCIId
+//				applicationId: AIR.AirApplicationManager.getCiId()//selectedCIId
+			 	
+			 	tableId: AIR.AirApplicationManager.getTableId(),
+		 		ciId: AIR.AirApplicationManager.getCiId(),
+	 			direction: 'UPSTREAM'
 			}
 		});
 
@@ -615,7 +630,11 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			params: {
 			 	cwid: AIR.AirApplicationManager.getCwid(),
 			 	token: AIR.AirApplicationManager.getToken(),
-				applicationId: AIR.AirApplicationManager.getCiId()//selectedCIId
+//				applicationId: AIR.AirApplicationManager.getCiId()//selectedCIId
+			 	
+			 	tableId: AIR.AirApplicationManager.getTableId(),
+		 		ciId: AIR.AirApplicationManager.getCiId(),
+	 			direction: 'DOWNSTREAM'
 			}
 		});
 		

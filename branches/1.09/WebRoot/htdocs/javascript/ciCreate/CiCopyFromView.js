@@ -300,8 +300,9 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 		mySaveMask.hide();
 		switch(records[0].data.result) {
 			case 'OK':
-				selectedCIId = records[0].data.applicationId;
+//				selectedCIId = records[0].data.applicationId;
 				AIR.AirApplicationManager.setCiId(records[0].data.applicationId);
+				AIR.AirApplicationManager.setTableId(AC.TABLE_ID_APPLICATION);
 				
 				var data = {
 					applicationName: this.applicationName,
@@ -324,8 +325,10 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 				}.createDelegate(this);
 				
 				var redirectToSearchCallback = function() {
-					selectedCIId = -1;
+//					selectedCIId = -1;
 					AIR.AirApplicationManager.setCiId(-1);
+					AIR.AirApplicationManager.setTableId(-1);
+
 					
 //					this.fireEvent('applicationCopy', this, 'redirectToSearch');
 					this.fireEvent('externalNavigation', this, null, 'clSearch');

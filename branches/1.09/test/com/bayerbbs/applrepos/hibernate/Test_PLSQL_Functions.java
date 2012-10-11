@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.hibernate;
 
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +21,7 @@ import org.junit.Test;
 
 import com.bayerbbs.applrepos.domain.ApplicationCat2;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
+import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
 
 public class Test_PLSQL_Functions {
 	Session session = null;
@@ -28,9 +30,59 @@ public class Test_PLSQL_Functions {
 	public void setUp() throws Exception {
 		SessionFactory sf = new AnnotationConfiguration().configure().buildSessionFactory();//new File("src/hibernate.cfg.xml") nicht nötig
 		session = sf.openSession();
+	}
+	
+	@Test
+	public void testGetDwhEntityRelations() throws HibernateException, SQLException {
+		DwhEntityParameterOutput output = CiEntitesHbn.getDwhEntityRelations(2L, 119504L, "UPSTREAM");
 		
-
+		System.out.println(output.getDwhEntityDTO().length);
+	}
+	
+	@Test
+	public void testP_save_relations() throws HibernateException, SQLException {
+		Long tableId = 2L;
+		Long ciId = 119504L;
+		String ciRelationsAddList = "SPL-1371";//SPL-116266 SPL-114473 APP-136668
+		String ciRelationsDeleteList = "";//APP-136664 APP-136668
+		String direction = "UPSTREAM";//UPSTREAM DOWNSTREAM
+		String cwid = "ERCVA";
+		//exception test: ciRelationsAddList = "SPL-1371", direction = "DOWNSTREAM"
 		
+		//Stored procedure call
+		String sql = "{call pck_air.p_save_relations(?,?,?,?,?,?)}";//"begin pck_air.p_save_relations(?,?,?,?,?,?); end;";//"EXEC pck_air.p_save_relations ("+tableId+", "+ciId+", "+ciRelationsAddList+", "+ciRelationsDeleteList+", "+direction+", "+cwid+")";
+		
+		Transaction ta = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+		
+		try {
+			ta = session.beginTransaction();
+			Connection conn = session.connection();
+			
+			CallableStatement stmt = conn.prepareCall(sql);
+			stmt.setLong(1, tableId);
+			stmt.setLong(2, ciId);
+			stmt.setString(3, ciRelationsAddList);
+			stmt.setString(4, ciRelationsDeleteList);
+			stmt.setString(5, direction);
+			stmt.setString(6, cwid);
+			stmt.executeUpdate();
+			ta.commit();
+			
+//			Object o = stmt.getObject(1);
+//			System.out.println(o);
+			
+			stmt.close();
+			conn.close();
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
 	}
 	
 	@Test

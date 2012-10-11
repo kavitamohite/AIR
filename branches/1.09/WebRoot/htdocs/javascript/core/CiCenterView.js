@@ -475,7 +475,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				
 				AIR.AirApplicationManager.updateCookie({
 					navigation: viewId,
-					ciId: AIR.AirApplicationManager.getCiId()
+					ciId: AIR.AirApplicationManager.getCiId(),
+					tableId: AIR.AirApplicationManager.getTableId()
 				});
 
 				

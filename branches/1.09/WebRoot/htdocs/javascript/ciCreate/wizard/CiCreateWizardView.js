@@ -271,6 +271,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 			case 'OK':
 //				selectedCIId = records[0].data.applicationId;
 				AIR.AirApplicationManager.setCiId(records[0].data.applicationId);
+				AIR.AirApplicationManager.setTableId(AC.TABLE_ID_APPLICATION);
 				
 				var data = {
 					applicationName: this.getComponent('ciCreateWizardP1').getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView').getComponent('tfCiNameW').getValue(),
@@ -294,8 +295,10 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 				}.createDelegate(this);
 				
 				var redirectToSearchCallback = function() {
-					selectedCIId = -1;
+//					selectedCIId = -1;
 					AIR.AirApplicationManager.setCiId(-1);
+					AIR.AirApplicationManager.setTableId(-1);
+					
 					this.wizardStarted = false;
 
 //					this.fireEvent('applicationCopy', this, 'redirectToSearch');

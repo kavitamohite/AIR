@@ -35,6 +35,8 @@ AIR.AirConstants = {
 	USER_ROLE_ADMINISTRATOR: 'AIR Administrator',//AIR Administrator RFC 8231
 	USER_ROLE_DEVELOPER: 'AIR Developer',
 	
+	TABLE_ID_APPLICATION: 2,
+	
 	APP_CAT1_APPLICATION: '5',//'Application',
 	APP_CAT1_APPLICATION_PLATFORM: '-10006',//'Application Platform',
 	APP_CAT1_COMMON_SERVICE: '-10013',//'Common Service',
@@ -79,7 +81,9 @@ AIR.AirConstants = {
 	VALIDATION_MESSAGE_NAME: '"Name" {0} already exists. Please choose another name or ask ITILcenter@bayer.com for help to enable this name.',// '+this.objectNameAllowedStore.getAt(0).data.application+'
 //	SUPPORTED_COUNTRIES: [AIR.AirConstants.IMG_COUNTRY_EN, AIR.AirConstants.IMG_COUNTRY_DE]
 	
-	INSERT_QUELLE_SHAREPOINT: 'SHAREPOINT'
+	INSERT_QUELLE_SHAREPOINT: 'SHAREPOINT',
+	UPSTREAM: 'Upstream',
+	DOWNSTREAM: 'Downstream'
 };
 AC = AIR.AirConstants;
 
