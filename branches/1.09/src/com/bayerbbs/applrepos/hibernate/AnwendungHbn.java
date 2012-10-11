@@ -2420,26 +2420,24 @@ public class AnwendungHbn {
 	}
 
 	
-	/**
-	 * find the application
-	 * @return
-	 */
 	public static List<ApplicationDTO> findApplications(String query, String queryMode, String advsearchappowner, String advsearchappdelegate, String advsearchciowner, String advsearchcidelegate, boolean onlyapplications, Long kat1Id, String sort, String dir,
 			Long advsearchcitypeid, String advsearchdescription, Long advsearchoperationalstatusid,
-	Long advsearchapplicationcat2id,
-	Long advsearchlifecyclestatusid,
-	Long advsearchprocessid,
-	String template,
-	String advsearchsteward,
-	String barRelevance, 
-	String organisationalScope
-	) {
+			Long advsearchapplicationcat2id,
+			Long advsearchlifecyclestatusid,
+			Long advsearchprocessid,
+			String template,
+			String advsearchsteward,
+			String barRelevance,
+			String organisationalScope,
+			String itSetId,
+			String itSecGroupId,
+			String source,
+			String businessEssentialId) {
+		
 //		String advsearchcountry;
 //		String advsearchsite;
 //		String advsearchbuilding;
 //		String advsearchroom;
-
-		
 //		Long advsearchcitypeid,
 //		Long advsearchapplicationcat2id,
 
@@ -2543,9 +2541,15 @@ public class AnwendungHbn {
 			sql.append(" and anw.LC_STATUS_ID = ").append(advsearchlifecyclestatusid.longValue());
 		}
 		
-		if (null != advsearchapplicationcat2id) {
-			sql.append(" and anw.ANWENDUNG_KAT2_ID = ").append(advsearchapplicationcat2id.longValue());
-		}
+		if(null != itSetId)
+			sql.append(" and anw.ITSET = ").append(Long.parseLong(itSetId));
+		if(null != itSecGroupId)
+			sql.append(" and anw.ITSEC_GRUPPE_ID = ").append(Long.parseLong(itSecGroupId));
+		if(null != source)
+			sql.append(" and anw.INSERT_QUELLE = '").append(source).append("'");
+		if(null != businessEssentialId)
+			sql.append(" and anw.BUSINESS_ESSENTIAL_ID = ").append(Long.parseLong(businessEssentialId));
+		
 
 		if (null != template) {
 			String searchTemplate = null;

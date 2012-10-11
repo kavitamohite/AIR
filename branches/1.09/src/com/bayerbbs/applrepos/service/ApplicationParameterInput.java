@@ -68,12 +68,13 @@ public class ApplicationParameterInput implements Serializable {
 
 	// for the new advanced search
 	String barRelevance;	// Y, N, U =Undefined -> null in database
-
 	String organisationalScope;
+	String itSetId;
+	String itSecGroupId;
+	String source;
+	String businessEssentialId;
+	
 
-	
-	
-	
 	/** the start index of the result */
 	Long start;
 	
@@ -353,10 +354,10 @@ public class ApplicationParameterInput implements Serializable {
 		this.advsearchsteward = advsearchsteward;
 	}
 
+	
 	public String getBarRelevance() {
 		return barRelevance;
 	}
-
 	public void setBarRelevance(String barRelevance) {
 		this.barRelevance = barRelevance;
 	}
@@ -364,9 +365,35 @@ public class ApplicationParameterInput implements Serializable {
 	public String getOrganisationalScope() {
 		return organisationalScope;
 	}
-
 	public void setOrganisationalScope(String organisationalScope) {
 		this.organisationalScope = organisationalScope;
 	}
 	
+	public String getItSetId() {
+		return itSetId;
+	}
+	public void setItSetId(String itSetId) {
+		this.itSetId = itSetId;
+	}
+
+	public String getItSecGroupId() {
+		return itSecGroupId;
+	}
+	public void setItSecGroupId(String itSecGroupId) {
+		this.itSecGroupId = itSecGroupId;
+	}
+
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
+	}	
+	
+	public String getBusinessEssentialId() {
+		return businessEssentialId;
+	}
+	public void setBusinessEssentialId(String businessEssentialId) {
+		this.businessEssentialId = businessEssentialId;
+	}
 }

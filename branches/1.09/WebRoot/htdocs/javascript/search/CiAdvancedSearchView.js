@@ -257,7 +257,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							lazyRender: true,
 							lazyInit: false,
 							mode: 'local'
-						},{
+						}/*,{
 							xtype: 'filterCombo',
 							id: 'cbAdvSearchOStypeW',
 							store: AIR.AirStoreManager.getStoreByName('sisoogleOsTypeListStore'),//new Ext.data.Store(),//
@@ -293,7 +293,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							lazyRender: true,
 							lazyInit: false,
 							mode: 'local'
-						},{
+						}*/,{
 							xtype: 'filterCombo',
 							id: 'cbAdvSearchSourceW',
 							store: AIR.AirStoreManager.getStoreByName('sisoogleSourceListStore'),//new Ext.data.Store(),//
@@ -329,7 +329,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							lazyRender: true,
 							lazyInit: false,
 							mode: 'local'
-						},{
+						}/*,{
 							xtype: 'filterCombo',
 							id: 'cbAdvSearchGapResponsibleW',
 							store: AIR.AirStoreManager.getStoreByName('sisoogleGapResponsibleListStore'),//new Ext.data.Store(),//
@@ -352,7 +352,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							id: 'dfAdvSearchTargetDate',
 							fieldLabel: 'Gap End Date',
 							width: 150
-						}]			
+						}*/]
 					}]
 		        }]
 		    }]
@@ -383,18 +383,18 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		cbAdvSearchITSecGroupW.on('change', this.onComboChange, this);
 		var cbAdvSearchProcessW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchProcessW');
 		cbAdvSearchProcessW.on('change', this.onComboChange, this);
-		var cbAdvSearchOStypeW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchOStypeW');
-		cbAdvSearchOStypeW.on('change', this.onComboChange, this);
-		var cbAdvSearchOSnameW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchOSnameW');
-		cbAdvSearchOSnameW.on('change', this.onComboChange, this);
+//		var cbAdvSearchOStypeW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchOStypeW');
+//		cbAdvSearchOStypeW.on('change', this.onComboChange, this);
+//		var cbAdvSearchOSnameW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchOSnameW');
+//		cbAdvSearchOSnameW.on('change', this.onComboChange, this);
 		var cbAdvSearchSourceW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchSourceW');
 		cbAdvSearchSourceW.on('change', this.onComboChange, this);
 		var cbAdvSearchBusinessEssentialW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchBusinessEssentialW');
 		cbAdvSearchBusinessEssentialW.on('change', this.onComboChange, this);
-		var cbAdvSearchGapResponsibleW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchGapResponsibleW');
-		cbAdvSearchGapResponsibleW.on('change', this.onComboChange, this);
-		var dfAdvSearchTargetDate = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('dfAdvSearchTargetDate');
-		dfAdvSearchTargetDate.on('change', this.onComboChange, this);
+//		var cbAdvSearchGapResponsibleW = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchGapResponsibleW');
+//		cbAdvSearchGapResponsibleW.on('change', this.onComboChange, this);
+//		var dfAdvSearchTargetDate = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('dfAdvSearchTargetDate');
+//		dfAdvSearchTargetDate.on('change', this.onComboChange, this);
 		
 		var lvAdvSearchOrganisationalScope = this.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('lvAdvSearchOrganisationalScope');
 		lvAdvSearchOrganisationalScope.on('selectionchange', this.onOrganisationalScopeChange, this);
@@ -597,36 +597,12 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
 		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchITSecGroupW'), labels.compliance1435WindowItSecGroup);
 		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchProcessW'), labels.businessProcess);
-//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW'), labels.lifecycleStatus);
-//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchOSnameW'), labels.operationalStatus);
-//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchSourceW'), labels.applicationCat2);
 		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchBusinessEssentialW'), labels.businessEssential);
-		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchGapResponsibleW'), labels.complianceWindowGapResponsible);
-//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('dfAdvSearchTargetDate'), labels.applicationCat2);
-		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW'), labels.osType);
-		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchOSnameW'), labels.osName);
+//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW'), labels.osType);
+//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchOSnameW'), labels.osName);
 		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchSourceW'), labels.source);
-		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchGapResponsibleW'), labels.gapResponsible);
-        
-        
-        
-
-		/*
-		//pAdvancedSearch/advsearchowner
-		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').setTitle(labels.advsearchowner);
-		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwner').getComponent('labeladvsearchappowner').setText(labels.advsearchappowner);
-		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchAppOwnerDelegate').getComponent('labeladvsearchappownerdelegate').setText(labels.advsearchappownerdelegate);
-		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwner').getComponent('labeladvsearchciowner').setText(labels.advsearchciowner);
-		this.getComponent('pAdvancedSearch').getComponent('advsearchowner').getComponent('pAdvSearchCiOwnerDelegate').getComponent('labeladvsearchcidelegate').setText(labels.advsearchcidelegate);
-		this.getComponent('pAdvancedSearch').getComponent('fsAdvSearchSteward').getComponent('pAdvSearchSteward').getComponent('labeltfAdvSearchSteward').setText(labels.advsearchsteward);
-		
-		
-		this.getComponent('advsearchplusfieldset').setTitle(labels.advsearchplusfieldset);
-		this.setFieldLabel(this.getComponent('advsearchplusfieldset').getComponent('advsearchlifecyclestatus'), labels.lifecycleStatus);
-		this.setFieldLabel(this.getComponent('advsearchplusfieldset').getComponent('advsearchoperationalStatus'), labels.operationalStatus);
-		this.setFieldLabel(this.getComponent('advsearchplusfieldset').getComponent('advsearchcategory'), labels.applicationCat2);
-		this.setFieldLabel(this.getComponent('advsearchplusfieldset').getComponent('advsearchprocess'), labels.businessProcess);
-		*/
+//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('dfAdvSearchTargetDate'), labels.applicationCat2);
+//		this.setFieldLabel(fsSpecialSearchAttributes.getComponent('cbAdvSearchGapResponsibleW'), labels.gapResponsible);
 	},
 	
 	reset: function(link) {

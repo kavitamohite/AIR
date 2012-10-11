@@ -621,7 +621,7 @@ public class CiEntitesHbn {
 		}
 		
 		output.setDwhEntityDTO(dwhEntities.toArray(new DwhEntityDTO[0]));
-		output.setTotal(i + 1 + start);
+		output.setTotal(i + start);// + 1
 		
 		return output;
 	}
