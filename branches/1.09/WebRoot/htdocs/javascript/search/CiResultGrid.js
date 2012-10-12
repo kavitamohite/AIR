@@ -121,15 +121,16 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 		
 		switch(this.pageSize) {
 			case 10:
-				this.setHeight(280);
+				this.setHeight(305);//280
 				break;
 			case 20://25
-				this.setHeight(490);//595
+				this.setHeight(520);//490
 				break;
 			case 50:
 			case 100:
-				this.setHeight(1120);
+				this.setHeight(1145);//1120
 				break;
+			default: break;
 		}
 	},
 	

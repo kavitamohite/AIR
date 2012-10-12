@@ -204,9 +204,9 @@ AIR.AirApplicationManager = function() {
 			var ciSearchView = ciCenterView.getComponent('ciSearchView');
 			
 			//replace rowclick registration by event(ciSelect) fired by MyPlaceTabView and register on this
-			var myOwnCIsGrid = myPlaceTabView.getComponent('card-mycis').getComponent('myOwnCisView').getComponent('myOwnCIsGrid');
-			var myDelegateCIsGrid = myPlaceTabView.getComponent('card-myapps').getComponent('myDelegateCisView').getComponent('myDelegateCIsGrid');
-			var ciSearchGrid = ciSearchView.getComponent('ciSearchResultView').getComponent('ciSearchGrid');
+			var myOwnCIsGrid = myPlaceTabView.getComponent('card-mycis')/*.getComponent('myOwnCisView')*/.getComponent('myOwnCIsGrid');
+			var myDelegateCIsGrid = myPlaceTabView.getComponent('card-myapps')/*.getComponent('myDelegateCisView')*/.getComponent('myDelegateCIsGrid');
+			var ciSearchGrid = ciSearchView/*.getComponent('ciSearchResultView')*/.getComponent('ciSearchGrid');
 			
 			this.exportForm = ciCenterView.getComponent('exportForm');
 
@@ -291,9 +291,9 @@ AIR.AirApplicationManager = function() {
 			var myPlaceTabView = ciCenterView.getComponent('myPlaceView').getComponent('myPlaceTabView');
 			var ciSearchView = ciCenterView.getComponent('ciSearchView');
 			
-			var myOwnCIsGrid = myPlaceTabView.getComponent('card-mycis').getComponent('myOwnCisView').getComponent('myOwnCIsGrid');
-			var myDelegateCIsGrid = myPlaceTabView.getComponent('card-myapps').getComponent('myDelegateCisView').getComponent('myDelegateCIsGrid');
-			var ciSearchGrid = ciSearchView.getComponent('ciSearchResultView').getComponent('ciSearchGrid');
+			var myOwnCIsGrid = myPlaceTabView.getComponent('card-mycis')/*.getComponent('myOwnCisView')*/.getComponent('myOwnCIsGrid');
+			var myDelegateCIsGrid = myPlaceTabView.getComponent('card-myapps')/*.getComponent('myDelegateCisView')*/.getComponent('myDelegateCIsGrid');
+			var ciSearchGrid = ciSearchView/*.getComponent('ciSearchResultView')*/.getComponent('ciSearchGrid');
 			
 			var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 			var ciComplianceView  = ciEditTabView.getComponent('clCiCompliance');

@@ -59,22 +59,26 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 					id: 'ciOuSearchView'
 				}]
 			}, {
-		    	xtype: 'AIR.CiResultView',
-		    	id: 'ciSearchResultView',
-		    	border: false,
-		    	hidden: true,
-//		    	height: 1000,
-		    	
-		    	style: {
-		    		marginTop: 20
-		    	},
-		    	
-		    	items: [{
+//		    	xtype: 'AIR.CiResultView',
+//		    	id: 'ciSearchResultView',
+//		    	border: false,
+//		    	hidden: true,
+////		    	height: 1000,
+//		    	
+//		    	style: {
+//		    		marginTop: 20
+//		    	},
+//		    	
+//		    	items: [{
 			    	xtype: 'AIR.CiResultGrid',
 			    	id: 'ciSearchGrid',
+			    	layout: 'fit',
+			    	
 			    	ownerPrefix: 'ciSearchGrid',
-			    	border: false
-		    	}]
+			    	hidden: true,
+			    	border: false,
+			    	title: 'Results'
+//		    	}]
 		    }]
 		});
 		
@@ -82,7 +86,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 		this.addEvents('ciSelect', 'beforeCiSelect');
 		
-		this.ciSearchGrid = this.getComponent('ciSearchResultView').getComponent('ciSearchGrid');//  findById=depr
+		this.ciSearchGrid = this/*.getComponent('ciSearchResultView')*/.getComponent('ciSearchGrid');//  findById=depr
 		this.ciSearchGrid.getStore().on('beforeload', this.onGridBeforeLoaded , this);
 		this.ciSearchGrid.getStore().on('load', this.onGridLoaded, this);
 		this.ciSearchGrid.on('rowclick', this.onRowClick, this);
@@ -257,7 +261,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 	    var params = { 
     		start: 0,
-    		limit: this.getComponent('ciSearchResultView').getComponent('ciSearchGrid').pageSize,//20,
+    		limit: this./*getComponent('ciSearchResultView').*/getComponent('ciSearchGrid').pageSize,//20,
     		
 		 	cwid: AIR.AirApplicationManager.getCwid(),
 		 	token: AIR.AirApplicationManager.getToken(),
@@ -467,11 +471,14 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	
 	onGridLoaded: function(store, records, options) {
 		myLoadMask.hide();
-		var ciSearchResultView = this.getComponent('ciSearchResultView');
-		ciSearchResultView.setVisible(true);
+//		var ciSearchResultView = this.getComponent('ciSearchResultView');
+//		ciSearchResultView.setVisible(true);
+//		
+//		ciSearchResultView.getComponent('ciSearchGrid').updateHeight();
 		
-		ciSearchResultView.getComponent('ciSearchGrid').updateHeight();
-		
+		var ciSearchGrid = this.getComponent('ciSearchGrid');
+		ciSearchGrid.setVisible(true);
+		ciSearchGrid.updateHeight();
 		
 		this.collapseAdvSearch();
 	},
@@ -641,7 +648,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 	    var params = {
     		start: 0,
-    		limit: this.getComponent('ciSearchResultView').getComponent('ciSearchGrid').pageSize,//20,
+    		limit: this./*getComponent('ciSearchResultView').*/getComponent('ciSearchGrid').pageSize,//20,
     		
 		 	cwid: AIR.AirApplicationManager.getCwid(),
 		 	token: AIR.AirApplicationManager.getToken(),
@@ -664,7 +671,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 			//ohne dies vertauscht der IE willkürlich Spalten
 //			this.ciSearchGrid.getColumnModel().setConfig(this.ciSearchGrid.getDefaultColumnConfig());//this.myOwnCIsGrid.getColumnModel().config
 			
-			var ciSearchGrid = this.getComponent('ciSearchResultView').getComponent('ciSearchGrid');
+			var ciSearchGrid = this./*getComponent('ciSearchResultView').*/getComponent('ciSearchGrid');
 			ciSearchGrid.getColumnModel().setConfig(AIR.AirConfigFactory.createCiResultGridConfig(true));
 			this.updateColumnLabels(AIR.AirApplicationManager.getLabels());
 		}
@@ -684,10 +691,14 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	},
 	
 	updateColumnLabels: function(labels) {
-		var ciSearchResultView = this.getComponent('ciSearchResultView');
-		var ciSearchGrid = ciSearchResultView.getComponent('ciSearchGrid');
+//		var ciSearchResultView = this.getComponent('ciSearchResultView');
+//		var ciSearchGrid = ciSearchResultView.getComponent('ciSearchGrid');
+//		
+//		ciSearchResultView.setTitle(labels.searchResultPanelTitle);
 		
-		ciSearchResultView.setTitle(labels.searchResultPanelTitle);
+		var ciSearchGrid = this.getComponent('ciSearchGrid');
+		ciSearchGrid.setTitle(labels.searchResultPanelTitle);
+		
 		ciSearchGrid.getColumnModel().setColumnHeader(0, labels.searchResultName);
 		ciSearchGrid.getColumnModel().setColumnHeader(1, labels.searchResultAlias);
 		ciSearchGrid.getColumnModel().setColumnHeader(2, labels.searchResultType);

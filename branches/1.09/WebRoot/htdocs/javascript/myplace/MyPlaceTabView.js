@@ -14,42 +14,46 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 			items: [{ 
 				id: 'card-mycis',
 				border: false,
-//				height: 1200,//!!
+				height: 1200,
 //				autoScroll: true,
+				layout: 'fit',
 				
 			    items: [{
-			    	xtype: 'AIR.CiResultView',
-			    	id: 'myOwnCisView',
-//			    	autoScroll: true,
-			    	height: 1200,
-			        
-			    	items: [{
+//			    	xtype: 'AIR.CiResultView',
+//			    	id: 'myOwnCisView',
+////			    	autoScroll: true,
+//			    	height: 1200,
+//			        
+//			    	items: [{
 				    	xtype: 'AIR.CiResultGrid',
 				    	id: 'myOwnCIsGrid',
-				    	ownerPrefix: 'myCis'
+				    	ownerPrefix: 'myCis',
 //				    	layout: 'anchor',
 //				    	anchor: '100%'
-			    	}]
+				    	title: 'Results'
+//			    	}]
 			    }]
 			}, {
 				id: 'card-myapps',
 				border: false,
-//				height: 1200,//!!
+				height: 1200,
 //				autoScroll: true,
+				layout: 'fit',
 				
 			    items: [{
-			    	xtype: 'AIR.CiResultView',
-			    	id: 'myDelegateCisView',
-//			    	autoScroll: true,
-			    	height: 1200,
-			        
-			    	items: [{
+//			    	xtype: 'AIR.CiResultView',
+//			    	id: 'myDelegateCisView',
+////			    	autoScroll: true,
+//			    	height: 1200,
+//			        
+//			    	items: [{
 				    	xtype: 'AIR.CiResultGrid',
 				    	id: 'myDelegateCIsGrid',
-				    	ownerPrefix: 'myCisSubstitute'
+				    	ownerPrefix: 'myCisSubstitute',
 //				    	layout: 'anchor',
-//				    	anchor: '100%'
-			    	}]
+//				    	anchor: '100%',
+				    	title: 'Results'
+//			    	}]
 		    	}] 
 			}]
 		});
@@ -58,14 +62,13 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		
 		this.addEvents('ciSelect', 'beforeCiSelect');
 		
-		//evtl. store params/baseParams Initialisierung in AirStoreFactory
-		this.myOwnCIsGrid = this.getComponent('card-mycis').getComponent('myOwnCisView').getComponent('myOwnCIsGrid');//  findById=depr
+		this.myOwnCIsGrid = this.getComponent('card-mycis')/*.getComponent('myOwnCisView')*/.getComponent('myOwnCIsGrid');
 		this.myOwnCIsGrid.getStore().on('beforeload', this.onGridBeforeLoaded, this);
 		this.myOwnCIsGrid.getStore().on('load', this.onMyOwnCIsGridLoaded, this);
 		this.myOwnCIsGrid.on('rowclick', this.onRowClick, this);
 		this.myOwnCIsGrid.on('rowdblclick', this.onRowDoubleClick, this);//onRowDoubleClick onRowClick
 		
-		this.myDelegateCIsGrid = this.getComponent('card-myapps').getComponent('myDelegateCisView').getComponent('myDelegateCIsGrid');//  findById=depr
+		this.myDelegateCIsGrid = this.getComponent('card-myapps')/*.getComponent('myDelegateCisView')*/.getComponent('myDelegateCIsGrid');//  findById=depr
 		this.myDelegateCIsGrid.getStore().on('beforeload', this.onGridBeforeLoaded, this);
 		this.myDelegateCIsGrid.getStore().on('load', this.onMyDelegateCIsGridLoaded, this);
 		this.myDelegateCIsGrid.on('rowclick', this.onRowClick, this);
@@ -100,8 +103,8 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 	
 	loadMyOwnCIsGrid: function(searchAction) {
 		var params = {
-			start: 0,
-			limit: 20,
+			start: 0,//this.myOwnCIsGrid.getBottomToolbar().cursor,//
+			limit: this.myOwnCIsGrid.pageSize,//20,
 			cwid: AIR.AirApplicationManager.getCwid(),
 			token: AIR.AirApplicationManager.getToken(),
 			searchAction: searchAction//'myCis'
@@ -129,8 +132,8 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 	
 	loadDelegateCIsGrid: function(searchAction) {
 		var params = {
-			start: 0,
-			limit: 20,
+			start: 0,//this.myDelegateCIsGrid.getBottomToolbar().cursor,//
+			limit: this.myDelegateCIsGrid.pageSize,//20,
 			cwid: AIR.AirApplicationManager.getCwid(),
 			token: AIR.AirApplicationManager.getToken(),
 			searchAction: searchAction//'myCisSubstitute'
@@ -212,7 +215,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 
 	
 	updateLabels: function(labels) {
-		var myOwnCisView = this.getComponent('card-mycis').getComponent('myOwnCisView');
+		var myOwnCisView = this.getComponent('card-mycis')/*.getComponent('myOwnCisView')*/;
 		myOwnCisView.setTitle(labels.searchResultPanelTitle);
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(0, labels.searchResultName);
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(1, labels.searchResultAlias);
@@ -225,7 +228,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(8, labels.searchResultSubResponsible);
 
 		
-		var myDelegateCisView = this.getComponent('card-myapps').getComponent('myDelegateCisView');
+		var myDelegateCisView = this.getComponent('card-myapps')/*.getComponent('myDelegateCisView')*/;
 		myDelegateCisView.setTitle(labels.searchResultPanelTitle);
 		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(0, labels.searchResultName);
 		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(1, labels.searchResultAlias);

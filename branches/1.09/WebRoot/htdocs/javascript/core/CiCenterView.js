@@ -152,8 +152,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		
 		switch(viewId) {
 			case 'clMyPlace':
-			    var ciSearchResultView = Ext.getCmp('ciSearchResultView');
-			    ciSearchResultView.setVisible(false);
+//			    var ciSearchResultView = Ext.getCmp('ciSearchResultView');
+//			    ciSearchResultView.setVisible(false);
 
 				var verwerfenCallback = function() {
 					if(ciEditView)
@@ -180,7 +180,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				break;
 			case 'clMyPlaceMyCIs':
 				var verwerfenCallback = function() {
-					searchAction = 'myCis';
+//					searchAction = 'myCis';
 					
 					if(ciEditView)
 						ciEditView.ciModified = false;
@@ -214,7 +214,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				break;
 			case 'clMyPlaceMyCIsDelegate':
 				var verwerfenCallback = function() {
-					searchAction = 'myCisSubstitute';
+//					searchAction = 'myCisSubstitute';
 					
 					if(ciEditView)
 						ciEditView.ciModified = false;
@@ -248,7 +248,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				break;
 			case 'clSearch':
 				var verwerfenCallback = function() {
-					searchAction = 'search';
+//					searchAction = 'search';
 //					selectedAdvancedSearch = false;
 					ciSearchView.setAdvSearch(false);//advSearch = false;
 					
