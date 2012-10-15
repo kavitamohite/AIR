@@ -248,14 +248,11 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				break;
 			case 'clSearch':
 				var verwerfenCallback = function() {
-//					searchAction = 'search';
-//					selectedAdvancedSearch = false;
-					ciSearchView.setAdvSearch(false);//advSearch = false;
+					ciSearchView.setAdvSearch(false);
 					
 					if(ciEditView)
 						ciEditView.ciModified = false;
-//					if(ciCreateWizardPagesView)
-//						ciCreateWizardPagesView.wizardStarted = false;
+
 					if(ciCreateWizardView)
 						ciCreateWizardView.wizardStarted = false;
 
@@ -280,14 +277,12 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var verwerfenCallback = function() {
 					if(ciEditView)
 						ciEditView.ciModified = false;
-//					if(ciCreateWizardPagesView)
-//						ciCreateWizardPagesView.wizardStarted = false;
+
 					if(ciCreateWizardView)
 						ciCreateWizardView.wizardStarted = false;
 					
 					this.getLayout().setActiveItem('ciSearchView');
 					
-//					ciSearchView.getComponent('ciSearchViewPages').setHeight(300);
 					ciSearchView.handleUiAdvancedSearch();
 					
 					if(options && options.callback)

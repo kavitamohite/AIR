@@ -23,7 +23,7 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 				height: 90
 		    },{
 		        region: 'west',
-	        	id: 'ciNavigationCiew',
+	        	id: 'ciNavigationView',
 
 	        	xtype: 'AIR.CiNavigationView',
 		        width: 180//155 200
@@ -69,7 +69,7 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		
 		var ciInfoView = this.getComponent('eastpanel');
 		var ciTitleView = this.getComponent('ciTitleView');
-		var navigationV = this.getComponent('ciNavigationCiew');
+		var navigationV = this.getComponent('ciNavigationView');
 		var myPlaceHomeView = this.getComponent('ciCenterView').getComponent('myPlaceHomeView');
 		
 		ciInfoView.update(AC.HELP_ID_INFOTEXT);
@@ -104,7 +104,7 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		
 
 	updateLabels: function(labels) {
-		var ciNavigationView = this.getComponent('ciNavigationCiew');
+		var ciNavigationView = this.getComponent('ciNavigationView');
 		ciNavigationView.updateLabels(labels);
 		
 		var ciCenterView = this.getComponent('ciCenterView');
@@ -121,7 +121,7 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		var ciViews = [
 		    this,
             Ext.getCmp('ciTitleView'),
-            Ext.getCmp('ciNavigationCiew'),
+            Ext.getCmp('ciNavigationView'),
             Ext.getCmp('ciCenterView'),
             Ext.getCmp('myPlaceView'),
             Ext.getCmp('myPlaceHomeView'),

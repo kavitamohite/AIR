@@ -284,7 +284,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
 	onAirRendered: function(lastRenderedView) {//airMainPanel
 //		var ciInfoView = this.airMainPanel.getComponent('ciCenterView');
 //		var ciTitleView = this.airMainPanel.getComponent('ciTitleView');
-//		var navigationV = this.airMainPanel.getComponent('ciNavigationCiew');
+//		var navigationV = this.airMainPanel.getComponent('ciNavigationView');
 //		var myPlaceHomeView = this.airMainPanel.getComponent('ciCenterView').getComponent('myplaceHomePanel');
 //		
 //		ciInfoView.update(AC.HELP_ID_INFOTEXT);
