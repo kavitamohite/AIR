@@ -194,7 +194,7 @@ AIR.AirApplicationManager = function() {
 //			lastRenderedView.on('afterrender', this.onAirRendered , this);//render
 			
 			//navigation
-			var navigationView = airViewport.getComponent('ciNavigationCiew');
+			var navigationView = airViewport.getComponent('ciNavigationView');
 			this.dirtyNavRef = navigationView;//REFAC!
 			
 			//center
@@ -206,7 +206,7 @@ AIR.AirApplicationManager = function() {
 			//replace rowclick registration by event(ciSelect) fired by MyPlaceTabView and register on this
 			var myOwnCIsGrid = myPlaceTabView.getComponent('card-mycis')/*.getComponent('myOwnCisView')*/.getComponent('myOwnCIsGrid');
 			var myDelegateCIsGrid = myPlaceTabView.getComponent('card-myapps')/*.getComponent('myDelegateCisView')*/.getComponent('myDelegateCIsGrid');
-			var ciSearchGrid = ciSearchView/*.getComponent('ciSearchResultView')*/.getComponent('ciSearchGrid');
+			//var ciSearchGrid = ciSearchView/*.getComponent('ciSearchResultView')*/.getComponent('ciSearchGrid');
 			
 			this.exportForm = ciCenterView.getComponent('exportForm');
 
@@ -293,20 +293,20 @@ AIR.AirApplicationManager = function() {
 			
 			var myOwnCIsGrid = myPlaceTabView.getComponent('card-mycis')/*.getComponent('myOwnCisView')*/.getComponent('myOwnCIsGrid');
 			var myDelegateCIsGrid = myPlaceTabView.getComponent('card-myapps')/*.getComponent('myDelegateCisView')*/.getComponent('myDelegateCIsGrid');
-			var ciSearchGrid = ciSearchView/*.getComponent('ciSearchResultView')*/.getComponent('ciSearchGrid');
+			//var ciSearchGrid = ciSearchView/*.getComponent('ciSearchResultView')*/.getComponent('ciSearchGrid');
 			
 			var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 			var ciComplianceView  = ciEditTabView.getComponent('clCiCompliance');
 			myOwnCIsGrid.on('rowclick', ciEditView.onCiSelected, ciEditView);
 			myDelegateCIsGrid.on('rowclick', ciEditView.onCiSelected, ciEditView);
-			ciSearchGrid.on('rowclick', ciEditView.onCiSelected, ciEditView);
+			//ciSearchGrid.on('rowclick', ciEditView.onCiSelected, ciEditView);
 			
 			myOwnCIsGrid.on('rowclick', ciConnectionsView.onCiSelected, ciConnectionsView);
 			myOwnCIsGrid.on('rowclick', ciComplianceView.onCiSelected, ciComplianceView);
 			myDelegateCIsGrid.on('rowclick', ciConnectionsView.onCiSelected, ciConnectionsView);
 			myDelegateCIsGrid.on('rowclick', ciComplianceView.onCiSelected, ciComplianceView);
-			ciSearchGrid.on('rowclick', ciConnectionsView.onCiSelected, ciConnectionsView);
-			ciSearchGrid.on('rowclick', ciComplianceView.onCiSelected, ciComplianceView);
+			//ciSearchGrid.on('rowclick', ciConnectionsView.onCiSelected, ciConnectionsView);
+			//ciSearchGrid.on('rowclick', ciComplianceView.onCiSelected, ciComplianceView);
 			
 			var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 			ciSpecificsView.on('airAction', this.onAirAction, this);

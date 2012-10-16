@@ -80,6 +80,10 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.CiStandardSearchView.superclass.initComponent.call(this);
 	},
 	
+	update: function(data) {
+		this.getComponent('ciAdvancedSearchView').update(data);
+	},
+	
 	updateLabels: function(labels) {
 		var ciAdvancedSearchView = this.getComponent('ciAdvancedSearchView');
 		ciAdvancedSearchView.updateLabels(labels);

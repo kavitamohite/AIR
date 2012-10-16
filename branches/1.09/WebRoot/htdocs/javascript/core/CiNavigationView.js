@@ -228,9 +228,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		for(var i = 0; i < links.length; i++)
 			links[i].on('click', this.onMenuSelect , this);
 		
-//		links = this.getComponent('pCreateDeleteMenuItems').findByType('commandlink');
-//		for(var i = 0; i < links.length; i++)
-//			links[i].on('click', this.onMenuSelect , this);
 		
 		this.addEvents('beforeNavigation', 'navigation');
 	},
@@ -239,8 +236,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		//add beforeNavigation handlers evtl. returning false to stop navigation
 		
 		//evtl. Problem wenn nach Wizard Finish auf new record gelickt wird, dass dann die automatische Weiterleitung zur ersten Wizard Seite nicht geht.
-			if(this.previousSelected && link.getId() == this.previousSelected.getId())//(options && !options.forceFireEvent) || 
-				return;
+		if(this.previousSelected && link.getId() == this.previousSelected.getId() && (!options || !options.forceNavigation))//(options && !options.forceFireEvent) || 
+			return;
 		
 		
 		var pMyPlaceMenuItems = this.getComponent('pMyPlaceMenuItems');
@@ -299,7 +296,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		this.fireEvent('navigation', link.getId(), link, options);//navigationCallback
 	},
 	
-	onExternalNavigation: function(source, uiComponent, target) {
+	onExternalNavigation: function(source, uiComponent, target, options) {
 		switch(target) {
 			case 'clCiDetails':
 			case 'clCiSpecifics':
@@ -326,12 +323,12 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			case 'clOuSearch':
 			case 'clMyPlace':
 			case 'clCiCreate':
-				var link = this.getComponent(target);//clSearch
-				link.fireEvent('click', link);
+				var link = this.getComponent(target);
+				link.fireEvent('click', link, null, options);
 				break;
 			case 'clMyPlaceMyCIs':
 			case 'clMyPlaceMyCIsDelegate':
-				var link = this.getComponent('pMyPlaceMenuItems').getComponent(target);//clSearch
+				var link = this.getComponent('pMyPlaceMenuItems').getComponent(target);
 				link.fireEvent('click', link);
 				break;
 			case 'clCiCreateCopyFrom':

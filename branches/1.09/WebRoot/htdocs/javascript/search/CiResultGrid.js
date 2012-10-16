@@ -10,30 +10,7 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 	            '<p><b>Lifecycle status:</b> {applicationCat2Txt}</p>'
 	        )
 	    });
-	    
-	    /*
-	    var columns = [];
-	    
-//		var columns = [
-////		    expander,
-//			{ header: 'Name', dataIndex: 'applicationName', width: 150, sortable: true},//, menuDisabled: true
-//			{ header: 'Alias', dataIndex: 'applicationAlias', width: 150, sortable: true},//, menuDisabled: true
-//			{ header: 'Type', dataIndex: 'applicationCat1Txt', width: 150, sortable: true}//, menuDisabled: true
-//		];
-		
-		columns.push({ id: 'applicationName', header: 'Name', dataIndex: 'applicationName', width: 150, sortable: true});
-		columns.push({ id: 'applicationAlias', header: 'Alias', dataIndex: 'applicationAlias', width: 150, sortable: true});
-		columns.push({ id: 'applicationCat1Txt', header: 'Type', dataIndex: 'applicationCat1Txt', width: 150, sortable: true});
-		
-		if(this.complete) {
-			columns.push({ id: 'applicationCat2Txt', header: 'Category', dataIndex: 'applicationCat2Txt', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ id: 'applicationOwner', header: 'App owner', dataIndex: 'applicationOwner', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ id: 'applicationOwnerDelegate', header: 'App owner delegate', dataIndex: 'applicationOwnerDelegate', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ id: 'applicationSteward', header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ id: 'responsible', header: 'Responsible', dataIndex: 'responsible', width: 150, sortable: true});//, menuDisabled: true
-			columns.push({ id: 'subResponsible', header: 'Sub responsible', dataIndex: 'subResponsible', width: 150, sortable: true});//, menuDisabled: true
-		}*/
-		
+	    		
 	    var columns = AIR.AirConfigFactory.createCiResultGridConfig(this.complete);
 		this.defaultColumnConfig = columns;
 	    
