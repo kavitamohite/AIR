@@ -314,18 +314,21 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    	if(barRelevance)
 	    		params.barRelevance = barRelevance.inputValue;
 	    	
-		    params.advsearchappowner = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerHidden').getValue();
+		    params.advsearchappowner = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwner').getValue();
+		    params.advsearchappownerHidden = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerHidden').getValue();
 		    params.advsearchappdelegate = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwnerDelegate').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerDelegate').getValue();
 		    params.advsearchappdelegateHidden = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwnerDelegate').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerDelegateHidden').getValue();
-		    params.advsearchsteward = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent(ciAdvancedSearchView.ownerId + 'applicationStewardHidden').getValue();
+		    params.advsearchsteward = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent(ciAdvancedSearchView.ownerId + 'applicationSteward').getValue();
+		    params.advsearchstewardHidden = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent(ciAdvancedSearchView.ownerId + 'applicationStewardHidden').getValue();
 	    }
-	    params.advsearchciowner = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent(ciAdvancedSearchView.ownerId + 'ciResponsibleHidden').getValue();
+	    params.advsearchciowner = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent(ciAdvancedSearchView.ownerId + 'ciResponsible').getValue();
+	    params.advsearchciownerHidden = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent(ciAdvancedSearchView.ownerId + 'ciResponsibleHidden').getValue();
 	    params.advsearchcidelegate = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CiSubResponsible').getComponent(ciAdvancedSearchView.ownerId + 'ciSubResponsible').getValue();
 	    params.advsearchcidelegateHidden = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CiSubResponsible').getComponent(ciAdvancedSearchView.ownerId + 'ciSubResponsibleHidden').getValue();
 	    
 	    params.isAdvSearchExt = this.isAdvSearchExt;
 	    
-	    if(!this.isAdvSearchExt) {//!
+	    if(this.isAdvSearchExt) {//!
 	    	var fsCategoriesAndStatus = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus');
 	    	var fsSpecialSearchAttributes = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes');
 	    	

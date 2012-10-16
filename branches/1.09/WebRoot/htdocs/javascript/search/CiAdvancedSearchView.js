@@ -622,95 +622,136 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	
 	    if(data.advsearchObjectTypeId === AC.APP_CAT1_APPLICATION || data.advsearchObjectTypeId.length === 0) {
 	    	pAdvancedSearch.getComponent('rgAdvSearchBARrelevance').setValue(data.barRelevance);
+
+	    	field = pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner');
+	    	if(data.advsearchappowner && data.advsearchappowner.length > 0)
+	    		field.setValue(data.advsearchappowner);
+	    	else field.reset();
 	    	
-		    pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden').setValue(data.advsearchappowner);
-		    pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate').setValue(data.advsearchappdelegate);
-		    pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateHidden').setValue(data.advsearchappdelegateHidden);
-		    pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardHidden').setValue(data.advsearchsteward);
+	    	field = pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden');
+	    	if(data.advsearchappownerHidden && data.advsearchappownerHidden.length > 0)
+	    		field.setValue(data.advsearchappownerHidden);
+	    	else field.reset();
+	    	
+	    	
+	    	field = pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate');
+	    	if(data.advsearchappdelegate && data.advsearchappdelegate.length > 0)
+	    		field.setValue(data.advsearchappdelegate);
+	    	else field.reset();
+	    	
+	    	field = pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateHidden');
+	    	if(data.advsearchappdelegateHidden && data.advsearchappdelegateHidden.length > 0)
+	    		field.setValue(data.advsearchappdelegateHidden);
+	    	else field.reset();
+	    	
+	    	
+	    	field = pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward');
+	    	if(data.advsearchsteward && data.advsearchsteward.length > 0)
+	    		field.setValue(data.advsearchsteward);
+	    	else field.reset();
+	    	
+	    	field = pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardHidden');
+	    	if(data.advsearchstewardHidden && data.advsearchstewardHidden.length > 0)
+	    		field.setValue(data.advsearchstewardHidden);
+	    	else field.reset();
 	    }
 	    
-	    pAdvancedSearch.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleHidden').setValue(data.advsearchciowner);
-	    pAdvancedSearch.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible').setValue(data.advsearchcidelegate);
-	    pAdvancedSearch.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleHidden').setValue(data.advsearchcidelegateHidden);
+    	field = pAdvancedSearch.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible');
+    	if(data.advsearchciowner && data.advsearchciowner.length > 0)
+    		field.setValue(data.advsearchciowner);
+    	else field.reset();
+    	
+    	field = pAdvancedSearch.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleHidden');
+    	if(data.advsearchciownerHidden && data.advsearchciownerHidden.length > 0)
+    		field.setValue(data.advsearchciownerHidden);
+    	else field.reset();
+	    
+    	
+    	field = pAdvancedSearch.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible');
+    	if(data.advsearchcidelegate && data.advsearchcidelegate.length > 0)
+    		field.setValue(data.advsearchcidelegate);
+    	else field.reset();
+    	
+    	field = pAdvancedSearch.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleHidden');
+    	if(data.advsearchcidelegateHidden && data.advsearchcidelegateHidden.length > 0)
+    		field.setValue(data.advsearchcidelegateHidden);
+    	else field.reset();
+    	
 	    
 	    
 	    var pAdditionalSearchAttributes = pAdvancedSearch.getComponent('pAdditionalSearchAttributes');
 	    
-	    if(!data.isAdvSearchExt) {//!
-//	    	pAdditionalSearchAttributes.setVisible(true);
-	    	
+	    if(data.isAdvSearchExt) {//!
 	    	var fsCategoriesAndStatus = pAdvancedSearch.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus');
 	    	var fsSpecialSearchAttributes = pAdvancedSearch.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes');
 	    	
 	    	
-	    	
 			field = fsCategoriesAndStatus.getComponent('cbAdvSearchGeneralUsageW');
-			if(field.getValue().length > 0)
+			if(data.advsearchoperationalstatusid && data.advsearchoperationalstatusid.length > 0)
 				field.setValue(data.advsearchoperationalstatusid);
 			else field.reset();
 			
 			field = fsCategoriesAndStatus.getComponent('cbAdvSearchITCategoryW');
-			if(field.getValue().length > 0)
+			if(data.advsearchapplicationcat2id && data.advsearchapplicationcat2id.length > 0)
 				field.setValue(data.advsearchapplicationcat2id);
 			else field.reset();
 			
 			field = fsCategoriesAndStatus.getComponent('cbAdvSearchLifecycleStatusW');
-			if(field.getValue().length > 0)
+			if(data.advsearchlifecyclestatusid && data.advsearchlifecyclestatusid.length > 0)
 				field.setValue(data.advsearchlifecyclestatusid);
 			else field.reset();
 			
-			/*var scopeRecords = fsCategoriesAndStatus.getComponent('lvAdvSearchOrganisationalScope').getSelectedRecords();
-			var scopes = '';
-			for(var i = 0; i < scopeRecords.length; i++) {
-				if(scopes.length > 0)
-					scopes += ',';
+			var lvOrganisationalScope = fsCategoriesAndStatus.getComponent('lvAdvSearchOrganisationalScope');
+			if(data.organisationalScope && data.organisationalScope.length > 0) {
+				var scopes = data.organisationalScope.split(',');
+				var store = lvOrganisationalScope.getStore();
 				
-				scopes += scopeRecords[i].get('id');
-			}
-			if(scopes.length > 0)
-				params.organisationalScope = scopes;*/
+				Ext.each(scopes, function(item, index, all) {
+					var r = store.getAt(store.findExact('name', item));
+					lvOrganisationalScope.select(r, true, true);
+				});
+			} else
+				lvOrganisationalScope.clearSelections();
 			
 	    	
 	    	
 			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchITSecGroupW');
-			if(field.getValue().length > 0)
+			if(data.itSecGroupId && data.itSecGroupId.length > 0)
 				field.setValue(data.itSecGroupId);
 			else field.reset();
 			
 			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchProcessW');
-			if(field.getValue().length > 0)
+			if(data.advsearchprocessid && data.advsearchprocessid.length > 0)
 				field.setValue(data.advsearchprocessid);
 			else field.reset();
 			
 //			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW');
-//			if(field.getValue().length > 0)
+//			if(data.osType && data.osType.length > 0)
 //				field.setValue(data.osType);
 //			
 //			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOSnameW');
-//			if(field.getValue().length > 0)
+//			if(data.osName && data.osName.length > 0)
 //				field.setValue(data.osName);
 //			
 			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchSourceW');
-			if(field.getValue().length > 0)
+			if(data.source && data.source.length > 0)
 				field.setRawValue(data.source);
 			else field.reset();
 			
 			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchBusinessEssentialW');
-			if(field.getValue().length > 0)
+			if(data.businessEssentialId && data.businessEssentialId.length > 0)
 				field.setValue(data.businessEssentialId);
 			else field.reset();
 			
 //			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchGapResponsibleW');
-//			if(field.getValue().length > 0)
+//			if(data.gapResponsible && data.gapResponsible.length > 0)
 //				field.setValue(data.gapResponsible);
 //			else field.reset();
 //			
 //			field = fsSpecialSearchAttributes.getComponent('dfAdvSearchTargetDate');
-//			if(field.getValue().length > 0)
+//			if(data.gapEndDate && data.gapEndDate.length > 0)
 //				field.setValue(data.gapEndDate);
 //			else field.reset();
-	    } else {
-//	    	pAdditionalSearchAttributes.setVisible(false);
 	    }
 	},
 	
