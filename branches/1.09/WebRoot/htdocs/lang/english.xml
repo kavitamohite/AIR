@@ -43,6 +43,7 @@
 		<source>Source</source>
 		<gapResponsible>Gap Responsible</gapResponsible>
 		<itSet>IT Set</itSet>
+		<bUpdateCiSearchResult>Update Search</bUpdateCiSearchResult>
 		
 		<!-- Label: Menu -->
 		<label_menu_myplacemenuitem>My Place</label_menu_myplacemenuitem>

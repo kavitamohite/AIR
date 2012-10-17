@@ -2532,6 +2532,10 @@ public class AnwendungHbn {
 		if (StringUtils.isNotNullOrEmpty(advsearchdescription)) {
 			sql.append(" and UPPER(anw.COMMENTS) like '%").append(advsearchdescription.toUpperCase()).append("%'");
 		}
+		
+		if (null != advsearchapplicationcat2id) {
+			sql.append(" and anw.ANWENDUNG_KAT2_ID = ").append(advsearchapplicationcat2id.longValue());
+		}
 
 		if (null != advsearchoperationalstatusid) {
 			sql.append(" and anw.EINSATZ_STATUS_ID = ").append(advsearchoperationalstatusid.longValue());

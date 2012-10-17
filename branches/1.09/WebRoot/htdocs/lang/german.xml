@@ -44,6 +44,7 @@
 		<source>Quelle</source>
 		<gapResponsible>Gap Verantwortlicher</gapResponsible>
 		<itSet>IT Set</itSet>
+		<bUpdateCiSearchResult>Suche aktualisieren</bUpdateCiSearchResult>
 		
 		<!-- Label: Menu -->
 		<label_menu_myplacemenuitem>Arbeitsplatz</label_menu_myplacemenuitem>

@@ -48,6 +48,19 @@ Util = {
 			return -1;
 		
 		return value.length > 2 && value.length < 6 ? 0 : 1;//value.length > 2 && value.length < 6 && value.match(AC.REGEX_CWID) != null
+	},
+	
+	
+//	initLoadMasks: function() {
+//		this.masks = {};
+//		this.masks.startupMask = new Ext.LoadMask(Ext.getBody(), { msg: 'Initializing AIR...' });
+//		this.masks.loadMask = new Ext.LoadMask(Ext.getBody(), { msg: 'Loading data...' });
+//		this.masks.saveMask = new Ext.LoadMask(Ext.getBody(), { msg: 'Saving data...' });//msg: AIR.AirApplicationManager.getLabels().gerneral_message_saving
+//	},
+
+
+	createMask: function(message, parentEl) {
+		return new Ext.LoadMask(parentEl, { msg: message });
 	}
 	
 	/*

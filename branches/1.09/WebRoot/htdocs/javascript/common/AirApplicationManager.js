@@ -185,9 +185,8 @@ AIR.AirApplicationManager = function() {
 		
 		//move to CiCenterView
 		registerComponents: function(airViewport) {
-			var hHistory = airViewport.getComponent('ciTitleView').getComponent('pCiTitleViewNorth').getComponent('hHistory');
-			Ext.History.fieldId = hHistory;
-			
+			Ext.History.iframeId = 'historyFrame';
+			Ext.History.fieldId = airViewport.getComponent('ciTitleView').getComponent('pCiTitleViewNorth').getComponent('hHistory');
 
 			
 //			var lastRenderedView = airViewport.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardPagesView').getComponent('ciCreateWizardPage3').getComponent('wizardCiowner').getComponent('tbWizardciResponsible');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('CiDeleteView');//ciCenterView
@@ -219,7 +218,10 @@ AIR.AirApplicationManager = function() {
 			
 			
 			myPlaceTabView.on('ciSelect', navigationView.onCiSelected, navigationView);
-			ciSearchView.on('ciSelect', navigationView.onCiSelected, navigationView);
+//			ciSearchView.on('ciSelect', navigationView.onCiSelected, navigationView);
+			ciSearchView.getComponent('ciSearchResultView').on('ciSelect', navigationView.onCiSelected, navigationView);
+			ciSearchView.getComponent('ciSearchResultView').on('ciSelect', ciEditView.onCiSelected, ciEditView);
+			
 //			myPlaceTabView.on('ciSelect', ciCenterView.onCiSelected, ciCenterView);
 //			ciSearchView.on('ciSelect', ciCenterView.onCiSelected, ciCenterView);
 			
@@ -271,8 +273,8 @@ AIR.AirApplicationManager = function() {
 			
 			
 			ciCenterView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
-//        	Ext.History.init(); //Fehler in IE bei ext-all-debug.js Z. 32840: iframe existiert nicht --> Laufzeitfehler
-//        	Ext.History.on('change', ciCenterView.onBackForwardClick, ciCenterView);
+        	Ext.History.init();
+        	Ext.History.on('change', ciCenterView.onBackForwardClick, ciCenterView);
 			//----------------------------------------------------------------------------------------------------
 			
 			//airAction

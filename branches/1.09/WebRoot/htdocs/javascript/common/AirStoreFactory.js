@@ -950,6 +950,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'source'},
 			        {name: 'gapResponsible'},
 			        {name: 'itSet'},
+			        {name: 'bUpdateCiSearchResult'},
 			        
 			        {name: 'label_menu_loggedinas'},
 			        {name: 'label_menu_myplacemenuitem'},

@@ -83,7 +83,11 @@ AIR.AirConstants = {
 	
 	INSERT_QUELLE_SHAREPOINT: 'SHAREPOINT',
 	UPSTREAM: 'Upstream',
-	DOWNSTREAM: 'Downstream'
+	DOWNSTREAM: 'Downstream',
+	
+	SEARCH_TYPE_SEARCH: 'Search',
+	SEARCH_TYPE_ADV_SEARCH: 'Adv. Search',
+	SEARCH_TYPE_OU_SEARCH: 'OU Search'
 };
 AC = AIR.AirConstants;
 
