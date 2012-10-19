@@ -532,23 +532,33 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		var ciCreateWizardView = this.getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardView');
 		//RFC 8271 - Wizard for Mandatory and/or Required Fields
 		
+
 		
 		if(ciEditView && ciEditView.isCiModified()) {
-			var callbackMap = {
-				'verwerfen': callback,
-				'speichern': saveCallback//ciEditView.saveApplication.createDelegate(ciEditView)
+			var isCiInvalid = AIR.AirAclManager.listRequiredFields(AIR.AirApplicationManager.getAppDetail()).length > 0;
+			var options = {
+				isCiInvalid: isCiInvalid
 			};
 			
-			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_CHANGED', callbackMap);
+			var callbackMap = {
+				verwerfen: callback,
+				speichern: saveCallback//ciEditView.saveApplication.createDelegate(ciEditView)
+			};
+			
+			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_CHANGED', callbackMap, null, null, options);
 			dynamicWindow.show();
-//		} else if(ciCreateWizardPagesView && ciCreateWizardPagesView.isWizardStarted()) {
 		} else if(ciCreateWizardView && ciCreateWizardView.isWizardStarted()) {
-			var callbackMap = {
-				'yes': callback
+			var isCiInvalid = AIR.AirAclManager.listRequiredFields(AIR.AirApplicationManager.getAppDetail()).length > 0;
+			var options = {
+				isCiInvalid: isCiInvalid
 			};
 			
-			var dynmicYesNoWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CANCEL_WIZARD', callbackMap);
-			dynmicYesNoWindow.show();
+			var callbackMap = {
+				yes: callback
+			};
+			
+			var dynamicYesNoWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CANCEL_WIZARD', callbackMap, null, null, options);
+			dynamicYesNoWindow.show();
 		} else {
 			callback();
 		}
@@ -605,6 +615,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 	
 	
 	onBackForwardClick: function(token) {
+		Util.log('back/forward token='+token);
 		if(token !== 'null')
 			this.fireEvent('externalNavigation', this, null, token);
 	}

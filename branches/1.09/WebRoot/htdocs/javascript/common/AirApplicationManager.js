@@ -185,8 +185,12 @@ AIR.AirApplicationManager = function() {
 		
 		//move to CiCenterView
 		registerComponents: function(airViewport) {
-			Ext.History.iframeId = 'historyFrame';
-			Ext.History.fieldId = airViewport.getComponent('ciTitleView').getComponent('pCiTitleViewNorth').getComponent('hHistory');
+			if(Ext.isIE) {
+				Ext.History.iframeId = 'x-history-frame';
+				Ext.History.fieldId = 'x-history-field';
+			} else {
+				Ext.History.fieldId = airViewport.getComponent('ciTitleView').getComponent('pCiTitleViewNorth').getComponent('hHistory');
+			}
 
 			
 //			var lastRenderedView = airViewport.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardPagesView').getComponent('ciCreateWizardPage3').getComponent('wizardCiowner').getComponent('tbWizardciResponsible');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('CiDeleteView');//ciCenterView
@@ -275,6 +279,12 @@ AIR.AirApplicationManager = function() {
 			ciCenterView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
         	Ext.History.init();
         	Ext.History.on('change', ciCenterView.onBackForwardClick, ciCenterView);
+        	
+        	if(Ext.isIE) {
+	        	ciTitleView.getComponent('clBack').on('click', navigationView.onBack, navigationView);
+	        	ciTitleView.getComponent('clForward').on('click', navigationView.onForward, navigationView);
+        	}
+        	
 			//----------------------------------------------------------------------------------------------------
 			
 			//airAction

@@ -1,8 +1,8 @@
 Ext.namespace('AIR');
 
-AIR.AirWindowFactory = function() {//{//
+AIR.AirWindowFactory = function() {
 	return {
-		createDynamicMessageWindow: function(windowType, callbackMap, message, title) {
+		createDynamicMessageWindow: function(windowType, callbackMap, message, title, options) {
 			var labels = AIR.AirApplicationManager.getLabels();
 			
 			switch(windowType) {
@@ -13,6 +13,7 @@ AIR.AirWindowFactory = function() {//{//
 					
 					var buttonConfigs = [{
 						text: labels.dynamicWindowDataChangedSaveButtonText,
+						disabled: options && options.isCiInvalid,
 						handler: function() {
 //							 bIsDynamicWindowSpeichern = true;//see commonvars.js
 //							 delegateCallback = callbackMap['verwerfen'];//required after DATA_SAVED:OK action to switch to seleted menuitem's page

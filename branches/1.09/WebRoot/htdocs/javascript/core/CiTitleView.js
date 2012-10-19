@@ -3,18 +3,7 @@ Ext.namespace('AIR');
 AIR.CiTitleView = Ext.extend(Ext.Panel, {
 	initComponent: function() {
 		Ext.apply(this, {
-//			layout: 'table',
-//			layoutConfig: {
-//				columns: 1,
-//				tableAttrs: {
-//					style: {
-//						width: '100%'
-//					}
-//				}
-//			},
-			
 			baseCls: 'x-plain',
-			
 			layout: 'border',
 			
 			items: [{
@@ -23,67 +12,89 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 		        id: 'pCiTitleViewNorth',
 			    border: false,
 			    height: 30,
-				
-//				layout: 'hbox',
-//			    layoutConfig: {
-//			        padding:'5',
-//			        pack:'end',
-//			        align:'middle'
-//			    },
 			    
-//			    defaults: { margins:'0 10 0 0' },
-//			    baseCls: 'x-plain',
+//				layout: 'table',
+//				layoutConfig: {
+//					columns: 6,//8 6
+//					padding: 5,
+//			        tableAttrs: {
+//			            style: {
+//			            	float: 'right',
+//			            	padding: 5
+//			            }
+//			        }
+//				},
 			    
-			    
-				layout: 'table',
-				layoutConfig: {
-					columns: 6,//8 6
-					padding: 5,
-			        tableAttrs: {
-			            style: {
-			            	float: 'right',
-			            	padding: 5
-			            }
-			        }
-				},
+			    layout: 'hbox',
+                layoutConfig: {
+                    padding: 5//'5'
+//                    align: 'top'
+                },
+//                defaults: { margins: '0 5 0 0' },
+
 			    
 				items: [{
-//					id: 'lclink',
-//					html: '<a href="#" onclick="languagecheck.show();">Check Language</a>',
-////					hidden: true,
-//					baseCls: 'x-plain'
-					
-			        id: 'lclink',
+					id: 'clBack',
 			        xtype: 'commandlink',
-			        text: 'Check Language'
+			        img: 'images/back_24x24.png',//24x24 16x16
+			        hidden: true,
+			        
+			        style: {
+						marginTop: -3
+//						marginBottom: 5
+					}
 				},{
-//					html: '<span id="languageDetailslanguagePicture" onclick="switchLanguage();"><img id="languageDetailslanguagePNG" align="top" src="' + urlFlagLanguage +'" alt="Language"></span>',
-//					baseCls: 'x-plain'//oder mit xtype: 'container' und parent[baseCls: 'x-plain'] 
-					
-//					flex: 1
-					
-		        	
-			        id: 'clLanguage',
+			        id: 'clForward',
+			        xtype: 'commandlink',
+			        img: 'images/forward_24x24.png',//24x24 16x16
+			        hidden: true,
+			        
+			        style: {
+						marginTop: -3
+//						marginBottom: 5
+					}
+				},{
+                    xtype: 'spacer',
+                    flex: 1
+                },{
+					id: 'clLanguage',
 			        xtype: 'commandlink',
 			        img: urlFlagLanguage
+			        
+//			        style: {
+//						marginRight: 10
+//					}
 				},{
 			        id: 'clInfo',
 			        xtype: 'commandlink',
-			        img: img_Info
+			        img: img_Info,
+			        
+			        style: {
+						marginLeft: 2
+//						marginTop: 5
+					}
 				},{
-					html: '<a href="' + manual_en + '" target="_blank"><img id="helpImage" align="top" src="' + img_Help + '" alt="Help"></a>',
-					baseCls: 'x-plain'
+//					html: '<a href="' + manual_en + '" target="_blank"><img id="helpImage" align="top" src="' + img_Help + '" alt="Help"></a>',
+//					baseCls: 'x-plain',
 					
-//					flex: 1
+			        id: 'clHelp',
+			        xtype: 'commandlink',
+			        img: img_Help,
 					
-					
-//			        id: 'clHelp',
-//			        xtype: 'commandlink',
-//			        img: img_Help
+			        style: {
+						marginLeft: 3
+//						marginTop: 5
+					}
 				},{
 			        id: 'clLogOut',
 			        xtype: 'commandlink',
-			        img: img_Logoff
+			        img: img_Logoff,
+			        
+			        style: {
+						marginLeft: 5
+//						marginTop: 5,
+//						marginRight: 5
+					}
 				},{
 					xtype: 'hidden',
 					id: 'hHistory'
@@ -163,8 +174,8 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
         var clInfo = this.getComponent('pCiTitleViewNorth').getComponent('clInfo');
         clInfo.on('click', this.onInfoClick, this);
         
-//        var clHelp = this.getComponent('pCiTitleViewNorth').getComponent('clHelp');
-//        clHelp.on('click', this.onHelpClick, this);
+        var clHelp = this.getComponent('pCiTitleViewNorth').getComponent('clHelp');
+        clHelp.on('click', this.onHelpClick, this);
         
 //        var clLogOut = this.getComponent('pCiTitleViewNorth').getComponent('clLogOut');
 //        clLogOut.on('click', this.onLogOutClick, this);
@@ -175,7 +186,7 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 //	},
 	
 	onHelpClick: function(button, event) {
-		
+		window.open(manual_en);
 	},
 	
 	onInfoClick: function(button, event) {
@@ -185,12 +196,12 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 	
 	update: function(language) {
 		// check role developer
-    	if (hasRoleDeveloper) {
-			Ext.getCmp('lclink').show();
-		}
-		else {
-			Ext.getCmp('lclink').hide();
-		}
+//    	if (hasRoleDeveloper) {
+//			Ext.getCmp('lclink').show();
+//		}
+//		else {
+//			Ext.getCmp('lclink').hide();
+//		}
 		
 //		var databaseDisplayNameListStore = AIR.AirStoreManager.getStoreByName('databaseDisplayNameListStore');
 //		var databaseInfoText = databaseDisplayNameListStore.data.items[0].data.text;

@@ -228,6 +228,10 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		for(var i = 0; i < links.length; i++)
 			links[i].on('click', this.onMenuSelect , this);
 		
+		if(Ext.isIE) {
+			this.history = [];
+			this.historyIndex = 0;
+		}
 		
 		this.addEvents('beforeNavigation', 'navigation');
 	},
@@ -274,10 +278,15 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			}
 			
 			AIR.AirApplicationManager.updateCookie({ navigation: link.getId() });//, true
-			Ext.History.add(link.getId());
+			if(Ext.isIE) {
+				history.push(link);//link.getId()
+			} else {
+				Ext.History.add(link.getId());
+			}
+			
 			
 			link.updateIcon('images/navmarker_on3.png');
-			if(this.previousSelected)
+			if(this.previousSelected && link.getId() != this.previousSelected.getId())
 				this.previousSelected.updateIcon('images/Transparent.png');
 			
 			this.doLayout();
@@ -447,6 +456,18 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiHistory');
 		link.updateText(labels.label_menu_detailshistory);
+	},
+	
+	onBack: function(link, event) {
+		this.historyIndex--;
+		
+		link.fireEvent('click', this.history[this.historyIndex]);
+	},
+	
+	onForward: function(link, event) {
+		this.historyIndex++;
+		
+		link.fireEvent('click', this.history[this.historyIndex]);
 	}
 	
 });
