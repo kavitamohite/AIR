@@ -613,12 +613,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		ciCreateView.updateToolTips(toolTips);
 	},
 	
-	
-	onBackForwardClick: function(token) {
-		Util.log('back/forward token='+token);
-		if(token !== 'null')
-			this.fireEvent('externalNavigation', this, null, token);
-	}
+
 	
 //	afterRender: function(parentCt) {
 //		$(this).corner();//this 'ciCenterView'

@@ -19,8 +19,8 @@
 		<link rel="stylesheet" id="standardTheme" type="text/css" href="lib/extjs/resources/css/ext-all-air.css">
 		<!--Standard Theme-->
 		
-		<script type="text/javascript" src="lib/extjs/adapter/ext/ext-base.js"></script><!-- ext-base.js ext-base-debug.js -->
-		<script type="text/javascript" src="lib/extjs/ext-all.js"></script><!-- ext-all.js ext-all-debug.js -->
+		<script type="text/javascript" src="lib/extjs/adapter/ext/ext-base-debug.js"></script><!-- ext-base.js ext-base-debug.js -->
+		<script type="text/javascript" src="lib/extjs/ext-all-debug.js"></script><!-- ext-all.js ext-all-debug.js -->
 		
 		
 		<!-- RowActions extension -->
@@ -71,6 +71,8 @@
 		<script type="text/javascript" src="javascript/common/AirOverrides.js"></script>
 		<script type="text/javascript" src="javascript/common/AirUiFactory.js"></script>
 		<script type="text/javascript" src="javascript/common/AirConfigFactory.js"></script>
+		<script type="text/javascript" src="javascript/common/AirHistoryManager.js"></script>
+		
 		
 		<script type="text/javascript" src="javascript/search/CiAdvancedSearchView.js"></script>
 		<script type="text/javascript" src="javascript/search/CiSearchView.js"></script>
@@ -154,7 +156,8 @@
 		</div>
 		
 		<form id='history-form' class='x-hidden'>
-		    <iframe id='historyFrame'></iframe>
+			<input type='hidden' id='x-history-field'/>
+		    <iframe id='x-history-frame'></iframe>
 		</form>
 	</body>
 </html>

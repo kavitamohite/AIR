@@ -238,9 +238,9 @@ AIR.AirApplicationManager = function() {
 			navigationView.on('airAction', this.onAirAction, this);
 
 			
-			var ciTitleView = airViewport.getComponent('ciTitleView').getComponent('pCiTitleViewNorth');
-			var clLanguage = ciTitleView.getComponent('clLanguage');
-			var clLogOut = ciTitleView.getComponent('clLogOut');
+			var ciTitleView = airViewport.getComponent('ciTitleView');
+			var clLanguage = ciTitleView.getComponent('pCiTitleViewNorth').getComponent('clLanguage');
+			var clLogOut = ciTitleView.getComponent('pCiTitleViewNorth').getComponent('clLogOut');
 			
 			clLanguage.on('click', airViewport.switchLanguage, airViewport);//oder wieder hier im AirAppMgr ?
 			clLogOut.on('click', this.logout, this);
@@ -277,14 +277,10 @@ AIR.AirApplicationManager = function() {
 			
 			
 			ciCenterView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
-        	Ext.History.init();
-        	Ext.History.on('change', ciCenterView.onBackForwardClick, ciCenterView);
-        	
-        	if(Ext.isIE) {
-	        	ciTitleView.getComponent('clBack').on('click', navigationView.onBack, navigationView);
-	        	ciTitleView.getComponent('clForward').on('click', navigationView.onForward, navigationView);
-        	}
-        	
+
+			this.historyManager = new AIR.AirHistoryManager();
+			this.historyManager.init(navigationView, ciTitleView);
+//			AIR.AirHistoryManager.init(navigationView, ciTitleView);
 			//----------------------------------------------------------------------------------------------------
 			
 			//airAction
@@ -327,6 +323,10 @@ AIR.AirApplicationManager = function() {
 			var navigationView = this.dirtyNavRef;
 			ciEditView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
 			ciEditView.on('airAction', this.onAirAction, this);
+		},
+		
+		addHistoryItem: function(link) {
+			this.historyManager.add(link);
 		},
 		
 		onAirAction: function(source, airActionType, data) {

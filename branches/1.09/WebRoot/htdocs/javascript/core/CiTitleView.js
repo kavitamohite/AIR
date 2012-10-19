@@ -37,6 +37,11 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 					id: 'clBack',
 			        xtype: 'commandlink',
 			        img: 'images/back_24x24.png',//24x24 16x16
+					
+//					xtype: 'button',
+//					cls : 'x-btn-icon',
+//					icon: 'images/back_24x24.png',
+
 			        hidden: true,
 			        
 			        style: {
@@ -47,6 +52,11 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 			        id: 'clForward',
 			        xtype: 'commandlink',
 			        img: 'images/forward_24x24.png',//24x24 16x16
+			        
+//					xtype: 'button',
+//					cls : 'x-btn-icon',
+//					icon: 'images/forward_24x24.png',
+			        
 			        hidden: true,
 			        
 			        style: {
@@ -254,6 +264,27 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 		
 		//PROBLEM: event gets fired before AIR.AirApplicationManager is registered on clLanguage's click event during startup
 //		clLanguage.fireEvent('click', clLanguage);
+	},
+	
+	onHistoryChange: function(history, link, historyIndex) {
+		var pCiTitleViewNorth = this.getComponent('pCiTitleViewNorth');
+		
+		if(historyIndex === 0) {//history.length
+			pCiTitleViewNorth.getComponent('clBack').hide();
+			pCiTitleViewNorth.getComponent('clForward').show();
+		} else if(historyIndex === history.length - 1) {
+			pCiTitleViewNorth.getComponent('clBack').show();
+			pCiTitleViewNorth.getComponent('clForward').hide();
+		} else {
+			pCiTitleViewNorth.getComponent('clBack').show();
+			pCiTitleViewNorth.getComponent('clForward').show();
+		}
+		
+		pCiTitleViewNorth.doLayout();
 	}
+	
+//	onNavigation: function(viewId, link, options) {
+//		
+//	}
 });
 Ext.reg('AIR.CiTitleView', AIR.CiTitleView);
