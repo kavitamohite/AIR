@@ -233,11 +233,11 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 
 	
-	onNavigation: function(viewId, link) {
+	onNavigation: function(viewId, link, options) {
 		this.getComponent('ciEditTabView').getLayout().setActiveItem(viewId);
 		
 		this.handleNavigation(viewId);
-		if(this.isLoaded) {
+		if(this.isLoaded || (options && options.skipReload)) {
 			//this.handleNavigation(viewId);
 		} else {
 			this.isLoaded = true;

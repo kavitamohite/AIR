@@ -269,41 +269,19 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 	onHistoryChange: function(history, link, historyIndex) {
 		var pCiTitleViewNorth = this.getComponent('pCiTitleViewNorth');
 		
-		if(historyIndex > 1 && historyIndex < history.length) {
+		if(historyIndex > 0 && historyIndex < history.length - 1) {
 			pCiTitleViewNorth.getComponent('clBack').show();
 			pCiTitleViewNorth.getComponent('clForward').show();
-		} else if(historyIndex === history.length && history.length > 1) {
+		} else if(history.length > 0 && historyIndex > 0) {//
 			pCiTitleViewNorth.getComponent('clBack').show();
 			pCiTitleViewNorth.getComponent('clForward').hide();
-		} else if(history.length > 1) {
+		} else if(history.length > 0 && historyIndex < history.length - 1) {// > 1 0
 			pCiTitleViewNorth.getComponent('clBack').hide();
 			pCiTitleViewNorth.getComponent('clForward').show();
-		}
-		
-		
-		/*if(historyIndex <= history.length) {
-			pCiTitleViewNorth.getComponent('clForward').hide();
-			pCiTitleViewNorth.getComponent('clBack').show();
-		} else if(historyIndex === 1 && history.length > 1) {
-			pCiTitleViewNorth.getComponent('clForward').show();
-			pCiTitleViewNorth.getComponent('clBack').hide();
-		} else if(history.length > 1) {
-			pCiTitleViewNorth.getComponent('clBack').show();
-			pCiTitleViewNorth.getComponent('clForward').show();
-		}*/
-		
-		
-		
-		/*if(historyIndex === 1) {//0 history.length
-			pCiTitleViewNorth.getComponent('clForward').hide();//clForward
-			pCiTitleViewNorth.getComponent('clBack').show();//clBack
-		} else if(historyIndex === history.length - 1) {
-			pCiTitleViewNorth.getComponent('clBack').show();
-			pCiTitleViewNorth.getComponent('clForward').hide();
 		} else {
-			pCiTitleViewNorth.getComponent('clBack').show();
-			pCiTitleViewNorth.getComponent('clForward').show();
-		}*/
+			pCiTitleViewNorth.getComponent('clBack').hide();
+			pCiTitleViewNorth.getComponent('clForward').hide();
+		}
 		
 		pCiTitleViewNorth.doLayout();
 	}

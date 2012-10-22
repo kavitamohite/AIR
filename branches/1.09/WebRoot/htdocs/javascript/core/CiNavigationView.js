@@ -316,9 +316,13 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 				
 				var link = this.getComponent('pCiDetailsMenuItems').getComponent(target);//clCiDetails
 				
-				var options = {
-					reset: true
-				};
+				if(options) {
+					options.reset = true;
+				} else {
+					var options = {
+						reset: true
+					};
+				}
 				link.fireEvent('click', link, null, options);
 				break;
 			case 'clSearch':

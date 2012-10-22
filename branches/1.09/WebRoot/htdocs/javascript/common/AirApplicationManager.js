@@ -656,7 +656,7 @@ AIR.AirApplicationManager = function() {
 				
 			if(airCookie.navigation)
 				airViewport.fireEvent('externalNavigation', airViewport, null, airCookie.navigation);
-			//else if(Ext.isIE) this.historyManager.afterInit();
+			else this.historyManager.afterInit();
 		},
 		
 		//RFC 8231 Einrichten der Rolle "Administrator"

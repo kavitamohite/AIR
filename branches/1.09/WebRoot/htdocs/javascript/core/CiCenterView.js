@@ -481,7 +481,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				
 				//B)
 				if(ciEditView) {
-					this.forwardNavigation();
+					this.forwardNavigation(options);
 				} else {
 					ciEditView = new AIR.CiEditView({ id: 'ciEditView' });
 //					var v = ciEditView.getComponent('clCiHistory');
@@ -509,7 +509,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		this.forwardNavigation();
 	},
 	
-	forwardNavigation: function() {
+	forwardNavigation: function(options) {
 		//var ciEditTabView = this.getComponent('ciEditView').getComponent('ciEditTabView');
 		var ciEditView = this.getComponent('ciEditView');
 		
@@ -517,7 +517,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			ciEditView.reset();
 						
 		this.getLayout().setActiveItem('ciEditView');
-		ciEditView.onNavigation(this.lastNavigation.viewId, this.lastNavigation.link);
+		ciEditView.onNavigation(this.lastNavigation.viewId, this.lastNavigation.link, options);
 		
 		
 		if(this.lastNavigation.options && this.lastNavigation.options.callback)
@@ -611,7 +611,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		
 		var ciCreateView = this.getComponent('ciCreateView');
 		ciCreateView.updateToolTips(toolTips);
-	},
+	}
 	
 
 	
