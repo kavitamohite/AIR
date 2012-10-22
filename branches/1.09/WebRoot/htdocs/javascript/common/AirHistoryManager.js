@@ -11,22 +11,31 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
     		this.ciTitleView.getComponent('pCiTitleViewNorth').getComponent('clBack').on('click', this.onBack, this);
     		this.ciTitleView.getComponent('pCiTitleViewNorth').getComponent('clForward').on('click', this.onForward, this);
     		
-			this.history = [];
-			this.historyIndex = 0;
+			this.history = [];//[] 'clSearch'
+			this.historyIndex = 1;//0 1
     	}
     	
 		this.addEvents('externalNavigation');
 		this.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
 	},
 	
+	afterInit: function() {
+//		this.fireEvent('externalNavigation', this, null, 'clSearch');
+	},
+	
 	add: function(link) {
 		if(Ext.isIE) {
 			if(this.historyIndex < this.history.length - 1) {
-				this.history.splice(this.historyIndex, this.history.length - 1 - this.historyIndex);
-				this.historyIndex = this.history.length - 1;
+				var index = this.historyIndex;
+				var length = this.history.length;
+				
+				this.history.splice(index, length - 1 - index);
+				length = this.history.length;
+				this.historyIndex = length - 1;//this.history.length - 1;
 			}
 			
 			this.history.push(link);//link link.getId()
+			length = this.history.length;
 			this.historyIndex++;
 			
 			this.ciTitleView.onHistoryChange(this.history, link.getId(), this.historyIndex);
@@ -55,8 +64,6 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 	
 	
 	onBackForwardClick: function(token) {
-		Util.log('back/forward token='+token);
-		
 		if(!Ext.isIE && token !== 'null')
 			this.fireEvent('externalNavigation', this, null, token);
 	}
