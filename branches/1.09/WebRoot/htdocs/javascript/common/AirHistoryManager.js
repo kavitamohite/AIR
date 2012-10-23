@@ -56,33 +56,60 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 	onBack: function(link, event) {
 		this.historyIndex--;
 		
-		var link = this.history[this.historyIndex];
-		var index = this.historyIndex;
+//		var link = this.history[this.historyIndex];
+//		var index = this.historyIndex;
 		
 		this.ciTitleView.onHistoryChange(this.history, this.history[this.historyIndex], this.historyIndex);
+		this.delegateNavigation();
 
-		var options = { skipHistory: true, forceNavigation: true, skipReload: true };
-		this.fireEvent('externalNavigation', this, null, this.history[this.historyIndex].getId(), options);//this.historyIndex
+//		var options = { skipHistory: true, forceNavigation: true, skipReload: true };
+//		this.fireEvent('externalNavigation', this, null, this.history[this.historyIndex].getId(), options);//this.historyIndex
 	},
 	
 	onForward: function(link, event) {
 		this.historyIndex++;
 		
-		var link = this.history[this.historyIndex];
-		var index = this.historyIndex;
+//		var link = this.history[this.historyIndex];
+//		var index = this.historyIndex;
 		
 		this.ciTitleView.onHistoryChange(this.history, this.history[this.historyIndex], this.historyIndex);
 		if(this.history[this.historyIndex]) {
-			var options = { skipHistory: true, forceNavigation: true, skipReload: true };
-			this.fireEvent('externalNavigation', this, null, this.history[this.historyIndex].getId(), options);
+			this.delegateNavigation();
+			
+//			var options = { skipHistory: true, forceNavigation: true, skipReload: true };
+//			this.fireEvent('externalNavigation', this, null, this.history[this.historyIndex].getId(), options);
 		}
 	},
 	
 	
 	onBackForwardClick: function(token) {
 		if(!Ext.isIE && token !== 'null') {
-			var options = { skipReload: true };
-			this.fireEvent('externalNavigation', this, null, token, options);
+			this.delegateNavigation(token);
+			
+//			var options = { skipReload: true };
+//			this.fireEvent('externalNavigation', this, null, token, options);
+		}
+	},
+	
+	delegateNavigation: function(token) {
+		var viewId = token ? token : this.history[this.historyIndex].getId();
+		
+		var cbm = AAM.getCallbackManager();
+		var options = cbm.getSpecificNavigationOptions(viewId);
+		var specificCallback = cbm.getSpecificNavigationCallback(viewId);
+		
+		if(options) {
+			options.skipHistory = true;
+			options.forceNavigation = true;
+		} else {
+			options = { skipHistory: true, forceNavigation: true };
+		}
+		
+		if(specificCallback) {
+			options.viewId = viewId;
+			specificCallback(null, null, options);
+		} else {
+			this.fireEvent('externalNavigation', this, null, viewId, options);
 		}
 	}
 

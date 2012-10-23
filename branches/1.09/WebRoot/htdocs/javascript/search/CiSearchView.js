@@ -651,13 +651,19 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		this.getComponent('ciSearchResultView').search(params, isUpdate);
 	},
 	
-	onTabChange: function(tabPanel, tab) {
-		if(!tab) return;
+	onTabChange: function(tabPanel, tab, options) {
+		if(!tab) {
+			tab = this.getComponent('ciSearchResultView').getComponent('tpCiSearchResultTables').getActiveTab();
+			if(!tab) {
+				if(options)
+					this.fireEvent('externalNavigation', this, tab, options.viewId, options);
+				return;
+			}
+		}
 		
 		var searchType = tab.getId().substring(0, tab.getId().indexOf('_'));
 		var params = this.getComponent('ciSearchResultView').getSearchParams(tab.getId());
 		
-		//A)
 		switch(searchType) {
 			case AC.SEARCH_TYPE_SEARCH:
 				viewId = 'clSearch';
@@ -672,15 +678,16 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 				break;
 		};
 		
-		var options = { forceNavigation: true };
+		if(options) {
+			options.forceNavigation = true;
+			options.skipHistory = true;
+		} else {
+			options = { forceNavigation: true, skipHistory: true };
+		}
+//		var options = { forceNavigation: true };
 		
-		//A)
 		this.fireEvent('externalNavigation', this, tab, viewId, options);
 		this.updateParams(params, searchType);
-
-		
-		//B)
-//		this.updateAdvSearchHeight();
 	},
 	
 	updateParams: function(params, searchType) {

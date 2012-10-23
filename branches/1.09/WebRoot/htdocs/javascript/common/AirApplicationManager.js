@@ -280,6 +280,9 @@ AIR.AirApplicationManager = function() {
 
 			this.historyManager = new AIR.AirHistoryManager();
 			this.historyManager.init(navigationView, ciTitleView);
+			
+			this.callbackManager = new AIR.AirCallbackManager();
+			this.callbackManager.init(airViewport);
 //			AIR.AirHistoryManager.init(navigationView, ciTitleView);
 			//----------------------------------------------------------------------------------------------------
 			
@@ -290,6 +293,10 @@ AIR.AirApplicationManager = function() {
 			if(ciCreateWizardPagesView)
 				ciCreateWizardPagesView.on('airAction', this.onAirAction, this);
 			ciDeleteView.on('airAction', this.onAirAction, this);
+		},
+		
+		getCallbackManager: function() {
+			return this.callbackManager;
 		},
 		
 		registerCiEditView: function(ciCenterView) {
