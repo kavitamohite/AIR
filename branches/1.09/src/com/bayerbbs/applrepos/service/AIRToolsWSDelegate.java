@@ -14,6 +14,8 @@ import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
 import com.bayerbbs.applrepos.dto.ItSetDTO;
 import com.bayerbbs.applrepos.dto.LicenseTypeDTO;
 import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
+import com.bayerbbs.applrepos.dto.LinkCIDTO;
+import com.bayerbbs.applrepos.dto.LinkCITypeDTO;
 import com.bayerbbs.applrepos.dto.LoadClassDTO;
 import com.bayerbbs.applrepos.dto.OperationalStatusDTO;
 import com.bayerbbs.applrepos.dto.OrganisationalScopeDTO;
@@ -135,5 +137,13 @@ public class AIRToolsWSDelegate {
 	
 	public CiTypeDTO[] getCiTypes() {
 		return aIRToolsWS.getCiTypes();
+	}
+	
+	public LinkCITypeDTO[] getLinkCITypeList() {
+		return aIRToolsWS.getLinkCITypeList();
+	}
+
+	public LinkCIDTO[] getLinkCI(CiComplianceParameterInput input) {
+		return aIRToolsWS.getLinkCI(input);
 	}
 }

@@ -22,6 +22,8 @@ import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
 import com.bayerbbs.applrepos.dto.ItSetDTO;
 import com.bayerbbs.applrepos.dto.LicenseTypeDTO;
 import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
+import com.bayerbbs.applrepos.dto.LinkCIDTO;
+import com.bayerbbs.applrepos.dto.LinkCITypeDTO;
 import com.bayerbbs.applrepos.dto.LoadClassDTO;
 import com.bayerbbs.applrepos.dto.OperationalStatusDTO;
 import com.bayerbbs.applrepos.dto.OrganisationalScopeDTO;
@@ -41,6 +43,7 @@ import com.bayerbbs.applrepos.hibernate.ApplicationCat1Hbn;
 import com.bayerbbs.applrepos.hibernate.BusinessEssentialHbn;
 import com.bayerbbs.applrepos.hibernate.CategoryBusinessHbn;
 import com.bayerbbs.applrepos.hibernate.ClassInformationHbn;
+import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
 import com.bayerbbs.applrepos.hibernate.CurrencyHbn;
 import com.bayerbbs.applrepos.hibernate.GroupsHbn;
 import com.bayerbbs.applrepos.hibernate.ItSecGroupHbn;
@@ -252,4 +255,13 @@ public class AIRToolsWS {
 	public CiTypeDTO[] getCiTypes() {
 		return ApplicationCat1Hbn.getCiTypes();
 	}
+	
+	public LinkCITypeDTO[] getLinkCITypeList() {
+		return ComplianceHbn.getArrayFromList(ComplianceHbn.findLinkCIType());
+	}
+	
+	public LinkCIDTO[] getLinkCI(CiComplianceParameterInput input) {
+		return ComplianceHbn.getArrayFromListLinkCI(ComplianceHbn.findLinkCI(input.getZielotypGSToolId(), input.getItSetId(), input.getApplicationId(), input.getMassnahmeId(), input.getApplicationCat1Id()));
+	}
+	
 }
