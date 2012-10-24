@@ -6,7 +6,10 @@ public class LinkCITypeDTO {
 	private String type;
 	String language;
 	
-
+	public LinkCITypeDTO() {
+		
+	}
+	
 	public LinkCITypeDTO(long zielotyp_gstoolid, String language, String type) {
 		this.zielotyp_gstoolid = zielotyp_gstoolid;
 		this.language = language;

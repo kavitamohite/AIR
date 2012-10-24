@@ -6,6 +6,10 @@ public class LinkCIDTO {
 	private String name;
 	private String sort;
 	
+	public LinkCIDTO() {
+		
+	}
+	
 	public LinkCIDTO(long id, String name, String sort) {
 		this.id = id;
 		this.name = name;
