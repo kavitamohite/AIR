@@ -143,7 +143,7 @@ public class AIRToolsWSDelegate {
 		return aIRToolsWS.getLinkCITypeList();
 	}
 
-	public LinkCIDTO[] getLinkCI(CiComplianceParameterInput input) {
-		return aIRToolsWS.getLinkCI(input);
+	public LinkCIDTO[] getLinkCIList(CiComplianceParameterInput input) {
+		return aIRToolsWS.getLinkCIList(input);
 	}
 }
