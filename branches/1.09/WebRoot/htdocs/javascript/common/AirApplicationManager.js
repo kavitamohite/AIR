@@ -332,8 +332,8 @@ AIR.AirApplicationManager = function() {
 			ciEditView.on('airAction', this.onAirAction, this);
 		},
 		
-		addHistoryItem: function(link) {
-			this.historyManager.add(link);
+		addHistoryItem: function(link, isExternalNavigation) {
+			this.historyManager.add(link, isExternalNavigation);
 		},
 		
 		onAirAction: function(source, airActionType, data) {

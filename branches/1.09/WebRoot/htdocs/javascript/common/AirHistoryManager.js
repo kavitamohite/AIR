@@ -20,13 +20,13 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 	},
 	
 	afterInit: function() {
-		if(Ext.isIE) //Ext.isIE
+//		if(Ext.isIE) //Ext.isIE
 			this.fireEvent('externalNavigation', this, null, 'clSearch');
 	},
 	
-	add: function(link) {
+	add: function(link, isExternalNavigation) {
 		if(Ext.isIE) {//Ext.isIE
-			if(this.historyIndex < this.history.length - 2) {//-1
+			/*if(this.historyIndex < this.history.length - 2) {//-1
 //				var howMany = this.history.length - 2 - this.historyIndex;
 //				this.history.splice(this.historyIndex, hoxMany);//length - 1 - index
 				
@@ -42,14 +42,16 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 				delete this.history;
 				this.history = temp;
 				this.historyIndex = this.history.length - 1;//this.history.length - 1 | length - 1
-			}
+			}*/
 			
 			this.history.push(link);//link link.getId()
 			this.historyIndex++;
 			
 			this.ciTitleView.onHistoryChange(this.history, link.getId(), this.historyIndex);//this.historyIndex
 		} else {
+			this.isBackForward = isExternalNavigation;// ? isExternalNavigation : true;
 			Ext.History.add(link.getId());
+			this.isBackForward = true;
 		}
 	},
 	
@@ -81,9 +83,20 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 		}
 	},
 	
-	
+	/**
+	 * Problematik: wie unterscheiden, ob es sich um einen Klick auf einen Navigationsmenupunkt oder einen back/forward
+	 * Browserbutton Klick handelt. Diese Funktion soll nur aufgerufen werden, wenn letzteres passiert. Da dieser 
+	 * Ext.History.add change event handler aber immer aufgerufen wird, sobald ein History Eintrag hinzugefügt wurde,
+	 * ausgelöst durch CiNavigationView.onMenuSelect, wird er zwangsläufig in beiden Fällen aufgerufen.
+	 * Es muss dafür gesorgt werden, dass wenn ein einfacher Klick auf einen Navigationsmenupunkt keinen delegateNavigation
+	 * Aufruf durch den onBackForwardClick Ext.History change event handler auslöst.
+	 * Dies erfolgt am besten in CiNavigationView wenn bei einem onMenuSelect Aufruf zur vor KEIN onExternalNavigation
+	 * Aufruf stattgefunden hat, weil bei onMenuSelect keine weitere/gesonderte Navigationsereignisbehandlung durch 
+	 * AirHistoryManager erforderlich ist.
+	 */
 	onBackForwardClick: function(token) {
-		if(!Ext.isIE && token !== 'null') {
+		if(!Ext.isIE && token !== 'null' && this.isBackForward) {
+//			this.isBackForward = false;
 			this.delegateNavigation(token);
 			
 //			var options = { skipReload: true };

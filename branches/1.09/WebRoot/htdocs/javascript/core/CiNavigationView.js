@@ -235,6 +235,9 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	onMenuSelect: function(link, event, options) {
 		//add beforeNavigation handlers evtl. returning false to stop navigation
 		
+		//für back/forward Unterscheidung im AirHistoryManager. Oder als neuer options parameter, z.B. options.isExternal
+		var isExternalNavigation = options !== undefined;
+		
 		//evtl. Problem wenn nach Wizard Finish auf new record gelickt wird, dass dann die automatische Weiterleitung zur ersten Wizard Seite nicht geht.
 		if(this.previousSelected && link.getId() == this.previousSelected.getId() && (!options || !options.forceNavigation))//(options && !options.forceFireEvent) || 
 			return;
@@ -276,7 +279,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			AIR.AirApplicationManager.updateCookie({ navigation: link.getId() });//, true
 //			AIR.AirHistoryManager.add(link);
 			if(!options || !options.skipHistory)
-				AIR.AirApplicationManager.addHistoryItem(link);
+				AIR.AirApplicationManager.addHistoryItem(link, isExternalNavigation);
 			
 			
 			link.updateIcon('images/navmarker_on3.png');
@@ -317,7 +320,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 				var link = this.getComponent('pCiDetailsMenuItems').getComponent(target);//clCiDetails
 				
 				if(options) {
-					options.reset = true;
+//					options.reset = true;
+					//auskommentiert damit kein reload bei klick auf ci detail menupunkt. Siehe AirHistoryManager.onBackForwardClick
 				} else {
 					var options = {
 						reset: true
