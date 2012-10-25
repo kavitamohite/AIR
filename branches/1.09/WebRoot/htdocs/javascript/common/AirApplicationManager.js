@@ -159,7 +159,8 @@ AIR.AirApplicationManager = function() {
 //				sisoogleActiveStateListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_ACTIVE_Y_N } } },
 //				sisoogleGpscOwnerListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_GPSC_OWNER } } }
 				
-				ciTypeListStore: null
+				ciTypeListStore: null,
+				linkCiTypeListStore: null
 			};
 			
 			this.storeCount = 0;

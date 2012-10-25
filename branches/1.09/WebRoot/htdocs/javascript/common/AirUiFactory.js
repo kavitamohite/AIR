@@ -222,7 +222,7 @@ AIR.AirUiFactory = function() {
 			return appOwnerStewardFieldsets;
 		},
 		
-		createComplianceLinkTypeConfigPanel: function(labels) {
+		createComplianceLinkTypeConfigPanel: function(labels, linkCiTypeListStore) {//
 			var pComplianceLinkTypeConfig = {
 				xtype: 'panel',
 				id: 'pComplianceLinkTypeConfig',
@@ -255,17 +255,17 @@ AIR.AirUiFactory = function() {
     			        { boxLabel: labels.RelevanceICSITManagement, name: 'cbgComplianceLinkTypeRelevance'}//, width: 100 
 			        ]
 				},{
-					xtype: 'combo',
+					xtype: 'filterCombo',
 					id: 'cbLinkCiType',
-					store: new Ext.data.Store(),//AIR.AirStoreFactory.createItsecMassnahmenGapClassStore(),
+					store: linkCiTypeListStore,//AIR.AirStoreManager.getStoreByName('linkCiTypeListStore'),//new Ext.data.Store(),//
 					
 					anchor: '100%',
 //					flex: 7,
 //					margins: '5 0 0 0',
 					
 					fieldLabel: labels.LinkCiType,
-//			        valueField: 'gapPriority',
-//			        displayField: this.gapClassDisplayField,
+			        valueField: 'id',
+			        displayField: 'type',
 			        
 			        mode: 'local',
 			        triggerAction: 'all',

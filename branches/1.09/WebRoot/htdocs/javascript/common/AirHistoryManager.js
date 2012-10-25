@@ -96,7 +96,6 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 	 */
 	onBackForwardClick: function(token) {
 		if(!Ext.isIE && token !== 'null' && this.isBackForward) {
-//			this.isBackForward = false;
 			this.delegateNavigation(token);
 			
 //			var options = { skipReload: true };

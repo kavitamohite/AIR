@@ -2,26 +2,26 @@ package com.bayerbbs.applrepos.dto;
 
 public class LinkCITypeDTO {
 
-	private long zielotyp_gstoolid;
+	private long id;
 	private String type;
-	String language;
+	private String language;
+	private String tableId;
 	
-	public LinkCITypeDTO() {
-		
-	}
+	public LinkCITypeDTO() {}
 	
-	public LinkCITypeDTO(long zielotyp_gstoolid, String language, String type) {
-		this.zielotyp_gstoolid = zielotyp_gstoolid;
+	public LinkCITypeDTO(long id, String language, String type, String tableId) {
+		this.id = id;
 		this.language = language;
 		this.type = type;
+		this.tableId = tableId;
 	}
 
-	public long getZielotyp_gstoolid() {
-		return zielotyp_gstoolid;
+	public long getId() {
+		return id;
 	}
 
-	public void setZielotyp_gstoolid(long zielotyp_gstoolid) {
-		this.zielotyp_gstoolid = zielotyp_gstoolid;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getType() {
@@ -31,5 +31,20 @@ public class LinkCITypeDTO {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setTableId(String tableId) {
+		this.tableId = tableId;
+	}
+
+	public String getTableId() {
+		return tableId;
+	}
 }

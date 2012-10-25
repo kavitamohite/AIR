@@ -61,7 +61,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		
 		var labels = AIR.AirApplicationManager.getLabels();
-		var pComplianceLinkTypeConfig = AIR.AirUiFactory.createComplianceLinkTypeConfigPanel(labels);
+//		var linkCiTypeListStore = AIR.AirStoreManager.getStoreByName('linkCiTypeListStore');
+//		var pComplianceLinkTypeConfig = AIR.AirUiFactory.createComplianceLinkTypeConfigPanel(labels, linkCiTypeListStore);//, AIR.AirStoreManager.getStoreByName('linkCiTypeListStore')
+
 		
 		Ext.apply(this, {
 			plain: true,
@@ -174,8 +176,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							}
 						}]
 					},*/
-				        pComplianceLinkTypeConfig
-		        	,{
+//				        pComplianceLinkTypeConfig,
+			        {
+			        	xtype: 'AIR.ComplianceLinkView',
+			        	id: 'complianceLinkView',
+			        	hidden: true
+			        },
+		        	{
 						xtype: 'fieldset',
 						id: 'fsComplianceStatement',
 						title: labels.complianceWindowStatement,
@@ -1041,6 +1048,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		cbSignee.on('change', this.onSigneeChange, this);
 		dfDateOfApproval.on('select', this.onMassnahmeChange, this);
 		dfDateOfApproval.on('change', this.onDateChange, this);//change keyup
+		
+		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
+		complianceLinkView.on('linkCiSelect', this.onLinkCiSelect, this);
 	},
 	
 	onDateChange: function(field, newValue, oldValue) {
@@ -1290,7 +1300,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	onMassnahmenDetailLoaded: function(store, records, options) {
 		if(!this.windowRendered) {
-			this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').setVisible(true);
+//			this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').setVisible(true);
+			this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').setVisible(true);
 			
 			var fsComplianceStatement = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement');
 			fsComplianceStatement.setVisible(true);
@@ -1529,6 +1540,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	updateComplianceDetails: function(massnahme) {//compliantStatus, justification
 		this.loadedMassnahme = massnahme;
+		
+//		if(this.isMassnahmeLinked(massnahme)) {
+			this.config.massnahmeGstoolId = massnahme.massnahmeGstoolId;
+			this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').update(this.config);
+//		} else {//dann wie bisher:
 		
 		var fsComplianceStatement = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement');
 		var cbCompliantStatus = fsComplianceStatement.getComponent('pCompliantStatus').getComponent('cbCompliantStatus');
@@ -2081,6 +2097,24 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		return userName;
 	},
 	
+	onLinkCiSelect: function(linkCiId, linkCiTabledId) {//massnahmeGstoolId
+		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
+		var massnahmeGstoolId = grid.getSelectionModel().getSelected().get('massnahmeGstoolId');
+		
+		var params = {
+			ciId: linkCiId,
+			ciTabledId: linkCiTabledId,
+			massnahmeId: massnahmeGstoolId
+		};
+		
+//		frm_S_Massnahmen, deReference und cboLink_AfterUpdate
+	},
+	
+	isMassnahmeLinked: function(massnahme) {
+		return massnahme.refTableID && massnahme.refPKID;
+	},
+	
+	
 	update: function() {
 //		if(this.config.hasTemplate) {
 			var cbCompliantStatus = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement').getComponent('pCompliantStatus').getComponent('cbCompliantStatus');
@@ -2181,7 +2215,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		Util.setFieldLabel(cbSignee, labels.complianceWindowSignee);
 		
-		Util.setFieldLabel(this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').getComponent('cbLinkCiType'), labels.LinkCiType);
-		Util.setFieldLabel(this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').getComponent('cbLinkCi'), labels.LinkCi);
+		this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').updateLabels(labels);
+//		Util.setFieldLabel(this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').getComponent('cbLinkCiType'), labels.LinkCiType);
+//		Util.setFieldLabel(this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').getComponent('cbLinkCi'), labels.LinkCi);
 	}
 });

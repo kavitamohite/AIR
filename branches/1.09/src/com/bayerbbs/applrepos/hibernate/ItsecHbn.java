@@ -115,15 +115,15 @@ public class ItsecHbn {
 
 			StringBuffer sql = new StringBuffer();
 			
-			sql.append("SELECT");   
-			sql.append(" STA.Itsec_Massn_St_Id,"); 
+			sql.append("SELECT");
+			sql.append(" STA.Itsec_Massn_St_Id,");
 			sql.append(" MAS.Massnahme_Id AS Massnahme_Gstoolid,");
 			sql.append(" MAS.Katalog_Id,");
 			sql.append(" MAS.Massnahme_Nr,");
 			sql.append(" NVL(MTX.Massnahme_Titel,'') AS Massnahme_Titel,");
 			sql.append(" MAS.Link,");
 			sql.append(" STA.Status_Id,");
-			sql.append(" CASE GRP.Itsec_Grp_Gstoolid"); 
+			sql.append(" CASE GRP.Itsec_Grp_Gstoolid");
 			sql.append("      WHEN ").append(itsecGruppenId).append(" THEN NULL ");
 			sql.append("      ELSE GRP.Itsec_Gruppe ");
 			sql.append(" END AS Itsec_Gruppe,");
@@ -152,10 +152,10 @@ public class ItsecHbn {
 			sql.append(" NVL(STA.Risk_Analysis_As_Freetext, 0) AS Risk_Analysis_As_Freetext,");
 			sql.append(" STA.Gap_End_Date_Increased,");
 			sql.append(" STA.Currency");
-			sql.append(" FROM     ITSEC_MASSN_STATUS STA"); 
-			sql.append("   INNER JOIN ITSEC_GRUPPE GRP ON STA.Zob_Id=GRP.Itsec_Grp_Gstoolid"); 
-			sql.append("   INNER JOIN ITSEC_MASSN MAS ON MAS.Massnahme_Id=STA.Massnahme_Gstoolid"); 
-			sql.append("  LEFT OUTER JOIN ITSEC_MASSNT MTX ON MAS.Massnahme_Id=MTX.Massnahme_Id AND MTX.Langu='de'"); 
+			sql.append(" FROM     ITSEC_MASSN_STATUS STA");
+			sql.append("   INNER JOIN ITSEC_GRUPPE GRP ON STA.Zob_Id=GRP.Itsec_Grp_Gstoolid");
+			sql.append("   INNER JOIN ITSEC_MASSN MAS ON MAS.Massnahme_Id=STA.Massnahme_Gstoolid");
+			sql.append("  LEFT OUTER JOIN ITSEC_MASSNT MTX ON MAS.Massnahme_Id=MTX.Massnahme_Id AND MTX.Langu='de'");
 			sql.append(" WHERE    STA.Itsec_Massn_St_Id = ").append(itsecMassnahmenStatusId);
 			
 			

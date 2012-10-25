@@ -38,10 +38,10 @@ public class ComplianceHbn {
 
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT   Zielotyp_Gstoolid, Zielobjekt_Typ, Zielobjekt_Typ_En");
-		// sql.append("DECODE('").append(language).append("', 'de', Zielobjekt_Typ, Zielobjekt_Typ_En) AS Type");
-		sql.append("FROM     ITSEC_ZIELOBJ_TYP");
-		sql.append("WHERE    Tabelle_Id <> 0");
+		sql.append("SELECT   Zielotyp_Gstoolid, Zielobjekt_Typ, Zielobjekt_Typ_En, tabelle_id ");
+		// sql.append("DECODE('").append(language).append("', 'de', Zielobjekt_Typ, Zielobjekt_Typ_En) AS Type ");
+		sql.append("FROM     ITSEC_ZIELOBJ_TYP ");
+		sql.append("WHERE    Tabelle_Id <> 0 ");
 		sql.append("ORDER BY Sort");
 
 		try {
@@ -57,9 +57,10 @@ public class ComplianceHbn {
 					long zielotyp_gstoolid = rset.getLong("ZIELOTYP_GSTOOLID");
 					String typeDE = rset.getString("ZIELOBJEKT_TYP");
 					String typeEN = rset.getString("ZIELOBJEKT_TYP_EN");
+					String tableId = rset.getString("TABELLE_ID");
 					
-					listResult.add(new LinkCITypeDTO(zielotyp_gstoolid, "de", typeDE));
-					listResult.add(new LinkCITypeDTO(zielotyp_gstoolid, "en", typeEN));
+					listResult.add(new LinkCITypeDTO(zielotyp_gstoolid, "de", typeDE, tableId));
+					listResult.add(new LinkCITypeDTO(zielotyp_gstoolid, "en", typeEN, tableId));
 				}
 				commit = true;
 			}
@@ -84,7 +85,7 @@ public class ComplianceHbn {
 		return listResult;
 	}
 	
-	public static LinkCIDTO[] getArrayFromListLinkCI(List<LinkCIDTO> input) {
+	public static LinkCIDTO[] getArrayFromListLinkCIList(List<LinkCIDTO> input) {
 		LinkCIDTO output[] = new LinkCIDTO[input.size()];
 		int i = 0;
 		for (final LinkCIDTO data : input) {
@@ -96,7 +97,7 @@ public class ComplianceHbn {
 
 
 
-	public static List<LinkCIDTO> findLinkCI(long zielotypGSToolId, long itSetId, long applicationId, long massnahmeId, long applicationCat1Id) {
+	public static List<LinkCIDTO> findLinkCIList(long zielotypGSToolId, long itSetId, long applicationId, long massnahmeId, long applicationCat1Id) {
 
 		List<LinkCIDTO> listResult = new ArrayList<LinkCIDTO>();
 		
@@ -108,7 +109,8 @@ public class ComplianceHbn {
 		Connection conn = null;
 		
 		StringBuffer sql = new StringBuffer();
-		if (5 == zielotypGSToolId) {
+		//TODO: prüfen ob if richtig:
+		if (5 == zielotypGSToolId || -10006 == zielotypGSToolId || -10013 == zielotypGSToolId || -10007 == zielotypGSToolId) {
 			sql.append("");
 			// ANWENDUNG:
 			sql.append("SELECT   CI.Anwendung_Id AS Id,");
