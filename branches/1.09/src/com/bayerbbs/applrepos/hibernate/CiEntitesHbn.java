@@ -565,7 +565,9 @@ public class CiEntitesHbn {
 			stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			rs.absolute(start + 1);//relative
+			if (0 != start) { 
+				rs.absolute(start + 1);//relative
+			}
 //			rs.setFetchSize(limit);
 			
 			DwhEntityDTO dwhEntity = null;
