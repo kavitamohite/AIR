@@ -1540,6 +1540,17 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	updateComplianceDetails: function(massnahme) {//compliantStatus, justification
 		this.loadedMassnahme = massnahme;
+
+
+		var cbgRelevances = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').getComponent('cbgComplianceLinkTypeRelevance');
+		
+		var values = [];
+		values[0] = massnahme.secuRelevance == '-1' ? true : false;
+		values[1] = massnahme.accsRelevance == '-1' ? true : false;
+		values[2] = massnahme.itopRelevance == '-1' ? true : false;
+		
+		cbgRelevances.setValue(values);
+		
 		
 //		if(this.isMassnahmeLinked(massnahme)) {
 			this.config.massnahmeGstoolId = massnahme.massnahmeGstoolId;

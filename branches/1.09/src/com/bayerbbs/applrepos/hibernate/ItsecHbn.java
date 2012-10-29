@@ -29,6 +29,8 @@ public class ItsecHbn {
 	
 	public static List<ItsecMassnahmenDTO> findItsecMassnahmen(Long tableId, Long ciId, String language) {
 		
+		long itVerbundZobId = 10002;
+		
 		ArrayList<ItsecMassnahmenDTO> listDTO = new ArrayList<ItsecMassnahmenDTO>();
 		
 		if (null != tableId && null != ciId && StringUtils.isNotNullOrEmpty(language)) {
@@ -52,7 +54,13 @@ public class ItsecHbn {
 			
 			sql.append(" STA.Massnahme_Gstoolid,");
 			sql.append(" STA.Zob_Id,");
-			sql.append(" MAS.Link");
+			sql.append(" MAS.Link,");
+			
+			// sub-select für die choco-Funktion
+			sql.append("(SELECT COUNT(*) AS Cnt FROM ITSEC_MOD MOD INNER JOIN ITVERBUND_ITSECGRP V2G ON MOD.Itsec_Gruppe_Id=V2G.Itsec_Gruppe_Zobid");
+			sql.append(" INNER JOIN ITSEC_GRUPPE GRP ON MOD.Itsec_Gruppe_Id=GRP.Itsec_Grp_Gstoolid WHERE MOD.Massnahme_Id = STA.Massnahme_Gstoolid AND");
+			sql.append(" V2G.It_Verbund_Zob_Id1 = ").append(itVerbundZobId).append(" AND GRP.Zielotyp_Gstoolid = 6) AS Choco");
+			
 			sql.append(" FROM     TABLE(pck_SISec.FT_Compliance(").append(tableId).append(",").append(ciId).append(")) STA ");
 			sql.append(" INNER JOIN ITSEC_MASSN MAS ON STA.Massnahme_Gstoolid=MAS.Massnahme_Id"); 
 			sql.append(" INNER JOIN ITSEC_MASSN_STWERT STW ON STW.Itsec_Massn_Wertid=NVL(pck_SISec.EffStatusId(STA.Itsec_Massn_St_Id), 5)"); 
@@ -81,6 +89,7 @@ public class ItsecHbn {
 						dto.setMassnahmeGstoolId(rsSet.getLong("MASSNAHME_GSTOOLID"));
 						dto.setZobId(rsSet.getLong("ZOB_ID"));
 						dto.setMassnahmeLink(rsSet.getString("Link"));
+						dto.setChocoMerkmal(rsSet.getInt("Choco"));	// Choco-Merkmal, ob diese Massnahme auf eine Funktion verlinkt werden darf
 						listDTO.add(dto);
 					}
 				}

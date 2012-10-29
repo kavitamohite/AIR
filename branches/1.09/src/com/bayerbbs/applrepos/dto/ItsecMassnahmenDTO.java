@@ -15,6 +15,8 @@ public class ItsecMassnahmenDTO {
 	
 	private String massnahmeLink;
 	
+	private Integer chocoMerkmal; // Merkmal, ob diese Massnahme auf eine Funktion "verlinkt" werden darf
+	
 	
 	public Long getItsecMassnahmenStatusId() {
 		return itsecMassnahmenStatusId;
@@ -63,6 +65,12 @@ public class ItsecMassnahmenDTO {
 	}
 	public void setMassnahmeLink(String massnahmeLink) {
 		this.massnahmeLink = massnahmeLink;
+	}
+	public Integer getChocoMerkmal() {
+		return chocoMerkmal;
+	}
+	public void setChocoMerkmal(Integer chocoMerkmal) {
+		this.chocoMerkmal = chocoMerkmal;
 	}
 	
 }
