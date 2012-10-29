@@ -431,6 +431,8 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onBARrelevanceChange: function(rgb, checkedRadio) {
+		if(!checkedRadio) return;//wenn rgbBarRelevance aufgrund des CI types nicht sichtbar ist 
+		
 		if(checkedRadio.inputValue === 'U')
 			rgb.setValue(AIR.AirApplicationManager.getAppDetail().barRelevance);
 		
@@ -622,20 +624,42 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	update: function(data) {
 		//this.updateAccessMode(data);
+		var isApplication = AAM.getTableId() === AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION;
 		
-//		selectedCiCat1Id = data.applicationCat1Id;//muss gesetzt werden für andere Codestellen?
-		this.getComponent('objectType').setValue(data.applicationCat1Id);//selectedCiCat1Id
+		this.getComponent('objectType').setValue(data.applicationCat1Id);
 		this.getComponent('applicationId').setValue(data.applicationId);
 		this.getComponent('applicationAlias').setValue(data.applicationAlias);
-		
-
 		this.getComponent('applicationVersion').setValue(data.applicationVersion);
 		
+		
 		var rgBARrelevance = this.getComponent('rgBARrelevance');
-		if(data.barRelevance.length === 0)
-			data.barRelevance = 'U';
+		var tfBarApplicationId = this.getComponent('barApplicationId');
+		
+		if(isApplication) {
+			rgBARrelevance.setVisible(true);
+			
+			if(data.barRelevance.length === 0)
+				data.barRelevance = 'U';
+	
+			rgBARrelevance.setValue(data.barRelevance);
+			
+			
+			tfBarApplicationId.setVisible(true);
+			if(data.barRelevance === 'Y') {
+				tfBarApplicationId.setValue(data.barApplicationId);
+				rgBARrelevance.disable();
+			} else {
+				tfBarApplicationId.setValue('');
+			}
+		} else {
+			rgBARrelevance.reset();
+			rgBARrelevance.setVisible(false);
+			
+			tfBarApplicationId.reset();
+			tfBarApplicationId.setVisible(false);
+		}
+		
 
-		rgBARrelevance.setValue(data.barRelevance);
 		
 		
 		var cbApplicationCat2 = this.getComponent('applicationCat2');
@@ -682,32 +706,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //			this.getComponent('organisationalScope').setValue('');
 //		}
 		
-		var lvOrganisationalScope = this.getComponent('organisationalScope');//.getComponent('fsOrganisationalScope')
-		lvOrganisationalScope.clearSelections(true);
-		var taOrganisationalScope = this.getComponent('organisationalScopeHidden');//.getComponent('fsOrganisationalScope')
-		taOrganisationalScope.reset();
-		
-		if(data.organisationalScope.length > 0) {
-			var scopes = data.organisationalScope.split(',');
-			var store = lvOrganisationalScope.getStore();
-			
-			
-			if(AIR.AirAclManager.isRelevance(lvOrganisationalScope, data)) {//lvApplicationUsingRegions.isVisible()
-				Ext.each(scopes, function(item, index, all) {
-					var r = store.getAt(store.findExact('name', item));
-					lvOrganisationalScope.select(r, true, true);//r
-				});
-			} else {
-				var organisationalScope = data.organisationalScope;
-				
-				Ext.each(scopes, function(item, index, all) {
-					var r = store.getAt(store.findExact('name', item));
-					organisationalScope = organisationalScope.replace(item, r.data.name);
-				});
-				taOrganisationalScope.setValue(organisationalScope.replace(/,/g,'\n'));//data.licenseUsingRegions.replace(',','\n')
-			}
-		}
-		
+
 		
 		
 //		selectedOperationalStatusId = data.operationalStatusId;
@@ -725,15 +724,41 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		this.updateAccessMode(data);
 		
+		var lvOrganisationalScope = this.getComponent('organisationalScope');//.getComponent('fsOrganisationalScope')
+		lvOrganisationalScope.clearSelections(true);
+		var taOrganisationalScope = this.getComponent('organisationalScopeHidden');//.getComponent('fsOrganisationalScope')
+		taOrganisationalScope.reset();
 		
-		if(data.barRelevance === 'Y') {
-			this.getComponent('barApplicationId').setValue(data.barApplicationId);
-			rgBARrelevance.disable();
+		if(isApplication) {
+			//durch AirAclManager erledigt 
+//			lvOrganisationalScope.setVisible(true);
+//			taOrganisationalScope.setVisible(true);
+			
+			if(data.organisationalScope.length > 0) {
+				var scopes = data.organisationalScope.split(',');
+				var store = lvOrganisationalScope.getStore();
+				
+				
+				if(AIR.AirAclManager.isRelevance(lvOrganisationalScope, data)) {//lvApplicationUsingRegions.isVisible()
+					Ext.each(scopes, function(item, index, all) {
+						var r = store.getAt(store.findExact('name', item));
+						lvOrganisationalScope.select(r, true, true);//r
+					});
+				} else {
+					var organisationalScope = data.organisationalScope;
+					
+					Ext.each(scopes, function(item, index, all) {
+						var r = store.getAt(store.findExact('name', item));
+						organisationalScope = organisationalScope.replace(item, r.data.name);
+					});
+					taOrganisationalScope.setValue(organisationalScope.replace(/,/g,'\n'));//data.licenseUsingRegions.replace(',','\n')
+				}
+			}
 		} else {
-			this.getComponent('barApplicationId').setValue('');
+			lvOrganisationalScope.setVisible(false);
+			taOrganisationalScope.setVisible(false);
 		}
 		
-			
 		this.loadApplicationBusinessProcesses(data.applicationId);
 		
 		//kein Effekt zur Verhinderung der Verkleinerung der combo Breite nachdem wenn auf Contacts die Primary Person

@@ -7,10 +7,11 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 
 	        items: [{
 	        	xtype: 'button',
-	        	id: 'bUpdateCiSearchResult',
-	        	
-	        	cls: 'x-btn-text-icon',
-	        	icon: 'images/refresh_16x16.png',
+	        	id: 'bExpandAdvSearchParams',//bUpdateCiSearchResult
+	    		enableToggle: true,
+	    		
+//	        	cls: 'x-btn-text-icon',
+//	        	icon: 'images/refresh_16x16.png',
 	        	
 	        	text: 'Update'
 	        },{
@@ -19,6 +20,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 
 				enableTabScroll: true,
 				resizeTabs: true,
+				tabWidth: 145,
 				
 	            plain: true,
 	            defaults: { autoScroll: true },
@@ -61,7 +63,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			
 			this.setVisible(true);//tpCiSearchResultTables
 			tpCiSearchResultTables.add(ciResultGrid);
-			tpCiSearchResultTables.getItem(ciResultGridId).setTitle(ciResultGridId);
+			tpCiSearchResultTables.getItem(ciResultGridId).setTitle(this.getTabTitle(ciResultGridId) + '_' + tabCount);//ciResultGridId
 			tpCiSearchResultTables.setActiveTab(ciResultGridId);
 			this.updateColumnLabels(AIR.AirApplicationManager.getLabels());
 
@@ -80,6 +82,25 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		delete params.start;
 		delete params.limit;
 		ciResultGrid.setPagingParams(params);
+	},
+	
+	getTabTitle: function(ciResultGridId) {
+		var searchType = ciResultGridId.substring(0, ciResultGridId.indexOf('_'));
+		var label;
+		
+		switch(searchType) {
+			case AC.SEARCH_TYPE_SEARCH:
+				label = AAM.getLabels().searchTypeSearch;
+				break;
+			case AC.SEARCH_TYPE_ADV_SEARCH:
+				label = AAM.getLabels().searchTypeAdvancedSearch;
+				break;
+			case AC.SEARCH_TYPE_OU_SEARCH:
+				label = AAM.getLabels().searchTypeOuSearch;
+				break;
+		}
+		
+		return label;
 	},
 	
 	onRowClick: function(grid, rowIndex, e) {
@@ -150,8 +171,29 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		return params;
 	},
 	
+	getCurrentSearchType: function() {
+		var tab = this.getComponent('tpCiSearchResultTables').getActiveTab();
+		
+		return tab.getId() || null;
+	},
+	
 	updateLabels: function(labels) {
-		this.getComponent('bUpdateCiSearchResult').setText(labels.bUpdateCiSearchResult);
+//		this.getComponent('bUpdateCiSearchResult').setText(labels.bUpdateCiSearchResult);
+		
+		var bExpandAdvSearchParams = this.getComponent('bExpandAdvSearchParams').setText(labels.bExpandAdvSearchParams);
+		if(bExpandAdvSearchParams.pressed) {
+			bExpandAdvSearchParams.setText(labels.bExpandAdvSearchParams);
+		} else {
+			bExpandAdvSearchParams.setText(labels.bCollapseAdvSearchParams);
+		}
+		
+		var tabs = this.getComponent('tpCiSearchResultTables').items.items;
+		if(tabs) {
+			for(var i = 0; i < tabs.length; i++) {
+				var title = this.getTabTitle(tabs[i].getId()) + '_' + (i + 1);
+				tabs[i].setTitle(title);
+			}
+		}
 		
 		this.updateColumnLabels(labels);
 	},

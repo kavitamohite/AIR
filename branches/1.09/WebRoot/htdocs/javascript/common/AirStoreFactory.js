@@ -951,6 +951,11 @@ AIR.AirStoreFactory = function() {
 			        {name: 'gapResponsible'},
 			        {name: 'itSet'},
 			        {name: 'bUpdateCiSearchResult'},
+			        {name: 'bExpandAdvSearchParams'},
+			        {name: 'bCollapseAdvSearchParams'},
+			        {name: 'searchTypeSearch'},
+			        {name: 'searchTypeAdvancedSearch'},
+			        {name: 'searchTypeOuSearch'},
 			        
 			        {name: 'label_menu_loggedinas'},
 			        {name: 'label_menu_myplacemenuitem'},
@@ -1153,6 +1158,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'button_general_search'},
 			        {name: 'button_general_next'},
 			        {name: 'button_general_copy'},
+			        {name: 'newSearch'},
 			        
 			        // general
 			        {name: 'gerneral_message_loading'},

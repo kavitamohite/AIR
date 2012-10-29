@@ -10,11 +10,12 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			title: 'Advanced Search Options',
 		    padding: 10,
 		    border: false,
-		    hidden: true,
+//		    hidden: true,
 //		    layout: 'column',
 			
 			autoScroll: true,
 			collapsible: true,
+			collapsed: false,
 		    
 		    bodyStyle: {
 		    	backgroundColor: panelbgcolor,

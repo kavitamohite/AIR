@@ -235,7 +235,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	onMenuSelect: function(link, event, options) {
 		//add beforeNavigation handlers evtl. returning false to stop navigation
 		
-		//für back/forward Unterscheidung im AirHistoryManager. Oder als neuer options parameter, z.B. options.isExternal
+		//Firefox: für back/forward Unterscheidung im AirHistoryManager. Oder als neuer options parameter, z.B. options.isExternal
 		var isExternalNavigation = options !== undefined;
 		
 		//evtl. Problem wenn nach Wizard Finish auf new record gelickt wird, dass dann die automatische Weiterleitung zur ersten Wizard Seite nicht geht.

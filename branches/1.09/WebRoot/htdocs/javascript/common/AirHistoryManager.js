@@ -50,8 +50,9 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 			this.ciTitleView.onHistoryChange(this.history, link.getId(), this.historyIndex);//this.historyIndex
 		} else {
 			this.isBackForward = isExternalNavigation;// ? isExternalNavigation : true;
+			this.skip = true;
 			Ext.History.add(link.getId());
-			this.isBackForward = true;
+//			this.isBackForward = true;
 		}
 	},
 	
@@ -93,17 +94,26 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 	 * Dies erfolgt am besten in CiNavigationView wenn bei einem onMenuSelect Aufruf zur vor KEIN onExternalNavigation
 	 * Aufruf stattgefunden hat, weil bei onMenuSelect keine weitere/gesonderte Navigationsereignisbehandlung durch 
 	 * AirHistoryManager erforderlich ist.
+	 * 
+	 * siehe auch CiNavigationView.onMenuSelect(): var isExternalNavigation = options !== undefined;
 	 */
 	onBackForwardClick: function(token) {
-		if(!Ext.isIE && token !== 'null' && this.isBackForward) {
-			this.delegateNavigation(token);
+		if(this.skip && !Ext.isIE) {
+			this.skip = false;
+			return;
+		}
+		
+		if(!Ext.isIE && token !== 'null') {// && this.isBackForward
+			
+			this.delegateNavigation(token);//, this.isBackForward
+			this.isBackForward = false;
 			
 //			var options = { skipReload: true };
 //			this.fireEvent('externalNavigation', this, null, token, options);
 		}
 	},
 	
-	delegateNavigation: function(token) {
+	delegateNavigation: function(token, isBackForward) {
 		var viewId = token ? token : this.history[this.historyIndex].getId();
 		
 		var cbm = AAM.getCallbackManager();
@@ -116,6 +126,10 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 		} else {
 			options = { skipHistory: true, forceNavigation: true };
 		}
+		
+		//unterscheiden ob eine Navigation von einem Menupunkt aus oder durch back/forward
+		if(isBackForward)
+			options.isBackForward = isBackForward;
 		
 		if(specificCallback) {
 			options.viewId = viewId;

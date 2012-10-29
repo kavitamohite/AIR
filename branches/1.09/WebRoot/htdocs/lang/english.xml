@@ -24,6 +24,7 @@
 		<button_general_search>Search</button_general_search>
 		<button_general_next>Next</button_general_next>
 		<button_general_copy>Copy</button_general_copy>
+		<newSearch>New Search</newSearch>
 		
 		<dynamicWindowOKButtonText>OK</dynamicWindowOKButtonText>
 		<notRelevant>not relevant</notRelevant>
@@ -44,6 +45,11 @@
 		<gapResponsible>Gap Responsible</gapResponsible>
 		<itSet>IT Set</itSet>
 		<bUpdateCiSearchResult>Update Search</bUpdateCiSearchResult>
+		<bExpandAdvSearchParams>Expand Advanced Search</bExpandAdvSearchParams>
+		<bCollapseAdvSearchParams>Collapse Advanced Search</bCollapseAdvSearchParams>
+		<searchTypeSearch>Search</searchTypeSearch>
+		<searchTypeAdvancedSearch>Advanced Search</searchTypeAdvancedSearch>
+		<searchTypeOuSearch>Ou Search</searchTypeOuSearch>
 		
 		<!-- Label: Menu -->
 		<label_menu_myplacemenuitem>My Place</label_menu_myplacemenuitem>
@@ -93,7 +99,7 @@
 			<advancedsearchpluslink>more options</advancedsearchpluslink>
 			<advancedsearchminuslink>less options</advancedsearchminuslink>
 			
-		<advsearchPanelTitle>Advanced Search Options</advsearchPanelTitle>
+		<advsearchPanelTitle>Advanced Search</advsearchPanelTitle>
 		<advsearchObjectType>Type</advsearchObjectType>
 		<advsearchdescription>Description</advsearchdescription>
 		

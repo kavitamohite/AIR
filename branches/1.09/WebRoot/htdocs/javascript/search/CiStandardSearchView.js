@@ -12,7 +12,7 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 				
 				layout: 'table',
 			    layoutConfig: {
-			    	columns: 2
+			    	columns: 3//2
 			    },
 				
 	//			layout: 'column',
@@ -23,25 +23,42 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        	
 		        	emptyText: 'Enter CI name or alias...',
 		        	width: 300,
-		        	height: 28,
+//		        	height: 28,
 		        	
 		        	hideLabel: true,
-		        	padding: '5',
+		        	padding: 5,
 		        	
 		        	hasSearch: false,
 		        	maskRe: /[0-9a-zA-Z%#=\+\-\_\/\\.:*? ]/,
 		        	maxLength: 656
 		        }, {
-					xtype: 'commandlink',
+					xtype: 'button',//commandlink
 					id: 'clSearch',
 					
-	                img: img_Search_offMouse,
+//	                img: img_Search_offMouse,
+					
+		        	cls: 'x-btn-text-icon',
+		        	icon: 'images/search_16x16.png',
+		        	text: '',
 					
 					style: {
-						marginLeft: 2
+						marginLeft: 5//2
 //						marginTop: 15
 					}
-				}, {
+				},{
+		        	xtype: 'button',
+		        	id: 'bUpdateCiSearchResult',
+		        	hidden: true,
+		        	
+		        	cls: 'x-btn-text-icon',
+		        	icon: 'images/refresh_16x16.png',
+		        	
+		        	text: 'Update',
+		        	
+					style: {
+						marginLeft: 5
+					}
+		        }, {
 		            xtype: 'radiogroup',
 					id: 'rbgQueryMode',
 					hidden: true,
@@ -53,8 +70,8 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 		            }, { 
 		            	id: 'rbgQueryModeExact', boxLabel: 'Exact', name: 'queryMode', inputValue: 'EXACT'
 		            }]
-				}, {
-					xtype: 'commandlink',
+				}/*, {
+					xtype: 'commandlink',//
 					id: 'clAdvancedSearch',
 					
 					text: 'Advanced Search',
@@ -64,7 +81,7 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 	                style: {
 	                	float: 'right'
 	                }
-				}]
+				}*/]
 	        },{
 		    	xtype: 'AIR.CiAdvancedSearchView',
 		    	id: 'ciAdvancedSearchView',
@@ -85,6 +102,11 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	updateLabels: function(labels) {
+		var clSearch = this.getComponent('pSearchField').getComponent('clSearch');
+		clSearch.setText(labels.newSearch);
+		
+		this.getComponent('pSearchField').getComponent('bUpdateCiSearchResult').setText(labels.bUpdateCiSearchResult);
+		
 		var ciAdvancedSearchView = this.getComponent('ciAdvancedSearchView');
 		ciAdvancedSearchView.updateLabels(labels);
 	},

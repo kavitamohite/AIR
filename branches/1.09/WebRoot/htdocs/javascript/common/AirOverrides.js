@@ -36,6 +36,14 @@ Ext.override(Ext.form.DateField, {
 	}
 });
 
+Ext.override(Ext.History, {
+    handleStateChange : function(token) {
+        currentToken = token;
+        Ext.History.fireEvent('change', token);
+    }
+});
+
+
 //Ext.override(Ext.form.TextField, {
 //	setValue: function() {
 //        if(this.emptyText && this.el && !Ext.isEmpty(v)){

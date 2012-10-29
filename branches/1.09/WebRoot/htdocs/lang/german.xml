@@ -24,6 +24,7 @@
 		<button_general_search>Suchen</button_general_search>
 		<button_general_next>Weiter</button_general_next>
 		<button_general_copy>Kopieren</button_general_copy>
+		<newSearch>Neue Suche</newSearch>
 		
 		<dynamicWindowOKButtonText>OK</dynamicWindowOKButtonText>
 		<notRelevant>nicht relevant</notRelevant>
@@ -45,6 +46,11 @@
 		<gapResponsible>Gap Verantwortlicher</gapResponsible>
 		<itSet>IT Set</itSet>
 		<bUpdateCiSearchResult>Suche aktualisieren</bUpdateCiSearchResult>
+		<bExpandAdvSearchParams>Erweiterte Suche aufklappen</bExpandAdvSearchParams>
+		<bCollapseAdvSearchParams>Erweiterte Suche zuklappen</bCollapseAdvSearchParams>
+		<searchTypeSearch>Suche</searchTypeSearch>
+		<searchTypeAdvancedSearch>Erweiterte Suche</searchTypeAdvancedSearch>
+		<searchTypeOuSearch>Ou Suche</searchTypeOuSearch>
 		
 		<!-- Label: Menu -->
 		<label_menu_myplacemenuitem>Arbeitsplatz</label_menu_myplacemenuitem>

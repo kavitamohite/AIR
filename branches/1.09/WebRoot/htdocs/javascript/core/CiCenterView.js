@@ -258,7 +258,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 
 					this.getLayout().setActiveItem('ciSearchView');
 					
-					ciSearchView.handleSearch();
+					ciSearchView.handleSearch(link);
 					
 					if(options && options.callback)
 						options.callback();
@@ -283,7 +283,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					
 					this.getLayout().setActiveItem('ciSearchView');
 					
-					ciSearchView.handleUiAdvancedSearch();
+					ciSearchView.handleUiAdvancedSearch(link);
 					
 					if(options && options.callback)
 						options.callback();
@@ -548,16 +548,11 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_CHANGED', callbackMap, null, null, options);
 			dynamicWindow.show();
 		} else if(ciCreateWizardView && ciCreateWizardView.isWizardStarted()) {
-			var isCiInvalid = AIR.AirAclManager.listRequiredFields(AIR.AirApplicationManager.getAppDetail()).length > 0;
-			var options = {
-				isCiInvalid: isCiInvalid
-			};
-			
 			var callbackMap = {
 				yes: callback
 			};
 			
-			var dynamicYesNoWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CANCEL_WIZARD', callbackMap, null, null, options);
+			var dynamicYesNoWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CANCEL_WIZARD', callbackMap, null, null);
 			dynamicYesNoWindow.show();
 		} else {
 			callback();
