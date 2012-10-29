@@ -842,7 +842,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 			isVisible = params.isAdvSearchExt;
 		} else {
 			var pAdditionalSearchAttributes = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView').getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes');
-			isVisible = pAdditionalSearchAttributes.isVisible();
+			isVisible = pAdditionalSearchAttributes.isVisible();//oder immer true
 		}
 		
 		return isVisible;

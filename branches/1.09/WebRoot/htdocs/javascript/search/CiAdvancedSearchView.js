@@ -469,7 +469,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	var fsCIOwner = pAdvancedSearch.getComponent('fs' + this.ownerId + 'CIOwner');
     	var fsApplicationOwner = pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationOwner');
     	var fsApplicationSteward = pAdvancedSearch.getComponent('fs' + this.ownerId + 'ApplicationSteward');
+    	
     	var rgAdvSearchBARrelevance = pAdvancedSearch.getComponent('rgAdvSearchBARrelevance');
+    	var lvAdvSearchOrganisationalScope = pAdvancedSearch.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('lvAdvSearchOrganisationalScope');
+    	
     	var label;
     	
     	
@@ -498,7 +501,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	fsCIOwner.setTitle(label);
 		fsApplicationOwner.setVisible(isCat1AppOrNone);
 		fsApplicationSteward.setVisible(isCat1AppOrNone);
+		
 		rgAdvSearchBARrelevance.setVisible(isCat1AppOrNone);
+		lvAdvSearchOrganisationalScope.setVisible(isCat1AppOrNone);
+		
     	pAdvancedSearch.doLayout();
 	},
 	
