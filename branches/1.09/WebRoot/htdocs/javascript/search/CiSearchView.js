@@ -634,8 +634,8 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 			
 			if(isAdditionalSearchAttributes || this.isAdditionalSearchAttributesActive()) {
 	//			height += ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getHeight();// - 300;//300;//250
-				var h = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getHeight();
-				height += h;
+				var pAdditionalSearchAttributes = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes');
+				height += pAdditionalSearchAttributes.getHeight();
 			}
 		}
 		
@@ -761,14 +761,15 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		} else {
 			options = { forceNavigation: true, skipHistory: true };
 		}
-//		var options = { forceNavigation: true };
 		
+		this.updateParams(params, searchType);
+		if(options.viewId && options.viewId !== viewId)
+			options.viewId = viewId;
+				
 		//Bugfix: wenn auf Adv. Search mehr als eine Suche stattgefunden hat und man wieder z.b. auf Search im Menu
 		//klickt, springt er ohne folgendes if wieder zurück zu Adv. Search.
-//		if(viewId === options.viewId)
-//		if(options.isBackForward)
-			this.fireEvent('externalNavigation', this, tab, viewId, options);
-		this.updateParams(params, searchType);
+		this.fireEvent('externalNavigation', this, tab, viewId, options);
+//		this.updateParams(params, searchType);
 	},
 	
 	updateParams: function(params, searchType) {

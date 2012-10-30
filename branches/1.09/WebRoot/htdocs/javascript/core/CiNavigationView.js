@@ -234,10 +234,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	
 	onMenuSelect: function(link, event, options) {
 		//add beforeNavigation handlers evtl. returning false to stop navigation
-		
-		//Firefox: für back/forward Unterscheidung im AirHistoryManager. Oder als neuer options parameter, z.B. options.isExternal
-		var isExternalNavigation = options !== undefined;
-		
+				
 		//evtl. Problem wenn nach Wizard Finish auf new record gelickt wird, dass dann die automatische Weiterleitung zur ersten Wizard Seite nicht geht.
 		if(this.previousSelected && link.getId() == this.previousSelected.getId() && (!options || !options.forceNavigation))//(options && !options.forceFireEvent) || 
 			return;
@@ -278,9 +275,21 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			
 			AIR.AirApplicationManager.updateCookie({ navigation: link.getId() });//, true
 //			AIR.AirHistoryManager.add(link);
-			if(!options || !options.skipHistory)
-				AIR.AirApplicationManager.addHistoryItem(link, isExternalNavigation);
 			
+			
+//			for(var key in options) {
+//			   var value = options[key];
+//			   
+//			   if(typeof value !== 'function')
+//				   Util.log('CiNavigationView::onMenuSelect() options: link='+link.getId()+' '+key+'='+value);
+//			   else
+//				   Util.log('CiNavigationView::onMenuSelect() options: link='+link.getId() + ' key='+key);
+//			}
+			if(!options || !options.skipHistory) {
+//				Util.log('CiNavigationView::onMenuSelect() adding history: link='+link.getId());
+				
+				AIR.AirApplicationManager.addHistoryItem(link);
+			}
 			
 			link.updateIcon('images/navmarker_on3.png');
 			if(this.previousSelected && link.getId() != this.previousSelected.getId())
@@ -340,13 +349,13 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			case 'clMyPlaceMyCIs':
 			case 'clMyPlaceMyCIsDelegate':
 				var link = this.getComponent('pMyPlaceMenuItems').getComponent(target);
-				link.fireEvent('click', link);
+				link.fireEvent('click', link, null, options);
 				break;
 			case 'clCiCreateCopyFrom':
 			case 'clCiDelete':
 			case 'clCiCreateWizard':
 				var link = this.getComponent('pCreateDeleteMenuItems').getComponent(target);
-				link.fireEvent('click', link);
+				link.fireEvent('click', link, null, options);
 				break;
 			default: break;
 		}
