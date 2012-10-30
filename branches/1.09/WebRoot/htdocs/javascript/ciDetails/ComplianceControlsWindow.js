@@ -2116,15 +2116,23 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		return userName;
 	},
 	
-	onLinkCiSelect: function(linkCiId, linkCiTabledId) {//massnahmeGstoolId
+	onLinkCiSelect: function(linkCiId, linkCiTableId) {//massnahmeGstoolId
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 		var massnahmeGstoolId = grid.getSelectionModel().getSelected().get('massnahmeGstoolId');
 		
 		var params = {
-			ciId: linkCiId,
-			ciTabledId: linkCiTabledId,
-			massnahmeId: massnahmeGstoolId
+		 	cwid: AIR.AirApplicationManager.getCwid(),
+		 	token: AIR.AirApplicationManager.getToken(),
+		 	linkCiId: linkCiId,
+			linkCiTableId: linkCiTableId,
+			massnahmeGstoolId: massnahmeGstoolId
 		};
+		
+		var store = AIR.AirStoreFactory.createLinkedMassnahmeDetailListStore();
+		store.on('load', this.onMassnahmenDetailLoaded, this);
+		store.load({
+			params: params
+		});
 		
 		//1. tableId 2. ciId des templates, 3. massnahmeGsToolId
 //		frm_S_Massnahmen, deReference und cboLink_AfterUpdate

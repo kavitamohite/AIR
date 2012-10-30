@@ -3397,6 +3397,35 @@ AIR.AirStoreFactory = function() {
 		    return itsecMassnahmenGapClassStore;
 		},
 		
+		createLinkedMassnahmeDetailListStore: function() {
+			var itsecMassnahmeDetailRecord = Ext.data.Record.create([
+		        'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency', 'secuRelevance', 'accsRelevance', 'itopRelevance'
+		    ]);
+			
+		    var itsecitsecMassnahmeDetailReader = new Ext.data.XmlReader({
+		    	record: 'itsecMassnahmeDetailDTO',
+		        idProperty: 'itsecMassnahmenStatusId'
+		    }, itsecMassnahmeDetailRecord); 
+			
+		    var itsecMassnahmeDetailStore = new Ext.data.XmlStore({
+		    	autoDestroy: true,
+		    	autoLoad: false,
+		    	
+		      	fields: [ 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency', 'secuRelevance', 'accsRelevance', 'itopRelevance' ],
+		      	
+		      	proxy: new Ext.ux.soap.SoapProxy({
+		      		url: webcontext + '/ItsecMassnahmenWSPort',
+		      		loadMethod: 'getLinkedMassnahmeDetail',
+		      		timeout: 120000,
+		      		reader: itsecitsecMassnahmeDetailReader
+		      	}),
+		    	
+		      	reader: itsecitsecMassnahmeDetailReader
+		    });
+		    
+		    return itsecMassnahmeDetailStore;
+		},
+		
 		createCurrencyStore: function() {
 			var currencyRecord = Ext.data.Record.create([
 	 	        'currencyId', 'currencyName', 'currencySymbol'

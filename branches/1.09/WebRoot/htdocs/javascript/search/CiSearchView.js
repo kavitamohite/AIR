@@ -608,12 +608,12 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		var height = ciSearchViewPages.getComponent('ciOuSearchView').getHeight() + 30;
 		Util.log(height);
 		
-		ciSearchViewPages.setHeight(250);//300 460
+		ciSearchViewPages.setHeight(250);//300 460 | height=0 direkt nach startup oder zum ersten Mal auf clOuSearch. Warum?
 		ciSearchViewPages.getLayout().setActiveItem(1);
 		ciSearchViewPages.getComponent('ciOuSearchView').doLayout();
 		
-//		var bExpandAdvSearchParams = this.getComponent('ciSearchResultView').getComponent('bExpandAdvSearchParams');
-//		bExpandAdvSearchParams.setVisible(false);
+		var bExpandAdvSearchParams = this.getComponent('ciSearchResultView').getComponent('bExpandAdvSearchParams');
+		bExpandAdvSearchParams.setVisible(false);
 	},
 	
 	setUpdateSearchAvailable: function(link, button) {
@@ -778,7 +778,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		}
 		
 		this.updateParams(params, searchType);
-		if(options.viewId && options.viewId !== viewId)
+		if(options.viewId && options.viewId !== viewId)//wenn durch MenuLinkklick und Adv. Seach Tab Klick versch. navMenuLink IDs in den options stehen, gleichsetzen. Nötig/sinnvoll ?
 			options.viewId = viewId;
 				
 		//Bugfix: wenn auf Adv. Search mehr als eine Suche stattgefunden hat und man wieder z.b. auf Search im Menu

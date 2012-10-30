@@ -123,13 +123,13 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 	onLinkCiListSelect: function(combo, record, index) {
 		var linkCiId = record.get('id');
 		var cbLinkCiType = this.getComponent('cbLinkCiType');
-		var linkCiTabledId = cbLinkCiType.getStore().getAt(cbLinkCiType.getStore().findExact('id', cbLinkCiType.getValue())).get('tableId');//record.get('tabledId');
+		var linkCiTableId = cbLinkCiType.getStore().getAt(cbLinkCiType.getStore().findExact('id', cbLinkCiType.getValue())).get('tableId');//record.get('tabledId');
 		
 		
 //		var linkCiTabledId = cbLinkCiType.getStore().find('id', cbLinkCiType.getValue());//.get('tabledId');
 		
 		
-		this.fireEvent('linkCiSelect', linkCiId, linkCiTabledId);//, this.ciData.massnahmeGstoolId
+		this.fireEvent('linkCiSelect', linkCiId, linkCiTableId);//, this.ciData.massnahmeGstoolId
 	},
 	
 //	setMassnahme: function(massnahmeId) {

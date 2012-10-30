@@ -519,8 +519,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		ciEditView.onNavigation(this.lastNavigation.viewId, this.lastNavigation.link, options);
 		
 		
-		if(this.lastNavigation.options && this.lastNavigation.options.callback && !this.isInitialNavigation) {
-			this.isInitialNavigation = true;
+		if(this.lastNavigation.options && this.lastNavigation.options.callback) {// && !this.isInitialNavigation
+//			this.isInitialNavigation = true;
 			this.lastNavigation.options.callback();
 		}
 	},
