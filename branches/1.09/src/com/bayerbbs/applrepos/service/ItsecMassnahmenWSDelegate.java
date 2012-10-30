@@ -35,4 +35,8 @@ public class ItsecMassnahmenWSDelegate {
 			ItsecMassnahmenParameterInput input) {
 		return itsecMassnahmenWS.saveItsecMassnahmenDetailComplete(input);
 	}
+
+	public ItsecMassnahmenParameterOutput getLinkedMassnahmeDetail(ItsecMassnahmenParameterInput input) {
+		return itsecMassnahmenWS.getLinkedMassnahmeDetail(input);
+	}
 }

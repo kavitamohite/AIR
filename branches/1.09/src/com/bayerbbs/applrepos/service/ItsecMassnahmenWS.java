@@ -188,4 +188,35 @@ public class ItsecMassnahmenWS {
 		return GapClassHbn.getArrayFromList(GapClassHbn.listGapClassesHbn());
 	}
 	
+
+	/**
+	 * liefert die verlinkte Massnahme
+	 * @param input
+	 * @return
+	 */
+	public static ItsecMassnahmenParameterOutput getLinkedMassnahmeDetail(ItsecMassnahmenParameterInput input) {
+
+		ItsecMassnahmenParameterOutput output = new ItsecMassnahmenParameterOutput();
+		
+		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+		
+			ItsecMassnahmeDetailDTO detailDTO = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(input.getLinkCiTableId(), input.getLinkCiId(), input.getMassnahmeGstoolId());
+			
+			if ( null != detailDTO.getRefTableID() && 0 != detailDTO.getRefTableID().longValue() && null != detailDTO.getRefPKID() 
+					&& 0 != detailDTO.getRefPKID().longValue()) {
+					// Weiterverlinkt... deshalb Datensatz nachladen...
+					detailDTO = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(detailDTO.getRefTableID(), detailDTO.getRefPKID(), detailDTO.getMassnahmeGstoolId());
+				}
+				
+				// neue kann nicht abgelöst werden, da spezieller SQL s.o.
+				// ItsecMassnahmeDetailDTO detailDTO = ItsecMassnahmeStatusHbn.findDTOById(input.getItsecMassnahmenStatusId());
+				
+			output.setItsecMassnahmeDetailDTO(detailDTO);
+		}
+		
+		return output;
+		
+		
+	}
+
 }

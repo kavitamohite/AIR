@@ -16,6 +16,11 @@ public class ItsecMassnahmenParameterInput {
 	private Long itsecGruppenId;
 	private Long itsecMassnahmenStatusId;
 	
+	// for the linked GSTOOL Massnahme
+	private Long linkCiId;
+	private Long linkCiTableId;
+	private Long massnahmeGstoolId;
+	
 	// for saving the detail information
 	private ItsecMassnahmeDetailDTO itsecMassnahmeDetailsDTO;//[]
 	
@@ -67,4 +72,24 @@ public class ItsecMassnahmenParameterInput {
 	public void setItsecMassnahmeDetailsDTO(ItsecMassnahmeDetailDTO itsecMassnahmeDetailsDTO) {//[]
 		this.itsecMassnahmeDetailsDTO = itsecMassnahmeDetailsDTO;
 	}
+	public Long getLinkCiId() {
+		return linkCiId;
+	}
+	public void setLinkCiId(Long linkCiId) {
+		this.linkCiId = linkCiId;
+	}
+	public Long getLinkCiTableId() {
+		return linkCiTableId;
+	}
+	public void setLinkCiTableId(Long linkCiTableId) {
+		this.linkCiTableId = linkCiTableId;
+	}
+	public Long getMassnahmeGstoolId() {
+		return massnahmeGstoolId;
+	}
+	public void setMassnahmeGstoolId(Long massnahmeGstoolId) {
+		this.massnahmeGstoolId = massnahmeGstoolId;
+	}
+	
+	
 }

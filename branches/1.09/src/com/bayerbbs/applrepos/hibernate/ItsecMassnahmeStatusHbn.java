@@ -15,6 +15,31 @@ import com.bayerbbs.applrepos.dto.ItsecMassnahmeDetailDTO;
 public class ItsecMassnahmeStatusHbn {
 
 	
+	public static ItsecMassnahmeStatus findLinkedMassnahmeDetail(Long linkCiId, Long linkCiTableId, Long massnahmeGstoolId) {
+		ItsecMassnahmeStatus result = null;
+
+		if (null != linkCiId && null != linkCiTableId && null != massnahmeGstoolId) {
+
+			Transaction tx = null;
+			Session session = HibernateUtil.getSession();
+			try {
+				tx = session.beginTransaction();
+				List<ItsecMassnahmeStatus> values = session.createQuery(
+						"select h from ItsecMassnahmeStatus as h where h.tabelleId = " + linkCiTableId + " h.and tabellePkId="+linkCiId + " and h.massnahmeGSTOOLID=" + massnahmeGstoolId).list();
+
+				if (null != values && 0 < values.size()) {
+					result = values.get(0);
+				}
+
+				HibernateUtil.close(tx, session, true);
+			} catch (RuntimeException e) {
+				HibernateUtil.close(tx, session, false);
+			}
+		}
+
+		return result;
+	}
+	
 	public static ItsecMassnahmeStatus findById(Long itsecMassnStId) {
 		ItsecMassnahmeStatus result = null;
 
