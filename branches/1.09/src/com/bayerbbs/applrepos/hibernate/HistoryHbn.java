@@ -67,7 +67,6 @@ public class HistoryHbn {
 					String newValue = rset.getString("New_Value");
 					Integer displayType = rset.getInt("Anzeigetyp");
 					// 
-					
 					listResult.add(new HistorySISecViewDataDTO(id, change_Timestamp, userName, insUpdDel, detailId, chgAttributeLog, oldValue, newValue, displayType));
 				}
 				commit = true;

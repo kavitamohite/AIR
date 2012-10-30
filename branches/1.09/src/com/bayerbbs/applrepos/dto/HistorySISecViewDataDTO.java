@@ -49,5 +49,45 @@ public class HistorySISecViewDataDTO {
 	public void setInsUpdDel(String insUpdDel) {
 		this.insUpdDel = insUpdDel;
 	}
+	public Long getHistoryDetailId() {
+		return historyDetailId;
+	}
+
+	public void setHistoryDetailId(Long historyDetailId) {
+		this.historyDetailId = historyDetailId;
+	}
+
+	public String getChgAttributeLog() {
+		return chgAttributeLog;
+	}
+
+	public void setChgAttributeLog(String chgAttributeLog) {
+		this.chgAttributeLog = chgAttributeLog;
+	}
+
+	public String getOldValue() {
+		return oldValue;
+	}
+
+	public void setOldValue(String oldValue) {
+		this.oldValue = oldValue;
+	}
+
+	public String getNewValue() {
+		return newValue;
+	}
+
+	public void setNewValue(String newValue) {
+		this.newValue = newValue;
+	}
+
+	public Integer getDisplayType() {
+		return displayType;
+	}
+
+	public void setDisplayType(Integer displayType) {
+		this.displayType = displayType;
+	}
 	
+
 }
