@@ -106,6 +106,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				        height: 380,//400 500 660 635
 				        
 						columns: [{
+							xtype: 'actioncolumn',
+							id: 'cLinkType',
+							width: 30,
+							
+							items: [{
+								icon: 'images/itSecMassnahmeLinkType.png'
+							}]
+						},{
 							header: 'Ident',
 							dataIndex: 'ident',
 							width: 60
@@ -2118,7 +2126,20 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			massnahmeId: massnahmeGstoolId
 		};
 		
+		//1. tableId 2. ciId des templates, 3. massnahmeGsToolId
 //		frm_S_Massnahmen, deReference und cboLink_AfterUpdate
+		
+		//nein andere/neue funktion als diese:
+//		var params = {
+//		 	cwid: AIR.AirApplicationManager.getCwid(),
+//		 	token: AIR.AirApplicationManager.getToken(),
+//			itsecMassnahmenStatusId: grid.getStore().getAt(rowIndex).data.itsecMassnahmenStatusId,
+//			itsecGruppenId: this.config.complianceType//this.CI_GROUP_ID_DEFAULT_ITSEC
+//		};
+//		
+//		this.massnahmeDetailStore.load({
+//			params: params
+//		});
 	},
 	
 	isMassnahmeLinked: function(massnahme) {

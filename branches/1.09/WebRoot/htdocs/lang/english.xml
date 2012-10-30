@@ -49,7 +49,7 @@
 		<bCollapseAdvSearchParams>Collapse Advanced Search</bCollapseAdvSearchParams>
 		<searchTypeSearch>Search</searchTypeSearch>
 		<searchTypeAdvancedSearch>Advanced Search</searchTypeAdvancedSearch>
-		<searchTypeOuSearch>Ou Search</searchTypeOuSearch>
+		<searchTypeOuSearch>OU Search</searchTypeOuSearch>
 		
 		<!-- Label: Menu -->
 		<label_menu_myplacemenuitem>My Place</label_menu_myplacemenuitem>

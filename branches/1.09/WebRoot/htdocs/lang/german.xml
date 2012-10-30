@@ -50,7 +50,7 @@
 		<bCollapseAdvSearchParams>Erweiterte Suche zuklappen</bCollapseAdvSearchParams>
 		<searchTypeSearch>Suche</searchTypeSearch>
 		<searchTypeAdvancedSearch>Erweiterte Suche</searchTypeAdvancedSearch>
-		<searchTypeOuSearch>Ou Suche</searchTypeOuSearch>
+		<searchTypeOuSearch>OE Suche</searchTypeOuSearch>
 		
 		<!-- Label: Menu -->
 		<label_menu_myplacemenuitem>Arbeitsplatz</label_menu_myplacemenuitem>

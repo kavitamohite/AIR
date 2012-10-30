@@ -309,8 +309,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					
 					this.getLayout().setActiveItem('ciSearchView');
 					
-//					ciSearchView.getComponent('ciSearchViewPages').setHeight(300);
-					ciSearchView.handleUiOuSearch();
+					ciSearchView.handleUiOuSearch(link);
 					
 					if(options && options.callback)
 						options.callback();

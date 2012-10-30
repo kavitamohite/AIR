@@ -130,12 +130,42 @@ AIR.CiOuSearchView = Ext.extend(AIR.AirView, {
 						//margins: '20 0 0 0'
 					}]
 			    }]
-			}, {
+			},{
+				xtype: 'panel',
+				id: 'pOuSearch',
+				layout: 'column',
+				border: false,
+				
+				items: [{
+					xtype: 'button',//commandlink
+					id: 'bOuSearch',
+					
+	//                img: img_Search_offMouse,
+					
+		        	cls: 'x-btn-text-icon',
+		        	icon: 'images/search_16x16.png',
+		        	text: ''			
+				},{
+		        	xtype: 'button',
+		        	id: 'bUpdateOuSearch',
+		        	hidden: true,
+		        	text: '',
+		        	
+		        	cls: 'x-btn-text-icon',
+		        	icon: 'images/refresh_16x16.png',
+		        	
+		        	text: '',
+		        	
+					style: {
+						marginLeft: 5
+					}
+				}]
+	        }/*, {
 		    	xtype: 'commandlink',
 				id: 'clOuSearch',
 				
                 img: img_Search_offMouse
-			}]
+			}*/]
 		});
 		
 		AIR.CiOuSearchView.superclass.initComponent.call(this);
@@ -161,6 +191,10 @@ AIR.CiOuSearchView = Ext.extend(AIR.AirView, {
 //		this.setBoxLabel(rbgOUSearchOwnerType.items.items[0], labels.applicationOwner);
 //		this.setBoxLabel(rbgOUSearchOwnerType.items.items[1], labels.applicationManager);
 		this.setBoxLabel(rbgOUSearchOwnerType.items.items[2], labels.both);
+		
+		
+		this.getComponent('pOuSearch').getComponent('bOuSearch').setText(labels.newSearch);
+		this.getComponent('pOuSearch').getComponent('bUpdateOuSearch').setText(labels.bUpdateCiSearchResult);
 	},
 	
 	updateToolTips: function(toolTips) {
