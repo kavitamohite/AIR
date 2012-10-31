@@ -60,7 +60,10 @@
 		implementation="com.bayerbbs.applrepos.service.CiEntityWSDelegate"
 		url-pattern="/CiEntityWSPort">
 	</endpoint>
-	
+	<endpoint name="HistoryComplianceWSPort"
+		implementation="com.bayerbbs.applrepos.service.HistoryComplianceWSDelegate"
+		url-pattern="/HistoryComplianceWSPort">
+	</endpoint>
 	<endpoint name="ItsecMassnahmenWSPort"
 		implementation="com.bayerbbs.applrepos.service.ItsecMassnahmenWSDelegate"
 		url-pattern="/ItsecMassnahmenWSPort">
