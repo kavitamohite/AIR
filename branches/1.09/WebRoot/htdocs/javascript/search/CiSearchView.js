@@ -780,9 +780,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		this.updateParams(params, searchType);
 		if(options.viewId && options.viewId !== viewId)//wenn durch MenuLinkklick und Adv. Seach Tab Klick versch. navMenuLink IDs in den options stehen, gleichsetzen. Nötig/sinnvoll ?
 			options.viewId = viewId;
-				
-		//Bugfix: wenn auf Adv. Search mehr als eine Suche stattgefunden hat und man wieder z.b. auf Search im Menu
-		//klickt, springt er ohne folgendes if wieder zurück zu Adv. Search.
+		
 		this.fireEvent('externalNavigation', this, tab, viewId, options);
 //		this.updateParams(params, searchType);
 	},

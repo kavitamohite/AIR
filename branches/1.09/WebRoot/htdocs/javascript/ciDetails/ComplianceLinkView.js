@@ -47,7 +47,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 //				margins: '5 0 0 0',
 				
 				fieldLabel: labels.LinkCiType,
-		        valueField: 'id',
+		        valueField: 'id',//id tableId
 		        displayField: 'type',
 		        
 		        mode: 'local',
@@ -115,6 +115,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 			params.applicationCat1Id = this.ciData.applicationCat1Id;
 		
 		var cbLinkCiList = this.getComponent('cbLinkCiList');
+		cbLinkCiList.reset();
 		cbLinkCiList.getStore().load({
 			params: params
 		});
@@ -123,7 +124,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 	onLinkCiListSelect: function(combo, record, index) {
 		var linkCiId = record.get('id');
 		var cbLinkCiType = this.getComponent('cbLinkCiType');
-		var linkCiTableId = cbLinkCiType.getStore().getAt(cbLinkCiType.getStore().findExact('id', cbLinkCiType.getValue())).get('tableId');//record.get('tabledId');
+		var linkCiTableId = cbLinkCiType.getStore().getAt(cbLinkCiType.getStore().findExact('id', cbLinkCiType.getValue())).get('tableId');//cbLinkCiType.getValue();//
 		
 		
 //		var linkCiTabledId = cbLinkCiType.getStore().find('id', cbLinkCiType.getValue());//.get('tabledId');

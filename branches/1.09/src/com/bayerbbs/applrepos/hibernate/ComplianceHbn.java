@@ -258,7 +258,7 @@ public class ComplianceHbn {
 			sql.append(" AND      MOD.Massnahme_Id = ").append(massnahmeId);
 			sql.append(" ORDER BY Sort1, CI.Standort_Name");
 		}
-		else if (-10014 == zielotypGSToolId) {
+		else if (-10014 == zielotypGSToolId || -10017 == zielotypGSToolId) {
 			// WAYS:
 			sql.append("SELECT   CI.Ways_Id AS Id,");
 			sql.append("	         '(' || VBD.It_Verbund_Name || ') ' || CI.Ways_Name AS Name,");

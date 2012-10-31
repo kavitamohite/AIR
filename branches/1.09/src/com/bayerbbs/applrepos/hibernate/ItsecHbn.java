@@ -351,10 +351,8 @@ public class ItsecHbn {
 						dto.setCurrency(rsSet.getString("CURRENCY"));
 						
 						// für die Weiterverlinkung
-						dto.setRefTableID(rsSet.getLong("Ref_Table_Id"));
-						dto.setRefPKID(rsSet.getLong("Ref_Pk_Id"));
-
-						
+						dto.setRefTableID(tabelleId);//rsSet.getLong("Ref_Table_Id")
+						dto.setRefPKID(tabellePkId);//rsSet.getLong("Ref_Pk_Id")
 					}
 				}
 				commit = true;
