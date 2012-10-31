@@ -210,7 +210,13 @@ public class ItsecMassnahmenWS {
 				
 				// neue kann nicht abgelöst werden, da spezieller SQL s.o.
 				// ItsecMassnahmeDetailDTO detailDTO = ItsecMassnahmeStatusHbn.findDTOById(input.getItsecMassnahmenStatusId());
-				
+
+			if (null != input.getLinkCiId()) {
+				// zurückliefern der ersten (durch den Anwender) in der GUI getroffen Auswahl
+				detailDTO.setRefPKID(input.getLinkCiId());
+				detailDTO.setRefTableID(input.getLinkCiTableId());
+			}
+			
 			output.setItsecMassnahmeDetailDTO(detailDTO);
 		}
 		
