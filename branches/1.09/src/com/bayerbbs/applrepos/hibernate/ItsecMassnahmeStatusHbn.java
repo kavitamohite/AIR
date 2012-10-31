@@ -157,10 +157,20 @@ public class ItsecMassnahmeStatusHbn {
 				
 				status.setGapPriority(dto.getGapPriority());
 				if (null != dto.getRefTableID()) {
-					status.setRefTableID(dto.getRefTableID());
+					if (-1 == dto.getRefTableID()) {
+						status.setRefTableID(null);
+					}
+					else {
+						status.setRefTableID(dto.getRefTableID());
+					}
 				}
 				if (null != dto.getRefPKID()) {
-					status.setRefPKID(dto.getRefPKID());
+					if (-1 == dto.getRefPKID()) {
+						status.setRefPKID(null);
+					}
+					else {
+						status.setRefPKID(dto.getRefPKID());
+					}
 				}
 				// --
 				status.setExpense(dto.getExpense());
