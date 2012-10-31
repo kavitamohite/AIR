@@ -13,6 +13,9 @@ public class HistorySISecViewDataDTO {
 	private String newValue = null;
 	private Integer displayType = null;
 	
+	public HistorySISecViewDataDTO() {
+	}
+	
 	public HistorySISecViewDataDTO(Long historyEventId, String changeTimestamp, String userName, String insUpdDel, Long historyDetailId, String chgAttributeLog, String oldValue, String newValue, Integer displayType) {
 		this.historyEventId = historyEventId;
 		this.change_Timestamp = changeTimestamp;

@@ -1,6 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.SQLQuery;
@@ -42,7 +44,18 @@ public class HistoryHbn {
 			selectQuery = session.createSQLQuery(SQL_HISTORY_LIST);
 			selectQuery.setLong("Table_ID", tableId);
 			selectQuery.setLong("Table_PK_ID", tablePkId);
-			listResult=selectQuery.list();
+			List<Object[]> listTemp = selectQuery.list();
+			
+			for (Iterator<Object[]> iterator = listTemp.iterator(); iterator.hasNext();) {
+				Object obj[] = iterator.next();
+				try {
+					listResult.add(new HistorySISecViewDataDTO((Long) (((BigDecimal)obj[0]).longValue()), (String) obj[1], (String)obj[2], ((Character)obj[3]).toString(), (((BigDecimal)obj[4]).longValue()), (String)obj[5], (String)obj[6], (String)obj[7], new Integer((Character)obj[8]).intValue()));					
+				} catch (Exception e) {
+					System.out.println(e.toString());
+				}
+				
+			}
+			
 			commit = true;
 		
 		} catch (Exception e) {

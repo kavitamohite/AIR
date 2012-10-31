@@ -10,6 +10,10 @@ public class CiComplianceParameterInput {
 	private Long massnahmeId;
 	private Long applicationCat1Id;
 
+	// für die Einzelverlinkung
+	private Long linkCiId;
+	private Long linkCiTableLinkId;
+	private Long massnahmeGstoolId;
 	
 	public String getCwid() {
 		return cwid;
@@ -52,6 +56,24 @@ public class CiComplianceParameterInput {
 	}
 	public void setApplicationCat1Id(Long applicationCat1Id) {
 		this.applicationCat1Id = applicationCat1Id;
+	}
+	public Long getLinkCiId() {
+		return linkCiId;
+	}
+	public void setLinkCiId(Long linkCiId) {
+		this.linkCiId = linkCiId;
+	}
+	public Long getLinkCiTableLinkId() {
+		return linkCiTableLinkId;
+	}
+	public void setLinkCiTableLinkId(Long linkCiTableLinkId) {
+		this.linkCiTableLinkId = linkCiTableLinkId;
+	}
+	public Long getMassnahmeGstoolId() {
+		return massnahmeGstoolId;
+	}
+	public void setMassnahmeGstoolId(Long massnahmeGstoolId) {
+		this.massnahmeGstoolId = massnahmeGstoolId;
 	}
 
 }
