@@ -66,14 +66,18 @@ public class ItsecMassnahmenWS {
 		
 			ItsecMassnahmeDetailDTO detailDTO = ItsecHbn.findItsecMassnahmeDetail(input.getItsecGruppenId(), input.getItsecMassnahmenStatusId());
 			
+			Long refTableId = detailDTO.getRefTableID();
+			Long refPkId = detailDTO.getRefPKID();
+			
 			if ( null != detailDTO.getRefTableID() && 0 != detailDTO.getRefTableID().longValue() && null != detailDTO.getRefPKID() 
 				&& 0 != detailDTO.getRefPKID().longValue()) {
 				// Weiterverlinkt... deshalb Datensatz nachladen...
 				detailDTO = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(detailDTO.getRefTableID(), detailDTO.getRefPKID(), detailDTO.getMassnahmeGstoolId());
+				
+				// für die erste getroffene Auswahl der Verlinkung..
+				detailDTO.setRefTableID(refTableId);
+				detailDTO.setRefPKID(refPkId);
 			}
-			
-			// neue kann nicht abgelöst werden, da spezieller SQL s.o.
-			// ItsecMassnahmeDetailDTO detailDTO = ItsecMassnahmeStatusHbn.findDTOById(input.getItsecMassnahmenStatusId());
 			
 			output.setItsecMassnahmeDetailDTO(detailDTO);
 		}
