@@ -1596,9 +1596,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var isMassnahmeLinked = this.isMassnahmeLinked(massnahme);
 		
 		if(isMassnahmeLinked) {
-//			var store = cbLinkCiType.getStore();
-//			var ciType = store.getAt(store.findExact('tableId', massnahme.refTableID)).get('id');
-			cbLinkCiType.setValue(massnahme.refTableID);//massnahme.refTableID ciType
+			var store = cbLinkCiType.getStore();
+			var ciType = store.getAt(store.findExact('tableId', massnahme.refTableID)).get('id');
+			cbLinkCiType.setValue(ciType);//massnahme.refTableID ciType
 			cbLinkCiList.setValue(massnahme.refPKID);
 			
 			this.disableMassnahmeDetails();
