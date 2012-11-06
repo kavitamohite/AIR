@@ -1338,6 +1338,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			this.windowRendered = true;
 		}
 
+		
+		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
+		complianceLinkView.update(this.config);
+		
 		this.updateComplianceDetails(records[0].data);
 	},
 	
@@ -1488,8 +1492,20 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var taJustification = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement').getComponent('pJustification').getComponent('taJustification');
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 		
-		var linkCiType = cbLinkCiType.getStore().getAt(cbLinkCiType.getStore().findExact('id', cbLinkCiType.getValue())).get('tableId');// cbLinkCiType.getValue();//getValue getRawValue
-		var linkCi = cbLinkCiList.getValue();
+		var linkCiSubType;
+		var linkCiType;
+		var linkCi;
+		
+		if(cbLinkCiType.getValue().length > 0) {
+			var r = cbLinkCiType.getStore().getAt(cbLinkCiType.getStore().findExact('id', cbLinkCiType.getValue()));
+			
+			var tableId = r.get('tableId');
+			if(tableId == AC.TABLE_ID_APPLICATION)//oder generische Hilfsfunktion für theoretisch andere CI Typen mit Subtypen
+				linkCiSubType = r.get('id');
+				
+			linkCiType = tableId;// cbLinkCiType.getValue();//getValue getRawValue
+			linkCi = cbLinkCiList.getValue();
+		}
 		
 		var itsecMassnahmenStatusId = grid.getStore().getAt(this.previousSelection).data.itsecMassnahmenStatusId;
 		var massnahmeGstoolId = grid.getStore().getAt(this.previousSelection).data.massnahmeGstoolId;
@@ -1498,14 +1514,22 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 		
 		this.editedMassnahmen[rowIndex] = {
-			refTableID: linkCiType,
-			refPKID: linkCi,
+//			refTableID: linkCiType,
+//			refPKID: linkCi,
 				
 			itsecMassnahmenStatusId: itsecMassnahmenStatusId,
 			massnahmeGstoolId: massnahmeGstoolId,
 			statusId: compliantStatusId,
 			statusKommentar: justification
 		};
+		
+		if(linkCiType) {
+			if(linkCiSubType)
+				this.editedMassnahmen[rowIndex].refCiSubTypeId = linkCiSubType;
+			
+			this.editedMassnahmen[rowIndex].refTableID = linkCiType;
+			this.editedMassnahmen[rowIndex].refPKID = linkCi;
+		}
 		
 		if(!this.hasNoGapAnalysis && (compliantStatusId === 3 || compliantStatusId === 4)) {
 			var taGapDescription = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('pGapDescription').getComponent('taGapDescription');
@@ -1596,23 +1620,69 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var isMassnahmeLinked = this.isMassnahmeLinked(massnahme);
 		
 		if(isMassnahmeLinked) {
-			var store = cbLinkCiType.getStore();
-			var ciType = store.getAt(store.findExact('tableId', massnahme.refTableID)).get('id');
+			var ciType;
+			var ciTypeStore = cbLinkCiType.getStore();
+			var r = ciTypeStore.getAt(ciTypeStore.findExact('tableId', massnahme.refTableID));
+			
+			if(r.get('tableId') == AC.TABLE_ID_APPLICATION) {
+//				var ciListStore = cbLinkCiList.getStore();
+//				
+//				var ciRefId = ciListStore.getAt(ciListStore.findExact('id', massnahme.refPKID));
+//				ciType = ciRefId.get('subTypeId');
+				
+				
+				
+				
+//				if(massnahme.refCiSubTypeId) {//aus DB geladen nicht durch CI Type combos gesetzt
+					ciType = massnahme.refCiSubTypeId;
+//				} else {//durch CI Type combo Auswahl erneuert
+//					var ciListStore = cbLinkCiList.getStore();
+//					
+//					var ciRefId = ciListStore.getAt(ciListStore.findExact('id', massnahme.refPKID));
+//					ciType = ciRefId.get('subTypeId');
+//				}
+				
+			} else {
+				ciType = r.get('id');
+			}
+			
+			Util.log('tableId='+r.get('tableId')+' ciType='+ciType);
 			cbLinkCiType.setValue(ciType);//massnahme.refTableID ciType
-			cbLinkCiList.setValue(massnahme.refPKID);
+//			cbLinkCiType.el.dom.value = ciType;
+//			cbLinkCiType.value = ciType;
+
+			
+			var callback = function() {
+				
+				
+				
+				cbLinkCiList.setValue(massnahme.refPKID);
+//				cbLinkCiList.el.dom.value = massnahme.refPKID;
+//				cbLinkCiList.value = massnahme.refPKID;
+			};
+			complianceLinkView.loadLinkCiList(ciType, callback);//verhindern, dass select event nochmal gefeuert wird
+//			cbLinkCiList.setValue(massnahme.refPKID);
+			
 			
 			this.disableMassnahmeDetails();
 		} else {
-			cbLinkCiType.reset();
-			cbLinkCiList.reset();
+//			cbLinkCiType.reset();
+//			cbLinkCiList.reset();
+			cbLinkCiType.setValue('');
+			cbLinkCiList.setValue('');
 			
 			if(!this.config.hasTemplate) {
 				this.enableMassnahmeDetails();
 				
-				var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
-				complianceLinkView.update(this.config);
+				
+//				var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
+//				complianceLinkView.update(this.config);//siehe onMassnahmenDetailLoaded
 			}
 		}
+		
+//		cbLinkCiType.filterByData();
+//		cbLinkCiList.filterByData();
+		
 		
 		var fsComplianceStatement = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement');
 		var cbCompliantStatus = fsComplianceStatement.getComponent('pCompliantStatus').getComponent('cbCompliantStatus');
@@ -2203,15 +2273,17 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.disableMassnahmeDetails();//kann schon vor dem fertigen store load event gemacht werden
 		
 		
-		//1. tableId 2. ciId des templates, 3. massnahmeGsToolId
+		//1. tableId 2. ciId des templates, 3. massnahmeGsToolId, 4. ciSubType (cat1Id des template CIs) --> modForms.getCIType/modAppType.getCITypeFromItem
 //		frm_S_Massnahmen, deReference und cboLink_AfterUpdate
 	},
 	
 	isMassnahmeLinked: function(massnahme) {
 		return massnahme.refTableID &&
 			   massnahme.refTableID.length > 0 &&
+			   massnahme.refTableID != 0 &&
 			   massnahme.refPKID &&
-			   massnahme.refPKID.length > 0;// && massnahme.refTableID.length > 0	 && massnahme.refPKID.length > 0
+			   massnahme.refPKID.length > 0 &&
+			   massnahme.refPKID != 0 ? true : false;// && massnahme.refTableID.length > 0	 && massnahme.refPKID.length > 0
 	},
 	
 	disableMassnahmeDetails: function(isTemplate) {

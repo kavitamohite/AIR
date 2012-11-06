@@ -110,10 +110,11 @@ public class ComplianceHbn {
 		
 		StringBuffer sql = new StringBuffer();
 		//TODO: prüfen ob if richtig:
-		if (5 == zielotypGSToolId || -10006 == zielotypGSToolId || -10013 == zielotypGSToolId || -10007 == zielotypGSToolId) {
+		boolean isAnwendungCi = isAnwendungCi(zielotypGSToolId);
+		if (isAnwendungCi) {
 			sql.append("");
 			// ANWENDUNG:
-			sql.append("SELECT   CI.Anwendung_Id AS Id,");
+			sql.append("SELECT   CI.Anwendung_Id AS Id, CAT.Application_Cat1_Id AS subTypeId,");
 			sql.append(" '(' || VBD.It_Verbund_Name || ') ' || CI.Anwendung_Name AS Name,");
 			sql.append("  CASE VBD.Gstool_Zob_Id"); 
 			sql.append("	WHEN ").append(itSetId).append(" THEN ' ' || It_Verbund_Name");
@@ -126,7 +127,7 @@ public class ComplianceHbn {
 			sql.append(" WHERE    CI.Del_Timestamp is NULL");
 			sql.append("	AND      CI.Template = -1");
 			sql.append("	AND      MOD.Massnahme_Id = ").append(massnahmeId);
-			sql.append("	AND      CAT.Application_Cat1_Id = ").append(applicationCat1Id);
+			sql.append("	AND      CAT.Application_Cat1_Id = ").append(applicationCat1Id);//applicationCat1Id zielotypGSToolId
 			sql.append("	AND      CI.Anwendung_Id <> ").append(applicationId);
 			sql.append("	ORDER BY Sort1, CI.Anwendung_Name");
 		}
@@ -298,6 +299,8 @@ public class ComplianceHbn {
 
 			selectStmt = conn.createStatement();
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
+			LinkCIDTO linkCI = null;
+			Long subTypeId = null;
 
 			if (null != rset) {
 				while (rset.next()) {
@@ -305,7 +308,14 @@ public class ComplianceHbn {
 					String name = rset.getString("Name");
 					String sort = rset.getString("Sort1");
 					
-					listResult.add(new LinkCIDTO(id, name, sort));
+					if(isAnwendungCi) {
+						subTypeId = rset.getLong("subTypeId");
+						linkCI = new LinkCIDTO(id, name, sort, subTypeId);
+					} else {
+						linkCI = new LinkCIDTO(id, name, sort);
+					}
+					
+					listResult.add(linkCI);
 				}
 				commit = true;
 			}
@@ -328,6 +338,11 @@ public class ComplianceHbn {
 		}
 
 		return listResult;
+	}
+
+
+	private static boolean isAnwendungCi(long zielotypGSToolId) {
+		return 5 == zielotypGSToolId || -10006 == zielotypGSToolId || -10013 == zielotypGSToolId || -10007 == zielotypGSToolId;
 	}
 
 }

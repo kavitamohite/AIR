@@ -57,7 +57,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        
 		        editable: false
 			},{
-				xtype: 'combo',
+				xtype: 'filterCombo',//filterCombo combo
 				id: 'cbLinkCiList',
 				store: AIR.AirStoreFactory.createLinkCiListStore(),//new Ext.data.Store(),//
 				
@@ -103,21 +103,26 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 	onLinkCiTypeSelect: function(combo, record, index) {
 		var ciTypeId = record.get('id');
 		
+		this.loadLinkCiList(ciTypeId);
+	},
+	
+	loadLinkCiList: function(ciTypeId, callback) {
 		var params = {
 			zielotypGSToolId: ciTypeId,
 			itSetId: this.ciData.itSet,
 			applicationId: this.ciData.ciId,
 			massnahmeId: this.ciData.massnahmeGstoolId
-//			applicationCat1Id: record.get('id')
+//				applicationCat1Id: record.get('id')
 		};
 		
 		if(this.isCiApplication())
-			params.applicationCat1Id = this.ciData.applicationCat1Id;
+			params.applicationCat1Id = ciTypeId;//this.ciData.applicationCat1Id;
 		
 		var cbLinkCiList = this.getComponent('cbLinkCiList');
 		cbLinkCiList.reset();
 		cbLinkCiList.getStore().load({
-			params: params
+			params: params,
+			callback: callback ? callback : function() {}
 		});
 	},
 	

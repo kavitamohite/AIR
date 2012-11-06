@@ -12,6 +12,7 @@ public class ItsecMassnahmeDetailDTO {
 	private String noUpdateYN;
 	private Long refTableID;
 	private Long refPKID;
+	private Long refCiSubTypeId;
 
 	
 	private Long katalogId;
@@ -346,5 +347,13 @@ public class ItsecMassnahmeDetailDTO {
 
 	public void setRefPKID(Long refPKID) {
 		this.refPKID = refPKID;
+	}
+
+	public void setRefCiSubTypeId(Long refCiSubTypeId) {
+		this.refCiSubTypeId = refCiSubTypeId;
+	}
+
+	public Long getRefCiSubTypeId() {
+		return refCiSubTypeId;
 	}
 }

@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import org.hibernate.Transaction;
 import com.bayerbbs.applrepos.domain.ApplicationCat1;
 import com.bayerbbs.applrepos.dto.ApplicationCat1DTO;
 import com.bayerbbs.applrepos.dto.CiTypeDTO;
-import com.bayerbbs.applrepos.dto.SISoogleAttribute;
 
 public class ApplicationCat1Hbn {
 
@@ -106,5 +106,45 @@ public class ApplicationCat1Hbn {
 		}
 		
 		return ciTypes.toArray(new CiTypeDTO[0]);
+	}
+	
+	public static Long getCat1IdByCiId(long ciId) {
+		String sql = "SELECT AK2.Application_Cat1_Id AS subTypeId FROM ANWENDUNG ANW INNER JOIN V_MD_APPLICATION_CAT2 AK2 ON ANW.Anwendung_Kat2_Id=AK2.Application_Cat2_Id WHERE ANW.Anwendung_Id = "+ciId;//=?
+		
+		Transaction ta = null;
+		Statement stmt = null;//PreparedStatement
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+		Long ciSubTypeId = -1L;
+		
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			
+//			stmt = conn.prepareStatement(sql);
+//			stmt.setLong(1, ciId);
+			stmt = conn.createStatement();
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if(rs.next())
+				ciSubTypeId = rs.getLong("subTypeId");
+			else
+				System.out.println("no subTypeId found for Anwendung="+ciId);
+		
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+	
+		return ciSubTypeId;
 	}
 }

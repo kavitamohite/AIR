@@ -66,6 +66,13 @@ public class TestGsToolHbn {
 		
 		session.close();
 	}
+	
+	@Test
+	public void testGetCat1IdByCiId() {
+		long ciId = 4773;
+		Long id = ApplicationCat1Hbn.getCat1IdByCiId(ciId);
+		System.out.println(id);
+	}
 
 	@After
 	public void tearDown() throws Exception {

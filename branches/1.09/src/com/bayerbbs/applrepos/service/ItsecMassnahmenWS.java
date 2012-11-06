@@ -2,12 +2,11 @@ package com.bayerbbs.applrepos.service;
 
 import java.util.List;
 
-import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.GapClassDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmeDetailDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenStatusWertDTO;
-import com.bayerbbs.applrepos.hibernate.CurrencyHbn;
+import com.bayerbbs.applrepos.hibernate.ApplicationCat1Hbn;
 import com.bayerbbs.applrepos.hibernate.GapClassHbn;
 import com.bayerbbs.applrepos.hibernate.ItsecHbn;
 import com.bayerbbs.applrepos.hibernate.ItsecMassnahmeStatusHbn;
@@ -69,14 +68,19 @@ public class ItsecMassnahmenWS {
 			Long refTableId = detailDTO.getRefTableID();
 			Long refPkId = detailDTO.getRefPKID();
 			
-			if ( null != detailDTO.getRefTableID() && 0 != detailDTO.getRefTableID().longValue() && null != detailDTO.getRefPKID() 
-				&& 0 != detailDTO.getRefPKID().longValue()) {
+			if(null != refTableId && 0 != refTableId.longValue() && null != refPkId && 0 != refPkId.longValue()) {
 				// Weiterverlinkt... deshalb Datensatz nachladen...
 				detailDTO = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(detailDTO.getRefTableID(), detailDTO.getRefPKID(), detailDTO.getMassnahmeGstoolId());
 				
 				// für die erste getroffene Auswahl der Verlinkung..
 				detailDTO.setRefTableID(refTableId);
 				detailDTO.setRefPKID(refPkId);
+				
+				//analog zu SISec: wenn tableId=2 (Tabelle Anwendung) die appCat1Id holen alias refCiSubTypeId
+				if(refTableId == 2) {
+					Long ciSubTypeId = ApplicationCat1Hbn.getCat1IdByCiId(refPkId);
+					detailDTO.setRefCiSubTypeId(ciSubTypeId);
+				}
 			}
 			
 			output.setItsecMassnahmeDetailDTO(detailDTO);
@@ -206,19 +210,26 @@ public class ItsecMassnahmenWS {
 		
 			ItsecMassnahmeDetailDTO detailDTO = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(input.getLinkCiTableId(), input.getLinkCiId(), input.getMassnahmeGstoolId());
 			
-			if ( null != detailDTO.getRefTableID() && 0 != detailDTO.getRefTableID().longValue() && null != detailDTO.getRefPKID() 
-					&& 0 != detailDTO.getRefPKID().longValue()) {
-					// Weiterverlinkt... deshalb Datensatz nachladen...
-					detailDTO = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(detailDTO.getRefTableID(), detailDTO.getRefPKID(), detailDTO.getMassnahmeGstoolId());
-				}
+			if ( null != detailDTO.getRefTableID() && 0 != detailDTO.getRefTableID().longValue() && null != detailDTO.getRefPKID() && 0 != detailDTO.getRefPKID().longValue()) {
+				// Weiterverlinkt... deshalb Datensatz nachladen...
+				detailDTO = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(detailDTO.getRefTableID(), detailDTO.getRefPKID(), detailDTO.getMassnahmeGstoolId());
+			}
 				
-				// neue kann nicht abgelöst werden, da spezieller SQL s.o.
-				// ItsecMassnahmeDetailDTO detailDTO = ItsecMassnahmeStatusHbn.findDTOById(input.getItsecMassnahmenStatusId());
+			// neue kann nicht abgelöst werden, da spezieller SQL s.o.
+			// ItsecMassnahmeDetailDTO detailDTO = ItsecMassnahmeStatusHbn.findDTOById(input.getItsecMassnahmenStatusId());
 
 			if (null != input.getLinkCiId()) {
+				Long tableId = input.getLinkCiTableId();
+				
 				// zurückliefern der ersten (durch den Anwender) in der GUI getroffen Auswahl
 				detailDTO.setRefPKID(input.getLinkCiId());
-				detailDTO.setRefTableID(input.getLinkCiTableId());
+				detailDTO.setRefTableID(tableId);
+				
+				//analog zu SISec: wenn tableId=2 (Tabelle Anwendung) die appCat1Id holen alias refCiSubTypeId
+				if(tableId == 2) {
+					Long ciSubTypeId = ApplicationCat1Hbn.getCat1IdByCiId(tableId);
+					detailDTO.setRefCiSubTypeId(ciSubTypeId);
+				}
 			}
 			
 			output.setItsecMassnahmeDetailDTO(detailDTO);
