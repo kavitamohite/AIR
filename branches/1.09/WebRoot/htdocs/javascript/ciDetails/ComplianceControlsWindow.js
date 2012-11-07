@@ -1701,8 +1701,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				cbLinkCiType.setValue('');
 				cbLinkCiList.setValue('');
 				
-				if(!this.config.hasTemplate)
-					this.enableMassnahmeDetails();//(*2) Release Defaultdeaktivierung
+//				if(!this.config.hasTemplate)
+//					this.enableMassnahmeDetails();//(*2) Release Defaultdeaktivierung
 				
 			}
 		}
@@ -2497,9 +2497,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	update: function() {
-		if(this.config.hasTemplate) {//(*2) Release Defaultdeaktivierung
+//		if(this.config.hasTemplate) {//(*2) Release Defaultdeaktivierung
 			this.disableMassnahmeDetails(this.config.hasTemplate);
-		}
+//		}
 		
 	},
 	

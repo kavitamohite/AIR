@@ -55,11 +55,11 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        lazyRender: true,
 		        lazyInit: false,
 		        
-		        editable: false
+		        editable: false,
 		        
 		        //(*2) Release Defaultdeaktivierung
-//		        disabled: true,
-//		        hideTrigger: true
+		        disabled: true,
+		        hideTrigger: true
 			},{
 				xtype: 'filterCombo',//filterCombo combo
 				id: 'cbLinkCiList',
@@ -78,11 +78,11 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        lazyRender: true,
 		        lazyInit: false,
 		        
-		        editable: false
+		        editable: false,
 		        
 		        //(*2) Release Defaultdeaktivierung
-//		        disabled: true,
-//		        hideTrigger: true
+		        disabled: true,
+		        hideTrigger: true
 			}
 //	            pComplianceLinkTypeConfig
             ]
