@@ -576,19 +576,18 @@ AIR.AirAclManager = function() {
 			var labels = AIR.AirApplicationManager.getLabels();
 			
 			
-			Ext.each(records, function(item, index, allItems) {
-				if(item.data.Mandatory === 'mandatory' && item.data.id.charAt(item.data.id.length - 1) !== 'W') { //'required'
-					var reqItemCmp = Ext.getCmp(item.data.id);
+//			Ext.each(records, function(item, index, allItems) {
+			for(var i = 0; i < records.length; i++) {
+//				if(item.data.Mandatory === 'mandatory' && item.data.id.charAt(item.data.id.length - 1) !== 'W') { //'required'
+				if(records[i].data.Mandatory === 'mandatory' && records[i].data.id.charAt(records[i].data.id.length - 1) !== 'W') { //'required'
+					var reqItemCmp = Ext.getCmp(records[i].data.id);
 					
-					if(reqItemCmp) {
+					if(reqItemCmp && this.isCiTypeField(data, reqItemCmp)) {
 						switch (reqItemCmp.getXType()) {
 							case 'textfield':
 							case 'textarea':
 							case 'combo':
 							case 'filterCombo':
-								if(data.applicationCat1Id !== AC.APP_CAT1_APPLICATION && AC.APP_CAT1_ONLY_FIELDS.indexOf(reqItemCmp.getId()) > -1)
-									break;
-							
 								//if(!reqItemCmp.disabled && (reqItemCmp.getValue()===undefined || reqItemCmp.getValue()==='')) {
 								if(!reqItemCmp.disabled && (!reqItemCmp.getValue() || reqItemCmp.getValue().length === 0))
 									if(labels[reqItemCmp.id])											
@@ -607,13 +606,18 @@ AIR.AirAclManager = function() {
 						}
 					}
 				}
-			});
+			}
+//			});
 			
 			if(incompleteFieldList.length > 2)
 				incompleteFieldList = incompleteFieldList.substring(0, incompleteFieldList.length - 2);
 			
 			
 			return incompleteFieldList;
+		},
+		
+		isCiTypeField: function(data, reqItemCmp) {//mit allen CI Typen: tableId, ciSubType
+			return !(data.applicationCat1Id !== AC.APP_CAT1_APPLICATION && AC.APP_CAT1_ONLY_FIELDS.indexOf(reqItemCmp.getId()) > -1);
 		},
 		
 		

@@ -424,16 +424,22 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 								layout: 'hbox',
 								anchor: '100%',
 								
+								style: {
+							    	marginTop: 5
+								},
+								
 								items: [{
 						    		xtype: 'label',
 						    		id: 'lGapClass',
 						    		text: labels.complianceWindowGapClass,
-						    		flex: 2,
-//						    		width: 100,
 						    		
-						    		margins: '5 5 5 0',
+//						    		flex: 2,
+//						    		margins: '5 5 5 0',
+
+						    		width: 92,//100
 						    		
 									style: {
+										marginTop: 5,
 								    	fontSize: 12
 									}
 						    	},{
@@ -442,9 +448,15 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									store: AIR.AirStoreFactory.createItsecMassnahmenGapClassStore(),
 									allowBlank: false,
 									
-									anchor: '100%',
-									flex: 7,
-									margins: '5 0 0 0',
+//									anchor: '100%',
+//									flex: 7,
+//									margins: '5 0 0 0',
+									
+									width: 318,
+									style: {
+//								    	marginTop: 5,
+								    	marginLeft: 5
+									},
 									
 									fieldLabel: 'Gap class',
 							        valueField: 'gapPriority',
@@ -465,28 +477,43 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 								layout: 'hbox',
 								anchor: '100%',
 								
+								style: {
+							    	marginTop: 5
+								},
+								
 								items: [{
 						    		xtype: 'label',
 						    		id: 'lTargetDate',
 						    		text: labels.complianceWindowTargetDate,
-						    		flex: 2,
-//						    		width: 100,
 						    		
-						    		margins: '5 5 5 0',
+//						    		flex: 2,
+//						    		margins: '5 5 5 0',
+						    		
+						    		width: 92,//100
 						    		
 									style: {
+										marginTop: 5,
 								    	fontSize: 12
 									}
 						    	},{
 									xtype: 'datefield',
 									id: 'dfTargetDate',
-									margins: '5 0 0 0',
+									
 									format: AIR.AirApplicationManager.getDateFormat(),//this.config.language
 									altFormats: AIR.AirApplicationManager.getDateFormat(),//only accept this format
 									allowBlank: false,
-									
 //									readOnly: true,//sonst kein Datem auswählbar
-									flex: 7
+									
+//									flex: 7,
+//									margins: '5 0 0 0'
+									
+									width: 120,
+									style: {
+//								    	marginTop: 5,
+								    	marginLeft: 5
+									}
+									
+									
 								}/*,{
 									xtype: 'textfield',
 									id: 'tfTargetDate',
@@ -605,13 +632,19 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 										layout: 'hbox',
 										anchor: '100%',
 										
+										style: {
+									    	marginTop: 5
+										},
+										
 										items: [{
 								    		xtype: 'label',
 								    		id: 'lMaxDamagePerEvent',
 								    		text: labels.complianceWindowMaximumDamagePerEvent,
-								    		flex: 5,
-								    		margins: '5 4 0 0',
 								    		
+//								    		flex: 5,
+//								    		margins: '0 0 0 0',//5 4 0 0
+								    		
+								    		width: 199,
 											style: {
 										    	fontSize: 12
 											}
@@ -624,16 +657,23 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 								    		maskRe: /[\d\\.]/,
 								    		vtype: 'decimal',
 											
-											flex: 3,
-											margins: '5 0 0 0'
+								    		width: 116
+//											flex: 3,
+//											margins: '0 0 0 0'//5 0 0 0
 										},{
 											xtype: 'combo',
 											id: 'cbMaxDamagePerEventCurrency',
 											store: currencyStore,//AIR.AirStoreManager.getStoreByName('currencyListStore'),//currencyStore,//currencyListStore,//AIR.AirStoreFactory.createGxpFlagListStore(),//gxpFlagListStore,
 											allowBlank: false,
 											
-											flex: 3,
-											margins: '5 0 0 5',
+//											flex: 3,
+//											margins: '5 0 0 5',
+											
+											width: 116,
+											style: {
+//										    	marginTop: 5,
+										    	marginLeft: 5
+											},
 											
 									        valueField: 'id',//id currencyId
 									        displayField: 'text',//text currencyName
@@ -864,8 +904,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 										}]
 									}]
 								}]
-							},
-							{
+							},{
 								xtype: 'combo',
 								id: 'cbSignee',
 								store: signeeListStore,//signeeListStore,//AIR.AirStoreFactory.createSigneeListStore()
@@ -897,26 +936,39 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 								layout: 'hbox',
 								anchor: '100%',
 								
+								style: {
+							    	marginTop: 5
+								},
+								
 								items: [{
 						    		xtype: 'label',
 						    		id: 'lDateOfApproval',
 						    		text: labels.complianceWindowDateOfApproval,
-						    		flex: 5,
 						    		
-						    		margins: '5 0 0 0',
+//						    		flex: 5,
+//						    		margins: '5 0 0 0',
 						    		
+						    		width: 195,
 									style: {
+										marginTop: 5,
 								    	fontSize: 12
 									}
 						    	},{
 									xtype: 'datefield',
 									id: 'dfDateOfApproval',
-									margins: '5 0 0 0',
+									
 									format: AIR.AirApplicationManager.getDateFormat(),//this.config.language
 									altFormats: AIR.AirApplicationManager.getDateFormat(),//only accept this format
-									
 //									readOnly: true,//sonst kein Datem auswählbar
-									flex: 6
+									
+//									margins: '5 0 0 0',
+//									flex: 6
+									
+									width: 120,
+									style: {
+//								    	marginTop: 5,
+								    	marginLeft: 5
+									}
 								}]
 							}]
 						}]
@@ -1366,6 +1418,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		for(var key in this.editedMassnahmen) {
 			var massnahme = this.editedMassnahmen[key];
 			
+			//wenn massnahme verlinkt ist keine Validierungsprüfungen, damit gespeichert werden kann
+			if(massnahme.refTableID)
+				continue;
+			
 			if(massnahme.statusId != 5 && massnahme.statusKommentar.length === 0) {
 				this.addInvalidMassnahme(invalidMassnahmen, massnahme);
 				continue;
@@ -1603,8 +1659,12 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		}
 	},
 	
+	//massnahme kann entweder die gerade aus der Tabelle ausgewählte sein oder die durch die combobox Link - CI ausgewählte.
+	//Im letzteren Fall dürfen die cbLinkCiType und cbLinkCiList nicht aktualisiert werden, da diese ja neu gesetzt wurden
+	//und sonst der alte Wert fälschlicherweise wieder zurückgesetzt wird! Dies ist dann der Fall wenn this.isLinkCiSelect=true.
 	updateComplianceDetails: function(massnahme) {//compliantStatus, justification
-		this.loadedMassnahme = massnahme;
+		if(!this.isLinkCiSelect)
+			this.loadedMassnahme = massnahme;
 
 		var cbgIcsRelevances = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').getComponent('cbgComplianceLinkTypeRelevance');
 		var icsRelevances = [ massnahme.secuRelevance == '-1', massnahme.accsRelevance == '-1', massnahme.itopRelevance == '-1' ];
@@ -1614,74 +1674,38 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var cbLinkCiType = complianceLinkView.getComponent('cbLinkCiType');
 		var cbLinkCiList = complianceLinkView.getComponent('cbLinkCiList');
 		
-
-		
 		this.config.massnahmeGstoolId = massnahme.massnahmeGstoolId;
-		var isMassnahmeLinked = this.isMassnahmeLinked(massnahme);
-		
-		if(isMassnahmeLinked) {
-			var ciType;
-			var ciTypeStore = cbLinkCiType.getStore();
-			var r = ciTypeStore.getAt(ciTypeStore.findExact('tableId', massnahme.refTableID));
-			
-			if(r.get('tableId') == AC.TABLE_ID_APPLICATION) {
-//				var ciListStore = cbLinkCiList.getStore();
-//				
-//				var ciRefId = ciListStore.getAt(ciListStore.findExact('id', massnahme.refPKID));
-//				ciType = ciRefId.get('subTypeId');
-				
-				
-				
-				
-//				if(massnahme.refCiSubTypeId) {//aus DB geladen nicht durch CI Type combos gesetzt
-					ciType = massnahme.refCiSubTypeId;
-//				} else {//durch CI Type combo Auswahl erneuert
-//					var ciListStore = cbLinkCiList.getStore();
-//					
-//					var ciRefId = ciListStore.getAt(ciListStore.findExact('id', massnahme.refPKID));
-//					ciType = ciRefId.get('subTypeId');
-//				}
-				
-			} else {
-				ciType = r.get('id');
-			}
-			
-			Util.log('tableId='+r.get('tableId')+' ciType='+ciType);
-			cbLinkCiType.setValue(ciType);//massnahme.refTableID ciType
-//			cbLinkCiType.el.dom.value = ciType;
-//			cbLinkCiType.value = ciType;
 
+		if(!this.isLinkCiSelect) {
+			var isMassnahmeLinked = this.isMassnahmeLinked(massnahme);
 			
-			var callback = function() {
+			if(isMassnahmeLinked) {
+//				var ciTypeStore = cbLinkCiType.getStore();
+//				var r = ciTypeStore.getAt(ciTypeStore.findExact('tableId', massnahme.refTableID));
+//				
+//				var ciType = r.get('tableId') == AC.TABLE_ID_APPLICATION ? massnahme.refCiSubTypeId : r.get('id');
+				cbLinkCiType.setValue(massnahme.refCiSubTypeId);//ciType
+	
 				
+				var callback = function() {
+					cbLinkCiList.setValue(massnahme.refPKID);
+				};
+				//override combo.setValue() or combo's internal load listener to choose wether to fire the select event or not
+				//to avoid undesired expanding of the combos's inner list after the link CI was changed?
+				complianceLinkView.loadLinkCiList(ciType, callback);
 				
+				this.disableMassnahmeDetails();
+			} else {
+	//			cbLinkCiType.reset();
+	//			cbLinkCiList.reset();
+				cbLinkCiType.setValue('');
+				cbLinkCiList.setValue('');
 				
-				cbLinkCiList.setValue(massnahme.refPKID);
-//				cbLinkCiList.el.dom.value = massnahme.refPKID;
-//				cbLinkCiList.value = massnahme.refPKID;
-			};
-			complianceLinkView.loadLinkCiList(ciType, callback);//verhindern, dass select event nochmal gefeuert wird
-//			cbLinkCiList.setValue(massnahme.refPKID);
-			
-			
-			this.disableMassnahmeDetails();
-		} else {
-//			cbLinkCiType.reset();
-//			cbLinkCiList.reset();
-			cbLinkCiType.setValue('');
-			cbLinkCiList.setValue('');
-			
-			if(!this.config.hasTemplate) {
-				this.enableMassnahmeDetails();
+				if(!this.config.hasTemplate)
+					this.enableMassnahmeDetails();//(*2) Release Defaultdeaktivierung
 				
-				
-//				var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
-//				complianceLinkView.update(this.config);//siehe onMassnahmenDetailLoaded
 			}
 		}
-		
-//		cbLinkCiType.filterByData();
-//		cbLinkCiList.filterByData();
 		
 		
 		var fsComplianceStatement = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement');
@@ -1848,6 +1872,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //			cbGapClass.fireEvent('select', cbGapClass);
 //			this.updateRiskAnalysisAndMgmt(gapClassId);
 			this.updateGapRelevance(massnahme.statusId, gapClassId);
+		}
+		
+		if(this.isLinkCiSelect) {
+			this.onMassnahmeChange();//wird durch klick auf andere massnahme in tabelle ausgelöst
+			this.isLinkCiSelect = false;
 		}
 	},
 	
@@ -2081,7 +2110,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		for(var i = 0; i < items.length; i++)
 //			items[i].reset();
 		
-		var items = panel.findByType('checkbox');
+		items = panel.findByType('checkbox');
 		for(var i = 0; i < items.length; i++) {
 //			items[i].reset();//(*checkbox1) oder manuell zurücksetzen, damit kein check event gefeuert wird
 			items[i].checked = false;
@@ -2251,6 +2280,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	onLinkCiSelect: function(linkCiId, linkCiTableId) {//massnahmeGstoolId
+//		this.onMassnahmeChange();
+		this.isLinkCiSelect = true;
+		
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 		var massnahmeGstoolId = grid.getSelectionModel().getSelected().get('massnahmeGstoolId');
 		
@@ -2269,7 +2301,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			params: params
 		});
 		
-		this.onMassnahmeChange();
+//		this.onMassnahmeChange();//ORIG
 		this.disableMassnahmeDetails();//kann schon vor dem fertigen store load event gemacht werden
 		
 		
@@ -2298,6 +2330,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var clGapResponsibleAddPicker = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination').getComponent('pGapResponsible').getComponent('clGapResponsibleAddPicker');
 		var clGapResponsibleDeletePicker = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination').getComponent('pGapResponsible').getComponent('clGapResponsibleDeletePicker');
 
+		var chbRiskAnalysisType = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisType').getComponent('chbRiskAnalysisType');
 
 		var pRiskAnalysisAndMgmtCard = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
 		var pRiskAnalysisAndMgmtNonFreeText = pRiskAnalysisAndMgmtCard.getComponent('pRiskAnalysisAndMgmtNonFreeText');
@@ -2351,6 +2384,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		clGapResponsibleAddPicker.hide();
 		clGapResponsibleDeletePicker.hide();
 
+		chbRiskAnalysisType.disable();
 		tfOccurenceOfDamagePerYear.disable();
 		tfMaxDamagePerEvent.disable();
 		Util.disableCombo(cbMaxDamagePerEventCurrency);
@@ -2358,6 +2392,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		tfDamagePerYear.disable();
 
 		tfGapResponsible.disable();
+//		fsGapElimination.getComponent('pGapResponsible').doLayout();//oder fsGapElimination.doLayout() ?
 		taPlanOfAction.disable();
 		dfTargetDate.disable();
 		dfTargetDate.setHideTrigger(true);
@@ -2384,6 +2419,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var clGapResponsibleAddPicker = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination').getComponent('pGapResponsible').getComponent('clGapResponsibleAddPicker');
 		var clGapResponsibleDeletePicker = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination').getComponent('pGapResponsible').getComponent('clGapResponsibleDeletePicker');
 
+		var chbRiskAnalysisType = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisType').getComponent('chbRiskAnalysisType');
 
 		var pRiskAnalysisAndMgmtCard = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
 		var pRiskAnalysisAndMgmtNonFreeText = pRiskAnalysisAndMgmtCard.getComponent('pRiskAnalysisAndMgmtNonFreeText');
@@ -2437,6 +2473,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		clGapResponsibleAddPicker.show();
 		clGapResponsibleDeletePicker.show();
 
+		chbRiskAnalysisType.enable();
 		tfOccurenceOfDamagePerYear.enable();
 		tfMaxDamagePerEvent.enable();
 		Util.enableCombo(cbMaxDamagePerEventCurrency);
@@ -2444,6 +2481,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		tfDamagePerYear.enable();
 
 		tfGapResponsible.enable();
+		fsGapElimination.getComponent('pGapResponsible').doLayout();//oder fsGapElimination.doLayout() ?
 		taPlanOfAction.enable();
 		dfTargetDate.enable();
 		dfTargetDate.setHideTrigger(false);
@@ -2459,12 +2497,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	update: function() {
-		if(this.config.hasTemplate) {
+		if(this.config.hasTemplate) {//(*2) Release Defaultdeaktivierung
 			this.disableMassnahmeDetails(this.config.hasTemplate);
-		}/* else {
-			var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
-			complianceLinkView.update(this.config);
-		}*/
+		}
 		
 	},
 	

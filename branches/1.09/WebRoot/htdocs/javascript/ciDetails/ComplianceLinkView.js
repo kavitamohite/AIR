@@ -56,6 +56,10 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        lazyInit: false,
 		        
 		        editable: false
+		        
+		        //(*2) Release Defaultdeaktivierung
+//		        disabled: true,
+//		        hideTrigger: true
 			},{
 				xtype: 'filterCombo',//filterCombo combo
 				id: 'cbLinkCiList',
@@ -75,6 +79,10 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        lazyInit: false,
 		        
 		        editable: false
+		        
+		        //(*2) Release Defaultdeaktivierung
+//		        disabled: true,
+//		        hideTrigger: true
 			}
 //	            pComplianceLinkTypeConfig
             ]
@@ -118,6 +126,8 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		if(this.isCiApplication())
 			params.applicationCat1Id = ciTypeId;//this.ciData.applicationCat1Id;
 		
+//		this.linkCiSelected = callback ? false : true;
+		
 		var cbLinkCiList = this.getComponent('cbLinkCiList');
 		cbLinkCiList.reset();
 		cbLinkCiList.getStore().load({
@@ -131,11 +141,8 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbLinkCiType = this.getComponent('cbLinkCiType');
 		var linkCiTableId = cbLinkCiType.getStore().getAt(cbLinkCiType.getStore().findExact('id', cbLinkCiType.getValue())).get('tableId');//cbLinkCiType.getValue();//
 		
-		
-//		var linkCiTabledId = cbLinkCiType.getStore().find('id', cbLinkCiType.getValue());//.get('tabledId');
-		
-		
-		this.fireEvent('linkCiSelect', linkCiId, linkCiTableId);//, this.ciData.massnahmeGstoolId
+//		if(this.linkCiSelected)
+			this.fireEvent('linkCiSelect', linkCiId, linkCiTableId);//, this.ciData.massnahmeGstoolId
 	},
 	
 //	setMassnahme: function(massnahmeId) {

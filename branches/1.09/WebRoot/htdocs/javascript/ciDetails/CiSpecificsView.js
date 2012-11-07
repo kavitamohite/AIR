@@ -635,30 +635,9 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var rgBARrelevance = this.getComponent('rgBARrelevance');
 		var tfBarApplicationId = this.getComponent('barApplicationId');
 		
-		if(isApplication) {
-			rgBARrelevance.setVisible(true);
-			
-			if(data.barRelevance.length === 0)
-				data.barRelevance = 'U';
-	
-			rgBARrelevance.setValue(data.barRelevance);
-			
-			
-			tfBarApplicationId.setVisible(true);
-			if(data.barRelevance === 'Y') {
-				tfBarApplicationId.setValue(data.barApplicationId);
-				rgBARrelevance.disable();
-			} else {
-				tfBarApplicationId.setValue('');
-			}
-		} else {
-			rgBARrelevance.reset();
-			rgBARrelevance.setVisible(false);
-			
-			tfBarApplicationId.reset();
-			tfBarApplicationId.setVisible(false);
-		}
-		
+		var lvOrganisationalScope = this.getComponent('organisationalScope');//.getComponent('fsOrganisationalScope')
+		var taOrganisationalScope = this.getComponent('organisationalScopeHidden');//.getComponent('fsOrganisationalScope')
+
 
 		
 		
@@ -724,12 +703,27 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		this.updateAccessMode(data);
 		
-		var lvOrganisationalScope = this.getComponent('organisationalScope');//.getComponent('fsOrganisationalScope')
+		
 		lvOrganisationalScope.clearSelections(true);
-		var taOrganisationalScope = this.getComponent('organisationalScopeHidden');//.getComponent('fsOrganisationalScope')
 		taOrganisationalScope.reset();
 		
 		if(isApplication) {
+			rgBARrelevance.setVisible(true);
+			
+			if(data.barRelevance.length === 0)
+				data.barRelevance = 'U';
+	
+			rgBARrelevance.setValue(data.barRelevance);
+			
+			
+			tfBarApplicationId.setVisible(true);
+			if(data.barRelevance === 'Y') {
+				tfBarApplicationId.setValue(data.barApplicationId);
+				rgBARrelevance.disable();
+			} else {
+				tfBarApplicationId.setValue('');
+			}
+		
 			//durch AirAclManager erledigt 
 //			lvOrganisationalScope.setVisible(true);
 //			taOrganisationalScope.setVisible(true);
@@ -755,6 +749,12 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				}
 			}
 		} else {
+			rgBARrelevance.reset();
+			rgBARrelevance.setVisible(false);
+			
+			tfBarApplicationId.reset();
+			tfBarApplicationId.setVisible(false);
+			
 			lvOrganisationalScope.setVisible(false);
 			taOrganisationalScope.setVisible(false);
 		}

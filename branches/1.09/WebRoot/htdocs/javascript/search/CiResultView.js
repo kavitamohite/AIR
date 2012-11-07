@@ -33,7 +33,9 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		});
 		
 		AIR.CiResultView.superclass.initComponent.call(this);
+		
 		this.ciResultGridParamSets = {};
+		this.tabCount = 0;
 		
 //		this.addEvents('tabclose');
 	},
@@ -49,7 +51,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			ciResultGridId = ciResultGrid.getId();
 			this.ciResultGridParamSets[ciResultGridId] = params;
 		} else {
-			var tabCount = tpCiSearchResultTables.items.items.length;
+			var tabCount = this.tabCount++;//tpCiSearchResultTables.items.items.length;
 			ciResultGridId = params.searchType + '_' + tabCount;
 			this.ciResultGridParamSets[ciResultGridId] = params;
 			
@@ -149,8 +151,9 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	
 	
 	onTabClose: function(tab) {
-		tab.getStore().removeAll();
-		delete this.ciResultGridParamSets[tab.getId()];
+		var grid = tab;
+		grid.getStore().removeAll();
+		delete this.ciResultGridParamSets[grid.getId()];
 		
 		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
 		var tabCount = tpCiSearchResultTables.items.items.length;

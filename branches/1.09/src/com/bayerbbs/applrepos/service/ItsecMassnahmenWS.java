@@ -70,6 +70,7 @@ public class ItsecMassnahmenWS {
 			
 			if(null != refTableId && 0 != refTableId.longValue() && null != refPkId && 0 != refPkId.longValue()) {
 				// Weiterverlinkt... deshalb Datensatz nachladen...
+				//detailDTO kann null sein, was tun wenn?
 				detailDTO = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(detailDTO.getRefTableID(), detailDTO.getRefPKID(), detailDTO.getMassnahmeGstoolId());
 				
 				// für die erste getroffene Auswahl der Verlinkung..
@@ -208,6 +209,7 @@ public class ItsecMassnahmenWS {
 		
 		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 		
+			//detailDTO kann null sein, was tun wenn?
 			ItsecMassnahmeDetailDTO detailDTO = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(input.getLinkCiTableId(), input.getLinkCiId(), input.getMassnahmeGstoolId());
 			
 			if ( null != detailDTO.getRefTableID() && 0 != detailDTO.getRefTableID().longValue() && null != detailDTO.getRefPKID() && 0 != detailDTO.getRefPKID().longValue()) {
