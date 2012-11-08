@@ -103,7 +103,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 	
 	loadMyOwnCIsGrid: function(searchAction) {
 		var params = {
-			start: 0,//this.myOwnCIsGrid.getBottomToolbar().cursor,//
+			start: this.myOwnCIsGrid.getBottomToolbar().cursor,//0,//
 			limit: this.myOwnCIsGrid.pageSize,//20,
 			cwid: AIR.AirApplicationManager.getCwid(),
 			token: AIR.AirApplicationManager.getToken(),
@@ -125,14 +125,14 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		});
 		
 		
-		delete params.start;
-		delete params.limit;
+//		delete params.start;
+//		delete params.limit;
 		this.myOwnCIsGrid.setPagingParams(params);
 	},
 	
 	loadDelegateCIsGrid: function(searchAction) {
 		var params = {
-			start: 0,//this.myDelegateCIsGrid.getBottomToolbar().cursor,//
+			start: this.myDelegateCIsGrid.getBottomToolbar().cursor,//0,//
 			limit: this.myDelegateCIsGrid.pageSize,//20,
 			cwid: AIR.AirApplicationManager.getCwid(),
 			token: AIR.AirApplicationManager.getToken(),
@@ -155,8 +155,8 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		});		
 		
 		
-		delete params.start;
-		delete params.limit;
+//		delete params.start;
+//		delete params.limit;
 		this.myDelegateCIsGrid.setPagingParams(params);
 	},
 	
