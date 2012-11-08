@@ -431,17 +431,16 @@ public class CiEntitesHbn {
 			sql.append(ciOwnerType);
 			sql.append("', '");
 			sql.append(ouQueryMode);
-			sql.append("'))");
 			
-			if (null != ciTypeaa && !"".equals(ciTypeaa)) {
-				sql.append(" where upper(type) = upper('").append(ciTypeaa).append("') ");
+			if (null != ciTypeaa && ciTypeaa.length() > 0) {
+				sql.append("', '");
+				sql.append(ciTypeaa);
 			}
 			
-			sql.append(" order by name");
+			sql.append("')) order by name");
 			
 			return findCis(sql.toString());
 		}
-		
 	}
 	
 	public static List<ApplicationDTO> findMyCisOwner(String cwid, String sort, String dir, boolean onlyApplications) {

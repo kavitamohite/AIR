@@ -53,7 +53,11 @@ AIR.AirPagingToolbar = Ext.extend(Ext.PagingToolbar, {
         // CUSTOM siehe original ext-all-debug.js 3.4.0 Z. 32715
         if(this.pagingParams)
         	for(var key in this.pagingParams)
-        		o[key] = this.pagingParams[key];
+        		if(key !== 'start' && key !== 'limit')
+        			o[key] = this.pagingParams[key];
+
+//        o[pn.start] = start;
+//        o[pn.limit] = this.pageSize;
         // CUSTOM
         
         if(this.fireEvent('beforechange', this, o) !== false){

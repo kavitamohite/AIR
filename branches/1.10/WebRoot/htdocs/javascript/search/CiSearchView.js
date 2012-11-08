@@ -133,7 +133,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		ciAdvancedSearchView.on('expand', this.onAdvSearchExpand, this);
 		ciAdvancedSearchView.on('collapse', this.onAdvSearchCollapse, this);
 		
-		var cbCat1 = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('advsearchObjectType');
+		var cbCat1 = ciAdvancedSearchView.getComponent('advsearchObjectType');
 		cbCat1.on('select', this.onCat1Select, this);
 		cbCat1.on('change', this.onCat1Change, this);
 		
@@ -262,7 +262,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 
 	    var ciAdvancedSearchView = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView');
 	    ciAdvancedSearchView.collapse(false);
-//	    ciAdvancedSearchView.getComponent('pAdvancedSearch').setVisible(false);
+//	    ciAdvancedSearchView.setVisible(false);
 	    
 	    var searchType = this.isAdvSearch ? AC.SEARCH_TYPE_ADV_SEARCH : AC.SEARCH_TYPE_SEARCH;
 	    params.searchType = searchType;
@@ -319,44 +319,44 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		params.isAdvSearch = this.isAdvSearch;
 		
 		var ciAdvancedSearchView = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView');
-		var pAdvancedSearch = ciAdvancedSearchView.getComponent('pAdvancedSearch');
+		
 		params.onlyapplications = 'false';
 		
-	    var field = pAdvancedSearch.getComponent('advsearchObjectType');
+	    var field = ciAdvancedSearchView.getComponent('advsearchObjectType');
 	    params.advsearchObjectTypeId = field.getValue();
 	    params.advsearchObjectTypeText = field.getRawValue().trim();
 	    
-	    field = pAdvancedSearch.getComponent('advsearchdescription');
+	    field = ciAdvancedSearchView.getComponent('advsearchdescription');
 	    params.advsearchdescription = field.getRawValue().trim();
 	    
-	    field = pAdvancedSearch.getComponent('cbAdvSearchITset');
+	    field = ciAdvancedSearchView.getComponent('cbAdvSearchITset');
 	    if(field.getValue().length > 0)
 	    	params.itSetId = field.getValue();
 	    
-	    var cbCat1 = pAdvancedSearch.getComponent('advsearchObjectType');
+	    var cbCat1 = ciAdvancedSearchView.getComponent('advsearchObjectType');
 	    var cat1 = cbCat1.getValue();
 	    if(cat1 === AC.APP_CAT1_APPLICATION || cat1.length === 0) {
-	    	var barRelevance = pAdvancedSearch.getComponent('rgAdvSearchBARrelevance').getValue();
+	    	var barRelevance = ciAdvancedSearchView.getComponent('rgAdvSearchBARrelevance').getValue();
 	    	if(barRelevance)
 	    		params.barRelevance = barRelevance.inputValue;
 	    	
-		    params.advsearchappowner = pAdvancedSearch.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerHidden').getValue();//applicationOwner
-//		    params.advsearchappownerHidden = pAdvancedSearch.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerHidden').getValue();
-		    params.advsearchappdelegate = pAdvancedSearch.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwnerDelegate').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerDelegateHidden').getValue();//applicationOwnerDelegate
-//		    params.advsearchappdelegateHidden = pAdvancedSearch.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwnerDelegate').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerDelegateHidden').getValue();
-		    params.advsearchsteward = pAdvancedSearch.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent(ciAdvancedSearchView.ownerId + 'applicationStewardHidden').getValue();//applicationSteward
-//		    params.advsearchstewardHidden = pAdvancedSearch.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent(ciAdvancedSearchView.ownerId + 'applicationStewardHidden').getValue();
+		    params.advsearchappowner = ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerHidden').getValue();//applicationOwner
+//		    params.advsearchappownerHidden = ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerHidden').getValue();
+		    params.advsearchappdelegate = ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwnerDelegate').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerDelegateHidden').getValue();//applicationOwnerDelegate
+//		    params.advsearchappdelegateHidden = ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationOwnerDelegate').getComponent(ciAdvancedSearchView.ownerId + 'applicationOwnerDelegateHidden').getValue();
+		    params.advsearchsteward = ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent(ciAdvancedSearchView.ownerId + 'applicationStewardHidden').getValue();//applicationSteward
+//		    params.advsearchstewardHidden = ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent('p' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getComponent(ciAdvancedSearchView.ownerId + 'applicationStewardHidden').getValue();
 	    }
-	    params.advsearchciowner = pAdvancedSearch.getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent(ciAdvancedSearchView.ownerId + 'ciResponsibleHidden').getValue();//ciResponsible
-//	    params.advsearchciownerHidden = pAdvancedSearch.getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent(ciAdvancedSearchView.ownerId + 'ciResponsibleHidden').getValue();
-	    params.advsearchcidelegate = pAdvancedSearch.getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CiSubResponsible').getComponent(ciAdvancedSearchView.ownerId + 'ciSubResponsibleHidden').getValue();//ciSubResponsible
-//	    params.advsearchcidelegateHidden = pAdvancedSearch.getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CiSubResponsible').getComponent(ciAdvancedSearchView.ownerId + 'ciSubResponsibleHidden').getValue();
+	    params.advsearchciowner = ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent(ciAdvancedSearchView.ownerId + 'ciResponsibleHidden').getValue();//ciResponsible
+//	    params.advsearchciownerHidden = ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent(ciAdvancedSearchView.ownerId + 'ciResponsibleHidden').getValue();
+	    params.advsearchcidelegate = ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CiSubResponsible').getComponent(ciAdvancedSearchView.ownerId + 'ciSubResponsibleHidden').getValue();//ciSubResponsible
+//	    params.advsearchcidelegateHidden = ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getComponent('p' + ciAdvancedSearchView.ownerId + 'CiSubResponsible').getComponent(ciAdvancedSearchView.ownerId + 'ciSubResponsibleHidden').getValue();
 	    
 	    params.isAdvSearchExt = this.isAdvSearchExt;
 	    
 	    if(this.isAdvSearchExt) {//!
-	    	var fsCategoriesAndStatus = pAdvancedSearch.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus');
-	    	var fsSpecialSearchAttributes = pAdvancedSearch.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes');
+	    	var fsCategoriesAndStatus = ciAdvancedSearchView.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus');
+	    	var fsSpecialSearchAttributes = ciAdvancedSearchView.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes');
 	    	
 	    	
 			field = fsCategoriesAndStatus.getComponent('cbAdvSearchGeneralUsageW');
@@ -428,7 +428,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 			cat1 = params.advsearchObjectTypeId;//params.advsearchObjectTypeId kann undefined sein
 		} else {
 			var ciAdvancedSearchView = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView');
-		    var cbCat1 = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('advsearchObjectType');
+		    var cbCat1 = ciAdvancedSearchView.getComponent('advsearchObjectType');
 		    cat1 = cbCat1.getValue();
 		}
 		
@@ -563,7 +563,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 //			this.isAdvSearchExt = !this.isAdvSearchExt;
 //			isAdvSearchExt = this.isAdvSearchExt;
 //			
-//			var cbCat1 = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('advsearchObjectType');
+//			var cbCat1 = ciAdvancedSearchView.getComponent('advsearchObjectType');
 //			isAdditionalSearchAttributes = true;
 //			isCat1OrNone = cbCat1.getValue() === AC.APP_CAT1_APPLICATION || cbCat1.getValue() === '' ? true : false;
 //		} else {
@@ -576,7 +576,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 		
 		this.isAdvSearchExt = true;
-		var cbCat1 = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('advsearchObjectType');
+		var cbCat1 = ciAdvancedSearchView.getComponent('advsearchObjectType');
 		var isAdvSearchExt = params ? params.isAdvSearchExt : this.isAdvSearchExt;
 		var isAdditionalSearchAttributes = true;
 		var isCat1OrNone = cbCat1.getValue() === AC.APP_CAT1_APPLICATION || cbCat1.getValue() === '' ? true : false;
@@ -585,7 +585,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		bExpandAdvSearchParams.setVisible(true);
 		
 		
-		ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').setVisible(isAdvSearchExt);
+		ciAdvancedSearchView.getComponent('pAdditionalSearchAttributes').setVisible(isAdvSearchExt);
 		ciAdvancedSearchView.show();
 		
 //		if(!ciAdvancedSearchView.collapsed)
@@ -643,14 +643,14 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		} else {
 	//		var height = 450;//50 + this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView').getHeight();//150;//200 300 400 630
 			//250 200
-			height = 250 + ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getHeight();
+			height = 250 + ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'CIOwner').getHeight();
 			if(isCat1OrNone || this.isCat1OrNoneSelected())
-				height += ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getHeight() +
-						  ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getHeight();
+				height += ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationOwner').getHeight() +
+						  ciAdvancedSearchView.getComponent('fs' + ciAdvancedSearchView.ownerId + 'ApplicationSteward').getHeight();
 			
 			if(isAdditionalSearchAttributes || this.isAdditionalSearchAttributesActive()) {
-	//			height += ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes').getHeight();// - 300;//300;//250
-				var pAdditionalSearchAttributes = ciAdvancedSearchView.getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes');
+	//			height += ciAdvancedSearchView.getComponent('pAdditionalSearchAttributes').getHeight();// - 300;//300;//250
+				var pAdditionalSearchAttributes = ciAdvancedSearchView.getComponent('pAdditionalSearchAttributes');
 				height += pAdditionalSearchAttributes.getHeight();
 			}
 		}
@@ -859,7 +859,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		if(params) {
 			isVisible = params.isAdvSearchExt;
 		} else {
-			var pAdditionalSearchAttributes = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView').getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes');
+			var pAdditionalSearchAttributes = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView').getComponent('pAdditionalSearchAttributes');
 			isVisible = pAdditionalSearchAttributes.isVisible();//oder immer true
 		}
 		
@@ -896,7 +896,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		var ciStandardSearchView = ciSearchViewPages.getComponent('ciStandardSearchView');
 		var ciAdvancedSearchView = ciStandardSearchView.getComponent('ciAdvancedSearchView');
 		
-		var pAdditionalSearchAttributes = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView').getComponent('pAdvancedSearch').getComponent('pAdditionalSearchAttributes');
+		var pAdditionalSearchAttributes = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView').getComponent('pAdditionalSearchAttributes');
 //		var clAdvancedSearch = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('pSearchField').getComponent('clAdvancedSearch');
 		
 //		if(pAdditionalSearchAttributes.isVisible()) {//this.isAdvSearchExt
