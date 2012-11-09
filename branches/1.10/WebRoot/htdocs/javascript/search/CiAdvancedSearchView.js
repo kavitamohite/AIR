@@ -4,11 +4,25 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	
 	initComponent: function() {
 		this.ownerId = 'AdvSearch';
-		var appOwnerStewardFieldsets = AIR.AirUiFactory.createAppOwnerStewardFieldsets(this.ownerId);
+		var options = {
+			fsApplicationOwner: {
+				padding: 10
+			},
+			
+			fsApplicationSteward: {
+				padding: 10
+			},
+			
+			fsCIOwner: {
+				padding: 10
+			}
+		};
+		
+		var appOwnerStewardFieldsets = AIR.AirUiFactory.createAppOwnerStewardFieldsets(this.ownerId, options);
 		
 		Ext.apply(this, {
 			title: 'Advanced Search',
-		    padding: 10,
+//		    padding: 10,
 		    border: false,
 		    
 		    layout: 'form',
@@ -23,350 +37,746 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    	color: fontColor,
 		    	fontFamily: fontType
 		    },
-		    
-//		    items: [{
-//				xtype: 'panel',
-//				id: 'pAdvancedSearch',
-//				layout: 'form',
-//				
-//				border: false,
-//				labelWidth: 100,
-//				
-//			    style: {
-//			    	marginRight: 10
-//			    },
 
+			items: [{
+				xtype: 'panel',
+				id: 'pAdvSearchSingleAttrsFrame',
+				layout: 'column',
+				border: false,
+				
 				items: [{
-					xtype: 'filterCombo',//combo
-					id: 'advsearchObjectType',
-				    store: AIR.AirStoreManager.getStoreByName('applicationCat1ListStore'),
+					xtype: 'panel',
+					id: 'pAdvSearchSingleAttrs',
+					layout: 'form',
 					
-				    fieldLabel: 'Type',
-				    valueField: 'id',
-			        displayField: 'english',
-			        
-//			        typeAhead: true,
-//			        autoSelect: false,
-//			        triggerAction: 'all',
-			        
-			        forceSelection: true,
-			        triggerAction: 'all',
-			        lazyRender: true,
-			        lazyInit: false,
-			        mode: 'local',
-			        
-			        width: 230
-			    },{
-					xtype: 'filterCombo',
-					id: 'cbAdvSearchITset',
-					store: AIR.AirStoreManager.getStoreByName('itSetListStore'),
+					border: false,
+					labelWidth: 100,
 					
-				    fieldLabel: 'IT Set',
-				    valueField: 'id',
-			        displayField: 'text',
-			        
-//			        typeAhead: true,
-//			        autoSelect: false,
-//			        triggerAction: 'all',
-			        
-			        forceSelection: true,
-			        triggerAction: 'all',
-			        lazyRender: true,
-			        lazyInit: false,
-			        mode: 'local',
-			        
-			        width: 230
-			    },{
-		        	xtype: 'textfield',
-		        	id: 'advsearchdescription',
-		        	
-		        	width: 230,
-		        	hidden: false,
-		        	hasSearch: false
-		        },{
-		            xtype: 'radiogroup',
-	    			id: 'rgAdvSearchBARrelevance',
-	    			width: 250,
-	    			fieldLabel: 'BAR relevant',
-	    			
-//	    			hidden: true,
-	    			columns: 3,
-
-		            items: [
-	                    { id: 'rgAdvSearchBARrelevanceYes',		itemId: 'rgAdvSearchBARrelevanceYes', 			boxLabel: 'Yes',		name: 'rgAdvSearchBARrelevance', inputValue: 'Y', width: 80 },//, width: 80 wenn gedatscht
-		                { id: 'rgAdvSearchBARrelevanceNo',		itemId: 'rgAdvSearchBARrelevanceNo',			boxLabel: 'No',			name: 'rgAdvSearchBARrelevance', inputValue: 'N', width: 80 },
-		                { id: 'rgAdvSearchBARrelevanceUndefined',itemId: 'rgAdvSearchBARrelevanceUndefined', 	boxLabel: 'Undefined',	name: 'rgAdvSearchBARrelevance', inputValue: 'U', width: 80 }//, checked: true
-		            ]
-			    },
-		        appOwnerStewardFieldsets.fsApplicationOwner,
-		        appOwnerStewardFieldsets.fsApplicationSteward,
-		        appOwnerStewardFieldsets.fsCIOwner,
-		        
-		        {
-		        	xtype: 'panel',
-		        	id: 'pAdditionalSearchAttributes',
-		        	layout: 'column',//column hbox
-		        	border: false,
-		        	
-//		        	anchor: '100%',
-//		        	width: 900,
-		        		
-		        	items: [{
-						xtype: 'fieldset',
-						id: 'fsCategoriesAndStatus',
-						title: 'Categories and Status',//Kategorien und Status; Advanced Search Plus
+					style: {
+						marginTop: 15//10
+					},
+					
+					items: [{
+						xtype: 'filterCombo',//combo
+						id: 'advsearchObjectType',
+					    store: AIR.AirStoreManager.getStoreByName('applicationCat1ListStore'),
 						
-						layout: 'form',
-						width: 420,
-						padding: 10,
-	
-						//hidden: true,
+					    fieldLabel: 'Type',
+					    valueField: 'id',
+				        displayField: 'english',
+				        
+		//			        typeAhead: true,
+		//			        autoSelect: false,
+		//			        triggerAction: 'all',
+				        
+				        forceSelection: true,
+				        triggerAction: 'all',
+				        lazyRender: true,
+				        lazyInit: false,
+				        mode: 'local',
+				        
+				        width: 230
+				    },{
+						xtype: 'filterCombo',
+						id: 'cbAdvSearchITset',
+						store: AIR.AirStoreManager.getStoreByName('itSetListStore'),
 						
-						style: {
-							marginRight: 10,
-							marginBottom: 10
+					    fieldLabel: 'IT Set',
+					    valueField: 'id',
+				        displayField: 'text',
+				        
+		//			        typeAhead: true,
+		//			        autoSelect: false,
+		//			        triggerAction: 'all',
+				        
+				        forceSelection: true,
+				        triggerAction: 'all',
+				        lazyRender: true,
+				        lazyInit: false,
+				        mode: 'local',
+				        
+				        width: 230
+				    },{
+			        	xtype: 'textfield',
+			        	id: 'advsearchdescription',
+			        	
+			        	width: 230,
+			        	hidden: false,
+			        	hasSearch: false
+			        },{
+			            xtype: 'radiogroup',
+		    			id: 'rgAdvSearchBARrelevance',
+		    			width: 250,
+		    			fieldLabel: 'BAR relevant',
+		    			
+		//	    			hidden: true,
+		    			columns: 3,
+		
+			            items: [
+		                    { id: 'rgAdvSearchBARrelevanceYes',		itemId: 'rgAdvSearchBARrelevanceYes', 			boxLabel: 'Yes',		name: 'rgAdvSearchBARrelevance', inputValue: 'Y', width: 80 },//, width: 80 wenn gedatscht
+			                { id: 'rgAdvSearchBARrelevanceNo',		itemId: 'rgAdvSearchBARrelevanceNo',			boxLabel: 'No',			name: 'rgAdvSearchBARrelevance', inputValue: 'N', width: 80 },
+			                { id: 'rgAdvSearchBARrelevanceUndefined',itemId: 'rgAdvSearchBARrelevanceUndefined', 	boxLabel: 'Undefined',	name: 'rgAdvSearchBARrelevance', inputValue: 'U', width: 80 }//, checked: true
+			            ]
+			        }]
+				}, {
+					xtype: 'panel',
+					id: 'pAdvSearchSingleAttrsOptions',
+					layout: 'form',
+					border: false,
+					
+					items: [{
+						xtype: 'label',
+						id: 'lCiTypeOptions',
+						text: 'not',
+						
+		    			style: {
+							fontSize: 10
+						}
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchCiTypeOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 5
+						},
+	        			
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchCiTypeOptions', width: 30 },
+	                    ]
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchItSetOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 10
 						},
 						
-						layout: 'form',//form fit
-						labelWidth: 150,
-	//				    width: 300,
-						
-						items: [{
-							xtype: 'filterCombo',
-							id: 'cbAdvSearchGeneralUsageW',
-							store: AIR.AirStoreManager.getStoreByName('operationalStatusListStore'),
-							width: 230,
-	
-							fieldLabel: 'General Usage',
-							valueField: 'id',
-							displayField: 'text',
-							
-	//				        typeAhead: true,
-	//				        forceSelection: true,
-	//				        autoSelect: false,
-							
-							triggerAction: 'all',
-							lazyRender: true,
-							lazyInit: false,
-							mode: 'local'
-						},{
-							xtype: 'filterCombo',
-							id: 'cbAdvSearchITCategoryW',
-							store: AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),
-							width: 230,
-	
-							fieldLabel: 'IT Category',
-							valueField: 'id',
-							displayField: 'text',
-							
-	//				        typeAhead: true,
-	//				        forceSelection: true,
-	//				        autoSelect: false,
-							
-							triggerAction: 'all',
-							lazyRender: true,
-							lazyInit: false,
-							mode: 'local'
-						}, {
-							xtype: 'filterCombo',
-							id: 'cbAdvSearchLifecycleStatusW',
-							store: AIR.AirStoreManager.getStoreByName('lifecycleStatusListStore'),
-							width: 230,
-							
-							fieldLabel: 'Lifecycle status',
-							valueField: 'id',
-							displayField: 'text',
-							
-	//				        typeAhead: true,
-	//				        forceSelection: true,
-	//				        autoSelect: false,
-							
-							triggerAction: 'all',
-							lazyRender: true,
-							lazyInit: false,
-							mode: 'local'
-						},{
-					        xtype: 'listview',
-					        width: 80,
-
-					        border: false,
-					        fieldLabel: 'Organisational scope',
-
-					        id: 'lvAdvSearchOrganisationalScope',
-					        store: AIR.AirStoreManager.getStoreByName('organisationalScopeListStore'),
-					        
-					        singleSelect: false,
-					        multiSelect: true,
-					        simpleSelect: true,
-					        hideHeaders: true,
-					        
-					        columns: [
-								{dataIndex: 'id', hidden: true, hideLabel: true, width: .001},
-								{dataIndex: 'name'}
-					        ]
-						}]
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchItSetOptions', width: 30 },
+	                    ]
 					},{
-						xtype: 'fieldset',
-						id: 'fsSpecialSearchAttributes',
-						title: 'Other Search Attributes',
-						
-						layout: 'form',
-		//				columnWidth: 0.33,//0.45
-						width: 480,
-
-						padding: 10,
-		//			    hidden: true,
-						
-						layout: 'form',//form fit
-						labelWidth: 120,
-		//			    width: 300,
-
-						
-						items: [{
-							xtype: 'filterCombo',
-							id: 'cbAdvSearchITSecGroupW',
-							store: AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),//new Ext.data.Store(),//
-							width: 300,
-
-							fieldLabel: 'ITSec Group',
-							valueField: 'id',
-							displayField: 'name',
-							
-		//			        typeAhead: true,
-		//			        forceSelection: true,
-		//			        autoSelect: false,
-							
-							triggerAction: 'all',
-							lazyRender: true,
-							lazyInit: false,
-							mode: 'local'
-						},{
-							xtype: 'filterCombo',
-							id: 'cbAdvSearchProcessW',
-							store: AIR.AirStoreManager.getStoreByName('processListStore'),
-						    fieldLabel: 'Business Prozess',
-
-					        tpl: '<tpl for="."><div ext:qtip="{text}" class="x-combo-list-item">{text}</div></tpl>',
-							valueField: 'id',
-							displayField: 'text',
-							width: 300,
-
-		//			        typeAhead: true,
-		//			        forceSelection: true,
-		//			        autoSelect: false,
-							
-							triggerAction: 'all',
-							lazyRender: true,
-							lazyInit: false,
-							mode: 'local'
-						}/*,{
-							xtype: 'filterCombo',
-							id: 'cbAdvSearchOStypeW',
-							store: AIR.AirStoreManager.getStoreByName('sisoogleOsTypeListStore'),//new Ext.data.Store(),//
-							width: 300,
-
-							fieldLabel: 'OS type',
-							valueField: 'id',
-							displayField: 'name',
-							
-		//			        typeAhead: true,
-		//			        forceSelection: true,
-		//			        autoSelect: false,
-							
-							triggerAction: 'all',
-							lazyRender: true,
-							lazyInit: false,
-							mode: 'local'
-						},{
-							xtype: 'filterCombo',
-							id: 'cbAdvSearchOSnameW',
-							store: AIR.AirStoreManager.getStoreByName('sisoogleOsNameListStore'),//new Ext.data.Store(),//
-							width: 300,
-
-							fieldLabel: 'OS name',
-							valueField: 'id',
-							displayField: 'name',
-							
-		//			        typeAhead: true,
-		//			        forceSelection: true,
-		//			        autoSelect: false,
-							
-							triggerAction: 'all',
-							lazyRender: true,
-							lazyInit: false,
-							mode: 'local'
-						}*/,{
-							xtype: 'filterCombo',
-							id: 'cbAdvSearchSourceW',
-							store: AIR.AirStoreManager.getStoreByName('sisoogleSourceListStore'),//new Ext.data.Store(),//
-							width: 300,
-
-							fieldLabel: 'Source',
-							valueField: 'id',
-							displayField: 'name',
-							
-		//			        typeAhead: true,
-		//			        forceSelection: true,
-		//			        autoSelect: false,
-							
-							triggerAction: 'all',
-							lazyRender: true,
-							lazyInit: false,
-							mode: 'local'
-						},{
-							xtype: 'filterCombo',
-							id: 'cbAdvSearchBusinessEssentialW',
-							store: AIR.AirStoreManager.getStoreByName('businessEssentialListStore'),
-							width: 300,
-
-							fieldLabel: 'Business Essential',
-							valueField: 'id',
-							displayField: 'text',
-							
-		//			        typeAhead: true,
-		//			        forceSelection: true,
-		//			        autoSelect: false,
-							
-							triggerAction: 'all',
-							lazyRender: true,
-							lazyInit: false,
-							mode: 'local'
-						}/*,{
-							xtype: 'filterCombo',
-							id: 'cbAdvSearchGapResponsibleW',
-							store: AIR.AirStoreManager.getStoreByName('sisoogleGapResponsibleListStore'),//new Ext.data.Store(),//
-							width: 300,
-
-							fieldLabel: 'Gap Responsible',
-							valueField: 'id',
-							displayField: 'name',
-							
-		//			        typeAhead: true,
-		//			        forceSelection: true,
-		//			        autoSelect: false,
-							
-							triggerAction: 'all',
-							lazyRender: true,
-							lazyInit: false,
-							mode: 'local'
-						},{
-							xtype: 'datefield',
-							id: 'dfAdvSearchTargetDate',
-							fieldLabel: 'Gap End Date',
-							width: 150
-						}*/]
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchDescriptionOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 10
+						},
+	        			
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchDescriptionOptions', width: 30 },
+	                    ]
 					}]
-		        }]
-//		    }]
+				}]
+		    }, {
+				xtype: 'panel',
+				id: 'pAdvSearchAppOwnerFrame',
+				layout: 'column',
+				border: false,
+				
+    			style: {
+		    		marginTop: 10//marginBottom
+				},
+				
+				items: [
+			        appOwnerStewardFieldsets.fsApplicationOwner,
+		        {
+					xtype: 'panel',
+					id: 'pAdvSearchAppOwnerOptions',
+					layout: 'form',
+					
+	    			style: {
+						marginLeft: 10
+//						marginTop: 10
+					},
+					
+					border: false,
+					
+					items: [{
+						xtype: 'label',
+						id: 'lAdvSearchAppOwnerOptions',
+						text: 'not',
+						
+		    			style: {
+							fontSize: 10,
+							marginTop: 15
+						}
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchAppOwnerOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 20
+						},
+						
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchAppOwnerOptions', width: 30 },
+	                    ]
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchAppOwnerDelegateOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 10
+						},
+	        			
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchAppOwnerDelegateOptions', width: 30 },
+	                    ]
+					}]
+				}]
+		    },{
+				xtype: 'panel',
+				id: 'pAdvSearchAppStewardFrame',
+				layout: 'column',
+				border: false,
+				
+				style: {
+		    		marginTop: 10//marginBottom
+				},
+				
+				items: [
+		        	appOwnerStewardFieldsets.fsApplicationSteward,
+		        {
+					xtype: 'panel',
+					id: 'pAdvSearchAppStewardOptions',
+					layout: 'form',
+					
+	    			style: {
+						marginLeft: 10
+//						marginTop: 10
+					},
+					
+					border: false,
+					
+					items: [/*{
+						xtype: 'label',
+						id: 'lAdvSearchAppStewardOptions',
+						text: 'not',
+						
+		    			style: {
+							fontSize: 10,
+							marginTop: 5
+						}
+					},*/{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchAppStewardOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 20
+						},
+						
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchAppStewardOptions', width: 30 },
+	                    ]
+					}]
+				}]
+		    },{
+				xtype: 'panel',
+				id: 'pAdvSearchCIOwnerFrame',
+				layout: 'column',
+				border: false,
+				
+    			style: {
+					marginTop: 10//marginBottom
+				},
+				
+				items: [
+			        appOwnerStewardFieldsets.fsCIOwner,
+		        {
+					xtype: 'panel',
+					id: 'pAdvSearchCIOwnerOptions',
+					layout: 'form',
+					
+	    			style: {
+						marginLeft: 10
+//						marginTop: 10
+					},
+					
+					border: false,
+					
+					items: [/*{
+						xtype: 'label',
+						id: 'lAdvSearchCIOwnerOptions',
+						text: 'not',
+						
+		    			style: {
+							fontSize: 10,
+							marginTop: 10
+						}
+					},*/{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchCIOwnerOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 25
+						},
+						
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchCIOwnerOptions', width: 30 },
+	                    ]
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchCIOwnerDelegateOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 10
+						},
+	        			
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchCIOwnerDelegateOptions', width: 30 },
+	                    ]
+					}]
+				}]
+	    	},{
+	        	xtype: 'panel',
+	        	id: 'pAdditionalSearchAttributes',
+	        	layout: 'column',//column hbox
+	        	border: false,
+	        	
+	        	style: {
+	    			marginTop: 20
+	    		},
+	        		
+	        	items: [{
+					xtype: 'fieldset',
+					id: 'fsCategoriesAndStatus',
+					title: 'Categories and Status',//Kategorien und Status; Advanced Search Plus
+					
+					layout: 'form',
+					width: 430,
+					padding: 10,
+
+					//hidden: true,
+					
+					style: {
+	        			marginTop: 10
+//						marginRight: 10,
+//						marginBottom: 10
+					},
+					
+					layout: 'form',//form fit
+					labelWidth: 150,
+//				    width: 300,
+					
+					items: [{
+						xtype: 'filterCombo',
+						id: 'cbAdvSearchGeneralUsageW',
+						store: AIR.AirStoreManager.getStoreByName('operationalStatusListStore'),
+						width: 230,
+
+						fieldLabel: 'General Usage',
+						valueField: 'id',
+						displayField: 'text',
+						
+//				        typeAhead: true,
+//				        forceSelection: true,
+//				        autoSelect: false,
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					},{
+						xtype: 'filterCombo',
+						id: 'cbAdvSearchITCategoryW',
+						store: AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),
+						width: 230,
+
+						fieldLabel: 'IT Category',
+						valueField: 'id',
+						displayField: 'text',
+						
+//				        typeAhead: true,
+//				        forceSelection: true,
+//				        autoSelect: false,
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					}, {
+						xtype: 'filterCombo',
+						id: 'cbAdvSearchLifecycleStatusW',
+						store: AIR.AirStoreManager.getStoreByName('lifecycleStatusListStore'),
+						width: 230,
+						
+						fieldLabel: 'Lifecycle status',
+						valueField: 'id',
+						displayField: 'text',
+						
+//				        typeAhead: true,
+//				        forceSelection: true,
+//				        autoSelect: false,
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					},{
+				        xtype: 'listview',
+				        width: 80,
+
+				        border: false,
+				        fieldLabel: 'Organisational scope',
+
+				        id: 'lvAdvSearchOrganisationalScope',
+				        store: AIR.AirStoreManager.getStoreByName('organisationalScopeListStore'),
+				        
+				        singleSelect: false,
+				        multiSelect: true,
+				        simpleSelect: true,
+				        hideHeaders: true,
+				        
+				        columns: [
+							{dataIndex: 'id', hidden: true, hideLabel: true, width: .001},
+							{dataIndex: 'name'}
+				        ]
+					}]
+				},{
+					xtype: 'panel',
+					id: 'pAdvSearchCategoriesAndStatusOptions',
+					layout: 'form',
+					
+	    			style: {
+						marginLeft: 10
+//						marginTop: 10
+					},
+					
+					border: false,
+					
+					items: [{
+						xtype: 'label',
+						id: 'lAdvSearchCategoriesAndStatusOptions',
+						text: 'not',
+						
+		    			style: {
+							fontSize: 10,
+							marginTop: 15
+						}
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchCategoriesAndStatusGeneralUsageOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 25
+						},
+						
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusGeneralUsageOptions', width: 30 },
+	                    ]
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchCategoriesAndStatusITCategoryOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 8
+						},
+	        			
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusITCategoryOptions', width: 30 },
+	                    ]
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 8
+						},
+						
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions', width: 30 },
+	                    ]
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 8
+						},
+	        			
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions', width: 30 },
+	                    ]
+					}]
+				},{
+					xtype: 'fieldset',
+					id: 'fsSpecialSearchAttributes',
+					title: 'Other Search Attributes',
+					
+					layout: 'form',
+	//				columnWidth: 0.33,//0.45
+					width: 480,
+
+					padding: 10,
+	//			    hidden: true,
+					
+					style: {
+	        			marginTop: 10
+					},
+					
+					layout: 'form',//form fit
+					labelWidth: 120,
+	//			    width: 300,
+
+					
+					items: [{
+						xtype: 'filterCombo',
+						id: 'cbAdvSearchITSecGroupW',
+						store: AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),//new Ext.data.Store(),//
+						width: 300,
+
+						fieldLabel: 'ITSec Group',
+						valueField: 'id',
+						displayField: 'name',
+						
+	//			        typeAhead: true,
+	//			        forceSelection: true,
+	//			        autoSelect: false,
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					},{
+						xtype: 'filterCombo',
+						id: 'cbAdvSearchProcessW',
+						store: AIR.AirStoreManager.getStoreByName('processListStore'),
+					    fieldLabel: 'Business Prozess',
+
+				        tpl: '<tpl for="."><div ext:qtip="{text}" class="x-combo-list-item">{text}</div></tpl>',
+						valueField: 'id',
+						displayField: 'text',
+						width: 300,
+
+	//			        typeAhead: true,
+	//			        forceSelection: true,
+	//			        autoSelect: false,
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					}/*,{
+						xtype: 'filterCombo',
+						id: 'cbAdvSearchOStypeW',
+						store: AIR.AirStoreManager.getStoreByName('sisoogleOsTypeListStore'),//new Ext.data.Store(),//
+						width: 300,
+
+						fieldLabel: 'OS type',
+						valueField: 'id',
+						displayField: 'name',
+						
+	//			        typeAhead: true,
+	//			        forceSelection: true,
+	//			        autoSelect: false,
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					},{
+						xtype: 'filterCombo',
+						id: 'cbAdvSearchOSnameW',
+						store: AIR.AirStoreManager.getStoreByName('sisoogleOsNameListStore'),//new Ext.data.Store(),//
+						width: 300,
+
+						fieldLabel: 'OS name',
+						valueField: 'id',
+						displayField: 'name',
+						
+	//			        typeAhead: true,
+	//			        forceSelection: true,
+	//			        autoSelect: false,
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					}*/,{
+						xtype: 'filterCombo',
+						id: 'cbAdvSearchSourceW',
+						store: AIR.AirStoreManager.getStoreByName('sisoogleSourceListStore'),//new Ext.data.Store(),//
+						width: 300,
+
+						fieldLabel: 'Source',
+						valueField: 'id',
+						displayField: 'name',
+						
+	//			        typeAhead: true,
+	//			        forceSelection: true,
+	//			        autoSelect: false,
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					},{
+						xtype: 'filterCombo',
+						id: 'cbAdvSearchBusinessEssentialW',
+						store: AIR.AirStoreManager.getStoreByName('businessEssentialListStore'),
+						width: 300,
+
+						fieldLabel: 'Business Essential',
+						valueField: 'id',
+						displayField: 'text',
+						
+	//			        typeAhead: true,
+	//			        forceSelection: true,
+	//			        autoSelect: false,
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					}/*,{
+						xtype: 'filterCombo',
+						id: 'cbAdvSearchGapResponsibleW',
+						store: AIR.AirStoreManager.getStoreByName('sisoogleGapResponsibleListStore'),//new Ext.data.Store(),//
+						width: 300,
+
+						fieldLabel: 'Gap Responsible',
+						valueField: 'id',
+						displayField: 'name',
+						
+	//			        typeAhead: true,
+	//			        forceSelection: true,
+	//			        autoSelect: false,
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					},{
+						xtype: 'datefield',
+						id: 'dfAdvSearchTargetDate',
+						fieldLabel: 'Gap End Date',
+						width: 150
+					}*/]
+				},{
+					xtype: 'panel',
+					id: 'pAdvSearchSpecialSearchAttributesOptions',
+					layout: 'form',
+					
+	    			style: {
+						marginLeft: 10
+//						marginTop: 10
+					},
+					
+					border: false,
+					
+					items: [{
+						xtype: 'label',
+						id: 'lAdvSearchSpecialSearchAttributesOptions',
+						text: 'not',
+						
+		    			style: {
+							fontSize: 10,
+							marginTop: 15
+						}
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchSpecialSearchAttributesITSecGroupOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 25
+						},
+						
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesITSecGroupOptions', width: 30 },
+	                    ]
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchSpecialSearchAttributesProcessOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 8
+						},
+	        			
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesProcessOptions', width: 30 },
+	                    ]
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchSpecialSearchAttributesSourceOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 8
+						},
+						
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesSourceOptions', width: 30 },
+	                    ]
+					},{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: true,
+		    			style: {
+							marginTop: 8
+						},
+	        			
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions', width: 30 },
+	                    ]
+					}]
+				}]
+	        }]
 		});
 		
 		AIR.CiAdvancedSearchView.superclass.initComponent.call(this);
 		
-		var cbCat1 = this.getComponent('advsearchObjectType');
+		var cbCat1 = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchObjectType');
 		cbCat1.on('select', this.onCat1Select, this);//select beforeselect
 		cbCat1.on('change', this.onCat1Change, this);
 		
-		var cbAdvSearchITset = this.getComponent('cbAdvSearchITset');
+		var cbAdvSearchITset = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbAdvSearchITset');
 		cbAdvSearchITset.on('change', this.onComboChange, this);
 		
 
@@ -408,22 +818,22 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //		var pAdvSearchCiOwnerDelegate = this.getComponent('advsearchowner').getComponent('pAdvSearchCiOwnerDelegate');
 //		var pAdvSearchSteward = this.getComponent('fsAdvSearchSteward').getComponent('pAdvSearchSteward');		
 		
-		var clAdvSearchAppOwnerAddPerson = this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerAdd');//pAdvSearchAppOwner.getComponent('clAdvSearchAppOwnerAddPerson');
-		var clAdvSearchAppOwnerRemove = this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerRemove');//pAdvSearchAppOwnerDelegate.getComponent('clAdvSearchAppOwnerDelegateAddPerson');
+		var clAdvSearchAppOwnerAddPerson = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerAdd');//pAdvSearchAppOwner.getComponent('clAdvSearchAppOwnerAddPerson');
+		var clAdvSearchAppOwnerRemove = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerRemove');//pAdvSearchAppOwnerDelegate.getComponent('clAdvSearchAppOwnerDelegateAddPerson');
 
-		var clAdvSearchAppOwnerDelegateAddPerson = this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateAdd');//pAdvSearchAppOwnerDelegate.getComponent('clAdvSearchAppOwnerDelegateAddPerson');
-		var clAdvSearchAppOwnerDelegateAddGroup = this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateAddGroup');//pAdvSearchAppOwnerDelegate.getComponent('clAdvSearchAppOwnerDelegateAddGroup');
-		var clAdvSearchAppOwnerDelegateRemove = this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateRemove');//pAdvSearchAppOwnerDelegate.getComponent('clAdvSearchAppOwnerDelegateAddPerson');
+		var clAdvSearchAppOwnerDelegateAddPerson = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateAdd');//pAdvSearchAppOwnerDelegate.getComponent('clAdvSearchAppOwnerDelegateAddPerson');
+		var clAdvSearchAppOwnerDelegateAddGroup = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateAddGroup');//pAdvSearchAppOwnerDelegate.getComponent('clAdvSearchAppOwnerDelegateAddGroup');
+		var clAdvSearchAppOwnerDelegateRemove = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateRemove');//pAdvSearchAppOwnerDelegate.getComponent('clAdvSearchAppOwnerDelegateAddPerson');
 		
-		var clAdvSearchStewardAddPerson = this.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardAdd');//pAdvSearchSteward.getComponent('clAdvSearchStewardAddPerson');
-		var clAdvSearchStewardRemove = this.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardRemove');//pAdvSearchSteward.getComponent('clAdvSearchStewardAddPerson');
+		var clAdvSearchStewardAddPerson = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardAdd');//pAdvSearchSteward.getComponent('clAdvSearchStewardAddPerson');
+		var clAdvSearchStewardRemove = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardRemove');//pAdvSearchSteward.getComponent('clAdvSearchStewardAddPerson');
 		
-		var clAdvSearchCiOwnerAddPerson = this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleAdd');//pAdvSearchAppOwner.getComponent('clAdvSearchAppOwnerAddPerson');//pAdvSearchCiOwner.getComponent('clAdvSearchCiOwnerAddPerson');
-		var clAdvSearchCiOwnerRemove = this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleRemove');//pAdvSearchAppOwner.getComponent('clAdvSearchAppOwnerAddPerson');//pAdvSearchCiOwner.getComponent('clAdvSearchCiOwnerAddPerson');
+		var clAdvSearchCiOwnerAddPerson = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleAdd');//pAdvSearchAppOwner.getComponent('clAdvSearchAppOwnerAddPerson');//pAdvSearchCiOwner.getComponent('clAdvSearchCiOwnerAddPerson');
+		var clAdvSearchCiOwnerRemove = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleRemove');//pAdvSearchAppOwner.getComponent('clAdvSearchAppOwnerAddPerson');//pAdvSearchCiOwner.getComponent('clAdvSearchCiOwnerAddPerson');
 		
-		var clAdvSearchCiOwnerDelegateAddPerson = this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleAdd');//pAdvSearchCiOwnerDelegate.getComponent('clAdvSearchCiOwnerDelegateAddPerson');
-		var clAdvSearchCiOwnerDelegateAddGroup = this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleAddGroup');//pAdvSearchCiOwnerDelegate.getComponent('clAdvSearchCiOwnerDelegateAddGroup');
-		var clAdvSearchCiOwnerDelegateRemove = this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleRemove');//pAdvSearchCiOwnerDelegate.getComponent('clAdvSearchCiOwnerDelegateAddPerson');		
+		var clAdvSearchCiOwnerDelegateAddPerson = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleAdd');//pAdvSearchCiOwnerDelegate.getComponent('clAdvSearchCiOwnerDelegateAddPerson');
+		var clAdvSearchCiOwnerDelegateAddGroup = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleAddGroup');//pAdvSearchCiOwnerDelegate.getComponent('clAdvSearchCiOwnerDelegateAddGroup');
+		var clAdvSearchCiOwnerDelegateRemove = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleRemove');//pAdvSearchCiOwnerDelegate.getComponent('clAdvSearchCiOwnerDelegateAddPerson');		
 
 		
 		clAdvSearchAppOwnerAddPerson.on('click', this.onAdvSearchAppOwnerAddPerson, this);
@@ -467,11 +877,11 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	processCat1Change: function(newValue) {
     	var labels = AIR.AirApplicationManager.getLabels();
     	
-    	var fsCIOwner = this.getComponent('fs' + this.ownerId + 'CIOwner');
-    	var fsApplicationOwner = this.getComponent('fs' + this.ownerId + 'ApplicationOwner');
-    	var fsApplicationSteward = this.getComponent('fs' + this.ownerId + 'ApplicationSteward');
+    	var fsCIOwner = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner');
+    	var fsApplicationOwner = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner');
+    	var fsApplicationSteward = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward');
     	
-    	var rgAdvSearchBARrelevance = this.getComponent('rgAdvSearchBARrelevance');
+    	var rgAdvSearchBARrelevance = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance');
     	var lvAdvSearchOrganisationalScope = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('lvAdvSearchOrganisationalScope');
     	
     	var label;
@@ -516,59 +926,59 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	
 	onAdvSearchAppOwnerAddPerson: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(
-			null /*this.onPersonAdded*/, this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner'), event);
+			null /*this.onPersonAdded*/, this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner'), event);
 	},
 	onAdvSearchAppOwnerRemove: function(link, event) {
 		AIR.AirPickerManager.openRemovePicker(
-			null, this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner'), event);
+			null, this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner'), event);
 	},
 	
 	
 	onAdvSearchAppOwnerDelegateAddPerson: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(
-			null /*this.onPersonAdded*/, this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate'), event);
+			null /*this.onPersonAdded*/, this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate'), event);
 	},
 	onAdvSearchAppOwnerDelegateAddGroup: function(link, event) {
 		AIR.AirPickerManager.openGroupPicker(
-			null, this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate'), event, 'none');
+			null, this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate'), event, 'none');
 	},
 	onAdvSearchAppOwnerDelegateRemove: function(link, event) {
 		AIR.AirPickerManager.openRemovePicker(
-			null, this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate'), event, 'none');
+			null, this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate'), event, 'none');
 	},
 	
 	
 	onAdvSearchStewardAddPerson: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(
-			null /*this.onPersonAdded*/, this.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward'), event);
+			null /*this.onPersonAdded*/, this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward'), event);
 	},
 	onAdvSearchStewardRemove: function(link, event) {
 		AIR.AirPickerManager.openRemovePicker(
-			null, this.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward'), event);
+			null, this.getComponent('fs' + this.getComponent('pAdvSearchAppStewardFrame').ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward'), event);
 	},
 	
 	
 	onAdvSearchCiOwnerAddPerson: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(
-			null /*this.onPersonAdded*/, this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible'), event);
+			null /*this.onPersonAdded*/, this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible'), event);
 	},
 	onAdvSearchCiOwnerRemove: function(link, event) {
 		AIR.AirPickerManager.openRemovePicker(
-			null, this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible'), event);
+			null, this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible'), event);
 	},
 	
 	
 	onAdvSearchCiOwnerDelegateAddPerson: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(
-			null /*this.onPersonAdded*/, this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible'), event);
+			null /*this.onPersonAdded*/, this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible'), event);
 	},
 	onAdvSearchCiOwnerDelegateAddGroup: function(link, event) {
 		AIR.AirPickerManager.openGroupPicker(
-			null, this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible'), event, 'none');
+			null, this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible'), event, 'none');
 	},
 	onAdvSearchCiOwnerDelegateRemove: function(link, event) {
 		AIR.AirPickerManager.openRemovePicker(
-			null, this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible'), event);
+			null, this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible'), event);
 	},
 
 	
@@ -580,20 +990,20 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	updateLabels: function(labels) {
 		this.setTitle(labels.advsearchPanelTitle);
 		
-		this.setFieldLabel(this.getComponent('advsearchObjectType'), labels.advsearchObjectType);
-		this.setFieldLabel(this.getComponent('advsearchdescription'), labels.advsearchdescription);
-		this.setFieldLabel(this.getComponent('cbAdvSearchITset'), labels.itSet);
-		this.setFieldLabel(this.getComponent('rgAdvSearchBARrelevance'), labels.rgBARrelevance);
-		this.setBoxLabel(this.getComponent('rgAdvSearchBARrelevance').items.items[0], labels.general_yes);
-		this.setBoxLabel(this.getComponent('rgAdvSearchBARrelevance').items.items[1], labels.general_no);
-		this.setBoxLabel(this.getComponent('rgAdvSearchBARrelevance').items.items[2], labels.complianceUndefined);
+		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchObjectType'), labels.advsearchObjectType);
+		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchdescription'), labels.advsearchdescription);
+		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbAdvSearchITset'), labels.itSet);
+		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance'), labels.rgBARrelevance);
+		this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[0], labels.general_yes);
+		this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[1], labels.general_no);
+		this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[2], labels.complianceUndefined);
 		
-		this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent('label' + this.ownerId + 'applicationOwner').setText(labels.applicationOwner);
-		this.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent('label' + this.ownerId + 'applicationSteward').setText(labels.applicationSteward);
-		this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent('label' + this.ownerId + 'applicationOwnerDelegate').setText(labels.applicationOwnerDelegate);
+		this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent('label' + this.ownerId + 'applicationOwner').setText(labels.applicationOwner);
+		this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent('label' + this.ownerId + 'applicationSteward').setText(labels.applicationSteward);
+		this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent('label' + this.ownerId + 'applicationOwnerDelegate').setText(labels.applicationOwnerDelegate);
 
-		this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent('label' + this.ownerId + 'ciResponsible').setText(labels.ciResponsible);
-		this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent('label' + this.ownerId + 'ciSubResponsible').setText(labels.ciSubResponsible);
+		this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent('label' + this.ownerId + 'ciResponsible').setText(labels.ciResponsible);
+		this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent('label' + this.ownerId + 'ciSubResponsible').setText(labels.ciSubResponsible);
 
 		var fsCategoriesAndStatus = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus');
 		var fsSpecialSearchAttributes = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes');
@@ -617,70 +1027,70 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
 	
 		
-	    var field = this.getComponent('advsearchObjectType');
+	    var field = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchObjectType');
 	    field.setValue(data.advsearchObjectTypeId);
 	    
-	    field = this.getComponent('advsearchdescription');
+	    field = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchdescription');
 	    field.setValue(data.advsearchdescription);
 	    
-	    field = this.getComponent('cbAdvSearchITset');
+	    field = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbAdvSearchITset');
     	field.setValue(data.itSetId);
 	    
     	this.processCat1Change(data.advsearchObjectTypeId);
     	
 	    if(data.advsearchObjectTypeId === AC.APP_CAT1_APPLICATION || data.advsearchObjectTypeId.length === 0) {
-	    	this.getComponent('rgAdvSearchBARrelevance').setValue(data.barRelevance);
+	    	this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').setValue(data.barRelevance);
 
-	    	field = this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner');
+	    	field = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner');
 	    	if(data.advsearchappowner && data.advsearchappowner.length > 0)
 	    		field.setValue(data.advsearchappowner);
 	    	else field.reset();
 	    	
-	    	field = this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden');
+	    	field = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden');
 	    	if(data.advsearchappownerHidden && data.advsearchappownerHidden.length > 0)
 	    		field.setValue(data.advsearchappownerHidden);
 	    	else field.reset();
 	    	
 	    	
-	    	field = this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate');
+	    	field = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate');
 	    	if(data.advsearchappdelegate && data.advsearchappdelegate.length > 0)
 	    		field.setValue(data.advsearchappdelegate);
 	    	else field.reset();
 	    	
-	    	field = this.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateHidden');
+	    	field = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateHidden');
 	    	if(data.advsearchappdelegateHidden && data.advsearchappdelegateHidden.length > 0)
 	    		field.setValue(data.advsearchappdelegateHidden);
 	    	else field.reset();
 	    	
 	    	
-	    	field = this.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward');
+	    	field = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward');
 	    	if(data.advsearchsteward && data.advsearchsteward.length > 0)
 	    		field.setValue(data.advsearchsteward);
 	    	else field.reset();
 	    	
-	    	field = this.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardHidden');
+	    	field = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardHidden');
 	    	if(data.advsearchstewardHidden && data.advsearchstewardHidden.length > 0)
 	    		field.setValue(data.advsearchstewardHidden);
 	    	else field.reset();
 	    }
 	    
-    	field = this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible');
+    	field = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible');
     	if(data.advsearchciowner && data.advsearchciowner.length > 0)
     		field.setValue(data.advsearchciowner);
     	else field.reset();
     	
-    	field = this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleHidden');
+    	field = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleHidden');
     	if(data.advsearchciownerHidden && data.advsearchciownerHidden.length > 0)
     		field.setValue(data.advsearchciownerHidden);
     	else field.reset();
 	    
     	
-    	field = this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible');
+    	field = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible');
     	if(data.advsearchcidelegate && data.advsearchcidelegate.length > 0)
     		field.setValue(data.advsearchcidelegate);
     	else field.reset();
     	
-    	field = this.getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleHidden');
+    	field = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleHidden');
     	if(data.advsearchcidelegateHidden && data.advsearchcidelegateHidden.length > 0)
     		field.setValue(data.advsearchcidelegateHidden);
     	else field.reset();
@@ -765,15 +1175,15 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	
 	reset: function(link) {
 		if(!link) {
-			var cbCat1 = this.getComponent('advsearchObjectType');
+			var cbCat1 = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchObjectType');
 			cbCat1.reset();
 			
 			var cbCat2 = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchITCategoryW');
 			cbCat2.reset();
 		
-	    	var fsCIOwner = this.getComponent('fs' + this.ownerId + 'CIOwner');
-	    	var fsApplicationOwner = this.getComponent('fs' + this.ownerId + 'ApplicationOwner');
-	    	var fsApplicationSteward = this.getComponent('fs' + this.ownerId + 'ApplicationSteward');
+	    	var fsCIOwner = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner');
+	    	var fsApplicationOwner = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner');
+	    	var fsApplicationSteward = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward');
 	    	
 	    	var labels = AIR.AirApplicationManager.getLabels();
 	    	fsCIOwner.setTitle(labels.label_details_ciOwner);

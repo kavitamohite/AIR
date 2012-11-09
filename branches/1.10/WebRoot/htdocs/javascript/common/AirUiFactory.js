@@ -2,7 +2,7 @@ Ext.namespace('AIR');
 
 AIR.AirUiFactory = function() {
 	return {
-		createAppOwnerStewardFieldsets: function(ownerId) {
+		createAppOwnerStewardFieldsets: function(ownerId, options) {
 			var fsApplicationOwner = {
 		        xtype: 'fieldset',
 		        id: 'fs' + ownerId + 'ApplicationOwner',
@@ -10,7 +10,7 @@ AIR.AirUiFactory = function() {
 		        labelWidth: 200,
 		        
 		        style: {
-					marginTop: 5
+					marginTop: 10//5
 				},
 		        
 				items: [{
@@ -126,6 +126,10 @@ AIR.AirUiFactory = function() {
 				    	xtype: 'commandlink',
 				    	id: ownerId + 'applicationStewardRemove',
 				    	img: img_RemovePerson
+				    },{
+				    	xtype: 'commandlink',
+				    	id: ownerId + 'applicationStewardEmpty',
+				    	img: 'images/Transparent.png'
 				    }]
 				}]
 			};
@@ -212,6 +216,22 @@ AIR.AirUiFactory = function() {
 				    }]
 				}]
 			};
+			
+			
+			if(options) {
+				if(options.fsApplicationOwner)
+					for(var key in options.fsApplicationOwner)
+						fsApplicationOwner[key] = options.fsApplicationOwner[key];
+				
+				if(options.fsApplicationSteward)
+					for(var key in options.fsApplicationSteward)
+						fsApplicationSteward[key] = options.fsApplicationSteward[key];
+				
+				if(options.fsCIOwner)
+					for(var key in options.fsCIOwner)
+						fsCIOwner[key] = options.fsCIOwner[key];
+			}
+			
 			
 			var appOwnerStewardFieldsets = {
 				fsApplicationOwner: fsApplicationOwner,

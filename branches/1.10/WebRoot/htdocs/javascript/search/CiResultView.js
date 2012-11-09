@@ -6,14 +6,33 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			hidden: true,
 
 	        items: [{
-	        	xtype: 'button',
-	        	id: 'bExpandAdvSearchParams',//bUpdateCiSearchResult
-	    		enableToggle: true,
-	    		
-//	        	cls: 'x-btn-text-icon',
-//	        	icon: 'images/refresh_16x16.png',
+	        	xtype: 'panel',
+	        	id: 'pSearchResultOptions',
+	        	layout: 'column',
+	        	border: false,
 	        	
-	        	text: 'Update'
+	        	items: [{
+		        	xtype: 'button',
+		        	id: 'bExpandAdvSearchParams',//bUpdateCiSearchResult
+		    		enableToggle: true,
+		    		
+	//	        	cls: 'x-btn-text-icon',
+	//	        	icon: 'images/refresh_16x16.png',
+		        	
+		        	text: 'Update'
+		        },{
+		        	xtype: 'button',
+		        	id: 'bAdvSearchReset',//bUpdateCiSearchResult
+		    		
+		        	cls: 'x-btn-text-icon',
+		        	icon: 'images/reset_16x16.png',
+		        	
+		        	style: {
+		        		marginLeft: 5
+		        	},
+		        	
+		        	text: 'Reset'
+		        }]
 	        },{
 	        	xtype: 'tabpanel',
 	        	id: 'tpCiSearchResultTables',
@@ -183,7 +202,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	updateLabels: function(labels) {
 //		this.getComponent('bUpdateCiSearchResult').setText(labels.bUpdateCiSearchResult);
 		
-		var bExpandAdvSearchParams = this.getComponent('bExpandAdvSearchParams').setText(labels.bExpandAdvSearchParams);
+		var bExpandAdvSearchParams = this.getComponent('pSearchResultOptions').getComponent('bExpandAdvSearchParams').setText(labels.bExpandAdvSearchParams);
 		if(bExpandAdvSearchParams.pressed) {
 			bExpandAdvSearchParams.setText(labels.bExpandAdvSearchParams);
 		} else {
