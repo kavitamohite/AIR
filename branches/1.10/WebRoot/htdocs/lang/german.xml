@@ -9,6 +9,7 @@
 		<general_no>Nein</general_no>
 		<indefinite_article>eine</indefinite_article>
 		<indefinite_article_no>keine</indefinite_article_no>
+		<OR>ODER</OR>
 		
 		<general_button_save>Speichern</general_button_save>
 		<general_button_cancel>Abbruch</general_button_cancel>
@@ -25,6 +26,7 @@
 		<button_general_next>Weiter</button_general_next>
 		<button_general_copy>Kopieren</button_general_copy>
 		<newSearch>Neue Suche</newSearch>
+		<findAll>Erste </findAll><!-- Zeige alle|Alle -->
 		
 		<dynamicWindowOKButtonText>OK</dynamicWindowOKButtonText>
 		<notRelevant>nicht relevant</notRelevant>

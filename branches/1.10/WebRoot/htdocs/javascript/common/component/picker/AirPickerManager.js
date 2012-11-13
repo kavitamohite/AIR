@@ -27,7 +27,7 @@ AIR.AirPickerManager = function() {
 //				personPicker.mun(personPicker, 'personAdd');
 			
 			
-			personPicker.showAt([ event.xy[0], event.xy[1] ]);
+			personPicker.showAt([ event.xy[0], event.xy[1] -100 ]);
 			personPicker.update(field);
 		},
 		
@@ -43,7 +43,7 @@ AIR.AirPickerManager = function() {
 				groupPicker.on('groupAdd', listener);
 			
 			
-			groupPicker.showAt([ event.xy[0], event.xy[1] ]);
+			groupPicker.show();//showAt([ event.xy[0], event.xy[1] -100 ]); wenn Ext.Tip, sonst show wenn Ext.Window
 			groupPicker.update(field, groupType);
 		},
 		
@@ -59,7 +59,7 @@ AIR.AirPickerManager = function() {
 				removePicker.on('recordRemove', listener);
 			
 			
-			removePicker.showAt([ event.xy[0], event.xy[1] ]);
+			removePicker.showAt([ event.xy[0], event.xy[1] -100 ]);
 			removePicker.update(field);
 		},
 		
@@ -75,7 +75,7 @@ AIR.AirPickerManager = function() {
 				recordPicker.on('recordAdd', listener);
 			
 			
-			recordPicker.showAt([ event.xy[0], event.xy[1] ]);
+			recordPicker.showAt([ event.xy[0], event.xy[1] -100 ]);
 			recordPicker.update(field, objectType);
 		}
     };

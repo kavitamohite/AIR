@@ -101,6 +101,10 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.getComponent('ciAdvancedSearchView').update(data);
 	},
 	
+	setData: function(params) {
+		this.getComponent('ciAdvancedSearchView').setData(params);
+	},
+	
 	updateLabels: function(labels) {
 		var clSearch = this.getComponent('pSearchField').getComponent('clSearch');
 		clSearch.setText(labels.newSearch);

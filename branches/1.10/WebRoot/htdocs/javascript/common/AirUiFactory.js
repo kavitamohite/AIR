@@ -140,6 +140,10 @@ AIR.AirUiFactory = function() {
 		        title: 'CI Owner',
 		        labelWidth: 200,
 		        
+		        style: {
+					marginTop: 10//5
+				},
+		        
 				items: [{
 					xtype: 'container',
 					id: 'p' + ownerId + 'CIOwner',

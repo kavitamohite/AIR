@@ -1,12 +1,14 @@
 Ext.namespace('AIR');
 
-AIR.AirGroupPicker = Ext.extend(Ext.Tip, {
+AIR.AirGroupPicker = Ext.extend(Ext.Window, {//Ext.Tip
 	constructor: function(event, pc) {//comp, 
 //		this.comp = comp;
 		this.event = event;
 		this.pickerConfig = pc;
 		this.isSearchComplete = true;
-
+		
+		this.limit = 100;
+		this.page = 0;
 //		var beginTitle = comp.getValue().length == 0 ? 'Add' : 'Replace';
 //		this.title = beginTitle + ' Group to '+ Ext.get('label'+ comp.getId()).dom.innerHTML +'<br><hr>';
 		
@@ -15,38 +17,47 @@ AIR.AirGroupPicker = Ext.extend(Ext.Tip, {
 
 	initComponent: function() {
 		Ext.apply(this, {
-			title: this.title,//'Add CWID<br/><hr>',
-			title: 'Add Group<br/><hr>',
 			id: 'grouppickertip',
+			layout: 'form',//fit form
+			title: this.title,//'Add CWID<br/><hr>',
 			
-			hidden: true,
-			autoHeight: true,
-			minWidth: 400,
-			maxWidth: 450,
+//			autoHeight: true,
+//			minWidth: 600,//560 400 450
+//			maxWidth: 950,//450 500
 			
-			//width: 450,
-			
-			autoDestroy: true,
+			width: 600,
+			resizable: false,
 			draggable: true,
-			resizeable: true,
+			hidden: true,
+
+//			autoDestroy: true,
+//			resizeable: true,
 			
-			layout: 'form',
-			labelWidth: 5,
-			cls: 'filter',
+//			labelWidth: 5,
+//			cls: 'filter',
 			
-			tools: [{
-				id: 'close',
-				qtip: 'Cancel',
-				handler: function (event, toolEl, panel, object) {
-	        	   this.close();
-				}.createDelegate(this)
-			}],
+//			tools: [{
+//				id: 'close',
+//				qtip: 'Cancel',
+//				handler: function (event, toolEl, panel, object) {
+//	        	   this.close();
+//				}.createDelegate(this)
+//			}],
 	        
 			items: [{
-				xtype: 'compositefield',
 				id: 'cfGroupSearch',
+
+//				xtype: 'compositefield',
+//				fieldLabel: '',
 				
-				fieldLabel: '',
+				xtype: 'panel',
+				layout: 'column',//column hbox
+				border: false,
+//				height: 25,
+				
+				bodyStyle: {
+					background: 'transparent'
+				},
 				
 				items: [{
 					xtype: 'searchfield',//textfield
@@ -70,7 +81,7 @@ AIR.AirGroupPicker = Ext.extend(Ext.Tip, {
 						marginLeft: 10
 					},
 
-				    width: 210,
+				    width: 200,//210
 				    columns: 2,//[85, 105],
 				    
 				    /*{boxLabel: 'Starts with', name: 'gpQuerySelector', inputValue: 'Normal', checked: true},*/
@@ -86,18 +97,58 @@ AIR.AirGroupPicker = Ext.extend(Ext.Tip, {
 				    	name: 'gpQuerySelector',
 				    	inputValue: 'CWID'
 				    }]
+				},{
+					xtype: 'label',
+					id: 'lGroupPickerOr',
+					text: AAM.getLabels().OR,
+					
+					style: {
+						fontSize: 12,
+						marginTop: 5,
+						marginLeft: 10,
+						fontWeight: 'bold'
+					}
+				},{
+					xtype: 'button',
+					id: 'bGroupPickerFindAll',
+					
+					text: '',
+					
+					style: {
+						marginLeft: 15
+					}
+				},{
+					xtype: 'button',
+					id: 'bGroupPickerBackward',
+					
+		        	cls: 'x-btn-text-icon',
+		        	icon: 'images/resultset_previous_16x16.png',
+		        	
+					style: {
+						marginLeft: 2
+					}
+				},{
+					xtype: 'button',
+					id: 'bGroupPickerForward',
+					
+		        	cls: 'x-btn-text-icon',
+		        	icon: 'images/resultset_next_16x16.png',
+		        	
+					style: {
+						marginLeft: 2
+					}
 				}]
 			},{
 				xtype: 'listview',
 				id: 'lvGroups',
 				
 				store: AIR.AirStoreFactory.createGroupPickerStore(),
+//				layout: 'fit',
 				
+				height: 260,//95
+
 				singleSelect: false,
-				emptyText: '',
 				autoScroll: true,
-				height: 200,//95
-				//width: 400,
 				
 				loadingText: '&nbsp;',
 				emptyText: 'No groups found.',
@@ -134,9 +185,44 @@ AIR.AirGroupPicker = Ext.extend(Ext.Tip, {
 	    
 	    this.addEvents('groupAdd');
 	    
-	    var field = this.getComponent('cfGroupSearch').items.items[0];
+	    var field = this.getComponent('cfGroupSearch').getComponent('gpQueryField');//this.getComponent('cfGroupSearch').items.items[0];
 	    field.on('search', this.onSearch, this);
 	    field.on('specialkey', this.onEnter, this);
+	    
+	    var bGroupPickerFindAll = this.getComponent('cfGroupSearch').getComponent('bGroupPickerFindAll');//this.getComponent('cfGroupSearch').items.items[1]
+	    bGroupPickerFindAll.on('click', this.onFindAll, this);
+	    
+	    var bGroupPickerBackward = this.getComponent('cfGroupSearch').getComponent('bGroupPickerBackward');//this.getComponent('cfGroupSearch').items.items[1]
+	    bGroupPickerBackward.on('click', this.onFindAll, this);
+	    
+	    var bGroupPickerForward = this.getComponent('cfGroupSearch').getComponent('bGroupPickerForward');//this.getComponent('cfGroupSearch').items.items[1]
+	    bGroupPickerForward.on('click', this.onFindAll, this);
+	},
+	
+	onFindAll: function(button, event) {
+		switch(button.getId()) {
+			case 'bGroupPickerFindAll':
+				this.page = 0;
+				break;
+			case 'bGroupPickerBackward':
+				this.page--;
+				break;
+			case 'bGroupPickerForward':
+				this.page++;
+				break;
+			default:
+				break;
+		}
+		
+		if(this.page === 0) {
+			this.getComponent('cfGroupSearch').getComponent('bGroupPickerBackward').hide();
+			this.getComponent('cfGroupSearch').getComponent('bGroupPickerForward').show();
+		} else {
+			this.getComponent('cfGroupSearch').getComponent('bGroupPickerBackward').show();
+		}
+		this.doLayout();//.getComponent('cfGroupSearch')
+		
+		this.onSearch();
 	},
 	
 	onEnter: function(field, e){
@@ -180,70 +266,103 @@ AIR.AirGroupPicker = Ext.extend(Ext.Tip, {
 	},
 	
 	onSearch: function(field) {
-//		var queryTask = new Ext.util.DelayedTask(function() {
-		
-//			var field = this.getComponent('cfGroupSearch').items.items[0];//this.getComponent('cfSearch').getComponent('ppQueryField');//Ext.getCmp('ppQueryField')
 		var store = this.getComponent('lvGroups').getStore();
-		//			var field = Ext.getCmp('gpQueryField');
+				store.removeAll();
 		
-		if (field.getValue().length > 2 && this.isSearchComplete) {
-			this.isSearchComplete = false;
-			
-			var searchType = this.getComponent('cfGroupSearch').items.items[1].getValue().inputValue;
-			
-//				var params = {
-//					groupName: field.getValue()
-//				};
-//				params[this.groupType] = 'Y';
-			
-			var params = {};
-			params[this.groupType] = 'Y';
-			
-			switch(searchType) {
-				case 'Normal':
-					params.fullLikeSearch = 'N';
-					params.groupName = field.getValue();
-			    	break;
-				case 'Full':
-					params.fullLikeSearch = 'Y';
-					params.groupName = field.getValue();
-		    		break;
-				case 'CWID':
-					params.managerCWID = field.getValue();
-			    	break;
-			};
-			
-			//if(this.isSearchComplete) {
-			
+		if(field) {
+			if(field.getValue().length > 2 && this.isSearchComplete) {
+				this.isSearchComplete = false;
+				
+				var searchType = this.getComponent('cfGroupSearch').getComponent('gpQuerySelectorGroup').getValue().inputValue;//this.getComponent('cfGroupSearch').items.items[1].getValue().inputValue;//1
+				
+	//				var params = {
+	//					groupName: field.getValue()
+	//				};
+	//				params[this.groupType] = 'Y';
+				
+				var params = {};
+				params[this.groupType] = 'Y';
+				
+				switch(searchType) {
+					case 'Normal':
+						params.fullLikeSearch = 'N';
+						params.groupName = field.getValue();
+				    	break;
+					case 'Full':
+						params.fullLikeSearch = 'Y';
+						params.groupName = field.getValue();
+			    		break;
+					case 'CWID':
+						params.managerCWID = field.getValue();
+				    	break;
+				};
+								
 				store.load({
 					params: params,
 					callback: function() {
 						this.isSearchComplete = true;
 					}.createDelegate(this)
 				});
-			//}
-	   } else {
-		   store.removeAll();
-	   }
-//		}.createDelegate(this));
-//		
-//		queryTask.delay(500);//2000
+			}
+		} else {
+//			store.removeAll();
+			var field = this.getComponent('cfGroupSearch').getComponent('gpQueryField');
+			field.reset();
+			
+			var params = {
+				start: this.page * this.limit,
+				limit: this.limit
+			};
+			
+			params[this.groupType] = 'Y';
+			
+			store.load({
+				params: params,
+				callback: function() {
+					this.isSearchComplete = true;
+				}.createDelegate(this)
+			});
+	   	}
 	},
 	
 	update: function(comp, groupType) {
 		this.comp = comp;
 		this.groupType = groupType;
 		
-		var tfSearch = this.getComponent('cfGroupSearch').items.items[0];
+		var tfSearch = this.getComponent('cfGroupSearch').getComponent('gpQueryField');//this.getComponent('cfGroupSearch').items.items[0];
 		tfSearch.reset();
 		tfSearch.focus(true, 500);
 		
-		this.getComponent('cfGroupSearch').items.items[1].setValue('Full');//funktioniert erst nach dem Rendern! Ext.getCmp('ppQuerySelectorGroup').setValue('ppQuerySelectorName', true);
+//		this.getComponent('cfGroupSearch').items.items[1].setValue('Full');//funktioniert erst nach dem Rendern! Ext.getCmp('ppQuerySelectorGroup').setValue('ppQuerySelectorName', true);
 		
 		var beginTitle = this.comp.getValue().length == 0 ? 'Add' : 'Replace';
 		var title = beginTitle + ' Group to '+ Ext.get('label'+ this.comp.getId()).dom.innerHTML +'<br><hr>';
 		
 		this.setTitle(title);
+		
+		var bGroupPickerFindAll = this.getComponent('cfGroupSearch').getComponent('bGroupPickerFindAll');//this.getComponent('cfGroupSearch').items.items[1]
+		bGroupPickerFindAll.setText(AAM.getLabels().findAll + ' ' + this.limit);
+		
+		var bGroupPickerBackward = this.getComponent('cfGroupSearch').getComponent('bGroupPickerBackward');
+		var bGroupPickerForward = this.getComponent('cfGroupSearch').getComponent('bGroupPickerForward');
+		
+		bGroupPickerBackward.setText(AAM.getLabels().button_general_back);
+		bGroupPickerForward.setText(AAM.getLabels().button_general_next);
+		
+		bGroupPickerBackward.hide();
+		bGroupPickerForward.hide();
+		
+//		if(this.page === 0) {
+//			bGroupPickerBackward.hide();
+//		}
+		/* else {
+			this.getComponent('cfGroupSearch').getComponent('bGroupPickerBackward').show();
+		}*/
+		
+		lGroupPickerOr = this.getComponent('cfGroupSearch').getComponent('lGroupPickerOr');
+		lGroupPickerOr.setText(AAM.getLabels().OR);
+		
+		this.getComponent('cfGroupSearch').doLayout();
 	},
 	
 	close: function() {

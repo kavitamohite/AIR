@@ -42,6 +42,31 @@ Util = {
 			combo.disable();
 	},
 	
+	setChbGroup: function(chbGroup, yesNoValues) {
+		var values = yesNoValues.split(',');
+		var data = [];
+		
+		for(var i = 0; i < values.length; i++)
+			data.push(values[i] === 'Y' ? true : false);
+		
+		
+		chbGroup.setValue(data);
+	},
+	
+	getChbYesNoValues: function(chbGroup) {
+		var values = chbGroup.getValue();
+		var value = '';
+		
+		for(var i = 0; i < values.length; i++) {
+			if(value && value.length > 0)
+				value += ',';
+			
+			value += values[i].checked ? 'Y' : 'N';
+		}
+		
+		return value;
+	},
+	
 	isCWID: function(value) {
 		var isNoCWID = value.indexOf(',') > -1;//value.match(AC.REGEX_CWID) != null;
 		if(isNoCWID)

@@ -59,6 +59,16 @@ AIR.AirRecordPicker = Ext.extend(Ext.Tip, {
 //						}.createDelegate(this)
 //					}
 				},{
+					xtype: 'button',
+					id: 'bRecordPickerFindAll',
+					
+					text: 'Find All',
+					
+					style: {
+						marginLeft: 5
+					}
+					
+				}/*,{
 				    xtype: 'combo',
 					id: 'rpQuerySelectorRecord',
 
@@ -83,7 +93,7 @@ AIR.AirRecordPicker = Ext.extend(Ext.Tip, {
 //							field.reset();
 //				    	}.createDelegate(this)
 //				    }
-				}]
+				}*/]
 			}, {
 				xtype: 'listview',
 				id: 'lvRecords',
@@ -132,6 +142,9 @@ AIR.AirRecordPicker = Ext.extend(Ext.Tip, {
 	    var field = this.getComponent('tbRecordSearch').getComponent('rpQueryField');
 	    field.on('search', this.onSearch, this);
 	    field.on('specialkey', this.onEnter, this);
+	    
+	    var bRecordPickerFindAll = this.getComponent('tbRecordSearch').getComponent('bRecordPickerFindAll');
+	    bRecordPickerFindAll.on('click', this.onFindAll, this);
 	},
 	
 	onEnter: function(field, e){
@@ -197,36 +210,32 @@ AIR.AirRecordPicker = Ext.extend(Ext.Tip, {
 		this.close();
 	},
 	
+	onFindAll: function(button, event) {
+		this.onSearch();
+	},
+	
 	onSearch: function(field) {
-		var queryTask = new Ext.util.DelayedTask(function() {
-//			var field = this.getComponent('tbRecordSearch').getComponent('rpQueryField');
-			var store = this.getComponent('lvRecords').getStore();
-			var rpQuerySelectorRecord = this.getComponent('tbRecordSearch').getComponent('rpQuerySelectorRecord');
-			
-			if (field.getValue().length >= 2) {
-				var params = {
-					query: field.getValue(),
-					type: this.objectType ? this.objectType : rpQuerySelectorRecord.getValue()
-				};
-				
+		var store = this.getComponent('lvRecords').getStore();
+		
+		var params = {
+			type: this.objectType //? this.objectType : rpQuerySelectorRecord.getValue()
+		};
+		
+		if(field) {
+			if(field.getValue().length >= 2) {
+				params.query = field.getValue();
+	
+				store.removeAll();
 				store.load({
 					params: params
 				});
-				
-//				rpStore.baseParams = {};
-//		    	rpStore.setBaseParam('query', field.getValue());
-//		    	if (recordpickerObjectType===null) {
-//		    		rpStore.setBaseParam('type', Ext.getCmp('rpQuerySelectorRecord').getValue());
-//		    	} else {
-//		    		rpStore.setBaseParam('type', recordpickerObjectType);
-//		    	}
-//			    rpStore.load();
-		   } else {
-			   store.removeAll();
-		   }
-		}.createDelegate(this));
-		
-		queryTask.delay(500);
+			}
+		} else {
+			store.removeAll();
+			store.load({
+				params: params
+			});
+		}
 	},
 	
 	update: function(comp, objectType) {
@@ -237,13 +246,16 @@ AIR.AirRecordPicker = Ext.extend(Ext.Tip, {
 		tfSearch.reset();
 		tfSearch.focus(true, 500);
 		
-		if (undefined!==Ext.getCmp('label' + this.comp.getId())) {
-			label = Ext.get('label' + this.comp.getId()).dom.innerHTML;
-		} else {
-			label = 'connections';
-		}
+//		if (undefined!==Ext.getCmp('label' + this.comp.getId())) {
+//			label = Ext.get('label' + this.comp.getId()).dom.innerHTML;
+//		} else {
+//			label = 'connections';
+//		}
 		
-		this.setTitle('Add record to ' + label + '<br><hr>');
+		this.setTitle('Add record to ' + AAM.getLabels().businessProcess);//label  + '<br><hr>'
+		
+		var bRecordPickerFindAll = this.getComponent('tbRecordSearch').getComponent('bRecordPickerFindAll');
+		bRecordPickerFindAll.setText(AAM.getLabels().findAll);
 	},
 	
 	close: function() {

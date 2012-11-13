@@ -172,9 +172,10 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					req.getParameter("itSetId"),
 					req.getParameter("itSecGroupId"),
 					req.getParameter("source"),
-					req.getParameter("businessEssentialId")
+					req.getParameter("businessEssentialId"),
+					null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
 				) :
-        		AnwendungHbn.findApplications(query, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        		AnwendungHbn.findApplications(query, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         } else if(searchAction.equals(SEARCH_POINT_MY_DELEGATE_CIS) || searchAction.equals(SEARCH_POINT_MY_CIS)) {
         	ApplicationParameterInput input = new ApplicationParameterInput();
         	input.setSearchAction(searchAction);

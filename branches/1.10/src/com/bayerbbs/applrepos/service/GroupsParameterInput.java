@@ -16,6 +16,10 @@ public class GroupsParameterInput {
 	private String managerCWID;
 	private String fullLikeSearch;
 	
+	private int start;
+	private int limit;
+	
+
 	public String getGroupName() {
 		return groupName;
 	}
@@ -83,4 +87,16 @@ public class GroupsParameterInput {
 		this.fullLikeSearch = fullLikeSearch;
 	}
 	
+	public int getStart() {
+		return start;
+	}
+	public void setStart(int start) {
+		this.start = start;
+	}
+	public int getLimit() {
+		return limit;
+	}
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
 }

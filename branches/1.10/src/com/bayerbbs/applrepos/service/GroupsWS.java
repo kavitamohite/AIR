@@ -1,7 +1,5 @@
 package com.bayerbbs.applrepos.service;
 
-import java.util.ArrayList;
-
 import com.bayerbbs.applrepos.dto.GroupsDTO;
 import com.bayerbbs.applrepos.hibernate.GroupsHbn;
 
@@ -22,6 +20,8 @@ public class GroupsWS {
 				input.getServiceCoordinator(),
 				input.getSupportGroupIMResolver(),
 				input.getManagerCWID(),
-				input.getFullLikeSearch()));
+				input.getFullLikeSearch(),
+				input.getStart(),
+				input.getLimit()));
 	}
 }

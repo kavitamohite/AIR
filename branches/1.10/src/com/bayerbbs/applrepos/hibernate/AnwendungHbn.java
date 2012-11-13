@@ -44,11 +44,22 @@ import com.bayerbbs.applrepos.service.ApplicationEditParameterOutput;
  */
 public class AnwendungHbn {
 
-	private static final String PARAMETER_QUERYMODE_BEGINS_WITH = "BEGINS_WITH";
-	private static final String PARAMETER_QUERYMODE_CONTAINS = "CONTAINS";
-	private static final String PARAMETER_QUERYMODE_EMPTYSTRING = "";
+//	private static final String PARAMETER_QUERYMODE_BEGINS_WITH = "BEGINS_WITH";
+//	private static final String PARAMETER_QUERYMODE_CONTAINS = "CONTAINS";
+//	private static final String PARAMETER_QUERYMODE_EMPTYSTRING = "";
+	
+	private static final String Y = "Y";
+	private static final String COMMA = ",";
+	
+	private static final String NOT_EQUAL = "<>";
+	private static final String EQUAL = "=";
+	
+	private static final String NOT_LIKE = "not like";
+	private static final String LIKE = "like";
+	
+	private static final String EMPTY = "";
+	
 
-	/** The logger. */
 	private static final Log log = LogFactory.getLog(AnwendungHbn.class);
 	
 	/**
@@ -79,13 +90,9 @@ public class AnwendungHbn {
 				// throw again the first exception
 				throw e;
 			}
-
 		}
 	}
 
-	/**
-	 * @param applicationId
-	 */
 	public static Application findApplicationById(Long applicationId) {
 		Application application = null;
 		Transaction tx = null;
@@ -117,11 +124,8 @@ public class AnwendungHbn {
 		return application;
 	}
 
-	/**
-	 * @param applicationId
-	 */
-	public static List<Application> findDeletedApplicationByName(
-			String applicationName) {
+
+	public static List<Application> findDeletedApplicationByName(String applicationName) {
 		List<Application> listApplications = null;
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
@@ -148,11 +152,8 @@ public class AnwendungHbn {
 		return listApplications;
 	}
 
-	/**
-	 * @param applicationId
-	 */
-	public static List<Application> findApplicationByName(
-			String applicationName) {
+
+	public static List<Application> findApplicationByName(String applicationName) {
 		List<Application> listApplications = null;
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
@@ -179,13 +180,7 @@ public class AnwendungHbn {
 		return listApplications;
 	}
 
-	/**
-	 * updates an existing entry
-	 * 
-	 * @param cwid
-	 * @param dto
-	 * @return
-	 */
+
 	public static ApplicationEditParameterOutput saveAnwendung(String cwid,	ApplicationDTO dto) {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
@@ -210,10 +205,10 @@ public class AnwendungHbn {
 
 					if (null == application) {
 						// application was not found in database
-						output.setErrorMessage("1000", ""+id);
+						output.setErrorMessage("1000", EMPTY+id);
 					} else if (null != application.getDeleteTimestamp()) {
 						// application is deleted
-						output.setErrorMessage("1001", ""+id);
+						output.setErrorMessage("1001", EMPTY+id);
 						
 // TODO reactivate RFC 8279
 //						reactivateApplication(cwid, dto, application);
@@ -472,7 +467,7 @@ public class AnwendungHbn {
 							//	we don't know, let the current value 
 						}
 						else {
-							if ("".equals(dto.getGxpFlagId())) {
+							if (EMPTY.equals(dto.getGxpFlagId())) {
 								application.setGxpFlag(null);
 							}
 							else {
@@ -666,7 +661,7 @@ public class AnwendungHbn {
 						if (toCommit && null != application) {
 							if (null == hbnMessage) {
 								output.setResult(ApplreposConstants.RESULT_OK);
-								output.setMessages(new String[] { "" });
+								output.setMessages(new String[] { EMPTY });
 							} else {
 								output
 										.setResult(ApplreposConstants.RESULT_ERROR);
@@ -941,7 +936,7 @@ public class AnwendungHbn {
 								if (null == hbnMessage) {
 									output
 											.setResult(ApplreposConstants.RESULT_OK);
-									output.setMessages(new String[] { "" });
+									output.setMessages(new String[] { EMPTY });
 								} else {
 									output
 											.setResult(ApplreposConstants.RESULT_ERROR);
@@ -1142,7 +1137,7 @@ public class AnwendungHbn {
 			if (toCommit && null != application) {
 				if (null == hbnMessage) {
 					output.setResult(ApplreposConstants.RESULT_OK);
-					output.setMessages(new String[] { "" });
+					output.setMessages(new String[] { EMPTY });
 				} else {
 					output
 							.setResult(ApplreposConstants.RESULT_ERROR);
@@ -1319,7 +1314,7 @@ public class AnwendungHbn {
 						if (toCommit) {
 							if (null == hbnMessage) {
 								output.setResult(ApplreposConstants.RESULT_OK);
-								output.setMessages(new String[] { "" });
+								output.setMessages(new String[] { EMPTY });
 							} else {
 								output
 										.setResult(ApplreposConstants.RESULT_ERROR);
@@ -1858,7 +1853,7 @@ public class AnwendungHbn {
 					String nachname = rsMessage.getString("NACHNAME");
 
 					if (null == vorname && null == nachname) {
-						contact.setPersonName("");
+						contact.setPersonName(EMPTY);
 					} else {
 						contact.setPersonName(nachname+ ", " + vorname);
 					}
@@ -2023,7 +2018,7 @@ public class AnwendungHbn {
 			if (null != rsMessage) {
 				while (rsMessage.next()) {
 					ViewDataDTO dto = new ViewDataDTO();
-					dto.setId("" +rsMessage.getLong("APP_HIGHER_ID"));
+					dto.setId(EMPTY +rsMessage.getLong("APP_HIGHER_ID"));
 
 					dto.setText(rsMessage
 							.getString("ANWENDUNG_NAME"));
@@ -2097,7 +2092,7 @@ public class AnwendungHbn {
 			if (null != rsMessage) {
 				while (rsMessage.next()) {
 					ViewDataDTO dto = new ViewDataDTO();
-					dto.setId("" +rsMessage.getLong("APP_LOWER_ID"));
+					dto.setId(EMPTY +rsMessage.getLong("APP_LOWER_ID"));
 					
 					dto.setText(rsMessage
 							.getString("ANWENDUNG_NAME"));
@@ -2171,7 +2166,7 @@ public class AnwendungHbn {
 			if (null != rsMessage) {
 				while (rsMessage.next()) {
 					ViewDataDTO dto = new ViewDataDTO();
-					dto.setId("" +rsMessage.getLong("PROCESS_ID"));
+					dto.setId(EMPTY +rsMessage.getLong("PROCESS_ID"));
 					
 					StringBuffer sb = new StringBuffer();
 					sb.append(rsMessage
@@ -2212,7 +2207,6 @@ public class AnwendungHbn {
 	 * @return
 	 */
 	public static List<ViewDataDTO> findApplicationConnections(Long applicationId) {
-
 		ArrayList<ViewDataDTO> listResult = new ArrayList<ViewDataDTO>();
 
 		boolean commit = false;
@@ -2242,8 +2236,7 @@ public class AnwendungHbn {
 			if (null != rsMessage) {
 				while (rsMessage.next()) {
 					ViewDataDTO dto = new ViewDataDTO();
-					dto.setDirection(rsMessage
-							.getString("DIRECTION"));
+					dto.setDirection(rsMessage.getString("DIRECTION"));
 					dto.setType(rsMessage.getString("TYPE"));
 					dto.setId(rsMessage.getString("ID"));
 					dto.setName(rsMessage.getString("NAME"));
@@ -2315,8 +2308,7 @@ public class AnwendungHbn {
 			if (null != rsMessage) {
 				while (rsMessage.next()) {
 					ViewDataDTO dto = new ViewDataDTO();
-					dto.setDirection(rsMessage
-							.getString("DIRECTION"));
+					dto.setDirection(rsMessage.getString("DIRECTION"));
 					dto.setType(rsMessage.getString("TYPE"));
 					dto.setId(rsMessage.getString("ID"));
 					dto.setName(rsMessage.getString("NAME"));
@@ -2390,7 +2382,7 @@ public class AnwendungHbn {
 			if (null != rsMessage) {
 				while (rsMessage.next()) {
 					ViewDataDTO dto = new ViewDataDTO();
-					dto.setId("" +rsMessage.getLong("IT_SYSTEM_ID"));
+					dto.setId(EMPTY +rsMessage.getLong("IT_SYSTEM_ID"));
 					dto.setText(rsMessage
 							.getString("IT_SYSTEM_NAME"));
 					
@@ -2432,7 +2424,11 @@ public class AnwendungHbn {
 			String itSetId,
 			String itSecGroupId,
 			String source,
-			String businessEssentialId) {
+			String businessEssentialId,
+			String ciTypeOptions, String itSetOptions, String descriptionOptions,
+			String appOwnerOptions, String appOwnerDelegateOptions, String appStewardOptions, String ciOwnerOptions, String ciOwnerDelegateOptions,
+			String generalUsageOptions, String itCategoryOptions, String lifecycleStatusOptions, String organisationalScopeOptions,
+			String itSecGroupOptions, String processOptions, String sourceOptions, String businessEssentialOptions) {
 		
 //		String advsearchcountry;
 //		String advsearchsite;
@@ -2508,52 +2504,69 @@ public class AnwendungHbn {
 		sql.append("' )");
 		
 		
+		boolean isNot = false;
 
+		
 		if (StringUtils.isNotNullOrEmpty(advsearchappowner)) {
-			sql.append(" and UPPER(anw.APPLICATION_OWNER) like '").append(advsearchappowner.toUpperCase()).append("'");
+			isNot = isNot(appOwnerOptions);
+			sql.append(" and UPPER(anw.APPLICATION_OWNER) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchappowner.toUpperCase()).append("'");
 		}
 		
 		if (StringUtils.isNotNullOrEmpty(advsearchappdelegate)) {
-			sql.append(" and UPPER(anw.APPLICATION_OWNER_DELEGATE) like '").append(advsearchappdelegate.toUpperCase()).append("'");
+			isNot = isNot(appOwnerDelegateOptions);
+			sql.append(" and UPPER(anw.APPLICATION_OWNER_DELEGATE) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchappdelegate.toUpperCase()).append("'");
 		}
 
 		if (StringUtils.isNotNullOrEmpty(advsearchciowner)) {
-			sql.append(" and UPPER(anw.CWID_VERANTW_BETR) like '").append(advsearchciowner.toUpperCase()).append("'");
+			isNot = isNot(ciOwnerOptions);
+			sql.append(" and UPPER(anw.CWID_VERANTW_BETR) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchciowner.toUpperCase()).append("'");
 		}
 		
 		if (StringUtils.isNotNullOrEmpty(advsearchcidelegate)) {
-			sql.append(" and UPPER(anw.SUB_RESPONSIBLE) like '").append(advsearchcidelegate.toUpperCase()).append("'");
+			isNot = isNot(ciOwnerDelegateOptions);
+			sql.append(" and UPPER(anw.SUB_RESPONSIBLE) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchcidelegate.toUpperCase()).append("'");
 		}
 
 		if (StringUtils.isNotNullOrEmpty(advsearchsteward)) {
-			sql.append(" and UPPER(anw.APPLICATION_STEWARD) like '").append(advsearchsteward.toUpperCase()).append("'");
+			isNot = isNot(appStewardOptions);
+			sql.append(" and UPPER(anw.APPLICATION_STEWARD) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchsteward.toUpperCase()).append("'");
 		}
 
 		if (StringUtils.isNotNullOrEmpty(advsearchdescription)) {
-			sql.append(" and UPPER(anw.COMMENTS) like '%").append(advsearchdescription.toUpperCase()).append("%'");
+			isNot = isNot(descriptionOptions);
+			sql.append(" and UPPER(anw.COMMENTS) "+ getLikeNotLikeOperator(isNot) +" '%").append(advsearchdescription.toUpperCase()).append("%'");
 		}
+		
+		
 		
 		if (null != advsearchapplicationcat2id) {
-			sql.append(" and anw.ANWENDUNG_KAT2_ID = ").append(advsearchapplicationcat2id.longValue());
+			isNot = isNot(itCategoryOptions);
+			sql.append(" and anw.ANWENDUNG_KAT2_ID "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchapplicationcat2id.longValue());
 		}
-
 		if (null != advsearchoperationalstatusid) {
-			sql.append(" and anw.EINSATZ_STATUS_ID = ").append(advsearchoperationalstatusid.longValue());
+			isNot = isNot(generalUsageOptions);
+			sql.append(" and anw.EINSATZ_STATUS_ID "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchoperationalstatusid.longValue());
 		}
-		
 		if (null != advsearchlifecyclestatusid) {
-			sql.append(" and anw.LC_STATUS_ID = ").append(advsearchlifecyclestatusid.longValue());
+			isNot = isNot(lifecycleStatusOptions);
+			sql.append(" and anw.LC_STATUS_ID "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchlifecyclestatusid.longValue());
 		}
-		
-		if(null != itSetId)
-			sql.append(" and anw.ITSET = ").append(Long.parseLong(itSetId));
-		if(null != itSecGroupId)
-			sql.append(" and anw.ITSEC_GRUPPE_ID = ").append(Long.parseLong(itSecGroupId));
-		if(null != source)
-			sql.append(" and anw.INSERT_QUELLE = '").append(source).append("'");
-		if(null != businessEssentialId)
-			sql.append(" and anw.BUSINESS_ESSENTIAL_ID = ").append(Long.parseLong(businessEssentialId));
-		
+		if(null != itSetId) {
+			isNot = isNot(itSetOptions);
+			sql.append(" and anw.ITSET "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(itSetId));
+		}
+		if(null != itSecGroupId) {
+			isNot = isNot(itSecGroupOptions);
+			sql.append(" and anw.ITSEC_GRUPPE_ID "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(itSecGroupId));
+		}
+		if(null != source) {
+			isNot = isNot(sourceOptions);
+			sql.append(" and anw.INSERT_QUELLE "+ getEqualNotEqualOperator(isNot) +" '").append(source).append("'");
+		}
+		if(null != businessEssentialId) {
+			isNot = isNot(businessEssentialOptions);
+			sql.append(" and anw.BUSINESS_ESSENTIAL_ID "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(businessEssentialId));
+		}
 
 		if (null != template) {
 			String searchTemplate = null;
@@ -2570,8 +2583,9 @@ public class AnwendungHbn {
 		}
 		
 		if (null != advsearchprocessid) {
+			isNot = isNot(processOptions);
 			sql.append(" and appproc.del_timestamp is null");
-			sql.append(" and appproc.process_id = ").append(advsearchprocessid.longValue());
+			sql.append(" and appproc.process_id "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchprocessid.longValue());
 		}
 		
 		// TODO LOCATION
@@ -2584,10 +2598,11 @@ public class AnwendungHbn {
 		}
 		
 		if (null != kat1Id) {
-			sql.append(" and kat1.anwendung_kat1_id=").append(kat1Id); // TODO ANWENDUNG_KAT1
+			isNot = isNot(ciTypeOptions);
+			sql.append(" and kat1.anwendung_kat1_id "+ getEqualNotEqualOperator(isNot) +" ").append(kat1Id);
 		}
 
-		if (null != barRelevance && !"".equals(barRelevance)) {
+		if (null != barRelevance && !EMPTY.equals(barRelevance)) {
 			if ("U".equals(barRelevance)) {
 				sql.append(" and anw.BAR_RELEVANCE_Y_N is null");
 			}
@@ -2596,7 +2611,9 @@ public class AnwendungHbn {
 			}
 		}
 		
-		if (null != organisationalScope && !"".equals(organisationalScope)) {
+		if (null != organisationalScope && !EMPTY.equals(organisationalScope)) {
+			isNot = isNot(organisationalScopeOptions);
+			
 			sql.append(" and (");
 			
 			int count = 0;
@@ -2606,7 +2623,7 @@ public class AnwendungHbn {
 				if (count != 0) {
 					sql.append(" or ");
 				}
-				sql.append("anw.ORG_SCOPE='").append(temp).append("'");
+				sql.append("anw.ORG_SCOPE "+ getEqualNotEqualOperator(isNot) +" '").append(temp).append("'");
 				count++;
 			}
 			
@@ -2761,7 +2778,7 @@ public class AnwendungHbn {
 					dto.setChangeSource(rsMessage.getString("CHANGESOURCE"));
 					dto.setChangeDBUser(rsMessage.getString("DBUSER"));
 					dto.setChangeUserCWID(rsMessage.getString("CHANGEUSER"));
-					dto.setChangeUserName("");
+					dto.setChangeUserName(EMPTY);
 					
 					String change = rsMessage.getString("CHANGES");
 					
@@ -2784,11 +2801,11 @@ public class AnwendungHbn {
 							 listResult.add(dto);
 							 dto = new HistoryViewDataDTO();
 							 
-								dto.setDatetime("");
-								dto.setChangeSource("");
-								dto.setChangeDBUser("");
-								dto.setChangeUserCWID("");
-								dto.setChangeUserName("");
+								dto.setDatetime(EMPTY);
+								dto.setChangeSource(EMPTY);
+								dto.setChangeDBUser(EMPTY);
+								dto.setChangeUserCWID(EMPTY);
+								dto.setChangeUserName(EMPTY);
 							 
 							 dto.setId(id++);
 						 }
@@ -3031,7 +3048,7 @@ public class AnwendungHbn {
 						if (toCommit && null != applicationTarget) {
 							if (null == hbnMessage) {
 								output.setResult(ApplreposConstants.RESULT_OK);
-								output.setMessages(new String[] { "" });
+								output.setMessages(new String[] { EMPTY });
 							} else {
 								output
 										.setResult(ApplreposConstants.RESULT_ERROR);
@@ -3224,7 +3241,7 @@ public class AnwendungHbn {
 			}
 		}
 		if (null == cat2TXT) {
-			cat2TXT = "" + application.getApplicationCat2Id().longValue();
+			cat2TXT = EMPTY + application.getApplicationCat2Id().longValue();
 		}
 		
 		
@@ -3270,4 +3287,20 @@ public class AnwendungHbn {
 		
 	}
 
+	private static boolean isNot(String options) {
+		if(options == null)
+			return false;
+		
+		boolean isNot = options.indexOf(',') > 0 ? options.split(COMMA)[0].equals(Y) : options.equals(Y);//options != null && 
+		
+		return isNot;
+	}
+	
+	private static String getLikeNotLikeOperator(boolean isNot) {
+		return isNot ? NOT_LIKE : LIKE;
+	}
+	
+	private static String getEqualNotEqualOperator(boolean isNot) {
+		return isNot ? NOT_EQUAL : EQUAL;
+	}
 }

@@ -933,6 +933,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'general_no'},
 			        {name: 'indefinite_article'},
 			        {name: 'indefinite_article_no'},
+			        {name: 'OR'},
 			        
 			        {name: 'dynamicWindowOKButtonText'},
 			        {name: 'objectType'},
@@ -1159,6 +1160,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'button_general_next'},
 			        {name: 'button_general_copy'},
 			        {name: 'newSearch'},
+			        {name: 'findAll'},
 			        
 			        // general
 			        {name: 'gerneral_message_loading'},
@@ -3682,11 +3684,11 @@ AIR.AirStoreFactory = function() {
 		        fields: [ 'type', 'displayText' ],
 		        
 		        data: [
-		            ['Process', 'Process'],//['Process', 'Business Process']
-		            ['Application', 'Application'],
-		            ['Application Platform', 'Application Platform'],
-		            ['Common Service', 'Common Service'],
-		            ['Middleware', 'Middleware']
+		            ['Process', 'Process']//['Process', 'Business Process']
+//		            ['Application', 'Application'],
+//		            ['Application Platform', 'Application Platform'],
+//		            ['Common Service', 'Common Service'],
+//		            ['Middleware', 'Middleware']
 		        ]
 			});
 			

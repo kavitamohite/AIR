@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -18,8 +19,7 @@ public class GroupsHbn {
 	 * @param input
 	 * @return
 	 */
-	private static List<GroupsDTO> getDTOList(
-			List<Groups> input) {
+	private static List<GroupsDTO> getDTOList(List<Groups> input) {
 		ArrayList<GroupsDTO> listDTO = new ArrayList<GroupsDTO>();
 
 		for (Iterator<Groups> iter = input.iterator(); iter.hasNext();) {
@@ -42,8 +42,7 @@ public class GroupsHbn {
 	 * @param input
 	 * @return
 	 */
-	public static GroupsDTO[] getArrayFromList(
-			List<GroupsDTO> input) {
+	public static GroupsDTO[] getArrayFromList(List<GroupsDTO> input) {
 		GroupsDTO output[] = new GroupsDTO[input.size()];
 		int i = 0;
 		for (final GroupsDTO data : input) {
@@ -54,7 +53,6 @@ public class GroupsHbn {
 	}
 
 	public static List<GroupsDTO> listGroupsHbn() {
-
 		List<GroupsDTO> listResult = new ArrayList<GroupsDTO>();
 
 		boolean commit = false;
@@ -62,15 +60,12 @@ public class GroupsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Groups> values = session
-					.createQuery(
-							"select h from Groups as h where deleteTimestamp is null order by h.groupName")
-					.list();
+			List<Groups> values = session.createQuery("select h from Groups as h where deleteTimestamp is null order by h.groupName").list();
 
 			listResult = getDTOList(values);
 			commit = true;
 		} catch (RuntimeException e) {
-
+			System.out.println(e);
 		}
 		finally {
 			HibernateUtil.close(tx, session, commit);
@@ -90,10 +85,7 @@ public class GroupsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Groups> values = session
-					.createQuery(
-							"select h from Groups as h where deleteTimestamp is null and upper(h.groupName) = '" + groupname.toUpperCase() +"'")
-					.list();
+			List<Groups> values = session.createQuery("select h from Groups as h where deleteTimestamp is null and upper(h.groupName) = '" + groupname.toUpperCase() +"'").list();
 
 			listResult = getDTOList(values);
 			commit = true;
@@ -101,9 +93,8 @@ public class GroupsHbn {
 			if (null != listResult && !listResult.isEmpty()) {
 				groupsDTO = listResult.get(0);
 			}
-			
 		} catch (RuntimeException e) {
-			// TODO Log error?
+			System.out.println(e);
 		}
 		finally {
 			HibernateUtil.close(tx, session, commit);
@@ -118,7 +109,6 @@ public class GroupsHbn {
 	 * @return
 	 */
 	public static List<GroupsDTO> findGroupByGroupUsage(String groupUsageName) {
-
 		String searchParameter = null;
 		if ("CHANGE_TEAM_Y_N".equals(groupUsageName)) {
 			searchParameter = "changeTeamYN";
@@ -156,16 +146,12 @@ public class GroupsHbn {
 		Session session = HibernateUtil.getSession();
 		try {
 			tx = session.beginTransaction();
-			List<Groups> values = session
-					.createQuery(
-							"select h from Groups as h where deleteTimestamp is null" + searchParameter + " order by h.groupName")
-					.list();
+			List<Groups> values = session.createQuery("select h from Groups as h where deleteTimestamp is null" + searchParameter + " order by h.groupName").list();
 
 			listResult = getDTOList(values);
 			commit = true;
-			
 		} catch (RuntimeException e) {
-			// TODO Log error?
+			System.out.println(e);
 		}
 		finally {
 			HibernateUtil.close(tx, session, commit);
@@ -176,17 +162,20 @@ public class GroupsHbn {
 	
 
 	public static List<GroupsDTO> findGroupsByName(String groupname, String impactedBusinessGroup,
-	String changeTeam,
-	String ciOwner,
-	String escalationList,
-	String implementataionTeam,
-	String owningBusinessGroup,
-	String serviceCoordinator,
-	String supportGroupIMResolver,
-	String managerCWID,
-	String fullLikeSearch) {
+		String changeTeam,
+		String ciOwner,
+		String escalationList,
+		String implementataionTeam,
+		String owningBusinessGroup,
+		String serviceCoordinator,
+		String supportGroupIMResolver,
+		String managerCWID,
+		String fullLikeSearch,
+		int start,
+		int limit) {
 		
 		List<GroupsDTO> listResult = new ArrayList<GroupsDTO>();
+		
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("select h from Groups as h where deleteTimestamp is null");
@@ -233,16 +222,18 @@ public class GroupsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Groups> values = session
-					.createQuery(
-							sb.toString())
-					.list();
+			Query query = session.createQuery(sb.toString());
+			
+//			System.out.println("start="+start+" limit="+limit);
+			if(start > 0 || limit > 0)
+				query.setFirstResult(start).setMaxResults(limit);
+			
+			List<Groups> values = query.list();
 
 			listResult = getDTOList(values);
 			commit = true;
-			
 		} catch (RuntimeException e) {
-			// TODO Log error?
+			System.out.println(e);
 		}
 		finally {
 			HibernateUtil.close(tx, session, commit);
@@ -250,6 +241,4 @@ public class GroupsHbn {
 
 		return listResult;
 	}
-
-
 }

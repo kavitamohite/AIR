@@ -42,12 +42,12 @@ public class ApplicationWS {
 	 * checks if the name (or alias) is already in usage. Return the count of
 	 * entries. This function does not check deleted items.
 	 * 
-	 * @param anwParamInp
+	 * @param input
 	 * @return
 	 */
-	public ApplicationParamOutput checkAllowedApplicationName(ApplicationParameterInput anwParamInp) {
+	public ApplicationParamOutput checkAllowedApplicationName(ApplicationParameterInput input) {
 
-		String searchname = anwParamInp.getQuery();
+		String searchname = input.getQuery();
 		List<ApplicationDTO> listAnwendungen = null;
 		listAnwendungen = CiEntitesHbn.findExistantCisByNameOrAlias(searchname, false);
 		ApplicationParamOutput output = new ApplicationParamOutput();
@@ -64,26 +64,26 @@ public class ApplicationWS {
 	/**
 	 * finds the applications
 	 * 
-	 * @param anwParamInp
+	 * @param input
 	 * @return
 	 */
-	public ApplicationParamOutput findApplications(ApplicationParameterInput anwParamInp) {
+	public ApplicationParamOutput findApplications(ApplicationParameterInput input) {
 
-		String searchname = anwParamInp.getQuery();
-		Long startwert = anwParamInp.getStart();
-		Long limit = anwParamInp.getLimit();
+		String searchname = input.getQuery();
+		Long startwert = input.getStart();
+		Long limit = input.getLimit();
 
-		String cwid = anwParamInp.getCwid();
-		String searchAction = anwParamInp.getSearchAction();
+		String cwid = input.getCwid();
+		String searchAction = input.getSearchAction();
 		
-		String ciType = anwParamInp.getCiType();
-		String ouUnit = anwParamInp.getOuUnit(); // "BBS-ITO-SOL-BPS-SEeB"
-		String ciOwnerType = anwParamInp.getCiOwnerType(); // "APP", "CI" oder "ALL"
-		String ouQueryMode = anwParamInp.getOuQueryMode(); //  "EXAKT" oder "START"
+		String ciType = input.getCiType();
+		String ouUnit = input.getOuUnit(); // "BBS-ITO-SOL-BPS-SEeB"
+		String ciOwnerType = input.getCiOwnerType(); // "APP", "CI" oder "ALL"
+		String ouQueryMode = input.getOuQueryMode(); //  "EXAKT" oder "START"
 
 		List<ApplicationDTO> listAnwendungen = null;
 
-		if (LDAPAuthWS.isLoginValid(anwParamInp.getCwid(), anwParamInp.getToken())) {
+		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 
 			if (null == startwert) {
 				startwert = 0L;
@@ -94,14 +94,14 @@ public class ApplicationWS {
 			
 			
 			boolean onlyApplications = false;
-			if (null != anwParamInp.getOnlyapplications()
-					&& ApplreposConstants.STRING_TRUE.equals(anwParamInp.getOnlyapplications())) {
+			if (null != input.getOnlyapplications()
+					&& ApplreposConstants.STRING_TRUE.equals(input.getOnlyapplications())) {
 				onlyApplications = true;
 			}
 			
-			if (null == anwParamInp.getSort()) {
+			if (null == input.getSort()) {
 				// default sort
-				anwParamInp.setSort("applicationName");
+				input.setSort("applicationName");
 			}
 
 			if (null != ouUnit && !"".equals(ouUnit)) {
@@ -114,36 +114,39 @@ public class ApplicationWS {
 			}
 			else if (MY_CIS.equals(searchAction)) {
 				if (StringUtils.isNotNullOrEmpty(cwid)) {
-					listAnwendungen = CiEntitesHbn.findMyCisOwner(cwid, anwParamInp.getSort(), anwParamInp.getDir(), onlyApplications);
+					listAnwendungen = CiEntitesHbn.findMyCisOwner(cwid, input.getSort(), input.getDir(), onlyApplications);
 				}
 			} else if (MY_CIS_SUBSTITUTE.equals(searchAction)) {
 				if (StringUtils.isNotNullOrEmpty(cwid)) {
-					listAnwendungen = CiEntitesHbn.findMyCisDelegate(cwid, anwParamInp.getSort(), anwParamInp.getDir(), onlyApplications);
+					listAnwendungen = CiEntitesHbn.findMyCisDelegate(cwid, input.getSort(), input.getDir(), onlyApplications);
 				}
 			} else if (MY_CIS_FOR_DELETE.equals(searchAction)) {
 				if (StringUtils.isNotNullOrEmpty(cwid)) {
-					listAnwendungen = CiEntitesHbn.findMyCisForDelete(cwid, anwParamInp.getSort(), anwParamInp.getDir(), onlyApplications);
+					listAnwendungen = CiEntitesHbn.findMyCisForDelete(cwid, input.getSort(), input.getDir(), onlyApplications);
 				}
 			} else {
-				// standard search
-
-				if (ApplreposConstants.STRING_TRUE.equals(anwParamInp.getAdvancedsearch())) {
-					listAnwendungen = AnwendungHbn.findApplications(searchname, anwParamInp.getQueryMode(),
-						anwParamInp.getAdvsearchappowner(), anwParamInp.getAdvsearchappdelegate(),
-						anwParamInp.getAdvsearchciowner(), anwParamInp.getAdvsearchcidelegate(), onlyApplications,
-						anwParamInp.getAdvsearchObjectTypeId(), anwParamInp.getSort(), anwParamInp.getDir(),
-						anwParamInp.getAdvsearchcitypeid(), anwParamInp.getAdvsearchdescription(),
-						anwParamInp.getAdvsearchoperationalstatusid(), anwParamInp.getAdvsearchapplicationcat2id(),
-						anwParamInp.getAdvsearchlifecyclestatusid(), anwParamInp.getAdvsearchprocessid(), anwParamInp.getTemplate(), 
-						anwParamInp.getAdvsearchsteward(), anwParamInp.getBarRelevance(), anwParamInp.getOrganisationalScope(),
-						anwParamInp.getItSetId(), anwParamInp.getItSecGroupId(), anwParamInp.getSource(), anwParamInp.getBusinessEssentialId()
+				if (ApplreposConstants.STRING_TRUE.equals(input.getAdvancedsearch())) {
+					listAnwendungen = AnwendungHbn.findApplications(searchname, input.getQueryMode(),
+						input.getAdvsearchappowner(), input.getAdvsearchappdelegate(),
+						input.getAdvsearchciowner(), input.getAdvsearchcidelegate(), onlyApplications,
+						input.getAdvsearchObjectTypeId(), input.getSort(), input.getDir(),
+						input.getAdvsearchcitypeid(), input.getAdvsearchdescription(),
+						input.getAdvsearchoperationalstatusid(), input.getAdvsearchapplicationcat2id(),
+						input.getAdvsearchlifecyclestatusid(), input.getAdvsearchprocessid(), input.getTemplate(), 
+						input.getAdvsearchsteward(), input.getBarRelevance(), input.getOrganisationalScope(),
+						input.getItSetId(), input.getItSecGroupId(), input.getSource(), input.getBusinessEssentialId(),
+						input.getCiTypeOptions(),input.getItSetOptions(), input.getDescriptionOptions(),
+						input.getAppOwnerOptions(), input.getAppOwnerDelegateOptions(), input.getAppStewardOptions(),
+						input.getCiOwnerOptions(), input.getCiOwnerDelegateOptions(),
+						input.getGeneralUsageOptions(), input.getItCategoryOptions(), input.getLifecycleStatusOptions(),
+						input.getOrganisationalScopeOptions(), input.getItSecGroupOptions(),
+						input.getProcessOptions(), input.getSourceOptions(), input.getBusinessEssentialOptions()
 					);
 				} else {
-					listAnwendungen = CiEntitesHbn.findCisByNameOrAlias(searchname, anwParamInp.getQueryMode(),
-							onlyApplications, anwParamInp.getSort(), anwParamInp.getDir());
+					listAnwendungen = CiEntitesHbn.findCisByNameOrAlias(searchname, input.getQueryMode(),
+							onlyApplications, input.getSort(), input.getDir());
 				}
 			}
-
 		}
 
 		if (null == listAnwendungen) {

@@ -100,8 +100,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	    	params: params
 	    });
 	    
-		delete params.start;
-		delete params.limit;
+//		delete params.start;
+//		delete params.limit;
 		ciResultGrid.setPagingParams(params);
 	},
 	
