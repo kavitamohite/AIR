@@ -22,7 +22,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		        	text: 'Update'
 		        },{
 		        	xtype: 'button',
-		        	id: 'bAdvSearchReset',//bUpdateCiSearchResult
+		        	id: 'bSearchReset',
 		    		
 		        	cls: 'x-btn-text-icon',
 		        	icon: 'images/reset_16x16.png',
@@ -70,7 +70,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			ciResultGridId = ciResultGrid.getId();
 			this.ciResultGridParamSets[ciResultGridId] = params;
 		} else {
-			var tabCount = this.tabCount++;//tpCiSearchResultTables.items.items.length;
+			var tabCount = ++this.tabCount;//tpCiSearchResultTables.items.items.length;
 			ciResultGridId = params.searchType + '_' + tabCount;
 			this.ciResultGridParamSets[ciResultGridId] = params;
 			

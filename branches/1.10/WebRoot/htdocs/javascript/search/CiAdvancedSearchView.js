@@ -1300,8 +1300,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    if(field.getValue().length > 0)
 	    	params.itSetId = field.getValue();
 	    
-	    var cbCat1 = pAdvSearchSingleAttrs.getComponent('advsearchObjectType');
-	    var cat1 = cbCat1.getValue();
+//	    var cbCat1 = pAdvSearchSingleAttrs.getComponent('advsearchObjectType');
+	    var cat1 = params.advsearchObjectTypeId;//cbCat1.getValue();
 	    
 	    
 		var pAdvSearchSingleAttrsOptions = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrsOptions');
@@ -1443,14 +1443,12 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			params.sourceOptions = Util.getChbYesNoValues(cbgAdvSearchSpecialSearchAttributesSourceOptions);
 			params.businessEssentialOptions = Util.getChbYesNoValues(cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions);
 	    }
-	    
-	    
 	},
 	
 
 	
-	reset: function(link) {
-		if(!link) {
+	reset: function() {//link
+		/*if(!link) {
 			var cbCat1 = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchObjectType');
 			cbCat1.reset();
 			
@@ -1469,7 +1467,131 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    	
 //	    	this.expand(false);//wenn nach neuer Suche und neuem Tab kein expand()!!
 //	    	this.setVisible(true);
-		}
+		} else {*/
+			var pAdvSearchSingleAttrs = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs');
+			
+		    var field = pAdvSearchSingleAttrs.getComponent('advsearchObjectType');
+		    field.reset();
+		    field = pAdvSearchSingleAttrs.getComponent('advsearchdescription');
+		    field.reset();
+		    field = pAdvSearchSingleAttrs.getComponent('cbAdvSearchITset');
+		    field.reset();
+		    field = pAdvSearchSingleAttrs.getComponent('rgAdvSearchBARrelevance');
+		    field.reset();
+		    
+		    
+	    	var pAdvSearchAppOwnerFrame = this.getComponent('pAdvSearchAppOwnerFrame');
+	    	var pAdvSearchAppStewardFrame = this.getComponent('pAdvSearchAppStewardFrame');
+	    	var pAdvSearchCIOwnerFrame = this.getComponent('pAdvSearchCIOwnerFrame');
+	    	
+	    	field = pAdvSearchAppOwnerFrame.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner');
+	    	field.reset();
+	    	field = pAdvSearchAppOwnerFrame.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden');
+	    	field.reset();
+	    	
+	    	field = pAdvSearchAppOwnerFrame.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate');
+	    	field.reset();
+	    	field = pAdvSearchAppOwnerFrame.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateHidden');
+	    	field.reset();
+	    	
+	    	field = pAdvSearchAppStewardFrame.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward');
+	    	field.reset();
+	    	field = pAdvSearchAppStewardFrame.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardHidden');
+	    	field.reset();
+		    
+		    
+		    var fsCIOwner = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner');
+		    
+	    	field = fsCIOwner.getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible');
+	    	field.reset();
+	    	field = fsCIOwner.getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleHidden');
+	    	field.reset();
+	    	
+	    	field = fsCIOwner.getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible');
+	    	field.reset();
+	    	field = fsCIOwner.getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleHidden');
+	    	field.reset();
+		    
+		    
+		    
+	    	var fsCategoriesAndStatus = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus');
+	    	var fsSpecialSearchAttributes = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes');
+	    	
+	    	
+			field = fsCategoriesAndStatus.getComponent('cbAdvSearchGeneralUsageW');
+			field.reset();
+			
+			field = fsCategoriesAndStatus.getComponent('cbAdvSearchITCategoryW');
+			field.reset();
+			
+			field = fsCategoriesAndStatus.getComponent('cbAdvSearchLifecycleStatusW');
+			field.reset();
+			
+			field = fsCategoriesAndStatus.getComponent('lvAdvSearchOrganisationalScope');
+			field.clearSelections();
+	    	
+	    	
+			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchITSecGroupW');
+			field.reset();
+			
+			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchProcessW');
+			field.reset();
+			
+//			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW');
+//			field.reset();
+//			
+//			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOSnameW');
+//			field.reset();
+//			
+			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchSourceW');
+			field.reset();
+			
+			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchBusinessEssentialW');
+			field.reset();
+			
+//			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchGapResponsibleW');
+//			field.reset();
+//			
+//			field = fsSpecialSearchAttributes.getComponent('dfAdvSearchTargetDate');
+//			field.reset();
+		    
+			
+			var chbGroups = [];
+			
+			var pAdvSearchSingleAttrsOptions = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrsOptions');
+			chbGroups.push(pAdvSearchSingleAttrsOptions.getComponent('cbgAdvSearchCiTypeOptions'));
+			chbGroups.push(pAdvSearchSingleAttrsOptions.getComponent('cbgAdvSearchItSetOptions'));
+			chbGroups.push(pAdvSearchSingleAttrsOptions.getComponent('cbgAdvSearchDescriptionOptions'));
+			
+			
+	    	var pAdvSearchAppOwnerOptions = pAdvSearchAppOwnerFrame.getComponent('pAdvSearchAppOwnerOptions');
+	    	chbGroups.push(pAdvSearchAppOwnerOptions.getComponent('cbgAdvSearchAppOwnerOptions'));
+	    	chbGroups.push(pAdvSearchAppOwnerOptions.getComponent('cbgAdvSearchAppOwnerDelegateOptions'));
+	    	
+	    	var pAdvSearchAppStewardOptions = pAdvSearchAppStewardFrame.getComponent('pAdvSearchAppStewardOptions');
+	    	chbGroups.push(pAdvSearchAppStewardOptions.getComponent('cbgAdvSearchAppStewardOptions'));
+
+			var pAdvSearchCIOwnerOptions = pAdvSearchCIOwnerFrame.getComponent('pAdvSearchCIOwnerOptions');
+			chbGroups.push(pAdvSearchCIOwnerOptions.getComponent('cbgAdvSearchCIOwnerOptions'));
+			chbGroups.push(pAdvSearchCIOwnerOptions.getComponent('cbgAdvSearchCIOwnerDelegateOptions'));
+
+			
+			var pAdvSearchCategoriesAndStatusOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchCategoriesAndStatusOptions');
+			var pAdvSearchSpecialSearchAttributesOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchSpecialSearchAttributesOptions');
+	    	
+			chbGroups.push(pAdvSearchCategoriesAndStatusOptions.getComponent('cbgAdvSearchCategoriesAndStatusGeneralUsageOptions'));
+			chbGroups.push(pAdvSearchCategoriesAndStatusOptions.getComponent('cbgAdvSearchCategoriesAndStatusITCategoryOptions'));
+			chbGroups.push(pAdvSearchCategoriesAndStatusOptions.getComponent('cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions'));
+			chbGroups.push(pAdvSearchCategoriesAndStatusOptions.getComponent('cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions'));
+
+			chbGroups.push(pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesITSecGroupOptions'));
+			chbGroups.push(pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesProcessOptions'));
+			chbGroups.push(pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesSourceOptions'));
+			chbGroups.push(pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions'));
+
+			for(var i = 0; i < chbGroups.length; i++)
+				chbGroups[i].reset();
+//		}
 	}
 });
 Ext.reg('AIR.CiAdvancedSearchView', AIR.CiAdvancedSearchView);

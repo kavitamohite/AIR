@@ -7,7 +7,7 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 			layout: 'form',
 			
 			items: [{
-				id: 'pSearchField',
+				id: 'pSearch',
 				border: false,
 				
 				layout: 'table',
@@ -19,7 +19,7 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    
 			    items: [{
 		        	xtype: 'textfield',
-		        	id: 'searchfield',
+		        	id: 'tfSearch',
 		        	
 		        	emptyText: 'Enter CI name or alias...',
 		        	width: 300,
@@ -31,7 +31,7 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        	hasSearch: false,
 		        	maskRe: /[0-9a-zA-Z%#=\+\-\_\/\\.:*? ]/,
 		        	maxLength: 656
-		        }, {
+		        },{
 					xtype: 'button',//commandlink
 					id: 'clSearch',
 					
@@ -58,7 +58,7 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 					style: {
 						marginLeft: 5
 					}
-		        }, {
+		        },{
 		            xtype: 'radiogroup',
 					id: 'rbgQueryMode',
 					hidden: true,
@@ -97,6 +97,10 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.CiStandardSearchView.superclass.initComponent.call(this);
 	},
 	
+	reset: function() {
+		this.getComponent('pSearch').getComponent('tfSearch').reset();
+	},
+	
 	update: function(data) {
 		this.getComponent('ciAdvancedSearchView').update(data);
 	},
@@ -106,10 +110,10 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	updateLabels: function(labels) {
-		var clSearch = this.getComponent('pSearchField').getComponent('clSearch');
+		var clSearch = this.getComponent('pSearch').getComponent('clSearch');
 		clSearch.setText(labels.newSearch);
 		
-		this.getComponent('pSearchField').getComponent('bUpdateCiSearchResult').setText(labels.bUpdateCiSearchResult);
+		this.getComponent('pSearch').getComponent('bUpdateCiSearchResult').setText(labels.bUpdateCiSearchResult);
 		
 		var ciAdvancedSearchView = this.getComponent('ciAdvancedSearchView');
 		ciAdvancedSearchView.updateLabels(labels);

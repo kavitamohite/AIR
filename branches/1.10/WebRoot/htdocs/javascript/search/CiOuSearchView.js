@@ -171,6 +171,38 @@ AIR.CiOuSearchView = Ext.extend(AIR.AirView, {
 		AIR.CiOuSearchView.superclass.initComponent.call(this);
 	},
 	
+	reset: function() {
+		var cbOuSearchObjectType = this.getComponent('cbOuSearchObjectType');
+		cbOuSearchObjectType.reset();
+		
+		var tfOrgUnit = this.getComponent('pOrgUnit').getComponent('pOrgUnit1').getComponent('tfOrgUnit');
+		tfOrgUnit.reset();
+		
+		var rbgOUSearchQueryMode = this.getComponent('pOrgUnit').getComponent('pOrgUnit2').getComponent('rbgOUSearchQueryMode');
+		var rbgOUSearchOwnerType = this.getComponent('pOrgUnit').getComponent('pOrgUnit2').getComponent('rbgOUSearchOwnerType');
+
+		rbgOUSearchQueryMode.setValue('START');
+		rbgOUSearchOwnerType.setValue('ALL');
+	},
+	
+	update: function(params) {
+		var cbOuSearchObjectType = this.getComponent('cbOuSearchObjectType');
+		if(params.ciType.length > 0)
+			cbOuSearchObjectType.setValue(cbOuSearchObjectType.getStore().getAt(cbOuSearchObjectType.getStore().findExact('english', params.ciType)).get('id'));//text
+		else
+			cbOuSearchObjectType.reset();
+		
+		var tfOrgUnit = this.getComponent('pOrgUnit').getComponent('pOrgUnit1').getComponent('tfOrgUnit');
+		tfOrgUnit.setValue(params.ouUnit);
+		
+		
+		var rbgOUSearchQueryMode = this.getComponent('pOrgUnit').getComponent('pOrgUnit2').getComponent('rbgOUSearchQueryMode');
+		var rbgOUSearchOwnerType = this.getComponent('pOrgUnit').getComponent('pOrgUnit2').getComponent('rbgOUSearchOwnerType');
+
+		rbgOUSearchQueryMode.setValue(params.ouQueryMode);
+		rbgOUSearchOwnerType.setValue(params.ciOwnerType);
+	},
+	
 	updateLabels: function(labels) {
 		this.setTitle(labels.CiOuSearchViewTitle);
 		
