@@ -226,7 +226,7 @@ AIR.AirApplicationManager = function() {
 //			ciSearchView.on('ciSelect', navigationView.onCiSelected, navigationView);
 			ciSearchView.getComponent('ciSearchResultView').on('ciSelect', navigationView.onCiSelected, navigationView);
 			ciSearchView.getComponent('ciSearchResultView').on('ciSelect', ciEditView.onCiSelected, ciEditView);
-			
+			ciSearchView.getComponent('ciSearchResultView').on('externalNavigation', navigationView.onExternalNavigation, navigationView);//doubleclick on ci in ci search table
 //			myPlaceTabView.on('ciSelect', ciCenterView.onCiSelected, ciCenterView);
 //			ciSearchView.on('ciSelect', ciCenterView.onCiSelected, ciCenterView);
 			
@@ -270,7 +270,7 @@ AIR.AirApplicationManager = function() {
 			
 			airViewport.on('externalNavigation', navigationView.onExternalNavigation, navigationView);//restore navigation from cookie
 			myPlaceTabView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);//doubleclick on ci in ci search table
-			ciSearchView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);//doubleclick on ci in ci search table
+//			ciSearchView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);//doubleclick on ci in ci search table
 			
 			var myPlaceHomeView = airViewport.getComponent('ciCenterView').getComponent('myPlaceHomeView');
 			if(ciCreateWizardPagesView)

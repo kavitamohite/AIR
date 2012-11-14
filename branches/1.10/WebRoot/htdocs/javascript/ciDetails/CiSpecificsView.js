@@ -296,11 +296,11 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //				        flex: 1
 				    }, {
 				    	xtype: 'commandlink',
-				    	id: 'businessProcessaddimg',
+				    	id: 'businessProcessAdd',
 				    	img: img_AddBusinessProcess
 				    },{
 				    	xtype: 'commandlink',
-				    	id: 'businessProcessremoveimg',
+				    	id: 'businessProcessRemove',
 				    	img: img_RemoveBusinessProcess
 				    }]
     			}]
@@ -363,8 +363,8 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		
 		var pBusiness = this.getComponent('specificsCategory').getComponent('pBusiness');
-		var clBusinessProcessAdd = pBusiness.getComponent('businessProcessaddimg');
-		var clBusinessProcessRemove = pBusiness.getComponent('businessProcessremoveimg');
+		var clBusinessProcessAdd = pBusiness.getComponent('businessProcessAdd');
+		var clBusinessProcessRemove = pBusiness.getComponent('businessProcessRemove');
 		clBusinessProcessAdd.on('click', this.onBusinessProcessAdd, this);
 		clBusinessProcessRemove.on('click', this.onBusinessProcessRemove, this);
 	},
