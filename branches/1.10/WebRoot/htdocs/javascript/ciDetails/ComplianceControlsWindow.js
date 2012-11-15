@@ -1130,7 +1130,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		if(!this.editedMassnahmen[this.previousSelection])
 			this.saveMassnahme(this.previousSelection);
 		
-		this.updateMassnahmenTable(combo, record);
+		this.updateMassnahmenTable(combo.getValue(), record.data.statusWert);
 		
 //		this.onMassnahmeChange();
 		
@@ -1143,25 +1143,31 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.onMassnahmeChange();
 	},
 	
-	updateMassnahmenTable: function(combo, record) {
+	updateMassnahmenTable: function(status, statusWert) {
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 		
-		grid.getStore().getAt(this.previousSelection).data.statusWert = record.data.statusWert;
+		grid.getStore().getAt(this.previousSelection).data.statusWert = statusWert;
 		var itsecMassnahmenStatusId = grid.getStore().getAt(this.previousSelection).data.itsecMassnahmenStatusId;
 		
 //		grid.getStore().clearGrouping();
 		grid.getStore().groupBy('statusWert', true);
 //		grid.getView().refresh();
 		
-		
-		//get new index after regrouping for this.editedMassnahmen[this.previousSelection] and delete it under the old and save it under this new index
-		var newIndex = grid.getStore().indexOfId(itsecMassnahmenStatusId);
-		
-		this.editedMassnahmen[this.previousSelection].statusId = parseInt(combo.getValue());// record.data.id;
-		var massnahme = this.editedMassnahmen[this.previousSelection];
-		delete this.editedMassnahmen[this.previousSelection];
-		this.editedMassnahmen[newIndex] = massnahme;
-		this.previousSelection = newIndex;
+		if(this.isLinkCiSelect) {
+			//wenn updateMassnahmenTable NICHT durch user mit cbCompliantStatus Selektion ausgelöst wurde, z.B. durch Klick auf cbLinkCiList
+			//muss der neue grid index der ausgewählten massnahme gesichert werden, damit die neuen template massnahmen
+			//Daten nicht unter der falschen Massnahme=rowIndex abgelegt werden!
+			this.previousSelection = this.getCurrentSelection();
+		} else {
+			//get new index after regrouping for this.editedMassnahmen[this.previousSelection] and delete it under the old and save it under this new index
+			var newIndex = grid.getStore().indexOfId(itsecMassnahmenStatusId);
+			
+			this.editedMassnahmen[this.previousSelection].statusId = parseInt(status);// record.data.id;
+			var massnahme = this.editedMassnahmen[this.previousSelection];
+			delete this.editedMassnahmen[this.previousSelection];
+			this.editedMassnahmen[newIndex] = massnahme;
+			this.previousSelection = newIndex;
+		}
 	},
 	
 	onSigneeSelect: function(combo, record, index) {
@@ -1680,11 +1686,19 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			var isMassnahmeLinked = this.isMassnahmeLinked(massnahme);
 			
 			if(isMassnahmeLinked) {
-//				var ciTypeStore = cbLinkCiType.getStore();
-//				var r = ciTypeStore.getAt(ciTypeStore.findExact('tableId', massnahme.refTableID));
-//				
-//				var ciType = r.get('tableId') == AC.TABLE_ID_APPLICATION ? massnahme.refCiSubTypeId : r.get('id');
-				cbLinkCiType.setValue(massnahme.refCiSubTypeId);//ciType
+				var ciType;
+				
+				//oder mit einer Funktion, wenn es neben CI Typ Anwendung mehrere CI Typen mit Subtypen gibt: this.isComplexCiType(massnahme.refTableID)
+				if(massnahme.refTableID == AC.TABLE_ID_APPLICATION) {
+					ciType = massnahme.refCiSubTypeId;
+				} else {
+					var ciTypeStore = cbLinkCiType.getStore();
+					var r = ciTypeStore.getAt(ciTypeStore.findExact('tableId', massnahme.refTableID));
+					ciType = r.get('id');
+				}
+//				var ciType = massnahme.refTableID == AC.TABLE_ID_APPLICATION ? massnahme.refCiSubTypeId : massnahme.refTableID;
+				
+				cbLinkCiType.setValue(ciType);//ciType massnahme.refCiSubTypeId
 	
 				
 				var callback = function() {
@@ -1703,7 +1717,6 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				
 				if(!this.config.hasTemplate)
 					this.enableMassnahmeDetails();//(*2) Release Defaultdeaktivierung
-				
 			}
 		}
 		
@@ -1714,6 +1727,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 		cbCompliantStatus.setValue(massnahme.statusId);//compliantStatus
 		taJustification.setValue(massnahme.statusKommentar);//justification
+		
+		if(this.isLinkCiSelect)
+			this.updateMassnahmenTable(massnahme.statusId, cbCompliantStatus.getStore().getById(massnahme.statusId).get('statusWert'));//fire compliantStatus change/select event
 		
 		if(!this.hasNoGapAnalysis) {
 			var taGapDescription = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('pGapDescription').getComponent('taGapDescription');
@@ -1875,7 +1891,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		}
 		
 		if(this.isLinkCiSelect) {
-			this.onMassnahmeChange();//wird durch klick auf andere massnahme in tabelle ausgelöst
+			this.onMassnahmeChange();//wird durch klick auf andere massnahme in massnahmen grid/tabelle ausgelöst
 			this.isLinkCiSelect = false;
 		}
 	},
@@ -2391,8 +2407,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		tfMitigationPotential.disable();
 		tfDamagePerYear.disable();
 
-		tfGapResponsible.disable();
-//		fsGapElimination.getComponent('pGapResponsible').doLayout();//oder fsGapElimination.doLayout() ?
+		
+		tfGapResponsible.disable();//getEl().dom.disabled = true;//wenn disable() verschwindet der parent panel mit tfGapResponsible. Warum??!!
+		fsGapElimination.getComponent('pGapResponsible').setVisible(true);
+//		fsGapElimination.doLayout();//oder fsGapElimination.doLayout() ? .getComponent('pGapResponsible')
+		
 		taPlanOfAction.disable();
 		dfTargetDate.disable();
 		dfTargetDate.setHideTrigger(true);
@@ -2497,10 +2516,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	update: function() {
-		if(this.config.hasTemplate) {//(*2) Release Defaultdeaktivierung
+		if(this.config.hasTemplate)//(*2) Release Defaultdeaktivierung
 			this.disableMassnahmeDetails(this.config.hasTemplate);
-		}
-		
 	},
 	
 	updateToolbar: function(message) {

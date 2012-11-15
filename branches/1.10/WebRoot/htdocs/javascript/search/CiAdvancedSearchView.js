@@ -6,15 +6,15 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		this.ownerId = 'AdvSearch';
 		var options = {
 			fsApplicationOwner: {
-				padding: 10
+				padding: Ext.isIE ? 0 : 10
 			},
 			
 			fsApplicationSteward: {
-				padding: 10
+				padding: Ext.isIE ? 0 : 10
 			},
 			
 			fsCIOwner: {
-				padding: 10
+				padding: Ext.isIE ? 0 : 10
 			}
 		};
 		
@@ -391,7 +391,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					
 					layout: 'form',
 					width: 430,
-					padding: 10,
+					padding: Ext.isIE ? 0 : 10,
 
 					//hidden: true,
 					
@@ -566,7 +566,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	//				columnWidth: 0.33,//0.45
 					width: 480,
 
-					padding: 10,
+					padding: Ext.isIE ? 0 : 10,
 	//			    hidden: true,
 					
 					style: {
