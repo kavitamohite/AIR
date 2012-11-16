@@ -1,7 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.applrepos.dto.PersonsDTO;
-import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "PersonsWSService", portName = "PersonsWSPort")
 public class PersonsWSDelegate {

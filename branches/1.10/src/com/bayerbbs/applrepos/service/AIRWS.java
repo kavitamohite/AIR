@@ -9,7 +9,7 @@ import com.bayerbbs.applrepos.dto.ItsecUserOptionDTO;
 import com.bayerbbs.applrepos.dto.PersonOptionDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
-import com.bayerbbs.applrepos.hibernate.CiEntitesHbn;
+import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.ItsecUserOptionHbn;
 import com.bayerbbs.applrepos.hibernate.PersonOptionHbn;
 
@@ -47,7 +47,7 @@ public class AIRWS {
 		List<ApplicationDTO> listAnwendungen = null;
 
 		if (LDAPAuthWS.isLoginValid(anwParamInp.getCwid(), anwParamInp.getToken())) {
-				listAnwendungen = CiEntitesHbn.findCisByOUunit(ciType, ouUnit, ciOwnerType, ouQueryMode);
+				listAnwendungen = CiEntitiesHbn.findCisByOUunit(ciType, ouUnit, ciOwnerType, ouQueryMode);
 		}
 		
 		

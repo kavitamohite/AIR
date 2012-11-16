@@ -3,7 +3,7 @@ package com.bayerbbs.applrepos.service;
 import java.util.List;
 
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
-import com.bayerbbs.applrepos.hibernate.CiEntitesHbn;
+import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 
 public class CiEntityWS {
 
@@ -11,7 +11,7 @@ public class CiEntityWS {
 		
 		CiEntityParameterOutput output = new CiEntityParameterOutput();
 		
-		List<ViewDataDTO> listDTO = CiEntitesHbn.findCisByTypeAndNameOrAlias(input.getType(), input.getQuery());
+		List<ViewDataDTO> listDTO = CiEntitiesHbn.findCisByTypeAndNameOrAlias(input.getType(), input.getQuery());
 		
 		if (listDTO.size() > 0) {
 			output.setViewdataDTO(getViewDataArray(listDTO));
@@ -35,7 +35,7 @@ public class CiEntityWS {
 		DwhEntityParameterOutput output = new DwhEntityParameterOutput();
 		
 		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))
-			output = CiEntitesHbn.findByTypeAndName(input.getType(), input.getQuery(), input.getStart(), input.getLimit());
+			output = CiEntitiesHbn.findByTypeAndName(input.getType(), input.getQuery(), input.getStart(), input.getLimit());
 		
 		return output;
 	}
@@ -44,7 +44,7 @@ public class CiEntityWS {
 		DwhEntityParameterOutput output = new DwhEntityParameterOutput();
 		
 		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))
-			output = CiEntitesHbn.getDwhEntityRelations(input.getTableId(), input.getCiId(), input.getDirection());
+			output = CiEntitiesHbn.getDwhEntityRelations(input.getTableId(), input.getCiId(), input.getDirection());
 		
 		return output;
 	}

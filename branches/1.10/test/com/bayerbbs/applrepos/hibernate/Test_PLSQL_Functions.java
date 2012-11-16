@@ -34,7 +34,7 @@ public class Test_PLSQL_Functions {
 	
 	@Test
 	public void testGetDwhEntityRelations() throws HibernateException, SQLException {
-		DwhEntityParameterOutput output = CiEntitesHbn.getDwhEntityRelations(2L, 119504L, "UPSTREAM");
+		DwhEntityParameterOutput output = CiEntitiesHbn.getDwhEntityRelations(2L, 119504L, "UPSTREAM");
 		
 		System.out.println(output.getDwhEntityDTO().length);
 	}

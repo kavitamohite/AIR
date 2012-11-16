@@ -2,7 +2,7 @@ package com.bayerbbs.applrepos.service;
 
 import java.io.Serializable;
 
-public class SissogleParameterInput implements Serializable {
+public class SisoogleParameterInput implements Serializable {
 
 	private static final long serialVersionUID = 2893884855221589067L;
 
