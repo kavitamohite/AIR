@@ -127,7 +127,7 @@ public class ApplicationWS {
 			} else {
 				if (ApplreposConstants.STRING_TRUE.equals(input.getAdvancedsearch())) {
 					listAnwendungen = AnwendungHbn.findApplications(searchname, input.getQueryMode(),
-						input.getAdvsearchappowner(), input.getAdvsearchappdelegate(),
+						input.getAdvsearchappowner(), input.getAdvsearchappdelegate(), input.getAdvsearchappdelegateHidden(),
 						input.getAdvsearchciowner(), input.getAdvsearchcidelegate(), input.getAdvsearchcidelegateHidden(), onlyApplications,
 						input.getAdvsearchObjectTypeId(), input.getSort(), input.getDir(),
 						input.getAdvsearchcitypeid(), input.getAdvsearchdescription(),

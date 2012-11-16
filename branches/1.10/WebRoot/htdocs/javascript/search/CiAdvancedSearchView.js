@@ -1110,15 +1110,15 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    	
 	    	
 	    	field = pAdvSearchAppOwnerFrame.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate');
-	    	if(data.advsearchappdelegateHidden && data.advsearchappdelegateHidden.length > 0)
-	    		field.setValue(data.advsearchappdelegateHidden);
+	    	if(data.advsearchappdelegate && data.advsearchappdelegate.length > 0)
+	    		field.setValue(data.advsearchappdelegate);
 	    	else field.reset();
 	    	
 	    	field = pAdvSearchAppOwnerFrame.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateHidden');
-	    	var v = data.advsearchappdelegateHidden && data.advsearchappdelegateHidden.length > 0 && data.advsearchappdelegateHidden.indexOf(')') > -1 ? data.advsearchappdelegateHidden : data.advsearchappdelegate;
-	    	if(v && v.length > 0)//data.advsearchappdelegate && data.advsearchappdelegate.length > 0
-	    		field.setValue(v);//data.advsearchappdelegate
+	    	if(data.advsearchappdelegateHidden && data.advsearchappdelegateHidden.length > 0)
+	    		field.setValue(data.advsearchappdelegateHidden);
 	    	else field.reset();
+
 	    	
 	    	
 	    	field = pAdvSearchAppStewardFrame.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward');
@@ -1324,12 +1324,12 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    	//weil es momtan in ApplicationWS.findApplications nur ein Feld x (ohne Hidden) gibt und die cwid im Feld x dort ausgelesen wird
 		    params.advsearchappowner = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden').getValue();//applicationOwner
 		    params.advsearchappownerHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner').getValue();
-		    params.advsearchappdelegate = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateHidden').getValue();//applicationOwnerDelegate
-		    params.advsearchappdelegateHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate').getValue();
+		    params.advsearchappdelegate = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate').getValue();//applicationOwnerDelegate
+		    params.advsearchappdelegateHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateHidden').getValue();
 		    params.advsearchsteward = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardHidden').getValue();//applicationSteward
 		    params.advsearchstewardHidden = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward').getValue();
 		    
-		    params.advsearchappdelegate = params.advsearchappdelegateHidden && params.advsearchappdelegateHidden.length > 0 && params.advsearchappdelegateHidden.indexOf(')') === -1 ? params.advsearchappdelegateHidden : params.advsearchappdelegate;
+//		    params.advsearchappdelegate = params.advsearchappdelegateHidden && params.advsearchappdelegateHidden.length > 0 && params.advsearchappdelegateHidden.indexOf(')') === -1 ? params.advsearchappdelegateHidden : params.advsearchappdelegate;
 		    
 		    
 			var pAdvSearchAppOwnerOptions = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('pAdvSearchAppOwnerOptions');

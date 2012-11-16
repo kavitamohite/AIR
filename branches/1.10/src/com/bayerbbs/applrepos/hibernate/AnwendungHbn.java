@@ -2412,7 +2412,7 @@ public class AnwendungHbn {
 	}
 
 	
-	public static List<ApplicationDTO> findApplications(String query, String queryMode, String advsearchappowner, String advsearchappdelegate, String advsearchciowner, String advsearchcidelegate, String advsearchcidelegateHidden, boolean onlyapplications, Long kat1Id, String sort, String dir,
+	public static List<ApplicationDTO> findApplications(String query, String queryMode, String advsearchappowner, String advsearchappdelegate, String advsearchappdelegateHidden, String advsearchciowner, String advsearchcidelegate, String advsearchcidelegateHidden, boolean onlyapplications, Long kat1Id, String sort, String dir,
 			Long advsearchcitypeid, String advsearchdescription, Long advsearchoperationalstatusid,
 			Long advsearchapplicationcat2id,
 			Long advsearchlifecyclestatusid,
@@ -2518,10 +2518,26 @@ public class AnwendungHbn {
 		}
 		
 		if (StringUtils.isNotNullOrEmpty(advsearchappdelegate)) {
+			boolean isCwid = advsearchappdelegate.indexOf(')') > -1;
+			String delegate = isCwid ? advsearchappdelegateHidden : advsearchappdelegate;//gruppe oder cwid?
+			
 			isNot = isNot(appOwnerDelegateOptions);
-			sql.append(" and UPPER(anw.APPLICATION_OWNER_DELEGATE) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchappdelegate.toUpperCase()).append("'");
-			if(advsearchappdelegate.indexOf('_') == -1)
-				sql.insert(sql.length() - 1, '%');
+			
+			sql.append(" and (");
+			if(isNot)
+				sql.append("UPPER(anw.APPLICATION_OWNER_DELEGATE) is null or ");
+			
+			sql.append("UPPER(anw.APPLICATION_OWNER_DELEGATE) "+ getLikeNotLikeOperator(isNot) +" '").append(delegate.toUpperCase()).append("')");
+			
+			if(!isCwid)
+				sql.insert(sql.length() - 2, '%');
+			
+			
+			
+//			isNot = isNot(appOwnerDelegateOptions);
+//			sql.append(" and UPPER(anw.APPLICATION_OWNER_DELEGATE) "+ getLikeNotLikeOperator(isNot) +" '").append(delegate.toUpperCase()).append("'");
+//			if(advsearchappdelegate.indexOf('_') == -1)
+//				sql.insert(sql.length() - 1, '%');
 		}
 
 		if (StringUtils.isNotNullOrEmpty(advsearchciowner)) {
