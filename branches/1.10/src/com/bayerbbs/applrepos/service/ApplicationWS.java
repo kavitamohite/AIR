@@ -24,7 +24,7 @@ import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationProcessHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationRegionHbn;
-import com.bayerbbs.applrepos.hibernate.CiEntitesHbn;
+import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
 import com.bayerbbs.applrepos.hibernate.CiPersonsHbn;
 import com.bayerbbs.applrepos.hibernate.CiSupportStuffHbn;
@@ -49,7 +49,7 @@ public class ApplicationWS {
 
 		String searchname = input.getQuery();
 		List<ApplicationDTO> listAnwendungen = null;
-		listAnwendungen = CiEntitesHbn.findExistantCisByNameOrAlias(searchname, false);
+		listAnwendungen = CiEntitiesHbn.findExistantCisByNameOrAlias(searchname, false);
 		ApplicationParamOutput output = new ApplicationParamOutput();
 		output.setCountResultSet(listAnwendungen.size());
 		if (0 != listAnwendungen.size()) {
@@ -110,19 +110,19 @@ public class ApplicationWS {
 					ouQueryMode = "START";
 				}
 				
-				listAnwendungen = CiEntitesHbn.findCisByOUunit(ciType, ouUnit, ciOwnerType, ouQueryMode);
+				listAnwendungen = CiEntitiesHbn.findCisByOUunit(ciType, ouUnit, ciOwnerType, ouQueryMode);
 			}
 			else if (MY_CIS.equals(searchAction)) {
 				if (StringUtils.isNotNullOrEmpty(cwid)) {
-					listAnwendungen = CiEntitesHbn.findMyCisOwner(cwid, input.getSort(), input.getDir(), onlyApplications);
+					listAnwendungen = CiEntitiesHbn.findMyCisOwner(cwid, input.getSort(), input.getDir(), onlyApplications);
 				}
 			} else if (MY_CIS_SUBSTITUTE.equals(searchAction)) {
 				if (StringUtils.isNotNullOrEmpty(cwid)) {
-					listAnwendungen = CiEntitesHbn.findMyCisDelegate(cwid, input.getSort(), input.getDir(), onlyApplications);
+					listAnwendungen = CiEntitiesHbn.findMyCisDelegate(cwid, input.getSort(), input.getDir(), onlyApplications);
 				}
 			} else if (MY_CIS_FOR_DELETE.equals(searchAction)) {
 				if (StringUtils.isNotNullOrEmpty(cwid)) {
-					listAnwendungen = CiEntitesHbn.findMyCisForDelete(cwid, input.getSort(), input.getDir(), onlyApplications);
+					listAnwendungen = CiEntitiesHbn.findMyCisForDelete(cwid, input.getSort(), input.getDir(), onlyApplications);
 				}
 			} else {
 				if (ApplreposConstants.STRING_TRUE.equals(input.getAdvancedsearch())) {
@@ -143,7 +143,7 @@ public class ApplicationWS {
 						input.getProcessOptions(), input.getSourceOptions(), input.getBusinessEssentialOptions()
 					);
 				} else {
-					listAnwendungen = CiEntitesHbn.findCisByNameOrAlias(searchname, input.getQueryMode(),
+					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchname, input.getQueryMode(),
 							onlyApplications, input.getSort(), input.getDir());
 				}
 			}
@@ -247,10 +247,10 @@ public class ApplicationWS {
 
 					
 					if(dto.getUpStreamAdd() != null && dto.getUpStreamAdd().length() > 0 || dto.getUpStreamDelete() != null && dto.getUpStreamDelete().length() > 0)
-						CiEntitesHbn.saveCiRelations(editInput.getTableId(), dto.getApplicationId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
+						CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getApplicationId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
 					
 					if(dto.getDownStreamAdd() != null && dto.getDownStreamAdd().length() > 0 || dto.getDownStreamDelete() != null && dto.getDownStreamDelete().length() > 0)
-						CiEntitesHbn.saveCiRelations(editInput.getTableId(), dto.getApplicationId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", editInput.getCwid());
+						CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getApplicationId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", editInput.getCwid());
 					
 					
 					// Connection higher/lower
