@@ -51,12 +51,17 @@ public class ApplicationDTO implements Serializable {
 
 	private String userCreate;
 	
-	private String responsible;
 	
+	private String applicationOwner;
+	private String applicationOwnerHidden;
+	private String applicationOwnerDelegate;
+	private String applicationOwnerDelegateHidden;
+	private String applicationSteward;
+	private String applicationStewardHidden;
+	
+	private String responsible;
 	private String responsibleHidden;
-
 	private String subResponsible;
-
 	private String subResponsibleHidden;
 
 	private Long itset;
@@ -185,15 +190,7 @@ public class ApplicationDTO implements Serializable {
 	// connections
 	private String businessProcess;
 	private String businessProcessHidden;
-	
-	// owner
-	private String applicationOwner;
-	private String applicationOwnerDelegate;
-	private String applicationSteward;
-	private String applicationOwnerHidden;
-	private String applicationOwnerDelegateHidden;
-	private String applicationStewardHidden;
-	
+		
 	private Long categoryBusinessId;
 	private String categoryBusiness;
 

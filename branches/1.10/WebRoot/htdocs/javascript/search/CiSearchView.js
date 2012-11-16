@@ -262,7 +262,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    	params = this.getAdvancedSearchParams(params);
 
 	    var ciAdvancedSearchView = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView');
-	    ciAdvancedSearchView.collapse(false);
+//	    ciAdvancedSearchView.collapse(false);
 //	    ciAdvancedSearchView.setVisible(false);
 	    
 	    var searchType = this.isAdvSearch ? AC.SEARCH_TYPE_ADV_SEARCH : AC.SEARCH_TYPE_SEARCH;
@@ -736,7 +736,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 				params = this.getAdvancedSearchParams(params);
 				
 			    var ciAdvancedSearchView = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView');
-			    ciAdvancedSearchView.collapse(false);
+//			    ciAdvancedSearchView.collapse(false);
 			    
 				break;
 			case AC.SEARCH_TYPE_OU_SEARCH:

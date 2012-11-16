@@ -2412,7 +2412,7 @@ public class AnwendungHbn {
 	}
 
 	
-	public static List<ApplicationDTO> findApplications(String query, String queryMode, String advsearchappowner, String advsearchappdelegate, String advsearchciowner, String advsearchcidelegate, boolean onlyapplications, Long kat1Id, String sort, String dir,
+	public static List<ApplicationDTO> findApplications(String query, String queryMode, String advsearchappowner, String advsearchappdelegate, String advsearchciowner, String advsearchcidelegate, String advsearchcidelegateHidden, boolean onlyapplications, Long kat1Id, String sort, String dir,
 			Long advsearchcitypeid, String advsearchdescription, Long advsearchoperationalstatusid,
 			Long advsearchapplicationcat2id,
 			Long advsearchlifecyclestatusid,
@@ -2515,6 +2515,8 @@ public class AnwendungHbn {
 		if (StringUtils.isNotNullOrEmpty(advsearchappdelegate)) {
 			isNot = isNot(appOwnerDelegateOptions);
 			sql.append(" and UPPER(anw.APPLICATION_OWNER_DELEGATE) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchappdelegate.toUpperCase()).append("'");
+			if(advsearchappdelegate.indexOf('_') == -1)
+				sql.insert(sql.length() - 1, '%');
 		}
 
 		if (StringUtils.isNotNullOrEmpty(advsearchciowner)) {
@@ -2522,9 +2524,15 @@ public class AnwendungHbn {
 			sql.append(" and UPPER(anw.CWID_VERANTW_BETR) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchciowner.toUpperCase()).append("'");
 		}
 		
-		if (StringUtils.isNotNullOrEmpty(advsearchcidelegate)) {
+		if (StringUtils.isNotNullOrEmpty(advsearchcidelegate)) {//advsearchcidelegateHidden
+			boolean isCwid = advsearchcidelegate.indexOf(')') > -1;
+			String delegate = isCwid ? advsearchcidelegateHidden : advsearchcidelegate;//gruppe oder cwid?
+			
+			
 			isNot = isNot(ciOwnerDelegateOptions);
-			sql.append(" and UPPER(anw.SUB_RESPONSIBLE) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchcidelegate.toUpperCase()).append("'");
+			sql.append(" and UPPER(anw.SUB_RESPONSIBLE) "+ getLikeNotLikeOperator(isNot) +" '").append(delegate.toUpperCase()).append("'");
+			if(!isCwid)
+				sql.insert(sql.length() - 1, '%');
 		}
 
 		if (StringUtils.isNotNullOrEmpty(advsearchsteward)) {
