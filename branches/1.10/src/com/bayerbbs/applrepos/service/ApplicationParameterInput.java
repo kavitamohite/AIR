@@ -27,6 +27,7 @@ public class ApplicationParameterInput implements Serializable {
 	private Long advsearchcitypeid;
 	private String advsearchappowner;
 	private String advsearchappdelegate;
+	private String advsearchappdelegateHidden;
 	private String advsearchciowner;
 	private String advsearchcidelegate;
 	private String advsearchcidelegateHidden;
@@ -183,6 +184,13 @@ public class ApplicationParameterInput implements Serializable {
 	}
 	public String getAdvsearchcidelegateHidden() {
 		return advsearchcidelegateHidden;
+	}
+	
+	public void setAdvsearchappdelegateHidden(String advsearchappdelegateHidden) {
+		this.advsearchappdelegateHidden = advsearchappdelegateHidden;
+	}
+	public String getAdvsearchappdelegateHidden() {
+		return advsearchappdelegateHidden;
 	}
 
 	public String getAdvsearchcountry() {
@@ -540,7 +548,4 @@ public class ApplicationParameterInput implements Serializable {
 	public void setBusinessEssentialOptions(String businessEssentialOptions) {
 		this.businessEssentialOptions = businessEssentialOptions;
 	}
-
-
-
 }

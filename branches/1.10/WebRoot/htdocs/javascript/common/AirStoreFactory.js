@@ -3347,7 +3347,7 @@ AIR.AirStoreFactory = function() {
 		    var itsecMassnahmenStatusWerteReader = new Ext.data.XmlReader({
 		    	record: 'itsecMassnahmenStatusWerteDTO',
 		        idProperty: 'itsecMassnahmenWertId'
-		    }, itsecMassnahmenStatusWerteRecord); 
+		    }, itsecMassnahmenStatusWerteRecord);
 			
 		    var itsecMassnahmenStatusWerteStore = new Ext.data.XmlStore({
 		    	autoDestroy: true,

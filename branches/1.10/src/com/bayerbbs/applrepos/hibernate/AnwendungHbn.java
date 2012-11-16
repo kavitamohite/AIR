@@ -2509,7 +2509,12 @@ public class AnwendungHbn {
 		
 		if (StringUtils.isNotNullOrEmpty(advsearchappowner)) {
 			isNot = isNot(appOwnerOptions);
-			sql.append(" and UPPER(anw.APPLICATION_OWNER) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchappowner.toUpperCase()).append("'");
+			
+			sql.append(" and (");
+			if(isNot)
+				sql.append("UPPER(anw.APPLICATION_OWNER) is null or ");
+			
+			sql.append("UPPER(anw.APPLICATION_OWNER) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchappowner.toUpperCase()).append("')");
 		}
 		
 		if (StringUtils.isNotNullOrEmpty(advsearchappdelegate)) {
@@ -2521,23 +2526,38 @@ public class AnwendungHbn {
 
 		if (StringUtils.isNotNullOrEmpty(advsearchciowner)) {
 			isNot = isNot(ciOwnerOptions);
-			sql.append(" and UPPER(anw.CWID_VERANTW_BETR) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchciowner.toUpperCase()).append("'");
+			
+			sql.append(" and (");
+			if(isNot)
+				sql.append("UPPER(anw.CWID_VERANTW_BETR) is null or ");
+			
+			sql.append("UPPER(anw.CWID_VERANTW_BETR) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchciowner.toUpperCase()).append("')");
 		}
 		
 		if (StringUtils.isNotNullOrEmpty(advsearchcidelegate)) {//advsearchcidelegateHidden
 			boolean isCwid = advsearchcidelegate.indexOf(')') > -1;
 			String delegate = isCwid ? advsearchcidelegateHidden : advsearchcidelegate;//gruppe oder cwid?
 			
-			
 			isNot = isNot(ciOwnerDelegateOptions);
-			sql.append(" and UPPER(anw.SUB_RESPONSIBLE) "+ getLikeNotLikeOperator(isNot) +" '").append(delegate.toUpperCase()).append("'");
+			
+			sql.append(" and (");
+			if(isNot)
+				sql.append("UPPER(anw.SUB_RESPONSIBLE) is null or ");
+			
+			sql.append("UPPER(anw.SUB_RESPONSIBLE) "+ getLikeNotLikeOperator(isNot) +" '").append(delegate.toUpperCase()).append("')");
+			
 			if(!isCwid)
-				sql.insert(sql.length() - 1, '%');
+				sql.insert(sql.length() - 2, '%');
 		}
 
 		if (StringUtils.isNotNullOrEmpty(advsearchsteward)) {
 			isNot = isNot(appStewardOptions);
-			sql.append(" and UPPER(anw.APPLICATION_STEWARD) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchsteward.toUpperCase()).append("'");
+			
+			sql.append(" and (");
+			if(isNot)
+				sql.append("UPPER(anw.APPLICATION_STEWARD) is null or ");
+			
+			sql.append(" and UPPER(anw.APPLICATION_STEWARD) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchsteward.toUpperCase()).append("')");
 		}
 
 		if (StringUtils.isNotNullOrEmpty(advsearchdescription)) {
