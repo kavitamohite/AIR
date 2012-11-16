@@ -22,7 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
-import com.bayerbbs.applrepos.hibernate.CiEntitesHbn;
+import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.service.ApplicationParameterInput;
 import com.bayerbbs.applrepos.service.ApplicationWS;
 
@@ -185,7 +185,7 @@ public class AirCiExcelExportServlet extends HttpServlet {
         	
         	applications = Arrays.asList(new ApplicationWS().findApplications(input).getApplicationDTO());
         } else if(searchAction.equals(SEARCH_POINT_OUSEARCH)) {
-        	applications = CiEntitesHbn.findCisByOUunit(
+        	applications = CiEntitiesHbn.findCisByOUunit(
     			req.getParameter("hciType"),
     			req.getParameter("houUnit"),
 				req.getParameter("hciOwnerType"),
