@@ -53,6 +53,7 @@ public class SlaHbn {
 		return output;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static List<SlaDTO> listSlaHbn() {
 
 		List<SlaDTO> listResult = new ArrayList<SlaDTO>();
@@ -61,7 +62,7 @@ public class SlaHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Sla> values = session
+			List<Sla> values = (List<Sla>) session
 					.createQuery(
 							"select h from Sla as h where h.deleteTimestamp is null order by h.slaName")
 					.list();
