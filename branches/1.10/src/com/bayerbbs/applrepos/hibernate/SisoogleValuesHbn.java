@@ -13,12 +13,12 @@ import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.dto.SISoogleAttribute;
-import com.bayerbbs.applrepos.service.SissogleParameterInput;
+import com.bayerbbs.applrepos.service.SisoogleParameterInput;
 
 
 public class SisoogleValuesHbn {
 
-	public static List<String> findValues(SissogleParameterInput parameter) {
+	public static List<String> findValues(SisoogleParameterInput parameter) {
 
 		List<String> listResult = new ArrayList<String>();
 
@@ -28,6 +28,7 @@ public class SisoogleValuesHbn {
 			String sqlQuery = getSearchCommand(parameter);
 			
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Object[]> temp = session
 					.createSQLQuery(sqlQuery)
 					.list();
@@ -61,7 +62,7 @@ public class SisoogleValuesHbn {
 		return listResult;
 	}
 
-	private static String getSearchCommand(SissogleParameterInput parameter) {
+	private static String getSearchCommand(SisoogleParameterInput parameter) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("select distinct(").append(parameter.getTargetAttribut()).append(") from MV_SISOOGLE_VALUES where");
 		sb.append(" CI_TYPE is not null");
