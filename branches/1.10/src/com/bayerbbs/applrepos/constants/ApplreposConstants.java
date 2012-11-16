@@ -38,7 +38,7 @@ public class ApplreposConstants {
 	public final static String ROLE_AIR_DEVELOPER			 	= "AIR Developer";
 	public final static String ROLE_AIR_INFRASTRUCTURE_LAYER 	= "AIR Infrastructure Layer";
 	
-	public final static String ROLE_BUSINESS_ESSENTIAL_EDITOR = "BusinessEssential-Editor";
+	public final static String ROLE_BUSINESS_ESSENTIAL_EDITOR = "AIR BusinessEssential-Editor";
 
 	public final static String ROLE_SUBSTITUTE = "Substitute";
 
