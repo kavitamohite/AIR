@@ -53,9 +53,9 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        mode: 'local',
 		        triggerAction: 'all',
 		        lazyRender: true,
-		        lazyInit: false,
+		        lazyInit: false
 		        
-		        editable: false
+//		        editable: false
 		        
 		        //(*2) Release Defaultdeaktivierung
 //		        disabled: true,
@@ -76,9 +76,9 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        mode: 'local',
 		        triggerAction: 'all',
 		        lazyRender: true,
-		        lazyInit: false,
+		        lazyInit: false
 		        
-		        editable: false
+//		        editable: false
 		        
 		        //(*2) Release Defaultdeaktivierung
 //		        disabled: true,
@@ -97,6 +97,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbLinkCiType = this.getComponent('cbLinkCiType');
 		cbLinkCiType.on('select', this.onLinkCiTypeSelect, this);
+		cbLinkCiType.on('change', this.onLinkCiTypeChange, this);
 		
 		var filterData = {
 			language: AAM.getLanguage().toLowerCase()
@@ -105,6 +106,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbLinkCiList = this.getComponent('cbLinkCiList');
 		cbLinkCiList.on('select', this.onLinkCiListSelect, this);
+		cbLinkCiList.on('change', this.onLinkCiListChange, this);
 	},
 	
 	
@@ -112,6 +114,16 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var ciTypeId = record.get('id');
 		
 		this.loadLinkCiList(ciTypeId);
+	},
+	
+	onLinkCiTypeChange: function(combo, newValue, oldValue) {
+		if(this.isComboValueValid(combo, newValue, oldValue)) {
+			if(newValue.length === 0) {
+				this.clearLinkCISettings();
+			} else {
+				this.loadLinkCiList(newValue);
+			}
+		}
 	},
 	
 	loadLinkCiList: function(ciTypeId, callback) {
@@ -138,11 +150,35 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	onLinkCiListSelect: function(combo, record, index) {
 		var linkCiId = record.get('id');
+		this.linkCiListSelected(linkCiId);
+	},
+	
+	onLinkCiListChange: function(combo, newValue, oldValue) {
+		if(this.isComboValueValid(combo, newValue, oldValue)) {
+			if(newValue.length === 0) {
+				this.clearLinkCISettings();
+			} else {
+				this.linkCiListSelected(newValue);
+			}
+		}
+	},
+	
+	linkCiListSelected: function(linkCiId) {
 		var cbLinkCiType = this.getComponent('cbLinkCiType');
 		var linkCiTableId = cbLinkCiType.getStore().getAt(cbLinkCiType.getStore().findExact('id', cbLinkCiType.getValue())).get('tableId');//cbLinkCiType.getValue();//
 		
 //		if(this.linkCiSelected)
 			this.fireEvent('linkCiSelect', linkCiId, linkCiTableId);//, this.ciData.massnahmeGstoolId
+	},
+	
+	clearLinkCISettings: function() {
+		var cbLinkCiType = this.getComponent('cbLinkCiType');
+		var cbLinkCiList = this.getComponent('cbLinkCiList');
+		
+		cbLinkCiType.setValue('');
+		cbLinkCiList.setValue('');
+		
+		this.fireEvent('linkCiSelect', '', '');
 	},
 	
 //	setMassnahme: function(massnahmeId) {

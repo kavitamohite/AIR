@@ -1313,12 +1313,12 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	selectMassnahme: function(grid, rowIndex, massnahmeId) {
 //		Util.log('selectMassnahme1 rowIndex='+rowIndex);
 
-		if(this.previousSelection === rowIndex && this.existsInvalidMassnahme === 0)//!this.existsInvalidMassnahme > 0
+		if(this.previousSelection === rowIndex && !massnahmeId)//this.existsInvalidMassnahme === 0 !this.existsInvalidMassnahme > 0
 			return;
 		
 		//save previously edited massnahmenDetails (clientseitig, noch nicht serverseitig),
 		//wenn rechts bei fsComplianceStatement etwas geändert wurde
-		if(this.massnahmeChanged && this.previousSelection > -1 && !this.existsInvalidMassnahme > 0) {
+		if(this.massnahmeChanged && this.previousSelection > -1 && this.existsInvalidMassnahme === 0) {//!this.existsInvalidMassnahme > 0
 			this.massnahmeChanged = false;
 			this.saveMassnahme(this.previousSelection);
 		}
@@ -1464,8 +1464,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
 		complianceLinkView.update(this.config);
 		
-		if(!this.existsInvalidMassnahme || this.existsInvalidMassnahme === 0)// this.existsInvalidMassnahme  && !this.previousLoadedMassnahme
-			this.previousLoadedMassnahme = records[0].data;
+//		if(!this.existsInvalidMassnahme || this.existsInvalidMassnahme === 0)// this.existsInvalidMassnahme  && !this.previousLoadedMassnahme
+//			this.previousLoadedMassnahme = records[0].data;
 		
 		this.updateComplianceDetails(records[0].data);
 	},
@@ -1607,26 +1607,20 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 
 		var cancelCallback = function() {
+			this.updateToolbar('');
 			var rowIndex = this.getSelectedGridIndex();
-			
-			
+
+			var previousMassnahmeId = this.editedMassnahmen[this.previousSelection].itsecMassnahmenStatusId;
 			delete this.editedMassnahmen[this.previousSelection];
 			
-
-			this.selectMassnahme(grid, this.previousSelection, this.previousLoadedMassnahme.itsecMassnahmenStatusId);//den alten falschen/unvollständigen neu laden
-
+			//vorherige falsche Massnahme mit Hilfe der itsecMassnahmenStatusId neu laden
+			this.selectMassnahme(grid, this.previousSelection, previousMassnahmeId);//den alten falschen/unvollständigen neu laden
+//			this.selectMassnahme(grid, this.previousSelection, this.previousLoadedMassnahme.itsecMassnahmenStatusId);//den alten falschen/unvollständigen neu laden
 			
-			this.selectMassnahme(grid, rowIndex);//dann den neu ausgewählten neu laden
-//			var task = new Ext.util.DelayedTask(function() {
-//				this.selectMassnahme(grid, rowIndex);//this.previousSelection
-//			}.createDelegate(this));
-//			task.delay(2000);
-			
-//			this.existsInvalidMassnahme = false;
-			this.updateToolbar('');
-			
-//			var record = this.getSelectedGridRecord();
-//			this.updateMassnahmenTable(record.get('itsecMassnahmenStatusId'), record.get('statusWert'), rowIndex);//status, statusWert, index
+			//es muss wohl sichergestellt werden, dass dieser this.selectMassnahme Aufruf per event/callback sicher NACH
+			//dem ersten erst statffindet, da es komplett absurden Situationen kommt, wenn sich updateComplianceDetails
+			//Aufrufe die nach den Ladeergebnissen kommen, überlappen.
+//			this.selectMassnahme(grid, rowIndex);//dann den neu ausgewählten neu laden
 		};
 		
 		var okCallback = function() {
@@ -2466,30 +2460,33 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	onLinkCiSelect: function(linkCiId, linkCiTableId) {//massnahmeGstoolId
-//		this.onMassnahmeChange();
-		this.isLinkCiSelect = true;
-		
-		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
-		var massnahmeGstoolId = grid.getSelectionModel().getSelected().get('massnahmeGstoolId');
-		
-		var params = {
-		 	cwid: AIR.AirApplicationManager.getCwid(),
-		 	token: AIR.AirApplicationManager.getToken(),
-		 	linkCiId: linkCiId,
-			linkCiTableId: linkCiTableId,
-			massnahmeGstoolId: massnahmeGstoolId
-		};
-		
-//		this.linkCiSelected = true;// siehe auch (*checkbox1)
-		var store = AIR.AirStoreFactory.createLinkedMassnahmeDetailListStore();
-		store.on('load', this.onMassnahmenDetailLoaded, this);
-		store.load({
-			params: params
-		});
-		
-//		this.onMassnahmeChange();//ORIG
-		this.disableMassnahmeDetails();//kann schon vor dem fertigen store load event gemacht werden
-		
+		if(linkCiId.length > 0 && linkCiTableId.length > 0) {
+	//		this.onMassnahmeChange();
+			this.isLinkCiSelect = true;
+			
+			var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
+			var massnahmeGstoolId = grid.getSelectionModel().getSelected().get('massnahmeGstoolId');
+			
+			var params = {
+			 	cwid: AIR.AirApplicationManager.getCwid(),
+			 	token: AIR.AirApplicationManager.getToken(),
+			 	linkCiId: linkCiId,
+				linkCiTableId: linkCiTableId,
+				massnahmeGstoolId: massnahmeGstoolId
+			};
+			
+	//		this.linkCiSelected = true;// siehe auch (*checkbox1)
+			var store = AIR.AirStoreFactory.createLinkedMassnahmeDetailListStore();
+			store.on('load', this.onMassnahmenDetailLoaded, this);
+			store.load({
+				params: params
+			});
+			
+	//		this.onMassnahmeChange();//ORIG
+			this.disableMassnahmeDetails();//kann schon vor dem fertigen store load event gemacht werden
+		} else {
+			this.enableMassnahmeDetails();
+		}
 		
 		//1. tableId 2. ciId des templates, 3. massnahmeGsToolId, 4. ciSubType (cat1Id des template CIs) --> modForms.getCIType/modAppType.getCITypeFromItem
 //		frm_S_Massnahmen, deReference und cboLink_AfterUpdate
@@ -2579,7 +2576,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 		
 		tfGapResponsible.disable();//getEl().dom.disabled = true;//wenn disable() verschwindet der parent panel mit tfGapResponsible. Warum??!!
-		fsGapElimination.getComponent('pGapResponsible').setVisible(true);
+//		fsGapElimination.getComponent('pGapResponsible').setVisible(true);
 //		fsGapElimination.doLayout();//oder fsGapElimination.doLayout() ? .getComponent('pGapResponsible')
 		
 		taPlanOfAction.disable();
@@ -2670,7 +2667,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		tfDamagePerYear.enable();
 
 		tfGapResponsible.enable();
-		fsGapElimination.getComponent('pGapResponsible').doLayout();//oder fsGapElimination.doLayout() ?
+//		fsGapElimination.getComponent('pGapResponsible').setVisible(true);
+		fsGapElimination.getComponent('pGapResponsible').doLayout();//oder fsGapElimination.doLayout() ? getComponent('pGapResponsible')
 		taPlanOfAction.enable();
 		dfTargetDate.enable();
 		dfTargetDate.setHideTrigger(false);
