@@ -12,7 +12,6 @@
 		<OR>ODER</OR>
 		
 		<general_button_save>Speichern</general_button_save>
-		<general_button_cancel>Abbruch</general_button_cancel>
 		<general_button_back>Zurück</general_button_back>
 
 		<gerneral_message_loading>Lade Daten...</gerneral_message_loading>
@@ -20,7 +19,7 @@
 
 		<label_menu_loggedinas>Angemeldet als</label_menu_loggedinas>
 		<button_general_save>Speichern</button_general_save>
-		<button_general_cancel>Abbruch</button_general_cancel>
+		<button_general_cancel>Abbrechen</button_general_cancel>
 		<button_general_back>Zurück</button_general_back>
 		<button_general_search>Suchen</button_general_search>
 		<button_general_next>Weiter</button_general_next>
@@ -241,6 +240,9 @@
 				
 				<checkItsecGroupWindowTitle>ITSec Gruppe</checkItsecGroupWindowTitle>
 				<checkItsecGroupWindowMessage>Sie haben die ITSec Gruppe dieses Application CIs geändert. Alle ITSec Massnahmen der vorherigen ITSec Gruppe werden gelöscht. Sind Sie sicher?</checkItsecGroupWindowMessage>
+				<invalidMassnameWindowTitle>Ungültige Massnahme</invalidMassnameWindowTitle>
+				<invalidMassnameWindowMessage>Alle Felder müssen bearbeitet werden, damit die Massnahme gültig ist.</invalidMassnameWindowMessage>
+				
 				
 				<!-- TODO: Benötigt? -->		
 				<riskAnalysisYN>Risikoanalyse vorhanden?</riskAnalysisYN>

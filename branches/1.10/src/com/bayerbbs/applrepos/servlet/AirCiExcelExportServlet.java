@@ -153,8 +153,10 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					req.getParameter("queryMode"),
 					req.getParameter("hadvsearchappowner"),
 					req.getParameter("hadvsearchappdelegate"),
+					req.getParameter("hadvsearchappdelegateHidden"),
 					req.getParameter("hadvsearchciowner"),
 					req.getParameter("hadvsearchcidelegate"),
+					req.getParameter("hadvsearchcidelegateHidden"),
 					false,
 					req.getParameter("hadvsearchObjectTypeId").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchObjectTypeId")) : null,
 					null/*req.getParameter("sort?")*/,
@@ -175,7 +177,7 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					req.getParameter("businessEssentialId"),
 					null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
 				) :
-        		AnwendungHbn.findApplications(query, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        		AnwendungHbn.findApplications(query, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         } else if(searchAction.equals(SEARCH_POINT_MY_DELEGATE_CIS) || searchAction.equals(SEARCH_POINT_MY_CIS)) {
         	ApplicationParameterInput input = new ApplicationParameterInput();
         	input.setSearchAction(searchAction);

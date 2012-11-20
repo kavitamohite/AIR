@@ -1105,6 +1105,8 @@ AIR.AirStoreFactory = function() {
 					{name: 'referencedTemplateInvalid'},
 					{name: 'checkItsecGroupWindowTitle'},
 					{name: 'checkItsecGroupWindowMessage'},
+					{name: 'invalidMassnameWindowTitle'},
+					{name: 'invalidMassnameWindowMessage'},
 	
 					// license			
 					{name: 'licensePanelTitle'},

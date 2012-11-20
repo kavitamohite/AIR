@@ -102,8 +102,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						id: 'lvComplianceControls',
 						store: this.massnahmenStore,
 				        
+						
 				        border: false,
 				        height: 380,//400 500 660 635
+//				        maxHeight: 2000,
 				        
 						columns: [{
 							xtype: 'actioncolumn',
@@ -242,9 +244,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 								flex: 7,
 								margins: '0 0 0 0',
 								
-								typeAhead: true,
-								forceSelection: true,
-								selectOnFocus: true,
+//								typeAhead: true,
+//								forceSelection: true,
+//								selectOnFocus: true,
 								
 								triggerAction: 'all',
 								mode: 'local',
@@ -997,13 +999,17 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				id: 'bComplianceControlsSave',
 				text: 'Save and Close',
 				disabled: true
-			}, {
+			},{
 				id: 'bComplianceControlsApply',
 				text: 'Save',
 				disabled: true
-			}, {
+			},{
 				id: 'bComplianceControlsCancel',
 				text: 'Cancel'
+			},{
+				id: 'bOpenInvalidMassnahmeWindow',
+//				text: ''
+				hidden: true
 			}]
 		});
 		
@@ -1014,21 +1020,24 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 		var cMassnahmeInfo = grid.getColumnModel().getColumnById('cMassnahmeInfo');
 		grid.on('rowclick', this.onMassnahmeSelected, this);//click
+//		grid.getSelectionModel().on('beforerowselect', this.onBeforeMassnahmeSelect, this);
 		cMassnahmeInfo.on('click', this.onMassnahmeInfoClick, this);
 		
 		var bComplianceControlsSave = this.getFooterToolbar().getComponent('bComplianceControlsSave');//items.map.bComplianceControlsSave
-		var bComplianceControlsApply = this.getFooterToolbar().items.map.bComplianceControlsApply;
-		var bComplianceControlsCancel = this.getFooterToolbar().items.map.bComplianceControlsCancel;
+		var bComplianceControlsApply = this.getFooterToolbar().getComponent('bComplianceControlsApply');
+		var bComplianceControlsCancel = this.getFooterToolbar().getComponent('bComplianceControlsCancel');
+		var bOpenInvalidMassnahmeWindow = this.getFooterToolbar().getComponent('bOpenInvalidMassnahmeWindow');
 		
 		bComplianceControlsSave.on('click', this.onSave, this);
 		bComplianceControlsApply.on('click', this.onApply, this);
 		bComplianceControlsCancel.on('click', this.onCancel, this);
-		
+//		bOpenInvalidMassnahmeWindow.on('click', this.openInvalidMassnahmeWindow, this);//onOpenInvalidMassnahmeWindow
 		
 		
 		var cbCompliantStatus = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement').getComponent('pCompliantStatus').getComponent('cbCompliantStatus');
 		var taJustification = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement').getComponent('pJustification').getComponent('taJustification');
 		
+//		cbCompliantStatus.on('beforeselect', this.onCompliantStatusBeforeChange, this);
 		cbCompliantStatus.on('select', this.onCompliantStatusChange, this);//onMassnahmeChange
 		taJustification.on('keyup', this.onMassnahmeChange, this);
 		
@@ -1126,6 +1135,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			else this.onMassnahmeChange();
 	},
 	
+	onCompliantStatusBeforeChange: function(combo, record, index) {
+//		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
+//		var rowEl = grid.getView().getRow(this.previousSelection);//this.previousSelection = this.getSelectedGridIndex();
+//		
+//		var rowPosY = rowEl.getScrolls().y;//getPosition
+//		Util.log('before: previousSelection='+this.previousSelection+' rowPosY='+rowPosY);//rowEl.getY()
+	},
 	onCompliantStatusChange: function(combo, record, index) {
 		if(!this.editedMassnahmen[this.previousSelection])
 			this.saveMassnahme(this.previousSelection);
@@ -1142,8 +1158,23 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		this.onMassnahmeChange();
 	},
+	/*scrollToMassnahme: function() {
+		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
+		var view = grid.getView();
+		var rowEl = grid.getView().getRow(this.getSelectedGridIndex());//this.previousSelection
+		var rowElParent = rowEl.getParent();
+
+		var rowPosY = rowEl.getScrolls().y;//getPosition
+		Util.log('after: previousSelection='+this.previousSelection+' rowPosY='+rowPosY);
+		
+		var direction = 'top';
+//		grid.getEl().scroll(direction, 500);//rowPosY
+//		view.el.scrollTo(0, 300);//rowPosY rowElParent
+		view.el.dom.scrollTop = 100;
+		grid.getEl().dom.scrollTop = 100;
+	},*/
 	
-	updateMassnahmenTable: function(status, statusWert) {
+	updateMassnahmenTable: function(status, statusWert, index) {
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 		
 		grid.getStore().getAt(this.previousSelection).data.statusWert = statusWert;
@@ -1157,17 +1188,30 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			//wenn updateMassnahmenTable NICHT durch user mit cbCompliantStatus Selektion ausgelöst wurde, z.B. durch Klick auf cbLinkCiList
 			//muss der neue grid index der ausgewählten massnahme gesichert werden, damit die neuen template massnahmen
 			//Daten nicht unter der falschen Massnahme=rowIndex abgelegt werden!
-			this.previousSelection = this.getCurrentSelection();
+			this.previousSelection = this.getSelectedGridIndex();
 		} else {
-			//get new index after regrouping for this.editedMassnahmen[this.previousSelection] and delete it under the old and save it under this new index
-			var newIndex = grid.getStore().indexOfId(itsecMassnahmenStatusId);
+//			var i = index ? index : this.previousSelection;
+//			if(index)
+//				this.previousSelection = index;
 			
-			this.editedMassnahmen[this.previousSelection].statusId = parseInt(status);// record.data.id;
-			var massnahme = this.editedMassnahmen[this.previousSelection];
-			delete this.editedMassnahmen[this.previousSelection];
-			this.editedMassnahmen[newIndex] = massnahme;
-			this.previousSelection = newIndex;
+			if(this.editedMassnahmen[this.previousSelection]) {//this.previousSelection
+				//get new index after regrouping for this.editedMassnahmen[this.previousSelection] and delete it under the old and save it under this new index
+				var newIndex = grid.getStore().indexOfId(itsecMassnahmenStatusId);
+				
+				this.editedMassnahmen[this.previousSelection].statusId = parseInt(status);//this.previousSelection; record.data.id;
+				var massnahme = this.editedMassnahmen[this.previousSelection];//this.previousSelection;
+				delete this.editedMassnahmen[this.previousSelection];//this.previousSelection;
+				this.editedMassnahmen[newIndex] = massnahme;
+				this.previousSelection = newIndex;//this.previousSelection;
+			}
 		}
+		
+
+//		this.scrollToMassnahme();
+		
+		//siehe auch links-AIR.txt
+		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
+		grid.getView().focusRow(this.getSelectedGridIndex());
 	},
 	
 	onSigneeSelect: function(combo, record, index) {
@@ -1221,7 +1265,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				case '1':
 				case '2':
 				default:
-					var massnahme = /*this.editedMassnahmen[this.getCurrentSelection()]  this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] :*/ this.loadedMassnahme;
+					var massnahme = /*this.editedMassnahmen[this.getSelectedGridIndex()]  this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] :*/ this.loadedMassnahme;
 					this.deleteGapValues(massnahme, compliantStatusId);
 					this.deleteRiskAnalysisAndMgmtValues(massnahme, '-1');
 					
@@ -1253,13 +1297,28 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	onMassnahmeSelected: function(grid, rowIndex, event) {
-		this.selectedComplianceControl = rowIndex;
-		if(this.previousSelection === this.selectedComplianceControl)
+		if(this.existsInvalidMassnahme > 0) {//sollte eigentlich unnötig sein wenn grid's selectionsModel's beforerowselect event handler false zurückgibt
+//			this.targetIndex = rowIndex;
+//			grid.getSelectionModel().selectRow(this.previousSelection);
+			this.onBeforeMassnahmeSelect();
+			return;
+		}
+		
+		
+		this.selectMassnahme(grid, rowIndex);
+		
+//		this.checkDataValid();
+	},
+	
+	selectMassnahme: function(grid, rowIndex, massnahmeId) {
+//		Util.log('selectMassnahme1 rowIndex='+rowIndex);
+
+		if(this.previousSelection === rowIndex && this.existsInvalidMassnahme === 0)//!this.existsInvalidMassnahme > 0
 			return;
 		
 		//save previously edited massnahmenDetails (clientseitig, noch nicht serverseitig),
 		//wenn rechts bei fsComplianceStatement etwas geändert wurde
-		if(this.massnahmeChanged && this.previousSelection > -1) {
+		if(this.massnahmeChanged && this.previousSelection > -1 && !this.existsInvalidMassnahme > 0) {
 			this.massnahmeChanged = false;
 			this.saveMassnahme(this.previousSelection);
 		}
@@ -1272,21 +1331,26 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		if(isMassnahmeAlreadyEdited) {
 			this.updateComplianceDetails(massnahme);//massnahme.statusId, massnahme.statusKommentar
 		} else {
-			var params = {
-			 	cwid: AIR.AirApplicationManager.getCwid(),
-			 	token: AIR.AirApplicationManager.getToken(),
-				itsecMassnahmenStatusId: grid.getStore().getAt(rowIndex).data.itsecMassnahmenStatusId,
-				itsecGruppenId: this.config.complianceType//this.CI_GROUP_ID_DEFAULT_ITSEC
-			};
-			
-			this.massnahmeDetailStore.load({
-				params: params
-			});
+			var id = massnahmeId ? massnahmeId : grid.getStore().getAt(rowIndex).data.itsecMassnahmenStatusId;
+			this.loadMassnahme(id, this.config.complianceType);
 		}
 		
 		this.previousSelection = rowIndex;
+	},
+	
+	loadMassnahme: function(itsecMassnahmenStatusId, itsecGruppenId) {
+//		Util.log('loadMassnahme itsecMassnahmenStatusId='+itsecMassnahmenStatusId);
 		
-//		this.checkDataValid();
+		var params = {
+		 	cwid: AIR.AirApplicationManager.getCwid(),
+		 	token: AIR.AirApplicationManager.getToken(),
+			itsecMassnahmenStatusId: itsecMassnahmenStatusId,
+			itsecGruppenId: itsecGruppenId//this.CI_GROUP_ID_DEFAULT_ITSEC
+		};
+		
+		this.massnahmeDetailStore.load({
+			params: params
+		});
 	},
 	
 //	getIdByCompliantStatus: function(store, compliantStatus) {
@@ -1400,6 +1464,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
 		complianceLinkView.update(this.config);
 		
+		if(!this.existsInvalidMassnahme || this.existsInvalidMassnahme === 0)// this.existsInvalidMassnahme  && !this.previousLoadedMassnahme
+			this.previousLoadedMassnahme = records[0].data;
+		
 		this.updateComplianceDetails(records[0].data);
 	},
 	
@@ -1416,9 +1483,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	//Zusatz: eine Statusbar mit Meldung welche editierten Massnahmen fehlerhafte Werte enthalten, z.B. Ident: Masnhamen 06.004, 11.651 enthalten Fehler
 	checkDataValid: function() {
 		//gerade gmachte Änderungen der aktuell ausgewählten Massnahme nach der letzen und vor der nächsten Massnahmenauswahl sichern
-		this.saveMassnahme(this.getCurrentSelection());
+		this.saveMassnahme(this.getSelectedGridIndex());
 		
-		
+//		this.existsInvalidMassnahme = true;
 		var invalidMassnahmen = [];
 		
 		for(var key in this.editedMassnahmen) {
@@ -1498,28 +1565,115 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		}
 		this.updateToolbar(sInvalidMassnahmen);
 		
-//		return invalidMassnahmen.length == 0;
-
-		
-		//B)
-//		var pRiskAnalysisAndMgmtCard = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
-//		var pRiskAnalysisAndMgmtNonFreeText = pRiskAnalysisAndMgmtCard.getComponent('pRiskAnalysisAndMgmtNonFreeText');
-//		var tfMitigationPotential = pRiskAnalysisAndMgmtNonFreeText.getComponent('pMitigationPotential').getComponent('tfMitigationPotential');
-//		
-//		var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
-//		var dfDateOfApproval = pRiskAnalysisAndMgmtDetail.getComponent('pDateOfApproval').getComponent('dfDateOfApproval');
-//		
-//		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
-//		var dfTargetDate = fsGapElimination.getComponent('pTargetDate').getComponent('dfTargetDate');
-//		
-//		return tfMitigationPotential.isValid() && dfDateOfApproval.isValid() && dfTargetDate.isValid();
+		this.existsInvalidMassnahme = invalidMassnahmen.length;//invalidMassnahmen.length + 1; > 0;
 	},
 	
-	getCurrentSelection: function() {
+	/**
+	 * Anders als ursprünglich implementiert, soll nicht jede ungültige=unvollständige Massnahme ZWISCHENgespeichert 
+	 * werden um beliebig weiterarbeiten und später korrigieren zu können, sondern der User sofort gewarnt werden 
+	 * die Massnahme entweder zu vervollständigen oder alle Änderungen zu verwerfen!
+	 * 
+	 * Hier sind zwei vom Ansatz her zwei Möglichkeiten vorhanden dieses Ergebnis zu erreichen.
+	 * 1. V O R  der Auswahl der neuen Massnahme (Klick auf eine Zeile in der Massnahmentabelle) die Prüfung 
+	 * und das Warnungsfenster öffnen 
+	 * (mit grid.getSelectionModel().on('beforerowselect', this.onBeforeMassnahmeSelect, this))
+	 * Vorteil: der saubere, gewünschte Weg
+	 * Nachteil: das Fenster wird aus unbekanntem Grund hinter/unter dem Compliance Details Hauptfenster geöffnet
+	 * 			 und ist somit unsichtbar/unbedienbar
+	 * 
+	 * 2. N A C H  der Auswahl der neuen Massnahme. onBeforeMassnahmeSelect() wird direkt von onMassnahmeSelected()
+	 * und nicht durch das event aus Möglichkeit 1 aufgerufen, wenn ungültige Massnahmen existieren, d.h.
+	 * existsInvalidMassnahme=true.
+	 * Vorteil: umgeht den Nachteil aus Möglichkeit 1
+	 * Nachteil: weniger konsequente Implementierung
+	 */
+	onBeforeMassnahmeSelect: function(selModel, rowIndex, keepExisting, record) {
+//		var lComplianceToolbar = this.getComponent('pComplianceToolbar').getComponent('lComplianceToolbar');
+		
+		if(this.existsInvalidMassnahme > 0) {//lComplianceToolbar.text.length > 0
+			this.openInvalidMassnahmeWindow();
+			
+			//Umweg über ein button click event, alternativ zum geplanten direkten Aufruf,
+			//löst das Problem der falschen Ebene in der das invalidMassnahmeWindow erscheint, nicht.
+//			var bOpenInvalidMassnahmeWindow = this.getFooterToolbar().getComponent('bOpenInvalidMassnahmeWindow');
+//			bOpenInvalidMassnahmeWindow.fireEvent('click', this);
+			
+			
+			return false;
+		} else return true;
+	},
+	
+	openInvalidMassnahmeWindow: function() {
+		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
+
+		var cancelCallback = function() {
+			var rowIndex = this.getSelectedGridIndex();
+			
+			
+			delete this.editedMassnahmen[this.previousSelection];
+			
+
+			this.selectMassnahme(grid, this.previousSelection, this.previousLoadedMassnahme.itsecMassnahmenStatusId);//den alten falschen/unvollständigen neu laden
+
+			
+			this.selectMassnahme(grid, rowIndex);//dann den neu ausgewählten neu laden
+//			var task = new Ext.util.DelayedTask(function() {
+//				this.selectMassnahme(grid, rowIndex);//this.previousSelection
+//			}.createDelegate(this));
+//			task.delay(2000);
+			
+//			this.existsInvalidMassnahme = false;
+			this.updateToolbar('');
+			
+//			var record = this.getSelectedGridRecord();
+//			this.updateMassnahmenTable(record.get('itsecMassnahmenStatusId'), record.get('statusWert'), rowIndex);//status, statusWert, index
+		};
+		
+		var okCallback = function() {
+//			this.existsInvalidMassnahme = 0;//0 -1
+			grid.getSelectionModel().selectRow(this.previousSelection);
+		};
+		
+		var callbackMap = {
+//			cancel: cancelCallback.createDelegate(this),
+			ok: okCallback.createDelegate(this)
+		};
+		
+		var labels = AIR.AirApplicationManager.getLabels();
+		
+		
+//		var ident = this.getMassnahmeHeaderValueByAttr(massnahme, 'ident');
+		var title = labels.invalidMassnameWindowTitle;
+		var message = labels.invalidMassnameWindowMessage;//complianceRiskAnalysisAndMgmtTypeSelectMessage.replace('{0}', isChecked ? labels.complianceRiskAnalysisAndMgmtTypeNonFreeText : labels.complianceRiskAnalysisAndMgmtTypeFreeText).replace('{1}', ident);
+		
+		var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', callbackMap, message, title);
+		invalidMassnahmeWindow.show();//null, null, this.getComponent('pLayout')
+//		
+//		invalidMassnahmeWindow.getEl().setStyle('z-index','80000');
+		
+		
+//		alert(title, message);
+//		var w = new Ext.Window();
+//		w.show();
+		
+		
+	},
+//	onOpenInvalidMassnahmeWindow: function(button, event) {
+//		var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', callbackMap, message, title);
+//		invalidMassnahmeWindow.show();
+//	},
+	
+	getSelectedGridIndex: function() {
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 		var rowIndex = grid.getStore().indexOfId(grid.getSelectionModel().getSelected().get('itsecMassnahmenStatusId'));
 		
 		return rowIndex;
+	},
+	getSelectedGridRecord: function() {
+		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
+		var r = grid.getSelectionModel().getSelected();
+		
+		return r;
 	},
 	
 	addInvalidMassnahme: function(invalidMassnahmen, massnahme) {
@@ -1668,7 +1822,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	//massnahme kann entweder die gerade aus der Tabelle ausgewählte sein oder die durch die combobox Link - CI ausgewählte.
 	//Im letzteren Fall dürfen die cbLinkCiType und cbLinkCiList nicht aktualisiert werden, da diese ja neu gesetzt wurden
 	//und sonst der alte Wert fälschlicherweise wieder zurückgesetzt wird! Dies ist dann der Fall wenn this.isLinkCiSelect=true.
-	updateComplianceDetails: function(massnahme) {//compliantStatus, justification
+	updateComplianceDetails: function(massnahme) {
 		if(!this.isLinkCiSelect)
 			this.loadedMassnahme = massnahme;
 
@@ -1728,8 +1882,24 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		cbCompliantStatus.setValue(massnahme.statusId);//compliantStatus
 		taJustification.setValue(massnahme.statusKommentar);//justification
 		
-		if(this.isLinkCiSelect)
-			this.updateMassnahmenTable(massnahme.statusId, cbCompliantStatus.getStore().getById(massnahme.statusId).get('statusWert'));//fire compliantStatus change/select event
+		
+		if(this.isLinkCiSelect || this.existsInvalidMassnahme > 0) {// || this.getSelectedGridRecord().get('itsecMassnahmenStatusId') != massnahme.statusId wenn massnahme.statusId !=  der compliant statusId aus der Tabelle
+			//zur Unterscheidung ob der Status der vorherigen falschen/unvollständigen Massnahme erst dieses flag
+			//false setzen, wenn der letzte Schritt erledigt ist und nicht schon in der Ursprungs callback 
+			//cancelCallback von openInvalidMassnahmeWindow
+//			this.existsInvalidMassnahme = false;
+			--this.existsInvalidMassnahme;
+			
+//			var isStatusChanged = this.getSelectedGridRecord().get('itsecMassnahmenStatusId') != massnahme.statusId;
+//			var index = 
+
+//			if(this.previousLoadedMassnahme) {
+//				this.updateMassnahmenTable(this.previousLoadedMassnahme.statusId, cbCompliantStatus.getStore().getById(massnahme.statusId).get('statusWert'));
+//				delete this.previousLoadedMassnahme;
+//			} else {
+				this.updateMassnahmenTable(massnahme.statusId, cbCompliantStatus.getStore().getById(massnahme.statusId).get('statusWert'));//fire compliantStatus change/select event
+//			}
+		}
 		
 		if(!this.hasNoGapAnalysis) {
 			var taGapDescription = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('pGapDescription').getComponent('taGapDescription');
@@ -1915,7 +2085,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		var fsRiskAnalysisAndMgmt = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt');
 		
-		var massnahme = /*this.editedMassnahmen[this.getCurrentSelection()] ||*/ this.loadedMassnahme;
+		var massnahme = /*this.editedMassnahmen[this.getSelectedGridIndex()] ||*/ this.loadedMassnahme;
 		
 		var yesCallback = function() {
 			this.deleteRiskAnalysisAndMgmtDamageData(massnahme, isChecked);

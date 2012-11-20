@@ -12,7 +12,6 @@
 		<OR>OR</OR>
 		
 		<general_button_save>Save</general_button_save>
-		<general_button_cancel>Cancel</general_button_cancel>
 		<general_button_back>Back</general_button_back>
 
 		<gerneral_message_loading>Loading data...</gerneral_message_loading>
@@ -239,6 +238,8 @@ whereas "External" manages only the references to an compliance management outsi
 				
 				<checkItsecGroupWindowTitle>ITSec Group</checkItsecGroupWindowTitle>
 				<checkItsecGroupWindowMessage>You changed the ITSec Group of this application CI. Are you sure to delete all ITSec Controls of the previously selected ITSec Group?</checkItsecGroupWindowMessage>
+				<invalidMassnameWindowTitle>Invalid control</invalidMassnameWindowTitle>
+				<invalidMassnameWindowMessage>All Fields must be filled for the control to be valid.</invalidMassnameWindowMessage>
 				
 				<!-- TODO: still needed? -->	
 				<riskAnalysisYN>Risk analysis available?</riskAnalysisYN>

@@ -91,8 +91,9 @@ AIR.DynamicWindow = Ext.extend(Ext.Window, {
 //
 //		this.setWidth(width);
 //		this.setHeight(height);
-	},
+	}
 	
+	/*
 	show: function() {
 //		switch(this.buttonConfigs.length) {//this.getBottomToolbar().items.items.length
 //			case 1:
@@ -110,5 +111,5 @@ AIR.DynamicWindow = Ext.extend(Ext.Window, {
 		//this.hide();
 		//this.setVisible(false);// calls show --> infinite recursion loop
 		//this.setVisible(true);
-	}
+	}*/
 });

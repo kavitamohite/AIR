@@ -299,6 +299,31 @@ AIR.AirWindowFactory = function() {
 						}
 					}];
 					break;
+				case 'INVALID_MASSNAHME':
+					var windowTitle = title;
+					var windowText = message;
+					var windowIcon = img_Warning;
+					
+					var buttonConfigs = [{
+						text: labels.dynamicWindowOKButtonText,
+						handler: function() {
+							var okCallback = callbackMap.ok;
+							okCallback();
+							dynamicWindow.close();
+						}
+					}/*,{
+						text: labels.button_general_cancel,
+						handler: function() {
+							var callback = callbackMap.cancel;
+							callback();
+							//wenn grid.getSelectionModel().on('beforerowselect', this.onBeforeMassnahmeSelect, this);
+							//nicht verwendet wird wegen des Problems des falschen Erscheinenes des Fensters im Hintergrund
+							//ist das Verhalten genau umgekehrt. D.h. die unvollständige Massnahme muss wieder ausgewählt
+							//werden, anstatt das verhnidert wird die näcshte zu selektieren.
+							dynamicWindow.close();
+						}
+					}*/];
+					break;
 			}
 
 			var dynamicWindow = new AIR.DynamicWindow(windowTitle, windowText, windowIcon, buttonConfigs);
