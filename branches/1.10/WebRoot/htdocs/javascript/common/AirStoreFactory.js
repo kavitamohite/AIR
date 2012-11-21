@@ -1107,6 +1107,8 @@ AIR.AirStoreFactory = function() {
 					{name: 'checkItsecGroupWindowMessage'},
 					{name: 'invalidMassnameWindowTitle'},
 					{name: 'invalidMassnameWindowMessage'},
+					{name: 'invalidMassnameDamagePerYear'},
+					{name: 'signeeApproval'},
 	
 					// license			
 					{name: 'licensePanelTitle'},
@@ -3370,7 +3372,7 @@ AIR.AirStoreFactory = function() {
 		    return itsecMassnahmenStatusWerteStore;
 		},
 		
-		createItsecMassnahmenGapClassStore: function() {
+		createItsecMassnahmenGapClassListStore: function() {
 			var itsecMassnahmenGapClassRecord = Ext.data.Record.create([
 	             'gapPriority', 'gapClassTextDE', 'gapClassTextEN'
 		    ]);
@@ -3381,7 +3383,7 @@ AIR.AirStoreFactory = function() {
 		    }, itsecMassnahmenGapClassRecord); 
 			
 		    var itsecMassnahmenGapClassStore = new Ext.data.XmlStore({
-		    	autoDestroy: true,
+//		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	storeId: 'itsecMassnahmenGapClassStore',
 		    	
@@ -3397,7 +3399,7 @@ AIR.AirStoreFactory = function() {
 		      	reader: itsecMassnahmenGapClassReader
 		    });
 		    
-		    itsecMassnahmenGapClassStore.load();
+//		    itsecMassnahmenGapClassStore.load();
 		    
 		    return itsecMassnahmenGapClassStore;
 		},

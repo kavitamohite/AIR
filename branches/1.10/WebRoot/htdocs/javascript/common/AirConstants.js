@@ -74,7 +74,10 @@ AIR.AirConstants = {
 	ORG_SCOPE_DEFAULT: 'Bayer Group',
 	
 	
-	MAX_MITIGATION_POTENTIAL: 10,
+	ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE: 0,
+	ITSEC_MASSN_INVALIDITY_TYPE_DAMAGE_PER_YEAR: 1,
+	
+	MAX_MITIGATION_POTENTIAL: 100,//
 	LABEL_INVALID: 'INVALID: ',
 	
 	VALIDATION_MESSAGE_ALIAS: '"Alias" {0} already exists. Please choose another name or ask ITILcenter@bayer.com for help to enable this alias.',// '+this.objectAliasAllowedStore.getAt(0).data.application+'

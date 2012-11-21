@@ -25,7 +25,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			decimalText: 'Wert muss eine Dezimalzahl sein',//language Datei!
 			
 			decimalSmallerConstantValue: this.validateDecimalSmallerConstantValue.createDelegate(this),
-			decimalSmallerConstantValueText: 'Wert muss eine Dezimalzahl kleiner '+AC.MAX_MITIGATION_POTENTIAL+' sein'//language Datei!
+			decimalSmallerConstantValueText: 'Wert muss eine Dezimalzahl kleiner oder gleich '+AC.MAX_MITIGATION_POTENTIAL+' sein'//language Datei!
 		});
 		
 		
@@ -56,8 +56,19 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			itSet: this.config.itSet
 		};
 		signeeListStore.load({
-			params: signeeStoreParams
+			params: signeeStoreParams,
+			callback: function() {//callback ONLY for TESTING
+				var signee = new Ext.data.Record({
+					cwid: 'ercva',
+					firstname: 'Simon',
+					lastname: 'Pepping'
+				});
+				
+				signeeListStore.add(signee);
+			}
 		});
+		
+
 		
 		
 		var labels = AIR.AirApplicationManager.getLabels();
@@ -343,7 +354,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 								id: 'pGapResponsible',
 								border: false,
 								
-								layout: 'hbox',
+								layout: 'column',//column hbox
 								anchor: '100%',
 								
 								items: [{
@@ -352,8 +363,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						    		text: labels.complianceWindowGapResponsible,
 //						    		flex: 5,//5 4
 						    		
-						    		width: 92,//100
-						    		margins: '0 2 0 0',
+						    		width: 92,//92 100
+//						    		margins: '0 2 0 0',
 						    		
 									style: {
 								    	fontSize: 12
@@ -364,8 +375,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //									enableKeyEvents: true,
 									allowBlank: false,
 									
-									flex: 14,//14 15
-									margins: '0 0 0 3',
+									width: 260,//280
+//									flex: 14,//14 15
+//									margins: '0 0 0 3',
+									
+									style: {
+						    			marginLeft: 5
+						    		},
 									
 //									fieldLabel: 'Responsible',
 									readOnly: true
@@ -375,15 +391,15 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							    },{
 					                xtype: 'commandlink',
 					                id: 'clGapResponsibleAddPicker',
-					                img: 'images/add_user_16x16.png',
+					                img: 'images/add_user_16x16.png'
 					                	
-				                	flex: 1
+//				                	flex: 1
 								},{
 					                xtype: 'commandlink',
 					                id: 'clGapResponsibleDeletePicker',
-					                img: 'images/failed_type1_16x16.png',
+					                img: 'images/failed_type1_16x16.png'
 					                
-				                	flex: 1
+//				                	flex: 1
 								}]
 							},{
 								xtype: 'panel',
@@ -447,7 +463,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						    	},{
 									xtype: 'combo',
 									id: 'cbGapClass',
-									store: AIR.AirStoreFactory.createItsecMassnahmenGapClassStore(),
+									store: AIR.AirStoreManager.getStoreByName('itsecMassnahmenGapClassListStore'),//AIR.AirStoreFactory.createItsecMassnahmenGapClassListStore(),
 									allowBlank: false,
 									
 //									anchor: '100%',
@@ -907,29 +923,57 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									}]
 								}]
 							},{
-								xtype: 'combo',
-								id: 'cbSignee',
-								store: signeeListStore,//signeeListStore,//AIR.AirStoreFactory.createSigneeListStore()
-								allowBlank: false,
+								xtype: 'panel',
+								id: 'pSignee',
+								border: false,
+								layout: 'hbox',//column
 								
-						        valueField: 'cwid',//id currencyId
-						        displayField: 'lastname',//text currencyName
-						        
-//						        itemSelector: 'x-combo-list-item',
-						        tpl: '<tpl for="."><div ext:qtip="{cwid}" class="x-combo-list-item">{lastname}, {firstname}</div></tpl>',//'<tpl for="."><div class="x-combo-list-item">{' + this.displayField + '}</div></tpl>',//
-
-						        triggerAction: 'all',
-						        lazyRender: true,
-						        lazyInit: false,
-						        mode: 'local',
-								
-								width: 195,
-								fieldLabel: labels.complianceWindowSignee
-//								editable: false
-								
-//								style: {
-//									marginTop: 5
-//								}
+								items: [{
+									xtype: 'label',
+									id: 'lSignee',
+									text: labels.complianceWindowSignee,
+									width: 200,//195
+									
+									style: {
+										fontSize: 12
+									}
+								},{	
+									xtype: 'combo',
+									id: 'cbSignee',
+									store: signeeListStore,//signeeListStore,//AIR.AirStoreFactory.createSigneeListStore()
+									allowBlank: false,
+									
+							        valueField: 'cwid',//id currencyId
+							        displayField: 'lastname',//text currencyName
+							        
+	//						        itemSelector: 'x-combo-list-item',
+							        tpl: '<tpl for="."><div ext:qtip="{cwid}" class="x-combo-list-item">{lastname}, {firstname}</div></tpl>',//'<tpl for="."><div class="x-combo-list-item">{' + this.displayField + '}</div></tpl>',//
+	
+							        triggerAction: 'all',
+							        lazyRender: true,
+							        lazyInit: false,
+							        mode: 'local',
+									
+									width: 145//195
+//									fieldLabel: labels.complianceWindowSignee
+	//								editable: false
+									
+	//								style: {
+	//									marginTop: 5
+	//								}
+								},{
+									xtype: 'button',
+									id: 'bSigneeApproval',
+									hidden: true,
+									
+						        	cls: 'x-btn-text-icon',
+						        	icon: 'images/ok_type1_16x16.png',
+						        	text: labels.signeeApproval,
+						        	
+									style: {
+										marginLeft: 5
+									}
+								}]
 							},{
 								xtype: 'panel',
 								id: 'pDateOfApproval',
@@ -965,6 +1009,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									
 //									margins: '5 0 0 0',
 //									flex: 6
+									
+									disabled: true,
+									hideTrigger: true,
 									
 									width: 120,
 									style: {
@@ -1077,15 +1124,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 		var tfOccurenceOfDamagePerYear = pRiskAnalysisAndMgmtNonFreeText.getComponent('pOccurenceOfDamagePerYear').getComponent('tfOccurenceOfDamagePerYear');
 		var tfMaxDamagePerEvent = pRiskAnalysisAndMgmtNonFreeText.getComponent('pMaxDamagePerEvent').getComponent('tfMaxDamagePerEvent');
-		var cbMaxDamagePerEventCurrency = pRiskAnalysisAndMgmtNonFreeText.getComponent('pMaxDamagePerEvent').getComponent('cbMaxDamagePerEventCurrency');
 		var tfMitigationPotential = pRiskAnalysisAndMgmtNonFreeText.getComponent('pMitigationPotential').getComponent('tfMitigationPotential');
 		var tfDamagePerYear = pRiskAnalysisAndMgmtNonFreeText.getComponent('pRiskMitigation').getComponent('tfDamagePerYear');
+		var cbMaxDamagePerEventCurrency = pRiskAnalysisAndMgmtNonFreeText.getComponent('pMaxDamagePerEvent').getComponent('cbMaxDamagePerEventCurrency');
 
-		tfOccurenceOfDamagePerYear.on('keyup', this.onMassnahmeChange, this);
-		tfMaxDamagePerEvent.on('keyup', this.onMassnahmeChange, this);
-		tfMitigationPotential.on('keyup', this.onMassnahmeChange, this);
-		tfDamagePerYear.on('keyup', this.onMassnahmeChange, this);
-		
+		tfOccurenceOfDamagePerYear.on('keyup', this.onOccurenceOfDamagePerYearChange, this);//onMassnahmeChange
+		tfMaxDamagePerEvent.on('keyup', this.onMaxDamagePerEventChange, this);//onMassnahmeChange
+		tfMitigationPotential.on('keyup', this.onMitigationPotentialChange, this);//onMassnahmeChange
+		tfDamagePerYear.on('keyup', this.onDamagePerYearChange, this);//onMassnahmeChange
 		cbMaxDamagePerEventCurrency.on('select', this.onMaxDamagePerEventCurrencySelect, this);
 		
 		
@@ -1115,12 +1161,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
 //		var tfSignee = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('tfSignee');
-		var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('cbSignee');
+		var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('cbSignee');
+		var bSigneeApproval = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('bSigneeApproval');
 		var dfDateOfApproval = pRiskAnalysisAndMgmtDetail.getComponent('pDateOfApproval').getComponent('dfDateOfApproval');
 		
 //		tfSignee.on('change', this.onMassnahmeChange, this);
 		cbSignee.on('select', this.onSigneeSelect, this);
 		cbSignee.on('change', this.onSigneeChange, this);
+		bSigneeApproval.on('click', this.onSigneeApprove, this);
 		dfDateOfApproval.on('select', this.onMassnahmeChange, this);
 		dfDateOfApproval.on('change', this.onDateChange, this);//change keyup
 		
@@ -1236,7 +1284,27 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		}
 		
 		
+		var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
+		var bSigneeApproval = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('bSigneeApproval');
+		
+		if(AAM.getCwid() === combo.cwid) {//newValue
+			bSigneeApproval.show();
+		} else {
+			bSigneeApproval.hide();
+		}
+		pRiskAnalysisAndMgmtDetail.getComponent('pSignee').doLayout();
+		
 //		Util.checkComboValueValid(combo, newValue, oldValue);
+	},
+	onSigneeApprove: function(button, event) {
+		var now = new Date();
+		
+		var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
+		var dfDateOfApproval = pRiskAnalysisAndMgmtDetail.getComponent('pDateOfApproval').getComponent('dfDateOfApproval');
+		
+		dfDateOfApproval.setValue(now);
+		
+		//Target Date wird genau 1 Jahr in die Zukunft gesetzt:
 	},
 	
 	updateGapRelevance: function(compliantStatusId, gapClassId) {
@@ -1496,6 +1564,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				continue;
 			
 			if(massnahme.statusId != 5 && massnahme.statusKommentar.length === 0) {
+				massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE;
 				this.addInvalidMassnahme(invalidMassnahmen, massnahme);
 				continue;
 			}
@@ -1503,6 +1572,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			if(massnahme.statusId === 3 || massnahme.statusId === 4) {
 				if(massnahme.gap.length === 0 || massnahme.gapResponsible.length === 0 || massnahme.gapMeasure.length === 0 || 
 				   massnahme.gapPriority.length === 0 || massnahme.gapEndDate === -1) {
+					massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE;
 					this.addInvalidMassnahme(invalidMassnahmen, massnahme);
 					continue;
 				}
@@ -1514,25 +1584,35 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					if(!isChecked) {
 						if(massnahme.probOccurence.length === 0 || massnahme.damage.length === 0 || massnahme.currency.length === 0 || 
 						   massnahme.mitigationPotential.length === 0 || massnahme.signee.length === 0) {
+							massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE;
 							this.addInvalidMassnahme(invalidMassnahmen, massnahme);
 							continue;
 						}
 						
 						if(massnahme.gapPriority == '5') {
 							if(massnahme.expense.length === 0) {
+								massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE;
 								this.addInvalidMassnahme(invalidMassnahmen, massnahme);
 								continue;	
+							}
+							
+							if(this.isDamagePerYearFalse(massnahme)) {
+								massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_DAMAGE_PER_YEAR;
+								this.addInvalidMassnahme(invalidMassnahmen, massnahme);
+								continue;
 							}
 						}
 					} else {
 						if(massnahme.probOccurenceText.length === 0 || massnahme.damageText.length === 0 ||
 						   massnahme.mitigationPotentialText.length === 0 || massnahme.signee.length === 0) {
+							massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE;
 							this.addInvalidMassnahme(invalidMassnahmen, massnahme);
 							continue;
 						}
 						
 						if(massnahme.gapPriority == '5') {
 							if(massnahme.expenseText.length === 0) {
+								massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE;
 								this.addInvalidMassnahme(invalidMassnahmen, massnahme);
 								continue;
 							}
@@ -1562,7 +1642,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					sInvalidMassnahmen += ', ';
 				sInvalidMassnahmen += invalidMassnahmen[i];
 			}
+		} else {
+			delete massnahme.invalidityId;
 		}
+		
 		this.updateToolbar(sInvalidMassnahmen);
 		
 		this.existsInvalidMassnahme = invalidMassnahmen.length;//invalidMassnahmen.length + 1; > 0;
@@ -1625,7 +1708,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		var okCallback = function() {
 //			this.existsInvalidMassnahme = 0;//0 -1
-			grid.getSelectionModel().selectRow(this.previousSelection);
+			
+			this.editedMassnahmen[this.previousSelection].invalidityId === AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE;
+				grid.getSelectionModel().selectRow(this.previousSelection);
 		};
 		
 		var callbackMap = {
@@ -1635,22 +1720,28 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		var labels = AIR.AirApplicationManager.getLabels();
 		
-		
-//		var ident = this.getMassnahmeHeaderValueByAttr(massnahme, 'ident');
 		var title = labels.invalidMassnameWindowTitle;
-		var message = labels.invalidMassnameWindowMessage;//complianceRiskAnalysisAndMgmtTypeSelectMessage.replace('{0}', isChecked ? labels.complianceRiskAnalysisAndMgmtTypeNonFreeText : labels.complianceRiskAnalysisAndMgmtTypeFreeText).replace('{1}', ident);
+		var message;
+		
+		switch(this.editedMassnahmen[this.previousSelection].invalidityId) {//massnahme
+			case AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE:
+				message = labels.invalidMassnameWindowMessage;
+				break;
+				
+			case AC.ITSEC_MASSN_INVALIDITY_TYPE_DAMAGE_PER_YEAR:
+				message = labels.invalidMassnameDamagePerYear;
+				break;
+		}
 		
 		var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', callbackMap, message, title);
 		invalidMassnahmeWindow.show();//null, null, this.getComponent('pLayout')
-//		
-//		invalidMassnahmeWindow.getEl().setStyle('z-index','80000');
+
 		
+//		invalidMassnahmeWindow.getEl().setStyle('z-index','80000');
 		
 //		alert(title, message);
 //		var w = new Ext.Window();
 //		w.show();
-		
-		
 	},
 //	onOpenInvalidMassnahmeWindow: function(button, event) {
 //		var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', callbackMap, message, title);
@@ -1803,7 +1894,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				
 				var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
 //				var tfSignee = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('tfSignee');
-				var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('cbSignee');
+				var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('cbSignee');
 				var dfDateOfApproval = pRiskAnalysisAndMgmtDetail.getComponent('pDateOfApproval').getComponent('dfDateOfApproval');
 				
 //				this.editedMassnahmen[rowIndex].signee = tfSignee.getValue();
@@ -1936,7 +2027,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			var taDamagePerYear2 = pRiskAnalysisAndMgmtFreeText.getComponent('pRiskMitigation2').getComponent('taDamagePerYear2');
 			
 			var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
-			var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('cbSignee');
+			var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('cbSignee');
 //			var tfSignee = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('tfSignee');
 			var dfDateOfApproval = pRiskAnalysisAndMgmtDetail.getComponent('pDateOfApproval').getComponent('dfDateOfApproval');
 			
@@ -2139,6 +2230,48 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.onMassnahmeChange();
 	},
 	
+	onOccurenceOfDamagePerYearChange: function(field, event) {
+//		this.resetApprovalDate();
+		this.onMassnahmeChange();
+	},
+	onMaxDamagePerEventChange: function(field, event) {
+//		this.resetApprovalDate();
+		this.onMassnahmeChange();
+	},
+	onMitigationPotentialChange: function(field, event) {
+//		this.resetApprovalDate();
+		this.onMassnahmeChange();
+	},
+	onDamagePerYearChange: function(field, event) {//newValue, oldValue
+
+		
+//		this.resetApprovalDate();
+		this.onMassnahmeChange();
+	},
+	resetApprovalDate: function() {
+		var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
+		var dfDateOfApproval = pRiskAnalysisAndMgmtDetail.getComponent('pDateOfApproval').getComponent('dfDateOfApproval');
+		dfDateOfApproval.reset();
+	},
+	
+	isDamagePerYearFalse: function(massnahme) {
+//		var massnahme = this.editedMassnahmen[this.getSelectedGridIndex()];
+		var isChecked = massnahme.riskAnalysisAsFreetext == '-1' ? true : false;
+		var isFalse = false;
+		
+		if(!isChecked && massnahme.gapPriority == 5) {
+			var probOccurence = parseInt(massnahme.probOccurence);
+			var damagePerEvent = parseInt(massnahme.damage);
+			var mitigationPotential = parseInt(massnahme.mitigationPotential) / 100;
+			var damagePerYear = parseInt(massnahme.expense);//field.getEl().dom.value
+			
+			isFalse = damagePerYear !== probOccurence * damagePerEvent * mitigationPotential;
+		}
+		
+		return isFalse;
+	},
+	
+	
 	onMaxDamagePerEventCurrencySelect: function(combo, record, index) {
 		this.onMassnahmeChange();
 	},
@@ -2212,6 +2345,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var pRiskAnalysisAndMgmtNonFreeText = fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard').getComponent('pRiskAnalysisAndMgmtNonFreeText');
 		var pRiskAnalysisAndMgmtFreeText = fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard').getComponent('pRiskAnalysisAndMgmtFreeText');
 		
+		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
+		var dfTargetDate = fsGapElimination.getComponent('pTargetDate').getComponent('dfTargetDate');
 		
 		if(this.isGapRelevant(compliantStatusId)) {
 			switch(gapClassId) {
@@ -2233,6 +2368,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					
 					fsRiskAnalysisAndMgmt.setVisible(true);
 					fsRiskAnalysisAndMgmt.doLayout();
+					
+					Util.disableCombo(dfTargetDate);
 					break;
 				case '5':
 					fsRiskAnalysisAndMgmt.setVisible(true);
@@ -2243,7 +2380,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					pRiskAnalysisAndMgmtNonFreeText.doLayout();
 					pRiskAnalysisAndMgmtFreeText.doLayout();
 					
-
+//					dfTargetDate.disable();
+					Util.disableCombo(dfTargetDate);
 					break;
 				default:
 					this.clearPanelItemValues(pRiskAnalysisAndMgmtNonFreeText);
@@ -2257,6 +2395,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					
 					//ORIG
 					fsRiskAnalysisAndMgmt.setVisible(false);
+//					dfTargetDate.enable();
+					Util.enableCombo(dfTargetDate);
 					break;
 			}
 		} else {
@@ -2396,7 +2536,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		value = this.removeDispensableDots(value);
 		field.setRawValue(value);//field.setValue(value) --> Endlosschleife
 		
-		var isValid = parseInt(value) < AC.MAX_MITIGATION_POTENTIAL || value.length == 0;//or use var MAX_VALUES = { field.getId(): 4711, ... } to make it dynamic if needed
+		var isValid = parseInt(value) <= AC.MAX_MITIGATION_POTENTIAL || value.length == 0;//or use var MAX_VALUES = { field.getId(): 4711, ... } to make it dynamic if needed
 //		if(isValid) {
 //			this.activateButtons();
 //		} else {
@@ -2539,7 +2679,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 
 		var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
-		var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('cbSignee');
+		var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('cbSignee');
 		var dfDateOfApproval = pRiskAnalysisAndMgmtDetail.getComponent('pDateOfApproval').getComponent('dfDateOfApproval');
 
 		
@@ -2580,8 +2720,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		fsGapElimination.doLayout();//oder fsGapElimination.doLayout() ? .getComponent('pGapResponsible')
 		
 		taPlanOfAction.disable();
-		dfTargetDate.disable();
-		dfTargetDate.setHideTrigger(true);
+//		dfTargetDate.disable();
+//		dfTargetDate.setHideTrigger(true);
+		Util.disableCombo(dfTargetDate);
 
 		taOccurenceOfDamagePerYear2.disable();
 		taMaxDamagePerEvent2.disable();
@@ -2589,8 +2730,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		taDamagePerYear2.disable();
 
 		Util.disableCombo(cbSignee);
-		dfDateOfApproval.disable();
-		dfDateOfApproval.setHideTrigger(true);
+//		dfDateOfApproval.disable();
+//		dfDateOfApproval.setHideTrigger(true);
+//		Util.disableCombo(dfDateOfApproval);
 	},
 	
 	enableMassnahmeDetails: function() {
@@ -2631,7 +2773,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 
 		var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
-		var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('cbSignee');
+		var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('cbSignee');
 		var dfDateOfApproval = pRiskAnalysisAndMgmtDetail.getComponent('pDateOfApproval').getComponent('dfDateOfApproval');
 
 		
@@ -2668,10 +2810,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 		tfGapResponsible.enable();
 //		fsGapElimination.getComponent('pGapResponsible').setVisible(true);
-		fsGapElimination.getComponent('pGapResponsible').doLayout();//oder fsGapElimination.doLayout() ? getComponent('pGapResponsible')
+//		fsGapElimination.getComponent('pGapResponsible').doLayout();//oder fsGapElimination.doLayout() ? getComponent('pGapResponsible')
 		taPlanOfAction.enable();
-		dfTargetDate.enable();
-		dfTargetDate.setHideTrigger(false);
+//		dfTargetDate.enable();
+//		dfTargetDate.setHideTrigger(false);
+		Util.enableCombo(dfTargetDate);
 
 		taOccurenceOfDamagePerYear2.enable();
 		taMaxDamagePerEvent2.enable();
@@ -2679,8 +2822,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		taDamagePerYear2.enable();
 
 		Util.enableCombo(cbSignee);
-		dfDateOfApproval.enable();
-		dfDateOfApproval.setHideTrigger(false);
+//		dfDateOfApproval.enable();
+//		dfDateOfApproval.setHideTrigger(false);
+//		Util.enableCombo(dfDateOfApproval);
 	},
 	
 	update: function() {
@@ -2703,9 +2847,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	updateLabels: function(labels) {
 		var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
-		var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('cbSignee');
 		
-		Util.setFieldLabel(cbSignee, labels.complianceWindowSignee);
+//		var cbSignee = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('cbSignee');
+//		Util.setFieldLabel(cbSignee, labels.complianceWindowSignee);
+		pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('lSignee').setText(labels.complianceWindowSignee);
 		
 		this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').updateLabels(labels);
 //		Util.setFieldLabel(this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').getComponent('cbLinkCiType'), labels.LinkCiType);

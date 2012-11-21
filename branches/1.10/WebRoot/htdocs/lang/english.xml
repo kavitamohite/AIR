@@ -240,6 +240,9 @@ whereas "External" manages only the references to an compliance management outsi
 				<checkItsecGroupWindowMessage>You changed the ITSec Group of this application CI. Are you sure to delete all ITSec Controls of the previously selected ITSec Group?</checkItsecGroupWindowMessage>
 				<invalidMassnameWindowTitle>Invalid control</invalidMassnameWindowTitle>
 				<invalidMassnameWindowMessage>All Fields must be filled for the control to be valid.</invalidMassnameWindowMessage>
+				<invalidMassnameDamagePerYear>The values will be saved, but it is not possible to approve:&lt;br&gt;The expense is not greater than the risk mitigation. The gap is not &quot;economically not solvable&quot;!</invalidMassnameDamagePerYear>
+				<signeeApproval>Approve</signeeApproval>
+				
 				
 				<!-- TODO: still needed? -->	
 				<riskAnalysisYN>Risk analysis available?</riskAnalysisYN>

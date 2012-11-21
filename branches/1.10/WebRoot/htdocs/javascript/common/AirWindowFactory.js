@@ -307,8 +307,10 @@ AIR.AirWindowFactory = function() {
 					var buttonConfigs = [{
 						text: labels.dynamicWindowOKButtonText,
 						handler: function() {
-							var okCallback = callbackMap.ok;
-							okCallback();
+							if(callbackMap) {
+								var okCallback = callbackMap.ok;
+								okCallback();
+							}
 							dynamicWindow.close();
 						}
 					}/*,{

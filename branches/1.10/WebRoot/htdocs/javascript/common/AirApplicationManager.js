@@ -129,6 +129,8 @@ AIR.AirApplicationManager = function() {
 				
 				itSecGroupListStore: null,
 				referencesListStore: null,
+				itsecMassnahmenGapClassListStore: null,
+//				signeeListStore: null,//vom itSet abhängig, daher hier nicht ODER lokal filtern mit itSet nach Öffnen des ComplianceControlsWindow
 				
 				rolePersonListStore: { params: { params: { cwid: this.getCwid() } } },
 				itsecUserOptionListStore: { params: { params: { cwid: this.getCwid() } } },
