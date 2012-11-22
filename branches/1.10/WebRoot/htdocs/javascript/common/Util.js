@@ -67,6 +67,30 @@ Util = {
 		return value;
 	},
 	
+	/**
+	 * avoid firing the change event from Ext.form.Field.onBlur() originally initiated by Ext.form.DateField.setValue()
+	 */
+	setDateFieldValue: function(dateField, date) {
+		var v = dateField.formatDate(dateField.parseDate(date));
+		dateField.value = v;
+		
+//        if(dateField.rendered){
+//        	dateField.el.dom.value = (Ext.isEmpty(v) ? '' : v);
+//        	dateField.validate();
+//        }
+		dateField.el.dom.value = v;
+	},
+	
+	setFieldValue: function(field, value) {
+		field.value = value;
+		
+//        if(dateField.rendered){
+//        	dateField.el.dom.value = (Ext.isEmpty(v) ? '' : v);
+//        	dateField.validate();
+//        }
+		field.el.dom.value = value;
+	},
+	
 	isCWID: function(value) {
 		var isNoCWID = value.indexOf(',') > -1;//value.match(AC.REGEX_CWID) != null;
 		if(isNoCWID)

@@ -1099,11 +1099,6 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		taGapDescription.on('keyup', this.onMassnahmeChange, this);
 		
 		
-		
-		var cbGapClass = Ext.getCmp('cbGapClass');//this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination').getComponent('pGapClass').getComponent('cbGapClass');
-		cbGapClass.on('select', this.onGapClassSelect, this);//select change
-		
-		
 		var clGapResponsibleAddPicker = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination').getComponent('pGapResponsible').getComponent('clGapResponsibleAddPicker');
 		clGapResponsibleAddPicker.on('click', this.onGapResponsibleAddPicker, this);
 		
@@ -1117,6 +1112,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		var clSigneeDeletePicker = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pSignee').getComponent('clSigneeDeletePicker');
 //		clSigneeDeletePicker.on('click', this.onSigneeDeletePicker, this);
 		
+		var cbGapClass = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination').getComponent('pGapClass').getComponent('cbGapClass');//Ext.getCmp('cbGapClass');//
+		cbGapClass.on('select', this.onGapClassSelect, this);//select change
 
 		
 		var pRiskAnalysisAndMgmtCard = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
@@ -1150,7 +1147,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		tfGapResponsible.on('change', this.onMassnahmeChange, this);
 		taPlanOfAction.on('keyup', this.onMassnahmeChange, this);
 		dfTargetDate.on('select', this.onMassnahmeChange, this);
-		dfTargetDate.on('change', this.onDateChange, this);//change keyup
+		dfTargetDate.on('change', this.onTargetDateChange, this);//change keyup
 	
 		
 		
@@ -1176,8 +1173,90 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		complianceLinkView.on('linkCiSelect', this.onLinkCiSelect, this);
 	},
 	
+	onTargetDateChange: function(field, newValue, oldValue) {
+		this.onDateChange(field, newValue, oldValue);
+		
+		var now = new Date();
+		if(newValue < now) {
+			Util.log('Message Window: no date in the past allowed');
+			return;
+		}
+		
+//		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
+//		var cbGapClass = fsGapElimination.getComponent('pGapClass').getComponent('cbGapClass');
+		var gapClass = this.editedMassnahmen[this.previousSelection].gapPriority;//cbGapClass.getValue();
+		
+		var oldMonth = now.getMonth();//oldValue
+		var oldYear = now.getFullYear();//oldValue
+		var newMonth = newValue.getMonth();
+		var newYear = newValue.getFullYear();
+		
+		var monthDifference;
+		var yearDifference = newYear - oldYear;
+		
+		if(yearDifference > 1) {
+			Util.log('Please set target date and/or gap class to appropriate values! ...');
+		} else if(yearDifference === 1) {
+			if(newMonth > oldMonth) {
+				monthDifference = 12 + (newMonth - oldMonth);
+			} else if(newMonth < oldMonth) {
+				monthDifference = 12 - (oldMonth - newMonth);
+			} else {
+				monthDifference = 12;
+			}
+		} else {
+			monthDifference = newMonth - oldMonth;
+		}
+
+
+		var newGapClass;
+		
+		switch(gapClass) {
+			case '1'://long-term
+//				if(monthDifference > 6 && monthDifference < 13)//kein Ändern der Gap Klasse
+				if(monthDifference > 12)
+					Util.log('Please set target date and/or gap class to appropriate values! ...');
+				break;
+			case '2'://mid-term
+				if(monthDifference > AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS && monthDifference < 13) {
+					Util.log('For the target date {0} the gap class "long-term to solve" was set instead of "mid-term to solve"');
+					newGapClass = '1';
+				} else if(monthDifference > 12) {
+					Util.log('Please set target date and/or gap class to appropriate values! ...');					
+				}
+				
+				break;
+			case '3'://short-term
+				if(monthDifference > AC.GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS && monthDifference <= AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS) {
+					Util.log('For the target date {0} the gap class "mid-term to solve" was set instead of "short-term to solve"');
+					newGapClass = '2';
+				} else if(monthDifference > AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS && monthDifference < 13) {
+					Util.log('For the target date {0} the gap class "long-term to solve" was set instead of "short-term to solve"');
+					newGapClass = '1';
+				} else if(monthDifference > 12) {
+					Util.log('Please set target date and/or gap class to appropriate values! ...');
+				}
+				break;
+			default: break;
+		}
+		
+		if(newGapClass) {
+			var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
+			var cbGapClass = fsGapElimination.getComponent('pGapClass').getComponent('cbGapClass');
+			
+			cbGapClass.setValue(newGapClass);
+		}
+		
+//		case '2':
+//			month += AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS;
+//			break;
+//		case '3':
+//			month += AC.GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS;
+//			break;
+	},
+	
 	onDateChange: function(field, newValue, oldValue) {
-		if(typeof newValue === 'string')
+		if(typeof newValue === 'string')//damit kein Mist eingegeben werden kann
 			if(newValue.length === 0 && field.el.dom.value.length > 0 && !field.parseDate(field.el.dom.value))
 				field.setValue(oldValue);
 			else this.onMassnahmeChange();
@@ -2007,7 +2086,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			
 			var date = parseInt(massnahme.gapEndDate);
 			if(date > 0)
-				dfTargetDate.setValue(new Date(date));
+				dfTargetDate.setValue(new Date(date));//Util.setDateFieldValue(dfTargetDate, new Date(date));
 			else dfTargetDate.reset();
 			
 			var pRiskAnalysisAndMgmtCard = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
@@ -2228,6 +2307,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.deleteRiskAnalysisAndMgmtValues(massnahme, combo.getValue());
 		
 		this.onMassnahmeChange();
+		
+		this.setTargetDate(combo.getValue());
 	},
 	
 	onOccurenceOfDamagePerYearChange: function(field, event) {
@@ -2353,11 +2434,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				/*case '1':
 				case '2':
 				case '3':
-					this.clearPanelItemValues(pRiskAnalysisAndMgmtNonFreeText);
-					this.clearPanelItemValues(pRiskAnalysisAndMgmtFreeText);
-					pRiskAnalysisAndMgmtNonFreeText.setVisible(false);
-					pRiskAnalysisAndMgmtFreeText.setVisible(false);
-					fsRiskAnalysisAndMgmt.setVisible(false);
+//					this.setTargetDate(gapClassId);
+					
+//					this.clearPanelItemValues(pRiskAnalysisAndMgmtNonFreeText);
+//					this.clearPanelItemValues(pRiskAnalysisAndMgmtFreeText);
+//					pRiskAnalysisAndMgmtNonFreeText.setVisible(false);
+//					pRiskAnalysisAndMgmtFreeText.setVisible(false);
+//					fsRiskAnalysisAndMgmt.setVisible(false);
 					break;*/
 				case '4':
 					pRiskAnalysisAndMgmtNonFreeText.getComponent('pRiskMitigation').getComponent('tfDamagePerYear').reset();
@@ -2395,8 +2478,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					
 					//ORIG
 					fsRiskAnalysisAndMgmt.setVisible(false);
+					
 //					dfTargetDate.enable();
-					Util.enableCombo(dfTargetDate);
+					if(!this.config.hasTemplate && !this.loadedMassnahme.refPKID)
+						Util.enableCombo(dfTargetDate);
 					break;
 			}
 		} else {
@@ -2437,6 +2522,42 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			items[i].el.dom.checked = false;
 		}
 	},
+	
+	setTargetDate: function(gapClassId) {
+		var now = new Date();
+		var month = now.getMonth();
+		var year = now.getFullYear();
+		
+		
+		switch(gapClassId) {
+			case '1':
+				year++;
+				month++;
+				//sonst wird vom datefield ein Monat zu früh gesetzt wenn nur das jahr erhöht wird.
+				//für das datefield ist im Gegensatz zum Date() der erste Monat die 1
+				break;
+			case '2':
+				month += AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS;
+				break;
+			case '3':
+				month += AC.GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS;
+				break;
+			default: break;
+		}
+		
+		if(month > 11) {
+			month -= 11;//month = plus - (11 - month)
+			year++;
+		}
+		
+		var newDate = new Date(year, month, 0);//0 für den letzten Tag des Monats
+		
+		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
+		var dfTargetDate = fsGapElimination.getComponent('pTargetDate').getComponent('dfTargetDate');
+		dfTargetDate.setValue(newDate);
+	},
+	
+	
 	
 //	onDateOfApprovalPicker: function(commandlink, event) {
 //		new Ext.DatePicker();
