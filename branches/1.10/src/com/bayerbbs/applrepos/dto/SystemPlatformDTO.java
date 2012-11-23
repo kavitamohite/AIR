@@ -1,9 +1,6 @@
 package com.bayerbbs.applrepos.dto;
 
-import java.io.Serializable;
-
-import oracle.sql.TIMESTAMP;
-
+import java.sql.Timestamp;
 
 public class SystemPlatformDTO {
 	private Long systemPlatformID;
@@ -28,7 +25,7 @@ public class SystemPlatformDTO {
 	private String gxpFlag;
 	private Long refID;
 	private Long itsecGroupID;
-	private TIMESTAMP sampleTestDate;
+	private Timestamp sampleTestDate;
 	private String sampleTestResult;
 	private Long serviceContractID;
 	private Long slaID;
@@ -211,11 +208,11 @@ public class SystemPlatformDTO {
 		this.itsecGroupID = itsecGroupID;
 	}
 
-	public TIMESTAMP getSampleTestDate() {
+	public Timestamp getSampleTestDate() {
 		return sampleTestDate;
 	}
 
-	public void setSampleTestDate(TIMESTAMP sampleTestDate) {
+	public void setSampleTestDate(Timestamp sampleTestDate) {
 		this.sampleTestDate = sampleTestDate;
 	}
 

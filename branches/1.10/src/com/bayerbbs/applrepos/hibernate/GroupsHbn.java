@@ -8,7 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.Groups;
+import com.bayerbbs.applrepos.domain.Group;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
 
 public class GroupsHbn {
@@ -19,11 +19,11 @@ public class GroupsHbn {
 	 * @param input
 	 * @return
 	 */
-	private static List<GroupsDTO> getDTOList(List<Groups> input) {
+	private static List<GroupsDTO> getDTOList(List<Group> input) {
 		ArrayList<GroupsDTO> listDTO = new ArrayList<GroupsDTO>();
 
-		for (Iterator<Groups> iter = input.iterator(); iter.hasNext();) {
-			Groups data = (Groups) iter.next();
+		for (Iterator<Group> iter = input.iterator(); iter.hasNext();) {
+			Group data = (Group) iter.next();
 			GroupsDTO dto = new GroupsDTO();
 
 			dto.setGroupId(data.getGroupId());
@@ -60,7 +60,7 @@ public class GroupsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Groups> values = session.createQuery("select h from Groups as h where deleteTimestamp is null order by h.groupName").list();
+			List<Group> values = session.createQuery("select h from Groups as h where deleteTimestamp is null order by h.groupName").list();
 
 			listResult = getDTOList(values);
 			commit = true;
@@ -85,7 +85,7 @@ public class GroupsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Groups> values = session.createQuery("select h from Groups as h where deleteTimestamp is null and upper(h.groupName) = '" + groupname.toUpperCase() +"'").list();
+			List<Group> values = session.createQuery("select h from Groups as h where deleteTimestamp is null and upper(h.groupName) = '" + groupname.toUpperCase() +"'").list();
 
 			listResult = getDTOList(values);
 			commit = true;
@@ -146,7 +146,7 @@ public class GroupsHbn {
 		Session session = HibernateUtil.getSession();
 		try {
 			tx = session.beginTransaction();
-			List<Groups> values = session.createQuery("select h from Groups as h where deleteTimestamp is null" + searchParameter + " order by h.groupName").list();
+			List<Group> values = session.createQuery("select h from Groups as h where deleteTimestamp is null" + searchParameter + " order by h.groupName").list();
 
 			listResult = getDTOList(values);
 			commit = true;
@@ -228,7 +228,7 @@ public class GroupsHbn {
 			if(start > 0 || limit > 0)
 				query.setFirstResult(start).setMaxResults(limit);
 			
-			List<Groups> values = query.list();
+			List<Group> values = query.list();
 
 			listResult = getDTOList(values);
 			commit = true;

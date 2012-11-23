@@ -10,7 +10,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "GROUPS")
-public class Groups extends DeletableRevisionInfo implements Serializable {
+public class Group extends DeletableRevisionInfo implements Serializable {
 
 	private static final long serialVersionUID = 2010107075766308936L;
 
@@ -38,7 +38,7 @@ public class Groups extends DeletableRevisionInfo implements Serializable {
 	/**
 	 * Creates a new instance.
 	 */
-	public Groups() {
+	public Group() {
 	}
 
 	// ------------------------------------------------------

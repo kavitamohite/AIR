@@ -1,45 +1,22 @@
 package com.bayerbbs.applrepos.hibernate;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.ApplreposConstants;
-import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.SystemPlatform;
-import com.bayerbbs.applrepos.dto.ApplicationDTO;
-import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
-import com.bayerbbs.applrepos.dto.ConnectionsViewDataDTO;
-import com.bayerbbs.applrepos.dto.GroupsDTO;
-import com.bayerbbs.applrepos.dto.HistoryViewDataDTO;
-import com.bayerbbs.applrepos.dto.PersonsDTO;
-import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.SystemPlatformDTO;
-import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.service.SystemPlatformEditParameterOutput;
 
 public class SystemPlatformHbn {
-
-	private static final String PARAMETER_QUERYMODE_BEGINS_WITH = "BEGINS_WITH";
-	private static final String PARAMETER_QUERYMODE_CONTAINS = "CONTAINS";
-	private static final String PARAMETER_QUERYMODE_EMPTYSTRING = "";
 
 	/** The logger. */
 	private static final Log log = LogFactory.getLog(SystemPlatformHbn.class);
@@ -47,16 +24,16 @@ public class SystemPlatformHbn {
 	/**
 	 * only for testing
 	 */
-	public static void listSystemPlatformHbn() 
+	public static void listSystemPlatform() 
 	{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try 
 		{
-			@SuppressWarnings("unchecked")
-			List<SystemPlatform> list = session.createQuery("select spl from SystemPlatform").list();
-			for (Iterator<SystemPlatform> iter = list.iterator(); iter.hasNext();) 
+			@SuppressWarnings("rawtypes")
+			Iterator iter = session.createQuery("from SystemPlatform spl order by spl.systemPlatformName").iterate();
+			while (iter.hasNext())
 			{
-				SystemPlatform element = iter.next();
+				SystemPlatform element = (SystemPlatform) iter.next();
 			}
 		} 
 		catch (RuntimeException e) 
@@ -101,7 +78,7 @@ public class SystemPlatformHbn {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try 
 		{
-			theSystemPlatform = (SystemPlatform) session.createQuery("select spl from SystemPlatform where spl.deleteTimestamp is not null and upper(spl.systemPlatformName) = :name")
+			theSystemPlatform = (SystemPlatform) session.createQuery("select spl from SystemPlatform as spl where spl.deleteTimestamp is not null and upper(spl.systemPlatformName) = :name")
 							.setString("name", systemPlatformName.toUpperCase())
 							.uniqueResult();
 		} 
@@ -123,10 +100,10 @@ public class SystemPlatformHbn {
 	public static SystemPlatform findSystemPlatformByName(String systemPlatformName) 
 	{
 		SystemPlatform theSystemPlatform = null;
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		try 
 		{
-			theSystemPlatform = (SystemPlatform) session.createQuery("select spl from SystemPlatform where upper(spl.systemPlatformName) = :name")
+			theSystemPlatform = (SystemPlatform) session.createQuery("from SystemPlatform spl where upper(spl.systemPlatformName) = :name")
 							.setString("name", systemPlatformName.toUpperCase())
 							.uniqueResult();
 		} 
@@ -174,11 +151,11 @@ public class SystemPlatformHbn {
 						if (dto.getSystemPlatformName() != null) theSystemPlatform.setSystemPlatformName(dto.getSystemPlatformName());
 						theSystemPlatform.setAlias(dto.getAlias());
 						if (dto.getHwIdentOrTrans() != null) theSystemPlatform.setHwIdentOrTrans(dto.getHwIdentOrTrans());
-						theSystemPlatform.setOsNameID(dto.getOsNameID());
-						theSystemPlatform.setPrimaryFunctionID(dto.getPrimaryFunctionID());
-						theSystemPlatform.setOperationalStatusID(dto.getOperationalStatusID());
-						theSystemPlatform.setLcStatusID(dto.getLcStatusID());
-						theSystemPlatform.setLicenseScanning(dto.getLicenseScanning());
+						theSystemPlatform.getOs().setOsNameId(dto.getOsNameID());
+						theSystemPlatform.getPrimaryFunction().setPrimaryFunctionId(dto.getPrimaryFunctionID());
+						theSystemPlatform.getOperationalStatus().setOperationalStatusId(dto.getOperationalStatusID());
+						theSystemPlatform.getLifecycle().setLcSubStatId(dto.getLcStatusID());
+						//theSystemPlatform.getLicenseScanning().setLicenseScanning(dto.getLicenseScanning());
 						theSystemPlatform.setPriorityLevelID(dto.getPriorityLevelID());
 						theSystemPlatform.setSeverityLevelID(dto.getSeverityLevelID());
 						theSystemPlatform.setBusinessEssentialID(dto.getBusinessEssentialID());
@@ -189,25 +166,25 @@ public class SystemPlatformHbn {
 						theSystemPlatform.setVirtualHostSW(dto.getVirtualHostSW());
 						// common attributes
 						theSystemPlatform.setTemplate(dto.getTemplate());
-						theSystemPlatform.setResponsible(dto.getResponsible());
-						theSystemPlatform.setSubResponsible(dto.getSubResponsible());
+						theSystemPlatform.getResponsible().setCwid(dto.getResponsible());
+						theSystemPlatform.getSubResponsible().setCwid(dto.getSubResponsible());
 						theSystemPlatform.setRefID(dto.getRefID());
 						theSystemPlatform.setRelevanceGR1920(dto.getRelevanceGR1920());
 						theSystemPlatform.setRelevanceGR1435(dto.getRelevanceGR1435());
-						theSystemPlatform.setGxpFlag(dto.getGxpFlag());
-						theSystemPlatform.setItsecGroupID(dto.getItsecGroupID());
+						//theSystemPlatform.getGxpFlag().(dto.getGxpFlag());
+						//theSystemPlatform.setItsecGroupID(dto.getItsecGroupID());
 						theSystemPlatform.setSampleTestDate(dto.getSampleTestDate());
 						theSystemPlatform.setSampleTestResult(dto.getSampleTestResult());
 						// contracts
 						theSystemPlatform.setSlaID(dto.getSlaID());
 						theSystemPlatform.setServiceContractID(dto.getServiceContractID());
 						// PL attributes
-						theSystemPlatform.setItsecPLIntegrityID(dto.getItsecPLIntegrityID());
-						theSystemPlatform.setItsecPLIntegrityText(dto.getItsecPLIntegrityText());
-						theSystemPlatform.setItsecPLAvailabilityID(dto.getItsecPLAvailabilityID());
-						theSystemPlatform.setItsecPLAvailabilityText(dto.getItsecPLAvailabilityText());
-						theSystemPlatform.setItsecPLConfidentialityID(dto.getItsecPLConfidentialityID());
-						theSystemPlatform.setItsecPLConfidentialityText(dto.getItsecPLConfidentialityText());
+						//theSystemPlatform.setItsecPLIntegrityID(dto.getItsecPLIntegrityID());
+						//theSystemPlatform.setItsecPLIntegrityText(dto.getItsecPLIntegrityText());
+						//theSystemPlatform.setItsecPLAvailabilityID(dto.getItsecPLAvailabilityID());
+						//theSystemPlatform.setItsecPLAvailabilityText(dto.getItsecPLAvailabilityText());
+						//theSystemPlatform.setItsecPLConfidentialityID(dto.getItsecPLConfidentialityID());
+						//theSystemPlatform.setItsecPLConfidentialityText(dto.getItsecPLConfidentialityText());
 						// overhead
 						theSystemPlatform.setUpdateUser(cwid);
 						theSystemPlatform.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);

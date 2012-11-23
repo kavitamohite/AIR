@@ -8,20 +8,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.Type;
+
 @Entity
-@Table(name = "PERSONS")
-public class Persons extends DeletableRevisionInfo implements Serializable {
+@Table(name = "V_MD_PERSON")
+public class Person implements Serializable {
 
 	private static final long serialVersionUID = -5657570461268334451L;
 	
 	private Long personId;
 	private String cwid;
-	private String persNr;
-	private String lastname;
-	private String firstname;
+	private String personNo;
+	private String lastName;
+	private String firstName;
 	private String mail;		// the internet email address
 	
-	private String inactive;	// inactive Y/N (or null)
+	private Boolean inactive;	// inactive Y/N (or null)
 	private String pstat;		// "PRIMARY CWID", "SECONDARDY CWID", "MACHINE CWID"
 	
 	
@@ -32,7 +35,7 @@ public class Persons extends DeletableRevisionInfo implements Serializable {
 	/**
 	 * Creates a new instance.
 	 */
-	public Persons() {
+	public Person() {
 	}
 
 	// ------------------------------------------------------
@@ -75,6 +78,7 @@ public class Persons extends DeletableRevisionInfo implements Serializable {
 	 * 
 	 * @return Value of the {@link #cwid} field.
 	 */
+	@NaturalId
 	@Column(name = "CWID")
 	public String getCwid() {
 		return cwid;
@@ -91,63 +95,63 @@ public class Persons extends DeletableRevisionInfo implements Serializable {
 	}
 
 	/**
-	 * Returns the value of the field {@link #persNr}.
+	 * Returns the value of the field {@link #personNo}.
 	 * 
-	 * @return Value of the {@link #persNr} field.
+	 * @return Value of the {@link #personNo} field.
 	 */
-	@Column(name = "PERS_NR")
+	@Column(name = "PERSON_NO")
 	public String getPersNr() {
-		return persNr;
+		return personNo;
 	}
 
 	/**
-	 * Sets the value of the {@link #persNr} field.
+	 * Sets the value of the {@link #personNo} field.
 	 * 
 	 * @param persNr
 	 *            The value to set.
 	 */
-	public void setPersNr(String persNr) {
-		this.persNr = persNr;
+	public void setPersNr(String personNo) {
+		this.personNo = personNo;
 	}
 	
 	/**
-	 * Returns the value of the field {@link #lastname}.
+	 * Returns the value of the field {@link #lastName}.
 	 * 
-	 * @return Value of the {@link #lastname} field.
+	 * @return Value of the {@link #lastName} field.
 	 */
-	@Column(name = "NACHNAME")
+	@Column(name = "LASTNAME")
 	public String getLastname() {
-		return lastname;
+		return lastName;
 	}
 
 	/**
-	 * Sets the value of the {@link #lastname} field.
+	 * Sets the value of the {@link #lastName} field.
 	 * 
 	 * @param lastname
 	 *            The value to set.
 	 */
 	public void setLastname(String lastname) {
-		this.lastname = lastname;
+		this.lastName = lastname;
 	}
 
 	/**
-	 * Returns the value of the field {@link #firstname}.
+	 * Returns the value of the field {@link #firstName}.
 	 * 
-	 * @return Value of the {@link #firstname} field.
+	 * @return Value of the {@link #firstName} field.
 	 */
-	@Column(name = "VORNAME")
+	@Column(name = "FIRST_NAME")
 	public String getFirstname() {
-		return firstname;
+		return firstName;
 	}
 
 	/**
-	 * Sets the value of the {@link #firstname} field.
+	 * Sets the value of the {@link #firstName} field.
 	 * 
 	 * @param firstname
 	 *            The value to set.
 	 */
 	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+		this.firstName = firstname;
 	}
 
 	/**
@@ -155,8 +159,9 @@ public class Persons extends DeletableRevisionInfo implements Serializable {
 	 * 
 	 * @return Value of the {@link #inactive} field.
 	 */
+	@Type(type="yes_no")
 	@Column(name = "INACTIVE")
-	public String getInactive() {
+	public Boolean getInactive() {
 		return inactive;
 	}
 
@@ -166,7 +171,7 @@ public class Persons extends DeletableRevisionInfo implements Serializable {
 	 * @param inactive
 	 *            The value to set.
 	 */
-	public void setInactive(String inactive) {
+	public void setInactive(Boolean inactive) {
 		this.inactive = inactive;
 	}
 

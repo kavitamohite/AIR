@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "EINSATZ_STATUS")
+@Table(name = "V_MD_OPERATIONAL_STATUS")
 public class OperationalStatus implements Serializable {
 
 	private static final long serialVersionUID = -8672683745548361394L;
@@ -19,6 +19,7 @@ public class OperationalStatus implements Serializable {
 	private String operationalStatusEn;
 	private String operationalStatusTxt;
 	private Long sort;
+	private String insertSource;
 
 	// ------------------------------------------------------
 	// -
@@ -50,7 +51,7 @@ public class OperationalStatus implements Serializable {
 	 * @return Value of the {@link #operationalStatusId} field.
 	 */
 	@Id
-	@Column(name = "EINSATZ_STATUS_ID")
+	@Column(name = "OPERATIONAL_STATUS_ID")
 	public Long getOperationalStatusId() {
 		return operationalStatusId;
 	}
@@ -70,7 +71,7 @@ public class OperationalStatus implements Serializable {
 	 * 
 	 * @return Value of the {@link #operationalStatus} field.
 	 */
-	@Column(name = "EINSATZ_STATUS")
+	@Column(name = "OPERATIONAL_STATUS")
 	public String getOperationalStatus() {
 		return operationalStatus;
 	}
@@ -90,7 +91,7 @@ public class OperationalStatus implements Serializable {
 	 * 
 	 * @return Value of the {@link #operationalStatusEn} field.
 	 */
-	@Column(name = "EINSATZ_STATUS_EN")
+	@Column(name = "OPERATIONAL_STATUS_EN")
 	public String getOperationalStatusEn() {
 		return operationalStatusEn;
 	}
@@ -110,7 +111,7 @@ public class OperationalStatus implements Serializable {
 	 * 
 	 * @return Value of the {@link #operationalStatusEnTxt} field.
 	 */
-	@Column(name = "EINSATZ_STATUS_TXT")
+	@Column(name = "OPERATIONAL_STATUS_TXT")
 	public String getOperationalStatusTxt() {
 		return operationalStatusTxt;
 	}
@@ -143,6 +144,14 @@ public class OperationalStatus implements Serializable {
 	 */
 	public void setSort(Long sort) {
 		this.sort = sort;
+	}
+
+	@Column(name = "INSERT_SOURCE")
+	public String getInsertSource() {
+		return insertSource;
+	}
+	public void setInsertSource(String insertSource) {
+		this.insertSource = insertSource;
 	}
 
 }

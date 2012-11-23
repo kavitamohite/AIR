@@ -8,7 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.GroupTypes;
+import com.bayerbbs.applrepos.domain.GroupType;
 import com.bayerbbs.applrepos.dto.GroupTypesDTO;
 
 public class GroupTypesHbn {
@@ -19,11 +19,11 @@ public class GroupTypesHbn {
 	 * @param input
 	 * @return
 	 */
-	private static List<GroupTypesDTO> getDTOList(List<GroupTypes> input) {
+	private static List<GroupTypesDTO> getDTOList(List<GroupType> input) {
 		ArrayList<GroupTypesDTO> listDTO = new ArrayList<GroupTypesDTO>();
 
-		for (Iterator<GroupTypes> iter = input.iterator(); iter.hasNext();) {
-			GroupTypes data = (GroupTypes) iter.next();
+		for (Iterator<GroupType> iter = input.iterator(); iter.hasNext();) {
+			GroupType data = (GroupType) iter.next();
 			GroupTypesDTO dto = new GroupTypesDTO();
 
 			dto.setGroupTypeId(data.getGroupTypeId());
@@ -61,7 +61,7 @@ public class GroupTypesHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<GroupTypes> values = session.createQuery(
+			List<GroupType> values = session.createQuery(
 					"select h from GroupTypes as h where h.delTimestamp is null order by h.groupTypeName")
 					.list();
 

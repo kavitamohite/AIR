@@ -2,12 +2,14 @@ package com.bayerbbs.applrepos.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -18,30 +20,25 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "IT_SYSTEM")
 @SequenceGenerator(name = "MySeqITSystem", sequenceName = "TBADM.SEQ_IT_SYSTEM")
-public class SystemPlatform extends CI implements Serializable {
+public class SystemPlatform extends ControlItem implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2407052791148141236L;
-	@Id
-	@GeneratedValue
 	private Long systemPlatformID;
-	@NaturalId
 	private String systemPlatformName;
 	private String alias;
 	private Long hwIdentOrTrans;
-	private Long osNameID;
-	private Long primaryFunctionID;
-	private Long operationalStatusID;
+	private OperatingSystem operatingSystem;
+	private PrimaryFunction primaryFunction;
+	private OperationalStatus operationalStatus;
 	private String clusterCode;
 	private String clusterType;
-	@Basic
 	private Character virtualHW;
-	@Basic
 	private Character virtualHost;
 	private String virtualHostSW;
-	private Long lcStatusID;
-	private Long licenseScanning;
+	private Lifecycle lifecycle;
+	private LicenseScanning licenseScanning;
 		
 	/**
 	 * 
@@ -50,9 +47,15 @@ public class SystemPlatform extends CI implements Serializable {
 		super();
 		this.setCiType(CIType.SYSTEM_PLATFORM);
 	}
+	@Override
 	@Transient
 	public Long getID() {
 		return getSystemPlatformID();
+	}
+	@Override
+	@Transient
+	public String getName() {
+		return getSystemPlatformName();
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "MySeqITSystem")
@@ -64,6 +67,7 @@ public class SystemPlatform extends CI implements Serializable {
 		this.systemPlatformID = systemPlatformID;
 		this.setID(systemPlatformID);
 	}
+	@NaturalId
 	@Column(name = "IT_SYSTEM_NAME")
 	public String getSystemPlatformName() {
 		return systemPlatformName;
@@ -86,26 +90,29 @@ public class SystemPlatform extends CI implements Serializable {
 	public void setHwIdentOrTrans(Long hwIdentOrTrans) {
 		this.hwIdentOrTrans = hwIdentOrTrans;
 	}
-	@Column(name = "OS_NAME_ID")
-	public Long getOsNameID() {
-		return osNameID;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "OS_NAME_ID", nullable = true)
+	public void setOs(OperatingSystem operatingSystem) {
+		this.operatingSystem = operatingSystem;
 	}
-	public void setOsNameID(Long osNameID) {
-		this.osNameID = osNameID;
+	public OperatingSystem getOs() {
+		return operatingSystem;
 	}
-	@Column(name = "PRIMARY_FUNCTION_ID")
-	public Long getPrimaryFunctionID() {
-		return primaryFunctionID;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PRIMARY_FUNCTION_ID", nullable = true)
+	public PrimaryFunction getPrimaryFunction() {
+		return primaryFunction;
 	}
-	public void setPrimaryFunctionID(Long primaryFunctionID) {
-		this.primaryFunctionID = primaryFunctionID;
+	public void setPrimaryFunction(PrimaryFunction primaryFunction) {
+		this.primaryFunction = primaryFunction;
 	}
-	@Column(name = "EINSATZ_STATUS_ID")
-	public Long getOperationalStatusID() {
-		return operationalStatusID;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "EINSATZ_STATUS_ID", nullable = true)
+	public OperationalStatus getOperationalStatus() {
+		return operationalStatus;
 	}
-	public void setOperationalStatusID(Long operationalStatusID) {
-		this.operationalStatusID = operationalStatusID;
+	public void setOperationalStatus(OperationalStatus operationalStatus) {
+		this.operationalStatus = operationalStatus;
 	}
 	@Column(name = "CLUSTER_CODE")
 	public String getClusterCode() {
@@ -121,6 +128,7 @@ public class SystemPlatform extends CI implements Serializable {
 	public void setClusterType(String clusterType) {
 		this.clusterType = clusterType;
 	}
+	@Type(type="yes_no")
 	@Column(name = "VIRTUAL_HW_Y_N")
 	public Boolean getVirtualHW() {
 		if (virtualHW == null) return null;
@@ -136,6 +144,7 @@ public class SystemPlatform extends CI implements Serializable {
 			this.virtualHW = virtualHW == true  ? 'Y' : 'N';
 		}
 	}
+	@Type(type="yes_no")
 	@Column(name = "VIRTUAL_HOST_Y_N")
 	public Boolean getVirtualHost() {
 		if (virtualHost == null) return null;
@@ -159,26 +168,28 @@ public class SystemPlatform extends CI implements Serializable {
 	public void setVirtualHostSW(String virtualHostSW) {
 		this.virtualHostSW = virtualHostSW;
 	}
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Column(name = "LC_SUB_STATUS_ID")
-	public Long getLcStatusID() {
-		return lcStatusID;
+	public void setLifecycle(Lifecycle lifecycle) {
+		this.lifecycle = lifecycle;
 	}
-	public void setLcStatusID(Long lcStatusID) {
-		this.lcStatusID = lcStatusID;
+	public Lifecycle getLifecycle() {
+		return lifecycle;
 	}
 	@Column(name = "LICENSE_SCANNING")
-	public Long getLicenseScanning() {
+	public LicenseScanning getLicenseScanning() {
 		return licenseScanning;
 	}
-	public void setLicenseScanning(Long licenseScanning) {
+	public void setLicenseScanning(LicenseScanning licenseScanning) {
 		this.licenseScanning = licenseScanning;
 	}
-	@Override
-	@Column(name = "CWID_VERANTW_BETR")
-	public String getResponsible() {
+	//@Override
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CWID_VERANTW_BETR")
+	public Person getResponsible() {
 		return responsible;
 	}
-	public void setResponsible(String responsible) {
+	public void setResponsible(Person responsible) {
 		this.responsible = responsible;
 	}
 }

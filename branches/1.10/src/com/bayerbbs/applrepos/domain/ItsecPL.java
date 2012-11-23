@@ -10,7 +10,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ITSEC_SB_WERTE")
-public class ItsecSBWerte implements Serializable {
+public class ItsecPL implements Serializable {
 
 	private static final long serialVersionUID = 1499502978832308901L;
 
@@ -30,7 +30,7 @@ public class ItsecSBWerte implements Serializable {
 	/**
 	 * Creates a new instance.
 	 */
-	public ItsecSBWerte() {
+	public ItsecPL() {
 	}
 
 	// ------------------------------------------------------

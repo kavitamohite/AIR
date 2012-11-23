@@ -66,6 +66,7 @@ public class OperationalStatusHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<OperationalStatus> values = session
 					.createQuery(
 							"select h from OperationalStatus as h order by h.sort")
