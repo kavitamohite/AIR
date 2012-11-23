@@ -30,7 +30,6 @@
 		<dynamicWindowOKButtonText>OK</dynamicWindowOKButtonText>
 		<notRelevant>nicht relevant</notRelevant>
 		
-		<!-- OU Search -->
 		<objectType>Objekttyp</objectType>
 <!-- 		<applicationOwner>Application Owner</applicationOwner> -->
 <!-- 		<applicationManager>Application Manager</applicationManager> -->
@@ -243,6 +242,11 @@
 				<invalidMassnameWindowTitle>Ungültige Massnahme</invalidMassnameWindowTitle>
 				<invalidMassnameWindowMessage>Alle Felder müssen bearbeitet werden, damit die Massnahme gültig ist.</invalidMassnameWindowMessage>
 				<invalidMassnameDamagePerYear>Die Werte werden gespeichert, aber es ist nicht möglich zu genehmigen:&lt;br&gt;Der Schaden ist nicht grösser als die Kosten der Risikominderung. Der Gap ist nicht &quot;economically not solvable&quot;</invalidMassnameDamagePerYear>
+				
+				<invalidMassnameTargetDatePastInvalid>A date in the past is not allowed</invalidMassnameTargetDatePastInvalid>
+				<invalidMassnameGapClassReplace>For the target date {0} the gap class &quot;{1}&quot; was set instead of &quot;{2}&quot;</invalidMassnameGapClassReplace>
+				<invalidMassnameTargetDateInvalid>Please set target date and/or gap class to appropriate values!&lt;br&gt;&lt;br&gt;{0}&lt;br&gt;{1}&lt;br&gt;{2}</invalidMassnameTargetDateInvalid>
+				
 				<signeeApproval>Genehmigen</signeeApproval>
 				
 				
@@ -419,7 +423,6 @@
 		<ciCopyFromViewTitle>Wählen Sie ein CI zum Kopieren aus</ciCopyFromViewTitle>
 		<ciCopyFromDetailViewHeaderLabel>Verwende als Vorlage</ciCopyFromDetailViewHeaderLabel>
 		<ciCopyFromDetailViewTitle>CI Details</ciCopyFromDetailViewTitle>
-		
 
 		<compliance1435WindowTitle>Compliance Details </compliance1435WindowTitle>
 		<compliance1435WindowItSet>IT Verbund</compliance1435WindowItSet>

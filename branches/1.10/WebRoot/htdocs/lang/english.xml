@@ -70,6 +70,7 @@
 			<label_useroptions_numberformat>Number Format DE</label_useroptions_numberformat>
 			<label_useroptions_disableTooltip>Disable Tooltip</label_useroptions_disableTooltip>
 		
+		
 		<label_menu_searchmenuitem>Search</label_menu_searchmenuitem>
 		<label_menu_advancedsearchmenuitem>Advanced Search</label_menu_advancedsearchmenuitem>
 		<lMenuItemOuSearch>Org. Unit Search</lMenuItemOuSearch>
@@ -129,6 +130,7 @@
 		<searchResultAppOwnerDelegate>Application Owner Delegate</searchResultAppOwnerDelegate>
 		<applicationManager>Application Manager</applicationManager>
 		<applicationManagerDelegate>Application Manager Delegate</applicationManagerDelegate>
+
 
 		<!-- Validation Messages -->
 		<editDataNotValid>Information given for ## are not valid. Please update marked fields.</editDataNotValid>
@@ -215,8 +217,7 @@
 			<complianceBYTSEC>Integrated</complianceBYTSEC>
 			<complianceNonBYTSEC>External</complianceNonBYTSEC>
 			<complianceUndefined>Undefined</complianceUndefined>
-			<complianceManagementText>By the selection "Integrated" AIR covers all issues of compliance management in an ISMS according to ISO 27001,
-whereas "External" manages only the references to an compliance management outside of AIR.</complianceManagementText>
+			<complianceManagementText>By the selection "Integrated" AIR covers all issues of compliance management in an ISMS according to ISO 27001, whereas "External" manages only the references to an compliance management outside of AIR.</complianceManagementText>
 			<complianceInfoText>Compliance Statements may be given per control.</complianceInfoText>
 		
 		
@@ -241,6 +242,11 @@ whereas "External" manages only the references to an compliance management outsi
 				<invalidMassnameWindowTitle>Invalid control</invalidMassnameWindowTitle>
 				<invalidMassnameWindowMessage>All Fields must be filled for the control to be valid.</invalidMassnameWindowMessage>
 				<invalidMassnameDamagePerYear>The values will be saved, but it is not possible to approve:&lt;br&gt;The expense is not greater than the risk mitigation. The gap is not &quot;economically not solvable&quot;!</invalidMassnameDamagePerYear>
+				
+				<invalidMassnameTargetDatePastInvalid>A date in the past is not allowed</invalidMassnameTargetDatePastInvalid>
+				<invalidMassnameGapClassReplace>For the target date {0} the gap class &quot;{1}&quot; was set instead of &quot;{2}&quot;</invalidMassnameGapClassReplace>
+				<invalidMassnameTargetDateInvalid>Please set target date and/or gap class to appropriate values!&lt;br&gt;&lt;br&gt;{0}&lt;br&gt;{1}&lt;br&gt;{2}</invalidMassnameTargetDateInvalid>
+				
 				<signeeApproval>Approve</signeeApproval>
 				
 				
@@ -354,7 +360,6 @@ whereas "External" manages only the references to an compliance management outsi
 				<wizardseverityLevel>Severity Level</wizardseverityLevel>
 				<wizardbusinessEssential>Business Essential</wizardbusinessEssential>
 				<lvApplicationUsingRegionsW>Using regions</lvApplicationUsingRegionsW>
-				
 		
 		<ciCreateWizardPage3>Wizard - Step 3: Contacts</ciCreateWizardPage3>
 			<wizardAppowner>Application Owner</wizardAppowner>
@@ -437,7 +442,6 @@ whereas "External" manages only the references to an compliance management outsi
 		<complianceWindowStatement>Statement</complianceWindowStatement>
 		<complianceWindowStatementUntreated>Untreated</complianceWindowStatementUntreated>
 		<complianceWindowStatementDispensable>Dispensable</complianceWindowStatementDispensable>
-		<complianceStatementInfo> </complianceStatementInfo>
 		<complianceWindowCompliant>Compliant</complianceWindowCompliant>
 		<complianceWindowJustification>Justification</complianceWindowJustification>
 		<complianceStatementInfo> </complianceStatementInfo>
@@ -462,7 +466,6 @@ whereas "External" manages only the references to an compliance management outsi
 		<complianceRiskAnalysisAndMgmtTypeSelectMessage>Switching means to loose the risk analysis and management {0} data of {1}. Are you sure?</complianceRiskAnalysisAndMgmtTypeSelectMessage>
 		<complianceRiskAnalysisAndMgmtTypeFreeText>free text</complianceRiskAnalysisAndMgmtTypeFreeText>
 		<complianceRiskAnalysisAndMgmtTypeNonFreeText>non free text</complianceRiskAnalysisAndMgmtTypeNonFreeText>
-
 		
 		<CiConnectionsViewTitle>Relationships</CiConnectionsViewTitle>
 		<CiConnectionsViewUpStreamConnections>UpStream</CiConnectionsViewUpStreamConnections>
@@ -475,7 +478,6 @@ whereas "External" manages only the references to an compliance management outsi
 		<CiConnectionsViewConnectionAlias>Alias</CiConnectionsViewConnectionAlias>
 		<CiConnectionsViewConnectionType>Type</CiConnectionsViewConnectionType>
 		
-		
 		<CiConnectionsViewMsgSuccessfullyAdded>Successfully added</CiConnectionsViewMsgSuccessfullyAdded>
 		<CiConnectionsViewMsgSuccessfullyDeleted>Successfully deleted</CiConnectionsViewMsgSuccessfullyDeleted>
 		<CiConnectionsViewMsgAlreadyExists>Already exists</CiConnectionsViewMsgAlreadyExists>
@@ -485,7 +487,6 @@ whereas "External" manages only the references to an compliance management outsi
 		<dynamicWindowFForIEText>Firefox is recommended for better performance!</dynamicWindowFForIEText>
 		<dynamicWindowFForIEContinueFFButtonText>Start Firefox</dynamicWindowFForIEContinueFFButtonText>
 		<dynamicWindowFForIEKeepIEButtonText>Continue using IE</dynamicWindowFForIEKeepIEButtonText>
-		
 		
 		<CiDeleteViewTitle>Select CI to delete</CiDeleteViewTitle>
 		<CiDeleteViewButtonDelete>Delete</CiDeleteViewButtonDelete>
