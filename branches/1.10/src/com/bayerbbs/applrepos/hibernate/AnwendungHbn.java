@@ -726,7 +726,7 @@ public class AnwendungHbn {
 					
 					
 					if (isApplicationNameAndAliasNameAllowed) {
-						List<ApplicationDTO> listApplications = CiEntitesHbn.findExistantCisByNameOrAlias(dto.getApplicationName(), true);
+						List<ApplicationDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getApplicationName(), true);
 						if (null != listApplications && 0 < listApplications.size()) {
 							// application name is not allowed
 							isApplicationNameAndAliasNameAllowed = false;
@@ -756,7 +756,7 @@ public class AnwendungHbn {
 					}
 					
 					if (isApplicationNameAndAliasNameAllowed) {
-						List<ApplicationDTO> listApplications = CiEntitesHbn.findExistantCisByNameOrAlias(dto
+						List<ApplicationDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto
 								.getApplicationAlias(), true);
 						if (null != listApplications && 0 < listApplications.size()) {
 							// application alias is not allowed
@@ -1164,7 +1164,7 @@ public class AnwendungHbn {
 			// messages.add("application name is empty");
 		}
 		else {
-			List<ApplicationDTO> listCi = CiEntitesHbn.findCisByNameOrAlias(dto.getApplicationName());
+			List<ApplicationDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getApplicationName());
 			if (!listCi.isEmpty()) {
 				// check if the name is unique
 				if (dto.getApplicationId().longValue() != listCi.get(0).getApplicationId().longValue()) {
@@ -1178,7 +1178,7 @@ public class AnwendungHbn {
 			dto.setApplicationAlias(dto.getApplicationName());
 		}
 		else {
-			List<ApplicationDTO> listCi = CiEntitesHbn.findCisByNameOrAlias(dto.getApplicationAlias());
+			List<ApplicationDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getApplicationAlias());
 			if (!listCi.isEmpty()) {
 				// check if the alias is unique
 				if (dto.getApplicationId().longValue() != listCi.get(0).getApplicationId().longValue()) {
@@ -2478,13 +2478,13 @@ public class AnwendungHbn {
 		
 		// alles andere führt zu einer exacten Suche
 		
-		if (CiEntitesHbn.isLikeStart(queryMode)) {
+		if (CiEntitiesHbn.isLikeStart(queryMode)) {
 			sql.append("%");
 		}
 		
 		sql.append(query.toUpperCase());
 		
-		if (CiEntitesHbn.isLikeEnd(queryMode)) {
+		if (CiEntitiesHbn.isLikeEnd(queryMode)) {
 			sql.append("%");
 		}
 		sql.append("'");
@@ -2492,13 +2492,13 @@ public class AnwendungHbn {
 		// ALIAS
 		sql.append(" or UPPER (anw.ALIAS) like '");
 		
-		if (CiEntitesHbn.isLikeStart(queryMode)) {
+		if (CiEntitiesHbn.isLikeStart(queryMode)) {
 			sql.append("%");
 		}
 		
 		sql.append(query.toUpperCase());
 		
-		if (CiEntitesHbn.isLikeEnd(queryMode)) {
+		if (CiEntitiesHbn.isLikeEnd(queryMode)) {
 			sql.append("%");
 		}
 		sql.append("' )");
@@ -2561,7 +2561,7 @@ public class AnwendungHbn {
 				sql.append("UPPER(anw.SUB_RESPONSIBLE) is null or ");
 			
 			sql.append("UPPER(anw.SUB_RESPONSIBLE) "+ getLikeNotLikeOperator(isNot) +" '").append(delegate.toUpperCase()).append("')");
-			
+						
 			if(!isCwid)
 				sql.insert(sql.length() - 2, '%');
 		}
