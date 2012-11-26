@@ -42,13 +42,13 @@ public class ItSecSBWerteHbn {
 		ArrayList<ItSecSBWerteDTO> listDTO = new ArrayList<ItSecSBWerteDTO>();
 
 		for (Iterator<ItsecPL> iter = input.iterator(); iter.hasNext();) {
-			ItsecPL data = (ItsecPL) iter.next();
+			ItsecPL data = iter.next();
 			ItSecSBWerteDTO dto = new ItSecSBWerteDTO();
 
-			dto.setItsecSBId(data.getItsecSBId());
-			dto.setSbText(data.getSbText());
-			dto.setSbWert(data.getSbWert());
-			dto.setSbTextEn(data.getSbTextEn());
+			dto.setItsecSBId(data.getItsecPLId());
+			dto.setSbText(data.getPLText());
+			dto.setSbWert(data.getPLValue());
+			dto.setSbTextEn(data.getPLTextEn());
 			
 			if (null != data.getSort()) {
 				dto.setSort(data.getSort());
@@ -69,7 +69,7 @@ public class ItSecSBWerteHbn {
 			try {
 				tx = session.beginTransaction();
 				List<ItsecPL> values = session.createQuery(
-						"select h from ItsecSBWerte as h order by h.sort").list();
+						"select h from ItsecPL as h order by h.sort").list();
 				
 				listResult = getDTOList(values);
 				
