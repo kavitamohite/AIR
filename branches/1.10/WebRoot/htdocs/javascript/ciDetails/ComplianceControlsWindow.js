@@ -14,7 +14,6 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.gapClassDisplayField = this.config.language == 'EN' ? 'gapClassTextEN' : 'gapClassTextDE';
 		this.hasNoGapAnalysis = this.config.complianceType == AC.CI_GROUP_ID_NON_BYTSEC || this.config.complianceType == AC.CI_GROUP_ID_DELETE_ID || this.config.complianceType == AC.CI_GROUP_ID_EMPTY;
 		
-
 //		this.massnahmeDetailStore = AIR.AirStoreFactory.createItsecMassnahmeDetailStore(this.statusWertDisplayField);
 		
 		
@@ -520,6 +519,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									format: AIR.AirApplicationManager.getDateFormat(),//this.config.language
 									altFormats: AIR.AirApplicationManager.getDateFormat(),//only accept this format
 									allowBlank: false,
+									enableKeyEvents: true,
+									msgTarget: 'under',
 //									readOnly: true,//sonst kein Datem auswählbar
 									
 //									flex: 7,
@@ -1067,7 +1068,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 		var cMassnahmeInfo = grid.getColumnModel().getColumnById('cMassnahmeInfo');
 		grid.on('rowclick', this.onMassnahmeSelected, this);//click
-//		grid.getSelectionModel().on('beforerowselect', this.onBeforeMassnahmeSelect, this);
+		grid.getSelectionModel().on('beforerowselect', this.onBeforeMassnahmeSelect, this);
 		cMassnahmeInfo.on('click', this.onMassnahmeInfoClick, this);
 		
 		var bComplianceControlsSave = this.getFooterToolbar().getComponent('bComplianceControlsSave');//items.map.bComplianceControlsSave
@@ -1148,7 +1149,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		taPlanOfAction.on('keyup', this.onMassnahmeChange, this);
 		dfTargetDate.on('select', this.onMassnahmeChange, this);
 		dfTargetDate.on('change', this.onTargetDateChange, this);//change keyup
-	
+		dfTargetDate.on('keyup', this.onTargetDateKeyUp, this);
+		dfTargetDate.on('blur', this.onTargetDateFocusLost, this);
 		
 		
 		taOccurenceOfDamagePerYear2.on('keyup', this.onMassnahmeChange, this);
@@ -1173,87 +1175,187 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		complianceLinkView.on('linkCiSelect', this.onLinkCiSelect, this);
 	},
 	
+	onTargetDateKeyUp: function(field, event) {
+		this.onMassnahmeChange();
+	},
+	
 	onTargetDateChange: function(field, newValue, oldValue) {
 		this.onDateChange(field, newValue, oldValue);
 		
-		var now = new Date();
-		if(newValue < now) {
-			Util.log('Message Window: no date in the past allowed');
-			return;
-		}
+		/*this.isTargetDateValid(field.getValue());
+//		this.loadedMassnahme.isValid = this.isTargetDateValid(field.getValue());
 		
-//		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
-//		var cbGapClass = fsGapElimination.getComponent('pGapClass').getComponent('cbGapClass');
-		var gapClass = this.editedMassnahmen[this.previousSelection].gapPriority;//cbGapClass.getValue();
-		
-		var oldMonth = now.getMonth();//oldValue
-		var oldYear = now.getFullYear();//oldValue
-		var newMonth = newValue.getMonth();
-		var newYear = newValue.getFullYear();
-		
-		var monthDifference;
-		var yearDifference = newYear - oldYear;
-		
-		if(yearDifference > 1) {
-			Util.log('Please set target date and/or gap class to appropriate values! ...');
-		} else if(yearDifference === 1) {
-			if(newMonth > oldMonth) {
-				monthDifference = 12 + (newMonth - oldMonth);
-			} else if(newMonth < oldMonth) {
-				monthDifference = 12 - (oldMonth - newMonth);
-			} else {
-				monthDifference = 12;
-			}
-		} else {
-			monthDifference = newMonth - oldMonth;
-		}
-
-
-		var newGapClass;
-		
-		switch(gapClass) {
-			case '1'://long-term
-//				if(monthDifference > 6 && monthDifference < 13)//kein Ändern der Gap Klasse
-				if(monthDifference > 12)
-					Util.log('Please set target date and/or gap class to appropriate values! ...');
-				break;
-			case '2'://mid-term
-				if(monthDifference > AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS && monthDifference < 13) {
-					Util.log('For the target date {0} the gap class "long-term to solve" was set instead of "mid-term to solve"');
-					newGapClass = '1';
-				} else if(monthDifference > 12) {
-					Util.log('Please set target date and/or gap class to appropriate values! ...');					
-				}
-				
-				break;
-			case '3'://short-term
-				if(monthDifference > AC.GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS && monthDifference <= AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS) {
-					Util.log('For the target date {0} the gap class "mid-term to solve" was set instead of "short-term to solve"');
-					newGapClass = '2';
-				} else if(monthDifference > AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS && monthDifference < 13) {
-					Util.log('For the target date {0} the gap class "long-term to solve" was set instead of "short-term to solve"');
-					newGapClass = '1';
-				} else if(monthDifference > 12) {
-					Util.log('Please set target date and/or gap class to appropriate values! ...');
-				}
-				break;
-			default: break;
-		}
-		
-		if(newGapClass) {
-			var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
-			var cbGapClass = fsGapElimination.getComponent('pGapClass').getComponent('cbGapClass');
-			
-			cbGapClass.setValue(newGapClass);
-		}
-		
-//		case '2':
-//			month += AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS;
-//			break;
-//		case '3':
-//			month += AC.GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS;
-//			break;
+		this.onMassnahmeChange();*/
 	},
+	
+	onTargetDateFocusLost: function(field) {
+//		Util.log('onTargetDateFocusLost');
+		
+//		var task = new Ext.util.DelayedTask(function() {
+			if(!this.isMessageWindowOpen) {
+				this.isTargetDateValid(field.getValue());
+				Util.log('onTargetDateFocusLost isMessageWindowOpen='+this.isMessageWindowOpen);
+			}
+//		}.createDelegate(this));
+//        task.delay(500);
+		
+		
+//		field.on('blur', this.onTargetDateFocusLost, this);
+		
+//		if(this.isNew) {
+		/*var isValid = this.isTargetDateValid(field.getValue());
+	
+		if(!isValid) {
+//			field.un('blur', this.onTargetDateFocusLost, this);
+			field.purgeListeners();
+			
+			field.markInvalid('');
+			field.focus();
+		}*/
+//		}
+	},
+	
+	isTargetDateValid: function(date, skip) {
+//		this.onDateChange(field, date, oldValue);
+		
+		var isValid = true;
+		var labels = AAM.getLabels();
+		
+		var now = new Date();
+		if(date < now) {
+			message = labels.invalidMassnameTargetDatePastInvalid;
+			
+		} else {
+			
+	//		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
+	//		var cbGapClass = fsGapElimination.getComponent('pGapClass').getComponent('cbGapClass');
+			var gapClass = this.loadedMassnahme.gapPriority;//this.editedMassnahmen[this.previousSelection] cbGapClass.getValue();
+			
+			var oldMonth = now.getMonth();//oldValue
+			var oldYear = now.getFullYear();//oldValue
+			var newMonth = date.getMonth();
+			var newYear = date.getFullYear();
+			
+			var monthDifference;
+			var yearDifference = newYear - oldYear;
+			var title = labels.invalidMassnameWindowTitle,
+				message;
+			
+			if(yearDifference > 1) {
+				message = labels.invalidMassnameTargetDateInvalid;
+				field.markInvalid('');
+				isValid = false;
+			} else if(yearDifference === 1) {
+				if(newMonth > oldMonth) {
+					monthDifference = 12 + (newMonth - oldMonth);
+				} else if(newMonth < oldMonth) {
+					monthDifference = 12 - (oldMonth - newMonth);
+				} else {
+					monthDifference = 12;
+				}
+			} else {
+				monthDifference = newMonth - oldMonth;
+			}
+	
+	
+			var newGapClass;
+			
+			switch(gapClass) {
+				case '1'://long-term
+					if(monthDifference > 12) {
+						field.markInvalid('');
+						message = labels.invalidMassnameTargetDateInvalid;
+						isValid = false;
+					}
+					break;
+				case '2'://mid-term
+					if(monthDifference > AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS && monthDifference < 13) {
+						message = labels.invalidMassnameGapClassReplace.replace('{0}', date.toString()).replace('{1}', 'long-term to solve').replace('{2}', 'mid-term to solve');
+						newGapClass = '1';
+					} else if(monthDifference > 12) {
+						message = labels.invalidMassnameTargetDateInvalid;//.replace('{0}', newDate.toString()).replace('{1}', 'long-term to solve').replace('{2}', 'mid-term to solve');
+						isValid = false;
+					}
+					
+					break;
+				case '3'://short-term
+					if(monthDifference > AC.GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS && monthDifference <= AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS) {
+						field.markInvalid('');
+						message = labels.invalidMassnameGapClassReplace.replace('{0}', date.toString()).replace('{1}', 'mid-term to solve').replace('{2}', 'short-term to solve');
+						newGapClass = '2';
+					} else if(monthDifference > AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS && monthDifference < 13) {
+						field.markInvalid('');
+						message = labels.invalidMassnameGapClassReplace.replace('{0}', date.toString()).replace('{1}', 'long-term to solve').replace('{2}', 'short-term to solve');
+						newGapClass = '1';
+					} else if(monthDifference > 12) {
+						field.markInvalid('');
+						message = labels.invalidMassnameTargetDateInvalid;
+						isValid = false;
+					}
+					break;
+				default: break;
+			}
+	
+			
+			if(isValid) {//isValid && newGapClass
+				if(newGapClass) {
+					var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
+					var cbGapClass = fsGapElimination.getComponent('pGapClass').getComponent('cbGapClass');
+					
+					cbGapClass.setValue(newGapClass);
+					
+					//if there is a matching gapClass (monthDifference < 13) for the new entered targetDate, this new date is valid
+				}
+			}/* else {
+				this.existsInvalidMassnahme = 1;//wird in checkDataValid nochmal geprüft und gesetzt
+			}*/
+		}
+		
+		
+		if(message && !skip) {
+			var okCallback = function() {
+				this.isMessageWindowOpen = false;
+				
+				if(!isValid) {
+					var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
+					var dfTargetDate = fsGapElimination.getComponent('pTargetDate').getComponent('dfTargetDate');
+					
+					dfTargetDate.focus();
+					dfTargetDate.markInvalid();
+				}
+			};
+			
+			var callbackMap = {
+				ok: okCallback.createDelegate(this)
+			};
+			
+			//callback und isMessageWindowOpen flag sind nötig, weil durch change event 3 bis 4 mal isTargetDateValid vom Framework aufgerufen wird.
+			//Um zu verhindern dass, das Fenster mehr als einmal geöffnet wird.
+			if(!this.isMessageWindowOpen) {
+				Util.log('isTargetDateValid isMessageWindowOpen='+this.isMessageWindowOpen);
+				
+
+//		        var task = new Ext.util.DelayedTask(function() {
+		        	this.isMessageWindowOpen = true;
+					var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', callbackMap, message, title);
+					invalidMassnahmeWindow.show(this.getEl());
+//		        }.createDelegate(this));
+//		        task.delay(500);
+			}
+			
+//			this.existsInvalidMassnahme = true;
+//			this.loadedMassnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE;
+		}
+		
+//		this.onMassnahmeChange();
+		
+		return isValid;
+		
+//		this.existsInvalidMassnahme = 1;//++//reicht nicht, da wieder zurückgesetzt bei jedem massnahmen auswahl klick
+		//und nicht durch this.checkDataValid() wieder auf false gesetzt
+	},
+	
+	
 	
 	onDateChange: function(field, newValue, oldValue) {
 		if(typeof newValue === 'string')//damit kein Mist eingegeben werden kann
@@ -1444,12 +1546,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	onMassnahmeSelected: function(grid, rowIndex, event) {
-		if(this.existsInvalidMassnahme > 0) {//sollte eigentlich unnötig sein wenn grid's selectionsModel's beforerowselect event handler false zurückgibt
-//			this.targetIndex = rowIndex;
-//			grid.getSelectionModel().selectRow(this.previousSelection);
+		/*if(this.existsInvalidMassnahme > 0) {
 			this.onBeforeMassnahmeSelect();
 			return;
-		}
+		}*/
 		
 		
 		this.selectMassnahme(grid, rowIndex);
@@ -1656,6 +1756,15 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					continue;
 				}
 				
+
+				
+				if(!this.isTargetDateValid(new Date(parseInt(massnahme.gapEndDate)), true)) {
+//					massnahme.invalidityId 
+					this.editedMassnahmen[key].invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1;
+					this.addInvalidMassnahme(invalidMassnahmen, massnahme);
+					continue;
+				}
+				
 				if(massnahme.gapPriority == '4' || massnahme.gapPriority == '5') {
 //					var chbRiskAnalysisType = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisType').getComponent('chbRiskAnalysisType');
 					var isChecked = massnahme.riskAnalysisAsFreetext == '-1' ? true : false;//chbRiskAnalysisType.getValue();
@@ -1753,13 +1862,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		var lComplianceToolbar = this.getComponent('pComplianceToolbar').getComponent('lComplianceToolbar');
 		
 		if(this.existsInvalidMassnahme > 0) {//lComplianceToolbar.text.length > 0
-			this.openInvalidMassnahmeWindow();
+			var invalidityId = this.editedMassnahmen[this.previousSelection].invalidityId ? this.editedMassnahmen[this.previousSelection].invalidityId : null;
 			
-			//Umweg über ein button click event, alternativ zum geplanten direkten Aufruf,
-			//löst das Problem der falschen Ebene in der das invalidMassnahmeWindow erscheint, nicht.
-//			var bOpenInvalidMassnahmeWindow = this.getFooterToolbar().getComponent('bOpenInvalidMassnahmeWindow');
-//			bOpenInvalidMassnahmeWindow.fireEvent('click', this);
-			
+			if(invalidityId && invalidityId != AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1)
+				this.openInvalidMassnahmeWindow();
 			
 			return false;
 		} else return true;
@@ -1768,7 +1874,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	openInvalidMassnahmeWindow: function() {
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 
-		var cancelCallback = function() {
+		/*var cancelCallback = function() {
 			this.updateToolbar('');
 			var rowIndex = this.getSelectedGridIndex();
 
@@ -1783,19 +1889,19 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			//dem ersten erst statffindet, da es komplett absurden Situationen kommt, wenn sich updateComplianceDetails
 			//Aufrufe die nach den Ladeergebnissen kommen, überlappen.
 //			this.selectMassnahme(grid, rowIndex);//dann den neu ausgewählten neu laden
-		};
+		};*/
 		
 		var okCallback = function() {
 //			this.existsInvalidMassnahme = 0;//0 -1
 			
-			this.editedMassnahmen[this.previousSelection].invalidityId === AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE;
+			if(this.editedMassnahmen[this.previousSelection].invalidityId === AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE)
 				grid.getSelectionModel().selectRow(this.previousSelection);
 		};
 		
-		var callbackMap = {
+		var callbackMap/* = {
 //			cancel: cancelCallback.createDelegate(this),
 			ok: okCallback.createDelegate(this)
-		};
+		}*/;
 		
 		var labels = AIR.AirApplicationManager.getLabels();
 		
@@ -1810,17 +1916,15 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			case AC.ITSEC_MASSN_INVALIDITY_TYPE_DAMAGE_PER_YEAR:
 				message = labels.invalidMassnameDamagePerYear;
 				break;
+				
+			case AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1:
+				message = 'ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1';//labels.invalidMassnameDamagePerYear;
+				break;
+			default: break;
 		}
 		
 		var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', callbackMap, message, title);
-		invalidMassnahmeWindow.show();//null, null, this.getComponent('pLayout')
-
-		
-//		invalidMassnahmeWindow.getEl().setStyle('z-index','80000');
-		
-//		alert(title, message);
-//		var w = new Ext.Window();
-//		w.show();
+		invalidMassnahmeWindow.show(this.getEl());
 	},
 //	onOpenInvalidMassnahmeWindow: function(button, event) {
 //		var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', callbackMap, message, title);
@@ -2052,7 +2156,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			//false setzen, wenn der letzte Schritt erledigt ist und nicht schon in der Ursprungs callback 
 			//cancelCallback von openInvalidMassnahmeWindow
 //			this.existsInvalidMassnahme = false;
-			--this.existsInvalidMassnahme;
+//			--this.existsInvalidMassnahme;
 			
 //			var isStatusChanged = this.getSelectedGridRecord().get('itsecMassnahmenStatusId') != massnahme.statusId;
 //			var index = 

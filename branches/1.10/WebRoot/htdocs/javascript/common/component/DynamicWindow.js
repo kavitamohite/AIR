@@ -91,10 +91,50 @@ AIR.DynamicWindow = Ext.extend(Ext.Window, {
 //
 //		this.setWidth(width);
 //		this.setHeight(height);
-	}
+	},
+	
+	
+	
+    show : function(parent, animateTarget, cb, scope){
+//		if(parent && this.isAlreadyOpen)
+//			return;
+//		this.isAlreadyOpen = true;
+		
+		//ÜBERSCHRIEBEN
+        if(!this.rendered){
+            this.render(parent || Ext.getBody());//parent
+        }
+        if(this.hidden === false){
+            this.toFront();
+            return this;
+        }
+        if(this.fireEvent('beforeshow', this) === false){
+            return this;
+        }
+        if(cb){
+            this.on('show', cb, scope, {single:true});
+        }
+        this.hidden = false;
+        if(Ext.isDefined(animateTarget)){
+            this.setAnimateTarget(animateTarget);
+        }
+        this.beforeShow();
+        if(this.animateTarget){
+            this.animShow();
+        }else{
+            this.afterShow();
+        }
+        return this;
+    }
+
+//    close : function() {
+//    	this.isAlreadyOpen = false;
+//    	
+//    	AIR.DynamicWindow.superclass.close.call(this);
+//    }
 	
 	/*
-	show: function() {
+	show: function(parent) {
 //		switch(this.buttonConfigs.length) {//this.getBottomToolbar().items.items.length
 //			case 1:
 //				this.setWidth(250);
