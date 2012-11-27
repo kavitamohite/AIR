@@ -1,16 +1,16 @@
 package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.applrepos.dto.GroupsDTO;
-import com.bayerbbs.applrepos.hibernate.GroupsHbn;
+import com.bayerbbs.applrepos.hibernate.GroupHbn;
 
 public class GroupsWS {
 
 //	public GroupsDTO[] getGroupsList() {
-//		return GroupsHbn.getArrayFromList(GroupsHbn.listGroupsHbn());
+//		return GroupHbn.getArrayFromList(GroupHbn.listGroupsHbn());
 //	}
 
 	public GroupsDTO[] findGroups(GroupsParameterInput input) {
-		return GroupsHbn.getArrayFromList(GroupsHbn.findGroupsByName(input.getGroupName(),
+		return GroupHbn.getArrayFromList(GroupHbn.findGroupsByName(input.getGroupName(),
 				input.getImpactedBusinessGroup(),
 				input.getChangeTeam(),
 				input.getCiOwner(),
