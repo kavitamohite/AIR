@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
@@ -19,8 +18,6 @@ import org.hibernate.annotations.Type;
 @MappedSuperclass
 public class ControlItem extends DeletableRevisionInfo  
 {
-	private CIType ciType;
-
 	public ControlItem() {
 		super();
 	}
@@ -179,22 +176,15 @@ public class ControlItem extends DeletableRevisionInfo
 	}
 	private SeverityLevel severityLevel;
 
-	private Long businessEssentialID;
-	protected ItsecPL integrity;
-	private String integrityText;
-	protected ItsecPL availability;
-	private String availabilityText;
-	protected ItsecPL confidentiality;
-	private String confidentialityText;
-	protected ItSet itset;
-	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Column(name = "BUSINESS_ESSENTIAL_ID")
-	public Long getBusinessEssentialID() {
-		return businessEssentialID;
+	public BusinessEssential getBusinessEssential() {
+		return businessEssential;
 	}
-	public void setBusinessEssentialID(Long businessEssentialID) {
-		this.businessEssentialID = businessEssentialID;
+	public void setBusinessEssentialID(BusinessEssential businessEssential) {
+		this.businessEssential = businessEssential;
 	}
+	private BusinessEssential businessEssential;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ITSEC_SB_INTEG_ID", nullable = true)
@@ -204,6 +194,7 @@ public class ControlItem extends DeletableRevisionInfo
 	public void setIntegrity(ItsecPL integrity) {
 		this.integrity = integrity;
 	}
+	protected ItsecPL integrity;
 	
 	@Column(name = "ITSEC_SB_INTEG_TXT")
 	public String getIntegrityText() {
@@ -212,6 +203,7 @@ public class ControlItem extends DeletableRevisionInfo
 	public void setIntegrityText(String integrityText) {
 		this.integrityText = integrityText;
 	}
+	private String integrityText;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ITSEC_SB_VERFG_ID", nullable = true)
@@ -221,6 +213,7 @@ public class ControlItem extends DeletableRevisionInfo
 	public void setAvailability(ItsecPL availability) {
 		this.availability = availability;
 	}
+	protected ItsecPL availability;
 	
 	@Column(name = "ITSEC_SB_VERFG_TXT")
 	public String getAvailabilityText() {
@@ -229,6 +222,7 @@ public class ControlItem extends DeletableRevisionInfo
 	public void setAvailabilityText(String availabilityText) {
 		this.availabilityText = availabilityText;
 	}
+	private String availabilityText;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ITSEC_SB_VERTR_ID", nullable = true)
@@ -238,6 +232,7 @@ public class ControlItem extends DeletableRevisionInfo
 	public void setConfidentiality(ItsecPL confidentiality) {
 		this.confidentiality = confidentiality;
 	}
+	protected ItsecPL confidentiality;
 	
 	@Column(name = "ITSEC_SB_VERTR_TXT")
 	public String getConfidentialityText() {
@@ -246,6 +241,7 @@ public class ControlItem extends DeletableRevisionInfo
 	public void setConfidentialityText(String confidentialiyText) {
 		this.confidentialityText = confidentialiyText;
 	}
+	private String confidentialityText;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ITSET", nullable = false)
@@ -255,6 +251,7 @@ public class ControlItem extends DeletableRevisionInfo
 	public void setItset(ItSet itset) {
 		this.itset = itset;
 	}
+	protected ItSet itset;
 	
 	@Transient
 	public CIType getCiType() {
@@ -263,4 +260,5 @@ public class ControlItem extends DeletableRevisionInfo
 	public void setCiType(CIType ciType) {
 		this.ciType = ciType;
 	}
+	private CIType ciType;
 }
