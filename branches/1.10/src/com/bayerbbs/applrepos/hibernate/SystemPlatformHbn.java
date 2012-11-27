@@ -16,6 +16,7 @@ import com.bayerbbs.applrepos.domain.SystemPlatform;
 import com.bayerbbs.applrepos.dto.SystemPlatformDTO;
 import com.bayerbbs.applrepos.service.SystemPlatformEditParameterOutput;
 
+
 public class SystemPlatformHbn {
 
 	/** The logger. */
