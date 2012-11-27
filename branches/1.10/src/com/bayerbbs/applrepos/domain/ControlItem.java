@@ -177,7 +177,7 @@ public class ControlItem extends DeletableRevisionInfo
 	private SeverityLevel severityLevel;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Column(name = "BUSINESS_ESSENTIAL_ID")
+	@JoinColumn(name = "BUSINESS_ESSENTIAL_ID")
 	public BusinessEssential getBusinessEssential() {
 		return businessEssential;
 	}
