@@ -23,7 +23,7 @@ public class GroupTypesHbn {
 		ArrayList<GroupTypesDTO> listDTO = new ArrayList<GroupTypesDTO>();
 
 		for (Iterator<GroupType> iter = input.iterator(); iter.hasNext();) {
-			GroupType data = (GroupType) iter.next();
+			GroupType data = iter.next();
 			GroupTypesDTO dto = new GroupTypesDTO();
 
 			dto.setGroupTypeId(data.getGroupTypeId());
@@ -62,7 +62,7 @@ public class GroupTypesHbn {
 		try {
 			tx = session.beginTransaction();
 			List<GroupType> values = session.createQuery(
-					"select h from GroupTypes as h where h.delTimestamp is null order by h.groupTypeName")
+					"select h from GroupType as h where h.delTimestamp is null order by h.groupTypeName")
 					.list();
 
 			listResult = getDTOList(values);

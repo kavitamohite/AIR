@@ -41,7 +41,7 @@ public class ItSetHbn {
 		ArrayList<ItSetDTO> listDTO = new ArrayList<ItSetDTO>();
 
 		for (Iterator<ItSet> iter = input.iterator(); iter.hasNext();) {
-			ItSet data = (ItSet) iter.next();
+			ItSet data = iter.next();
 			ItSetDTO dto = new ItSetDTO();
 
 			dto.setId(data.getId());

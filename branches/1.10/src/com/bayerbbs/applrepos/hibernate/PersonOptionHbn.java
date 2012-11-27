@@ -44,7 +44,7 @@ public class PersonOptionHbn {
 		ArrayList<PersonOptionDTO> listDTO = new ArrayList<PersonOptionDTO>();
 
 		for (Iterator<PersonOption> iter = input.iterator(); iter.hasNext();) {
-			PersonOption data = (PersonOption) iter.next();
+			PersonOption data = iter.next();
 			PersonOptionDTO dto = new PersonOptionDTO();
 
 			dto.setPersonOptionId(data.getPersonOptionId());

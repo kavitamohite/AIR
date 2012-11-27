@@ -1,8 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
-import java.util.ArrayList;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
-import com.bayerbbs.applrepos.hibernate.GroupsHbn;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "GroupsWSService", portName = "GroupsWSPort")
 public class GroupsWSDelegate {

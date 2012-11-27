@@ -1,17 +1,16 @@
 package com.bayerbbs.applrepos.hibernate;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.domain.CiPersons;
 import com.bayerbbs.applrepos.dto.CiPersonsDTO;
@@ -28,7 +27,7 @@ public class CiPersonsHbn {
 		ArrayList<CiPersonsDTO> listDTO = new ArrayList<CiPersonsDTO>();
 
 		for (Iterator<CiPersons> iter = input.iterator(); iter.hasNext();) {
-			CiPersons data = (CiPersons) iter.next();
+			CiPersons data = iter.next();
 			CiPersonsDTO dto = new CiPersonsDTO();
 
 			dto.setCiPersonsId(data.getCiPersonsId());
@@ -62,6 +61,7 @@ public class CiPersonsHbn {
 	 * @deprecated Eine Selektion aus CI_PERSON ohne Angabe der TABLE_ID ist sinnlos
 	 *
 	 */
+	@Deprecated
 	public static List<CiPersonsDTO> findCiPersonsBy(Long ciId, Long groupTypeId) {
 
 		List<CiPersonsDTO> listResult = new ArrayList<CiPersonsDTO>();
@@ -250,7 +250,7 @@ public class CiPersonsHbn {
 
 		cwid = cwid.toUpperCase();
 
-		Long tableId = ApplreposConstants.TABELLEN_ID_APPLICATION;
+		Long tableId = ApplreposConstants.TABLE_ID_APPLICATION;
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
 		tx = session.beginTransaction();

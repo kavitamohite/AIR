@@ -29,7 +29,7 @@ public class CurrencyHbn {
 		ArrayList<CurrencyDTO> listDTO = new ArrayList<CurrencyDTO>();
 
 		for (Iterator<Currency> iter = input.iterator(); iter.hasNext();) {
-			Currency data = (Currency) iter.next();
+			Currency data = iter.next();
 			CurrencyDTO dto = new CurrencyDTO();
 
 			dto.setCurrencyId(data.getCurrencyId());

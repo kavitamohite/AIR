@@ -12,7 +12,6 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -1221,7 +1220,7 @@ public class AnwendungHbn {
 			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getApplicationOwnerDelegateHidden());
 			if (null == listPersons || listPersons.isEmpty()) {
 				// not a valid person, maybe a group?
-				GroupsDTO group = GroupsHbn.findGroupByName(dto.getApplicationOwnerDelegate());
+				GroupsDTO group = GroupHbn.findGroupByName(dto.getApplicationOwnerDelegate());
 				if (null == group) {
 					messages.add(errorCodeManager.getErrorMessage("1105"));
 				}
@@ -1240,7 +1239,7 @@ public class AnwendungHbn {
 			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getSubResponsibleHidden());
 			if (null == listPersons || listPersons.isEmpty()) {
 				// not a valid person, maybe a group?
-				GroupsDTO group = GroupsHbn.findGroupByName(dto.getSubResponsible());
+				GroupsDTO group = GroupHbn.findGroupByName(dto.getSubResponsible());
 				if (null == group) {
 					messages.add(errorCodeManager.getErrorMessage("1107")); // "subresponsible is not valid");
 				}
@@ -2750,7 +2749,7 @@ public class AnwendungHbn {
 					anw.setApplicationOwner(applicationOwner);
 					anw.setApplicationOwnerDelegate(applicationOwnerDelegate);
 					anw.setApplicationSteward(applicationSteward);
-					anw.setTableId(ApplreposConstants.TABELLEN_ID_APPLICATION);
+					anw.setTableId(ApplreposConstants.TABLE_ID_APPLICATION);
 					listResult.add(anw);
 				}
 			}
@@ -2796,7 +2795,7 @@ public class AnwendungHbn {
 //
 //		sql.append("select");
 //		sql.append(" * from history ");
-//		sql.append(" where table_id = ").append(ApplreposConstants.TABELLEN_ID_APPLICATION).append(" and primarykey = ");
+//		sql.append(" where table_id = ").append(ApplreposConstants.TABLE_ID_APPLICATION).append(" and primarykey = ");
 //		sql.append(applicationId);
 //		sql.append(" order by datetime desc");
 		

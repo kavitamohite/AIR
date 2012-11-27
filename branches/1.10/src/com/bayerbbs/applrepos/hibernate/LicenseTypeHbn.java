@@ -8,9 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.Currency;
 import com.bayerbbs.applrepos.domain.LicenseType;
-import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.LicenseTypeDTO;
 
 public class LicenseTypeHbn {
@@ -26,7 +24,7 @@ public class LicenseTypeHbn {
 		ArrayList<LicenseTypeDTO> listDTO = new ArrayList<LicenseTypeDTO>();
 
 		for (Iterator<LicenseType> iter = input.iterator(); iter.hasNext();) {
-			LicenseType data = (LicenseType) iter.next();
+			LicenseType data = iter.next();
 			LicenseTypeDTO dto = new LicenseTypeDTO();
 
 			dto.setLicenseTypeId(data.getLicenseTypeId());

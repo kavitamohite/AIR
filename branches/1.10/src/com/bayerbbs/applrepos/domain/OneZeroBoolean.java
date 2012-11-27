@@ -3,10 +3,10 @@ package com.bayerbbs.applrepos.domain;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types; 
+import java.sql.Types;
 
 import org.hibernate.dialect.Dialect;
-import org.hibernate.type.BooleanType; 
+import org.hibernate.type.BooleanType;
 
 public class OneZeroBoolean extends BooleanType
 {

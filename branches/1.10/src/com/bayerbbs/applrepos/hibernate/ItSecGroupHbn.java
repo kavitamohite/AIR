@@ -52,7 +52,7 @@ public class ItSecGroupHbn {
 		ArrayList<ItSecGroupDTO> listDTO = new ArrayList<ItSecGroupDTO>();
 
 		for (Iterator<ItSecGroup> iter = input.iterator(); iter.hasNext();) {
-			ItSecGroup data = (ItSecGroup) iter.next();
+			ItSecGroup data = iter.next();
 			ItSecGroupDTO dto = new ItSecGroupDTO();
 
 			dto.setItSecGroupId(data.getId());

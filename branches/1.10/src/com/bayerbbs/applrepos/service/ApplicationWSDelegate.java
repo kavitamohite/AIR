@@ -1,39 +1,7 @@
 package com.bayerbbs.applrepos.service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
-import com.bayerbbs.applrepos.domain.Application;
-import com.bayerbbs.applrepos.domain.ApplicationRegion;
-import com.bayerbbs.applrepos.dto.ApplicationAccessDTO;
-import com.bayerbbs.applrepos.dto.ApplicationContact;
-import com.bayerbbs.applrepos.dto.ApplicationContactEntryDTO;
-import com.bayerbbs.applrepos.dto.ApplicationContactGroupDTO;
-import com.bayerbbs.applrepos.dto.ApplicationContactsDTO;
-import com.bayerbbs.applrepos.dto.ApplicationDTO;
-import com.bayerbbs.applrepos.dto.CiSupportStuffDTO;
 import com.bayerbbs.applrepos.dto.ComplianceControlStatusDTO;
 import com.bayerbbs.applrepos.dto.HistoryViewDataDTO;
-import com.bayerbbs.applrepos.dto.InterfacesDTO;
-import com.bayerbbs.applrepos.dto.ItsecUserOptionDTO;
-import com.bayerbbs.applrepos.dto.PersonsDTO;
-import com.bayerbbs.applrepos.dto.RolePersonDTO;
-import com.bayerbbs.applrepos.dto.ViewDataDTO;
-import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
-import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
-import com.bayerbbs.applrepos.hibernate.ApplicationApplicationHbn;
-import com.bayerbbs.applrepos.hibernate.ApplicationProcessHbn;
-import com.bayerbbs.applrepos.hibernate.ApplicationRegionHbn;
-import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
-import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
-import com.bayerbbs.applrepos.hibernate.CiPersonsHbn;
-import com.bayerbbs.applrepos.hibernate.CiSupportStuffHbn;
-import com.bayerbbs.applrepos.hibernate.InterfacesHbn;
-import com.bayerbbs.applrepos.hibernate.ItsecUserOptionHbn;
-import com.bayerbbs.applrepos.hibernate.PersonsHbn;
-import com.bayerbbs.applrepos.validation.ValidationReader;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "ApplicationWSService", portName = "ApplicationWSPort")
 public class ApplicationWSDelegate {

@@ -14,7 +14,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmeDetailDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenStatusWertDTO;

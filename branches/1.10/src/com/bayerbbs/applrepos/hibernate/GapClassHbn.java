@@ -10,9 +10,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.Currency;
 import com.bayerbbs.applrepos.domain.GapClass;
-import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.GapClassDTO;
 
 public class GapClassHbn {
@@ -31,7 +29,7 @@ public class GapClassHbn {
 		ArrayList<GapClassDTO> listDTO = new ArrayList<GapClassDTO>();
 
 		for (Iterator<GapClass> iter = input.iterator(); iter.hasNext();) {
-			GapClass data = (GapClass) iter.next();
+			GapClass data = iter.next();
 			GapClassDTO dto = new GapClassDTO();
 
 			dto.setGapPriority(data.getGapPriority());

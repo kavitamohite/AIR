@@ -2,7 +2,6 @@ package com.bayerbbs.applrepos.service;
 
 import java.util.List;
 
-// import com.bayerbbs.applrepos.dao.ApplicationCat1DAO;
 import com.bayerbbs.applrepos.dto.ApplicationCat1DTO;
 import com.bayerbbs.applrepos.hibernate.ApplicationCat1Hbn;
 

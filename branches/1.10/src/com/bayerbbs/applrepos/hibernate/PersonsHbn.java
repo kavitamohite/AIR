@@ -28,7 +28,7 @@ public class PersonsHbn {
 		ArrayList<PersonsDTO> listDTO = new ArrayList<PersonsDTO>();
 
 		for (Iterator<Person> iter = input.iterator(); iter.hasNext();) {
-			Person data = (Person) iter.next();
+			Person data = iter.next();
 			PersonsDTO dto = new PersonsDTO();
 
 			dto.setPersonId(data.getPersonId());

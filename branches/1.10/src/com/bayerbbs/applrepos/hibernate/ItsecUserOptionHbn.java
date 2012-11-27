@@ -7,7 +7,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.domain.ItsecUserOption;
 import com.bayerbbs.applrepos.dto.ItsecUserOptionDTO;
 
@@ -41,7 +40,7 @@ public class ItsecUserOptionHbn {
 		ArrayList<ItsecUserOptionDTO> listDTO = new ArrayList<ItsecUserOptionDTO>();
 
 		for (Iterator<ItsecUserOption> iter = input.iterator(); iter.hasNext();) {
-			ItsecUserOption data = (ItsecUserOption) iter.next();
+			ItsecUserOption data = iter.next();
 			ItsecUserOptionDTO dto = new ItsecUserOptionDTO();
 
 			dto.setItsecUserOptionId(data.getItsecUserOptionId());

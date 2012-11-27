@@ -24,7 +24,7 @@ public class SlaHbn {
 		ArrayList<SlaDTO> listDTO = new ArrayList<SlaDTO>();
 
 		for (Iterator<Sla> iter = input.iterator(); iter.hasNext();) {
-			Sla data = (Sla) iter.next();
+			Sla data = iter.next();
 			SlaDTO dto = new SlaDTO();
 
 			dto.setSlaId(data.getSlaId());
@@ -62,7 +62,7 @@ public class SlaHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Sla> values = (List<Sla>) session
+			List<Sla> values = session
 					.createQuery(
 							"select h from Sla as h where h.deleteTimestamp is null order by h.slaName")
 					.list();

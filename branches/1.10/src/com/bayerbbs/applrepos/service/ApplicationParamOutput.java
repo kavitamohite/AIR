@@ -3,7 +3,7 @@
 
 	import java.io.Serializable;
 
-	import com.bayerbbs.applrepos.dto.*;
+import com.bayerbbs.applrepos.dto.ApplicationDTO;
 
 	public class ApplicationParamOutput implements Serializable {
 

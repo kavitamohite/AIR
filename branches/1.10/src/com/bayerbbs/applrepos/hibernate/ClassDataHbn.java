@@ -41,7 +41,7 @@ public class ClassDataHbn {
 		ArrayList<ClassDataDTO> listDTO = new ArrayList<ClassDataDTO>();
 
 		for (Iterator<ClassData> iter = input.iterator(); iter.hasNext();) {
-			ClassData data = (ClassData) iter.next();
+			ClassData data = iter.next();
 			ClassDataDTO dto = new ClassDataDTO();
 
 			dto.setClassDataId(data.getClassDataId());

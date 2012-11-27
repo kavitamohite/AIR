@@ -2,6 +2,8 @@ package com.bayerbbs.applrepos.dto;
 
 import java.sql.Timestamp;
 
+import com.bayerbbs.applrepos.domain.LicenseScanning;
+
 public class SystemPlatformDTO {
 	private Long systemPlatformID;
 	private String systemPlatformName;
@@ -16,7 +18,7 @@ public class SystemPlatformDTO {
 	private Boolean virtualHost;
 	private String virtualHostSW;
 	private Long lcStatusID;
-	private Long licenseScanning;
+	private LicenseScanning licenseScanning;
 	private String responsible;
 	private String subResponsible;
 	private Boolean template;
@@ -136,11 +138,11 @@ public class SystemPlatformDTO {
 		this.lcStatusID = lcStatusID;
 	}
 
-	public Long getLicenseScanning() {
+	public LicenseScanning getLicenseScanning() {
 		return licenseScanning;
 	}
 
-	public void setLicenseScanning(Long licenseScanning) {
+	public void setLicenseScanning(LicenseScanning licenseScanning) {
 		this.licenseScanning = licenseScanning;
 	}
 

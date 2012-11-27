@@ -182,7 +182,7 @@ public class HistoryHbn {
 		Query selectQuery = session.createSQLQuery("SELECT SEQ_HISTORY_EVENT.NEXTVAL FROM DUAL");
 		try 
 		{
-			result = (Long) ((BigDecimal) selectQuery.uniqueResult()).longValue();
+			result = ((BigDecimal) selectQuery.uniqueResult()).longValue();
 		} 
 		catch (Exception e) 
 		{

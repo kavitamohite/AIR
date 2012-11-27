@@ -985,63 +985,63 @@ public class ApplicationWS {
 	private void readAndFillCiStuff(ApplicationDTO dto, Application application) {
 		Long ciId = application.getApplicationId();
 		CiSupportStuffDTO supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABELLEN_ID_APPLICATION, ciId,
+				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
 				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserAuthorizationSupportedByDocumentation);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffUserAuthorizationSupportedByDocumentation(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABELLEN_ID_APPLICATION, ciId,
+				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
 				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserAuthorizationProcess);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffUserAuthorizationProcess(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABELLEN_ID_APPLICATION, ciId,
+				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
 				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ChangeManagementSupportedByTool);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffChangeManagementSupportedByTool(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABELLEN_ID_APPLICATION, ciId,
+				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
 				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserManagementProcess);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffUserManagementProcess(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABELLEN_ID_APPLICATION, ciId,
+				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
 				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ApplicationDocumentation);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffApplicationDocumentation(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABELLEN_ID_APPLICATION, ciId,
+				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
 				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_RootDirectory);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffRootDirectory(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABELLEN_ID_APPLICATION, ciId,
+				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
 				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_DataDirectory);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffDataDirectory(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABELLEN_ID_APPLICATION, ciId,
+				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
 				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ProvidedServices);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffProvidedServices(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABELLEN_ID_APPLICATION, ciId,
+				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
 				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ProvidedMachineUsers);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffProvidedMachineUsers(supportStuffDTO.getCiSupportStuffValue());
@@ -1219,7 +1219,7 @@ public class ApplicationWS {
 	public ComplianceControlStatusDTO[] getApplicationComplianceControlStatus(
 			ApplicationContactsParameterInput contactsInput) {
 
-		Long tableId = ApplreposConstants.TABELLEN_ID_APPLICATION;
+		Long tableId = ApplreposConstants.TABLE_ID_APPLICATION;
 
 		ComplianceControlStatusDTO aControls[] = null;
 

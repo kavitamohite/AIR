@@ -7,9 +7,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.ClassData;
 import com.bayerbbs.applrepos.domain.ClassInformation;
-import com.bayerbbs.applrepos.dto.ClassDataDTO;
 import com.bayerbbs.applrepos.dto.ClassInformationDTO;
 
 public class ClassInformationHbn {
@@ -43,7 +41,7 @@ public class ClassInformationHbn {
 		ArrayList<ClassInformationDTO> listDTO = new ArrayList<ClassInformationDTO>();
 
 		for (Iterator<ClassInformation> iter = input.iterator(); iter.hasNext();) {
-			ClassInformation data = (ClassInformation) iter.next();
+			ClassInformation data = iter.next();
 			ClassInformationDTO dto = new ClassInformationDTO();
 
 			dto.setClassInformationId(data.getClassInformationId());

@@ -24,7 +24,7 @@ public class ProcessHbn {
 		ArrayList<ProcessDTO> listDTO = new ArrayList<ProcessDTO>();
 
 		for (Iterator<Process> iter = input.iterator(); iter.hasNext();) {
-			Process data = (Process) iter.next();
+			Process data = iter.next();
 			ProcessDTO dto = new ProcessDTO();
 
 			dto.setProcessId(data.getProcessId());

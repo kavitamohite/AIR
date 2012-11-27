@@ -51,7 +51,7 @@ public class OperationalStatus implements Serializable {
 	 * @return Value of the {@link #operationalStatusId} field.
 	 */
 	@Id
-	@Column(name = "OPERATIONAL_STATUS_ID")
+	@Column(name = "OPERATIONAL_STATUS_ID", unique = true, nullable = false)
 	public Long getOperationalStatusId() {
 		return operationalStatusId;
 	}

@@ -2,8 +2,12 @@ package com.bayerbbs.applrepos.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
@@ -20,12 +23,17 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "IT_SYSTEM")
 @SequenceGenerator(name = "MySeqITSystem", sequenceName = "TBADM.SEQ_IT_SYSTEM")
+@AttributeOverrides({
+	@AttributeOverride(name = "id", column = @Column(name = "IT_SYSTEM_ID", insertable = false, updatable = false)),
+	@AttributeOverride(name = "name", column = @Column(name = "IT_SYSTEM_NAME")),
+	@AttributeOverride(name = "responsible", column = @Column(name = "CWID_VERANTW_BETR"))
+})
 public class SystemPlatform extends ControlItem implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2407052791148141236L;
-	private Long systemPlatformID;
+	//private Long systemPlatformID;
 	private String systemPlatformName;
 	private String alias;
 	private Long hwIdentOrTrans;
@@ -48,34 +56,22 @@ public class SystemPlatform extends ControlItem implements Serializable {
 		this.setCiType(CIType.SYSTEM_PLATFORM);
 	}
 	@Override
-	@Transient
-	public Long getID() {
-		return getSystemPlatformID();
-	}
-	@Override
-	@Transient
-	public String getName() {
-		return getSystemPlatformName();
-	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "MySeqITSystem")
-	@Column(name = "IT_SYSTEM_ID")
-	public Long getSystemPlatformID() {
-		return systemPlatformID;
+	@AttributeOverride(name = "id", column = @Column(name = "IT_SYSTEM_ID", insertable = false, updatable = false))
+	public Long getID() {
+		return this.id;
 	}
-	public void setSystemPlatformID(Long systemPlatformID) {
-		this.systemPlatformID = systemPlatformID;
-		this.setID(systemPlatformID);
-	}
+	@Override
 	@NaturalId
-	@Column(name = "IT_SYSTEM_NAME")
-	public String getSystemPlatformName() {
-		return systemPlatformName;
+	@AttributeOverride(name = "name", column = @Column(name = "IT_SYSTEM_NAME"))
+	public String getName() {
+		return this.systemPlatformName;
 	}
-	public void setSystemPlatformName(String systemPlatformName) {
-		this.systemPlatformName = systemPlatformName;
-		this.setName(systemPlatformName);
+	public void setName(String name) {
+		this.systemPlatformName = name;
 	}
+	
 	@Column(name = "ALIAS")
 	public String getAlias() {
 		return alias;
@@ -92,11 +88,11 @@ public class SystemPlatform extends ControlItem implements Serializable {
 	}
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OS_NAME_ID", nullable = true)
-	public void setOs(OperatingSystem operatingSystem) {
-		this.operatingSystem = operatingSystem;
-	}
-	public OperatingSystem getOs() {
+	public OperatingSystem getOperatingSystem() {
 		return operatingSystem;
+	}
+	public void setOperatingSystem(OperatingSystem operatingSystem) {
+		this.operatingSystem = operatingSystem;
 	}
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PRIMARY_FUNCTION_ID", nullable = true)
@@ -169,13 +165,14 @@ public class SystemPlatform extends ControlItem implements Serializable {
 		this.virtualHostSW = virtualHostSW;
 	}
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Column(name = "LC_SUB_STATUS_ID")
-	public void setLifecycle(Lifecycle lifecycle) {
-		this.lifecycle = lifecycle;
-	}
+	@JoinColumn(name = "LC_SUB_STATUS_ID", nullable = true)
 	public Lifecycle getLifecycle() {
 		return lifecycle;
 	}
+	public void setLifecycle(Lifecycle lifecycle) {
+		this.lifecycle = lifecycle;
+	}
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "LICENSE_SCANNING")
 	public LicenseScanning getLicenseScanning() {
 		return licenseScanning;
@@ -183,13 +180,12 @@ public class SystemPlatform extends ControlItem implements Serializable {
 	public void setLicenseScanning(LicenseScanning licenseScanning) {
 		this.licenseScanning = licenseScanning;
 	}
-	//@Override
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CWID_VERANTW_BETR")
+/*	@Override
+	@AttributeOverride(name = "RESPONSIBLE", column = @Column(name = "CWID_VERANTW_BETR"))
 	public Person getResponsible() {
-		return responsible;
+		return this.responsible;
 	}
 	public void setResponsible(Person responsible) {
 		this.responsible = responsible;
 	}
-}
+*/}

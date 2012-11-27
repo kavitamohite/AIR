@@ -45,7 +45,7 @@ import com.bayerbbs.applrepos.hibernate.CategoryBusinessHbn;
 import com.bayerbbs.applrepos.hibernate.ClassInformationHbn;
 import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
 import com.bayerbbs.applrepos.hibernate.CurrencyHbn;
-import com.bayerbbs.applrepos.hibernate.GroupsHbn;
+import com.bayerbbs.applrepos.hibernate.GroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSecGroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSecSBWerteHbn;
 import com.bayerbbs.applrepos.hibernate.ItSetHbn;
@@ -99,7 +99,7 @@ public class AIRToolsWS {
 	}
 
 	public GroupsDTO[] getGroupByGroupUsage(String groupUsageName) {
-		return GroupsHbn.getArrayFromList(GroupsHbn.findGroupByGroupUsage(groupUsageName));
+		return GroupHbn.getArrayFromList(GroupHbn.findGroupByGroupUsage(groupUsageName));
 	}
 	
 	public GxpFlagDTO[] getGxpFlagList() {
@@ -174,7 +174,7 @@ public class AIRToolsWS {
 	}
 	
 	public LifecycleStatusDTO[] getLifecycleStatusList() {
-		return LifecycleStatusHbn.getArrayFromList(LifecycleStatusHbn.listLifecycleStatus(ApplreposConstants.TABELLEN_ID_APPLICATION));
+		return LifecycleStatusHbn.getArrayFromList(LifecycleStatusHbn.listLifecycleStatus(ApplreposConstants.TABLE_ID_APPLICATION));
 	}
 	
 	public ProcessDTO[] getProcessList() {

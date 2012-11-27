@@ -33,7 +33,7 @@ public class LifecycleStatusHbn {
 		ArrayList<LifecycleStatusDTO> listDTO = new ArrayList<LifecycleStatusDTO>();
 
 		for (Iterator<LifecycleStatus> iter = input.iterator(); iter.hasNext();) {
-			LifecycleStatus data = (LifecycleStatus) iter.next();
+			LifecycleStatus data = iter.next();
 			LifecycleStatusDTO dto = new LifecycleStatusDTO();
 
 			dto.setLcStatusId(data.getLcStatusId());
@@ -77,7 +77,7 @@ public class LifecycleStatusHbn {
 			tx = session.beginTransaction();
 			List<LifecycleStatus> values = session
 					.createQuery(
-							"select h from LifecycleStatus as h where h.tabelleId = " + ApplreposConstants.TABELLEN_ID_APPLICATION + "  order by h.sort")
+							"select h from LifecycleStatus as h where h.tabelleId = " + ApplreposConstants.TABLE_ID_APPLICATION + "  order by h.sort")
 					.list();
 
 			listResult = getDTOList(values);

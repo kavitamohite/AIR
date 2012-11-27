@@ -30,7 +30,7 @@ public class ApplicationCat2Hbn {
 		ArrayList<ApplicationCat2DTO> listDTO = new ArrayList<ApplicationCat2DTO>();
 
 		for (Iterator<ApplicationCat2> iter = input.iterator(); iter.hasNext();) {
-			ApplicationCat2 data = (ApplicationCat2) iter.next();
+			ApplicationCat2 data = iter.next();
 			ApplicationCat2DTO dto = new ApplicationCat2DTO();
 			dto.setApplicationCat2Id(data.getId());
 			dto.setApplicationCat1Id(data.getAnwendungKat1Id());

@@ -25,7 +25,7 @@ public class OperationalStatusHbn {
 		ArrayList<OperationalStatusDTO> listDTO = new ArrayList<OperationalStatusDTO>();
 
 		for (Iterator<OperationalStatus> iter = input.iterator(); iter.hasNext();) {
-			OperationalStatus data = (OperationalStatus) iter.next();
+			OperationalStatus data = iter.next();
 			OperationalStatusDTO dto = new OperationalStatusDTO();
 
 			dto.setOperationalStatusId(data.getOperationalStatusId());

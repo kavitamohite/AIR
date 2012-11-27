@@ -48,8 +48,8 @@ public class Person implements Serializable {
 	 * @return Value of the {@link #id} field.
 	 */
 	@Transient
-	public Long getId() {
-		return getPersonId();
+	public String getId() {
+		return getCwid();
 	}
 
 	/**
@@ -57,7 +57,6 @@ public class Person implements Serializable {
 	 * 
 	 * @return Value of the {@link #personId} field.
 	 */
-	@Id
 	@Column(name = "PERSON_ID")
 	public Long getPersonId() {
 		return personId;
@@ -78,7 +77,7 @@ public class Person implements Serializable {
 	 * 
 	 * @return Value of the {@link #cwid} field.
 	 */
-	@NaturalId
+	@Id
 	@Column(name = "CWID")
 	public String getCwid() {
 		return cwid;

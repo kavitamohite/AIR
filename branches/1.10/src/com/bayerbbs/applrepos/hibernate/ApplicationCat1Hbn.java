@@ -1,7 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class ApplicationCat1Hbn {
 		ArrayList<ApplicationCat1DTO> listDTO = new ArrayList<ApplicationCat1DTO>();
 
 		for (Iterator<ApplicationCat1> iter = input.iterator(); iter.hasNext();) {
-			ApplicationCat1 data = (ApplicationCat1) iter.next();
+			ApplicationCat1 data = iter.next();
 			ApplicationCat1DTO dto = new ApplicationCat1DTO();
 			dto.setApplicationCat1Id(data.getId());
 			dto.setApplicationCat1Text(data.getApplicationCat1Txt());

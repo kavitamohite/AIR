@@ -366,7 +366,7 @@ public class ApplReposHbn {
 			try {
 				
 				@SuppressWarnings("unchecked")
-				List<Object[]> listTemp = (List<Object[]>) session.createSQLQuery(SELECT_ROLES)
+				List<Object[]> listTemp = session.createSQLQuery(SELECT_ROLES)
 					.setString("Cwid", cwid.toUpperCase())
 					.list();
 				
@@ -412,7 +412,7 @@ public class ApplReposHbn {
 			try {
 				
 				@SuppressWarnings("unchecked")
-				List<Object[]> listTemp = (List<Object[]>) session.createSQLQuery(SELECT_ROLE_BUSINESS_ESSENTIAL)
+				List<Object[]> listTemp = session.createSQLQuery(SELECT_ROLE_BUSINESS_ESSENTIAL)
 					.setString("Cwid", cwid.toUpperCase())
 					.setString("Role_Name", ApplreposConstants.ROLE_BUSINESS_ESSENTIAL_EDITOR)
 					.list();

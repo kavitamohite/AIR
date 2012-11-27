@@ -24,7 +24,7 @@ public class AccountHbn {
 		ArrayList<AccountDTO> listDTO = new ArrayList<AccountDTO>();
 
 		for (Iterator<Account> iter = input.iterator(); iter.hasNext();) {
-			Account data = (Account) iter.next();
+			Account data = iter.next();
 			AccountDTO dto = new AccountDTO();
 
 			dto.setAccountId(data.getAccountId());

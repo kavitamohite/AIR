@@ -1,7 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.applrepos.dto.ApplicationCat2DTO;
-import com.bayerbbs.applrepos.hibernate.ApplicationCat2Hbn;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "ApplicationCat2WSService", portName = "ApplicationCat2WSPort")
 public class ApplicationCat2WSDelegate {

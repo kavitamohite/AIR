@@ -42,7 +42,7 @@ public class ServiceContractHbn {
 		ArrayList<ServiceContractDTO> listDTO = new ArrayList<ServiceContractDTO>();
 
 		for (Iterator<ServiceContract> iter = input.iterator(); iter.hasNext();) {
-			ServiceContract data = (ServiceContract) iter.next();
+			ServiceContract data = iter.next();
 			ServiceContractDTO dto = new ServiceContractDTO();
 
 			dto.setServiceContractId(data.getServiceContractId());

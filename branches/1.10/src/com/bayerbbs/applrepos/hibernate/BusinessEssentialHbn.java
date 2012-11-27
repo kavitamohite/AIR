@@ -25,7 +25,7 @@ public class BusinessEssentialHbn {
 		ArrayList<BusinessEssentialDTO> listDTO = new ArrayList<BusinessEssentialDTO>();
 
 		for (Iterator<BusinessEssential> iter = input.iterator(); iter.hasNext();) {
-			BusinessEssential data = (BusinessEssential) iter.next();
+			BusinessEssential data = iter.next();
 			BusinessEssentialDTO dto = new BusinessEssentialDTO();
 
 			dto.setSeverityLevelId(data.getSeverityLevelId());

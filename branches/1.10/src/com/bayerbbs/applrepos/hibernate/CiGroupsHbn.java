@@ -11,12 +11,9 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.common.ApplReposTS;
-import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.domain.CiGroups;
 import com.bayerbbs.applrepos.dto.CiGroupsDTO;
-import com.bayerbbs.applrepos.dto.GroupsDTO;
 
 public class CiGroupsHbn {
 
@@ -31,7 +28,7 @@ public class CiGroupsHbn {
 		ArrayList<CiGroupsDTO> listDTO = new ArrayList<CiGroupsDTO>();
 
 		for (Iterator<CiGroups> iter = input.iterator(); iter.hasNext();) {
-			CiGroups data = (CiGroups) iter.next();
+			CiGroups data = iter.next();
 			CiGroupsDTO dto = new CiGroupsDTO();
 
 			dto.setCiGroupsId(data.getCiGroupsId());
@@ -67,6 +64,7 @@ public class CiGroupsHbn {
 	 * @deprecated Eine Selektion von CI_GROUPS ohne Angabe der TABLE_ID ist sinnlos.
 	 * 
 	 */
+	@Deprecated
 	public static List<CiGroupsDTO> findCiGroupsBy(Long ciId, Long groupTypeId) {
 
 		List<CiGroupsDTO> listResult = new ArrayList<CiGroupsDTO>();
@@ -216,7 +214,7 @@ public class CiGroupsHbn {
 
 		cwid = cwid.toUpperCase();
 
-		Long tableId = ApplreposConstants.TABELLEN_ID_APPLICATION;
+		Long tableId = ApplreposConstants.TABLE_ID_APPLICATION;
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
 		tx = session.beginTransaction();

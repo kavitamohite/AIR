@@ -33,6 +33,7 @@ public class SystemPlatformHbn {
 			Iterator iter = session.createQuery("from SystemPlatform spl order by spl.systemPlatformName").iterate();
 			while (iter.hasNext())
 			{
+				@SuppressWarnings("unused")
 				SystemPlatform element = (SystemPlatform) iter.next();
 			}
 		} 
@@ -75,7 +76,7 @@ public class SystemPlatformHbn {
 	public static SystemPlatform findDeletedSystemPlatformByName(String systemPlatformName) 
 	{
 		SystemPlatform theSystemPlatform = null;
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSession();
 		try 
 		{
 			theSystemPlatform = (SystemPlatform) session.createQuery("select spl from SystemPlatform as spl where spl.deleteTimestamp is not null and upper(spl.systemPlatformName) = :name")
@@ -103,7 +104,7 @@ public class SystemPlatformHbn {
 		Session session = HibernateUtil.getSession();
 		try 
 		{
-			theSystemPlatform = (SystemPlatform) session.createQuery("from SystemPlatform spl where upper(spl.systemPlatformName) = :name")
+			theSystemPlatform = (SystemPlatform) session.createQuery("from SystemPlatform spl where upper(spl.name) = :name")
 							.setString("name", systemPlatformName.toUpperCase())
 							.uniqueResult();
 		} 
@@ -130,6 +131,7 @@ public class SystemPlatformHbn {
 	{
 		SystemPlatformEditParameterOutput output = new SystemPlatformEditParameterOutput();
 
+		@SuppressWarnings("unused")
 		String validationMessage = null;
 		Session session = null; 
 		if (cwid != null) 
@@ -148,15 +150,15 @@ public class SystemPlatformHbn {
 						session = HibernateUtil.getSessionFactory().getCurrentSession();
 						session.beginTransaction();
 						SystemPlatform theSystemPlatform = (SystemPlatform) session.get(SystemPlatform.class, id);
-						if (dto.getSystemPlatformName() != null) theSystemPlatform.setSystemPlatformName(dto.getSystemPlatformName());
+						if (dto.getSystemPlatformName() != null) theSystemPlatform.setName(dto.getSystemPlatformName());
 						theSystemPlatform.setAlias(dto.getAlias());
 						if (dto.getHwIdentOrTrans() != null) theSystemPlatform.setHwIdentOrTrans(dto.getHwIdentOrTrans());
-						theSystemPlatform.getOs().setOsNameId(dto.getOsNameID());
+						theSystemPlatform.getOperatingSystem().setOsNameId(dto.getOsNameID());
 						theSystemPlatform.getPrimaryFunction().setPrimaryFunctionId(dto.getPrimaryFunctionID());
 						theSystemPlatform.getOperationalStatus().setOperationalStatusId(dto.getOperationalStatusID());
 						theSystemPlatform.getLifecycle().setLcSubStatId(dto.getLcStatusID());
-						//theSystemPlatform.getLicenseScanning().setLicenseScanning(dto.getLicenseScanning());
-						theSystemPlatform.setPriorityLevelID(dto.getPriorityLevelID());
+						theSystemPlatform.setLicenseScanning(dto.getLicenseScanning());
+						theSystemPlatform.setPriorityLevel(dto.getPriorityLevelID());
 						theSystemPlatform.setSeverityLevelID(dto.getSeverityLevelID());
 						theSystemPlatform.setBusinessEssentialID(dto.getBusinessEssentialID());
 						theSystemPlatform.setClusterCode(dto.getClusterCode());
@@ -166,8 +168,8 @@ public class SystemPlatformHbn {
 						theSystemPlatform.setVirtualHostSW(dto.getVirtualHostSW());
 						// common attributes
 						theSystemPlatform.setTemplate(dto.getTemplate());
-						theSystemPlatform.getResponsible().setCwid(dto.getResponsible());
-						theSystemPlatform.getSubResponsible().setCwid(dto.getSubResponsible());
+						//theSystemPlatform.setResponsible(dto.getResponsible());
+						//theSystemPlatform.setSubResponsible(dto.getSubResponsible());
 						theSystemPlatform.setRefID(dto.getRefID());
 						theSystemPlatform.setRelevanceGR1920(dto.getRelevanceGR1920());
 						theSystemPlatform.setRelevanceGR1435(dto.getRelevanceGR1435());

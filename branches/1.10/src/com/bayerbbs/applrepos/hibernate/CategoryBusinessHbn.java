@@ -41,7 +41,7 @@ public class CategoryBusinessHbn {
 		ArrayList<CategoryBusinessDTO> listDTO = new ArrayList<CategoryBusinessDTO>();
 
 		for (Iterator<CategoryBusiness> iter = input.iterator(); iter.hasNext();) {
-			CategoryBusiness data = (CategoryBusiness) iter.next();
+			CategoryBusiness data = iter.next();
 			CategoryBusinessDTO dto = new CategoryBusinessDTO();
 
 			dto.setCategoryBusinessId(data.getCategoryBusinessId());

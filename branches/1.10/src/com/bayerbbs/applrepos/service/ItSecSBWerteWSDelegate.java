@@ -1,7 +1,6 @@
 	package com.bayerbbs.applrepos.service;
 
 	import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
-	import com.bayerbbs.applrepos.hibernate.ItSecSBWerteHbn;
 
 @javax.jws.WebService(
 targetNamespace = 

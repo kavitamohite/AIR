@@ -1,7 +1,6 @@
 	package com.bayerbbs.applrepos.service;
 
 	import com.bayerbbs.applrepos.dto.CiGroupsDTO;
-	import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
 
 @javax.jws.WebService(
 targetNamespace = 
