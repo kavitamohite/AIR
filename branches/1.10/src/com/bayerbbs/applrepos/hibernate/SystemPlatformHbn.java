@@ -158,9 +158,9 @@ public class SystemPlatformHbn {
 						theSystemPlatform.getOperationalStatus().setOperationalStatusId(dto.getOperationalStatusID());
 						theSystemPlatform.getLifecycle().setLcSubStatId(dto.getLcStatusID());
 						theSystemPlatform.setLicenseScanning(dto.getLicenseScanning());
-						theSystemPlatform.setPriorityLevel(dto.getPriorityLevelID());
-						theSystemPlatform.setSeverityLevelID(dto.getSeverityLevelID());
-						theSystemPlatform.setBusinessEssentialID(dto.getBusinessEssentialID());
+						//theSystemPlatform.setPriorityLevel(dto.getPriorityLevelID());
+						//theSystemPlatform.setSeverityLevel(dto.getSeverityLevelID());
+						//theSystemPlatform.setBusinessEssential(dto.getBusinessEssentialID());
 						theSystemPlatform.setClusterCode(dto.getClusterCode());
 						theSystemPlatform.setClusterType(dto.getClusterType());
 						theSystemPlatform.setVirtualHW(dto.getVirtualHW());
@@ -178,8 +178,8 @@ public class SystemPlatformHbn {
 						theSystemPlatform.setSampleTestDate(dto.getSampleTestDate());
 						theSystemPlatform.setSampleTestResult(dto.getSampleTestResult());
 						// contracts
-						theSystemPlatform.setSlaID(dto.getSlaID());
-						theSystemPlatform.setServiceContractID(dto.getServiceContractID());
+						//theSystemPlatform.setSlaID(dto.getSlaID());
+						//theSystemPlatform.setServiceContractID(dto.getServiceContractID());
 						// PL attributes
 						//theSystemPlatform.setItsecPLIntegrityID(dto.getItsecPLIntegrityID());
 						//theSystemPlatform.setItsecPLIntegrityText(dto.getItsecPLIntegrityText());
