@@ -8,10 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
+
 @Entity
+@Immutable
 @Table(name = "ITSEC_SB_WERTE")
 public class ItsecPL implements Serializable {
-
 	private static final long serialVersionUID = 1499502978832308901L;
 
 	
@@ -19,12 +21,12 @@ public class ItsecPL implements Serializable {
 	// -
 	// ------------------------------------------------------
 
-	Long itsecSBId;
+	Long itsecPlId;
 	
-	String sbText;
-	Long sbWert;
+	String plText;
+	Long plValue;
 	Long sort;
-	String sbTextEn;
+	String plTextEn;
 	
 	
 	/**
@@ -44,68 +46,68 @@ public class ItsecPL implements Serializable {
 	 */
 	@Transient
 	public Long getId() {
-		return getItsecSBId();
+		return getItsecPLId();
 	}
 
 	/**
-	 * Returns the value of the field {@link #itsecSBId}.
+	 * Returns the value of the field {@link #itsecPlId}.
 	 * 
-	 * @return Value of the {@link #itsecSBId} field.
+	 * @return Value of the {@link #itsecPlId} field.
 	 */
 	@Id
 	@Column(name = "ITSEC_SB_ID")
-	public Long getItsecSBId() {
-		return itsecSBId;
+	public Long getItsecPLId() {
+		return itsecPlId;
 	}
 
 	/**
-	 * Sets the value of the {@link #itsecSBId} field.
+	 * Sets the value of the {@link #itsecPlId} field.
 	 * 
-	 * @param itsecSBId
+	 * @param itsecPlId
 	 *            The value to set.
 	 */
-	public void setItsecSBId(Long itsecSBId) {
-		this.itsecSBId = itsecSBId;
+	public void setItsecPLId(Long itsecPLId) {
+		this.itsecPlId = itsecPLId;
 	}
 
 	/**
-	 * Returns the value of the field {@link #sbText}.
+	 * Returns the value of the field {@link #plText}.
 	 * 
-	 * @return Value of the {@link #sbText} field.
+	 * @return Value of the {@link #plText} field.
 	 */
 	@Column(name = "SB_TEXT")
-	public String getSbText() {
-		return sbText;
+	public String getPLText() {
+		return plText;
 	}
 
 	/**
-	 * Sets the value of the {@link #sbText} field.
+	 * Sets the value of the {@link #plText} field.
 	 * 
-	 * @param sbText
+	 * @param plText
 	 *            The value to set.
 	 */
-	public void setSbText(String sbText) {
-		this.sbText = sbText;
+	public void setPLText(String plText) {
+		this.plText = plText;
 	}
 
 	/**
-	 * Returns the value of the field {@link #sbWert}.
+	 * Returns the value of the field {@link #plValue}.
 	 * 
-	 * @return Value of the {@link #sbWert} field.
+	 * @return Value of the {@link #plValue} field.
 	 */
 	@Column(name = "SB_WERT")
-	public Long getSbWert() {
-		return sbWert;
+	public Long getPLValue() {
+		return plValue;
 	}
 
 	/**
-	 * Sets the value of the {@link #sbWert} field.
+	 * Sets the value of the {@link #plValue} field.
 	 * 
-	 * @param sbWert
+	 * @param plValue
 	 *            The value to set.
 	 */
-	public void setSbWert(Long sbWert) {
-		this.sbWert = sbWert;
+	public void setPLValue(Long plValue) {
+		this.plValue = plValue;
 	}
 
 	/**
@@ -130,23 +132,23 @@ public class ItsecPL implements Serializable {
 
 	
 	/**
-	 * Returns the value of the field {@link #sbTextEn}.
+	 * Returns the value of the field {@link #plTextEn}.
 	 * 
-	 * @return Value of the {@link #sbTextEn} field.
+	 * @return Value of the {@link #plTextEn} field.
 	 */
 	@Column(name = "SB_TEXT_EN")
-	public String getSbTextEn() {
-		return sbTextEn;
+	public String getPLTextEn() {
+		return plTextEn;
 	}
 
 	/**
-	 * Sets the value of the {@link #sbTextEn} field.
+	 * Sets the value of the {@link #plTextEn} field.
 	 * 
-	 * @param sbTextEn
+	 * @param plTextEn
 	 *            The value to set.
 	 */
-	public void setSbTextEn(String sbTextEn) {
-		this.sbTextEn = sbTextEn;
+	public void setPLTextEn(String plTextEn) {
+		this.plTextEn = plTextEn;
 	}
 
 }
