@@ -1224,12 +1224,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var now = new Date();
 		if(date < now) {
 			message = labels.invalidMassnameTargetDatePastInvalid;
-			
 		} else {
 			
 	//		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
 	//		var cbGapClass = fsGapElimination.getComponent('pGapClass').getComponent('cbGapClass');
-			var gapClass = this.loadedMassnahme.gapPriority;//this.editedMassnahmen[this.previousSelection] cbGapClass.getValue();
+			var gapClass = this.editedMassnahmen[this.previousSelection].gapPriority;//this.loadedMassnahme.gapPriority;// cbGapClass.getValue();
 			
 			var oldMonth = now.getMonth();//oldValue
 			var oldYear = now.getFullYear();//oldValue
@@ -1242,7 +1241,12 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				message;
 			
 			if(yearDifference > 1) {
+				var dates = this.getValidTargetDates(oldMonth, oldYear);
 				message = labels.invalidMassnameTargetDateInvalid;
+				
+//				for(var i = 0; i < dates.length; i++)
+				message = message.replace('{0}', dates[0].format(AAM.getDateFormat())).replace('{1}', dates[1].format(AAM.getDateFormat())).replace('{2}', dates[2].format(AAM.getDateFormat()));
+				
 				field.markInvalid('');
 				isValid = false;
 			} else if(yearDifference === 1) {
@@ -1260,42 +1264,45 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 			var newGapClass;
 			
-			switch(gapClass) {
-				case '1'://long-term
-					if(monthDifference > 12) {
-						field.markInvalid('');
-						message = labels.invalidMassnameTargetDateInvalid;
-						isValid = false;
-					}
-					break;
-				case '2'://mid-term
-					if(monthDifference > AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS && monthDifference < 13) {
-						message = labels.invalidMassnameGapClassReplace.replace('{0}', date.toString()).replace('{1}', 'long-term to solve').replace('{2}', 'mid-term to solve');
-						newGapClass = '1';
-					} else if(monthDifference > 12) {
-						message = labels.invalidMassnameTargetDateInvalid;//.replace('{0}', newDate.toString()).replace('{1}', 'long-term to solve').replace('{2}', 'mid-term to solve');
-						isValid = false;
-					}
-					
-					break;
-				case '3'://short-term
-					if(monthDifference > AC.GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS && monthDifference <= AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS) {
-						field.markInvalid('');
-						message = labels.invalidMassnameGapClassReplace.replace('{0}', date.toString()).replace('{1}', 'mid-term to solve').replace('{2}', 'short-term to solve');
-						newGapClass = '2';
-					} else if(monthDifference > AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS && monthDifference < 13) {
-						field.markInvalid('');
-						message = labels.invalidMassnameGapClassReplace.replace('{0}', date.toString()).replace('{1}', 'long-term to solve').replace('{2}', 'short-term to solve');
-						newGapClass = '1';
-					} else if(monthDifference > 12) {
-						field.markInvalid('');
-						message = labels.invalidMassnameTargetDateInvalid;
-						isValid = false;
-					}
-					break;
-				default: break;
+			if(monthDifference > 12) {
+				var dates = this.getValidTargetDates(oldMonth, oldYear);
+				message = labels.invalidMassnameTargetDateInvalid;
+				
+//				for(var i = 0; i < dates.length; i++)
+				message = message.replace('{0}', dates[0].format(AAM.getDateFormat())).replace('{1}', dates[1].format(AAM.getDateFormat())).replace('{2}', dates[2].format(AAM.getDateFormat()));
+				
+				field.markInvalid('');
+				isValid = false;
+			} else {
+				switch(gapClass) {
+					case '1'://long-term
+						if(monthDifference > 12) {
+							field.markInvalid('');
+							message = labels.invalidMassnameTargetDateInvalid;
+							isValid = false;
+						}
+						break;
+					case '2'://mid-term
+						if(monthDifference > AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS && monthDifference < 13) {
+							message = labels.invalidMassnameGapClassReplace.replace('{0}', date.format(AAM.getDateFormat())).replace('{1}', 'long-term to solve').replace('{2}', 'mid-term to solve');
+							newGapClass = '1';
+						}
+						
+						break;
+					case '3'://short-term
+						if(monthDifference > AC.GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS && monthDifference <= AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS) {
+							field.markInvalid('');
+							message = labels.invalidMassnameGapClassReplace.replace('{0}', date.format(AAM.getDateFormat())).replace('{1}', 'mid-term to solve').replace('{2}', 'short-term to solve');
+							newGapClass = '2';
+						} else if(monthDifference > AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS && monthDifference < 13) {
+							field.markInvalid('');
+							message = labels.invalidMassnameGapClassReplace.replace('{0}', date.format(AAM.getDateFormat())).replace('{1}', 'long-term to solve').replace('{2}', 'short-term to solve');
+							newGapClass = '1';
+						}
+						break;
+					default: break;
+				}
 			}
-	
 			
 			if(isValid) {//isValid && newGapClass
 				if(newGapClass) {
@@ -1310,7 +1317,6 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				this.existsInvalidMassnahme = 1;//wird in checkDataValid nochmal geprüft und gesetzt
 			}*/
 		}
-		
 		
 		if(message && !skip) {
 			var okCallback = function() {
@@ -1485,7 +1491,16 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		dfDateOfApproval.setValue(now);
 		
+		
 		//Target Date wird genau 1 Jahr in die Zukunft gesetzt:
+		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
+		var dfTargetDate = fsGapElimination.getComponent('pTargetDate').getComponent('dfTargetDate');
+		
+		var month = now.getMonth();
+		var year = now.getFullYear();
+		var newDate = new Date(year + 1, month + 1, 0);//month + 1 weil datefield bei 1 anfängt
+		
+		dfTargetDate.setValue(newDate);
 	},
 	
 	updateGapRelevance: function(compliantStatusId, gapClassId) {
@@ -1718,17 +1733,17 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	
-	onMassnahmeChange: function(source, event) {
+	onMassnahmeChange: function(options) {//source, event
 		this.massnahmeChanged = true;
 		this.activateButtons();
-		this.checkDataValid();
+		this.checkDataValid(options);
 	},
 	
 	
 	//ORDER: alle validierten Werte/Felder aller this.editedMassnahmen validieren. 
 	//Hier this.editedMassnahmen[i].mitigationPotential und Datumsfelder/-werte this.editedMassnahmen[i].dateOfApproval,targetDate
 	//Zusatz: eine Statusbar mit Meldung welche editierten Massnahmen fehlerhafte Werte enthalten, z.B. Ident: Masnhamen 06.004, 11.651 enthalten Fehler
-	checkDataValid: function() {
+	checkDataValid: function(options) {
 		//gerade gmachte Änderungen der aktuell ausgewählten Massnahme nach der letzen und vor der nächsten Massnahmenauswahl sichern
 		this.saveMassnahme(this.getSelectedGridIndex());
 		
@@ -1750,19 +1765,24 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			
 			if(massnahme.statusId === 3 || massnahme.statusId === 4) {
 				if(massnahme.gap.length === 0 || massnahme.gapResponsible.length === 0 || massnahme.gapMeasure.length === 0 || 
-				   massnahme.gapPriority.length === 0 || massnahme.gapEndDate === -1) {
+				   massnahme.gapPriority.length === 0) {// || massnahme.gapEndDate === -1
 					massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE;
 					this.addInvalidMassnahme(invalidMassnahmen, massnahme);
 					continue;
 				}
 				
 
+				//wenn massnahme.gapEndDate > -1 (d.h. gapClass ist nicht 4 oder 5)
+				var toBeChecked = (!options || !options.skipTargetDate) && massnahme.gapEndDate > -1;
+				//oder umgekehrt: option für die targetDate gecheckt werden muss: wenn manuell dfTargetDate geändert
 				
-				if(!this.isTargetDateValid(new Date(parseInt(massnahme.gapEndDate)), true)) {
-//					massnahme.invalidityId 
-					this.editedMassnahmen[key].invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1;
-					this.addInvalidMassnahme(invalidMassnahmen, massnahme);
-					continue;
+				if(toBeChecked) {
+					var isValid = this.isTargetDateValid(new Date(parseInt(massnahme.gapEndDate)), true);
+					if(!isValid) {
+						this.editedMassnahmen[key].invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1;
+						this.addInvalidMassnahme(invalidMassnahmen, massnahme);
+						continue;
+					}
 				}
 				
 				if(massnahme.gapPriority == '4' || massnahme.gapPriority == '5') {
@@ -1862,9 +1882,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		var lComplianceToolbar = this.getComponent('pComplianceToolbar').getComponent('lComplianceToolbar');
 		
 		if(this.existsInvalidMassnahme > 0) {//lComplianceToolbar.text.length > 0
-			var invalidityId = this.editedMassnahmen[this.previousSelection].invalidityId ? this.editedMassnahmen[this.previousSelection].invalidityId : null;
+			var massnahme = this.editedMassnahmen[this.previousSelection];
 			
-			if(invalidityId && invalidityId != AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1)
+			if(massnahme.invalidityId !== AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1)
 				this.openInvalidMassnahmeWindow();
 			
 			return false;
@@ -2405,14 +2425,18 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	onGapClassSelect: function(combo, record, index) {
 		var fsComplianceStatement = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement');
 		var cbCompliantStatus = fsComplianceStatement.getComponent('pCompliantStatus').getComponent('cbCompliantStatus');
+		var gapClass = combo.getValue();
 		
-		this.updateRiskAnalysisAndMgmt(combo.getValue(), cbCompliantStatus.getValue());
+		this.updateRiskAnalysisAndMgmt(gapClass, cbCompliantStatus.getValue());
 		var massnahme = /*this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] :*/ this.loadedMassnahme;
-		this.deleteRiskAnalysisAndMgmtValues(massnahme, combo.getValue());
+		this.deleteRiskAnalysisAndMgmtValues(massnahme, gapClass);
 		
-		this.onMassnahmeChange();
+		//Achtung bei Aufruf von isTargetDateValid(): diese Funktion ist momentan spezialisiert auf Änderungen des targetDate
+		//und die Anpassung der gapClass. Aber nicht umgekehrt! Sie wird aber in beiden Fällen aufgerufen.
+		var options = { skipTargetDate: true };
+		this.onMassnahmeChange(options);
 		
-		this.setTargetDate(combo.getValue());
+		this.setTargetDate(gapClass);
 	},
 	
 	onOccurenceOfDamagePerYearChange: function(field, event) {
@@ -2627,7 +2651,66 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		}
 	},
 	
+	
+	
 	setTargetDate: function(gapClassId) {
+		var now = new Date();
+		var month = now.getMonth();
+		var year = now.getFullYear();
+		
+		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
+		var dfTargetDate = fsGapElimination.getComponent('pTargetDate').getComponent('dfTargetDate');
+
+		
+		switch(gapClassId) {
+			case '1':
+				year++;
+				month++;
+				//sonst wird vom datefield ein Monat zu früh gesetzt wenn nur das jahr erhöht wird.
+				//für das datefield ist im Gegensatz zum Date() der erste Monat die 1
+				
+				var newDate = new Date(year, month, 0);
+				
+				dfTargetDate.setValue(newDate);
+				Util.enableCombo(dfTargetDate);
+				break;
+			case '2':
+				month += AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS;
+				
+				if(month > 11) {
+					month -= 11;//month = plus - (11 - month)
+					year++;
+				}
+				
+				var newDate = new Date(year, month, 0);//0 für den letzten Tag des Monats
+				
+				dfTargetDate.setValue(newDate);
+				Util.enableCombo(dfTargetDate);
+				break;
+			case '3':
+				month += AC.GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS;
+				
+				if(month > 11) {
+					month -= 11;//month = plus - (11 - month)
+					year++;
+				}
+				
+				var newDate = new Date(year, month, 0);//0 für den letzten Tag des Monats
+				
+				dfTargetDate.setValue(newDate);
+				Util.enableCombo(dfTargetDate);
+				break;
+			case '4':
+			case '5':
+				dfTargetDate.reset();
+				Util.disableCombo(dfTargetDate);
+				
+				break;
+			default: break;
+		}
+	},
+	
+	/*setTargetDate: function(gapClassId) {
 		var now = new Date();
 		var month = now.getMonth();
 		var year = now.getFullYear();
@@ -2659,7 +2742,37 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
 		var dfTargetDate = fsGapElimination.getComponent('pTargetDate').getComponent('dfTargetDate');
 		dfTargetDate.setValue(newDate);
+	},*/
+	
+	getValidTargetDates: function(oldMonth, oldYear) {
+		var dates = [];
+		
+		var month = oldMonth + AC.GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS;
+		var year = oldYear;
+		if(month > 11) {
+			month -= 11;
+			year++;
+		}
+		
+		var shotTermDate = new Date(year, month, 0);
+		dates.push(shotTermDate);
+		
+		month = oldMonth + AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS;
+		year = oldYear;
+		if(month > 11) {
+			month -= 11;
+			year++;
+		}
+		
+		var shotTermDate = new Date(year, month, 0);
+		dates.push(shotTermDate);
+		
+		var longTermDate = new Date(oldYear + 1, oldMonth, 0);
+		dates.push(longTermDate);
+		
+		return dates;
 	},
+
 	
 	
 	
