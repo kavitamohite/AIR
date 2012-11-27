@@ -16,14 +16,16 @@ public class TestSPL {
 		
 		//SystemPlatformHbn.listSystemPlatform();
 		SystemPlatform spl =  SystemPlatformHbn.findSystemPlatformByName("BY7437");
-		System.out.println(spl.getAlias());		
-		System.out.println(spl.getAvailability().getSbTextEn());
-		System.out.println(spl.getAvailabilityText());
-		System.out.println(spl.getClusterCode());
-		System.out.println(spl.getClusterType());
-		System.out.println(spl.getConfidentiality().getSbTextEn());
-		System.out.println(spl.getConfidentialityText());
-		System.out.println(spl.getSystemPlatformName());
+		System.out.println("System Platform ID: "+spl.getID());
+		System.out.println("System Platform Name: "+spl.getName());
+		System.out.println("Alias: "+spl.getAlias());		
+		System.out.println("Responsible: "+spl.getResponsible());
+		//System.out.println("Availability: "+spl.getAvailability().getPLTextEn());
+		System.out.println("Availability Text: "+spl.getAvailabilityText());
+		System.out.println("Cluster Code: "+spl.getClusterCode());
+		System.out.println("Cluster Type: "+spl.getClusterType());
+		//System.out.println("Confidentiality: "+spl.getConfidentiality().getPLTextEn());
+		System.out.println("Confidentiality Text: "+spl.getConfidentialityText());
 		session.close();
 	}
 
