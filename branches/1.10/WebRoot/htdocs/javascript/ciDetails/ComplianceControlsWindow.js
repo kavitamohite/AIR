@@ -15,6 +15,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.hasNoGapAnalysis = this.config.complianceType == AC.CI_GROUP_ID_NON_BYTSEC || this.config.complianceType == AC.CI_GROUP_ID_DELETE_ID || this.config.complianceType == AC.CI_GROUP_ID_EMPTY;
 		
 //		this.massnahmeDetailStore = AIR.AirStoreFactory.createItsecMassnahmeDetailStore(this.statusWertDisplayField);
+		this.isWarningMassnahmenDone = true;
+		this.warningMassnahmen = [];
 		
 		
 		this.editedMassnahmen = {};//[]
@@ -1174,6 +1176,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
 		complianceLinkView.on('linkCiSelect', this.onLinkCiSelect, this);
+		
+		this.on('massnahmenWarning', this.onMassnahmenWarning, this);
 	},
 	
 	onTargetDateKeyUp: function(field, event) {
@@ -1206,7 +1210,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var isValid = true;
 		var labels = AAM.getLabels();
 		
-		var title = labels.invalidMassnameWindowTitle,
+		var title = labels.invalidMassnameWindowTitleGapClass,
 			message;
 		
 		var now = new Date();
@@ -1563,10 +1567,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			return;
 		}*/
 		
+		if(this.warningMassnahmen.length > 0) {
+			this.onMassnahmenWarning(this.warningMassnahmen);
+			this.warningMassnahmen.splice(0, this.warningMassnahmen.length);//entspricht auch this.isWarningMassnahmenDone = true;
+		}
 		
 		this.selectMassnahme(grid, rowIndex);
 		
-//		this.checkDataValid();
+//		this.validateMassnahmen();
 	},
 	
 	selectMassnahme: function(grid, rowIndex, massnahmeId) {
@@ -1742,22 +1750,23 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //			this.existsInvalidMassnahme = isValid ? 0 : 1;
 			this.existsInvalidMassnahme = 0;
 		} else {
-//			this.checkDataValid(options);
+//			this.validateMassnahmen(options);
 		}*/
 		
-		this.checkDataValid(options);
+		this.validateMassnahmen(options);
 	},
 	
 	
 	//ORDER: alle validierten Werte/Felder aller this.editedMassnahmen validieren. 
 	//Hier this.editedMassnahmen[i].mitigationPotential und Datumsfelder/-werte this.editedMassnahmen[i].dateOfApproval,targetDate
 	//Zusatz: eine Statusbar mit Meldung welche editierten Massnahmen fehlerhafte Werte enthalten, z.B. Ident: Masnhamen 06.004, 11.651 enthalten Fehler
-	checkDataValid: function(options) {
+	validateMassnahmen: function(options) {
 		//gerade gmachte Änderungen der aktuell ausgewählten Massnahme nach der letzen und vor der nächsten Massnahmenauswahl sichern
 		this.saveMassnahme(this.getSelectedGridIndex());
 		
 //		this.existsInvalidMassnahme = true;
-		var invalidMassnahmen = [];
+		var invalidMassnahmen = [],
+			warningMassnahmen = [];
 		
 		for(var key in this.editedMassnahmen) {
 			var massnahme = this.editedMassnahmen[key];
@@ -1815,9 +1824,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 								continue;	
 							}
 							
-							if(this.isDamagePerYearFalse(massnahme)) {
-								massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_DAMAGE_PER_YEAR;
-								this.addInvalidMassnahme(invalidMassnahmen, massnahme);
+							if(this.isDamagePerYearFalse(massnahme) && !this.isWarningMassnahmenDone) {
+//								massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_DAMAGE_PER_YEAR;
+//								this.addInvalidMassnahme(invalidMassnahmen, massnahme);
+
+								massnahme.warningId = AC.ITSEC_MASSN_INVALIDITY_TYPE_DAMAGE_PER_YEAR;
+								this.addWarningMassnahme(warningMassnahmen, massnahme);
+								
 								continue;
 							}
 						}
@@ -1868,6 +1881,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.updateToolbar(sInvalidMassnahmen);
 		
 		this.existsInvalidMassnahme = invalidMassnahmen.length;//invalidMassnahmen.length + 1; > 0;
+		
+		
+//		if(warningMassnahmen.length > 0)
+//		this.fireEvent('massnahmenWarning', warningMassnahmen);
+		this.warningMassnahmen = warningMassnahmen;
 	},
 	
 	/**
@@ -1904,6 +1922,17 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				this.openInvalidMassnahmeWindow(grid.getEl());
 			
 			return false;
+			
+			
+			/*if(massnahme.invalidityId === AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE) {
+				this.openInvalidMassnahmeWindow(grid.getEl());
+				return false;
+			} else {
+				if(massnahme.invalidityId !== AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1)//erledigt von onTargetDateFocusLost
+					this.openInvalidMassnahmeWindow(grid.getEl());
+				
+				return false;//true
+			}*/
 		} else {
 			this.ignoreInvalidMassnahme = false;
 			
@@ -2003,6 +2032,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var ident = this.getMassnahmeHeaderValueByAttr(massnahme, 'ident');
 		invalidMassnahmen.push(ident);
 	},
+	
+	addWarningMassnahme: function(warningMassnahmen, massnahme) {
+//		var ident = this.getMassnahmeHeaderValueByAttr(massnahme, 'ident');
+		warningMassnahmen.push(massnahme);//ident
+	},
+	
+	
 	
 	/**
 	 * es muss unterschieden werden was die Quelle der massnahme ist:
@@ -2483,6 +2519,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	
 	onRiskAnalysisAndMgmtChange: function(field, event) {
+		this.isWarningMassnahmenDone = false;
+		
 		this.resetMassnahmeDates();
 		this.onMassnahmeChange();
 	},
@@ -2505,6 +2543,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //	},
 	
 	isDamagePerYearFalse: function(massnahme) {
+		if(this.isWarningMassnahmenDone)
+			return true;
+		
 //		var massnahme = this.editedMassnahmen[this.getSelectedGridIndex()];
 		var isChecked = massnahme.riskAnalysisAsFreetext == '-1' ? true : false;
 		var isFalse = false;
@@ -2519,6 +2560,27 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		}
 		
 		return isFalse;
+	},
+	onMassnahmenWarning: function(warningMassnahmen) {
+		var callbackMap;
+		var title, message;
+		var labels = AIR.AirApplicationManager.getLabels();
+		
+//		switch(warningMassnahmen[0].invalidityId) {
+		switch(warningMassnahmen[0].warningId) {
+			case AC.ITSEC_MASSN_INVALIDITY_TYPE_DAMAGE_PER_YEAR:
+				title = labels.invalidMassnameWindowTitleDamagePerYear;
+				message = labels.invalidMassnameWindowDamagePerYear;
+				
+				break;
+			default: break;
+		}
+		
+		this.isWarningMassnahmenDone = true;
+	
+		
+		var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', callbackMap, message, title);
+		invalidMassnahmeWindow.show(this.getEl());
 	},
 	
 	
