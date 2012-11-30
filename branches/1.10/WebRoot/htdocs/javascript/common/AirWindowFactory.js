@@ -2,7 +2,7 @@ Ext.namespace('AIR');
 
 AIR.AirWindowFactory = function() {
 	return {
-		createDynamicMessageWindow: function(windowType, callbackMap, message, title, options) {
+		createDynamicMessageWindow: function(windowType, callbackMap, message, title, options, iconType) {
 			var labels = AIR.AirApplicationManager.getLabels();
 			
 			switch(windowType) {
@@ -302,7 +302,7 @@ AIR.AirWindowFactory = function() {
 				case 'INVALID_MASSNAHME':
 					var windowTitle = title;
 					var windowText = message;
-					var windowIcon = img_Warning;
+					var windowIcon = iconType ? iconType : img_Warning;
 					
 					var buttonConfigs = [{
 						text: labels.dynamicWindowOKButtonText,

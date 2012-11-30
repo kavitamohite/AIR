@@ -239,28 +239,29 @@
 				
 				<checkItsecGroupWindowTitle>ITSec Gruppe</checkItsecGroupWindowTitle>
 				<checkItsecGroupWindowMessage>Sie haben die ITSec Gruppe dieses Application CIs geändert. Alle ITSec Massnahmen der vorherigen ITSec Gruppe werden gelöscht. Sind Sie sicher?</checkItsecGroupWindowMessage>
-				<invalidMassnameWindowTitle>Ungültige Massnahme</invalidMassnameWindowTitle>
-				<invalidMassnameWindowMessage>Alle Felder müssen bearbeitet werden, damit die Massnahme gültig ist.</invalidMassnameWindowMessage>
-				<invalidMassnameDamagePerYear>Die Werte werden gespeichert, aber es ist nicht möglich zu genehmigen:&lt;br&gt;Der Schaden ist nicht grösser als die Kosten der Risikominderung. Der Gap ist nicht &quot;economically not solvable&quot;</invalidMassnameDamagePerYear>
 				
-				<invalidMassnameTargetDatePastInvalid>A date in the past is not allowed</invalidMassnameTargetDatePastInvalid>
-				<invalidMassnameGapClassReplace>For the target date {0} the gap class &quot;{1}&quot; was set instead of &quot;{2}&quot;</invalidMassnameGapClassReplace>
-				<invalidMassnameTargetDateInvalid>Please set target date and/or gap class to appropriate values!&lt;br&gt;&lt;br&gt;{0}&lt;br&gt;{1}&lt;br&gt;{2}</invalidMassnameTargetDateInvalid>
 				
-				<signeeApproval>Genehmigen</signeeApproval>
+				<invalidMassnameWindowTitleIncomplete>Unvollständige Massnahme</invalidMassnameWindowTitleIncomplete>
+				<invalidMassnameWindowTitleGapClass>Diskrepanz Target Date und Gap Klasse</invalidMassnameWindowTitleGapClass>
+				<invalidMassnameWindowTitleDamagePerYear>Ökonomisch lösbar?</invalidMassnameWindowTitleDamagePerYear>
+				
+				<invalidMassnameWindowIncomplete>Alle Felder müssen bearbeitet werden, damit die Massnahme gültig ist.</invalidMassnameWindowIncomplete>
+				<invalidMassnameWindowDamagePerYear>Die Werte werden gespeichert, aber es ist nicht möglich zu genehmigen:&lt;br&gt;Der Schaden ist nicht grösser als die Kosten der Risikominderung. Der Gap ist nicht &quot;economically not solvable&quot;</invalidMassnameWindowDamagePerYear>
+				<invalidMassnameWindowTargetDatePast>Ein Datum in der Vergangenheit ist nicht erlaubt</invalidMassnameWindowTargetDatePast>
+				<invalidMassnameWindowGapClassReplace>Für den Zieltermin {0} wurde die Gap Klasse &quot;{1}&quot; gesetzt anstatt &quot;{2}&quot;</invalidMassnameWindowGapClassReplace>
+				<invalidMassnameWindowTargetDate>Bitte setzen Sie gültige Werte für den Zieltermin und/oder Gap Klasse!&lt;br&gt;&lt;br&gt;short-term to solve		max: {0}&lt;br&gt;mid-term to solve		max: {1}&lt;br&gt;long-term to solve		max: {2}</invalidMassnameWindowTargetDate>
 				
 				
 				<!-- TODO: Benötigt? -->		
 				<riskAnalysisYN>Risikoanalyse vorhanden?</riskAnalysisYN>
-			<complianceprocedures>Prozeduren</complianceprocedures>
-			<supportStuffUserAuthorisation>Benutzer Authorisierung</supportStuffUserAuthorisation>
+				<complianceprocedures>Prozeduren</complianceprocedures>
+				<supportStuffUserAuthorisation>Benutzer Authorisierung</supportStuffUserAuthorisation>
 				<supportstuffUASupportingDoc>Dokumentation</supportstuffUASupportingDoc>
 				<supportstuffUAProcess>Prozess</supportstuffUAProcess>
-			<supportStuffUserManagement>Benutzer Management</supportStuffUserManagement>
+				<supportStuffUserManagement>Benutzer Management</supportStuffUserManagement>
 				<supportstuffUMProcess>Prozess</supportstuffUMProcess>
-			<compliancecontrols>Maßnahmen</compliancecontrols>
-
-				<!-- ENDE TODO: Benötigt? -->	
+				<compliancecontrols>Maßnahmen</compliancecontrols>
+				<!-- ENDE TODO: Benötigt? -->
 		  
 		<licensePanelTitle>Lizenzen und Kosten</licensePanelTitle>
 			<licenselicense>Lizenzen</licenselicense>
@@ -466,6 +467,7 @@
 		<complianceRiskAnalysisAndMgmtTypeSelectMessage>Wechseln hat den Verlust der Risk Analysis and Management {0} Daten von {1} zur Folge. Sind Sie sicher?</complianceRiskAnalysisAndMgmtTypeSelectMessage>
 		<complianceRiskAnalysisAndMgmtTypeFreeText>Freitext</complianceRiskAnalysisAndMgmtTypeFreeText>
 		<complianceRiskAnalysisAndMgmtTypeNonFreeText>nicht Freitext</complianceRiskAnalysisAndMgmtTypeNonFreeText>
+		<signeeApproval>Genehmigen</signeeApproval>
 				
 		<CiConnectionsViewTitle>Verknüpfungen</CiConnectionsViewTitle>
 		<CiConnectionsViewUpStreamConnections>UpStream</CiConnectionsViewUpStreamConnections>

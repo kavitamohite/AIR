@@ -18,8 +18,8 @@ AIR.DynamicWindow = Ext.extend(Ext.Window, {
 			
 //			minWidth: 200,//350,//this.minWidth,//
 //			minHeight: 80, //kein Effekt
-			height: 80,
-			width: 200,//this.minWidth + 50,//
+//			height: 120,//80
+//			width: 400,//this.minWidth + 50,//
 			
 //			autoHeight: true,
 //			autoWidth: true,

@@ -27,7 +27,7 @@ Ext.override(Ext.form.DateField, {
 	        this.validate();
 	    }
 	    var v = this.getValue();
-	    //auskommentiert um ungültige Werte zu löschen, NACHDEM ein gültiges Datum gelöscht wurde, und nichts um datefield steht
+	    //auskommentiert um ungültige Werte zu löschen, NACHDEM ein gültiges Datum gelöscht wurde, und nichts im datefield steht
 	    //if(String(v) !== String(this.startValue)){
 	        this.fireEvent('change', this, v, this.startValue);
 	    //}

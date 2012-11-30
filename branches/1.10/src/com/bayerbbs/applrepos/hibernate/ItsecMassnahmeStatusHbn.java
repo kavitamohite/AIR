@@ -23,7 +23,7 @@ public class ItsecMassnahmeStatusHbn {
 				tx = session.beginTransaction();
 				@SuppressWarnings("unchecked")
 				List<ItsecCompliance> values = session.createQuery(
-						"select h from ItsecMassnahmeStatus as h where h.tabelleId = " + linkCiTableId + " h.and tabellePkId="+linkCiId + " and h.massnahmeGSTOOLID=" + massnahmeGstoolId).list();
+						"select h from ItsecCompliance h where h.tabelleId = " + linkCiTableId + " h.and tabellePkId="+linkCiId + " and h.massnahmeGSTOOLID=" + massnahmeGstoolId).list();
 
 				if (null != values && 0 < values.size()) {
 					result = values.get(0);
@@ -49,7 +49,7 @@ public class ItsecMassnahmeStatusHbn {
 				tx = session.beginTransaction();
 				@SuppressWarnings("unchecked")
 				List<ItsecCompliance> values = session.createQuery(
-						"select h from ItsecMassnahmeStatus as h where h.itsecMassnStId = " + itsecMassnStId).list();
+						"select h from ItsecCompliance as h where h.itsecMassnStId = " + itsecMassnStId).list();
 
 				if (null != values && 0 < values.size()) {
 					result = values.get(0);

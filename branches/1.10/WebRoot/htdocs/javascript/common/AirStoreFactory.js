@@ -1103,16 +1103,19 @@ AIR.AirStoreFactory = function() {
 			        {name: 'itsecGroup'},
 			        {name: 'referencedTemplate'},
 					{name: 'referencedTemplateInvalid'},
+					{name: 'signeeApproval'},
 					{name: 'checkItsecGroupWindowTitle'},
 					{name: 'checkItsecGroupWindowMessage'},
-					{name: 'invalidMassnameWindowTitle'},
-					{name: 'invalidMassnameWindowMessage'},
-					{name: 'invalidMassnameDamagePerYear'},
 					
-					{name: 'invalidMassnameTargetDatePastInvalid'},
-					{name: 'invalidMassnameGapClassReplace'},
-					{name: 'invalidMassnameTargetDateInvalid'},
-					{name: 'signeeApproval'},
+					{name: 'invalidMassnameWindowTitleIncomplete'},
+					{name: 'invalidMassnameWindowTitleGapClass'},
+					{name: 'invalidMassnameWindowTitleDamagePerYear'},
+					
+					{name: 'invalidMassnameWindowIncomplete'},
+					{name: 'invalidMassnameWindowDamagePerYear'},
+					{name: 'invalidMassnameWindowTargetDatePast'},
+					{name: 'invalidMassnameWindowGapClassReplace'},
+					{name: 'invalidMassnameWindowTargetDate'},
 	
 					// license			
 					{name: 'licensePanelTitle'},
