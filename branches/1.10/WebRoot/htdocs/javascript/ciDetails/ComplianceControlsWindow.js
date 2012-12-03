@@ -59,13 +59,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		signeeListStore.load({
 			params: signeeStoreParams,
 			callback: function() {//callback ONLY for TESTING
-				var signee = new Ext.data.Record({
+				/*var signee = new Ext.data.Record({
 					cwid: 'ercva',
 					firstname: 'Simon',
 					lastname: 'Pepping'
 				});
 				
-				signeeListStore.add(signee);
+				signeeListStore.add(signee);*/
 			}
 		});
 		
@@ -1199,12 +1199,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		var result = this.isTargetDateValid(field.getValue());
 		if(result.message) {
-			if(result.isValid) {
+			if(result.isValid) {//Massnahmen Validierungsfenster für Warnungen sollen nur einmal kommen
 				if(this.warningMassnahmen.length > 0 && !this.skipFocusLost) {
 					this.warningMassnahmen.splice(0, this.warningMassnahmen.length);
 					this.openMassnahmeValidationWindow(result.gapClass, result.title, result.iconType, result.message, result.isValid);
 				}
-				
 			} else
 				this.openMassnahmeValidationWindow(result.gapClass, result.title, result.iconType, result.message, result.isValid);
 		}
@@ -1214,6 +1213,12 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	isTargetDateValid: function(date) {//, skip
+		//wenn es keine editierten Massnahmen gibt, sprich die Massnahme nach einer Speicherung neu geladen wurde,
+		//kann das target nicht falsch sein, daher keine Prüfung, damit beim Zugriff auf die nicht existierende
+		//Massnahme kein Fehler kommt: var gapClass = this.editedMassnahmen[this.previousSelection].gapPriority
+		if(!this.editedMassnahmen[this.previousSelection])
+			return true;
+		
 		var isValid = true;
 		var labels = AAM.getLabels();
 		
@@ -1476,7 +1481,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
 		var bSigneeApproval = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('bSigneeApproval');
 		
-		if(AAM.getCwid() === combo.cwid) {//newValue
+		if(AAM.getCwid().toUpperCase() === combo.cwid) {//newValue
 			bSigneeApproval.show();
 		} else {
 			bSigneeApproval.hide();
@@ -1503,6 +1508,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var newDate = new Date(year + 1, month + 1, 0);//month + 1 weil datefield bei 1 anfängt
 		
 		dfTargetDate.setValue(newDate);
+		this.onMassnahmeChange();
 	},
 	
 	updateGapRelevance: function(compliantStatusId, gapClassId, doMarkInvalid) {
@@ -1520,8 +1526,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				case '3':
 				case 4:
 				case '4':
-					if(doMarkInvalid)
-						this.markInvalid(fsGap, [ 'dfTargetDate' ]);
+					if(doMarkInvalid) {
+						var exceptions = [ 'dfTargetDate' ];
+						this.markInvalid(fsGap, exceptions);
+					}
 					
 					fsGap.setVisible(true);
 					break;
@@ -2074,7 +2082,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	 */
 	getMassnahmeHeaderValueByAttr: function(massnahme, attr) {
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
-		var attrValue = grid.getStore().getById(massnahme.itsecMassnahmenStatusId).data[attr];
+		
+		var r = grid.getStore().getById(massnahme.itsecMassnahmenStatusId);
+		
+		//wenn Massnahme verlinkt ist, ist die itsecMassnahmenStatusId natürlich nicht im gridStore vorhanden, daher:
+		if(!r)
+			r = this.getSelectedGridRecord();//grid.getStore().getAt();
+		
+		var attrValue = r.data[attr];
 		return attrValue;
 	},
 	
@@ -2363,6 +2378,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				taMitigationPotential2.setValue(massnahme.mitigationPotentialText);
 //				taDamagePerYear2.setValue(massnahme.expenseText);
 				
+				var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
+				var bSigneeApproval = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('bSigneeApproval');
+				bSigneeApproval.hide();
+				
 
 				if(gapClassId == '5') {//economically not solvable
 //					tfDamagePerYear.setVisible(true);
@@ -2392,19 +2411,20 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				//orig
 				if(massnahme.signee.length > 0)
 					cbSignee.setValue(this.getSigneeValueByCwid(cbSignee, massnahme.signee));//setRawValue
-				var isSigneeUser = cbSignee.getStore().getById(AIR.AirApplicationManager.getCwid());
+				
+
+				var isSigneeUser = cbSignee.getStore().getById(AIR.AirApplicationManager.getCwid().toUpperCase());
 				if(isSigneeUser && !this.config.hasTemplate) {
-//					Util.enableCombo(cbSignee);
-					
-					var signee = cbSignee.getValue();
-					if(signee === AIR.AirApplicationManager.getCwid()) {
-						Util.enableCombo(dfDateOfApproval);
+//					var signee = cbSignee.getValue();
+					if(massnahme.signee === AIR.AirApplicationManager.getCwid().toUpperCase()) {//signee
+//						Util.enableCombo(dfDateOfApproval);
+						bSigneeApproval.show();
 					} else {
-						Util.disableCombo(dfDateOfApproval);
+//						Util.disableCombo(dfDateOfApproval);
 					}
 				} else {
 //					Util.disableCombo(cbSignee);
-					Util.disableCombo(dfDateOfApproval);
+//					Util.disableCombo(dfDateOfApproval);
 				}
 				//new
 //				cbSignee.setValue(massnahme.signee);//setRawValue
@@ -2465,7 +2485,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		var fsRiskAnalysisAndMgmt = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt');
 		
-		var massnahme = /*this.editedMassnahmen[this.getSelectedGridIndex()] ||*/ this.loadedMassnahme;
+		var massnahme = /*this.editedMassnahmen[this.getSelectedGridIndex()] ||*/ this.loadedMassnahme;//oder einkommentieren siehe getMassnahmeHeaderValueByAttr()? 03122012
 		
 		var yesCallback = function() {
 			this.deleteRiskAnalysisAndMgmtDamageData(massnahme, isChecked);
@@ -2608,8 +2628,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			default: break;
 		}
 		
-		this.isWarningMassnahmenDone = true;
-		
+		//Massnahmen Validierungsfenster für Warnungen sollen nur einmal kommen
+		this.isWarningMassnahmenDone = true;//mit warningMassnahmen.splice vereinheitlichen? Siehe isDamagePerYearFalse()
 		this.warningMassnahmen.splice(0, this.warningMassnahmen.length);//entspricht auch this.isWarningMassnahmenDone = true;
 	},
 	
@@ -3036,9 +3056,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	validateDecimalSmallerConstantValue: function(value, field) {
 		value = this.removeDispensableDots(value);
-		field.setRawValue(value);//field.setValue(value) --> Endlosschleife
 		
-		var isValid = parseInt(value) <= AC.MAX_MITIGATION_POTENTIAL || value.length == 0;//or use var MAX_VALUES = { field.getId(): 4711, ... } to make it dynamic if needed
+//		var isValid = parseInt(value) <= AC.MAX_MITIGATION_POTENTIAL || value.length == 0;//or use var MAX_VALUES = { field.getId(): 4711, ... } to make it dynamic if needed
+		if(parseInt(value) > 100)
+			value = 100;
+		
+		field.setRawValue(value);//field.setValue(value) --> Endlosschleife
+		return true;
+		
 //		if(isValid) {
 //			this.activateButtons();
 //		} else {
@@ -3050,7 +3075,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //			isValid = true;
 //		}
 		
-		return isValid;
+//		return isValid;
 	},
 	
 	validateDecimal: function(value, field) {
