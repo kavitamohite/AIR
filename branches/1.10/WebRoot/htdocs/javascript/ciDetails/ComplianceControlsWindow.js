@@ -1198,9 +1198,16 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //			this.isTargetDateValid(field.getValue());
 		
 		var result = this.isTargetDateValid(field.getValue());
-		if(result.message)
-			this.openMassnahmeValidationWindow(result.gapClass, result.title, result.iconType, result.message, result.isValid);
-		
+		if(result.message) {
+			if(result.isValid) {
+				if(this.warningMassnahmen.length > 0 && !this.skipFocusLost) {
+					this.warningMassnahmen.splice(0, this.warningMassnahmen.length);
+					this.openMassnahmeValidationWindow(result.gapClass, result.title, result.iconType, result.message, result.isValid);
+				}
+				
+			} else
+				this.openMassnahmeValidationWindow(result.gapClass, result.title, result.iconType, result.message, result.isValid);
+		}
 		Util.log('onTargetDateFocusLost isMessageWindowOpen='+this.isMessageWindowOpen);
 		
 //		}
@@ -1567,9 +1574,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			return;
 		}*/
 		
+		//funktioniert nur mit warnung Fenstern solange, die Warnung nicht bei einem focusLost/blur event kommen muss. Beipsiel: isDamagePerYearFalse
+		//funktioniert nicht bei isTargetDateValid, die valid ergeben weil warnung Fenster bei einem focusLost/blur event 
 		if(this.warningMassnahmen.length > 0) {
 			this.onMassnahmenWarning(this.warningMassnahmen);
-			this.warningMassnahmen.splice(0, this.warningMassnahmen.length);//entspricht auch this.isWarningMassnahmenDone = true;
+			this.skipFocusLost = false;
 		}
 		
 		this.selectMassnahme(grid, rowIndex);
@@ -1798,8 +1807,12 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //					var isValid = this.isTargetDateValid(new Date(parseInt(massnahme.gapEndDate)), true);
 					var result = this.isTargetDateValid(new Date(parseInt(massnahme.gapEndDate)));
 					
-					if(!result.isValid) {//isValid
-						this.editedMassnahmen[key].invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1;
+					if(result.isValid) {//isValid
+						massnahme.warningId = AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1;
+						this.addWarningMassnahme(warningMassnahmen, massnahme);
+						continue;
+					} else {
+						massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1;
 						this.addInvalidMassnahme(invalidMassnahmen, massnahme);
 						continue;
 					}
@@ -1908,10 +1921,19 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	 * Nachteil: weniger konsequente Implementierung
 	 */
 	onBeforeMassnahmeSelect: function(selModel, rowIndex, keepExisting, record) {
-//		if(this.previousSelection) {
-//			var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
-//			grid.getView().focusRow(this.previousSelection);
-//		}
+		//warningMassnahmen Fesnter die nur einmal kommen sollen. 
+		//Sowohl auf der Massnahme Detail Seite als auch auf der Massnahmen Tabellen Seite
+		if(this.warningMassnahmen.length > 0) {//geht nur, wenn beforeselect event VOR dem blur event des dfTargetDate gefeuert wird!
+			this.skipFocusLost = true;
+			return true;
+		}
+		/*if(this.warningMassnahmen.length > 0 && !this.ignoreWarningMassnahme) {
+			
+			return true;
+		} else {
+			this.ignoreWarningMassnahme = true;
+			return true;
+		}*/
 		
 		if(this.existsInvalidMassnahme > 0 && !this.ignoreInvalidMassnahme) {
 			var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
@@ -1935,6 +1957,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			}*/
 		} else {
 			this.ignoreInvalidMassnahme = false;
+			
 			
 			return true;
 		}
@@ -2566,21 +2589,28 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var title, message;
 		var labels = AIR.AirApplicationManager.getLabels();
 		
-//		switch(warningMassnahmen[0].invalidityId) {
 		switch(warningMassnahmen[0].warningId) {
 			case AC.ITSEC_MASSN_INVALIDITY_TYPE_DAMAGE_PER_YEAR:
 				title = labels.invalidMassnameWindowTitleDamagePerYear;
 				message = labels.invalidMassnameWindowDamagePerYear;
 				
+				var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', callbackMap, message, title);
+				invalidMassnahmeWindow.show(this.getEl());
+				break;
+				
+			case AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1:
+				var result = this.isTargetDateValid(new Date(parseInt(warningMassnahmen[0].gapEndDate)));
+				
+				if(this.warningMassnahmen.length > 0)
+					this.openMassnahmeValidationWindow(result.gapClass, result.title, result.iconType, result.message, result.isValid);
+
 				break;
 			default: break;
 		}
 		
 		this.isWarningMassnahmenDone = true;
-	
 		
-		var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', callbackMap, message, title);
-		invalidMassnahmeWindow.show(this.getEl());
+		this.warningMassnahmen.splice(0, this.warningMassnahmen.length);//entspricht auch this.isWarningMassnahmenDone = true;
 	},
 	
 	
