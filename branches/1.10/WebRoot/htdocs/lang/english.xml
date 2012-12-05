@@ -460,7 +460,8 @@
 		<complianceWindowOccurenceOfDamagePerYear>Occurence of damage per year</complianceWindowOccurenceOfDamagePerYear>
 		<complianceWindowMaximumDamagePerEvent>Maximum damage per event</complianceWindowMaximumDamagePerEvent>
 		<complianceWindowMitigationPotential>Mitigation potential</complianceWindowMitigationPotential>
-		<complianceWindowRiskMitigation>Risk mitigation: expense per year</complianceWindowRiskMitigation>
+		<complianceWindowRiskMitigation>Risk mitigation</complianceWindowRiskMitigation>
+		<complianceWindowExpensePerYear>Expense per year</complianceWindowExpensePerYear>
 		<complianceWindowSignee>Signee</complianceWindowSignee>
 		<complianceWindowDateOfApproval>Date of approval</complianceWindowDateOfApproval>
 		<complianceRiskAnalysisAndMgmtTypeSelectTitle>Switch risk analysis and management type</complianceRiskAnalysisAndMgmtTypeSelectTitle>

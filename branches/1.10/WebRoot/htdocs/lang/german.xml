@@ -460,7 +460,8 @@
 		<complianceWindowOccurenceOfDamagePerYear>Schadenshäufigkeit pro Jahr</complianceWindowOccurenceOfDamagePerYear>
 		<complianceWindowMaximumDamagePerEvent>Maximaler Schaden pro Jahr</complianceWindowMaximumDamagePerEvent>
 		<complianceWindowMitigationPotential>Minderungspotential</complianceWindowMitigationPotential>
-		<complianceWindowRiskMitigation>Risikominderung: Kosten pro Jahr</complianceWindowRiskMitigation>
+		<complianceWindowRiskMitigation>Risikominderung</complianceWindowRiskMitigation>
+		<complianceWindowExpensePerYear>Kosten pro Jahr</complianceWindowExpensePerYear>
 		<complianceWindowSignee>Unterzeichner</complianceWindowSignee>
 		<complianceWindowDateOfApproval>Genehmigungsdatum</complianceWindowDateOfApproval>
 		<complianceRiskAnalysisAndMgmtTypeSelectTitle>Wechsel des Risk Analysis and Management Typs</complianceRiskAnalysisAndMgmtTypeSelectTitle>

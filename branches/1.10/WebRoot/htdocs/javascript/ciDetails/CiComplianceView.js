@@ -531,9 +531,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.filterCombo(cbItSecGroup);
 		
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
-		//bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceEditButton);
-		
-		
+		var text = AIR.AirApplicationManager.getLabels().relevanceViewButton;
 		
 		var hasTemplate = data.refId !== '0';
 		if(hasTemplate) {
@@ -554,9 +552,6 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				//var message = AIR.AirApplicationManager.getLabels().referencedTemplateInvalid;
 				//lReferencedTemplateError.setText(message);
 			}
-			
-			Util.disableCombo(cbItSecGroup);
-			//bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceViewButton);
 		} else {
 			//cbReferencedTemplate.clearValue();//setValue('');//
 			//AIR.AirAclManager.setRelevance(cbItSecGroup, data);//setEditable(cbItSecGroup);
@@ -564,9 +559,13 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if(AIR.AirAclManager.isRelevance(cbItSecGroup, data))
 				Util.enableCombo(cbItSecGroup);
 				
-			//bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceEditButton);
+			if(AIR.AirAclManager.isRelevance(bEditItSecGroup, data))
+				text = AIR.AirApplicationManager.getLabels().relevanceEditButton;
+//			
 			//cbReferencedTemplate.isInvalid = false;
 		}
+		bEditItSecGroup.setText(text);
+		
 		
 		//is itsecGroupId a real BYTsec ItSecGroup?
 		if(data.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && data.itsecGroupId != 0 && data.itsecGroupId != -1) {//evtl. mit cbItSecGroup.setRawValue('Default_ItSecGroup'); setzen falls der Name dieser Default itsecGruppe angezeigt werden soll
@@ -639,9 +638,14 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var massnahmeDetailStore = AIR.AirStoreFactory.createItsecMassnahmeDetailStore();
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
-		var hasTemplate = cbReferencedTemplate.getValue().length > 0 || 
-						  cbReferencedTemplate.el.dom.value.indexOf(AC.LABEL_INVALID) > -1 ||
-						  cbItSecGroup.el.dom.value.indexOf(AC.LABEL_INVALID) > -1;
+		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
+		
+		var hasTemplate = 	cbReferencedTemplate.getValue().length > 0 || 
+						  	cbReferencedTemplate.el.dom.value.indexOf(AC.LABEL_INVALID) > -1 ||
+						  	cbItSecGroup.el.dom.value.indexOf(AC.LABEL_INVALID) > -1;
+						  	
+	  	var hasEditRights = AIR.AirAclManager.isRelevance(bEditItSecGroup, AAM.getAppDetail());
+	  	
 		
 		var config = {
 			complianceType: this.complianceType,
@@ -650,7 +654,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 //			itSetId: AAM.getAppDetail().itsetId,
 			ciId: AAM.getAppDetail().applicationId,
 			applicationCat1Id: AAM.getAppDetail().applicationCat1Id,
-			hasTemplate: hasTemplate
+			hasEditRights: !hasTemplate && hasEditRights
 		};
 		
 		var complianceControlsWindow = new AIR.ComplianceControlsWindow(massnahmenStore, massnahmeDetailStore, config);//this.getStatusWertDisplayField()	, massnahmeDetailStore	selectedLanguage in commonvars.js
@@ -694,7 +698,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		Util.disableCombo(cbItSecGroup);
 		
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
-		//bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceViewButton);
+		bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceViewButton);
 		
 		//this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('lReferencedTemplateError').hide();
 		//combo.isInvalid = false;
@@ -718,8 +722,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 			Util.enableCombo(cbItSecGroup);
 			
-			//var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
-			//bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceEditButton);
+			var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
+			bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceEditButton);
 		}
 		
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
@@ -785,57 +789,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				rgRelevanceBYTSEC.disable();
 				
 				this.setComplianceDetails(data);
-				/*
-				var tfItsetName = this.getComponent('fsComplianceDetails').getComponent('pItSet').getComponent('tfItsetName');
-				tfItsetName.setValue(data.itsetName);//data.itset oder anstatt id einen Namen in data.itset speichern?
-				
-				var isTemplate = data.isTemplate === '1';
-				var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
-				cbIsTemplate.setValue(isTemplate);
-				
-				
-				var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
-				this.filterCombo(cbReferencedTemplate);
-
-				//var lReferencedTemplateError = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('lReferencedTemplateError');
-				var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
-				var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
-
-				var hasTemplate = data.refId !== '0';
-				if(hasTemplate) {
-					Util.disableCombo(cbItSecGroup);
-					
-					var isTemplateValid = cbReferencedTemplate.getStore().data.key(data.refId);
-					if(isTemplateValid) {
-						cbReferencedTemplate.setValue(data.refId);
-						//lReferencedTemplateError.hide();
-						//cbReferencedTemplate.isInvalid = false;
-					} else {
-						//cbReferencedTemplate.setRawValue(data.refTxt);
-						cbReferencedTemplate.setRawValue(AC.LABEL_INVALID+data.refTxt);
-						//lReferencedTemplateError.show();
-						//cbReferencedTemplate.isInvalid = true;
-
-						//var message = AIR.AirApplicationManager.getLabels().referencedTemplateInvalid;
-						//lReferencedTemplateError.setText(message);
-					}
-					
-					bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceViewButton);
-				} else {
-					//cbReferencedTemplate.clearValue();//setValue('');//
-					//AIR.AirAclManager.setRelevance(cbItSecGroup, data);//setEditable(cbItSecGroup);
-					bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceEditButton);
-					//cbReferencedTemplate.isInvalid = false;
-				}
-				
-				
-				
-				this.filterByItSet(cbItSecGroup, data.itset);
-				if(data.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC)//evtl. mit cbItSecGroup.setRawValue('Default_ItSecGroup'); setzen falls der Name dieser Default itsecGruppe angezeigt werden soll
-					cbItSecGroup.setValue(data.itsecGroupId);
-				//else
-					//cbItSecGroup.clearValue();*/
-
+			
 				break;
 		}
 		
@@ -1020,16 +974,22 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.get('fsComplianceDetails').get('pItSecGroup').get('lItSecGroup').setText(labels.compliance1435WindowItSecGroup);
 		
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
-		if(AIR.AirApplicationManager.getAppDetail()) {
-			var hasTemplate = AIR.AirApplicationManager.getAppDetail().refId === '0';
+		var text = AIR.AirApplicationManager.getLabels().relevanceViewButton;
+		
+		var data = AIR.AirApplicationManager.getAppDetail();
+		if(data) {
+			var hasTemplate = data.refId !== '0';
 			
+			if(!hasTemplate && AIR.AirAclManager.isRelevance(bEditItSecGroup, data))
+				text = labels.relevanceEditButton;
 			
-			/*if(hasTemplate)
-				bEditItSecGroup.setText(labels.relevanceEditButton);
-			else
-				bEditItSecGroup.setText(labels.relevanceViewButton);*/
+//			if(hasTemplate)
+//				bEditItSecGroup.setText(labels.relevanceViewButton);
+//			else
+//				bEditItSecGroup.setText(labels.relevanceEditButton);
 		}
-		bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceViewButton);
+		
+		bEditItSecGroup.setText(text);
 		
 		
 		this.get('fsRelevantRegulations').setTitle(labels.compliancerelevance);

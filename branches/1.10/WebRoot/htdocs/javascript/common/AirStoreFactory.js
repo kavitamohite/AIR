@@ -1366,6 +1366,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'complianceWindowMaximumDamagePerEvent'},
 			        {name: 'complianceWindowMitigationPotential'},
 			        {name: 'complianceWindowRiskMitigation'},
+			        {name: 'complianceWindowExpensePerYear'},
 			        {name: 'complianceWindowSignee'},
 			        {name: 'complianceWindowDateOfApproval'},
 			        {name: 'complianceRiskAnalysisAndMgmtTypeSelectTitle'},
