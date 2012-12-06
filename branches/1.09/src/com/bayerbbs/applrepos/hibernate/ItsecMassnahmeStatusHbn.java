@@ -9,14 +9,14 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.ItsecMassnahmeStatus;
+import com.bayerbbs.applrepos.domain.ItsecCompliance;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmeDetailDTO;
 
 public class ItsecMassnahmeStatusHbn {
 
 	
-	public static ItsecMassnahmeStatus findLinkedMassnahmeDetail(Long linkCiId, Long linkCiTableId, Long massnahmeGstoolId) {
-		ItsecMassnahmeStatus result = null;
+	public static ItsecCompliance findLinkedMassnahmeDetail(Long linkCiId, Long linkCiTableId, Long massnahmeGstoolId) {
+		ItsecCompliance result = null;
 
 		if (null != linkCiId && null != linkCiTableId && null != massnahmeGstoolId) {
 
@@ -24,8 +24,8 @@ public class ItsecMassnahmeStatusHbn {
 			Session session = HibernateUtil.getSession();
 			try {
 				tx = session.beginTransaction();
-				List<ItsecMassnahmeStatus> values = session.createQuery(
-						"select h from ItsecMassnahmeStatus as h where h.tabelleId = " + linkCiTableId + " h.and tabellePkId="+linkCiId + " and h.massnahmeGSTOOLID=" + massnahmeGstoolId).list();
+				List<ItsecCompliance> values = session.createQuery(
+						"select h from ItsecCompliance as h where h.tabelleId = " + linkCiTableId + " h.and tabellePkId="+linkCiId + " and h.massnahmeGSTOOLID=" + massnahmeGstoolId).list();
 
 				if (null != values && 0 < values.size()) {
 					result = values.get(0);
@@ -40,8 +40,8 @@ public class ItsecMassnahmeStatusHbn {
 		return result;
 	}
 	
-	public static ItsecMassnahmeStatus findById(Long itsecMassnStId) {
-		ItsecMassnahmeStatus result = null;
+	public static ItsecCompliance findById(Long itsecMassnStId) {
+		ItsecCompliance result = null;
 
 		if (null != itsecMassnStId) {
 
@@ -49,8 +49,8 @@ public class ItsecMassnahmeStatusHbn {
 			Session session = HibernateUtil.getSession();
 			try {
 				tx = session.beginTransaction();
-				List<ItsecMassnahmeStatus> values = session.createQuery(
-						"select h from ItsecMassnahmeStatus as h where h.itsecMassnStId = " + itsecMassnStId).list();
+				List<ItsecCompliance> values = session.createQuery(
+						"select h from ItsecCompliance as h where h.itsecMassnStId = " + itsecMassnStId).list();
 
 				if (null != values && 0 < values.size()) {
 					result = values.get(0);
@@ -68,7 +68,7 @@ public class ItsecMassnahmeStatusHbn {
 	public static ItsecMassnahmeDetailDTO findDTOById(Long itsecMassnStId) {
 		ItsecMassnahmeDetailDTO dto = null;
 		
-		ItsecMassnahmeStatus status = findById(itsecMassnStId);
+		ItsecCompliance status = findById(itsecMassnStId);
 		
 		if (null != status) {
 			dto = new ItsecMassnahmeDetailDTO();
@@ -120,7 +120,7 @@ public class ItsecMassnahmeStatusHbn {
 		boolean result = false;
 		
 		if (null != itsecMassnStId) {
-			ItsecMassnahmeStatus status = findById(itsecMassnStId);
+			ItsecCompliance status = findById(itsecMassnStId);
 			
 			if (null != status) {
 				// fill data

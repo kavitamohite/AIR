@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ITSEC_MASSN_STATUS")
-public class ItsecMassnahmeStatus implements Serializable {
+public class ItsecCompliance implements Serializable {
 
 	private static final long serialVersionUID = -2270858009018028854L;
 	
@@ -54,7 +54,7 @@ public class ItsecMassnahmeStatus implements Serializable {
 	/**
 	 * Creates a new instance.
 	 */
-	public ItsecMassnahmeStatus() {
+	public ItsecCompliance() {
 	}
 
 	// ------------------------------------------------------

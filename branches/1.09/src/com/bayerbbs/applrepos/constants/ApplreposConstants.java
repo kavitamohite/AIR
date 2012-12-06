@@ -1,6 +1,5 @@
 package com.bayerbbs.applrepos.constants;
 
-import org.hibernate.mapping.Array;
 
 public class ApplreposConstants {
 
@@ -8,9 +7,9 @@ public class ApplreposConstants {
 	
 	public final static Long BUSINESS_ESSENTIAL_DEFAULT = new Long(16);
 	
-	public final static Long TABELLEN_ID_IT_SYSTEM	 = new Long(1);
-	public final static Long TABELLEN_ID_APPLICATION = new Long(2);
-	public final static Long TABELLEN_ID_WAYS		 = new Long(37);
+	public final static Long TABLE_ID_IT_SYSTEM	 = new Long(1);
+	public final static Long TABLE_ID_APPLICATION = new Long(2);
+	public final static Long TABLE_ID_WAYS		 = new Long(37);
 
 	public final static String APPLICATION_GUI_NAME = "AIR";
 	
@@ -38,7 +37,7 @@ public class ApplreposConstants {
 	public final static String ROLE_AIR_DEVELOPER			 	= "AIR Developer";
 	public final static String ROLE_AIR_INFRASTRUCTURE_LAYER 	= "AIR Infrastructure Layer";
 	
-	public final static String ROLE_BUSINESS_ESSENTIAL_EDITOR = "BusinessEssential-Editor";
+	public final static String ROLE_BUSINESS_ESSENTIAL_EDITOR = "AIR BusinessEssential-Editor";
 
 	public final static String ROLE_SUBSTITUTE = "Substitute";
 

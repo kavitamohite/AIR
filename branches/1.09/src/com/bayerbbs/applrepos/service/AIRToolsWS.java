@@ -174,7 +174,7 @@ public class AIRToolsWS {
 	}
 	
 	public LifecycleStatusDTO[] getLifecycleStatusList() {
-		return LifecycleStatusHbn.getArrayFromList(LifecycleStatusHbn.listLifecycleStatus(ApplreposConstants.TABELLEN_ID_APPLICATION));
+		return LifecycleStatusHbn.getArrayFromList(LifecycleStatusHbn.listLifecycleStatus(ApplreposConstants.TABLE_ID_APPLICATION));
 	}
 	
 	public ProcessDTO[] getProcessList() {

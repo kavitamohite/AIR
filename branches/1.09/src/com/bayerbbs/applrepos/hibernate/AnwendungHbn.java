@@ -2689,7 +2689,7 @@ public class AnwendungHbn {
 					anw.setApplicationOwner(applicationOwner);
 					anw.setApplicationOwnerDelegate(applicationOwnerDelegate);
 					anw.setApplicationSteward(applicationSteward);
-					anw.setTableId(ApplreposConstants.TABELLEN_ID_APPLICATION);
+					anw.setTableId(ApplreposConstants.TABLE_ID_APPLICATION);
 					listResult.add(anw);
 				}
 			}

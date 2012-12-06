@@ -12,7 +12,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.Persons;
+import com.bayerbbs.applrepos.domain.Person;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 
 public class PersonsHbn {
@@ -24,11 +24,11 @@ public class PersonsHbn {
 	 * @return
 	 */
 	private static List<PersonsDTO> getDTOList(
-			List<Persons> input) {
+			List<Person> input) {
 		ArrayList<PersonsDTO> listDTO = new ArrayList<PersonsDTO>();
 
-		for (Iterator<Persons> iter = input.iterator(); iter.hasNext();) {
-			Persons data = (Persons) iter.next();
+		for (Iterator<Person> iter = input.iterator(); iter.hasNext();) {
+			Person data = iter.next();
 			PersonsDTO dto = new PersonsDTO();
 
 			dto.setPersonId(data.getPersonId());
@@ -68,9 +68,9 @@ public class PersonsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Persons> values = session
+			List<Person> values = session
 					.createQuery(
-							"select h from persons as h order by h.lastname, h.firstname")
+							"select h from Person as h order by h.lastname, h.firstname")
 					.list();
 
 			listResult = getDTOList(values);
@@ -106,9 +106,9 @@ public class PersonsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Persons> values = session
+			List<Person> values = session
 					.createQuery(
-							"select h from Persons as h where h.deleteTimestamp is null and h.cwid like '" + cwid.toUpperCase() +"%' order by h.cwid")
+							"select h from Person as h where h.deleteTimestamp is null and h.cwid like '" + cwid.toUpperCase() +"%' order by h.cwid")
 					.list();
 
 			listResult = getDTOList(values);
@@ -159,7 +159,7 @@ public class PersonsHbn {
 		}
 		
 		StringBuffer sb = new StringBuffer();
-		sb.append("select h from Persons as h where h.deleteTimestamp is null");
+		sb.append("select h from Person as h where h.deleteTimestamp is null");
 		sb.append(" and (NVL(h.inactive,'N') ='N')");
 		if (0 != pstat.length()) {
 			sb.append(" and h.pstat in (").append(pstat).append(")");
@@ -187,7 +187,7 @@ public class PersonsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Persons> values = session
+			List<Person> values = session
 					.createQuery(
 							sb.toString())
 					.list();
@@ -302,9 +302,9 @@ public class PersonsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Persons> values = session
+			List<Person> values = session
 					.createQuery(
-							"select h from Persons as h where h.deleteTimestamp is null and h.cwid = '" + cwid.toUpperCase() +"'")
+							"select h from Person as h where h.cwid = '" + cwid.toUpperCase() +"'")
 					.list();
 
 			listResult = getDTOList(values);
@@ -344,7 +344,7 @@ public class PersonsHbn {
 			try {
 				StringBuffer sql = new StringBuffer();
 				
-				sql.append("select pers.cwid, pers.nachname as lastname, pers.vorname as firstname from persons pers"); 
+				sql.append("select pers.cwid, pers.nachname as lastname, pers.vorname as firstname from Person pers"); 
 				sql.append(" join function func on func.responsible = pers.cwid and func.del_timestamp is null and func.itset=").append(itSet);
 				sql.append(" where pers.del_timestamp is null");
 				sql.append(" order by pers.nachname, pers.vorname");

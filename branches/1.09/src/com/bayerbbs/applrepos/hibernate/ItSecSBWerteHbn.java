@@ -7,7 +7,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.ItsecSBWerte;
+import com.bayerbbs.applrepos.domain.ItsecPL;
 import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
 
 
@@ -38,17 +38,17 @@ public class ItSecSBWerteHbn {
 	 * @return
 	 */
 	private static List<ItSecSBWerteDTO> getDTOList(
-			List<ItsecSBWerte> input) {
+			List<ItsecPL> input) {
 		ArrayList<ItSecSBWerteDTO> listDTO = new ArrayList<ItSecSBWerteDTO>();
 
-		for (Iterator<ItsecSBWerte> iter = input.iterator(); iter.hasNext();) {
-			ItsecSBWerte data = (ItsecSBWerte) iter.next();
+		for (Iterator<ItsecPL> iter = input.iterator(); iter.hasNext();) {
+			ItsecPL data = (ItsecPL) iter.next();
 			ItSecSBWerteDTO dto = new ItSecSBWerteDTO();
 
-			dto.setItsecSBId(data.getItsecSBId());
-			dto.setSbText(data.getSbText());
-			dto.setSbWert(data.getSbWert());
-			dto.setSbTextEn(data.getSbTextEn());
+			dto.setItsecSBId(data.getItsecPLId());
+			dto.setSbText(data.getPLText());
+			dto.setSbWert(data.getPLValue());
+			dto.setSbTextEn(data.getPLTextEn());
 			
 			if (null != data.getSort()) {
 				dto.setSort(data.getSort());
@@ -68,8 +68,8 @@ public class ItSecSBWerteHbn {
 			Session session = HibernateUtil.getSession();
 			try {
 				tx = session.beginTransaction();
-				List<ItsecSBWerte> values = session.createQuery(
-						"select h from ItsecSBWerte as h order by h.sort").list();
+				List<ItsecPL> values = session.createQuery(
+						"select h from ItsecPL as h order by h.sort").list();
 				
 				listResult = getDTOList(values);
 				

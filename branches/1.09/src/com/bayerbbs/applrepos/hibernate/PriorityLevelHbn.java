@@ -7,9 +7,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.ItsecSBWerte;
 import com.bayerbbs.applrepos.domain.PriorityLevel;
-import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
 import com.bayerbbs.applrepos.dto.PriorityLevelDTO;
 
 public class PriorityLevelHbn {

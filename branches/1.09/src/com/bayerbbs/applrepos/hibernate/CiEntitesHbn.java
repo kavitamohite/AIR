@@ -48,17 +48,17 @@ public class CiEntitesHbn {
 		sql.append("select * from DWH_ENTITY  where");
 		// sql.append(" upper(deleted) = 'NO'");
 		sql.append(" TABLE_ID in (");
-			sql.append(ApplreposConstants.TABELLEN_ID_IT_SYSTEM);
+			sql.append(ApplreposConstants.TABLE_ID_IT_SYSTEM);
 			sql.append(",");
-			sql.append(ApplreposConstants.TABELLEN_ID_APPLICATION);
+			sql.append(ApplreposConstants.TABLE_ID_APPLICATION);
 			sql.append(",");
-			sql.append(ApplreposConstants.TABELLEN_ID_WAYS);
+			sql.append(ApplreposConstants.TABLE_ID_WAYS);
 		sql.append(")");
 		
 		sql.append(" and (upper(name) = '" + searchName + "'  or upper(ASSET_ID_OR_ALIAS) = '" +searchName + "')");
 		
 		if (withDeletedApplications) {
-			sql.append(" and (TABLE_ID in ").append(ApplreposConstants.TABELLEN_ID_APPLICATION).append(" and upper(DELETED) = 'YES')");
+			sql.append(" and (TABLE_ID in ").append(ApplreposConstants.TABLE_ID_APPLICATION).append(" and upper(DELETED) = 'YES')");
 		}
 		else {
 			sql.append(" and upper(DELETED) = 'NO'");
@@ -154,13 +154,13 @@ public class CiEntitesHbn {
 		sql.append(" upper(deleted) = 'NO'");
 		sql.append(" and TABLE_ID in (");
 		if (!onlyapplications) {
-			sql.append(ApplreposConstants.TABELLEN_ID_IT_SYSTEM);
+			sql.append(ApplreposConstants.TABLE_ID_IT_SYSTEM);
 			sql.append(",");
 		}
-		sql.append(ApplreposConstants.TABELLEN_ID_APPLICATION);
+		sql.append(ApplreposConstants.TABLE_ID_APPLICATION);
 		if (!onlyapplications) {
 			sql.append(",");
-			sql.append(ApplreposConstants.TABELLEN_ID_WAYS);
+			sql.append(ApplreposConstants.TABLE_ID_WAYS);
 		}
 		sql.append(")");
 		

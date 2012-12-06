@@ -96,23 +96,23 @@ public class CiSupportStuffHbn {
 	public static void saveCiSupportStuffAll(String cwid, Long ciId,
 			String userAuthorizationSupportedByDocumentation, String userAuthorizationProcess, String changeManagementSupportedByTool, String userManagementProcess, String applicationDocumentation, String rootDirectory, String dataDirectory, String providedServices, String providedMachineUsers) {
 
-		saveSupportStuff(cwid, ApplreposConstants.TABELLEN_ID_APPLICATION,
+		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
 				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserAuthorizationSupportedByDocumentation, userAuthorizationSupportedByDocumentation);
-		saveSupportStuff(cwid, ApplreposConstants.TABELLEN_ID_APPLICATION,
+		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
 				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserAuthorizationProcess, userAuthorizationProcess);
-		saveSupportStuff(cwid, ApplreposConstants.TABELLEN_ID_APPLICATION,
+		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
 				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ChangeManagementSupportedByTool, changeManagementSupportedByTool);
-		saveSupportStuff(cwid, ApplreposConstants.TABELLEN_ID_APPLICATION,
+		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
 				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserManagementProcess, userManagementProcess);
-		saveSupportStuff(cwid, ApplreposConstants.TABELLEN_ID_APPLICATION,
+		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
 				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ApplicationDocumentation, applicationDocumentation);
-		saveSupportStuff(cwid, ApplreposConstants.TABELLEN_ID_APPLICATION,
+		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
 				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_RootDirectory, rootDirectory);
-		saveSupportStuff(cwid, ApplreposConstants.TABELLEN_ID_APPLICATION,
+		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
 				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_DataDirectory, dataDirectory);
-		saveSupportStuff(cwid, ApplreposConstants.TABELLEN_ID_APPLICATION,
+		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
 				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ProvidedServices, providedServices);
-		saveSupportStuff(cwid, ApplreposConstants.TABELLEN_ID_APPLICATION,
+		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
 				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ProvidedMachineUsers, providedMachineUsers);
 	}
 

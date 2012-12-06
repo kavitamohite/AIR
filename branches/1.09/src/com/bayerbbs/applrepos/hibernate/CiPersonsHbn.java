@@ -250,7 +250,7 @@ public class CiPersonsHbn {
 
 		cwid = cwid.toUpperCase();
 
-		Long tableId = ApplreposConstants.TABELLEN_ID_APPLICATION;
+		Long tableId = ApplreposConstants.TABLE_ID_APPLICATION;
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
 		tx = session.beginTransaction();

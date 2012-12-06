@@ -7,7 +7,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.Groups;
+import com.bayerbbs.applrepos.domain.Group;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
 
 public class GroupsHbn {
@@ -19,11 +19,11 @@ public class GroupsHbn {
 	 * @return
 	 */
 	private static List<GroupsDTO> getDTOList(
-			List<Groups> input) {
+			List<Group> input) {
 		ArrayList<GroupsDTO> listDTO = new ArrayList<GroupsDTO>();
 
-		for (Iterator<Groups> iter = input.iterator(); iter.hasNext();) {
-			Groups data = (Groups) iter.next();
+		for (Iterator<Group> iter = input.iterator(); iter.hasNext();) {
+			Group data = (Group) iter.next();
 			GroupsDTO dto = new GroupsDTO();
 
 			dto.setGroupId(data.getGroupId());
@@ -62,9 +62,9 @@ public class GroupsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Groups> values = session
+			List<Group> values = session
 					.createQuery(
-							"select h from Groups as h where deleteTimestamp is null order by h.groupName")
+							"select h from Group as h where deleteTimestamp is null order by h.groupName")
 					.list();
 
 			listResult = getDTOList(values);
@@ -90,9 +90,9 @@ public class GroupsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Groups> values = session
+			List<Group> values = session
 					.createQuery(
-							"select h from Groups as h where deleteTimestamp is null and upper(h.groupName) = '" + groupname.toUpperCase() +"'")
+							"select h from Group as h where deleteTimestamp is null and upper(h.groupName) = '" + groupname.toUpperCase() +"'")
 					.list();
 
 			listResult = getDTOList(values);
@@ -156,9 +156,9 @@ public class GroupsHbn {
 		Session session = HibernateUtil.getSession();
 		try {
 			tx = session.beginTransaction();
-			List<Groups> values = session
+			List<Group> values = session
 					.createQuery(
-							"select h from Groups as h where deleteTimestamp is null" + searchParameter + " order by h.groupName")
+							"select h from Group as h where deleteTimestamp is null" + searchParameter + " order by h.groupName")
 					.list();
 
 			listResult = getDTOList(values);
@@ -189,7 +189,7 @@ public class GroupsHbn {
 		List<GroupsDTO> listResult = new ArrayList<GroupsDTO>();
 
 		StringBuffer sb = new StringBuffer();
-		sb.append("select h from Groups as h where deleteTimestamp is null");
+		sb.append("select h from Group as h where deleteTimestamp is null");
 		if (null != groupname) {
 			sb.append(" and upper(h.groupName) like '");
 			if (null != fullLikeSearch) {
@@ -233,7 +233,7 @@ public class GroupsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Groups> values = session
+			List<Group> values = session
 					.createQuery(
 							sb.toString())
 					.list();

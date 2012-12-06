@@ -1,11 +1,12 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -20,6 +21,24 @@ import com.bayerbbs.applrepos.dto.ComplianceControlStatusDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
 
 public class ApplReposHbn {
+
+	private static final String SELECT_ROLES = "SELECT   ROL.Role_Id, " +
+					         "ROL.Role_Name " +
+					         "FROM     ROLE ROL  " +
+					         "INNER JOIN ROLE_PERSON R2P ON ROL.Role_Id=R2P.Role_Id AND Current_Date BETWEEN R2P.Date_Start AND R2P.Date_End AND R2P.Del_Timestamp IS NULL " + 
+					         "INNER JOIN ROLE_INTERFACE R2I ON R2P.Role_Id=R2I.Role_Id AND R2I.Del_Timestamp IS NULL  " +
+					         "INNER JOIN INTERFACES INT ON R2I.Interface_Id=INT.Interfaces_Id AND INT.Del_Timestamp IS NULL AND INT.Token = 'AIR' " +
+								"WHERE    R2P.Cwid = :Cwid " +
+								"AND      ROL.Del_Timestamp IS NULL";
+	private static final String SELECT_ROLE_BUSINESS_ESSENTIAL = "SELECT   ROL.Role_Id, " +
+															    "ROL.Role_Name " +
+															    "FROM     ROLE ROL  " +
+															    "INNER JOIN ROLE_PERSON R2P ON ROL.Role_Id=R2P.Role_Id AND Current_Date BETWEEN R2P.Date_Start AND R2P.Date_End AND R2P.Del_Timestamp IS NULL " + 
+															    "INNER JOIN ROLE_INTERFACE R2I ON R2P.Role_Id=R2I.Role_Id AND R2I.Del_Timestamp IS NULL  " +
+															    "INNER JOIN INTERFACES INT ON R2I.Interface_Id=INT.Interfaces_Id AND INT.Del_Timestamp IS NULL AND INT.Token = 'AIR' " +
+																"WHERE    R2P.Cwid = :Cwid " +
+																"AND      ROL.Role_Name = :Role_Name "+
+																"AND      ROL.Del_Timestamp IS NULL"; 
 
 	private static final String TRANSBASE_ORA_20000 = "ORA-20000: ";
 	/** The logger. */
@@ -344,62 +363,42 @@ public class ApplReposHbn {
 		
 		if (StringUtils.isNotNullOrEmpty(cwid)) {
 
-			boolean commit = false;
-			Transaction tx = null;
-			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
 
-			Connection conn = null;
-
-			StringBuffer sql = new StringBuffer();
-			
-			sql.append("select");
-			sql.append(" rp.*");
-			sql.append(" , ro.role_name");
-			sql.append(" from role_person rp");
-			sql.append(" join role ro on ro.role_id = rp.role_id");
-			sql.append(" where rp.cwid = '").append(cwid.toUpperCase()).append("'");
-			sql.append(" and rp.date_start <= current_date");
-			sql.append(" and rp.date_end > current_date");
-			sql.append(" and (ro.role_name like 'AIR%' or (ro.role_name = '").append(ApplreposConstants.ROLE_BUSINESS_ESSENTIAL_EDITOR).append("' and rp.zob_id=11397))");
-			
 			try {
-				tx = session.beginTransaction();
-
-				conn = session.connection();
-
-				selectStmt = conn.createStatement();
-				ResultSet rsSet = selectStmt
-						.executeQuery(sql.toString());
-
-				if (null != rsSet) {
-					while (rsSet.next()) {
-						RolePersonDTO dto = new RolePersonDTO();
-						dto.setRoleId(rsSet.getLong("ROLE_ID"));
-						dto.setCwid(rsSet.getString("CWID"));
-						dto.setRoleName(rsSet.getString("ROLE_NAME"));
-						listDTO.add(dto);
-					}
-				}
-				commit = true;
 				
-			} catch (Exception e) {
+				@SuppressWarnings("unchecked")
+				List<Object[]> listTemp = session.createSQLQuery(SELECT_ROLES)
+					.setString("Cwid", cwid.toUpperCase())
+					.list();
+				
+				for (Iterator<Object[]> iterator = listTemp.iterator(); iterator.hasNext();) 
+				{
+					Object obj[] = iterator.next();
+					try 
+					{
+						RolePersonDTO dto = new RolePersonDTO();
+						dto.setRoleId(((BigDecimal)obj[0]).longValue());
+						dto.setCwid(cwid.toUpperCase());
+						dto.setRoleName((String) obj[1]);
+						listDTO.add(dto);
+					} 
+					catch (Exception e) 
+					{
+						System.out.println(e.toString());
+					}
+					
+				}			
+			} 
+			catch (Exception e) 
+			{
 				System.out.println(e.toString());
-				try {
-					System.out.println(conn.isClosed());
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				session.disconnect();
 			}
-			finally {
-				HibernateUtil.close(tx, session, commit);
+			finally 
+			{
+				session.flush();
 			}
-
-			
 		}
-
 		return listDTO;
 	}
 	
@@ -410,55 +409,43 @@ public class ApplReposHbn {
 		
 		if (StringUtils.isNotNullOrEmpty(cwid)) {
 
-			boolean commit = false;
-			Transaction tx = null;
-			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
 
-			Connection conn = null;
-
-			StringBuffer sql = new StringBuffer();
-			
-			sql.append("select");
-			sql.append(" rp.*");
-			sql.append(" , ro.role_name");
-			sql.append(" from role_person rp");
-			sql.append(" join role ro on ro.role_id = rp.role_id");
-			sql.append(" where rp.cwid = '").append(cwid.toUpperCase()).append("'");
-			sql.append(" and rp.date_start <= current_date");
-			sql.append(" and rp.date_end > current_date");
-			sql.append(" and ro.role_name = '").append(ApplreposConstants.ROLE_BUSINESS_ESSENTIAL_EDITOR).append("'");
-			
 			try {
-				tx = session.beginTransaction();
-
-				conn = HibernateUtil.getSession().connection();
-
-				selectStmt = conn.createStatement();
-				ResultSet rsSet = selectStmt
-						.executeQuery(sql.toString());
-
-				if (null != rsSet) {
-					while (rsSet.next()) {
-						RolePersonDTO dto = new RolePersonDTO();
-						dto.setRoleId(rsSet.getLong("ROLE_ID"));
-						dto.setCwid(rsSet.getString("CWID"));
-						dto.setRoleName(rsSet.getString("ROLE_NAME"));
-						listDTO.add(dto);
-					}
-				}
-				commit = true;
 				
-			} catch (Exception e) {
-				//
+				@SuppressWarnings("unchecked")
+				List<Object[]> listTemp = session.createSQLQuery(SELECT_ROLE_BUSINESS_ESSENTIAL)
+					.setString("Cwid", cwid.toUpperCase())
+					.setString("Role_Name", ApplreposConstants.ROLE_BUSINESS_ESSENTIAL_EDITOR)
+					.list();
+				
+				for (Iterator<Object[]> iterator = listTemp.iterator(); iterator.hasNext();) 
+				{
+					Object obj[] = iterator.next();
+					try 
+					{
+						RolePersonDTO dto = new RolePersonDTO();
+						dto.setRoleId(((BigDecimal)obj[0]).longValue());
+						dto.setCwid(cwid.toUpperCase());
+						dto.setRoleName((String) obj[1]);
+						listDTO.add(dto);
+					} 
+					catch (Exception e) 
+					{
+						System.out.println(e.toString());
+					}
+					
+				}			
+			} 
+			catch (Exception e) 
+			{
+				System.out.println(e.toString());
 			}
-			finally {
-				HibernateUtil.close(tx, session, commit);
+			finally 
+			{
+				session.flush();
 			}
-
-			
 		}
-
 		return listDTO;
 	}
 
