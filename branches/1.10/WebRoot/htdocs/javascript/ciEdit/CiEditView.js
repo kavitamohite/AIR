@@ -390,41 +390,44 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		applicationSaveStore.on('load', callback, this);
 		this.skipLoading = options && options.skipLoading ? true : false;
 
-		
+		var ciEditTabView = this.getComponent('ciEditTabView');
 		var data = {};
 		
-		var ciSpecificsView = this.getComponent('ciEditTabView').getComponent('clCiSpecifics');
+		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.setData(data);
 
-		var ciContactsView = this.getComponent('ciEditTabView').getComponent('clCiContacts');
+		var ciContactsView = ciEditTabView.getComponent('clCiContacts');
 		ciContactsView.setData(data);
 
-		var ciAgreementsView = this.getComponent('ciEditTabView').getComponent('clCiAgreements');
+		var ciAgreementsView = ciEditTabView.getComponent('clCiAgreements');
 		ciAgreementsView.setData(data);
 
-		var ciProtectionView = this.getComponent('ciEditTabView').getComponent('clCiProtection');
+		var ciProtectionView = ciEditTabView.getComponent('clCiProtection');
 		ciProtectionView.setData(data);
 
-		var ciComplianceView = this.getComponent('ciEditTabView').getComponent('clCiCompliance');
+		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.setData(data);
 
-		var ciLicenseView = this.getComponent('ciEditTabView').getComponent('clCiLicense');
+		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
 		ciLicenseView.setData(data);
 		
-		var ciConnectionsView = this.getComponent('ciEditTabView').getComponent('clCiConnections');
+		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.setData(data);
 		
-		var ciSupportStuffView = this.getComponent('ciEditTabView').getComponent('clCiSupportStuff');
+		var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 		ciSupportStuffView.setData(data);
 		
 		data.tableId = AIR.AirApplicationManager.getTableId();
 
 		var saveCallback = function() {
 			mySaveMask.show();
+			
+//			this.mergeCiChanges(data);//(noch) nicht notwendig, da noch keine Fälle in denen Daten zusammengeführt werden müssen
+			
 			applicationSaveStore.load({
 				params: data
 			});
-		};
+		}.createDelegate(this);
 		
 		this.checkItsecGroup(data, AIR.AirApplicationManager.getAppDetail(), saveCallback);
 	},
@@ -442,6 +445,11 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		} else {
 			saveCallback();
 		}
+	},
+	
+	mergeCiChanges: function(data) {
+		if(data.template == '-1' && data.barRelevance !== 'Y')//RFC 8727: nicht notwendig, da von 'No' nicht auf 'Undefined' gewechselt werden kann
+			data.barRelevance = 'N';
 	},
 	
 	cancelApplication: function() {

@@ -25,7 +25,8 @@
 		<button_general_next>Weiter</button_general_next>
 		<button_general_copy>Kopieren</button_general_copy>
 		<newSearch>Neue Suche</newSearch>
-		<findAll>Erste </findAll><!-- Zeige alle|Alle -->
+		<findFirst>Erste</findFirst><!-- Show all|All -->
+		<findAll>Alle</findAll>
 		
 		<dynamicWindowOKButtonText>OK</dynamicWindowOKButtonText>
 		<notRelevant>nicht relevant</notRelevant>

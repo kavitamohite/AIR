@@ -53,6 +53,8 @@ AIR.AirUiFactory = function() {
 					layout: 'column',//toolbar hbox
 					style: {
 						marginTop: 5
+//						marginLeft: options.marginLeft ? options.marginLeft : 0
+						//marginLeft: 5
 					},
 					
 					items: [{
@@ -224,16 +226,19 @@ AIR.AirUiFactory = function() {
 			
 			if(options) {
 				if(options.fsApplicationOwner)
-					for(var key in options.fsApplicationOwner)
-						fsApplicationOwner[key] = options.fsApplicationOwner[key];
+					Util.setObjectProperties(options.fsApplicationOwner, fsApplicationOwner);
+//					for(var key in options.fsApplicationOwner)
+//						fsApplicationOwner[key] = options.fsApplicationOwner[key];
 				
 				if(options.fsApplicationSteward)
-					for(var key in options.fsApplicationSteward)
-						fsApplicationSteward[key] = options.fsApplicationSteward[key];
+					Util.setObjectProperties(options.fsApplicationSteward, fsApplicationSteward);
+//					for(var key in options.fsApplicationSteward)
+//						fsApplicationSteward[key] = options.fsApplicationSteward[key];
 				
 				if(options.fsCIOwner)
-					for(var key in options.fsCIOwner)
-						fsCIOwner[key] = options.fsCIOwner[key];
+					Util.setObjectProperties(options.fsCIOwner, fsCIOwner);
+//					for(var key in options.fsCIOwner)
+//						fsCIOwner[key] = options.fsCIOwner[key];
 			}
 			
 			

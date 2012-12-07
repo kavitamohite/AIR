@@ -123,6 +123,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							xtype: 'actioncolumn',
 							id: 'cLinkType',
 							width: 30,
+							menuDisabled: true,
 							
 							getClass: function(v, meta, record) {
 								var isCItypeFunctionLinkable = parseInt(record.get('chocoMerkmal')) > 0;
@@ -136,11 +137,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						},{
 							header: 'Ident',
 							dataIndex: 'ident',
-							width: 60
+							width: 60,
+							menuDisabled: true
 						},{
 							header: 'Control',
 							dataIndex: 'massnahmeTitel',
-							width: 320
+							width: 320,
+							menuDisabled: true
 						},{
 							header: 'Implemented',
 							dataIndex: 'statusWert',//'statusWert', this.statusWertDisplayField
@@ -151,6 +154,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							xtype: 'actioncolumn',
 							id: 'cMassnahmeInfo',
 							width: 30,
+							menuDisabled: true,
 							
 							items: [{
 								icon: 'images/Info_16x16.png'
@@ -872,8 +876,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									
 									layout: 'form',
 									border: false,
-//									height: 220,
-									
+									height: 240,//sonst wird letzte textarea nicht angezeigt
 									
 									items: [{
 										xtype: 'container',
@@ -1255,10 +1258,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
 		complianceLinkView.on('linkCiSelect', this.onLinkCiSelect, this);
 		
-		this.on('massnahmenWarning', this.onMassnahmenWarning, this);
+//		this.on('massnahmenWarning', this.onMassnahmenWarning, this);
 	},
 	
 	onTargetDateKeyUp: function(field, event) {
+		this.isWarningMassnahmenDone = false;
 		this.onMassnahmeChange();
 	},
 	
@@ -1298,6 +1302,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			return true;
 		
 		var isValid = true;
+		var isWarning = true;
 		var labels = AAM.getLabels();
 		
 		var title = labels.invalidMassnameWindowTitleGapClass,
@@ -1366,6 +1371,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							newGapClass = '1';
 							message = labels.invalidMassnameWindowGapClassReplace.replace('{0}', date.format(AAM.getDateFormat())).replace('{1}', 'long-term to solve').replace('{2}', 'mid-term to solve');
 							iconType = img_OK;
+						} else {
+							isWarning = false;
 						}
 												
 						break;
@@ -1382,8 +1389,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							message = labels.invalidMassnameWindowGapClassReplace.replace('{0}', date.format(AAM.getDateFormat())).replace('{1}', 'long-term to solve').replace('{2}', 'short-term to solve');
 							field.markInvalid('');
 							iconType = img_OK;
+						} else {
+							isWarning = false;
 						}
-						
 						
 						break;
 					default: break;
@@ -1400,6 +1408,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		var result = {
 			isValid: isValid,
+			isWarning: isWarning,
 			gapClass: newGapClass,
 			title: title,
 			iconType: iconType,
@@ -1602,6 +1611,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 			var pJustification = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement').getComponent('pJustification');
 			pJustification.setVisible(true);
+			if(doMarkInvalid)
+				this.markInvalid(pJustification);
+			
 			
 			switch(compliantStatusId) {
 				case 3:
@@ -1898,9 +1910,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					var result = this.isTargetDateValid(new Date(parseInt(massnahme.gapEndDate)));
 					
 					if(result.isValid) {//isValid
-						massnahme.warningId = AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1;
-						this.addWarningMassnahme(warningMassnahmen, massnahme);
-						continue;
+						if(result.isWarning && !this.isWarningMassnahmenDone) {//damit keine Warnung kommt, wenn etwas anderes als das targetDate geändert wurde
+							massnahme.warningId = AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1;
+							this.addWarningMassnahme(warningMassnahmen, massnahme);
+						}
 					} else {
 						massnahme.invalidityId = AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1;
 						this.addInvalidMassnahme(invalidMassnahmen, massnahme);
@@ -2015,15 +2028,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		//Sowohl auf der Massnahme Detail Seite als auch auf der Massnahmen Tabellen Seite
 		if(this.warningMassnahmen.length > 0) {//geht nur, wenn beforeselect event VOR dem blur event des dfTargetDate gefeuert wird!
 			this.skipFocusLost = true;
-			return true;
+//			return true;
 		}
-		/*if(this.warningMassnahmen.length > 0 && !this.ignoreWarningMassnahme) {
-			
-			return true;
-		} else {
-			this.ignoreWarningMassnahme = true;
-			return true;
-		}*/
+
 		
 		if(this.existsInvalidMassnahme > 0 && !this.ignoreInvalidMassnahme) {
 			var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');

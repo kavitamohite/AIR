@@ -699,6 +699,17 @@
 	
 	<!-- referencedTemplate -->
 	<Identifier>
+		<id>cbIsTemplate</id>
+		<Mandatory>dependent on other</Mandatory>
+		<Relevance>operational and strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>AKZ,ANT,BARDO,BBSam,BKV,BSHARP,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,OLA,QIP,SAP,SDB,SIEBEL,SNS,Software,FW,BVS,COMMAND,VCenter,NAAC,SHAREPOINT,APAC,HPED,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
 		<id>cbReferencedTemplate</id>
 		<Mandatory>dependent on other</Mandatory>
 		<Relevance>operational and strategic</Relevance>

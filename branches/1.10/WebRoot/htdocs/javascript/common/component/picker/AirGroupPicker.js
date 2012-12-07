@@ -25,7 +25,7 @@ AIR.AirGroupPicker = Ext.extend(Ext.Window, {//Ext.Tip
 //			minWidth: 600,//560 400 450
 //			maxWidth: 950,//450 500
 			
-			width: 600,
+			width: 610,
 			resizable: false,
 			draggable: true,
 			hidden: true,
@@ -341,7 +341,7 @@ AIR.AirGroupPicker = Ext.extend(Ext.Window, {//Ext.Tip
 		this.setTitle(title);
 		
 		var bGroupPickerFindAll = this.getComponent('cfGroupSearch').getComponent('bGroupPickerFindAll');//this.getComponent('cfGroupSearch').items.items[1]
-		bGroupPickerFindAll.setText(AAM.getLabels().findAll + ' ' + this.limit);
+		bGroupPickerFindAll.setText(AAM.getLabels().findFirst + ' ' + this.limit);
 		
 		var bGroupPickerBackward = this.getComponent('cfGroupSearch').getComponent('bGroupPickerBackward');
 		var bGroupPickerForward = this.getComponent('cfGroupSearch').getComponent('bGroupPickerForward');

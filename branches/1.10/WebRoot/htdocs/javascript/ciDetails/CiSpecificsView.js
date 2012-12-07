@@ -721,9 +721,12 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				tfBarApplicationId.setValue(data.barApplicationId);
 				rgBARrelevance.disable();
 			} else {
+				if(data.barRelevance === 'N' && data.isTemplate == '1')//-1
+					rgBARrelevance.disable();
+				
 				tfBarApplicationId.setValue('');
 			}
-		
+			
 			//durch AirAclManager erledigt 
 //			lvOrganisationalScope.setVisible(true);
 //			taOrganisationalScope.setVisible(true);

@@ -150,14 +150,14 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	//			        anchor: '100%',
 				    	
 				    	flex: 4,
-				    	margins: '5 0 10 0',
+				    	margins: '5 0 10 0'
 				    	
 //				        boxLabel: 'As Template',
 				        
 	//			        checked: this.viewData.isTemplate,
-				        disabled: true,	// keine Änderung zulassen - nur ANZEIGE
-				        allowBlank: true
-			    	}/*
+//				        disabled: true,	// keine Änderung zulassen - nur ANZEIGE
+//				        allowBlank: true
+			    	},/*
 			        {
 			        	xtype: 'checkboxgroup',
 			        	id: 'cbgIsTemplate',
@@ -168,7 +168,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	    			        { boxLabel: 'As Template', name: 'cbgIsTemplate' }
 				        ]
 			        }*/
-			    	,{
+			    	{
 						xtype: 'spacer',
 						id: 'spIsTemplate',
 						flex: 4,
@@ -424,13 +424,12 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		AIR.CiComplianceView.superclass.initComponent.call(this);
 		
-		this.initialize(true);
 		this.addEvents('ciBeforeChange', 'ciChange', 'complianceTypeChange', 'itsecGroupEdit');
-	},
-	
-	initialize: function(onOff) {
+		
 		var rgRelevanceBYTSEC = this.getComponent('fsComplianceMgmt').getComponent('rgRelevanceBYTSEC');
 		var bEditNonBytSec = this.getComponent('fsComplianceInfo').getComponent('bEditNonBytSec');
+		
+		var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
 		
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
@@ -442,6 +441,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		rgRelevanceBYTSEC.on('change', this.onRadioGroupRelevanceBYTSEC, this);
 		bEditNonBytSec.on('click', this.onEditNonBytSec, this);
 
+		cbIsTemplate.on('check', this.onIsTemplateCheck, this);
 		
 		cbReferencedTemplate.on('beforeselect', this.onReferencedTemplateBeforeSelect, this);
 		cbReferencedTemplate.on('select', this.onReferencedTemplateSelect, this);
@@ -452,13 +452,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		bEditItSecGroup.on('click', this.onEditItSecGroup, this);
 
 		cbgRegulations.on('change', this.onRegulationsChange, this);
-		cbRelevanceGxp.on('select', this.onRelevanceGxpSelect, this);//change
-
-		
-		//cbItSecGroup.getStore().filter('itsetId', '10002');
-//		cbItSecGroup.view.refresh();
+		cbRelevanceGxp.on('select', this.onRelevanceGxpSelect, this);
 	},
-
 	
 	//============================================================================================================================
 	
@@ -587,6 +582,10 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	onEditNonBytSec: function(button, event) {
 		this.loadItsecMassnahmenStore();
+	},
+	
+	onIsTemplateCheck: function(checkbox, isChecked) {
+		this.fireEvent('ciChange', this, checkbox, isChecked);
 	},
 	
 	onEditItSecGroup: function(button, event) {
@@ -813,6 +812,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceInfo').getComponent('bEditNonBytSec'), data);
 		
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup'), data);
 		//Compliance Controls sind nur sichtbar, nicht editierbar. Sie sollen immer über bEditItSecGroup zu öffnen sein

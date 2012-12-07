@@ -99,6 +99,16 @@ Util = {
 		return value.length > 2 && value.length < 6 ? 0 : 1;//value.length > 2 && value.length < 6 && value.match(AC.REGEX_CWID) != null
 	},
 	
+	setObjectProperties: function(source, target) {
+		for(var key in source) {
+			if(!target[key]) {
+				target[key] = source[key];
+			} else {
+				if(typeof source[key] === 'object')
+					Util.setObjectProperties(source[key], target[key]);
+			}
+		}
+	},
 	
 //	initLoadMasks: function() {
 //		this.masks = {};

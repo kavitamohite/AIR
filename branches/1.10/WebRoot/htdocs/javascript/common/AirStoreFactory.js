@@ -1171,6 +1171,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'button_general_next'},
 			        {name: 'button_general_copy'},
 			        {name: 'newSearch'},
+			        {name: 'findFirst'},
 			        {name: 'findAll'},
 			        
 			        // general
