@@ -3,83 +3,105 @@ package com.bayerbbs.applrepos.service;
 import java.io.Serializable;
 
 public class ApplicationParameterInput implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4879117627848606292L;
 
-	/** the cwid logged in*/
-	String cwid;
-
-	/** the token - session */
-	String token;
+	private String cwid;
+	private String token;
 	
 	/** the search Action - search, myCis, myCisSubstitute */
-	String searchAction;
-	
-	/** the query we are searching for */
-	String query;
-	
-	/** the query mode how to search for the name */
-	String queryMode;	// BEGINS_WITH, CONTAINS, EXACT (Default = CONTAINS)
-	
-	/** only applications */
-	String onlyapplications;
+	private String searchAction;
+	private String query;
+	private String queryMode;	// BEGINS_WITH, CONTAINS, EXACT (Default = CONTAINS)
+	private String onlyapplications;
 	
 	/** template Y = 0, N = -1, else = all */
-	String template;
+	private String template;
 	
 	/** advanced search true/false */
-	String advancedsearch;
+	private String advancedsearch;
 	
 	/** advanced search parameters */
-	Long advsearchObjectTypeId;
-	String advsearchObjectTypeText;
+	private Long advsearchObjectTypeId;
+	private String advsearchObjectTypeText;
+	private Long advsearchcitypeid;
 	
-	Long advsearchcitypeid;
-	String advsearchappowner;
-	String advsearchappdelegate;
-	String advsearchciowner;
-	String advsearchcidelegate;
-	String advsearchsteward;
-	String advsearchdescription;
 	
-	/** advanced search plus parameters */
-	Long advsearchoperationalstatusid;
-	Long advsearchapplicationcat2id;
-	Long advsearchlifecyclestatusid;
-	Long advsearchprocessid;
+	private String advsearchappowner;
+	private String advsearchappownerHidden;
+	
+	private String advsearchappdelegate;
+	private String advsearchappdelegateHidden;
+	
+	private String advsearchsteward;
+	private String advsearchstewardHidden;
+	
+
+	private String advsearchciowner;
+	private String advsearchciownerHidden;
+	
+	private String advsearchcidelegate;
+	private String advsearchcidelegateHidden;
+	
+
+	
+	
+	private String advsearchdescription;
+	private Long advsearchoperationalstatusid;
+	private Long advsearchapplicationcat2id;
+	private Long advsearchlifecyclestatusid;
+	private Long advsearchprocessid;
 	
 //---	
-	String advsearchcountry;
-	String advsearchsite;
-	String advsearchbuilding;
-	String advsearchroom;
+	private String advsearchcountry;
+	private String advsearchsite;
+	private String advsearchbuilding;
+	private String advsearchroom;
 	
-	String sort;
-	String dir;
+	private Long start;
+	private Long limit;
+	private String sort;
+	private String dir;
 	
 	// for the ou-search
-	String ciType;
-	String ouUnit;
-	String ciOwnerType;
-	String ouQueryMode;
+	private String ciType;
+	private String ouUnit;
+	private String ciOwnerType;
+	private String ouQueryMode;
 
 	// for the new advanced search
-	String barRelevance;	// Y, N, U =Undefined -> null in database
-	String organisationalScope;
-	String itSetId;
-	String itSecGroupId;
-	String source;
-	String businessEssentialId;
+	private String barRelevance;	// Y, N, U =Undefined -> null in database
+	private String organisationalScope;
+	private String itSetId;
+	private String itSecGroupId;
+	private String source;
+	private String businessEssentialId;
 	
+	
+	private String ciTypeOptions;
+	private String itSetOptions;
+	private String descriptionOptions;
 
-	/** the start index of the result */
-	Long start;
-	
-	/** the limit how many results to return */
-	Long limit;
+	private String appOwnerOptions;
+	private String appOwnerDelegateOptions;
+	private String appStewardOptions;
+	private String ciOwnerOptions;
+	private String ciOwnerDelegateOptions;
+
+	private String generalUsageOptions;
+	private String itCategoryOptions;
+	private String lifecycleStatusOptions;
+	private String organisationalScopeOptions;
+	private String itSecGroupOptions;
+	private String processOptions;
+	private String sourceOptions;
+	private String businessEssentialOptions;
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
 	
 	public ApplicationParameterInput() {
 	}
@@ -165,9 +187,21 @@ public class ApplicationParameterInput implements Serializable {
 	public String getAdvsearchcidelegate() {
 		return advsearchcidelegate;
 	}
-
 	public void setAdvsearchcidelegate(String advsearchcidelegate) {
 		this.advsearchcidelegate = advsearchcidelegate;
+	}
+	public void setAdvsearchcidelegateHidden(String advsearchcidelegateHidden) {
+		this.advsearchcidelegateHidden = advsearchcidelegateHidden;
+	}
+	public String getAdvsearchcidelegateHidden() {
+		return advsearchcidelegateHidden;
+	}
+	
+	public void setAdvsearchappdelegateHidden(String advsearchappdelegateHidden) {
+		this.advsearchappdelegateHidden = advsearchappdelegateHidden;
+	}
+	public String getAdvsearchappdelegateHidden() {
+		return advsearchappdelegateHidden;
 	}
 
 	public String getAdvsearchcountry() {
@@ -353,6 +387,25 @@ public class ApplicationParameterInput implements Serializable {
 	public void setAdvsearchsteward(String advsearchsteward) {
 		this.advsearchsteward = advsearchsteward;
 	}
+	public String getAdvsearchappownerHidden() {
+		return advsearchappownerHidden;
+	}
+	public void setAdvsearchappownerHidden(String advsearchappownerHidden) {
+		this.advsearchappownerHidden = advsearchappownerHidden;
+	}
+	public String getAdvsearchstewardHidden() {
+		return advsearchstewardHidden;
+	}
+	public void setAdvsearchstewardHidden(String advsearchstewardHidden) {
+		this.advsearchstewardHidden = advsearchstewardHidden;
+	}
+	public String getAdvsearchciownerHidden() {
+		return advsearchciownerHidden;
+	}
+	public void setAdvsearchciownerHidden(String advsearchciownerHidden) {
+		this.advsearchciownerHidden = advsearchciownerHidden;
+	}
+
 
 	
 	public String getBarRelevance() {
@@ -395,5 +448,134 @@ public class ApplicationParameterInput implements Serializable {
 	}
 	public void setBusinessEssentialId(String businessEssentialId) {
 		this.businessEssentialId = businessEssentialId;
+	}
+	
+
+	public String getCiTypeOptions() {
+		return ciTypeOptions;
+	}
+
+	public void setCiTypeOptions(String ciTypeOptions) {
+		this.ciTypeOptions = ciTypeOptions;
+	}
+
+	public String getItSetOptions() {
+		return itSetOptions;
+	}
+
+	public void setItSetOptions(String itSetOptions) {
+		this.itSetOptions = itSetOptions;
+	}
+
+	public String getDescriptionOptions() {
+		return descriptionOptions;
+	}
+
+	public void setDescriptionOptions(String descriptionOptions) {
+		this.descriptionOptions = descriptionOptions;
+	}
+
+	public String getAppOwnerOptions() {
+		return appOwnerOptions;
+	}
+
+	public void setAppOwnerOptions(String appOwnerOptions) {
+		this.appOwnerOptions = appOwnerOptions;
+	}
+
+	public String getAppOwnerDelegateOptions() {
+		return appOwnerDelegateOptions;
+	}
+
+	public void setAppOwnerDelegateOptions(String appOwnerDelegateOptions) {
+		this.appOwnerDelegateOptions = appOwnerDelegateOptions;
+	}
+
+	public String getAppStewardOptions() {
+		return appStewardOptions;
+	}
+
+	public void setAppStewardOptions(String appStewardOptions) {
+		this.appStewardOptions = appStewardOptions;
+	}
+
+	public String getCiOwnerOptions() {
+		return ciOwnerOptions;
+	}
+
+	public void setCiOwnerOptions(String ciOwnerOptions) {
+		this.ciOwnerOptions = ciOwnerOptions;
+	}
+
+	public String getCiOwnerDelegateOptions() {
+		return ciOwnerDelegateOptions;
+	}
+
+	public void setCiOwnerDelegateOptions(String ciOwnerDelegateOptions) {
+		this.ciOwnerDelegateOptions = ciOwnerDelegateOptions;
+	}
+
+	public String getGeneralUsageOptions() {
+		return generalUsageOptions;
+	}
+
+	public void setGeneralUsageOptions(String generalUsageOptions) {
+		this.generalUsageOptions = generalUsageOptions;
+	}
+
+	public String getItCategoryOptions() {
+		return itCategoryOptions;
+	}
+
+	public void setItCategoryOptions(String itCategoryOptions) {
+		this.itCategoryOptions = itCategoryOptions;
+	}
+
+	public String getLifecycleStatusOptions() {
+		return lifecycleStatusOptions;
+	}
+
+	public void setLifecycleStatusOptions(String lifecycleStatusOptions) {
+		this.lifecycleStatusOptions = lifecycleStatusOptions;
+	}
+
+	public String getOrganisationalScopeOptions() {
+		return organisationalScopeOptions;
+	}
+
+	public void setOrganisationalScopeOptions(String organisationalScopeOptions) {
+		this.organisationalScopeOptions = organisationalScopeOptions;
+	}
+
+	public String getItSecGroupOptions() {
+		return itSecGroupOptions;
+	}
+
+	public void setItSecGroupOptions(String itSecGroupOptions) {
+		this.itSecGroupOptions = itSecGroupOptions;
+	}
+
+	public String getProcessOptions() {
+		return processOptions;
+	}
+
+	public void setProcessOptions(String processOptions) {
+		this.processOptions = processOptions;
+	}
+
+	public String getSourceOptions() {
+		return sourceOptions;
+	}
+
+	public void setSourceOptions(String sourceOptions) {
+		this.sourceOptions = sourceOptions;
+	}
+
+	public String getBusinessEssentialOptions() {
+		return businessEssentialOptions;
+	}
+
+	public void setBusinessEssentialOptions(String businessEssentialOptions) {
+		this.businessEssentialOptions = businessEssentialOptions;
 	}
 }

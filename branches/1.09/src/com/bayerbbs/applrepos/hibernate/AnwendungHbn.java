@@ -2420,13 +2420,17 @@ public class AnwendungHbn {
 	}
 
 	
-	public static List<ApplicationDTO> findApplications(String query, String queryMode, String advsearchappowner, String advsearchappdelegate, String advsearchciowner, String advsearchcidelegate, boolean onlyapplications, Long kat1Id, String sort, String dir,
+	public static List<ApplicationDTO> findApplications(
+			String query, String queryMode, String advsearchappowner, String advsearchappownerHidden, String advsearchappdelegate,
+			String advsearchappdelegateHidden, String advsearchciowner, String advsearchciownerHidden, String advsearchcidelegate, 
+			String advsearchcidelegateHidden, boolean onlyapplications, Long kat1Id, String sort, String dir,
 			Long advsearchcitypeid, String advsearchdescription, Long advsearchoperationalstatusid,
 			Long advsearchapplicationcat2id,
 			Long advsearchlifecyclestatusid,
 			Long advsearchprocessid,
 			String template,
 			String advsearchsteward,
+			String advsearchstewardHidden,
 			String barRelevance,
 			String organisationalScope,
 			String itSetId,
@@ -2442,20 +2446,20 @@ public class AnwendungHbn {
 //		Long advsearchapplicationcat2id,
 
 		
-		if (null != advsearchappowner) {
-			advsearchappowner = advsearchappowner.replace("*", "%");
+		if (null != advsearchappownerHidden) {//advsearchappowner
+			advsearchappownerHidden = advsearchappownerHidden.replace("*", "%");//advsearchappowner
 		}
 		if (null != advsearchappdelegate) {
 			advsearchappdelegate = advsearchappdelegate.replace("*", "%");
 		}
-		if (null != advsearchciowner) {
-			advsearchciowner = advsearchciowner.replace("*", "%");
+		if (null != advsearchciownerHidden) {//advsearchciowner
+			advsearchciownerHidden = advsearchciownerHidden.replace("*", "%");//advsearchciowner
 		}
 		if (null != advsearchcidelegate) {
 			advsearchcidelegate = advsearchcidelegate.replace("*", "%");
 		}
-		if (null != advsearchsteward) {
-			advsearchsteward = advsearchsteward.replace("*", "%");
+		if (null != advsearchstewardHidden) {//advsearchsteward
+			advsearchstewardHidden = advsearchstewardHidden.replace("*", "%");//advsearchsteward
 		}
 		
 		ArrayList<ApplicationDTO> listResult = new ArrayList<ApplicationDTO>();
@@ -2509,24 +2513,30 @@ public class AnwendungHbn {
 		
 		
 
-		if (StringUtils.isNotNullOrEmpty(advsearchappowner)) {
-			sql.append(" and UPPER(anw.APPLICATION_OWNER) like '").append(advsearchappowner.toUpperCase()).append("'");
+		if (StringUtils.isNotNullOrEmpty(advsearchappownerHidden)) {//advsearchappowner
+			sql.append(" and UPPER(anw.APPLICATION_OWNER) like '").append(advsearchappownerHidden.toUpperCase()).append("'");//advsearchappowner
 		}
 		
 		if (StringUtils.isNotNullOrEmpty(advsearchappdelegate)) {
-			sql.append(" and UPPER(anw.APPLICATION_OWNER_DELEGATE) like '").append(advsearchappdelegate.toUpperCase()).append("'");
+			boolean isCwid = advsearchappdelegate.indexOf(')') > -1;
+			String delegate = isCwid ? advsearchappdelegateHidden : advsearchappdelegate;
+			
+			sql.append(" and UPPER(anw.APPLICATION_OWNER_DELEGATE) like '").append(delegate.toUpperCase()).append("'");//advsearchappdelegate
 		}
 
-		if (StringUtils.isNotNullOrEmpty(advsearchciowner)) {
-			sql.append(" and UPPER(anw.CWID_VERANTW_BETR) like '").append(advsearchciowner.toUpperCase()).append("'");
+		if (StringUtils.isNotNullOrEmpty(advsearchciownerHidden)) {//advsearchciowner
+			sql.append(" and UPPER(anw.CWID_VERANTW_BETR) like '").append(advsearchciownerHidden.toUpperCase()).append("'");//advsearchciowner
 		}
 		
 		if (StringUtils.isNotNullOrEmpty(advsearchcidelegate)) {
-			sql.append(" and UPPER(anw.SUB_RESPONSIBLE) like '").append(advsearchcidelegate.toUpperCase()).append("'");
+			boolean isCwid = advsearchcidelegate.indexOf(')') > -1;
+			String delegate = isCwid ? advsearchcidelegateHidden : advsearchcidelegate;//gruppe oder cwid?
+
+			sql.append(" and UPPER(anw.SUB_RESPONSIBLE) like '").append(delegate.toUpperCase()).append("'");//advsearchcidelegate
 		}
 
-		if (StringUtils.isNotNullOrEmpty(advsearchsteward)) {
-			sql.append(" and UPPER(anw.APPLICATION_STEWARD) like '").append(advsearchsteward.toUpperCase()).append("'");
+		if (StringUtils.isNotNullOrEmpty(advsearchstewardHidden)) {//advsearchsteward
+			sql.append(" and UPPER(anw.APPLICATION_STEWARD) like '").append(advsearchstewardHidden.toUpperCase()).append("'");//advsearchsteward
 		}
 
 		if (StringUtils.isNotNullOrEmpty(advsearchdescription)) {

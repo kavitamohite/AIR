@@ -129,13 +129,13 @@ public class ApplicationWS {
 
 				if (ApplreposConstants.STRING_TRUE.equals(anwParamInp.getAdvancedsearch())) {
 					listAnwendungen = AnwendungHbn.findApplications(searchname, anwParamInp.getQueryMode(),
-						anwParamInp.getAdvsearchappowner(), anwParamInp.getAdvsearchappdelegate(),
-						anwParamInp.getAdvsearchciowner(), anwParamInp.getAdvsearchcidelegate(), onlyApplications,
-						anwParamInp.getAdvsearchObjectTypeId(), anwParamInp.getSort(), anwParamInp.getDir(),
+						anwParamInp.getAdvsearchappowner(), anwParamInp.getAdvsearchappownerHidden(), anwParamInp.getAdvsearchappdelegate(), anwParamInp.getAdvsearchappdelegateHidden(),
+						anwParamInp.getAdvsearchciowner(), anwParamInp.getAdvsearchciownerHidden(), anwParamInp.getAdvsearchcidelegate(), anwParamInp.getAdvsearchcidelegateHidden(), 
+						onlyApplications, anwParamInp.getAdvsearchObjectTypeId(), anwParamInp.getSort(), anwParamInp.getDir(),
 						anwParamInp.getAdvsearchcitypeid(), anwParamInp.getAdvsearchdescription(),
 						anwParamInp.getAdvsearchoperationalstatusid(), anwParamInp.getAdvsearchapplicationcat2id(),
 						anwParamInp.getAdvsearchlifecyclestatusid(), anwParamInp.getAdvsearchprocessid(), anwParamInp.getTemplate(), 
-						anwParamInp.getAdvsearchsteward(), anwParamInp.getBarRelevance(), anwParamInp.getOrganisationalScope(),
+						anwParamInp.getAdvsearchsteward(), anwParamInp.getAdvsearchstewardHidden(), anwParamInp.getBarRelevance(), anwParamInp.getOrganisationalScope(),
 						anwParamInp.getItSetId(), anwParamInp.getItSecGroupId(), anwParamInp.getSource(), anwParamInp.getBusinessEssentialId()
 					);
 				} else {

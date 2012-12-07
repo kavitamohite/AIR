@@ -152,9 +152,13 @@ public class AirCiExcelExportServlet extends HttpServlet {
     			AnwendungHbn.findApplications(query, 
 					req.getParameter("queryMode"),
 					req.getParameter("hadvsearchappowner"),
+					req.getParameter("hadvsearchappownerHidden"),
 					req.getParameter("hadvsearchappdelegate"),
+					req.getParameter("hadvsearchappdelegateHidden"),
 					req.getParameter("hadvsearchciowner"),
+					req.getParameter("hadvsearchciownerHidden"),
 					req.getParameter("hadvsearchcidelegate"),
+					req.getParameter("hadvsearchcidelegateHidden"),
 					false,
 					req.getParameter("hadvsearchObjectTypeId").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchObjectTypeId")) : null,
 					null/*req.getParameter("sort?")*/,
@@ -167,6 +171,7 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					req.getParameter("hadvsearchprocessid").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchprocessid")) : null,
 					null,/*req.getParameter("template?")*/
 					req.getParameter("hadvsearchsteward"),
+					req.getParameter("hadvsearchstewardHidden"),
 					req.getParameter("barRelevance"),
 					req.getParameter("organisationalScope"),
 					req.getParameter("itSetId"),
@@ -174,7 +179,7 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					req.getParameter("source"),
 					req.getParameter("businessEssentialId")
 				) :
-        		AnwendungHbn.findApplications(query, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        		AnwendungHbn.findApplications(query, null, null, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         } else if(searchAction.equals(SEARCH_POINT_MY_DELEGATE_CIS) || searchAction.equals(SEARCH_POINT_MY_CIS)) {
         	ApplicationParameterInput input = new ApplicationParameterInput();
         	input.setSearchAction(searchAction);
