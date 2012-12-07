@@ -87,12 +87,7 @@ public class LDAPAuthWS {
 						
 						String lastLogon = null;
 						
-						if (AIRWS.usePersonOptions) {
-							lastLogon = PersonOptionHbn.findLastLogon(cwid);
-						}
-						else {
-							lastLogon = ItSecUserHbn.findItSecUserLastLogon(cwid);
-						}
+						lastLogon = PersonOptionHbn.findLastLogon(cwid);
 							
 						if (null == lastLogon) {
 							lastLogon = "";
@@ -100,13 +95,7 @@ public class LDAPAuthWS {
 						output.setLastLogon(lastLogon);
 						authData.setLastlogon(lastLogon);
 						
-						if (AIRWS.usePersonOptions) {
-							PersonOptionHbn.saveLastLogon(cwid);
-						}
-						else {
-							ItSecUserHbn.updateItSecUserLastLogon(cwid);
-						}
-						
+						PersonOptionHbn.saveLastLogon(cwid);
 						
 					}
 					
@@ -234,12 +223,7 @@ public class LDAPAuthWS {
 
 		if (null != cwid && !"".equals(cwid)) {
 			
-			if (AIRWS.usePersonOptions) {
-				PersonOptionHbn.saveLastLogoff(cwid);
-			}
-			else {
-				ItSecUserHbn.updateItSecUserLastLogoff(cwid);
-			}
+			PersonOptionHbn.saveLastLogoff(cwid);
 		}
 	}
 

@@ -31,7 +31,6 @@ import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
 import com.bayerbbs.applrepos.hibernate.CiPersonsHbn;
 import com.bayerbbs.applrepos.hibernate.CiSupportStuffHbn;
 import com.bayerbbs.applrepos.hibernate.InterfacesHbn;
-import com.bayerbbs.applrepos.hibernate.ItsecUserOptionHbn;
 import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 import com.bayerbbs.applrepos.validation.ValidationReader;
 

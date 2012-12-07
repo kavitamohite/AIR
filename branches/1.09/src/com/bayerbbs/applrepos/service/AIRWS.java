@@ -10,14 +10,10 @@ import com.bayerbbs.applrepos.dto.PersonOptionDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitesHbn;
-import com.bayerbbs.applrepos.hibernate.ItsecUserOptionHbn;
 import com.bayerbbs.applrepos.hibernate.PersonOptionHbn;
 
 public class AIRWS {
 
-	public final static boolean usePersonOptions = true;	// RFC 8303
-	
-	
 	/**
 	 * searches CIs or Applications by Organisation Unit and CI/APP
 	 * 
@@ -96,7 +92,7 @@ public class AIRWS {
 
 	public ItsecUserOptionDTO[] getItsecUserOption(ItsecUserOptionParameter parameter) {
 		ItsecUserOptionDTO[] itsecUserOptions = null;
-		if (usePersonOptions) {
+		// usePersonOptions
 			List<PersonOptionDTO> listPersonOptions= PersonOptionHbn.findPersonOptions(parameter.getCwid());
 			itsecUserOptions = new ItsecUserOptionDTO[listPersonOptions.size()];
 			for (int i = 0; i < itsecUserOptions.length; i++) {
@@ -109,11 +105,6 @@ public class AIRWS {
 				temp.setItsecUserOptionValue(personTemp.getValue());
 				itsecUserOptions[i] = temp;
 			}
-			
-		}
-		else {
-			itsecUserOptions = ItsecUserOptionHbn.getArrayFromList(ItsecUserOptionHbn.findItSecUserOptions(parameter.getCwid()));
-		}
 		
 		return itsecUserOptions;
 	}
@@ -154,26 +145,15 @@ public class AIRWS {
 
 		if (null != editInput && StringUtils.isNotNullOrEmpty(editInput.getCwid())) {
 			
-			if (usePersonOptions) {
-				List<PersonOptionDTO> listOptions = PersonOptionHbn.findPersonOptions(editInput.getCwid());
-				
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_CURRENCY", editInput.getCurrency());
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_LANGUAGE", editInput.getLanguage());
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_NUMBER_FORMAT", editInput.getNumberFormat());
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_HELP_ACTIVATE", editInput.getHelp());
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_SKIP_WIZARD", editInput.getSkipWizard());
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_TOOLTIP", editInput.getTooltip());
-			}
-			else {
-				List<ItsecUserOptionDTO> listOptions = ItsecUserOptionHbn.findItSecUserOptions(editInput.getCwid());
-				
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_CURRENCY", editInput.getCurrency());
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_LANGUAGE", editInput.getLanguage());
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_NUMBER_FORMAT", editInput.getNumberFormat());
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_HELP_ACTIVATE", editInput.getHelp());
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_SKIP_WIZARD", editInput.getSkipWizard());
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_TOOLTIP", editInput.getTooltip());
-			}
+			// usePersonOptions
+			List<PersonOptionDTO> listOptions = PersonOptionHbn.findPersonOptions(editInput.getCwid());
+			
+			PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_CURRENCY", editInput.getCurrency());
+			PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_LANGUAGE", editInput.getLanguage());
+			PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_NUMBER_FORMAT", editInput.getNumberFormat());
+			PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_HELP_ACTIVATE", editInput.getHelp());
+			PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_SKIP_WIZARD", editInput.getSkipWizard());
+			PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_TOOLTIP", editInput.getTooltip());
 		}
 		
 		return output;

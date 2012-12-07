@@ -45,7 +45,6 @@ import com.bayerbbs.applrepos.hibernate.GroupsHbn;
 import com.bayerbbs.applrepos.hibernate.ItSecGroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSecSBWerteHbn;
 import com.bayerbbs.applrepos.hibernate.ItSetHbn;
-import com.bayerbbs.applrepos.hibernate.ItsecUserOptionHbn;
 import com.bayerbbs.applrepos.hibernate.LicenseTypeHbn;
 import com.bayerbbs.applrepos.hibernate.LifecycleStatusHbn;
 import com.bayerbbs.applrepos.hibernate.OperationalStatusHbn;

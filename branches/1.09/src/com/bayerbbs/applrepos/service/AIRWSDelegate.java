@@ -8,7 +8,6 @@ import com.bayerbbs.applrepos.dto.ItsecUserOptionDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitesHbn;
-import com.bayerbbs.applrepos.hibernate.ItsecUserOptionHbn;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "AIRWSService", portName = "AIRWSPort")
 public class AIRWSDelegate {
