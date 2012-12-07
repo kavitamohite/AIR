@@ -231,10 +231,8 @@ public class AnwendungHbn {
 
 						// TODO check if allowed
 						application.setUpdateUser(cwid);
-						application
-								.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
-						application.setUpdateTimestamp(ApplReposTS
-								.getCurrentTimestamp());
+						application.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						application.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 						
 						// RFC8344 change Insert-Quelle? // RFC 8532
 						if (ApplreposConstants.INSERT_QUELLE_ANT.equals(application.getInsertQuelle()) ||
@@ -421,12 +419,12 @@ public class AnwendungHbn {
 						
 						// Template
 						if (null != dto.getTemplate()) {
-							if (-1 == dto.getTemplate()) {
-								application.setTemplate(null);
-							}
-							else {
+//							if (-1 == dto.getTemplate()) {
+//								application.setTemplate(null);
+//							}
+//							else {
 								application.setTemplate(dto.getTemplate());
-							}
+//							}
 						}
 						
 						if (null != dto.getItsecGroupId() && 0 != dto.getItsecGroupId()) {
@@ -2411,13 +2409,17 @@ public class AnwendungHbn {
 	}
 
 	
-	public static List<ApplicationDTO> findApplications(String query, String queryMode, String advsearchappowner, String advsearchappdelegate, String advsearchappdelegateHidden, String advsearchciowner, String advsearchcidelegate, String advsearchcidelegateHidden, boolean onlyapplications, Long kat1Id, String sort, String dir,
+	public static List<ApplicationDTO> findApplications(
+			String query, String queryMode, String advsearchappowner, String advsearchappownerHidden, String advsearchappdelegate, 
+			String advsearchappdelegateHidden, String advsearchciowner, String advsearchciownerHidden, String advsearchcidelegate, 
+			String advsearchcidelegateHidden, boolean onlyapplications, Long kat1Id, String sort, String dir,
 			Long advsearchcitypeid, String advsearchdescription, Long advsearchoperationalstatusid,
 			Long advsearchapplicationcat2id,
 			Long advsearchlifecyclestatusid,
 			Long advsearchprocessid,
 			String template,
 			String advsearchsteward,
+			String advsearchstewardHidden,
 			String barRelevance,
 			String organisationalScope,
 			String itSetId,
@@ -2437,20 +2439,20 @@ public class AnwendungHbn {
 //		Long advsearchapplicationcat2id,
 
 		
-		if (null != advsearchappowner) {
-			advsearchappowner = advsearchappowner.replace("*", "%");
+		if (null != advsearchappownerHidden) {//advsearchappowner
+			advsearchappownerHidden = advsearchappownerHidden.replace("*", "%");//advsearchappowner
 		}
 		if (null != advsearchappdelegate) {
 			advsearchappdelegate = advsearchappdelegate.replace("*", "%");
 		}
-		if (null != advsearchciowner) {
-			advsearchciowner = advsearchciowner.replace("*", "%");
+		if (null != advsearchciownerHidden) {//advsearchciowner
+			advsearchciownerHidden = advsearchciownerHidden.replace("*", "%");//advsearchciowner
 		}
 		if (null != advsearchcidelegate) {
 			advsearchcidelegate = advsearchcidelegate.replace("*", "%");
 		}
-		if (null != advsearchsteward) {
-			advsearchsteward = advsearchsteward.replace("*", "%");
+		if (null != advsearchstewardHidden) {//advsearchsteward
+			advsearchstewardHidden = advsearchstewardHidden.replace("*", "%");//advsearchsteward
 		}
 		
 		ArrayList<ApplicationDTO> listResult = new ArrayList<ApplicationDTO>();
@@ -2506,14 +2508,14 @@ public class AnwendungHbn {
 		boolean isNot = false;
 
 		
-		if (StringUtils.isNotNullOrEmpty(advsearchappowner)) {
+		if (StringUtils.isNotNullOrEmpty(advsearchappownerHidden)) {//advsearchappowner
 			isNot = isNot(appOwnerOptions);
 			
 			sql.append(" and (");
 			if(isNot)
 				sql.append("UPPER(anw.APPLICATION_OWNER) is null or ");
 			
-			sql.append("UPPER(anw.APPLICATION_OWNER) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchappowner.toUpperCase()).append("')");
+			sql.append("UPPER(anw.APPLICATION_OWNER) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchappownerHidden.toUpperCase()).append("')");//advsearchappowner
 		}
 		
 		if (StringUtils.isNotNullOrEmpty(advsearchappdelegate)) {
@@ -2539,14 +2541,14 @@ public class AnwendungHbn {
 //				sql.insert(sql.length() - 1, '%');
 		}
 
-		if (StringUtils.isNotNullOrEmpty(advsearchciowner)) {
+		if (StringUtils.isNotNullOrEmpty(advsearchciownerHidden)) {//advsearchciowner
 			isNot = isNot(ciOwnerOptions);
 			
 			sql.append(" and (");
 			if(isNot)
 				sql.append("UPPER(anw.CWID_VERANTW_BETR) is null or ");
 			
-			sql.append("UPPER(anw.CWID_VERANTW_BETR) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchciowner.toUpperCase()).append("')");
+			sql.append("UPPER(anw.CWID_VERANTW_BETR) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchciownerHidden.toUpperCase()).append("')");//advsearchciowner
 		}
 		
 		if (StringUtils.isNotNullOrEmpty(advsearchcidelegate)) {//advsearchcidelegateHidden
@@ -2565,14 +2567,14 @@ public class AnwendungHbn {
 				sql.insert(sql.length() - 2, '%');
 		}
 
-		if (StringUtils.isNotNullOrEmpty(advsearchsteward)) {
+		if (StringUtils.isNotNullOrEmpty(advsearchstewardHidden)) {//advsearchsteward
 			isNot = isNot(appStewardOptions);
 			
 			sql.append(" and (");
 			if(isNot)
 				sql.append("UPPER(anw.APPLICATION_STEWARD) is null or ");
 			
-			sql.append(" and UPPER(anw.APPLICATION_STEWARD) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchsteward.toUpperCase()).append("')");
+			sql.append("UPPER(anw.APPLICATION_STEWARD) "+ getLikeNotLikeOperator(isNot) +" '").append(advsearchstewardHidden.toUpperCase()).append("')");//advsearchsteward
 		}
 
 		if (StringUtils.isNotNullOrEmpty(advsearchdescription)) {

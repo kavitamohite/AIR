@@ -7,6 +7,13 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		var options = {
 			fsApplicationOwner: {
 				padding: Ext.isIE ? 0 : 10
+				/*items: [{
+					id: 'pAdvSearchApplicationOwnerDelegate',
+					style: {
+						marginLeft: 5
+					}
+				}]*/
+//				marginLeft: Ext.isIE ? 5 : 0
 			},
 			
 			fsApplicationSteward: {
@@ -17,6 +24,27 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 				padding: Ext.isIE ? 0 : 10
 			}
 		};
+		
+		if(Ext.isIE) {
+			options.fsApplicationOwner.items = [];
+			options.fsApplicationSteward.items = [];
+			options.fsCIOwner.items = [];
+			
+			var item = {
+//				id: 'pAdvSearchApplicationOwnerDelegate',
+				style: {
+					marginLeft: 5
+				}
+			};
+			
+			options.fsApplicationOwner.items.push(item);
+			options.fsApplicationOwner.items.push(item);
+			
+			options.fsApplicationSteward.items.push(item);
+			
+			options.fsCIOwner.items.push(item);
+			options.fsCIOwner.items.push(item);
+		}
 		
 		var appOwnerStewardFieldsets = AIR.AirUiFactory.createAppOwnerStewardFieldsets(this.ownerId, options);
 		
@@ -295,7 +323,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 20
+							marginTop: Ext.isIE ? 10 : 20
 						},
 						
 	        			items: [
@@ -396,7 +424,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					//hidden: true,
 					
 					style: {
-	        			marginTop: 10
+	        			marginTop: 10,
+		    			paddingLeft: Ext.isIE ? 5 : 0
 //						marginRight: 10,
 //						marginBottom: 10
 					},
@@ -419,6 +448,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //				        forceSelection: true,
 //				        autoSelect: false,
 						
+//						style: {
+//							marginLeft: Ext.isIE ? 5 : 0//20//
+//						},
+						
 						triggerAction: 'all',
 						lazyRender: true,
 						lazyInit: false,
@@ -436,6 +469,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //				        typeAhead: true,
 //				        forceSelection: true,
 //				        autoSelect: false,
+						
+//						style: {
+//							marginLeft: Ext.isIE ? 5 : 0
+//						},
 						
 						triggerAction: 'all',
 						lazyRender: true,
@@ -455,6 +492,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //				        forceSelection: true,
 //				        autoSelect: false,
 						
+//						style: {
+//							marginLeft: Ext.isIE ? 5 : 0
+//						},
+						
 						triggerAction: 'all',
 						lazyRender: true,
 						lazyInit: false,
@@ -468,6 +509,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 
 				        id: 'lvAdvSearchOrganisationalScope',
 				        store: AIR.AirStoreManager.getStoreByName('organisationalScopeListStore'),
+				        
+//				        style: {
+//							marginLeft: Ext.isIE ? 5 : 0
+//						},
 				        
 				        singleSelect: false,
 				        multiSelect: true,
@@ -522,7 +567,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 8
+							marginTop: Ext.isIE ? 5 : 8
 						},
 	        			
 	        			items: [
@@ -536,7 +581,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 8
+							marginTop: Ext.isIE ? 5 : 8
 						},
 						
 	        			items: [
@@ -550,7 +595,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 8
+							marginTop: Ext.isIE ? 5 : 8
 						},
 	        			
 	        			items: [
@@ -570,7 +615,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	//			    hidden: true,
 					
 					style: {
-	        			marginTop: 10
+	        			marginTop: 10,
+		    			paddingLeft: Ext.isIE ? 5 : 0
 					},
 					
 					layout: 'form',//form fit
@@ -592,6 +638,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	//			        forceSelection: true,
 	//			        autoSelect: false,
 						
+				        style: {
+							marginLeft: Ext.isIE ? 5 : 0
+						},
+						
 						triggerAction: 'all',
 						lazyRender: true,
 						lazyInit: false,
@@ -611,6 +661,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	//			        forceSelection: true,
 	//			        autoSelect: false,
 						
+				        style: {
+							marginLeft: Ext.isIE ? 5 : 0
+						},
+						
 						triggerAction: 'all',
 						lazyRender: true,
 						lazyInit: false,
@@ -628,6 +682,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	//			        typeAhead: true,
 	//			        forceSelection: true,
 	//			        autoSelect: false,
+	
+				        style: {
+							marginLeft: Ext.isIE ? 5 : 0
+						},
 						
 						triggerAction: 'all',
 						lazyRender: true,
@@ -646,6 +704,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	//			        typeAhead: true,
 	//			        forceSelection: true,
 	//			        autoSelect: false,
+	
+				        style: {
+							marginLeft: Ext.isIE ? 5 : 0
+						},
 						
 						triggerAction: 'all',
 						lazyRender: true,
@@ -665,6 +727,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	//			        forceSelection: true,
 	//			        autoSelect: false,
 						
+				        style: {
+							marginLeft: Ext.isIE ? 5 : 0
+						},
+						
 						triggerAction: 'all',
 						lazyRender: true,
 						lazyInit: false,
@@ -683,6 +749,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	//			        forceSelection: true,
 	//			        autoSelect: false,
 						
+				        style: {
+							marginLeft: Ext.isIE ? 5 : 0
+						},
+						
 						triggerAction: 'all',
 						lazyRender: true,
 						lazyInit: false,
@@ -700,6 +770,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	//			        typeAhead: true,
 	//			        forceSelection: true,
 	//			        autoSelect: false,
+	
+				        style: {
+							marginLeft: Ext.isIE ? 5 : 0
+						},
 						
 						triggerAction: 'all',
 						lazyRender: true,
@@ -754,7 +828,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 8
+							marginTop: Ext.isIE ? 5 : 8
 						},
 	        			
 	        			items: [
@@ -768,7 +842,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 8
+							marginTop: Ext.isIE ? 5 : 8
 						},
 						
 	        			items: [
@@ -782,7 +856,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 8
+							marginTop: Ext.isIE ? 5 : 8
 						},
 	        			
 	        			items: [
@@ -1098,15 +1172,18 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    	var pAdvSearchAppStewardFrame = this.getComponent('pAdvSearchAppStewardFrame');
 	    	var pAdvSearchCIOwnerFrame = this.getComponent('pAdvSearchCIOwnerFrame');
 	    	
-	    	field = pAdvSearchAppOwnerFrame.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner');
-	    	if(data.advsearchappownerHidden && data.advsearchappownerHidden.length > 0)
-	    		field.setValue(data.advsearchappownerHidden);
-	    	else field.reset();
+
 	    	
-	    	field = pAdvSearchAppOwnerFrame.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden');
+	    	field = pAdvSearchAppOwnerFrame.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner');
 	    	if(data.advsearchappowner && data.advsearchappowner.length > 0)
 	    		field.setValue(data.advsearchappowner);
 	    	else field.reset();
+	    	
+	    	field = pAdvSearchAppOwnerFrame.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden');
+	    	if(data.advsearchappownerHidden && data.advsearchappownerHidden.length > 0)
+	    		field.setValue(data.advsearchappownerHidden);
+	    	else field.reset();
+
 	    	
 	    	
 	    	field = pAdvSearchAppOwnerFrame.getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate');
@@ -1122,13 +1199,13 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    	
 	    	
 	    	field = pAdvSearchAppStewardFrame.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward');
-	    	if(data.advsearchstewardHidden && data.advsearchstewardHidden.length > 0)
-	    		field.setValue(data.advsearchstewardHidden);
+	    	if(data.advsearchsteward && data.advsearchsteward.length > 0)
+	    		field.setValue(data.advsearchsteward);
 	    	else field.reset();
 	    	
 	    	field = pAdvSearchAppStewardFrame.getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardHidden');
-	    	if(data.advsearchsteward && data.advsearchsteward.length > 0)
-	    		field.setValue(data.advsearchsteward);
+	    	if(data.advsearchstewardHidden && data.advsearchstewardHidden.length > 0)
+	    		field.setValue(data.advsearchstewardHidden);
 	    	else field.reset();
 	    	
 	    	
@@ -1154,15 +1231,17 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    	Util.setChbGroup(cbgAdvSearchCIOwnerDelegateOptions, data.ciOwnerDelegateOptions);
 	    }
 	    
+    	
     	field = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible');
+    	if(data.advsearchciowner && data.advsearchciowner.length > 0)
+    		field.setValue(data.advsearchciowner);
+    	else field.reset();
+    	
+    	field = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleHidden');
     	if(data.advsearchciownerHidden && data.advsearchciownerHidden.length > 0)
     		field.setValue(data.advsearchciownerHidden);
     	else field.reset();
     	
-    	field = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleHidden');
-    	if(data.advsearchciowner && data.advsearchciowner.length > 0)
-    		field.setValue(data.advsearchciowner);
-    	else field.reset();
 	    
     	
     	field = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner').getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible');
@@ -1322,12 +1401,12 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    	
 	    	//params.xHidden = ...getComponent('x'); und params.x = ...getComponent('xHidden'); sind vertauscht 
 	    	//weil es momtan in ApplicationWS.findApplications nur ein Feld x (ohne Hidden) gibt und die cwid im Feld x dort ausgelesen wird
-		    params.advsearchappowner = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden').getValue();//applicationOwner
-		    params.advsearchappownerHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner').getValue();
+		    params.advsearchappowner = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner').getValue();//applicationOwner
+		    params.advsearchappownerHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden').getValue();
 		    params.advsearchappdelegate = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate').getValue();//applicationOwnerDelegate
 		    params.advsearchappdelegateHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateHidden').getValue();
-		    params.advsearchsteward = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardHidden').getValue();//applicationSteward
-		    params.advsearchstewardHidden = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward').getValue();
+		    params.advsearchsteward = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward').getValue();//applicationSteward
+		    params.advsearchstewardHidden = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardHidden').getValue();
 		    
 //		    params.advsearchappdelegate = params.advsearchappdelegateHidden && params.advsearchappdelegateHidden.length > 0 && params.advsearchappdelegateHidden.indexOf(')') === -1 ? params.advsearchappdelegateHidden : params.advsearchappdelegate;
 		    
@@ -1353,8 +1432,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			params.ciOwnerDelegateOptions = Util.getChbYesNoValues(cbgAdvSearchCIOwnerDelegateOptions);
 	    }
 	    
-	    params.advsearchciowner = fsCIOwner.getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleHidden').getValue();//ciResponsible
-	    params.advsearchciownerHidden = fsCIOwner.getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible').getValue();
+	    params.advsearchciowner = fsCIOwner.getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible').getValue();//ciResponsible
+	    params.advsearchciownerHidden = fsCIOwner.getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleHidden').getValue();
 	    params.advsearchcidelegate = fsCIOwner.getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible').getValue();
 	    params.advsearchcidelegateHidden = fsCIOwner.getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleHidden').getValue();
 	    

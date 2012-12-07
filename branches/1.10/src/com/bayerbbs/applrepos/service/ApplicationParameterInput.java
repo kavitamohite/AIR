@@ -23,18 +23,29 @@ public class ApplicationParameterInput implements Serializable {
 	/** advanced search parameters */
 	private Long advsearchObjectTypeId;
 	private String advsearchObjectTypeText;
-	
 	private Long advsearchcitypeid;
+	
+	
 	private String advsearchappowner;
+	private String advsearchappownerHidden;
+	
 	private String advsearchappdelegate;
 	private String advsearchappdelegateHidden;
+	
+	private String advsearchsteward;
+	private String advsearchstewardHidden;
+	
+
 	private String advsearchciowner;
+	private String advsearchciownerHidden;
+	
 	private String advsearchcidelegate;
 	private String advsearchcidelegateHidden;
-	private String advsearchsteward;
-	private String advsearchdescription;
 	
-	/** advanced search plus parameters */
+
+	
+	
+	private String advsearchdescription;
 	private Long advsearchoperationalstatusid;
 	private Long advsearchapplicationcat2id;
 	private Long advsearchlifecyclestatusid;
@@ -376,6 +387,25 @@ public class ApplicationParameterInput implements Serializable {
 	public void setAdvsearchsteward(String advsearchsteward) {
 		this.advsearchsteward = advsearchsteward;
 	}
+	public String getAdvsearchappownerHidden() {
+		return advsearchappownerHidden;
+	}
+	public void setAdvsearchappownerHidden(String advsearchappownerHidden) {
+		this.advsearchappownerHidden = advsearchappownerHidden;
+	}
+	public String getAdvsearchstewardHidden() {
+		return advsearchstewardHidden;
+	}
+	public void setAdvsearchstewardHidden(String advsearchstewardHidden) {
+		this.advsearchstewardHidden = advsearchstewardHidden;
+	}
+	public String getAdvsearchciownerHidden() {
+		return advsearchciownerHidden;
+	}
+	public void setAdvsearchciownerHidden(String advsearchciownerHidden) {
+		this.advsearchciownerHidden = advsearchciownerHidden;
+	}
+
 
 	
 	public String getBarRelevance() {
