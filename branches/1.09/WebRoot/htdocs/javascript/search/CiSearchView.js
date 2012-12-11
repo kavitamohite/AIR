@@ -193,7 +193,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    	var params = this.getOuSearchParams();
 //	    	params.limit = 100000;
 	    	
-	    	form.searchAction.value = params.searchAction;
+	    	form.searchAction.value = params.searchType;//searchAction
 	    	
 	    	for(var key in params)
 	    		if(form['h'+key])
@@ -728,16 +728,20 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 		
 		params.isAdvSearchExt = this.isAdvSearchExt;
-		this.getComponent('ciSearchResultView').search(params, isUpdate);
+		this.getComponent('ciSearchResultView').search(params, isUpdate, this.onExcelExport.createDelegate(this));//this
 	},
 	
 	onTabChange: function(tabPanel, tab, options) {
 		if(tabPanel) {
 			var bUpdateCiSearchResult = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('pSearchField').getComponent('bUpdateCiSearchResult');
+			var bUpdateOuSearch = this.getComponent('ciSearchViewPages').getComponent('ciOuSearchView').getComponent('pOuSearch').getComponent('bUpdateOuSearch');
+			
 			if(tabPanel.items.items.length > 0) {
 				bUpdateCiSearchResult.setVisible(true);
+				bUpdateOuSearch.setVisible(true);
 			} else {
 				bUpdateCiSearchResult.setVisible(false);
+				bUpdateOuSearch.setVisible(false);
 				this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView').expand(false);
 			}
 		}

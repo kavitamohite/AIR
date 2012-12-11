@@ -1,7 +1,4 @@
-
-<!DOCTYPE hibernate-configuration PUBLIC
-"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>	
 
@@ -10,11 +7,12 @@
   <property name="hibernate.connection.username">mxtba</property>
   <property name="hibernate.connection.password">isbb2007</property>
   <property name="hibernate.connection.pool_size">10</property>
+  <property name="hibernate.connection.autoReconnect">true</property>
+  <property name="hibernate.connection.validationQuery">SELECT 1</property>
   
   <property name="show_sql">true</property>
   <property name="dialect">org.hibernate.dialect.OracleDialect</property>
-  <!-- Mapping files -->
-
+		<mapping package="com.bayerbbs.applrepos.domain" />
 		<mapping class="com.bayerbbs.applrepos.domain.Account" />
 		<mapping class="com.bayerbbs.applrepos.domain.Application" />
 		<mapping class="com.bayerbbs.applrepos.domain.ApplicationApplication" />
@@ -35,25 +33,22 @@
 		<mapping class="com.bayerbbs.applrepos.domain.CiSupportStuffType" />
 		<mapping class="com.bayerbbs.applrepos.domain.Currency" />
 		<mapping class="com.bayerbbs.applrepos.domain.GapClass" />
-		<mapping class="com.bayerbbs.applrepos.domain.Groups" />
-		<mapping class="com.bayerbbs.applrepos.domain.GroupTypes" />
+		<mapping class="com.bayerbbs.applrepos.domain.Group" />
+		<mapping class="com.bayerbbs.applrepos.domain.GroupType" />
 		<mapping class="com.bayerbbs.applrepos.domain.Interfaces" />
 		<mapping class="com.bayerbbs.applrepos.domain.ItSet" />
 		<mapping class="com.bayerbbs.applrepos.domain.ItSecGroup" />
-		<mapping class="com.bayerbbs.applrepos.domain.ItsecMassnahmeStatus" />
-		<mapping class="com.bayerbbs.applrepos.domain.ItsecUserOption" />
+		<mapping class="com.bayerbbs.applrepos.domain.ItsecCompliance" />
 		<mapping class="com.bayerbbs.applrepos.domain.ItSystem" />
-		<mapping class="com.bayerbbs.applrepos.domain.ItsecSBWerte" />
-		
+		<mapping class="com.bayerbbs.applrepos.domain.ItsecPL" />
 		<mapping class="com.bayerbbs.applrepos.domain.LicenseType" />
 		<mapping class="com.bayerbbs.applrepos.domain.LifecycleStatus" />
 		<mapping class="com.bayerbbs.applrepos.domain.OperationalStatus" />
-		<mapping class="com.bayerbbs.applrepos.domain.Persons" />
+		<mapping class="com.bayerbbs.applrepos.domain.Person" />
 		<mapping class="com.bayerbbs.applrepos.domain.PersonOption" />
 		<mapping class="com.bayerbbs.applrepos.domain.PriorityLevel" />
 		<mapping class="com.bayerbbs.applrepos.domain.Process" />
 		<mapping class="com.bayerbbs.applrepos.domain.ServiceContract" />
 		<mapping class="com.bayerbbs.applrepos.domain.Sla" />
-		
 	</session-factory>
 </hibernate-configuration>

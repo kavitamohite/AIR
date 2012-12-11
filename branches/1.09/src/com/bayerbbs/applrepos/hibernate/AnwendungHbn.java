@@ -2555,13 +2555,13 @@ public class AnwendungHbn {
 			sql.append(" and anw.LC_STATUS_ID = ").append(advsearchlifecyclestatusid.longValue());
 		}
 		
-		if(null != itSetId)
+		if(StringUtils.isNotNullOrEmpty(itSetId))
 			sql.append(" and anw.ITSET = ").append(Long.parseLong(itSetId));
-		if(null != itSecGroupId)
+		if(StringUtils.isNotNullOrEmpty(itSecGroupId))
 			sql.append(" and anw.ITSEC_GRUPPE_ID = ").append(Long.parseLong(itSecGroupId));
-		if(null != source)
+		if(StringUtils.isNotNullOrEmpty(source))
 			sql.append(" and anw.INSERT_QUELLE = '").append(source).append("'");
-		if(null != businessEssentialId)
+		if(StringUtils.isNotNullOrEmpty(businessEssentialId))
 			sql.append(" and anw.BUSINESS_ESSENTIAL_ID = ").append(Long.parseLong(businessEssentialId));
 		
 

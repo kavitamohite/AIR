@@ -40,7 +40,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 //		this.addEvents('tabclose');
 	},
 	
-	search: function(params, isUpdate) {
+	search: function(params, isUpdate, callback) {//ownerView
 		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
 		
 		var ciResultGrid;
@@ -58,6 +58,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			ciResultGrid = new AIR.CiResultGrid({
 		    	id: ciResultGridId,
 		    	layout: 'fit',
+		    	ownerPrefix: ciResultGridId,
 		    	border: false,
 		    	closable: true
 	//	    	loadMask: new Ext.LoadMask(tpCiSearchResultTables.getEl(), { msg: 'Loading...' })
@@ -74,6 +75,10 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			ciResultGrid.getStore().on('load', this.onGridLoaded, this);
 			ciResultGrid.on('rowclick', this.onRowClick, this);
 			ciResultGrid.on('rowdblclick', this.onRowDoubleClick, this);
+			
+			var pagingBar = ciResultGrid.getBottomToolbar();
+			var clExcelExport = pagingBar.getComponent(ciResultGridId + '_clExcelExport');//ciSearchGrid_clExcelExport
+			clExcelExport.on('click', callback);//ownerView.onExcelExport, ownerView
 		}
 		
 //		this.ciResultGridParamSets[ciResultGridId] = params;

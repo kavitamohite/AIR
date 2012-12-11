@@ -1,12 +1,9 @@
-
-<!DOCTYPE hibernate-configuration PUBLIC
-"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>	
 
   <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
-  <property name="hibernate.connection.url">jdbc:oracle:thin:@(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = by08vf.bayer-ag.com)(PORT = 1521)) (ADDRESS = (PROTOCOL = TCP)(HOST = by08vf.bayer-ag.com)(PORT = 1521)) (LOAD_BALANCE = yes) (CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = TRANSBQ)))</property>
+  <property name="hibernate.connection.url">jdbc:oracle:thin:@(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = byob01.bayer-ag.com)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = TRANSBP)))</property>
   <property name="hibernate.connection.username">mxtba</property>
   <property name="hibernate.connection.password">isbb2007</property>
   <property name="hibernate.connection.pool_size">10</property>
@@ -15,8 +12,6 @@
   
   <property name="show_sql">true</property>
   <property name="dialect">org.hibernate.dialect.OracleDialect</property>
-  <!-- Mapping files -->
-
 		<mapping package="com.bayerbbs.applrepos.domain" />
 		<mapping class="com.bayerbbs.applrepos.domain.Account" />
 		<mapping class="com.bayerbbs.applrepos.domain.Application" />

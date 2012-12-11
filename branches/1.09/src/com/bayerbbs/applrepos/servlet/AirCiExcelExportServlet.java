@@ -30,7 +30,7 @@ public class AirCiExcelExportServlet extends HttpServlet {
 	private static final long serialVersionUID = 3569239290421829949L;
 	
 	private static final String SEARCH_POINT_SEARCH = "search";
-	private static final String SEARCH_POINT_OUSEARCH = "ouSearch";
+	private static final String SEARCH_POINT_OUSEARCH = "Ou Search";//ouSearch
 	private static final String SEARCH_POINT_MY_CIS = "myCis";
 	private static final String SEARCH_POINT_MY_DELEGATE_CIS = "myCisSubstitute";
 	
@@ -54,12 +54,16 @@ public class AirCiExcelExportServlet extends HttpServlet {
 		String cwid = req.getParameter("cwid");
 		String searchAction = req.getParameter("searchAction");
 		
-		String fileName = "AirCIExport_".concat(cwid);
+		String fileName = "AirCIExport";
+		
+		if(cwid != null && cwid.length() > 0)
+			fileName = fileName.concat(UNDERSCORE).concat(cwid);
 		if(searchAction != null && searchAction.length() > 0)
 			fileName = fileName.concat(UNDERSCORE).concat(searchAction);
 		if(query != null && query.length() > 0)
 			fileName = fileName.concat(UNDERSCORE).concat(query);
 
+		fileName = fileName.concat(".xlsx");
 		
 		res.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");//xlsx: vnd.openxmlformats-officedocument.spreadsheetml.sheet, xls: vnd.ms-excel
 		res.setHeader("Content-Disposition", "attachment; filename="+fileName);
@@ -169,15 +173,15 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					req.getParameter("hadvsearchapplicationcat2id").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchapplicationcat2id")) : null,
 					req.getParameter("hadvsearchlifecyclestatusid").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchlifecyclestatusid")) : null,
 					req.getParameter("hadvsearchprocessid").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchprocessid")) : null,
-					null,/*req.getParameter("template?")*/
+					null,/*req.getParameter("template")?*/
 					req.getParameter("hadvsearchsteward"),
 					req.getParameter("hadvsearchstewardHidden"),
-					req.getParameter("barRelevance"),
-					req.getParameter("organisationalScope"),
-					req.getParameter("itSetId"),
-					req.getParameter("itSecGroupId"),
-					req.getParameter("source"),
-					req.getParameter("businessEssentialId")
+					req.getParameter("hbarRelevance"),
+					req.getParameter("horganisationalScope"),
+					req.getParameter("hitSetId"),
+					req.getParameter("hitSecGroupId"),
+					req.getParameter("hsource"),
+					req.getParameter("hbusinessEssentialId")
 				) :
         		AnwendungHbn.findApplications(query, null, null, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         } else if(searchAction.equals(SEARCH_POINT_MY_DELEGATE_CIS) || searchAction.equals(SEARCH_POINT_MY_CIS)) {
