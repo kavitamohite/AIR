@@ -2596,19 +2596,19 @@ public class AnwendungHbn {
 			isNot = isNot(lifecycleStatusOptions);
 			sql.append(" and anw.LC_STATUS_ID "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchlifecyclestatusid.longValue());
 		}
-		if(null != itSetId) {
+		if(StringUtils.isNotNullOrEmpty(itSetId)) {
 			isNot = isNot(itSetOptions);
 			sql.append(" and anw.ITSET "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(itSetId));
 		}
-		if(null != itSecGroupId) {
+		if(StringUtils.isNotNullOrEmpty(itSecGroupId)) {
 			isNot = isNot(itSecGroupOptions);
 			sql.append(" and anw.ITSEC_GRUPPE_ID "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(itSecGroupId));
 		}
-		if(null != source) {
+		if(StringUtils.isNotNullOrEmpty(source)) {
 			isNot = isNot(sourceOptions);
 			sql.append(" and anw.INSERT_QUELLE "+ getEqualNotEqualOperator(isNot) +" '").append(source).append("'");
 		}
-		if(null != businessEssentialId) {
+		if(StringUtils.isNotNullOrEmpty(businessEssentialId)) {
 			isNot = isNot(businessEssentialOptions);
 			sql.append(" and anw.BUSINESS_ESSENTIAL_ID "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(businessEssentialId));
 		}

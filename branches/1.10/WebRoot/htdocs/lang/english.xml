@@ -245,11 +245,13 @@
 				<invalidMassnameWindowTitleIncomplete>Incomplete control</invalidMassnameWindowTitleIncomplete>
 				<invalidMassnameWindowTitleGapClass>Mismatch of Target Date and Gap Class</invalidMassnameWindowTitleGapClass>
 				<invalidMassnameWindowTitleDamagePerYear>Economically solvable?</invalidMassnameWindowTitleDamagePerYear>
+				<invalidMassnameWindowTitleGapClassTargetDateChange>Target Date will be adjusted automatically</invalidMassnameWindowTitleGapClassTargetDateChange>
 				
 				<invalidMassnameWindowIncomplete>All Fields must be filled for the control to be valid.</invalidMassnameWindowIncomplete>
 				<invalidMassnameWindowDamagePerYear>The values will be saved, but it is not possible to approve:&lt;br&gt;The expense is not greater than the risk mitigation. The gap is not &quot;economically not solvable&quot;!</invalidMassnameWindowDamagePerYear>
 				<invalidMassnameWindowTargetDatePast>A date in the past is not allowed</invalidMassnameWindowTargetDatePast>
 				<invalidMassnameWindowGapClassReplace>For the target date {0} the gap class &quot;{1}&quot; was set instead of &quot;{2}&quot;</invalidMassnameWindowGapClassReplace>
+				<invalidMassnameWindowGapClassTargetDateChange>Target date is changed from &quot;{0}&quot; to &quot;{1}&quot;</invalidMassnameWindowGapClassTargetDateChange>
 				<invalidMassnameWindowTargetDate>Please set target date and/or gap class to appropriate values!&lt;br&gt;&lt;br&gt;short-term to solve		max: {0}&lt;br&gt;mid-term to solve		max: {1}&lt;br&gt;long-term to solve		max: {2}</invalidMassnameWindowTargetDate>
 				
 				

@@ -2,7 +2,14 @@ Ext.namespace('AIR');
 
 AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 	
-	init: function(navigationView, ciTitleView) {
+	init: function(navigationView, ciTitleView, hHistory) {
+		if(Ext.isIE) {
+			Ext.History.iframeId = 'x-history-frame';
+			Ext.History.fieldId = 'x-history-field';
+		} else {
+			Ext.History.fieldId = hHistory;//airViewport.getComponent('ciTitleView').getComponent('pCiTitleViewNorth').getComponent('hHistory');
+		}
+	
     	Ext.History.init();
     	Ext.History.on('change', this.onBackForwardClick, this);
     	

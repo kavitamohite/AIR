@@ -72,7 +72,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 		
 		
-		var labels = AIR.AirApplicationManager.getLabels();
+		var labels = AAM.getLabels();
 //		var linkCiTypeListStore = AIR.AirStoreManager.getStoreByName('linkCiTypeListStore');
 //		var pComplianceLinkTypeConfig = AIR.AirUiFactory.createComplianceLinkTypeConfigPanel(labels, linkCiTypeListStore);//, AIR.AirStoreManager.getStoreByName('linkCiTypeListStore')
 
@@ -1276,10 +1276,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	onTargetDateFocusLost: function(field) {
-//		if(!this.isMessageWindowOpen) {//kein effekt
-//			this.isTargetDateValid(field.getValue());
-		
 		var result = this.isTargetDateValid(field.getValue());
+		
 		if(result.message) {
 			if(result.isValid) {//Massnahmen Validierungsfenster für Warnungen sollen nur einmal kommen
 				if(this.warningMassnahmen.length > 0 && !this.skipFocusLost) {
@@ -1289,20 +1287,17 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			} else
 				this.openMassnahmeValidationWindow(result.gapClass, result.title, result.iconType, result.message, result.isValid);
 		}
-		Util.log('onTargetDateFocusLost isMessageWindowOpen='+this.isMessageWindowOpen);
-		
-//		}
 	},
 	
 	isTargetDateValid: function(date) {//, skip
 		//wenn es keine editierten Massnahmen gibt, sprich die Massnahme nach einer Speicherung neu geladen wurde,
-		//kann das target nicht falsch sein, daher keine Prüfung, damit beim Zugriff auf die nicht existierende
+		//kann das target nicht falsch sein. Daher keine Prüfung, damit beim Zugriff auf die nicht existierende
 		//Massnahme kein Fehler kommt: var gapClass = this.editedMassnahmen[this.previousSelection].gapPriority
 		if(!this.editedMassnahmen[this.previousSelection])
 			return true;
 		
 		var isValid = true;
-		var isWarning = true;
+		var isWarning = false;
 		var labels = AAM.getLabels();
 		
 		var title = labels.invalidMassnameWindowTitleGapClass,
@@ -1371,8 +1366,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							newGapClass = '1';
 							message = labels.invalidMassnameWindowGapClassReplace.replace('{0}', date.format(AAM.getDateFormat())).replace('{1}', 'long-term to solve').replace('{2}', 'mid-term to solve');
 							iconType = img_OK;
-						} else {
-							isWarning = false;
+							isWarning = true;
 						}
 												
 						break;
@@ -1383,14 +1377,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							message = labels.invalidMassnameWindowGapClassReplace.replace('{0}', date.format(AAM.getDateFormat())).replace('{1}', 'mid-term to solve').replace('{2}', 'short-term to solve');
 							field.markInvalid('');
 							iconType = img_OK;
+							isWarning = true;
 						} else if(monthDifference > AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS && monthDifference < 13) {
 							newGapClass = '1';
 							
 							message = labels.invalidMassnameWindowGapClassReplace.replace('{0}', date.format(AAM.getDateFormat())).replace('{1}', 'long-term to solve').replace('{2}', 'short-term to solve');
 							field.markInvalid('');
 							iconType = img_OK;
-						} else {
-							isWarning = false;
+							isWarning = true;
 						}
 						
 						break;
@@ -2026,10 +2020,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	onBeforeMassnahmeSelect: function(selModel, rowIndex, keepExisting, record) {
 		//warningMassnahmen Fesnter die nur einmal kommen sollen. 
 		//Sowohl auf der Massnahme Detail Seite als auch auf der Massnahmen Tabellen Seite
-		if(this.warningMassnahmen.length > 0) {//geht nur, wenn beforeselect event VOR dem blur event des dfTargetDate gefeuert wird!
+		if(this.warningMassnahmen.length > 0)//geht nur, wenn beforeselect event VOR dem blur event des dfTargetDate gefeuert wird!
 			this.skipFocusLost = true;
-//			return true;
-		}
 
 		
 		if(this.existsInvalidMassnahme > 0 && !this.ignoreInvalidMassnahme) {
@@ -2041,20 +2033,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				this.openInvalidMassnahmeWindow(grid.getEl());
 			
 			return false;
-			
-			
-			/*if(massnahme.invalidityId === AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE) {
-				this.openInvalidMassnahmeWindow(grid.getEl());
-				return false;
-			} else {
-				if(massnahme.invalidityId !== AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1)//erledigt von onTargetDateFocusLost
-					this.openInvalidMassnahmeWindow(grid.getEl());
-				
-				return false;//true
-			}*/
 		} else {
 			this.ignoreInvalidMassnahme = false;
-			
 			
 			return true;
 		}
@@ -2644,15 +2624,21 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var cbCompliantStatus = fsComplianceStatement.getComponent('pCompliantStatus').getComponent('cbCompliantStatus');
 		var gapClass = combo.getValue();
 		
-		this.updateRiskAnalysisAndMgmt(gapClass, cbCompliantStatus.getValue(), true);
 		var massnahme = /*this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] :*/ this.loadedMassnahme;
 		this.deleteRiskAnalysisAndMgmtValues(massnahme, gapClass);
+		this.updateRiskAnalysisAndMgmt(gapClass, cbCompliantStatus.getValue(), true);
+
 		
-		//Achtung bei Aufruf von isTargetDateValid(): diese Funktion ist momentan spezialisiert auf Änderungen des targetDate
-		//und die Anpassung der gapClass. Aber nicht umgekehrt! Sie wird aber in beiden Fällen aufgerufen.
+		//Achtung bei Aufruf von isTargetDateValid(): diese Funktion ist momentan spezialisiert auf (manuelle in Zusammenhang
+		//mit onFocusLost) Änderungen des targetDate und die Anpassung der gapClass. 
+		//Aber nicht umgekehrt wenn die gapClass geändert wird! Sie würde aber ohne den skipTargetDate option Parameter
+		//in beiden Fällen durch/nach onMassnahmeChange() aufgerufen. Daher der options Parameter skipTargetDate für 
+		//validateMassnahmen, um den Aufruf von isTargetDateValid() zu unterbinden.
+		//Da hier das Hinweisfenster immer kommen soll, muss das targetDate nicht validiert werden.
 		var options = { skipTargetDate: true };
-		this.onMassnahmeChange(options);
+		this.onMassnahmeChange(options);//options
 		
+//		this.isWarningMassnahmenDone = false;
 		this.setTargetDate(gapClass);
 	},
 	
@@ -2662,14 +2648,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		this.resetMassnahmeDates();
 		this.onMassnahmeChange();
-
 		var massnahme = this.editedMassnahmen[this.previousSelection];
-		var isNotApprovable = field.getValue().length === 0 || this.existsInvalidMassnahme > 0;
-		this.checkApprovable(massnahme.signee, isNotApprovable);
 
 		var isChecked = massnahme.riskAnalysisAsFreetext == '-1' ? true : false;
 		if(!isChecked)
 			this.calculateRiskMitigation(massnahme);
+
+		var isNotApprovable = field.getValue().length === 0 || this.existsInvalidMassnahme > 0 || this.isDamagePerYearFalse(massnahme);
+		this.checkApprovable(massnahme.signee, isNotApprovable);
 	},
 	
 //	onOccurenceOfDamagePerYearChange: function(field, event) {
@@ -2841,6 +2827,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					Util.disableCombo(dfTargetDate);
 					
 					if(doMarkInvalid) {
+						this.clearPanelItemValues(fsRiskAnalysisAndMgmt, doMarkInvalid);
+						var pRiskAnalysisAndMgmtCard = fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
+						pRiskAnalysisAndMgmtCard.getLayout().setActiveItem('pRiskAnalysisAndMgmtNonFreeText');
+						
 						this.markInvalid(fsRiskAnalysisAndMgmt, [ 'dfDateOfApproval' ]);
 						this.markInvalid(pRiskAnalysisAndMgmtNonFreeText, [ 'tfRiskMitigation' ]);
 						this.markInvalid(pRiskAnalysisAndMgmtFreeText);
@@ -2858,6 +2848,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					Util.disableCombo(dfTargetDate);
 					
 					if(doMarkInvalid) {
+						
+						this.clearPanelItemValues(fsRiskAnalysisAndMgmt, doMarkInvalid);
+						var pRiskAnalysisAndMgmtCard = fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
+						pRiskAnalysisAndMgmtCard.getLayout().setActiveItem('pRiskAnalysisAndMgmtNonFreeText');
+						
 						this.markInvalid(fsRiskAnalysisAndMgmt, [ 'dfDateOfApproval' ]);
 						this.markInvalid(pRiskAnalysisAndMgmtNonFreeText, [ 'tfRiskMitigation' ]);
 						this.markInvalid(pRiskAnalysisAndMgmtFreeText);
@@ -2971,20 +2966,34 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
 		var dfTargetDate = fsGapElimination.getComponent('pTargetDate').getComponent('dfTargetDate');
 
+		var labels = AAM.getLabels();
 		
 		switch(gapClassId) {
-			case '1':
+			case '1'://long-term
 				year++;
 				month++;
 				//sonst wird vom datefield ein Monat zu früh gesetzt wenn nur das jahr erhöht wird.
 				//für das datefield ist im Gegensatz zum Date() der erste Monat die 1
 				
+				var oldDate = dfTargetDate.getValue();
 				var newDate = new Date(year, month, 0);
 				
 				dfTargetDate.setValue(newDate);
 				Util.enableCombo(dfTargetDate);
+				
+//				var result = this.isTargetDateValid(newDate);
+//				this.openMassnahmeValidationWindow(result.gapClass, result.title, result.iconType, result.message, result.isValid);
+				
+				if(oldDate instanceof Date) {
+					var title = labels.invalidMassnameWindowTitleGapClassTargetDateChange;
+					var iconType = img_OK;
+					var message = labels.invalidMassnameWindowGapClassTargetDateChange.replace('{0}', oldDate.format(AAM.getDateFormat())).replace('{1}', newDate.format(AAM.getDateFormat()));
+					
+					this.openMassnahmeValidationWindow(gapClassId, title, iconType, message, true);
+				}
+				
 				break;
-			case '2':
+			case '2'://mid-term
 				month += AC.GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS;
 				
 				if(month > 11) {
@@ -2992,12 +3001,22 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					year++;
 				}
 				
+				var oldDate = dfTargetDate.getValue();
 				var newDate = new Date(year, month, 0);//0 für den letzten Tag des Monats
 				
 				dfTargetDate.setValue(newDate);
 				Util.enableCombo(dfTargetDate);
+				
+				if(oldDate instanceof Date) {
+					var title = labels.invalidMassnameWindowTitleGapClassTargetDateChange;
+					var iconType = img_OK;
+					var message = labels.invalidMassnameWindowGapClassTargetDateChange.replace('{0}', oldDate.format(AAM.getDateFormat())).replace('{1}', newDate.format(AAM.getDateFormat()));
+					
+					this.openMassnahmeValidationWindow(gapClassId, title, iconType, message, true);
+				}
+				
 				break;
-			case '3':
+			case '3'://short-term
 				month += AC.GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS;
 				
 				if(month > 11) {
@@ -3005,10 +3024,20 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					year++;
 				}
 				
+				var oldDate = dfTargetDate.getValue();
 				var newDate = new Date(year, month, 0);//0 für den letzten Tag des Monats
 				
 				dfTargetDate.setValue(newDate);
 				Util.enableCombo(dfTargetDate);
+				
+				if(oldDate instanceof Date) {
+					var title = labels.invalidMassnameWindowTitleGapClassTargetDateChange;
+					var iconType = img_OK;
+					var message = labels.invalidMassnameWindowGapClassTargetDateChange.replace('{0}', oldDate.format(AAM.getDateFormat())).replace('{1}', newDate.format(AAM.getDateFormat()));
+					
+					this.openMassnahmeValidationWindow(gapClassId, title, iconType, message, true);
+				}
+				
 				break;
 			case '4':
 			case '5':
@@ -3036,12 +3065,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		if(probOccurence > -1 && damagePerEvent > -1 && mitigationPotential > -1) {
 			var riskMitigation = probOccurence * damagePerEvent * mitigationPotential;
-
-
-//			var cbMaxDamagePerEventCurrency = pRiskAnalysisAndMgmtNonFreeText.getComponent('pMaxDamagePerEvent').getComponent('cbMaxDamagePerEventCurrency');
-			var currency = massnahme.currency;//cbMaxDamagePerEventCurrency.getStore(massnahme.currency).getById().get('symbol');
+			riskMitigation = Math.round(riskMitigation * 100) / 100;//auf zwei Nachkommastellen runden
 			
-			tfRiskMitigation.setValue(riskMitigation + ' ' + currency);
+//			var x = new String(riskMitigation).indexOf('.')//eine 0 anhängen wenn Ergebnis mit nur einer Nachkommastelle rauskommt 
+			
+//			var cbMaxDamagePerEventCurrency = pRiskAnalysisAndMgmtNonFreeText.getComponent('pMaxDamagePerEvent').getComponent('cbMaxDamagePerEventCurrency');
+			var value = riskMitigation + ' ' + massnahme.currency;//cbMaxDamagePerEventCurrency.getStore(massnahme.currency).getById().get('symbol');
+			tfRiskMitigation.setValue(value);
 		} else {
 			tfRiskMitigation.reset();
 		}

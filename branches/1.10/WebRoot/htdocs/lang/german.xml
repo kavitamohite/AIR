@@ -245,11 +245,13 @@
 				<invalidMassnameWindowTitleIncomplete>Unvollständige Massnahme</invalidMassnameWindowTitleIncomplete>
 				<invalidMassnameWindowTitleGapClass>Diskrepanz Target Date und Gap Klasse</invalidMassnameWindowTitleGapClass>
 				<invalidMassnameWindowTitleDamagePerYear>Ökonomisch lösbar?</invalidMassnameWindowTitleDamagePerYear>
+				<invalidMassnameWindowTitleGapClassTargetDateChange>Zieltermin wird automatisch angepasst</invalidMassnameWindowTitleGapClassTargetDateChange>
 				
 				<invalidMassnameWindowIncomplete>Alle Felder müssen bearbeitet werden, damit die Massnahme gültig ist.</invalidMassnameWindowIncomplete>
 				<invalidMassnameWindowDamagePerYear>Die Werte werden gespeichert, aber es ist nicht möglich zu genehmigen:&lt;br&gt;Der Schaden ist nicht grösser als die Kosten der Risikominderung. Der Gap ist nicht &quot;economically not solvable&quot;</invalidMassnameWindowDamagePerYear>
 				<invalidMassnameWindowTargetDatePast>Ein Datum in der Vergangenheit ist nicht erlaubt</invalidMassnameWindowTargetDatePast>
 				<invalidMassnameWindowGapClassReplace>Für den Zieltermin {0} wurde die Gap Klasse &quot;{1}&quot; gesetzt anstatt &quot;{2}&quot;</invalidMassnameWindowGapClassReplace>
+				<invalidMassnameWindowGapClassTargetDateChange>Zieltermin wird geändert von &quot;{0}&quot; zu &quot;{1}&quot;</invalidMassnameWindowGapClassTargetDateChange>
 				<invalidMassnameWindowTargetDate>Bitte setzen Sie gültige Werte für den Zieltermin und/oder Gap Klasse!&lt;br&gt;&lt;br&gt;short-term to solve		max: {0}&lt;br&gt;mid-term to solve		max: {1}&lt;br&gt;long-term to solve		max: {2}</invalidMassnameWindowTargetDate>
 				
 				

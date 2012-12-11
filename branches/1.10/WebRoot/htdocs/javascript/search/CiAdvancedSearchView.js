@@ -1488,7 +1488,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOSnameW');
 //			if(field.getValue().length > 0)
 //				params.osName = field.getValue();
-//			
+
 			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchSourceW');
 			if(field.getValue().length > 0)
 				params.source = field.getRawValue();

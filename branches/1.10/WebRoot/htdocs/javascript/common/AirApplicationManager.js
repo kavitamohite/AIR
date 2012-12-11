@@ -188,14 +188,6 @@ AIR.AirApplicationManager = function() {
 		
 		//move to CiCenterView
 		registerComponents: function(airViewport) {
-			if(Ext.isIE) {
-				Ext.History.iframeId = 'x-history-frame';
-				Ext.History.fieldId = 'x-history-field';
-			} else {
-				Ext.History.fieldId = airViewport.getComponent('ciTitleView').getComponent('pCiTitleViewNorth').getComponent('hHistory');
-			}
-
-			
 //			var lastRenderedView = airViewport.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardPagesView').getComponent('ciCreateWizardPage3').getComponent('wizardCiowner').getComponent('tbWizardciResponsible');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('CiDeleteView');//ciCenterView
 //			lastRenderedView.on('afterrender', this.onAirRendered , this);//render
 			
@@ -282,7 +274,8 @@ AIR.AirApplicationManager = function() {
 			ciCenterView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
 
 			this.historyManager = new AIR.AirHistoryManager();
-			this.historyManager.init(navigationView, ciTitleView);
+			var hHistory = airViewport.getComponent('ciTitleView').getComponent('pCiTitleViewNorth').getComponent('hHistory');
+			this.historyManager.init(navigationView, ciTitleView, hHistory);
 			
 			this.callbackManager = new AIR.AirCallbackManager();
 			this.callbackManager.init(airViewport);

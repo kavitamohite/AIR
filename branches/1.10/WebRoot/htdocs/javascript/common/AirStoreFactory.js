@@ -1110,11 +1110,13 @@ AIR.AirStoreFactory = function() {
 					{name: 'invalidMassnameWindowTitleIncomplete'},
 					{name: 'invalidMassnameWindowTitleGapClass'},
 					{name: 'invalidMassnameWindowTitleDamagePerYear'},
+					{name: 'invalidMassnameWindowTitleGapClassTargetDateChange'},
 					
 					{name: 'invalidMassnameWindowIncomplete'},
 					{name: 'invalidMassnameWindowDamagePerYear'},
 					{name: 'invalidMassnameWindowTargetDatePast'},
 					{name: 'invalidMassnameWindowGapClassReplace'},
+					{name: 'invalidMassnameWindowGapClassTargetDateChange'},
 					{name: 'invalidMassnameWindowTargetDate'},
 	
 					// license			

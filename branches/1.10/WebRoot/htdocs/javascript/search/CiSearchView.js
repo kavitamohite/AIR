@@ -172,6 +172,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		this.collapseAdvSearch();
 	},
 	
+	
 	onExcelExport: function(link, event) {
 		//a)
 //		var tfSearch = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('pSearch').getComponent('tfSearch');
@@ -194,7 +195,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    	var params = this.getOuSearchParams();
 //	    	params.limit = 100000;
 	    	
-	    	form.searchAction.value = params.searchAction;
+	    	form.searchAction.value = params.searchType;//searchAction
 	    	
 	    	for(var key in params)
 	    		if(form['h'+key])
@@ -515,7 +516,6 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 		var ciSearchViewPages = this.getComponent('ciSearchViewPages');
 		var height = ciSearchViewPages.getComponent('ciOuSearchView').getHeight() + 30;
-		Util.log(height);
 		
 		ciSearchViewPages.setHeight(250);//300 460 | height=0 direkt nach startup oder zum ersten Mal auf clOuSearch. Warum?
 		ciSearchViewPages.getLayout().setActiveItem(1);
@@ -640,16 +640,20 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 		
 		params.isAdvSearchExt = this.isAdvSearchExt;
-		this.getComponent('ciSearchResultView').search(params, isUpdate);
+		this.getComponent('ciSearchResultView').search(params, isUpdate, this);
 	},
 	
 	onTabChange: function(tabPanel, tab, options) {
 		if(tabPanel) {
 			var bUpdateCiSearchResult = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('pSearch').getComponent('bUpdateCiSearchResult');
+			var bUpdateOuSearch = this.getComponent('ciSearchViewPages').getComponent('ciOuSearchView').getComponent('pOuSearch').getComponent('bUpdateOuSearch');
+			
 			if(tabPanel.items.items.length > 0) {
 				bUpdateCiSearchResult.setVisible(true);
+				bUpdateOuSearch.setVisible(true);
 			} else {
 				bUpdateCiSearchResult.setVisible(false);
+				bUpdateOuSearch.setVisible(false);
 				this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView').expand(false);
 			}
 		}
