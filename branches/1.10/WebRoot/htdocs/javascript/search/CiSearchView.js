@@ -87,8 +87,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 		AIR.CiSearchView.superclass.initComponent.call(this);
 		
-		this.addEvents('ciSelect', 'beforeCiSelect');
-		
+		this.addEvents('ciSelect', 'beforeCiSelect', 'externalNavigation');
 		/*
 		this.ciSearchGrid = this.getComponent('ciSearchGrid');//.getComponent('ciSearchResultView')
 		this.ciSearchGrid.getStore().on('beforeload', this.onGridBeforeLoaded , this);

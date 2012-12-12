@@ -220,7 +220,8 @@ AIR.AirApplicationManager = function() {
 //			ciSearchView.on('ciSelect', navigationView.onCiSelected, navigationView);
 			ciSearchView.getComponent('ciSearchResultView').on('ciSelect', navigationView.onCiSelected, navigationView);
 			ciSearchView.getComponent('ciSearchResultView').on('ciSelect', ciEditView.onCiSelected, ciEditView);
-			ciSearchView.getComponent('ciSearchResultView').on('externalNavigation', navigationView.onExternalNavigation, navigationView);//doubleclick on ci in ci search table
+			ciSearchView.getComponent('ciSearchResultView').on('externalNavigation', navigationView.onExternalNavigation, navigationView);//doubleclick on ci in ci search table AND onTabChange
+			ciSearchView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
 //			myPlaceTabView.on('ciSelect', ciCenterView.onCiSelected, ciCenterView);
 //			ciSearchView.on('ciSelect', ciCenterView.onCiSelected, ciCenterView);
 			
