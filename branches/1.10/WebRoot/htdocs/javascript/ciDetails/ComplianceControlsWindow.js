@@ -1540,16 +1540,17 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		combo.setValue(value);//setValue setRawValue anstatt setValue damit beim auslesen die cwid mit getValue verfügbar ist
 		combo.cwid = record.data.cwid;//.value
 		
-		this.resetMassnahmeDates();
-		this.checkApprovable(combo.cwid);
-		
 		this.onMassnahmeChange();
+		
+		this.resetMassnahmeDates();
+		this.checkApprovable(this.editedMassnahmen[this.previousSelection]);//combo.cwid
 	},
 	onSigneeChange: function (combo, newValue, oldValue) {
 		if(newValue.length === 0) {
 			combo.reset();
-			this.checkApprovable(combo.cwid);
 			this.onMassnahmeChange();
+			
+			this.checkApprovable(this.editedMassnahmen[this.previousSelection]);//combo.cwid
 		} else {
 			combo.getStore().clearFilter();
 			
@@ -1584,11 +1585,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		dfTargetDate.setValue(newDate);
 		this.onMassnahmeChange();
 	},
-	checkApprovable: function(selectedCwid, isNotApprovable) {
+	checkApprovable: function(massnahme) {//selectedCwid, isNotApprovable
 		var pRiskAnalysisAndMgmtDetail = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail');
 		var bSigneeApproval = pRiskAnalysisAndMgmtDetail.getComponent('pSignee').getComponent('bSigneeApproval');
 		
-		if(!isNotApprovable && AAM.getCwid().toUpperCase() === selectedCwid) {//newValue
+		var isNotApprovable = this.existsInvalidMassnahme > 0 || this.isDamagePerYearFalse(massnahme);
+		
+		if(!isNotApprovable && AAM.getCwid().toUpperCase() === massnahme.signee) {//newValue	selectedCwid
 			bSigneeApproval.show();
 		} else {
 			bSigneeApproval.hide();
@@ -2231,8 +2234,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			this.editedMassnahmen[rowIndex].gapResponsible = tfGapResponsible.getValue();
 			this.editedMassnahmen[rowIndex].gapMeasure = taPlanOfAction.getValue();
 			this.editedMassnahmen[rowIndex].gapPriority = cbGapClass.getValue();
-			this.editedMassnahmen[rowIndex].gapEndDate = dfTargetDate.getValue() ? dfTargetDate.getValue().getTime() : -1;//-1 für SoapProxy, bei null statt -1 kommt JS Fehler
-			
+			this.editedMassnahmen[rowIndex].gapEndDate = dfTargetDate.getValue() && dfTargetDate.getValue() instanceof Date ? dfTargetDate.getValue().getTime() : -1;//dfTargetDate.getValue().length > 0  -1 für SoapProxy, bei null statt -1 kommt JS Fehler
 			
 			if(gapClassId == '4' || gapClassId == '5') {
 				var pRiskAnalysisAndMgmtCard = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
@@ -2444,6 +2446,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					cbMaxDamagePerEventCurrency.reset();
 				}
 				
+				//z.B. wenn 0,00001 aus der DB kommt was als 1.0E-4 geladen wird.
+				var n = parseInt(massnahme.mitigationPotential);
+				if(n > 0 && n < 0.01)
+					massnahme.mitigationPotential = '0';
+				
 				tfMitigationPotential.setValue(massnahme.mitigationPotential);
 //				tfDamagePerYear.setValue(massnahme.expense);
 				
@@ -2629,6 +2636,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.updateRiskAnalysisAndMgmt(gapClass, cbCompliantStatus.getValue(), true);
 
 		
+//		this.isWarningMassnahmenDone = false;
+		this.setTargetDate(gapClass);
+		
 		//Achtung bei Aufruf von isTargetDateValid(): diese Funktion ist momentan spezialisiert auf (manuelle in Zusammenhang
 		//mit onFocusLost) Änderungen des targetDate und die Anpassung der gapClass. 
 		//Aber nicht umgekehrt wenn die gapClass geändert wird! Sie würde aber ohne den skipTargetDate option Parameter
@@ -2637,9 +2647,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		//Da hier das Hinweisfenster immer kommen soll, muss das targetDate nicht validiert werden.
 		var options = { skipTargetDate: true };
 		this.onMassnahmeChange(options);//options
-		
-//		this.isWarningMassnahmenDone = false;
-		this.setTargetDate(gapClass);
+
 	},
 	
 	
@@ -2654,8 +2662,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		if(!isChecked)
 			this.calculateRiskMitigation(massnahme);
 
-		var isNotApprovable = field.getValue().length === 0 || this.existsInvalidMassnahme > 0 || this.isDamagePerYearFalse(massnahme);
-		this.checkApprovable(massnahme.signee, isNotApprovable);
+//		var isNotApprovable = field.getValue().length === 0 || this.existsInvalidMassnahme > 0 || this.isDamagePerYearFalse(massnahme);
+//		this.checkApprovable(massnahme.signee, isNotApprovable);
+		this.checkApprovable(massnahme);
 	},
 	
 //	onOccurenceOfDamagePerYearChange: function(field, event) {
@@ -3070,7 +3079,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //			var x = new String(riskMitigation).indexOf('.')//eine 0 anhängen wenn Ergebnis mit nur einer Nachkommastelle rauskommt 
 			
 //			var cbMaxDamagePerEventCurrency = pRiskAnalysisAndMgmtNonFreeText.getComponent('pMaxDamagePerEvent').getComponent('cbMaxDamagePerEventCurrency');
-			var value = riskMitigation + ' ' + massnahme.currency;//cbMaxDamagePerEventCurrency.getStore(massnahme.currency).getById().get('symbol');
+			var value = riskMitigation;
+			if(massnahme.currency && massnahme.currency.length > 0)
+				value += ' ' + massnahme.currency;//cbMaxDamagePerEventCurrency.getStore(massnahme.currency).getById().get('symbol');
 			tfRiskMitigation.setValue(value);
 		} else {
 			tfRiskMitigation.reset();
@@ -3221,8 +3232,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		value = this.removeDispensableDots(value);
 		
 //		var isValid = parseInt(value) <= AC.MAX_MITIGATION_POTENTIAL || value.length == 0;//or use var MAX_VALUES = { field.getId(): 4711, ... } to make it dynamic if needed
-		if(parseInt(value) > 100)
+		var v = parseInt(value);
+		if(v > 100)
 			value = '100';
+		else if(v < 1)
+			value = '1';
 		
 		field.setRawValue(value);//setRawValue field.setValue(value) --> Endlosschleife in ext-all-debug.js 40684
 		return true;

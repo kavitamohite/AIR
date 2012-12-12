@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -185,12 +186,28 @@ public class Test_PLSQL_Functions {
 	}
 	
 	@Test
-	public void ntestDefault() { 
-		List<ApplicationCat2> values = session.createQuery("select h from ApplicationCat2 as h where h.delTimestamp is null").list();
+	public void testDefault() { 
+		/*List<ApplicationCat2> values = session.createQuery("select h from ApplicationCat2 as h where h.delTimestamp is null").list();
 		for(ApplicationCat2 value : values)
 			System.out.println(value.getAnwendungKat2Text() + " :: " + value.getDelTimestamp());
 		
-		System.out.println(values.size());
+		System.out.println(values.size());*/
+		
+//		Float f1 = new Float(0.0001);
+		float f1 = 0.0001f;
+		
+		System.out.println(new Float(String.format(Locale.ENGLISH, "%.2f", f1)));//Locale.getDefault()
+		
+		
+		/*
+//		Float f2 = new Float(0.0155);
+		float f2 = 0.0155f;
+		
+		System.out.println(String.format(Locale.ENGLISH, "%.2g", f2));//%.2f %.2g%n Locale.getDefault()
+		System.out.println(String.format(Locale.ENGLISH, "%.2f", f2));
+		
+		System.out.println(String.format("%.5g%n", 0.912385));
+		System.out.println(new Float(String.format("%.1g%n", 0.0015)));*/
 	}
 
 	@After

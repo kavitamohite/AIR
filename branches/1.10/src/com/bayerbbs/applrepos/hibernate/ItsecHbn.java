@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -217,7 +218,12 @@ public class ItsecHbn {
 						dto.setExpense(rsSet.getFloat("EXPENSE"));
 						dto.setProbOccurence(rsSet.getFloat("PROB_OCCURENCE"));
 						dto.setDamage(rsSet.getFloat("DAMAGE"));
-						dto.setMitigationPotential(rsSet.getFloat("MITIGATION_POTENTIAL"));
+						Float mitigationPotential = rsSet.getFloat("MITIGATION_POTENTIAL");
+						
+						if(mitigationPotential < 1)
+							mitigationPotential = new Float(String.format(Locale.ENGLISH, "%.2f", mitigationPotential)) * 100;
+						dto.setMitigationPotential(mitigationPotential);
+						
 						dto.setSignee(rsSet.getString("SIGNEE"));
 						
 						Date gapClassApproved = rsSet.getDate("GAP_CLASS_APPROVED");
@@ -332,7 +338,12 @@ public class ItsecHbn {
 						dto.setExpense(rsSet.getFloat("EXPENSE"));
 						dto.setProbOccurence(rsSet.getFloat("PROB_OCCURENCE"));
 						dto.setDamage(rsSet.getFloat("DAMAGE"));
-						dto.setMitigationPotential(rsSet.getFloat("MITIGATION_POTENTIAL"));
+						
+						Float mitigationPotential = rsSet.getFloat("MITIGATION_POTENTIAL");
+						if(mitigationPotential < 1)
+							mitigationPotential = new Float(String.format(Locale.ENGLISH, "%.2f", mitigationPotential)) * 100;
+						dto.setMitigationPotential(mitigationPotential);//%.2f %.2g%n
+						
 						dto.setSignee(rsSet.getString("SIGNEE"));
 						
 						Date gapClassApproved = rsSet.getDate("GAP_CLASS_APPROVED");

@@ -146,7 +146,7 @@ public class ItsecMassnahmeStatusHbn {
 //					Date gapEndDate = Date.valueOf(dto.getGapEndDate());
 //					status.setGapEndDate(gapEndDate);
 //				}
-				if(dto.getGapEndDate() != null) {
+				if(dto.getGapEndDate() != null && dto.getGapEndDate() > 0) {
 					Date gapEndDate = new Date(dto.getGapEndDate());
 					status.setGapEndDate(gapEndDate);
 				}
@@ -182,7 +182,7 @@ public class ItsecMassnahmeStatusHbn {
 //					Date gapClassApproved = Date.valueOf(dto.getGapClassApproved());
 //					status.setGapClassApproved(gapClassApproved);
 //				}
-				if(dto.getGapClassApproved() != null) {
+				if(dto.getGapClassApproved() != null && dto.getGapClassApproved() > 0) {
 					Date gapClassApproved = new Date(dto.getGapClassApproved());
 					status.setGapClassApproved(gapClassApproved);
 				}
