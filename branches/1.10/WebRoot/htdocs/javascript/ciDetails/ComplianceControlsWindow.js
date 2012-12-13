@@ -1850,18 +1850,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.massnahmeChanged = true;
 		this.activateButtons();
 		
-		
-		/*if(options && options.compliantStatusClearInvalid) {
-			this.updateToolbar('');
-			
-//			var isValid = options.status == '5';
-//			this.existsInvalidMassnahme = isValid ? 0 : 1;
-			this.existsInvalidMassnahme = 0;
-		} else {
-//			this.validateMassnahmen(options);
-		}*/
-		
-		this.validateMassnahmen(options);
+		if(!options || !options.skipLinkCiValidation)
+			this.validateMassnahmen(options);
 	},
 	
 	
@@ -2685,8 +2675,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //	},
 	
 	isDamagePerYearFalse: function(massnahme) {
-		if(this.isWarningMassnahmenDone)
-			return true;
+//		if(this.isWarningMassnahmenDone)
+//			return true;
 		
 //		var massnahme = this.editedMassnahmen[this.getSelectedGridIndex()];
 		var isChecked = massnahme.riskAnalysisAsFreetext == '-1' ? true : false;
@@ -2834,6 +2824,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					fsRiskAnalysisAndMgmt.doLayout();
 					
 					Util.disableCombo(dfTargetDate);
+					this.checkApprovable(this.loadedMassnahme);//this.editedMassnahmen[this.previousSelection]
 					
 					if(doMarkInvalid) {
 						this.clearPanelItemValues(fsRiskAnalysisAndMgmt, doMarkInvalid);
@@ -2855,9 +2846,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 					pRiskAnalysisAndMgmtFreeText.doLayout();
 					
 					Util.disableCombo(dfTargetDate);
+					this.checkApprovable(this.loadedMassnahme);//this.editedMassnahmen[this.previousSelection]
 					
 					if(doMarkInvalid) {
-						
 						this.clearPanelItemValues(fsRiskAnalysisAndMgmt, doMarkInvalid);
 						var pRiskAnalysisAndMgmtCard = fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
 						pRiskAnalysisAndMgmtCard.getLayout().setActiveItem('pRiskAnalysisAndMgmtNonFreeText');
@@ -3333,7 +3324,16 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				this.enableMassnahmeDetails();
 		}
 		
-		this.onMassnahmeChange();
+		//sonst wird die Massnahme durch onMassnahmeChange()->validateMassnahmen()->saveMassnahme() gespeichert und nochmal durch
+		//die Auswahl einer anderen Massnahme. In diesem Fall soll erst nach Auswahl einer anderen Massnahme gespeichert
+		//werden! Deshalb soll die Validierung durch Veränderung der Einzelverlinkung der Massnahme nicht durchgeführt
+		//werden, weil dies fachlich auch nicht notwendig ist. Die Massnahme auf die die ausgewählte Massnahme verweisen soll
+		//ist zwangsläufig valide, sonst hätte sie nicht irgendwann gesichert werden können.
+		var options = {
+			skipLinkCiValidation: true
+		};
+		this.onMassnahmeChange(options);
+//		this.onMassnahmeChange();
 		
 		//1. tableId 2. ciId des templates, 3. massnahmeGsToolId, 4. ciSubType (cat1Id des template CIs) --> modForms.getCIType/modAppType.getCITypeFromItem
 //		frm_S_Massnahmen, deReference und cboLink_AfterUpdate
