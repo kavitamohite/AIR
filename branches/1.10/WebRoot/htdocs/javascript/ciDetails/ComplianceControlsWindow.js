@@ -2534,7 +2534,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		}
 		
 		if(this.isLinkCiSelect) {
+			//hier muss gespeichert werden, wenn durch skipLinkCiValidation: true direkt nach der Änderung der Einzelverlinkung
+			//nicht sofort gespeichert werden soll! Siehe onLinkCiSelect()
 			this.onMassnahmeChange();//wird durch klick auf andere massnahme in massnahmen grid/tabelle ausgelöst
+			
 			this.isLinkCiSelect = false;
 		}
 	},
@@ -3324,6 +3327,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				this.enableMassnahmeDetails();
 		}
 		
+		
 		//sonst wird die Massnahme durch onMassnahmeChange()->validateMassnahmen()->saveMassnahme() gespeichert und nochmal durch
 		//die Auswahl einer anderen Massnahme. In diesem Fall soll erst nach Auswahl einer anderen Massnahme gespeichert
 		//werden! Deshalb soll die Validierung durch Veränderung der Einzelverlinkung der Massnahme nicht durchgeführt
@@ -3333,6 +3337,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			skipLinkCiValidation: true
 		};
 		this.onMassnahmeChange(options);
+		
 //		this.onMassnahmeChange();
 		
 		//1. tableId 2. ciId des templates, 3. massnahmeGsToolId, 4. ciSubType (cat1Id des template CIs) --> modForms.getCIType/modAppType.getCITypeFromItem

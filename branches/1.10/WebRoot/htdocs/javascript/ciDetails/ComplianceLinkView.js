@@ -154,20 +154,26 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onLinkCiListChange: function(combo, newValue, oldValue) {
-		if(this.isComboValueValid(combo, newValue, oldValue)) {
+		/*if(this.isComboValueValid(combo, newValue, oldValue)) {
 			if(newValue.length === 0) {
 				this.clearLinkCISettings();
 			} else {
 				this.linkCiListSelected(newValue);
 			}
 		}
+		Problem wenn this.linkCiListSelected(newValue); zweimal ausgeführt wird durch select und change wenn combo mittels
+		select bedient wird. Durch das geworfene linkCiSelect event wird updateComplianceDetails und updateMassnahmenTable
+		zweimal ausgeführt, was zu falschen/irritierenden compliant Status Änderungen in der Massnahmentabelle. 
+		Daher das change erstmal deaktiviert. Evtl. ein flag nutzen um beides zu unterstützen. Siehe if(this.isLinkCiSelect)
+		in updateComplianceDetails()
+		*/
 	},
 	
 	linkCiListSelected: function(linkCiId) {
 		var cbLinkCiType = this.getComponent('cbLinkCiType');
 		var linkCiTableId = cbLinkCiType.getStore().getAt(cbLinkCiType.getStore().findExact('id', cbLinkCiType.getValue())).get('tableId');//cbLinkCiType.getValue();//
 		
-//		if(this.linkCiSelected)
+//		if(this.linkCiSelected)// vorher auskommentiert
 			this.fireEvent('linkCiSelect', linkCiId, linkCiTableId);//, this.ciData.massnahmeGstoolId
 	},
 	

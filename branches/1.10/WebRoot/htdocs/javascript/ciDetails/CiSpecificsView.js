@@ -849,7 +849,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			data.version = field.getValue();
 		
 		field = this.getComponent('rgBARrelevance');
-		if(!field.disabled)
+		if(field && !field.disabled)//wenn tabledId != 2 || ciType != 5
 			data.barRelevance = field.getValue().inputValue;
 		
 
