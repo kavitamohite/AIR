@@ -34,11 +34,25 @@ a:active {text-decoration: none; color:#085E8B;}
     color: #ededed;
 	font-weight: bold;
 }
+
+.AppLabelTag-container {
+	line-height: 0px;
+	margin-top: 7pt;
+}
 .AppLabelTag-version {
 	font-size: 7pt;
 	color: #ededed;
 	font-weight: bold;
-	margin-top: 5pt;
+	//margin-top: 5pt;
+	text-align: left;
+}
+.AppLabelTag-browserOptimization {
+	font-size: 8pt;
+	color: red;
+	font-weight: bold;
+	//margin-top: 5pt;
+	text-align: right;
+	hidden: true;
 }
 
 .roundCorners {

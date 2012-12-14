@@ -1175,6 +1175,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'newSearch'},
 			        {name: 'findFirst'},
 			        {name: 'findAll'},
+			        {name: 'browserOptimization'},
 			        
 			        // general
 			        {name: 'gerneral_message_loading'},

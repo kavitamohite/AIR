@@ -1033,7 +1033,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							        
 	//						        itemSelector: 'x-combo-list-item',
 							        tpl: '<tpl for="."><div ext:qtip="{cwid}" class="x-combo-list-item">{lastname}, {firstname}</div></tpl>',//'<tpl for="."><div class="x-combo-list-item">{' + this.displayField + '}</div></tpl>',//
-	
+							        enableKeyEvents: true,
+							        
 							        triggerAction: 'all',
 							        lazyRender: true,
 							        lazyInit: false,
@@ -1250,7 +1251,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 //		tfSignee.on('change', this.onMassnahmeChange, this);
 		cbSignee.on('select', this.onSigneeSelect, this);
-		cbSignee.on('change', this.onSigneeChange, this);
+//		cbSignee.on('change', this.onSigneeChange, this);
+		cbSignee.on('keyup', this.onSigneeChange, this);
 		bSigneeApproval.on('click', this.onSigneeApprove, this);
 		dfDateOfApproval.on('select', this.onMassnahmeChange, this);
 		dfDateOfApproval.on('change', this.onDateChange, this);//change keyup
@@ -1545,9 +1547,16 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.resetMassnahmeDates();
 		this.checkApprovable(this.editedMassnahmen[this.previousSelection]);//combo.cwid
 	},
-	onSigneeChange: function (combo, newValue, oldValue) {
+//	onSigneeChange: function (combo, newValue, oldValue) {//change event
+	onSigneeChange: function (combo, event) {//keyup event
+		var newValue = combo.getRawValue();//getRawValue keyup event
+		var oldValue = combo.startValue;
+		
 		if(newValue.length === 0) {
 			combo.reset();
+			combo.markInvalid();
+//			this.editedMassnahmen[this.previousSelection].signee = newValue;
+			
 			this.onMassnahmeChange();
 			
 			this.checkApprovable(this.editedMassnahmen[this.previousSelection]);//combo.cwid

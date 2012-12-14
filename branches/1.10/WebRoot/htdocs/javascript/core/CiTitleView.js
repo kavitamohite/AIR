@@ -174,7 +174,8 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 			shortName: app_shortname,
 			longName: app_name,
 			version: app_version,
-			database: databaseInfoText
+			database: databaseInfoText,
+			browserOptimization: AAM.getLabels().browserOptimization
 	    };
     		
         var tAppLabel = this.getComponent('pCiTitleCenter').getComponent('tAppLabel');
@@ -240,7 +241,8 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 //        task.delay(1000);
         
         
-        
+		var tAppLabel = this.getComponent('pCiTitleCenter').getComponent('tAppLabel');
+		var el = tAppLabel.getEl();
         
 		//richtige Flagge setzen anhand paramter language
 		var clLanguage = this.getComponent('pCiTitleViewNorth').getComponent('clLanguage');

@@ -28,6 +28,8 @@
 		<findFirst>Erste</findFirst><!-- Show all|All -->
 		<findAll>Alle</findAll>
 		
+		<browserOptimization>Optimiert für den Firefox Browser</browserOptimization>
+		
 		<dynamicWindowOKButtonText>OK</dynamicWindowOKButtonText>
 		<notRelevant>nicht relevant</notRelevant>
 		

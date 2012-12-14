@@ -9,9 +9,15 @@ Ext.ux.AppLabelTag = Ext.extend(Ext.BoxComponent, {
 //			'<tr class="AppLabelTag-name"><td>{shortName}</td><td>&nbsp;-&nbsp;{longName}</td></tr>'+
 //			'<tr class="AppLabelTag-version"><td colspan="2">{version}&nbsp;{database}</td></tr>'+
 //		'</table>',
+    	
+//		'<div>'+
+//			'<div class="AppLabelTag-name">{shortName}&nbsp;-&nbsp;{longName}</div>'+
+//			'<div class="AppLabelTag-version">{version}&nbsp;{database}</div>'+
+//		'</div>',
+		
 		'<div>'+
 			'<div class="AppLabelTag-name">{shortName}&nbsp;-&nbsp;{longName}</div>'+
-			'<div class="AppLabelTag-version">{version}&nbsp;{database}</div>'+
+			'<div class="AppLabelTag-container"><div class="AppLabelTag-version">{version}&nbsp;{database}</div><div class="AppLabelTag-browserOptimization">{browserOptimization}</div></div>'+
 		'</div>',
    
     onRender: function(ct, position) {
