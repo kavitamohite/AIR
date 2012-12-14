@@ -22,15 +22,15 @@ import com.bayerbbs.applrepos.dto.RolePersonDTO;
 
 public class ApplReposHbn {
 
-	private static final String SELECT_ROLES = "SELECT   ROL.Role_Id, " +
+	private static final String SELECT_ROLES = "SELECT DISTINCT ROL.Role_Id, " +
 					         "ROL.Role_Name " +
 					         "FROM     ROLE ROL  " +
 					         "INNER JOIN ROLE_PERSON R2P ON ROL.Role_Id=R2P.Role_Id AND Current_Date BETWEEN R2P.Date_Start AND R2P.Date_End AND R2P.Del_Timestamp IS NULL " + 
 					         "INNER JOIN ROLE_INTERFACE R2I ON R2P.Role_Id=R2I.Role_Id AND R2I.Del_Timestamp IS NULL  " +
 					         "INNER JOIN INTERFACES INT ON R2I.Interface_Id=INT.Interfaces_Id AND INT.Del_Timestamp IS NULL AND INT.Token = 'AIR' " +
 								"WHERE    R2P.Cwid = :Cwid " +
-								"AND      ROL.Del_Timestamp IS NULL";
-	private static final String SELECT_ROLE_BUSINESS_ESSENTIAL = "SELECT   ROL.Role_Id, " +
+								"AND      ROL.Del_Quelle IS NULL";
+	private static final String SELECT_ROLE_BUSINESS_ESSENTIAL = "SELECT DISTINCT ROL.Role_Id, " +
 															    "ROL.Role_Name " +
 															    "FROM     ROLE ROL  " +
 															    "INNER JOIN ROLE_PERSON R2P ON ROL.Role_Id=R2P.Role_Id AND Current_Date BETWEEN R2P.Date_Start AND R2P.Date_End AND R2P.Del_Timestamp IS NULL " + 
@@ -38,7 +38,7 @@ public class ApplReposHbn {
 															    "INNER JOIN INTERFACES INT ON R2I.Interface_Id=INT.Interfaces_Id AND INT.Del_Timestamp IS NULL AND INT.Token = 'AIR' " +
 																"WHERE    R2P.Cwid = :Cwid " +
 																"AND      ROL.Role_Name = :Role_Name "+
-																"AND      ROL.Del_Timestamp IS NULL"; 
+																"AND      ROL.Del_Quelle IS NULL"; 
 
 	private static final String TRANSBASE_ORA_20000 = "ORA-20000: ";
 	/** The logger. */
