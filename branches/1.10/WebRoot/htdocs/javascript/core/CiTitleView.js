@@ -174,8 +174,8 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 			shortName: app_shortname,
 			longName: app_name,
 			version: app_version,
-			database: databaseInfoText,
-			browserOptimization: AAM.getLabels().browserOptimization
+			database: databaseInfoText
+//			browserOptimization: AAM.getLabels().browserOptimization
 	    };
     		
         var tAppLabel = this.getComponent('pCiTitleCenter').getComponent('tAppLabel');
@@ -221,28 +221,12 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 //		lThisappdatabase.setText(databaseInfoText);
 ////		cThisappdatabase.dom.innerHTML = '<br/><span style="font-size: 7pt;">' + databaseInfoText + '</span>';
 		
-		
-//        var data = {
-//			shortName: app_shortname,
-//			longName: app_name,
-//			version: app_version,
-//			database: databaseInfoText
-//        };
-//		
-//        var tAppLabel = this.getComponent('pCiTitleCenter').getComponent('tAppLabel');
-//        tAppLabel.update(data);
-//        
-//        var f = function() {
-//        	tAppLabel.update(data);
-//        };
-//        
-//        //TODO: make DelayedTask obsolete
-//        var task = new Ext.util.DelayedTask(f.createDelegate(this));
-//        task.delay(1000);
         
+//        if(Ext.isIE) {
+//			var tAppLabel = this.getComponent('pCiTitleCenter').getComponent('tAppLabel');
+//			tAppLabel.setIeMessage();
+//        }
         
-		var tAppLabel = this.getComponent('pCiTitleCenter').getComponent('tAppLabel');
-		var el = tAppLabel.getEl();
         
 		//richtige Flagge setzen anhand paramter language
 		var clLanguage = this.getComponent('pCiTitleViewNorth').getComponent('clLanguage');
@@ -266,6 +250,13 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 		
 		//PROBLEM: event gets fired before AIR.AirApplicationManager is registered on clLanguage's click event during startup
 //		clLanguage.fireEvent('click', clLanguage);
+	},
+	
+	updateLabels: function(labels) {
+		if(Ext.isIE) {
+	        var tAppLabel = this.getComponent('pCiTitleCenter').getComponent('tAppLabel');
+	        tAppLabel.updateBrowserOptimization(labels.browserOptimization);
+		}
 	},
 	
 	onHistoryChange: function(history, link, historyIndex) {

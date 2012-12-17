@@ -104,6 +104,9 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		
 
 	updateLabels: function(labels) {
+		var ciTitleView = this.getComponent('ciTitleView');
+		ciTitleView.updateLabels(labels);
+		
 		var ciNavigationView = this.getComponent('ciNavigationView');
 		ciNavigationView.updateLabels(labels);
 		

@@ -350,24 +350,20 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbBusinessEssential = this.getComponent('businessEssential');
 		if(hasRoleBusinessEssentialEditor) {
-			// nur für die Rolle BusinessEssential-Editor !!!
+			// nur für die Rolle BusinessEssential-Editor
 			// unter Prüfung der Insert-Source mittels isEditable
 			if (AIR.AirAclManager.isEditable(cbBusinessEssential)) {
-				cbBusinessEssential.enable();
-				cbBusinessEssential.setHideTrigger(false);
+				Util.enableCombo(cbBusinessEssential);
+				
 				AIR.AirAclManager.setMandatory(cbBusinessEssential, 'mandatory');
 				// this.setEditable(aclItemCmp); // diese Methode prüft die Rechte und verhindert das Editieren...
 				// deshalb setzen wir das FormElement einzeln auf true
-				AIR.AirAclManager.setFormElementEnable(cbBusinessEssential, true);
+//				AIR.AirAclManager.setFormElementEnable(cbBusinessEssential, true);
 			}
 		} else {
 			//cbBusinessEssential.disable();
-			if(Ext.isIE)
-				cbBusinessEssential.el.dom.disabled = true;
-			else
-				cbBusinessEssential.disable();
-				
-			cbBusinessEssential.setHideTrigger(true);
+			Util.disableCombo(cbBusinessEssential);
+			
 			AIR.AirAclManager.setMandatory(cbBusinessEssential, 'optional');
 		}
 	},

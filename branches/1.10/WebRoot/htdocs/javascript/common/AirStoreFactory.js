@@ -726,7 +726,7 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		//not used
-		createRolePersonBusinessEssentialListStore: function() {
+		/*createRolePersonBusinessEssentialListStore: function() {
 			var rolePersonBusinessEssentialListRecord = Ext.data.Record.create([
            	    {name: 'id', mapping: 'roleId'},
            		{name: 'cwid', mapping: 'cwid'},
@@ -756,28 +756,28 @@ AIR.AirStoreFactory = function() {
 	           	
 	           	fields: [ 'id',	'roleId', 'cwid', 'roleName' ],
 	
-	           	reader: rolePersonBusinessEssentialListReader,
+	           	reader: rolePersonBusinessEssentialListReader
 	           	
-	           	listeners: {
-	           		beforeload: function(store, options) {
-	           			rolePersonBusinessEssentialListStore.baseParams.cwid = cwid;
-	           		},
-	           		load: function(store, records, options) {
-	           			var beinfo = 'NO';
-	           			hasRoleBusinessEssentialEditor = false;
-	           			
-	           		   	if (undefined !== records && records.hasOwnProperty('0') && 'BusinessEssential-Editor' === records[0].data.roleName) {
-	           	       		hasRoleBusinessEssentialEditor = true;
-	           	       		beinfo = 'YES';
-	                 	}
-	           		   	
-	           		   	Ext.getCmp('myplacerolebusinessessentialeditor').setValue(beinfo);
-	           		}
-	           	}
+//	           	listeners: {
+//	           		beforeload: function(store, options) {
+//	           			rolePersonBusinessEssentialListStore.baseParams.cwid = cwid;
+//	           		},
+//	           		load: function(store, records, options) {
+//	           			var beinfo = 'NO';
+//	           			hasRoleBusinessEssentialEditor = false;
+//	           			
+//	           		   	if (undefined !== records && records.hasOwnProperty('0') && 'AIR BusinessEssential-Editor' === records[0].data.roleName) {
+//	           	       		hasRoleBusinessEssentialEditor = true;
+//	           	       		beinfo = 'YES';
+//	                 	}
+//	           		   	
+//	           		   	Ext.getCmp('myplacerolebusinessessentialeditor').setValue(beinfo);
+//	           		}
+//	           	}
 			});
 			
 			return rolePersonBusinessEssentialListStore;
-		},
+		},*/
 		
 		createProcessListStore: function() {
 			var processListRecord = Ext.data.Record.create([
@@ -2324,7 +2324,7 @@ AIR.AirStoreFactory = function() {
 				name : 'itsetName',
 				mapping : 'applicationDTO > itsetName'
 			}, {
-				name : 'isTemplate',
+				name : 'template',
 				mapping : 'applicationDTO > template'
 			}, {
 				name : 'isTemplateReferencedByItem',

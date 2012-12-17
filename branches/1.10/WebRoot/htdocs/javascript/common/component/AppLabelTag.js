@@ -31,9 +31,10 @@ Ext.ux.AppLabelTag = Ext.extend(Ext.BoxComponent, {
             shortName: this.shortName,
             longName: this.longName,
 			version: this.version,
-			database: this.database
+			database: this.database,
+			browserOptimization: this.browserOptimization
 		};
-       
+        
 
         if(position) {
             this.el = this.template.insertBefore(position, targs, true);
@@ -42,6 +43,17 @@ Ext.ux.AppLabelTag = Ext.extend(Ext.BoxComponent, {
         }
         
         //this.mon(this.el, this.clickEvent, this.onClick, this);
+    },
+    
+    setIeMessage: function() {
+    	var el = this.getEl();
+    	var browserMessage = el.dom.children[1].children[1];
+    	
+    	if(Ext.isIE) {
+    		browserMessage.style.visibility = 'visible';
+    	} else {
+    		browserMessage.style.visibility = 'hidden';
+    	}
     },
     
 	/*
@@ -61,7 +73,8 @@ Ext.ux.AppLabelTag = Ext.extend(Ext.BoxComponent, {
     	this.shortName = data.shortName,
 		this.longName = data.longName;
 		this.version = data.version;
-		this.database = data.database;
+		this.database = data.database,
+		this.browserOptimization = data.browserOptimization;
     },
 
     updateShortName: function(shortName) {
@@ -69,7 +82,8 @@ Ext.ux.AppLabelTag = Ext.extend(Ext.BoxComponent, {
     		shortName: shortName,
     		longName: this.longName,
     		version: this.version,
-    		database: this.database
+    		database: this.database,
+    		browserOptimization: this.browserOptimization
         };
         
         this.update(tplData);
@@ -80,7 +94,8 @@ Ext.ux.AppLabelTag = Ext.extend(Ext.BoxComponent, {
     		shortName: this.shortName,
     		longName: longName,
     		version: this.version,
-    		database: this.database
+    		database: this.database,
+    		browserOptimization: this.browserOptimization
         };
         
         this.update(tplData);
@@ -91,7 +106,8 @@ Ext.ux.AppLabelTag = Ext.extend(Ext.BoxComponent, {
     		shortName: this.shortName,
     		longName: this.longName,
     		version: version,
-    		database: this.database
+    		database: this.database,
+    		browserOptimization: this.browserOptimization
         };
         
         this.update(tplData);
@@ -102,7 +118,20 @@ Ext.ux.AppLabelTag = Ext.extend(Ext.BoxComponent, {
     		shortName: this.shortName,
     		longName: this.longName,
     		version: this.version,
-    		database: database
+    		database: database,
+    		browserOptimization: this.browserOptimization
+        };
+        
+        this.update(tplData);
+    },
+    
+    updateBrowserOptimization: function(browserOptimization) {
+        var tplData = {
+    		shortName: this.shortName,
+    		longName: this.longName,
+    		version: this.version,
+    		database: this.database,
+    		browserOptimization: browserOptimization
         };
         
         this.update(tplData);

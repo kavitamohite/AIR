@@ -18,7 +18,7 @@ var rolenameInfrastructure = 'AIR Infrastructure Layer';
 var rolenameApplicationManager = 'AIR Application Manager';
 var rolenameAdministrator = 'AIR Administrator';
 var rolenameDeveloper = 'AIR Developer';
-var rolenameBusinessEssentialEditor = 'BusinessEssential-Editor';
+var rolenameBusinessEssentialEditor = 'AIR BusinessEssential-Editor';
 var applicationObjectTypeId = 5;//CI Typ Application
 var applicationObjectTypeText = 'Application';
 

@@ -214,9 +214,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 						xtype: 'filterCombo',//combo
 				        id: 'cbReferencedTemplate',
 						
-						//enableKeyEvents: true,
-				        
-//				        region: 'center',
+						enableKeyEvents: true,
 				        
 //				        flex: 8,//hbox
 				        width: 350,//layout: 'column'
@@ -446,6 +444,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbReferencedTemplate.on('beforeselect', this.onReferencedTemplateBeforeSelect, this);
 		cbReferencedTemplate.on('select', this.onReferencedTemplateSelect, this);
 		cbReferencedTemplate.on('change', this.onReferencedTemplateChange, this);
+		cbReferencedTemplate.on('keyup', this.onReferencedTemplateKeyUp, this);
 		
 		cbItSecGroup.on('select', this.onItSecGroupSelect, this);
 		cbItSecGroup.on('change', this.onItSecGroupChange, this);
@@ -516,48 +515,60 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var tfItsetName = this.getComponent('fsComplianceDetails').getComponent('pItSet').getComponent('tfItsetName');
 		tfItsetName.setValue(data.itsetName);
 		
-		var isTemplate = data.isTemplate === '1';
+		var isTemplate = data.template === '1';
 		var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
 		cbIsTemplate.setValue(isTemplate);
 		
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
+
 		this.filterCombo(cbReferencedTemplate);
 		this.filterCombo(cbItSecGroup);
 		
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
 		var text = AIR.AirApplicationManager.getLabels().relevanceViewButton;
 		
-		var hasTemplate = data.refId !== '0';
-		if(hasTemplate) {
-			Util.disableCombo(cbItSecGroup);
-			
-			//nicht getStore().getById() damit gegen die gefilterten Daten geprüft wird
-			var isTemplateValid = cbReferencedTemplate.getStore().data.key(data.refId);
-			if(isTemplateValid) {
-				cbReferencedTemplate.setValue(data.refId);
-				//lReferencedTemplateError.hide();
-				//cbReferencedTemplate.isInvalid = false;
-			} else {
-				//cbReferencedTemplate.setRawValue(data.refTxt);
-				cbReferencedTemplate.setRawValue(AC.LABEL_INVALID+data.refTxt);
-				//lReferencedTemplateError.show();
-				//cbReferencedTemplate.isInvalid = true;
-
-				//var message = AIR.AirApplicationManager.getLabels().referencedTemplateInvalid;
-				//lReferencedTemplateError.setText(message);
-			}
-		} else {
-			//cbReferencedTemplate.clearValue();//setValue('');//
-			//AIR.AirAclManager.setRelevance(cbItSecGroup, data);//setEditable(cbItSecGroup);
+		if(isTemplate) {
+			cbReferencedTemplate.setValue('');//reset();
+			Util.disableCombo(cbReferencedTemplate);
 			
 			if(AIR.AirAclManager.isRelevance(cbItSecGroup, data))
 				Util.enableCombo(cbItSecGroup);
-				
+			
 			if(AIR.AirAclManager.isRelevance(bEditItSecGroup, data))
 				text = AIR.AirApplicationManager.getLabels().relevanceEditButton;
-//			
-			//cbReferencedTemplate.isInvalid = false;
+		} else {
+			var hasTemplate = data.refId !== '0';
+			if(hasTemplate) {
+				Util.disableCombo(cbItSecGroup);
+				
+				//nicht getStore().getById() damit gegen die gefilterten Daten geprüft wird
+				var isTemplateValid = cbReferencedTemplate.getStore().data.key(data.refId);
+				if(isTemplateValid) {
+					cbReferencedTemplate.setValue(data.refId);
+					//lReferencedTemplateError.hide();
+					//cbReferencedTemplate.isInvalid = false;
+				} else {
+					//cbReferencedTemplate.setRawValue(data.refTxt);
+					cbReferencedTemplate.setRawValue(AC.LABEL_INVALID+data.refTxt);
+					//lReferencedTemplateError.show();
+					//cbReferencedTemplate.isInvalid = true;
+	
+					//var message = AIR.AirApplicationManager.getLabels().referencedTemplateInvalid;
+					//lReferencedTemplateError.setText(message);
+				}
+			} else {
+				//cbReferencedTemplate.clearValue();//setValue('');//
+				//AIR.AirAclManager.setRelevance(cbItSecGroup, data);//setEditable(cbItSecGroup);
+				
+				if(AIR.AirAclManager.isRelevance(cbItSecGroup, data))
+					Util.enableCombo(cbItSecGroup);
+					
+				if(AIR.AirAclManager.isRelevance(bEditItSecGroup, data))
+					text = AIR.AirApplicationManager.getLabels().relevanceEditButton;
+	//			
+				//cbReferencedTemplate.isInvalid = false;
+			}
 		}
 		bEditItSecGroup.setText(text);
 		
@@ -585,6 +596,28 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onIsTemplateCheck: function(checkbox, isChecked) {
+		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
+		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
+		
+//		var text = AIR.AirApplicationManager.getLabels().relevanceViewButton;
+//		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
+
+		if(isChecked) {
+			var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
+			if(AIR.AirAclManager.isRelevance(bEditItSecGroup, AAM.getAppDetail())) {
+				var text = AIR.AirApplicationManager.getLabels().relevanceEditButton;
+				bEditItSecGroup.setText(text);
+			}
+			
+			//Template darf nicht auf ein weiteres template verweisen
+			cbReferencedTemplate.setValue('');//reset();
+			Util.disableCombo(cbReferencedTemplate);
+			Util.enableCombo(cbItSecGroup);
+		} else {
+			Util.enableCombo(cbReferencedTemplate);
+			Util.enableCombo(cbItSecGroup);
+		}
+		
 		this.fireEvent('ciChange', this, checkbox, isChecked);
 	},
 	
@@ -717,7 +750,21 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		//combo.isInvalid = false;
 		//this.filterCombo(combo);//change event schmeisst den filter raus? Warum?
 		
-		if(newValue.length === 0) {
+//		if(newValue.length === 0) {
+//			var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
+//			Util.enableCombo(cbItSecGroup);
+//			
+//			var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
+//			bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceEditButton);
+//		}
+		
+		if(this.isComboValueValid(combo, newValue, oldValue)) {
+			//this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('lReferencedTemplateError').hide();
+			this.fireEvent('ciChange', this, combo, newValue, oldValue);
+		}
+	},
+	onReferencedTemplateKeyUp: function(combo, event) {
+		if(combo.getRawValue().length === 0) {
 			var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 			Util.enableCombo(cbItSecGroup);
 			
@@ -725,10 +772,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceEditButton);
 		}
 		
-		if(this.isComboValueValid(combo, newValue, oldValue)) {
-			//this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('lReferencedTemplateError').hide();
-			this.fireEvent('ciChange', this, combo, newValue, oldValue);
-		}
+		this.filterCombo(combo);
 	},
 
 	
@@ -846,7 +890,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
 			if (!cbIsTemplate.disabled)
-				data.template = cbIsTemplate.getValue() ? -1 : 0;
+				data.template = cbIsTemplate.getValue() ? -1 : 0;//isTemplate
 			
 			var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 			if (!cbReferencedTemplate.disabled && cbReferencedTemplate.getValue().length > 0)

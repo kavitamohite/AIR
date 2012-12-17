@@ -52,7 +52,7 @@ a:active {text-decoration: none; color:#085E8B;}
 	font-weight: bold;
 	//margin-top: 5pt;
 	text-align: right;
-	hidden: true;
+	//visibility: hidden;
 }
 
 .roundCorners {

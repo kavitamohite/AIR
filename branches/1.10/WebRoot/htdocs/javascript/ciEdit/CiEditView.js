@@ -374,8 +374,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 //		var labels = AIR.AirApplicationManager.getLabels();
 		
+		var appDetail = AAM.getAppDetail();
+		
 		if(!AIR.AirAclManager.isEditMaskValid()) {
-			msgtext = AIR.AirApplicationManager.getLabels().editDataNotValid.replace(/##/, AIR.AirApplicationManager.getAppDetail().applicationName);//this.getComponent('applicationName').getValue()
+			msgtext = AIR.AirApplicationManager.getLabels().editDataNotValid.replace(/##/, appDetail.applicationName);//this.getComponent('applicationName').getValue()
 			Ext.MessageBox.show({
 				title: 'Error',
 				msg: msgtext,
@@ -417,10 +419,19 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 		ciSupportStuffView.setData(data);
 		
-		data.tableId = AIR.AirApplicationManager.getTableId();
+		data.tableId = AAM.getTableId();
 
 		var saveCallback = function() {
 			mySaveMask.show();
+			
+			/*
+			Util.log('new template? data.template='+data.template+'   appDetail.isTemplate='+appDetail.template);
+			//isTemplate
+			if(data.template !== appDetail.template) {//new template or removed template of the changed CI?
+				var referencesListStore = AIR.AirStoreManager.getStoreByName('referencesListStore');
+				referencesListStore.load();
+			}*/
+			this.templateChanged = data.template !== appDetail.template;
 			
 //			this.mergeCiChanges(data);//(noch) nicht notwendig, da noch keine Fälle in denen Daten zusammengeführt werden müssen
 			
@@ -429,7 +440,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			});
 		}.createDelegate(this);
 		
-		this.checkItsecGroup(data, AIR.AirApplicationManager.getAppDetail(), saveCallback);
+		this.checkItsecGroup(data, appDetail, saveCallback);
 	},
 	
 	checkItsecGroup: function(newAppDetail, appDetail, saveCallback) {
@@ -538,6 +549,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			var ciConnectionsView = this.getComponent('ciEditTabView').getComponent('clCiConnections');
 			ciConnectionsView.commitChanges();
+			
+			this.checkTemplateChange();
 
 			if(!this.skipLoading)
 				this.loadCiDetails();//hier ein itsecGroupCallback übergeben (das ComplianceControlWindow), wenn er nach dem Neuladen aufgerufen werden soll
@@ -563,8 +576,11 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var callback = function(store, records, options) {
 			ciComplianceView.getComponent('fsComplianceDetails').setVisible(false);
 			ciComplianceView.getComponent('fsComplianceInfo').setVisible(true);
-			
+						
 			this.onCiChange();
+			
+			this.checkTemplateChange();
+			
 			mySaveMask.hide();
 		};
 		
@@ -574,6 +590,14 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		this.saveApplication(options);
 	},
+	
+	checkTemplateChange: function() {
+		if(this.templateChanged) {//new template or removed template?
+			var referencesListStore = AIR.AirStoreManager.getStoreByName('referencesListStore');
+			referencesListStore.load();
+		}
+	},
+	
 	
 	onItsecGroupEdit: function(ciComplianceView, itsecGroupCallback, newItSecGroup) {
 		var callback = function(params) {

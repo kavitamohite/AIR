@@ -658,6 +658,7 @@ AIR.AirAclManager = function() {
         	
 //			Ext.each(records, function(item, index, allItems) {
 		
+		/*
 		updateAcl: function(appDetail) {//RFC 8225: added "appDetail", removed "store, records, options"
 			this.aclStore.each(function(item, index, allItems) {
 				//NUR NICHT Wizard Felder, bzw. nur Felder, die sich je nach Buntzerrechten am CI hinsichtlich Editierbarkeit und Sichtbarkeit ändern können! Wizard Felder gehören nicht dazu!
@@ -740,7 +741,7 @@ AIR.AirAclManager = function() {
 			aclItemCmp = Ext.getCmp('protectionApplicationProtection');
 			aclItemCmp.disable();
 			this.setMandatory(aclItemCmp, 'optional');
-		},
+		},*/
 		
 		
 		
