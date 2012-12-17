@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import java.util.StringTokenizer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -32,7 +34,6 @@ import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.service.ApplicationEditParameterOutput;
-
 /**
  * @author evafl
  *
@@ -47,6 +48,7 @@ public class AnwendungHbn {
 //	private static final String PARAMETER_QUERYMODE_CONTAINS = "CONTAINS";
 //	private static final String PARAMETER_QUERYMODE_EMPTYSTRING = "";
 	
+	private static final String SQL_GET_ITSET = "SELECT pck_sync_tools.fn_ITSet(:responsible, :subResponsible, :tableID, :itemID, :source) AS ITSet FROM DUAL";
 	private static final String Y = "Y";
 	private static final String COMMA = ",";
 	
@@ -408,14 +410,8 @@ public class AnwendungHbn {
 						// ==========
 						
 						// IT SET only view!
-						if (null == dto.getItset()) {
-							if (null == application.getItset()) {
-								application.setItset(ApplreposConstants.IT_SET_DEFAULT);
-							}
-						}
-						else {
-							application.setItset(dto.getItset());
-						}
+						application.setItset(getItset(dto.getResponsibleHidden(),dto.getSubResponsibleHidden(),ApplreposConstants.TABLE_ID_APPLICATION,application.getApplicationId(),ApplreposConstants.APPLICATION_GUI_NAME));
+						
 						
 						// Template
 						if (null != dto.getTemplate()) {
@@ -694,6 +690,32 @@ public class AnwendungHbn {
 		}
 		
 		return output;
+	}
+
+	private static Long getItset(String responsible,
+			String subResponsible, Long tableId,
+			Long itemId, String source) {
+		Long result = null;
+		Session session = HibernateUtil.getSession();
+		Query selectQuery = session.createSQLQuery(SQL_GET_ITSET)
+		.setString("responsible", responsible)
+		.setString("subResponsible", subResponsible)
+		.setLong("tableID", tableId)
+		.setLong("itemID", itemId)
+		.setString("source", source);
+		try 
+		{
+			result = (Long) ((BigDecimal) selectQuery.uniqueResult()).longValue();
+		} 
+		catch (Exception e) 
+		{
+			System.out.println(e.toString());
+		}
+		finally
+		{
+			session.flush();		
+		}
+		return result;
 	}
 
 	/**
