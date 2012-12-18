@@ -659,8 +659,13 @@ public class ApplicationWS {
 				dto.setSubResponsible(applicationSource.getSubResponsible());
 				dto.setSubResponsibleHidden(applicationSource.getSubResponsible());
 				dto.setTemplate(applicationSource.getTemplate());
+				
 				dto.setRelevanzItsec(applicationSource.getRelevanzITSEC());
 				dto.setRelevanceICS(applicationSource.getRelevanceICS());
+
+				dto.setRelevance1775(applicationSource.getRelevance1775());
+				dto.setRelevance2008(applicationSource.getRelevance2008());
+				
 				
 				// save / create application
 				ApplicationEditParameterOutput createOutput = AnwendungHbn.createAnwendung(copyInput.getCwid(), dto, null);

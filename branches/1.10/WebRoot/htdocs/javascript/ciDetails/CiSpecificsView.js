@@ -451,28 +451,6 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
     },
 	onApplicationCat2BeforeSelect: function(combo, record, index) {
 		return this.checkSapName(record);		
-		
-		/*
-		var applicationName = AIR.AirApplicationManager.getAppDetail().applicationName;
-		
-		var isSapCat2 = record.get('guiSAPNameWizard') === 'Y';//this.getComponent('applicationCat2').getStore().getById(cat2Id).get('guiSAPNameWizard') === 'Y';//AC.CI_CAT1_SAP_CAT2_ID.indexOf(cat2Id) > -1;
-		var isSapName = applicationName.match(AC.REGEX_SAP_NAME) != null;
-		
-		var isValidCat2 = (isSapCat2 && !isSapName) || (!isSapCat2 && isSapName) ? false : true;
-		
-		if(!isValidCat2) {
-			var data = {
-				airErrorId: AC.AIR_ERROR_INVALID_CAT2_SAP,
-				applicationName: applicationName,
-				applicationCat1: AIR.AirApplicationManager.getAppDetail().applicationCat1Txt,
-				isSapApp: !isSapCat2 && isSapName,
-				applicationCat2: record.get('text')
-			};
-			this.fireEvent('airAction', this, 'airError', data);
-		}
-			//error message || fire AIR action to display error on bottom toolbar
-		
-		return isValidCat2;*/
     },
     onApplicationCat2Change: function(combo, newValue, oldValue) {
     	if(this.isComboValueValid(combo, newValue, oldValue)) {
@@ -624,7 +602,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	update: function(data) {
 		//this.updateAccessMode(data);
-		var isApplication = AAM.getTableId() === AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION;
+//		var isApplication = AAM.getTableId() === AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION;
 		
 		this.getComponent('objectType').setValue(data.applicationCat1Id);
 		this.getComponent('applicationId').setValue(data.applicationId);
@@ -707,7 +685,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		lvOrganisationalScope.clearSelections(true);
 		taOrganisationalScope.reset();
 		
-		if(isApplication) {
+		if(this.isApplicationCI(data.applicationCat1Id)) {
 			rgBARrelevance.setVisible(true);
 			
 			if(data.barRelevance.length === 0)
@@ -848,10 +826,11 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		if(!field.disabled)
 			data.version = field.getValue();
 		
-		field = this.getComponent('rgBARrelevance');
-		if(field && !field.disabled)//wenn tabledId != 2 || ciType != 5
-			data.barRelevance = field.getValue().inputValue;
-		
+		if(this.isApplicationCI(AAM.getAppDetail().applicationCat1Id)) {//data.applicationCat1Id is undefined
+			field = this.getComponent('rgBARrelevance');
+			if(!field.disabled)//wenn tableId != 2 || ciType != 5
+				data.barRelevance = field.getValue().inputValue;
+		}
 
 		field = this.getComponent('specificsCategory').getComponent('cbApplicationBusinessCat');
 		if(!field.disabled)
@@ -881,26 +860,22 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			else 
 				data.lifecycleStatusId = -1;
 		
-//		field = this.getComponent('organisationalScope');
-//		if(!field.disabled)
-//			if(field.getValue().length > 0)
-//				data.organisationalScope = field.getValue();
-//			else 
-//				data.organisationalScope = -1;
-		var lvOrganisationalScope = this.getComponent('organisationalScope');//.getComponent('fsOrganisationalScope')
-		if(!lvOrganisationalScope.disabled) {
-			var scopeRecords = lvOrganisationalScope.getSelectedRecords();
-			var scopes = '';
-			for(var i = 0; i < scopeRecords.length; i++) {
+		if(this.isApplicationCI(AAM.getAppDetail().applicationCat1Id)) {//data.applicationCat1Id is undefined
+			var lvOrganisationalScope = this.getComponent('organisationalScope');
+			if(!lvOrganisationalScope.disabled) {
+				var scopeRecords = lvOrganisationalScope.getSelectedRecords();
+				var scopes = '';
+				for(var i = 0; i < scopeRecords.length; i++) {
+					if(scopes.length > 0)
+						scopes += ',';
+					
+					scopes += scopeRecords[i].get('id');
+				}
 				if(scopes.length > 0)
-					scopes += ',';
-				
-				scopes += scopeRecords[i].get('id');
+					data.organisationalScope = scopes;
+				else
+					data.organisationalScope = '-1';
 			}
-			if(scopes.length > 0)
-				data.organisationalScope = scopes;
-			else
-				data.organisationalScope = '-1';
 		}
 		
 		field = this.getComponent('operationalStatus');
@@ -923,6 +898,10 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			data.businessProcessHidden = field.getValue();
 		
 		return data;
+	},
+	
+	isApplicationCI: function(applicationCat1Id) {
+		return AAM.getTableId() === AC.TABLE_ID_APPLICATION && applicationCat1Id === AC.APP_CAT1_APPLICATION;
 	},
 	
 	updateLabels: function(labels) {
