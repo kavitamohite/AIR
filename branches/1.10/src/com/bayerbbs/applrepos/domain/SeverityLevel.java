@@ -2,29 +2,47 @@ package com.bayerbbs.applrepos.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Entity;
+import org.hibernate.annotations.NaturalId;
 
 
 @Entity
 @Table(name="SEVERITY_LEVEL")
-@SequenceGenerator(name = "MySeqSeverityLevel", sequenceName = "TBADM.SEQ_SEVERITY_LEVEL")
 
-public class SeverityLevel implements Serializable {
+public class SeverityLevel extends DeletableRevisionInfo implements Serializable {
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 168789052260094674L;
 
-
-	
-	@Id @GeneratedValue
-	public Long getID() {
-		return id;
+	/**
+	 * 
+	 */
+	public SeverityLevel() {
+		super();
 	}
-	public void setID(Long id) {
+	@Id
+	@Column(name = "SEVERITY_LEVEL_ID", insertable = false, updatable = false)
+	public Long getId() {
+		return this.id;
+	}
+	public void setId(Long id) {
 		this.id = id;
 	}
-	protected Long id;
+	private Long id;
+	
+	@NaturalId
+	@Column(name = "SEVERITY_LEVEL")
+	public String getSeverityLevel() {
+		return severityLevel;
+	}
+	public void setSeverityLevel(String severityLevel) {
+		this.severityLevel = severityLevel;
+	}
+	private String severityLevel;
 }
