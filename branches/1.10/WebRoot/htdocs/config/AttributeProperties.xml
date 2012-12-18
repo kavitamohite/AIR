@@ -74,7 +74,7 @@
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
 		<UseInWizard>N</UseInWizard>
 		<attributeType>Text</attributeType>
-		<attributeLength>10</attributeLength>
+		<attributeLength>50</attributeLength>
 		<attributeMask></attributeMask><!-- /[abcrv0-9.]/g -->
 	</Identifier>
 
