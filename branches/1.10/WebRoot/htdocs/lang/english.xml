@@ -26,7 +26,7 @@
 		<button_general_copy>Copy</button_general_copy>
 		<newSearch>New Search</newSearch>
 		<findFirst>First</findFirst><!-- Show all|All -->
-		<findAll>All</findAll>
+		<findAll>Show all</findAll>
 		
 		<browserOptimization>Optimized for Firefox Browser</browserOptimization>
 		
@@ -239,6 +239,9 @@
 				<itsecGroup>ITSec Group</itsecGroup>
 				<referencedTemplate>Link</referencedTemplate>
 				<referencedTemplateInvalid>Template invalid</referencedTemplateInvalid><!-- for IT set and object type-->
+				<templateBARrelevanceValidationTitle>BAR relevance</templateBARrelevanceValidationTitle>
+				<templateBARrelevanceValidationBARrelevance1>The BAR relevance was determined to &quot;No&quot; since templates cannot be BAR relevant</templateBARrelevanceValidationBARrelevance1>
+				<templateBARrelevanceValidationBARrelevance2>The BAR relevance is editable again, since this CI is no template anymore</templateBARrelevanceValidationBARrelevance2>
 				
 				<checkItsecGroupWindowTitle>ITSec Group</checkItsecGroupWindowTitle>
 				<checkItsecGroupWindowMessage>You changed the ITSec Group of this application CI. Are you sure to delete all ITSec Controls of the previously selected ITSec Group?</checkItsecGroupWindowMessage>

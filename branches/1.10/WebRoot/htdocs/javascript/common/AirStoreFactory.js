@@ -1103,6 +1103,11 @@ AIR.AirStoreFactory = function() {
 			        {name: 'itsecGroup'},
 			        {name: 'referencedTemplate'},
 					{name: 'referencedTemplateInvalid'},
+					{name: 'templateBARrelevanceValidationTitle'},
+					{name: 'templateBARrelevanceValidationBARrelevance1'},
+					{name: 'templateBARrelevanceValidationBARrelevance2'},
+					{name: 'templateBARrelevanceValidationBARtemplate'},
+					
 					{name: 'signeeApproval'},
 					{name: 'checkItsecGroupWindowTitle'},
 					{name: 'checkItsecGroupWindowMessage'},

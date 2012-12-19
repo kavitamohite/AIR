@@ -904,6 +904,40 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		return AAM.getTableId() === AC.TABLE_ID_APPLICATION && applicationCat1Id === AC.APP_CAT1_APPLICATION;
 	},
 	
+	validate: function(item) {
+		switch(item.getId()) {
+			case 'cbIsTemplate':
+				var isChecked = item.getValue();
+				var rgBARrelevance = this.getComponent('rgBARrelevance');
+				
+				if(AIR.AirAclManager.isRelevance(rgBARrelevance, AAM.getAppDetail())) {
+					var labels = AAM.getLabels();
+					var infoTitle = labels.templateBARrelevanceValidationTitle,
+						infoText;
+					
+					if(isChecked) {
+						rgBARrelevance.setValue('N');
+						rgBARrelevance.disable();
+						
+						infoText = labels.templateBARrelevanceValidationBARrelevance1;
+					} else {
+						var barRelevance = AAM.getAppDetail().barRelevance;
+						rgBARrelevance.setValue(barRelevance);
+						
+						if(barRelevance !== 'Y')
+							rgBARrelevance.enable();
+						
+						infoText = labels.templateBARrelevanceValidationBARrelevance2;
+					}
+					
+					var infoWindow = AIR.AirWindowFactory.createDynamicMessageWindow('GENERIC_OK', null, infoText, infoTitle);
+					infoWindow.show();
+				}
+				break;
+			default: break;
+		}
+	},
+	
 	updateLabels: function(labels) {
 		this.setTitle(labels.specificsPanelTitle);
 //		this.setFieldLabel(this.getComponent('applicationName'), labels.applicationName);

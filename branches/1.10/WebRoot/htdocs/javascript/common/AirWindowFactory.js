@@ -272,6 +272,20 @@ AIR.AirWindowFactory = function() {
 					}];
 					
 					break;
+					
+				case 'GENERIC_OK':
+					var windowTitle = title;
+					var windowText = message;
+					var windowIcon = img_OK;
+					
+					var buttonConfigs = [{
+						text: labels.dynamicWindowOKButtonText,
+						handler: function() {
+							dynamicWindow.close();
+						}
+					}];
+					
+					break;
 				case 'CONFIRM_ITSEC_GROUP_SAVE':
 				case 'RISK_ANALYSIS_AND_MGMT_TYPE_SELECT':
 				case 'GENERIC_YES_NO':

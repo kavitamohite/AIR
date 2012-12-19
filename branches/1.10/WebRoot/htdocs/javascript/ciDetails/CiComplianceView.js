@@ -469,7 +469,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				this.getComponent('fsComplianceDetails').setVisible(true);
 				rgb.disable();
 				
-				this.setComplianceDetails(AIR.AirApplicationManager.getAppDetail());
+				this.updateComplianceDetails(AIR.AirApplicationManager.getAppDetail());
 				
 				this.fireEvent('ciChange', this, rgb, checkedRadio);
 				break;
@@ -511,13 +511,16 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	
-	setComplianceDetails: function(data) {
+	updateComplianceDetails: function(data) {
 		var tfItsetName = this.getComponent('fsComplianceDetails').getComponent('pItSet').getComponent('tfItsetName');
 		tfItsetName.setValue(data.itsetName);
 		
 		var isTemplate = data.template === '1';
 		var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
 		cbIsTemplate.setValue(isTemplate);
+		if(data.barRelevance === 'Y')
+			cbIsTemplate.disable();//BAR relevante CIs dürfen keine templates sein
+		
 		
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
@@ -831,7 +834,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 //				rgRelevanceBYTSEC.fireEvent('change', rgRelevanceBYTSEC, rgRelevanceBYTSEC.getValue()??);//wenn fsComplianceMgmt unverständlicherweise nicht angezeigt wird. Das ausgewählte checkbox Element muss mitübergeben werden
 				rgRelevanceBYTSEC.disable();
 				
-				this.setComplianceDetails(data);
+				this.updateComplianceDetails(data);
 			
 				break;
 		}
@@ -975,6 +978,26 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			itsetId: AIR.AirApplicationManager.getAppDetail().itset
 		};
 		combo.filterByData(filterData);
+	},
+	
+	validate: function(item) {
+		switch(item.getId()) {
+			case 'rgBARrelevance':
+				var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
+				
+				if(AIR.AirAclManager.isRelevance(cbIsTemplate, AAM.getAppDetail())) {
+					var barRelevance = item.getValue().inputValue;
+					
+					if(barRelevance === 'Y') {
+						cbIsTemplate.disable();
+					} else {
+						cbIsTemplate.enable();
+					}
+				}
+				break;
+				
+			default: break;
+		}
 	},
 
 	/*

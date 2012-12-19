@@ -215,16 +215,14 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		if(ciEditTabView)
 			ciEditTabView.updateToolTips(toolTips);
 	},
-	
-	/*update: function(data) {
-		this.getComponent('editpanelheader').setText(data.applicationName);
-		this.getComponent('editpanelsubheader').setText(data.applicationCat1Txt);
-	},*/
+
+
 	
 	onCiChange: function(view, viewElement, changedViewItems) {
 		if(this.isUserChange) {
 			this.enableButtons();
 			this.ciModified = true;
+			this.validateCiChange(view, viewElement, changedViewItems);
 		}
 	},
 	
@@ -250,6 +248,29 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			case 'clCiHistory':
 				var ciHistory = this.getComponent('ciEditTabView').getComponent('clCiHistory');
 				ciHistory.update();
+				break;
+			default: break;
+		}
+	},
+	
+	validateCiChange: function(view, viewElement, changedViewItems) {
+		switch(view.getId()) {
+			case 'clCiSpecifics':
+				if(viewElement.getId() === 'rgBARrelevance') {
+					var ciComplianceView = this.getComponent('ciEditTabView').getComponent('clCiCompliance');
+					ciComplianceView.validate(viewElement);
+					
+					//show warning toolbar message or warningWindow
+				}
+				
+				break;
+			case 'clCiCompliance':
+				if(viewElement.getId() === 'cbIsTemplate') {
+					var ciSpecificsView = this.getComponent('ciEditTabView').getComponent('clCiSpecifics');
+					ciSpecificsView.validate(viewElement);
+					
+					//show warning toolbar message or warningWindow
+				}
 				break;
 			default: break;
 		}

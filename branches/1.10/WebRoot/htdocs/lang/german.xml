@@ -26,7 +26,7 @@
 		<button_general_copy>Kopieren</button_general_copy>
 		<newSearch>Neue Suche</newSearch>
 		<findFirst>Erste</findFirst><!-- Show all|All -->
-		<findAll>Alle</findAll>
+		<findAll>Zeige alle</findAll>
 		
 		<browserOptimization>Optimiert für den Firefox Browser</browserOptimization>
 		
@@ -239,6 +239,9 @@
 				<itsecGroup>ITSec Gruppe</itsecGroup>
 				<referencedTemplate>Referenzierung</referencedTemplate>
 				<referencedTemplateInvalid>Template ungültig</referencedTemplateInvalid><!-- für IT set und Objekttyp-->
+				<templateBARrelevanceValidationTitle>BAR Relevanz</templateBARrelevanceValidationTitle>
+				<templateBARrelevanceValidationBARrelevance1>Die BAR Relevanz wurde auf "Nein" festgesetzt, weil Templates nicht BAR relevant sein können.</templateBARrelevanceValidationBARrelevance1>
+				<templateBARrelevanceValidationBARrelevance2>Die BAR Relevanz ist wieder bearbeitbar, weil dieses CI kein Template mehr ist.</templateBARrelevanceValidationBARrelevance2>
 				
 				<checkItsecGroupWindowTitle>ITSec Gruppe</checkItsecGroupWindowTitle>
 				<checkItsecGroupWindowMessage>Sie haben die ITSec Gruppe dieses Application CIs geändert. Alle ITSec Massnahmen der vorherigen ITSec Gruppe werden gelöscht. Sind Sie sicher?</checkItsecGroupWindowMessage>
