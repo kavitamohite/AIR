@@ -813,11 +813,20 @@ public class ApplicationWS {
 					accessDTO.setRelevanceOperational(ApplreposConstants.NO_SHORT);
 				}
 
-				if (checker.isRelevanceStrategic(detailInput.getCwid(), application)) {
-					accessDTO.setRelevanceStrategic(ApplreposConstants.YES_SHORT);
-				} else {
-					accessDTO.setRelevanceStrategic(ApplreposConstants.NO_SHORT);
+				// TODO RFC angegben und Konstante einfügen.
+				if (5 == dto.getApplicationCat1Id().longValue()) {
+					// nur für CI's Typ = Anwendung
+					if (checker.isRelevanceStrategic(detailInput.getCwid(), application)) {
+						accessDTO.setRelevanceStrategic(ApplreposConstants.YES_SHORT);
+					} else {
+						accessDTO.setRelevanceStrategic(ApplreposConstants.NO_SHORT);
+					}
 				}
+				else {
+					// alle anderen CI's haben keine Trennung
+					accessDTO.setRelevanceStrategic(accessDTO.getRelevanceOperational());
+				}
+				
 
 				if (StringUtils.isNotNullOrEmpty(application.getInsertQuelle())) {
 					if (ApplreposConstants.YES_SHORT.equals(dto.getIsEditable())) {
