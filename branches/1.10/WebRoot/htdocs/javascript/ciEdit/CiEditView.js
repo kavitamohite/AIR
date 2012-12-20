@@ -598,7 +598,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			ciComplianceView.getComponent('fsComplianceDetails').setVisible(false);
 			ciComplianceView.getComponent('fsComplianceInfo').setVisible(true);
 						
-			this.onCiChange();
+			this.onCiChange(ciComplianceView, rgb);
 			
 			this.checkTemplateChange();
 			

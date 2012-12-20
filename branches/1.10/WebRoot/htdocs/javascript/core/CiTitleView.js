@@ -35,12 +35,14 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 			    
 				items: [{
 					id: 'clBack',
-			        xtype: 'commandlink',
-			        img: 'images/back_24x24.png',//24x24 16x16
+//			        xtype: 'commandlink',
+//			        img: 'images/back_24x24.png',//24x24 16x16
 					
-//					xtype: 'button',
-//					cls : 'x-btn-icon',
-//					icon: 'images/back_24x24.png',
+					xtype: 'button',
+					cls: 'x-btn-text-icon',
+					icon: 'images/back_16x16.png',
+					text: 'Back',
+//					width: 80,
 
 			        hidden: true,
 			        
@@ -50,17 +52,20 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 					}
 				},{
 			        id: 'clForward',
-			        xtype: 'commandlink',
-			        img: 'images/forward_24x24.png',//24x24 16x16
+//			        xtype: 'commandlink',
+//			        img: 'images/forward_24x24.png',//24x24 16x16
 			        
-//					xtype: 'button',
-//					cls : 'x-btn-icon',
-//					icon: 'images/forward_24x24.png',
+					xtype: 'button',
+					cls: 'x-btn-text-icon',
+					icon: 'images/forward_16x16.png',
+					text: 'Forward',
+//					width: 80,
 			        
 			        hidden: true,
 			        
 			        style: {
 						marginTop: -3
+//						marginLeft: 5
 //						marginBottom: 5
 					}
 				},{

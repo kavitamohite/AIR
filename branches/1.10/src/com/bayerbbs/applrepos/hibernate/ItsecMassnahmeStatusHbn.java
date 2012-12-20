@@ -175,7 +175,7 @@ public class ItsecMassnahmeStatusHbn {
 				status.setExpense(dto.getExpense());
 				status.setProbOccurence(dto.getProbOccurence());
 				status.setDamage(dto.getDamage());
-				status.setMitigationPotential(dto.getMitigationPotential());
+				status.setMitigationPotential(dto.getMitigationPotential());// / 100
 				status.setSignee(dto.getSignee());
 				
 //				if (null != dto.getGapClassApproved() && !"".equals(dto.getGapClassApproved())) {

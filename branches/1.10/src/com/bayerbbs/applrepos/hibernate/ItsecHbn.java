@@ -220,8 +220,8 @@ public class ItsecHbn {
 						dto.setDamage(rsSet.getFloat("DAMAGE"));
 						Float mitigationPotential = rsSet.getFloat("MITIGATION_POTENTIAL");
 						
-						if(mitigationPotential < 1)
-							mitigationPotential = new Float(String.format(Locale.ENGLISH, "%.2f", mitigationPotential)) * 100;
+//						if(mitigationPotential < 1)
+//							mitigationPotential = new Float(String.format(Locale.ENGLISH, "%.2f", mitigationPotential)) * 100;
 						dto.setMitigationPotential(mitigationPotential);
 						
 						dto.setSignee(rsSet.getString("SIGNEE"));

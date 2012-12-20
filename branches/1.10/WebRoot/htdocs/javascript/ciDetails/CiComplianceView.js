@@ -660,7 +660,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		 	cwid: AIR.AirApplicationManager.getCwid(),
 		 	token: AIR.AirApplicationManager.getToken(),
 			ciId: AIR.AirApplicationManager.getCiId(),//selectedCIId,
-			language: 'en',//selectedLanguage
+			language: AAM.getLanguage(),//'en',//selectedLanguage
 			tableId: 2//2=CI Typ Application (?)
 		};
 		
@@ -684,7 +684,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var config = {
 			complianceType: this.complianceType,
-			language: selectedLanguage,
+			language: AAM.getLanguage(),//selectedLanguage,
 			itSet: AAM.getAppDetail().itset,//this.getComponent('fsComplianceDetails').getComponent('pItSet').getComponent('tfItsetName').getValue()
 //			itSetId: AAM.getAppDetail().itsetId,
 			ciId: AAM.getAppDetail().applicationId,

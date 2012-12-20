@@ -81,7 +81,7 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 					params[key] = this.pagingParams[key];
 			
 //			params.start = 0;
-//			params.limit = this.pageSize;
+			params.limit = this.pageSize;
 			
 			this.getStore().load({
 				params: params,

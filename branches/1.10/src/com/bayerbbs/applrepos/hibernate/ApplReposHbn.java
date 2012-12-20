@@ -71,8 +71,7 @@ public class ApplReposHbn {
 
 				selectStmt = conn.createStatement();
 				ResultSet rsMessage = selectStmt
-						.executeQuery("select pck_sync_tools.FN_ITset('" + cwid
-								+ "',null,null,null,null) from dual");
+						.executeQuery("select pck_sync_tools.FN_ITset('" + cwid + "',null,null,null,null) from dual");
 
 				if (null != rsMessage) {
 					rsMessage.next();

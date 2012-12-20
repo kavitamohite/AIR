@@ -5,6 +5,7 @@ AIR.AirApplicationManager = function() {
 	return {
 		DATE_FORMAT_DE: 'd.m.Y',
 		DATE_FORMAT_EN: 'm/d/Y',
+		DATE_FORMAT_INTERNATIONAL: 'dMY',
 		
 		toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="images/{icon}"/></td><td>{text}</td></tr><table>'),
 
@@ -477,15 +478,18 @@ AIR.AirApplicationManager = function() {
 		},
 		
 		getDateFormat: function(language) {
-			if(!language)
-				language = this.getLanguage();
+//			if(!language)
+//				language = this.getLanguage();
 				
 			switch(language) {
+				case 'EN':
+				case 'en':
+					return this.DATE_FORMAT_EN;
 				case 'DE':
 				case 'de':
 					return this.DATE_FORMAT_DE;
 				default:
-					return this.DATE_FORMAT_EN;
+					return this.DATE_FORMAT_INTERNATIONAL;
 			}
 		},
 		
