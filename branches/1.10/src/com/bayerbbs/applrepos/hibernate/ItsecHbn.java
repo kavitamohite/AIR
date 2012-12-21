@@ -50,7 +50,7 @@ public class ItsecHbn {
 			sql.append(" DECODE(MTX.Langu, '").append("de").append("', STW.Status_Wert, STW.Status_Wert_En) AS Status_Wert,");//language.toLowerCase()
 
 			// für die Liste laut Simon
-			sql.append(" STW.ITSEC_MASSN_WERTID AS STATUS_WERT_ID,");
+//			sql.append(" STW.ITSEC_MASSN_WERTID AS STATUS_WERT_ID,");
 			
 			sql.append(" STA.Massnahme_Gstoolid,");
 			sql.append(" STA.Zob_Id,");
@@ -85,7 +85,7 @@ public class ItsecHbn {
 						dto.setIdent(rsSet.getString("IDENT"));
 						dto.setMassnahmeTitel(rsSet.getString("MASSNAHME_TITEL"));
 						dto.setStatusWert(rsSet.getString("STATUS_WERT"));
-						dto.setStatusWertId(rsSet.getLong("STATUS_WERT_ID"));
+//						dto.setStatusWertId(rsSet.getLong("STATUS_WERT_ID"));
 						dto.setMassnahmeGstoolId(rsSet.getLong("MASSNAHME_GSTOOLID"));
 						dto.setZobId(rsSet.getLong("ZOB_ID"));
 						dto.setMassnahmeLink(rsSet.getString("Link"));
