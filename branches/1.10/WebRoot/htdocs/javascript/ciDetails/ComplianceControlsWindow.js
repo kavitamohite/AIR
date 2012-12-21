@@ -1215,8 +1215,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		tfMaxDamagePerEvent.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onMaxDamagePerEventChange onMassnahmeChange
 		tfMitigationPotential.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onMitigationPotentialChange onMassnahmeChange
 		tfDamagePerYear.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onDamagePerYearChange onMassnahmeChange
+		tfDamagePerYear.on('change', this.onDamagePerYearChange, this);
 		cbMaxDamagePerEventCurrency.on('select', this.onRiskAnalysisAndMgmtChange, this);//onMaxDamagePerEventCurrencySelect
-		//tfDamagePerYear.on('change', this.onDamagePerYearChange, this);
 		
 		
 		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
@@ -2691,7 +2691,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.checkApprovable(massnahme);
 	},
 	onDamagePerYearChange: function(field, newValue, oldValue) {
-		var massnahme = this.editedMassnahmen[this.previousSelection];
+		/*var massnahme = this.editedMassnahmen[this.previousSelection];
 		if(this.isDamagePerYearFalse(massnahme)) {
 			var labels = AAM.getLabels();
 			var title = labels.invalidMassnameWindowTitleDamagePerYear;
@@ -2699,6 +2699,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			
 			var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', null, message, title);//callbackMap
 			invalidMassnahmeWindow.show(this.getEl());
+		}*/
+		
+		var massnahme = this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] : this.loadedMassnahme;//this.editedMassnahmen[this.previousSelection];//this.previousSelection this.getSelectedGridIndex()
+		massnahme.expense = newValue;
+		
+		if(this.isDamagePerYearFalse(massnahme)) {
+			this.onMassnahmenWarning(this.warningMassnahmen);
+			this.skipFocusLost = false;
 		}
 	},
 	

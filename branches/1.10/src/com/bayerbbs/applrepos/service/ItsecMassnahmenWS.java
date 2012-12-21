@@ -26,7 +26,7 @@ public class ItsecMassnahmenWS {
 		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {		
 		
 			String language = input.getLanguage();
-			if (null == language || (!language.equals("de") && !language.equals("en"))) {
+			if (null == language || (!language.equalsIgnoreCase("de") && !language.equalsIgnoreCase("en"))) {
 				language = "de";
 			}
 			

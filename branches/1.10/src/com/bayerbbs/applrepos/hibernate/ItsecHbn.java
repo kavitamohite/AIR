@@ -47,7 +47,7 @@ public class ItsecHbn {
 			sql.append("SELECT   STA.Itsec_Massn_St_Id,");
 			sql.append(" TO_CHAR(MAS.Katalog_Id, 'fm00') || '.' || TO_CHAR(MAS.Massnahme_Nr,'fm000') AS Ident,");
 			sql.append(" MTX.Massnahme_Titel,");
-			sql.append(" DECODE(MTX.Langu, '").append(language).append("', STW.Status_Wert, STW.Status_Wert_En) AS Status_Wert,");
+			sql.append(" DECODE(MTX.Langu, '").append("de").append("', STW.Status_Wert, STW.Status_Wert_En) AS Status_Wert,");//language.toLowerCase()
 
 			// für die Liste laut Simon
 			sql.append(" STW.ITSEC_MASSN_WERTID AS STATUS_WERT_ID,");
@@ -64,7 +64,7 @@ public class ItsecHbn {
 			sql.append(" FROM     TABLE(pck_SISec.FT_Compliance(").append(tableId).append(",").append(ciId).append(")) STA ");
 			sql.append(" INNER JOIN ITSEC_MASSN MAS ON STA.Massnahme_Gstoolid=MAS.Massnahme_Id"); 
 			sql.append(" INNER JOIN ITSEC_MASSN_STWERT STW ON STW.Itsec_Massn_Wertid=NVL(pck_SISec.EffStatusId(STA.Itsec_Massn_St_Id), 5)"); 
-			sql.append(" LEFT OUTER JOIN ITSEC_MASSNT MTX ON STA.Massnahme_Gstoolid=MTX.Massnahme_Id AND MTX.Langu='").append(language).append("'");
+			sql.append(" LEFT OUTER JOIN ITSEC_MASSNT MTX ON STA.Massnahme_Gstoolid=MTX.Massnahme_Id AND MTX.Langu='").append(language.toLowerCase()).append("'");//"de" language
 			sql.append(" ORDER BY MAS.Katalog_ID, MAS.Massnahme_Nr");
 			
 			
