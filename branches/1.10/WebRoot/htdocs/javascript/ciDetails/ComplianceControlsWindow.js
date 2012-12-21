@@ -10,8 +10,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.massnahmeDetailStore = massnahmeDetailStore;
 		this.config = config;
 		
-		this.statusWertDisplayField = this.config.language == 'EN' ? 'statusWertEn' : 'statusWert';//statusWertDisplayField;//'statusWertEn';
-		this.gapClassDisplayField = this.config.language == 'EN' ? 'gapClassTextEN' : 'gapClassTextDE';
+		this.statusWertDisplayField = this.config.language.toUpperCase() == 'EN' ? 'statusWertEn' : 'statusWert';//statusWertDisplayField;//'statusWertEn';
+		this.gapClassDisplayField = this.config.language.toUpperCase() == 'EN' ? 'gapClassTextEN' : 'gapClassTextDE';
 		this.hasNoGapAnalysis = this.config.complianceType == AC.CI_GROUP_ID_NON_BYTSEC || this.config.complianceType == AC.CI_GROUP_ID_DELETE_ID || this.config.complianceType == AC.CI_GROUP_ID_EMPTY;
 		
 //		this.massnahmeDetailStore = AIR.AirStoreFactory.createItsecMassnahmeDetailStore(this.statusWertDisplayField);
@@ -1216,6 +1216,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		tfMitigationPotential.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onMitigationPotentialChange onMassnahmeChange
 		tfDamagePerYear.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onDamagePerYearChange onMassnahmeChange
 		cbMaxDamagePerEventCurrency.on('select', this.onRiskAnalysisAndMgmtChange, this);//onMaxDamagePerEventCurrencySelect
+		//tfDamagePerYear.on('change', this.onDamagePerYearChange, this);
 		
 		
 		var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
@@ -1278,6 +1279,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	onTargetDateFocusLost: function(field) {
+		if(field.getValue().length === 0) {
+			field.clearInvalid();
+			return;
+		}
+		
 		var result = this.isTargetDateValid(field.getValue());
 		
 		if(result.message) {
@@ -2258,7 +2264,23 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				var currencySymbol = currency.length == 0 ? currency : cbMaxDamagePerEventCurrency.getStore().getById(currency).data.symbol;//symbol currencySymbol '';// findExact('currencySymbol', currency).data.currencySymbol;
 //				Util.log('saving '+cbMaxDamagePerEventCurrency.getValue()+'='+cbMaxDamagePerEventCurrency.getStore().getById(currency).data.currencySymbol);
 				this.editedMassnahmen[rowIndex].currency = currencySymbol;//'';//currency;//weder currencyId/currencyName können gesichert werden. cbMaxDamagePerEventCurrency.getValue(); --> 1,2,3: ORA-20000: Invalid currency,ORA-06512: at "TBADM.TRG_045_BIU", line 109,ORA-04088: error during execution of trigger 'TBADM.TRG_045_BIU'
-				this.editedMassnahmen[rowIndex].mitigationPotential = tfMitigationPotential.getValue().length > 0 ? tfMitigationPotential.getValue() : '';//parseInt(tfMitigationPotential.getValue())
+
+
+				var m = tfMitigationPotential.getValue();
+				var v;
+				if(m.length > 0) {
+					if(parseFloat(m) >= 1) {
+						v = parseFloat(m) / 100;
+						v = v.toString();
+					} else {
+						v = m;
+					}
+				} else {
+					v = '';
+				}
+				this.editedMassnahmen[rowIndex].mitigationPotential = v;
+				
+//				this.editedMassnahmen[rowIndex].mitigationPotential = tfMitigationPotential.getValue().length > 0 ? tfMitigationPotential.getValue() : '';//parseInt(tfMitigationPotential.getValue())
 				
 				
 				
@@ -2450,7 +2472,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				if(n > 0 && n < 0.01)
 					massnahme.mitigationPotential = '0';
 				
-				tfMitigationPotential.setValue(massnahme.mitigationPotential);
+				tfMitigationPotential.setValue(parseFloat(massnahme.mitigationPotential) * 100);//massnahme.mitigationPotential
 //				tfDamagePerYear.setValue(massnahme.expense);
 				
 				taOccurenceOfDamagePerYear2.setValue(massnahme.probOccurenceText);
@@ -2668,6 +2690,17 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		this.checkApprovable(massnahme.signee, isNotApprovable);
 		this.checkApprovable(massnahme);
 	},
+	onDamagePerYearChange: function(field, newValue, oldValue) {
+		var massnahme = this.editedMassnahmen[this.previousSelection];
+		if(this.isDamagePerYearFalse(massnahme)) {
+			var labels = AAM.getLabels();
+			var title = labels.invalidMassnameWindowTitleDamagePerYear;
+			var message = labels.invalidMassnameWindowDamagePerYear;
+			
+			var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', null, message, title);//callbackMap
+			invalidMassnahmeWindow.show(this.getEl());
+		}
+	},
 	
 //	onOccurenceOfDamagePerYearChange: function(field, event) {
 //		this.resetMassnahmeDates();
@@ -2697,7 +2730,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		if(!isChecked && massnahme.gapPriority == 5) {
 			var probOccurence = parseInt(massnahme.probOccurence);
 			var damagePerEvent = parseInt(massnahme.damage);
-			var mitigationPotential = parseInt(massnahme.mitigationPotential) / 100;
+			var mitigationPotential = parseFloat(massnahme.mitigationPotential);//parseInt
 			var damagePerYear = parseInt(massnahme.expense);//field.getEl().dom.value
 			
 			isFalse = damagePerYear < probOccurence * damagePerEvent * mitigationPotential;
@@ -3069,22 +3102,19 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 		var probOccurence = massnahme.probOccurence.length > 0 ? parseInt(massnahme.probOccurence) : -1;
 		var damagePerEvent = massnahme.damage.length > 0 ? parseInt(massnahme.damage) : -1;
-		var mitigationPotential = massnahme.mitigationPotential.length > 0 ? parseInt(massnahme.mitigationPotential) / 100 : -1;
+		var mitigationPotential = massnahme.mitigationPotential.length > 0 ? parseFloat(massnahme.mitigationPotential) : -1;
 		
 		var pRiskAnalysisAndMgmtCard = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
 		var pRiskAnalysisAndMgmtNonFreeText = pRiskAnalysisAndMgmtCard.getComponent('pRiskAnalysisAndMgmtNonFreeText');
 		var tfRiskMitigation = pRiskAnalysisAndMgmtNonFreeText.getComponent('pRiskMitigation').getComponent('tfRiskMitigation');
 		
 		if(probOccurence > -1 && damagePerEvent > -1 && mitigationPotential > -1) {
-			var riskMitigation = probOccurence * damagePerEvent * mitigationPotential;
+			var riskMitigation = (probOccurence * damagePerEvent * mitigationPotential);
 			riskMitigation = Math.round(riskMitigation * 100) / 100;//auf zwei Nachkommastellen runden
 			
-//			var x = new String(riskMitigation).indexOf('.')//eine 0 anhängen wenn Ergebnis mit nur einer Nachkommastelle rauskommt 
-			
-//			var cbMaxDamagePerEventCurrency = pRiskAnalysisAndMgmtNonFreeText.getComponent('pMaxDamagePerEvent').getComponent('cbMaxDamagePerEventCurrency');
 			var value = riskMitigation;
 			if(massnahme.currency && massnahme.currency.length > 0)
-				value += ' ' + massnahme.currency;//cbMaxDamagePerEventCurrency.getStore(massnahme.currency).getById().get('symbol');
+				value += ' ' + massnahme.currency;
 			tfRiskMitigation.setValue(value);
 		} else {
 			tfRiskMitigation.reset();
@@ -3128,7 +3158,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var shotTermDate = new Date(year, month, 0);
 		dates.push(shotTermDate);
 		
-		var longTermDate = new Date(oldYear + 1, oldMonth, 0);
+		var longTermDate = new Date(oldYear + 1, oldMonth + 1, 0);
 		dates.push(longTermDate);
 		
 		return dates;
@@ -3236,12 +3266,24 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 //		var isValid = parseInt(value) <= AC.MAX_MITIGATION_POTENTIAL || value.length == 0;//or use var MAX_VALUES = { field.getId(): 4711, ... } to make it dynamic if needed
 		var v = parseInt(value);
-		if(v > 100)
+		var isFalse = false;
+		
+		if(v > 100) {
 			value = '100';
-		else if(v < 1)
+			isFalse = true;
+		} else if(v < 1 && v > 0) {
 			value = '1';
+			isFalse = true;
+		}
 		
 		field.setRawValue(value);//setRawValue field.setValue(value) --> Endlosschleife in ext-all-debug.js 40684
+		
+		if(isFalse) {
+			var massnahme = this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] : this.loadedMassnahme;
+			massnahme.mitigationPotential = value;
+			this.calculateRiskMitigation(massnahme);
+		}
+		
 		return true;
 		
 //		if(isValid) {
