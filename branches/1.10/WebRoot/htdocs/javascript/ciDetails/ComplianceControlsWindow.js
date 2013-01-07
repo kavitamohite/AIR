@@ -2576,7 +2576,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	onMassnahmeInfoClick: function(column, grid, rowIndex, event) {
 		var massnahme = grid.getStore().getAt(rowIndex);
 		
-		window.open('/AIR/massnbeschreibung?massnahmeGstoolId='+massnahme.get('massnahmeGstoolId'));
+		window.open('/AIR/massnbeschreibung?massnahmeGstoolId='+massnahme.get('massnahmeGstoolId')+'&lang='+AAM.getLanguage());
 	},
 	
 	//-----------------------------------------------------------------------------------------------------------------------

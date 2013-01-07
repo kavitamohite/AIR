@@ -77,7 +77,10 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 		
 		String massnBeschreibung = null;
 //		String massnTitel = null;
-		res.setCharacterEncoding("ISO-8859-1");//Windows-1252 UTF-8 ISO-8859-1
+		
+		String userAgent = req.getHeader("user-agent");
+		String encoding = userAgent.contains("MSIE") ? "Windows-1252" : "UTF-8";//ISO-8859-1
+		res.setCharacterEncoding(encoding);//Windows-1252 UTF-8 ISO-8859-1
 		PrintWriter writer = res.getWriter();
 		
 		try {
@@ -89,9 +92,9 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 			if(rs.next()) {//Achtung es gibt mehrere Treffer für die massnahmeGstoolId. Weiteres Kriterium welche die richtige Massnahmenversion ist.
 //				massnTitel = rs.getString("NAME");
 				massnBeschreibung = rs.getString(SQL_RESULT_BESCHREIBUNG);
-				
 				massnBeschreibung = massnBeschreibung.replaceAll("/baust/", "/AIR/massnbeschreibung?lang=" + lang + "&bausteinId=");
 				
+				writer.write("<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>\n");
 				writer.write(massnBeschreibung);
 			} else {
 				writer.write("There is no control with id="+massnahmeGstoolId);
