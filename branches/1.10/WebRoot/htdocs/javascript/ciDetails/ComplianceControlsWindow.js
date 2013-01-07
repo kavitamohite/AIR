@@ -1215,7 +1215,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		tfMaxDamagePerEvent.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onMaxDamagePerEventChange onMassnahmeChange
 		tfMitigationPotential.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onMitigationPotentialChange onMassnahmeChange
 		tfDamagePerYear.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onDamagePerYearChange onMassnahmeChange
-		tfDamagePerYear.on('change', this.onDamagePerYearChange, this);
+//		tfDamagePerYear.on('change', this.onDamagePerYearChange, this);//change blur
 		cbMaxDamagePerEventCurrency.on('select', this.onRiskAnalysisAndMgmtChange, this);//onMaxDamagePerEventCurrencySelect
 		
 		
@@ -2671,7 +2671,6 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		//Da hier das Hinweisfenster immer kommen soll, muss das targetDate nicht validiert werden.
 		var options = { skipTargetDate: true };
 		this.onMassnahmeChange(options);//options
-
 	},
 	
 	
@@ -2690,7 +2689,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		this.checkApprovable(massnahme.signee, isNotApprovable);
 		this.checkApprovable(massnahme);
 	},
-	onDamagePerYearChange: function(field, newValue, oldValue) {
+	
+//	onDamagePerYearChange: function(field) {//blur event
+	onDamagePerYearChange: function(field, newValue, oldValue) {//change event
 		/*var massnahme = this.editedMassnahmen[this.previousSelection];
 		if(this.isDamagePerYearFalse(massnahme)) {
 			var labels = AAM.getLabels();
@@ -2702,7 +2703,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		}*/
 		
 		var massnahme = this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] : this.loadedMassnahme;//this.editedMassnahmen[this.previousSelection];//this.previousSelection this.getSelectedGridIndex()
-		massnahme.expense = newValue;
+		massnahme.expense = newValue;//change event//field.getValue();//blur event
 		
 		if(this.isDamagePerYearFalse(massnahme)) {
 			this.onMassnahmenWarning(this.warningMassnahmen);
