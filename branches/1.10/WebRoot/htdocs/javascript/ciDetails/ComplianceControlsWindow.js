@@ -1835,7 +1835,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	onMassnahmenDetailLoaded: function(store, records, options) {
 		if(!this.windowRendered) {
-			this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').setVisible(true);
+			if(!this.hasNoGapAnalysis) {
+				var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
+				complianceLinkView.update(this.config);
+				complianceLinkView.setVisible(true);
+			}
+//			this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').setVisible(true);
+			
+			
 			
 			var fsComplianceStatement = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement');
 			fsComplianceStatement.setVisible(true);
@@ -1851,8 +1858,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		}
 
 		
-		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
-		complianceLinkView.update(this.config);
+//		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
+//		complianceLinkView.update(this.config);
+		
+		
 		
 //		if(!this.existsInvalidMassnahme || this.existsInvalidMassnahme === 0)// this.existsInvalidMassnahme  && !this.previousLoadedMassnahme
 //			this.previousLoadedMassnahme = records[0].data;
@@ -2172,7 +2181,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	
 	saveMassnahme: function(rowIndex) {
-		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').setVisible(true);
+		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');//.setVisible(true);
 		var cbLinkCiType = complianceLinkView.getComponent('cbLinkCiType');
 		var cbLinkCiList = complianceLinkView.getComponent('cbLinkCiList');
 		
@@ -2318,54 +2327,56 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		if(!this.isLinkCiSelect)
 			this.loadedMassnahme = massnahme;
 
-		var cbgIcsRelevances = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').getComponent('cbgComplianceLinkTypeRelevance');
-		var icsRelevances = [ massnahme.secuRelevance == '-1', massnahme.accsRelevance == '-1', massnahme.itopRelevance == '-1' ];
-		cbgIcsRelevances.setValue(icsRelevances);
-		
-		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').setVisible(true);
-		var cbLinkCiType = complianceLinkView.getComponent('cbLinkCiType');
-		var cbLinkCiList = complianceLinkView.getComponent('cbLinkCiList');
-		
-		this.config.massnahmeGstoolId = massnahme.massnahmeGstoolId;
-
-		if(!this.isLinkCiSelect) {
-			var isMassnahmeLinked = this.isMassnahmeLinked(massnahme);
+		if(!this.hasNoGapAnalysis) {
+			var cbgIcsRelevances = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').getComponent('cbgComplianceLinkTypeRelevance');
+			var icsRelevances = [ massnahme.secuRelevance == '-1', massnahme.accsRelevance == '-1', massnahme.itopRelevance == '-1' ];
+			cbgIcsRelevances.setValue(icsRelevances);
 			
-			if(isMassnahmeLinked) {
-				var ciType;
-				
-				//oder mit einer Funktion, wenn es neben CI Typ Anwendung mehrere CI Typen mit Subtypen gibt: this.isComplexCiType(massnahme.refTableID)
-				if(massnahme.refTableID == AC.TABLE_ID_APPLICATION) {
-					ciType = massnahme.refCiSubTypeId;
-				} else {
-					var ciTypeStore = cbLinkCiType.getStore();
-					var r = ciTypeStore.getAt(ciTypeStore.findExact('tableId', massnahme.refTableID));
-					ciType = r.get('id');
-				}
-//				var ciType = massnahme.refTableID == AC.TABLE_ID_APPLICATION ? massnahme.refCiSubTypeId : massnahme.refTableID;
-				
-				cbLinkCiType.setValue(ciType);//ciType massnahme.refCiSubTypeId
+			var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');//.setVisible(true);
+			var cbLinkCiType = complianceLinkView.getComponent('cbLinkCiType');
+			var cbLinkCiList = complianceLinkView.getComponent('cbLinkCiList');
+			
+			this.config.massnahmeGstoolId = massnahme.massnahmeGstoolId;
 	
+			if(!this.isLinkCiSelect) {
+				var isMassnahmeLinked = this.isMassnahmeLinked(massnahme);
 				
-				var callback = function() {
-					cbLinkCiList.setValue(massnahme.refPKID);
-				};
-				//override combo.setValue() or combo's internal load listener to choose wether to fire the select event or not
-				//to avoid undesired expanding of the combos's inner list after the link CI was changed?
-				complianceLinkView.loadLinkCiList(ciType, callback);
-				
-				this.disableMassnahmeDetails(this.config.hasEditRights);
-			} else {
-	//			cbLinkCiType.reset();
-	//			cbLinkCiList.reset();
-				cbLinkCiType.setValue('');
-				cbLinkCiList.setValue('');
-				
-				if(this.config.hasEditRights)
-					this.enableMassnahmeDetails();//(*2) Release Defaultdeaktivierung
+				if(isMassnahmeLinked) {
+					var ciType;
+					
+					//oder mit einer Funktion, wenn es neben CI Typ Anwendung mehrere CI Typen mit Subtypen gibt: this.isComplexCiType(massnahme.refTableID)
+					if(massnahme.refTableID == AC.TABLE_ID_APPLICATION) {
+						ciType = massnahme.refCiSubTypeId;
+					} else {
+						var ciTypeStore = cbLinkCiType.getStore();
+						var r = ciTypeStore.getAt(ciTypeStore.findExact('tableId', massnahme.refTableID));
+						ciType = r.get('id');
+					}
+	//				var ciType = massnahme.refTableID == AC.TABLE_ID_APPLICATION ? massnahme.refCiSubTypeId : massnahme.refTableID;
+					
+					cbLinkCiType.setValue(ciType);//ciType massnahme.refCiSubTypeId
+		
+					
+					var callback = function() {
+						cbLinkCiList.setValue(massnahme.refPKID);
+					};
+					//override combo.setValue() or combo's internal load listener to choose wether to fire the select event or not
+					//to avoid undesired expanding of the combos's inner list after the link CI was changed?
+					complianceLinkView.loadLinkCiList(ciType, callback);
+					
+					this.disableMassnahmeDetails(this.config.hasEditRights);
+				} else {
+		//			cbLinkCiType.reset();
+		//			cbLinkCiList.reset();
+					cbLinkCiType.setValue('');
+					cbLinkCiList.setValue('');
+					
+					if(this.config.hasEditRights)
+						this.enableMassnahmeDetails();//(*2) Release Defaultdeaktivierung
+				}
 			}
 		}
-		
+			
 		
 		var fsComplianceStatement = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement');
 		var cbCompliantStatus = fsComplianceStatement.getComponent('pCompliantStatus').getComponent('cbCompliantStatus');
@@ -3414,7 +3425,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	disableMassnahmeDetails: function(hasEditRights) {
-		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').setVisible(true);
+		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');//.setVisible(true);
 		var cbLinkCiType = complianceLinkView.getComponent('cbLinkCiType');
 		var cbLinkCiList = complianceLinkView.getComponent('cbLinkCiList');
 		
@@ -3508,7 +3519,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	enableMassnahmeDetails: function() {
-		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').setVisible(true);
+		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');//.setVisible(true);
 		var cbLinkCiType = complianceLinkView.getComponent('cbLinkCiType');
 		var cbLinkCiList = complianceLinkView.getComponent('cbLinkCiList');
 		

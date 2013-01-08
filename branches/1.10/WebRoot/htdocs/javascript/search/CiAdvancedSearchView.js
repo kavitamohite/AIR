@@ -1417,19 +1417,12 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			
 			var pAdvSearchAppStewardOptions = this.getComponent('pAdvSearchAppStewardFrame').getComponent('pAdvSearchAppStewardOptions');
 			var cbgAdvSearchAppStewardOptions = pAdvSearchAppStewardOptions.getComponent('cbgAdvSearchAppStewardOptions');
-			
-			var pAdvSearchCIOwnerOptions = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('pAdvSearchCIOwnerOptions');
-			var cbgAdvSearchCIOwnerOptions = pAdvSearchCIOwnerOptions.getComponent('cbgAdvSearchCIOwnerOptions');
-			var cbgAdvSearchCIOwnerDelegateOptions = pAdvSearchCIOwnerOptions.getComponent('cbgAdvSearchCIOwnerDelegateOptions');
-			
+						
 			
 			params.appOwnerOptions = Util.getChbYesNoValues(cbgAdvSearchAppOwnerOptions);
 			params.appOwnerDelegateOptions = Util.getChbYesNoValues(cbgAdvSearchAppOwnerDelegateOptions);
 			
 			params.appStewardOptions = Util.getChbYesNoValues(cbgAdvSearchAppStewardOptions);
-			
-			params.ciOwnerOptions = Util.getChbYesNoValues(cbgAdvSearchCIOwnerOptions);
-			params.ciOwnerDelegateOptions = Util.getChbYesNoValues(cbgAdvSearchCIOwnerDelegateOptions);
 	    }
 	    
 	    params.advsearchciowner = fsCIOwner.getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible').getValue();//ciResponsible
@@ -1438,6 +1431,13 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    params.advsearchcidelegateHidden = fsCIOwner.getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleHidden').getValue();
 	    
 	    
+		var pAdvSearchCIOwnerOptions = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('pAdvSearchCIOwnerOptions');
+		var cbgAdvSearchCIOwnerOptions = pAdvSearchCIOwnerOptions.getComponent('cbgAdvSearchCIOwnerOptions');
+		var cbgAdvSearchCIOwnerDelegateOptions = pAdvSearchCIOwnerOptions.getComponent('cbgAdvSearchCIOwnerDelegateOptions');
+	    
+		params.ciOwnerOptions = Util.getChbYesNoValues(cbgAdvSearchCIOwnerOptions);
+		params.ciOwnerDelegateOptions = Util.getChbYesNoValues(cbgAdvSearchCIOwnerDelegateOptions);
+
 	    
 	    if(params.isAdvSearchExt) {//this.isAdvSearchExt
 			var pAdvSearchCategoriesAndStatusOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchCategoriesAndStatusOptions');
