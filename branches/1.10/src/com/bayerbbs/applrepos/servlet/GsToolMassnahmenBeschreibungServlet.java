@@ -80,6 +80,9 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 		
 		String userAgent = req.getHeader("user-agent");
 		String encoding = userAgent.contains("MSIE") ? "Windows-1252" : "UTF-8";//ISO-8859-1
+
+		res.setContentType("text/html");
+		
 		res.setCharacterEncoding(encoding);//Windows-1252 UTF-8 ISO-8859-1
 		PrintWriter writer = res.getWriter();
 		
