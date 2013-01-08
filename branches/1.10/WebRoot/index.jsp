@@ -2,6 +2,8 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+String ciId = request.getParameter("id");
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -19,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     
     <title>Application Infrastructure Repository starting page</title>
-    <meta http-equiv="refresh" content="0;URL=htdocs/index.html"><!-- authenticate.html -->
+    <meta http-equiv="refresh" content="0;URL=htdocs/index.html"><!-- (*9) /AIR/run htdocs/index.html authenticate.html -->
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    

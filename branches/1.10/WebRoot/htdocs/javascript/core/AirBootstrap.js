@@ -72,7 +72,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
         };
     	
         Ext.Ajax.request({
-            url: '../loginAction.jsp',
+            url: '../loginAction.jsp',//(*9) loginAction.jsp ../loginAction.jsp
             params: params,
             success: this.onLoginSuccessful.createDelegate(this),
             failure: this.airLoginWindow.onLoginFailure.createDelegate(this)
@@ -83,14 +83,14 @@ AIR.AirBootstrap = Ext.extend(Object, {
         var responseData = Ext.util.JSON.decode(response.responseText);
         
         if(responseData.success) {
-			var tokenCheckUrl = '../checkTokenAction.jsp';//?cwid=' + cwid + '&token=' + token;
+			var tokenCheckUrl = '../checkTokenAction.jsp';//(*9) checkTokenAction.jsp ../checkTokenAction.jsp  ?cwid=' + cwid + '&token=' + token;
 			
 	        var params = {
 	    		cwid: responseData.cwid,
 	    		token: responseData.token
 	        };
 						
-			Ext.Ajax.request({ 
+			Ext.Ajax.request({
 		        url: tokenCheckUrl,
 		        params: params,
 		        success: this.onTokenCheckSuccessful.createDelegate(this),
