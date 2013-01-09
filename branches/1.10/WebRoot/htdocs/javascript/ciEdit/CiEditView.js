@@ -68,7 +68,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 //					marginBottom: 20
 				}
 			},{
-				//Layout verbessern: nach unten, ist zu weit oben
 				xtype: 'label',
 				id: 'editpanelmessage',
 				hidden: true,
@@ -108,35 +107,37 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				items: [{ 
 					id: 'clCiDetails',
 					xtype: 'AIR.CiDetailsView'
-				 }, {
-					 id: 'clCiSpecifics',
-					 xtype: 'AIR.CiSpecificsView'
-				 }, {
-					 id: 'clCiContacts',
-					 xtype: 'AIR.CiContactsView'
-				 }, {
-					 id: 'clCiAgreements',
-					 xtype: 'AIR.CiAgreementsView'
-				 }, {
-					 id: 'clCiProtection',
-					 xtype: 'AIR.CiProtectionView'
-				 }, {
-					 id: 'clCiCompliance',
-					 xtype: 'AIR.CiComplianceView'
-				 }, {
-					 id: 'clCiLicense',
-					 xtype: 'AIR.CiLicenseView'
-				 }, {
-					 id: 'clCiConnections',
-					 xtype: 'AIR.CiConnectionsView'
-				 }, {
-					 id: 'clCiSupportStuff',
-					 xtype: 'AIR.CiSupportStuffView'
-				 }, {
-					 id: 'clCiHistory',
-					 xtype: 'AIR.CiHistoryView'
-				 }],
+				}, {
+					id: 'clCiSpecifics',
+					xtype: 'AIR.CiSpecificsView'
+				}, {
+					id: 'clCiContacts',
+					xtype: 'AIR.CiContactsView'
+				}, {
+					id: 'clCiAgreements',
+					xtype: 'AIR.CiAgreementsView'
+				}, {
+					id: 'clCiProtection',
+					xtype: 'AIR.CiProtectionView'
+				}, {
+					id: 'clCiCompliance',
+					xtype: 'AIR.CiComplianceView'
+				}, {
+					id: 'clCiLicense',
+					xtype: 'AIR.CiLicenseView'
+				}, {
+					id: 'clCiConnections',
+					xtype: 'AIR.CiConnectionsView'
+				}, {
+					id: 'clCiSupportStuff',
+					xtype: 'AIR.CiSupportStuffView'
+				}, {
+					id: 'clCiHistory',
+					xtype: 'AIR.CiHistoryView'
+				}],
+				
 				buttonAlign: 'left',
+				
 				buttons: [{
 					id: 'savebutton',
 					text: 'Save',

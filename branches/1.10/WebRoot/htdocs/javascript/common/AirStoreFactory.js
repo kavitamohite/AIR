@@ -3240,7 +3240,9 @@ AIR.AirStoreFactory = function() {
 		
 		//==============================================================================================================================
 		
-		createItsecMassnahmenStore: function() {//statusWertDisplayField
+		createItsecMassnahmenStore: function(language) {//statusWertDisplayField
+			var statusWertDisplayField = language == 'EN' ? 'statusWertEn' : 'statusWert';
+			
 			var itsecMassnahmenRecord = Ext.data.Record.create([
 		        'ident', 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'massnahmeTitel', 'statusWert', 'zobId', 'massnahmeLink', 'chocoMerkmal'//, 'statusWertId'
 		    ]);

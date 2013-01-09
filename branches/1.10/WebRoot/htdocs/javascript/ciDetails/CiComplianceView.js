@@ -653,7 +653,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	loadItsecMassnahmenStore: function(params) {
-		var massnahmenStore = AIR.AirStoreFactory.createItsecMassnahmenStore();//this.getStatusWertDisplayField()
+		var massnahmenStore = AIR.AirStoreFactory.createItsecMassnahmenStore(AAM.getLanguage());//this.getStatusWertDisplayField()
 		massnahmenStore.on('load', this.onItsecMassnahmenStoreLoaded, this);
 		
 		var params = {
@@ -675,7 +675,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
 		
-		var hasTemplate = 	cbReferencedTemplate.getValue().length > 0 || 
+		var hasTemplate = 	cbReferencedTemplate.getValue().length > 0 ||
 						  	cbReferencedTemplate.el.dom.value.indexOf(AC.LABEL_INVALID) > -1 ||
 						  	cbItSecGroup.el.dom.value.indexOf(AC.LABEL_INVALID) > -1;
 						  	

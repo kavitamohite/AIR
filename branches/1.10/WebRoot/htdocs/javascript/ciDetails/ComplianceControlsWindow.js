@@ -1471,7 +1471,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var options = { compliantStatusClearInvalid: true };
 		this.onMassnahmeChange(options);
 		
-		this.updateMassnahmenTable(status, record.data.statusWert);
+		this.updateMassnahmenTable(status, record.data[this.statusWertDisplayField]);//record.data.statusWert
 //		this.onMassnahmeChange();
 		
 		
@@ -1507,7 +1507,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 //		grid.getStore().skipDataChanged = true;
 //		grid.getStore().clearGrouping();
-		grid.getStore().groupBy('statusWert', true);//multisort in Z. 24730 löst mit this.fireEvent('datachanged', this); selectionModel's beforeselect event aus 
+		grid.getStore().groupBy('statusWert', true);//'statusWert'  multisort in Z. 24730 löst mit this.fireEvent('datachanged', this); selectionModel's beforeselect event aus 
 //		grid.getView().refresh();
 //		grid.getStore().skipDataChanged = false;
 		
@@ -1615,11 +1615,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	updateGapRelevance: function(compliantStatusId, gapClassId, doMarkInvalid) {
-		if(!this.hasNoGapAnalysis) {//--> complianceType
+//		if(!this.hasNoGapAnalysis) {//--> complianceType
 			var fsGap = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap');
-			var fsRiskAnalysisAndMgmt = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt');//.getComponent('pRiskAnalysisAndMgmtDetail');
-			var pRiskAnalysisAndMgmtNonFreeText = fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard').getComponent('pRiskAnalysisAndMgmtNonFreeText');
-			var pRiskAnalysisAndMgmtFreeText = fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard').getComponent('pRiskAnalysisAndMgmtFreeText');
 
 			var pJustification = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement').getComponent('pJustification');
 			pJustification.setVisible(true);
@@ -1632,12 +1629,16 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				case '3':
 				case 4:
 				case '4':
-					if(doMarkInvalid) {
-						var exceptions = [ 'dfTargetDate' ];
-						this.markInvalid(fsGap, exceptions);
+					if(!this.hasNoGapAnalysis) {//--> complianceType
+						
+						
+						if(doMarkInvalid) {
+							var exceptions = [ 'dfTargetDate' ];
+							this.markInvalid(fsGap, exceptions);
+						}
+						
+						fsGap.setVisible(true);
 					}
-					
-					fsGap.setVisible(true);
 					break;
 				case 5:
 				case '5':
@@ -1648,19 +1649,26 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				case 2:
 				case '2':
 				default:
-					var massnahme = /*this.editedMassnahmen[this.getSelectedGridIndex()]  this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] :*/ this.loadedMassnahme;
-					this.deleteGapValues(massnahme, compliantStatusId);
-					this.deleteRiskAnalysisAndMgmtValues(massnahme, '-1');
-					
-					this.clearPanelItemValues(fsGap);
-					this.clearPanelItemValues(pRiskAnalysisAndMgmtNonFreeText);
-					this.clearPanelItemValues(pRiskAnalysisAndMgmtFreeText);
-					this.clearPanelItemValues(fsRiskAnalysisAndMgmt);
-					
-					fsGap.setVisible(false);
-					
-					if(doMarkInvalid)
-						this.markInvalid(pJustification);
+					if(!this.hasNoGapAnalysis) {//--> complianceType
+						var fsRiskAnalysisAndMgmt = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt');//.getComponent('pRiskAnalysisAndMgmtDetail');
+						var pRiskAnalysisAndMgmtNonFreeText = fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard').getComponent('pRiskAnalysisAndMgmtNonFreeText');
+						var pRiskAnalysisAndMgmtFreeText = fsRiskAnalysisAndMgmt.getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard').getComponent('pRiskAnalysisAndMgmtFreeText');
+
+						
+						var massnahme = /*this.editedMassnahmen[this.getSelectedGridIndex()]  this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] :*/ this.loadedMassnahme;
+						this.deleteGapValues(massnahme, compliantStatusId);
+						this.deleteRiskAnalysisAndMgmtValues(massnahme, '-1');
+						
+						this.clearPanelItemValues(fsGap);
+						this.clearPanelItemValues(pRiskAnalysisAndMgmtNonFreeText);
+						this.clearPanelItemValues(pRiskAnalysisAndMgmtFreeText);
+						this.clearPanelItemValues(fsRiskAnalysisAndMgmt);
+						
+						fsGap.setVisible(false);
+						
+						if(doMarkInvalid)
+							this.markInvalid(pJustification);
+					}
 					break;
 			}
 			
@@ -1669,7 +1677,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			
 			if(Ext.isIE)
 				this.getComponent('pLayout').getComponent('pMassnahmeDetails').doLayout();//true, true
-		}
+//		}
 		
 //		if(gapClassId.length == 0)
 //			gapClassId = '-1';
@@ -1902,6 +1910,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				this.addInvalidMassnahme(invalidMassnahmen, massnahme);
 				continue;
 			}
+			
+			if(this.hasNoGapAnalysis)
+				continue;
 			
 			if(massnahme.statusId === 3 || massnahme.statusId === 4) {
 				if(massnahme.gap.length === 0 || massnahme.gapResponsible.length === 0 || massnahme.gapMeasure.length === 0 || 
@@ -2570,10 +2581,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				dfDateOfApproval.reset();
 			}
 			
-//			cbGapClass.fireEvent('select', cbGapClass);
-//			this.updateRiskAnalysisAndMgmt(gapClassId);
-			this.updateGapRelevance(massnahme.statusId, gapClassId);
+//			this.updateGapRelevance(massnahme.statusId, gapClassId);
 		}
+		
+		this.updateGapRelevance(massnahme.statusId, gapClassId);
 		
 		if(this.isLinkCiSelect) {
 			//hier muss gespeichert werden, wenn durch skipLinkCiValidation: true direkt nach der Änderung der Einzelverlinkung
