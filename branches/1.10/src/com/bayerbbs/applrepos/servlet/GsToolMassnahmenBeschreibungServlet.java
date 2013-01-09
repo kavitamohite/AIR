@@ -78,12 +78,7 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 		String massnBeschreibung = null;
 //		String massnTitel = null;
 		
-		String userAgent = req.getHeader("user-agent");
-		String encoding = userAgent.contains("MSIE") ? "Windows-1252" : "UTF-8";//ISO-8859-1
-
-		res.setContentType("text/html");
-		
-		res.setCharacterEncoding(encoding);//Windows-1252 UTF-8 ISO-8859-1
+		configureResponse(req, res);
 		PrintWriter writer = res.getWriter();
 		
 		try {
@@ -129,9 +124,9 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 		// für den SQL verwenden wir: "14350841" 
 		
 		bausteinId = bausteinId.replace("b", "").replace(".html", "");
-		
 		String bausteinBeschreibung = null;
-		res.setCharacterEncoding("ISO-8859-1");//Windows-1252 UTF-8 ISO-8859-1
+		
+		configureResponse(req, res);
 		PrintWriter writer = res.getWriter();
 		
 		try {
@@ -160,6 +155,13 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 			session.close();
 			writer.close();
 		}
+	}
+	
+	private void configureResponse(HttpServletRequest req, HttpServletResponse res) {
+		String userAgent = req.getHeader("user-agent");
+		String encoding = userAgent.contains("MSIE") ? "Windows-1252" : "UTF-8";//ISO-8859-1
 
+		res.setContentType("text/html");
+		res.setCharacterEncoding(encoding);//Windows-1252 UTF-8 ISO-8859-1
 	}
 }
