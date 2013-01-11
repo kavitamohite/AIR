@@ -3,7 +3,7 @@ Ext.namespace('AIR');
 
 //http://by02wr:8080/AIR/ItsecMassnahmenWSPort?wsdl
 AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
-	toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="images/{icon}"/></td><td>{text}</td></tr><table>'),
+	toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="/AIR/htdocs/images/{icon}"/></td><td>{text}</td></tr><table>'),//images/{icon}
 	
 	constructor: function(massnahmenStore, massnahmeDetailStore, config) {//, statusWertDisplayField, massnahmeDetailStore language
 		this.massnahmenStore = massnahmenStore;
@@ -157,7 +157,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							menuDisabled: true,
 							
 							items: [{
-								icon: 'images/Info_16x16.png'
+								icon: '/AIR/htdocs/images/Info_16x16.png'//images/Info_16x16.png
 //								handler: function(grid, rowIndex, colIndex) {
 //									var x;
 //								}
@@ -396,13 +396,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							    },{
 					                xtype: 'commandlink',
 					                id: 'clGapResponsibleAddPicker',
-					                img: 'images/add_user_16x16.png'
+					                img: '/AIR/htdocs/images/add_user_16x16.png'//images/add_user_16x16.png
 					                	
 //				                	flex: 1
 								},{
 					                xtype: 'commandlink',
 					                id: 'clGapResponsibleDeletePicker',
-					                img: 'images/failed_type1_16x16.png'
+					                img: '/AIR/htdocs/images/failed_type1_16x16.png'//images/failed_type1_16x16.png
 					                
 //				                	flex: 1
 								}]
@@ -1053,7 +1053,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									hidden: true,
 									
 						        	cls: 'x-btn-text-icon',
-						        	icon: 'images/ok_type1_16x16.png',
+						        	icon: '/AIR/htdocs/images/ok_type1_16x16.png',//images/ok_type1_16x16.png
 						        	text: labels.signeeApproval,
 						        	
 									style: {

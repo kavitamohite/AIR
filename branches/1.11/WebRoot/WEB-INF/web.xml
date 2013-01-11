@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" 
+<web-app version="2.4" 
 	xmlns="http://java.sun.com/xml/ns/javaee" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
@@ -135,24 +135,24 @@
   	<url-pattern>/massnbeschreibung</url-pattern>
   </servlet-mapping>
   
-  <!-- (*9)
+  <!-- (*9) -->
   <servlet>
   	<description>AirServlet</description>
   	<servlet-name>AirServlet</servlet-name>
-  	<servlet-class>
-  		com.bayerbbs.air.AirServlet
-  	</servlet-class>
+  	<servlet-class>com.bayerbbs.air.AirServlet</servlet-class>
   	<load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
   	<servlet-name>AirServlet</servlet-name>
-  	<url-pattern>/run</url-pattern>
+  	<url-pattern>/run</url-pattern><!-- / /run -->
   </servlet-mapping>
-   -->
+   
   
+  <!--
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
+  </welcome-file-list>-->
+  
   <listener>
   	<listener-class>
   		com.sun.xml.ws.transport.http.servlet.WSServletContextListener

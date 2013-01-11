@@ -38,7 +38,7 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 //	                img: img_Search_offMouse,
 					
 		        	cls: 'x-btn-text-icon',
-		        	icon: 'images/search_16x16.png',
+		        	icon: imgcontext+'/search_16x16.png',//'images/search_16x16.png'
 		        	text: '',
 					
 					style: {
@@ -51,7 +51,7 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        	hidden: true,
 		        	
 		        	cls: 'x-btn-text-icon',
-		        	icon: 'images/refresh_16x16.png',
+		        	icon: imgcontext+'/refresh_16x16.png',//'images/refresh_16x16.png',
 		        	
 		        	text: 'Update',
 		        	

@@ -46,7 +46,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
                 xtype: 'commandlink',
                 id: 'clMyPlace',//myplacemenuitem myplacemenu
                 text: 'My Place',
-                img: 'images/Transparent.png',//navmarker_on.png navmarker_off.png
+                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
                 cls: 'menuMainLink',
                 style: {
                 	marginTop: 5
@@ -64,13 +64,13 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	                xtype: 'commandlink',
 	                id: 'clMyPlaceMyCIs',
 	                text: 'My CIs',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clMyPlaceMyCIsDelegate',
 	                text: 'My CIs (Delegate)',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				}]
 			},{ 
@@ -82,7 +82,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
                 xtype: 'commandlink',
                 id: 'clSearch',//clSearch searchmenuitem
                 text: 'Search',
-                img: 'images/Transparent.png',
+                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
                 cls: 'menuMainLink',
                 bodyStyle: {
                 	marginTop: 5
@@ -91,13 +91,13 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
                 xtype: 'commandlink',
                 id: 'clAdvancedSearch',
                 text: 'Advanced Search',
-                img: 'images/Transparent.png',
+                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
                 cls: 'menuSubLink'
 			},{
                 xtype: 'commandlink',
                 id: 'clOuSearch',
                 text: 'Org. Unit Search',
-                img: 'images/Transparent.png',
+                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
                 cls: 'menuSubLink'
 			},{ 
 				xtype: 'container',
@@ -107,7 +107,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
                 xtype: 'commandlink',
                 id: 'clCiCreate',
                 text: 'New',
-                img: 'images/Transparent.png',
+                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
                 cls: 'menuMainLink',
                 style: {
                 	marginTop: 5
@@ -125,19 +125,19 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	                xtype: 'commandlink',
 	                id: 'clCiCreateWizard',
 	                text: 'Wizard',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clCiCreateCopyFrom',
 	                text: 'Copy From',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clCiDelete',
 	                text: 'Delete',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				}]
 			},{
@@ -157,55 +157,55 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	                xtype: 'commandlink',
 	                id: 'clCiDetails',
 	                text: 'Details',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuMainLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clCiSpecifics',
 	                text: 'Specifics',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clCiContacts',
 	                text: 'Contacts',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clCiAgreements',
 	                text: 'Agreements',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clCiProtection',
 	                text: 'Protection',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clCiCompliance',
 	                text: 'Compliance',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clCiLicense',
 	                text: 'License',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clCiConnections',
 	                text: 'Connections',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clCiSupportStuff',
 	                text: 'Support Stuff',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 					xtype: 'container',
@@ -215,7 +215,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	                xtype: 'commandlink',
 	                id: 'clCiHistory',
 	                text: 'History',
-	                img: 'images/Transparent.png',
+	                img: '/AIR/htdocs/images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				}]
 			}]
@@ -291,9 +291,9 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 				AIR.AirApplicationManager.addHistoryItem(link);
 			}
 			
-			link.updateIcon('images/navmarker_on3.png');
+			link.updateIcon('/AIR/htdocs/images/navmarker_on3.png');//images/navmarker_on3.png
 			if(this.previousSelected && link.getId() != this.previousSelected.getId())
-				this.previousSelected.updateIcon('images/Transparent.png');
+				this.previousSelected.updateIcon('/AIR/htdocs/images/Transparent.png');//images/Transparent.png
 			
 			this.doLayout();
 			this.previousSelected = link;

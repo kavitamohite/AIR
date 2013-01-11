@@ -21,7 +21,7 @@ String ciId = request.getParameter("id");
     <base href="<%=basePath%>">
     
     <title>Application Infrastructure Repository starting page</title>
-    <meta http-equiv="refresh" content="0;URL=htdocs/index.html"><!-- (*9) /AIR/run htdocs/index.html authenticate.html -->
+    <meta http-equiv="refresh" content="0;URL=/AIR/run"><!-- (*9) /AIR/run htdocs/index.html authenticate.html -->
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    

@@ -6,6 +6,6 @@ LDAPAuthWS ldapAuthWS = new LDAPAuthWS();
 
 ldapAuthWS.logout(cwid, token);
 
-response.sendRedirect("htdocs/index.html");//authenticate.html
+response.sendRedirect("/AIR");//htdocs/index.html authenticate.html
 %>
 

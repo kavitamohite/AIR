@@ -44,8 +44,8 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		});
 		
 		
-	    Ext.BLANK_IMAGE_URL = 'lib/extjs/resources/images/default/s.gif';
-	    Ext.SSL_SECURE_URL = 'lib/extjs/resources/images/default/s.gif';
+	    Ext.BLANK_IMAGE_URL = '/AIR/htdocs/lib/extjs/resources/images/default/s.gif';//lib/extjs/resources/images/default/s.gif
+	    Ext.SSL_SECURE_URL = '/AIR/htdocslib/extjs/resources/images/default/s.gif';//lib/extjs/resources/images/default/s.gif
 	    
 		Ext.form.Field.prototype.msgTarget = 'side';
 		Ext.isSecure = true;
@@ -72,7 +72,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
         };
     	
         Ext.Ajax.request({
-            url: '../loginAction.jsp',//(*9) loginAction.jsp ../loginAction.jsp
+            url: '/AIR/loginAction.jsp',//(*9) /AIR/loginAction.jsp ../loginAction.jsp
             params: params,
             success: this.onLoginSuccessful.createDelegate(this),
             failure: this.airLoginWindow.onLoginFailure.createDelegate(this)
@@ -83,7 +83,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
         var responseData = Ext.util.JSON.decode(response.responseText);
         
         if(responseData.success) {
-			var tokenCheckUrl = '../checkTokenAction.jsp';//(*9) checkTokenAction.jsp ../checkTokenAction.jsp  ?cwid=' + cwid + '&token=' + token;
+			var tokenCheckUrl = '/AIR/checkTokenAction.jsp';//(*9) /AIR/checkTokenAction.jsp ../checkTokenAction.jsp  ?cwid=' + cwid + '&token=' + token;
 			
 	        var params = {
 	    		cwid: responseData.cwid,

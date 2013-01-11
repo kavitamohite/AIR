@@ -131,7 +131,7 @@ AIR.AirUiFactory = function() {
 				    },{
 				    	xtype: 'commandlink',
 				    	id: ownerId + 'applicationStewardEmpty',
-				    	img: 'images/Transparent.png'
+				    	img: '/AIR/htdocs/images/Transparent.png'//images/Transparent.png
 				    }]
 				}]
 			};

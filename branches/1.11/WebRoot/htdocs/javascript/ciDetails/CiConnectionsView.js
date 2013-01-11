@@ -1,7 +1,7 @@
 Ext.namespace('AIR');
 
 AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
-	toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="images/{icon}"/></td><td>{text}</td></tr><table>'),
+	toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="/AIR/htdocs/images/{icon}"/></td><td>{text}</td></tr><table>'),//images/{icon}
 	toolbarEmptyMessage: '<table><tr><td>&nbsp;</td></tr><table>',
 	
 	

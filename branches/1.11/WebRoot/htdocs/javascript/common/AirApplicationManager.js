@@ -7,7 +7,7 @@ AIR.AirApplicationManager = function() {
 		DATE_FORMAT_EN: 'm/d/Y',
 		DATE_FORMAT_INTERNATIONAL: 'dMY',
 		
-		toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="images/{icon}"/></td><td>{text}</td></tr><table>'),
+		toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="/AIR/htdocs/images/{icon}"/></td><td>{text}</td></tr><table>'),//images/{icon}
 
 		
 		processLogin: function(initAirCallback, loginCallback) {
@@ -651,7 +651,7 @@ AIR.AirApplicationManager = function() {
 			Ext.state.Manager.clear('airCookie');
 
 			//alle stores leeren und alles andere delete/null setzen
-			window.location = '../logoutAction.jsp?cwid='+this.getCwid()+'&token='+this.getToken();
+			window.location = '/AIR/logoutAction.jsp?cwid='+this.getCwid()+'&token='+this.getToken();// ../logoutAction.jsp
 		},
 		
 		restoreUiState: function(airViewport) {

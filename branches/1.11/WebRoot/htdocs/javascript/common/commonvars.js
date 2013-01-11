@@ -3,8 +3,8 @@
  * 
  */
 //ExtJS internal settings
-Ext.BLANK_IMAGE_URL = 'lib/extjs/resources/images/default/s.gif';
-Ext.SSL_SECURE_URL = 'lib/extjs/resources/images/default/s.gif'; 
+//Ext.BLANK_IMAGE_URL = 'lib/extjs/resources/images/default/s.gif';
+//Ext.SSL_SECURE_URL = 'lib/extjs/resources/images/default/s.gif'; 
 
 Ext.isSecure = true;
 Ext.Ajax.timeout = 3000000;
