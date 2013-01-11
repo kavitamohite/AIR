@@ -113,6 +113,7 @@ public class AirServlet extends HttpServlet {
 				append("<script type='text/javascript' src='javascript/myplace/MyPlaceView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/myplace/MyPlaceHomeView.js'></script>\n").
 				
+				append("<script type='text/javascript' src='javascript/ciEdit/CiEditView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/CiDetailsView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/CiSpecificsView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/CiContactsView.js'></script>\n").
@@ -128,14 +129,12 @@ public class AirServlet extends HttpServlet {
 				append("<script type='text/javascript' src='javascript/ciDetails/CiDetailsCommon.js'></script>\n").
 				
 				
-				append("<script type='text/javascript' src='javascript/ciEdit/CiEditTabView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciEdit/CiEditView.js'></script>\n").
 				
-				append("<script type='text/javascript' src='javascript/ciCreate/CiCreateInfoView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciCreate/CiCopyFromDetailView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciCreate/CiCopyFromView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciCreate/CiCreateView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciCreate/CiDeleteView.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateInfoView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateWizardView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateWizardP1.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateAppMandatoryView.js'></script>\n").
@@ -156,8 +155,7 @@ public class AirServlet extends HttpServlet {
 				append("<script type='text/javascript' src='javascript/core/Main.js'></script>\n").
 	//			===================================================================================================================
 				
-				append("<script type='text/javascript' src='config/config.js'></script>\n").///AIR/htdocs/
-				append("<script type='text/javascript' src='javascript/common/commonvars.js'></script>\n").
+				append("<script type='text/javascript' src='config/config.js'></script>\n").
 			append("</head>\n").
 			
 			
