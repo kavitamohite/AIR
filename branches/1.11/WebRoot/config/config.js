@@ -13,7 +13,7 @@ var app_interfacename 	= 'AIR';
 	
 // Directories
 var webcontext = '/AIR';
-var imgcontext = '/AIR/htdocs/images/';//images/
+var imgcontext = 'images/';//images/ /AIR/htdocs/images/
 var lngcontext = 'lang/';
 var doccontext = 'docs/';
 

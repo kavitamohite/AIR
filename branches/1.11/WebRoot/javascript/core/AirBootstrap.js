@@ -44,8 +44,8 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		});
 		
 		
-	    Ext.BLANK_IMAGE_URL = '/AIR/htdocs/lib/extjs/resources/images/default/s.gif';//lib/extjs/resources/images/default/s.gif
-	    Ext.SSL_SECURE_URL = '/AIR/htdocslib/extjs/resources/images/default/s.gif';//lib/extjs/resources/images/default/s.gif
+	    Ext.BLANK_IMAGE_URL = 'javascript/lib/extjs/resources/images/default/s.gif';//AIR/htdocs/lib/extjs/resources/images/default/s.gif lib/extjs/resources/images/default/s.gif
+	    Ext.SSL_SECURE_URL = 'javascript/lib/extjs/resources/images/default/s.gif';//AIR/htdocs/lib/extjs/resources/images/default/s.gif lib/extjs/resources/images/default/s.gif
 	    
 		Ext.form.Field.prototype.msgTarget = 'side';
 		Ext.isSecure = true;

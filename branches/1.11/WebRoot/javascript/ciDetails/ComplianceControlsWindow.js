@@ -3,7 +3,7 @@ Ext.namespace('AIR');
 
 //http://by02wr:8080/AIR/ItsecMassnahmenWSPort?wsdl
 AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
-	toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="/AIR/htdocs/images/{icon}"/></td><td>{text}</td></tr><table>'),//images/{icon}
+	toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="images/{icon}"/></td><td>{text}</td></tr><table>'),//images/{icon}
 	
 	constructor: function(massnahmenStore, massnahmeDetailStore, config) {//, statusWertDisplayField, massnahmeDetailStore language
 		this.massnahmenStore = massnahmenStore;
@@ -157,7 +157,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							menuDisabled: true,
 							
 							items: [{
-								icon: '/AIR/htdocs/images/Info_16x16.png'//images/Info_16x16.png
+								icon: 'images/Info_16x16.png'//images/Info_16x16.png
 //								handler: function(grid, rowIndex, colIndex) {
 //									var x;
 //								}
@@ -396,13 +396,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							    },{
 					                xtype: 'commandlink',
 					                id: 'clGapResponsibleAddPicker',
-					                img: '/AIR/htdocs/images/add_user_16x16.png'//images/add_user_16x16.png
+					                img: 'images/add_user_16x16.png'//images/add_user_16x16.png
 					                	
 //				                	flex: 1
 								},{
 					                xtype: 'commandlink',
 					                id: 'clGapResponsibleDeletePicker',
-					                img: '/AIR/htdocs/images/failed_type1_16x16.png'//images/failed_type1_16x16.png
+					                img: 'images/failed_type1_16x16.png'//images/failed_type1_16x16.png
 					                
 //				                	flex: 1
 								}]
@@ -1053,7 +1053,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									hidden: true,
 									
 						        	cls: 'x-btn-text-icon',
-						        	icon: '/AIR/htdocs/images/ok_type1_16x16.png',//images/ok_type1_16x16.png
+						        	icon: 'images/ok_type1_16x16.png',//images/ok_type1_16x16.png
 						        	text: labels.signeeApproval,
 						        	
 									style: {
@@ -2251,12 +2251,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			
 			var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
 			var tfGapResponsible = fsGapElimination.getComponent('pGapResponsible').getComponent('tfGapResponsible');
+			var tfGapResponsibleHidden = fsGapElimination.getComponent('pGapResponsible').getComponent('tfGapResponsibleHidden');
 			var taPlanOfAction = fsGapElimination.getComponent('pPlanOfAction').getComponent('taPlanOfAction');
 			var cbGapClass = fsGapElimination.getComponent('pGapClass').getComponent('cbGapClass');
 			var dfTargetDate = fsGapElimination.getComponent('pTargetDate').getComponent('dfTargetDate');
 			var gapClassId = cbGapClass.getValue();
 			
 			this.editedMassnahmen[rowIndex].gapResponsible = tfGapResponsible.getValue();
+			this.editedMassnahmen[rowIndex].gapResponsibleHidden = tfGapResponsibleHidden.getValue();
 			this.editedMassnahmen[rowIndex].gapMeasure = taPlanOfAction.getValue();
 			this.editedMassnahmen[rowIndex].gapPriority = cbGapClass.getValue();
 			this.editedMassnahmen[rowIndex].gapEndDate = dfTargetDate.getValue() && dfTargetDate.getValue() instanceof Date ? dfTargetDate.getValue().getTime() : -1;//dfTargetDate.getValue().length > 0  -1 für SoapProxy, bei null statt -1 kommt JS Fehler
@@ -2422,11 +2424,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			//folgendes nur wenn massnahme.statusId no/nein oder partly/tweilweise (?, Ja!). Sonst panel wieder deaktivieren
 			var fsGapElimination = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsGap').getComponent('fsGapElimination');
 			var tfGapResponsible = fsGapElimination.getComponent('pGapResponsible').getComponent('tfGapResponsible');
+			var tfGapResponsibleHidden = fsGapElimination.getComponent('pGapResponsible').getComponent('tfGapResponsibleHidden');
 			var taPlanOfAction = fsGapElimination.getComponent('pPlanOfAction').getComponent('taPlanOfAction');
 			var cbGapClass = fsGapElimination.getComponent('pGapClass').getComponent('cbGapClass');
 			var dfTargetDate = fsGapElimination.getComponent('pTargetDate').getComponent('dfTargetDate');
 			
 			tfGapResponsible.setValue(massnahme.gapResponsible);
+			tfGapResponsibleHidden.setValue(massnahme.gapResponsibleHidden);
 			taPlanOfAction.setValue(massnahme.gapMeasure);
 			if(massnahme.gapPriority != 0 || massnahme.gapPriority.length == 0) {//massnahme.gapPriority != '0' && 
 				cbGapClass.setValue(massnahme.gapPriority);

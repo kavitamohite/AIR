@@ -33,7 +33,7 @@ String ciId = request.getParameter("id");
   </head>
   
   <body>
-  	<script type="text/javascript" src="htdocs/config/config.js"></script>
+  	<script type="text/javascript" src="config/config.js"></script><!-- htdocs/ -->
   	<script>
   	document.writeln("<br>Starting <b>" + app_name + "</b> v"+ app_version + " ...<br>");
   	</script>

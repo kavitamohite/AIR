@@ -883,7 +883,7 @@ AIR.AirStoreFactory = function() {
 			var languageHelpStore = new Ext.data.XmlStore({
 			    autoLoad: false,
 			    storeId: 'languageHelpStore',
-			    url: '/AIR/htdocs/lang/german_help.xml',//(*9) lang/ /AIR/htdocs/lang/
+			    url: 'lang/german_help.xml',//(*9) lang/ /AIR/htdocs/lang/
 
 			    record: 'Items',
 			    
@@ -916,7 +916,7 @@ AIR.AirStoreFactory = function() {
 			return this.createLanguageStore('DE');
 		},
 		createLanguageStore: function(language) {
-			var url = language == 'de' || language == 'DE' ? '/AIR/htdocs/lang/german.xml' : '/AIR/htdocs/lang/english.xml';//(*9) lang/ /AIR/htdocs/lang/
+			var url = language == 'de' || language == 'DE' ? 'lang/german.xml' : 'lang/english.xml';//(*9) lang/ /AIR/htdocs/lang/
 			
 			var languageStore = new Ext.data.XmlStore({
 			    autoLoad: false,
@@ -1430,7 +1430,7 @@ AIR.AirStoreFactory = function() {
 			return this.createLanguageToolTipStore('DE');
 		},
 		createLanguageToolTipStore: function(language) {
-			var url = language == 'de' || language == 'DE' ? '/AIR/htdocs/lang/german_tooltips.xml' : '/AIR/htdocs/lang/english_tooltips.xml';//(*9) lang/ /AIR/htdocs/lang/
+			var url = language == 'de' || language == 'DE' ? 'lang/german_tooltips.xml' : 'lang/english_tooltips.xml';//(*9) lang/ /AIR/htdocs/lang/
 			
 			var languageToolTipStore = new Ext.data.XmlStore({
 			    autoLoad: false,
@@ -1842,7 +1842,7 @@ AIR.AirStoreFactory = function() {
 			var aclStore = new Ext.data.XmlStore({
 			    autoLoad: false,//false true
 			    storeId: 'aclStore',
-			    url: '/AIR/htdocs/config/AttributeProperties.xml',//(*9) config/ /AIR/htdocs/config/
+			    url: 'config/AttributeProperties.xml',//(*9) config/ /AIR/htdocs/config/
 
 			    record: 'Identifier', // records will have an 'Identifier' tag
 			    
@@ -3092,7 +3092,7 @@ AIR.AirStoreFactory = function() {
 			
 			var store = new Ext.data.XmlStore({
 			    autoLoad: false,
-			    url: '/AIR/htdocs/config/ConnectionProperties.xml',//(*9) config/ /AIR/htdocs/config/
+			    url: 'config/ConnectionProperties.xml',//(*9) config/ /AIR/htdocs/config/
 			    
 			    // reader configs
 			    record: 'Identifier',
@@ -3276,7 +3276,7 @@ AIR.AirStoreFactory = function() {
 		
 		createItsecMassnahmeDetailStore: function() {
 			var itsecMassnahmeDetailRecord = Ext.data.Record.create([
-		        'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency', 'secuRelevance', 'accsRelevance', 'itopRelevance', 'refTableID', 'refPKID', 'refCiSubTypeId'
+		        'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapResponsibleHidden','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency', 'secuRelevance', 'accsRelevance', 'itopRelevance', 'refTableID', 'refPKID', 'refCiSubTypeId'
 		    ]);
 			
 		    var itsecitsecMassnahmeDetailReader = new Ext.data.XmlReader({
@@ -3288,7 +3288,7 @@ AIR.AirStoreFactory = function() {
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: [ 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency', 'secuRelevance', 'accsRelevance', 'itopRelevance', 'refTableID', 'refPKID', 'refCiSubTypeId' ],
+		      	fields: [ 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapResponsibleHidden','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency', 'secuRelevance', 'accsRelevance', 'itopRelevance', 'refTableID', 'refPKID', 'refCiSubTypeId' ],
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
 		      		url: webcontext + '/ItsecMassnahmenWSPort',
@@ -3425,7 +3425,7 @@ AIR.AirStoreFactory = function() {
 		
 		createLinkedMassnahmeDetailListStore: function() {
 			var itsecMassnahmeDetailRecord = Ext.data.Record.create([
-		        'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency', 'secuRelevance', 'accsRelevance', 'itopRelevance', 'refTableID', 'refPKID', 'refCiSubTypeId'
+		        'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapResponsibleHidden','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency', 'secuRelevance', 'accsRelevance', 'itopRelevance', 'refTableID', 'refPKID', 'refCiSubTypeId'
 		    ]);
 			
 		    var itsecMassnahmeDetailReader = new Ext.data.XmlReader({
@@ -3437,7 +3437,7 @@ AIR.AirStoreFactory = function() {
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: [ 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency', 'secuRelevance', 'accsRelevance', 'itopRelevance', 'refTableID', 'refPKID', 'refCiSubTypeId' ],
+		      	fields: [ 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'katalogId', 'massnahmeNr', 'massnahmeTitel', 'statusId', 'statusKommentar', 'gap','gapResponsible','gapResponsibleHidden','gapMeasure','gapPriority','gapEndDate','riskAnalysisAsFreetext','expense','probOccurence','damage','mitigationPotential','expenseText','probOccurenceText','damageText','mitigationPotentialText','signee','gapClassApproved', 'currency', 'secuRelevance', 'accsRelevance', 'itopRelevance', 'refTableID', 'refPKID', 'refCiSubTypeId' ],
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
 		      		url: webcontext + '/ItsecMassnahmenWSPort',

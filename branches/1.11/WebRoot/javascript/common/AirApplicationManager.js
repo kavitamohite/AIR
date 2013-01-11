@@ -7,7 +7,7 @@ AIR.AirApplicationManager = function() {
 		DATE_FORMAT_EN: 'm/d/Y',
 		DATE_FORMAT_INTERNATIONAL: 'dMY',
 		
-		toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="/AIR/htdocs/images/{icon}"/></td><td>{text}</td></tr><table>'),//images/{icon}
+		toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="images/{icon}"/></td><td>{text}</td></tr><table>'),//images/{icon}
 
 		
 		processLogin: function(initAirCallback, loginCallback) {
