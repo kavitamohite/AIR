@@ -6,10 +6,12 @@ import com.bayerbbs.applrepos.dto.GapClassDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmeDetailDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenStatusWertDTO;
+import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.hibernate.ApplicationCat1Hbn;
 import com.bayerbbs.applrepos.hibernate.GapClassHbn;
 import com.bayerbbs.applrepos.hibernate.ItsecHbn;
 import com.bayerbbs.applrepos.hibernate.ItsecMassnahmeStatusHbn;
+import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 
 public class ItsecMassnahmenWS {
 
@@ -81,6 +83,15 @@ public class ItsecMassnahmenWS {
 				if(refTableId == 2) {
 					Long ciSubTypeId = ApplicationCat1Hbn.getCat1IdByCiId(refPkId);
 					detailDTO.setRefCiSubTypeId(ciSubTypeId);
+				}
+			}
+			
+			if (null != detailDTO.getGapResponsibleHidden() && !"".equals(detailDTO.getGapResponsibleHidden())) {
+				// 
+				List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(detailDTO.getGapResponsible());
+				if (null != listPers && 1 == listPers.size()) {
+					PersonsDTO tempPers = listPers.get(0);
+					detailDTO.setGapResponsible(tempPers.getDisplayNameFull());
 				}
 			}
 			
@@ -233,6 +244,16 @@ public class ItsecMassnahmenWS {
 					detailDTO.setRefCiSubTypeId(ciSubTypeId);
 				}
 			}
+			
+			if (null != detailDTO.getGapResponsibleHidden() && !"".equals(detailDTO.getGapResponsibleHidden())) {
+				// 
+				List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(detailDTO.getGapResponsible());
+				if (null != listPers && 1 == listPers.size()) {
+					PersonsDTO tempPers = listPers.get(0);
+					detailDTO.setGapResponsible(tempPers.getDisplayNameFull());
+				}
+			}
+
 			
 			output.setItsecMassnahmeDetailDTO(detailDTO);
 		}

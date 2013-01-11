@@ -29,6 +29,7 @@ public class ItsecMassnahmeDetailDTO {
 	private Long templateException;
 	private String gap;
 	private String gapResponsible;
+	private String gapResponsibleHidden;
 	private String gapMeasure;
 	private Long gapEndDate;	//String date in Javascript?
 	
@@ -147,6 +148,14 @@ public class ItsecMassnahmeDetailDTO {
 
 	public void setGapResponsible(String gapResponsible) {
 		this.gapResponsible = gapResponsible;
+	}
+
+	public String getGapResponsibleHidden() {
+		return gapResponsibleHidden;
+	}
+
+	public void setGapResponsibleHidden(String gapResponsibleHidden) {
+		this.gapResponsibleHidden = gapResponsibleHidden;
 	}
 
 	public String getGapMeasure() {

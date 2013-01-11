@@ -199,6 +199,7 @@ public class ItsecHbn {
 						dto.setTemplateException(rsSet.getLong("TEMPLATE_EXCEPTION"));
 						dto.setGap(rsSet.getString("GAP"));
 						dto.setGapResponsible(rsSet.getString("GAP_RESPONSIBLE"));
+						dto.setGapResponsibleHidden(rsSet.getString("GAP_RESPONSIBLE"));
 						
 						dto.setGapMeasure(rsSet.getString("GAP_MEASURE"));
 						
@@ -318,6 +319,7 @@ public class ItsecHbn {
 						dto.setTemplateException(rsSet.getLong("TEMPLATE_EXCEPTION"));
 						dto.setGap(rsSet.getString("GAP"));
 						dto.setGapResponsible(rsSet.getString("GAP_RESPONSIBLE"));
+						dto.setGapResponsibleHidden(rsSet.getString("GAP_RESPONSIBLE"));
 						
 						dto.setGapMeasure(rsSet.getString("GAP_MEASURE"));
 						

@@ -81,6 +81,7 @@ public class ItsecMassnahmeStatusHbn {
 			dto.setNoUpdateYN(status.getNoUpdateYN());
 			dto.setGap(status.getGap());
 			dto.setGapResponsible(status.getGapResponsible());
+			dto.setGapResponsibleHidden(status.getGapResponsible());
 			dto.setGapMeasure(status.getGapMeasure());
 			dto.setGapEndDate(status.getGapEndDate().getTime());//.toString()
 			dto.setGapPriority(status.getGapPriority());
@@ -139,7 +140,7 @@ public class ItsecMassnahmeStatusHbn {
 					status.setNoUpdateYN(dto.getNoUpdateYN());
 				}
 				status.setGap(dto.getGap());
-				status.setGapResponsible(dto.getGapResponsible());
+				status.setGapResponsible(dto.getGapResponsibleHidden());
 				status.setGapMeasure(dto.getGapMeasure());
 
 //				if (null != dto.getGapEndDate() && !"".equals(dto.getGapEndDate())) {
