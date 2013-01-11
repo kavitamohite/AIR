@@ -95,8 +95,8 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					
 					style: {
 						textAlign: 'left',
-						color: fontColor,
-						fontFamily: fontType,
+						color: AC.AIR_FONT_COLOR,
+						fontFamily: AC.AIR_FONT_TYPE,
 						fontWeight: 'normal',
 						fontSize: '8pt',
 						cursor:'pointer'

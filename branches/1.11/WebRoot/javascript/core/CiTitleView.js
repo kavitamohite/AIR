@@ -74,7 +74,7 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
                 },{
 					id: 'clLanguage',
 			        xtype: 'commandlink',
-			        img: urlFlagLanguage
+			        img: img_LangDE //urlFlagLanguage (#8)
 			        
 //			        style: {
 //						marginRight: 10
@@ -117,7 +117,7 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 			    bodyStyle: {//ohne: Hintergrundfarbe weiss
 			    	backgroundColor: '#043453',
 			    	color: '#CEE7F7',
-			    	fontFamily: fontType
+			    	fontFamily: AC.AIR_FONT_TYPE
 			    }
 			}, {
 				region: 'center',
@@ -153,7 +153,7 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 					style: {
 					   	color: '#ededed',
 					   	fontWeight: 'bold',
-				    	fontFamily: fontType,
+				    	fontFamily: AC.AIR_FONT_TYPE,
 				    	marginLeft: '180px',
 				    	marginRight: '5px',
 				    	marginTop: '5px'
@@ -165,7 +165,7 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 			    bodyStyle: {
 			    	//backgroundColor: '#085E8B',
 			    	color: '#ededed',
-			    	fontFamily: fontType
+			    	fontFamily: AC.AIR_FONT_TYPE
 			    }
 			}]
 		});
@@ -211,29 +211,6 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 	
 	
 	update: function(language) {
-		// check role developer
-//    	if (hasRoleDeveloper) {
-//			Ext.getCmp('lclink').show();
-//		}
-//		else {
-//			Ext.getCmp('lclink').hide();
-//		}
-		
-//		var databaseDisplayNameListStore = AIR.AirStoreManager.getStoreByName('databaseDisplayNameListStore');
-//		var databaseInfoText = databaseDisplayNameListStore.data.items[0].data.text;
-//		
-//		var lThisappdatabase = this.getComponent('pCiTitleCenter').getComponent('thisappdatabase');//cThisappdatabase
-//		lThisappdatabase.setText(databaseInfoText);
-////		cThisappdatabase.dom.innerHTML = '<br/><span style="font-size: 7pt;">' + databaseInfoText + '</span>';
-		
-        
-//        if(Ext.isIE) {
-//			var tAppLabel = this.getComponent('pCiTitleCenter').getComponent('tAppLabel');
-//			tAppLabel.setIeMessage();
-//        }
-        
-        
-		//richtige Flagge setzen anhand paramter language
 		var clLanguage = this.getComponent('pCiTitleViewNorth').getComponent('clLanguage');
 		
 		switch(language) {

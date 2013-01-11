@@ -318,19 +318,6 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 						{dataIndex: 'id', hidden: true, hideLabel: true, width: .001},
 						{dataIndex: 'text'}
 			        ]
-			        
-			        /*
-			        listeners: {
-		                selectionchange: function(listview, selections) {
-		                	var tRegs = [];
-		                	Ext.each(listview.getSelectedRecords(), function(item, index, all) {
-		                		tRegs.push(item.id);
-		                	});
-		                	selectedUsingRegions = tRegs.join(',');//this.selectedUsingRegions
-//		                    activteButtonSaveApplication();
-		                	this.fireEvent('ciChange', this, listview, selections);
-		                }.createDelegate(this)
-			        }*/
 		    	},{
 		    		//because listview applicationUsingRegions is still editable when using applicationUsingRegions.disable();
 		    		xtype: 'textarea',//textarea hidden
@@ -466,12 +453,6 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
     },
 	
     onApplicationUsingRegionsSelectionChange: function(listview, selections) {
-    	var tRegs = [];
-    	Ext.each(listview.getSelectedRecords(), function(item, index, all) {//listview.getSelectedRecords() listview.getSelections()--> wenn grid statt listview
-    		tRegs.push(item.id);
-    	});
-    	selectedUsingRegions = tRegs.join(',');//this.selectedUsingRegions
-//        activteButtonSaveApplication();
     	this.fireEvent('ciChange', this, listview, selections);
     },
 	
@@ -542,9 +523,7 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 		} else {
 			this.getComponent('licensecosts').getComponent('costChangePa').setValue('');
 		}
-		
 	
-//		selectedCurrencyId = data.currencyId;
 		if (data.currencyId && data.currencyId != 0) {
 			this.getComponent('licensecosts').getComponent('currency').setValue(data.currencyId);
 		} else {
@@ -552,24 +531,13 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 			var defaultCurrencyId = AIR.AirApplicationManager.getDefaultCurrency();
 			this.getComponent('licensecosts').getComponent('currency').setValue(defaultCurrencyId);//'' cbUseroptionCurrency.getValue()
 		}
-//		this.getComponent('licensecosts').getComponent('currency').setVisible(false);
 		
-		//FF OK, IE fails: all combos shot
-//		if(AIR.AirAclManager.isRelevance(this.getComponent('licensecosts').getComponent('currency'), data))
-//			this.getComponent('licensecosts').getComponent('currency').setVisible(true);
-//		else
-//			this.getComponent('licensecosts').getComponent('currency').setVisible(false);
-//		this.getComponent('licensecosts').getComponent('currency').doLayout();
-		
-		
-//		selectedRunAccountId = data.costRunAccountId;
 		if (data.costRunAccountId && data.costRunAccountId != 0) {
 			this.getComponent('licensecosts').getComponent('runAccount').setValue(data.costRunAccountId);
 		} else {
 			this.getComponent('licensecosts').getComponent('runAccount').setValue('');
 		}
 
-//		selectedChangeAccountId = data.costChangeAccountId;
 		if (data.costChangeAccountId && data.costChangeAccountId != 0) {
 			this.getComponent('licensecosts').getComponent('changeAccount').setValue(data.costChangeAccountId);
 		} else {
@@ -577,45 +545,6 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 
 
-		/*
-		var lvApplicationUsingRegions = this.getComponent('licenseusingregions').getComponent('applicationUsingRegions');
-		lvApplicationUsingRegions.getSelectionModel().unlock();// to make lvApplicationUsingRegions.getSelectionModel().clearSelections(); possible
-		
-		if(data.licenseUsingRegions.length > 0) {
-			var regions = [];
-			Ext.each(data.licenseUsingRegions.split(','), function(item, index, all) {
-	//			lvApplicationUsingRegions.select(lvApplicationUsingRegions.getStore().getById(item), true, true);
-				
-				var r = lvApplicationUsingRegions.getStore().getById(item);
-				if(r)
-					regions.push(r);
-	//			lvApplicationUsingRegions.getSelectionModel().selectRow(lvApplicationUsingRegions.getStore().indexOf(r), false);//selectRow selectRecords
-			});
-			lvApplicationUsingRegions.getSelectionModel().selectRecords(regions, false);//selectRow
-		} else {
-			lvApplicationUsingRegions.getSelectionModel().clearSelections();
-		}
-		
-		if(!AIR.AirAclManager.isRelevance(lvApplicationUsingRegions, data)) {
-			lvApplicationUsingRegions.getSelectionModel().lock();
-			
-			if(Ext.isIE) {
-				lvApplicationUsingRegions.getEl().addClass('ie8Opacity');
-			} else {
-				new Fx.Morph(lvApplicationUsingRegions.getId()).set({
-					'opacity': 0.5//[0,5],
-				});
-			}
-		} else {
-			if(Ext.isIE) {
-				lvApplicationUsingRegions.getEl().removeClass('ie8Opacity');
-			} else {
-				new Fx.Morph(lvApplicationUsingRegions.getId()).set({
-					'opacity': 1
-				});
-			}
-		}*/
-		
 		var lvApplicationUsingRegions = this.getComponent('licenseusingregions').getComponent('applicationUsingRegions');
 		lvApplicationUsingRegions.clearSelections(true);
 		var tfApplicationUsingRegions = this.getComponent('licenseusingregions').getComponent('applicationUsingRegionsHidden');
@@ -657,23 +586,15 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirAclManager.setAccessMode(this.getComponent('licenseusingregions').getComponent('applicationUsingRegions'), data);
 	},
 	
-	//getData: function() {
 	setData: function(data) {
-		//var data = {};
-			
-		
 		field = this.getComponent('licenselicense').getComponent('licenseType');
-		if(!field.disabled)
+		if(!field.disabled) {
 			if(field.getValue().length > 0) {
 				data.licenseTypeId = field.getValue();
 			} else {
 				data.licenseTypeId = -1;
 			}
-////			if(undefined !== field.getValue() && '' !== field.getValue())
-//				data.licenseTypeId = field.getValue();
-		
-
-		
+		}
 		
 		
 		field = this.getComponent('licenselicense').getComponent('applicationAccessingUserCount');
@@ -703,9 +624,6 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 				data.serviceModel = field.getValue();
 		
 		
-		
-		
-		
 		field = this.getComponent('licensecosts').getComponent('costRunPa');
 		if(!field.disabled)
 			data[field.id] = field.getValue().length > 0 ? field.getValue() : -1;
@@ -716,44 +634,37 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		
 		field = this.getComponent('licensecosts').getComponent('currency');
-		if(!field.disabled)
-//			if (undefined !== field.getValue() && '' !== field.getValue())
-//				data.currencyId = field.getValue();
+		if(!field.disabled) {
 			if(field.getValue().length > 0) {
 				data.currencyId = field.getValue();
 			} else {
 				data.currencyId = -1;
 			}
+		}
 		
 
 		field = this.getComponent('licensecosts').getComponent('runAccount');
-		if(!field.disabled)
-//			if (undefined !== field.getValue() && '' !== field.getValue())
-//				data.costRunAccountId = field.getValue();
+		if(!field.disabled) {
 			if(field.getValue().length > 0) {
 				data.costRunAccountId = field.getValue();
 			} else {
 				data.costRunAccountId = -1;
 			}
+		}
 		
 		
 		field = this.getComponent('licensecosts').getComponent('changeAccount');
-		if(!field.disabled)
-//			if (undefined !== field.getValue() && '' !== field.getValue())
-//				data.costChangeAccountId = field.getValue();
+		if(!field.disabled) {
 			if(field.getValue().length > 0) {
 				data.costChangeAccountId = field.getValue();
 			} else {
 				data.costChangeAccountId = -1;
 			}
-		
+		}
 		
 		field = this.getComponent('licenseusingregions').getComponent('applicationUsingRegions');
 		if(!field.disabled)
-			data.licenseUsingRegions = selectedUsingRegions;//this.selectedUsingRegions
-		
-		
-		//return data;
+			data.licenseUsingRegions = Util.getSelectedListViewValuesAsCommaString(field);
 	},
 	
 	updateLabels: function(labels) {

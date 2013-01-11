@@ -171,9 +171,6 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	},
 	
 	
-	
-	
-	
 	onTabClose: function(tab) {
 		var grid = tab;
 		grid.getStore().removeAll();

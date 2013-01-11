@@ -349,7 +349,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		
 		var cbBusinessEssential = this.getComponent('businessEssential');
-		if(hasRoleBusinessEssentialEditor) {
+		if(AIR.AirApplicationManager.hasRole(AC.ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)) {//hasRoleBusinessEssentialEditor (#8)
 			// nur für die Rolle BusinessEssential-Editor
 			// unter Prüfung der Insert-Source mittels isEditable
 			if (AIR.AirAclManager.isEditable(cbBusinessEssential)) {

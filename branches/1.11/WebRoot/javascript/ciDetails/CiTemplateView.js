@@ -11,9 +11,9 @@ AIR.CiTemplateView = Ext.extend(Ext.Panel, {
 	        border: true,
 	        
 	        bodyStyle: {
-	        	backgroundColor: panelbgcolor,
-	        	color: fontColor,
-	        	fontFamily: fontType
+	        	backgroundColor: AC.AIR_BG_COLOR,
+	        	color: AC.AIR_FONT_COLOR,
+	        	fontFamily: AC.AIR_FONT_TYPE
 	        },
 	        
 	        items: [{

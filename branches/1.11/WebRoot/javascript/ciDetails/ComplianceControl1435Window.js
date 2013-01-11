@@ -16,7 +16,7 @@ AIR.ComplianceControl1435Window = Ext.extend(Ext.Window, {
 			height: 200,
 			
 //			bodyStyle: {
-//				backgroundColor: panelbgcolor
+//				backgroundColor: AC.AIR_BG_COLOR
 //			},
 			
 			plain: true,

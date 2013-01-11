@@ -110,6 +110,22 @@ Util = {
 		}
 	},
 	
+	getSelectedListViewValuesAsCommaString: function(listView) {
+		var records = listView.getSelectedRecords();
+		
+		var scopes = '';
+		for(var i = 0; i < records.length; i++) {
+			if(scopes.length > 0)
+				scopes += ',';
+			
+			scopes += records[i].get('id');
+		}
+		
+//		scopes = records.join(',');
+		
+		return scopes;
+	},
+	
 //	initLoadMasks: function() {
 //		this.masks = {};
 //		this.masks.startupMask = new Ext.LoadMask(Ext.getBody(), { msg: 'Initializing AIR...' });

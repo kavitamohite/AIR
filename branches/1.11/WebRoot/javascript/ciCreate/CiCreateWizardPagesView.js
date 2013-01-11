@@ -285,7 +285,7 @@ AIR.CiCreateWizardPagesView = Ext.extend(Ext.Panel, {
 	
 	onApplicationCreate: function(store, records, options) {
 		//eine gemeinsame Funktion mit CiCopyFromView::onApplicationCopy ?!
-		mySaveMask.hide();
+		AAM.getMask(AC.MASK_TYPE_SAVE).hide();
 		
 		switch(records[0].data.result) {
 			case 'OK':
@@ -343,9 +343,7 @@ AIR.CiCreateWizardPagesView = Ext.extend(Ext.Panel, {
 	},
 	
 	onApplicationBeforeCreate: function(store, options) {
-		mySaveMask.show({
-			msg: AIR.AirApplicationManager.getLabels().gerneral_message_saving
-		});
+		AAM.getMask(AC.MASK_TYPE_SAVE).show();
 	},
 	
 	

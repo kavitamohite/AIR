@@ -144,7 +144,7 @@ AIR.CiEditTabView = Ext.extend(Ext.Panel, {
 	},
 	
 	onBeforeLoadApplication: function(store, options) {
-		myLoadMask.show();
+		AAM.getMask(AC.MASK_TYPE_LOAD).show();
 	},
 	
 	onLoadApplication: function(store, records, options) {
@@ -257,7 +257,7 @@ AIR.CiEditTabView = Ext.extend(Ext.Panel, {
 		}.createDelegate(this));
 		task.delay(1500);
 		
-		myLoadMask.hide();
+		AAM.getMask(AC.MASK_TYPE_LOAD).hide();
 		
 		
 		//das Akzeptieren von User Bedienaktionen (textfeld Änderungen, combo Auswahlen, ...) erst jetzt wieder freischalten für

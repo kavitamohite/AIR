@@ -15,9 +15,9 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 //		    },
 		    
 			bodyStyle: {//style: kein Effekt
-		    	backgroundColor: panelbgcolor,
-		    	color: fontColor,
-		    	fontFamily: fontType,
+		    	backgroundColor: AC.AIR_BG_COLOR,
+		    	color: AC.AIR_FONT_COLOR,
+		    	fontFamily: AC.AIR_FONT_TYPE,
 		    	backgroundImage: 'url("' + img_gradientNavi_Info + '")',//img_MenuLeft
 		    	backgroundRepeat: 'repeat-x',//'no-repeat',
 		    	backgroundPosition: 'left top'
@@ -33,11 +33,11 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					color: '#ededed',
 					fontWeight: 'bold',
 					fontSize: '7pt',
-					fontFamily: fontType,
+					fontFamily: AC.AIR_FONT_TYPE,
 					textAlign: 'center',
 					
 					//entweder a)
-					color: fontColor
+					color: AC.AIR_FONT_COLOR
 					//oder b)
 //					backgroundImage: 'url("' + img_HeaderBottom + '")',
 //					backgroundRepeat: 'repeat-x'

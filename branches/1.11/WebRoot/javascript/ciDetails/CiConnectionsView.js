@@ -399,11 +399,12 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onGridBeforeLoaded: function(store, options) {
-		myLoadMask.show();
+		AAM.getMask(AC.MASK_TYPE_LOAD).show();
 	},
 	
 	onGridLoaded: function(store, records, options) {
-		myLoadMask.hide();
+		AAM.getMask(AC.MASK_TYPE_LOAD).hide();
+		
 		var grid = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('CiConnectionsResultGrid');
 		grid.setVisible(true);
 	},

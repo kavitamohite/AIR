@@ -13,7 +13,7 @@ AIR.CiInfoView = Ext.extend(Ext.Panel, {
 			    backgroundImage: 'url(' + img_HeaderBottom + ')',
 //			    backgroundRepeat: 'repeat',
 //			  	backgroundColor: '#FFFFFF',
-		    	fontFamily: fontType,
+		    	fontFamily: AC.AIR_FONT_TYPE,
 //		    	borderBottomColor: '#FFFFFF',
 		    	color: '#ededed'
 			},
@@ -30,8 +30,8 @@ AIR.CiInfoView = Ext.extend(Ext.Panel, {
             	id: 'lInfoText',
             	
         		style: {
-                	color: fontColor,
-                	fontFamily: fontType,
+                	color: AC.AIR_FONT_COLOR,
+                	fontFamily: AC.AIR_FONT_TYPE,
                 	fontSize: 10,
                 	background: 'transparent'
         		}

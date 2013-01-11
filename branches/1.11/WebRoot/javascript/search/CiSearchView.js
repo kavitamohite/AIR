@@ -9,9 +9,9 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		    padding: 20,
 		    
 		    bodyStyle: {
-		    	backgroundColor: panelbgcolor,
-		    	color: fontColor,
-		    	fontFamily: fontType
+		    	backgroundColor: AC.AIR_BG_COLOR,
+		    	color: AC.AIR_FONT_COLOR,
+		    	fontFamily: AC.AIR_FONT_TYPE
 		    },
 		    
 		    items: [{
@@ -20,9 +20,9 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 				
 				style: {
 					textAlign: 'left',
-					backgroundColor: panelbgcolor,
-					color: fontColor,
-					fontFamily: fontType,
+					backgroundColor: AC.AIR_BG_COLOR,
+					color: AC.AIR_FONT_COLOR,
+					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: '12pt'
 				}
@@ -343,70 +343,6 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    return cat1 === undefined || cat1 === AC.APP_CAT1_APPLICATION || cat1.length === 0;
 	},
 
-
-	/*
-	onGridBeforeLoaded: function(store, options) {
-		myLoadMask.show();
-	},
-	
-	onGridLoaded: function(store, records, options) {
-		myLoadMask.hide();
-//		var ciSearchResultView = this.getComponent('ciSearchResultView');
-//		ciSearchResultView.setVisible(true);
-//		
-//		ciSearchResultView.getComponent('ciSearchGrid').updateHeight();
-		
-		
-//		var ciSearchGrid = this.getComponent('ciSearchGrid');
-//		ciSearchGrid.setVisible(true);
-//		ciSearchGrid.updateHeight();
-		
-		this.collapseAdvSearch();
-	},
-	
-	
-	
-	onRowClick: function(grid, rowIndex, e) {
-		this.fireEvent('beforeCiSelect');//if(this.fireEvent('beforeCiSelect') == false) return;
-		
-		var record = grid.getStore().getAt(rowIndex);
-		var ciId = record.id;
-		
-		if(record.data.tableId == AC.TABLE_ID_APPLICATION) {
-//			selectedCIId = ciId;//grid.store.getAt(rowIndex).id;
-			AIR.AirApplicationManager.setCiId(ciId);
-			AIR.AirApplicationManager.setTableId(AC.TABLE_ID_APPLICATION);
-		} else {
-//			selectedCIId = -1;
-			AIR.AirApplicationManager.setCiId(-1);
-			AIR.AirApplicationManager.setTableId(-1);
-			
-//			if(Ext.isIE) {
-//				var windowTitle = labels.dynamicWindowCiTypeNotSupportedWarningTitle;//languagestore.data.items[0].data['dynamicWindowCiTypeNotSupportedWarningTitle']
-//				var windowText = labels.dynamicWindowCiTypeNotSupportedWarningText;
-//				
-//				alert(windowTitle, windowText);//Fenster zerschossen bei IE. Grund unbekannt. Grund: falscher DOCTYPE! FF und IE hierbei unterschiedlich!
-//			} else {
-				var ciTypeWarningWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CI_TYPE_NOT_SUPPORTED_WARNING');
-				ciTypeWarningWindow.show();
-//			}
-		}
-		
-		this.fireEvent('ciSelect', this, ciId);//selectedCIId ciId
-	},
-	
-	onRowDoubleClick: function (grid, rowIndex, e) {
-//		var ciId = grid.store.getAt(rowIndex).id;
-//		selectedCIId = ciId;
-//		AIR.AirApplicationManager.setCiId(ciId);
-//		
-//		this.fireEvent('ciSelect', this, ciId, 'clCiDetails');//selectedCIId ciId
-		
-//		this.onRowClick(grid, rowIndex, e);
-		
-		this.onRowClick(grid, rowIndex, e);
-		this.fireEvent('externalNavigation', this, grid, 'clCiDetails');
-	},*/
 	
 	handleSearch: function(link) {
 		this.isOuSearch = false;
@@ -433,7 +369,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		ciStandardSearchView.getComponent('ciAdvancedSearchView').setVisible(false);
 		
 		var rbgQueryMode = ciStandardSearchView.getComponent('pSearch').getComponent('rbgQueryMode');//.getComponent('pSearch').getComponent('rbgQueryMode')
-		rbgQueryMode.setValue(searchQueryModeContains);
+		rbgQueryMode.setValue(AC.SEARCH_MODE_CONTAINS);//searchQueryModeContains (#8)
 		rbgQueryMode.setVisible(false);
 		
 		var bExpandAdvSearchParams = this.getComponent('ciSearchResultView').getComponent('pSearchResultOptions').getComponent('bExpandAdvSearchParams');

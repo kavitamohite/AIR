@@ -80,17 +80,14 @@ AIR.AirApplicationManager = function() {
 		
 		initLoadMasks: function() {
 			this.masks = {};
-			this.masks.startupMask = new Ext.LoadMask(Ext.getBody(), { msg: 'Initializing AIR...' });
-			this.masks.loadMask = new Ext.LoadMask(Ext.getBody(), { msg: 'Loading data...' });
-			this.masks.saveMask = new Ext.LoadMask(Ext.getBody(), { msg: 'Saving data...' });//msg: AIR.AirApplicationManager.getLabels().gerneral_message_saving
+			this.masks.start = new Ext.LoadMask(Ext.getBody(), { msg: 'Initializing AIR...' });
+			this.masks.load = new Ext.LoadMask(Ext.getBody(), { msg: 'Loading data...' });
+			this.masks.save = new Ext.LoadMask(Ext.getBody(), { msg: 'Saving data...' });//msg: AIR.AirApplicationManager.getLabels().gerneral_message_saving
 		},
-
-		
-		
-
 		getMask: function(type) {
 			return this.masks[type];
 		},
+		
 		
 		loadStoreIds: function() {
 //			this.storeIds = [ 

@@ -30,9 +30,9 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 	        border: false,
 	        
 	        bodyStyle: {
-	        	backgroundColor: panelbgcolor,
-	        	color: fontColor,
-	        	fontFamily: fontType,
+	        	backgroundColor: AC.AIR_BG_COLOR,
+	        	color: AC.AIR_FONT_COLOR,
+	        	fontFamily: AC.AIR_FONT_TYPE,
 	        	padding: 5
 	        },
 	        

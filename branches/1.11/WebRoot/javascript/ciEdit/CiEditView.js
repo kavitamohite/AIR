@@ -16,9 +16,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				
 				style: {
 //					textAlign: 'left',
-					backgroundColor: panelbgcolor,
-					color: fontColor,
-					fontFamily: fontType,
+					backgroundColor: AC.AIR_BG_COLOR,
+					color: AC.AIR_FONT_COLOR,
+					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: '12pt'
 //					float: 'left'
@@ -31,9 +31,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				
 				style: {
 //					textAlign: 'left',
-					backgroundColor: panelbgcolor,
-					color: fontColor,
-					fontFamily: fontType,
+					backgroundColor: AC.AIR_BG_COLOR,
+					color: AC.AIR_FONT_COLOR,
+					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: '8pt'
 //					float: 'left'
@@ -57,10 +57,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				
 				style: {
 //					textAlign: 'right',
-					backgroundColor: panelbgcolor,
-					color: panelDraftMsgColor,
+					backgroundColor: AC.AIR_BG_COLOR,
+					color: '#FF0000',//panelDraftMsgColor, (#8)
 					
-					fontFamily: fontType,
+					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: '10pt',
 					
@@ -76,13 +76,13 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 					textAlign: 'left',
 					borderStyle: 'solid',
 					borderWidth: '1pt',
-					borderColor: panelErrorMsgColor,
-					backgroundColor: panelbgcolor,
+					borderColor: '#FF0000', //panelErrorMsgColor, (#8)
+					backgroundColor: AC.AIR_BG_COLOR,
 					
-					color: panelErrorMsgColor,
+					color: '#FF0000', //panelErrorMsgColor, (#8)
 					padding: 3,//'2 5 2 5',
 					
-					fontFamily: fontType,
+					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: 12
 					
@@ -204,7 +204,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	updateLabels: function(labels) {
 		this.getComponent('editpanelmessage').setText(labels.header_applicationIsIncomplete.replace('##', incompleteFieldList));
-    	this.getComponent('editpaneldraft').setText(labels.header_applicationIsDraft.replace('##', draftFlag));
+    	this.getComponent('editpaneldraft').setText(labels.header_applicationIsDraft.replace('##', ''));//draftFlag '' (#8)
     	
 		var ciEditTabView = this.getComponent('ciEditTabView');
 		if(ciEditTabView)
@@ -292,7 +292,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	onBeforeLoadApplication: function(store, options) {
-		myLoadMask.show();
+		AAM.getMask(AC.MASK_TYPE_LOAD).show();
 	},
 	
 	onLoadApplication: function(store, records, options) {
@@ -347,7 +347,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		}.createDelegate(this));
 		task.delay(1500);
 		
-		myLoadMask.hide();
+		AAM.getMask(AC.MASK_TYPE_LOAD).hide();
 		
 		
 		//das Akzeptieren von User Bedienaktionen (textfeld Änderungen, combo Auswahlen, ...) erst jetzt wieder freischalten für
@@ -444,7 +444,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		data.tableId = AAM.getTableId();
 
 		var saveCallback = function() {
-			mySaveMask.show();
+			AAM.getMask(AC.MASK_TYPE_SAVE).show();
 			
 			/*
 			Util.log('new template? data.template='+data.template+'   appDetail.isTemplate='+appDetail.template);
@@ -570,7 +570,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	onApplicationSave: function(store, records, options) {
-		mySaveMask.hide();
+		AAM.getMask(AC.MASK_TYPE_SAVE).hide();
 		
 		if('OK' === records[0].data.result) {
 //			deactivateButtonSaveApplication();
@@ -610,7 +610,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			this.checkTemplateChange();
 			
-			mySaveMask.hide();
+			AAM.getMask(AC.MASK_TYPE_SAVE).hide();
 		};
 		
 		var options = {
@@ -630,7 +630,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	onItsecGroupEdit: function(ciComplianceView, itsecGroupCallback, newItSecGroup) {
 		var callback = function(params) {
-			mySaveMask.hide();
+			AAM.getMask(AC.MASK_TYPE_SAVE).hide();
 			itsecGroupCallback(params);
 		};
 		

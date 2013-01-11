@@ -51,9 +51,6 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		Ext.isSecure = true;
 		Ext.Ajax.timeout = 3000000;
 		
-
-		myLoadMask = new Ext.LoadMask(Ext.getBody(), {msg: 'Loading'});//labels['gerneral_message_loading']
-		mySaveMask = new Ext.LoadMask(Ext.getBody(), {msg: 'Saving'});//labels['gerneral_message_saving']
 		
 		//disable F5,F6
 		if(Ext.isIE) {
@@ -178,8 +175,8 @@ AIR.AirBootstrap = Ext.extend(Object, {
         	if(this.airLoginWindow)
         		this.airLoginWindow.close();
         	
-	    		var startupMask = AIR.AirApplicationManager.getMask('startupMask');
-	    		startupMask.show();
+	    		var startMask = AAM.getMask(AC.MASK_TYPE_START);
+	    		startMask.show();
 //        		myStartupMask.show();
 	    		
 //	        this.updateTheme();
@@ -307,8 +304,8 @@ AIR.AirBootstrap = Ext.extend(Object, {
 //		AIR.AirApplicationManager.restoreUiState(this.airMainPanel);
 		
 //		this.airMainPanel.getEl().unmask();
-		var startupMask = AIR.AirApplicationManager.getMask('startupMask');
-		startupMask.hide();
+		var startMask = AAM.getMask(AC.MASK_TYPE_START);
+		startMask.hide();
 //		myStartupMask.hide();
 		
 		

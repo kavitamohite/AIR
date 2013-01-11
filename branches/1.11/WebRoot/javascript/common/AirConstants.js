@@ -94,7 +94,27 @@ AIR.AirConstants = {
 	
 	SEARCH_TYPE_SEARCH: 'Search',
 	SEARCH_TYPE_ADV_SEARCH: 'Advanced Search',//Adv. Search
-	SEARCH_TYPE_OU_SEARCH: 'Ou Search'//OU Search
+	SEARCH_TYPE_OU_SEARCH: 'Ou Search',//OU Search
+	
+	
+	//commonvars.js Ersetzung
+	SEARCH_MODE_CONTAINS: 'CONTAINS',
+	
+	ROLE_AIR_APPLICATION_LAYER: 'AIR Application Layer',
+	ROLE_AIR_DEFAULT: 'AIR Default',
+	ROLE_AIR_INFRASTRUCTURE_LAYER: 'AIR Infrastructure Layer',
+	ROLE_AIR_APPLICATION_MANAGER: 'AIR Application Manager',
+	ROLE_AIR_ADMINISTRATOR: 'AIR Administrator',
+	ROLE_AIR_DEVELOPER: 'AIR Developer',
+	ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR: 'AIR BusinessEssential-Editor',
+	
+	AIR_BG_COLOR: '#FFFFFF',//panelbgcolor
+	AIR_FONT_COLOR: '#085E8B',//fontColor
+	AIR_FONT_TYPE: 'Arial, Helvetica, sans-serif',//fontType
+	
+	MASK_TYPE_START: 'start',
+	MASK_TYPE_LOAD: 'load',
+	MASK_TYPE_SAVE: 'save'
 };
 AC = AIR.AirConstants;
 

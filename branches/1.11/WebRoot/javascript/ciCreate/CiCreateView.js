@@ -42,9 +42,9 @@ AIR.CiCreateView = Ext.extend(Ext.Panel, {
 				
 				style: {
 					textAlign: 'left',
-					backgroundColor: panelbgcolor,
-					color: fontColor,
-					fontFamily: fontType,
+					backgroundColor: AC.AIR_BG_COLOR,
+					color: AC.AIR_FONT_COLOR,
+					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: '12pt'
 				}
@@ -56,9 +56,9 @@ AIR.CiCreateView = Ext.extend(Ext.Panel, {
 				cls: 'x-plain',
 				style: {
 					textAlign: 'left',
-				  	backgroundColor: panelbgcolor,
-				  	color: fontColor,
-				    fontFamily: fontType,
+				  	backgroundColor: AC.AIR_BG_COLOR,
+				  	color: AC.AIR_FONT_COLOR,
+				    fontFamily: AC.AIR_FONT_TYPE,
 				  	fontWeight: 'bold',
 				  	fontSize: '8pt'
 				}

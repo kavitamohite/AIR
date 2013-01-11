@@ -174,7 +174,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 				query: this.query,
 				queryMode: 'CONTAINS',
 				searchAction: 'search',
-				advsearchObjectTypeId: applicationObjectTypeId,
+				advsearchObjectTypeId: AC.APP_CAT1_APPLICATION,//applicationObjectTypeId,
 				onlyapplications: 'true',
 	//			advancedsearch: 'true',
    			 	cwid: AIR.AirApplicationManager.getCwid(),
@@ -259,11 +259,13 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 //			store.baseParams.advsearchObjectTypeId = applicationObjectTypeId;
 //		}
 		
-		myLoadMask.show();
+		
+		AAM.getMask(AC.MASK_TYPE_LOAD).show();
 	},
 	
 	onGridLoaded: function(store, records, options) {
-		myLoadMask.hide();
+		AAM.getMask(AC.MASK_TYPE_LOAD).hide();
+		
 		var grid = this.getComponent('pCopyFromSearchCard').getComponent('CiSearchWizzardResultGrid');
 		grid.setVisible(true);
 		grid.updateHeight();
@@ -288,16 +290,14 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 	},
 	
 	onApplicationBeforeCopy: function(store, options) {
-		var saveMsg = AIR.AirApplicationManager.getLabels().gerneral_message_saving;//languagestore.getAt(0).data['gerneral_message_saving'];
-		mySaveMask.show({
-			msg: saveMsg
-		});
+		AAM.getMask(AC.MASK_TYPE_SAVE).show();
 	},
 	
 	onApplicationCopy: function(store, records, options) {
 		//eine gemeinsame Funktion mit CiCreateWizardPagesView::onApplicationCreate ?!
 		
-		mySaveMask.hide();
+		AAM.getMask(AC.MASK_TYPE_SAVE).hide();
+		
 		switch(records[0].data.result) {
 			case 'OK':
 //				selectedCIId = records[0].data.applicationId;

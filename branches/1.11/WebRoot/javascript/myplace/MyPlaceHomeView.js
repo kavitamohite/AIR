@@ -18,9 +18,9 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 				
 				style: {
 					textAlign: 'left',
-					backgroundColor: panelbgcolor,
-					color: fontColor,
-					fontFamily: fontType,
+					backgroundColor: AC.AIR_BG_COLOR,
+					color: AC.AIR_FONT_COLOR,
+					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: '12pt'
 				}
@@ -32,9 +32,9 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 				cls: 'x-plain',
 				style: {
 			  	  	textAlign: 'left',
-			  	  	backgroundColor: panelbgcolor,
-			  	  	color: fontColor,
-			  	  	fontFamily: fontType,
+			  	  	backgroundColor: AC.AIR_BG_COLOR,
+			  	  	color: AC.AIR_FONT_COLOR,
+			  	  	fontFamily: AC.AIR_FONT_TYPE,
 			  	  	fontWeight: 'bold',
 			  	  	fontSize: '8pt'
 				}
@@ -276,12 +276,11 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onUserOptionBeforeSaved: function(store, options) {
-		mySaveMask.show();
+		AAM.getMask(AC.MASK_TYPE_SAVE).show();
 	},
 	
 	onUserOptionSaved: function(store, records, options) {
-		mySaveMask.hide();
-//		this.update();
+		AAM.getMask(AC.MASK_TYPE_SAVE).hide();
 		
 		this.update(AIR.AirStoreFactory.createItsecUserOptionListStore());
 	},
@@ -440,7 +439,7 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			anzeigetext = anzeigetext + value;
 			
-			if(rolenameApplicationLayer === value) {
+			/*if(rolenameApplicationLayer === value) {
 				selectedOnlyApplications = true;
 				hasRoleApplicationLayer = true;
 			} else if(rolenameDefault === value) {
@@ -455,7 +454,7 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 				hasRoleDeveloper = true;
 			} else if(rolenameBusinessEssentialEditor === value) {
 				hasRoleBusinessEssentialEditor = true;
-			}
+			}*/
 		});
 				
 		this.getComponent('myplaceroleperson').setValue(anzeigetext);

@@ -13,9 +13,9 @@ AIR.AirViewport = Ext.extend(Ext.Viewport, {
 			layout: 'fit',
 			
 		    style: {
-				backgroundColor: panelbgcolor,
-				color: fontColor,
-		    	fontFamily: fontType
+				backgroundColor: AC.AIR_BG_COLOR,
+				color: AC.AIR_FONT_COLOR,
+		    	fontFamily: AC.AIR_FONT_TYPE
 			},
 			
 			items: [ this.airMainPanel ]
@@ -33,9 +33,9 @@ AIR.AirViewport = Ext.extend(Ext.Viewport, {
     autoDestroy: true,
     
     style: {
-		backgroundColor: panelbgcolor,
-		color: fontColor,
-    	fontFamily: fontType
+		backgroundColor: AC.AIR_BG_COLOR,
+		color: AC.AIR_FONT_COLOR,
+    	fontFamily: AC.AIR_FONT_TYPE
 	},
 
 	initComponent: function() {
@@ -104,7 +104,7 @@ AIR.AirViewport = Ext.extend(Ext.Viewport, {
 				    backgroundImage: 'url(' + img_HeaderBottom + ')',
 				    backgroundRepeat: 'repeat',
 				  	backgroundColor: '#FFFFFF',
-			    	fontFamily: fontType,
+			    	fontFamily: AC.AIR_FONT_TYPE,
 			    	borderBottomColor: '#FFFFFF'
 				},
 		        
@@ -116,9 +116,9 @@ AIR.AirViewport = Ext.extend(Ext.Viewport, {
 		            },
 		            
 		            bodyStyle: {
-		            	backgroundColor: panelbgcolor,
-		            	color: fontColor,
-		            	fontFamily: fontType
+		            	backgroundColor: AC.AIR_BG_COLOR,
+		            	color: AC.AIR_FONT_COLOR,
+		            	fontFamily:AC. AIR_FONT_TYPE
 		            },
 		            
 		            defaults: {margins: '0 0 0 0'},
@@ -131,9 +131,9 @@ AIR.AirViewport = Ext.extend(Ext.Viewport, {
 		                contentEl: 'infotext',
 		                
 		                style: {
-		                	backgroundColor: panelbgcolor,
-		                	color: fontColor,
-		                	fontFamily: fontType,
+		                	backgroundColor: AC.AIR_BG_COLOR,
+		                	color: AC.AIR_FONT_COLOR,
+		                	fontFamily: AC.AIR_FONT_TYPE,
 		                	backgroundImage: 'url("' + img_MenuRight + '")',
 		                	backgroundRepeat: 'no-repeat',
 		                	backgroundPosition: 'left top'
@@ -170,13 +170,13 @@ AIR.AirViewport = Ext.extend(Ext.Viewport, {
 						html: '&nbsp;',
 						style: {
 						   	backgroundColor: '#043453',
-					    	fontFamily: fontType
+					    	fontFamily: AC.AIR_FONT_TYPE
 						}
 					}],
 					bodyStyle: {
 						backgroundColor: '#043453',
 						color: '#CEE7F7',
-				    	fontFamily: fontType
+				    	fontFamily: AC.AIR_FONT_TYPE
 					}
 				}]
 		    }]

@@ -165,16 +165,16 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 	
 	//onMyOwnCIsGridBeforeLoaded
 	onGridBeforeLoaded: function(store, options) {
-		myLoadMask.show();
+		AAM.getMask(AC.MASK_TYPE_LOAD).show();
 	},
 	
 	onMyOwnCIsGridLoaded: function(store, records, options) {
-		myLoadMask.hide();
+		AAM.getMask(AC.MASK_TYPE_LOAD).hide();
 		this.myOwnCIsGrid.updateHeight();
 	},
 	
 	onMyDelegateCIsGridLoaded: function(store, records, options) {
-		myLoadMask.hide();
+		AAM.getMask(AC.MASK_TYPE_LOAD).hide();
 		this.myDelegateCIsGrid.updateHeight();
 	},
 	

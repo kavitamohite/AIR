@@ -725,59 +725,6 @@ AIR.AirStoreFactory = function() {
 			return rolePersonListStore;
 		},
 		
-		//not used
-		/*createRolePersonBusinessEssentialListStore: function() {
-			var rolePersonBusinessEssentialListRecord = Ext.data.Record.create([
-           	    {name: 'id', mapping: 'roleId'},
-           		{name: 'cwid', mapping: 'cwid'},
-           		{name: 'roleName', mapping: 'roleName'}
-       		]);
-
-			var rolePersonBusinessEssentialListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'id'
-			}, rolePersonBusinessEssentialListRecord); 
-
-			var rolePersonBusinessEssentialListStore = new Ext.data.XmlStore({
-				autoDestroy: false,
-				storeId: 'rolePersonBusinessEssentialListStore',
-				autoLoad: false,
-               
-	           	proxy: new Ext.ux.soap.SoapProxy({
-	           		url: webcontext +'/AIRWSPort',
-	           		loadMethod: 'getRolePersonBusinessEssentialEditor',
-	           		timeout: 120000,
-	           		reader: rolePersonBusinessEssentialListReader
-	           	}),
-	           	
-	           	baseParams: {
-	           		cwid: cwid
-	           	},
-	           	
-	           	fields: [ 'id',	'roleId', 'cwid', 'roleName' ],
-	
-	           	reader: rolePersonBusinessEssentialListReader
-	           	
-//	           	listeners: {
-//	           		beforeload: function(store, options) {
-//	           			rolePersonBusinessEssentialListStore.baseParams.cwid = cwid;
-//	           		},
-//	           		load: function(store, records, options) {
-//	           			var beinfo = 'NO';
-//	           			hasRoleBusinessEssentialEditor = false;
-//	           			
-//	           		   	if (undefined !== records && records.hasOwnProperty('0') && 'AIR BusinessEssential-Editor' === records[0].data.roleName) {
-//	           	       		hasRoleBusinessEssentialEditor = true;
-//	           	       		beinfo = 'YES';
-//	                 	}
-//	           		   	
-//	           		   	Ext.getCmp('myplacerolebusinessessentialeditor').setValue(beinfo);
-//	           		}
-//	           	}
-			});
-			
-			return rolePersonBusinessEssentialListStore;
-		},*/
 		
 		createProcessListStore: function() {
 			var processListRecord = Ext.data.Record.create([
@@ -2161,17 +2108,17 @@ AIR.AirStoreFactory = function() {
 					reader: applicationListReader
 				}),
 				
-				reader: applicationListReader,
+				reader: applicationListReader
 	
-			    baseParams: {
-				 	cwid: AIR.AirApplicationManager.getCwid(),
-				 	token: AIR.AirApplicationManager.getToken(),
-					searchAction: searchAction,
-					start: 0,	
-					limit: 20
-				},
-				
-				getGroupState: Ext.emptyFn
+//			    baseParams: {
+//				 	cwid: AIR.AirApplicationManager.getCwid(),
+//				 	token: AIR.AirApplicationManager.getToken(),
+//					searchAction: searchAction,
+//					start: 0,	
+//					limit: 20
+//				},
+//				
+//				getGroupState: Ext.emptyFn
 			});
 			
 			return applicationListStore;

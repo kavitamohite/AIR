@@ -254,17 +254,12 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 	
 	
 	onApplicationBeforeCreate: function(store, options) {
-//		mySaveMask.show({
-//			msg: AIR.AirApplicationManager.getLabels().gerneral_message_saving
-//		});
-		
-		var saveMask = AIR.AirApplicationManager.getMask('saveMask');
+		var saveMask = AIR.AirApplicationManager.getMask(AC.MASK_TYPE_SAVE);
 		saveMask.show();
 	},
 	
 	onApplicationCreate: function(store, records, options) {
-//		mySaveMask.hide();
-		var saveMask = AIR.AirApplicationManager.getMask('saveMask');
+		var saveMask = AIR.AirApplicationManager.getMask(AC.MASK_TYPE_SAVE);
 		saveMask.hide();
 		
 		switch(records[0].data.result) {

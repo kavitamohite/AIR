@@ -8,9 +8,9 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 	toolbarEmptyMessage: '<table><tr><td>&nbsp;</td></tr><table>',
     
 //    style: {
-//		backgroundColor: panelbgcolor,
-//		color: fontColor,
-//    	fontFamily: fontType
+//		backgroundColor: AC.AIR_BG_COLOR,
+//		color: AC.AIR_FONT_COLOR,
+//    	fontFamily: AC.AIR_FONT_TYPE
 //	},
 	
 	initComponent: function() {

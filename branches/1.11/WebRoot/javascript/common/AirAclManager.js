@@ -550,7 +550,7 @@ AIR.AirAclManager = function() {
 
 		setDraft: function(isDraft) {
 			if(isDraft) {
-				Ext.getCmp('editpaneldraft').el.dom.innerHTML = AIR.AirApplicationManager.getLabels().header_applicationIsDraft.replace('##', draftFlag);
+				Ext.getCmp('editpaneldraft').el.dom.innerHTML = AIR.AirApplicationManager.getLabels().header_applicationIsDraft.replace('##', '');//draftFlag '' (#8)
 				Ext.getCmp('editpaneldraft').show();
 			} else {
 				Ext.getCmp('editpaneldraft').hide();
@@ -646,103 +646,6 @@ AIR.AirAclManager = function() {
 				);
 //			}
 		},
-		
-//		onAclLoaded: function(store, records, options) {
-//			aclRec = applicationDetailStore.getRange(0,0);
-//			relevanceOperational = aclRec[0].get('relevanceOperational');
-//        	relevanceStrategic = aclRec[0].get('relevanceStrategic');
-			
-//			var appDetail = applicationDetailStore.data.items[0].data;
-//			var relevanceOperational = appDetail.relevanceOperational;
-//			var relevanceStrategic = appDetail.relevanceStrategic;
-        	
-//			Ext.each(records, function(item, index, allItems) {
-		
-		/*
-		updateAcl: function(appDetail) {//RFC 8225: added "appDetail", removed "store, records, options"
-			this.aclStore.each(function(item, index, allItems) {
-				//NUR NICHT Wizard Felder, bzw. nur Felder, die sich je nach Buntzerrechten am CI hinsichtlich Editierbarkeit und Sichtbarkeit ändern können! Wizard Felder gehören nicht dazu!
-				if(item.data.id.charAt(item.data.id.length - 1) !== 'W') {
-	    			var aclItemCmp = Ext.getCmp(item.data.id);
-	    			
-	    			if(aclItemCmp) {//!==undefined
-	    				switch(aclItemCmp.getXType()) {
-							case 'checkboxgroup':
-							case 'radiogroup':
-							case 'button':
-	    					case 'textfield':
-	    					case 'textarea':
-	    					case 'combo':
-							case 'filterCombo':
-	    					case 'checkbox':
-	    					case 'listview'://grid
-	//    					case 'grid':
-	    						this.setMandatory(aclItemCmp, item.data.Mandatory);
-	    						
-								//user rechte/rollen prüfen. Wenn user rolle 'AIR Administrator' hat, alle Rechte zulassen. Zur Prüfung verwenden: var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
-								//RFC 8231 Einrichten der Rolle "Administrator"
-	//							var isAdmin = AIR.AirApplicationManager.hasRole(AC.USER_ROLE_ADMINISTRATOR);//zum TEST: USER_ROLE_APPLICATION_LAYER;;USER_ROLE_ADMINISTRATOR
-								//RFC 8231 Einrichten der Rolle "Administrator"
-	    						
-	//							if(!isAdmin)
-									this.setEditable(aclItemCmp);
-	    						
-	    						if(!aclItemCmp.disabled) {
-	//    							if(!isAdmin)
-	    								this.setRelevance(aclItemCmp, appDetail);
-	
-	    								
-	//								this.setMandatory(aclItemCmp, item.data.Mandatory);//only at startup?
-									
-									this.setAttributeProperty(
-										aclItemCmp, 
-										item.data.attributeType, 
-										item.data.attributeLength, 
-										item.data.attributeMask,
-										item.data.Mandatory
-									);
-	    						}
-	    						break;
-	    					default: break;
-	    				}
-	    			}
-				}
-        	}.createDelegate(this));
-			
-			// Special for business Essential
-			var aclItemCmp = Ext.getCmp('businessEssential');
-			if(!hasRoleBusinessEssentialEditor) {
-				aclItemCmp.disable();
-				aclItemCmp.setHideTrigger(true);
-				this.setMandatory(aclItemCmp, 'optional');
-			}
-			else {
-				// nur für die Rolle BusinessEssential-Editor !!!
-				// unter Prüfung der Insert-Source mittels isEditable
-				if (this.isEditable(aclItemCmp)) {
-					aclItemCmp.enable();
-					aclItemCmp.setHideTrigger(false);
-					this.setMandatory(aclItemCmp, 'mandatory');
-					// this.setEditable(aclItemCmp); // diese Methode prüft die Rechte und verhindert das Editieren...
-					// deshalb setzen wir das FormElement einzeln auf true
-					this.setFormElementEnable(aclItemCmp, true);
-				}
-			}
-			
-			// always hidden
-			aclItemCmp = Ext.getCmp('objectType');
-			aclItemCmp.hide();
-
-			// always disabled
-			// TODO Maskenänderungen nachziehen
-//			aclItemCmp = Ext.getCmp('itsetName');
-//			aclItemCmp.disable();
-			this.setMandatory(aclItemCmp, 'optional');
-			aclItemCmp = Ext.getCmp('protectionApplicationProtection');
-			aclItemCmp.disable();
-			this.setMandatory(aclItemCmp, 'optional');
-		},*/
-		
 		
 		
 		//===================================================================================================================
