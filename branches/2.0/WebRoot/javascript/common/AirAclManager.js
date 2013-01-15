@@ -350,11 +350,11 @@ AIR.AirAclManager = function() {
 //			aclRec = applicationDetailStore.getRange(0,0);
 //			insertSource = aclRec[0].get('insertQuelle');
 			
-			var isAdmin = AIR.AirApplicationManager.hasRole(AC.USER_ROLE_ADMINISTRATOR);
+			var isAdmin = AAM.hasRole(AC.USER_ROLE_ADMINISTRATOR);
 			if(isAdmin)
 				return true;
 			
-			var appDetail = AIR.AirApplicationManager.getAppDetail();//applicationDetailStore.data.items[0].data;//AIR.ApplicationManager.getAppDetail();(#3)
+			var appDetail = AAM.getAppDetail();//applicationDetailStore.data.items[0].data;//AIR.ApplicationManager.getAppDetail();(#3)
 			var insertSource = appDetail.insertQuelle;
 			
 			var index = this.aclStore.find('id', item.id);

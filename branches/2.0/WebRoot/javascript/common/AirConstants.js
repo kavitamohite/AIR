@@ -36,6 +36,7 @@ AIR.AirConstants = {
 	USER_ROLE_DEVELOPER: 'AIR Developer',
 	
 	TABLE_ID_APPLICATION: 2,
+	TABLE_ID_TERRAIN: 30,
 	
 	APP_CAT1_APPLICATION: '5',//'Application',
 	APP_CAT1_APPLICATION_PLATFORM: '-10006',//'Application Platform',
