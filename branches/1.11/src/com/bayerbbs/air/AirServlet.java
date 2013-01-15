@@ -3,15 +3,28 @@ package com.bayerbbs.air;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bayerbbs.air.error.ErrorCodeReader;
+import com.bayerbbs.applrepos.validation.ValidationReader;
+
 public class AirServlet extends HttpServlet {
 	private static final long serialVersionUID = 3569239290421829949L;
 	
-//	private static final String SEARCH_POINT_SEARCH = 'search';
+	public void init(ServletConfig config) {
+		String configFile = config.getServletContext().getRealPath("config/AttributeProperties.xml");//htdocs
+		ValidationReader.setValidationConfigFile(configFile);
+		
+		String errorMessageFile = config.getServletContext().getRealPath("lang/english_errormessages.xml");//htdocs
+		ErrorCodeReader.setErrorMessageConfigFile(errorMessageFile);
+		
+//		String connectionPropertiesFile = config.getServletContext().getRealPath("htdocs/config/ConnectionProperties.xml");
+//		ConnectionPropertiesReader.setConfigFile(connectionPropertiesFile);
+	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -115,7 +128,8 @@ public class AirServlet extends HttpServlet {
 				
 				append("<script type='text/javascript' src='javascript/ciEdit/CiEditView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/CiDetailsView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/CiSpecificsView.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsView.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsAnwendungView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/CiContactsView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/CiAgreementsView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/CiProtectionView.js'></script>\n").

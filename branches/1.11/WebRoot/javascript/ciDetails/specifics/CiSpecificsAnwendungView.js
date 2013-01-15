@@ -1,16 +1,13 @@
 Ext.namespace('AIR');
 
-AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
+AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	initComponent: function() {
 		this.objectAliasAllowedStore = AIR.AirStoreFactory.getObjectAliasAllowedStore();
 		
 		Ext.apply(this, {
 			labelWidth: 200, // label settings here cascade unless overridden
-		    title: 'Specifics',
 		    
 		    border: false,
-		    bodyStyle: 'padding:10px',
-
 		    layout: 'form',
 		    
 		    items: [{
@@ -224,7 +221,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        layout: 'form',//orig: auskommentiert, anchor
 		        
 				items: [{
-	    			xtype: 'combo',
+	    			xtype: 'filterCombo',//combo
 	    	        id: 'cbApplicationBusinessCat',
 	    	        
 	    	        store: AIR.AirStoreManager.getStoreByName('categoryBusinessListStore'),//categoryBusinessListStore,
@@ -307,7 +304,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}]
 		});
 		
-		AIR.CiSpecificsView.superclass.initComponent.call(this);
+		AIR.CiSpecificsAnwendungView.superclass.initComponent.call(this);
 		
 		this.addEvents('ciBeforeChange', 'ciChange', 'ciInvalid');
 		
@@ -386,12 +383,11 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		AIR.CiDetailsCommon.orgScopeChange(listview, selections);
 		
-		this.fireEvent('ciChange', this, listview, selections);
+		this.ownerCt.fireEvent('ciChange', this, listview, selections);//parentView.ciChange this.fireEvent
 	},
 	
 	onApplicationNameChange: function(textfield, newValue, oldValue) {
-//		activateButtonSaveApplication();
-		this.fireEvent('ciChange', this, textfield, newValue);
+		this.ownerCt.fireEvent('ciChange', this, textfield, newValue);//this
 	},
 	
 	onApplicationAliasChange: function (textfield, newValue, oldValue) {
@@ -412,13 +408,13 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 						this.getComponent('applicationAlias').clearInvalid();
 		    			// data changed - activate save button	
 		    			// activateButtonSaveApplication();
-						this.fireEvent('ciChange', this, textfield, newValue);
+						this.ownerCt.fireEvent('ciChange', this, textfield, newValue);//this
 					} else {
 						this.getComponent('applicationAlias').markInvalid();
 		    			// data changed - but not valid deactivate save button
 		    			// deactivateButtonSaveApplication();
 						
-						this.fireEvent('ciInvalid', this, textfield, newValue);
+						this.ownerCt.fireEvent('ciInvalid', this, textfield, newValue);//this
 					}
 				}.createDelegate(this)
 			});
@@ -427,7 +423,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	
 	onApplicationVersionChange: function(textfield, newValue, oldValue) {
-		this.fireEvent('ciChange', this, textfield, newValue);
+		this.ownerCt.fireEvent('ciChange', this, textfield, newValue);//this
 	},
 	
 	onBARrelevanceChange: function(rgb, checkedRadio) {
@@ -436,7 +432,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		if(checkedRadio.inputValue === 'U')
 			rgb.setValue(AIR.AirApplicationManager.getAppDetail().barRelevance);
 		
-		this.fireEvent('ciChange', this, rgb, checkedRadio);
+		this.ownerCt.fireEvent('ciChange', this, rgb, checkedRadio);//this
 	},
 
 	
@@ -447,7 +443,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		var sapRegex = '[0-9a-zA-Z#=\+\-\_\/\\. ]+M[0-9]+C[0-9]+';
 //		var isSapName = applicationName.match(AC.REGEX_SAP_NAME) != null;
 		
-    	this.fireEvent('ciChange', this, combo, record);
+		this.ownerCt.fireEvent('ciChange', this, combo, record);//this
     },
 	onApplicationCat2BeforeSelect: function(combo, record, index) {
 		return this.checkSapName(record);		
@@ -462,7 +458,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
     		
     		if(record)
     			if(this.checkSapName(record))
-    				this.fireEvent('ciChange', this, combo, newValue);
+    				this.ownerCt.fireEvent('ciChange', this, combo, newValue);//this
     			else
     				combo.setValue(oldValue);//record.get('id')
     	}
@@ -485,18 +481,18 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				sapApplicationCat2: isSapCat2 ? record.get('text') : AIR.AirApplicationManager.getAppDetail().applicationCat2Txt,
 				applicationCat2: isSapCat2 ? AIR.AirApplicationManager.getAppDetail().applicationCat2Txt : record.get('text')
 			};
-			this.fireEvent('airAction', this, 'airError', data);
+			this.ownerCt.fireEvent('airAction', this, 'airError', data);//this
 		}
 		
 		return isValidCat2;
     },
     
     onLifecycleStatusSelect: function(combo, record, index) {
-    	this.fireEvent('ciChange', this, combo, record);
+    	this.ownerCt.fireEvent('ciChange', this, combo, record);//this
     },
     onLifecycleStatusChange: function (combo, newValue, oldValue) {
     	if(this.isComboValueValid(combo, newValue, oldValue))
-    		this.fireEvent('ciChange', this, combo, newValue);
+    		this.ownerCt.fireEvent('ciChange', this, combo, newValue);//this
     },
     
     
@@ -510,45 +506,39 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
     
     
     onOperationalStatusSelect: function(combo, record, index) {
-    	this.fireEvent('ciChange', this, combo, record);
+    	this.ownerCt.fireEvent('ciChange', this, combo, record);//this
     },
     onOperationalStatusChange: function(combo, newValue, oldValue) {
     	if(this.isComboValueValid(combo, newValue, oldValue))
-    		this.fireEvent('ciChange', this, combo, newValue);
+    		this.ownerCt.fireEvent('ciChange', this, combo, newValue);//this
     },
     
     
     onCommentsChange: function(textarea, newValue, oldValue) {
-		this.fireEvent('ciChange', this, textarea, newValue);
+    	this.ownerCt.fireEvent('ciChange', this, textarea, newValue);//this
 	},
     
     
 	onApplicationBusinessCatSelect: function(combo, record, index) {
-//        activateButtonSaveApplication();
-    	this.fireEvent('ciChange', this, combo, record);
+		this.ownerCt.fireEvent('ciChange', this, combo, record);//this
             
-        // reload data class
-        if(record) {//!==undefined
-            selectedCategoryBusinessId = record.data['id'];
-            this.getComponent('specificsCategory').getComponent('cbDataClass').store.load();
-            // selectedDataClassId = '0';
+        if(record) {
+        	var data = {
+    			categoryBusinessId: record.data.id
+        	};
+        	
+            this.getComponent('specificsCategory').getComponent('cbDataClass').store.load({
+            	params: data
+            });
+            
             this.getComponent('specificsCategory').getComponent('cbDataClass').setValue('');
             
-            
-     		// activate data class
-//            if (isRelevance(this.getComponent('cbDataClass'))) {
-            
+
             var appDetail = AIR.AirApplicationManager.getAppDetail();
             if (AIR.AirAclManager.isRelevance(this.getComponent('specificsCategory').getComponent('cbDataClass'), appDetail)) {
-				this.getComponent('specificsCategory').getComponent('cbDataClass').enable();
-				this.getComponent('specificsCategory').getComponent('cbDataClass').setHideTrigger(false);
+            	Util.enableCombo(this.getComponent('specificsCategory').getComponent('cbDataClass'));
 			} else {
-				if(Ext.isIE)
-					this.getComponent('specificsCategory').getComponent('cbDataClass').el.dom.disabled = true;
-				else
-					this.getComponent('specificsCategory').getComponent('cbDataClass').disable();
-
-				this.getComponent('specificsCategory').getComponent('cbDataClass').setHideTrigger(true);
+				Util.disableCombo(this.getComponent('specificsCategory').getComponent('cbDataClass'));
 			}
         }
         else {
@@ -556,29 +546,22 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
         }
     },
     onApplicationBusinessCatChange: function(combo, newValue, oldValue) { 
-		if (newValue !== oldValue) {
+		if (newValue !== oldValue)
 			this.getComponent('specificsCategory').getComponent('cbDataClass').setValue('');
-		}
 		
-		if(newValue.length === 0) {
-			if(Ext.isIE)
-				this.getComponent('specificsCategory').getComponent('cbDataClass').el.dom.disabled = true;
-			else
-				this.getComponent('specificsCategory').getComponent('cbDataClass').disable();
-				
-			this.getComponent('specificsCategory').getComponent('cbDataClass').setHideTrigger(true);
-		}
+		if(newValue.length === 0)
+			Util.disableCombo(this.getComponent('specificsCategory').getComponent('cbDataClass'));
 		
 		if(this.isComboValueValid(combo, newValue, oldValue))
-			this.fireEvent('ciChange', this, combo, newValue);
+			this.ownerCt.fireEvent('ciChange', this, combo, newValue);//this
     },
 
     onDataClassSelect: function(combo, record, index) {
-    	this.fireEvent('ciChange', this, combo, record);
+    	this.fireEvent('ciChange', this, combo, record);//this
     },
     onDataClassChange: function(combo, newValue, oldValue) {
     	if(this.isComboValueValid(combo, newValue, oldValue))
-    		this.fireEvent('ciChange', this, combo, newValue);
+    		this.ownerCt.fireEvent('ciChange', this, combo, newValue);//this
     },
     
     
@@ -594,10 +577,10 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onRecordAdded: function(element, hiddenElement) {
-		this.fireEvent('ciChange', this, element, hiddenElement);
+		this.ownerCt.fireEvent('ciChange', this, element, hiddenElement);//this
 	},
 	onRecordRemoved: function(element, hiddenElement) {
-		this.fireEvent('ciChange', this, element, hiddenElement);
+		this.ownerCt.fireEvent('ciChange', this, element, hiddenElement);//this
 	},
 	
 	update: function(data) {
@@ -939,7 +922,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	updateLabels: function(labels) {
-		this.setTitle(labels.specificsPanelTitle);
+//		this.setTitle(labels.specificsPanelTitle);
 //		this.setFieldLabel(this.getComponent('applicationName'), labels.applicationName);
 		this.setFieldLabel(this.getComponent('applicationAlias'), labels.applicationAlias);
 		this.setFieldLabel(this.getComponent('barApplicationId'), labels.barApplicationId);
@@ -982,4 +965,4 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setTooltipData(this.getComponent('specificsCategory').getComponent('pBusiness').getComponent('labelbusinessProcess'), toolTips.businessProcess, toolTips.businessProcessText);
 	}
 });
-Ext.reg('AIR.CiSpecificsView', AIR.CiSpecificsView);
+Ext.reg('AIR.CiSpecificsAnwendungView', AIR.CiSpecificsAnwendungView);

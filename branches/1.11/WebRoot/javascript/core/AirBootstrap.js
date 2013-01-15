@@ -266,7 +266,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
 	onTokenCheckFailure: function(response, options) {
 //		obj = Ext.util.JSON.decode(response.responseText);
 		
-		AIR.AirApplicationManager.logout();
+		AAM.logout();
 	},
 	
 	onBeforeAirRendered: function(ct) {
@@ -291,30 +291,20 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		this.airMainPanel.update();
 //		AIR.AirAclManager.init();//here instead of launchAir to be done only at stratup?
 		
-
+		AAM.restoreUiState(this.airMainPanel);//schon hier, da nötig für CiEditView.updateLabels()
 //		var task = new Ext.util.DelayedTask(function() {
 //			AIR.AirApplicationManager.updateLanguage(language);
 //			AIR.AirApplicationManager.updateToolTips(language);
 //		});
 //		task.delay(1000);//2000 5000
 
-		this.airMainPanel.updateLabels(AIR.AirApplicationManager.getLabels());
+		this.airMainPanel.updateLabels(AAM.getLabels());
 		//performance Verbesserung: erst rendern wenn user zum ersten Mal über einem Label anhält, anstatt alles nach App Start.
-		this.airMainPanel.updateToolTips(AIR.AirApplicationManager.getToolTips());//AIR.AirApplicationManager.getLanguage()
-//		AIR.AirApplicationManager.restoreUiState(this.airMainPanel);
+		this.airMainPanel.updateToolTips(AAM.getToolTips());//AIR.AirApplicationManager.getLanguage()
 		
-//		this.airMainPanel.getEl().unmask();
 		var startMask = AAM.getMask(AC.MASK_TYPE_START);
 		startMask.hide();
-//		myStartupMask.hide();
-		
-		
-		AIR.AirApplicationManager.restoreUiState(this.airMainPanel);
-		
-//		this.airMainPanel.getComponent('');
-//		$('ciCenterView').corner();//this 'ciCenterView'
-		
-		
+				
 		//Angabe in einer StatusBar: wie lange das Rendern und das Store Laden gedauert hat. Und nach spätestens 5 Sekunden verschwindet Meldung
 //		this.fireEvent('airAction', this, 'airReady');//, data
 	}

@@ -570,7 +570,7 @@ AIR.AirAclManager = function() {
 //			}
 //		},
 //		
-		listRequiredFields: function(data) {
+		getRequiredFields: function(data) {
 			var incompleteFieldList = '';
 			var records = this.aclStore.getRange();
 			var labels = AIR.AirApplicationManager.getLabels();
@@ -684,3 +684,4 @@ AIR.AirAclManager = function() {
 		//===================================================================================================================
     };
 }();
+ACM = AIR.AirAclManager;

@@ -1,8 +1,8 @@
 .icon-delete {
-	background-image:url(../../../../images/failed_type2_16x16.png) ! important;
+	background-image:url(../../../../../images/failed_type2_16x16.png) ! important;
 }
 .icon-info {
-	background-image:url(../../../../images/Info_16x16.png) ! important;
+	background-image:url(../../../../../images/Info_16x16.png) ! important;
 }
 
 a:link {text-decoration: none; color:#085E8B;}

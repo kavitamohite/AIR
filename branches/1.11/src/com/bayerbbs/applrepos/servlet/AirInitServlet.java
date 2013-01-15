@@ -15,10 +15,10 @@ public class AirInitServlet extends HttpServlet {
 	}
 
 	public void init(ServletConfig config) {
-		String configFile = config.getServletContext().getRealPath("htdocs/config/AttributeProperties.xml");
+		String configFile = config.getServletContext().getRealPath("config/AttributeProperties.xml");//htdocs
 		ValidationReader.setValidationConfigFile(configFile);
 		
-		String errorMessageFile = config.getServletContext().getRealPath("htdocs/lang/english_errormessages.xml");
+		String errorMessageFile = config.getServletContext().getRealPath("lang/english_errormessages.xml");//htdocs
 		ErrorCodeReader.setErrorMessageConfigFile(errorMessageFile);
 		
 //		String connectionPropertiesFile = config.getServletContext().getRealPath("htdocs/config/ConnectionProperties.xml");

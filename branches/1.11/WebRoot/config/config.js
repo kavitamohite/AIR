@@ -1,8 +1,3 @@
-/*
- * General configuration
- * 
-*/
-
 // Application Name, Version and Contacts
 var app_version 		= '1.11.000';
 var app_name 			= 'Application Infrastructure Repository';

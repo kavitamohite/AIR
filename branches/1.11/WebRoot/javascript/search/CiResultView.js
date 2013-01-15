@@ -87,7 +87,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			tpCiSearchResultTables.add(ciResultGrid);
 			tpCiSearchResultTables.getItem(ciResultGridId).setTitle(this.getTabTitle(ciResultGridId) + '_' + tabCount);//ciResultGridId
 			tpCiSearchResultTables.setActiveTab(ciResultGridId);
-			this.updateColumnLabels(AIR.AirApplicationManager.getLabels());
+			this.updateColumnLabels(AAM.getLabels());
 
 			ciResultGrid.on('close', this.onTabClose, this);
 			ciResultGrid.getStore().on('beforeload', this.onGridBeforeLoaded , this);
@@ -136,11 +136,11 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		var ciId = record.id;
 		
 		if(record.data.tableId == AC.TABLE_ID_APPLICATION) {
-			AIR.AirApplicationManager.setCiId(ciId);
-			AIR.AirApplicationManager.setTableId(AC.TABLE_ID_APPLICATION);
+			AAM.setCiId(ciId);
+			AAM.setTableId(AC.TABLE_ID_APPLICATION);
 		} else {
-			AIR.AirApplicationManager.setCiId(-1);
-			AIR.AirApplicationManager.setTableId(-1);
+			AAM.setCiId(-1);
+			AAM.setTableId(-1);
 			
 			var ciTypeWarningWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CI_TYPE_NOT_SUPPORTED_WARNING');
 			ciTypeWarningWindow.show();
@@ -159,14 +159,14 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			this.loadMask = Util.createMask('Loading data...', this.getComponent('tpCiSearchResultTables').getActiveTab().getEl());//this.getComponent('tpCiSearchResultTables').getEl()
 		this.loadMask.show();
 		
-//		AIR.AirApplicationManager.getMask('loadMask').show();
+//		AAM.getMask('loadMask').show();
 //		myLoadMask.show();
 	},
 	
 	onGridLoaded: function(store, records, options) {
 		this.loadMask.hide();
 		
-//		AIR.AirApplicationManager.getMask('loadMask').hide();
+//		AAM.getMask('loadMask').hide();
 //		myLoadMask.hide();
 	},
 	

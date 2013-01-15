@@ -2925,14 +2925,14 @@ AIR.AirStoreFactory = function() {
 		        idProperty: 'dwhEntityId',//id
 		        	
 		        fields: ['id', 'ciName', 'ciType', 'source', 'dwhEntityId']//name type
-		    }, ciConnectionsRecord); 
+		    }, ciConnectionsRecord);
 			
 		    var ciConnectionsStore = new Ext.data.XmlStore({
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
 		      	fields: ['id', 'ciName', 'ciType', 'source', 'dwhEntityId'],//name type
-	
+//		      	idProperty: 'dwhEntityId',//id
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
 		      		url: webcontext + '/CiEntityWSPort',//ApplicationWSPort

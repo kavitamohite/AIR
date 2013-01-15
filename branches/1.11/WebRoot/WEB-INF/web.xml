@@ -14,7 +14,7 @@
   	<load-on-startup>1</load-on-startup>
   </servlet>
   
-  <servlet>
+  <!--<servlet>
   	<description>AIR Init Servlet</description>
   	<display-name>AIRInit</display-name>
   	<servlet-name>AIRInit</servlet-name>
@@ -22,7 +22,7 @@
   		com.bayerbbs.applrepos.servlet.AirInitServlet
   	</servlet-class>
   	<load-on-startup>1</load-on-startup>
-  </servlet>
+  </servlet>-->
   
   <servlet-mapping>
   	<servlet-name>ApplicationService</servlet-name>

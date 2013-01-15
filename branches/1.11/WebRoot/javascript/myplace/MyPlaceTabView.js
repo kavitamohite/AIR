@@ -84,9 +84,9 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 	},
 	
 	onExcelExport: function(link, event) {
-//		var exportWindow = window.open('/AIR/excelexport?cwid='+AIR.AirApplicationManager.getCwid()+'&token='+AIR.AirApplicationManager.getToken()+'&searchPoint='+link.getId().substring(0, link.getId().indexOf('_')));
+//		var exportWindow = window.open('/AIR/excelexport?cwid='+AAM.getCwid()+'&token='+AAM.getToken()+'&searchPoint='+link.getId().substring(0, link.getId().indexOf('_')));
 		
-		var exportForm = AIR.AirApplicationManager.getExportForm();//this.getComponent('ciSearchResultView').getComponent('exportForm').getEl().dom.children[0].children[0];//document.createElement('form');//
+		var exportForm = AAM.getExportForm();//this.getComponent('ciSearchResultView').getComponent('exportForm').getEl().dom.children[0].children[0];//document.createElement('form');//
 		
 		exportForm.action = '/AIR/excelexport';
 		exportForm.method = 'POST';
@@ -95,8 +95,8 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		//query searchPoint cwid: already rendered <hidden> fields!
 //		exportForm.query.value = tfSearch.getValue();
 		exportForm.searchAction.value = link.getId().substring(0, link.getId().indexOf('_'));
-		exportForm.cwid.value = AIR.AirApplicationManager.getCwid();
-		exportForm.token.value = AIR.AirApplicationManager.getToken();
+		exportForm.cwid.value = AAM.getCwid();
+		exportForm.token.value = AAM.getToken();
 		
 		exportForm.submit();
 	},
@@ -108,8 +108,8 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		var params = {
 			start: start,//0,//
 			limit: pageSize,//20,
-			cwid: AIR.AirApplicationManager.getCwid(),
-			token: AIR.AirApplicationManager.getToken(),
+			cwid: AAM.getCwid(),
+			token: AAM.getToken(),
 			searchAction: searchAction//'myCis'
 		};
 		
@@ -120,7 +120,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 //			this.myOwnCIsGrid.getColumnModel().setConfig(this.myOwnCIsGrid.getColumnModel().config);//this.myDelegateCIsGrid.getColumnModel().setConfig(this.myDelegateCIsGrid.getDefaultColumnConfig());//
 			
 			this.myOwnCIsGrid.getColumnModel().setConfig(AIR.AirConfigFactory.createCiResultGridConfig(true));
-			this.updateLabels(AIR.AirApplicationManager.getLabels());
+			this.updateLabels(AAM.getLabels());
 		}
 		
 		this.myOwnCIsGrid.getStore().load({
@@ -137,8 +137,8 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		var params = {
 			start: this.myDelegateCIsGrid.getBottomToolbar().cursor,//0,//
 			limit: this.myDelegateCIsGrid.pageSize,//20,
-			cwid: AIR.AirApplicationManager.getCwid(),
-			token: AIR.AirApplicationManager.getToken(),
+			cwid: AAM.getCwid(),
+			token: AAM.getToken(),
 			searchAction: searchAction//'myCisSubstitute'
 		};
 		
@@ -149,7 +149,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 //			this.myDelegateCIsGrid.getColumnModel().setConfig(this.myOwnCIsGrid.getColumnModel().config);//this.myDelegateCIsGrid.getColumnModel().setConfig(this.myDelegateCIsGrid.getDefaultColumnConfig());//
 			
 			this.myDelegateCIsGrid.getColumnModel().setConfig(AIR.AirConfigFactory.createCiResultGridConfig(true));
-			this.updateLabels(AIR.AirApplicationManager.getLabels());
+			this.updateLabels(AAM.getLabels());
 		}
 		
 
@@ -187,12 +187,12 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		
 		if(record.data.tableId == AC.TABLE_ID_APPLICATION) {
 //			selectedCIId = ciId;//grid.store.getAt(rowIndex).id;
-			AIR.AirApplicationManager.setCiId(ciId);
-			AIR.AirApplicationManager.setTableId(AC.TABLE_ID_APPLICATION);
+			AAM.setCiId(ciId);
+			AAM.setTableId(AC.TABLE_ID_APPLICATION);
 		} else {
 //			selectedCIId = -1;
-			AIR.AirApplicationManager.setCiId(-1);
-			AIR.AirApplicationManager.setTableId(-1);
+			AAM.setCiId(-1);
+			AAM.setTableId(-1);
 			
 //			if(Ext.isIE) {
 //				var windowTitle = labels.dynamicWindowCiTypeNotSupportedWarningTitle;

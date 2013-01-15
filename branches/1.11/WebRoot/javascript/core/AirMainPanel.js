@@ -73,7 +73,7 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		var myPlaceHomeView = this.getComponent('ciCenterView').getComponent('myPlaceHomeView');
 		
 		ciInfoView.update(AC.HELP_ID_INFOTEXT);
-		ciTitleView.update(AIR.AirApplicationManager.getLanguage());
+		ciTitleView.update(AAM.getLanguage());
 		myPlaceHomeView.update();
 		navigationV.update();
 		
@@ -131,7 +131,7 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
             
             Ext.getCmp('ciSearchView'),
             Ext.getCmp('ciEditView'),
-            Ext.getCmp('ciEditTabView'),
+//            Ext.getCmp('ciEditTabView'),
             Ext.getCmp('clCiDetails'),
             Ext.getCmp('clCiSpecifics'),
             Ext.getCmp('clCiContacts'),

@@ -154,45 +154,46 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		this.addEvents('airAction');
 		
+		var ciEditTabView = this.getComponent('ciEditTabView');
 		
-		var bSave = this.getComponent('ciEditTabView').getFooterToolbar().getComponent('savebutton');
+		var bSave = ciEditTabView.getFooterToolbar().getComponent('savebutton');
 		bSave.on('click', this.onSaveApplication, this);
 		
-		var bCancel = this.getComponent('ciEditTabView').getFooterToolbar().getComponent('cancelbutton');
+		var bCancel = ciEditTabView.getFooterToolbar().getComponent('cancelbutton');
 		bCancel.on('click', this.cancelApplication, this);
 		
 		
-		var ciDetailsView = this.getComponent('ciEditTabView').getComponent('clCiDetails');
+		var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
 		ciDetailsView.on('ciChange', this.onCiChange, this);
 		
-		var ciSpecificsView = this.getComponent('ciEditTabView').getComponent('clCiSpecifics');
+		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.on('ciChange', this.onCiChange, this);
 		ciSpecificsView.on('ciInvalid', this.onCiInvalid, this);
 		
-		var ciContactsView = this.getComponent('ciEditTabView').getComponent('clCiContacts');
+		var ciContactsView = ciEditTabView.getComponent('clCiContacts');
 		ciContactsView.on('ciChange', this.onCiChange, this);
 		
-		var ciAgreementsView = this.getComponent('ciEditTabView').getComponent('clCiAgreements');
+		var ciAgreementsView = ciEditTabView.getComponent('clCiAgreements');
 		ciAgreementsView.on('ciChange', this.onCiChange, this);
 
-		var ciProtectionView = this.getComponent('ciEditTabView').getComponent('clCiProtection');
+		var ciProtectionView = ciEditTabView.getComponent('clCiProtection');
 		ciProtectionView.on('ciChange', this.onCiChange, this);		
 		
-		var ciComplianceView = this.getComponent('ciEditTabView').getComponent('clCiCompliance');
+		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.on('ciChange', this.onCiChange, this);
 		ciComplianceView.on('complianceTypeChange', this.onComplianceTypeChange, this);
 		ciComplianceView.on('itsecGroupEdit', this.onItsecGroupEdit, this);
 		
-		var ciLicenseView = this.getComponent('ciEditTabView').getComponent('clCiLicense');
+		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
 		ciLicenseView.on('ciChange', this.onCiChange, this);
 		
-		var ciConnectionsView = this.getComponent('ciEditTabView').getComponent('clCiConnections');
+		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.on('ciChange', this.onCiChange, this);
 
-		var ciSupportStuffView = this.getComponent('ciEditTabView').getComponent('clCiSupportStuff');
+		var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 		ciSupportStuffView.on('ciChange', this.onCiChange, this);
 
-		var ciHistoryView = this.getComponent('ciEditTabView').getComponent('clCiHistory');
+		var ciHistoryView = ciEditTabView.getComponent('clCiHistory');
 		ciHistoryView.on('ciChange', this.onCiChange, this);
 		
 		this.isLoaded = false;
@@ -201,15 +202,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		this.callContext = {};
 	},
-	
-	updateLabels: function(labels) {
-		this.getComponent('editpanelmessage').setText(labels.header_applicationIsIncomplete.replace('##', incompleteFieldList));
-    	this.getComponent('editpaneldraft').setText(labels.header_applicationIsDraft.replace('##', ''));//draftFlag '' (#8)
-    	
-		var ciEditTabView = this.getComponent('ciEditTabView');
-		if(ciEditTabView)
-			ciEditTabView.updateLabels(labels);
-	},
+
 	
 	updateToolTips: function(toolTips) {
 		var ciEditTabView = this.getComponent('ciEditTabView');
@@ -284,9 +277,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		appDetailStore.load({
 			params: {
-				applicationId: AIR.AirApplicationManager.getCiId(),
-   			 	cwid: AIR.AirApplicationManager.getCwid(),
-   			 	token: AIR.AirApplicationManager.getToken()
+				applicationId: AAM.getCiId(),
+   			 	cwid: AAM.getCwid(),
+   			 	token: AAM.getToken()
 			}
 		});
 	},
@@ -299,9 +292,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.ciModified = false;
 		
 		var appDetail = records[0].data;
-//		if(appDetail.applicationCat1Id == '0')
-//			appDetail.applicationCat1Id = '5';
-		AIR.AirApplicationManager.setAppDetail(appDetail);
+		appDetail.ciTableId = this.ciTableId || AAM.getTableId();
+
+		AAM.setAppDetail(appDetail);
 		
 
 		this.getComponent('editpanelheader').setText(appDetail.applicationName);
@@ -309,35 +302,36 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 		//---------------------------------------------------------------------------------------------------------
 		//AIR.AirAclManager.updateAcl(appDetail);// RFC 8225: added appDetail param
+		var ciEditTabView = this.getComponent('ciEditTabView');
 		
-		var ciDetailsView = this.getComponent('ciEditTabView').getComponent('clCiDetails');
+		var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
 		ciDetailsView.update(appDetail);//detailsData
 		
-		var ciSpecificsView = this.getComponent('ciEditTabView').getComponent('clCiSpecifics');
+		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.update(appDetail);
 		
-		var ciContactsView = this.getComponent('ciEditTabView').getComponent('clCiContacts');
+		var ciContactsView = ciEditTabView.getComponent('clCiContacts');
 		ciContactsView.update(appDetail);
 		
-		var ciAgreementsView = this.getComponent('ciEditTabView').getComponent('clCiAgreements');
+		var ciAgreementsView = ciEditTabView.getComponent('clCiAgreements');
 		ciAgreementsView.update(appDetail);
 		
-		var ciProtectionView = this.getComponent('ciEditTabView').getComponent('clCiProtection');
+		var ciProtectionView = ciEditTabView.getComponent('clCiProtection');
 		ciProtectionView.update(appDetail);
 
-		var ciLicenseView = this.getComponent('ciEditTabView').getComponent('clCiLicense');
+		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
 		ciLicenseView.update(appDetail);
 		
-		var ciComplianceView = this.getComponent('ciEditTabView').getComponent('clCiCompliance');
+		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.update(appDetail);
 		
-		var ciConnectionsView = this.getComponent('ciEditTabView').getComponent('clCiConnections');
+		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.update(appDetail);
 		
-		var ciSupportStuff = this.getComponent('ciEditTabView').getComponent('clCiSupportStuff');
+		var ciSupportStuff = ciEditTabView.getComponent('clCiSupportStuff');
 		ciSupportStuff.update(appDetail);
 		
-		//var ciHistory = this.getComponent('ciEditTabView').getComponent('clCiHistory');
+		//var ciHistory = ciEditTabView.getComponent('clCiHistory');
 		//ciHistory.update();
 		
 		
@@ -362,7 +356,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		this.disableButtons();
 		
-		var panelMsg = AIR.AirAclManager.listRequiredFields(appDetail);
+		var panelMsg = ACM.getRequiredFields(appDetail);
 		if(panelMsg.length > 0) {
 			this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
 		} else {
@@ -416,6 +410,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 		var ciEditTabView = this.getComponent('ciEditTabView');
 		var data = {};
+		var tableId = this.ciTableId || AAM.getTableId();
+		data.ciTableId = tableId;
 		
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.setData(data);
@@ -441,7 +437,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 		ciSupportStuffView.setData(data);
 		
-		data.tableId = AAM.getTableId();
+		data.tableId = AAM.getTableId();//oder this.ciTableId?
 
 		var saveCallback = function() {
 			AAM.getMask(AC.MASK_TYPE_SAVE).show();
@@ -516,16 +512,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CANCEL_CONFIRMATION', callbackMap);
 		dynamicWindow.show();
 	},
-	
-	updateLabels: function(labels) {
-		//start label language changes of all detail views here?
-		
-		this.getComponent('ciEditTabView').getFooterToolbar().getComponent('savebutton').setText(labels.button_general_save);
-		this.getComponent('ciEditTabView').getFooterToolbar().getComponent('cancelbutton').setText(labels.button_general_cancel);
-	},
+
 	
 	enableButtons: function() {
-		var panelMsg = AIR.AirAclManager.listRequiredFields(AIR.AirApplicationManager.getAppDetail());
+		var panelMsg = ACM.getRequiredFields(AIR.AirApplicationManager.getAppDetail());
 		
 		if(panelMsg.length == 0) {
 			this.setPanelMessage(panelMsg);
@@ -652,75 +642,87 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.saveApplication();
 	},
 	
-	update: function() {
-
-	},
+//	update: function() {
+//
+//	},
 	
 	updateLabels: function(labels) {
-		var ciDetailsView = this.getComponent('ciEditTabView').getComponent('clCiDetails');
+//		this.getComponent('editpanelmessage').setText(labels.header_applicationIsIncomplete.replace('##', ACM.getRequiredFields(AAM.getAppDetail())));
+//    	this.getComponent('editpaneldraft').setText(labels.header_applicationIsDraft.replace('##', ''));//draftFlag '' (#8)
+    	
+    	var ciEditTabView = this.getComponent('ciEditTabView');
+    	
+		var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
 		ciDetailsView.updateLabels(labels);
 		
-		var ciSpecificsView = this.getComponent('ciEditTabView').getComponent('clCiSpecifics');
-		ciSpecificsView.updateLabels(labels);
+		var tableId = this.ciTableId || AAM.getTableId();
+		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
+		ciSpecificsView.updateLabels(labels, tableId);
 		
-		var ciContactsView = this.getComponent('ciEditTabView').getComponent('clCiContacts');
+		var ciContactsView = ciEditTabView.getComponent('clCiContacts');
 		ciContactsView.updateLabels(labels);
 
-		var ciAgreementsView = this.getComponent('ciEditTabView').getComponent('clCiAgreements');
+		var ciAgreementsView = ciEditTabView.getComponent('clCiAgreements');
 		ciAgreementsView.updateLabels(labels);
 
-		var ciProtectionView = this.getComponent('ciEditTabView').getComponent('clCiProtection');
+		var ciProtectionView = ciEditTabView.getComponent('clCiProtection');
 		ciProtectionView.updateLabels(labels);
 		
-		var ciComplianceView = this.getComponent('ciEditTabView').getComponent('clCiCompliance');
+		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.updateLabels(labels);
 		
-		var ciConnectionsView = this.getComponent('ciEditTabView').getComponent('clCiConnections');
+		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.updateLabels(labels);
 
-		var ciLicenseView = this.getComponent('ciEditTabView').getComponent('clCiLicense');
+		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
 		ciLicenseView.updateLabels(labels);
 
-		var ciSupportStuffView = this.getComponent('ciEditTabView').getComponent('clCiSupportStuff');
+		var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 		ciSupportStuffView.updateLabels(labels);
 		
-		var ciHistoryView = this.getComponent('ciEditTabView').getComponent('clCiHistory');
+		var ciHistoryView = ciEditTabView.getComponent('clCiHistory');
 		ciHistoryView.updateLabels(labels);
+		
+		ciEditTabView.getFooterToolbar().getComponent('savebutton').setText(labels.button_general_save);
+		ciEditTabView.getFooterToolbar().getComponent('cancelbutton').setText(labels.button_general_cancel);
 	},
 	
 	updateToolTips: function(toolTips) {
+		var ciEditTabView = this.getComponent('ciEditTabView');
+		
 //		var ciDetailsView = this.getComponent('clCiDetails');
 //		ciDetailsView.updateToolTips(toolTips);
 		
-		var ciSpecificsView = this.getComponent('ciEditTabView').getComponent('clCiSpecifics');
-		ciSpecificsView.updateToolTips(toolTips);
+		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
+		ciSpecificsView.updateToolTips(toolTips, this.ciTableId);
 		
-		var ciContactsView = this.getComponent('ciEditTabView').getComponent('clCiContacts');
+		var ciContactsView = ciEditTabView.getComponent('clCiContacts');
 		ciContactsView.updateToolTips(toolTips);
 
-		var ciAgreementsView = this.getComponent('ciEditTabView').getComponent('clCiAgreements');
+		var ciAgreementsView = ciEditTabView.getComponent('clCiAgreements');
 		ciAgreementsView.updateToolTips(toolTips);
 
-		var ciProtectionView = this.getComponent('ciEditTabView').getComponent('clCiProtection');
+		var ciProtectionView = ciEditTabView.getComponent('clCiProtection');
 		ciProtectionView.updateToolTips(toolTips);
 		
-		var ciComplianceView = this.getComponent('ciEditTabView').getComponent('clCiCompliance');
+		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.updateToolTips(toolTips);
 		
-		var ciConnectionsView = this.getComponent('ciEditTabView').getComponent('clCiConnections');
+		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.updateToolTips(toolTips);
 
-		var ciLicenseView = this.getComponent('ciEditTabView').getComponent('clCiLicense');
+		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
 		ciLicenseView.updateToolTips(toolTips);
 
-		var ciSupportStuffView = this.getComponent('ciEditTabView').getComponent('clCiSupportStuff');
+		var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 		ciSupportStuffView.updateToolTips(toolTips);
 		
-//		var ciHistoryView = this.getComponent('ciEditTabView').getComponent('clCiHistory');
+//		var ciHistoryView = ciEditTabView.getComponent('clCiHistory');
 //		ciHistoryView.updateToolTips(toolTips);
 	},
 	
-	onCiSelected: function() {
+	onCiSelected: function(grid, rowIndex, event) {
+		this.ciTableId = grid.getStore().getAt(rowIndex).get('tableId');
 		this.reset();
 	},
 	

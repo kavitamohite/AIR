@@ -506,10 +506,10 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			case 'clCiSupportStuff':
 			case 'clCiHistory':
 				
-				AIR.AirApplicationManager.updateCookie({
+				AAM.updateCookie({
 					navigation: viewId,
-					ciId: AIR.AirApplicationManager.getCiId(),
-					tableId: AIR.AirApplicationManager.getTableId()
+					ciId: AAM.getCiId(),
+					tableId: AAM.getTableId()
 				});
 
 				
@@ -575,7 +575,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 
 		
 		if(ciEditView && ciEditView.isCiModified()) {
-			var isCiInvalid = AIR.AirAclManager.listRequiredFields(AIR.AirApplicationManager.getAppDetail()).length > 0;
+			var isCiInvalid = ACM.getRequiredFields(AIR.AirApplicationManager.getAppDetail()).length > 0;
 			var options = {
 				isCiInvalid: isCiInvalid
 			};

@@ -498,10 +498,15 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var upStreamListView = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvUpStreamConnections');
 		var downStreamListView = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvDownStreamConnections');
 		
-		var alreadyExists = upStreamListView.getStore().getById(newCiId) ||
-							downStreamListView.getStore().getById(newCiId);
+		//Funktioniert nicht wie erwartet. idProperty im reader des listView Stores ist undefined, obwohl in AirStoreFactory.createCiConnectionsStore()
+		//idProperty: 'dwhEntityId' gesetzt ist. So müsste es funktionieren.
+//		var alreadyExists = upStreamListView.getStore().getById(newCiId) ||
+//							downStreamListView.getStore().getById(newCiId);
+//		alreadyExists = alreadyExists == undefined ? false : true;
+
+		var alreadyExists = upStreamListView.getStore().findExact('dwhEntityId', newCiId) > -1 ||
+							downStreamListView.getStore().findExact('dwhEntityId', newCiId) > -1;
 		
-		alreadyExists = alreadyExists == undefined ? false : true;
 		return alreadyExists;
 	},
 	

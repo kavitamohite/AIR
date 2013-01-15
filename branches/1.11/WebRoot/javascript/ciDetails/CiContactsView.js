@@ -1266,8 +1266,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		} else {
 			data.gpsccontactBusinessOwnerRepresentativeHidden = 'DISABLED';
 		}
-
-		//return data;
 	},
 	
 	updateLabels: function(labels) {
