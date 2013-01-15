@@ -307,8 +307,6 @@ AIR.AirApplicationManager = function() {
 			
 			var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 			var ciComplianceView  = ciEditTabView.getComponent('clCiCompliance');
-			myOwnCIsGrid.on('rowclick', ciEditView.onCiSelected, ciEditView);
-			myDelegateCIsGrid.on('rowclick', ciEditView.onCiSelected, ciEditView);
 			//ciSearchGrid.on('rowclick', ciEditView.onCiSelected, ciEditView);
 			
 			myOwnCIsGrid.on('rowclick', ciConnectionsView.onCiSelected, ciConnectionsView);
@@ -648,7 +646,7 @@ AIR.AirApplicationManager = function() {
 			Ext.state.Manager.clear('airCookie');
 
 			//alle stores leeren und alles andere delete/null setzen
-			window.location = 'logoutAction.jsp?cwid='+this.getCwid()+'&token='+this.getToken();// ../logoutAction.jsp
+			window.location = 'jsp/logoutAction.jsp?cwid='+this.getCwid()+'&token='+this.getToken();// ../logoutAction.jsp
 		},
 		
 		restoreUiState: function(airViewport) {

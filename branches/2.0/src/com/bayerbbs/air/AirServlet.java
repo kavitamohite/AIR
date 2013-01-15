@@ -169,7 +169,7 @@ public class AirServlet extends HttpServlet {
 				append("<script type='text/javascript' src='javascript/core/Main.js'></script>\n").
 	//			===================================================================================================================
 				
-				append("<script type='text/javascript' src='config/config.js'></script>\n").
+				append("<script type='text/javascript' src='conf/config.js'></script>\n").
 			append("</head>\n").
 			
 			

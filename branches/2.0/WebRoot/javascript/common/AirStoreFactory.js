@@ -830,7 +830,7 @@ AIR.AirStoreFactory = function() {
 			var languageHelpStore = new Ext.data.XmlStore({
 			    autoLoad: false,
 			    storeId: 'languageHelpStore',
-			    url: 'lang/german_help.xml',//(*9) lang/ /AIR/htdocs/lang/
+			    url: 'conf/lang/german_help.xml',//(*9) lang/ /AIR/htdocs/lang/
 
 			    record: 'Items',
 			    
@@ -863,7 +863,7 @@ AIR.AirStoreFactory = function() {
 			return this.createLanguageStore('DE');
 		},
 		createLanguageStore: function(language) {
-			var url = language == 'de' || language == 'DE' ? 'lang/german.xml' : 'lang/english.xml';//(*9) lang/ /AIR/htdocs/lang/
+			var url = language == 'de' || language == 'DE' ? 'conf/lang/german.xml' : 'conf/lang/english.xml';//(*9) lang/ /AIR/htdocs/lang/
 			
 			var languageStore = new Ext.data.XmlStore({
 			    autoLoad: false,
@@ -1377,7 +1377,7 @@ AIR.AirStoreFactory = function() {
 			return this.createLanguageToolTipStore('DE');
 		},
 		createLanguageToolTipStore: function(language) {
-			var url = language == 'de' || language == 'DE' ? 'lang/german_tooltips.xml' : 'lang/english_tooltips.xml';//(*9) lang/ /AIR/htdocs/lang/
+			var url = language == 'de' || language == 'DE' ? 'conf/lang/german_tooltips.xml' : 'conf/lang/english_tooltips.xml';//(*9) lang/ /AIR/htdocs/lang/
 			
 			var languageToolTipStore = new Ext.data.XmlStore({
 			    autoLoad: false,
@@ -1789,7 +1789,7 @@ AIR.AirStoreFactory = function() {
 			var aclStore = new Ext.data.XmlStore({
 			    autoLoad: false,//false true
 			    storeId: 'aclStore',
-			    url: 'config/AttributeProperties.xml',//(*9) config/ /AIR/htdocs/config/
+			    url: 'conf/AttributeProperties.xml',//(*9) config/ /AIR/htdocs/config/
 
 			    record: 'Identifier', // records will have an 'Identifier' tag
 			    
@@ -3039,7 +3039,7 @@ AIR.AirStoreFactory = function() {
 			
 			var store = new Ext.data.XmlStore({
 			    autoLoad: false,
-			    url: 'config/ConnectionProperties.xml',//(*9) config/ /AIR/htdocs/config/
+			    url: 'conf/ConnectionProperties.xml',//(*9) config/ /AIR/htdocs/config/
 			    
 			    // reader configs
 			    record: 'Identifier',

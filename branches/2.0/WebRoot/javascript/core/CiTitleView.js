@@ -206,7 +206,7 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 	},
 	
 	onInfoClick: function(button, event) {
-		window.open('versioninfo.html', 'version', 'width=580,height=360,scrollbars=no, toolbar=no,status=no, resizable=yes,menubar=no,location=no,directories=no,top=10,left=10');
+		window.open('conf/versioninfo.html', 'version', 'width=580,height=360,scrollbars=no, toolbar=no,status=no, resizable=yes,menubar=no,location=no,directories=no,top=10,left=10');
 	},
 	
 	

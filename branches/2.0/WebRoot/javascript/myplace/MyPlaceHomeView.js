@@ -360,16 +360,16 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			var value = item.data.itsecUserOptionValue;
 			
 			if ('AIR_APPLICATION_ONLY' === key) {
-				selectedOnlyApplications = true;
+//				selectedOnlyApplications = true;
 			}
 			else if ('AIR_LANGUAGE' === key) {
 				// invert selected language and switch
 				if ('DE' == value) {
-					selectedLanguage = 'EN';
+//					selectedLanguage = 'EN';
 					this.getComponent('fsUserOptions').getComponent('useroptionLanguage').setValue(true);
 				}
 				else if('EN' === value) {
-					selectedLanguage = 'DE';
+//					selectedLanguage = 'DE';
 					this.getComponent('fsUserOptions').getComponent('useroptionLanguage').setValue(false);
 				}
 			}
@@ -406,18 +406,18 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			else if ('AIR_NUMBER_FORMAT' === key) {
 				// invert selected language and switch
 				if ('DE' == value) {
-					selectedNumberFormat = 'DE';
+//					selectedNumberFormat = 'DE';
 					this.getComponent('fsUserOptions').getComponent('useroptionNumberFormat').setValue(true);
 				}
 				else if('EN' === value) {
-					selectedNumberFormat = 'US';
+//					selectedNumberFormat = 'US';
 					this.getComponent('fsUserOptions').getComponent('useroptionNumberFormat').setValue(false);
 				}
 			}
 			else if ('AIR_CURRENCY' === key) {
 				// set the currency				
 				this.getComponent('fsUserOptions').getComponent('useroptionCurrency').setValue(value);
-				selectedCurrency = value;
+//				selectedCurrency = value;
 			}
 		}.createDelegate(this));
 		

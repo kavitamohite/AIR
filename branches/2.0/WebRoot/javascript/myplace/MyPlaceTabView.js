@@ -205,7 +205,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 //			}
 		}
 		
-		this.fireEvent('ciSelect', this, ciId);//selectedCIId ciId
+		this.fireEvent('ciSelect', this, ciId, null, record);
 	},
 	
 	onRowDoubleClick: function (grid, rowIndex, e) {

@@ -9,8 +9,8 @@ var app_interfacename 	= 'AIR';
 // Directories
 var webcontext = '/AIR';
 var imgcontext = 'images/';//images/ /AIR/htdocs/images/
-var lngcontext = 'lang/';
-var doccontext = 'docs/';
+var lngcontext = 'conf/lang/';//lang/
+var doccontext = 'doc/';
 
 //Languages 
 var lng_DE 			= lngcontext + 'german.xml';
