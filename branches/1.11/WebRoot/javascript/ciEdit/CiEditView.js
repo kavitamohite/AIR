@@ -721,8 +721,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 //		ciHistoryView.updateToolTips(toolTips);
 	},
 	
-	onCiSelected: function(grid, rowIndex, event) {
-		this.ciTableId = grid.getStore().getAt(rowIndex).get('tableId');
+	onCiSelected: function(sourceView, ciId, target, record) {
+		this.ciTableId = record.get('tableId');//grid.getStore().getAt(rowIndex).get('tableId');
 		this.reset();
 	},
 	

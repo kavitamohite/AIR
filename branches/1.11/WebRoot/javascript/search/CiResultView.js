@@ -146,7 +146,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			ciTypeWarningWindow.show();
 		}
 		
-		this.fireEvent('ciSelect', this, ciId);
+		this.fireEvent('ciSelect', this, ciId, null, record);//grid this
 	},
 	
 	onRowDoubleClick: function (grid, rowIndex, e) {

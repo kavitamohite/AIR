@@ -307,8 +307,6 @@ AIR.AirApplicationManager = function() {
 			
 			var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 			var ciComplianceView  = ciEditTabView.getComponent('clCiCompliance');
-			myOwnCIsGrid.on('rowclick', ciEditView.onCiSelected, ciEditView);
-			myDelegateCIsGrid.on('rowclick', ciEditView.onCiSelected, ciEditView);
 			//ciSearchGrid.on('rowclick', ciEditView.onCiSelected, ciEditView);
 			
 			myOwnCIsGrid.on('rowclick', ciConnectionsView.onCiSelected, ciConnectionsView);

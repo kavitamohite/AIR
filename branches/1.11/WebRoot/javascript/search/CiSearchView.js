@@ -308,8 +308,11 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 	    var params = this.getBaseSearchParams();
 	    
+	    var store = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
+	    var isAppOnly = AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_LAYER) || store.findExact('itsecUserOptionName', 'AIR_APPLICATION_ONLY') > -1;
+	    params.onlyapplications = '' + isAppOnly;//selectedOnlyApplications;
+
 	    params.query = searchString;
-	    params.onlyapplications = '' + selectedOnlyApplications;
 	    params.queryMode = queryMode;
 		params.advancedsearch = '' + this.isAdvSearch;
 		
