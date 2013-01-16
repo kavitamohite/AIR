@@ -14,9 +14,11 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 		    
 		    items: [{
 		    	id: 'clCiSpecificsAnwendung',
-		        xtype: 'AIR.CiSpecificsAnwendungView',
-		        parentView: this
-			}]
+		        xtype: 'AIR.CiSpecificsAnwendungView'
+			}/*,{
+		    	id: 'clCiSpecificsTerrain',
+		        xtype: 'AIR.CiSpecificsTerrainView'
+			}*/]
 		});
 		
 		AIR.CiSpecificsView.superclass.initComponent.call(this);
@@ -28,73 +30,54 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 	},
 
 	update: function(data) {
-		switch(parseInt(data.ciTableId)) {
-			case AC.TABLE_ID_APPLICATION:
-				this.getComponent('clCiSpecificsAnwendung').update(data);
-				break;
-		}
+		var specificsView = this.getSpecificsViewByTableId(parseInt(data.ciTableId));//parseInt(
+		specificsView.update(data);
 	},
 	
 	
 	setData: function(data) {
-		switch(parseInt(data.ciTableId)) {
-			case AC.TABLE_ID_APPLICATION:
-				this.getComponent('clCiSpecificsAnwendung').setData(data);
-				break;
-		}
+		var specificsView = this.getSpecificsViewByTableId(parseInt(data.ciTableId));//parseInt(
+		specificsView.setData(data);
 	},
 
 	
 	validate: function(item) {
 		/*switch(item.getId()) {
 			case 'cbIsTemplate':
-				var isChecked = item.getValue();
-				var rgBARrelevance = this.getComponent('rgBARrelevance');
-				
-				if(AIR.AirAclManager.isRelevance(rgBARrelevance, AAM.getAppDetail())) {
-					var labels = AAM.getLabels();
-					var infoTitle = labels.templateBARrelevanceValidationTitle,
-						infoText;
-					
-					if(isChecked) {
-						rgBARrelevance.setValue('N');
-						rgBARrelevance.disable();
-						
-						infoText = labels.templateBARrelevanceValidationBARrelevance1;
-					} else {
-						var barRelevance = AAM.getAppDetail().barRelevance;
-						rgBARrelevance.setValue(barRelevance);
-						
-						if(barRelevance !== 'Y')
-							rgBARrelevance.enable();
-						
-						infoText = labels.templateBARrelevanceValidationBARrelevance2;
-					}
-					
-					var infoWindow = AIR.AirWindowFactory.createDynamicMessageWindow('GENERIC_OK', null, infoText, infoTitle);
-					infoWindow.show();
-				}
+			
 				break;
 			default: break;
 		}*/
 	},
 	
+
+	
 	updateLabels: function(labels, ciTableId) {
 		this.setTitle(labels.specificsPanelTitle);
 
-		switch(parseInt(ciTableId)) {
-			case AC.TABLE_ID_APPLICATION:
-				this.getComponent('clCiSpecificsAnwendung').updateLabels(labels);
-				break;
-		}
+		var specificsView = this.getSpecificsViewByTableId(parseInt(ciTableId));//parseInt(
+		specificsView.updateLabels(labels);
 	},
 	
 	updateToolTips: function(toolTips, ciTableId) {
-		switch(parseInt(ciTableId)) {
+		var specificsView = this.getSpecificsViewByTableId(parseInt(ciTableId));//parseInt(
+		specificsView.updateToolTips(toolTips);
+	},
+	
+
+	getSpecificsViewByTableId: function(tableId) {
+		var specificsView;
+		
+		switch(tableId) {
 			case AC.TABLE_ID_APPLICATION:
-				this.getComponent('clCiSpecificsAnwendung').updateToolTips(toolTips);
+				specificsView = this.getComponent('clCiSpecificsAnwendung');
+				break;
+			case AC.TABLE_ID_TERRAIN:
+				specificsView = this.getComponent('clCiSpecificsTerrain');
 				break;
 		}
+		
+		return specificsView;
 	}
 });
 Ext.reg('AIR.CiSpecificsView', AIR.CiSpecificsView);

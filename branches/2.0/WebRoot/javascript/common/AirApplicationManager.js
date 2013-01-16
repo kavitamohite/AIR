@@ -656,7 +656,11 @@ AIR.AirApplicationManager = function() {
 				this.setCiId(airCookie.ciId);
 				this.setTableId(airCookie.tableId);
 			}
-				
+		},
+		
+		restoreUi: function(airViewport) {
+			var airCookie = Ext.state.Manager.get('airCookie');
+			
 			if(airCookie.navigation)
 				airViewport.fireEvent('externalNavigation', airViewport, null, airCookie.navigation);
 			else this.historyManager.afterInit();

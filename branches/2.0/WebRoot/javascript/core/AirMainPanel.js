@@ -134,6 +134,8 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 //            Ext.getCmp('ciEditTabView'),
             Ext.getCmp('clCiDetails'),
             Ext.getCmp('clCiSpecifics'),
+            Ext.getCmp('clCiSpecificsAnwendung'),
+            Ext.getCmp('clCiSpecificsTerrain'),
             Ext.getCmp('clCiContacts'),
             Ext.getCmp('clCiAgreements'),
             Ext.getCmp('clCiProtection'),

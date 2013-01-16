@@ -410,7 +410,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 		var ciEditTabView = this.getComponent('ciEditTabView');
 		var data = {};
-		var tableId = this.ciTableId || AAM.getTableId();
+		var tableId = this.ciTableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
 		data.ciTableId = tableId;
 		
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
@@ -655,7 +655,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
 		ciDetailsView.updateLabels(labels);
 		
-		var tableId = this.ciTableId || AAM.getTableId();
+		//falls kein CI vor dem Start ausgewählt war, gibt es natürlich keine gesicherte tableId. Folge: kein specificsView Label kann gesetzt werden
+		//ODER die Lebels aller specificsView CI Typ Seiten müssen gesetzt werden ODER CiSpecificsAnwendungView Labels werden per Default gesetzt, wie hier:
+		var tableId = this.ciTableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.updateLabels(labels, tableId);
 		
@@ -693,8 +695,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 //		var ciDetailsView = this.getComponent('clCiDetails');
 //		ciDetailsView.updateToolTips(toolTips);
 		
+		var tableId = this.ciTableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
-		ciSpecificsView.updateToolTips(toolTips, this.ciTableId);
+		ciSpecificsView.updateToolTips(toolTips, tableId);
 		
 		var ciContactsView = ciEditTabView.getComponent('clCiContacts');
 		ciContactsView.updateToolTips(toolTips);

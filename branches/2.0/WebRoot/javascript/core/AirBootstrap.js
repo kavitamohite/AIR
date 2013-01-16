@@ -288,22 +288,20 @@ AIR.AirBootstrap = Ext.extend(Object, {
 //		ciTitleView.update(language);
 //		myPlaceHomeView.update();
 //		navigationV.update();
-		this.airMainPanel.update();
+//		this.airMainPanel.update();
 //		AIR.AirAclManager.init();//here instead of launchAir to be done only at stratup?
 		
-		AAM.restoreUiState(this.airMainPanel);//schon hier, da nötig für CiEditView.updateLabels()
-//		var task = new Ext.util.DelayedTask(function() {
-//			AIR.AirApplicationManager.updateLanguage(language);
-//			AIR.AirApplicationManager.updateToolTips(language);
-//		});
-//		task.delay(1000);//2000 5000
-
+		AAM.restoreUiState(this.airMainPanel);//schon hier, da nötig für CiEditView.updateLabels() wegen tableId
+		
+		this.airMainPanel.update();
 		this.airMainPanel.updateLabels(AAM.getLabels());
 		//performance Verbesserung: erst rendern wenn user zum ersten Mal über einem Label anhält, anstatt alles nach App Start.
 		this.airMainPanel.updateToolTips(AAM.getToolTips());//AIR.AirApplicationManager.getLanguage()
 		
 		var startMask = AAM.getMask(AC.MASK_TYPE_START);
 		startMask.hide();
+		
+		AAM.restoreUi(this.airMainPanel);
 				
 		//Angabe in einer StatusBar: wie lange das Rendern und das Store Laden gedauert hat. Und nach spätestens 5 Sekunden verschwindet Meldung
 //		this.fireEvent('airAction', this, 'airReady');//, data
