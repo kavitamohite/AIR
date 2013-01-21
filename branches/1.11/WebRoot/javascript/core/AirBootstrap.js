@@ -110,8 +110,25 @@ AIR.AirBootstrap = Ext.extend(Object, {
 	},
 	
 	createCookie: function(loginData) {
-		AIR.AirApplicationManager.updateCookie({ cwid: loginData.cwid, token: loginData.token, username: loginData.username, lastlogon: loginData.lastlogon });
-//		Ext.state.Manager.set('airCookie', { cwid: loginData.cwid, token: loginData.token, username: loginData.username });
+		var cookieData = {
+			cwid: loginData.cwid,
+			token: loginData.token,
+			username: loginData.username,
+			lastlogon: loginData.lastlogon
+		};
+		
+		if(AAM.isAnwendungsEinsprung()) {
+			var einsprungData = AAM.getEinsprungData();
+			
+//			for(var key in einsprungData)
+//				cookieData[key] = einsprungData[key];
+			
+			cookieData.tableId = einsprungData.tableId;
+			cookieData.ciId = einsprungData.ciId;
+			cookieData.navigation = einsprungData.navigation;
+		}
+		
+		AAM.updateCookie(cookieData);
 	},
 	
 	initAir: function(loginData) {

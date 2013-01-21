@@ -335,9 +335,9 @@
 			If "yes" an ITSec group must be assigned to the CI.
 		</relevanceGR1435Text>
 
-		<relevanceGR1775>GR1775</relevanceGR1775>
+		<relevanceGR1775>GR2059</relevanceGR1775><!-- RFC 9016 1775 zu 2059 -->
 		<relevanceGR1775Text>
-			Specifies whether a CI is GR1775 relevant or
+			Specifies whether a CI is GR2059 relevant or
 			not.&lt;br&gt;
 			If "yes" an ITSec group must be assigned to the CI.
 		</relevanceGR1775Text>

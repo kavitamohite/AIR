@@ -391,7 +391,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
     	var userNameC = this.getComponent('usernamecontainer');
     	var usernameSpan = userNameC.el.dom.children[2];
     	        	
-    	username = AIR.AirApplicationManager.getUserName();//responseData.username;//username ist global
     	var showLoginData = AIR.AirApplicationManager.getUserName() +' (' + AIR.AirApplicationManager.getCwid().toUpperCase() + ')';//username cwid.toUpperCase()
     	        	
     	var usernameSpan = Ext.get('username');//username usernamecontainer

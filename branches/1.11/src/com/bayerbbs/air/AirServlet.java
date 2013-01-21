@@ -31,7 +31,7 @@ public class AirServlet extends HttpServlet {
 	}
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		String ciId = req.getParameter("id");
+//		String ciId = req.getParameter("id");
 		
 		StringBuffer html = new StringBuffer();
 		
@@ -41,12 +41,19 @@ public class AirServlet extends HttpServlet {
 		if(isIE) {
 			html.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n");
 		} else {
-			html.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
+			html.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");//<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">	<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">
 		}
+		
+//		String einsprungHiddenFeld = "";
+//		if(ciId != null)
+//			einsprungHiddenFeld = "<hidden id='ciId' value='"+ciId+"'/>\n";
+		
+//		String basePath = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath();
 		
 		html.
 		append("<html>\n").
 			append("<head>\n").
+//				append("<base href='"+basePath+"'>\n").
 				append("<meta name='description' content='BBS Application Infrastructure Repository'>\n").
 				append("<meta name='keywords' content='BBS, AIR, Application Infrastructure Repository'>\n").
 				append("<meta name='author' content='BBS-ITO-BDC-FSC-SCM'>\n").
@@ -176,6 +183,7 @@ public class AirServlet extends HttpServlet {
 			
 			
 			append("<body style='background-color: #D3E1F1;'>\n").
+//				append(einsprungHiddenFeld).
 				append("<div id='content' style='background-color: #043453;'>\n").
 					append("<div id='startscreen' class='x-hidden' style='color: darkblue; font-family: Arial, Helvetica, sans-serif !important;'><h1>Startseite</h1>Dies ist die Einstiegsseite zur Anwendung...</div>\n").
 					append("<div id='searchgrid' class='x-hidden'></div>\n").

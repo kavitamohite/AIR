@@ -228,7 +228,7 @@
 				<isTemplate>BYTsec-Template?</isTemplate>
 			<compliancerelevance>Relevante Regelungen</compliancerelevance>	
 				<relevanceGR1435>KR1435</relevanceGR1435>
-				<relevanceGR1775>KR1775</relevanceGR1775>
+				<relevanceGR1775>KR2059</relevanceGR1775><!-- RFC 9016 1775 zu 2059 -->
 				<relevanceGR1920>KR1920 (ICS)</relevanceGR1920>
 				<relevanceGR2008>KR2008</relevanceGR2008>
 				<relevanceEditButton>Bearbeiten</relevanceEditButton>
@@ -347,11 +347,6 @@
 			<wizardapplicationAlias>Alias</wizardapplicationAlias>
 			<wizardcomments>Description</wizardcomments>
 			<wizardRelevance>Relevanz</wizardRelevance>
-				<labelwizardrelevanceGR1920>KR1920 (ICS)</labelwizardrelevanceGR1920>
-				<labelwizardrelevanceGR1435>KR1435</labelwizardrelevanceGR1435>
-				<labelwizardrelevanceGR1775>KR1775</labelwizardrelevanceGR1775>
-				<labelwizardrelevanceGR2008>KR2008</labelwizardrelevanceGR2008>
-				<labelwizardrelevanceGxp>GxP</labelwizardrelevanceGxp>
 			<wizardisTemplate>Ist BYTsec-Template</wizardisTemplate>
 			<tfApplicationIdW>Bayer Application Registry ID</tfApplicationIdW>
 			<labeltfApplicationOwnerCompanyW>Application Owner Company</labeltfApplicationOwnerCompanyW>

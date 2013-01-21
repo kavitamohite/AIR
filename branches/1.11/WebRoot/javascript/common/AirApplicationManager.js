@@ -11,11 +11,23 @@ AIR.AirApplicationManager = function() {
 
 		
 		processLogin: function(initAirCallback, loginCallback) {
+//			var hCiId = document.getElementById('ciId');
+//			var uri = hCiId.baseURI;
+//			var ciId = hCiId.attributes[0].value;
+
+			
 			var airCookie = Ext.state.Manager.get('airCookie');
 			
 			if(airCookie) {
 				var checkAuthStore = AIR.AirStoreFactory.createCheckAuthStore();
 //				checkAuthStore.on('load', this.onAuthCheck, this);
+				
+
+				if(this.isAnwendungsEinsprung()) {
+					var einsprungData = this.getEinsprungData();
+					
+					this.updateCookie(einsprungData);
+				}
 				
 				checkAuthStore.load({
 					params: {
@@ -723,6 +735,38 @@ AIR.AirApplicationManager = function() {
 			}
 			
 			return value.length <= AC.REGEX_SAP_NAME_PART_2_3 && value.length > 0;
+		},
+		
+		isAnwendungsEinsprung: function() {
+			var baseURI = Ext.isIE ? document.URL || document.location : Ext.getBody().dom.baseURI;
+			return baseURI.indexOf('?') > -1;
+		},
+		
+		getEinsprungData: function() {
+			var baseURI = Ext.isIE ? document.URL || document.location : Ext.getBody().dom.baseURI;
+			
+			if(baseURI.indexOf('#') > -1)
+				baseURI = baseURI.split('#')[0];
+			
+			var tableIdCiId = baseURI.split('?')[1].split('=')[1];
+			var isPair = tableIdCiId.indexOf('-') > -1;
+			if(isPair) {
+				tableIdCiId = tableIdCiId.split('-');
+				tableIdCiId[0] = 'APP';//solange noch nicht alle CI Typen unterstützt werden. Siehe RFC 9022
+			}
+				
+			
+			var einsprungData = {
+				tableId: isPair ? this.getTableIdByTLA(tableIdCiId[0]) : AC.TABLE_ID_APPLICATION,
+				ciId: isPair ? tableIdCiId[1] : tableIdCiId,
+				navigation: 'clCiDetails'
+			};
+			
+			return einsprungData;
+		},
+		
+		getTableIdByTLA: function(ciTypeTLA) {
+			return AC.CI_TYPE_TLA[ciTypeTLA];
 		}
 	};
 }();

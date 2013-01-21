@@ -292,7 +292,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.ciModified = false;
 		
 		var appDetail = records[0].data;
-		appDetail.ciTableId = this.ciTableId || AAM.getTableId();
+		appDetail.ciTableId = this.ciTableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;
 
 		AAM.setAppDetail(appDetail);
 		

@@ -115,7 +115,25 @@ AIR.AirConstants = {
 	
 	MASK_TYPE_START: 'start',
 	MASK_TYPE_LOAD: 'load',
-	MASK_TYPE_SAVE: 'save'
+	MASK_TYPE_SAVE: 'save',
+	
+	CI_TYPE_TLA: {
+		SPL: 1,
+		APP: 2,
+		ROM: 3,
+		GEB: 4,
+		COU: 11,
+		SIT: 12,
+		POS: 13,
+		HWK: 19,
+		TER: 30,
+		WAY: 37,
+		NWA: 53,
+		ARE: 88,
+		DNS: 106,
+		PRC: 118,
+		SVC: 123
+	}
 };
 AC = AIR.AirConstants;
 
