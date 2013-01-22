@@ -139,7 +139,7 @@ public class ApplicationEditParameterInput {
 	
 	// compliance request
 	private String relevanceGR1435;
-	private String relevanceGR1775;
+	private String relevanceGR2059;
 	private String relevanceGR1920;
 	private String relevanceGR2008;
 
@@ -954,13 +954,13 @@ public class ApplicationEditParameterInput {
 	}
 
 
-	public String getRelevanceGR1775() {
-		return relevanceGR1775;
+	public String getRelevanceGR2059() {
+		return relevanceGR2059;
 	}
 
 
-	public void setRelevanceGR1775(String relevanceGR1775) {
-		this.relevanceGR1775 = relevanceGR1775;
+	public void setRelevanceGR2059(String relevanceGR2059) {
+		this.relevanceGR2059 = relevanceGR2059;
 	}
 
 

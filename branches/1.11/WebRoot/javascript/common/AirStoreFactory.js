@@ -1039,7 +1039,7 @@ AIR.AirStoreFactory = function() {
 					{name: 'itsetName'},
 			        {name: 'relevanceGR1920'},
 			        {name: 'relevanceGR1435'},
-			        {name: 'relevanceGR1775'},
+			        {name: 'relevanceGR2059'},
 			        {name: 'relevanceGR2008'},
 			        {name: 'relevanceEditButton'},
 					{name: 'relevanceViewButton'},
@@ -1490,8 +1490,8 @@ AIR.AirStoreFactory = function() {
 					
 			        {name: 'relevanceGR1435'},
 			        {name: 'relevanceGR1435Text'},
-			        {name: 'relevanceGR1775'},
-			        {name: 'relevanceGR1775Text'},
+			        {name: 'relevanceGR2059'},
+			        {name: 'relevanceGR2059Text'},
 			        {name: 'relevanceGR1920'},
 			        {name: 'relevanceGR1920Text'},
 			        {name: 'relevanceGR2008'},
@@ -2280,8 +2280,8 @@ AIR.AirStoreFactory = function() {
 				name : 'relevanceGR1435',
 				mapping : 'applicationDTO > relevanceGR1435'
 			}, {
-				name : 'relevanceGR1775',
-				mapping : 'applicationDTO > relevanceGR1775'
+				name : 'relevanceGR2059',
+				mapping : 'applicationDTO > relevanceGR2059'
 			}, {
 				name : 'relevanceGR1920',
 				mapping : 'applicationDTO > relevanceGR1920'
@@ -2292,8 +2292,8 @@ AIR.AirStoreFactory = function() {
 				name : 'ciComplianceRequestId1435',
 				mapping : 'applicationDTO > ciComplianceRequestId1435'
 			}, {
-				name : 'ciComplianceRequestId1775',
-				mapping : 'applicationDTO > ciComplianceRequestId1775'
+				name : 'ciComplianceRequestId2059',
+				mapping : 'applicationDTO > ciComplianceRequestId2059'
 			}, {
 				name : 'ciComplianceRequestId1920',
 				mapping : 'applicationDTO > ciComplianceRequestId1920'

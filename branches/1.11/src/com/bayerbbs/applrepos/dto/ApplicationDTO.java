@@ -72,7 +72,7 @@ public class ApplicationDTO implements Serializable {
 	
 	private Long relevanceICS;
 	
-	private Long relevance1775;
+	private Long relevance2059;
 	
 	private Long relevance2008;
 	
@@ -210,12 +210,12 @@ public class ApplicationDTO implements Serializable {
 	
 	// compliance request
 	private String relevanceGR1435;
-	private String relevanceGR1775;
+	private String relevanceGR2059;
 	private String relevanceGR1920;
 	private String relevanceGR2008;
 
 	private Long ciComplianceRequestId1435;
-	private Long ciComplianceRequestId1775;
+	private Long ciComplianceRequestId2059;
 	private Long ciComplianceRequestId1920;
 	private Long ciComplianceRequestId2008;
 	
@@ -1309,17 +1309,17 @@ public class ApplicationDTO implements Serializable {
 		}
 	}
 
-	public String getRelevanceGR1775() {
-		return relevanceGR1775;
+	public String getRelevanceGR2059() {
+		return relevanceGR2059;
 	}
 
-	public void setRelevanceGR1775(String relevanceGR1775) {
-		this.relevanceGR1775 = relevanceGR1775;
-		if ("Y".equals(relevanceGR1775)) {
-			setRelevance1775(new Long(-1));
+	public void setRelevanceGR2059(String relevanceGR2059) {
+		this.relevanceGR2059 = relevanceGR2059;
+		if ("Y".equals(relevanceGR2059)) {
+			setRelevance2059(new Long(-1));
 		}
-		else if ("N".equals(relevanceGR1775)) {
-			setRelevance1775(new Long(0));
+		else if ("N".equals(relevanceGR2059)) {
+			setRelevance2059(new Long(0));
 		}
 	}
 
@@ -1359,12 +1359,12 @@ public class ApplicationDTO implements Serializable {
 		this.ciComplianceRequestId1435 = ciComplianceRequestId1435;
 	}
 
-	public Long getCiComplianceRequestId1775() {
-		return ciComplianceRequestId1775;
+	public Long getCiComplianceRequestId2059() {
+		return ciComplianceRequestId2059;
 	}
 
-	public void setCiComplianceRequestId1775(Long ciComplianceRequestId1775) {
-		this.ciComplianceRequestId1775 = ciComplianceRequestId1775;
+	public void setCiComplianceRequestId2059(Long ciComplianceRequestId2059) {
+		this.ciComplianceRequestId2059 = ciComplianceRequestId2059;
 	}
 
 	public Long getCiComplianceRequestId1920() {
@@ -1431,12 +1431,12 @@ public class ApplicationDTO implements Serializable {
 		this.organisationalScope = organisationalScope;
 	}
 	
-	public Long getRelevance1775() {
-		return relevance1775;
+	public Long getRelevance2059() {
+		return relevance2059;
 	}
 
-	public void setRelevance1775(Long relevance1775) {
-		this.relevance1775 = relevance1775;
+	public void setRelevance2059(Long relevance2059) {
+		this.relevance2059 = relevance2059;
 	}
 
 	public Long getRelevance2008() {

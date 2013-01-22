@@ -506,7 +506,7 @@ public class ApplicationWS {
 		
 		// compliance request
 		dto.setRelevanceGR1435(editInput.getRelevanceGR1435());
-		dto.setRelevanceGR1775(editInput.getRelevanceGR1775());
+		dto.setRelevanceGR2059(editInput.getRelevanceGR2059());
 		dto.setRelevanceGR1920(editInput.getRelevanceGR1920());
 		dto.setRelevanceGR2008(editInput.getRelevanceGR2008());
 		
@@ -663,7 +663,7 @@ public class ApplicationWS {
 				dto.setRelevanzItsec(applicationSource.getRelevanzITSEC());
 				dto.setRelevanceICS(applicationSource.getRelevanceICS());
 
-				dto.setRelevance1775(applicationSource.getRelevance1775());
+				dto.setRelevance2059(applicationSource.getRelevance2059());
 				dto.setRelevance2008(applicationSource.getRelevance2008());
 				
 				
@@ -918,7 +918,7 @@ public class ApplicationWS {
 				// compliance
 				Long releItsec = dto.getRelevanzItsec();
 				Long releICS = dto.getRelevanceICS();
-				Long rele1775 = dto.getRelevance1775();
+				Long rele2059 = dto.getRelevance2059();
 				Long rele2008 = dto.getRelevance2008();
 				
 				if (-1 == releItsec) {
@@ -933,11 +933,11 @@ public class ApplicationWS {
 				else if (0 == releICS) {
 					dto.setRelevanceGR1920("N");
 				}
-				if (-1 == rele1775) {
-					dto.setRelevanceGR1775("Y");
+				if (-1 == rele2059) {
+					dto.setRelevanceGR2059("Y");
 				}
-				else if (0 == rele1775) {
-					dto.setRelevanceGR1775("N");
+				else if (0 == rele2059) {
+					dto.setRelevanceGR2059("N");
 				}
 				if (-1 == rele2008) {
 					dto.setRelevanceGR2008("Y");

@@ -228,7 +228,7 @@
 				<isTemplate>BYTsec-Template?</isTemplate>
 			<compliancerelevance>Relevante Regelungen</compliancerelevance>	
 				<relevanceGR1435>KR1435</relevanceGR1435>
-				<relevanceGR1775>KR2059</relevanceGR1775><!-- RFC 9016 1775 zu 2059 -->
+				<relevanceGR2059>KR2059</relevanceGR2059><!-- RFC 9016 1775 zu 2059 -->
 				<relevanceGR1920>KR1920 (ICS)</relevanceGR1920>
 				<relevanceGR2008>KR2008</relevanceGR2008>
 				<relevanceEditButton>Bearbeiten</relevanceEditButton>

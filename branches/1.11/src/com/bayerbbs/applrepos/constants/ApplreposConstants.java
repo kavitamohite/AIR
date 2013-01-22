@@ -52,7 +52,7 @@ public class ApplreposConstants {
 	public final static Long CI_SUPPORT_STUFF_TYPE_ProvidedMachineUsers = new Long(9);
 
 	public final static Long COMPLIANCE_REQUEST_GR1435 = new Long(1);
-	public final static Long COMPLIANCE_REQUEST_GR1775 = new Long(2);
+	public final static Long COMPLIANCE_REQUEST_GR2059 = new Long(2);
 	public final static Long COMPLIANCE_REQUEST_GR1920 = new Long(3);
 	public final static Long COMPLIANCE_REQUEST_GR2008 = new Long(4);
 	

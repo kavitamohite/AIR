@@ -55,7 +55,7 @@ public class Application extends DeletableRevisionInfo {
 	
 	private Long relevanceICS;
 	private Long relevanzITSEC;
-	private Long relevance1775;
+	private Long relevance2059;
 	private Long relevance2008;
 	private String gxpFlag;
 	// private String riskAnalysisYN;
@@ -470,21 +470,21 @@ public class Application extends DeletableRevisionInfo {
 	}
 
 	/**
-	 * @return the relevance1775
+	 * @return the relevance2059
 	 */
-	@Column(name = "RELEVANCE_1775")
-	public Long getRelevance1775() {
-		return relevance1775;
+	@Column(name = "RELEVANCE_2059")
+	public Long getRelevance2059() {
+		return relevance2059;
 	}
 
 	/**
-	 * Sets the value of the {@link #relevance1775} field.
+	 * Sets the value of the {@link #relevance2059} field.
 	 * 
-	 * @param relevance1775
+	 * @param relevance2059
 	 *            The value to set.
 	 */
-	public void setRelevance1775(Long relevance1775) {
-		this.relevance1775 = relevance1775;
+	public void setRelevance2059(Long relevance2059) {
+		this.relevance2059 = relevance2059;
 	}
 
 	/**

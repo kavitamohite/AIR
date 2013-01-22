@@ -228,7 +228,7 @@
 				<isTemplate>Is BYTsec-Template</isTemplate>
 			<compliancerelevance>Relevant Regulations</compliancerelevance>	
 				<relevanceGR1435>GR1435</relevanceGR1435>
-				<relevanceGR1775>GR2059</relevanceGR1775><!-- RFC 9016 1775 zu 2059 -->
+				<relevanceGR2059>GR2059</relevanceGR2059><!-- RFC 9016 1775 zu 2059 -->
 				<relevanceGR1920>GR1920 (ICS)</relevanceGR1920>
 				<relevanceGR2008>GR2008</relevanceGR2008>
 				<relevanceEditButton>Edit</relevanceEditButton>

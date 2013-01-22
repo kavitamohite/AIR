@@ -207,7 +207,7 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
     			items: [
 			        { boxLabel: 'GR1435', name: 'cbgWizardRegulationsW', width: 100 },
 			        { boxLabel: 'GR1920', name: 'cbgWizardRegulationsW', width: 100 },
-			        { boxLabel: 'GR1775', name: 'cbgWizardRegulationsW', width: 100 },
+			        { boxLabel: 'GR2059', name: 'cbgWizardRegulationsW', width: 100 },
 			        { boxLabel: 'GR2008', name: 'cbgWizardRegulationsW', width: 100 }
 		        ]
 	        },{
@@ -491,7 +491,7 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		
 		var cbgRegulations = this.getComponent('cbgRegulationsW');
 		this.setBoxLabel(cbgRegulations.items.items[0], labels.relevanceGR1435);
-		this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceGR1775);
+		this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceGR2059);
 		this.setBoxLabel(cbgRegulations.items.items[2], labels.relevanceGR1920);
 		this.setBoxLabel(cbgRegulations.items.items[3], labels.relevanceGR2008);
 		this.setFieldLabel(cbgRegulations, labels.compliancerelevance);

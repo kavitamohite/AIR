@@ -335,12 +335,12 @@
 			If "yes" an ITSec group must be assigned to the CI.
 		</relevanceGR1435Text>
 
-		<relevanceGR1775>GR2059</relevanceGR1775><!-- RFC 9016 1775 zu 2059 -->
-		<relevanceGR1775Text>
+		<relevanceGR2059>GR2059</relevanceGR2059><!-- RFC 9016 1775 zu 2059 -->
+		<relevanceGR2059Text>
 			Specifies whether a CI is GR2059 relevant or
 			not.&lt;br&gt;
 			If "yes" an ITSec group must be assigned to the CI.
-		</relevanceGR1775Text>
+		</relevanceGR2059Text>
 
 		<relevanceGR1920>Relevance ICS</relevanceGR1920>
 		<relevanceGR1920Text>
@@ -363,7 +363,7 @@
 		<riskAnalysisYN>Risk analysis</riskAnalysisYN>
 		<riskAnalysisYNText>
 			Defines the availability of a formal risk analysis
-			according to GR1775 or GR2008.
+			according to GR2059 or GR2008.
 		</riskAnalysisYNText>
 
 

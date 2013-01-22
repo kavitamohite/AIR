@@ -362,13 +362,9 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
         			hideLabel: true,
         			
         			items: [
-//    			        { boxLabel: 'GR1435', name: 'cbgRegulations', width: 100 },
-//    			        { boxLabel: 'GR1775', name: 'cbgRegulations', width: 100 },
-//    			        { boxLabel: 'GR2008', name: 'cbgRegulations', width: 100 },
-//    			        { boxLabel: 'GR1920', name: 'cbgRegulations', width: 100 }
 						{ boxLabel: 'GR1435', name: 'cbgRegulations', width: 100 },
     			        { boxLabel: 'GR1920', name: 'cbgRegulations', width: 100 },
-    			        { boxLabel: 'GR1775', name: 'cbgRegulations', width: 100 },
+    			        { boxLabel: 'GR2059', name: 'cbgRegulations', width: 100 },
     			        { boxLabel: 'GR2008', name: 'cbgRegulations', width: 100 }
 			        ]
 		        }, {
@@ -1062,7 +1058,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.get('fsRelevantRegulations').setTitle(labels.compliancerelevance);
 		var cbgRegulations = this.get('fsRelevantRegulations').get('cbgRegulations');
 		this.setBoxLabel(cbgRegulations.items.items[0], labels.relevanceGR1435);
-		this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceGR1775);
+		this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceGR2059);
 		this.setBoxLabel(cbgRegulations.items.items[2], labels.relevanceGR1920);
 		this.setBoxLabel(cbgRegulations.items.items[3], labels.relevanceGR2008);
 	},
@@ -1084,7 +1080,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setTooltipData(label, toolTips.relevanceGR1435, toolTips.relevanceGR1435Text);//oder nur für checkbox el.dom
 		
 		label = Ext.isIE ? cbgRegulations.items.items[1].label.dom.nextSibling.children[0] : cbgRegulations.items.items[1].label.dom.nextElementSibling.children[0];
-		this.setTooltipData(label, toolTips.relevanceGR1775, toolTips.relevanceGR1775Text);
+		this.setTooltipData(label, toolTips.relevanceGR2059, toolTips.relevanceGR2059Text);
 		
 		label = Ext.isIE ? cbgRegulations.items.items[2].label.dom.nextSibling.children[0] : cbgRegulations.items.items[2].label.dom.nextElementSibling.children[0];
 		this.setTooltipData(label, toolTips.relevanceGR1920, toolTips.relevanceGR1920Text);

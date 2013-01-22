@@ -449,8 +449,8 @@ public class AnwendungHbn {
 							application.setRelevanzITSEC(dto.getRelevanzItsec());
 						}
 
-						if (null != dto.getRelevance1775()) {
-							application.setRelevance1775(dto.getRelevance1775());
+						if (null != dto.getRelevance2059()) {
+							application.setRelevance2059(dto.getRelevance2059());
 						}
 						if (null != dto.getRelevance2008()) {
 							application.setRelevance2008(dto.getRelevance2008());
@@ -887,12 +887,12 @@ public class AnwendungHbn {
 							}
 						}
 						
-						if (null == dto.getRelevance1775()) {
-							if ("Y".equals(dto.getRelevanceGR1775())) {
-								dto.setRelevance1775(new Long(-1));
+						if (null == dto.getRelevance2059()) {
+							if ("Y".equals(dto.getRelevanceGR2059())) {
+								dto.setRelevance2059(new Long(-1));
 							}
-							else if ("N".equals(dto.getRelevanceGR1775())) {
-								dto.setRelevance1775(new Long(0));
+							else if ("N".equals(dto.getRelevanceGR2059())) {
+								dto.setRelevance2059(new Long(0));
 							}
 						}
 
@@ -909,7 +909,7 @@ public class AnwendungHbn {
 						application.setTemplate(dto.getTemplate());
 						application.setRelevanzITSEC(dto.getRelevanzItsec());
 						application.setRelevanceICS(dto.getRelevanceICS());
-						application.setRelevance1775(dto.getRelevance1775());
+						application.setRelevance2059(dto.getRelevance2059());
 						application.setRelevance2008(dto.getRelevance2008());
 						application.setGxpFlag(dto.getGxpFlagId());
 						application.setSlaId(dto.getSlaId());
@@ -1422,7 +1422,7 @@ public class AnwendungHbn {
 		sql.append("		  , anw.itset");
 		sql.append("		  , itsverb.it_verbund_name");
 		sql.append("		  , anw.relevance_ics");
-		sql.append("		  , anw.relevance_1775");
+		sql.append("		  , anw.relevance_2059");
 		sql.append("		  , anw.relevance_2008");
 		sql.append("		  , anw.gxp_flag");
 		sql.append("		  , anw.sla_id");
@@ -1620,8 +1620,8 @@ public class AnwendungHbn {
 				Long relevanceICS = rsMessage.getLong("RELEVANCE_ICS");
 				applicationDTO.setRelevanceICS(relevanceICS);
 				
-				Long relevance1775 = rsMessage.getLong("RELEVANCE_1775");
-				applicationDTO.setRelevance1775(relevance1775);
+				Long relevance2059 = rsMessage.getLong("RELEVANCE_2059");
+				applicationDTO.setRelevance2059(relevance2059);
 
 				Long relevance2008 = rsMessage.getLong("RELEVANCE_2008");
 				applicationDTO.setRelevance2008(relevance2008);
