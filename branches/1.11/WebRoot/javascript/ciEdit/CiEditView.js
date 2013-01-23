@@ -271,17 +271,23 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	loadCiDetails: function() {
-		var appDetailStore = AIR.AirStoreFactory.createApplicationDetailStore();
-		appDetailStore.on('beforeload', this.onBeforeLoadApplication, this);
-		appDetailStore.on('load', this.onLoadApplication, this);
-		
-		appDetailStore.load({
-			params: {
-				applicationId: AAM.getCiId(),
-   			 	cwid: AAM.getCwid(),
-   			 	token: AAM.getToken()
-			}
-		});
+		if(Util.isCiId(AAM.getCiId())) {
+			var appDetailStore = AIR.AirStoreFactory.createApplicationDetailStore();
+			appDetailStore.on('beforeload', this.onBeforeLoadApplication, this);
+			appDetailStore.on('load', this.onLoadApplication, this);
+			
+			appDetailStore.load({
+				params: {
+					applicationId: AAM.getCiId(),
+	   			 	cwid: AAM.getCwid(),
+	   			 	token: AAM.getToken()
+				}
+			});
+		} else {
+			var labels = AAM.getLabels();
+			var message = labels.CiEinsprungCiIdInvalidMessage.replace('{0}', AAM.getCiId());
+			this.openEinsprungDataWarnungWindow(message);
+		}
 	},
 	
 	onBeforeLoadApplication: function(store, options) {
@@ -293,86 +299,108 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		var appDetail = records[0].data;
 		appDetail.ciTableId = this.ciTableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;
-
 		AAM.setAppDetail(appDetail);
 		
-
-		this.getComponent('editpanelheader').setText(appDetail.applicationName);
-		this.getComponent('editpanelsubheader').setText(appDetail.applicationCat1Txt);
-
-		//---------------------------------------------------------------------------------------------------------
-		//AIR.AirAclManager.updateAcl(appDetail);// RFC 8225: added appDetail param
-		var ciEditTabView = this.getComponent('ciEditTabView');
-		
-		var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
-		ciDetailsView.update(appDetail);//detailsData
-		
-		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
-		ciSpecificsView.update(appDetail);
-		
-		var ciContactsView = ciEditTabView.getComponent('clCiContacts');
-		ciContactsView.update(appDetail);
-		
-		var ciAgreementsView = ciEditTabView.getComponent('clCiAgreements');
-		ciAgreementsView.update(appDetail);
-		
-		var ciProtectionView = ciEditTabView.getComponent('clCiProtection');
-		ciProtectionView.update(appDetail);
-
-		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
-		ciLicenseView.update(appDetail);
-		
-		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
-		ciComplianceView.update(appDetail);
-		
-		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
-		ciConnectionsView.update(appDetail);
-		
-		var ciSupportStuff = ciEditTabView.getComponent('clCiSupportStuff');
-		ciSupportStuff.update(appDetail);
-		
-		//var ciHistory = ciEditTabView.getComponent('clCiHistory');
-		//ciHistory.update();
-		
-		
-		var task = new Ext.util.DelayedTask(function() {
-			AIR.AirAclManager.setDraft(AIR.AirAclManager.isDraft());
-//			AIR.AirAclManager.updateAcl();
-		}.createDelegate(this));
-		task.delay(1500);
+		if(appDetail.applicationId.length === 0) {
+			//wenn die ciId für den gegebenen ciType/tableId nicht existiert (z.B. aufgrund schlechter URL CI Einsprungdaten),
+			//OK Hinweisfenster mit navigation callback zur Search
+			
+			var labels = AAM.getLabels();
+			var message = labels.CiEinsprungCiIdDoesNotExistMessage.replace('{0}', AAM.getCiId());
+			this.openEinsprungDataWarnungWindow(message);
+		} else {
+			this.getComponent('editpanelheader').setText(appDetail.applicationName);
+			this.getComponent('editpanelsubheader').setText(appDetail.applicationCat1Txt);
+	
+			//---------------------------------------------------------------------------------------------------------
+			//AIR.AirAclManager.updateAcl(appDetail);// RFC 8225: added appDetail param
+			var ciEditTabView = this.getComponent('ciEditTabView');
+			
+			var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
+			ciDetailsView.update(appDetail);//detailsData
+			
+			var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
+			ciSpecificsView.update(appDetail);
+			
+			var ciContactsView = ciEditTabView.getComponent('clCiContacts');
+			ciContactsView.update(appDetail);
+			
+			var ciAgreementsView = ciEditTabView.getComponent('clCiAgreements');
+			ciAgreementsView.update(appDetail);
+			
+			var ciProtectionView = ciEditTabView.getComponent('clCiProtection');
+			ciProtectionView.update(appDetail);
+	
+			var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
+			ciLicenseView.update(appDetail);
+			
+			var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
+			ciComplianceView.update(appDetail);
+			
+			var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
+			ciConnectionsView.update(appDetail);
+			
+			var ciSupportStuff = ciEditTabView.getComponent('clCiSupportStuff');
+			ciSupportStuff.update(appDetail);
+			
+			//var ciHistory = ciEditTabView.getComponent('clCiHistory');
+			//ciHistory.update();
+			
+			
+			var task = new Ext.util.DelayedTask(function() {
+				AIR.AirAclManager.setDraft(AIR.AirAclManager.isDraft());
+	//			AIR.AirAclManager.updateAcl();
+			}.createDelegate(this));
+			task.delay(1500);
+			
+//			AAM.getMask(AC.MASK_TYPE_LOAD).hide();
+			
+			
+			//das Akzeptieren von User Bedienaktionen (textfeld Änderungen, combo Auswahlen, ...) erst jetzt wieder freischalten für
+			//den Empfang von ciChange Events
+	//		this.isUserChange = true;
+			var task = new Ext.util.DelayedTask(function() {
+				this.isUserChange = true;
+				this.doLayout();
+	
+			}.createDelegate(this));
+			task.delay(1000);//1000 2000
+			
+			this.disableButtons();
+			
+			var panelMsg = ACM.getRequiredFields(appDetail);
+			if(panelMsg.length > 0) {
+				this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
+			} else {
+				this.setPanelMessage(panelMsg);
+			}
+	
+			if(this.callContext.itsecGroupEdit) {
+				var callback = this.callContext.itsecGroupEdit.callback.createDelegate(ciComplianceView);
+				var params = this.callContext.itsecGroupEdit.params;
+	
+				callback(params);
+				delete this.callContext.itsecGroupEdit;
+			}
+	//		this.fireEvent('airAction', this, 'appLoadSuccess');
+		}
 		
 		AAM.getMask(AC.MASK_TYPE_LOAD).hide();
-		
-		
-		//das Akzeptieren von User Bedienaktionen (textfeld Änderungen, combo Auswahlen, ...) erst jetzt wieder freischalten für
-		//den Empfang von ciChange Events
-//		this.isUserChange = true;
-		var task = new Ext.util.DelayedTask(function() {
-			this.isUserChange = true;
-			this.doLayout();
-
-		}.createDelegate(this));
-		task.delay(1000);//1000 2000
-		
-		this.disableButtons();
-		
-		var panelMsg = ACM.getRequiredFields(appDetail);
-		if(panelMsg.length > 0) {
-			this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
-		} else {
-			this.setPanelMessage(panelMsg);
-		}
-
-		if(this.callContext.itsecGroupEdit) {
-			var callback = this.callContext.itsecGroupEdit.callback.createDelegate(ciComplianceView);
-			var params = this.callContext.itsecGroupEdit.params;
-
-			callback(params);
-			delete this.callContext.itsecGroupEdit;
-		}
-//		this.fireEvent('airAction', this, 'appLoadSuccess');
 	},
 	
+	openEinsprungDataWarnungWindow: function(message) {
+		var callback = function() {
+			this.fireEvent('externalNavigation', this, null, 'clSearch');
+		};
+		
+		var callbackMap = {
+			ok: callback.createDelegate(this)
+		};
+
+		
+		var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('WARNING_OK', callbackMap, message, AAM.getLabels().CiEinsprungInvalidTitle);
+		dynamicWindow.show();		
+	},
 	
 	//move to CiCenterView CiEditView ?
 	onSaveApplication: function(button, event) {

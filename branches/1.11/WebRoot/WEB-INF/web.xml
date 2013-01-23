@@ -135,18 +135,38 @@
   	<url-pattern>/massnbeschreibung</url-pattern>
   </servlet-mapping>
   
-  <!-- (*9) -->
+  
+  <!--
   <servlet>
-  	<description>AirServlet</description>
+  	<servlet-name>AirRedirectServlet</servlet-name>
+  	<servlet-class>com.bayerbbs.air.AirRedirectServlet</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AirRedirectServlet</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>-->
+  
+  
+  <servlet>
   	<servlet-name>AirServlet</servlet-name>
   	<servlet-class>com.bayerbbs.air.AirServlet</servlet-class>
   	<load-on-startup>1</load-on-startup>
   </servlet>
+  <!-- (*9)
   <servlet-mapping>
   	<servlet-name>AirServlet</servlet-name>
-  	<url-pattern>/run</url-pattern><!-- / /run -->
+  	<url-pattern>/run</url-pattern>
+  </servlet-mapping> -->
+  <!---->
+  <servlet-mapping>
+  	<servlet-name>AirServlet</servlet-name>
+  	<url-pattern>/P</url-pattern>
   </servlet-mapping>
-   
+  <servlet-mapping>
+  	<servlet-name>AirServlet</servlet-name>
+  	<url-pattern>/Q</url-pattern>
+  </servlet-mapping>
   
   <!--
   <welcome-file-list>
@@ -154,7 +174,5 @@
   </welcome-file-list>-->
   
   <listener>
-  	<listener-class>
-  		com.sun.xml.ws.transport.http.servlet.WSServletContextListener
-  	</listener-class>
+  	<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
   </listener></web-app>

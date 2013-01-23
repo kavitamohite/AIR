@@ -30,8 +30,37 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		    },{
 			    region: 'center',
 				id: 'ciCenterView',
-				
 				xtype: 'AIR.CiCenterView'
+		    	
+		    	
+//		    	region: 'center',
+//		    	xtype: 'panel',
+//		    	id: 'pLCiCenterView',
+//		    	
+////				layout: 'form',//fit form
+//				border: false,
+//				
+//				bodyStyle: {
+//		    		backgroundColor: '#12638e'
+//		    	},
+//		    	
+//		    	items: [
+//		    	{
+//		    		html: '<div style="background-color: white; border-radius:25px 25px 0px 0px; height: 25px;"></div>'
+//		    	},
+//		    	{
+//		    		xtype: 'panel',
+//		    		border: false,
+////		    		height: 25,
+//		    		
+//				    bodyStyle: {
+//			    		borderRadius: '25px 25px 0px 0px'
+////			    		backgroundColor: '#12638e'
+//			    	}
+//		    	},{
+//					id: 'ciCenterView',
+//					xtype: 'AIR.CiCenterView'
+//		    	}]
 		    },{
 		    	region: 'east',
 		        id: 'eastpanel',
@@ -70,7 +99,7 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		var ciInfoView = this.getComponent('eastpanel');
 		var ciTitleView = this.getComponent('ciTitleView');
 		var navigationV = this.getComponent('ciNavigationView');
-		var myPlaceHomeView = this.getComponent('ciCenterView').getComponent('myPlaceHomeView');
+		var myPlaceHomeView = this/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView').getComponent('myPlaceHomeView');
 		
 		ciInfoView.update(AC.HELP_ID_INFOTEXT);
 		ciTitleView.update(AAM.getLanguage());
@@ -110,12 +139,12 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		var ciNavigationView = this.getComponent('ciNavigationView');
 		ciNavigationView.updateLabels(labels);
 		
-		var ciCenterView = this.getComponent('ciCenterView');
+		var ciCenterView = this/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView');
 		ciCenterView.updateLabels(labels);
 	},
 
 	updateToolTips: function(toolTips) {
-		var ciCenterView = this.getComponent('ciCenterView');
+		var ciCenterView = this/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView');
 		ciCenterView.updateToolTips(toolTips);
 	},
 	

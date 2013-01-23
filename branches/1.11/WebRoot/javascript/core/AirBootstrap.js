@@ -249,14 +249,14 @@ AIR.AirBootstrap = Ext.extend(Object, {
 //		new AIR.AirViewport(airMainPanel);
 		
 		this.airMainPanel = new AIR.AirMainPanel();
-		this.airMainPanel.on('render', this.onBeforeAirRendered , this);
+//		this.airMainPanel.on('render', this.onBeforeAirRendered , this);
 		
 		
 		AIR.AirApplicationManager.afterInit(this.airMainPanel);
 		
 		
 		//move to AirApplicationManager::afterInit ?	ciCreateWizardView
-		var lastRenderedView = this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardView').getComponent('ciCreateWizardP2').getComponent('ciCreateAppRequiredView').getComponent('fsContactsGPSCW').getComponent('pGPSCOwningBusinessGroup').getComponent('labeltaGPSCOwningBusinessGroup');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('CiCopyFromView');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciDeleteView');////this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardPagesView').getComponent('ciCreateWizardPage3').getComponent('wizardCiowner').getComponent('tbWizardciResponsible');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('CiDeleteView');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardPagesView').getComponent('ciCreateWizardPage3').getComponent('wizardCiowner').getComponent('tbWizardciResponsible');
+		var lastRenderedView = this.airMainPanel/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardView').getComponent('ciCreateWizardP2').getComponent('ciCreateAppRequiredView').getComponent('fsContactsGPSCW').getComponent('pGPSCOwningBusinessGroup').getComponent('labeltaGPSCOwningBusinessGroup');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('CiCopyFromView');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciDeleteView');////this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardPagesView').getComponent('ciCreateWizardPage3').getComponent('wizardCiowner').getComponent('tbWizardciResponsible');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('CiDeleteView');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardPagesView').getComponent('ciCreateWizardPage3').getComponent('wizardCiowner').getComponent('tbWizardciResponsible');
 		lastRenderedView.on('afterrender', this.onAirRendered , this);//render
 		
 		//ODER das hier ?

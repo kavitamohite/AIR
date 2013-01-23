@@ -35,7 +35,7 @@ AIR.AirApplicationManager = function() {
 						token: airCookie.token
 					},
 					callback: function(records, options, isSuccess) {
-						Util.log('Login Status: '+records[0].data.result);
+//						Util.log('Login Status: '+records[0].data.result);
 						
 						if(isSuccess && records[0].data.result === 'OK') {
 							initAirCallback(airCookie);
@@ -206,7 +206,7 @@ AIR.AirApplicationManager = function() {
 			this.dirtyNavRef = navigationView;//REFAC!
 			
 			//center
-			var ciCenterView = airViewport.getComponent('ciCenterView');
+			var ciCenterView = airViewport/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView');
 			var ciInfoView = airViewport.getComponent('eastpanel');
 			var myPlaceTabView = ciCenterView.getComponent('myPlaceView').getComponent('myPlaceTabView');
 			var ciSearchView = ciCenterView.getComponent('ciSearchView');
@@ -255,7 +255,7 @@ AIR.AirApplicationManager = function() {
 			//external navigation (CiNavigationView perspective)
 			//new wizard
 			
-			var ciCreateWizardView = airViewport.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardView');//.getComponent('ciCreateWizardP1').getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView')
+			var ciCreateWizardView = airViewport/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardView');//.getComponent('ciCreateWizardP1').getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView')
 			if(ciCreateWizardView) {
 				ciCreateWizardView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
 				ciCreateWizardView.on('airAction', this.onAirAction, this);
@@ -264,7 +264,7 @@ AIR.AirApplicationManager = function() {
 			
 			
 			
-			var ciCreateView = airViewport.getComponent('ciCenterView').getComponent('ciCreateView');
+			var ciCreateView = airViewport/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView').getComponent('ciCreateView');
 			var ciCopyFromView = ciCreateView.getComponent('ciCreatePagesView').getComponent('CiCopyFromView');
 			var ciCreateWizardPagesView = ciCreateView.getComponent('ciCreatePagesView').getComponent('ciCreateWizardPagesView');
 			
@@ -277,7 +277,7 @@ AIR.AirApplicationManager = function() {
 			myPlaceTabView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);//doubleclick on ci in ci search table
 //			ciSearchView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);//doubleclick on ci in ci search table
 			
-			var myPlaceHomeView = airViewport.getComponent('ciCenterView').getComponent('myPlaceHomeView');
+			var myPlaceHomeView = airViewport/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView').getComponent('myPlaceHomeView');
 			if(ciCreateWizardPagesView)
 				ciCreateWizardPagesView.on('userOptionsChange', myPlaceHomeView.saveUserOptions, myPlaceHomeView);
 			
@@ -748,7 +748,7 @@ AIR.AirApplicationManager = function() {
 			if(baseURI.indexOf('#') > -1)
 				baseURI = baseURI.split('#')[0];
 			
-			var tableIdCiId = baseURI.split('?')[1].split('=')[1];
+			var tableIdCiId = baseURI.indexOf('?') > 0 && baseURI.indexOf('=') > -1 ? baseURI.split('?')[1].split('=')[1] : '0';
 			var isPair = tableIdCiId.indexOf('-') > -1;
 			if(isPair) {
 				tableIdCiId = tableIdCiId.split('-');

@@ -22,6 +22,13 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 //		    },
 //		    cls: 'roundCorners',
 		    
+
+			/*
+		    bodyStyle: {
+	    		borderRadius: '30px 30px 0px 0px'
+//	    		backgroundColor: '#12638e'
+	    	},*/
+		    
 		    items: [{
 				xtype: 'AIR.MyPlaceView',
 				id: 'myPlaceView'
@@ -180,7 +187,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		//RFC 8271 - Wizard for Mandatory and/or Required Fields
 
 		var ciEditView = this.getComponent('ciEditView');
-		//var ciEditTabView = ciEditView.getComponent('ciEditTabView');
 		
 		this.lastNavigation = {
 			viewId: viewId,

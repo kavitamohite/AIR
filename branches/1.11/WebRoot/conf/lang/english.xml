@@ -508,5 +508,10 @@
 		<StandardNameToSAPNameInvalid>The name "{0}" does not comply with the SAP name nomenclature for the designated IT-Category "{1}"</StandardNameToSAPNameInvalid>
 		<ToolbarInvalidTemplate>{0} {1} cannot have itself as a template</ToolbarInvalidTemplate>
 		<dynamicWindowCIreactivationPrompt>Your new CI cannot be saved because there is already such a CI marked as deleted with this name or alias. Do you want to reactivate this CI and override with the data you provided?</dynamicWindowCIreactivationPrompt>
+		
+		<CiEinsprungInvalidTitle>Invalid Jump In Data</CiEinsprungInvalidTitle>
+		<CiEinsprungCiIdInvalidMessage>The CI id={0} is invalid</CiEinsprungCiIdInvalidMessage>
+		<CiEinsprungCiIdDoesNotExistMessage>The CI id={0} does not exist</CiEinsprungCiIdDoesNotExistMessage>
+		<CiEinsprungInvalidCiTypeMessage>The CI type={0} is invalid</CiEinsprungInvalidCiTypeMessage>
 	</Items>
 </LanguageItems>

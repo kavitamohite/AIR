@@ -136,6 +136,12 @@ Util = {
 
 	createMask: function(message, parentEl) {
 		return new Ext.LoadMask(parentEl, { msg: message });
+	},
+	
+	isCiId: function(value) {
+		var regExp = new RegExp(/^\d+$/);//das ^ und $ Zeichen bewirken die exakte Validierung. Ohne diese liefert string=23v454 liefert die Funktion nicht false!
+		var result = value.match(regExp) ? true : false;
+		return result;
 	}
 	
 	/*

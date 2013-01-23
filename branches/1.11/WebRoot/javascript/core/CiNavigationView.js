@@ -27,7 +27,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 				xtype: 'container',
 				html: '<i><span id="label_menu_loggedinas">Logged in as</span></i><br><span id="username">-</span><br><span id="label_menu_lastlogin">Last login: </span><span id="lastlogin">-</span><br>',
 				id: 'usernamecontainer',
-				height: 45,
+				height: 40,
 				
 				style: {
 					color: '#ededed',
@@ -36,8 +36,10 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					fontFamily: AC.AIR_FONT_TYPE,
 					textAlign: 'center',
 					
+					backgroundColor: '#12638e'
+					
 					//entweder a)
-					color: AC.AIR_FONT_COLOR
+//					color: AC.AIR_FONT_COLOR
 					//oder b)
 //					backgroundImage: 'url("' + img_HeaderBottom + '")',
 //					backgroundRepeat: 'repeat-x'

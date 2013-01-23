@@ -11,26 +11,25 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 	private static SessionFactory sessionFactory;
+	private static final Map<Integer, SessionFactory> sessionFactories = new HashMap<Integer, SessionFactory>();
 	
 	public static final int DATASOURCE_ID_GSTOOL = 0x4711;
 	public static final int DATASOURCE_ID_TRANSBASE = 0x0815;
 	
-	private static final Map<Integer, SessionFactory> sessionFactories = new HashMap<Integer, SessionFactory>();
-	
+	/*private static Configuration transbaseConf;
 
 	static {
 		try {
-			
 			// Einlesen der Standard-Konfig (aus der hibernate.cfg.xml)
-			Configuration conf = new Configuration().configure();
+			transbaseConf = new Configuration().configure();
 
 			// Erzeugung der Session.
-			sessionFactory = conf.buildSessionFactory();
+			sessionFactory = transbaseConf.buildSessionFactory();
 
 		} catch (RuntimeException ex) {
 			System.out.println(ex.getMessage());
 		}
-	}
+	}*/
 	
 	public static SessionFactory getSessionFactory(int dataSourceId) {
 		SessionFactory sf = sessionFactories.get(dataSourceId);
@@ -44,6 +43,7 @@ public class HibernateUtil {
 					break;
 				case DATASOURCE_ID_TRANSBASE:
 					config = new AnnotationConfiguration().configure();
+//					transbaseConf = config;
 					break;
 				default: break;
 			}
@@ -82,22 +82,13 @@ public class HibernateUtil {
 		return sessionFactory;
 	}
 	
-	/**
-	 * gets a session from the sessionfactory
-	 * @return
-	 */
+
 	public static Session getSession() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		return session;
 	}
 	
-	
-	/**
-	 * closes the transaction and session
-	 * @param tx
-	 * @param session
-	 * @param rollback
-	 */
+
 	public static String close(Transaction tx, Session session, boolean commit) {
 		String message = null;
 		try {
@@ -106,11 +97,6 @@ public class HibernateUtil {
 					tx.commit();
 				}
 				else {
-/*
-					System.out.println("OPEN:" 			+ session.isOpen());
-					System.out.println("CONNECTED: " 	+ session.isConnected());
-					System.out.println("DIRTY:" 		+ session.isDirty());
-*/					
 					tx.rollback();
 				}
 			}
@@ -124,11 +110,6 @@ public class HibernateUtil {
 		
 		try {
 			if (null != session && session.isOpen()) {
-/*
-				System.out.println("! OPEN:" 		+ session.isOpen());
-				System.out.println("! CONNECTED: " 	+ session.isConnected());
-				System.out.println("! DIRTY:" 		+ session.isDirty());
-*/
 				session.connection().close();
 				session.close();
 				

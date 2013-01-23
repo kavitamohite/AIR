@@ -1357,7 +1357,12 @@ AIR.AirStoreFactory = function() {
 			        {name: 'StandardNameToSAPNameInvalid'},
 			        
 					{name: 'ToolbarInvalidTemplate'},
-			        {name: 'dynamicWindowCIreactivationPrompt'}
+			        {name: 'dynamicWindowCIreactivationPrompt'},
+					
+					{name: 'CiEinsprungInvalidTitle'},
+					{name: 'CiEinsprungCiIdInvalidMessage'},
+					{name: 'CiEinsprungCiIdDoesNotExistMessage'},
+					{name: 'CiEinsprungInvalidCiTypeMessage'}
 			    ]
 			});
 		
