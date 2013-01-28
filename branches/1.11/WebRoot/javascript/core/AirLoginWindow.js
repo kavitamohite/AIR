@@ -88,11 +88,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		    
 	        bbar: {
 	        	height: 80,
-	        	items: [{
-	                xtype: 'container',
-	                contentEl: 'pwtext',
-	                style: {display: 'block', clear: 'both'}
-	            }]
+                html: AC.LOGIN_WINDOW_INFO_TEXT
 	        }
 	    });
 	    
@@ -110,11 +106,12 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 	    tfCwid.on('specialkey', this.onEnter, this);
 	    //tfCwid.focus(true, 500);
 	    
+	    
 	    //bei Klaus hat das erste Fokussieren im IE nicht funktioniert. Ein Fixversuch:
-		var task = new Ext.util.DelayedTask(function() {
+//		var task = new Ext.util.DelayedTask(function() {
 			tfCwid.focus(true, 0);
-		}.createDelegate(this));
-		task.delay(1000);//2000
+//		}.createDelegate(this));
+//		task.delay(1000);//2000
 	},
 	
 	onEnter: function (field, el) {
