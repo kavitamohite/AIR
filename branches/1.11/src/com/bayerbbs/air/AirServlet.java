@@ -178,24 +178,9 @@ public class AirServlet extends HttpServlet {
 			append("</head>\n").
 			
 			
-			append("<body style='background-color: #D3E1F1;'>\n").
+			append("<body style='background-color: #D3E1F1;'>\n");
 //				append(einsprungHiddenFeld).
-				append("<div id='content' style='background-color: #043453;'>\n").
-					append("<div id='startscreen' class='x-hidden' style='color: darkblue; font-family: Arial, Helvetica, sans-serif !important;'><h1>Startseite</h1>Dies ist die Einstiegsseite zur Anwendung...</div>\n").
-					append("<div id='searchgrid' class='x-hidden'></div>\n").
-					append("<div id='infotext' style='margin-left: 5px;color: darkblue; font-family: Arial, Helvetica, sans-serif !important; font-size: 7pt !important; font-weight: bold !important;'> </div>\n").
-				append("</div>").
-				
-				append("<div id='pwtext' class='x-hidden' style='color: darkblue; font-family: Arial, Helvetica, sans-serif !important; font-size: 7pt !important; font-weight: bold !important;'>\n").
-					append("AIR uses the Bayer LDAP password (intranet password)<br/>\n").
-					append("for user authentication. You can set up, proof, change or<br/>\n").
-					append("reset this password on<br/>").
-					append("<a href='http://by-password.bayer-ag.com/domino/httppw.nsf/Start?OpenForm=English' target='_blank'>Intranet-Password-Management</a>.<br/>\n").
-					append("Additional information regarding the application login<br/>").
-					append("can be found in our <a href='http://sp-coll-bbs.bayer-ag.com/sites/000127/ConfigMgmt/Forum/Benutzerhandbuch%20AIR.docx' target='_blank'>manual</a>.<br/>\n").
-					append("If you need access <a href='mailto:ITILcenter@bayer.com&amp;subject=AIR:%20Request%20for%20access'>contact the administrator</a>.\n").
-				append("</div>\n");
-				
+		
 				if(isIE) {
 					html.
 					append("<form id='history-form' class='x-hidden'>\n").

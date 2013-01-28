@@ -271,7 +271,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	loadCiDetails: function() {
-		if(Util.isCiId(AAM.getCiId())) {
+		if(Util.isCiId(AAM.getCiId())) {//check URL CI-Einsprung Daten
 			var appDetailStore = AIR.AirStoreFactory.createApplicationDetailStore();
 			appDetailStore.on('beforeload', this.onBeforeLoadApplication, this);
 			appDetailStore.on('load', this.onLoadApplication, this);

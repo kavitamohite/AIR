@@ -17,6 +17,17 @@ AIR.AirConstants = {
 	HELP_ID_DETAILS_CONNECTIONS: 'help_details_connections',
 	HELP_ID_DETAILS_SUPPORTSTUFF: 'help_details_supportstuff',
 	HELP_ID_DETAILS_HISTORY: 'help_details_history',
+	
+	LOGIN_WINDOW_INFO_TEXT: 
+		'<div style="color: darkblue; font-family: Arial, Helvetica, sans-serif !important; font-size: 7pt !important; font-weight: bold !important;">'+
+			'AIR uses the Bayer LDAP password (intranet password)<br/>' +
+			'for user authentication. You can set up, proof, change or<br/>' +
+			'reset this password on<br/>' +
+			'<a href="http://by-password.bayer-ag.com/domino/httppw.nsf/Start?OpenForm=English" target="_blank">Intranet-Password-Management</a>.<br/>' +
+			'Additional information regarding the application login<br/>' +
+			'can be found in our <a href="http://sp-coll-bbs.bayer-ag.com/sites/000127/ConfigMgmt/Forum/Benutzerhandbuch%20AIR.docx" target="_blank">manual</a>.<br/>' +
+			'If you need access <a href="mailto:ITILcenter@bayer.com&amp;subject=AIR:%20Request%20for%20access">contact the administrator</a>.' +
+		'</div>',
 
 	IMG_COUNTRY_EN: 'country_EN.png',
 	IMG_COUNTRY_DE: 'country_DE.png',

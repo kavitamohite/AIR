@@ -20,7 +20,7 @@
 	<meta name="author" content="BBS-ITO-BDC-FSC-SCM">
 	
   	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <meta http-equiv="refresh" content="0;URL=<%=redirectPath%>"><!-- (*9) /AIR/Q /AIR/run htdocs/index.html authenticate.html -->
+    <meta http-equiv="refresh" content="0;URL=<%=redirectPath%>"><!-- (*9) /AIR/ITIL /AIR/Q /AIR/run htdocs/index.html authenticate.html -->
 	<meta http-equiv="expires" content="86400"/>
 	<meta http-equiv="cache-control" content="no-cache"/>
 	<meta http-equiv="pragma" content="no-cache"/>
