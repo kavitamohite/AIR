@@ -3,8 +3,10 @@ package com.bayerbbs.applrepos.service;
 import java.util.List;
 
 import com.bayerbbs.applrepos.domain.Room;
+import com.bayerbbs.applrepos.dto.ApplicationDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
+import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
 
@@ -90,4 +92,53 @@ public class CiEntityWS {
 		return output;
 	}
 
+	protected RoomDTO getRoomDTOFromEditInput(RoomEditParameterInput editInput) {
+		RoomDTO roomDTO = new RoomDTO();
+		roomDTO.setId(editInput.getId());
+		roomDTO.setName(editInput.getName());
+		roomDTO.setAlias(editInput.getAlias());
+		roomDTO.setFloor(editInput.getFloor());
+		roomDTO.setAreaId(editInput.getAreaId());
+		
+//		private String ciOwner;
+//		private String ciOwnerHidden;
+//		private String ciOwnerDelegate;
+//		private String ciOwnerDelegateHidden;
+
+		return roomDTO;
+	}
+	
+	public CiEntityEditParameterOutput saveRoom(RoomEditParameterInput editInput) {
+
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		if (null != editInput) {
+			RoomDTO dto = getRoomDTOFromEditInput(editInput);
+
+			output = RoomHbn.saveRoom(editInput.getCwid(), dto);
+		}
+		
+		return output;
+	}
+	
+	public CiEntityEditParameterOutput deleteRoom(RoomEditParameterInput editInput) {
+
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		if (null != editInput) {
+
+			if (LDAPAuthWS.isLoginValid(editInput.getCwid(), editInput.getToken())) {
+				RoomDTO dto = getRoomDTOFromEditInput(editInput);
+
+				output = RoomHbn.deleteRoom(editInput.getCwid(), dto);
+			} else {
+				// TODO MESSAGE LOGGED OUT
+			}
+		}
+
+		return output;
+
+	}
+
+	
 }

@@ -14,6 +14,7 @@ import org.hibernate.Transaction;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
+import com.bayerbbs.applrepos.dto.BaseDTO;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
@@ -274,6 +275,84 @@ public class CiEntitiesHbn {
 		return listResult;
 	}
 
+	/**
+	 * find all the ci's or only the applications
+	 * @return
+	 */
+	public static List<BaseDTO> findCisByNameOrAlias(String searchName, Long ciTableId) {
+
+		ArrayList<BaseDTO> listResult = new ArrayList<BaseDTO>();
+
+		boolean commit = false;
+		Transaction tx = null;
+		Statement selectStmt = null;
+		Session session = HibernateUtil.getSession();
+
+		Connection conn = null;
+
+		searchName = searchName.toUpperCase();
+		
+		StringBuffer sql = new StringBuffer();
+
+		sql.append("select /*+ INDEX (DWH_ENTITY FIX_143_16) */ * from DWH_ENTITY  where");
+		sql.append(" upper(deleted) = 'NO'");
+		sql.append(" and TABLE_ID in (");
+		sql.append(ciTableId);
+		sql.append(")");
+		
+		sql.append(" and (upper(name) like '");
+
+			sql.append(searchName);
+
+		sql.append("'  or upper(ASSET_ID_OR_ALIAS) like '");
+		
+			sql.append(searchName);
+			
+		sql.append("')");
+		
+		try {
+			tx = session.beginTransaction();
+
+			conn = session.connection();
+
+			selectStmt = conn.createStatement();
+			//System.out.println(sql.toString());
+			ResultSet rset = selectStmt.executeQuery(sql.toString());
+
+			if (null != rset) {
+				while (rset.next()) {
+					ApplicationDTO anw = getApplicationDTOFromResultSet(rset);
+					BaseDTO baseDTO = new BaseDTO();
+					baseDTO.setId(rset.getLong("CI_ID"));
+					baseDTO.setName(rset.getString("NAME"));
+					baseDTO.setAlias(rset.getString("ASSET_ID_OR_ALIAS"));
+						
+					listResult.add(baseDTO);
+				}
+				commit = true;
+			}
+			
+			if (null != rset) {
+				rset.close();
+			}
+			if (null != selectStmt) {
+				selectStmt.close();
+			}
+			if (null != conn) {
+				conn.close();
+			}
+		} catch (Exception e) {
+			//
+			System.out.println(e.toString());
+		}
+		finally {
+			HibernateUtil.close(tx, session, commit);
+		}
+
+		return listResult;
+	}
+
+	
 	/**
 	 * find all the ci's by type for the selectboxes
 	 * @return
