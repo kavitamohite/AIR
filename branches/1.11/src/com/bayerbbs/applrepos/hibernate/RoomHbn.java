@@ -214,9 +214,78 @@ public class RoomHbn {
 							room.setAreaId(dto.getAreaId());
 						}
 						
+						// ================
+						// Owner / Delegate
+						// ================
+						if (null != dto.getCiOwnerHidden()) {
+							if(StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {
+								room.setResponsible(null);
+							}
+							else {
+								room.setResponsible(dto.getCiOwnerHidden());
+							}
+						}
+						if (null != dto.getCiOwnerDelegateHidden()) {
+							if(StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {
+								room.setSubResponsible(null);
+							}
+							else {
+								room.setSubResponsible(dto.getCiOwnerDelegateHidden());
+							}
+						}
+
+						
 						// ==========
 						// compliance
 						// ==========
+						// Template
+						if (null != dto.getTemplate()) {
+//							if (-1 == dto.getTemplate()) {
+//								application.setTemplate(null);
+//							}
+//							else {
+							room.setTemplate(dto.getTemplate());
+//							}
+						}
+						
+						if (null != dto.getItsecGroupId() && 0 != dto.getItsecGroupId()) {
+							if (-1 == dto.getItsecGroupId()) {
+								room.setItsecGroupId(null);
+							}
+							else {
+								room.setItsecGroupId(dto.getItsecGroupId());
+							}
+						}
+						
+						if (null != dto.getRefId()) {
+							if (-1 == dto.getRefId()) {
+								room.setRefId(null);
+							}
+							else {
+								room.setRefId(dto.getRefId());
+							}
+						}
+						
+						if (null != dto.getRelevanceICS()) {
+							room.setRelevanceICS(dto.getRelevanceICS());
+						}
+
+						if (null != dto.getRelevanceITSEC()) {
+							room.setRelevanceITSEC(dto.getRelevanceITSEC());
+						}
+
+						if (null == dto.getGxpFlagId()) {
+							//	we don't know, let the current value 
+						}
+						else {
+							if (EMPTY.equals(dto.getGxpFlagId())) {
+								room.setGxpFlag(null);
+							}
+							else {
+								room.setGxpFlag(dto.getGxpFlagId());
+							}
+						}
+
 						
 					}
 					boolean toCommit = false;
@@ -368,6 +437,17 @@ public class RoomHbn {
 
 			room.setResponsible(null);
 			room.setSubResponsible(null);
+			
+			
+			room.setItset(null);
+			room.setTemplate(null);
+			room.setItsecGroupId(null);
+			room.setRefId(null);
+			
+			room.setRelevanceICS(null);
+			room.setRelevanceITSEC(null);
+			room.setGxpFlag(null);
+
 			
 			// ==============================
 		}

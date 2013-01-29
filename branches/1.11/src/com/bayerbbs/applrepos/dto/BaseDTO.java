@@ -23,6 +23,17 @@ public class BaseDTO {
 	private String deleteTimestamp;
 	private String deleteUser;
 
+	// compliance
+	private Long itset;
+	private Long template;
+	private Long itsecGroupId;
+	private Long refId;
+	
+	private Long relevanceICS;
+	private Long relevanceITSEC;
+	private String gxpFlag;
+	private String gxpFlagId;	// falls später über id referenziert wird
+
 	
 	public BaseDTO() {}
 	
@@ -158,6 +169,70 @@ public class BaseDTO {
 
 	public void setDeleteUser(String deleteUser) {
 		this.deleteUser = deleteUser;
+	}
+
+	public Long getItset() {
+		return itset;
+	}
+
+	public void setItset(Long itset) {
+		this.itset = itset;
+	}
+
+	public Long getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(Long template) {
+		this.template = template;
+	}
+
+	public Long getItsecGroupId() {
+		return itsecGroupId;
+	}
+
+	public void setItsecGroupId(Long itsecGroupId) {
+		this.itsecGroupId = itsecGroupId;
+	}
+
+	public Long getRefId() {
+		return refId;
+	}
+
+	public void setRefId(Long refId) {
+		this.refId = refId;
+	}
+
+	public Long getRelevanceICS() {
+		return relevanceICS;
+	}
+
+	public void setRelevanceICS(Long relevanceICS) {
+		this.relevanceICS = relevanceICS;
+	}
+
+	public Long getRelevanceITSEC() {
+		return relevanceITSEC;
+	}
+
+	public void setRelevanceITSEC(Long relevanceITSEC) {
+		this.relevanceITSEC = relevanceITSEC;
+	}
+
+	public String getGxpFlag() {
+		return gxpFlag;
+	}
+
+	public void setGxpFlag(String gxpFlag) {
+		this.gxpFlag = gxpFlag;
+	}
+
+	public String getGxpFlagId() {
+		return gxpFlagId;
+	}
+
+	public void setGxpFlagId(String gxpFlagId) {
+		this.gxpFlagId = gxpFlagId;
 	}
 	
 }

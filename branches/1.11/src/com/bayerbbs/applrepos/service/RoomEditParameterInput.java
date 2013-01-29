@@ -19,6 +19,17 @@ public class RoomEditParameterInput {
 	private String ciOwnerHidden;
 	private String ciOwnerDelegate;
 	private String ciOwnerDelegateHidden;
+	
+	private Long itset;
+	private Long template;
+	private Long itsecGroupId;
+	private Long refId;
+	
+	private Long relevanceICS;
+	private Long relevanzITSEC;
+	private String gxpFlag;
+	private String gxpFlagId;	// falls später über id referenziert wird
+
 
 	
 	public String getCwid() {
@@ -87,5 +98,52 @@ public class RoomEditParameterInput {
 	public void setCiOwnerDelegateHidden(String ciOwnerDelegateHidden) {
 		this.ciOwnerDelegateHidden = ciOwnerDelegateHidden;
 	}
-	
+	public Long getItset() {
+		return itset;
+	}
+	public void setItset(Long itset) {
+		this.itset = itset;
+	}
+	public Long getTemplate() {
+		return template;
+	}
+	public void setTemplate(Long template) {
+		this.template = template;
+	}
+	public Long getItsecGroupId() {
+		return itsecGroupId;
+	}
+	public void setItsecGroupId(Long itsecGroupId) {
+		this.itsecGroupId = itsecGroupId;
+	}
+	public Long getRefId() {
+		return refId;
+	}
+	public void setRefId(Long refId) {
+		this.refId = refId;
+	}
+	public Long getRelevanceICS() {
+		return relevanceICS;
+	}
+	public void setRelevanceICS(Long relevanceICS) {
+		this.relevanceICS = relevanceICS;
+	}
+	public Long getRelevanzITSEC() {
+		return relevanzITSEC;
+	}
+	public void setRelevanzITSEC(Long relevanzITSEC) {
+		this.relevanzITSEC = relevanzITSEC;
+	}
+	public String getGxpFlag() {
+		return gxpFlag;
+	}
+	public void setGxpFlag(String gxpFlag) {
+		this.gxpFlag = gxpFlag;
+	}
+	public String getGxpFlagId() {
+		return gxpFlagId;
+	}
+	public void setGxpFlagId(String gxpFlagId) {
+		this.gxpFlagId = gxpFlagId;
+	}
 }

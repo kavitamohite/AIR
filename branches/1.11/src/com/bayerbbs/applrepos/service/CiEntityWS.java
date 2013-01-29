@@ -86,6 +86,20 @@ public class CiEntityWS {
 
 			roomDTO.setCiOwner(room.getResponsible());
 			roomDTO.setCiOwnerDelegate(room.getSubResponsible());
+			
+			roomDTO.setItset(room.getItset());
+			roomDTO.setTemplate(room.getTemplate());
+			roomDTO.setItsecGroupId(room.getItsecGroupId());
+			
+			Long template = room.getTemplate();
+			if (-1 == template.longValue()) {
+				// TODO -1 != 1 - Achtung beim Speichern
+				template = new Long(1);
+			}
+
+			roomDTO.setRefId(room.getRefId());
+			roomDTO.setRelevanceICS(room.getRelevanceICS());
+			roomDTO.setRelevanceITSEC(room.getRelevanceITSEC());
 		}
 		
 		output.setRoomDTO(roomDTO);
@@ -100,10 +114,20 @@ public class CiEntityWS {
 		roomDTO.setFloor(editInput.getFloor());
 		roomDTO.setAreaId(editInput.getAreaId());
 		
-//		private String ciOwner;
-//		private String ciOwnerHidden;
-//		private String ciOwnerDelegate;
-//		private String ciOwnerDelegateHidden;
+		roomDTO.setCiOwner(editInput.getCiOwner());
+		roomDTO.setCiOwnerHidden(editInput.getCiOwnerHidden());
+		roomDTO.setCiOwnerDelegate(editInput.getCiOwnerDelegate());
+		roomDTO.setCiOwnerDelegateHidden(editInput.getCiOwnerDelegateHidden());
+
+		roomDTO.setItset(editInput.getItset());
+		roomDTO.setTemplate(editInput.getTemplate());
+		roomDTO.setItsecGroupId(editInput.getItsecGroupId());
+		roomDTO.setRefId(editInput.getRefId());
+		
+		roomDTO.setRelevanceICS(editInput.getRelevanceICS());
+		roomDTO.setRelevanceITSEC(editInput.getRelevanzITSEC());
+		roomDTO.setGxpFlag(editInput.getGxpFlag());
+		roomDTO.setGxpFlagId(editInput.getGxpFlagId());
 
 		return roomDTO;
 	}

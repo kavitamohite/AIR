@@ -24,6 +24,16 @@ public class Room extends DeletableRevisionInfo implements Serializable {
 	private String responsible;
 	private String subResponsible;
 	
+	// compliance
+	private Long itset;
+	private Long template;
+	private Long itsecGroupId;
+	private Long refId;
+	
+	private Long relevanceICS;
+	private Long relevanceITSEC;
+	private String gxpFlag;
+
 	
 	// ------------------------------------------------------
 	// -
@@ -143,4 +153,82 @@ public class Room extends DeletableRevisionInfo implements Serializable {
 	public void setAreaId(Long areaId) {
 		this.areaId = areaId;
 	}
+	
+	
+	/**
+	 * @return the itset
+	 */
+	@Column(name = "ITSET")
+	public Long getItset() {
+		return itset;
+	}
+
+	/**
+	 * Sets the value of the {@link #itset} field.
+	 * 
+	 * @param itset
+	 *            The value to set.
+	 */
+	public void setItset(Long itset) {
+		this.itset = itset;
+	}
+
+	/**
+	 * @return the template
+	 */
+	@Column(name = "TEMPLATE")
+	public Long getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(Long template) {
+		this.template = template;
+	}
+
+	@Column(name = "ITSEC_GRUPPE_ID")
+	public Long getItsecGroupId() {
+		return itsecGroupId;
+	}
+
+	public void setItsecGroupId(Long itsecGroupId) {
+		this.itsecGroupId = itsecGroupId;
+	}
+
+	@Column(name = "REF_ID")
+	public Long getRefId() {
+		return refId;
+	}
+
+	public void setRefId(Long refId) {
+		this.refId = refId;
+	}
+	
+	
+	@Column(name = "RELEVANCE_ICS")
+	public Long getRelevanceICS() {
+		return relevanceICS;
+	}
+
+	public void setRelevanceICS(Long relevanceICS) {
+		this.relevanceICS = relevanceICS;
+	}
+
+	@Column(name = "RELEVANZ_ITSEC")
+	public Long getRelevanceITSEC() {
+		return relevanceITSEC;
+	}
+
+	public void setRelevanceITSEC(Long relevanceITSEC) {
+		this.relevanceITSEC = relevanceITSEC;
+	}
+
+	@Column(name = "GXP_FLAG")
+	public String getGxpFlag() {
+		return gxpFlag;
+	}
+
+	public void setGxpFlag(String gxpFlag) {
+		this.gxpFlag = gxpFlag;
+	}
+
 }
