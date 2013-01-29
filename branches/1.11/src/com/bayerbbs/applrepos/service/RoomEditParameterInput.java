@@ -20,6 +20,8 @@ public class RoomEditParameterInput {
 	private String ciOwnerDelegate;
 	private String ciOwnerDelegateHidden;
 	
+	private Long businessEssentialId;
+	
 	private Long itset;
 	private Long template;
 	private Long itsecGroupId;
@@ -97,6 +99,12 @@ public class RoomEditParameterInput {
 	}
 	public void setCiOwnerDelegateHidden(String ciOwnerDelegateHidden) {
 		this.ciOwnerDelegateHidden = ciOwnerDelegateHidden;
+	}
+	public Long getBusinessEssentialId() {
+		return businessEssentialId;
+	}
+	public void setBusinessEssentialId(Long businessEssentialId) {
+		this.businessEssentialId = businessEssentialId;
 	}
 	public Long getItset() {
 		return itset;

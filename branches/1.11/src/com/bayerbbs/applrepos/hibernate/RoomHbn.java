@@ -521,11 +521,11 @@ public class RoomHbn {
 									return saveRoom(cwid, dto);
 
 								} else {
-									output.setMessages(new String[] {"Application Name '" + listCi.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+									output.setMessages(new String[] {"Room Name '" + listCi.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 								}
 							}
 							else {
-								output.setMessages(new String[] {"Application Name '" + listCi.get(0).getName() + "' already exists."});
+								output.setMessages(new String[] {"Room Name '" + listCi.get(0).getName() + "' already exists."});
 							}
 						}
 					}

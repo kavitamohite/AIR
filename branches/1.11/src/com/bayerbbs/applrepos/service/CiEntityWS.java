@@ -2,11 +2,11 @@ package com.bayerbbs.applrepos.service;
 
 import java.util.List;
 
+import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.domain.Room;
-import com.bayerbbs.applrepos.dto.ApplicationDTO;
+import com.bayerbbs.applrepos.dto.BaseDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
-import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
 
@@ -59,7 +59,7 @@ public class CiEntityWS {
 		RoomDTO roomDTO = new RoomDTO();
 		CiDetailParameterOutput output = new CiDetailParameterOutput();
 
-		if(true || LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
+		if(LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
 			
 			Room room = RoomHbn.findById(detailInput.getCiId());
 
@@ -119,6 +119,8 @@ public class CiEntityWS {
 		roomDTO.setCiOwnerDelegate(editInput.getCiOwnerDelegate());
 		roomDTO.setCiOwnerDelegateHidden(editInput.getCiOwnerDelegateHidden());
 
+		roomDTO.setBusinessEssentialId(editInput.getBusinessEssentialId());
+		
 		roomDTO.setItset(editInput.getItset());
 		roomDTO.setTemplate(editInput.getTemplate());
 		roomDTO.setItsecGroupId(editInput.getItsecGroupId());
@@ -162,6 +164,47 @@ public class CiEntityWS {
 
 		return output;
 
+	}
+
+	
+	public CiEntityEditParameterOutput createRoom(RoomEditParameterInput editInput) {
+
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		if (null != editInput && (LDAPAuthWS.isLoginValid(editInput.getCwid(), editInput.getToken())) ) {
+			RoomDTO dto = getRoomDTOFromEditInput(editInput);
+
+			// create Application - fill attributes
+			if (null == dto.getCiOwner()) {
+				dto.setCiOwner(editInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(editInput.getCwid().toUpperCase());
+			}
+			if (null == dto.getBusinessEssentialId()) {
+				dto.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
+			}
+
+			// save / create application
+			output = RoomHbn.createRoom(editInput.getCwid(), dto, true);
+
+			if (ApplreposConstants.RESULT_OK.equals(output.getResult())) {
+				// get detail
+				List<BaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, false);
+				if (null != listCi && 1 == listCi.size()) {
+					Long ciId = listCi.get(0).getId();
+					output.setCiId(ciId);
+				} else {
+					// unknown?
+					output.setCiId(new Long(-1));
+				}
+			} else {
+				// TODO errorcodes / Texte
+				if (null != output.getMessages() && output.getMessages().length > 0) {
+					output.setDisplayMessage(output.getMessages()[0]);
+				}
+			}
+		}
+
+		return output;
 	}
 
 	

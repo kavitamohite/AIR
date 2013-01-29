@@ -23,6 +23,8 @@ public class BaseDTO {
 	private String deleteTimestamp;
 	private String deleteUser;
 
+	private Long businessEssentialId;
+	
 	// compliance
 	private Long itset;
 	private Long template;
@@ -169,6 +171,14 @@ public class BaseDTO {
 
 	public void setDeleteUser(String deleteUser) {
 		this.deleteUser = deleteUser;
+	}
+
+	public Long getBusinessEssentialId() {
+		return businessEssentialId;
+	}
+
+	public void setBusinessEssentialId(Long businessEssentialId) {
+		this.businessEssentialId = businessEssentialId;
 	}
 
 	public Long getItset() {

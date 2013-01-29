@@ -11,7 +11,7 @@ public class CiEntityEditParameterOutput {
 	
 	private String messages[];
 	
-	private Long applicationId;
+	private Long ciId;
 	
 	public CiEntityEditParameterOutput() {
 	}
@@ -40,14 +40,13 @@ public class CiEntityEditParameterOutput {
 		this.displayMessage = displayMessage;
 	}
 
-	public Long getApplicationId() {
-		return applicationId;
+	public Long getCiId() {
+		return ciId;
 	}
 
-	public void setApplicationId(Long applicationId) {
-		this.applicationId = applicationId;
+	public void setCiId(Long ciId) {
+		this.ciId = ciId;
 	}
-	
 
 	public void setErrorMessage(String code) {
 		setErrorMessage(code, null);
