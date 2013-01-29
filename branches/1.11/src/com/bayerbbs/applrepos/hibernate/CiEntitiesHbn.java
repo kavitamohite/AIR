@@ -279,7 +279,7 @@ public class CiEntitiesHbn {
 	 * find all the ci's or only the applications
 	 * @return
 	 */
-	public static List<BaseDTO> findCisByNameOrAlias(String searchName, Long ciTableId) {
+	public static List<BaseDTO> findCisByNameOrAlias(String searchName, Long ciTableId, boolean withDeleted) {
 
 		ArrayList<BaseDTO> listResult = new ArrayList<BaseDTO>();
 
@@ -295,8 +295,11 @@ public class CiEntitiesHbn {
 		StringBuffer sql = new StringBuffer();
 
 		sql.append("select /*+ INDEX (DWH_ENTITY FIX_143_16) */ * from DWH_ENTITY  where");
-		sql.append(" upper(deleted) = 'NO'");
-		sql.append(" and TABLE_ID in (");
+
+		if (!withDeleted) {
+			sql.append(" upper(deleted) = 'NO' and ");
+		}
+		sql.append(" TABLE_ID in (");
 		sql.append(ciTableId);
 		sql.append(")");
 		

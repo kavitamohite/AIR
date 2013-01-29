@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +14,9 @@ import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.ApplreposConstants;
-import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.Room;
-import com.bayerbbs.applrepos.dto.ApplicationDTO;
 import com.bayerbbs.applrepos.dto.BaseDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
-import com.bayerbbs.applrepos.service.ApplicationEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 
 public class RoomHbn {
@@ -69,7 +67,6 @@ public class RoomHbn {
 					&& 0 < dto.getId().longValue()) {
 				Long id = new Long(dto.getId());
 
-				// TODO check der InputWerte
 				Session session = HibernateUtil.getSession();
 				Transaction tx = null;
 				tx = session.beginTransaction();
@@ -184,7 +181,6 @@ public class RoomHbn {
 //						}
 						
 
-						// TODO check if allowed
 						room.setUpdateUser(cwid);
 						room.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
 						room.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
@@ -280,7 +276,7 @@ public class RoomHbn {
 		}
 
 		if (ApplreposConstants.RESULT_ERROR.equals(output.getResult())) {
-			// TODO errorcodes / Texte
+			// errorcodes / Texte
 			if (null != output.getMessages() && output.getMessages().length > 0) {
 				output.setDisplayMessage(output.getMessages()[0]);
 			}
@@ -298,7 +294,7 @@ public class RoomHbn {
 			messages.add("room name is empty");
 		}
 		else {
-			List<BaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM);
+			List<BaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, false);
 			if (!listCi.isEmpty()) {
 				// check if the name is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
@@ -312,7 +308,7 @@ public class RoomHbn {
 			dto.setAlias(dto.getName());
 		}
 		else {
-			List<BaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM);
+			List<BaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, false);
 			if (!listCi.isEmpty()) {
 				// check if the alias is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
@@ -323,4 +319,250 @@ public class RoomHbn {
 
 		return messages;
 	}
+	
+	/**
+	 * reactivates an marked as deleted room. Clears all data attributes !!!
+	 * @param cwid
+	 * @param dto
+	 * @param application
+	 * @return
+	 */
+	public static CiEntityEditParameterOutput reactivateRoom(String cwid, RoomDTO dto, Room room) {
+		
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		
+		Session session = HibernateUtil.getSession();
+		Transaction tx = null;
+		tx = session.beginTransaction();
+
+		if (null == room) {
+			// application was not found in database
+			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setMessages(new String[] { "the room was not found in database" });
+		} else {
+
+			Timestamp tsNow = ApplReposTS
+			.getCurrentTimestamp();
+			
+			// application found - change values
+			room.setUpdateUser(cwid);
+			room
+					.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+			room.setUpdateTimestamp(tsNow);
+			// override INSERT-attributes
+			room.setInsertUser(cwid);
+			room.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+			room.setInsertTimestamp(tsNow);
+			
+			// reactivate DELETE-attributes
+			room.setDeleteTimestamp(null);
+			room.setDeleteQuelle(null);
+			room.setDeleteUser(null);
+
+
+			room.setRoomName(null);
+			room.setRoomAlias(null);
+			room.setRoomType(null);
+			room.setFloor(null);
+			room.setAreaId(null);
+
+			room.setResponsible(null);
+			room.setSubResponsible(null);
+			
+			// ==============================
+		}
+
+		boolean toCommit = false;
+		try {
+			if (null != room) {
+				session.saveOrUpdate(room);
+				session.flush();
+			}
+			toCommit = true;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			// handle exception
+			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setMessages(new String[] { e.getMessage() });
+		} finally {
+			String hbnMessage = HibernateUtil.close(tx, session,
+					toCommit);
+			if (toCommit && null != room) {
+				if (null == hbnMessage) {
+					output.setResult(ApplreposConstants.RESULT_OK);
+					output.setMessages(new String[] { EMPTY });
+				} else {
+					output
+							.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setMessages(new String[] { hbnMessage });
+				}
+			}
+		}
+	return output;
+	}
+
+	
+	
+	public static CiEntityEditParameterOutput createRoom(String cwid, RoomDTO dto, Boolean forceOverride) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		if (null != cwid) {
+			cwid = cwid.toUpperCase();
+			if (null != dto.getId() && 0 == dto.getId()) {
+
+				// check der InputWerte
+				List<String> messages = RoomHbn.validateRoom(dto);
+
+				if (messages.isEmpty()) {
+
+					Room room = new Room();
+					
+					boolean isNameAndAliasNameAllowed = true;
+					
+					
+					if (isNameAndAliasNameAllowed) {
+						List<BaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, true);
+						if (null != listCi && 0 < listCi.size()) {
+							// name is not allowed
+							isNameAndAliasNameAllowed = false;
+							output.setResult(ApplreposConstants.RESULT_ERROR);
+							if (null != listCi.get(0).getDeleteQuelle()) {
+								boolean override = forceOverride != null && forceOverride.booleanValue();
+								
+								if(override) {
+									// ENTWICKLUNG RFC8279
+									Session session = HibernateUtil.getSession();
+									Room roomDeleted = (Room)session.get(Room.class, listCi.get(0).getId());
+									
+									// reactivate
+									reactivateRoom(cwid, dto, roomDeleted);
+									// save the data
+									dto.setId(roomDeleted.getId());
+									return saveRoom(cwid, dto);
+
+								} else {
+									output.setMessages(new String[] {"Application Name '" + listCi.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+								}
+							}
+							else {
+								output.setMessages(new String[] {"Application Name '" + listCi.get(0).getName() + "' already exists."});
+							}
+						}
+					}
+					
+					if (isNameAndAliasNameAllowed) {
+						List<BaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), ApplreposConstants.TABLE_ID_ROOM, true);
+						if (null != listCI && 0 < listCI.size()) {
+							// alias is not allowed
+							isNameAndAliasNameAllowed = false;
+							output.setResult(ApplreposConstants.RESULT_ERROR);
+							if (null != listCI.get(0).getDeleteQuelle()) {
+								output.setMessages(new String[] {"Room Alias '" + listCI.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+							}
+							else {
+								output.setMessages(new String[] {"Room Alias '" + listCI.get(0).getAlias() + "' already exists."});
+							}
+						}						
+					}
+					
+					
+					if (isNameAndAliasNameAllowed) {
+						// create the ci
+
+						// calculates the ItSet
+						Long itSet = null;
+						String strItSet = ApplReposHbn.getItSetFromCwid(dto
+								.getCiOwner());
+						if (null != strItSet) {
+							itSet = Long.parseLong(strItSet);
+						}
+						if (null == itSet) {
+							// set default itSet
+							itSet = new Long(ApplreposConstants.IT_SET_DEFAULT);
+						}
+
+
+						Session session = HibernateUtil.getSession();
+						Transaction tx = null;
+						tx = session.beginTransaction();
+
+						// ci - insert values
+						room.setInsertUser(cwid);
+						room
+								.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						room.setInsertTimestamp(ApplReposTS
+								.getCurrentTimestamp());
+
+						// ci - update values
+						room.setUpdateUser(room.getInsertUser());
+						room.setUpdateQuelle(room
+								.getInsertQuelle());
+						room.setUpdateTimestamp(room
+								.getInsertTimestamp());
+
+						// ci - attributes
+						room.setRoomName(dto.getName());
+						room.setRoomAlias(dto.getAlias());
+						room.setFloor(dto.getFloor());
+						room.setRoomType(dto.getRoomType());
+						room.setAreaId(dto.getAreaId());
+						
+						if (null != dto.getCiOwnerHidden()) {
+							room.setResponsible(dto.getCiOwnerHidden());
+						}
+						if (null != dto.getCiOwnerDelegateHidden()) {
+							room.setSubResponsible(dto.getCiOwnerDelegateHidden());
+						}
+
+						
+						boolean toCommit = false;
+						try {
+							session.save(room);
+							session.flush();
+							toCommit = true;
+						} catch (Exception e) {
+							// handle exception
+							output.setResult(ApplreposConstants.RESULT_ERROR);
+							output.setMessages(new String[] { e.getMessage() });
+						} finally {
+							String hbnMessage = HibernateUtil.close(tx,
+									session, toCommit);
+							if (toCommit) {
+								if (null == hbnMessage) {
+									output
+											.setResult(ApplreposConstants.RESULT_OK);
+									output.setMessages(new String[] { EMPTY });
+								} else {
+									output
+											.setResult(ApplreposConstants.RESULT_ERROR);
+									output
+											.setMessages(new String[] { hbnMessage });
+								}
+							}
+						}
+					}
+				} else {
+					// messages
+					output.setResult(ApplreposConstants.RESULT_ERROR);
+					String astrMessages[] = new String[messages.size()];
+					for (int i = 0; i < messages.size(); i++) {
+						astrMessages[i] = messages.get(i);
+					}
+					output.setMessages(astrMessages);
+				}
+			} else {
+				// ci id not 0
+				output.setResult(ApplreposConstants.RESULT_ERROR);
+				output
+						.setMessages(new String[] { "the ci id should not be 0" });
+			}
+		} else {
+			// cwid missing
+			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setMessages(new String[] { "cwid missing" });
+		}
+
+		return output;
+	}
+
 }
