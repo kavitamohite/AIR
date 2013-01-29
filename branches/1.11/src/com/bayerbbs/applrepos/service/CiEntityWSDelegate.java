@@ -17,4 +17,8 @@ public class CiEntityWSDelegate {
 	public DwhEntityParameterOutput getDwhEntityRelations(CiEntityParameterInput input) {
 		return ciEntityWS.getDwhEntityRelations(input);
 	}
+	
+	public CiDetailParameterOutput getRoom(CiDetailParameterInput input) {
+		return ciEntityWS.getRoom(input);
+	}
 }

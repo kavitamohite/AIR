@@ -2,8 +2,11 @@ package com.bayerbbs.applrepos.service;
 
 import java.util.List;
 
+import com.bayerbbs.applrepos.domain.Room;
+import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
+import com.bayerbbs.applrepos.hibernate.RoomHbn;
 
 public class CiEntityWS {
 
@@ -48,4 +51,43 @@ public class CiEntityWS {
 		
 		return output;
 	}
+	
+	
+	public CiDetailParameterOutput getRoom(CiDetailParameterInput detailInput) {
+		RoomDTO roomDTO = new RoomDTO();
+		CiDetailParameterOutput output = new CiDetailParameterOutput();
+
+		if(true || LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
+			
+			Room room = RoomHbn.findById(detailInput.getCiId());
+
+			roomDTO.setId(room.getId());
+			roomDTO.setName(room.getRoomName());
+			roomDTO.setAlias(room.getRoomAlias());
+			roomDTO.setRoomType(room.getRoomType());
+			roomDTO.setFloor(room.getFloor());
+			roomDTO.setAreaId(room.getAreaId());
+
+			//			applicationDTO.setItsecGroupId(application.getItsecGroupId());
+			roomDTO.setInsertQuelle(room.getInsertQuelle());
+			roomDTO.setInsertUser(room.getInsertUser());
+			if (null != room.getInsertTimestamp())
+			roomDTO.setInsertTimestamp(room.getInsertTimestamp().toString());
+			roomDTO.setUpdateQuelle(room.getUpdateQuelle());
+			roomDTO.setUpdateUser(room.getUpdateUser());
+			if (null != room.getUpdateTimestamp())
+			roomDTO.setUpdateTimestamp(room.getUpdateTimestamp().toString());
+			roomDTO.setDeleteQuelle(room.getDeleteQuelle());
+			roomDTO.setDeleteUser(room.getDeleteUser());
+			if (null != room.getDeleteTimestamp())
+			roomDTO.setDeleteTimestamp(room.getDeleteTimestamp().toString());
+
+			roomDTO.setCiOwner(room.getResponsible());
+			roomDTO.setCiOwnerDelegate(room.getSubResponsible());
+		}
+		
+		output.setRoomDTO(roomDTO);
+		return output;
+	}
+
 }

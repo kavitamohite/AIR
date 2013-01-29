@@ -9,7 +9,12 @@ public class ApplreposConstants {
 	
 	public final static Long TABLE_ID_IT_SYSTEM	 = new Long(1);
 	public final static Long TABLE_ID_APPLICATION = new Long(2);
+	public final static Long TABLE_ID_ROOM = new Long(3);
+	public final static Long TABLE_ID_BUILDING = new Long(4);
+	public final static Long TABLE_ID_RACK = new Long(13);
+	public final static Long TABLE_ID_TERRAIN = new Long(30);
 	public final static Long TABLE_ID_WAYS		 = new Long(37);
+	public final static Long TABLE_ID_BUILDING_AREA = new Long(88);
 
 	public final static String APPLICATION_GUI_NAME = "AIR";
 	

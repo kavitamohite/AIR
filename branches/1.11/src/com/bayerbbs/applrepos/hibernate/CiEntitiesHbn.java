@@ -160,6 +160,8 @@ public class CiEntitiesHbn {
 		sql.append(ApplreposConstants.TABLE_ID_APPLICATION);
 		if (!onlyapplications) {
 			sql.append(",");
+			sql.append(ApplreposConstants.TABLE_ID_ROOM);
+			sql.append(",");
 			sql.append(ApplreposConstants.TABLE_ID_WAYS);
 		}
 		sql.append(")");
