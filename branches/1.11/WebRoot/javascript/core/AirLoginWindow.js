@@ -127,10 +127,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		var cwid = this.getComponent('pAirLoginWindow').getComponent('tfCwid').getValue();
 		var password = this.getComponent('pAirLoginWindow').getComponent('tfPassword').getValue();
 
-		if(cwid.length === 0)
-			cwid = 'ercva';
-		if(password.length === 0)
-			password = 'creati91';
+	
 		
 		this.fireEvent('login', cwid, password);
 	},
