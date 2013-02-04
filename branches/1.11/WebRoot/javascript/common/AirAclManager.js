@@ -495,7 +495,7 @@ AIR.AirAclManager = function() {
 			for(var i = 0; i < records.length; i++) {
 				var item = records[i];
 				
-				if(item.data.Mandatory==='required') {
+				if(item.data.Mandatory === 'required') {
 					var draftItemCmp = Ext.getCmp(item.data.id);
 //					if(draftItemCmp!==undefined) {
 					

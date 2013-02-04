@@ -549,7 +549,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 					//cbReferencedTemplate.isInvalid = false;
 				} else {
 					//cbReferencedTemplate.setRawValue(data.refTxt);
-					cbReferencedTemplate.setRawValue(AC.LABEL_INVALID+data.refTxt);
+					cbReferencedTemplate.setRawValue(AC.LABEL_INVALID + data.refTxt);
 					//lReferencedTemplateError.show();
 					//cbReferencedTemplate.isInvalid = true;
 	

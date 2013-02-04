@@ -550,22 +550,28 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var tfApplicationUsingRegions = this.getComponent('licenseusingregions').getComponent('applicationUsingRegionsHidden');
 		tfApplicationUsingRegions.reset();
 		
-		if(data.licenseUsingRegions.length > 0) {
-			var regions = data.licenseUsingRegions.split(',');
-			var store = lvApplicationUsingRegions.getStore();
+		if(data.tableId == AC.TABLE_ID_APPLICATION) {
+			this.getComponent('licenseusingregions').setVisible(true);
 			
-			if(AIR.AirAclManager.isRelevance(lvApplicationUsingRegions,data)) {//lvApplicationUsingRegions.isVisible()
-				Ext.each(regions, function(item, index, all) {
-					lvApplicationUsingRegions.select(store.getById(item), true, true);
-				});
-			} else {
-				var licenseUsingRegions = data.licenseUsingRegions;
+			if(data.licenseUsingRegions.length > 0) {
+				var regions = data.licenseUsingRegions.split(',');
+				var store = lvApplicationUsingRegions.getStore();
 				
-				Ext.each(regions, function(item, index, all) {
-					licenseUsingRegions = licenseUsingRegions.replace(item, store.getById(item).data.text);
-				});
-				tfApplicationUsingRegions.setValue(licenseUsingRegions.replace(/,/g,'\n'));//data.licenseUsingRegions.replace(',','\n')
+				if(AIR.AirAclManager.isRelevance(lvApplicationUsingRegions,data)) {//lvApplicationUsingRegions.isVisible()
+					Ext.each(regions, function(item, index, all) {
+						lvApplicationUsingRegions.select(store.getById(item), true, true);
+					});
+				} else {
+					var licenseUsingRegions = data.licenseUsingRegions;
+					
+					Ext.each(regions, function(item, index, all) {
+						licenseUsingRegions = licenseUsingRegions.replace(item, store.getById(item).data.text);
+					});
+					tfApplicationUsingRegions.setValue(licenseUsingRegions.replace(/,/g,'\n'));//data.licenseUsingRegions.replace(',','\n')
+				}
 			}
+		} else {
+			this.getComponent('licenseusingregions').setVisible(false);
 		}
 	},
 	

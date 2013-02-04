@@ -331,13 +331,6 @@ AIR.AirStoreFactory = function() {
 		      		reader: serviceContractListReader
 		      	}),
 		      	
-//		      	baseParams: {
-//		      		applicationId: -1,	
-//		      		cwid: cwid,
-//		      		token: '',
-//		      		slaName: selectedSlaId
-//		      	},
-		      	
 		      	fields: [ 'id', 'text' ],
 	
 		      	reader: serviceContractListReader
@@ -604,13 +597,6 @@ AIR.AirStoreFactory = function() {
 	         		timeout: 120000,
 	         		reader: dataClassListReader
 	         	}),
-	         	
-//	         	baseParams: {
-//	         		applicationId: -1,	
-//	         		cwid: cwid,
-//	         		token: '',
-//	         		categoryBusinessId: selectedCategoryBusinessId
-//	         	},
 	         	
 	         	fields: [ 'id', 'text' ],
 	
@@ -2062,13 +2048,13 @@ AIR.AirStoreFactory = function() {
 		
 		createApplicationListStore: function() {
 			var applicationListRecord = Ext.data.Record.create([
-			    {name: 'applicationId', mapping: 'applicationId'},
-			    {name: 'applicationName'},
-			    {name: 'applicationAlias'},
+			    {name: 'id'},//applicationId
+			    {name: 'name'},//applicationName
+			    {name: 'alias'},//applicationAlias
 			    {name: 'applicationCat1Txt'},
 			    {name: 'applicationCat2Txt'},
-			    {name: 'responsible'},
-			    {name: 'subResponsible'},
+			    {name: 'ciOwner'},//responsible
+			    {name: 'ciOwnerDelegate'},//subResponsible
 			    {name: 'applicationOwner'},
 			    {name: 'applicationSteward'},
 			    {name: 'applicationOwnerDelegate'},
@@ -2078,7 +2064,7 @@ AIR.AirStoreFactory = function() {
 			var applicationListReader = new Ext.data.XmlReader({
 			    totalProperty: 'countResultSet',
 			    record: 'applicationDTO',
-			    idProperty: 'applicationId'
+			    idProperty: 'id'//applicationId
 			}, applicationListRecord); 
 	
 			var applicationListStore = new Ext.data.GroupingStore({//XmlStore
@@ -2086,20 +2072,20 @@ AIR.AirStoreFactory = function() {
 			    autoLoad: false,
 //			    remoteSort: true,
 			    
-				fields: [
-					'applicationId', 
-					'applicationName', 
-					'applicationAlias',
-					'advancedsearch',
-					'responsible', 
-					'subResponsible',
-					'applicationCat2Txt',
-					'applicationCat1Txt',
-					'applicationOwner',
-					'applicationSteward',
-					'applicationOwnerDelegate',
-					'tableId'
-				],
+//				fields: [
+//					'applicationId', 
+//					'applicationName', 
+//					'applicationAlias',
+//					'advancedsearch',
+//					'responsible', 
+//					'subResponsible',
+//					'applicationCat2Txt',
+//					'applicationCat1Txt',
+//					'applicationOwner',
+//					'applicationSteward',
+//					'applicationOwnerDelegate',
+//					'tableId'
+//				],
 			    
 				proxy: new Ext.ux.soap.SoapProxy({
 					url: webcontext +'/ApplicationWSPort',
@@ -2178,10 +2164,111 @@ AIR.AirStoreFactory = function() {
 			return applicationStore;
 		},
 		
+		
+		createCiDetailStore: function(tableId) {
+			var ciDetailStore;
+			
+			switch(tableId) {
+				case AC.TABLE_ID_APPLICATION:
+					ciDetailStore = this.createApplicationDetailStore();
+					break;
+				case AC.TABLE_ID_ROOM:
+					ciDetailStore = this.createRoomDetailStore();
+					break;
+				case AC.TABLE_ID_BUILDING:
+					ciDetailStore = this.createGebaeudeDetailStore();
+					break;
+				default: break;
+			}
+			
+			return ciDetailStore;
+		},
+		
+		//SIEHE CiDetailsCommon:
+		createGebaeudeDetailStore: function() {
+			var gebaeudeRecord = AIR.AirConfigFactory.createBuildingCiRecord();//new AIR.CiLocationRecord();
+
+			var ciDetailReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, gebaeudeRecord);
+
+			var ciDetailStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'ciBuildingStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getBuilding',
+					timeout: 120000,
+					reader: ciDetailReader
+				})
+			});
+			
+			return ciDetailStore;
+		},
+		
+		createRoomDetailStore: function() {
+			var ciDetailRecord = Ext.data.Record.create([{
+				name: 'id', type: 'int'
+			},{
+				name: 'tableId', type: 'int'
+			},{
+				name: 'areaId', type: 'int'
+			}, 'name', 'alias', 'ciOwner', 'ciOwnerDelegate', 'insertQuelle', 'insertTimestamp', 'insertUser', 'updateQuelle', 'updateTimestamp', 'updateUser', 'slaId', 'businessEssentialId', 'floor', 'roomType',
+				'hasMarkedDeletedItems',{
+				name: 'standordLoeschung', type: 'int'
+			},{
+				name: 'terrainLoeschung', type: 'int'
+			},{
+				name: 'gebaeudeLoeschung', type: 'int'
+			},{
+				name: 'aereaLoeschung', type: 'int'
+			},{
+				name: 'raumLoeschung', type: 'int'
+			},{
+				name: 'schrankLoeschung', type: 'int'
+			},{
+				name: 'landId', type: 'int'
+			}, 'landName', 'landNameEn', 'landKennzeichen',{
+				name: 'standortId', type: 'int'
+			}, 'standortName', 'standortCode',{
+				name: 'terrainId', type: 'int'
+			},'terrainName',{
+				name: 'gebaeudeId', type: 'int'
+			},'gebaeudeName',{
+				name: 'areaId', type: 'int'
+			},'areaName',{
+				name: 'raumId', type: 'int'
+			},'raumName',{
+				name: 'schrankId', type: 'int'
+			},'schrankName']);
+				
+				
+			var ciDetailReader = new Ext.data.XmlReader({
+				record: 'return'//return room
+			}, ciDetailRecord);
+
+			var ciDetailStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'ciRoomStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getRoom',
+					timeout: 120000,
+					reader: ciDetailReader
+				})
+			});
+			
+			return ciDetailStore;
+		},
+		
 		createApplicationDetailStore: function() {
 			var applicationDetailRecord = Ext.data.Record.create([{
-				name : 'applicationId',
-				mapping : 'applicationDTO > applicationId'
+				name : 'id',//applicationId
+				mapping : 'applicationDTO > id'
 			}, {
 				name : 'barApplicationId',
 				mapping : 'applicationDTO > barApplicationId'
@@ -2189,11 +2276,11 @@ AIR.AirStoreFactory = function() {
 				name : 'barRelevance',
 				mapping : 'applicationDTO > barRelevance'
 			}, {
-				name : 'applicationName',
-				mapping : 'applicationDTO > applicationName'
+				name : 'name',//applicationName
+				mapping : 'applicationDTO > name'
 			}, {
-				name : 'applicationAlias',
-				mapping : 'applicationDTO > applicationAlias'
+				name : 'alias',//applicationAlias
+				mapping : 'applicationDTO > alias'
 			}, {
 				name : 'categoryBusinessId',
 				mapping : 'applicationDTO > categoryBusinessId'
@@ -2218,13 +2305,13 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'applicationCat2Txt',
 				mapping : 'applicationDTO > applicationCat2Txt'
-			}, {
+			}/*, {
 				name : 'clusterCode',
 				mapping : 'applicationDTO > clusterCode'
 			}, {
 				name : 'clusterType',
 				mapping : 'applicationDTO > clusterType'
-			}, {
+			}*/, {
 				name : 'lifecycleStatusId',
 				mapping : 'applicationDTO > lifecycleStatusId'
 			}, {
@@ -2241,16 +2328,16 @@ AIR.AirStoreFactory = function() {
 				mapping : 'applicationDTO > operationalStatusTxt'
 			}, {
 				name : 'ciResponsible',
-				mapping : 'applicationDTO > responsible'
+				mapping : 'applicationDTO > ciOwner'//responsible
 			}, {
 				name : 'ciResponsibleHidden',
-				mapping : 'applicationDTO > responsibleHidden'
+				mapping : 'applicationDTO > ciOwnerHidden'//responsibleHidden
 			}, {
 				name : 'ciSubResponsible',
-				mapping : 'applicationDTO > subResponsible'
+				mapping : 'applicationDTO > ciOwnerDelegate'//subResponsible
 			}, {
 				name : 'ciSubResponsibleHidden',
-				mapping : 'applicationDTO > subResponsibleHidden'
+				mapping : 'applicationDTO > ciOwnerDelegateHidden'//subResponsibleHidden
 			}, {
 				name : 'applicationOwner',
 				mapping : 'applicationDTO > applicationOwner'
@@ -2631,11 +2718,11 @@ AIR.AirStoreFactory = function() {
 					reader: applicationCreateReader
 				}),
 				
-				baseParams : {
-				 	cwid: AIR.AirApplicationManager.getCwid(),
-				 	token: AIR.AirApplicationManager.getToken(),
-					applicationId: 0
-				},
+//				baseParams : {
+//				 	cwid: AIR.AirApplicationManager.getCwid(),
+//				 	token: AIR.AirApplicationManager.getToken(),
+//					applicationId: 0
+//				},
 				
 				fields: [ 'result', 'displayMessage', 'messages' ],
 	
@@ -2664,11 +2751,11 @@ AIR.AirStoreFactory = function() {
 					reader: applicationSaveReader
 				}),
 				
-				baseParams: {
-				 	cwid: AIR.AirApplicationManager.getCwid(),
-				 	token: AIR.AirApplicationManager.getToken(),
-					applicationId: -1
-				},
+//				baseParams: {
+//				 	cwid: AIR.AirApplicationManager.getCwid(),
+//				 	token: AIR.AirApplicationManager.getToken(),
+//					applicationId: -1
+//				},
 				
 				fields: [ 'result', 'displayMessage', 'messages' ],
 	

@@ -135,12 +135,15 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		var record = grid.getStore().getAt(rowIndex);
 		var ciId = record.id;
 		
+		// || record.data.tableId == AC.TABLE_ID_ROOM || record.data.tableId == AC.TABLE_ID_BUILDING
 		if(record.data.tableId == AC.TABLE_ID_APPLICATION) {
 			AAM.setCiId(ciId);
-			AAM.setTableId(AC.TABLE_ID_APPLICATION);
+			AAM.setTableId(parseInt(record.data.tableId));//AC.TABLE_ID_APPLICATION
 		} else {
 			AAM.setCiId(-1);
 			AAM.setTableId(-1);
+			
+			ciId = -1;
 			
 			var ciTypeWarningWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CI_TYPE_NOT_SUPPORTED_WARNING');
 			ciTypeWarningWindow.show();

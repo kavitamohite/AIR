@@ -15,6 +15,9 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 		    items: [{
 		    	id: 'clCiSpecificsAnwendung',
 		        xtype: 'AIR.CiSpecificsAnwendungView'
+			},{
+		    	id: 'clCiSpecificsLocationItem',
+		        xtype: 'AIR.CiSpecificsLocationItemView'
 			}/*,{
 		    	id: 'clCiSpecificsTerrain',
 		        xtype: 'AIR.CiSpecificsTerrainView'
@@ -30,13 +33,15 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 	},
 
 	update: function(data) {
-		var specificsView = this.getSpecificsViewByTableId(parseInt(data.ciTableId));//parseInt(
+		var specificsView = this.getSpecificsViewByTableId(parseInt(data.tableId));//parseInt(
 		specificsView.update(data);
+		
+		this.getLayout().setActiveItem(specificsView.getId());
 	},
 	
 	
 	setData: function(data) {
-		var specificsView = this.getSpecificsViewByTableId(parseInt(data.ciTableId));//parseInt(
+		var specificsView = this.getSpecificsViewByTableId(parseInt(data.tableId));//parseInt(
 		specificsView.setData(data);
 	},
 
@@ -52,15 +57,15 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 	
 
 	
-	updateLabels: function(labels, ciTableId) {
+	updateLabels: function(labels, tableId) {
 		this.setTitle(labels.specificsPanelTitle);
 
-		var specificsView = this.getSpecificsViewByTableId(parseInt(ciTableId));//parseInt(
+		var specificsView = this.getSpecificsViewByTableId(parseInt(tableId));//parseInt(
 		specificsView.updateLabels(labels);
 	},
 	
-	updateToolTips: function(toolTips, ciTableId) {
-		var specificsView = this.getSpecificsViewByTableId(parseInt(ciTableId));//parseInt(
+	updateToolTips: function(toolTips, tableId) {
+		var specificsView = this.getSpecificsViewByTableId(parseInt(tableId));//parseInt(
 		specificsView.updateToolTips(toolTips);
 	},
 	
@@ -72,9 +77,13 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 			case AC.TABLE_ID_APPLICATION:
 				specificsView = this.getComponent('clCiSpecificsAnwendung');
 				break;
-			case AC.TABLE_ID_TERRAIN:
-				specificsView = this.getComponent('clCiSpecificsTerrain');
+			case AC.TABLE_ID_ROOM:
+			case AC.TABLE_ID_BUILDING:
+				specificsView = this.getComponent('clCiSpecificsLocationItem');
 				break;
+//			case AC.TABLE_ID_TERRAIN:
+//				specificsView = this.getComponent('clCiSpecificsTerrain');
+//				break;
 		}
 		
 		return specificsView;

@@ -1,6 +1,6 @@
 package com.bayerbbs.applrepos.dto;
 
-public class BaseCredentialDTO extends BaseDTO {
+public class BaseCredentialDTO extends CiBaseDTO {
 	private String cwid;
 	private String token;
 	

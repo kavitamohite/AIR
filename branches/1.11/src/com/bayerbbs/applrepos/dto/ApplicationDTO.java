@@ -1,52 +1,34 @@
 package com.bayerbbs.applrepos.dto;
 
-import java.io.Serializable;
 
-/**
- * The DTO (Data transfer object) for the database table "ANWENDUNG"
- * 
- * @author evafl
- * 
- */
-public class ApplicationDTO implements Serializable {
 
-	/**
-	 * 
-	 */
+public class ApplicationDTO extends CiBaseDTO {
 	private static final long serialVersionUID = 6615538451865795610L;
 
-	private Long applicationId;
-	
+//	private Long id;
+//	private String name;
+//	private String alias;
+
 	private String barApplicationId;
-
-	private String applicationName;
-
-	private String applicationAlias;
-
-	private Long applicationCat2Id;
 	
+	private Long applicationCat2Id;
 	private String applicationCat2Txt;
 
 	private Long applicationCat1Id;
-	
 	private String applicationCat1Txt;
 	
 	private Long primaryFunctionId;
-	
 	private String primaryFunctionTxt;
 	
-	private String clusterCode;
-
-	private String clusterType;
+//	private String clusterCode;
+//	private String clusterType;
 
 	private String comments;
 
 	private Long lifecycleStatusId;
-	
 	private String lifecycleStatusTxt;
 
 	private Long operationalStatusId;
-	
 	private String operationalStatusTxt;
 
 	private String userCreate;
@@ -59,35 +41,33 @@ public class ApplicationDTO implements Serializable {
 	private String applicationSteward;
 	private String applicationStewardHidden;
 	
-	private String responsible;
-	private String responsibleHidden;
-	private String subResponsible;
-	private String subResponsibleHidden;
+//	private String responsible;
+//	private String responsibleHidden;
+//	private String subResponsible;
+//	private String subResponsibleHidden;
 
 	private Long itset;
-	
 	private String itsetName;
 	
-	private Long relevanzItsec;
+	// compliance request
+//	private String relevanceGR1435;
+//	private String relevanceGR1920;
+	private String relevanceGR2059;
+	private String relevanceGR2008;
 	
-	private Long relevanceICS;
-	
+//	private Long relevanzItsec;
+//	private Long relevanceICS;
 	private Long relevance2059;
-	
 	private Long relevance2008;
+	
 	
 	private Long template;
 	private String templateReferencedByItem; 
 	
 	private Long itsecGroupId;
-	
 	private Long refId;
 	private String refTxt;
-	
 	private String itsecGroup;
-
-	private Long slaId;
-	private String slaName;
 	
 	private Long serviceContractId;
 	private String serviceContract;
@@ -123,15 +103,15 @@ public class ApplicationDTO implements Serializable {
 	
 
 	// insert, update, delete attributes
-	private String insertQuelle;
-	private String insertTimestamp;
-	private String insertUser;
-	private String updateQuelle;
-	private String updateTimestamp;
-	private String updateUser;
-	private String deleteQuelle;
-	private String deleteTimestamp;
-	private String deleteUser;
+//	private String insertQuelle;
+//	private String insertTimestamp;
+//	private String insertUser;
+//	private String updateQuelle;
+//	private String updateTimestamp;
+//	private String updateUser;
+//	private String deleteQuelle;
+//	private String deleteTimestamp;
+//	private String deleteUser;
 
 	
 	// access rights
@@ -148,7 +128,7 @@ public class ApplicationDTO implements Serializable {
 	private String ciSupportStuffProvidedServices;
 	private String ciSupportStuffProvidedMachineUsers;
 
-	// itSec
+	// Protection
 	private Long itSecSbIntegrityId;
 	private String itSecSbIntegrityTxt;
 	private String itSecSbIntegrityDescription;
@@ -190,34 +170,25 @@ public class ApplicationDTO implements Serializable {
 	// connections
 	private String businessProcess;
 	private String businessProcessHidden;
-		
+	private String organisationalScope;
+	private String barRelevance;
 	private Long categoryBusinessId;
 	private String categoryBusiness;
 
-	private Long tableId;
+//	private Long tableId;
 	
 	private Long classDataId;
 	private String classData;
 	private Long classInformationId;
 	private String classInformationExplanation;
 	private String applicationProtection;	// only for display usage
-	
 	private String serviceModel;
-	
-	private String organisationalScope;
-	
-	private String barRelevance;
-	
-	// compliance request
-	private String relevanceGR1435;
-	private String relevanceGR2059;
-	private String relevanceGR1920;
-	private String relevanceGR2008;
 
-	private Long ciComplianceRequestId1435;
-	private Long ciComplianceRequestId2059;
-	private Long ciComplianceRequestId1920;
-	private Long ciComplianceRequestId2008;
+
+//	private Long ciComplianceRequestId1435;
+//	private Long ciComplianceRequestId2059;
+//	private Long ciComplianceRequestId1920;
+//	private Long ciComplianceRequestId2008;
 	
 	// connections
 	private String upStreamAdd;
@@ -228,13 +199,13 @@ public class ApplicationDTO implements Serializable {
 	public ApplicationDTO() {
 	}
 
-	public Long getApplicationId() {
-		return applicationId;
-	}
-
-	public void setApplicationId(Long applicationId) {
-		this.applicationId = applicationId;
-	}
+//	public Long getApplicationId() {
+//		return applicationId;
+//	}
+//
+//	public void setApplicationId(Long applicationId) {
+//		this.applicationId = applicationId;
+//	}
 
 	public String getBarApplicationId() {
 		return barApplicationId;
@@ -244,37 +215,37 @@ public class ApplicationDTO implements Serializable {
 		this.barApplicationId = barApplicationId;
 	}
 
-	public String getApplicationName() {
-		return applicationName;
-	}
-
-	public void setApplicationName(String applicationName) {
-		this.applicationName = applicationName;
-	}
-
-	public String getApplicationAlias() {
-		return applicationAlias;
-	}
-
-	public void setApplicationAlias(String applicationAlias) {
-		this.applicationAlias = applicationAlias;
-	}
-
-	public String getResponsible() {
-		return responsible;
-	}
-
-	public void setResponsible(String responsible) {
-		this.responsible = responsible;
-	}
-
-	public String getSubResponsible() {
-		return subResponsible;
-	}
-
-	public void setSubResponsible(String subResponsible) {
-		this.subResponsible = subResponsible;
-	}
+//	public String getApplicationName() {
+//		return applicationName;
+//	}
+//
+//	public void setApplicationName(String applicationName) {
+//		this.applicationName = applicationName;
+//	}
+//
+//	public String getApplicationAlias() {
+//		return applicationAlias;
+//	}
+//
+//	public void setApplicationAlias(String applicationAlias) {
+//		this.applicationAlias = applicationAlias;
+//	}
+//
+//	public String getResponsible() {
+//		return responsible;
+//	}
+//
+//	public void setResponsible(String responsible) {
+//		this.responsible = responsible;
+//	}
+//
+//	public String getSubResponsible() {
+//		return subResponsible;
+//	}
+//
+//	public void setSubResponsible(String subResponsible) {
+//		this.subResponsible = subResponsible;
+//	}
 
 	public Long getApplicationCat2Id() {
 		return applicationCat2Id;
@@ -284,21 +255,21 @@ public class ApplicationDTO implements Serializable {
 		this.applicationCat2Id = applicationCat2Id;
 	}
 
-	public String getClusterCode() {
-		return clusterCode;
-	}
-
-	public void setClusterCode(String clusterCode) {
-		this.clusterCode = clusterCode;
-	}
-
-	public String getClusterType() {
-		return clusterType;
-	}
-
-	public void setClusterType(String clusterType) {
-		this.clusterType = clusterType;
-	}
+//	public String getClusterCode() {
+//		return clusterCode;
+//	}
+//
+//	public void setClusterCode(String clusterCode) {
+//		this.clusterCode = clusterCode;
+//	}
+//
+//	public String getClusterType() {
+//		return clusterType;
+//	}
+//
+//	public void setClusterType(String clusterType) {
+//		this.clusterType = clusterType;
+//	}
 
 	public String getComments() {
 		return comments;
@@ -348,77 +319,77 @@ public class ApplicationDTO implements Serializable {
 		this.isEditable = isEditable;
 	}
 
-	public String getInsertQuelle() {
-		return insertQuelle;
-	}
-
-	public void setInsertQuelle(String insertQuelle) {
-		this.insertQuelle = insertQuelle;
-	}
-
-	public String getInsertTimestamp() {
-		return insertTimestamp;
-	}
-
-	public void setInsertTimestamp(String insertTimestamp) {
-		this.insertTimestamp = insertTimestamp;
-	}
-
-	public String getInsertUser() {
-		return insertUser;
-	}
-
-	public void setInsertUser(String insertUser) {
-		this.insertUser = insertUser;
-	}
-
-	public String getUpdateQuelle() {
-		return updateQuelle;
-	}
-
-	public void setUpdateQuelle(String updateQuelle) {
-		this.updateQuelle = updateQuelle;
-	}
-
-	public String getUpdateTimestamp() {
-		return updateTimestamp;
-	}
-
-	public void setUpdateTimestamp(String updateTimestamp) {
-		this.updateTimestamp = updateTimestamp;
-	}
-
-	public String getUpdateUser() {
-		return updateUser;
-	}
-
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
-
-	public String getDeleteQuelle() {
-		return deleteQuelle;
-	}
-
-	public void setDeleteQuelle(String deleteQuelle) {
-		this.deleteQuelle = deleteQuelle;
-	}
-
-	public String getDeleteTimestamp() {
-		return deleteTimestamp;
-	}
-
-	public void setDeleteTimestamp(String deleteTimestamp) {
-		this.deleteTimestamp = deleteTimestamp;
-	}
-
-	public String getDeleteUser() {
-		return deleteUser;
-	}
-
-	public void setDeleteUser(String deleteUser) {
-		this.deleteUser = deleteUser;
-	}
+//	public String getInsertQuelle() {
+//		return insertQuelle;
+//	}
+//
+//	public void setInsertQuelle(String insertQuelle) {
+//		this.insertQuelle = insertQuelle;
+//	}
+//
+//	public String getInsertTimestamp() {
+//		return insertTimestamp;
+//	}
+//
+//	public void setInsertTimestamp(String insertTimestamp) {
+//		this.insertTimestamp = insertTimestamp;
+//	}
+//
+//	public String getInsertUser() {
+//		return insertUser;
+//	}
+//
+//	public void setInsertUser(String insertUser) {
+//		this.insertUser = insertUser;
+//	}
+//
+//	public String getUpdateQuelle() {
+//		return updateQuelle;
+//	}
+//
+//	public void setUpdateQuelle(String updateQuelle) {
+//		this.updateQuelle = updateQuelle;
+//	}
+//
+//	public String getUpdateTimestamp() {
+//		return updateTimestamp;
+//	}
+//
+//	public void setUpdateTimestamp(String updateTimestamp) {
+//		this.updateTimestamp = updateTimestamp;
+//	}
+//
+//	public String getUpdateUser() {
+//		return updateUser;
+//	}
+//
+//	public void setUpdateUser(String updateUser) {
+//		this.updateUser = updateUser;
+//	}
+//
+//	public String getDeleteQuelle() {
+//		return deleteQuelle;
+//	}
+//
+//	public void setDeleteQuelle(String deleteQuelle) {
+//		this.deleteQuelle = deleteQuelle;
+//	}
+//
+//	public String getDeleteTimestamp() {
+//		return deleteTimestamp;
+//	}
+//
+//	public void setDeleteTimestamp(String deleteTimestamp) {
+//		this.deleteTimestamp = deleteTimestamp;
+//	}
+//
+//	public String getDeleteUser() {
+//		return deleteUser;
+//	}
+//
+//	public void setDeleteUser(String deleteUser) {
+//		this.deleteUser = deleteUser;
+//	}
 
 	public String getApplicationCat2Txt() {
 		return applicationCat2Txt;
@@ -460,13 +431,13 @@ public class ApplicationDTO implements Serializable {
 		this.applicationCat1Txt = applicationCat1Txt;
 	}
 
-	public Long getRelevanzItsec() {
-		return relevanzItsec;
-	}
-
-	public void setRelevanzItsec(Long relevanzItsec) {
-		this.relevanzItsec = relevanzItsec;
-	}
+//	public Long getRelevanzItsec() {
+//		return relevanzItsec;
+//	}
+//
+//	public void setRelevanzItsec(Long relevanzItsec) {
+//		this.relevanzItsec = relevanzItsec;
+//	}
 
 	public Long getItsecGroupId() {
 		return itsecGroupId;
@@ -516,21 +487,6 @@ public class ApplicationDTO implements Serializable {
 		this.itsetName = itsetName;
 	}
 
-	public Long getSlaId() {
-		return slaId;
-	}
-
-	public void setSlaId(Long slaId) {
-		this.slaId = slaId;
-	}
-
-	public String getSlaName() {
-		return slaName;
-	}
-
-	public void setSlaName(String slaName) {
-		this.slaName = slaName;
-	}
 
 	public Long getServiceContractId() {
 		return serviceContractId;
@@ -596,13 +552,13 @@ public class ApplicationDTO implements Serializable {
 		this.businessEssential = businessEssential;
 	}
 
-	public Long getRelevanceICS() {
-		return relevanceICS;
-	}
-
-	public void setRelevanceICS(Long relevanceICS) {
-		this.relevanceICS = relevanceICS;
-	}
+//	public Long getRelevanceICS() {
+//		return relevanceICS;
+//	}
+//
+//	public void setRelevanceICS(Long relevanceICS) {
+//		this.relevanceICS = relevanceICS;
+//	}
 	
 	public Long getTemplate() {
 		return template;
@@ -944,21 +900,21 @@ public class ApplicationDTO implements Serializable {
 		this.primaryFunctionTxt = primaryFunctionTxt;
 	}
 
-	public String getResponsibleHidden() {
-		return responsibleHidden;
-	}
-
-	public void setResponsibleHidden(String responsibleHidden) {
-		this.responsibleHidden = responsibleHidden;
-	}
-
-	public String getSubResponsibleHidden() {
-		return subResponsibleHidden;
-	}
-
-	public void setSubResponsibleHidden(String subResponsibleHidden) {
-		this.subResponsibleHidden = subResponsibleHidden;
-	}
+//	public String getResponsibleHidden() {
+//		return responsibleHidden;
+//	}
+//
+//	public void setResponsibleHidden(String responsibleHidden) {
+//		this.responsibleHidden = responsibleHidden;
+//	}
+//
+//	public String getSubResponsibleHidden() {
+//		return subResponsibleHidden;
+//	}
+//
+//	public void setSubResponsibleHidden(String subResponsibleHidden) {
+//		this.subResponsibleHidden = subResponsibleHidden;
+//	}
 
 	public String getGpsccontactSupportGroup() {
 		return gpsccontactSupportGroup;
@@ -1247,13 +1203,13 @@ public class ApplicationDTO implements Serializable {
 		this.categoryBusiness = categoryBusiness;
 	}
 
-	public Long getTableId() {
-		return tableId;
-	}
-
-	public void setTableId(Long tableId) {
-		this.tableId = tableId;
-	}
+//	public Long getTableId() {
+//		return tableId;
+//	}
+//
+//	public void setTableId(Long tableId) {
+//		this.tableId = tableId;
+//	}
 
 	public Long getClassDataId() {
 		return classDataId;
@@ -1295,19 +1251,19 @@ public class ApplicationDTO implements Serializable {
 		this.applicationProtection = applicationProtection;
 	}
 
-	public String getRelevanceGR1435() {
-		return relevanceGR1435;
-	}
-
-	public void setRelevanceGR1435(String relevanceGR1435) {
-		this.relevanceGR1435 = relevanceGR1435;
-		if ("Y".equals(relevanceGR1435)) {
-			setRelevanzItsec(new Long(-1));
-		}
-		else if ("N".equals(relevanceGR1435)) {
-			setRelevanzItsec(new Long(0));
-		}
-	}
+//	public String getRelevanceGR1435() {
+//		return relevanceGR1435;
+//	}
+//
+//	public void setRelevanceGR1435(String relevanceGR1435) {
+//		this.relevanceGR1435 = relevanceGR1435;
+//		if ("Y".equals(relevanceGR1435)) {
+//			setRelevanzItsec(new Long(-1));
+//		}
+//		else if ("N".equals(relevanceGR1435)) {
+//			setRelevanzItsec(new Long(0));
+//		}
+//	}
 
 	public String getRelevanceGR2059() {
 		return relevanceGR2059;
@@ -1323,19 +1279,19 @@ public class ApplicationDTO implements Serializable {
 		}
 	}
 
-	public String getRelevanceGR1920() {
-		return relevanceGR1920;
-	}
-
-	public void setRelevanceGR1920(String relevanceGR1920) {
-		this.relevanceGR1920 = relevanceGR1920;
-		if ("Y".equals(relevanceGR1920)) {
-			setRelevanceICS(new Long(-1));
-		}
-		else if ("N".equals(relevanceGR1920)) {
-			setRelevanceICS(new Long(0));
-		}
-	}
+//	public String getRelevanceGR1920() {
+//		return relevanceGR1920;
+//	}
+//
+//	public void setRelevanceGR1920(String relevanceGR1920) {
+//		this.relevanceGR1920 = relevanceGR1920;
+//		if ("Y".equals(relevanceGR1920)) {
+//			setRelevanceICS(new Long(-1));
+//		}
+//		else if ("N".equals(relevanceGR1920)) {
+//			setRelevanceICS(new Long(0));
+//		}
+//	}
 
 	public String getRelevanceGR2008() {
 		return relevanceGR2008;
@@ -1351,37 +1307,37 @@ public class ApplicationDTO implements Serializable {
 		}
 	}
 
-	public Long getCiComplianceRequestId1435() {
-		return ciComplianceRequestId1435;
-	}
-
-	public void setCiComplianceRequestId1435(Long ciComplianceRequestId1435) {
-		this.ciComplianceRequestId1435 = ciComplianceRequestId1435;
-	}
-
-	public Long getCiComplianceRequestId2059() {
-		return ciComplianceRequestId2059;
-	}
-
-	public void setCiComplianceRequestId2059(Long ciComplianceRequestId2059) {
-		this.ciComplianceRequestId2059 = ciComplianceRequestId2059;
-	}
-
-	public Long getCiComplianceRequestId1920() {
-		return ciComplianceRequestId1920;
-	}
-
-	public void setCiComplianceRequestId1920(Long ciComplianceRequestId1920) {
-		this.ciComplianceRequestId1920 = ciComplianceRequestId1920;
-	}
-
-	public Long getCiComplianceRequestId2008() {
-		return ciComplianceRequestId2008;
-	}
-
-	public void setCiComplianceRequestId2008(Long ciComplianceRequestId2008) {
-		this.ciComplianceRequestId2008 = ciComplianceRequestId2008;
-	}
+//	public Long getCiComplianceRequestId1435() {
+//		return ciComplianceRequestId1435;
+//	}
+//
+//	public void setCiComplianceRequestId1435(Long ciComplianceRequestId1435) {
+//		this.ciComplianceRequestId1435 = ciComplianceRequestId1435;
+//	}
+//
+//	public Long getCiComplianceRequestId2059() {
+//		return ciComplianceRequestId2059;
+//	}
+//
+//	public void setCiComplianceRequestId2059(Long ciComplianceRequestId2059) {
+//		this.ciComplianceRequestId2059 = ciComplianceRequestId2059;
+//	}
+//
+//	public Long getCiComplianceRequestId1920() {
+//		return ciComplianceRequestId1920;
+//	}
+//
+//	public void setCiComplianceRequestId1920(Long ciComplianceRequestId1920) {
+//		this.ciComplianceRequestId1920 = ciComplianceRequestId1920;
+//	}
+//
+//	public Long getCiComplianceRequestId2008() {
+//		return ciComplianceRequestId2008;
+//	}
+//
+//	public void setCiComplianceRequestId2008(Long ciComplianceRequestId2008) {
+//		this.ciComplianceRequestId2008 = ciComplianceRequestId2008;
+//	}
 
 	public String getUpStreamAdd() {
 		return upStreamAdd;

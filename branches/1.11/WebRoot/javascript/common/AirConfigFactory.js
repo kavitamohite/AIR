@@ -5,8 +5,8 @@ AIR.AirConfigFactory = function() {
 		createCiResultGridConfig: function(isComplete) {
 		    var columnConfig = [];
 		    		
-			columnConfig.push({ id: 'applicationName', header: 'Name', dataIndex: 'applicationName', width: 150, sortable: true});
-			columnConfig.push({ id: 'applicationAlias', header: 'Alias', dataIndex: 'applicationAlias', width: 150, sortable: true});
+			columnConfig.push({ id: 'name', header: 'Name', dataIndex: 'name', width: 150, sortable: true});//applicationName
+			columnConfig.push({ id: 'alias', header: 'Alias', dataIndex: 'alias', width: 150, sortable: true});//applicationAlias
 			columnConfig.push({ id: 'applicationCat1Txt', header: 'Type', dataIndex: 'applicationCat1Txt', width: 150, sortable: true});
 			
 			if(isComplete) {
@@ -14,8 +14,8 @@ AIR.AirConfigFactory = function() {
 				columnConfig.push({ id: 'applicationOwner', header: 'App owner', dataIndex: 'applicationOwner', width: 150, sortable: true});//, menuDisabled: true
 				columnConfig.push({ id: 'applicationOwnerDelegate', header: 'App owner delegate', dataIndex: 'applicationOwnerDelegate', width: 150, sortable: true});//, menuDisabled: true
 				columnConfig.push({ id: 'applicationSteward', header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'responsible', header: 'Responsible', dataIndex: 'responsible', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'subResponsible', header: 'Sub responsible', dataIndex: 'subResponsible', width: 150, sortable: true});//, menuDisabled: true
+				columnConfig.push({ id: 'ciOwner', header: 'Responsible', dataIndex: 'ciOwner', width: 150, sortable: true});//responsible , menuDisabled: true
+				columnConfig.push({ id: 'ciOwnerDelegate', header: 'Sub responsible', dataIndex: 'ciOwnerDelegate', width: 150, sortable: true});//subResponsible , menuDisabled: true
 			}
 			
 			return columnConfig;
@@ -39,6 +39,66 @@ AIR.AirConfigFactory = function() {
 			}
 			
 			return columnConfig;
+		},
+		
+		createBuildingCiRecord: function() {
+			var buildingCiFields = this.getLocationCiFields();
+			
+			buildingCiFields.push('buildingCode');
+			buildingCiFields.push('street');
+			buildingCiFields.push('streetNumber');
+			buildingCiFields.push('postalCode');
+			buildingCiFields.push('location');
+			
+			return Ext.data.Record.create(buildingCiFields);
+		},
+		
+		createRoomCiFields: function() {
+			var roomCiFields = this.getLocationCiFields();
+			
+			roomCiFields.push('floor');
+			roomCiFields.push('roomType');
+			
+			return Ext.data.Record.create(roomCiFields);
+		},
+		
+		getLocationCiFields: function() {
+			var locationCiFields = [{
+				name: 'id', type: 'int'
+			},{
+				name: 'tableId', type: 'int'
+			},{
+				name: 'areaId', type: 'int'
+			}, 'name', 'alias', 'ciOwner', 'ciOwnerDelegate', 'insertQuelle', 'insertTimestamp', 'insertUser', 'updateQuelle', 'updateTimestamp', 'updateUser', 'slaId', 'businessEssentialId',
+				'hasMarkedDeletedItems',{
+				name: 'standordLoeschung', type: 'int'
+			},{
+				name: 'terrainLoeschung', type: 'int'
+			},{
+				name: 'gebaeudeLoeschung', type: 'int'
+			},{
+				name: 'aereaLoeschung', type: 'int'
+			},{
+				name: 'raumLoeschung', type: 'int'
+			},{
+				name: 'schrankLoeschung', type: 'int'
+			},{
+				name: 'landId', type: 'int'
+			}, 'landName', 'landNameEn', 'landKennzeichen',{
+				name: 'standortId', type: 'int'
+			}, 'standortName', 'standortCode',{
+				name: 'terrainId', type: 'int'
+			},'terrainName',{
+				name: 'gebaeudeId', type: 'int'
+			},'gebaeudeName',{
+				name: 'areaId', type: 'int'
+			},'areaName',{
+				name: 'raumId', type: 'int'
+			},'raumName',{
+				name: 'schrankId', type: 'int'
+			},'schrankName'];
+			
+			return locationCiFields;
 		}
 	};
 }();

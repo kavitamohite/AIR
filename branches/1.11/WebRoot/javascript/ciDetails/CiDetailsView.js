@@ -120,98 +120,118 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		this.addEvents('ciBeforeChange', 'ciChange');
 	},
 	
-	update: function(appDetail) {//detailsData
-		var store = AIR.AirStoreManager.getStoreByName('applicationCat2ListStore');
-		var applicationCat2 = appDetail.applicationCat2;
-		applicationCat2 = applicationCat2.length > 0 && applicationCat2 != '0' && store.getById(appDetail.applicationCat2) ? store.getById(appDetail.applicationCat2).data.text : '';
-		
-		store = AIR.AirStoreManager.getStoreByName('categoryBusinessListStore');
-		var categoryBusiness = appDetail.categoryBusinessId;
-		categoryBusiness = categoryBusiness.length > 0 && categoryBusiness != '0' && store.getById(appDetail.categoryBusinessId) ? store.getById(appDetail.categoryBusinessId).data.text : '';
-		
-		store = AIR.AirStoreManager.getStoreByName('slaListStore');
-		var slaName = appDetail.slaId;
-		slaName = slaName.length > 0 && slaName != '0' && store.getById(appDetail.slaId) ? store.getById(appDetail.slaId).data.text : '';
+	update: function(ciDetail) {//data
+		var store = AIR.AirStoreManager.getStoreByName('slaListStore');
+//		var slaName = ciDetail.slaId;
+//		slaName = slaName.length > 0 && slaName != '0' && store.getById(ciDetail.slaId) ? store.getById(ciDetail.slaId).data.text : '';
+		var slaName = ciDetail.slaId && ciDetail.slaId != 0 ? store.getById(ciDetail.slaId).data.text : '';
 
 		store = AIR.AirStoreManager.getStoreByName('businessEssentialListStore');
-		var businessEssential = appDetail.businessEssentialId;
-		businessEssential = businessEssential.length > 0 && businessEssential != '0' && store.getById(appDetail.businessEssentialId) ? store.getById(appDetail.businessEssentialId).data.text : '';
-
+//		var businessEssential = ciDetail.businessEssentialId;
+//		businessEssential = businessEssential.length > 0 && businessEssential != '0' && store.getById(ciDetail.businessEssentialId) ? store.getById(ciDetail.businessEssentialId).data.text : '';
+		var businessEssential = ciDetail.businessEssentialId && ciDetail.businessEssentialId != 0 ? store.getById(ciDetail.businessEssentialId).data.text : '';
 		
-		var detailsData = {
-			applicationCat1Txt: appDetail.applicationCat1Txt,
-			applicationAlias: appDetail.applicationAlias,
-			barApplicationId: appDetail.barApplicationId,
-			applicationCat2: applicationCat2,
-			categoryBusiness: categoryBusiness,
-			ciResponsible: appDetail.ciResponsible,
-			applicationOwner: appDetail.applicationOwner,
-			slaName: slaName,//AIR.AirStoreManager.getStoreByName('slaListStore').getById(appDetail.slaId).data.text,
-			businessEssential: businessEssential,//AIR.AirStoreManager.getStoreByName('businessEssentialListStore').getById(appDetail.businessEssentialId).data.text,
+		
+		var data = {
+			applicationCat1Txt: ciDetail.applicationCat1Txt,
+			applicationAlias: ciDetail.applicationAlias,
+			barApplicationId: ciDetail.barApplicationId,
+//				applicationCat2: applicationCat2,
+//				categoryBusiness: categoryBusiness,
+			ciResponsible: ciDetail.ciResponsible,
+			applicationOwner: ciDetail.applicationOwner,
+			slaName: slaName,//AIR.AirStoreManager.getStoreByName('slaListStore').getById(ciDetail.slaId).data.text,
+			businessEssential: businessEssential,//AIR.AirStoreManager.getStoreByName('businessEssentialListStore').getById(ciDetail.businessEssentialId).data.text,
 			
-			insertQuelle: appDetail.insertQuelle,
-			insertUser: appDetail.insertUser,
-			insertTimestamp: appDetail.insertTimestamp,
-			updateQuelle: appDetail.updateQuelle,
-			updateUser: appDetail.updateUser,
-			updateTimestamp: appDetail.updateTimestamp,
+			insertQuelle: ciDetail.insertQuelle,
+			insertUser: ciDetail.insertUser,
+			insertTimestamp: ciDetail.insertTimestamp,
+			updateQuelle: ciDetail.updateQuelle,
+			updateUser: ciDetail.updateUser,
+			updateTimestamp: ciDetail.updateTimestamp,
 			
 			//mailTemplate
-			applicationName: appDetail.applicationName,
-			ciSubResponsible: appDetail.ciSubResponsible
+			applicationName: ciDetail.applicationName,
+			ciSubResponsible: ciDetail.ciSubResponsible
 		};
+
+		
+		var tfAlias = this.getComponent('detailsApplicationAlias');
+		var tfBusinessCat = this.getComponent('detailsApplicationBusinessCat');
+		
+		if(ciDetail.tableId === AC.TABLE_ID_APPLICATION) {
+			store = AIR.AirStoreManager.getStoreByName('applicationCat2ListStore');
+			var applicationCat2 = ciDetail.applicationCat2;
+			applicationCat2 = applicationCat2.length > 0 && applicationCat2 != '0' && store.getById(ciDetail.applicationCat2) ? store.getById(ciDetail.applicationCat2).data.text : '';
+			
+			store = AIR.AirStoreManager.getStoreByName('categoryBusinessListStore');
+			var categoryBusiness = ciDetail.categoryBusinessId;
+			categoryBusiness = categoryBusiness.length > 0 && categoryBusiness != '0' && store.getById(ciDetail.categoryBusinessId) ? store.getById(ciDetail.categoryBusinessId).data.text : '';
+			
+			data.applicationCat2 = applicationCat2;
+			data.categoryBusiness = categoryBusiness;
+			
+			
+			tfAlias.setValue(data.applicationAlias);
+			tfBusinessCat.setValue(data.categoryBusiness);
+			
+			tfAlias.setVisible(true);
+			tfBusinessCat.setVisible(true);
+		} else {
+			tfAlias.reset();
+			tfBusinessCat.reset();
+			
+			tfAlias.setVisible(false);
+			tfBusinessCat.setVisible(false);
+		}
 		
 		
-		var field = this.getComponent('detailsApplicationAlias');
-		field.setValue(detailsData.applicationAlias);
+
 		
-		field = this.getComponent('detailsApplicationBusinessCat');
-		field.setValue(detailsData.categoryBusiness);
-		
-		field = this.getComponent('detailsApplicationCat2');
-		field.setValue(detailsData.applicationCat2);
+		var field = this.getComponent('detailsApplicationCat2');
+		field.setValue(data.applicationCat2);
 		
 		field = this.getComponent('detailsCiOwner');
-		field.setValue(detailsData.ciResponsible);
+		field.setValue(data.ciResponsible);
 		var labels = AIR.AirApplicationManager.getLabels();
-		var label = detailsData.applicationCat1Txt === 'Application' ? labels.applicationManager : labels.label_details_ciOwner;
+		var label = data.applicationCat1Txt === 'Application' ? labels.applicationManager : labels.label_details_ciOwner;
 		this.setFieldLabel(field, label);
 		
 		field = this.getComponent('detailsApplicationOwner');
-		field.setValue(detailsData.applicationOwner);
+		field.setValue(data.applicationOwner);
 		
 		
 		field = this.getComponent('detailsSlaName');
-		field.setValue(detailsData.slaName);
+		field.setValue(data.slaName);
 		
 		field = this.getComponent('detailsBusinessEssential');
-		field.setValue(detailsData.businessEssential);
+		field.setValue(data.businessEssential);
 		
 
-		var data = detailsData.insertQuelle + ' ' + detailsData.insertUser + ' ' + detailsData.insertTimestamp;
+		var data = data.insertQuelle + ' ' + data.insertUser + ' ' + data.insertTimestamp;
 		this.getComponent('detailsInsertdata').setValue(data);
 
-		data = detailsData.updateQuelle + ' ' + detailsData.updateUser + ' ' + detailsData.updateTimestamp;
+		data = data.updateQuelle + ' ' + data.updateUser + ' ' + data.updateTimestamp;
 		this.getComponent('detailsUpdatedata').setValue(data);
 		
 		
-		this.updateMailTemplate(detailsData);
+		this.updateMailTemplate(data);
 	},
 	
-	updateMailTemplate: function(detailsData) {
+	updateMailTemplate: function(data) {
 		var mailtemplate = 'mailto:';
 		// check value
-		mailtemplate += detailsData.ciResponsible;//Ext.getCmp('ciResponsibleHidden').getValue();
+		mailtemplate += data.ciResponsible;//Ext.getCmp('ciResponsibleHidden').getValue();
 		mailtemplate += '?';
 
 		// mail copy to sub responsible
-		if ('' !== detailsData.ciSubResponsible) {//Ext.getCmp('ciSubResponsibleHidden').getValue()
-			mailtemplate += 'cc=' + detailsData.ciSubResponsible;//Ext.getCmp('ciSubResponsibleHidden').getValue()
+		if ('' !== data.ciSubResponsible) {//Ext.getCmp('ciSubResponsibleHidden').getValue()
+			mailtemplate += 'cc=' + data.ciSubResponsible;//Ext.getCmp('ciSubResponsibleHidden').getValue()
 			mailtemplate += '&';
 		}
 
-		var tempSubj = mail_Subject.replace('<CIName>', detailsData.applicationName);//Ext.getCmp('applicationName').getValue()
-		var tempText = mail_Text.replace('<CIName>', detailsData.applicationName);//Ext.getCmp('applicationName').getValue()
+		var tempSubj = mail_Subject.replace('<CIName>', data.applicationName);//Ext.getCmp('applicationName').getValue()
+		var tempText = mail_Text.replace('<CIName>', data.applicationName);//Ext.getCmp('applicationName').getValue()
 		tempText = tempText.replace('<Username>', AIR.AirApplicationManager.getUserName());//username
 		
 		mailtemplate += 'subject=' + tempSubj + '';
@@ -226,9 +246,9 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setFieldLabel(this.getComponent('detailsApplicationBusinessCat'), labels.label_details_category_business);
 		this.setFieldLabel(this.getComponent('detailsApplicationCat2'), labels.label_details_category);
 		
-//		var appDetail = AIR.AirApplicationManager.getAppDetail();
-//		if(appDetail) {
-//			var label = appDetail.applicationCat1Txt === 'Application' ? labels.applicationManager : labels.label_details_ciOwner;
+//		var ciDetail = AIR.AirApplicationManager.getciDetail();
+//		if(ciDetail) {
+//			var label = ciDetail.applicationCat1Txt === 'Application' ? labels.applicationManager : labels.label_details_ciOwner;
 //			this.setFieldLabel(this.getComponent('detailsCiOwner'), label);//labels.label_details_ciOwner
 //		}
 		

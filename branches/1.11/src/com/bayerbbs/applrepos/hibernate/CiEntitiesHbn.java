@@ -14,7 +14,7 @@ import org.hibernate.Transaction;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
-import com.bayerbbs.applrepos.dto.BaseDTO;
+import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
@@ -163,7 +163,7 @@ public class CiEntitiesHbn {
 			sql.append(",");
 			sql.append(ApplreposConstants.TABLE_ID_ROOM);
 			sql.append(",");
-			sql.append(ApplreposConstants.TABLE_ID_WAYS);
+			sql.append(ApplreposConstants.TABLE_ID_BUILDING);//TABLE_ID_WAYS
 		}
 		sql.append(")");
 		
@@ -279,9 +279,9 @@ public class CiEntitiesHbn {
 	 * find all the ci's or only the applications
 	 * @return
 	 */
-	public static List<BaseDTO> findCisByNameOrAlias(String searchName, Long ciTableId, boolean withDeleted) {
+	public static List<CiBaseDTO> findCisByNameOrAlias(String searchName, Long ciTableId, boolean withDeleted) {
 
-		ArrayList<BaseDTO> listResult = new ArrayList<BaseDTO>();
+		ArrayList<CiBaseDTO> listResult = new ArrayList<CiBaseDTO>();
 
 		boolean commit = false;
 		Transaction tx = null;
@@ -325,7 +325,7 @@ public class CiEntitiesHbn {
 			if (null != rset) {
 				while (rset.next()) {
 					ApplicationDTO anw = getApplicationDTOFromResultSet(rset);
-					BaseDTO baseDTO = new BaseDTO();
+					CiBaseDTO baseDTO = new CiBaseDTO();
 					baseDTO.setId(rset.getLong("CI_ID"));
 					baseDTO.setName(rset.getString("NAME"));
 					baseDTO.setAlias(rset.getString("ASSET_ID_OR_ALIAS"));
@@ -488,12 +488,12 @@ public class CiEntitiesHbn {
 		
 		// TODO rename fields application to ci entities
 		ApplicationDTO anw = new ApplicationDTO();
-		anw.setApplicationId(ci_id);
-		anw.setApplicationName(name);
-		anw.setApplicationAlias(assetIdOrAlias);
-		anw.setResponsible(responsible);
+		anw.setId(ci_id);
+		anw.setName(name);
+		anw.setAlias(assetIdOrAlias);
+		anw.setCiOwner(responsible);
 		anw.setApplicationSteward(applicationSteward);
-		anw.setSubResponsible(subResponsible);
+		anw.setCiOwnerDelegate(subResponsible);
 		anw.setApplicationCat1Txt(type);
 		anw.setApplicationCat2Txt(category);
 		anw.setApplicationOwner(applicationOwner);

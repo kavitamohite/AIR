@@ -1,6 +1,10 @@
 package com.bayerbbs.applrepos.dto;
 
-public class BaseDTO {
+import java.io.Serializable;
+
+public class CiBaseDTO implements Serializable {
+	private static final long serialVersionUID = -7096067985931326775L;
+	
 	private Long id;
 	private Long tableId;
 	private String name;
@@ -23,7 +27,8 @@ public class BaseDTO {
 	private String deleteTimestamp;
 	private String deleteUser;
 
-	private Long businessEssentialId;
+	private Long slaId;
+	private String slaName;
 	
 	// compliance
 	private Long itset;
@@ -31,13 +36,18 @@ public class BaseDTO {
 	private Long itsecGroupId;
 	private Long refId;
 	
+	private String relevanceGR1435;//ITSEC
+	private String relevanceGR1920;//ICS
+	
 	private Long relevanceICS;
-	private Long relevanceITSEC;
+	private Long relevanzItsec;
+	
+
 	private String gxpFlag;
 	private String gxpFlagId;	// falls später über id referenziert wird
 
 	
-	public BaseDTO() {}
+	public CiBaseDTO() {}
 	
 	public Long getId() {
 		return id;
@@ -172,14 +182,25 @@ public class BaseDTO {
 	public void setDeleteUser(String deleteUser) {
 		this.deleteUser = deleteUser;
 	}
+	
+	
 
-	public Long getBusinessEssentialId() {
-		return businessEssentialId;
+	public Long getSlaId() {
+		return slaId;
 	}
 
-	public void setBusinessEssentialId(Long businessEssentialId) {
-		this.businessEssentialId = businessEssentialId;
+	public void setSlaId(Long slaId) {
+		this.slaId = slaId;
 	}
+
+	public String getSlaName() {
+		return slaName;
+	}
+
+	public void setSlaName(String slaName) {
+		this.slaName = slaName;
+	}
+
 
 	public Long getItset() {
 		return itset;
@@ -213,6 +234,43 @@ public class BaseDTO {
 		this.refId = refId;
 	}
 
+	public String getRelevanceGR1435() {
+		return relevanceGR1435;
+	}
+
+	public void setRelevanceGR1435(String relevanceGR1435) {
+		this.relevanceGR1435 = relevanceGR1435;
+		if ("Y".equals(relevanceGR1435)) {
+			setRelevanzItsec(new Long(-1));
+		}
+		else if ("N".equals(relevanceGR1435)) {
+			setRelevanzItsec(new Long(0));
+		}
+	}
+
+	public Long getRelevanzItsec() {
+		return relevanzItsec;
+	}
+
+	public void setRelevanzItsec(Long relevanzItsec) {
+		this.relevanzItsec = relevanzItsec;
+	}
+	
+	
+	public String getRelevanceGR1920() {
+		return relevanceGR1920;
+	}
+
+	public void setRelevanceGR1920(String relevanceGR1920) {
+		this.relevanceGR1920 = relevanceGR1920;
+		if ("Y".equals(relevanceGR1920)) {
+			setRelevanceICS(new Long(-1));
+		}
+		else if ("N".equals(relevanceGR1920)) {
+			setRelevanceICS(new Long(0));
+		}
+	}
+	
 	public Long getRelevanceICS() {
 		return relevanceICS;
 	}
@@ -220,14 +278,7 @@ public class BaseDTO {
 	public void setRelevanceICS(Long relevanceICS) {
 		this.relevanceICS = relevanceICS;
 	}
-
-	public Long getRelevanceITSEC() {
-		return relevanceITSEC;
-	}
-
-	public void setRelevanceITSEC(Long relevanceITSEC) {
-		this.relevanceITSEC = relevanceITSEC;
-	}
+	
 
 	public String getGxpFlag() {
 		return gxpFlag;

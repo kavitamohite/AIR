@@ -98,11 +98,10 @@ public class AnwendungHbn {
 		Application application = null;
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
+		
 		try {
 			tx = session.beginTransaction();
-			List<Application> list = session.createQuery(
-					"select h from Application as h where h.applicationId= "
-							+ applicationId).list();
+			List<Application> list = session.createQuery("select h from Application as h where h.applicationId= " + applicationId).list();
 
 			if (null != list && 0 < list.size()) {
 				application = (Application) list.get(0);
@@ -130,12 +129,10 @@ public class AnwendungHbn {
 		List<Application> listApplications = null;
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
+		
 		try {
 			tx = session.beginTransaction();
-			listApplications = session
-					.createQuery(
-							"select h from Application as h where h.deleteTimestamp is not null and upper(h.applicationName)= '"
-									+ applicationName.toUpperCase() + "'").list();
+			listApplications = session.createQuery("select h from Application as h where h.deleteTimestamp is not null and upper(h.applicationName)= '"	+ applicationName.toUpperCase() + "'").list();
 			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
@@ -148,8 +145,8 @@ public class AnwendungHbn {
 				// throw again the first exception
 				throw e;
 			}
-
 		}
+		
 		return listApplications;
 	}
 
@@ -158,12 +155,10 @@ public class AnwendungHbn {
 		List<Application> listApplications = null;
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
+		
 		try {
 			tx = session.beginTransaction();
-			listApplications = session
-					.createQuery(
-							"select h from Application as h where h.deleteTimestamp is null and upper(h.applicationName)= '"
-									+ applicationName.toUpperCase() + "'").list();
+			listApplications = session.createQuery("select h from Application as h where h.deleteTimestamp is null and upper(h.applicationName)= '"	+ applicationName.toUpperCase() + "'").list();
 			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
@@ -184,28 +179,25 @@ public class AnwendungHbn {
 
 	public static ApplicationEditParameterOutput saveAnwendung(String cwid,	ApplicationDTO dto) {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
-
 		String validationMessage = null;
 		
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
-			if (null != dto.getApplicationId()
-					|| 0 < dto.getApplicationId().longValue()) {
-				Long id = new Long(dto.getApplicationId());
+			
+			if (null != dto.getId()	|| 0 < dto.getId().longValue()) {
+				Long id = new Long(dto.getId());
 
 				// check der InputWerte
 				List<String> messages = AnwendungHbn.validateApplication(dto);
 
 				if (messages.isEmpty()) {
-
 					Session session = HibernateUtil.getSession();
 					Transaction tx = null;
 					tx = session.beginTransaction();
-					Application application = (Application) session.get(
-							Application.class, id);
+					Application application = (Application) session.get(Application.class, id);
 
 					if (null == application) {
-						// application was not found in database
+						//  was not found in database
 						output.setErrorMessage("1000", EMPTY+id);
 					} else if (null != application.getDeleteTimestamp()) {
 						// application is deleted
@@ -247,28 +239,24 @@ public class AnwendungHbn {
 						// Basics
 						// ======
 
-						if (null != dto.getApplicationName()) {
-							application
-								.setApplicationName(dto.getApplicationName());
+						if (null != dto.getName()) {
+							application.setApplicationName(dto.getName());
 						}
-						if (null != dto.getApplicationAlias()) {
-							application.setApplicationAlias(dto
-									.getApplicationAlias());
+						if (null != dto.getAlias()) {
+							application.setApplicationAlias(dto.getAlias());
 						}
 						if (null != dto.getVersion()) {
 							application.setVersion(dto.getVersion());
 						}
-						if (null != dto
-								.getApplicationCat2Id()) {
+						if (null != dto.getApplicationCat2Id()) {
 							if (-1 == dto.getApplicationCat2Id()) {
 								application.setApplicationCat2Id(null);
 							}
 							else {
-								application.setApplicationCat2Id(dto
-								.getApplicationCat2Id());
+								application.setApplicationCat2Id(dto.getApplicationCat2Id());
 							}
 						}
-						// primary function only view
+
 
 						if (null != dto.getLifecycleStatusId()) {
 							if (-1 == dto.getLifecycleStatusId()) {
@@ -280,14 +268,12 @@ public class AnwendungHbn {
 						}
 						
 						
-						if (null != dto
-								.getOperationalStatusId()) {
+						if (null != dto.getOperationalStatusId()) {
 							if (-1 == dto.getOperationalStatusId()) {
 								application.setOperationalStatusId(null);
 							}
 							else {
-								application.setOperationalStatusId(dto
-								.getOperationalStatusId());
+								application.setOperationalStatusId(dto.getOperationalStatusId());
 							}
 						}
 						if (null != dto.getComments()) {
@@ -351,13 +337,6 @@ public class AnwendungHbn {
 						if (hasBusinessEssentialChanged) {
 							sendBusinessEssentialChangedMail(application, dto, businessEssentialIdOld);
 						}
-						// ----------
-						
-						// TODO edit more Attributes
-
-						// TODO welche?
-						// TODO check ob alle Variablen gesetzt worden sind!
-						// ==============================
 
 						
 						if (null != dto.getItSecSbAvailabilityId()) {
@@ -373,23 +352,23 @@ public class AnwendungHbn {
 							application.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
 						}
 						
-						if (null != dto.getClusterCode()) {
-							application.setClusterCode(dto.getClusterCode());
-						}
-						if (null != dto.getClusterType()) {
-							application.setClusterType(dto.getClusterType());
-						}
+//						if (null != dto.getClusterCode()) {
+//							application.setClusterCode(dto.getClusterCode());
+//						}
+//						if (null != dto.getClusterType()) {
+//							application.setClusterType(dto.getClusterType());
+//						}
 						
-						if (null != dto.getResponsibleHidden()) {
-							if(StringUtils.isNullOrEmpty(dto.getResponsibleHidden())) {
+						if (null != dto.getCiOwnerHidden()) {
+							if(StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {
 								application.setResponsible(null);
 							}
 							else {
-								application.setResponsible(dto.getResponsibleHidden());
+								application.setResponsible(dto.getCiOwnerHidden());
 							}
 						}
-						if (null != dto.getSubResponsibleHidden()) {
-							application.setSubResponsible(dto.getSubResponsibleHidden());
+						if (null != dto.getCiOwnerDelegateHidden()) {
+							application.setSubResponsible(dto.getCiOwnerDelegateHidden());
 						}
 
 						if (null != dto.getApplicationOwnerHidden()) {
@@ -410,7 +389,7 @@ public class AnwendungHbn {
 						// ==========
 						
 						// IT SET only view!
-						application.setItset(getItset(dto.getResponsibleHidden(),dto.getSubResponsibleHidden(),ApplreposConstants.TABLE_ID_APPLICATION,application.getApplicationId(),ApplreposConstants.APPLICATION_GUI_NAME));
+						application.setItset(getItset(dto.getCiOwnerHidden(), dto.getCiOwnerDelegateHidden(),ApplreposConstants.TABLE_ID_APPLICATION,application.getApplicationId(),ApplreposConstants.APPLICATION_GUI_NAME));
 						
 						
 						// Template
@@ -732,7 +711,7 @@ public class AnwendungHbn {
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
-			if (null != dto.getApplicationId() && 0 == dto.getApplicationId()) {
+			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
 				List<String> messages = AnwendungHbn.validateApplication(dto);
@@ -745,7 +724,7 @@ public class AnwendungHbn {
 					
 					
 					if (isApplicationNameAndAliasNameAllowed) {
-						List<ApplicationDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getApplicationName(), true);
+						List<ApplicationDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getName(), true);
 						if (null != listApplications && 0 < listApplications.size()) {
 							// application name is not allowed
 							isApplicationNameAndAliasNameAllowed = false;
@@ -756,36 +735,34 @@ public class AnwendungHbn {
 								if(override) {
 									// TODO ENTWICKLUNG RFC8279
 									Session session = HibernateUtil.getSession();
-									Application applicationDeleted = (Application)session.get(Application.class, listApplications.get(0).getApplicationId());
-									
+									Application applicationDeleted = (Application)session.get(Application.class, listApplications.get(0).getId());
 									// reactivate application
 									reactivateApplication(cwid, dto, applicationDeleted);
 									// save the data
-									dto.setApplicationId(applicationDeleted.getApplicationId());
+									dto.setId(applicationDeleted.getApplicationId());
 									return saveAnwendung(cwid, dto);
 
 								} else {
-									output.setMessages(new String[] {"Application Name '" + listApplications.get(0).getApplicationName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+									output.setMessages(new String[] {"Application Name '" + listApplications.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 								}
 							}
 							else {
-								output.setMessages(new String[] {"Application Name '" + listApplications.get(0).getApplicationName() + "' already exists."});
+								output.setMessages(new String[] {"Application Name '" + listApplications.get(0).getName() + "' already exists."});
 							}
 						}
 					}
 					
 					if (isApplicationNameAndAliasNameAllowed) {
-						List<ApplicationDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto
-								.getApplicationAlias(), true);
+						List<ApplicationDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getAlias(), true);
 						if (null != listApplications && 0 < listApplications.size()) {
 							// application alias is not allowed
 							isApplicationNameAndAliasNameAllowed = false;
 							output.setResult(ApplreposConstants.RESULT_ERROR);
 							if (null != listApplications.get(0).getDeleteQuelle()) {
-								output.setMessages(new String[] {"Application Alias '" + listApplications.get(0).getApplicationAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+								output.setMessages(new String[] {"Application Alias '" + listApplications.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 							}
 							else {
-								output.setMessages(new String[] {"Application Alias '" + listApplications.get(0).getApplicationAlias() + "' already exists."});
+								output.setMessages(new String[] {"Application Alias '" + listApplications.get(0).getAlias() + "' already exists."});
 							}
 						}						
 					}
@@ -796,8 +773,7 @@ public class AnwendungHbn {
 
 						// calculates the ItSet
 						Long itSet = null;
-						String strItSet = ApplReposHbn.getItSetFromCwid(dto
-								.getResponsible());
+						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
 						if (null != strItSet) {
 							itSet = Long.parseLong(strItSet);
 						}
@@ -832,24 +808,20 @@ public class AnwendungHbn {
 
 						// application - attributes
 						application
-								.setApplicationName(dto.getApplicationName());
-						application.setApplicationAlias(dto
-								.getApplicationAlias());
+								.setApplicationName(dto.getName());
+						application.setApplicationAlias(dto.getAlias());
 						application.setComments(dto.getComments());
-						application.setClusterCode(dto.getClusterCode());
-						application.setClusterType(dto.getClusterType());
-						application.setApplicationCat2Id(dto
-								.getApplicationCat2Id());
-						application.setLifecycleStatusId(dto
-								.getLifecycleStatusId());
-						application.setOperationalStatusId(dto
-								.getOperationalStatusId());
+//						application.setClusterCode(dto.getClusterCode());
+//						application.setClusterType(dto.getClusterType());
+						application.setApplicationCat2Id(dto.getApplicationCat2Id());
+						application.setLifecycleStatusId(dto.getLifecycleStatusId());
+						application.setOperationalStatusId(dto.getOperationalStatusId());
 
-						if (null != dto.getResponsibleHidden()) {
-							application.setResponsible(dto.getResponsibleHidden());
+						if (null != dto.getCiOwnerHidden()) {//getResponsibleHidden
+							application.setResponsible(dto.getCiOwnerHidden());
 						}
-						if (null != dto.getSubResponsibleHidden()) {
-							application.setSubResponsible(dto.getSubResponsibleHidden());
+						if (null != dto.getCiOwnerDelegateHidden()) {//getSubResponsibleHidden
+							application.setSubResponsible(dto.getCiOwnerDelegateHidden());
 						}
 
 						if (null != dto.getApplicationOwnerHidden()) {
@@ -1179,29 +1151,29 @@ public class AnwendungHbn {
 		
 		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 
-		if (StringUtils.isNullOrEmpty(dto.getApplicationName())) {
+		if (StringUtils.isNullOrEmpty(dto.getName())) {
 			// messages.add("application name is empty");
 		}
 		else {
-			List<ApplicationDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getApplicationName());
+			List<ApplicationDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
 			if (!listCi.isEmpty()) {
 				// check if the name is unique
-				if (dto.getApplicationId().longValue() != listCi.get(0).getApplicationId().longValue()) {
-					messages.add(errorCodeManager.getErrorMessage("1100", dto.getApplicationName()));
+				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
+					messages.add(errorCodeManager.getErrorMessage("1100", dto.getName()));
 				}
 			}
 		}
 
-		if (StringUtils.isNullOrEmpty(dto.getApplicationAlias())) {
+		if (StringUtils.isNullOrEmpty(dto.getAlias())) {
 			// messages.add("application alias is empty");
-			dto.setApplicationAlias(dto.getApplicationName());
+			dto.setAlias(dto.getName());
 		}
 		else {
-			List<ApplicationDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getApplicationAlias());
+			List<ApplicationDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias());
 			if (!listCi.isEmpty()) {
 				// check if the alias is unique
-				if (dto.getApplicationId().longValue() != listCi.get(0).getApplicationId().longValue()) {
-					messages.add(errorCodeManager.getErrorMessage("1101", dto.getApplicationAlias()));
+				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
+					messages.add(errorCodeManager.getErrorMessage("1101", dto.getAlias()));
 				}
 			}
 		}
@@ -1221,12 +1193,12 @@ public class AnwendungHbn {
 		// validate contacts
 		// =================
 		// responsible
-		if (StringUtils.isNullOrEmpty(dto.getResponsibleHidden())) {
+		if (StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {//getResponsibleHidden
 			// messages.add(errorCodeManager.getErrorMessage("1102"));
 			// darf jetzt leer sein
 		}
 		else {
-			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getResponsibleHidden());
+			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getCiOwnerHidden());//getResponsibleHidden
 			if (null == listPersons || listPersons.isEmpty()) {
 				messages.add(errorCodeManager.getErrorMessage("1103"));
 			}
@@ -1255,17 +1227,18 @@ public class AnwendungHbn {
 			
 		}		
 		// subresponsible
-		if (!StringUtils.isNullOrEmpty(dto.getSubResponsibleHidden())) {
-			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getSubResponsibleHidden());
+		if (!StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {//getSubResponsibleHidden
+			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getCiOwnerDelegateHidden());
 			if (null == listPersons || listPersons.isEmpty()) {
 				// not a valid person, maybe a group?
-				GroupsDTO group = GroupHbn.findGroupByName(dto.getSubResponsible());
+				GroupsDTO group = GroupHbn.findGroupByName(dto.getCiOwnerDelegate());//getSubResponsible
 				if (null == group) {
 					messages.add(errorCodeManager.getErrorMessage("1107")); // "subresponsible is not valid");
 				}
 				else {
 					// sub responsible is a valid group
-					dto.setSubResponsibleHidden(dto.getSubResponsible());
+//					dto.setSubResponsibleHidden(dto.getSubResponsible());
+					dto.setCiOwnerDelegateHidden(dto.getCiOwnerDelegate());//
 				}
 			}
 			else if (1 != listPersons.size()) {
@@ -1292,9 +1265,9 @@ public class AnwendungHbn {
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
-			if (null != dto.getApplicationId()
-					&& 0 < dto.getApplicationId().longValue()) {
-				Long id = new Long(dto.getApplicationId());
+			if (null != dto.getId()
+					&& 0 < dto.getId().longValue()) {
+				Long id = new Long(dto.getId());
 
 				// TODO check der InputWerte
 				Session session = HibernateUtil.getSession();
@@ -1471,51 +1444,34 @@ public class AnwendungHbn {
 		sql.append("          , classinfo.CLASS_INFORMATION_NAME");
 		sql.append("          , anw.CLASS_INFORMATION_EXPLANATION");
 		sql.append("          , classinfo.CLASS_PROTECTION_NAME");
-
 		sql.append("		from anwendung anw");
-		sql
-		.append("		left join category_business katbus on anw.category_business_id = katbus.category_business_id");
-		
-		sql
-				.append("		left join anwendung_kat2 kat2 on anw.anwendung_kat2_id = kat2.anwendung_kat2_id");
-		sql
-				.append("		left join anwendung_kat1 kat1 on kat2.anwendung_kat1_id = kat1.anwendung_kat1_id");
-		sql
-				.append("		left join itsec_gruppe itsgrp on anw.itsec_gruppe_id = itsgrp.ITSEC_GRP_GSTOOLID");
-		sql.append(" left join anwendung anwref on anw.ref_id = anwref.anwendung_id");
-		sql
-				.append("		left join einsatz_status einsstat on anw.einsatz_status_id = einsstat.einsatz_status_id");
-		sql
-				.append("		left join lifecycle_sub_stat lcsubstat on anw.lc_status_id = lcsubstat.lc_sub_stat_id and lcsubstat.tabelle_id = 2");
-		sql
-				.append("		left join lifecycle_status lcstat on lcsubstat.lc_status_id = lcstat.lc_status_id and lcstat.tabelle_id = 2");
-		sql
-				.append("		left join itsec_it_verbund itsverb on anw.itset = itsverb.gstool_zob_id");
+		sql.append("		left join category_business katbus on anw.category_business_id = katbus.category_business_id");
+		sql.append("		left join anwendung_kat2 kat2 on anw.anwendung_kat2_id = kat2.anwendung_kat2_id");
+		sql.append("		left join anwendung_kat1 kat1 on kat2.anwendung_kat1_id = kat1.anwendung_kat1_id");
+		sql.append("		left join itsec_gruppe itsgrp on anw.itsec_gruppe_id = itsgrp.ITSEC_GRP_GSTOOLID");
+		sql.append(" 		left join anwendung anwref on anw.ref_id = anwref.anwendung_id");
+		sql.append("		left join einsatz_status einsstat on anw.einsatz_status_id = einsstat.einsatz_status_id");
+		sql.append("		left join lifecycle_sub_stat lcsubstat on anw.lc_status_id = lcsubstat.lc_sub_stat_id and lcsubstat.tabelle_id = 2");
+		sql.append("		left join lifecycle_status lcstat on lcsubstat.lc_status_id = lcstat.lc_status_id and lcstat.tabelle_id = 2");
+		sql.append("		left join itsec_it_verbund itsverb on anw.itset = itsverb.gstool_zob_id");
 		sql.append("		left join sla sla on anw.sla_id = sla.sla_id");
-		sql
-				.append("		left join service_contract servcontr on anw.service_contract_id = servcontr.service_contract_id");
-		sql
-				.append("		left join priority_level priolev on anw.priority_level_id = priolev.priority_level_id");
-		sql
-				.append("		left join severity_level sevlev on anw.severity_level_id = sevlev.severity_level_id");
-		sql
-				.append("		left join severity_level busess on anw.business_essential_id = busess.severity_level_id");
-		sql.append(" left join LICENSE_TYPE lic on anw.license_type_id = lic.license_type_id");
-		sql.append(" left join CURRENCY cicurrency on anw.currency_id = cicurrency.currency_id");
-		sql.append(" left join KONTO costrun on anw.cost_run_account_id = costrun.konto_id");
-		sql.append(" left join KONTO costchange on anw.cost_change_account_id = costchange.konto_id");
-		sql.append(" left join ITSEC_SB_WERTE itsecsbinteg on anw.ITSEC_SB_INTEG_ID = itsecsbinteg.ITSEC_SB_ID");
-		sql.append(" left join ITSEC_SB_WERTE itsecsbverfg on anw.ITSEC_SB_VERFG_ID = itsecsbverfg.ITSEC_SB_ID");
-		sql.append(" left join ITSEC_SB_WERTE itsecsbvertr on anw.ITSEC_SB_VERTR_ID = itsecsbvertr.ITSEC_SB_ID");
-		
-		sql.append(" left join CLASS_DATA classdata on anw.CLASS_DATA_ID = classdata.CLASS_DATA_ID and classdata.DEL_TIMESTAMP is null");
-		sql.append(" left join CLASS_INFORMATION classinfo on anw.CLASS_INFORMATION_ID = classinfo.CLASS_INFORMATION_ID and classinfo.DEL_TIMESTAMP is null");
-		
+		sql.append("		left join service_contract servcontr on anw.service_contract_id = servcontr.service_contract_id");
+		sql.append("		left join priority_level priolev on anw.priority_level_id = priolev.priority_level_id");
+		sql.append("		left join severity_level sevlev on anw.severity_level_id = sevlev.severity_level_id");
+		sql.append("		left join severity_level busess on anw.business_essential_id = busess.severity_level_id");
+		sql.append(" 		left join LICENSE_TYPE lic on anw.license_type_id = lic.license_type_id");
+		sql.append(" 		left join CURRENCY cicurrency on anw.currency_id = cicurrency.currency_id");
+		sql.append(" 		left join KONTO costrun on anw.cost_run_account_id = costrun.konto_id");
+		sql.append(" 		left join KONTO costchange on anw.cost_change_account_id = costchange.konto_id");
+		sql.append(" 		left join ITSEC_SB_WERTE itsecsbinteg on anw.ITSEC_SB_INTEG_ID = itsecsbinteg.ITSEC_SB_ID");
+		sql.append(" 		left join ITSEC_SB_WERTE itsecsbverfg on anw.ITSEC_SB_VERFG_ID = itsecsbverfg.ITSEC_SB_ID");
+		sql.append(" 		left join ITSEC_SB_WERTE itsecsbvertr on anw.ITSEC_SB_VERTR_ID = itsecsbvertr.ITSEC_SB_ID");
+		sql.append(" 		left join CLASS_DATA classdata on anw.CLASS_DATA_ID = classdata.CLASS_DATA_ID and classdata.DEL_TIMESTAMP is null");
+		sql.append(" 		left join CLASS_INFORMATION classinfo on anw.CLASS_INFORMATION_ID = classinfo.CLASS_INFORMATION_ID and classinfo.DEL_TIMESTAMP is null");
 		sql.append("		where anw.anwendung_id=").append(applicationId);
 
 		try {
 			tx = session.beginTransaction();
-
 			conn = session.connection();
 
 			selectStmt = conn.createStatement();
@@ -1524,98 +1480,59 @@ public class AnwendungHbn {
 			if (null != rsMessage) {
 				rsMessage.next();
 				applicationDTO = new ApplicationDTO();
-				applicationDTO.setApplicationId(rsMessage
-						.getLong("ANWENDUNG_ID"));
+				applicationDTO.setId(rsMessage.getLong("ANWENDUNG_ID"));
 				applicationDTO.setBarApplicationId(rsMessage.getString("BAR_APPLICATION_ID"));
 				applicationDTO.setBarRelevance(rsMessage.getString("BAR_RELEVANCE_Y_N"));
-				applicationDTO.setApplicationName(rsMessage
-						.getString("ANWENDUNG_NAME"));
-				applicationDTO.setApplicationCat2Id(rsMessage
-						.getLong("ANWENDUNG_KAT2_ID"));
-				applicationDTO.setApplicationCat2Txt(rsMessage
-						.getString("ANWENDUNG_KAT2_TXT"));
-				applicationDTO.setApplicationCat1Id(rsMessage
-						.getLong("ANWENDUNG_KAT1_ID"));
-				applicationDTO.setApplicationCat1Txt(rsMessage
-						.getString("ANWENDUNG_KAT1_EN"));
-
-				Long relevanzItsec = rsMessage.getLong("RELEVANZ_ITSEC");
-
-				applicationDTO.setRelevanzItsec(relevanzItsec);
-
-				applicationDTO.setItsecGroupId(rsMessage
-						.getLong("ITSEC_GRUPPE_ID"));
-				applicationDTO.setItsecGroup(rsMessage
-						.getString("ITSEC_GRUPPE"));
+				applicationDTO.setName(rsMessage.getString("ANWENDUNG_NAME"));
+				applicationDTO.setApplicationCat2Id(rsMessage.getLong("ANWENDUNG_KAT2_ID"));
+				applicationDTO.setApplicationCat2Txt(rsMessage.getString("ANWENDUNG_KAT2_TXT"));
+				applicationDTO.setApplicationCat1Id(rsMessage.getLong("ANWENDUNG_KAT1_ID"));
+				applicationDTO.setApplicationCat1Txt(rsMessage.getString("ANWENDUNG_KAT1_EN"));
+				applicationDTO.setRelevanzItsec(rsMessage.getLong("RELEVANZ_ITSEC"));
+				applicationDTO.setItsecGroupId(rsMessage.getLong("ITSEC_GRUPPE_ID"));
+				applicationDTO.setItsecGroup(rsMessage.getString("ITSEC_GRUPPE"));
 				applicationDTO.setRefId(rsMessage.getLong("REF_ID"));
 				applicationDTO.setRefTxt(rsMessage.getString("REF_TXT"));
-				applicationDTO.setOperationalStatusId(rsMessage
-						.getLong("EINSATZ_STATUS_ID"));
-				applicationDTO.setOperationalStatusTxt(rsMessage
-						.getString("EINSATZ_STATUS_EN"));
-				applicationDTO.setLifecycleStatusId(rsMessage
-						.getLong("LC_STATUS_ID"));
-
-				applicationDTO.setLifecycleStatusTxt(rsMessage
-						.getString("LIFECYCLE_STATUS"));
+				applicationDTO.setOperationalStatusId(rsMessage.getLong("EINSATZ_STATUS_ID"));
+				applicationDTO.setOperationalStatusTxt(rsMessage.getString("EINSATZ_STATUS_EN"));
+				applicationDTO.setLifecycleStatusId(rsMessage.getLong("LC_STATUS_ID"));
+				applicationDTO.setLifecycleStatusTxt(rsMessage.getString("LIFECYCLE_STATUS"));
+				
 				if (" :: ".equals(applicationDTO.getLifecycleStatusTxt())) {
 					// attributes are combined, must be handled as single
 					// attributes, because of
 					// null-attributes results => " :: "
 					// so change to empty string for display
-					applicationDTO
-							.setLifecycleStatusTxt(ApplreposConstants.STRING_EMPTY);
+					applicationDTO.setLifecycleStatusTxt(ApplreposConstants.STRING_EMPTY);
 				}
 
-				applicationDTO
-						.setUserCreate(rsMessage.getString("USER_CREATE"));
-				applicationDTO.setClusterCode(rsMessage
-						.getString("CLUSTER_CODE"));
-				applicationDTO.setClusterType(rsMessage
-						.getString("CLUSTER_TYPE"));
-				applicationDTO.setDeleteTimestamp(ApplReposTS.getTimestampDisp(rsMessage
-						.getTimestamp("DEL_TIMESTAMP")));
+				applicationDTO.setUserCreate(rsMessage.getString("USER_CREATE"));
+//				applicationDTO.setClusterCode(rsMessage.getString("CLUSTER_CODE"));
+//				applicationDTO.setClusterType(rsMessage.getString("CLUSTER_TYPE"));
+				applicationDTO.setDeleteTimestamp(ApplReposTS.getTimestampDisp(rsMessage.getTimestamp("DEL_TIMESTAMP")));
 				applicationDTO.setDeleteUser(rsMessage.getString("DEL_USER"));
-				applicationDTO.setDeleteQuelle(rsMessage
-						.getString("DEL_QUELLE"));
-				applicationDTO.setInsertTimestamp(ApplReposTS.getTimestampDisp(rsMessage
-						.getTimestamp("INSERT_TIMESTAMP")));
-				applicationDTO
-						.setInsertUser(rsMessage.getString("INSERT_USER"));
-				applicationDTO.setInsertQuelle(rsMessage
-						.getString("INSERT_QUELLE"));
-				applicationDTO.setUpdateTimestamp(ApplReposTS.getTimestampDisp(rsMessage
-						.getTimestamp("UPDATE_TIMESTAMP")));
-				applicationDTO
-						.setUpdateUser(rsMessage.getString("UPDATE_USER"));
-				applicationDTO.setUpdateQuelle(rsMessage
-						.getString("UPDATE_QUELLE"));
-				applicationDTO.setResponsible(rsMessage
-						.getString("CWID_VERANTW_BETR"));
-				applicationDTO.setResponsibleHidden(rsMessage
-						.getString("CWID_VERANTW_BETR"));
-				applicationDTO.setSubResponsible(rsMessage
-						.getString("SUB_RESPONSIBLE"));
-				applicationDTO.setSubResponsibleHidden(rsMessage
-						.getString("SUB_RESPONSIBLE"));
+				applicationDTO.setDeleteQuelle(rsMessage.getString("DEL_QUELLE"));
+				applicationDTO.setInsertTimestamp(ApplReposTS.getTimestampDisp(rsMessage.getTimestamp("INSERT_TIMESTAMP")));
+				applicationDTO.setInsertUser(rsMessage.getString("INSERT_USER"));
+				applicationDTO.setInsertQuelle(rsMessage.getString("INSERT_QUELLE"));
+				applicationDTO.setUpdateTimestamp(ApplReposTS.getTimestampDisp(rsMessage.getTimestamp("UPDATE_TIMESTAMP")));
+				applicationDTO.setUpdateUser(rsMessage.getString("UPDATE_USER"));
+				applicationDTO.setUpdateQuelle(rsMessage.getString("UPDATE_QUELLE"));
+				applicationDTO.setCiOwner(rsMessage.getString("CWID_VERANTW_BETR"));//setResponsible
+				applicationDTO.setCiOwnerHidden(rsMessage.getString("CWID_VERANTW_BETR"));//setResponsibleHidden
+				applicationDTO.setCiOwnerDelegate(rsMessage.getString("SUB_RESPONSIBLE"));//setSubResponsible
+				applicationDTO.setCiOwnerDelegateHidden(rsMessage.getString("SUB_RESPONSIBLE"));//setSubResponsibleHidden
 
-				applicationDTO.setApplicationOwner(rsMessage
-						.getString("APPLICATION_OWNER"));
-				applicationDTO.setApplicationSteward(rsMessage
-						.getString("APPLICATION_STEWARD"));
-				applicationDTO.setApplicationOwnerDelegate(rsMessage
-						.getString("APPLICATION_OWNER_DELEGATE"));
+				applicationDTO.setApplicationOwner(rsMessage.getString("APPLICATION_OWNER"));
+				applicationDTO.setApplicationSteward(rsMessage.getString("APPLICATION_STEWARD"));
+				applicationDTO.setApplicationOwnerDelegate(rsMessage.getString("APPLICATION_OWNER_DELEGATE"));
 				
-				applicationDTO.setApplicationOwnerHidden(rsMessage
-						.getString("APPLICATION_OWNER"));
-				applicationDTO.setApplicationStewardHidden(rsMessage
-						.getString("APPLICATION_STEWARD"));
-				applicationDTO.setApplicationOwnerDelegateHidden(rsMessage
-						.getString("APPLICATION_OWNER_DELEGATE"));
+				applicationDTO.setApplicationOwnerHidden(rsMessage.getString("APPLICATION_OWNER"));
+				applicationDTO.setApplicationStewardHidden(rsMessage.getString("APPLICATION_STEWARD"));
+				applicationDTO.setApplicationOwnerDelegateHidden(rsMessage.getString("APPLICATION_OWNER_DELEGATE"));
 				
 				applicationDTO.setItset(rsMessage.getLong("ITSET"));
-				applicationDTO.setItsetName(rsMessage
-						.getString("IT_VERBUND_NAME"));
+				applicationDTO.setItsetName(rsMessage.getString("IT_VERBUND_NAME"));
 
 				Long relevanceICS = rsMessage.getLong("RELEVANCE_ICS");
 				applicationDTO.setRelevanceICS(relevanceICS);
@@ -1633,31 +1550,19 @@ public class AnwendungHbn {
 				}
 
 				applicationDTO.setTemplate(template);
-
-				
 				applicationDTO.setSlaId(rsMessage.getLong("SLA_ID"));
 				applicationDTO.setSlaName(rsMessage.getString("SLA_NAME"));
-				applicationDTO.setServiceContractId(rsMessage
-						.getLong("SERVICE_CONTRACT_ID"));
-				applicationDTO.setServiceContract(rsMessage
-						.getString("SERVICE_CONTRACT"));
+				applicationDTO.setServiceContractId(rsMessage.getLong("SERVICE_CONTRACT_ID"));
+				applicationDTO.setServiceContract(rsMessage.getString("SERVICE_CONTRACT"));
 				applicationDTO.setComments(rsMessage.getString("COMMENTS"));
-				applicationDTO
-						.setApplicationAlias(rsMessage.getString("ALIAS"));
-				applicationDTO.setPriorityLevelId(rsMessage
-						.getLong("PRIORITY_LEVEL_ID"));
-				applicationDTO.setPriorityLevel(rsMessage
-						.getString("PRIORITY_LEVEL"));
-				applicationDTO.setSeverityLevelId(rsMessage
-						.getLong("SEVERITY_LEVEL_ID"));
-				applicationDTO.setSeverityLevel(rsMessage
-						.getString("SEVERITY_LEVEL"));
-				applicationDTO.setLocationPath(rsMessage
-						.getString("LOCATION_PATH"));
-				applicationDTO.setBusinessEssentialId(rsMessage
-						.getLong("BUSINESS_ESSENTIAL_ID"));
-				applicationDTO.setBusinessEssential(rsMessage
-						.getString("BUSINESS_ESSENTIAL"));
+				applicationDTO.setAlias(rsMessage.getString("ALIAS"));
+				applicationDTO.setPriorityLevelId(rsMessage.getLong("PRIORITY_LEVEL_ID"));
+				applicationDTO.setPriorityLevel(rsMessage.getString("PRIORITY_LEVEL"));
+				applicationDTO.setSeverityLevelId(rsMessage.getLong("SEVERITY_LEVEL_ID"));
+				applicationDTO.setSeverityLevel(rsMessage.getString("SEVERITY_LEVEL"));
+				applicationDTO.setLocationPath(rsMessage.getString("LOCATION_PATH"));
+				applicationDTO.setBusinessEssentialId(rsMessage.getLong("BUSINESS_ESSENTIAL_ID"));
+				applicationDTO.setBusinessEssential(rsMessage.getString("BUSINESS_ESSENTIAL"));
 				// set both values!
 				applicationDTO.setGxpFlagId(rsMessage.getString("GXP_FLAG"));
 				applicationDTO.setGxpFlagTxt(rsMessage.getString("GXP_FLAG"));
@@ -1671,10 +1576,8 @@ public class AnwendungHbn {
 //				} else {
 //					applicationDTO.setRiskAnalysisYN("false");
 //				}
-				applicationDTO.setLicenseTypeId(rsMessage
-						.getLong("LICENSE_TYPE_ID"));
-				applicationDTO.setLicenseTypeTxt(rsMessage
-						.getString("LICENSE_TYPE_TXT"));
+				applicationDTO.setLicenseTypeId(rsMessage.getLong("LICENSE_TYPE_ID"));
+				applicationDTO.setLicenseTypeTxt(rsMessage.getString("LICENSE_TYPE_TXT"));
 				
 				applicationDTO.setDedicated(rsMessage.getString("DEDICATED_Y_N"));
 				
@@ -1683,8 +1586,7 @@ public class AnwendungHbn {
 					applicationDTO.setAccessingUserCount(null);
 				}
 				else {
-					applicationDTO.setAccessingUserCount(rsMessage
-							.getLong("ACCESSING_USER_COUNT"));
+					applicationDTO.setAccessingUserCount(rsMessage.getLong("ACCESSING_USER_COUNT"));
 				}
 				
 				String testAccessingUserCountMeasured = rsMessage.getString("ACCESSING_USER_COUNT_MEASURED");
@@ -1692,19 +1594,15 @@ public class AnwendungHbn {
 					applicationDTO.setAccessingUserCountMeasured(null);
 				}
 				else {
-					applicationDTO.setAccessingUserCountMeasured(rsMessage
-							.getLong("ACCESSING_USER_COUNT_MEASURED"));
+					applicationDTO.setAccessingUserCountMeasured(rsMessage.getLong("ACCESSING_USER_COUNT_MEASURED"));
 				}
 
 				applicationDTO.setLoadClass(rsMessage.getString("LOAD_CLASS"));
-				
 				applicationDTO.setServiceModel(rsMessage.getString("SERVICE_MODEL"));
-				
 				applicationDTO.setOrganisationalScope(rsMessage.getString("ORG_SCOPE"));
-				
 				applicationDTO.setVersion(rsMessage.getString("VERSION"));
-
 				String testCostRunPa = rsMessage.getString("COST_RUN_PA");
+				
 				if (null == testCostRunPa) {
 					applicationDTO.setCostRunPa(null);
 				}
@@ -1717,21 +1615,15 @@ public class AnwendungHbn {
 					applicationDTO.setCostChangePa(null);
 				}
 				else {
-					applicationDTO.setCostChangePa(rsMessage
-							.getLong("COST_CHANGE_PA"));
+					applicationDTO.setCostChangePa(rsMessage.getLong("COST_CHANGE_PA"));
 				}
 				
 				applicationDTO.setCurrencyId(rsMessage.getLong("CURRENCY_ID"));
 				applicationDTO.setCurrencyTxt(rsMessage.getString("CURRENCY_TXT"));
-				applicationDTO.setCostRunAccountId(rsMessage
-						.getLong("COST_RUN_ACCOUNT_ID"));
-				applicationDTO.setCostRunAccountTxt(rsMessage
-						.getString("COST_RUN_ACCOUNT_TXT"));
-				applicationDTO.setCostChangeAccountId(rsMessage
-						.getLong("COST_CHANGE_ACCOUNT_ID"));
-				applicationDTO.setCostChangeAccountTxt(rsMessage
-						.getString("COST_CHANGE_ACCOUNT_TXT"));
-				
+				applicationDTO.setCostRunAccountId(rsMessage.getLong("COST_RUN_ACCOUNT_ID"));
+				applicationDTO.setCostRunAccountTxt(rsMessage.getString("COST_RUN_ACCOUNT_TXT"));
+				applicationDTO.setCostChangeAccountId(rsMessage.getLong("COST_CHANGE_ACCOUNT_ID"));
+				applicationDTO.setCostChangeAccountTxt(rsMessage.getString("COST_CHANGE_ACCOUNT_TXT"));
 				
 				// itSec
 				applicationDTO.setItSecSbIntegrityId(rsMessage.getLong("ITSEC_SB_INTEG_ID"));
@@ -1764,7 +1656,6 @@ public class AnwendungHbn {
 				applicationDTO.setClassInformationId(rsMessage.getLong("CLASS_INFORMATION_ID"));
 				applicationDTO.setClassInformationExplanation(rsMessage.getString("CLASS_INFORMATION_EXPLANATION"));
 				applicationDTO.setApplicationProtection(rsMessage.getString("CLASS_PROTECTION_NAME"));
-				
 			}
 
 			if (null != rsMessage) {
@@ -1789,7 +1680,6 @@ public class AnwendungHbn {
 				// throw again the first exception
 				// throw e;
 			}
-
 		}
 		return applicationDTO;
 	}
@@ -2762,12 +2652,12 @@ public class AnwendungHbn {
 					String applicationSteward = rset.getString("APPLICATION_STEWARD");
 					
 					ApplicationDTO anw = new ApplicationDTO();
-					anw.setApplicationId(anwendungId);
+					anw.setId(anwendungId);
 					anw.setBarApplicationId(barApplicationId);
-					anw.setApplicationName(anwendungName);
-					anw.setApplicationAlias(anwendungAlias);
-					anw.setResponsible(responsible);
-					anw.setSubResponsible(subResponsible);
+					anw.setName(anwendungName);
+					anw.setAlias(anwendungAlias);
+					anw.setCiOwner(responsible);//setResponsible
+					anw.setCiOwnerDelegate(subResponsible);//setSubResponsible
 					anw.setApplicationCat1Txt(applicationCat1Txt);
 					anw.setApplicationCat2Txt(applicationCat2Txt);
 					anw.setApplicationOwner(applicationOwner);

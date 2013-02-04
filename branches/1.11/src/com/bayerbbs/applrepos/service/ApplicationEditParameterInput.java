@@ -7,9 +7,9 @@ public class ApplicationEditParameterInput {
 	
 
 	// basic
-	private Long applicationId;
-	private String applicationName;
-	private String applicationAlias;
+	private Long id;//applicationId
+	private String name;//applicationName
+	private String alias;//applicationAlias
 	
 	private String barRelevance;
 	
@@ -176,33 +176,33 @@ public class ApplicationEditParameterInput {
 	}
 
 
-	public Long getApplicationId() {
-		return applicationId;
+	public Long getId() {
+		return id;
 	}
 
 
-	public void setApplicationId(Long applicationId) {
-		this.applicationId = applicationId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 
-	public String getApplicationName() {
-		return applicationName;
+	public String getName() {
+		return name;
 	}
 
 
-	public void setApplicationName(String applicationName) {
-		this.applicationName = applicationName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 
-	public String getApplicationAlias() {
-		return applicationAlias;
+	public String getAlias() {
+		return alias;
 	}
 
 
-	public void setApplicationAlias(String applicationAlias) {
-		this.applicationAlias = applicationAlias;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 

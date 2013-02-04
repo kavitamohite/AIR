@@ -57,7 +57,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		        fieldLabel: 'BAR Application Id',
 		        anchor: '70%',
 		        disabled: true,
-		        cls: 'required',
+//		        cls: 'required',
 		        
 		        id: 'barApplicationId'
 	        },{
@@ -588,8 +588,8 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 //		var isApplication = AAM.getTableId() === AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION;
 		
 		this.getComponent('objectType').setValue(data.applicationCat1Id);
-		this.getComponent('applicationId').setValue(data.applicationId);
-		this.getComponent('applicationAlias').setValue(data.applicationAlias);
+		this.getComponent('applicationId').setValue(data.id);//applicationId
+		this.getComponent('applicationAlias').setValue(data.alias);//applicationAlias
 		this.getComponent('applicationVersion').setValue(data.applicationVersion);
 		
 		
@@ -723,7 +723,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 			taOrganisationalScope.setVisible(false);
 		}
 		
-		this.loadApplicationBusinessProcesses(data.applicationId);
+		this.loadApplicationBusinessProcesses(data.id);//applicationId
 		
 		//kein Effekt zur Verhinderung der Verkleinerung der combo Breite nachdem wenn auf Contacts die Primary Person
 		//gelöscht und wieder hinzugefügt wurde. (*1)
@@ -752,14 +752,14 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	},
 
 	
-	loadApplicationBusinessProcesses: function(applicationId) {
+	loadApplicationBusinessProcesses: function(id) {//applicationId
 		var applicationProcessStore = AIR.AirStoreFactory.createApplicationProcessStore();
 		applicationProcessStore.on('load', this.onApplicationProcessLoad, this);
 		
 		var params = {
 			cwid: AIR.AirApplicationManager.getCwid(),
 			token: AIR.AirApplicationManager.getToken(),
-			applicationId: applicationId//AIR.AirApplicationManager.getCiId()
+			id: id//applicationId	AIR.AirApplicationManager.getCiId()
 		};
 		
 		applicationProcessStore.load({
@@ -788,21 +788,19 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		field.setValue(hiddenValues);
 	},
 	
-	//getData: function() {
+
 	setData: function(data) {
-		//var data = {};
-		
 		var field = this.getComponent('applicationId');
-		data.applicationId = field.getValue();
+		data.id = field.getValue();//applicationId
 
 //		field = this.getComponent('applicationName');
 //		if(!field.disabled)
-//			data.applicationName = field.getValue();
+//			data.name = field.getValue();//applicationName
 		
 
 		field = this.getComponent('applicationAlias');
 		if(!field.disabled)
-			data.applicationAlias = field.getValue();
+			data.alias = field.getValue();//applicationAlias
 		
 
 		field = this.getComponent('applicationVersion');

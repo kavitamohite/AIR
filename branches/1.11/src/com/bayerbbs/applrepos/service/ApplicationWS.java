@@ -46,29 +46,21 @@ public class ApplicationWS {
 	 * @return
 	 */
 	public ApplicationParamOutput checkAllowedApplicationName(ApplicationParameterInput input) {
-
 		String searchname = input.getQuery();
 		List<ApplicationDTO> listAnwendungen = null;
 		listAnwendungen = CiEntitiesHbn.findExistantCisByNameOrAlias(searchname, false);
 		ApplicationParamOutput output = new ApplicationParamOutput();
 		output.setCountResultSet(listAnwendungen.size());
+		
 		if (0 != listAnwendungen.size()) {
 			output.setInformationText(listAnwendungen.get(0).getApplicationCat1Txt());
 		}
+		
 		return output;
 	}
 
-	
-	
-	
-	/**
-	 * finds the applications
-	 * 
-	 * @param input
-	 * @return
-	 */
-	public ApplicationParamOutput findApplications(ApplicationParameterInput input) {
 
+	public ApplicationParamOutput findApplications(ApplicationParameterInput input) {
 		String searchname = input.getQuery();
 		Long startwert = input.getStart();
 		Long limit = input.getLimit();
@@ -84,14 +76,12 @@ public class ApplicationWS {
 		List<ApplicationDTO> listAnwendungen = null;
 
 		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
-
 			if (null == startwert) {
 				startwert = 0L;
 			}
 			if (null == limit) {
 				limit = 20L;
 			}
-			
 			
 			boolean onlyApplications = false;
 			if (null != input.getOnlyapplications()
@@ -193,18 +183,16 @@ public class ApplicationWS {
 	}
 
 	public ApplicationEditParameterOutput saveApplication(ApplicationEditParameterInput editInput) {
-
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
 		if (null != editInput) {
-			ApplicationDTO dto = getApplicationDTOFormEditInput(editInput);
-
+			ApplicationDTO dto = getApplicationDTOFromEditInput(editInput);
 			output = AnwendungHbn.saveAnwendung(editInput.getCwid(), dto);
 
 			if (!ApplreposConstants.RESULT_ERROR.equals(output.getResult())) {
 				try {
 					// TODO DEBUG Test SupportStuff
-					CiSupportStuffHbn.saveCiSupportStuffAll(editInput.getCwid(), dto.getApplicationId(),
+					CiSupportStuffHbn.saveCiSupportStuffAll(editInput.getCwid(), dto.getId(),
 							dto.getCiSupportStuffUserAuthorizationSupportedByDocumentation(),
 							dto.getCiSupportStuffUserAuthorizationProcess(),
 							dto.getCiSupportStuffChangeManagementSupportedByTool(),
@@ -216,11 +204,10 @@ public class ApplicationWS {
 
 					
 					if (null != dto.getLicenseUsingRegions()) {
-						ApplicationRegionHbn.saveApplicationRegionsAll(editInput.getCwid(), dto.getApplicationId(),
-								dto.getLicenseUsingRegions());
+						ApplicationRegionHbn.saveApplicationRegionsAll(editInput.getCwid(), dto.getId(), dto.getLicenseUsingRegions());
 					}
 
-					ApplicationProcessHbn.saveApplicationProcessAll(editInput.getCwid(), dto.getApplicationId(), dto.getBusinessProcessHidden());
+					ApplicationProcessHbn.saveApplicationProcessAll(editInput.getCwid(), dto.getId(), dto.getBusinessProcessHidden());
 					// ApplicationProcessHbn.saveApplicationProcessAll(editInput.getCwid(),
 					// dto.getApplicationId(), dto.getConnection_process_D(),
 					// "D");
@@ -235,11 +222,11 @@ public class ApplicationWS {
 						if (!(ApplreposConstants.GPSCGROUP_DISABLED_MARKER.equals(gpscContact)) && !(ApplreposConstants.GPSCGROUP_DISABLED_MARKER.equals(gpscContactHidden))) {
 							if ("Y".equals(grouptype[2])) { // Individual Contact(s)
 								CiPersonsHbn.saveCiPerson(editInput.getCwid(),
-										 dto.getApplicationId(), new Long(grouptype[0]), grouptype[3],
+										 dto.getId(), new Long(grouptype[0]), grouptype[3],
 										 gpscContactHidden);
 							} else { // Group(s)
 								CiGroupsHbn.saveCiGroup(editInput.getCwid(),
-										 dto.getApplicationId(), new Long(grouptype[0]), grouptype[3],
+										 dto.getId(), new Long(grouptype[0]), grouptype[3],
 										 gpscContact);
 							}
 						}
@@ -247,10 +234,10 @@ public class ApplicationWS {
 
 					
 					if(dto.getUpStreamAdd() != null && dto.getUpStreamAdd().length() > 0 || dto.getUpStreamDelete() != null && dto.getUpStreamDelete().length() > 0)
-						CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getApplicationId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
+						CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
 					
 					if(dto.getDownStreamAdd() != null && dto.getDownStreamAdd().length() > 0 || dto.getDownStreamDelete() != null && dto.getDownStreamDelete().length() > 0)
-						CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getApplicationId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", editInput.getCwid());
+						CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", editInput.getCwid());
 					
 					
 					// Connection higher/lower
@@ -290,12 +277,12 @@ public class ApplicationWS {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
 		if (null != editInput) {
-			ApplicationDTO dto = getApplicationDTOFormEditInput(editInput);
+			ApplicationDTO dto = getApplicationDTOFromEditInput(editInput);
 
 			// create Application - fill attributes
-			if (null == dto.getResponsible()) {
-				dto.setResponsible(editInput.getCwid().toUpperCase());
-				dto.setResponsibleHidden(editInput.getCwid().toUpperCase());
+			if (null == dto.getCiOwner()) {//getResponsible
+				dto.setCiOwner(editInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(editInput.getCwid().toUpperCase());
 			}
 			if (null == dto.getBusinessEssentialId()) {
 				dto.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
@@ -306,7 +293,7 @@ public class ApplicationWS {
 
 			if (ApplreposConstants.RESULT_OK.equals(output.getResult())) {
 				// get detail
-				List<Application> listAnwendung = AnwendungHbn.findApplicationByName(editInput.getApplicationName());
+				List<Application> listAnwendung = AnwendungHbn.findApplicationByName(editInput.getName());
 				if (null != listAnwendung && 1 == listAnwendung.size()) {
 					output.setApplicationId(listAnwendung.get(0).getApplicationId());
 					
@@ -326,8 +313,7 @@ public class ApplicationWS {
 					}
 					
 					if (null != dto.getLicenseUsingRegions()) {
-						ApplicationRegionHbn.saveApplicationRegionsAll(editInput.getCwid(), ciId,
-								dto.getLicenseUsingRegions());
+						ApplicationRegionHbn.saveApplicationRegionsAll(editInput.getCwid(), ciId, dto.getLicenseUsingRegions());
 					}
 
 					ApplicationProcessHbn.saveApplicationProcessAll(editInput.getCwid(), ciId, dto.getBusinessProcessHidden());
@@ -361,10 +347,10 @@ public class ApplicationWS {
 		if (null != editInput) {
 
 			if (LDAPAuthWS.isLoginValid(editInput.getCwid(), editInput.getToken())) {
-				ApplicationDTO dto = getApplicationDTOFormEditInput(editInput);
+				ApplicationDTO dto = getApplicationDTOFromEditInput(editInput);
 
-				AnwendungHbn.deleteApplicationApplication(editInput.getCwid(), dto.getApplicationId());
-				AnwendungHbn.deleteApplicationItSystem(editInput.getCwid(), dto.getApplicationId());
+				AnwendungHbn.deleteApplicationApplication(editInput.getCwid(), dto.getId());
+				AnwendungHbn.deleteApplicationItSystem(editInput.getCwid(), dto.getId());
 				
 				output = AnwendungHbn.deleteAnwendung(editInput.getCwid(), dto);
 			} else {
@@ -382,13 +368,13 @@ public class ApplicationWS {
 	 * @param editInput
 	 * @return
 	 */
-	private ApplicationDTO getApplicationDTOFormEditInput(ApplicationEditParameterInput editInput) {
+	private ApplicationDTO getApplicationDTOFromEditInput(ApplicationEditParameterInput editInput) {
 		ApplicationDTO dto = new ApplicationDTO();
-		dto.setApplicationId(editInput.getApplicationId());
+		dto.setId(editInput.getId());
 
 		// Basics
-		dto.setApplicationName(editInput.getApplicationName());
-		dto.setApplicationAlias(editInput.getApplicationAlias());
+		dto.setName(editInput.getName());
+		dto.setAlias(editInput.getAlias());
 		dto.setVersion(editInput.getVersion());
 		dto.setApplicationCat2Id(editInput.getApplicationCat2Id());
 		// view - primary function
@@ -405,15 +391,15 @@ public class ApplicationWS {
 		dto.setSeverityLevelId(editInput.getSeverityLevel());
 		dto.setBusinessEssentialId(editInput.getBusinessEssentialId());
 
-		dto.setClusterCode(editInput.getClusterCode());
-		dto.setClusterType(editInput.getClusterType());
+//		dto.setClusterCode(editInput.getClusterCode());
+//		dto.setClusterType(editInput.getClusterType());
 
 		// contacts
-		dto.setResponsible(editInput.getResponsible());
-		dto.setSubResponsible(editInput.getSubResponsible());
+		dto.setCiOwner(editInput.getResponsible());//setResponsible
+		dto.setCiOwnerDelegate(editInput.getSubResponsible());//setSubResponsible
 
-		dto.setResponsibleHidden(editInput.getResponsibleHidden());
-		dto.setSubResponsibleHidden(editInput.getSubResponsibleHidden());
+		dto.setCiOwnerHidden(editInput.getResponsibleHidden());
+		dto.setCiOwnerDelegateHidden(editInput.getSubResponsibleHidden());
 
 		dto.setApplicationOwner(editInput.getApplicationOwner());
 		dto.setApplicationSteward(editInput.getApplicationSteward());
@@ -479,11 +465,9 @@ public class ApplicationWS {
 		dto.setCostChangeAccountId(editInput.getCostChangeAccountId());
 		dto.setLicenseUsingRegions(editInput.getLicenseUsingRegions());
 
-		dto.setCiSupportStuffUserAuthorizationSupportedByDocumentation(editInput
-				.getCiSupportStuffUserAuthorizationSupportedByDocumentation());
+		dto.setCiSupportStuffUserAuthorizationSupportedByDocumentation(editInput.getCiSupportStuffUserAuthorizationSupportedByDocumentation());
 		dto.setCiSupportStuffUserAuthorizationProcess(editInput.getCiSupportStuffUserAuthorizationProcess());
-		dto.setCiSupportStuffChangeManagementSupportedByTool(editInput
-				.getCiSupportStuffChangeManagementSupportedByTool());
+		dto.setCiSupportStuffChangeManagementSupportedByTool(editInput.getCiSupportStuffChangeManagementSupportedByTool());
 		dto.setCiSupportStuffUserManagementProcess(editInput.getCiSupportStuffUserManagementProcess());
 		dto.setCiSupportStuffApplicationDocumentation(editInput.getCiSupportStuffApplicationDocumentation());
 		dto.setCiSupportStuffRootDirectory(editInput.getCiSupportStuffRootDirectory());
@@ -530,8 +514,8 @@ public class ApplicationWS {
 		ApplicationViewdataOutput output = new ApplicationViewdataOutput();
 
 		if (LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
-			if (null != detailInput.getApplicationId()) {
-				List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationUpStream(detailInput.getApplicationId());
+			if (null != detailInput.getId()) {
+				List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationUpStream(detailInput.getId());
 
 				output.setViewdataDTO(getViewDataArray(listDTO));
 			}
@@ -551,8 +535,8 @@ public class ApplicationWS {
 		ApplicationViewdataOutput output = new ApplicationViewdataOutput();
 
 		if (LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
-			if (null != detailInput.getApplicationId()) {
-				List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationDownStream(detailInput.getApplicationId());
+			if (null != detailInput.getId()) {
+				List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationDownStream(detailInput.getId());
 
 				output.setViewdataDTO(getViewDataArray(listDTO));
 			}
@@ -572,10 +556,10 @@ public class ApplicationWS {
 		ApplicationViewdataOutput output = new ApplicationViewdataOutput();
 
 		if (LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
-			if (null != detailInput.getApplicationId()) {
-				 List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationProcess(detailInput.getApplicationId());
+			if (null != detailInput.getId()) {
+				 List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationProcess(detailInput.getId());
 
-				//List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationConnections(detailInput.getApplicationId());
+				//List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationConnections(detailInput.getId());
 
 				output.setViewdataDTO(getViewDataArray(listDTO));
 			}
@@ -589,8 +573,8 @@ public class ApplicationWS {
 		ApplicationViewdataOutput output = new ApplicationViewdataOutput();
 
 		if (LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
-			if (null != detailInput.getApplicationId()) {
-				List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationConnections(detailInput.getApplicationId());
+			if (null != detailInput.getId()) {
+				List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationConnections(detailInput.getId());
 
 				output.setViewdataDTO(getViewDataArray(listDTO));
 			}
@@ -604,8 +588,8 @@ public class ApplicationWS {
 		ApplicationViewdataOutput output = new ApplicationViewdataOutput();
 
 		if (LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
-			if (null != detailInput.getApplicationId()) {
-				List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationItSystems(detailInput.getApplicationId());
+			if (null != detailInput.getId()) {
+				List<ViewDataDTO> listDTO = AnwendungHbn.findApplicationItSystems(detailInput.getId());
 				output.setViewdataDTO(getViewDataArray(listDTO));
 			}
 		}
@@ -639,25 +623,22 @@ public class ApplicationWS {
 			Application applicationSource = AnwendungHbn.findApplicationById(copyInput.getCiIdSource());
 
 			if (null != applicationSource) {
-				//	source found.
-				
 				// create Application - fill attributes
 				
-				dto.setApplicationId(new Long(0));
-				dto.setApplicationName(copyInput.getCiNameTarget());
-				dto.setApplicationAlias(copyInput.getCiAliasTarget());
+				dto.setId(new Long(0));
+				dto.setName(copyInput.getCiNameTarget());
+				dto.setAlias(copyInput.getCiAliasTarget());
 				
-				dto.setResponsible(copyInput.getCwid().toUpperCase());
 
 				if (null == dto.getBusinessEssentialId()) {
 					dto.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
 				}
 
 				// set the actual cwid as responsible
-				dto.setResponsibleHidden(copyInput.getCwid().toUpperCase());
-				// ---
-				dto.setSubResponsible(applicationSource.getSubResponsible());
-				dto.setSubResponsibleHidden(applicationSource.getSubResponsible());
+				dto.setCiOwner(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerDelegate(applicationSource.getSubResponsible());
+				dto.setCiOwnerDelegateHidden(applicationSource.getSubResponsible());
 				dto.setTemplate(applicationSource.getTemplate());
 				
 				dto.setRelevanzItsec(applicationSource.getRelevanzITSEC());
@@ -671,19 +652,15 @@ public class ApplicationWS {
 				ApplicationEditParameterOutput createOutput = AnwendungHbn.createAnwendung(copyInput.getCwid(), dto, null);
 
 				if (ApplreposConstants.RESULT_OK.equals(createOutput.getResult())) {
-					// get detail
 					List<Application> listAnwendung = AnwendungHbn.findApplicationByName(copyInput.getCiNameTarget());
 					if (null != listAnwendung && 1 == listAnwendung.size()) {
-						dto.setApplicationId(listAnwendung.get(0).getApplicationId());
+						dto.setId(listAnwendung.get(0).getApplicationId());
 						
 						Long ciId = listAnwendung.get(0).getApplicationId();
-
 						Application applicationTarget = AnwendungHbn.findApplicationById(ciId);
+						
 						if (null != applicationTarget) {
-							
-							ApplicationEditParameterOutput temp = null;
-							
-							temp = AnwendungHbn.copyApplication(copyInput.getCwid(), applicationSource.getId(), applicationTarget.getId());
+							ApplicationEditParameterOutput temp = AnwendungHbn.copyApplication(copyInput.getCwid(), applicationSource.getId(), applicationTarget.getId());
 							
 							output.setApplicationId(temp.getApplicationId());
 							output.setResult(temp.getResult());
@@ -698,7 +675,6 @@ public class ApplicationWS {
 					output.setMessages(createOutput.getMessages());
 					output.setDisplayMessage(createOutput.getDisplayMessage());
 				}
-				
 			}
 		}
 
@@ -714,11 +690,11 @@ public class ApplicationWS {
 		ApplicationDetailParameterOutput output = new ApplicationDetailParameterOutput();
 
 		if(LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
-			Application application = AnwendungHbn.findApplicationById(detailInput.getApplicationId());
+			Application application = AnwendungHbn.findApplicationById(detailInput.getId());
 
-			applicationDTO.setApplicationId(application.getApplicationId());
-			applicationDTO.setApplicationName(application.getApplicationName());
-			applicationDTO.setApplicationAlias(application.getApplicationAlias());
+			applicationDTO.setId(application.getApplicationId());
+			applicationDTO.setName(application.getApplicationName());
+			applicationDTO.setAlias(application.getApplicationAlias());
 			applicationDTO.setApplicationCat2Id(application.getApplicationCat2Id());
 			applicationDTO.setItsecGroupId(application.getItsecGroupId());
 			//evtl. weitere falls diese Methode noch woanders benötigt wird
@@ -738,41 +714,36 @@ public class ApplicationWS {
 	public ApplicationDetailParameterOutput getApplicationDetail(ApplicationDetailParameterInput detailInput) {
 		ApplicationDetailParameterOutput output = new ApplicationDetailParameterOutput();
 
-		// ValidationReader reader = new ValidationReader();
-		// reader.readConfigData();
-
 		ApplicationDTO dto = new ApplicationDTO();
 		ApplicationAccessDTO accessDTO = new ApplicationAccessDTO();
 
 		if (LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
-
-			Application application = AnwendungHbn.findApplicationById(detailInput.getApplicationId());
+			Application application = AnwendungHbn.findApplicationById(detailInput.getId());
 
 			if (null != application) {
-
-				dto = AnwendungHbn.getApplicationDetail(detailInput.getApplicationId());
-
+				dto = AnwendungHbn.getApplicationDetail(detailInput.getId());
 				dto.setTemplateReferencedByItem("N");
+				
 				if (null != dto.getTemplate() && !"0".equals(dto.getTemplate())) {
 					// it is a template, so see if it is referenced by some ci's
-					if (!"0".equals(ApplReposHbn.getCountReferencingTemplates(detailInput.getApplicationId()))) {
+					if (!"0".equals(ApplReposHbn.getCountReferencingTemplates(detailInput.getId()))) {
 						dto.setTemplateReferencedByItem("Y");
 					}
 				}
 
-				if (StringUtils.isNotNullOrEmpty(dto.getResponsible())) {
-					List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(dto.getResponsible());
+				if (StringUtils.isNotNullOrEmpty(dto.getCiOwner())) {
+					List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(dto.getCiOwner());
 					if (null != listPers && 1 == listPers.size()) {
 						PersonsDTO tempPers = listPers.get(0);
-						dto.setResponsible(tempPers.getDisplayNameFull());
+						dto.setCiOwner(tempPers.getDisplayNameFull());
 					}
 				}
 
-				if (StringUtils.isNotNullOrEmpty(dto.getSubResponsible())) {
-					List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(dto.getSubResponsible());
+				if (StringUtils.isNotNullOrEmpty(dto.getCiOwnerDelegate())) {
+					List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(dto.getCiOwnerDelegate());
 					if (null != listPers && 1 == listPers.size()) {
 						PersonsDTO tempPers = listPers.get(0);
-						dto.setSubResponsible(tempPers.getDisplayNameFull());
+						dto.setCiOwnerDelegate(tempPers.getDisplayNameFull());
 					}
 				}
 
@@ -836,9 +807,8 @@ public class ApplicationWS {
 							// for the application itself, all are editable
 							accessDTO.setAllEditable();
 						} else {
-
-							InterfacesDTO interfaceDto = InterfacesHbn.findInterfacesByInterfaceToken(application
-									.getInsertQuelle());
+							InterfacesDTO interfaceDto = InterfacesHbn.findInterfacesByInterfaceToken(application.getInsertQuelle());
+							
 							if (StringUtils.isNotNullOrEmpty(interfaceDto.getSisecEditable()) && null != interfaceDto) {
 								String allRights = interfaceDto.getSisecEditable();
 								if (-1 != allRights.indexOf("License_Scanning")) {
@@ -901,10 +871,8 @@ public class ApplicationWS {
 								if (-1 != allRights.indexOf("Itsec_SB_Vertr_Txt")) {
 									accessDTO.setItsec_SB_Vertr_Txt(ApplreposConstants.YES_SHORT);
 								}
-
 							}
 						}
-
 					}
 				}
 
@@ -952,7 +920,7 @@ public class ApplicationWS {
 				// ===================
 				StringBuffer licenseUsingRegions = new StringBuffer();
 				List<ApplicationRegion> listApplicationRegion = ApplicationRegionHbn
-						.findCurrentApplicationRegion(detailInput.getApplicationId());
+						.findCurrentApplicationRegion(detailInput.getId());
 
 				if (null != listApplicationRegion && !listApplicationRegion.isEmpty()) {
 					for (ApplicationRegion applRegion : listApplicationRegion) {
@@ -1259,9 +1227,9 @@ public class ApplicationWS {
 		
 		HistoryViewDataDTO[] arrayHist = null;
 
-		if (null != detailInput.getApplicationId() && 0 < detailInput.getApplicationId().longValue()) {
+		if (null != detailInput.getId() && 0 < detailInput.getId().longValue()) {
 		
-			List<HistoryViewDataDTO> listHistory = AnwendungHbn.findApplicationHistory(detailInput.getApplicationId());
+			List<HistoryViewDataDTO> listHistory = AnwendungHbn.findApplicationHistory(detailInput.getId());
 			
 			if (!listHistory.isEmpty()) {
 				arrayHist = new HistoryViewDataDTO[listHistory.size()];

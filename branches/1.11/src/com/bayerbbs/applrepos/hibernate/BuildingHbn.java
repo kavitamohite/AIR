@@ -1,7 +1,5 @@
 package com.bayerbbs.applrepos.hibernate;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -10,31 +8,23 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.air.error.ErrorCodeManager;
-import com.bayerbbs.applrepos.common.ApplReposTS;
-import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
-import com.bayerbbs.applrepos.domain.Room;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
-import com.bayerbbs.applrepos.dto.RoomDTO;
-import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 
-public class RoomHbn extends LokationItemHbn {
-	private static final Log log = LogFactory.getLog(RoomHbn.class);
-	private static final String EMPTY = "";
+public class BuildingHbn extends LokationItemHbn {
+	private static final Log log = LogFactory.getLog(BuildingHbn.class);
 	
-	public static Room findById(Long id) {
-		Room room = null;
+	public static Building findById(Long id) {
+		Building building = null;
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
 		
 		try {
 			tx = session.beginTransaction();
-			List<Room> list = session.createQuery("select h from Room as h where h.roomId=" + id).list();
+			List<Building> list = session.createQuery("select b from Building as b where b.buildingId=" + id).list();
 
 			if (null != list && 0 < list.size()) {
-				room = (Room) list.get(0);
+				building = (Building) list.get(0);
 			}
 
 			tx.commit();
@@ -51,15 +41,15 @@ public class RoomHbn extends LokationItemHbn {
 			}
 
 		}
-		return room;
+		return building;
 	}
 	
 	public static CiLokationsKette findLokationsKetteById(Long ciId) {
-		return findLokationsKetteByCiTypeAndCiId(LokationItemHbn.RAUM_TYPE_LOCATION, ciId);
+		return findLokationsKetteByCiTypeAndCiId(LokationItemHbn.GEBAEUDE_TYPE_LOCATION, ciId);
 	}
 
 
-	public static CiEntityEditParameterOutput deleteRoom(String cwid, RoomDTO dto) {
+	/*public static CiEntityEditParameterOutput deleteRoom(String cwid, RoomDTO dto) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
 		if (null != cwid) {
@@ -125,9 +115,9 @@ public class RoomHbn extends LokationItemHbn {
 		}
 
 		return output;
-	}
+	}*/
 
-	
+	/*
 	public static CiEntityEditParameterOutput saveRoom(String cwid,	RoomDTO dto) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 		String validationMessage = null;
@@ -139,7 +129,7 @@ public class RoomHbn extends LokationItemHbn {
 				Long id = new Long(dto.getId());
 
 				// check der InputWerte
-				List<String> messages = RoomHbn.validateRoom(dto);
+				List<String> messages = BuildingHbn.validateRoom(dto);
 
 				if (messages.isEmpty()) {
 
@@ -352,7 +342,7 @@ public class RoomHbn extends LokationItemHbn {
 			messages.add("room name is empty");
 		}
 		else {
-			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, false);
+			List<BaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, false);
 			if (!listCi.isEmpty()) {
 				// check if the name is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
@@ -366,7 +356,7 @@ public class RoomHbn extends LokationItemHbn {
 			dto.setAlias(dto.getName());
 		}
 		else {
-			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, false);
+			List<BaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, false);
 			if (!listCi.isEmpty()) {
 				// check if the alias is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
@@ -376,7 +366,7 @@ public class RoomHbn extends LokationItemHbn {
 		}
 
 		return messages;
-	}
+	}*/
 	
 	/**
 	 * reactivates an marked as deleted room. Clears all data attributes !!!
@@ -385,6 +375,7 @@ public class RoomHbn extends LokationItemHbn {
 	 * @param application
 	 * @return
 	 */
+	/*
 	public static CiEntityEditParameterOutput reactivateRoom(String cwid, RoomDTO dto, Room room) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 		
@@ -472,14 +463,14 @@ public class RoomHbn extends LokationItemHbn {
 			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
-				List<String> messages = RoomHbn.validateRoom(dto);
+				List<String> messages = BuildingHbn.validateRoom(dto);
 
 				if (messages.isEmpty()) {
 					Room room = new Room();
 					boolean isNameAndAliasNameAllowed = true;
 					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, true);
+						List<BaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, true);
 						if (null != listCi && 0 < listCi.size()) {
 							// name is not allowed
 							isNameAndAliasNameAllowed = false;
@@ -509,7 +500,7 @@ public class RoomHbn extends LokationItemHbn {
 					}
 					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), ApplreposConstants.TABLE_ID_ROOM, true);
+						List<BaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), ApplreposConstants.TABLE_ID_ROOM, true);
 						if (null != listCI && 0 < listCI.size()) {
 							// alias is not allowed
 							isNameAndAliasNameAllowed = false;
@@ -611,5 +602,5 @@ public class RoomHbn extends LokationItemHbn {
 		}
 
 		return output;
-	}
+	}*/
 }

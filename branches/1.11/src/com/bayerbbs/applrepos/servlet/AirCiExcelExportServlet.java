@@ -112,10 +112,10 @@ public class AirCiExcelExportServlet extends HttpServlet {
         for(ApplicationDTO app : applications) {
         	row = sheet.createRow(i++);
         	cell = row.createCell(0);
-        	cell.setCellValue(app.getApplicationName());
+        	cell.setCellValue(app.getName());
         	
         	cell = row.createCell(1);
-        	cell.setCellValue(app.getApplicationAlias());
+        	cell.setCellValue(app.getAlias());
         	
         	cell = row.createCell(2);
         	cell.setCellValue(app.getApplicationCat1Txt());
@@ -124,10 +124,10 @@ public class AirCiExcelExportServlet extends HttpServlet {
         	cell.setCellValue(app.getApplicationCat2Txt());
         	
         	cell = row.createCell(4);
-        	cell.setCellValue(app.getResponsible());
+        	cell.setCellValue(app.getCiOwner());
         	
         	cell = row.createCell(5);
-        	cell.setCellValue(app.getSubResponsible());
+        	cell.setCellValue(app.getCiOwnerDelegate());
         	
         	cell = row.createCell(6);
         	cell.setCellValue(app.getApplicationOwner());

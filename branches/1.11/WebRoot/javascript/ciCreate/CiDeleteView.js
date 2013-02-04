@@ -86,7 +86,7 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 		var params = { 
 		 	cwid: AIR.AirApplicationManager.getCwid(),
 		 	token: AIR.AirApplicationManager.getToken(),
-			applicationId: this.ciId//Flag für Owner und Delegate Apps!
+			id: this.ciId//applicationId	Flag für Owner und Delegate Apps!
 		};
 
 		store.load({

@@ -16,10 +16,10 @@ public class AirServlet extends HttpServlet {
 	private static final long serialVersionUID = 3569239290421829949L;
 		
 	public void init(ServletConfig config) {
-		String configFile = config.getServletContext().getRealPath("config/AttributeProperties.xml");//htdocs
+		String configFile = config.getServletContext().getRealPath("conf/AttributeProperties.xml");//config htdocs
 		ValidationReader.setValidationConfigFile(configFile);
 		
-		String errorMessageFile = config.getServletContext().getRealPath("lang/english_errormessages.xml");//htdocs
+		String errorMessageFile = config.getServletContext().getRealPath("conf/lang/english_errormessages.xml");//lang htdocs
 		ErrorCodeReader.setErrorMessageConfigFile(errorMessageFile);
 		
 //		String connectionPropertiesFile = config.getServletContext().getRealPath("htdocs/config/ConnectionProperties.xml");
@@ -92,6 +92,7 @@ public class AirServlet extends HttpServlet {
 				append("<script type='text/javascript' src='javascript/common/Util.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/common/data/AirStoreLoader.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/common/data/AirStoreManager.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/data/CiLocationRecord.js'></script>\n").
 				 
 				append("<script type='text/javascript' src='javascript/common/component/picker/AirPickerManager.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/common/component/picker/AirPersonPicker.js'></script>\n").
@@ -135,7 +136,7 @@ public class AirServlet extends HttpServlet {
 				append("<script type='text/javascript' src='javascript/ciDetails/CiDetailsView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsAnwendungView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsTerrainView.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsLocationItemView.js'></script>\n").//CiSpecificsTerrainView.js
 				
 				append("<script type='text/javascript' src='javascript/ciDetails/CiContactsView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/CiAgreementsView.js'></script>\n").

@@ -948,7 +948,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var fsApplicationOwner = this.getComponent('fsApplicationOwner');
 		var fsApplicationSteward = this.getComponent('fsApplicationSteward');
 		
-		if(data.applicationCat1Id === AC.APP_CAT1_APPLICATION) {
+		if(data.tableId == AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION) {
 			fsApplicationOwner.setVisible(true);
 			fsApplicationSteward.setVisible(true);
 			
@@ -997,18 +997,18 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 
 		var pCIOwner = this.getComponent('fsCIOwner').getComponent('pCIOwner');
-		if(data.ciResponsible) {// && data.ciResponsible != 0
-			pCIOwner.getComponent('ciResponsible').setValue(data.ciResponsible);
-			pCIOwner.getComponent('ciResponsibleHidden').setValue(data.ciResponsibleHidden);
+		if(data.ciOwner) {//ciResponsible && data.ciResponsible != 0
+			pCIOwner.getComponent('ciResponsible').setValue(data.ciOwner);//ciResponsible
+			pCIOwner.getComponent('ciResponsibleHidden').setValue(data.ciOwnerHidden);//ciResponsibleHidden
 		} else {
 			pCIOwner.getComponent('ciResponsible').setValue('');
 			pCIOwner.getComponent('ciResponsibleHidden').setValue('');
 		}
 		
 		var pCiSubResponsible = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible');
-		if(data.ciSubResponsible) {// && data.ciSubResponsible != 0
-			pCiSubResponsible.getComponent('ciSubResponsible').setValue(data.ciSubResponsible);
-			pCiSubResponsible.getComponent('ciSubResponsibleHidden').setValue(data.ciSubResponsibleHidden);
+		if(data.ciOwnerDelegate) {//ciSubResponsible && data.ciSubResponsible != 0
+			pCiSubResponsible.getComponent('ciSubResponsible').setValue(data.ciOwnerDelegate);//ciSubResponsible
+			pCiSubResponsible.getComponent('ciSubResponsibleHidden').setValue(data.ciOwnerDelegateHidden);//ciSubResponsibleHidden
 		} else {
 			pCiSubResponsible.getComponent('ciSubResponsible').setValue('');
 			pCiSubResponsible.getComponent('ciSubResponsibleHidden').setValue('');
@@ -1036,9 +1036,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	updateAccessMode: function(data) {
-		AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwner'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), data);//fsApplicationOwner
-		AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), data);
+		if(data.tableId == AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION) {
+			AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwner'), data);
+			AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), data);//fsApplicationOwner
+			AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), data);
+		}
 		
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsible'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), data);

@@ -272,13 +272,14 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	loadCiDetails: function() {
 		if(Util.isCiId(AAM.getCiId())) {//check URL CI-Einsprung Daten
-			var appDetailStore = AIR.AirStoreFactory.createApplicationDetailStore();
-			appDetailStore.on('beforeload', this.onBeforeLoadApplication, this);
-			appDetailStore.on('load', this.onLoadApplication, this);
+			var ciDetailStore = AIR.AirStoreFactory.createCiDetailStore(AAM.getTableId());//createApplicationDetailStore
+			ciDetailStore.on('beforeload', this.onBeforeCiLoad, this);
+			ciDetailStore.on('load', this.onCiLoad, this);
 			
-			appDetailStore.load({
+			ciDetailStore.load({
 				params: {
-					applicationId: AAM.getCiId(),
+					ciId: AAM.getCiId(),//applicationId
+					id: AAM.getCiId(),//applicationId	NUR übergangsweise
 	   			 	cwid: AAM.getCwid(),
 	   			 	token: AAM.getToken()
 				}
@@ -290,18 +291,18 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		}
 	},
 	
-	onBeforeLoadApplication: function(store, options) {
+	onBeforeCiLoad: function(store, options) {
 		AAM.getMask(AC.MASK_TYPE_LOAD).show();
 	},
 	
-	onLoadApplication: function(store, records, options) {
+	onCiLoad: function(store, records, options) {
 		this.ciModified = false;
 		
-		var appDetail = records[0].data;
-		appDetail.ciTableId = this.ciTableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;
-		AAM.setAppDetail(appDetail);
+		var ciDetail = records[0].data;
+		ciDetail.tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;
+		AAM.setAppDetail(ciDetail);
 		
-		if(appDetail.applicationId.length === 0) {
+		if(ciDetail.id.length === 0) {//applicationId
 			//wenn die ciId für den gegebenen ciType/tableId nicht existiert (z.B. aufgrund schlechter URL CI Einsprungdaten),
 			//OK Hinweisfenster mit navigation callback zur Search
 			
@@ -309,39 +310,39 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			var message = labels.CiEinsprungCiIdDoesNotExistMessage.replace('{0}', AAM.getCiId());
 			this.openEinsprungDataWarnungWindow(message);
 		} else {
-			this.getComponent('editpanelheader').setText(appDetail.applicationName);
-			this.getComponent('editpanelsubheader').setText(appDetail.applicationCat1Txt);
+			this.getComponent('editpanelheader').setText(ciDetail.name);//applicationName
+			this.getComponent('editpanelsubheader').setText(ciDetail.applicationCat1Txt);//applicationName
 	
 			//---------------------------------------------------------------------------------------------------------
-			//AIR.AirAclManager.updateAcl(appDetail);// RFC 8225: added appDetail param
+			//AIR.AirAclManager.updateAcl(ciDetail);// RFC 8225: added ciDetail param
 			var ciEditTabView = this.getComponent('ciEditTabView');
 			
 			var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
-			ciDetailsView.update(appDetail);//detailsData
+			ciDetailsView.update(ciDetail);//detailsData
 			
 			var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
-			ciSpecificsView.update(appDetail);
+			ciSpecificsView.update(ciDetail);
 			
 			var ciContactsView = ciEditTabView.getComponent('clCiContacts');
-			ciContactsView.update(appDetail);
+			ciContactsView.update(ciDetail);
 			
 			var ciAgreementsView = ciEditTabView.getComponent('clCiAgreements');
-			ciAgreementsView.update(appDetail);
+			ciAgreementsView.update(ciDetail);
 			
 			var ciProtectionView = ciEditTabView.getComponent('clCiProtection');
-			ciProtectionView.update(appDetail);
+			ciProtectionView.update(ciDetail);
 	
 			var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
-			ciLicenseView.update(appDetail);
+			ciLicenseView.update(ciDetail);
 			
 			var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
-			ciComplianceView.update(appDetail);
+			ciComplianceView.update(ciDetail);
 			
 			var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
-			ciConnectionsView.update(appDetail);
+			ciConnectionsView.update(ciDetail);
 			
 			var ciSupportStuff = ciEditTabView.getComponent('clCiSupportStuff');
-			ciSupportStuff.update(appDetail);
+			ciSupportStuff.update(ciDetail);
 			
 			//var ciHistory = ciEditTabView.getComponent('clCiHistory');
 			//ciHistory.update();
@@ -368,7 +369,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			this.disableButtons();
 			
-			var panelMsg = ACM.getRequiredFields(appDetail);
+			var panelMsg = ACM.getRequiredFields(ciDetail);
 			if(panelMsg.length > 0) {
 				this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
 			} else {
@@ -418,16 +419,18 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 //		var labels = AIR.AirApplicationManager.getLabels();
 		
-		var appDetail = AAM.getAppDetail();
+		var ciDetail = AAM.getAppDetail();
 		
 		if(!AIR.AirAclManager.isEditMaskValid()) {
-			msgtext = AIR.AirApplicationManager.getLabels().editDataNotValid.replace(/##/, appDetail.applicationName);//this.getComponent('applicationName').getValue()
+			msgtext = AIR.AirApplicationManager.getLabels().editDataNotValid.replace(/##/, ciDetail.applicationName);//this.getComponent('applicationName').getValue()
+			
 			Ext.MessageBox.show({
 				title: 'Error',
 				msg: msgtext,
 				buttons: Ext.MessageBox.OK,
 				icon: Ext.MessageBox.ERROR
 			});
+			
 			return;
 		}
 
@@ -437,9 +440,14 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.skipLoading = options && options.skipLoading ? true : false;
 
 		var ciEditTabView = this.getComponent('ciEditTabView');
-		var data = {};
-		var tableId = this.ciTableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
-		data.ciTableId = tableId;
+		
+		var data = {
+		 	cwid: AIR.AirApplicationManager.getCwid(),
+		 	token: AIR.AirApplicationManager.getToken()
+		};
+		
+		var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
+		data.tableId = tableId;
 		
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.setData(data);
@@ -465,19 +473,17 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 		ciSupportStuffView.setData(data);
 		
-		data.tableId = AAM.getTableId();//oder this.ciTableId?
-
 		var saveCallback = function() {
 			AAM.getMask(AC.MASK_TYPE_SAVE).show();
 			
 			/*
-			Util.log('new template? data.template='+data.template+'   appDetail.isTemplate='+appDetail.template);
+			Util.log('new template? data.template='+data.template+'   ciDetail.isTemplate='+ciDetail.template);
 			//isTemplate
-			if(data.template !== appDetail.template) {//new template or removed template of the changed CI?
+			if(data.template !== ciDetail.template) {//new template or removed template of the changed CI?
 				var referencesListStore = AIR.AirStoreManager.getStoreByName('referencesListStore');
 				referencesListStore.load();
 			}*/
-			this.templateChanged = data.template !== appDetail.template;
+			this.templateChanged = data.template !== ciDetail.template;
 			
 //			this.mergeCiChanges(data);//(noch) nicht notwendig, da noch keine Fälle in denen Daten zusammengeführt werden müssen
 			
@@ -486,17 +492,17 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			});
 		}.createDelegate(this);
 		
-		this.checkItsecGroup(data, appDetail, saveCallback);
+		this.checkItsecGroup(data, ciDetail, saveCallback);
 	},
 	
-	checkItsecGroup: function(newAppDetail, appDetail, saveCallback) {
-		if(appDetail.itsecGroupId.length > 0 &&
-		   appDetail.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && // wenn itsecGroupId = 10136 (Default ITsec Group), wird cbItSecGroup nicht gesetzt. Sie ist in diesem Fall leer. Die Überprüfung findet aber über appDetail.itsecGroupId statt
-		   appDetail.itsecGroupId !== newAppDetail.itSecGroupId &&
-		   newAppDetail.itSecGroupId &&
-		   newAppDetail.itSecGroupId !== AC.CI_GROUP_ID_NON_BYTSEC &&
-		   newAppDetail.itSecGroupId !== AC.CI_GROUP_ID_DELETE_ID &&
-		   newAppDetail.itSecGroupId !== AC.CI_GROUP_ID_EMPTY) {
+	checkItsecGroup: function(newCiDetail, ciDetail, saveCallback) {
+		if(ciDetail.itsecGroupId.length > 0 &&
+		   ciDetail.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && // wenn itsecGroupId = 10136 (Default ITsec Group), wird cbItSecGroup nicht gesetzt. Sie ist in diesem Fall leer. Die Überprüfung findet aber über ciDetail.itsecGroupId statt
+		   ciDetail.itsecGroupId !== newCiDetail.itSecGroupId &&
+		   newCiDetail.itSecGroupId &&
+		   newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_NON_BYTSEC &&
+		   newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_DELETE_ID &&
+		   newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_EMPTY) {
 			
 			var callbackMap = {
 				yes: saveCallback
@@ -602,7 +608,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			if(!this.skipLoading)
 				this.loadCiDetails();//hier ein itsecGroupCallback übergeben (das ComplianceControlWindow), wenn er nach dem Neuladen aufgerufen werden soll
 			
-			this.fireEvent('airAction', this, 'appSaveSuccess');//(bestimmte) appDetail Daten mitgeben?
+			this.fireEvent('airAction', this, 'appSaveSuccess');//(bestimmte) ciDetail Daten mitgeben?
 			
 			
 			//refactor remove global bIsDynamicWindowSpeichern and delegateCallback. See also commonfunctions::AIR.AirWindowFactory.createDynamicMessageWindow
@@ -685,7 +691,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		//falls kein CI vor dem Start ausgewählt war, gibt es natürlich keine gesicherte tableId. Folge: kein specificsView Label kann gesetzt werden
 		//ODER die Lebels aller specificsView CI Typ Seiten müssen gesetzt werden ODER CiSpecificsAnwendungView Labels werden per Default gesetzt, wie hier:
-		var tableId = this.ciTableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
+		var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.updateLabels(labels, tableId);
 		
@@ -723,7 +729,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 //		var ciDetailsView = this.getComponent('clCiDetails');
 //		ciDetailsView.updateToolTips(toolTips);
 		
-		var tableId = this.ciTableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
+		var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.updateToolTips(toolTips, tableId);
 		
@@ -753,7 +759,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	onCiSelected: function(sourceView, ciId, target, record) {
-		this.ciTableId = record.get('tableId');//grid.getStore().getAt(rowIndex).get('tableId');
+		this.tableId = record.get('tableId');//grid.getStore().getAt(rowIndex).get('tableId');
 		this.reset();
 	},
 	

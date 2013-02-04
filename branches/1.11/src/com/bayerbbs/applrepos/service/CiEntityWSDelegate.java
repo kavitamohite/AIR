@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.service;
 
+import com.bayerbbs.applrepos.dto.BuildingDTO;
+import com.bayerbbs.applrepos.dto.RoomDTO;
+
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "CiEntityWSService", portName = "CiEntityWSPort")
 public class CiEntityWSDelegate {
@@ -18,7 +21,11 @@ public class CiEntityWSDelegate {
 		return ciEntityWS.getDwhEntityRelations(input);
 	}
 	
-	public CiDetailParameterOutput getRoom(CiDetailParameterInput input) {
+	public RoomDTO getRoom(CiDetailParameterInput input) {//CiDetailParameterOutput
 		return ciEntityWS.getRoom(input);
+	}
+	
+	public BuildingDTO getBuilding(CiDetailParameterInput input) {//CiDetailParameterOutput
+		return ciEntityWS.getBuilding(input);
 	}
 }

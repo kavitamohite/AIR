@@ -56,6 +56,8 @@
 <!--		<mapping class="com.bayerbbs.applrepos.domain.SystemPlatform" />-->
 <!--		<mapping class="com.bayerbbs.applrepos.domain.SeverityLevel" />??-->
 		
+		<mapping class="com.bayerbbs.applrepos.domain.CiLokationsKette" />
 		<mapping class="com.bayerbbs.applrepos.domain.Room" />
+		<mapping class="com.bayerbbs.applrepos.domain.Building" />
 	</session-factory>
 </hibernate-configuration>

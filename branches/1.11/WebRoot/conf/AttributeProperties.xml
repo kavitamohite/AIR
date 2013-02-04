@@ -43,7 +43,7 @@
 
 	<Identifier>
 		<id>barApplicationId</id>
-		<Mandatory>required</Mandatory>
+		<Mandatory>optional</Mandatory>
 		<Relevance>no one should edit it</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>

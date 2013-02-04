@@ -4,14 +4,14 @@ public class ApplicationDetailParameterInput {
 
 	private String token;
 	private String cwid;
-	private Long applicationId;
+	private Long id;
 	
-	public Long getApplicationId() {
-		return applicationId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setApplicationId(Long applicationId) {
-		this.applicationId = applicationId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getToken() {
