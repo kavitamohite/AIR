@@ -711,7 +711,7 @@ public class AnwendungHbn {
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
-			if (null != dto.getId() && 0 == dto.getId()) {
+			if (null == dto.getId()) {
 
 				// check der InputWerte
 				List<String> messages = AnwendungHbn.validateApplication(dto);
