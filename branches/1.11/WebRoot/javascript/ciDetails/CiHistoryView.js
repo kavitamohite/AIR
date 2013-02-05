@@ -101,7 +101,7 @@ AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 		var params = {
 			cwid: AIR.AirApplicationManager.getCwid(),
 			token: AIR.AirApplicationManager.getToken(),
-			applicationId: AIR.AirApplicationManager.getCiId()//selectedCIId
+			id: AIR.AirApplicationManager.getCiId()//selectedCIId
 		};
 		
 		historyListStore.load({
