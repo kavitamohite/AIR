@@ -62,7 +62,7 @@ public class LicenseTypeHbn {
 			tx = session.beginTransaction();
 			List<LicenseType> values = session
 					.createQuery(
-							"select h from LicenseType as h where h.deleteTimestamp is null order by h.licenseTypeName")
+							"select h from LicenseType as h order by h.licenseTypeName")
 					.list();
 
 			listResult = getDTOList(values);

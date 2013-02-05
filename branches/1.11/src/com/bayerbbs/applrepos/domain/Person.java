@@ -8,9 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
 
+@Immutable
 @Entity
 @Table(name = "V_MD_PERSON")
 public class Person implements Serializable {

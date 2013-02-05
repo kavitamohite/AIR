@@ -8,8 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
+
+@Immutable
 @Entity
-@Table(name = "ANWENDUNG_KAT1")
+@Table(name = "V_MD_APPLICATION_CAT1")
 public class ApplicationCat1 implements Serializable {
 
 	private static final long serialVersionUID = 5606742662561150268L;
@@ -53,7 +56,7 @@ public class ApplicationCat1 implements Serializable {
 	 * @return Value of the {@link #id} field.
 	 */
 	@Id
-	@Column(name = "ANWENDUNG_KAT1_ID")
+	@Column(name = "APPLICATION_CAT1_ID")
 	public Long getApplicationCat1Id() {
 		return applicationCat1Id;
 	}
@@ -73,7 +76,7 @@ public class ApplicationCat1 implements Serializable {
 	 * 
 	 * @return Value of the {@link #applicationCat1Txt} field.
 	 */
-	@Column(name = "ANWENDUNG_KAT1_TXT")
+	@Column(name = "APPLICATION_CAT1_TXT")
 	public String getApplicationCat1Txt() {
 		return applicationCat1Txt;
 	}
@@ -93,7 +96,7 @@ public class ApplicationCat1 implements Serializable {
 	 * 
 	 * @return Value of the {@link #applicationCat1En} field.
 	 */
-	@Column(name = "ANWENDUNG_KAT1_EN")
+	@Column(name = "APPLICATION_CAT1_EN")
 	public String getApplicationCat1En() {
 		return applicationCat1En;
 	}

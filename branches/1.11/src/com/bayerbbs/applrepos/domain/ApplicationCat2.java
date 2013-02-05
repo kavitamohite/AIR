@@ -8,8 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Immutable;
+
+@Immutable
 @Entity
-@Table(name = "ANWENDUNG_KAT2")
+@Table(name = "V_MD_APPLICATION_CAT2")
 public class ApplicationCat2 implements Serializable {
 	private static final long serialVersionUID = -2410206992724504924L;
 	
@@ -26,7 +29,7 @@ public class ApplicationCat2 implements Serializable {
 
 
 	@Id
-	@Column(name = "ANWENDUNG_KAT2_ID")
+	@Column(name = "APPLICATION_CAT2_ID")
 	public Long getId() {
 		return id;
 	}
@@ -35,7 +38,7 @@ public class ApplicationCat2 implements Serializable {
 	}
 
 
-	@Column(name = "ANWENDUNG_KAT2_TXT")
+	@Column(name = "APPLICATION_CAT2_TXT")
 	public String getAnwendungKat2Text() {
 		return anwendungKat2Text;
 	}
@@ -53,7 +56,7 @@ public class ApplicationCat2 implements Serializable {
 	}
 	
 
-	@Column(name = "ANWENDUNG_KAT1_ID")
+	@Column(name = "APPLICATION_CAT1_ID")
 	public Long getAnwendungKat1Id() {
 		return anwendungKat1Id;
 	}
@@ -70,13 +73,4 @@ public class ApplicationCat2 implements Serializable {
 		this.guiSAPNameWizard = guiSAPNameWizard;
 	}
 
-	@Column(name = "DEL_TIMESTAMP")
-	public Date getDelTimestamp() {
-		return delTimestamp;
-	}
-	public void setDelTimestamp(Date delTimestamp) {
-		this.delTimestamp = delTimestamp;
-	}
-
-	
 }

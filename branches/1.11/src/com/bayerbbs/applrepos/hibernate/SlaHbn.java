@@ -64,7 +64,7 @@ public class SlaHbn {
 			tx = session.beginTransaction();
 			List<Sla> values = session
 					.createQuery(
-							"select h from Sla as h where h.deleteTimestamp is null order by h.slaName")
+							"select h from Sla as h order by h.slaName")	// where h.deleteTimestamp is null 
 					.list();
 
 			listResult = getDTOList(values);

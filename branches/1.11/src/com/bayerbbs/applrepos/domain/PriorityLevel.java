@@ -8,9 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
+
+@Immutable
 @Entity
-@Table(name = "PRIORITY_LEVEL")
-public class PriorityLevel extends DeletableRevisionInfo implements Serializable {
+@Table(name = "V_MD_PRIORITY_LEVEL")
+public class PriorityLevel implements Serializable {
 
 
 	private static final long serialVersionUID = -4150814818241850811L;

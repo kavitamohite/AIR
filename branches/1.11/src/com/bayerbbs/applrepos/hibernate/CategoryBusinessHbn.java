@@ -62,7 +62,7 @@ public class CategoryBusinessHbn {
 			try {
 				tx = session.beginTransaction();
 				List<CategoryBusiness> values = session.createQuery(
-						"select h from CategoryBusiness as h where h.deleteTimestamp is null order by h.categoryBusinessName").list();
+						"select h from CategoryBusiness as h order by h.categoryBusinessName").list();	// where h.deleteTimestamp is null 
 				
 				listResult = getDTOList(values);
 				

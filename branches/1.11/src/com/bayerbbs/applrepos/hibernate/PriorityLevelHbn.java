@@ -62,7 +62,7 @@ public class PriorityLevelHbn {
 			try {
 				tx = session.beginTransaction();
 				List<PriorityLevel> values = session.createQuery(
-						"select h from PriorityLevel as h where h.deleteTimestamp is null order by h.priorityLevelId").list();
+						"select h from PriorityLevel as h order by h.priorityLevelId").list();	// where h.deleteTimestamp is null 
 				
 				listResult = getDTOList(values);
 				

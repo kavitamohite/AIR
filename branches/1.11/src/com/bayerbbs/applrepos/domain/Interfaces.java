@@ -8,8 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
+
+@Immutable
 @Entity
-@Table(name = "INTERFACES")
+@Table(name = "V_MD_INTERFACE")
 public class Interfaces implements Serializable {
 
 	private static final long serialVersionUID = -1269472619097704156L;

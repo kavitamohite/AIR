@@ -8,9 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
+
+@Immutable
 @Entity
-@Table(name = "LIFECYCLE_STATUS")
-public class LifecycleStatus  implements Serializable {
+@Table(name = "V_MD_LIFECYCLE_STATUS")
+public class LifecycleStatus implements Serializable {
 
 	private static final long serialVersionUID = 1302835433144931166L;
 

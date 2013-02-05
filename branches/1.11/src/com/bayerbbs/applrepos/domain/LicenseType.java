@@ -8,9 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
+
+@Immutable
 @Entity
-@Table(name = "LICENSE_TYPE")
-public class LicenseType extends DeletableRevisionInfo implements Serializable {
+@Table(name = "V_MD_LICENSE_TYPE")
+public class LicenseType implements Serializable {
 
 	private static final long serialVersionUID = 1115199930658830080L;
 

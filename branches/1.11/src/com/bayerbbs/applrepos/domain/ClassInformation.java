@@ -8,9 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
+
+@Immutable
 @Entity
-@Table(name = "CLASS_INFORMATION")
-public class ClassInformation extends DeletableRevisionInfo implements Serializable {
+@Table(name = "V_MD_CLASS_INFORMATION")
+public class ClassInformation implements Serializable {
 
 	private static final long serialVersionUID = 4501233402812738360L;
 

@@ -62,7 +62,7 @@ public class AccountHbn {
 			tx = session.beginTransaction();
 			List<Account> values = session
 					.createQuery(
-							"select h from Account as h where h.deleteTimestamp is null and (h.accountType='KST' or (h.accountType='PSP' and h.accountName like 'O%')) order by h.accountName")
+							"select h from Account as h where (h.accountType='KST' or (h.accountType='PSP' and h.accountName like 'O%')) order by h.accountName")
 					.list();
 
 			listResult = getDTOList(values);

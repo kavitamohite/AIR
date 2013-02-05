@@ -7,11 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.NaturalId;
 
 
+@Immutable
 @Entity
-@Table(name="SEVERITY_LEVEL")
+@Table(name = "V_MD_SEVERITY_LEVEL")
 
 public class SeverityLevel extends DeletableRevisionInfo implements Serializable {
 

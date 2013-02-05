@@ -60,7 +60,7 @@ public class GroupHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Group> values = session.createQuery("select h from Group as h where deleteTimestamp is null order by h.groupName").list();
+			List<Group> values = session.createQuery("select h from Group as h where order by h.groupName").list();
 
 			listResult = getDTOList(values);
 			commit = true;
@@ -85,7 +85,7 @@ public class GroupHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Group> values = session.createQuery("select h from Group as h where deleteTimestamp is null and upper(h.groupName) = '" + groupname.toUpperCase() +"'").list();
+			List<Group> values = session.createQuery("select h from Group as h where upper(h.groupName) = '" + groupname.toUpperCase() +"'").list();
 
 			listResult = getDTOList(values);
 			commit = true;
@@ -146,7 +146,7 @@ public class GroupHbn {
 		Session session = HibernateUtil.getSession();
 		try {
 			tx = session.beginTransaction();
-			List<Group> values = session.createQuery("select h from Group as h where deleteTimestamp is null" + searchParameter + " order by h.groupName").list();
+			List<Group> values = session.createQuery("select h from Group as h where " + searchParameter + " order by h.groupName").list();
 
 			listResult = getDTOList(values);
 			commit = true;
@@ -178,7 +178,7 @@ public class GroupHbn {
 		
 
 		StringBuffer sb = new StringBuffer();
-		sb.append("select h from Group as h where deleteTimestamp is null");
+		sb.append("select h from Group as h where 1=1");
 		if (null != groupname) {
 			sb.append(" and upper(h.groupName) like '");
 			if (null != fullLikeSearch) {

@@ -72,7 +72,7 @@ public class CurrencyHbn {
 			tx = session.beginTransaction();
 			List<Currency> values = session
 					.createQuery(
-							"select h from Currency as h where h.deleteTimestamp is null order by h.currencyName")
+							"select h from Currency as h order by h.currencyName")
 					.list();
 
 			listResult = getDTOList(values);

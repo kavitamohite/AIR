@@ -8,9 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
+
+@Immutable
 @Entity
-@Table(name = "GROUP_TYPES")
-public class GroupType extends DeletableRevisionInfo implements Serializable {
+@Table(name = "V_MD_GROUP_TYPE")
+public class GroupType implements Serializable {
 
 	private static final long serialVersionUID = -2303209644906360270L;
 

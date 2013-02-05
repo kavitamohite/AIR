@@ -8,9 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
+
+@Immutable
 @Entity
-@Table(name = "CI_SUPPORT_STUFF_TYPE")
-public class CiSupportStuffType extends DeletableRevisionInfo implements Serializable {
+@Table(name = "V_MD_CI_SUPPORT_STUFF_TYPE")
+public class CiSupportStuffType implements Serializable {
 
 	private static final long serialVersionUID = -5815607844011557914L;
 

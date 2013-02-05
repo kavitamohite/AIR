@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
+
+@Immutable
 @Entity
 @Table(name = "V_MD_OPERATIONAL_STATUS")
 public class OperationalStatus implements Serializable {

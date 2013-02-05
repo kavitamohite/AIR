@@ -8,9 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Immutable;
+
+@Immutable
 @Entity
-@Table(name = "KONTO")
-public class Account extends DeletableRevisionInfo implements Serializable {
+@Table(name = "V_MD_ACCOUNT")
+public class Account implements Serializable {
 
 	private static final long serialVersionUID = 2432846363309970397L;
 	private Long accountId;
@@ -49,7 +52,7 @@ public class Account extends DeletableRevisionInfo implements Serializable {
 	 * @return Value of the {@link #accountId} field.
 	 */
 	@Id
-	@Column(name = "KONTO_ID")
+	@Column(name = "ACCOUNT_ID")
 	public Long getAccountId() {
 		return accountId;
 	}
@@ -69,7 +72,7 @@ public class Account extends DeletableRevisionInfo implements Serializable {
 	 * 
 	 * @return Value of the {@link #accountName} field.
 	 */
-	@Column(name = "KONTO_NAME")
+	@Column(name = "ACCOUNT_NAME")
 	public String getAccountName() {
 		return accountName;
 	}
@@ -89,7 +92,7 @@ public class Account extends DeletableRevisionInfo implements Serializable {
 	 * 
 	 * @return Value of the {@link #accountType} field.
 	 */
-	@Column(name = "KONTO_ART")
+	@Column(name = "ACCOUNT_TYPE")
 	public String getAccountType() {
 		return accountType;
 	}
