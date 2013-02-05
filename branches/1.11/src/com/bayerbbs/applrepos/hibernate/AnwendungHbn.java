@@ -1194,8 +1194,8 @@ public class AnwendungHbn {
 		// =================
 		// responsible
 		if (StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {//getResponsibleHidden
-			// messages.add(errorCodeManager.getErrorMessage("1102"));
-			// darf jetzt leer sein
+			// RFC 9102 - darf jetzt nicht mehr leer sein und wird automatisch vorbelegt.
+			dto.setCiOwnerHidden(dto.getApplicationOwnerHidden());
 		}
 		else {
 			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getCiOwnerHidden());//getResponsibleHidden
