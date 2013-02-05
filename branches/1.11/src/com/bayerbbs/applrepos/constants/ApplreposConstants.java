@@ -41,6 +41,7 @@ public class ApplreposConstants {
 	public final static String ROLE_AIR_DEFAULT			 		= "AIR Default";
 	public final static String ROLE_AIR_DEVELOPER			 	= "AIR Developer";
 	public final static String ROLE_AIR_INFRASTRUCTURE_LAYER 	= "AIR Infrastructure Layer";
+	public final static String ROLE_AIR_INFRASTRUCTURE_MANAGER 	= "AIR Infrastructure Manager";
 	
 	public final static String ROLE_BUSINESS_ESSENTIAL_EDITOR = "AIR BusinessEssential-Editor";
 
@@ -80,5 +81,10 @@ public class ApplreposConstants {
 		{"15", "gpsccontactBusinessOwnerRepresentative", "Y", "Business Owner Representative"}
 	};
 	
+	public final static Long APPLICATION_CAT1_APPLICATION = new Long(5);
+	public final static Long APPLICATION_CAT1_COMMON_SERVICE = new Long(-10013);
+	public final static Long APPLICATION_CAT1_COMMON_MIDDLEWARE = new Long(-10007);
+	public final static Long APPLICATION_CAT1_COMMON_APPLICATIONPLATFORM = new Long(-10006);
 	
+
 }

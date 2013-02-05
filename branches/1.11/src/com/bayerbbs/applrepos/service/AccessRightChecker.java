@@ -186,8 +186,7 @@ public class AccessRightChecker {
 			}
 			
 			if (!isRelevanceStrategic) {
-				if (!ApplreposConstants.STRING_0.equals(ApplReposHbn.getCountFromRoleNameAndCwid(
-						ApplreposConstants.ROLE_AIR_APPLICATION_MANAGER, cwid))) {
+				if (isEditableRoleApplicationManager( cwid)) {
 					// allowed by role rights for admin
 					isRelevanceStrategic = true;
 				}
@@ -197,4 +196,23 @@ public class AccessRightChecker {
 		return isRelevanceStrategic;
 	}
 
+	private boolean isEditableByRoleAdminType(String adminTypeRoleName, String cwidInput) {
+		boolean isEditableByRoleAdminType = false;
+		if (!ApplreposConstants.STRING_0.equals(ApplReposHbn.getCountFromRoleNameAndCwid(
+				adminTypeRoleName, cwidInput))) {
+			// allowed by role rights for admin type
+			isEditableByRoleAdminType = true;
+		}
+		
+		return isEditableByRoleAdminType;
+	}
+
+	public boolean isEditableRoleApplicationManager(String cwidInput) {
+		return isEditableByRoleAdminType(ApplreposConstants.ROLE_AIR_APPLICATION_MANAGER, cwidInput);
+	}
+	
+	public boolean isEditableRoleInfrastructureManager(String cwidInput) {
+		return isEditableByRoleAdminType(ApplreposConstants.ROLE_AIR_INFRASTRUCTURE_MANAGER, cwidInput);
+	}
+	
 }

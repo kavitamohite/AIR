@@ -208,9 +208,6 @@ public class ApplicationWS {
 					}
 
 					ApplicationProcessHbn.saveApplicationProcessAll(editInput.getCwid(), dto.getId(), dto.getBusinessProcessHidden());
-					// ApplicationProcessHbn.saveApplicationProcessAll(editInput.getCwid(),
-					// dto.getApplicationId(), dto.getConnection_process_D(),
-					// "D");
 
 					for (String[] grouptype : ApplreposConstants.GPSCGROUP_MAPPING) {
 						char d[] = grouptype[1].toCharArray();
@@ -318,13 +315,6 @@ public class ApplicationWS {
 
 					ApplicationProcessHbn.saveApplicationProcessAll(editInput.getCwid(), ciId, dto.getBusinessProcessHidden());
 
-					
-					// TODO: GPSCContact "Application Owner" wird beim Create nicht mehr gespeichert... Kann das hier weg?
-					// save gpsc contact 'application owner'
-//					if (null != editInput.getGpscContact1Hidden()) {
-//						CiPersonsHbn.saveCiPerson(editInput.getCwid(), listAnwendung.get(0).getApplicationId(),
-//								new Long(11), dto.getGpscContact1Hidden(), "save");
-//					}
 				} else {
 					// unknown?
 					output.setApplicationId(new Long(-1));
@@ -722,12 +712,12 @@ public class ApplicationWS {
 
 			if (null != application) {
 				dto = AnwendungHbn.getApplicationDetail(detailInput.getId());
-				dto.setTemplateReferencedByItem("N");
+				dto.setTemplateReferencedByItem(ApplreposConstants.NO_SHORT);
 				
 				if (null != dto.getTemplate() && !"0".equals(dto.getTemplate())) {
 					// it is a template, so see if it is referenced by some ci's
 					if (!"0".equals(ApplReposHbn.getCountReferencingTemplates(detailInput.getId()))) {
-						dto.setTemplateReferencedByItem("Y");
+						dto.setTemplateReferencedByItem(ApplreposConstants.YES_SHORT);
 					}
 				}
 
@@ -773,6 +763,7 @@ public class ApplicationWS {
 
 				AccessRightChecker checker = new AccessRightChecker();
 
+				// hier wird geprüft, ob der aktive Anwender über Edit-Zugriffsrechte (über Person, seine Gruppenzugehörigkeit oder globale Adminrechte) verfügt  
 				if (checker.isEditable(application.getApplicationId(), new Long(2), detailInput.getCwid())) {
 					dto.setIsEditable(ApplreposConstants.YES_SHORT);
 				}
@@ -784,8 +775,9 @@ public class ApplicationWS {
 					accessDTO.setRelevanceOperational(ApplreposConstants.NO_SHORT);
 				}
 
-				// TODO RFC angegben und Konstante einfügen.
-				if (5 == dto.getApplicationCat1Id().longValue()) {
+				// RFC 9101 Erweiterung "AIR Infrastructure Manager"
+				long applCat1Id = dto.getApplicationCat1Id().longValue();
+				if (ApplreposConstants.APPLICATION_CAT1_APPLICATION.longValue() == applCat1Id) {
 					// nur für CI's Typ = Anwendung
 					if (checker.isRelevanceStrategic(detailInput.getCwid(), application)) {
 						accessDTO.setRelevanceStrategic(ApplreposConstants.YES_SHORT);
@@ -793,8 +785,26 @@ public class ApplicationWS {
 						accessDTO.setRelevanceStrategic(ApplreposConstants.NO_SHORT);
 					}
 				}
+				else if (ApplreposConstants.APPLICATION_CAT1_COMMON_SERVICE.longValue() == applCat1Id ||
+						 ApplreposConstants.APPLICATION_CAT1_COMMON_MIDDLEWARE.longValue() == applCat1Id ||
+						 ApplreposConstants.APPLICATION_CAT1_COMMON_APPLICATIONPLATFORM.longValue() == applCat1Id)
+						 {
+
+					if (ApplreposConstants.NO_SHORT.equals(accessDTO.getRelevanceOperational())) {
+						// Abfrage Infrastructure Manager
+						if (checker.isEditableRoleInfrastructureManager(detailInput.getCwid())) {
+							accessDTO.setRelevanceOperational(ApplreposConstants.YES_SHORT);
+						}
+					}
+					
+					// diese CI's haben keine Trennung zwischen Operational und Strategic
+					// deshalb setzen wir hier beide Berechtigungen gleich
+					accessDTO.setRelevanceStrategic(accessDTO.getRelevanceOperational());
+				}
 				else {
-					// alle anderen CI's haben keine Trennung
+
+					// alle anderen CI's haben keine Trennung, z.B. Raum
+					// deshalb setzen wir hier beide Berechtigungen gleich
 					accessDTO.setRelevanceStrategic(accessDTO.getRelevanceOperational());
 				}
 				
@@ -890,28 +900,28 @@ public class ApplicationWS {
 				Long rele2008 = dto.getRelevance2008();
 				
 				if (-1 == releItsec) {
-					dto.setRelevanceGR1435("Y");
+					dto.setRelevanceGR1435(ApplreposConstants.YES_SHORT);
 				}
 				else if (0 == releItsec) {
-					dto.setRelevanceGR1435("N");
+					dto.setRelevanceGR1435(ApplreposConstants.NO_SHORT);
 				}
 				if (-1 == releICS) {
-					dto.setRelevanceGR1920("Y");
+					dto.setRelevanceGR1920(ApplreposConstants.YES_SHORT);
 				}
 				else if (0 == releICS) {
-					dto.setRelevanceGR1920("N");
+					dto.setRelevanceGR1920(ApplreposConstants.NO_SHORT);
 				}
 				if (-1 == rele2059) {
-					dto.setRelevanceGR2059("Y");
+					dto.setRelevanceGR2059(ApplreposConstants.YES_SHORT);
 				}
 				else if (0 == rele2059) {
-					dto.setRelevanceGR2059("N");
+					dto.setRelevanceGR2059(ApplreposConstants.NO_SHORT);
 				}
 				if (-1 == rele2008) {
-					dto.setRelevanceGR2008("Y");
+					dto.setRelevanceGR2008(ApplreposConstants.YES_SHORT);
 				}
 				else if (0 == rele2008) {
-					dto.setRelevanceGR2008("N");
+					dto.setRelevanceGR2008(ApplreposConstants.NO_SHORT);
 				}
 
 				
@@ -1031,31 +1041,31 @@ public class ApplicationWS {
 
 		// quickhack
 		if (null == dto.getCiSupportStuffUserAuthorizationSupportedByDocumentation()) {
-			dto.setCiSupportStuffUserAuthorizationSupportedByDocumentation("");
+			dto.setCiSupportStuffUserAuthorizationSupportedByDocumentation(ApplreposConstants.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffUserAuthorizationProcess()) {
-			dto.setCiSupportStuffUserAuthorizationProcess("");
+			dto.setCiSupportStuffUserAuthorizationProcess(ApplreposConstants.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffChangeManagementSupportedByTool()) {
-			dto.setCiSupportStuffChangeManagementSupportedByTool("");
+			dto.setCiSupportStuffChangeManagementSupportedByTool(ApplreposConstants.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffUserManagementProcess()) {
-			dto.setCiSupportStuffUserManagementProcess("");
+			dto.setCiSupportStuffUserManagementProcess(ApplreposConstants.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffApplicationDocumentation()) {
-			dto.setCiSupportStuffApplicationDocumentation("");
+			dto.setCiSupportStuffApplicationDocumentation(ApplreposConstants.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffRootDirectory()) {
-			dto.setCiSupportStuffRootDirectory("");
+			dto.setCiSupportStuffRootDirectory(ApplreposConstants.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffDataDirectory()) {
-			dto.setCiSupportStuffDataDirectory("");
+			dto.setCiSupportStuffDataDirectory(ApplreposConstants.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffProvidedServices()) {
-			dto.setCiSupportStuffProvidedServices("");
+			dto.setCiSupportStuffProvidedServices(ApplreposConstants.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffProvidedMachineUsers()) {
-			dto.setCiSupportStuffProvidedMachineUsers("");
+			dto.setCiSupportStuffProvidedMachineUsers(ApplreposConstants.STRING_EMPTY);
 		}
 	}
 
@@ -1072,7 +1082,7 @@ public class ApplicationWS {
 
 		List<ApplicationContact> listContacts = AnwendungHbn.findApplicationContacts(contactsInput.getApplicationId());
 
-		String lastGroupTypeName = "";
+		String lastGroupTypeName = ApplreposConstants.STRING_EMPTY;
 
 		ArrayList<ApplicationContactGroupDTO> listGroups = new ArrayList<ApplicationContactGroupDTO>();
 		ArrayList<ApplicationContactEntryDTO> listEntries = new ArrayList<ApplicationContactEntryDTO>();
@@ -1121,27 +1131,6 @@ public class ApplicationWS {
 					entry = new ApplicationContactEntryDTO();
 
 				}
-			} else {
-				// add the entry to the actual group (more than one entry for
-				// the group)
-//				if (null != entry) {
-//					listEntries.add(entry);
-//				}
-
-				// --- only for testing
-				// TODO Application contacts - einzelne Anzeige
-//				ApplicationContactGroupDTO groupTest = new ApplicationContactGroupDTO();
-//				groupTest.setGroupTypeId(contact.getGroupTypeId());
-//				groupTest.setGroupTypeName(contact.getGroupTypeName());
-//				groupTest.setIndividualContactYN(contact.getIndividualContactYN());
-//				groupTest.setMinContacts(contact.getMinContacts());
-//				groupTest.setMaxContacts(contact.getMaxContacts());
-//
-//				ApplicationContactEntryDTO temp[] = new ApplicationContactEntryDTO[1];
-//				temp[0] = entry;
-//				groupTest.setApplicationContactEntryDTO(temp);
-//				listGroups.add(groupTest);
-				// --- only for testing
 			}
 			if (null != contact.getCwid()) { 
 				// contact has valid entry
@@ -1160,24 +1149,6 @@ public class ApplicationWS {
 
 		}
 
-		// add the last one..
-//		if (null != contact) {
-//			// --- only for testing
-//			// TODO Application contacts - einzelne Anzeige
-//			ApplicationContactGroupDTO groupTest = new ApplicationContactGroupDTO();
-//			groupTest.setGroupTypeId(contact.getGroupTypeId());
-//			groupTest.setGroupTypeName(contact.getGroupTypeName());
-//			groupTest.setIndividualContactYN(contact.getIndividualContactYN());
-//			groupTest.setMinContacts(contact.getMinContacts());
-//			groupTest.setMaxContacts(contact.getMaxContacts());
-//
-//			ApplicationContactEntryDTO temp[] = new ApplicationContactEntryDTO[1];
-//			temp[0] = entry;
-//			groupTest.setApplicationContactEntryDTO(temp);
-//			listGroups.add(groupTest);
-//			// --- only for testing
-//
-//		}
 
 		// create the result (array)
 		ApplicationContactGroupDTO temp[] = new ApplicationContactGroupDTO[listGroups.size()];
