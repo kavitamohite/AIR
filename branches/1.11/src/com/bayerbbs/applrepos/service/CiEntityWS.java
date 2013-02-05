@@ -5,10 +5,11 @@ import java.util.List;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.domain.Building;
+import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Room;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
+import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
@@ -62,97 +63,19 @@ public class CiEntityWS {
 	}
 	
 	
-	public BuildingDTO getBuilding(CiDetailParameterInput detailInput) {//CiDetailParameterOutput
+	public BuildingDTO getBuilding(CiDetailParameterInput detailInput) {
 		BuildingDTO buildingDTO = new BuildingDTO();
-//		CiDetailParameterOutput output = new CiDetailParameterOutput();
 
 		if(LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
 			Building building = BuildingHbn.findById(detailInput.getCiId());
 			CiLokationsKette lokationsKette = BuildingHbn.findLokationsKetteById(detailInput.getCiId());
 			
-			buildingDTO.setId(building.getId());
-			buildingDTO.setName(building.getName());
-			buildingDTO.setAlias(building.getAlias());
+//			Set<BuildingArea> buildingAreas = building.getBuildingAreas();
 			
-			
-			//			applicationDTO.setItsecGroupId(application.getItsecGroupId());
-			buildingDTO.setInsertQuelle(building.getInsertQuelle());
-			buildingDTO.setInsertUser(building.getInsertUser());
-			
-			if (null != building.getInsertTimestamp())
-				buildingDTO.setInsertTimestamp(building.getInsertTimestamp().toString());
-			
-			buildingDTO.setUpdateQuelle(building.getUpdateQuelle());
-			buildingDTO.setUpdateUser(building.getUpdateUser());
-			
-			if (null != building.getUpdateTimestamp())
-				buildingDTO.setUpdateTimestamp(building.getUpdateTimestamp().toString());
-			
-			buildingDTO.setDeleteQuelle(building.getDeleteQuelle());
-			buildingDTO.setDeleteUser(building.getDeleteUser());
-			
-			if (null != building.getDeleteTimestamp())
-				buildingDTO.setDeleteTimestamp(building.getDeleteTimestamp().toString());
-
-			buildingDTO.setCiOwnerHidden(building.getResponsible());
-			buildingDTO.setCiOwnerDelegateHidden(building.getSubResponsible());
-			
-			buildingDTO.setSlaId(building.getSlaId());
-			
-			
-			buildingDTO.setItset(building.getItset());
-			buildingDTO.setTemplate(building.getTemplate());
-			buildingDTO.setItsecGroupId(building.getItsecGroupId());
-			
-			Long template = building.getTemplate();
-			if (-1 == template.longValue()) {
-				// TODO -1 != 1 - Achtung beim Speichern
-				template = new Long(1);
-				//FEHLT NOCH siehe ApplicationWS!!
-			}
-
-			buildingDTO.setRefId(building.getRefId());
-			
-			
-			if (StringUtils.isNotNullOrEmpty(buildingDTO.getCiOwnerHidden())) {
-				List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(buildingDTO.getCiOwnerHidden());
-				if (null != persons && 1 == persons.size()) {
-					PersonsDTO person = persons.get(0);
-					buildingDTO.setCiOwner(person.getDisplayNameFull());
-				}
-			}
-
-			if (StringUtils.isNotNullOrEmpty(buildingDTO.getCiOwnerDelegateHidden())) {
-				List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(buildingDTO.getCiOwnerDelegateHidden());
-				if (null != persons && 1 == persons.size()) {
-					PersonsDTO person = persons.get(0);
-					buildingDTO.setCiOwnerDelegate(person.getDisplayNameFull());
-				}
-			}
-			
-			
-			Long releItsec = building.getRelevanceITSEC();
-			Long releICS = building.getRelevanceICS();
-			
-			if (-1 == releItsec) {
-				buildingDTO.setRelevanceGR1435(YES);
-			}
-			else if (0 == releItsec) {
-				buildingDTO.setRelevanceGR1435(NO);
-			}
-			if (-1 == releICS) {
-				buildingDTO.setRelevanceGR1920(YES);
-			}
-			else if (0 == releICS) {
-				buildingDTO.setRelevanceGR1920(NO);
-			}
-			
-			
+			setCiBaseData(buildingDTO, building);
 			buildingDTO.setCiLokationsKette(lokationsKette);
 		}
-		
-//		output.setCiDetailDTO(roomDTO);
-//		return output;
+
 		return buildingDTO;
 	}
 	
@@ -165,93 +88,98 @@ public class CiEntityWS {
 			Room room = RoomHbn.findById(detailInput.getCiId());
 			CiLokationsKette lokationsKette = RoomHbn.findLokationsKetteById(detailInput.getCiId());
 
-			roomDTO.setId(room.getId());
-			roomDTO.setName(room.getRoomName());
-			roomDTO.setAlias(room.getRoomAlias());
-			roomDTO.setRoomType(room.getRoomType());
-			roomDTO.setFloor(room.getFloor());
-			roomDTO.setAreaId(room.getAreaId());
-
-			//			applicationDTO.setItsecGroupId(application.getItsecGroupId());
-			roomDTO.setInsertQuelle(room.getInsertQuelle());
-			roomDTO.setInsertUser(room.getInsertUser());
+			setCiBaseData(roomDTO, room);
 			
-			if (null != room.getInsertTimestamp())
-				roomDTO.setInsertTimestamp(room.getInsertTimestamp().toString());
-			
-			roomDTO.setUpdateQuelle(room.getUpdateQuelle());
-			roomDTO.setUpdateUser(room.getUpdateUser());
-			
-			if (null != room.getUpdateTimestamp())
-				roomDTO.setUpdateTimestamp(room.getUpdateTimestamp().toString());
-			
-			roomDTO.setDeleteQuelle(room.getDeleteQuelle());
-			roomDTO.setDeleteUser(room.getDeleteUser());
-			
-			if (null != room.getDeleteTimestamp())
-				roomDTO.setDeleteTimestamp(room.getDeleteTimestamp().toString());
-
-			roomDTO.setCiOwnerHidden(room.getResponsible());
-			roomDTO.setCiOwnerDelegateHidden(room.getSubResponsible());
-			
-			roomDTO.setSlaId(room.getSlaId());
-//			roomDTO.setSlaName("");
 			roomDTO.setSeverityLevelId(room.getSeverityLevelId());
 			roomDTO.setBusinessEssentialId(room.getBusinessEssentialId());
-			
-			roomDTO.setItset(room.getItset());
-			roomDTO.setTemplate(room.getTemplate());
-			roomDTO.setItsecGroupId(room.getItsecGroupId());
-			
-			Long template = room.getTemplate();
-			if (-1 == template.longValue()) {
-				// TODO -1 != 1 - Achtung beim Speichern
-				template = new Long(1);
-				//FEHLT NOCH siehe ApplicationWS!!
-			}
-
-			roomDTO.setRefId(room.getRefId());
-			
-			
-			if (StringUtils.isNotNullOrEmpty(roomDTO.getCiOwnerHidden())) {
-				List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(roomDTO.getCiOwnerHidden());
-				if (null != persons && 1 == persons.size()) {
-					PersonsDTO person = persons.get(0);
-					roomDTO.setCiOwner(person.getDisplayNameFull());
-				}
-			}
-
-			if (StringUtils.isNotNullOrEmpty(roomDTO.getCiOwnerDelegateHidden())) {
-				List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(roomDTO.getCiOwnerDelegateHidden());
-				if (null != persons && 1 == persons.size()) {
-					PersonsDTO person = persons.get(0);
-					roomDTO.setCiOwnerDelegate(person.getDisplayNameFull());
-				}
-			}
-			
-			
-			Long releItsec = room.getRelevanceITSEC();
-			Long releICS = room.getRelevanceICS();
-			
-			if (-1 == releItsec) {
-				roomDTO.setRelevanceGR1435(YES);
-			}
-			else if (0 == releItsec) {
-				roomDTO.setRelevanceGR1435(NO);
-			}
-			if (-1 == releICS) {
-				roomDTO.setRelevanceGR1920(YES);
-			}
-			else if (0 == releICS) {
-				roomDTO.setRelevanceGR1920(NO);
-			}
-			
+			roomDTO.setRoomType(room.getRoomType());
+			roomDTO.setFloor(room.getFloor());
+			roomDTO.setAreaId(room.getBuildingAreaId());
 			
 			roomDTO.setCiLokationsKette(lokationsKette);
 		}
 		
 //		output.setCiDetailDTO(roomDTO);//setRoomDTO setCiDetailDTO
 		return roomDTO;
+	}
+	
+	private void setCiBaseData(CiBaseDTO ciBaseDTO, CiBase ciBase) {
+		ciBaseDTO.setId(ciBase.getId());
+		ciBaseDTO.setName(ciBase.getName());
+		ciBaseDTO.setAlias(ciBase.getAlias());
+		
+		
+		//			applicationDTO.setItsecGroupId(application.getItsecGroupId());
+		ciBaseDTO.setInsertQuelle(ciBase.getInsertQuelle());
+		ciBaseDTO.setInsertUser(ciBase.getInsertUser());
+		
+		if (null != ciBase.getInsertTimestamp())
+			ciBaseDTO.setInsertTimestamp(ciBase.getInsertTimestamp().toString());
+		
+		ciBaseDTO.setUpdateQuelle(ciBase.getUpdateQuelle());
+		ciBaseDTO.setUpdateUser(ciBase.getUpdateUser());
+		
+		if (null != ciBase.getUpdateTimestamp())
+			ciBaseDTO.setUpdateTimestamp(ciBase.getUpdateTimestamp().toString());
+		
+		ciBaseDTO.setDeleteQuelle(ciBase.getDeleteQuelle());
+		ciBaseDTO.setDeleteUser(ciBase.getDeleteUser());
+		
+		if (null != ciBase.getDeleteTimestamp())
+			ciBaseDTO.setDeleteTimestamp(ciBase.getDeleteTimestamp().toString());
+
+		ciBaseDTO.setCiOwnerHidden(ciBase.getResponsible());
+		ciBaseDTO.setCiOwnerDelegateHidden(ciBase.getSubResponsible());
+		
+		ciBaseDTO.setSlaId(ciBase.getSlaId());
+		
+		
+		ciBaseDTO.setItset(ciBase.getItset());
+		ciBaseDTO.setTemplate(ciBase.getTemplate());
+		ciBaseDTO.setItsecGroupId(ciBase.getItsecGroupId());
+		
+		Long template = ciBase.getTemplate();
+		if (-1 == template.longValue()) {
+			// TODO -1 != 1 - Achtung beim Speichern
+			template = new Long(1);
+			//FEHLT NOCH siehe ApplicationWS!!
+		}
+
+		ciBaseDTO.setRefId(ciBase.getRefId());
+		
+		
+		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerHidden())) {
+			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerHidden());
+			if (null != persons && 1 == persons.size()) {
+				PersonsDTO person = persons.get(0);
+				ciBaseDTO.setCiOwner(person.getDisplayNameFull());
+			}
+		}
+
+		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerDelegateHidden())) {
+			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerDelegateHidden());
+			if (null != persons && 1 == persons.size()) {
+				PersonsDTO person = persons.get(0);
+				ciBaseDTO.setCiOwnerDelegate(person.getDisplayNameFull());
+			}
+		}
+		
+		
+		Long releItsec = ciBase.getRelevanceITSEC();
+		Long releICS = ciBase.getRelevanceICS();
+		
+		if (-1 == releItsec) {
+			ciBaseDTO.setRelevanceGR1435(YES);
+		}
+		else if (0 == releItsec) {
+			ciBaseDTO.setRelevanceGR1435(NO);
+		}
+		if (-1 == releICS) {
+			ciBaseDTO.setRelevanceGR1920(YES);
+		}
+		else if (0 == releICS) {
+			ciBaseDTO.setRelevanceGR1920(NO);
+		}
 	}
 
 	protected RoomDTO getRoomDTOFromEditInput(RoomEditParameterInput editInput) {

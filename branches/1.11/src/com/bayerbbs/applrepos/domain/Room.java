@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,12 +19,12 @@ public class Room extends CiBase implements Serializable {
 //	private String roomAlias;
 	private String roomType;
 	private String floor;
-	private Long areaId;
 	
 	private Long severityLevelId;
 	private Long businessEssentialId;
-
 	
+	private Long buildingAreaId;
+	private BuildingArea buildingArea;
 
 	
 //	@Transient
@@ -79,16 +81,7 @@ public class Room extends CiBase implements Serializable {
 	public void setFloor(String floor) {
 		this.floor = floor;
 	}
-	
-	@Column(name = "AREA_ID")
-	public Long getAreaId() {
-		return areaId;
-	}
 
-	public void setAreaId(Long areaId) {
-		this.areaId = areaId;
-	}
-	
 	
 	@Column(name = "SEVERITY_LEVEL_ID")
 	public Long getSeverityLevelId() {
@@ -107,5 +100,24 @@ public class Room extends CiBase implements Serializable {
 
 	public void setBusinessEssentialId(Long businessEssentialId) {
 		this.businessEssentialId = businessEssentialId;
+	}
+	
+	
+	
+	@ManyToOne
+	@JoinColumn(name="AREA_ID")
+	public BuildingArea getBuildingArea() {
+		return buildingArea;
+	}
+	public void setBuildingArea(BuildingArea buildingArea) {
+		this.buildingArea = buildingArea;
+	}
+	@Column(name = "AREA_ID", insertable=false, updatable=false)
+	public Long getBuildingAreaId() {
+		return buildingAreaId;
+	}
+
+	public void setBuildingAreaId(Long areaId) {
+		this.buildingAreaId = areaId;
 	}
 }

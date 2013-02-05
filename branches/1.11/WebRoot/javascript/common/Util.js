@@ -140,7 +140,7 @@ Util = {
 	
 	isCiId: function(value) {
 		var regExp = new RegExp(/^\d+$/);//das ^ und $ Zeichen bewirken die exakte Validierung. Ohne diese liefert string=23v454 liefert die Funktion nicht false!
-		var result = value.match(regExp) ? true : false;
+		var result = value && value.length > 0 && value.match(regExp) ? true : false;
 		return result;
 	}
 	

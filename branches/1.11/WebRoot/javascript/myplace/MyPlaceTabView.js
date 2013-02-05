@@ -185,26 +185,18 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		var record = grid.getStore().getAt(rowIndex);
 		var ciId = record.id;
 		
-		// || record.data.tableId == AC.TABLE_ID_ROOM || record.data.tableId == AC.TABLE_ID_BUILDING
-		if(record.data.tableId == AC.TABLE_ID_APPLICATION) {
+		//
+		if(record.data.tableId == AC.TABLE_ID_APPLICATION || record.data.tableId == AC.TABLE_ID_ROOM || record.data.tableId == AC.TABLE_ID_BUILDING) {
 			AAM.setCiId(ciId);
 			AAM.setTableId(parseInt(record.data.tableId));//AC.TABLE_ID_APPLICATION
 		} else {
-//			selectedCIId = -1;
 			AAM.setCiId(-1);
 			AAM.setTableId(-1);
 			
-			ciId = -1;
+			ciId = -1;//damit Ci Detail-Menu ausgeblendet wird
 			
-//			if(Ext.isIE) {
-//				var windowTitle = labels.dynamicWindowCiTypeNotSupportedWarningTitle;
-//				var windowText = labels.dynamicWindowCiTypeNotSupportedWarningText;//languagestore.data.items[0].data['dynamicWindowCiTypeNotSupportedWarningText
-//				
-//				alert(windowTitle, windowText);//Fenster zerschossen bei IE. Grund unbekannt. Grund ist der HTML doctype!
-//			} else {
-				var ciTypeWarningWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CI_TYPE_NOT_SUPPORTED_WARNING');
-				ciTypeWarningWindow.show();
-//			}
+			var ciTypeWarningWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CI_TYPE_NOT_SUPPORTED_WARNING');
+			ciTypeWarningWindow.show();
 		}
 		
 		this.fireEvent('ciSelect', this, ciId, null, record);

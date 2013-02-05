@@ -315,28 +315,46 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //			this.getComponent('serviceContract').setValue('');
 //		}
 
-
-		//selectedPriorityLevelId = data.priorityLevelId;
-		if (data.priorityLevelId && data.priorityLevelId != 0) {
-			this.getComponent('priorityLevel').setValue(data.priorityLevelId);
+		
+		var cbPriorityLevel = this.getComponent('priorityLevel');
+		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION) {
+			cbPriorityLevel.setVisible(true);
+			
+			if (data.priorityLevelId && data.priorityLevelId != 0) {
+				cbPriorityLevel.setValue(data.priorityLevelId);
+			} else {
+				cbPriorityLevel.setValue('');
+			}
 		} else {
-			this.getComponent('priorityLevel').setValue('');
+			cbPriorityLevel.reset();
+			cbPriorityLevel.setVisible(false);
 		}
 		
 		
 
-		//selectedSeverityLevelId = data.severityLevelId;
-		if (data.severityLevelId && data.severityLevelId != 0) {
-			this.getComponent('severityLevel').setValue(data.severityLevelId);
-		} else {
-			this.getComponent('severityLevel').setValue('');
-		}
-		
-		
-		
-		
+		var cbSeverityLevel = this.getComponent('severityLevel');
 		var cbBusinessEssential = this.getComponent('businessEssential');
-		this.getComponent('businessEssential').setValue(data.businessEssentialId);
+		
+		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION ||
+		   parseInt(data.tableId) === AC.TABLE_ID_ROOM ||
+		   parseInt(data.tableId) === AC.TABLE_ID_POSITION) {
+			
+			cbSeverityLevel.setVisible(true);
+			cbBusinessEssential.setVisible(true);
+			
+			if (data.severityLevelId && data.severityLevelId != 0) {
+				cbSeverityLevel.setValue(data.severityLevelId);
+			} else {
+				cbSeverityLevel.setValue('');
+			}
+			
+			cbBusinessEssential.setValue(data.businessEssentialId);
+		} else {
+			cbSeverityLevel.reset();
+			cbBusinessEssential.reset();
+			cbSeverityLevel.setVisible(false);
+			cbBusinessEssential.setVisible(false);
+		}
 		
 		this.updateAccessMode(data);
 	},

@@ -286,7 +286,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			});
 		} else {
 			var labels = AAM.getLabels();
-			var message = labels.CiEinsprungCiIdInvalidMessage.replace('{0}', AAM.getCiId());
+			var message = labels.CiEinsprungCiIdInvalidMessage.replace('{0}', AAM.getCiId() || '');
 			this.openEinsprungDataWarnungWindow(message);
 		}
 	},

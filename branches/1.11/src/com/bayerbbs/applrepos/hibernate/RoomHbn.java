@@ -200,7 +200,7 @@ public class RoomHbn extends LokationItemHbn {
 							room.setRoomType(dto.getRoomType());
 						}
 						if (null != dto.getAreaId()) {
-							room.setAreaId(dto.getAreaId());
+							room.setBuildingAreaId(dto.getAreaId());
 						}
 						
 						// ================
@@ -419,7 +419,7 @@ public class RoomHbn extends LokationItemHbn {
 			room.setRoomAlias(null);
 			room.setRoomType(null);
 			room.setFloor(null);
-			room.setAreaId(null);
+			room.setBuildingAreaId(null);
 
 			room.setResponsible(null);
 			room.setSubResponsible(null);
@@ -558,7 +558,7 @@ public class RoomHbn extends LokationItemHbn {
 						room.setRoomAlias(dto.getAlias());
 						room.setFloor(dto.getFloor());
 						room.setRoomType(dto.getRoomType());
-						room.setAreaId(dto.getAreaId());
+						room.setBuildingAreaId(dto.getAreaId());
 						
 						if (null != dto.getCiOwnerHidden()) {
 							room.setResponsible(dto.getCiOwnerHidden());

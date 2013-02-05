@@ -1,10 +1,13 @@
 package com.bayerbbs.applrepos.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +25,8 @@ public class Building extends CiBase implements Serializable {
 	private String streetNumber;
 	private String postalCode;
 	private String location;
+	
+    private Set<BuildingArea> buildingAreas;
 	
 	
 //	@Transient
@@ -111,5 +116,14 @@ public class Building extends CiBase implements Serializable {
 	}
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "building")//, mappedBy = "building"
+	public Set<BuildingArea> getBuildingAreas() {
+		return buildingAreas;
+	}
+	public void setBuildingAreas(Set<BuildingArea> buildingAreas) {
+		this.buildingAreas = buildingAreas;
 	}
 }

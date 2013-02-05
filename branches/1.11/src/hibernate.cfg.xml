@@ -59,5 +59,6 @@
 		<mapping class="com.bayerbbs.applrepos.domain.CiLokationsKette" />
 		<mapping class="com.bayerbbs.applrepos.domain.Room" />
 		<mapping class="com.bayerbbs.applrepos.domain.Building" />
+		<mapping class="com.bayerbbs.applrepos.domain.BuildingArea" />
 	</session-factory>
 </hibernate-configuration>
