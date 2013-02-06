@@ -119,7 +119,6 @@ AIR.AirApplicationManager = function() {
 			
 			this.storeIds = {
 				aclStore: null,
-				dataClassListStore: { params: { params: { categoryBusinessId: 1 } } },//null, selectedCategoryBusinessId
 				currencyListStore: null,
 				licenseTypeListStore: null,
 				changeAccountListStore: null,
@@ -136,7 +135,8 @@ AIR.AirApplicationManager = function() {
 				lifecycleStatusListStore: null,
 				operationalStatusListStore: null,
 				categoryBusinessListStore: null,
-				
+				dataClassListStore: { params: { params: { categoryBusinessId: 1 } } },//null, selectedCategoryBusinessId
+
 				itSecGroupListStore: null,
 				referencesListStore: null,
 				itsecMassnahmenGapClassListStore: null,

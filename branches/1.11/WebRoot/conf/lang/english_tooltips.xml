@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LanguageItems>
 	<Items>
-
+		<contactsPanelTitle>Details</contactsPanelTitle>
+		<insertData>Insert source, user, date</insertData>
+		<insertDataText>CI insertion data: the source system, the user and the date</insertDataText>
+		
+		<updateData>Insert source, user, date</updateData>
+		<updateDataText>CI update data: the source system, the user and the date</updateDataText>
+		
 		<specificsPanelTitle>Specifics</specificsPanelTitle>
 		<applicationName>Application Name</applicationName>
 		<applicationNameText>
@@ -68,8 +74,8 @@
 			&lt;li&gt;Sandbox: CI is used in a test with the customer’s involvement.
 			&lt;li&gt;Test: CI is used in a test without the customer’s
 			involvement.
-			&lt;/ul&gt; </operationalStatusText>
-
+			&lt;/ul&gt;
+		</operationalStatusText>
 		<comments>Description</comments>
 		<commentsText>
 			The description / purpose is what the application is supposed to do in Bayer
@@ -90,10 +96,8 @@
 			regarding the selected business category
 		</businessProcessText>
 		
-		
 
 		<contactsPanelTitle>Contacts</contactsPanelTitle>
-		
 		<applicationOwner>Primary Person</applicationOwner>
 		<applicationOwnerText>
 			Person who is responsible for the application from the business side and responsible for the strategic attributes.
@@ -273,7 +277,8 @@
 			&lt;li&gt;Public
 			&lt;li&gt;Protected
 			&lt;li&gt;Strictly Protected
-			&lt;/ul&gt; </itSecSbAppProtectionText>
+			&lt;/ul&gt;
+		</itSecSbAppProtectionText>
 
 		<itSecSbAvailabilityId>Availability</itSecSbAvailabilityId>
 		<itSecSbAvailabilityIdText>
@@ -437,8 +442,7 @@
 		</changeAccountText>
 
 		<applicationUsingRegions>Using Regions</applicationUsingRegions>
-		<applicationUsingRegionsText>Using Regions
-		</applicationUsingRegionsText>
+		<applicationUsingRegionsText>Using Regions</applicationUsingRegionsText>
 
 
 		<supportStuffPanelTitle>Support Stuff</supportStuffPanelTitle>

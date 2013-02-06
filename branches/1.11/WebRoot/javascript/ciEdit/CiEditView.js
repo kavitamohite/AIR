@@ -726,8 +726,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	updateToolTips: function(toolTips) {
 		var ciEditTabView = this.getComponent('ciEditTabView');
 		
-//		var ciDetailsView = this.getComponent('clCiDetails');
-//		ciDetailsView.updateToolTips(toolTips);
+		var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
+		ciDetailsView.updateToolTips(toolTips);
 		
 		var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');

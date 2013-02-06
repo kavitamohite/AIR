@@ -76,7 +76,6 @@ public class ClassDataHbn {
 	
 	@SuppressWarnings("unchecked")
 	public static List<ClassDataDTO> findClassDataByCategoryBusiness(Long categoryBusinessId) {
-
 		List<ClassDataDTO> listResult = new ArrayList<ClassDataDTO>();
 		
 		if (null != categoryBusinessId) {
@@ -85,7 +84,7 @@ public class ClassDataHbn {
 			try {
 				tx = session.beginTransaction();
 				List<ClassData> values = session.createQuery(
-						"select h from ClassData as h where h.deleteTimestamp is null and h.categoryBusinessId = " + categoryBusinessId + " order by h.classDataName").list();
+						"select h from ClassData as h where h.categoryBusinessId = " + categoryBusinessId + " order by h.classDataName").list();//h.deleteTimestamp is null and 
 				
 				listResult = getDTOList(values);
 				

@@ -1373,6 +1373,12 @@ AIR.AirStoreFactory = function() {
 			    record: 'Items',
 			    
 			    fields: [
+			        //details
+			        {name: 'insertData'},
+			        {name: 'insertDataText'},
+			        {name: 'updateData'},
+			        {name: 'updateDataText'},
+			        
 			        //specifics
 			        {name: 'applicationName'},
 			        {name: 'applicationNameText'},

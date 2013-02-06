@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LanguageItems>
 	<Items>
+		<contactsPanelTitle>Details</contactsPanelTitle>
+		<insertData>Insert source, user, date</insertData>
+		<insertDataText>CI insertion data: the source system, the user and the date</insertDataText>
+				
+		<updateData>Insert source, user, date</updateData>
+		<updateDataText>CI update data: the source system, the user and the date</updateDataText>
+		
 		<specificsPanelTitle>Specifics</specificsPanelTitle>
 		<applicationName>Application Name</applicationName>
 		<applicationNameText>
@@ -69,7 +76,6 @@
 			involvement.
 			&lt;/ul&gt;
 		</operationalStatusText>
-
 		<comments>Description</comments>
 		<commentsText>
 			The description / purpose is what the application is supposed to do in Bayer
@@ -89,12 +95,9 @@
 			Categorization of standard data classes to match the data wich is  processed  in the business process 
 			regarding the selected business category
 		</businessProcessText>
-		
-		
-		
+
 
 		<contactsPanelTitle>Contacts</contactsPanelTitle>
-		
 		<applicationOwner>Primary Person</applicationOwner>
 		<applicationOwnerText>
 			Person who is responsible for the application from the business side and responsible for the strategic attributes.
@@ -110,6 +113,7 @@
 			Person or group delegated ("Substitute") by the Application Owner.
 		</applicationOwnerDelegateText>
 		
+		
 		<ciResponsible>Primary Person</ciResponsible>
 		<ciResponsibleText>
 			Person who is responsible for the application from the operational side and responsible for the operational attributes.
@@ -119,6 +123,7 @@
 		<ciSubResponsibleText>
 			Person or group delegated ("Substitute") by the Application Manager.
 		</ciSubResponsibleText>
+
 
 		<gpsccontactCiOwner>CI Owner</gpsccontactCiOwner>
 		<gpsccontactCiOwnerText>

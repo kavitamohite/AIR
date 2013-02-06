@@ -781,8 +781,7 @@ public class ApplicationWS {
 				}
 				else if (ApplreposConstants.APPLICATION_CAT1_COMMON_SERVICE.longValue() == applCat1Id ||
 						 ApplreposConstants.APPLICATION_CAT1_COMMON_MIDDLEWARE.longValue() == applCat1Id ||
-						 ApplreposConstants.APPLICATION_CAT1_COMMON_APPLICATIONPLATFORM.longValue() == applCat1Id)
-						 {
+						 ApplreposConstants.APPLICATION_CAT1_COMMON_APPLICATIONPLATFORM.longValue() == applCat1Id) {
 
 					if (ApplreposConstants.NO_SHORT.equals(accessDTO.getRelevanceOperational())) {
 						// Abfrage Infrastructure Manager
@@ -884,9 +883,6 @@ public class ApplicationWS {
 				// ================
 				readAndFillCiStuff(dto, application);
 				
-				// compliance request
-				// ==================
-				
 				// compliance
 				Long releItsec = dto.getRelevanzItsec();
 				Long releICS = dto.getRelevanceICS();
@@ -923,8 +919,7 @@ public class ApplicationWS {
 				// licenseUsingRegions
 				// ===================
 				StringBuffer licenseUsingRegions = new StringBuffer();
-				List<ApplicationRegion> listApplicationRegion = ApplicationRegionHbn
-						.findCurrentApplicationRegion(detailInput.getId());
+				List<ApplicationRegion> listApplicationRegion = ApplicationRegionHbn.findCurrentApplicationRegion(detailInput.getId());
 
 				if (null != listApplicationRegion && !listApplicationRegion.isEmpty()) {
 					for (ApplicationRegion applRegion : listApplicationRegion) {
@@ -936,14 +931,12 @@ public class ApplicationWS {
 				}
 
 				dto.setLicenseUsingRegions(licenseUsingRegions.toString());
-
 			}
 
 			// the attribute business essential is only editable for users
 			// with the role "BusinessEssential-Editor"
 			// so we have to check it here
-			String count = ApplReposHbn.getCountFromRoleNameAndCwid(ApplreposConstants.ROLE_BUSINESS_ESSENTIAL_EDITOR,
-					detailInput.getCwid());
+			String count = ApplReposHbn.getCountFromRoleNameAndCwid(ApplreposConstants.ROLE_BUSINESS_ESSENTIAL_EDITOR, detailInput.getCwid());
 			if (null != count && !"0".equals(count)) {
 				accessDTO.setBusiness_Essential_Id(ApplreposConstants.YES_SHORT);
 				// if we can edit the business essential, we can edit the ci
@@ -951,7 +944,6 @@ public class ApplicationWS {
 			} else {
 				accessDTO.setBusiness_Essential_Id(ApplreposConstants.NO_SHORT);
 			}
-
 		} // end of if valid session
 
 		output.setApplicationDTO(dto);

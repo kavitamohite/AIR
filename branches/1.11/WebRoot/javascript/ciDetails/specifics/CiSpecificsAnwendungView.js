@@ -241,7 +241,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	    	        lazyInit: false,
 	    	        mode: 'local'
 				},{
-	    			xtype: 'combo',
+	    			xtype: 'filterCombo',//combo
 	    	        id: 'cbDataClass',
 	    	        
 	    	        store: AIR.AirStoreManager.getStoreByName('dataClassListStore'),//dataClassListStore,//dataClassListStore operationalStatusListStore,
@@ -521,24 +521,26 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
     
 	onApplicationBusinessCatSelect: function(combo, record, index) {
 		this.ownerCt.fireEvent('ciChange', this, combo, record);//this
-            
+        
+		
         if(record) {
-        	var data = {
-    			categoryBusinessId: record.data.id
-        	};
-        	
-            this.getComponent('specificsCategory').getComponent('cbDataClass').store.load({
-            	params: data
-            });
+//        	var data = {
+//    			categoryBusinessId: record.data.id
+//        	};
+//        	
+//            this.getComponent('specificsCategory').getComponent('cbDataClass').store.load({
+//            	params: data
+//            });
             
-            this.getComponent('specificsCategory').getComponent('cbDataClass').setValue('');
+            var cbDataClass = this.getComponent('specificsCategory').getComponent('cbDataClass');
+            cbDataClass.setValue('');
             
 
             var appDetail = AIR.AirApplicationManager.getAppDetail();
-            if (AIR.AirAclManager.isRelevance(this.getComponent('specificsCategory').getComponent('cbDataClass'), appDetail)) {
-            	Util.enableCombo(this.getComponent('specificsCategory').getComponent('cbDataClass'));
+            if (AIR.AirAclManager.isRelevance(cbDataClass, appDetail)) {
+            	Util.enableCombo(cbDataClass);
 			} else {
-				Util.disableCombo(this.getComponent('specificsCategory').getComponent('cbDataClass'));
+				Util.disableCombo(cbDataClass);
 			}
         }
         else {

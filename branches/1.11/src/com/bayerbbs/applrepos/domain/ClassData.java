@@ -14,32 +14,13 @@ import org.hibernate.annotations.Immutable;
 @Entity
 @Table(name = "V_MD_CLASS_DATA")
 public class ClassData implements Serializable {
-
 	private static final long serialVersionUID = -2102335301485680999L;
 
 	private Long classDataId;
 	private String classDataName;
 	private Long categoryBusinessId;
 	
-	// ------------------------------------------------------
-	// -
-	// ------------------------------------------------------
 
-	/**
-	 * Creates a new instance.
-	 */
-	public ClassData() {
-	}
-
-	// ------------------------------------------------------
-	// hibernate get / set
-	// ------------------------------------------------------
-
-	/**
-	 * Returns the value of the field {@link #id}.
-	 * 
-	 * @return Value of the {@link #id} field.
-	 */
 	@Transient
 	public Long getId() {
 		return getClassDataId();
@@ -70,5 +51,4 @@ public class ClassData implements Serializable {
 	public void setCategoryBusinessId(Long categoryBusinessId) {
 		this.categoryBusinessId = categoryBusinessId;
 	}
-
 }
