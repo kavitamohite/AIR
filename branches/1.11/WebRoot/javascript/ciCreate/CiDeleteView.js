@@ -112,8 +112,8 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 	onRowClick: function(grid, rowIndex, e) {
 		var record = grid.getStore().getAt(rowIndex);
 		this.selectedCiIndex = rowIndex;
-		this.ciId = record.data.applicationId;
-		this.applicationName = record.data.applicationName;
+		this.ciId = record.data.id;
+		this.applicationName = record.data.name;
 		this.applicationCat1Txt = record.data.applicationCat1Txt;
 		
 //		var bDelete = this.getComponent('bDelete');//this.getComponent('pDeleteCiSearch').getComponent('bDelete');

@@ -108,6 +108,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 	
 	onFinish: function(button, event) {
 		var params = {
+			id: 0,
 			cwid: AIR.AirApplicationManager.getCwid(),
 			token: AIR.AirApplicationManager.getToken()
 		};
@@ -123,15 +124,15 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		var errorData = [];
 		
 		if(this.isSAPApplication()) {
-			if(params.applicationName.match(AC.REGEX_SAP_NAME) == null) {
+			if(params.name.match(AC.REGEX_SAP_NAME) == null) {
 				var sapNameLabel = labels.wizardapplicationNameSAP + ' (' + labels.wizardapplicationNameSAP1 + ', ' + labels.wizardapplicationNameSAP2 + ', ' + labels.wizardapplicationNameSAP3 + ')';
 				errorData.push(sapNameLabel);
 //				errorData.push(labels.wizardapplicationName);
 			}
 		} else {
-			if(params.applicationName.length === 0)
+			if(params.name.length === 0)
 				errorData.push(labels.wizardapplicationName);
-			else if(params.applicationName.match(AC.REGEX_SAP_NAME) != null) {
+			else if(params.name.match(AC.REGEX_SAP_NAME) != null) {
 				errorData.push(labels.wizardapplicationNameSAPillegal.replace('{0}', this.getComponent('ciCreateWizardP1').getComponent('cbAppCat1W').getRawValue()).replace('{1}', this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getRawValue()));
 			}
 		}
@@ -161,7 +162,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 			
 			this.objectNameAllowedStore.isLoaded = false;
 			this.objectNameAllowedStore.load({
-				params: { query: params.applicationName }
+				params: { query: params.name }
 //				callback: function(store, records, options) {
 //					store.isLoaded = true;
 //					
@@ -172,7 +173,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 			
 			this.objectAliasAllowedStore.isLoaded = false;
 			this.objectAliasAllowedStore.load({
-				params: { query: params.applicationAlias }
+				params: { query: params.alias }//applicationAlias
 //				callback: function(store, records, options) {
 //					store.isLoaded = true;
 //					

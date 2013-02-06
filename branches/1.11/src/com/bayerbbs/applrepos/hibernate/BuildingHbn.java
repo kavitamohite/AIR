@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.domain.Building;
+import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 
 public class BuildingHbn extends LokationItemHbn {
@@ -44,8 +45,41 @@ public class BuildingHbn extends LokationItemHbn {
 		return building;
 	}
 	
+	public static BuildingArea findBuildingAreaById(Long id) {
+		BuildingArea buildingArea = null;
+		Transaction tx = null;
+		Session session = HibernateUtil.getSession();
+		
+		try {
+			tx = session.beginTransaction();
+			List<BuildingArea> list = session.createQuery("select ba from BuildingArea as ba where ba.areaId=" + id).list();
+
+			if (null != list && 0 < list.size()) {
+				buildingArea = (BuildingArea) list.get(0);
+			}
+
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null && tx.isActive()) {
+				try {
+					// Second try catch as the rollback could fail as well
+					tx.rollback();
+				} catch (HibernateException e1) {
+					log.error(e1.getMessage());
+				}
+				// throw again the first exception
+				throw e;
+			}
+
+		}
+		return buildingArea;
+	}
+	
 	public static CiLokationsKette findLokationsKetteById(Long ciId) {
 		return findLokationsKetteByCiTypeAndCiId(LokationItemHbn.GEBAEUDE_TYPE_LOCATION, ciId);
+	}
+	public static CiLokationsKette findLokationsKetteByAreaId(Long ciId) {
+		return findLokationsKetteByCiTypeAndCiId(LokationItemHbn.BUILDING_AREA_TYPE_LOCATION, ciId);
 	}
 
 }

@@ -17,6 +17,7 @@ public class LokationItemHbn {
 	static final String STANDORT_TYPE_LOCATION = "standortId";
 	static final String TERRAIN_TYPE_LOCATION = "terrainId";
 	static final String GEBAEUDE_TYPE_LOCATION = "gebaeudeId";
+	static final String BUILDING_AREA_TYPE_LOCATION = "areaId";
 	static final String AREA_TYPE_LOCATION = "areaId";
 	static final String SCHRANK_TYPE_LOCATION = "schrankId";
 	

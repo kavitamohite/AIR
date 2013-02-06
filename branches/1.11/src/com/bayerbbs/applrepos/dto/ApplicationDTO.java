@@ -45,6 +45,12 @@ public class ApplicationDTO extends CiBaseDTO {
 //	private String responsibleHidden;
 //	private String subResponsible;
 //	private String subResponsibleHidden;
+	
+//	private String ciOwner;//responsible
+//	private String ciOwnerHidden;//responsibleHidden
+//
+//	private String ciOwnerDelegate;//subResponsible
+//	private String ciOwnerDelegateHidden;//subResponsibleHidden
 
 	private Long itset;
 	private String itsetName;
@@ -246,6 +252,38 @@ public class ApplicationDTO extends CiBaseDTO {
 //	public void setSubResponsible(String subResponsible) {
 //		this.subResponsible = subResponsible;
 //	}
+	
+//	public String getCiOwner() {
+//		return ciOwner;
+//	}
+//	public void setCiOwner(String ciOwner) {
+//		this.ciOwner = ciOwner;
+//	}
+//
+//
+//	public String getCiOwnerDelegate() {
+//		return ciOwnerDelegate;
+//	}
+//	public void setCiOwnerDelegate(String ciOwnerDelegate) {
+//		this.ciOwnerDelegate = ciOwnerDelegate;
+//	}
+//	
+//	public String getCiOwnerHidden() {
+//		return ciOwnerHidden;
+//	}
+//	public void setCiOwnerHidden(String ciOwnerHidden) {
+//		this.ciOwnerHidden = ciOwnerHidden;
+//	}
+//
+//
+//	public String getCiOwnerDelegateHidden() {
+//		return ciOwnerDelegateHidden;
+//	}
+//	public void setCiOwnerDelegateHidden(String ciOwnerDelegateHidden) {
+//		this.ciOwnerDelegateHidden = ciOwnerDelegateHidden;
+//	}
+	
+	
 
 	public Long getApplicationCat2Id() {
 		return applicationCat2Id;

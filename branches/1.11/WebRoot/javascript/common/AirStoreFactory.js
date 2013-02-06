@@ -2118,11 +2118,11 @@ AIR.AirStoreFactory = function() {
 				name: 'barApplicationId',
 				mapping: 'applicationDTO > barApplicationId'
 			}, {
-				name: 'applicationName',
-				mapping: 'applicationDTO > applicationName'
+				name: 'name',
+				mapping: 'applicationDTO > name'
 			}, {
-				name: 'applicationAlias',
-				mapping: 'applicationDTO > applicationAlias'
+				name: 'alias',
+				mapping: 'applicationDTO > alias'
 			}, {
 				name: 'itsecGroupId',
 				mapping: 'applicationDTO > itsecGroupId'
@@ -2153,10 +2153,10 @@ AIR.AirStoreFactory = function() {
 					reader: applicationDetailReader
 				}),
 				
-				fields: [ 
-					'applicationDTO', 'applicationId', 'applicationName', 'applicationAlias', 'applicationCat1Id',
-					'applicationCat1Txt', 'applicationCat2', 'applicationCat2Txt', 'isEditable'
-				],
+//				fields: [ 
+//					'applicationDTO', 'applicationId', 'applicationName', 'applicationAlias', 'applicationCat1Id',
+//					'applicationCat1Txt', 'applicationCat2', 'applicationCat2Txt', 'isEditable'
+//				],
 
 				reader: applicationReader
 			});
@@ -2178,13 +2178,19 @@ AIR.AirStoreFactory = function() {
 				case AC.TABLE_ID_BUILDING:
 					ciDetailStore = this.createGebaeudeDetailStore();
 					break;
+				case AC.TABLE_ID_BUILDING_AREA:
+					ciDetailStore = this.createBuildingAreaDetailStore();
+					break;
+				case AC.TABLE_ID_POSITION:
+					ciDetailStore = this.createSchrankDetailStore();
+					break;
 				default: break;
 			}
 			
 			return ciDetailStore;
 		},
 		
-		//SIEHE CiDetailsCommon:
+
 		createGebaeudeDetailStore: function() {
 			var gebaeudeRecord = AIR.AirConfigFactory.createBuildingCiRecord();//new AIR.CiLocationRecord();
 
@@ -2208,43 +2214,32 @@ AIR.AirStoreFactory = function() {
 			return ciDetailStore;
 		},
 		
+		createBuildingAreaDetailStore: function() {
+			var ciDetailRecord = AIR.AirConfigFactory.createBuildingAreaCiRecord();//new AIR.CiLocationRecord();
+
+			var ciDetailReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, ciDetailRecord);
+
+			var ciDetailStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'ciBuildingAreaStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getBuildingArea',
+					timeout: 120000,
+					reader: ciDetailReader
+				})
+			});
+			
+			return ciDetailStore;
+		},
+		
 		createRoomDetailStore: function() {
-			var ciDetailRecord = Ext.data.Record.create([{
-				name: 'id', type: 'int'
-			},{
-				name: 'tableId', type: 'int'
-			},{
-				name: 'areaId', type: 'int'
-			}, 'name', 'alias', 'ciOwner', 'ciOwnerDelegate', 'insertQuelle', 'insertTimestamp', 'insertUser', 'updateQuelle', 'updateTimestamp', 'updateUser', 'slaId', 'businessEssentialId', 'floor', 'roomType',
-				'hasMarkedDeletedItems',{
-				name: 'standordLoeschung', type: 'int'
-			},{
-				name: 'terrainLoeschung', type: 'int'
-			},{
-				name: 'gebaeudeLoeschung', type: 'int'
-			},{
-				name: 'aereaLoeschung', type: 'int'
-			},{
-				name: 'raumLoeschung', type: 'int'
-			},{
-				name: 'schrankLoeschung', type: 'int'
-			},{
-				name: 'landId', type: 'int'
-			}, 'landName', 'landNameEn', 'landKennzeichen',{
-				name: 'standortId', type: 'int'
-			}, 'standortName', 'standortCode',{
-				name: 'terrainId', type: 'int'
-			},'terrainName',{
-				name: 'gebaeudeId', type: 'int'
-			},'gebaeudeName',{
-				name: 'areaId', type: 'int'
-			},'areaName',{
-				name: 'raumId', type: 'int'
-			},'raumName',{
-				name: 'schrankId', type: 'int'
-			},'schrankName']);
-				
-				
+			var ciDetailRecord = AIR.AirConfigFactory.createRoomCiRecord();
+			
 			var ciDetailReader = new Ext.data.XmlReader({
 				record: 'return'//return room
 			}, ciDetailRecord);
@@ -2257,6 +2252,29 @@ AIR.AirStoreFactory = function() {
 				proxy: new Ext.ux.soap.SoapProxy({
 					url: webcontext + '/CiEntityWSPort',
 					loadMethod: 'getRoom',
+					timeout: 120000,
+					reader: ciDetailReader
+				})
+			});
+			
+			return ciDetailStore;
+		},
+		
+		createSchrankDetailStore: function() {
+			var ciDetailRecord = AIR.AirConfigFactory.createBuildingAreaCiRecord();//new AIR.CiLocationRecord();
+
+			var ciDetailReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, ciDetailRecord);
+
+			var ciDetailStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'ciSchrankStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getSchrank',
 					timeout: 120000,
 					reader: ciDetailReader
 				})
@@ -2327,16 +2345,16 @@ AIR.AirStoreFactory = function() {
 				name : 'operationalStatusTxt',
 				mapping : 'applicationDTO > operationalStatusTxt'
 			}, {
-				name : 'ciResponsible',
+				name : 'ciOwner',//ciResponsible ciOwner
 				mapping : 'applicationDTO > ciOwner'//responsible
 			}, {
-				name : 'ciResponsibleHidden',
+				name : 'ciOwnerHidden',//ciResponsibleHidden ciOwnerHidden
 				mapping : 'applicationDTO > ciOwnerHidden'//responsibleHidden
 			}, {
-				name : 'ciSubResponsible',
+				name : 'ciOwnerDelegate',//ciSubResponsible ciOwnerDelegate
 				mapping : 'applicationDTO > ciOwnerDelegate'//subResponsible
 			}, {
-				name : 'ciSubResponsibleHidden',
+				name : 'ciOwnerDelegateHidden',//ciSubResponsibleHidden ciOwnerDelegateHidden
 				mapping : 'applicationDTO > ciOwnerDelegateHidden'//subResponsibleHidden
 			}, {
 				name : 'applicationOwner',
@@ -2679,10 +2697,10 @@ AIR.AirStoreFactory = function() {
 					reader: applicationDetailReader
 				}),
 				
-				fields: [ 
-					'applicationDTO', 'applicationId', 'applicationName', 'applicationAlias', 'applicationCat1Id',
-					'applicationCat1Txt', 'applicationCat2', 'applicationCat2Txt', 'isEditable'
-				],
+//				fields: [ 
+//					'applicationDTO', 'applicationId', 'applicationName', 'applicationAlias', 'applicationCat1Id',
+//					'applicationCat1Txt', 'applicationCat2', 'applicationCat2Txt', 'isEditable'
+//				],
 
 				reader: applicationDetailReader
 			});

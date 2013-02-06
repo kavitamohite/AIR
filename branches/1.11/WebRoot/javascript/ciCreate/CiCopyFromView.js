@@ -204,8 +204,8 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 	
 	onRowClick: function(grid, rowIndex, e) {
 		var record = grid.getStore().getAt(rowIndex);
-		this.ciId = record.data.applicationId;
-		this.applicationName = record.data.applicationName;
+		this.ciId = record.data.id;//applicationId
+		this.applicationName = record.data.name;
 		this.applicationCat1 = record.data.applicationCat1Txt;
 		this.applicationCat2 = record.data.applicationCat2Txt;
 		
@@ -300,8 +300,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 		
 		switch(records[0].data.result) {
 			case 'OK':
-//				selectedCIId = records[0].data.applicationId;
-				AIR.AirApplicationManager.setCiId(records[0].data.applicationId);
+				AIR.AirApplicationManager.setCiId(records[0].data.applicationId);//applicationId!! id
 				AIR.AirApplicationManager.setTableId(AC.TABLE_ID_APPLICATION);
 				
 				var data = {

@@ -5,9 +5,11 @@ import java.util.List;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.domain.Building;
+import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Room;
+import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
@@ -70,13 +72,36 @@ public class CiEntityWS {
 			Building building = BuildingHbn.findById(detailInput.getCiId());
 			CiLokationsKette lokationsKette = BuildingHbn.findLokationsKetteById(detailInput.getCiId());
 			
+			//wenn noch alle Räume aller BuildingAreas irgendwie auf die GUI sollen
 //			Set<BuildingArea> buildingAreas = building.getBuildingAreas();
+			
+			buildingDTO.setStreet(building.getStreet());
+			buildingDTO.setStreetNumber(building.getStreetNumber());
+			buildingDTO.setPostalCode(building.getPostalCode());
+			buildingDTO.setLocation(building.getLocation());
 			
 			setCiBaseData(buildingDTO, building);
 			buildingDTO.setCiLokationsKette(lokationsKette);
 		}
 
 		return buildingDTO;
+	}
+	
+	public BuildingAreaDTO getBuildingArea(CiDetailParameterInput detailInput) {
+		BuildingAreaDTO buildingAreaDTO = new BuildingAreaDTO();
+
+		if(LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
+			BuildingArea buildingArea = BuildingHbn.findBuildingAreaById(detailInput.getCiId());
+			CiLokationsKette lokationsKette = BuildingHbn.findLokationsKetteByAreaId(detailInput.getCiId());
+			
+			//wenn noch alle Räume aller BuildingAreas irgendwie auf die GUI sollen
+//			Set<Room> rooms = buildingArea.getRooms();
+			
+			setCiBaseData(buildingAreaDTO, buildingArea);
+			buildingAreaDTO.setCiLokationsKette(lokationsKette);
+		}
+
+		return buildingAreaDTO;
 	}
 	
 	
@@ -87,9 +112,10 @@ public class CiEntityWS {
 		if(LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
 			Room room = RoomHbn.findById(detailInput.getCiId());
 			CiLokationsKette lokationsKette = RoomHbn.findLokationsKetteById(detailInput.getCiId());
+			Building building = room.getBuildingArea().getBuilding();
+
 
 			setCiBaseData(roomDTO, room);
-			
 			roomDTO.setSeverityLevelId(room.getSeverityLevelId());
 			roomDTO.setBusinessEssentialId(room.getBusinessEssentialId());
 			roomDTO.setRoomType(room.getRoomType());
@@ -97,6 +123,11 @@ public class CiEntityWS {
 			roomDTO.setAreaId(room.getBuildingAreaId());
 			
 			roomDTO.setCiLokationsKette(lokationsKette);
+			
+			roomDTO.setStreet(building.getStreet());
+			roomDTO.setStreetNumber(building.getStreetNumber());
+			roomDTO.setPostalCode(building.getPostalCode());
+			roomDTO.setLocation(building.getLocation());
 		}
 		
 //		output.setCiDetailDTO(roomDTO);//setRoomDTO setCiDetailDTO

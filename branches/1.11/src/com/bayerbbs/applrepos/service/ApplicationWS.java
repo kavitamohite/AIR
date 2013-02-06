@@ -270,16 +270,15 @@ public class ApplicationWS {
 	}
 
 	public ApplicationEditParameterOutput createApplication(ApplicationEditParameterInput editInput) {
-
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
 		if (null != editInput) {
 			ApplicationDTO dto = getApplicationDTOFromEditInput(editInput);
-
+			
 			// create Application - fill attributes
-			if (null == dto.getCiOwner()) {//getResponsible
-				dto.setCiOwner(editInput.getCwid().toUpperCase());
-				dto.setCiOwnerHidden(editInput.getCwid().toUpperCase());
+			if (null == dto.getCiOwner() || dto.getCiOwner().length() == 0) {//getResponsible
+				dto.setCiOwner(editInput.getCwid().toUpperCase());//oder dto.getApplicationOwner() ?
+				dto.setCiOwnerHidden(editInput.getCwid().toUpperCase());//oder dto.getApplicationOwnerHidden() ?
 			}
 			if (null == dto.getBusinessEssentialId()) {
 				dto.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
@@ -385,11 +384,11 @@ public class ApplicationWS {
 //		dto.setClusterType(editInput.getClusterType());
 
 		// contacts
-		dto.setCiOwner(editInput.getResponsible());//setResponsible
-		dto.setCiOwnerDelegate(editInput.getSubResponsible());//setSubResponsible
+		dto.setCiOwner(editInput.getCiOwner());//setResponsible
+		dto.setCiOwnerDelegate(editInput.getCiOwnerDelegate());//setSubResponsible
 
-		dto.setCiOwnerHidden(editInput.getResponsibleHidden());
-		dto.setCiOwnerDelegateHidden(editInput.getSubResponsibleHidden());
+		dto.setCiOwnerHidden(editInput.getCiOwnerHidden());
+		dto.setCiOwnerDelegateHidden(editInput.getCiOwnerDelegateHidden());
 
 		dto.setApplicationOwner(editInput.getApplicationOwner());
 		dto.setApplicationSteward(editInput.getApplicationSteward());
@@ -601,25 +600,20 @@ public class ApplicationWS {
 	
 	public ApplicationEditParameterOutput createApplicationByCopy(ApplicationCopyParameterInput copyInput) {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
-
 		ApplicationDTO dto = new ApplicationDTO();
 		
 		output.setResult(ApplreposConstants.RESULT_ERROR);
 		
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
-
 			// TODO check tableId !!! (app only)
 			
 			Application applicationSource = AnwendungHbn.findApplicationById(copyInput.getCiIdSource());
 
 			if (null != applicationSource) {
-				// create Application - fill attributes
-				
 				dto.setId(new Long(0));
 				dto.setName(copyInput.getCiNameTarget());
 				dto.setAlias(copyInput.getCiAliasTarget());
 				
-
 				if (null == dto.getBusinessEssentialId()) {
 					dto.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
 				}

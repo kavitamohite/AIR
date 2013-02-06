@@ -408,10 +408,10 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 				var fieldValue = this.getComponent('pSapNameW').getComponent('tfSapName1W').getValue().trim()
 								+ 'M' + this.getComponent('pSapNameW').getComponent('tfSapName2W').getValue()
 								+ 'C' + this.getComponent('pSapNameW').getComponent('tfSapName3W').getValue();
-				params.applicationName = fieldValue;
+				params.name = fieldValue;
 			} else {
 				var field = this.getComponent('tfCiNameW');
-				params.applicationName = field.getValue().trim();
+				params.name = field.getValue().trim();
 			}
 			
 			if(this.getComponent('rgBARrelevanceW').getValue())

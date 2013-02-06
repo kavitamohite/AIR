@@ -30,11 +30,11 @@ public class ApplicationEditParameterInput {
 	private String organisationalScope;
 
 	// contacts
-	private String responsible;
-	private String responsibleHidden;
+	private String ciOwner;//responsible
+	private String ciOwnerHidden;//responsibleHidden
 
-	private String subResponsible;
-	private String subResponsibleHidden;
+	private String ciOwnerDelegate;//subResponsible
+	private String ciOwnerDelegateHidden;//subResponsibleHidden
 	
 	// owner
 	private String applicationOwner;
@@ -266,23 +266,35 @@ public class ApplicationEditParameterInput {
 	}
 
 
-	public String getResponsible() {
-		return responsible;
+	public String getCiOwner() {
+		return ciOwner;
+	}
+	public void setCiOwner(String ciOwner) {
+		this.ciOwner = ciOwner;
 	}
 
 
-	public void setResponsible(String responsible) {
-		this.responsible = responsible;
+	public String getCiOwnerDelegate() {
+		return ciOwnerDelegate;
+	}
+	public void setCiOwnerDelegate(String ciOwnerDelegate) {
+		this.ciOwnerDelegate = ciOwnerDelegate;
+	}
+	
+	
+	public String getCiOwnerHidden() {
+		return ciOwnerHidden;
+	}
+	public void setCiOwnerHidden(String ciOwnerHidden) {
+		this.ciOwnerHidden = ciOwnerHidden;
 	}
 
 
-	public String getSubResponsible() {
-		return subResponsible;
+	public String getCiOwnerDelegateHidden() {
+		return ciOwnerDelegateHidden;
 	}
-
-
-	public void setSubResponsible(String subResponsible) {
-		this.subResponsible = subResponsible;
+	public void setCiOwnerDelegateHidden(String ciOwnerDelegateHidden) {
+		this.ciOwnerDelegateHidden = ciOwnerDelegateHidden;
 	}
 
 
@@ -667,26 +679,6 @@ public class ApplicationEditParameterInput {
 
 	public void setSeverityLevel(Long severityLevel) {
 		this.severityLevel = severityLevel;
-	}
-
-
-	public String getResponsibleHidden() {
-		return responsibleHidden;
-	}
-
-
-	public void setResponsibleHidden(String responsibleHidden) {
-		this.responsibleHidden = responsibleHidden;
-	}
-
-
-	public String getSubResponsibleHidden() {
-		return subResponsibleHidden;
-	}
-
-
-	public void setSubResponsibleHidden(String subResponsibleHidden) {
-		this.subResponsibleHidden = subResponsibleHidden;
 	}
 
 

@@ -1093,17 +1093,17 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 		field = this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsibleHidden');
 		if (!field.disabled) {
-			data.responsible = field.getValue();
-			data.responsibleHidden = field.getValue();
+			data.ciOwner = field.getValue();
+			data.ciOwnerHidden = field.getValue();
 		}
 
 
 		field = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsibleHidden');
 		if (!field.disabled) {
-			data.subResponsibleHidden = field.getValue();
+			data.ciOwnerDelegateHidden = field.getValue();
 			// Sonderfall ciSubResponsible benötigt den Gruppennamen!
 			field = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible');
-			data.subResponsible = field.getValue();
+			data.ciOwnerDelegate = field.getValue();
 		}
 		
 		

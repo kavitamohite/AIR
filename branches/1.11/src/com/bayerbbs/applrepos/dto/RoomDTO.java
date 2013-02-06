@@ -10,6 +10,11 @@ public class RoomDTO extends LocationDTO implements Serializable {
 	
 	private Long severityLevelId;
 	private Long businessEssentialId;
+	
+	private String street;
+	private String streetNumber;
+	private String postalCode;
+	private String location;
 
 
 	public String getFloor() {
@@ -40,5 +45,37 @@ public class RoomDTO extends LocationDTO implements Serializable {
 
 	public void setBusinessEssentialId(Long businessEssentialId) {
 		this.businessEssentialId = businessEssentialId;
+	}
+	
+	
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	
+	public String getStreetNumber() {
+		return streetNumber;
+	}
+	public void setStreetNumber(String streetNumber) {
+		this.streetNumber = streetNumber;
+	}
+
+	
+	public String getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

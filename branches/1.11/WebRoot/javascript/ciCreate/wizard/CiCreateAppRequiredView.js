@@ -403,12 +403,12 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 	
 	
 	setData: function(params) {
-		params.applicationAlias = this.getComponent('tfApplicationAliasW').getValue();
+		params.alias = this.getComponent('tfApplicationAliasW').getValue();//applicationAlias
 		params.businessProcessHidden = this.getComponent('pBusinessW').getComponent('taBusinessProcessWHidden').getValue();
 		
 		
-		params.responsibleHidden = this.getComponent('fsCiOwnerW').getComponent('pCiOwnerW').getComponent('tfResponsibleWHidden').getValue();
-		params.responsible = this.getComponent('fsCiOwnerW').getComponent('pCiOwnerW').getComponent('tfResponsibleW').getValue();
+		params.ciOwnerHidden = this.getComponent('fsCiOwnerW').getComponent('pCiOwnerW').getComponent('tfResponsibleWHidden').getValue();//responsibleHidden
+		params.ciOwner = this.getComponent('fsCiOwnerW').getComponent('pCiOwnerW').getComponent('tfResponsibleW').getValue();//responsible
 		params.gpsccontactSupportGroupHidden = this.getComponent('fsContactsGPSCW').getComponent('pGPSCSupportGroup').getComponent('taGPSCSupportGroupHidden').getValue();
 		params.gpsccontactSupportGroup = this.getComponent('fsContactsGPSCW').getComponent('pGPSCSupportGroup').getComponent('taGPSCSupportGroup').getValue();
 		params.gpsccontactOwningBusinessGroupHidden = this.getComponent('fsContactsGPSCW').getComponent('pGPSCOwningBusinessGroup').getComponent('taGPSCOwningBusinessGroupHidden').getValue();

@@ -399,7 +399,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		
     	// check vor valid application alias name. Funktioniert noch nicht. Wenn bereits erxistierender Alias (z.B. Test) eingegeben wird:
 		//geht das Speicehrn bis zum Server durhc. Muss sofort kommen und ggf. save/canel Buttons deaktiviert werden
-		if(newValue.length > 0 && newValue != AIR.AirApplicationManager.getAppDetail().applicationAlias) {//nur aufrufen wenn alias != geladenem alias
+		if(newValue.length > 0 && newValue != AIR.AirApplicationManager.getAppDetail().alias) {//applicationAlias nur aufrufen wenn alias != geladenem alias
 			this.objectAliasAllowedStore.setBaseParam('query', newValue);
 			this.objectAliasAllowedStore.load({
 				callback: function() {

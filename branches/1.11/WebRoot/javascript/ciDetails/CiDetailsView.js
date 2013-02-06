@@ -125,7 +125,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var data = {
 			applicationCat1Txt: ciDetail.applicationCat1Txt,
-			applicationAlias: ciDetail.applicationAlias,
+			alias: ciDetail.alias,//applicationAlias
 			barApplicationId: ciDetail.barApplicationId,
 //				applicationCat2: applicationCat2,
 //				categoryBusiness: categoryBusiness,
@@ -142,7 +142,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			updateTimestamp: ciDetail.updateTimestamp,
 			
 			//mailTemplate
-			applicationName: ciDetail.applicationName,
+			name: ciDetail.name,//applicationName
 			ciSubResponsible: ciDetail.ciOwnerDelegate//ciSubResponsible
 		};
 
@@ -227,17 +227,17 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	updateMailTemplate: function(data) {
 		var mailtemplate = 'mailto:';
 		// check value
-		mailtemplate += data.ciResponsible;//Ext.getCmp('ciResponsibleHidden').getValue();
+		mailtemplate += data.ciOwner;//ciResponsible
 		mailtemplate += '?';
 
 		// mail copy to sub responsible
-		if ('' !== data.ciSubResponsible) {//Ext.getCmp('ciSubResponsibleHidden').getValue()
-			mailtemplate += 'cc=' + data.ciSubResponsible;//Ext.getCmp('ciSubResponsibleHidden').getValue()
+		if ('' !== data.ciOwnerDelegate) {//ciSubResponsible
+			mailtemplate += 'cc=' + data.ciOwnerDelegate;//ciSubResponsible
 			mailtemplate += '&';
 		}
 
-		var tempSubj = mail_Subject.replace('<CIName>', data.applicationName);//Ext.getCmp('applicationName').getValue()
-		var tempText = mail_Text.replace('<CIName>', data.applicationName);//Ext.getCmp('applicationName').getValue()
+		var tempSubj = mail_Subject.replace('<CIName>', data.name);//applicationName
+		var tempText = mail_Text.replace('<CIName>', data.name);//applicationName
 		tempText = tempText.replace('<Username>', AIR.AirApplicationManager.getUserName());//username
 		
 		mailtemplate += 'subject=' + tempSubj + '';

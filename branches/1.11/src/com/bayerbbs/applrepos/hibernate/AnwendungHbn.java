@@ -34,16 +34,9 @@ import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.service.ApplicationEditParameterOutput;
-/**
- * @author evafl
- *
- */
-/**
- * @author evafl
- *
- */
-public class AnwendungHbn {
 
+
+public class AnwendungHbn {
 //	private static final String PARAMETER_QUERYMODE_BEGINS_WITH = "BEGINS_WITH";
 //	private static final String PARAMETER_QUERYMODE_CONTAINS = "CONTAINS";
 //	private static final String PARAMETER_QUERYMODE_EMPTYSTRING = "";
@@ -321,8 +314,7 @@ public class AnwendungHbn {
 						if (null == dto.getBusinessEssentialId()) {
 							if (null == application.getBusinessEssentialId()) {
 								// set the default value
-								application
-								.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
+								application.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
 								hasBusinessEssentialChanged = true;
 							}
 						}
@@ -330,8 +322,7 @@ public class AnwendungHbn {
 							if (null == application.getBusinessEssentialId() || application.getBusinessEssentialId().longValue() != dto.getBusinessEssentialId().longValue()) {
 								hasBusinessEssentialChanged = true;
 							}
-							application.setBusinessEssentialId(dto
-										.getBusinessEssentialId());
+							application.setBusinessEssentialId(dto.getBusinessEssentialId());
 						}
 						
 						if (hasBusinessEssentialChanged) {
@@ -389,7 +380,7 @@ public class AnwendungHbn {
 						// ==========
 						
 						// IT SET only view!
-						application.setItset(getItset(dto.getCiOwnerHidden(), dto.getCiOwnerDelegateHidden(),ApplreposConstants.TABLE_ID_APPLICATION,application.getApplicationId(),ApplreposConstants.APPLICATION_GUI_NAME));
+						application.setItset(getItset(dto.getCiOwnerHidden(), dto.getCiOwnerDelegateHidden(), ApplreposConstants.TABLE_ID_APPLICATION, application.getApplicationId(), ApplreposConstants.APPLICATION_GUI_NAME));
 						
 						
 						// Template
@@ -671,9 +662,7 @@ public class AnwendungHbn {
 		return output;
 	}
 
-	private static Long getItset(String responsible,
-			String subResponsible, Long tableId,
-			Long itemId, String source) {
+	private static Long getItset(String responsible, String subResponsible, Long tableId, Long itemId, String source) {
 		Long result = null;
 		Session session = HibernateUtil.getSession();
 		Query selectQuery = session.createSQLQuery(SQL_GET_ITSET)
@@ -682,28 +671,19 @@ public class AnwendungHbn {
 		.setLong("tableID", tableId)
 		.setLong("itemID", itemId)
 		.setString("source", source);
-		try 
-		{
+		
+		try {
 			result = (Long) ((BigDecimal) selectQuery.uniqueResult()).longValue();
-		} 
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
 			System.out.println(e.toString());
-		}
-		finally
-		{
+		} finally {
 			session.flush();		
 		}
+		
 		return result;
 	}
 
-	/**
-	 * creates a new application
-	 * 
-	 * @param cwid
-	 * @param dto
-	 * @return
-	 */
+
 	public static ApplicationEditParameterOutput createAnwendung(String cwid, ApplicationDTO dto, Boolean forceOverride) {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
@@ -711,13 +691,11 @@ public class AnwendungHbn {
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
-			if (null == dto.getId()) {
-
-				// check der InputWerte
+			
+			if (null != dto.getId() && 0 == dto.getId()) {
 				List<String> messages = AnwendungHbn.validateApplication(dto);
 
 				if (messages.isEmpty()) {
-
 					Application application = new Application();
 					
 					boolean isApplicationNameAndAliasNameAllowed = true;
@@ -769,13 +747,12 @@ public class AnwendungHbn {
 					
 					
 					if (isApplicationNameAndAliasNameAllowed) {
-						// create the application
-
 						// calculates the ItSet
 						Long itSet = null;
-						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
+						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwnerHidden());
+						
 						if (null != strItSet) {
-							itSet = Long.parseLong(strItSet);
+							itSet = Long.parseLong(strItSet);//getItset(responsible, subResponsible, tableId, itemId, source);
 						}
 						if (null == itSet) {
 							// set default itSet
@@ -783,9 +760,7 @@ public class AnwendungHbn {
 						}
 
 						if (0 == dto.getBusinessEssentialId().longValue()) {
-							dto
-									.setBusinessEssentialId(new Long(
-											ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT));
+							dto.setBusinessEssentialId(new Long(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT));
 						}
 
 						Session session = HibernateUtil.getSession();
@@ -794,21 +769,16 @@ public class AnwendungHbn {
 
 						// application - insert values
 						application.setInsertUser(cwid);
-						application
-								.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
-						application.setInsertTimestamp(ApplReposTS
-								.getCurrentTimestamp());
+						application.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						application.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 
 						// application - update values
 						application.setUpdateUser(application.getInsertUser());
-						application.setUpdateQuelle(application
-								.getInsertQuelle());
-						application.setUpdateTimestamp(application
-								.getInsertTimestamp());
+						application.setUpdateQuelle(application.getInsertQuelle());
+						application.setUpdateTimestamp(application.getInsertTimestamp());
 
 						// application - attributes
-						application
-								.setApplicationName(dto.getName());
+						application.setApplicationName(dto.getName());
 						application.setApplicationAlias(dto.getAlias());
 						application.setComments(dto.getComments());
 //						application.setClusterCode(dto.getClusterCode());
@@ -836,8 +806,7 @@ public class AnwendungHbn {
 							application.setApplicationOwnerDelegate(dto.getApplicationOwnerDelegateHidden());
 						}
 						
-						application.setBusinessEssentialId(dto
-								.getBusinessEssentialId());
+						application.setBusinessEssentialId(dto.getBusinessEssentialId());
 						application.setItset(itSet);
 
 						// TODO !!!
@@ -921,18 +890,14 @@ public class AnwendungHbn {
 							output.setResult(ApplreposConstants.RESULT_ERROR);
 							output.setMessages(new String[] { e.getMessage() });
 						} finally {
-							String hbnMessage = HibernateUtil.close(tx,
-									session, toCommit);
+							String hbnMessage = HibernateUtil.close(tx,	session, toCommit);
 							if (toCommit) {
 								if (null == hbnMessage) {
-									output
-											.setResult(ApplreposConstants.RESULT_OK);
+									output.setResult(ApplreposConstants.RESULT_OK);
 									output.setMessages(new String[] { EMPTY });
 								} else {
-									output
-											.setResult(ApplreposConstants.RESULT_ERROR);
-									output
-											.setMessages(new String[] { hbnMessage });
+									output.setResult(ApplreposConstants.RESULT_ERROR);
+									output.setMessages(new String[] { hbnMessage });
 								}
 							}
 						}
@@ -949,8 +914,7 @@ public class AnwendungHbn {
 			} else {
 				// application id not 0
 				output.setResult(ApplreposConstants.RESULT_ERROR);
-				output
-						.setMessages(new String[] { "the application id should be 0" });
+				output.setMessages(new String[] { "the application id should be 0" });
 			}
 		} else {
 			// cwid missing
@@ -981,14 +945,11 @@ public class AnwendungHbn {
 			output.setResult(ApplreposConstants.RESULT_ERROR);
 			output.setMessages(new String[] { "the application was not found in database" });
 		} else {
-
-			Timestamp tsNow = ApplReposTS
-			.getCurrentTimestamp();
+			Timestamp tsNow = ApplReposTS.getCurrentTimestamp();
 			
 			// application found - change values
 			application.setUpdateUser(cwid);
-			application
-					.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+			application.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
 			application.setUpdateTimestamp(tsNow);
 			// override INSERT-attributes
 			application.setInsertUser(cwid);
@@ -1092,7 +1053,6 @@ public class AnwendungHbn {
 			
 			// unsorted
 			application.setClusterCode(null);
-
 			application.setClusterType(null);
 			
 			application.setApplicationOwner(cwid);
@@ -1130,22 +1090,15 @@ public class AnwendungHbn {
 					output.setResult(ApplreposConstants.RESULT_OK);
 					output.setMessages(new String[] { EMPTY });
 				} else {
-					output
-							.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(ApplreposConstants.RESULT_ERROR);
 					output.setMessages(new String[] { hbnMessage });
 				}
 			}
 		}
-	return output;
+		return output;
 	}
 	
 	
-	/**
-	 * validates the input ApplicationDTO
-	 * 
-	 * @param dto
-	 * @return
-	 */
 	private static List<String> validateApplication(ApplicationDTO dto) {
 		List<String> messages = new ArrayList<String>();
 		
@@ -1244,7 +1197,6 @@ public class AnwendungHbn {
 			else if (1 != listPersons.size()) {
 				messages.add(errorCodeManager.getErrorMessage("1108")); 
 			}
-			
 		}
 		
 		return messages;
@@ -1257,38 +1209,32 @@ public class AnwendungHbn {
 	 * @param dto
 	 * @return
 	 */
-	public static ApplicationEditParameterOutput deleteAnwendung(String cwid,
-			ApplicationDTO dto) {
+	public static ApplicationEditParameterOutput deleteAnwendung(String cwid, ApplicationDTO dto) {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
 		// TODO check validate token
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
-			if (null != dto.getId()
-					&& 0 < dto.getId().longValue()) {
+			if (null != dto.getId()	&& 0 < dto.getId().longValue()) {
 				Long id = new Long(dto.getId());
 
 				// TODO check der InputWerte
 				Session session = HibernateUtil.getSession();
 				Transaction tx = null;
 				tx = session.beginTransaction();
-				Application application = (Application) session.get(
-						Application.class, id);
+				Application application = (Application) session.get(Application.class, id);
 				if (null == application) {
 					// application was not found in database
 					output.setResult(ApplreposConstants.RESULT_ERROR);
-					output.setMessages(new String[] { "the application id "
-							+ id + " was not found in database" });
+					output.setMessages(new String[] { "the application id "	+ id + " was not found in database" });
 				}
 
 				// if it is not already marked as deleted, we can do it
 				else if (null == application.getDeleteTimestamp()) {
 					application.setDeleteUser(cwid);
-					application
-							.setDeleteQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
-					application.setDeleteTimestamp(ApplReposTS
-							.getDeletionTimestamp());
+					application.setDeleteQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+					application.setDeleteTimestamp(ApplReposTS.getDeletionTimestamp());
 
 					boolean toCommit = false;
 					try {
@@ -1301,15 +1247,13 @@ public class AnwendungHbn {
 						output.setResult(ApplreposConstants.RESULT_ERROR);
 						output.setMessages(new String[] { e.getMessage() });
 					} finally {
-						String hbnMessage = HibernateUtil.close(tx, session,
-								toCommit);
+						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
 						if (toCommit) {
 							if (null == hbnMessage) {
 								output.setResult(ApplreposConstants.RESULT_OK);
 								output.setMessages(new String[] { EMPTY });
 							} else {
-								output
-										.setResult(ApplreposConstants.RESULT_ERROR);
+								output.setResult(ApplreposConstants.RESULT_ERROR);
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
@@ -1318,15 +1262,13 @@ public class AnwendungHbn {
 				} else {
 					// application is already deleted
 					output.setResult(ApplreposConstants.RESULT_ERROR);
-					output
-							.setMessages(new String[] { "the application is already deleted" });
+					output.setMessages(new String[] { "the application is already deleted" });
 				}
 
 			} else {
 				// application id is missing
 				output.setResult(ApplreposConstants.RESULT_ERROR);
-				output
-						.setMessages(new String[] { "the application id is missing or invalid" });
+				output.setMessages(new String[] { "the application id is missing or invalid" });
 			}
 
 		} else {
@@ -1339,7 +1281,6 @@ public class AnwendungHbn {
 	}
 
 	public static ApplicationDTO getApplicationDetail(Long applicationId) {
-
 		ApplicationDTO applicationDTO = null;
 
 		Transaction tx = null;
@@ -1690,9 +1631,7 @@ public class AnwendungHbn {
 	 * @param applicationId
 	 * @return
 	 */
-	public static List<ApplicationContact> findApplicationContacts(
-			Long applicationId) {
-
+	public static List<ApplicationContact> findApplicationContacts(Long applicationId) {
 		ArrayList<ApplicationContact> listResult = new ArrayList<ApplicationContact>();
 
 		Transaction tx = null;
@@ -1717,28 +1656,16 @@ public class AnwendungHbn {
 
 		sql.append(" from group_types gt");
 
-		sql
-				.append(
-						" left join ci_groups cigr on gt.GROUP_TYPE_ID = cigr.GROUP_TYPE_ID and cigr.table_id=2 and cigr.ci_id=")
-				.append(applicationId);
+		sql.append(" left join ci_groups cigr on gt.GROUP_TYPE_ID = cigr.GROUP_TYPE_ID and cigr.table_id=2 and cigr.ci_id=").append(applicationId);
 		sql.append(" and cigr.del_timestamp is null");
-		sql
-				.append(
-						" left join ci_persons cipers on gt.INDIVIDUAL_CONTACT_Y_N='Y' and gt.group_type_id = cipers.group_type_id and cipers.table_id=2 and cipers.del_timestamp is null and cipers.ci_id=")
-				.append(applicationId);
+		sql.append(" left join ci_persons cipers on gt.INDIVIDUAL_CONTACT_Y_N='Y' and gt.group_type_id = cipers.group_type_id and cipers.table_id=2 and cipers.del_timestamp is null and cipers.ci_id=").append(applicationId);
 		sql.append(" left join persons pers on cipers.cwid = pers.cwid");
-
-		sql
-				.append(" left join groups grp on gt.INDIVIDUAL_CONTACT_Y_N='N' and cigr.group_id= grp.group_id");
-
-		sql
-				.append(" where gt.visible_application = 1 and gt.del_timestamp is null");
-
+		sql.append(" left join groups grp on gt.INDIVIDUAL_CONTACT_Y_N='N' and cigr.group_id= grp.group_id");
+		sql.append(" where gt.visible_application = 1 and gt.del_timestamp is null");
 		sql.append(" order by gt.group_type_id, gt.INDIVIDUAL_CONTACT_Y_N, gt.GROUP_TYPE_NAME");
 		
 		try {
 			tx = session.beginTransaction();
-
 			conn = session.connection();
 
 			selectStmt = conn.createStatement();
@@ -1749,11 +1676,8 @@ public class AnwendungHbn {
 				while (rsMessage.next()) {
 					ApplicationContact contact = new ApplicationContact();
 					contact.setGroupTypeId(rsMessage.getLong("GROUP_TYPE_ID"));
-					
 					contact.setGroupTypeName(rsMessage.getString("GROUP_TYPE_NAME"));
-					
-					contact.setIndividualContactYN(rsMessage
-							.getString("INDIVIDUAL_CONTACT_Y_N"));
+					contact.setIndividualContactYN(rsMessage.getString("INDIVIDUAL_CONTACT_Y_N"));
 					contact.setMinContacts(rsMessage.getLong("MIN_CONTACTS"));
 					contact.setMaxContacts(rsMessage.getLong("MAX_CONTACTS"));
 					contact.setCwid(rsMessage.getString("CWID"));
@@ -1794,18 +1718,12 @@ public class AnwendungHbn {
 				// throw again the first exception
 				// throw e;
 			}
-
 		}
 		return listResult;
 	}
 
 
-	/**
-	 * find the references
-	 * @return
-	 */
 	public static List<ReferenzDTO> findApplicationReferenz() {
-
 		ArrayList<ReferenzDTO> listResult = new ArrayList<ReferenzDTO>();
 
 		Transaction tx = null;
@@ -1842,7 +1760,6 @@ public class AnwendungHbn {
 		
 		try {
 			tx = session.beginTransaction();
-
 			conn = session.connection();
 
 			selectStmt = conn.createStatement();
@@ -1881,7 +1798,6 @@ public class AnwendungHbn {
 				// throw again the first exception
 				// throw e;
 			}
-
 		}
 		return listResult;
 	}
@@ -1891,7 +1807,6 @@ public class AnwendungHbn {
 	 * @return
 	 */
 	public static List<ViewDataDTO> findApplicationUpStream(Long applicationId) {
-
 		ArrayList<ViewDataDTO> listResult = new ArrayList<ViewDataDTO>();
 
 		boolean commit = false;
@@ -1918,7 +1833,6 @@ public class AnwendungHbn {
 		
 		try {
 			tx = session.beginTransaction();
-
 			conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
@@ -1960,19 +1874,13 @@ public class AnwendungHbn {
 	}
 
 
-	/**
-	 * find the application downstream
-	 * @return
-	 */
 	public static List<ViewDataDTO> findApplicationDownStream(Long applicationId) {
-
 		ArrayList<ViewDataDTO> listResult = new ArrayList<ViewDataDTO>();
 
 		boolean commit = false;
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
-
 		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
@@ -1992,7 +1900,6 @@ public class AnwendungHbn {
 		
 		try {
 			tx = session.beginTransaction();
-
 			conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
@@ -2003,11 +1910,8 @@ public class AnwendungHbn {
 					ViewDataDTO dto = new ViewDataDTO();
 					dto.setId(EMPTY +rsMessage.getLong("APP_LOWER_ID"));
 					
-					dto.setText(rsMessage
-							.getString("ANWENDUNG_NAME"));
-					dto.setType(rsMessage
-							.getString("ANWENDUNG_KAT1_EN"));
-					
+					dto.setText(rsMessage.getString("ANWENDUNG_NAME"));
+					dto.setType(rsMessage.getString("ANWENDUNG_KAT1_EN"));
 
 					listResult.add(dto);
 				}
@@ -2034,10 +1938,6 @@ public class AnwendungHbn {
 	}
  
 
-	/**
-	 * find the application process
-	 * @return
-	 */
 	public static List<ViewDataDTO> findApplicationProcess(Long applicationId) {
 
 		ArrayList<ViewDataDTO> listResult = new ArrayList<ViewDataDTO>();
@@ -2066,7 +1966,6 @@ public class AnwendungHbn {
 	
 		try {
 			tx = session.beginTransaction();
-
 			conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
@@ -2078,8 +1977,7 @@ public class AnwendungHbn {
 					dto.setId(EMPTY +rsMessage.getLong("PROCESS_ID"));
 					
 					StringBuffer sb = new StringBuffer();
-					sb.append(rsMessage
-							.getString("PROCESS_NAME"));
+					sb.append(rsMessage.getString("PROCESS_NAME"));
 					
 					if (null != rsMessage.getTimestamp("DEL_TIMESTAMP")) {
 						sb.append(" (DELETED)");
@@ -2111,10 +2009,6 @@ public class AnwendungHbn {
 	}
 
 	
-	/**
-	 * find the application connections (up- and downstream)
-	 * @return
-	 */
 	public static List<ViewDataDTO> findApplicationConnections(Long applicationId) {
 		ArrayList<ViewDataDTO> listResult = new ArrayList<ViewDataDTO>();
 
@@ -2136,7 +2030,6 @@ public class AnwendungHbn {
 	
 		try {
 			tx = session.beginTransaction();
-
 			conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
@@ -2156,8 +2049,7 @@ public class AnwendungHbn {
 					dto.setTableId(rsMessage.getLong("TABLE_ID"));
 					dto.setCiId(rsMessage.getLong("CI_ID"));
 					
-					dto.setGroupsort(rsMessage
-							.getString("DIRECTION") +"::" + rsMessage.getString("TYPE"));
+					dto.setGroupsort(rsMessage.getString("DIRECTION") +"::" + rsMessage.getString("TYPE"));
 
 					listResult.add(dto);
 				}
@@ -2188,7 +2080,6 @@ public class AnwendungHbn {
 	 * @return
 	 */
 	public static List<ViewDataDTO> findConnectionEntries(String type, String searchparam) {
-
 		ArrayList<ViewDataDTO> listResult = new ArrayList<ViewDataDTO>();
 
 		boolean commit = false;
@@ -2197,9 +2088,7 @@ public class AnwendungHbn {
 		Session session = HibernateUtil.getSession();
 
 		Connection conn = null;
-
 		searchparam = searchparam.toUpperCase();
-		
 		StringBuffer sql = new StringBuffer();
 
 		sql.append("select * from dwh_entity");
@@ -2208,7 +2097,6 @@ public class AnwendungHbn {
 		
 		try {
 			tx = session.beginTransaction();
-
 			conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
@@ -2253,12 +2141,7 @@ public class AnwendungHbn {
 	}
 
 	
-	/**
-	 * find the application it systems
-	 * @return
-	 */
 	public static List<ViewDataDTO> findApplicationItSystems(Long applicationId) {
-
 		ArrayList<ViewDataDTO> listResult = new ArrayList<ViewDataDTO>();
 
 		boolean commit = false;
@@ -2282,7 +2165,6 @@ public class AnwendungHbn {
 		
 		try {
 			tx = session.beginTransaction();
-
 			conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
@@ -2292,8 +2174,7 @@ public class AnwendungHbn {
 				while (rsMessage.next()) {
 					ViewDataDTO dto = new ViewDataDTO();
 					dto.setId(EMPTY +rsMessage.getLong("IT_SYSTEM_ID"));
-					dto.setText(rsMessage
-							.getString("IT_SYSTEM_NAME"));
+					dto.setText(rsMessage.getString("IT_SYSTEM_NAME"));
 					
 					listResult.add(dto);
 				}
@@ -2619,17 +2500,13 @@ public class AnwendungHbn {
 			if (StringUtils.isNotNullOrEmpty(dir)) {
 				sql.append(" ").append(dir);
 			}
-
 		}
 		else {
 			sql.append(" order by anw.ANWENDUNG_NAME");
 		}
 		
-
-		
 		try {
 			tx = session.beginTransaction();
-
 			conn = session.connection();
 
 			selectStmt = conn.createStatement();
@@ -2688,14 +2565,12 @@ public class AnwendungHbn {
 					log.error(e1.getMessage());
 				}
 			}
-
 		}
 		return listResult;
 	}
 
 	
 	public static List<HistoryViewDataDTO> findApplicationHistory(Long applicationId) {
-
 		ArrayList<HistoryViewDataDTO> listResult = new ArrayList<HistoryViewDataDTO>();
 
 		boolean commit = false;
@@ -2813,8 +2688,7 @@ public class AnwendungHbn {
 	 * @param dto
 	 * @return
 	 */
-	public static ApplicationEditParameterOutput copyApplication(String cwid,
-			Long applicationIdSource, Long applicationIdTarget) {
+	public static ApplicationEditParameterOutput copyApplication(String cwid, Long applicationIdSource, Long applicationIdTarget) {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
 		String validationMessage = null;
@@ -2830,38 +2704,30 @@ public class AnwendungHbn {
 					Session session = HibernateUtil.getSession();
 					Transaction tx = null;
 					tx = session.beginTransaction();
-					Application applicationSource = (Application) session.get(
-							Application.class, applicationIdSource);
 					
-					Application applicationTarget = (Application) session.get(
-							Application.class, applicationIdTarget);
+					Application applicationSource = (Application) session.get(Application.class, applicationIdSource);
+					Application applicationTarget = (Application) session.get(Application.class, applicationIdTarget);
 
 					if (null == applicationSource) {
 						// application was not found in database
 						output.setResult(ApplreposConstants.RESULT_ERROR);
-						output.setMessages(new String[] { "the application id "
-								+ applicationIdSource + " was not found in database" });
+						output.setMessages(new String[] { "the application id "	+ applicationIdSource + " was not found in database" });
 					}
 					else if (null == applicationTarget) {
 							// application was not found in database
 							output.setResult(ApplreposConstants.RESULT_ERROR);
-							output.setMessages(new String[] { "the application id "
-									+ applicationIdTarget + " was not found in database" });
+							output.setMessages(new String[] { "the application id "	+ applicationIdTarget + " was not found in database" });
 					} else if (null != applicationTarget.getDeleteTimestamp()) {
 						// application is deleted
 						output.setResult(ApplreposConstants.RESULT_ERROR);
-						output.setMessages(new String[] { "the application id "
-								+ applicationIdTarget + " is deleted" });
+						output.setMessages(new String[] { "the application id "	+ applicationIdTarget + " is deleted" });
 					} else {
 						// application found - change values
-
 						output.setApplicationId(applicationIdTarget);
 						
 						applicationTarget.setUpdateUser(cwid);
-						applicationTarget
-								.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
-						applicationTarget.setUpdateTimestamp(ApplReposTS
-								.getCurrentTimestamp());
+						applicationTarget.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						applicationTarget.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 
 						// ======
 						// Basics
@@ -2884,8 +2750,7 @@ public class AnwendungHbn {
 						applicationTarget.setServiceContractId(applicationSource.getServiceContractId());
 						applicationTarget.setPriorityLevelId(applicationSource.getPriorityLevelId());
 						applicationTarget.setSeverityLevelId(applicationSource.getSeverityLevelId());
-						applicationTarget
-								.setBusinessEssentialId(applicationSource.getBusinessEssentialId());
+						applicationTarget.setBusinessEssentialId(applicationSource.getBusinessEssentialId());
 						// ----------
 						
 						// TODO edit more Attributes
@@ -2895,25 +2760,19 @@ public class AnwendungHbn {
 						// ==============================
 
 						applicationTarget.setItSecSbAvailability(applicationSource.getItSecSbAvailability());
-
 						applicationTarget.setItSecSbAvailabilityText(applicationSource.getItSecSbAvailabilityText());
-						
 						applicationTarget.setClusterCode(applicationSource.getClusterCode());
-
 						applicationTarget.setClusterType(applicationSource.getClusterType());
 						
 						// der kopierende User wird Responsible
 						applicationTarget.setResponsible(cwid);
 						// applicationTarget.setResponsible(applicationSource.getResponsible());
-
 						applicationTarget.setSubResponsible(applicationSource.getSubResponsible());
-
 						applicationTarget.setApplicationOwner(applicationSource.getApplicationOwner());
 						
 						// RFC 8539 
 						// applicationTarget.setApplicationSteward(applicationSource.getApplicationSteward());
 						applicationTarget.setApplicationSteward(cwid);
-						
 						applicationTarget.setApplicationOwnerDelegate(applicationSource.getApplicationOwnerDelegate());
 						
 						
@@ -2923,18 +2782,13 @@ public class AnwendungHbn {
 						
 						// IT SET only view!
 						applicationTarget.setItset(applicationSource.getItset());
-						
 						applicationTarget.setTemplate(applicationSource.getTemplate());
-						
 						applicationTarget.setItsecGroupId(null);
-						
 						applicationTarget.setRefId(null);
 						
 // TODO anderes Feld?
 //						applicationTarget.setRelevanceICS(applicationSource.getRelevanceICS());
-
 //						applicationTarget.setRelevanzITSEC(applicationSource.getRelevanzITSEC());
-
 						applicationTarget.setGxpFlag(applicationSource.getGxpFlag());
 						
 						
@@ -2942,35 +2796,24 @@ public class AnwendungHbn {
 						// License & Costs
 						// ===============
 						applicationTarget.setLicenseTypeId(applicationSource.getLicenseTypeId());
-
 						applicationTarget.setDedicated(applicationSource.getDedicated());
 						applicationTarget.setAccessingUserCount(applicationSource.getAccessingUserCount());
 						applicationTarget.setAccessingUserCountMeasured(applicationSource.getAccessingUserCountMeasured());
 						applicationTarget.setLoadClass(applicationSource.getLoadClass());
 						
-						applicationTarget.setCostRunAccountId(applicationSource
-										.getCostRunAccountId());
-						applicationTarget.setCostChangeAccountId(applicationSource
-										.getCostChangeAccountId());
+						applicationTarget.setCostRunAccountId(applicationSource.getCostRunAccountId());
+						applicationTarget.setCostChangeAccountId(applicationSource.getCostChangeAccountId());
 
 						
 						// ----------------
 						applicationTarget.setCostRunPa(applicationSource.getCostRunPa());
-
 						applicationTarget.setCostChangePa(applicationSource.getCostChangePa());
-
 						applicationTarget.setCurrencyId(applicationSource.getCurrencyId());
-						
 						applicationTarget.setCategoryBusiness(applicationSource.getCategoryBusiness());
-						
 						applicationTarget.setClassDataId(applicationSource.getClassDataId());
-						
 						applicationTarget.setClassInformationId(applicationSource.getClassInformationId());
-						
 						applicationTarget.setClassInformationExplanation(applicationSource.getClassInformationExplanation());
-						
 						applicationTarget.setServiceModel(applicationSource.getServiceModel());
-						
 						applicationTarget.setOrganisationalScope(applicationSource.getOrganisationalScope());
 						
 					}
@@ -2978,17 +2821,13 @@ public class AnwendungHbn {
 					boolean toCommit = false;
 					try {
 						if (null == validationMessage) {
-						
-							if (null != applicationTarget
-									&& null != applicationTarget.getDeleteTimestamp()) {
+							if (null != applicationTarget && null != applicationTarget.getDeleteTimestamp()) {
 								session.saveOrUpdate(applicationTarget);
 								session.flush();
 							}
 							toCommit = true;
-							
 						}
 					} catch (Exception e) {
-						
 						String message = e.getMessage();
 						log.error(message);
 						// handle exception
@@ -3000,15 +2839,13 @@ public class AnwendungHbn {
 						
 						output.setMessages(new String[] { message });
 					} finally {
-						String hbnMessage = HibernateUtil.close(tx, session,
-								toCommit);
+						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
 						if (toCommit && null != applicationTarget) {
 							if (null == hbnMessage) {
 								output.setResult(ApplreposConstants.RESULT_OK);
 								output.setMessages(new String[] { EMPTY });
 							} else {
-								output
-										.setResult(ApplreposConstants.RESULT_ERROR);
+								output.setResult(ApplreposConstants.RESULT_ERROR);
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
@@ -3044,7 +2881,6 @@ public class AnwendungHbn {
 	 * @return
 	 */
 	public static List<ConnectionsViewDataDTO> findConnectionTreeEntries(String id) {
-
 		ArrayList<ConnectionsViewDataDTO> listResult = new ArrayList<ConnectionsViewDataDTO>();
 
 		boolean commit = false;
@@ -3071,7 +2907,6 @@ public class AnwendungHbn {
 		
 		try {
 			tx = session.beginTransaction();
-
 			conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
@@ -3117,7 +2952,6 @@ public class AnwendungHbn {
 	 */
 	public static boolean deleteApplicationApplication(String cwid, Long ciId) {
 		boolean result = false;
-
 		cwid = cwid.toUpperCase();
 
 		Session session = HibernateUtil.getSession();
@@ -3150,7 +2984,6 @@ public class AnwendungHbn {
 	 */
 	public static boolean deleteApplicationItSystem(String cwid, Long ciId) {
 		boolean result = false;
-
 		cwid = cwid.toUpperCase();
 
 		Session session = HibernateUtil.getSession();
@@ -3175,7 +3008,6 @@ public class AnwendungHbn {
 	}
 
 	public static void sendBusinessEssentialChangedMail(Application application, ApplicationDTO dto, Long businessEssentialIdOld) {
-
 		String sendTo = null;
 		PersonsDTO personDTO = null;
 		
@@ -3222,7 +3054,6 @@ public class AnwendungHbn {
 			businessEssentialOld = "---";
 		}
 		
-		
 		if (null != sendTo) {
 			String copyTo = "itilcenter@bayer.com";
 			
@@ -3241,7 +3072,6 @@ public class AnwendungHbn {
 			sb.append("ITILcenter Administration");
 			ApplReposHbn.sendMail(sendTo, copyTo, sbSubject.toString(), sb.toString(), ApplreposConstants.APPLICATION_GUI_NAME);
 		}
-		
 	}
 
 	private static boolean isNot(String options) {

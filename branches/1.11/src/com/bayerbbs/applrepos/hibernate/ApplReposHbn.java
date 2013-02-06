@@ -41,7 +41,6 @@ public class ApplReposHbn {
 																"AND      ROL.Del_Quelle IS NULL"; 
 
 	private static final String TRANSBASE_ORA_20000 = "ORA-20000: ";
-	/** The logger. */
 	private static final Log log = LogFactory.getLog(ApplReposHbn.class);
 
 	
@@ -53,20 +52,16 @@ public class ApplReposHbn {
 	 * @return
 	 */
 	public static String getItSetFromCwid(String cwid) {
-
 		String resultItSet = null;
 
-		if (null != cwid && !"".equals(cwid)) {
-
+		if (null != cwid && cwid.length() > 0) {
 			Transaction tx = null;
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
-
 			Connection conn = null;
 
 			try {
 				tx = session.beginTransaction();
-
 				conn = session.connection();
 
 				selectStmt = conn.createStatement();
@@ -99,9 +94,9 @@ public class ApplReposHbn {
 					// throw again the first exception
 					// throw e;
 				}
-
 			}
 		}
+		
 		return resultItSet;
 	}
 

@@ -53,11 +53,21 @@ AIR.AirConfigFactory = function() {
 			return Ext.data.Record.create(buildingCiFields);
 		},
 		
-		createRoomCiFields: function() {
+		createBuildingAreaCiRecord: function() {
+			var buildingAreaCiFields = this.getLocationCiFields();
+			
+			return Ext.data.Record.create(buildingAreaCiFields);
+		},
+		
+		createRoomCiRecord: function() {
 			var roomCiFields = this.getLocationCiFields();
 			
 			roomCiFields.push('floor');
 			roomCiFields.push('roomType');
+			roomCiFields.push('street');
+			roomCiFields.push('streetNumber');
+			roomCiFields.push('location');
+			roomCiFields.push('postalCode');
 			
 			return Ext.data.Record.create(roomCiFields);
 		},
