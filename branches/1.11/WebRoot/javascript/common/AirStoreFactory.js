@@ -1348,7 +1348,8 @@ AIR.AirStoreFactory = function() {
 					{name: 'CiEinsprungInvalidTitle'},
 					{name: 'CiEinsprungCiIdInvalidMessage'},
 					{name: 'CiEinsprungCiIdDoesNotExistMessage'},
-					{name: 'CiEinsprungInvalidCiTypeMessage'}
+					{name: 'CiEinsprungInvalidCiTypeMessage'},
+					{name: 'CiEinsprungCiIdMarkedAsDeleted'}
 			    ]
 			});
 		
@@ -2609,6 +2610,15 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'updateUser',
 				mapping : 'applicationDTO > updateUser'
+			}, {
+				name : 'deleteQuelle',
+				mapping : 'applicationDTO > deleteQuelle'
+			}, {
+				name : 'deleteTimestamp',
+				mapping : 'applicationDTO > deleteTimestamp'
+			}, {
+				name : 'deleteUser',
+				mapping : 'applicationDTO > deleteUser'
 			},
 
 			// access rights acl

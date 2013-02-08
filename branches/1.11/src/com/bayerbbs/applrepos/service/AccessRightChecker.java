@@ -3,6 +3,7 @@ package com.bayerbbs.applrepos.service;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.ApplreposConstants;
 import com.bayerbbs.applrepos.domain.Application;
+import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 
@@ -25,26 +26,20 @@ public class AccessRightChecker {
 
 		// application
 		if (2 == tableId.longValue()) {
-			Application application = AnwendungHbn
-					.findApplicationById(objectId);
+			Application application = AnwendungHbn.findApplicationById(objectId);
 
 			if (null == application || null != application.getDeleteTimestamp()) {
 				// deleted items are not to be edited
 				isEditable = false;
-			} else if (StringUtils.isNotNullOrEmpty(application
-					.getResponsible())
+			} else if (StringUtils.isNotNullOrEmpty(application.getResponsible())
 					&& cwid.equals(application.getResponsible().toUpperCase())) {
 				// responsible has the right
 				isEditable = true;
 			} else if (StringUtils.isNotNullOrEmpty(application
-					.getSubResponsible())
-					&& cwid.equals(application.getSubResponsible()
-							.toUpperCase())) {
+					.getSubResponsible()) && cwid.equals(application.getSubResponsible().toUpperCase())) {
 				// sub-responsible has the right
 				isEditable = true;
 			} else {
-
-
 				// TODO neu GPSC-Group CI-Owner
 				if (!isEditable && StringUtils.isNotNullOrEmpty(cwid)) {
 					if (!ApplreposConstants.STRING_0.equals(ApplReposHbn.getCountFromGPSCGroupCIOwnder(objectId, tableId, cwid))) {
@@ -52,7 +47,6 @@ public class AccessRightChecker {
 						isEditable = true;
 					}
 				}
-				
 				
 				// check group rights responsible
 				if (!isEditable
@@ -108,24 +102,31 @@ public class AccessRightChecker {
 								.getCountFromGroupNameAndCwid(
 										ApplreposConstants.ROLE_SUBSTITUTE
 												+ ApplreposConstants.STRING_ONE_BLANK
-												+ application
-														.getSubResponsible(),
-										cwid))) {
+												+ application.getSubResponsible(), cwid))) {
 							// allowed by subsitute group rights
 							isEditable = true;
 						}
 					}
-					
-
-
 				}
 			}
-
 		}
 
 		return isEditable;
 	}
 
+	public boolean isRelevanceOperational(String cwid, CiBase ci) {
+		if(cwid == null || ci == null)// || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)
+			return false;
+		
+		if(cwid.equals(ci.getCiOwner()) || cwid.equals(ci.getCiOwnerDelegate()) || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null))
+			return true;
+		
+		String groupCount = ApplReposHbn.getCountFromGroupNameAndCwid(ci.getCiOwnerDelegate(), cwid);
+		if (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(ApplreposConstants.STRING_0))
+			return true;
+		
+		return false;
+	}
 	
 	public boolean isRelevanceOperational(String cwidInput, Application application) {
 		boolean isRelevanceOperational = false;

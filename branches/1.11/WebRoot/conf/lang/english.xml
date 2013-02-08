@@ -513,5 +513,6 @@
 		<CiEinsprungCiIdInvalidMessage>The CI id={0} is invalid</CiEinsprungCiIdInvalidMessage>
 		<CiEinsprungCiIdDoesNotExistMessage>The CI id={0} does not exist</CiEinsprungCiIdDoesNotExistMessage>
 		<CiEinsprungInvalidCiTypeMessage>The CI type={0} is invalid</CiEinsprungInvalidCiTypeMessage>
+		<CiEinsprungCiIdMarkedAsDeleted>The CI id={0} is marked as deleted</CiEinsprungCiIdMarkedAsDeleted>
 	</Items>
 </LanguageItems>

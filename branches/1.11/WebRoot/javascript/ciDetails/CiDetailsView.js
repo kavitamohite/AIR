@@ -139,14 +139,14 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			//mailTemplate
 			name: ciDetail.name,//applicationName
-			ciSubResponsible: ciDetail.ciOwnerDelegate//ciSubResponsible
+			ciOwnerDelegate: ciDetail.ciOwnerDelegate//ciSubResponsible
 		};
 
 		
 		var tfBusinessCat = this.getComponent('detailsApplicationBusinessCat');
 		var tfAppCat2 = this.getComponent('detailsApplicationCat2');
 		var tfAppOwner = this.getComponent('detailsApplicationOwner');
-		
+
 		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION) {
 			store = AIR.AirStoreManager.getStoreByName('applicationCat2ListStore');
 			var applicationCat2 = ciDetail.applicationCat2;
@@ -161,11 +161,17 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			tfBusinessCat.setValue(data.categoryBusiness);
 			tfAppCat2.setValue(data.applicationCat2);
-			tfAppOwner.setValue(data.applicationOwner);
 			
 			tfBusinessCat.setVisible(true);
 			tfAppCat2.setVisible(true);
-			tfAppOwner.setVisible(true);
+			
+			if(data.applicationCat1Id == AC.APP_CAT1_APPLICATION) {
+				tfAppOwner.setValue(data.applicationOwner);
+				tfAppOwner.setVisible(true);
+			} else {
+				tfAppOwner.reset();
+				tfAppOwner.setVisible(false);
+			}
 		} else {
 			tfBusinessCat.reset();
 			tfAppCat2.reset();

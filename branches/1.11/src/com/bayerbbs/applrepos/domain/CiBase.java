@@ -10,8 +10,8 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	private String name;
 	private String alias;
 	
-	private String responsible;
-	private String subResponsible;
+	private String ciOwner;
+	private String ciOwnerDelegate;
 	
 	// compliance
 	private Long itset;
@@ -54,21 +54,21 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	
 	
 	@Column(name = "RESPONSIBLE")
-	public String getResponsible() {
-		return responsible;
+	public String getCiOwner() {
+		return ciOwner;
 	}
 
-	public void setResponsible(String responsible) {
-		this.responsible = responsible;
+	public void setCiOwner(String ciOwner) {
+		this.ciOwner = ciOwner;
 	}
 
 	@Column(name = "SUB_RESPONSIBLE")
-	public String getSubResponsible() {
-		return subResponsible;
+	public String getCiOwnerDelegate() {
+		return ciOwnerDelegate;
 	}
 
-	public void setSubResponsible(String subResponsible) {
-		this.subResponsible = subResponsible;
+	public void setCiOwnerDelegate(String ciOwnerDelegate) {
+		this.ciOwnerDelegate = ciOwnerDelegate;
 	}
 	
 	@Column(name = "ITSET")

@@ -378,24 +378,22 @@ AIR.AirAclManager = function() {
 			var userOperational = appDetail.relevanceOperational;
 			var userStrategic = appDetail.relevanceStrategic;
 			
-			var idx = this.aclStore.find('id', item.id);
-			if(idx > -1) {
-				rec = this.aclStore.getAt(idx);
+			var index = this.aclStore.find('id', item.id);
+			if(index > -1) {
+				rec = this.aclStore.getAt(index);
 			
 				switch (rec.get('Relevance')) {
 					case 'operational': 
-						if('Y' === userOperational) 
+						if('Y' === userOperational)
 							return true;
-						break;
 					case 'strategic':
-						if('Y' === userStrategic) 
+						if('Y' === userStrategic)
 							return true;
-						break;
 					case 'operational and strategic':
-						if('Y' === userStrategic || 'Y' === userOperational) 
+						if('Y' === userStrategic || 'Y' === userOperational)
 							return true;
-						break;
-					default: return false;
+					default:
+						return false;
 				}
 			}
 			return false;

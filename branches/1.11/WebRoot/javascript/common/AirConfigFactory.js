@@ -69,18 +69,30 @@ AIR.AirConfigFactory = function() {
 			roomCiFields.push('location');
 			roomCiFields.push('postalCode');
 			
+			roomCiFields.push('severityLevelId');
+			roomCiFields.push('businessEssentialId');
+			
+			roomCiFields.push('severityLevelIdAcl');
+			roomCiFields.push('businessEssentialIdAcl');
+			
 			return Ext.data.Record.create(roomCiFields);
 		},
 		
+		//von Feldern id bis tableId wie BaseDTO in function verlagern
 		getLocationCiFields: function() {
 			var locationCiFields = [{
 				name: 'id', type: 'int'
-			},{
+			}, 'name', 'alias', 'relevanceOperational', 'ciOwner', 'ciOwnerDelegate', 'insertQuelle', 'insertTimestamp', 'insertUser', 
+			   'updateQuelle', 'updateTimestamp', 'updateUser', 'deleteQuelle', 'deleteTimestamp', 'deleteUser',
+			   'slaId', 'serviceContractId', 'itset', 'template', 'itsecGroupId', 'refId', 'relevanceGR1435', 'relevanceGR1920',
+			   
+			   'ciOwnerAcl', 'ciOwnerDelegateAcl', 'relevanceGR1435Acl', 'relevanceGR1920Acl', 'gxpFlagIdAcl',
+			   'refIdAcl', 'itsecGroupIdAcl', 'slaIdAcl', 'serviceContractIdAcl', {
 				name: 'tableId', type: 'int'
 			},{
-				name: 'areaId', type: 'int'
-			}, 'name', 'alias', 'ciOwner', 'ciOwnerDelegate', 'insertQuelle', 'insertTimestamp', 'insertUser', 'updateQuelle', 'updateTimestamp', 'updateUser', 'slaId', 'businessEssentialId',
-				'hasMarkedDeletedItems',{
+				name: 'areaId', type: 'int'//nötig, da schon vorhanden --> nur Room??
+			},
+			   'hasMarkedDeletedItems',{
 				name: 'standordLoeschung', type: 'int'
 			},{
 				name: 'terrainLoeschung', type: 'int'

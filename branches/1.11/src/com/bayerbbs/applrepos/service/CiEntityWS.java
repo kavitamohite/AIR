@@ -113,7 +113,7 @@ public class CiEntityWS {
 			Room room = RoomHbn.findById(detailInput.getCiId());
 			CiLokationsKette lokationsKette = RoomHbn.findLokationsKetteById(detailInput.getCiId());
 			Building building = room.getBuildingArea().getBuilding();
-
+			
 
 			setCiBaseData(roomDTO, room);
 			roomDTO.setSeverityLevelId(room.getSeverityLevelId());
@@ -128,6 +128,21 @@ public class CiEntityWS {
 			roomDTO.setStreetNumber(building.getStreetNumber());
 			roomDTO.setPostalCode(building.getPostalCode());
 			roomDTO.setLocation(building.getLocation());
+			
+			
+			
+			//Zugriffsrechte setzen
+			AccessRightChecker checker = new AccessRightChecker();
+			if (checker.isRelevanceOperational(detailInput.getCwid().toUpperCase(), room)) {
+				roomDTO.setRelevanceOperational(ApplreposConstants.YES_SHORT);
+			} else {
+				roomDTO.setRelevanceOperational(ApplreposConstants.NO_SHORT);
+			}
+			
+			String source = room.getInsertQuelle();
+			if(!source.equals(ApplreposConstants.INSERT_QUELLE_SISEC) && !source.equals(ApplreposConstants.APPLICATION_GUI_NAME)) {
+				roomDTO.setSeverityLevelIdAcl(ApplreposConstants.NO_SHORT);
+			}
 		}
 		
 //		output.setCiDetailDTO(roomDTO);//setRoomDTO setCiDetailDTO
@@ -159,11 +174,11 @@ public class CiEntityWS {
 		if (null != ciBase.getDeleteTimestamp())
 			ciBaseDTO.setDeleteTimestamp(ciBase.getDeleteTimestamp().toString());
 
-		ciBaseDTO.setCiOwnerHidden(ciBase.getResponsible());
-		ciBaseDTO.setCiOwnerDelegateHidden(ciBase.getSubResponsible());
+		ciBaseDTO.setCiOwnerHidden(ciBase.getCiOwner());
+		ciBaseDTO.setCiOwnerDelegateHidden(ciBase.getCiOwnerDelegate());
 		
 		ciBaseDTO.setSlaId(ciBase.getSlaId());
-		
+		ciBaseDTO.setServiceContractId(ciBase.getServiceContractId());
 		
 		ciBaseDTO.setItset(ciBase.getItset());
 		ciBaseDTO.setTemplate(ciBase.getTemplate());
@@ -196,20 +211,40 @@ public class CiEntityWS {
 		}
 		
 		
-		Long releItsec = ciBase.getRelevanceITSEC();
-		Long releICS = ciBase.getRelevanceICS();
+		Long relevanceItsec = ciBase.getRelevanceITSEC();
+		Long relevanceICS = ciBase.getRelevanceICS();
 		
-		if (-1 == releItsec) {
+		if (-1 == relevanceItsec) {
 			ciBaseDTO.setRelevanceGR1435(YES);
 		}
-		else if (0 == releItsec) {
+		else {// if (0 == relevanceItsec) {
 			ciBaseDTO.setRelevanceGR1435(NO);
 		}
-		if (-1 == releICS) {
+		if (-1 == relevanceICS) {
 			ciBaseDTO.setRelevanceGR1920(YES);
 		}
-		else if (0 == releICS) {
+		else {//(0 == relevanceICS) {
 			ciBaseDTO.setRelevanceGR1920(NO);
+		}
+
+		
+		String source = ciBaseDTO.getInsertQuelle();
+		if(!source.equals(ApplreposConstants.INSERT_QUELLE_SISEC) &&
+		   !source.equals(ApplreposConstants.APPLICATION_GUI_NAME)) {
+			
+			ciBaseDTO.setCiOwnerAcl(ApplreposConstants.NO_SHORT);
+			ciBaseDTO.setCiOwnerDelegateAcl(ApplreposConstants.NO_SHORT);
+			ciBaseDTO.setRelevanceGR1435Acl(ApplreposConstants.NO_SHORT);
+			ciBaseDTO.setRelevanceGR1920Acl(ApplreposConstants.NO_SHORT);
+			ciBaseDTO.setGxpFlagIdAcl(ApplreposConstants.NO_SHORT);
+			ciBaseDTO.setRefIdAcl(ApplreposConstants.NO_SHORT);
+			ciBaseDTO.setItsecGroupIdAcl(ApplreposConstants.NO_SHORT);
+			ciBaseDTO.setSlaIdAcl(ApplreposConstants.NO_SHORT);
+			ciBaseDTO.setServiceContractIdAcl(ApplreposConstants.NO_SHORT);
+			
+			//fehlt, nötig?
+//			License_Scanning,Sample_Test_Date,Sample_Test_Result,Itsec_SB_Integ_ID,Itsec_SB_Integ_Txt,
+//			Itsec_SB_Verfg_ID,Itsec_SB_Verfg_Txt,Itsec_SB_Vertr_ID,Itsec_SB_Vertr_Txt
 		}
 	}
 

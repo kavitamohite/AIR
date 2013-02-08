@@ -173,6 +173,7 @@ public class AirServlet extends HttpServlet {
 				append("<script type='text/javascript' src='javascript/core/AirBootstrap.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/core/Main.js'></script>\n").
 				
+//				append("<script type='text/javascript' src='javascript/core/temp.js'></script>\n").
 	//			===================================================================================================================
 				
 				append("<script type='text/javascript' src='conf/config.js'></script>\n").

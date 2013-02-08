@@ -208,18 +208,18 @@ public class RoomHbn extends LokationItemHbn {
 						// ================
 						if (null != dto.getCiOwnerHidden()) {
 							if(StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {
-								room.setResponsible(null);
+								room.setCiOwner(null);
 							}
 							else {
-								room.setResponsible(dto.getCiOwnerHidden());
+								room.setCiOwner(dto.getCiOwnerHidden());
 							}
 						}
 						if (null != dto.getCiOwnerDelegateHidden()) {
 							if(StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {
-								room.setSubResponsible(null);
+								room.setCiOwnerDelegate(null);
 							}
 							else {
-								room.setSubResponsible(dto.getCiOwnerDelegateHidden());
+								room.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
 							}
 						}
 
@@ -421,8 +421,8 @@ public class RoomHbn extends LokationItemHbn {
 			room.setFloor(null);
 			room.setBuildingAreaId(null);
 
-			room.setResponsible(null);
-			room.setSubResponsible(null);
+			room.setCiOwner(null);
+			room.setCiOwnerDelegate(null);
 			
 			
 			room.setItset(null);
@@ -561,10 +561,10 @@ public class RoomHbn extends LokationItemHbn {
 						room.setBuildingAreaId(dto.getAreaId());
 						
 						if (null != dto.getCiOwnerHidden()) {
-							room.setResponsible(dto.getCiOwnerHidden());
+							room.setCiOwner(dto.getCiOwnerHidden());
 						}
 						if (null != dto.getCiOwnerDelegateHidden()) {
-							room.setSubResponsible(dto.getCiOwnerDelegateHidden());
+							room.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
 						}
 
 						

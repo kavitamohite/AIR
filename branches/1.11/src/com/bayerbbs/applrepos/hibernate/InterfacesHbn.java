@@ -11,20 +11,16 @@ import com.bayerbbs.applrepos.dto.InterfacesDTO;
 
 public class InterfacesHbn {
 
-	public static InterfacesDTO findInterfacesByInterfaceToken(
-			String interfaceToken) {
-
+	public static InterfacesDTO findInterfacesByInterfaceToken(String interfaceToken) {
 		InterfacesDTO result = new InterfacesDTO();
 
 		if (StringUtils.isNotNullOrEmpty(interfaceToken)) {
-
 			Transaction tx = null;
 			Session session = HibernateUtil.getSession();
+			
 			try {
 				tx = session.beginTransaction();
-				List<Interfaces> values = session.createQuery(
-						"select h from Interfaces as h where h.interfaceToken = '"
-								+ interfaceToken + "'").list();
+				List<Interfaces> values = session.createQuery("select h from Interfaces as h where h.interfaceToken = '" + interfaceToken + "'").list();
 
 				if (null != values && 1 == values.size()) {
 					Interfaces myValue = values.get(0);
@@ -33,9 +29,8 @@ public class InterfacesHbn {
 					result.setInterfaceName(myValue.getInterfaceName());
 					result.setSisecEditable(myValue.getSisecEditable());
 					// TODO Token zerlegen?
-
 				}
-
+				
 				HibernateUtil.close(tx, session, true);
 			} catch (RuntimeException e) {
 				HibernateUtil.close(tx, session, false);
@@ -44,5 +39,4 @@ public class InterfacesHbn {
 
 		return result;
 	}
-
 }

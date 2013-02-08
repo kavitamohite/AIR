@@ -103,11 +103,9 @@ public class ApplReposHbn {
 
 
 	public static String getCountFromGroupNameAndCwid(String groupname, String cwid) {
-
 		String resultCount = null;
 
 		if (null != cwid && !"".equals(cwid)) {
-
 			Transaction tx = null;
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
@@ -118,16 +116,13 @@ public class ApplReposHbn {
 			sql.append("select count(*) from v_person_groups where (upper(group_name) = '");
 			sql.append(groupname.toUpperCase()).append("'");
 			sql.append(" and upper(cwid)='").append(cwid.toUpperCase()).append("')");
-					
 			
 			try {
 				tx = session.beginTransaction();
-
 				conn = session.connection();
 
 				selectStmt = conn.createStatement();
-				ResultSet rsMessage = selectStmt
-						.executeQuery(sql.toString());
+				ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
 
 				if (null != rsMessage) {
 					rsMessage.next();
@@ -155,7 +150,6 @@ public class ApplReposHbn {
 					// throw again the first exception
 					// throw e;
 				}
-
 			}
 		}
 		return resultCount;
@@ -163,11 +157,9 @@ public class ApplReposHbn {
 
 	
 	public static String getCountFromRoleNameAndCwid(String rolename, String cwid) {
-
 		String resultCount = null;
 
 		if (null != cwid && !"".equals(cwid)) {
-
 			Transaction tx = null;
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
@@ -178,11 +170,9 @@ public class ApplReposHbn {
 			sql.append("select count(*) from role_person rp join role rl on rp.role_id = rl.role_id and rl.role_name = '");
 			sql.append(rolename).append("'");
 			sql.append(" where upper(cwid)='").append(cwid.toUpperCase()).append("'");
-					
 			
 			try {
 				tx = session.beginTransaction();
-
 				conn = session.connection();
 
 				selectStmt = conn.createStatement();

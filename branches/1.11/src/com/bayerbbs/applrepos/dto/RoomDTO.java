@@ -15,7 +15,11 @@ public class RoomDTO extends LocationDTO implements Serializable {
 	private String streetNumber;
 	private String postalCode;
 	private String location;
-
+	
+	//====================
+	private String severityLevelIdAcl;
+//	private String businessEssentialIdAcl;//Rollenbasierte Sonderfall: wenn User Rolle BusinessEssential-Editor hat: editierbar!
+	//====================
 
 	public String getFloor() {
 		return floor;
@@ -78,4 +82,20 @@ public class RoomDTO extends LocationDTO implements Serializable {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	
+	
+	public String getSeverityLevelIdAcl() {
+		return severityLevelIdAcl;
+	}
+	public void setSeverityLevelIdAcl(String severityLevelIdAcl) {
+		this.severityLevelIdAcl = severityLevelIdAcl;
+	}
+	
+	
+//	public String getBusinessEssentialIdAcl() {
+//		return businessEssentialIdAcl;
+//	}
+//	public void setBusinessEssentialIdAcl(String businessEssentialIdAcl) {
+//		this.businessEssentialIdAcl = businessEssentialIdAcl;
+//	}
 }

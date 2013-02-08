@@ -63,7 +63,7 @@ public class ClassInformationHbn {
 			try {
 				tx = session.beginTransaction();
 				List<ClassInformation> values = session.createQuery(
-						"select h from ClassInformation as h where h.deleteTimestamp is null order by h.classInformationName").list();
+						"select h from ClassInformation as h order by h.classInformationName").list();// where h.deleteTimestamp is null
 				
 				listResult = getDTOList(values);
 				
