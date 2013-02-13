@@ -145,4 +145,8 @@ public class AIRToolsWSDelegate {
 	public LinkCIDTO[] getLinkCIList(CiComplianceParameterInput input) {
 		return aIRToolsWS.getLinkCIList(input);
 	}
+	
+	public ReferenzDTO[] getTemplateCIs() {
+		return aIRToolsWS.getTemplateCIs();
+	}
 }

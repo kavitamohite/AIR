@@ -59,7 +59,7 @@ public class BuildingArea extends CiBase implements Serializable {
 	}
 	
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "buildingArea")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "buildingArea")//EAGER
 	public Set<Room> getRooms() {
 		return rooms;
 	}

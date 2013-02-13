@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
+import com.bayerbbs.applrepos.domain.Standort;
 
 public class LokationItemHbn {
 	private static final Log log = LogFactory.getLog(LokationItemHbn.class);
@@ -20,6 +21,15 @@ public class LokationItemHbn {
 	static final String BUILDING_AREA_TYPE_LOCATION = "areaId";
 	static final String AREA_TYPE_LOCATION = "areaId";
 	static final String SCHRANK_TYPE_LOCATION = "schrankId";
+	
+	
+	public static <T> T findById(Class<T> ci, Long id) {
+		Session session = HibernateUtil.getSession();
+
+		T t = (T)session.get(ci, id);
+
+		return t;
+	}
 	
 	
 	public static CiLokationsKette findLokationsKetteByCiTypeAndCiId(String ciType, Long ciId) {

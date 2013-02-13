@@ -1,7 +1,7 @@
 package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
@@ -42,7 +42,7 @@ public class AccessRightChecker {
 			} else {
 				// TODO neu GPSC-Group CI-Owner
 				if (!isEditable && StringUtils.isNotNullOrEmpty(cwid)) {
-					if (!ApplreposConstants.STRING_0.equals(ApplReposHbn.getCountFromGPSCGroupCIOwnder(objectId, tableId, cwid))) {
+					if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGPSCGroupCIOwnder(objectId, tableId, cwid))) {
 						// allowed by GPSC-Group CI Owner
 						isEditable = true;
 					}
@@ -51,7 +51,7 @@ public class AccessRightChecker {
 				// check group rights responsible
 				if (!isEditable
 						&& StringUtils.isNotNullOrEmpty(cwid) && StringUtils.isNotNullOrEmpty(application.getResponsible())) {
-					if (!ApplreposConstants.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(
+					if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(
 							application.getResponsible(), cwid))) {
 						// allowed by group rights
 						isEditable = true;
@@ -61,7 +61,7 @@ public class AccessRightChecker {
 				if (!isEditable
 						&& StringUtils.isNotNullOrEmpty(cwid) && StringUtils.isNotNullOrEmpty(application
 								.getSubResponsible())) {
-					if (!ApplreposConstants.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(
+					if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(
 							application.getSubResponsible(), cwid))) {
 						// allowed by group rights
 						isEditable = true;
@@ -72,8 +72,8 @@ public class AccessRightChecker {
 				if (!isEditable && StringUtils.isNotNullOrEmpty(cwid)) {
 					// Admin-Rolle nur für die Role AIR Administrator
 					
-					if (!ApplreposConstants.STRING_0.equals(ApplReposHbn.getCountFromRoleNameAndCwid(
-							ApplreposConstants.ROLE_AIR_ADMINISTRATOR, cwid))) {
+					if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromRoleNameAndCwid(
+							AirKonstanten.ROLE_AIR_ADMINISTRATOR, cwid))) {
 						// allowed by group rights for admin
 						isEditable = true;
 					}
@@ -84,10 +84,10 @@ public class AccessRightChecker {
 					// check subsitute group rights responsible
 					if (StringUtils.isNotNullOrEmpty(application
 							.getResponsible())) {
-						if (!ApplreposConstants.STRING_0.equals(ApplReposHbn
+						if (!AirKonstanten.STRING_0.equals(ApplReposHbn
 								.getCountFromGroupNameAndCwid(
-										ApplreposConstants.ROLE_SUBSTITUTE
-												+ ApplreposConstants.STRING_ONE_BLANK
+										AirKonstanten.ROLE_SUBSTITUTE
+												+ AirKonstanten.STRING_ONE_BLANK
 												+ application.getResponsible(),
 										cwid))) {
 							// allowed by subsitute group rights
@@ -98,10 +98,10 @@ public class AccessRightChecker {
 					if (!isEditable && !StringUtils.isNotNullOrEmpty(cwid)
 							&& StringUtils.isNotNullOrEmpty(application
 									.getSubResponsible())) {
-						if (!ApplreposConstants.STRING_0.equals(ApplReposHbn
+						if (!AirKonstanten.STRING_0.equals(ApplReposHbn
 								.getCountFromGroupNameAndCwid(
-										ApplreposConstants.ROLE_SUBSTITUTE
-												+ ApplreposConstants.STRING_ONE_BLANK
+										AirKonstanten.ROLE_SUBSTITUTE
+												+ AirKonstanten.STRING_ONE_BLANK
 												+ application.getSubResponsible(), cwid))) {
 							// allowed by subsitute group rights
 							isEditable = true;
@@ -122,7 +122,7 @@ public class AccessRightChecker {
 			return true;
 		
 		String groupCount = ApplReposHbn.getCountFromGroupNameAndCwid(ci.getCiOwnerDelegate(), cwid);
-		if (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(ApplreposConstants.STRING_0))
+		if (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(AirKonstanten.STRING_0))
 			return true;
 		
 		return false;
@@ -148,7 +148,7 @@ public class AccessRightChecker {
 			
 			if (!isRelevanceOperational && StringUtils.isNotNullOrEmpty(application
 					.getSubResponsible())) {
-				if (!ApplreposConstants.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(
+				if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(
 						application.getSubResponsible(), cwid))) {
 					// allowed by group rights
 					isRelevanceOperational = true;
@@ -179,7 +179,7 @@ public class AccessRightChecker {
 			}
 			
 			if (!isRelevanceStrategic && StringUtils.isNotNullOrEmpty(application.getApplicationOwnerDelegate())) {
-				if (!ApplreposConstants.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(
+				if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(
 						application.getApplicationOwnerDelegate(), cwid))) {
 					// allowed by group rights
 					isRelevanceStrategic = true;
@@ -199,7 +199,7 @@ public class AccessRightChecker {
 
 	private boolean isEditableByRoleAdminType(String adminTypeRoleName, String cwidInput) {
 		boolean isEditableByRoleAdminType = false;
-		if (!ApplreposConstants.STRING_0.equals(ApplReposHbn.getCountFromRoleNameAndCwid(
+		if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromRoleNameAndCwid(
 				adminTypeRoleName, cwidInput))) {
 			// allowed by role rights for admin type
 			isEditableByRoleAdminType = true;
@@ -209,11 +209,11 @@ public class AccessRightChecker {
 	}
 
 	public boolean isEditableRoleApplicationManager(String cwidInput) {
-		return isEditableByRoleAdminType(ApplreposConstants.ROLE_AIR_APPLICATION_MANAGER, cwidInput);
+		return isEditableByRoleAdminType(AirKonstanten.ROLE_AIR_APPLICATION_MANAGER, cwidInput);
 	}
 	
 	public boolean isEditableRoleInfrastructureManager(String cwidInput) {
-		return isEditableByRoleAdminType(ApplreposConstants.ROLE_AIR_INFRASTRUCTURE_MANAGER, cwidInput);
+		return isEditableByRoleAdminType(AirKonstanten.ROLE_AIR_INFRASTRUCTURE_MANAGER, cwidInput);
 	}
 	
 }

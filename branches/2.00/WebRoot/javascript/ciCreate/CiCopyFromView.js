@@ -208,6 +208,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 		this.applicationName = record.data.name;
 		this.applicationCat1 = record.data.applicationCat1Txt;
 		this.applicationCat2 = record.data.applicationCat2Txt;
+		this.tableId = record.data.tableId;
 		
 		var bCopyFromNext = this.getComponent('pCopyFromSearchCard').getComponent('pCopyFromCiSearch').getComponent('bCopyFromNext');
 		bCopyFromNext.show();
@@ -311,25 +312,28 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 				this.fireEvent('airAction', this, 'appCopySuccess', data);
 	
 				var continueEditingCallback = function() {
-					showCiDetailDataChanged = false;
+					var grid = this.getComponent('pCopyFromSearchCard').getComponent('CiSearchWizzardResultGrid');
+					var record = grid.getSelectionModel().getSelected();//grid.getStore().getAt(rowIndex);
 					
-//					this.fireEvent('applicationCopy', this, 'continueEditing');
-					this.fireEvent('externalNavigation', this, null, 'clCiDetails');
+					var options = {
+						tableId: record.get('tableId'),
+						ciSubType: record.get('applicationCat1Id')
+					};
+
+					this.fireEvent('externalNavigation', this, null, 'clCiDetails', options);
+					
+//					this.fireEvent('externalNavigation', this, null, 'clCiDetails');
 				}.createDelegate(this);
 				
-				var createNewCiCallback = function() {
-//					wizardStart(true, 'CiCopyFromDetailView');
-					
+				var createNewCiCallback = function() {					
 					this.fireEvent('externalNavigation', this, null, 'clCiCreateWizard');//or clCiCreateCopyFrom: only reset all and switch card like back button
 				}.createDelegate(this);
 				
 				var redirectToSearchCallback = function() {
-//					selectedCIId = -1;
 					AIR.AirApplicationManager.setCiId(-1);
 					AIR.AirApplicationManager.setTableId(-1);
 
 					
-//					this.fireEvent('applicationCopy', this, 'redirectToSearch');
 					this.fireEvent('externalNavigation', this, null, 'clSearch');
 				}.createDelegate(this);
 	

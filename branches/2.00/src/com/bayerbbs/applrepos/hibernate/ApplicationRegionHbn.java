@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.ApplReposTS;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.ApplicationRegion;
 import com.bayerbbs.applrepos.dto.ItSetDTO;
 
@@ -143,7 +143,7 @@ public class ApplicationRegionHbn {
 					&& null == applicationRegion.getDeleteTimestamp()) {
 				// set deletion information
 				applicationRegion
-						.setDeleteQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				applicationRegion.setDeleteUser(cwid);
 				applicationRegion.setDeleteTimestamp(ApplReposTS
 						.getDeletionTimestamp());
@@ -151,13 +151,13 @@ public class ApplicationRegionHbn {
 		} else if (null != applicationRegion) {
 			// update existing entry
 			applicationRegion
-					.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+					.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			applicationRegion.setUpdateUser(cwid.toUpperCase());
 			applicationRegion.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 			if (null != applicationRegion.getDeleteTimestamp()) {
 				// oh it is deleted, so reactivate it
 				applicationRegion
-						.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				applicationRegion.setInsertUser(cwid);
 				applicationRegion.setInsertTimestamp(applicationRegion
 						.getUpdateTimestamp());
@@ -170,7 +170,7 @@ public class ApplicationRegionHbn {
 			update = false;
 			applicationRegion = new ApplicationRegion();
 			applicationRegion
-					.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			applicationRegion.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 			applicationRegion.setInsertUser(cwid);
 			// --

@@ -13,8 +13,9 @@ import org.hibernate.Transaction;
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
+import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
@@ -49,13 +50,25 @@ public class RoomHbn extends LokationItemHbn {
 				// throw again the first exception
 				throw e;
 			}
-
 		}
 		return room;
 	}
 	
 	public static CiLokationsKette findLokationsKetteById(Long ciId) {
 		return findLokationsKetteByCiTypeAndCiId(LokationItemHbn.RAUM_TYPE_LOCATION, ciId);
+	}
+	
+	public static List<ItSystem> getSystemPlatformsById(Long roomId) {
+		List<ItSystem> itSystems = null;
+		
+//		select its.it_system_name, its.hw_ident_or_trans from it_system its 
+//		join it_system_hw itshw on itshw.it_system_id = its.it_system_id 
+//		join hardwarekomponente hwk on hwk.hw_id = itshw.hw_id 
+//		join schrank s on s.schrank_id = hwk.schrank_id 
+//		where s.raum_id = roomId 
+//		order by its.it_system_name
+		
+		return itSystems;
 	}
 
 
@@ -69,20 +82,19 @@ public class RoomHbn extends LokationItemHbn {
 				Long id = new Long(dto.getId());
 
 				Session session = HibernateUtil.getSession();
-				Transaction tx = null;
-				tx = session.beginTransaction();
+				Transaction tx = session.beginTransaction();
 				Room room = (Room) session.get(Room.class, id);
 				
 				if (null == room) {
 					// application was not found in database
-					output.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(AirKonstanten.RESULT_ERROR);
 					output.setMessages(new String[] { "the room id " + id + " was not found in database" });
 				}
 
 				// if it is not already marked as deleted, we can do it
 				else if (null == room.getDeleteTimestamp()) {
 					room.setDeleteUser(cwid);
-					room.setDeleteQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+					room.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 					room.setDeleteTimestamp(ApplReposTS.getDeletionTimestamp());
 
 					boolean toCommit = false;
@@ -93,34 +105,34 @@ public class RoomHbn extends LokationItemHbn {
 					} catch (Exception e) {
 						log.error(e.getMessage());
 						// handle exception
-						output.setResult(ApplreposConstants.RESULT_ERROR);
+						output.setResult(AirKonstanten.RESULT_ERROR);
 						output.setMessages(new String[] { e.getMessage() });
 					} finally {
 						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
 						
 						if (toCommit) {
 							if (null == hbnMessage) {
-								output.setResult(ApplreposConstants.RESULT_OK);
+								output.setResult(AirKonstanten.RESULT_OK);
 								output.setMessages(new String[] { EMPTY });
 							} else {
-								output.setResult(ApplreposConstants.RESULT_ERROR);
+								output.setResult(AirKonstanten.RESULT_ERROR);
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
 					}
 				} else {
 					// application is already deleted
-					output.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(AirKonstanten.RESULT_ERROR);
 					output.setMessages(new String[] { "the room is already deleted" });
 				}
 			} else {
 				// application id is missing
-				output.setResult(ApplreposConstants.RESULT_ERROR);
+				output.setResult(AirKonstanten.RESULT_ERROR);
 				output.setMessages(new String[] { "the room id is missing or invalid" });
 			}
 		} else {
 			// cwid missing
-			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { "cwid missing" });
 		}
 
@@ -144,10 +156,8 @@ public class RoomHbn extends LokationItemHbn {
 				if (messages.isEmpty()) {
 
 					Session session = HibernateUtil.getSession();
-					Transaction tx = null;
-					tx = session.beginTransaction();
-					Room room = (Room) session.get(
-							Room.class, id);
+					Transaction tx = session.beginTransaction();
+					Room room = (Room) session.get(Room.class, id);
 
 					if (null == room) {
 						// room was not found in database
@@ -173,7 +183,7 @@ public class RoomHbn extends LokationItemHbn {
 						
 
 						room.setUpdateUser(cwid);
-						room.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						room.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						room.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 						
 						// RFC8344 change Insert-Quelle? // RFC 8532
@@ -191,7 +201,7 @@ public class RoomHbn extends LokationItemHbn {
 							room.setRoomName(dto.getName());
 						}
 						if (null != dto.getAlias()) {
-							room.setRoomAlias(dto.getAlias());
+							room.setAlias(dto.getAlias());
 						}
 						if (null != dto.getFloor()) {
 							room.setFloor(dto.getFloor());
@@ -294,7 +304,7 @@ public class RoomHbn extends LokationItemHbn {
 						String message = e.getMessage();
 						log.error(message);
 						// handle exception
-						output.setResult(ApplreposConstants.RESULT_ERROR);
+						output.setResult(AirKonstanten.RESULT_ERROR);
 						
 						message = ApplReposHbn.getOracleTransbaseErrorMessage(message);
 						
@@ -304,18 +314,18 @@ public class RoomHbn extends LokationItemHbn {
 								toCommit);
 						if (toCommit && null != room) {
 							if (null == hbnMessage) {
-								output.setResult(ApplreposConstants.RESULT_OK);
+								output.setResult(AirKonstanten.RESULT_OK);
 								output.setMessages(new String[] { EMPTY });
 							} else {
 								output
-										.setResult(ApplreposConstants.RESULT_ERROR);
+										.setResult(AirKonstanten.RESULT_ERROR);
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
 					}
 				} else {
 					// messages
-					output.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(AirKonstanten.RESULT_ERROR);
 					String astrMessages[] = new String[messages.size()];
 					for (int i = 0; i < messages.size(); i++) {
 						astrMessages[i] = messages.get(i);
@@ -333,7 +343,7 @@ public class RoomHbn extends LokationItemHbn {
 			output.setErrorMessage("100");
 		}
 
-		if (ApplreposConstants.RESULT_ERROR.equals(output.getResult())) {
+		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
 			// errorcodes / Texte
 			if (null != output.getMessages() && output.getMessages().length > 0) {
 				output.setDisplayMessage(output.getMessages()[0]);
@@ -352,7 +362,7 @@ public class RoomHbn extends LokationItemHbn {
 			messages.add("room name is empty");
 		}
 		else {
-			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, false);
+			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
 			if (!listCi.isEmpty()) {
 				// check if the name is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
@@ -366,7 +376,7 @@ public class RoomHbn extends LokationItemHbn {
 			dto.setAlias(dto.getName());
 		}
 		else {
-			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, false);
+			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
 			if (!listCi.isEmpty()) {
 				// check if the alias is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
@@ -394,7 +404,7 @@ public class RoomHbn extends LokationItemHbn {
 
 		if (null == room) {
 			// application was not found in database
-			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { "the room was not found in database" });
 		} else {
 			Timestamp tsNow = ApplReposTS
@@ -402,11 +412,11 @@ public class RoomHbn extends LokationItemHbn {
 			
 			// application found - change values
 			room.setUpdateUser(cwid);
-			room.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+			room.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			room.setUpdateTimestamp(tsNow);
 			// override INSERT-attributes
 			room.setInsertUser(cwid);
-			room.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+			room.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			room.setInsertTimestamp(tsNow);
 			
 			// reactivate DELETE-attributes
@@ -416,7 +426,7 @@ public class RoomHbn extends LokationItemHbn {
 
 
 			room.setRoomName(null);
-			room.setRoomAlias(null);
+			room.setAlias(null);
 			room.setRoomType(null);
 			room.setFloor(null);
 			room.setBuildingAreaId(null);
@@ -445,16 +455,16 @@ public class RoomHbn extends LokationItemHbn {
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			// handle exception
-			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { e.getMessage() });
 		} finally {
 			String hbnMessage = HibernateUtil.close(tx, session, toCommit);
 			if (toCommit && null != room) {
 				if (null == hbnMessage) {
-					output.setResult(ApplreposConstants.RESULT_OK);
+					output.setResult(AirKonstanten.RESULT_OK);
 					output.setMessages(new String[] { EMPTY });
 				} else {
-					output.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(AirKonstanten.RESULT_ERROR);
 					output.setMessages(new String[] { hbnMessage });
 				}
 			}
@@ -479,11 +489,11 @@ public class RoomHbn extends LokationItemHbn {
 					boolean isNameAndAliasNameAllowed = true;
 					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, true);
+						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
 						if (null != listCi && 0 < listCi.size()) {
 							// name is not allowed
 							isNameAndAliasNameAllowed = false;
-							output.setResult(ApplreposConstants.RESULT_ERROR);
+							output.setResult(AirKonstanten.RESULT_ERROR);
 							if (null != listCi.get(0).getDeleteQuelle()) {
 								boolean override = forceOverride != null && forceOverride.booleanValue();
 								
@@ -509,11 +519,11 @@ public class RoomHbn extends LokationItemHbn {
 					}
 					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), ApplreposConstants.TABLE_ID_ROOM, true);
+						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
 						if (null != listCI && 0 < listCI.size()) {
 							// alias is not allowed
 							isNameAndAliasNameAllowed = false;
-							output.setResult(ApplreposConstants.RESULT_ERROR);
+							output.setResult(AirKonstanten.RESULT_ERROR);
 							if (null != listCI.get(0).getDeleteQuelle()) {
 								output.setMessages(new String[] {"Room Alias '" + listCI.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 							}
@@ -535,7 +545,7 @@ public class RoomHbn extends LokationItemHbn {
 						}
 						if (null == itSet) {
 							// set default itSet
-							itSet = new Long(ApplreposConstants.IT_SET_DEFAULT);
+							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
 						}
 
 
@@ -545,7 +555,7 @@ public class RoomHbn extends LokationItemHbn {
 
 						// ci - insert values
 						room.setInsertUser(cwid);
-						room.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						room.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						room.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 
 						// ci - update values
@@ -555,7 +565,7 @@ public class RoomHbn extends LokationItemHbn {
 
 						// ci - attributes
 						room.setRoomName(dto.getName());
-						room.setRoomAlias(dto.getAlias());
+						room.setAlias(dto.getAlias());
 						room.setFloor(dto.getFloor());
 						room.setRoomType(dto.getRoomType());
 						room.setBuildingAreaId(dto.getAreaId());
@@ -575,16 +585,16 @@ public class RoomHbn extends LokationItemHbn {
 							toCommit = true;
 						} catch (Exception e) {
 							// handle exception
-							output.setResult(ApplreposConstants.RESULT_ERROR);
+							output.setResult(AirKonstanten.RESULT_ERROR);
 							output.setMessages(new String[] { e.getMessage() });
 						} finally {
 							String hbnMessage = HibernateUtil.close(tx, session, toCommit);
 							if (toCommit) {
 								if (null == hbnMessage) {
-									output.setResult(ApplreposConstants.RESULT_OK);
+									output.setResult(AirKonstanten.RESULT_OK);
 									output.setMessages(new String[] { EMPTY });
 								} else {
-									output.setResult(ApplreposConstants.RESULT_ERROR);
+									output.setResult(AirKonstanten.RESULT_ERROR);
 									output.setMessages(new String[] { hbnMessage });
 								}
 							}
@@ -592,7 +602,7 @@ public class RoomHbn extends LokationItemHbn {
 					}
 				} else {
 					// messages
-					output.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(AirKonstanten.RESULT_ERROR);
 					String astrMessages[] = new String[messages.size()];
 					for (int i = 0; i < messages.size(); i++) {
 						astrMessages[i] = messages.get(i);
@@ -601,12 +611,12 @@ public class RoomHbn extends LokationItemHbn {
 				}
 			} else {
 				// ci id not 0
-				output.setResult(ApplreposConstants.RESULT_ERROR);
+				output.setResult(AirKonstanten.RESULT_ERROR);
 				output.setMessages(new String[] { "the ci id should not be 0" });
 			}
 		} else {
 			// cwid missing
-			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { "cwid missing" });
 		}
 

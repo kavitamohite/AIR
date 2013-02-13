@@ -71,9 +71,6 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 		
 		this.ciTitleView.onHistoryChange(this.history, this.history[this.historyIndex], this.historyIndex);
 		this.delegateNavigation();
-
-//		var options = { skipHistory: true, forceNavigation: true, skipReload: true };
-//		this.fireEvent('externalNavigation', this, null, this.history[this.historyIndex].getId(), options);//this.historyIndex
 	},
 	
 	onForward: function(link, event) {
@@ -85,9 +82,6 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 		this.ciTitleView.onHistoryChange(this.history, this.history[this.historyIndex], this.historyIndex);
 		if(this.history[this.historyIndex]) {
 			this.delegateNavigation();
-			
-//			var options = { skipHistory: true, forceNavigation: true, skipReload: true };
-//			this.fireEvent('externalNavigation', this, null, this.history[this.historyIndex].getId(), options);
 		} else this.historyIndex--;
 	},
 	
@@ -110,9 +104,6 @@ AIR.AirHistoryManager = Ext.extend(Ext.util.Observable, {
 		
 		if(!Ext.isIE && token !== 'null') {
 			this.delegateNavigation(token);
-			
-//			var options = { skipReload: true };
-//			this.fireEvent('externalNavigation', this, null, token, options);
 		}
 	},
 	

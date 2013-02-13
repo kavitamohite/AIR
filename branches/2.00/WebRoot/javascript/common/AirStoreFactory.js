@@ -2077,22 +2077,6 @@ AIR.AirStoreFactory = function() {
 			var applicationListStore = new Ext.data.GroupingStore({//XmlStore
 			    autoDestroy: true,
 			    autoLoad: false,
-//			    remoteSort: true,
-			    
-//				fields: [
-//					'applicationId', 
-//					'applicationName', 
-//					'applicationAlias',
-//					'advancedsearch',
-//					'responsible', 
-//					'subResponsible',
-//					'applicationCat2Txt',
-//					'applicationCat1Txt',
-//					'applicationOwner',
-//					'applicationSteward',
-//					'applicationOwnerDelegate',
-//					'tableId'
-//				],
 			    
 				proxy: new Ext.ux.soap.SoapProxy({
 					url: webcontext +'/ApplicationWSPort',
@@ -2102,16 +2086,6 @@ AIR.AirStoreFactory = function() {
 				}),
 				
 				reader: applicationListReader
-	
-//			    baseParams: {
-//				 	cwid: AIR.AirApplicationManager.getCwid(),
-//				 	token: AIR.AirApplicationManager.getToken(),
-//					searchAction: searchAction,
-//					start: 0,	
-//					limit: 20
-//				},
-//				
-//				getGroupState: Ext.emptyFn
 			});
 			
 			return applicationListStore;
@@ -2191,6 +2165,12 @@ AIR.AirStoreFactory = function() {
 				case AC.TABLE_ID_POSITION:
 					ciDetailStore = this.createSchrankDetailStore();
 					break;
+				case AC.TABLE_ID_TERRAIN:
+					ciDetailStore = this.createTerrainDetailStore();
+					break;
+				case AC.TABLE_ID_SITE:
+					ciDetailStore = this.createStandortDetailStore();
+					break;
 				default: break;
 			}
 			
@@ -2268,7 +2248,7 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createSchrankDetailStore: function() {
-			var ciDetailRecord = AIR.AirConfigFactory.createBuildingAreaCiRecord();//new AIR.CiLocationRecord();
+			var ciDetailRecord = AIR.AirConfigFactory.createSchrankCiRecord();//new AIR.CiLocationRecord();
 
 			var ciDetailReader = new Ext.data.XmlReader({
 				record: 'return'
@@ -2282,6 +2262,52 @@ AIR.AirStoreFactory = function() {
 				proxy: new Ext.ux.soap.SoapProxy({
 					url: webcontext + '/CiEntityWSPort',
 					loadMethod: 'getSchrank',
+					timeout: 120000,
+					reader: ciDetailReader
+				})
+			});
+			
+			return ciDetailStore;
+		},
+		
+		createStandortDetailStore: function() {
+			var ciDetailRecord = AIR.AirConfigFactory.createStandortCiRecord();//new AIR.CiLocationRecord();
+
+			var ciDetailReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, ciDetailRecord);
+
+			var ciDetailStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'ciStandortStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getStandort',
+					timeout: 120000,
+					reader: ciDetailReader
+				})
+			});
+			
+			return ciDetailStore;
+		},
+		
+		createTerrainDetailStore: function() {
+			var ciDetailRecord = AIR.AirConfigFactory.createTerrainCiRecord();//new AIR.CiLocationRecord();
+
+			var ciDetailReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, ciDetailRecord);
+
+			var ciDetailStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'ciTerrainStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getTerrain',
 					timeout: 120000,
 					reader: ciDetailReader
 				})
@@ -2942,6 +2968,7 @@ AIR.AirStoreFactory = function() {
 			var referencesListRecord = Ext.data.Record.create([
 		      	{ name: 'id' },//,{ name: 'id', mapping: 'id' }
 		      	{ name: 'name' },//{ name: 'text', mapping: 'name' }
+		      	{ name: 'tableId' },
 		      	{ name: 'itsetId' },
 		      	{ name: 'itsecGroupId' },
 				{ name: 'ciKat1' }
@@ -2959,17 +2986,17 @@ AIR.AirStoreFactory = function() {
 				
 		      	proxy: new Ext.ux.soap.SoapProxy({
 		      		url: webcontext +'/AIRToolsWSPort',
-		      		loadMethod: 'getReferenzList',
+		      		loadMethod: 'getTemplateCIs',//getReferenzList
 		      		timeout: 120000,
 		      		reader: referencesListReader
 		      	}),
-		      	fields: ['id', 'name', 'itsetId', 'itsecGroupId', 'ciKat1'],
 		      	
-		      	baseParams: {
-				 	cwid: AIR.AirApplicationManager.getCwid(),
-				 	token: AIR.AirApplicationManager.getToken()
-		      	},
-	
+//		      	fields: ['id', 'name', 'itsetId', 'itsecGroupId', 'ciKat1'],
+//		      	baseParams: {
+//				 	cwid: AIR.AirApplicationManager.getCwid(),
+//				 	token: AIR.AirApplicationManager.getToken()
+//		      	},
+
 		      	reader: referencesListReader
 		    });
 		    
@@ -2981,7 +3008,8 @@ AIR.AirStoreFactory = function() {
 		      	{ name: 'id', mapping: 'itSecGroupId' },//name: 'id'		, mapping: 'itSecGroupId'
 		      	{ name: 'name', mapping: 'itSecGroupName' },//name: 'name'		, mapping: 'itSecGroupName'
 		      	{ name: 'itsetId', mapping: 'itsetId' },
-				{ name: 'ciKat1' }
+				{ name: 'ciKat1' },
+				{ name: 'tableId', type: 'int' }
 		    ]);
 		
 		    var itSecGroupListReader = new Ext.data.XmlReader({
@@ -3000,7 +3028,7 @@ AIR.AirStoreFactory = function() {
 		      		timeout: 120000,
 		      		reader: itSecGroupListReader
 		      	}),
-		      	fields: [ 'id', 'name', 'itsetId', 'ciKat1' ],//'itSecGroupId', 'itSecGroupName' :: 'id', 'name'
+//		      	fields: [ 'id', 'name', 'itsetId', 'ciKat1', 'tableId' ],//'itSecGroupId', 'itSecGroupName' :: 'id', 'name'
 		      	
 		      	reader: itSecGroupListReader
 		    });

@@ -1,21 +1,21 @@
 package com.bayerbbs.applrepos.constants;
 
 
-public class ApplreposConstants {
-
+public final class AirKonstanten {
 	public final static Long IT_SET_DEFAULT = new Long(10002);
-	
 	public final static Long BUSINESS_ESSENTIAL_DEFAULT = new Long(16);
 	
-	public final static Long TABLE_ID_IT_SYSTEM	 = new Long(1);
-	public final static Long TABLE_ID_APPLICATION = new Long(2);
-	public final static Long TABLE_ID_ROOM = new Long(3);
-	public final static Long TABLE_ID_BUILDING = new Long(4);
-	public final static Long TABLE_ID_RACK = new Long(13);
-	public final static Long TABLE_ID_TERRAIN = new Long(30);
-	public final static Long TABLE_ID_WAYS		 = new Long(37);
-	public final static Long TABLE_ID_BUILDING_AREA = new Long(88);
+	public final static int TABLE_ID_IT_SYSTEM		= 1;
+	public final static int TABLE_ID_APPLICATION	= 2;
+	public final static int TABLE_ID_ROOM			= 3;
+	public final static int TABLE_ID_BUILDING		= 4;
+	public final static int TABLE_ID_POSITION		= 13;
+	public final static int TABLE_ID_TERRAIN		= 30;
+	public final static int TABLE_ID_WAYS			= 37;
+	public final static int TABLE_ID_BUILDING_AREA	= 88;
+	public final static int TABLE_ID_SITE			= 12;
 
+	
 	public final static String APPLICATION_GUI_NAME = "AIR";
 	
 	public final static String INSERT_QUELLE_ANT 	= "ANT";

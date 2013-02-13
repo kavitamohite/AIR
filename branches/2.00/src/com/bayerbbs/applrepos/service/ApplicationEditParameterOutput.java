@@ -1,7 +1,7 @@
 package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.air.error.ErrorCodeManager;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 
 public class ApplicationEditParameterOutput {
 
@@ -55,7 +55,7 @@ public class ApplicationEditParameterOutput {
 
 		
 	public void setErrorMessage(String code, String replacement) {
-		setResult(ApplreposConstants.RESULT_ERROR);
+		setResult(AirKonstanten.RESULT_ERROR);
 		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 		String detailedMessage = errorCodeManager.getErrorMessage(code, replacement);
 		setMessages(new String[] { detailedMessage });		

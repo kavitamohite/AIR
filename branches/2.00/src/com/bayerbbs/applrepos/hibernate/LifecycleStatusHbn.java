@@ -13,7 +13,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.LifecycleStatus;
 import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
 
@@ -77,7 +77,7 @@ public class LifecycleStatusHbn {
 			tx = session.beginTransaction();
 			List<LifecycleStatus> values = session
 					.createQuery(
-							"select h from LifecycleStatus as h where h.tabelleId = " + ApplreposConstants.TABLE_ID_APPLICATION + "  order by h.sort")
+							"select h from LifecycleStatus as h where h.tabelleId = " + AirKonstanten.TABLE_ID_APPLICATION + "  order by h.sort")
 					.list();
 
 			listResult = getDTOList(values);
@@ -107,7 +107,7 @@ public class LifecycleStatusHbn {
 	 * @param applicationId
 	 * @return
 	 */
-	public static List<LifecycleStatusDTO> listLifecycleStatus(Long tablellen_id) {
+	public static List<LifecycleStatusDTO> listLifecycleStatus(Integer tableId) {
 		
 		ArrayList<LifecycleStatusDTO> listResult = new ArrayList<LifecycleStatusDTO>();
 
@@ -124,7 +124,7 @@ public class LifecycleStatusHbn {
 		sql.append(" from lifecycle_sub_stat lcsubstat");
 		sql.append(" left join lifecycle_status lcstat on lcstat.lc_status_id = lcsubstat.lc_status_id");
 		sql.append(" where lcsubstat.tabelle_id = ");
-		sql.append(tablellen_id);
+		sql.append(tableId);
 		sql.append(" ORDER BY lcstat.SORT, lcsubstat.SORT"); 
 
 		try {

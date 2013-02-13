@@ -11,7 +11,7 @@ import org.hibernate.Session;
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.SystemPlatform;
 import com.bayerbbs.applrepos.dto.SystemPlatformDTO;
 import com.bayerbbs.applrepos.service.SystemPlatformEditParameterOutput;
@@ -190,7 +190,7 @@ public class SystemPlatformHbn {
 						//theSystemPlatform.setItsecPLConfidentialityText(dto.getItsecPLConfidentialityText());
 						// overhead
 						theSystemPlatform.setUpdateUser(cwid);
-						theSystemPlatform.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						theSystemPlatform.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						theSystemPlatform.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 						
 						session.saveOrUpdate(theSystemPlatform);

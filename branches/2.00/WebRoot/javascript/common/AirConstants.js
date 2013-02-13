@@ -52,6 +52,7 @@ AIR.AirConstants = {
 	TABLE_ID_BUILDING: 4,
 	TABLE_ID_BUILDING_AREA: 88,
 	TABLE_ID_POSITION: 13,
+	TABLE_ID_SITE: 12,
 	
 	APP_CAT1_APPLICATION: '5',//'Application',
 	APP_CAT1_APPLICATION_PLATFORM: '-10006',//'Application Platform',
@@ -97,7 +98,7 @@ AIR.AirConstants = {
 	GAP_CLASS_MID_TERM_ID2_PLUS_6_MONTHS: 6,
 	GAP_CLASS_MID_TERM_ID3_PLUS_3_MONTHS: 3,
 	
-	MAX_MITIGATION_POTENTIAL: 100,//
+	MAX_MITIGATION_POTENTIAL: 100,
 	LABEL_INVALID: 'INVALID: ',
 	
 	VALIDATION_MESSAGE_ALIAS: '"Alias" {0} already exists. Please choose another name or ask ITILcenter@bayer.com for help to enable this alias.',// '+this.objectAliasAllowedStore.getAt(0).data.application+'
@@ -148,7 +149,12 @@ AIR.AirConstants = {
 		DNS: 106,
 		PRC: 118,
 		SVC: 123
-	}
+	},
+	
+	COMPANY_REGULATION_ITSEC: '1435',
+	COMPANY_REGULATION_ICS: '1920',
+	COMPANY_REGULATION_2059: '2059',
+	COMPANY_REGULATION_2008: '2008'
 };
 AC = AIR.AirConstants;
 

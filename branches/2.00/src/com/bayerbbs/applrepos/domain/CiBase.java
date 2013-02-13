@@ -8,7 +8,6 @@ import javax.persistence.Transient;
 public abstract class CiBase extends DeletableRevisionInfo {
 	private Long id;
 	private String name;
-	private String alias;
 	
 	private String ciOwner;
 	private String ciOwnerDelegate;
@@ -43,14 +42,7 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@Transient
-	public String getAlias() {
-		return alias;
-	}
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
+
 	
 	
 	@Column(name = "RESPONSIBLE")

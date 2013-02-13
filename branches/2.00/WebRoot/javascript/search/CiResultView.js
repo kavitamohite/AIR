@@ -135,12 +135,14 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		var record = grid.getStore().getAt(rowIndex);
 		var ciId = record.id;
 		
-		//
-		if(record.data.tableId == AC.TABLE_ID_APPLICATION/* ||
+		
+		if(record.data.tableId == AC.TABLE_ID_APPLICATION ||
 		   record.data.tableId == AC.TABLE_ID_ROOM ||
 		   record.data.tableId == AC.TABLE_ID_BUILDING ||
 		   record.data.tableId == AC.TABLE_ID_BUILDING_AREA ||
-		   record.data.tableId == AC.TABLE_ID_POSITION*/) {
+		   record.data.tableId == AC.TABLE_ID_POSITION ||
+		   record.data.tableId == AC.TABLE_ID_TERRAIN ||
+		   record.data.tableId == AC.TABLE_ID_SITE) {
 			
 			AAM.setCiId(ciId);
 			AAM.setTableId(parseInt(record.data.tableId));//AC.TABLE_ID_APPLICATION

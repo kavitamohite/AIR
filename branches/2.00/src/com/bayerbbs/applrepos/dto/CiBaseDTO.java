@@ -2,13 +2,13 @@ package com.bayerbbs.applrepos.dto;
 
 import java.io.Serializable;
 
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 
 public class CiBaseDTO implements Serializable {
 	private static final long serialVersionUID = -7096067985931326775L;
 	
 	private Long id;
-	private Long tableId;
+	private Integer tableId;
 	private String name;
 	private String alias;
 
@@ -49,7 +49,7 @@ public class CiBaseDTO implements Serializable {
 	private String gxpFlagId;// falls später über id referenziert wird
 	
 	//====================
-	private String relevanceOperational = ApplreposConstants.NO_SHORT;
+	private String relevanceOperational = AirKonstanten.NO_SHORT;
 	
 //	Rechteeinschränkungen auf einzelne Felder, wenn CI aus anderen Quellen als SISECGui, AIR kommt
 	
@@ -81,11 +81,11 @@ public class CiBaseDTO implements Serializable {
 		this.id = id;
 	}
 
-	public Long getTableId() {
+	public Integer getTableId() {
 		return tableId;
 	}
 
-	public void setTableId(Long tableId) {
+	public void setTableId(Integer tableId) {
 		this.tableId = tableId;
 	}
 

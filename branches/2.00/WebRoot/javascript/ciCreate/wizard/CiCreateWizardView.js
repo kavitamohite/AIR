@@ -276,28 +276,26 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 				this.fireEvent('airAction', this, 'appCreateSuccess', data);
 	
 				var continueEditingCallback = function() {
-//					showCiDetailDataChanged = false;
 					this.wizardStarted = false;
+					
+//					var options = {
+//						tableId: //aus wizard CI-Typ combo
+//						ciSubType: //aus wizard CI-Typ combo
+//					};
 
-//					this.fireEvent('applicationCopy', this, 'continueEditing');
-					this.fireEvent('externalNavigation', this, null, 'clCiDetails');
+					this.fireEvent('externalNavigation', this, null, 'clCiDetails');//, options
 				}.createDelegate(this);
 				
 				var createNewCiCallback = function() {
-//					wizardStart(true);
-					
 					this.fireEvent('externalNavigation', this, null, 'clCiCreateWizard');
-//					this.wizardStart(true);
 				}.createDelegate(this);
 				
 				var redirectToSearchCallback = function() {
-//					selectedCIId = -1;
 					AIR.AirApplicationManager.setCiId(-1);
 					AIR.AirApplicationManager.setTableId(-1);
 					
 					this.wizardStarted = false;
 
-//					this.fireEvent('applicationCopy', this, 'redirectToSearch');
 					this.fireEvent('externalNavigation', this, null, 'clSearch');
 				}.createDelegate(this);
 	

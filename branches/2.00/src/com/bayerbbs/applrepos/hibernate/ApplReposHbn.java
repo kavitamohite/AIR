@@ -16,7 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.dto.ComplianceControlStatusDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
 
@@ -295,7 +295,7 @@ public class ApplReposHbn {
 		return resultCount;
 	}
 	
-	public static List<ComplianceControlStatusDTO> getComplianceControlStatus(Long tableId, Long ciId) {
+	public static List<ComplianceControlStatusDTO> getComplianceControlStatus(Integer tableId, Long ciId) {
 		
 		ArrayList<ComplianceControlStatusDTO> listControl = new ArrayList<ComplianceControlStatusDTO>();
 		
@@ -400,7 +400,7 @@ public class ApplReposHbn {
 				@SuppressWarnings("unchecked")
 				List<Object[]> listTemp = session.createSQLQuery(SELECT_ROLE_BUSINESS_ESSENTIAL)
 					.setString("Cwid", cwid.toUpperCase())
-					.setString("Role_Name", ApplreposConstants.ROLE_BUSINESS_ESSENTIAL_EDITOR)
+					.setString("Role_Name", AirKonstanten.ROLE_BUSINESS_ESSENTIAL_EDITOR)
 					.list();
 				
 				for (Iterator<Object[]> iterator = listTemp.iterator(); iterator.hasNext();) 
@@ -441,7 +441,7 @@ public class ApplReposHbn {
 
 	public static String getInterfaceIdFromApplication() {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select interfaces_id from interfaces where token = '").append(ApplreposConstants.APPLICATION_GUI_NAME).append("'");
+		sql.append("select interfaces_id from interfaces where token = '").append(AirKonstanten.APPLICATION_GUI_NAME).append("'");
 		return getCountInternal(sql.toString());
 	}
 	

@@ -1,56 +1,56 @@
 package com.bayerbbs.applrepos.dto;
 
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 
 public class ApplicationAccessDTO {
 
-	private String relevanceOperational = ApplreposConstants.NO_SHORT;
-	private String relevanceStrategic = ApplreposConstants.NO_SHORT;
+	private String relevanceOperational = AirKonstanten.NO_SHORT;
+	private String relevanceStrategic = AirKonstanten.NO_SHORT;
 	
-	private String License_Scanning = ApplreposConstants.NO_SHORT;
-	private String Responsible = ApplreposConstants.NO_SHORT;
-	private String Sub_Responsible = ApplreposConstants.NO_SHORT;
-	private String Relevance_Ics = ApplreposConstants.NO_SHORT;
-	private String Relevanz_Itsec = ApplreposConstants.NO_SHORT;
-	private String Gxp_Flag = ApplreposConstants.NO_SHORT;
-	private String Ref_Id = ApplreposConstants.NO_SHORT;
-	private String Itsec_Gruppe_Id = ApplreposConstants.NO_SHORT;
-	private String Sample_Test_Date = ApplreposConstants.NO_SHORT;
-	private String Sample_Test_Result = ApplreposConstants.NO_SHORT;
-	private String Sla_Id = ApplreposConstants.NO_SHORT;
-	private String Service_Contract_Id = ApplreposConstants.NO_SHORT;
-	private String Priority_Level_Id = ApplreposConstants.NO_SHORT;
-	private String Severity_Level_Id = ApplreposConstants.NO_SHORT;
-	private String Business_Essential_Id = ApplreposConstants.NO_SHORT;
-	private String Itsec_SB_Integ_ID = ApplreposConstants.NO_SHORT;
-	private String Itsec_SB_Integ_Txt = ApplreposConstants.NO_SHORT;
-	private String Itsec_SB_Verfg_ID = ApplreposConstants.NO_SHORT;
-	private String Itsec_SB_Verfg_Txt = ApplreposConstants.NO_SHORT;
-	private String Itsec_SB_Vertr_ID = ApplreposConstants.NO_SHORT;
-	private String Itsec_SB_Vertr_Txt = ApplreposConstants.NO_SHORT;
+	private String License_Scanning = AirKonstanten.NO_SHORT;
+	private String Responsible = AirKonstanten.NO_SHORT;
+	private String Sub_Responsible = AirKonstanten.NO_SHORT;
+	private String Relevance_Ics = AirKonstanten.NO_SHORT;
+	private String Relevanz_Itsec = AirKonstanten.NO_SHORT;
+	private String Gxp_Flag = AirKonstanten.NO_SHORT;
+	private String Ref_Id = AirKonstanten.NO_SHORT;
+	private String Itsec_Gruppe_Id = AirKonstanten.NO_SHORT;
+	private String Sample_Test_Date = AirKonstanten.NO_SHORT;
+	private String Sample_Test_Result = AirKonstanten.NO_SHORT;
+	private String Sla_Id = AirKonstanten.NO_SHORT;
+	private String Service_Contract_Id = AirKonstanten.NO_SHORT;
+	private String Priority_Level_Id = AirKonstanten.NO_SHORT;
+	private String Severity_Level_Id = AirKonstanten.NO_SHORT;
+	private String Business_Essential_Id = AirKonstanten.NO_SHORT;
+	private String Itsec_SB_Integ_ID = AirKonstanten.NO_SHORT;
+	private String Itsec_SB_Integ_Txt = AirKonstanten.NO_SHORT;
+	private String Itsec_SB_Verfg_ID = AirKonstanten.NO_SHORT;
+	private String Itsec_SB_Verfg_Txt = AirKonstanten.NO_SHORT;
+	private String Itsec_SB_Vertr_ID = AirKonstanten.NO_SHORT;
+	private String Itsec_SB_Vertr_Txt = AirKonstanten.NO_SHORT;
 	
 	public void setAllEditable() {
-		License_Scanning = ApplreposConstants.YES_SHORT;
-		Responsible = ApplreposConstants.YES_SHORT;
-		Sub_Responsible = ApplreposConstants.YES_SHORT;
-		Relevance_Ics = ApplreposConstants.YES_SHORT;
-		Relevanz_Itsec = ApplreposConstants.YES_SHORT;
-		Gxp_Flag = ApplreposConstants.YES_SHORT;
-		Ref_Id = ApplreposConstants.YES_SHORT;
-		Itsec_Gruppe_Id = ApplreposConstants.YES_SHORT;
-		Sample_Test_Date = ApplreposConstants.YES_SHORT;
-		Sample_Test_Result = ApplreposConstants.YES_SHORT;
-		Sla_Id = ApplreposConstants.YES_SHORT;
-		Service_Contract_Id = ApplreposConstants.YES_SHORT;
-		Priority_Level_Id = ApplreposConstants.YES_SHORT;
-		Severity_Level_Id = ApplreposConstants.YES_SHORT;
+		License_Scanning = AirKonstanten.YES_SHORT;
+		Responsible = AirKonstanten.YES_SHORT;
+		Sub_Responsible = AirKonstanten.YES_SHORT;
+		Relevance_Ics = AirKonstanten.YES_SHORT;
+		Relevanz_Itsec = AirKonstanten.YES_SHORT;
+		Gxp_Flag = AirKonstanten.YES_SHORT;
+		Ref_Id = AirKonstanten.YES_SHORT;
+		Itsec_Gruppe_Id = AirKonstanten.YES_SHORT;
+		Sample_Test_Date = AirKonstanten.YES_SHORT;
+		Sample_Test_Result = AirKonstanten.YES_SHORT;
+		Sla_Id = AirKonstanten.YES_SHORT;
+		Service_Contract_Id = AirKonstanten.YES_SHORT;
+		Priority_Level_Id = AirKonstanten.YES_SHORT;
+		Severity_Level_Id = AirKonstanten.YES_SHORT;
 		// Business_Essential_Id = ApplreposConstants.YES_SHORT; only by group
-		Itsec_SB_Integ_ID = ApplreposConstants.YES_SHORT;
-		Itsec_SB_Integ_Txt = ApplreposConstants.YES_SHORT;
-		Itsec_SB_Verfg_ID = ApplreposConstants.YES_SHORT;
-		Itsec_SB_Verfg_Txt = ApplreposConstants.YES_SHORT;
-		Itsec_SB_Vertr_ID = ApplreposConstants.YES_SHORT;
-		Itsec_SB_Vertr_Txt = ApplreposConstants.YES_SHORT;
+		Itsec_SB_Integ_ID = AirKonstanten.YES_SHORT;
+		Itsec_SB_Integ_Txt = AirKonstanten.YES_SHORT;
+		Itsec_SB_Verfg_ID = AirKonstanten.YES_SHORT;
+		Itsec_SB_Verfg_Txt = AirKonstanten.YES_SHORT;
+		Itsec_SB_Vertr_ID = AirKonstanten.YES_SHORT;
+		Itsec_SB_Vertr_Txt = AirKonstanten.YES_SHORT;
 	}
 	
 	public String getLicense_Scanning() {

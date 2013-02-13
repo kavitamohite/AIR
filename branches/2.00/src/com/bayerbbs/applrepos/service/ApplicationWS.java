@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.ApplicationRegion;
 import com.bayerbbs.applrepos.dto.ApplicationAccessDTO;
@@ -84,8 +84,7 @@ public class ApplicationWS {
 			}
 			
 			boolean onlyApplications = false;
-			if (null != input.getOnlyapplications()
-					&& ApplreposConstants.STRING_TRUE.equals(input.getOnlyapplications())) {
+			if (null != input.getOnlyapplications()	&& AirKonstanten.STRING_TRUE.equals(input.getOnlyapplications())) {
 				onlyApplications = true;
 			}
 			
@@ -115,7 +114,7 @@ public class ApplicationWS {
 					listAnwendungen = CiEntitiesHbn.findMyCisForDelete(cwid, input.getSort(), input.getDir(), onlyApplications);
 				}
 			} else {
-				if (ApplreposConstants.STRING_TRUE.equals(input.getAdvancedsearch())) {
+				if (AirKonstanten.STRING_TRUE.equals(input.getAdvancedsearch())) {
 					listAnwendungen = AnwendungHbn.findApplications(searchname, input.getQueryMode(),
 						input.getAdvsearchappowner(), input.getAdvsearchappownerHidden(), input.getAdvsearchappdelegate(), input.getAdvsearchappdelegateHidden(),
 						input.getAdvsearchciowner(), input.getAdvsearchciownerHidden(), input.getAdvsearchcidelegate(), input.getAdvsearchcidelegateHidden(), 
@@ -189,7 +188,7 @@ public class ApplicationWS {
 			ApplicationDTO dto = getApplicationDTOFromEditInput(editInput);
 			output = AnwendungHbn.saveAnwendung(editInput.getCwid(), dto);
 
-			if (!ApplreposConstants.RESULT_ERROR.equals(output.getResult())) {
+			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
 				try {
 					// TODO DEBUG Test SupportStuff
 					CiSupportStuffHbn.saveCiSupportStuffAll(editInput.getCwid(), dto.getId(),
@@ -209,14 +208,14 @@ public class ApplicationWS {
 
 					ApplicationProcessHbn.saveApplicationProcessAll(editInput.getCwid(), dto.getId(), dto.getBusinessProcessHidden());
 
-					for (String[] grouptype : ApplreposConstants.GPSCGROUP_MAPPING) {
+					for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) {
 						char d[] = grouptype[1].toCharArray();
 						d[0] = String.valueOf(d[0]).toUpperCase().charAt(0);
 						String method = "get" + new String(d);
 						String gpscContact = (String) ApplicationDTO.class.getMethod(method).invoke(dto);
-						String methodHidden = "get" + new String(d) + ApplreposConstants.GPSCGROUP_HIDDEN_DESCRIPTOR;
+						String methodHidden = "get" + new String(d) + AirKonstanten.GPSCGROUP_HIDDEN_DESCRIPTOR;
 						String gpscContactHidden = (String) ApplicationDTO.class.getMethod(methodHidden).invoke(dto);
-						if (!(ApplreposConstants.GPSCGROUP_DISABLED_MARKER.equals(gpscContact)) && !(ApplreposConstants.GPSCGROUP_DISABLED_MARKER.equals(gpscContactHidden))) {
+						if (!(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContact)) && !(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContactHidden))) {
 							if ("Y".equals(grouptype[2])) { // Individual Contact(s)
 								CiPersonsHbn.saveCiPerson(editInput.getCwid(),
 										 dto.getId(), new Long(grouptype[0]), grouptype[3],
@@ -281,13 +280,13 @@ public class ApplicationWS {
 				dto.setCiOwnerHidden(editInput.getCwid().toUpperCase());//oder dto.getApplicationOwnerHidden() ?
 			}
 			if (null == dto.getBusinessEssentialId()) {
-				dto.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
+				dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
 			}
 
 			// save / create application
 			output = AnwendungHbn.createAnwendung(editInput.getCwid(), dto, editInput.getForceOverride());
 
-			if (ApplreposConstants.RESULT_OK.equals(output.getResult())) {
+			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
 				// get detail
 				List<Application> listAnwendung = AnwendungHbn.findApplicationByName(editInput.getName());
 				if (null != listAnwendung && 1 == listAnwendung.size()) {
@@ -602,7 +601,7 @@ public class ApplicationWS {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 		ApplicationDTO dto = new ApplicationDTO();
 		
-		output.setResult(ApplreposConstants.RESULT_ERROR);
+		output.setResult(AirKonstanten.RESULT_ERROR);
 		
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
 			// TODO check tableId !!! (app only)
@@ -615,7 +614,7 @@ public class ApplicationWS {
 				dto.setAlias(copyInput.getCiAliasTarget());
 				
 				if (null == dto.getBusinessEssentialId()) {
-					dto.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
+					dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
 				}
 
 				// set the actual cwid as responsible
@@ -635,7 +634,7 @@ public class ApplicationWS {
 				// save / create application
 				ApplicationEditParameterOutput createOutput = AnwendungHbn.createAnwendung(copyInput.getCwid(), dto, null);
 
-				if (ApplreposConstants.RESULT_OK.equals(createOutput.getResult())) {
+				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
 					List<Application> listAnwendung = AnwendungHbn.findApplicationByName(copyInput.getCiNameTarget());
 					if (null != listAnwendung && 1 == listAnwendung.size()) {
 						dto.setId(listAnwendung.get(0).getApplicationId());
@@ -706,12 +705,12 @@ public class ApplicationWS {
 
 			if (null != application) {
 				dto = AnwendungHbn.getApplicationDetail(detailInput.getId());
-				dto.setTemplateReferencedByItem(ApplreposConstants.NO_SHORT);
+				dto.setTemplateReferencedByItem(AirKonstanten.NO_SHORT);
 				
 				if (null != dto.getTemplate() && !"0".equals(dto.getTemplate())) {
 					// it is a template, so see if it is referenced by some ci's
 					if (!"0".equals(ApplReposHbn.getCountReferencingTemplates(detailInput.getId()))) {
-						dto.setTemplateReferencedByItem(ApplreposConstants.YES_SHORT);
+						dto.setTemplateReferencedByItem(AirKonstanten.YES_SHORT);
 					}
 				}
 
@@ -759,34 +758,34 @@ public class ApplicationWS {
 
 				// hier wird geprüft, ob der aktive Anwender über Edit-Zugriffsrechte (über Person, seine Gruppenzugehörigkeit oder globale Adminrechte) verfügt  
 				if (checker.isEditable(application.getApplicationId(), new Long(2), detailInput.getCwid())) {
-					dto.setIsEditable(ApplreposConstants.YES_SHORT);
+					dto.setIsEditable(AirKonstanten.YES_SHORT);
 				}
 
 				// RFC 7465
 				if (checker.isRelevanceOperational(detailInput.getCwid(), application)) {
-					accessDTO.setRelevanceOperational(ApplreposConstants.YES_SHORT);
+					accessDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 				} else {
-					accessDTO.setRelevanceOperational(ApplreposConstants.NO_SHORT);
+					accessDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
 				}
 
 				// RFC 9101 Erweiterung "AIR Infrastructure Manager"
 				long applCat1Id = dto.getApplicationCat1Id().longValue();
-				if (ApplreposConstants.APPLICATION_CAT1_APPLICATION.longValue() == applCat1Id) {
+				if (AirKonstanten.APPLICATION_CAT1_APPLICATION.longValue() == applCat1Id) {
 					// nur für CI's Typ = Anwendung
 					if (checker.isRelevanceStrategic(detailInput.getCwid(), application)) {
-						accessDTO.setRelevanceStrategic(ApplreposConstants.YES_SHORT);
+						accessDTO.setRelevanceStrategic(AirKonstanten.YES_SHORT);
 					} else {
-						accessDTO.setRelevanceStrategic(ApplreposConstants.NO_SHORT);
+						accessDTO.setRelevanceStrategic(AirKonstanten.NO_SHORT);
 					}
 				}
-				else if (ApplreposConstants.APPLICATION_CAT1_COMMON_SERVICE.longValue() == applCat1Id ||
-						 ApplreposConstants.APPLICATION_CAT1_COMMON_MIDDLEWARE.longValue() == applCat1Id ||
-						 ApplreposConstants.APPLICATION_CAT1_COMMON_APPLICATIONPLATFORM.longValue() == applCat1Id) {
+				else if (AirKonstanten.APPLICATION_CAT1_COMMON_SERVICE.longValue() == applCat1Id ||
+						 AirKonstanten.APPLICATION_CAT1_COMMON_MIDDLEWARE.longValue() == applCat1Id ||
+						 AirKonstanten.APPLICATION_CAT1_COMMON_APPLICATIONPLATFORM.longValue() == applCat1Id) {
 
-					if (ApplreposConstants.NO_SHORT.equals(accessDTO.getRelevanceOperational())) {
+					if (AirKonstanten.NO_SHORT.equals(accessDTO.getRelevanceOperational())) {
 						// Abfrage Infrastructure Manager
 						if (checker.isEditableRoleInfrastructureManager(detailInput.getCwid())) {
-							accessDTO.setRelevanceOperational(ApplreposConstants.YES_SHORT);
+							accessDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 						}
 					}
 					
@@ -803,10 +802,10 @@ public class ApplicationWS {
 				
 
 				if (StringUtils.isNotNullOrEmpty(application.getInsertQuelle())) {
-					if (ApplreposConstants.YES_SHORT.equals(dto.getIsEditable())) {
+					if (AirKonstanten.YES_SHORT.equals(dto.getIsEditable())) {
 
-						if (ApplreposConstants.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())
-								|| ApplreposConstants.APPLICATION_GUI_NAME.equals(application.getInsertQuelle())) {
+						if (AirKonstanten.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())
+								|| AirKonstanten.APPLICATION_GUI_NAME.equals(application.getInsertQuelle())) {
 							// for the application itself, all are editable
 							accessDTO.setAllEditable();
 						} else {
@@ -815,64 +814,64 @@ public class ApplicationWS {
 							if (StringUtils.isNotNullOrEmpty(interfaceDto.getSisecEditable()) && null != interfaceDto) {
 								String allRights = interfaceDto.getSisecEditable();
 								if (-1 != allRights.indexOf("License_Scanning")) {
-									accessDTO.setLicense_Scanning(ApplreposConstants.YES_SHORT);
+									accessDTO.setLicense_Scanning(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Responsible")) {
-									accessDTO.setResponsible(ApplreposConstants.YES_SHORT);
+									accessDTO.setResponsible(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Sub_Responsible")) {
-									accessDTO.setSub_Responsible(ApplreposConstants.YES_SHORT);
+									accessDTO.setSub_Responsible(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Relevance_Ics")) {
-									accessDTO.setRelevance_Ics(ApplreposConstants.YES_SHORT);
+									accessDTO.setRelevance_Ics(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Relevanz_Itsec")) {
-									accessDTO.setRelevanz_Itsec(ApplreposConstants.YES_SHORT);
+									accessDTO.setRelevanz_Itsec(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Gxp_Flag")) {
-									accessDTO.setGxp_Flag(ApplreposConstants.YES_SHORT);
+									accessDTO.setGxp_Flag(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Itsec_Gruppe_Id")) {
-									accessDTO.setItsec_Gruppe_Id(ApplreposConstants.YES_SHORT);
+									accessDTO.setItsec_Gruppe_Id(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Sample_Test_Date")) {
-									accessDTO.setSample_Test_Date(ApplreposConstants.YES_SHORT);
+									accessDTO.setSample_Test_Date(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Sample_Test_Result")) {
-									accessDTO.setSample_Test_Result(ApplreposConstants.YES_SHORT);
+									accessDTO.setSample_Test_Result(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Sla_Id")) {
-									accessDTO.setSla_Id(ApplreposConstants.YES_SHORT);
+									accessDTO.setSla_Id(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Service_Contract_Id")) {
-									accessDTO.setService_Contract_Id(ApplreposConstants.YES_SHORT);
+									accessDTO.setService_Contract_Id(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Priority_Level_Id")) {
-									accessDTO.setPriority_Level_Id(ApplreposConstants.YES_SHORT);
+									accessDTO.setPriority_Level_Id(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Severity_Level_Id")) {
-									accessDTO.setSeverity_Level_Id(ApplreposConstants.YES_SHORT);
+									accessDTO.setSeverity_Level_Id(AirKonstanten.YES_SHORT);
 								}
 
 								// business essential only by group right
 
 								if (-1 != allRights.indexOf("Itsec_SB_Integ_ID")) {
-									accessDTO.setItsec_SB_Integ_ID(ApplreposConstants.YES_SHORT);
+									accessDTO.setItsec_SB_Integ_ID(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Itsec_SB_Integ_Txt")) {
-									accessDTO.setItsec_SB_Integ_Txt(ApplreposConstants.YES_SHORT);
+									accessDTO.setItsec_SB_Integ_Txt(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Itsec_SB_Verfg_ID")) {
-									accessDTO.setItsec_SB_Verfg_ID(ApplreposConstants.YES_SHORT);
+									accessDTO.setItsec_SB_Verfg_ID(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Itsec_SB_Verfg_Txt")) {
-									accessDTO.setItsec_SB_Verfg_Txt(ApplreposConstants.YES_SHORT);
+									accessDTO.setItsec_SB_Verfg_Txt(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Itsec_SB_Vertr_ID")) {
-									accessDTO.setItsec_SB_Vertr_ID(ApplreposConstants.YES_SHORT);
+									accessDTO.setItsec_SB_Vertr_ID(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Itsec_SB_Vertr_Txt")) {
-									accessDTO.setItsec_SB_Vertr_Txt(ApplreposConstants.YES_SHORT);
+									accessDTO.setItsec_SB_Vertr_Txt(AirKonstanten.YES_SHORT);
 								}
 							}
 						}
@@ -890,28 +889,28 @@ public class ApplicationWS {
 				Long rele2008 = dto.getRelevance2008();
 				
 				if (-1 == releItsec) {
-					dto.setRelevanceGR1435(ApplreposConstants.YES_SHORT);
+					dto.setRelevanceGR1435(AirKonstanten.YES_SHORT);
 				}
 				else if (0 == releItsec) {
-					dto.setRelevanceGR1435(ApplreposConstants.NO_SHORT);
+					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
 				}
 				if (-1 == releICS) {
-					dto.setRelevanceGR1920(ApplreposConstants.YES_SHORT);
+					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
 				}
 				else if (0 == releICS) {
-					dto.setRelevanceGR1920(ApplreposConstants.NO_SHORT);
+					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
 				}
 				if (-1 == rele2059) {
-					dto.setRelevanceGR2059(ApplreposConstants.YES_SHORT);
+					dto.setRelevanceGR2059(AirKonstanten.YES_SHORT);
 				}
 				else if (0 == rele2059) {
-					dto.setRelevanceGR2059(ApplreposConstants.NO_SHORT);
+					dto.setRelevanceGR2059(AirKonstanten.NO_SHORT);
 				}
 				if (-1 == rele2008) {
-					dto.setRelevanceGR2008(ApplreposConstants.YES_SHORT);
+					dto.setRelevanceGR2008(AirKonstanten.YES_SHORT);
 				}
 				else if (0 == rele2008) {
-					dto.setRelevanceGR2008(ApplreposConstants.NO_SHORT);
+					dto.setRelevanceGR2008(AirKonstanten.NO_SHORT);
 				}
 
 				
@@ -936,13 +935,13 @@ public class ApplicationWS {
 			// the attribute business essential is only editable for users
 			// with the role "BusinessEssential-Editor"
 			// so we have to check it here
-			String count = ApplReposHbn.getCountFromRoleNameAndCwid(ApplreposConstants.ROLE_BUSINESS_ESSENTIAL_EDITOR, detailInput.getCwid());
+			String count = ApplReposHbn.getCountFromRoleNameAndCwid(AirKonstanten.ROLE_BUSINESS_ESSENTIAL_EDITOR, detailInput.getCwid());
 			if (null != count && !"0".equals(count)) {
-				accessDTO.setBusiness_Essential_Id(ApplreposConstants.YES_SHORT);
+				accessDTO.setBusiness_Essential_Id(AirKonstanten.YES_SHORT);
 				// if we can edit the business essential, we can edit the ci
-				dto.setIsEditable(ApplreposConstants.YES_SHORT);
+				dto.setIsEditable(AirKonstanten.YES_SHORT);
 			} else {
-				accessDTO.setBusiness_Essential_Id(ApplreposConstants.NO_SHORT);
+				accessDTO.setBusiness_Essential_Id(AirKonstanten.NO_SHORT);
 			}
 		} // end of if valid session
 
@@ -963,95 +962,95 @@ public class ApplicationWS {
 	private void readAndFillCiStuff(ApplicationDTO dto, Application application) {
 		Long ciId = application.getApplicationId();
 		CiSupportStuffDTO supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
-				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserAuthorizationSupportedByDocumentation);
+				AirKonstanten.TABLE_ID_APPLICATION, ciId,
+				AirKonstanten.CI_SUPPORT_STUFF_TYPE_UserAuthorizationSupportedByDocumentation);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffUserAuthorizationSupportedByDocumentation(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
-				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserAuthorizationProcess);
+				AirKonstanten.TABLE_ID_APPLICATION, ciId,
+				AirKonstanten.CI_SUPPORT_STUFF_TYPE_UserAuthorizationProcess);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffUserAuthorizationProcess(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
-				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ChangeManagementSupportedByTool);
+				AirKonstanten.TABLE_ID_APPLICATION, ciId,
+				AirKonstanten.CI_SUPPORT_STUFF_TYPE_ChangeManagementSupportedByTool);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffChangeManagementSupportedByTool(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
-				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserManagementProcess);
+				AirKonstanten.TABLE_ID_APPLICATION, ciId,
+				AirKonstanten.CI_SUPPORT_STUFF_TYPE_UserManagementProcess);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffUserManagementProcess(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
-				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ApplicationDocumentation);
+				AirKonstanten.TABLE_ID_APPLICATION, ciId,
+				AirKonstanten.CI_SUPPORT_STUFF_TYPE_ApplicationDocumentation);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffApplicationDocumentation(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
-				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_RootDirectory);
+				AirKonstanten.TABLE_ID_APPLICATION, ciId,
+				AirKonstanten.CI_SUPPORT_STUFF_TYPE_RootDirectory);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffRootDirectory(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
-				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_DataDirectory);
+				AirKonstanten.TABLE_ID_APPLICATION, ciId,
+				AirKonstanten.CI_SUPPORT_STUFF_TYPE_DataDirectory);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffDataDirectory(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
-				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ProvidedServices);
+				AirKonstanten.TABLE_ID_APPLICATION, ciId,
+				AirKonstanten.CI_SUPPORT_STUFF_TYPE_ProvidedServices);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffProvidedServices(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		supportStuffDTO = CiSupportStuffHbn.findCiSupportStuffByTableAndCiAndTypeId(
-				ApplreposConstants.TABLE_ID_APPLICATION, ciId,
-				ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ProvidedMachineUsers);
+				AirKonstanten.TABLE_ID_APPLICATION, ciId,
+				AirKonstanten.CI_SUPPORT_STUFF_TYPE_ProvidedMachineUsers);
 		if (null != supportStuffDTO) {
 			dto.setCiSupportStuffProvidedMachineUsers(supportStuffDTO.getCiSupportStuffValue());
 		}
 
 		// quickhack
 		if (null == dto.getCiSupportStuffUserAuthorizationSupportedByDocumentation()) {
-			dto.setCiSupportStuffUserAuthorizationSupportedByDocumentation(ApplreposConstants.STRING_EMPTY);
+			dto.setCiSupportStuffUserAuthorizationSupportedByDocumentation(AirKonstanten.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffUserAuthorizationProcess()) {
-			dto.setCiSupportStuffUserAuthorizationProcess(ApplreposConstants.STRING_EMPTY);
+			dto.setCiSupportStuffUserAuthorizationProcess(AirKonstanten.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffChangeManagementSupportedByTool()) {
-			dto.setCiSupportStuffChangeManagementSupportedByTool(ApplreposConstants.STRING_EMPTY);
+			dto.setCiSupportStuffChangeManagementSupportedByTool(AirKonstanten.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffUserManagementProcess()) {
-			dto.setCiSupportStuffUserManagementProcess(ApplreposConstants.STRING_EMPTY);
+			dto.setCiSupportStuffUserManagementProcess(AirKonstanten.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffApplicationDocumentation()) {
-			dto.setCiSupportStuffApplicationDocumentation(ApplreposConstants.STRING_EMPTY);
+			dto.setCiSupportStuffApplicationDocumentation(AirKonstanten.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffRootDirectory()) {
-			dto.setCiSupportStuffRootDirectory(ApplreposConstants.STRING_EMPTY);
+			dto.setCiSupportStuffRootDirectory(AirKonstanten.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffDataDirectory()) {
-			dto.setCiSupportStuffDataDirectory(ApplreposConstants.STRING_EMPTY);
+			dto.setCiSupportStuffDataDirectory(AirKonstanten.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffProvidedServices()) {
-			dto.setCiSupportStuffProvidedServices(ApplreposConstants.STRING_EMPTY);
+			dto.setCiSupportStuffProvidedServices(AirKonstanten.STRING_EMPTY);
 		}
 		if (null == dto.getCiSupportStuffProvidedMachineUsers()) {
-			dto.setCiSupportStuffProvidedMachineUsers(ApplreposConstants.STRING_EMPTY);
+			dto.setCiSupportStuffProvidedMachineUsers(AirKonstanten.STRING_EMPTY);
 		}
 	}
 
@@ -1068,7 +1067,7 @@ public class ApplicationWS {
 
 		List<ApplicationContact> listContacts = AnwendungHbn.findApplicationContacts(contactsInput.getApplicationId());
 
-		String lastGroupTypeName = ApplreposConstants.STRING_EMPTY;
+		String lastGroupTypeName = AirKonstanten.STRING_EMPTY;
 
 		ArrayList<ApplicationContactGroupDTO> listGroups = new ArrayList<ApplicationContactGroupDTO>();
 		ArrayList<ApplicationContactEntryDTO> listEntries = new ArrayList<ApplicationContactEntryDTO>();
@@ -1158,7 +1157,7 @@ public class ApplicationWS {
 	public ComplianceControlStatusDTO[] getApplicationComplianceControlStatus(
 			ApplicationContactsParameterInput contactsInput) {
 
-		Long tableId = ApplreposConstants.TABLE_ID_APPLICATION;
+		Integer tableId = AirKonstanten.TABLE_ID_APPLICATION;
 
 		ComplianceControlStatusDTO aControls[] = null;
 

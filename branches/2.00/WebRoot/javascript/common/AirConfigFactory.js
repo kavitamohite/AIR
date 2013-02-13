@@ -59,6 +59,24 @@ AIR.AirConfigFactory = function() {
 			return Ext.data.Record.create(buildingAreaCiFields);
 		},
 		
+		createSchrankCiRecord: function() {
+			var schrankCiFields = this.getLocationCiFields();
+			
+			return Ext.data.Record.create(schrankCiFields);
+		},
+		
+		createTerrainCiRecord: function() {
+			var terrainCiFields = this.getLocationCiFields();
+			
+			return Ext.data.Record.create(terrainCiFields);
+		},
+		
+		createStandortCiRecord: function() {
+			var standortCiFields = this.getLocationCiFields();
+			
+			return Ext.data.Record.create(standortCiFields);
+		},
+		
 		createRoomCiRecord: function() {
 			var roomCiFields = this.getLocationCiFields();
 			

@@ -82,6 +82,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 			case AC.TABLE_ID_BUILDING_AREA:
 			case AC.TABLE_ID_POSITION:
 			case AC.TABLE_ID_TERRAIN:
+			case AC.TABLE_ID_SITE:
 				specificsView = this.getComponent('clCiSpecificsLocationItem');
 				break;
 		}

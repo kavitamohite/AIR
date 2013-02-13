@@ -60,5 +60,8 @@
 		<mapping class="com.bayerbbs.applrepos.domain.Room" />
 		<mapping class="com.bayerbbs.applrepos.domain.Building" />
 		<mapping class="com.bayerbbs.applrepos.domain.BuildingArea" />
+		<mapping class="com.bayerbbs.applrepos.domain.Schrank" />
+		<mapping class="com.bayerbbs.applrepos.domain.Terrain" />
+		<mapping class="com.bayerbbs.applrepos.domain.Standort" />
 	</session-factory>
 </hibernate-configuration>

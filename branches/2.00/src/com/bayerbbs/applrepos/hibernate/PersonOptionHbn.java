@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.ApplReposTS;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.PersonOption;
 import com.bayerbbs.applrepos.dto.PersonOptionDTO;
 
@@ -108,7 +108,7 @@ public class PersonOptionHbn {
 			// Update data
 			personOption.setUpdateUser(cwid);
 			personOption
-					.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+					.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			personOption.setUpdateTimestamp(ApplReposTS
 					.getCurrentTimestamp());
 			if (null == personOption.getId() || null == personOption.getInsertQuelle()) {

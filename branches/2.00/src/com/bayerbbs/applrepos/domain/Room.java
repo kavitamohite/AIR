@@ -13,10 +13,9 @@ import javax.persistence.Table;
 @Table(name = "RAUM")
 public class Room extends CiBase implements Serializable {
 	private static final long serialVersionUID = -1270064907617489118L;
+
+	private String alias;
 	
-//	private Long roomId;
-//	private String roomName;
-//	private String roomAlias;
 	private String roomType;
 	private String floor;
 	
@@ -26,49 +25,36 @@ public class Room extends CiBase implements Serializable {
 	private Long buildingAreaId;
 	private BuildingArea buildingArea;
 
-	
-//	@Transient
-//	public Long getId() {
-//		return getRoomId();
-//	}
 
 	@Id
 	@Column(name = "RAUM_ID")
 	public Long getRoomId() {
-		return getId();//roomId;
+		return getId();
 	}
-
 	public void setRoomId(Long roomId) {
 		setId(roomId);
-//		this.roomId = roomId;
 	}
 
 	@Column(name = "RAUM_NAME")
 	public String getRoomName() {
-		return getName();//roomName;
+		return getName();
 	}
-
-
 	public void setRoomName(String roomName) {
 		setName(roomName);
-//		this.roomName = roomName;
 	}
 
 	@Column(name = "RAUMALIAS")
-	public String getRoomAlias() {
-		return getAlias();//roomAlias;
+	public String getAlias() {
+		return alias;
 	}
-
-	public void setRoomAlias(String roomAlias) {
-		setAlias(roomAlias);
-//		this.roomAlias = roomAlias;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	@Column(name = "RAUM_TYP")
 	public String getRoomType() {
 		return roomType;
 	}
-
 	public void setRoomType(String roomType) {
 		this.roomType = roomType;
 	}
@@ -77,21 +63,17 @@ public class Room extends CiBase implements Serializable {
 	public String getFloor() {
 		return floor;
 	}
-
 	public void setFloor(String floor) {
 		this.floor = floor;
 	}
-
 	
 	@Column(name = "SEVERITY_LEVEL_ID")
 	public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
-
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
 	}
-	
 	
 	@Column(name = "BUSINESS_ESSENTIAL_ID")
 	public Long getBusinessEssentialId() {
@@ -101,7 +83,6 @@ public class Room extends CiBase implements Serializable {
 	public void setBusinessEssentialId(Long businessEssentialId) {
 		this.businessEssentialId = businessEssentialId;
 	}
-	
 	
 	
 	@ManyToOne

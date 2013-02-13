@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class RoomDTO extends LocationDTO implements Serializable {
 	private static final long serialVersionUID = 1853465853927062074L;
 	
+	private String alias;
+
 	private String floor;
 	private String roomType;
 	
@@ -21,6 +23,15 @@ public class RoomDTO extends LocationDTO implements Serializable {
 //	private String businessEssentialIdAcl;//Rollenbasierte Sonderfall: wenn User Rolle BusinessEssential-Editor hat: editierbar!
 	//====================
 
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+	
 	public String getFloor() {
 		return floor;
 	}

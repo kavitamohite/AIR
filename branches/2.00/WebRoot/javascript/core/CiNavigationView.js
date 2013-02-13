@@ -363,7 +363,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		}
 	},
 	
-	onCiSelected: function(source, ciId, target) {
+	onCiSelected: function(source, ciId, target, record) {
 		switch(ciId) {
 			case -1:
 				var pCiDetailsMenuItems = this.getComponent('pCiDetailsMenuItems');
@@ -376,6 +376,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 				} else {
 					var pCiDetailsMenuItems = this.getComponent('pCiDetailsMenuItems');
 					pCiDetailsMenuItems.setVisible(true);
+					
+					this.updateMenu(parseInt(record.get('tableId')), record.get('applicationCat1Txt'));
 				}
 				break;
 		}
@@ -383,6 +385,28 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		this.doLayout();
 	},
 
+	updateMenu: function(tableId, ciSubType) {
+		var pCiDetailsMenuItems = this.getComponent('pCiDetailsMenuItems');
+		var clCiLicense = pCiDetailsMenuItems.getComponent('clCiLicense');
+		var clCiSupportStuff = pCiDetailsMenuItems.getComponent('clCiSupportStuff');
+		
+		switch(tableId) {
+			case AC.TABLE_ID_APPLICATION:
+				var store = AIR.AirStoreManager.getStoreByName('applicationCat1ListStore');
+				var cat1Id = store.getAt(store.findExact('english', ciSubType)).get('id');
+				
+				if(cat1Id == AC.APP_CAT1_APPLICATION) {
+					clCiLicense.setVisible(true);
+					clCiSupportStuff.setVisible(true);
+					break;
+				}
+			default:
+				clCiLicense.setVisible(false);
+				clCiSupportStuff.setVisible(false);
+				break;
+		}
+	},
+	
 	
 //	onApplicationCancel: function() {
 //		var searchMenuItem = this.getComponent('clSearch');

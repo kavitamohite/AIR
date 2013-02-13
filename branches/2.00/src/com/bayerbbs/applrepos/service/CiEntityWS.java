@@ -3,22 +3,33 @@ package com.bayerbbs.applrepos.service;
 import java.util.List;
 
 import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
+import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.domain.Room;
+import com.bayerbbs.applrepos.domain.Schrank;
+import com.bayerbbs.applrepos.domain.Standort;
+import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
+import com.bayerbbs.applrepos.dto.SchrankDTO;
+import com.bayerbbs.applrepos.dto.StandortDTO;
+import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
+import com.bayerbbs.applrepos.hibernate.SchrankHbn;
+import com.bayerbbs.applrepos.hibernate.StandortHbn;
+import com.bayerbbs.applrepos.hibernate.TerrainHbn;
 
 public class CiEntityWS {
 	static final String YES = "Y";
@@ -64,21 +75,74 @@ public class CiEntityWS {
 		return output;
 	}
 	
+	public StandortDTO getStandort(CiDetailParameterInput input) {
+		StandortDTO standortDTO = new StandortDTO();
+
+		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+			Standort standort = StandortHbn.findById(Standort.class, input.getCiId());
+			CiLokationsKette lokationsKette = TerrainHbn.findLokationsKetteById(input.getCiId());
+			
+//			Set<Terrain> terrains = standort.getTerrains();
+			standortDTO.setTableId(AirKonstanten.TABLE_ID_SITE);
+			
+			setCiBaseData(standortDTO, standort);
+			standortDTO.setCiLokationsKette(lokationsKette);
+		}
+		
+		return standortDTO;
+	}
 	
-	public BuildingDTO getBuilding(CiDetailParameterInput detailInput) {
+	public TerrainDTO getTerrain(CiDetailParameterInput input) {
+		TerrainDTO terrainDTO = new TerrainDTO();
+
+		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+			Terrain terrain = TerrainHbn.findById(Terrain.class, input.getCiId());
+			CiLokationsKette lokationsKette = TerrainHbn.findLokationsKetteById(input.getCiId());
+			
+//			Set<Building> building = terrain.getBuildings();
+			terrainDTO.setTableId(AirKonstanten.TABLE_ID_TERRAIN);
+			
+			setCiBaseData(terrainDTO, terrain);
+			terrainDTO.setCiLokationsKette(lokationsKette);
+		}
+		
+		return terrainDTO;
+	}
+	
+	public SchrankDTO getSchrank(CiDetailParameterInput input) {
+		SchrankDTO schrankDTO = new SchrankDTO();
+
+		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+			Schrank schrank = SchrankHbn.findById(input.getCiId());
+			CiLokationsKette lokationsKette = SchrankHbn.findLokationsKetteById(input.getCiId());
+			
+			//wenn noch alle Räume irgendwie auf die GUI sollen
+//			Set<Room> rooms = buildingArea.getRooms();
+			schrankDTO.setTableId(AirKonstanten.TABLE_ID_POSITION);
+			
+			setCiBaseData(schrankDTO, schrank);
+			schrankDTO.setCiLokationsKette(lokationsKette);
+		}
+		
+		return schrankDTO;
+	}
+	
+	public BuildingDTO getBuilding(CiDetailParameterInput input) {
 		BuildingDTO buildingDTO = new BuildingDTO();
 
-		if(LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
-			Building building = BuildingHbn.findById(detailInput.getCiId());
-			CiLokationsKette lokationsKette = BuildingHbn.findLokationsKetteById(detailInput.getCiId());
+		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+			Building building = BuildingHbn.findById(input.getCiId());
+			CiLokationsKette lokationsKette = BuildingHbn.findLokationsKetteById(input.getCiId());
 			
 			//wenn noch alle Räume aller BuildingAreas irgendwie auf die GUI sollen
 //			Set<BuildingArea> buildingAreas = building.getBuildingAreas();
 			
+			buildingDTO.setAlias(building.getAlias());
 			buildingDTO.setStreet(building.getStreet());
 			buildingDTO.setStreetNumber(building.getStreetNumber());
 			buildingDTO.setPostalCode(building.getPostalCode());
 			buildingDTO.setLocation(building.getLocation());
+			buildingDTO.setTableId(AirKonstanten.TABLE_ID_BUILDING);
 			
 			setCiBaseData(buildingDTO, building);
 			buildingDTO.setCiLokationsKette(lokationsKette);
@@ -94,8 +158,9 @@ public class CiEntityWS {
 			BuildingArea buildingArea = BuildingHbn.findBuildingAreaById(detailInput.getCiId());
 			CiLokationsKette lokationsKette = BuildingHbn.findLokationsKetteByAreaId(detailInput.getCiId());
 			
-			//wenn noch alle Räume aller BuildingAreas irgendwie auf die GUI sollen
+			//wenn noch alle Räume irgendwie auf die GUI sollen
 //			Set<Room> rooms = buildingArea.getRooms();
+			buildingAreaDTO.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
 			
 			setCiBaseData(buildingAreaDTO, buildingArea);
 			buildingAreaDTO.setCiLokationsKette(lokationsKette);
@@ -116,6 +181,7 @@ public class CiEntityWS {
 			
 
 			setCiBaseData(roomDTO, room);
+			roomDTO.setAlias(room.getAlias());
 			roomDTO.setSeverityLevelId(room.getSeverityLevelId());
 			roomDTO.setBusinessEssentialId(room.getBusinessEssentialId());
 			roomDTO.setRoomType(room.getRoomType());
@@ -128,20 +194,20 @@ public class CiEntityWS {
 			roomDTO.setStreetNumber(building.getStreetNumber());
 			roomDTO.setPostalCode(building.getPostalCode());
 			roomDTO.setLocation(building.getLocation());
-			
+			roomDTO.setTableId(AirKonstanten.TABLE_ID_ROOM);
 			
 			
 			//Zugriffsrechte setzen
 			AccessRightChecker checker = new AccessRightChecker();
 			if (checker.isRelevanceOperational(detailInput.getCwid().toUpperCase(), room)) {
-				roomDTO.setRelevanceOperational(ApplreposConstants.YES_SHORT);
+				roomDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 			} else {
-				roomDTO.setRelevanceOperational(ApplreposConstants.NO_SHORT);
+				roomDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
 			}
 			
 			String source = room.getInsertQuelle();
-			if(!source.equals(ApplreposConstants.INSERT_QUELLE_SISEC) && !source.equals(ApplreposConstants.APPLICATION_GUI_NAME)) {
-				roomDTO.setSeverityLevelIdAcl(ApplreposConstants.NO_SHORT);
+			if(!source.equals(AirKonstanten.INSERT_QUELLE_SISEC) && !source.equals(AirKonstanten.APPLICATION_GUI_NAME)) {
+				roomDTO.setSeverityLevelIdAcl(AirKonstanten.NO_SHORT);
 			}
 		}
 		
@@ -149,10 +215,17 @@ public class CiEntityWS {
 		return roomDTO;
 	}
 	
+	public ItSystemDTO getSystemPlatformsById(CiEntityParameterInput detailInput) {
+		List<ItSystem> itSystems = RoomHbn.getSystemPlatformsById(detailInput.getCiId());
+		
+		
+		 
+		return null;
+	}
+	
 	private void setCiBaseData(CiBaseDTO ciBaseDTO, CiBase ciBase) {
 		ciBaseDTO.setId(ciBase.getId());
 		ciBaseDTO.setName(ciBase.getName());
-		ciBaseDTO.setAlias(ciBase.getAlias());
 		
 		
 		//			applicationDTO.setItsecGroupId(application.getItsecGroupId());
@@ -229,18 +302,18 @@ public class CiEntityWS {
 
 		
 		String source = ciBaseDTO.getInsertQuelle();
-		if(!source.equals(ApplreposConstants.INSERT_QUELLE_SISEC) &&
-		   !source.equals(ApplreposConstants.APPLICATION_GUI_NAME)) {
+		if(!source.equals(AirKonstanten.INSERT_QUELLE_SISEC) &&
+		   !source.equals(AirKonstanten.APPLICATION_GUI_NAME)) {
 			
-			ciBaseDTO.setCiOwnerAcl(ApplreposConstants.NO_SHORT);
-			ciBaseDTO.setCiOwnerDelegateAcl(ApplreposConstants.NO_SHORT);
-			ciBaseDTO.setRelevanceGR1435Acl(ApplreposConstants.NO_SHORT);
-			ciBaseDTO.setRelevanceGR1920Acl(ApplreposConstants.NO_SHORT);
-			ciBaseDTO.setGxpFlagIdAcl(ApplreposConstants.NO_SHORT);
-			ciBaseDTO.setRefIdAcl(ApplreposConstants.NO_SHORT);
-			ciBaseDTO.setItsecGroupIdAcl(ApplreposConstants.NO_SHORT);
-			ciBaseDTO.setSlaIdAcl(ApplreposConstants.NO_SHORT);
-			ciBaseDTO.setServiceContractIdAcl(ApplreposConstants.NO_SHORT);
+			ciBaseDTO.setCiOwnerAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setCiOwnerDelegateAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setRelevanceGR1435Acl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setRelevanceGR1920Acl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setServiceContractIdAcl(AirKonstanten.NO_SHORT);
 			
 			//fehlt, nötig?
 //			License_Scanning,Sample_Test_Date,Sample_Test_Result,Itsec_SB_Integ_ID,Itsec_SB_Integ_Txt,
@@ -317,15 +390,15 @@ public class CiEntityWS {
 				dto.setCiOwnerHidden(editInput.getCwid().toUpperCase());
 			}
 			if (null == dto.getBusinessEssentialId()) {
-				dto.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
+				dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
 			}
 
 			// save / create application
 			output = RoomHbn.createRoom(editInput.getCwid(), dto, true);
 
-			if (ApplreposConstants.RESULT_OK.equals(output.getResult())) {
+			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
 				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), ApplreposConstants.TABLE_ID_ROOM, false);
+				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
 				if (null != listCi && 1 == listCi.size()) {
 					Long ciId = listCi.get(0).getId();
 					output.setCiId(ciId);

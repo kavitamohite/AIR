@@ -8,7 +8,7 @@ public class CiSupportStuffDTO implements Serializable {
 	
 	private Long ciSupportStuffId;
 	private Long ciSupportStuffTypeId;
-	private Long tableId;
+	private Integer tableId;
 	private Long ciId;
 	private String ciSupportStuffValue;
 
@@ -24,10 +24,10 @@ public class CiSupportStuffDTO implements Serializable {
 	public void setCiSupportStuffTypeId(Long ciSupportStuffTypeId) {
 		this.ciSupportStuffTypeId = ciSupportStuffTypeId;
 	}
-	public Long getTableId() {
+	public Integer getTableId() {
 		return tableId;
 	}
-	public void setTableId(Long tableId) {
+	public void setTableId(Integer tableId) {
 		this.tableId = tableId;
 	}
 	public Long getCiId() {

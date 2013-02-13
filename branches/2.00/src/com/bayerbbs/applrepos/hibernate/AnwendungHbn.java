@@ -21,7 +21,7 @@ import org.hibernate.Transaction;
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.dto.ApplicationCat2DTO;
 import com.bayerbbs.applrepos.dto.ApplicationContact;
@@ -218,14 +218,14 @@ public class AnwendungHbn {
 
 						// TODO check if allowed
 						application.setUpdateUser(cwid);
-						application.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						application.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						application.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 						
 						// RFC8344 change Insert-Quelle? // RFC 8532
-						if (ApplreposConstants.INSERT_QUELLE_ANT.equals(application.getInsertQuelle()) ||
-							ApplreposConstants.INSERT_QUELLE_RFC.equals(application.getInsertQuelle())  ||
-							ApplreposConstants.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())) {
-							application.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						if (AirKonstanten.INSERT_QUELLE_ANT.equals(application.getInsertQuelle()) ||
+							AirKonstanten.INSERT_QUELLE_RFC.equals(application.getInsertQuelle())  ||
+							AirKonstanten.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())) {
+							application.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						}
 
 						// ======
@@ -314,7 +314,7 @@ public class AnwendungHbn {
 						if (null == dto.getBusinessEssentialId()) {
 							if (null == application.getBusinessEssentialId()) {
 								// set the default value
-								application.setBusinessEssentialId(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT);
+								application.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
 								hasBusinessEssentialChanged = true;
 							}
 						}
@@ -380,7 +380,7 @@ public class AnwendungHbn {
 						// ==========
 						
 						// IT SET only view!
-						application.setItset(getItset(dto.getCiOwnerHidden(), dto.getCiOwnerDelegateHidden(), ApplreposConstants.TABLE_ID_APPLICATION, application.getApplicationId(), ApplreposConstants.APPLICATION_GUI_NAME));
+						application.setItset(getItset(dto.getCiOwnerHidden(), dto.getCiOwnerDelegateHidden(), AirKonstanten.TABLE_ID_APPLICATION, application.getApplicationId(), AirKonstanten.APPLICATION_GUI_NAME));
 						
 						
 						// Template
@@ -492,8 +492,7 @@ public class AnwendungHbn {
 								.getCostRunAccountId()) {
 								application.setCostRunAccountId(null);
 							} else {
-								application.setCostRunAccountId(dto
-										.getCostRunAccountId());
+								application.setCostRunAccountId(dto.getCostRunAccountId());
 							}
 							
 						}
@@ -501,8 +500,7 @@ public class AnwendungHbn {
 							if (-1 == dto.getCostChangeAccountId()) {
 								application.setCostChangeAccountId(null);
 							} else {
-								application.setCostChangeAccountId(dto
-										.getCostChangeAccountId());
+								application.setCostChangeAccountId(dto.getCostChangeAccountId());
 							}
 						}
 
@@ -593,48 +591,40 @@ public class AnwendungHbn {
 								}
 							}
 						}
-						
 					}
 
 					boolean toCommit = false;
 					try {
 						if (null == validationMessage) {
-						
-							if (null != application
-									&& null != application.getDeleteTimestamp()) {
+							if (null != application && null != application.getDeleteTimestamp()) {
 								session.saveOrUpdate(application);
 								session.flush();
 							}
-							toCommit = true;
 							
+							toCommit = true;
 						}
 					} catch (Exception e) {
-						
 						String message = e.getMessage();
 						log.error(message);
 						// handle exception
-						output.setResult(ApplreposConstants.RESULT_ERROR);
-						
+						output.setResult(AirKonstanten.RESULT_ERROR);
 						message = ApplReposHbn.getOracleTransbaseErrorMessage(message);
-						
 						output.setMessages(new String[] { message });
 					} finally {
-						String hbnMessage = HibernateUtil.close(tx, session,
-								toCommit);
+						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
 						if (toCommit && null != application) {
 							if (null == hbnMessage) {
-								output.setResult(ApplreposConstants.RESULT_OK);
+								output.setResult(AirKonstanten.RESULT_OK);
 								output.setMessages(new String[] { EMPTY });
 							} else {
-								output
-										.setResult(ApplreposConstants.RESULT_ERROR);
+								output.setResult(AirKonstanten.RESULT_ERROR);
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
 					}
 				} else {
 					// messages
-					output.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(AirKonstanten.RESULT_ERROR);
 					String astrMessages[] = new String[messages.size()];
 					for (int i = 0; i < messages.size(); i++) {
 						astrMessages[i] = messages.get(i);
@@ -652,7 +642,7 @@ public class AnwendungHbn {
 			output.setErrorMessage("100");
 		}
 
-		if (ApplreposConstants.RESULT_ERROR.equals(output.getResult())) {
+		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
 			// TODO errorcodes / Texte
 			if (null != output.getMessages() && output.getMessages().length > 0) {
 				output.setDisplayMessage(output.getMessages()[0]);
@@ -662,7 +652,7 @@ public class AnwendungHbn {
 		return output;
 	}
 
-	private static Long getItset(String responsible, String subResponsible, Long tableId, Long itemId, String source) {
+	private static Long getItset(String responsible, String subResponsible, Integer tableId, Long itemId, String source) {
 		Long result = null;
 		Session session = HibernateUtil.getSession();
 		Query selectQuery = session.createSQLQuery(SQL_GET_ITSET)
@@ -697,16 +687,14 @@ public class AnwendungHbn {
 
 				if (messages.isEmpty()) {
 					Application application = new Application();
-					
 					boolean isApplicationNameAndAliasNameAllowed = true;
-					
 					
 					if (isApplicationNameAndAliasNameAllowed) {
 						List<ApplicationDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getName(), true);
 						if (null != listApplications && 0 < listApplications.size()) {
 							// application name is not allowed
 							isApplicationNameAndAliasNameAllowed = false;
-							output.setResult(ApplreposConstants.RESULT_ERROR);
+							output.setResult(AirKonstanten.RESULT_ERROR);
 							if (null != listApplications.get(0).getDeleteQuelle()) {
 								boolean override = forceOverride != null && forceOverride.booleanValue();
 								
@@ -735,7 +723,7 @@ public class AnwendungHbn {
 						if (null != listApplications && 0 < listApplications.size()) {
 							// application alias is not allowed
 							isApplicationNameAndAliasNameAllowed = false;
-							output.setResult(ApplreposConstants.RESULT_ERROR);
+							output.setResult(AirKonstanten.RESULT_ERROR);
 							if (null != listApplications.get(0).getDeleteQuelle()) {
 								output.setMessages(new String[] {"Application Alias '" + listApplications.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 							}
@@ -756,11 +744,11 @@ public class AnwendungHbn {
 						}
 						if (null == itSet) {
 							// set default itSet
-							itSet = new Long(ApplreposConstants.IT_SET_DEFAULT);
+							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
 						}
 
 						if (0 == dto.getBusinessEssentialId().longValue()) {
-							dto.setBusinessEssentialId(new Long(ApplreposConstants.BUSINESS_ESSENTIAL_DEFAULT));
+							dto.setBusinessEssentialId(new Long(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT));
 						}
 
 						Session session = HibernateUtil.getSession();
@@ -769,7 +757,7 @@ public class AnwendungHbn {
 
 						// application - insert values
 						application.setInsertUser(cwid);
-						application.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						application.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						application.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 
 						// application - update values
@@ -887,16 +875,16 @@ public class AnwendungHbn {
 							toCommit = true;
 						} catch (Exception e) {
 							// handle exception
-							output.setResult(ApplreposConstants.RESULT_ERROR);
+							output.setResult(AirKonstanten.RESULT_ERROR);
 							output.setMessages(new String[] { e.getMessage() });
 						} finally {
 							String hbnMessage = HibernateUtil.close(tx,	session, toCommit);
 							if (toCommit) {
 								if (null == hbnMessage) {
-									output.setResult(ApplreposConstants.RESULT_OK);
+									output.setResult(AirKonstanten.RESULT_OK);
 									output.setMessages(new String[] { EMPTY });
 								} else {
-									output.setResult(ApplreposConstants.RESULT_ERROR);
+									output.setResult(AirKonstanten.RESULT_ERROR);
 									output.setMessages(new String[] { hbnMessage });
 								}
 							}
@@ -904,7 +892,7 @@ public class AnwendungHbn {
 					}
 				} else {
 					// messages
-					output.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(AirKonstanten.RESULT_ERROR);
 					String astrMessages[] = new String[messages.size()];
 					for (int i = 0; i < messages.size(); i++) {
 						astrMessages[i] = messages.get(i);
@@ -913,12 +901,12 @@ public class AnwendungHbn {
 				}
 			} else {
 				// application id not 0
-				output.setResult(ApplreposConstants.RESULT_ERROR);
+				output.setResult(AirKonstanten.RESULT_ERROR);
 				output.setMessages(new String[] { "the application id should be 0" });
 			}
 		} else {
 			// cwid missing
-			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { "cwid missing" });
 		}
 
@@ -942,18 +930,18 @@ public class AnwendungHbn {
 
 		if (null == application) {
 			// application was not found in database
-			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { "the application was not found in database" });
 		} else {
 			Timestamp tsNow = ApplReposTS.getCurrentTimestamp();
 			
 			// application found - change values
 			application.setUpdateUser(cwid);
-			application.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+			application.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			application.setUpdateTimestamp(tsNow);
 			// override INSERT-attributes
 			application.setInsertUser(cwid);
-			application.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+			application.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			application.setInsertTimestamp(tsNow);
 			
 			// reactivate DELETE-attributes
@@ -1080,17 +1068,17 @@ public class AnwendungHbn {
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			// handle exception
-			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { e.getMessage() });
 		} finally {
 			String hbnMessage = HibernateUtil.close(tx, session,
 					toCommit);
 			if (toCommit && null != application) {
 				if (null == hbnMessage) {
-					output.setResult(ApplreposConstants.RESULT_OK);
+					output.setResult(AirKonstanten.RESULT_OK);
 					output.setMessages(new String[] { EMPTY });
 				} else {
-					output.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(AirKonstanten.RESULT_ERROR);
 					output.setMessages(new String[] { hbnMessage });
 				}
 			}
@@ -1226,14 +1214,14 @@ public class AnwendungHbn {
 				Application application = (Application) session.get(Application.class, id);
 				if (null == application) {
 					// application was not found in database
-					output.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(AirKonstanten.RESULT_ERROR);
 					output.setMessages(new String[] { "the application id "	+ id + " was not found in database" });
 				}
 
 				// if it is not already marked as deleted, we can do it
 				else if (null == application.getDeleteTimestamp()) {
 					application.setDeleteUser(cwid);
-					application.setDeleteQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+					application.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 					application.setDeleteTimestamp(ApplReposTS.getDeletionTimestamp());
 
 					boolean toCommit = false;
@@ -1244,16 +1232,16 @@ public class AnwendungHbn {
 					} catch (Exception e) {
 						log.error(e.getMessage());
 						// handle exception
-						output.setResult(ApplreposConstants.RESULT_ERROR);
+						output.setResult(AirKonstanten.RESULT_ERROR);
 						output.setMessages(new String[] { e.getMessage() });
 					} finally {
 						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
 						if (toCommit) {
 							if (null == hbnMessage) {
-								output.setResult(ApplreposConstants.RESULT_OK);
+								output.setResult(AirKonstanten.RESULT_OK);
 								output.setMessages(new String[] { EMPTY });
 							} else {
-								output.setResult(ApplreposConstants.RESULT_ERROR);
+								output.setResult(AirKonstanten.RESULT_ERROR);
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
@@ -1261,19 +1249,19 @@ public class AnwendungHbn {
 
 				} else {
 					// application is already deleted
-					output.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(AirKonstanten.RESULT_ERROR);
 					output.setMessages(new String[] { "the application is already deleted" });
 				}
 
 			} else {
 				// application id is missing
-				output.setResult(ApplreposConstants.RESULT_ERROR);
+				output.setResult(AirKonstanten.RESULT_ERROR);
 				output.setMessages(new String[] { "the application id is missing or invalid" });
 			}
 
 		} else {
 			// cwid missing
-			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { "cwid missing" });
 		}
 
@@ -1444,7 +1432,7 @@ public class AnwendungHbn {
 					// attributes, because of
 					// null-attributes results => " :: "
 					// so change to empty string for display
-					applicationDTO.setLifecycleStatusTxt(ApplreposConstants.STRING_EMPTY);
+					applicationDTO.setLifecycleStatusTxt(AirKonstanten.STRING_EMPTY);
 				}
 
 				applicationDTO.setUserCreate(rsMessage.getString("USER_CREATE"));
@@ -2432,7 +2420,7 @@ public class AnwendungHbn {
 //		}
 		
 		if (onlyapplications) {
-			sql.append(" and kat1.anwendung_kat1_id=5"); // TODO ANWENDUNG_KAT1 Constante
+			sql.append(" and kat1.anwendung_kat1_id="+AirKonstanten.APPLICATION_CAT1_APPLICATION);
 		}
 		
 		if (null != kat1Id) {
@@ -2540,7 +2528,7 @@ public class AnwendungHbn {
 					anw.setApplicationOwner(applicationOwner);
 					anw.setApplicationOwnerDelegate(applicationOwnerDelegate);
 					anw.setApplicationSteward(applicationSteward);
-					anw.setTableId(ApplreposConstants.TABLE_ID_APPLICATION);
+					anw.setTableId(AirKonstanten.TABLE_ID_APPLICATION);
 					listResult.add(anw);
 				}
 			}
@@ -2710,23 +2698,23 @@ public class AnwendungHbn {
 
 					if (null == applicationSource) {
 						// application was not found in database
-						output.setResult(ApplreposConstants.RESULT_ERROR);
+						output.setResult(AirKonstanten.RESULT_ERROR);
 						output.setMessages(new String[] { "the application id "	+ applicationIdSource + " was not found in database" });
 					}
 					else if (null == applicationTarget) {
 							// application was not found in database
-							output.setResult(ApplreposConstants.RESULT_ERROR);
+							output.setResult(AirKonstanten.RESULT_ERROR);
 							output.setMessages(new String[] { "the application id "	+ applicationIdTarget + " was not found in database" });
 					} else if (null != applicationTarget.getDeleteTimestamp()) {
 						// application is deleted
-						output.setResult(ApplreposConstants.RESULT_ERROR);
+						output.setResult(AirKonstanten.RESULT_ERROR);
 						output.setMessages(new String[] { "the application id "	+ applicationIdTarget + " is deleted" });
 					} else {
 						// application found - change values
 						output.setApplicationId(applicationIdTarget);
 						
 						applicationTarget.setUpdateUser(cwid);
-						applicationTarget.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						applicationTarget.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						applicationTarget.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 
 						// ======
@@ -2831,7 +2819,7 @@ public class AnwendungHbn {
 						String message = e.getMessage();
 						log.error(message);
 						// handle exception
-						output.setResult(ApplreposConstants.RESULT_ERROR);
+						output.setResult(AirKonstanten.RESULT_ERROR);
 						
 						if (null != message && message.startsWith("ORA-20000: ")) {
 							message = message.substring("ORA-20000: ".length());
@@ -2842,17 +2830,17 @@ public class AnwendungHbn {
 						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
 						if (toCommit && null != applicationTarget) {
 							if (null == hbnMessage) {
-								output.setResult(ApplreposConstants.RESULT_OK);
+								output.setResult(AirKonstanten.RESULT_OK);
 								output.setMessages(new String[] { EMPTY });
 							} else {
-								output.setResult(ApplreposConstants.RESULT_ERROR);
+								output.setResult(AirKonstanten.RESULT_ERROR);
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
 					}
 				} else {
 					// messages
-					output.setResult(ApplreposConstants.RESULT_ERROR);
+					output.setResult(AirKonstanten.RESULT_ERROR);
 					String astrMessages[] = new String[messages.size()];
 					for (int i = 0; i < messages.size(); i++) {
 						astrMessages[i] = messages.get(i);
@@ -2862,11 +2850,11 @@ public class AnwendungHbn {
 
 		} else {
 			// cwid missing
-			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { "cwid missing" });
 		}
 
-		if (ApplreposConstants.RESULT_ERROR.equals(output.getResult())) {
+		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
 			// TODO errorcodes / Texte
 			if (null != output.getMessages() && output.getMessages().length > 0) {
 				output.setDisplayMessage(output.getMessages()[0]);
@@ -2958,7 +2946,7 @@ public class AnwendungHbn {
 		Transaction tx = null;
 		tx = session.beginTransaction();
 
-		String stampSQL = "update ANW_ANW set DEL_QUELLE = '" + ApplreposConstants.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE APP_HIGHER_ID = ? OR APP_LOWER_ID = ? AND del_timestamp IS NULL";
+		String stampSQL = "update ANW_ANW set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE APP_HIGHER_ID = ? OR APP_LOWER_ID = ? AND del_timestamp IS NULL";
 		try {
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, cwid);
@@ -2990,7 +2978,7 @@ public class AnwendungHbn {
 		Transaction tx = null;
 		tx = session.beginTransaction();
 
-		String stampSQL = "update ANWEND_IT_SYSTEM set DEL_QUELLE = '" + ApplreposConstants.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE ANWENDUNG_ID = ? AND del_timestamp IS NULL";
+		String stampSQL = "update ANWEND_IT_SYSTEM set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE ANWENDUNG_ID = ? AND del_timestamp IS NULL";
 		try {
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, cwid);
@@ -3070,7 +3058,7 @@ public class AnwendungHbn {
 			sb.append("If you have questions about this please contact ITILcenter@bayer.com.\r\n\r\n");
 			sb.append("Best Regards\r\n");
 			sb.append("ITILcenter Administration");
-			ApplReposHbn.sendMail(sendTo, copyTo, sbSubject.toString(), sb.toString(), ApplreposConstants.APPLICATION_GUI_NAME);
+			ApplReposHbn.sendMail(sendTo, copyTo, sbSubject.toString(), sb.toString(), AirKonstanten.APPLICATION_GUI_NAME);
 		}
 	}
 

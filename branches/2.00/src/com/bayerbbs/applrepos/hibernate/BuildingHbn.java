@@ -27,7 +27,7 @@ public class BuildingHbn extends LokationItemHbn {
 			if (null != list && 0 < list.size()) {
 				building = (Building) list.get(0);
 			}
-
+			
 			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
@@ -52,11 +52,13 @@ public class BuildingHbn extends LokationItemHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			List<BuildingArea> list = session.createQuery("select ba from BuildingArea as ba where ba.areaId=" + id).list();
-
-			if (null != list && 0 < list.size()) {
-				buildingArea = (BuildingArea) list.get(0);
-			}
+//			List<BuildingArea> list = session.createQuery("select ba from BuildingArea as ba where ba.areaId=" + id).list();
+			
+//			if (null != list && 0 < list.size()) {
+//				buildingArea = (BuildingArea) list.get(0);
+//			}
+			
+			buildingArea = (BuildingArea)session.get(BuildingArea.class, id);
 
 			tx.commit();
 		} catch (RuntimeException e) {
@@ -70,7 +72,6 @@ public class BuildingHbn extends LokationItemHbn {
 				// throw again the first exception
 				throw e;
 			}
-
 		}
 		return buildingArea;
 	}

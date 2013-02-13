@@ -509,7 +509,13 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	updateComplianceDetails: function(data) {
 		var tfItsetName = this.getComponent('fsComplianceDetails').getComponent('pItSet').getComponent('tfItsetName');
-		tfItsetName.setValue(data.itsetName);
+		if(data.tableId == AC.TABLE_ID_APPLICATION) {
+			tfItsetName.setValue(data.itsetName);
+		} else {
+			var itsetStore = AIR.AirStoreManager.getStoreByName('itSetListStore');
+			var itsetName = itsetStore.getById(data.itset).get('text');
+			tfItsetName.setValue(itsetName);
+		}
 		
 		var isTemplate = data.template === '1';
 		var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
@@ -537,7 +543,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if(AIR.AirAclManager.isRelevance(bEditItSecGroup, data))
 				text = AIR.AirApplicationManager.getLabels().relevanceEditButton;
 		} else {
-			var hasTemplate = data.refId !== '0';
+			var hasTemplate = data.refId !== '0' && data.refId.length > 0;
 			if(hasTemplate) {
 				Util.disableCombo(cbItSecGroup);
 				
@@ -655,9 +661,9 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var params = {
 		 	cwid: AIR.AirApplicationManager.getCwid(),
 		 	token: AIR.AirApplicationManager.getToken(),
-			ciId: AIR.AirApplicationManager.getCiId(),//selectedCIId,
-			language: AAM.getLanguage(),//'en',//selectedLanguage
-			tableId: 2//2=CI Typ Application (?)
+			ciId: AIR.AirApplicationManager.getCiId(),
+			language: AAM.getLanguage(),
+			tableId: 2//2=CI Typ Application
 		};
 		
 		massnahmenStore.load({
@@ -715,7 +721,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			var data = {
 				airErrorId: AC.AIR_ERROR_INVALID_TEMPLATE,
 				applicationCat1: AIR.AirApplicationManager.getAppDetail().applicationCat1Txt,
-				applicationName: AIR.AirApplicationManager.getAppDetail().applicationName
+				applicationName: AIR.AirApplicationManager.getAppDetail().name//applicationName
 			};
 			this.fireEvent('airAction', this, 'airError', data);
 		}
@@ -839,8 +845,12 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var values = [];
 		for(var i = 0; i < cbgRegulations.items.items.length; i++) {
-			var regulationId = 'relevance' + cbgRegulations.items.items[i].boxLabel;
+			var regulation = cbgRegulations.items.items[i].boxLabel;
+			var regulationId = 'relevance' + regulation;
 			values[values.length] = data[regulationId] == 'Y' ? true : false;
+			
+			var exists = AIR.AirBusinessRules.existsItsecRegulationByCiType(data.tableId, regulation);
+			cbgRegulations.items.items[i].setVisible(exists);
 		}
 		
 		cbgRegulations.setValue(values);
@@ -856,7 +866,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceInfo').getComponent('bEditNonBytSec'), data);
 		
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup'), data);
 		//Compliance Controls sind nur sichtbar, nicht editierbar. Sie sollen immer über bEditItSecGroup zu öffnen sein
 		//AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup'), data);
@@ -969,10 +979,19 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	
 	filterCombo: function(combo) {
+		var ciDetail = AIR.AirApplicationManager.getAppDetail();
+		
 		var filterData = {
-			ciKat1: AIR.AirApplicationManager.getAppDetail().applicationCat1Id,
-			itsetId: AIR.AirApplicationManager.getAppDetail().itset
+//			ciKat1: ciDetail.applicationCat1Id,
+			itsetId: ciDetail.itset
 		};
+		
+		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION) {
+			filterData.ciKat1 = ciDetail.applicationCat1Id;
+		} else {
+			filterData.tableId = ciDetail.tableId;
+		}
+		
 		combo.filterByData(filterData);
 	},
 	

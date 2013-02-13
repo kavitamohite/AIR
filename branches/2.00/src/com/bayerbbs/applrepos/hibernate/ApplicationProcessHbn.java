@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.ApplReposTS;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.ApplicationProcess;
 
 public class ApplicationProcessHbn {
@@ -48,8 +48,8 @@ public class ApplicationProcessHbn {
 		String stampSQL = "UPDATE application_process SET last_sync_source = ?, syncing = ? WHERE application_id = ? AND del_timestamp IS NULL";
 		try {
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
-			stmt.setString(1, ApplreposConstants.APPLICATION_GUI_NAME);
-			stmt.setString(2, ApplreposConstants.APPLICATION_GUI_NAME + '_' + cwid);
+			stmt.setString(1, AirKonstanten.APPLICATION_GUI_NAME);
+			stmt.setString(2, AirKonstanten.APPLICATION_GUI_NAME + '_' + cwid);
 			stmt.setLong(3, applicationId);
 			stmt.executeUpdate();
 		} catch (Exception e) {
@@ -68,10 +68,10 @@ public class ApplicationProcessHbn {
 				+ "WHERE application_id = ? AND del_timestamp IS NULL AND syncing=?";
 		try {
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
-			stmt.setString(1, ApplreposConstants.APPLICATION_GUI_NAME);
+			stmt.setString(1, AirKonstanten.APPLICATION_GUI_NAME);
 			stmt.setString(2, cwid);
 			stmt.setLong(3, applicationId);
-			stmt.setString(4, ApplreposConstants.APPLICATION_GUI_NAME + "_" + cwid);
+			stmt.setString(4, AirKonstanten.APPLICATION_GUI_NAME + "_" + cwid);
 			stmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -120,11 +120,11 @@ public class ApplicationProcessHbn {
 			// update existing entry / or reactivate it
 			
 			if (null != applicationProcess.getDeleteTimestamp()) {
-				applicationProcess.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+				applicationProcess.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				applicationProcess.setUpdateUser(cwid.toUpperCase());
 				applicationProcess.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 				// oh it is deleted, so reactivate it
-				applicationProcess.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+				applicationProcess.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				applicationProcess.setInsertUser(cwid);
 				applicationProcess.setInsertTimestamp(applicationProcess.getUpdateTimestamp());
 				applicationProcess.setDeleteQuelle(null);
@@ -135,7 +135,7 @@ public class ApplicationProcessHbn {
 		} else {
 			// application process - insert values
 			applicationProcess = new ApplicationProcess();
-			applicationProcess.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+			applicationProcess.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			applicationProcess.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 			applicationProcess.setInsertUser(cwid);
 			// --

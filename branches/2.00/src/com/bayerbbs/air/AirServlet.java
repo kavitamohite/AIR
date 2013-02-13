@@ -119,6 +119,7 @@ public class AirServlet extends HttpServlet {
 				append("<script type='text/javascript' src='javascript/common/AirConfigFactory.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/common/AirHistoryManager.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/common/AirCallbackManager.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirBusinessRules.js'></script>\n").
 				
 				append("<script type='text/javascript' src='javascript/search/CiAdvancedSearchView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/search/CiSearchView.js'></script>\n").

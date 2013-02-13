@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.ApplReposTS;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.ApplicationApplication;
 
 public class ApplicationApplicationHbn {
@@ -57,7 +57,7 @@ public class ApplicationApplicationHbn {
 					&& null == applicationApplication.getDeleteTimestamp()) {
 				// set deletion information
 				applicationApplication
-						.setDeleteQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				applicationApplication.setDeleteUser(cwid);
 				applicationApplication.setDeleteTimestamp(ApplReposTS
 						.getDeletionTimestamp());
@@ -65,13 +65,13 @@ public class ApplicationApplicationHbn {
 		} else if (null != applicationApplication) {
 			// update existing entry
 			applicationApplication
-					.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+					.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			applicationApplication.setUpdateUser(cwid.toUpperCase());
 			applicationApplication.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 			if (null != applicationApplication.getDeleteTimestamp()) {
 				// oh it is deleted, so reactivate it
 				applicationApplication
-						.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				applicationApplication.setInsertUser(cwid);
 				applicationApplication.setInsertTimestamp(applicationApplication
 						.getUpdateTimestamp());
@@ -87,7 +87,7 @@ public class ApplicationApplicationHbn {
 			update = false;
 			applicationApplication = new ApplicationApplication();
 			applicationApplication
-					.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			applicationApplication.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 			applicationApplication.setInsertUser(cwid);
 			// --

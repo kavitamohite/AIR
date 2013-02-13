@@ -212,6 +212,14 @@ public class ApplicationDTO extends CiBaseDTO {
 //	public void setApplicationId(Long applicationId) {
 //		this.applicationId = applicationId;
 //	}
+	
+//	public String getAlias() {
+//		return alias;
+//	}
+//
+//	public void setAlias(String alias) {
+//		this.alias = alias;
+//	}
 
 	public String getBarApplicationId() {
 		return barApplicationId;

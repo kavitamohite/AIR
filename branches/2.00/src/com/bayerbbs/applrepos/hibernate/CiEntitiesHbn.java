@@ -12,10 +12,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
+import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
 
@@ -49,17 +50,17 @@ public class CiEntitiesHbn {
 		sql.append("select * from DWH_ENTITY  where");
 		// sql.append(" upper(deleted) = 'NO'");
 		sql.append(" TABLE_ID in (");
-			sql.append(ApplreposConstants.TABLE_ID_IT_SYSTEM);
+			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
 			sql.append(",");
-			sql.append(ApplreposConstants.TABLE_ID_APPLICATION);
+			sql.append(AirKonstanten.TABLE_ID_APPLICATION);
 			sql.append(",");
-			sql.append(ApplreposConstants.TABLE_ID_WAYS);
+			sql.append(AirKonstanten.TABLE_ID_WAYS);
 		sql.append(")");
 		
 		sql.append(" and (upper(name) = '" + searchName + "'  or upper(ASSET_ID_OR_ALIAS) = '" +searchName + "')");
 		
 		if (withDeletedApplications) {
-			sql.append(" and (TABLE_ID in ").append(ApplreposConstants.TABLE_ID_APPLICATION).append(" and upper(DELETED) = 'YES')");
+			sql.append(" and (TABLE_ID in ").append(AirKonstanten.TABLE_ID_APPLICATION).append(" and upper(DELETED) = 'YES')");
 		}
 		else {
 			sql.append(" and upper(DELETED) = 'NO'");
@@ -155,15 +156,23 @@ public class CiEntitiesHbn {
 		sql.append(" upper(deleted) = 'NO'");
 		sql.append(" and TABLE_ID in (");
 		if (!onlyapplications) {
-			sql.append(ApplreposConstants.TABLE_ID_IT_SYSTEM);
+			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
 			sql.append(",");
 		}
-		sql.append(ApplreposConstants.TABLE_ID_APPLICATION);
+		sql.append(AirKonstanten.TABLE_ID_APPLICATION);
 		if (!onlyapplications) {
 			sql.append(",");
-			sql.append(ApplreposConstants.TABLE_ID_ROOM);
+			sql.append(AirKonstanten.TABLE_ID_ROOM);
 			sql.append(",");
-			sql.append(ApplreposConstants.TABLE_ID_BUILDING);//TABLE_ID_WAYS
+			sql.append(AirKonstanten.TABLE_ID_BUILDING);//TABLE_ID_WAYS
+			sql.append(",");
+			sql.append(AirKonstanten.TABLE_ID_BUILDING_AREA);
+			sql.append(",");
+			sql.append(AirKonstanten.TABLE_ID_TERRAIN);
+			sql.append(",");
+			sql.append(AirKonstanten.TABLE_ID_POSITION);
+			sql.append(",");
+			sql.append(AirKonstanten.TABLE_ID_SITE);
 		}
 		sql.append(")");
 		
@@ -279,21 +288,17 @@ public class CiEntitiesHbn {
 	 * find all the ci's or only the applications
 	 * @return
 	 */
-	public static List<CiBaseDTO> findCisByNameOrAlias(String searchName, Long ciTableId, boolean withDeleted) {
-
+	public static List<CiBaseDTO> findCisByNameOrAlias(String searchName, int ciTableId, boolean withDeleted) {
 		ArrayList<CiBaseDTO> listResult = new ArrayList<CiBaseDTO>();
 
 		boolean commit = false;
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
-
 		Connection conn = null;
 
 		searchName = searchName.toUpperCase();
-		
 		StringBuffer sql = new StringBuffer();
-
 		sql.append("select /*+ INDEX (DWH_ENTITY FIX_143_16) */ * from DWH_ENTITY  where");
 
 		if (!withDeleted) {
@@ -304,18 +309,14 @@ public class CiEntitiesHbn {
 		sql.append(")");
 		
 		sql.append(" and (upper(name) like '");
-
-			sql.append(searchName);
+		sql.append(searchName);
 
 		sql.append("'  or upper(ASSET_ID_OR_ALIAS) like '");
-		
-			sql.append(searchName);
-			
+		sql.append(searchName);
 		sql.append("')");
 		
 		try {
 			tx = session.beginTransaction();
-
 			conn = session.connection();
 
 			selectStmt = conn.createStatement();
@@ -324,7 +325,7 @@ public class CiEntitiesHbn {
 
 			if (null != rset) {
 				while (rset.next()) {
-					ApplicationDTO anw = getApplicationDTOFromResultSet(rset);
+//					ApplicationDTO anw = getApplicationDTOFromResultSet(rset);
 					CiBaseDTO baseDTO = new CiBaseDTO();
 					baseDTO.setId(rset.getLong("CI_ID"));
 					baseDTO.setName(rset.getString("NAME"));
@@ -345,7 +346,6 @@ public class CiEntitiesHbn {
 				conn.close();
 			}
 		} catch (Exception e) {
-			//
 			System.out.println(e.toString());
 		}
 		finally {
@@ -355,24 +355,17 @@ public class CiEntitiesHbn {
 		return listResult;
 	}
 
-	
-	/**
-	 * find all the ci's by type for the selectboxes
-	 * @return
-	 */
-	public static List<ViewDataDTO> findCisByTypeAndNameOrAlias(String typename, String searchName) {
 
+	public static List<ViewDataDTO> findCisByTypeAndNameOrAlias(String typename, String searchName) {
 		ArrayList<ViewDataDTO> listResult = new ArrayList<ViewDataDTO>();
 
 		boolean commit = false;
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
-
 		Connection conn = null;
 
 		searchName = searchName.toUpperCase();
-		
 		StringBuffer sql = new StringBuffer();
 
 		sql.append("select * from DWH_ENTITY  where");
@@ -380,12 +373,10 @@ public class CiEntitiesHbn {
 		sql.append(" and upper(type) = upper('").append(typename).append("')");
 		
 		sql.append(" and (upper(name) like '%" + searchName + "%'  or upper(ASSET_ID_OR_ALIAS) like '%" +searchName + "%')");
-		
 		sql.append(" order by NAME");
 		
 		try {
 			tx = session.beginTransaction();
-
 			conn = session.connection();
 
 			selectStmt = conn.createStatement();
@@ -442,8 +433,9 @@ public class CiEntitiesHbn {
 		String applicationOwnerDelegate = null;
 		Long ci_id = null;
 		String category = null;
-		Long tableId = null;
+		Integer tableId = null;
 		String deleted = null;
+		
 		try {
 			type = rset.getString("TYPE");
 			id = rset.getString("ID");
@@ -455,17 +447,9 @@ public class CiEntitiesHbn {
 			ci_id = rset.getLong("CI_ID");
 			applicationOwner = rset.getString("APP_OWNER");
 			applicationOwnerDelegate = rset.getString("APP_OWNER_DELEGATE");
-			tableId = rset.getLong("TABLE_ID");
+			tableId = rset.getInt("TABLE_ID");
 			deleted = rset.getString("DELETED");
-			
-			
-			try {
-				applicationSteward = rset.getString("APP_STEWARD");	
-			} catch (Exception e) {
-				//TODO DWH Entity - nothing da noch nicht in DWH Entity
-			}
-			
-			
+			applicationSteward = rset.getString("APP_STEWARD");
 			
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -500,6 +484,7 @@ public class CiEntitiesHbn {
 		anw.setApplicationOwnerDelegate(applicationOwnerDelegate);
 		anw.setTableId(tableId);
 		anw.setDeleteQuelle(deleted);
+		
 		return anw;
 	}
 
@@ -540,7 +525,6 @@ public class CiEntitiesHbn {
 	}
 	
 	private static List<ApplicationDTO> findMyCisOwnerOrDelegate(String ownerDelegate, String cwid, String sort, String dir, boolean onlyApplications) {
-
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("SELECT * FROM TABLE (").append(ownerDelegate).append("('").append(cwid.toUpperCase()).append("'))");
@@ -591,7 +575,6 @@ public class CiEntitiesHbn {
 
 	
 	private static List<ApplicationDTO> findCis(String sql) {
-
 		ArrayList<ApplicationDTO> listeAnwendungen = new ArrayList<ApplicationDTO>();
 
 		boolean commit = false;
@@ -607,8 +590,8 @@ public class CiEntitiesHbn {
 			
 			selectStmt = conn.createStatement();
 			ResultSet rset = selectStmt.executeQuery(sql);
+			
 			while (rset.next()) {
-				
 				// TODO rename fields application to ci entities
 				ApplicationDTO anw = getApplicationDTOFromResultSet(rset);
 				listeAnwendungen.add(anw);
@@ -792,4 +775,72 @@ public class CiEntitiesHbn {
 		return output;
 	}
 	
+	public static List<ReferenzDTO> getTemplateCIs() {
+		List<ReferenzDTO> templates = new ArrayList<ReferenzDTO>();
+		
+		Transaction ta = null;
+		Statement stmt = null;
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();//"SELECT ci_id, table_id, type, name, itset, FROM dwh_entity WHERE template = 'Yes'";
+		sql.
+		append("select r.raum_name as ci_name, r.raum_id as ci_id, r.itset, r.itsec_gruppe_id, (3) as table_id, (0) as ci_sub_type from raum r ").
+		append("where r.template = -1 ").
+		append("union ").// --all
+		append("select g.gebaeude_name, g.gebaeude_id, g.itset, g.itsec_gruppe_id, (4) as table_id, (0) as ci_sub_type from gebaeude g ").
+		append("where g.template = -1 ").
+		append("union ").// --all
+		append("select ba.area_name, ba.area_id, ba.itset, ba.itsec_gruppe_id, (88) as table_id, (0) as ci_sub_type from building_area ba ").
+		append("where ba.template = -1 ").
+		append("union ").// --all
+		append("select i.it_system_name, i.it_system_id, i.itset, i.itsec_gruppe_id, (1) as table_id, i.hw_ident_or_trans as ci_sub_type from it_system i ").
+		append("where i.template = -1 ").
+		append("union ").// --all
+		append("select s.schrank_name as ci_name, s.schrank_id as ci_id, s.itset, s.itsec_gruppe_id, (13) as table_id, (0) as ci_sub_type from schrank s ").
+		append("where s.template = -1 ").
+		append("union ").// --all
+		append("select st.standort_name as ci_name, st.standort_id as ci_id, st.itset, st.itsec_gruppe_id, (12) as table_id, (0) as ci_sub_type from standort st ").
+		append("where st.template = -1 ").
+		append("union ").// --all
+		append("select t.terrain_name as ci_name, t.terrain_id as ci_id, t.itset, t.itsec_gruppe_id, (30) as table_id, (0) as ci_sub_type from terrain t ").
+		append("where t.template = -1 ").
+		append("union ").// --all
+		append("select an.anwendung_name, an.anwendung_id, an.itset, an.itsec_gruppe_id, (2) as table_id, ak2.anwendung_kat1_id from anwendung an ").
+		append("  inner join anwendung_kat2 ak2 on an.anwendung_kat2_id = ak2.anwendung_kat2_id ").
+		append("where an.template = -1 ").
+		append("order by table_id, ci_sub_type");
+
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+
+			ReferenzDTO templateDTO = null;
+			
+			while (rs.next()) {
+				templateDTO = new ReferenzDTO();
+				templateDTO.setId(rs.getLong("CI_ID"));
+				templateDTO.setName(rs.getString("CI_NAME"));
+				templateDTO.setItsetId(rs.getLong("ITSET"));
+				templateDTO.setItsecGroupId(rs.getLong("ITSEC_GRUPPE_ID"));
+				templateDTO.setTableId(rs.getInt("TABLE_ID"));
+				templateDTO.setCiKat1(rs.getLong("CI_SUB_TYPE"));
+				
+				templates.add(templateDTO);
+			}
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		int size = templates.size();
+		return templates;
+	}
 }

@@ -20,29 +20,11 @@ public class CiSupportStuff  extends DeletableRevisionInfo implements Serializab
 
 	private Long ciSupportStuffId;
 	private Long ciSupportStuffTypeId;
-	private Long tableId;
+	private Integer tableId;
 	private Long ciId;
 	private String ciSupportStuffValue;
 
-	// ------------------------------------------------------
-	// -
-	// ------------------------------------------------------
-
-	/**
-	 * Creates a new instance.
-	 */
-	public CiSupportStuff() {
-	}
-
-	// ------------------------------------------------------
-	// hibernate get / set
-	// ------------------------------------------------------
-
-	/**
-	 * Returns the value of the field {@link #id}.
-	 * 
-	 * @return Value of the {@link #id} field.
-	 */
+	
 	@Transient
 	public Long getId() {
 		return getCiSupportStuffId();
@@ -96,7 +78,7 @@ public class CiSupportStuff  extends DeletableRevisionInfo implements Serializab
 	 * @return Value of the {@link #tableId} field.
 	 */
 	@Column(name = "TABLE_ID")
-	public Long getTableId() {
+	public Integer getTableId() {
 		return tableId;
 	}
 
@@ -106,7 +88,7 @@ public class CiSupportStuff  extends DeletableRevisionInfo implements Serializab
 	 * @param tableId
 	 *            The value to set.
 	 */
-	public void setTableId(Long tableId) {
+	public void setTableId(Integer tableId) {
 		this.tableId = tableId;
 	}
 

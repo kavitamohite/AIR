@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -15,9 +17,7 @@ import javax.persistence.Table;
 public class Building extends CiBase implements Serializable {
 	private static final long serialVersionUID = 2431254723377623846L;
 	
-//	private Long buildingId;
-//	private String buildingName;
-//	private String buildingAlias;
+	private String alias;
 	private String buildingCode;
 	private Long terrainId;
 	
@@ -27,43 +27,33 @@ public class Building extends CiBase implements Serializable {
 	private String location;
 	
     private Set<BuildingArea> buildingAreas;
-	
-	
-//	@Transient
-//	public Long getId() {
-//		return getBuildingId();
-//	}
+    private Terrain terrain;
+
 
 	@Id
 	@Column(name = "GEBAEUDE_ID")
 	public Long getBuildingId() {
-		return getId();//buildingId;
+		return getId();
 	}
 	public void setBuildingId(Long buildingId) {
 		setId(buildingId);
-//		this.buildingId = buildingId;
 	}
-
 	
 	@Column(name = "GEBAEUDE_NAME")
 	public String getBuildingName() {
-		return getName();//buildingName;
+		return getName();
 	}
 	public void setBuildingName(String buildingName) {
 		setName(buildingName);
-//		this.buildingName = buildingName;
 	}
-
 	
 	@Column(name = "ALIAS")
-	public String getBuildingAlias() {
-		return getAlias();//buildingAlias;
+	public String getAlias() {
+		return alias;
 	}
-	public void setBuildingAlias(String buildingAlias) {
-		setAlias(buildingAlias);
-//		this.buildingAlias = buildingAlias;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
-
 	
 	@Column(name = "GEBAEUDE_CODE")
 	public String getBuildingCode() {
@@ -72,16 +62,6 @@ public class Building extends CiBase implements Serializable {
 	public void setBuildingCode(String buildingCode) {
 		this.buildingCode = buildingCode;
 	}
-
-	
-	@Column(name = "TERRAIN_ID")
-	public Long getTerrainId() {
-		return terrainId;
-	}
-	public void setTerrainId(Long terrainId) {
-		this.terrainId = terrainId;
-	}
-
 	
 	@Column(name = "STRASSE")
 	public String getStreet() {
@@ -90,7 +70,6 @@ public class Building extends CiBase implements Serializable {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-
 	
 	@Column(name = "NR")
 	public String getStreetNumber() {
@@ -99,7 +78,6 @@ public class Building extends CiBase implements Serializable {
 	public void setStreetNumber(String streetNumber) {
 		this.streetNumber = streetNumber;
 	}
-
 	
 	@Column(name = "PLZ")
 	public String getPostalCode() {
@@ -108,7 +86,6 @@ public class Building extends CiBase implements Serializable {
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
-
 	
 	@Column(name = "ORT")
 	public String getLocation() {
@@ -119,7 +96,24 @@ public class Building extends CiBase implements Serializable {
 	}
 	
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "building")//, mappedBy = "building"
+	@ManyToOne
+	@JoinColumn(name="TERRAIN_ID")
+	public Terrain getTerrain() {
+		return terrain;
+	}
+	public void setTerrain(Terrain terrain) {
+		this.terrain = terrain;
+	}
+	@Column(name = "TERRAIN_ID", insertable=false, updatable=false)
+	public Long getTerrainId() {
+		return terrainId;
+	}
+	public void setTerrainId(Long terrainId) {
+		this.terrainId = terrainId;
+	}
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "building")
 	public Set<BuildingArea> getBuildingAreas() {
 		return buildingAreas;
 	}

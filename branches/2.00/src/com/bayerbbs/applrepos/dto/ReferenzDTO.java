@@ -6,6 +6,7 @@ public class ReferenzDTO {
 	private Long itsetId;
 	private Long itsecGroupId;
 	private Long ciKat1;
+	private Integer tableId;
 
 	public Long getId() {
 		return id;
@@ -13,6 +14,7 @@ public class ReferenzDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public String getName() {
 		return name;
 	}
@@ -39,5 +41,12 @@ public class ReferenzDTO {
 	}
 	public void setCiKat1(Long ciKat1) {
 		this.ciKat1 = ciKat1;
+	}
+	
+	public Integer getTableId() {
+		return tableId;
+	}
+	public void setTableId(Integer tableId) {
+		this.tableId = tableId;
 	}
 }

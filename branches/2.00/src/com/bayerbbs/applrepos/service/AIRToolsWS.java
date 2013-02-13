@@ -7,7 +7,7 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.dto.AccountDTO;
 import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.CategoryBusinessDTO;
@@ -42,6 +42,7 @@ import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationCat1Hbn;
 import com.bayerbbs.applrepos.hibernate.BusinessEssentialHbn;
 import com.bayerbbs.applrepos.hibernate.CategoryBusinessHbn;
+import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.ClassInformationHbn;
 import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
 import com.bayerbbs.applrepos.hibernate.CurrencyHbn;
@@ -59,13 +60,10 @@ import com.bayerbbs.applrepos.hibernate.SlaHbn;
 import com.bayerbbs.applrepos.hibernate.SlaServiceContractHbn;
 
 public class AIRToolsWS {
-
 	private final static String CACHENAME = "airCache";
 	
 	public AccountDTO[] getAccountList() {
-		
 		AccountDTO[] aAccountsDTO = null;
-		
 		String cacheKeyName = "accountList";
 		
 		Cache myCache = (Cache) CacheManager.getInstance().getCache(CACHENAME);
@@ -119,14 +117,14 @@ public class AIRToolsWS {
 	public OrganisationalScopeDTO[] getOrganisationalScopeList() {
 		OrganisationalScopeDTO[] orgScopes = {
 //				new OrganisationalScopeDTO(""),
-				new OrganisationalScopeDTO("BHC"),
-				new OrganisationalScopeDTO("BCS"),
-				new OrganisationalScopeDTO("BMS"),
-				new OrganisationalScopeDTO("BBS"),
-				new OrganisationalScopeDTO("BTS"),
-				new OrganisationalScopeDTO("CUR"),
-				new OrganisationalScopeDTO("BAG"),
-				new OrganisationalScopeDTO("Bayer Group")
+			new OrganisationalScopeDTO("BHC"),
+			new OrganisationalScopeDTO("BCS"),
+			new OrganisationalScopeDTO("BMS"),
+			new OrganisationalScopeDTO("BBS"),
+			new OrganisationalScopeDTO("BTS"),
+			new OrganisationalScopeDTO("CUR"),
+			new OrganisationalScopeDTO("BAG"),
+			new OrganisationalScopeDTO("Bayer Group")
 		};
 		
 		return orgScopes;
@@ -174,7 +172,7 @@ public class AIRToolsWS {
 	}
 	
 	public LifecycleStatusDTO[] getLifecycleStatusList() {
-		return LifecycleStatusHbn.getArrayFromList(LifecycleStatusHbn.listLifecycleStatus(ApplreposConstants.TABLE_ID_APPLICATION));
+		return LifecycleStatusHbn.getArrayFromList(LifecycleStatusHbn.listLifecycleStatus(AirKonstanten.TABLE_ID_APPLICATION));
 	}
 	
 	public ProcessDTO[] getProcessList() {
@@ -201,6 +199,12 @@ public class AIRToolsWS {
 			}
 		}
 		return aRefs;
+	}
+	
+	public ReferenzDTO[] getTemplateCIs() {//Integer tableId
+		List<ReferenzDTO> templateList = CiEntitiesHbn.getTemplateCIs();
+		
+		return templateList.toArray(new ReferenzDTO[0]);
 	}
 	
 	public SeverityLevelDTO[] getSeverityLevelList() {

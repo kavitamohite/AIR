@@ -6,14 +6,14 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.ApplReposTS;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiSupportStuff;
 import com.bayerbbs.applrepos.dto.CiSupportStuffDTO;
 
 public class CiSupportStuffHbn {
 
 	public static CiSupportStuffDTO findCiSupportStuffByTableAndCiAndTypeId(
-			Long tableId, Long ciId, Long ciSupportStuffTypeId) {
+			Integer tableId, Long ciId, Long ciSupportStuffTypeId) {
 
 		CiSupportStuffDTO result = new CiSupportStuffDTO();
 
@@ -34,8 +34,7 @@ public class CiSupportStuffHbn {
 					CiSupportStuff myValue = values.get(0);
 
 					result.setCiSupportStuffId(myValue.getCiSupportStuffId());
-					result.setCiSupportStuffTypeId(myValue
-							.getCiSupportStuffTypeId());
+					result.setCiSupportStuffTypeId(myValue.getCiSupportStuffTypeId());
 					result.setTableId(myValue.getTableId());
 					result.setCiId(myValue.getCiId());
 					result.setCiSupportStuffValue(myValue
@@ -52,13 +51,13 @@ public class CiSupportStuffHbn {
 		return result;
 	}
 
-	public static CiSupportStuff findCiSupportStuffAll(Long tableId, Long ciId,
-			Long ciSupportStuffTypeId) {
+	public static CiSupportStuff findCiSupportStuffAll(Integer tableId, Long ciId, Long ciSupportStuffTypeId) {
 		CiSupportStuff result = null;
+		
 		if (null != tableId && null != ciId && null != ciSupportStuffTypeId) {
-
 			Transaction tx = null;
 			Session session = HibernateUtil.getSession();
+			
 			try {
 				tx = session.beginTransaction();
 				List<CiSupportStuff> values = session.createQuery(
@@ -96,28 +95,27 @@ public class CiSupportStuffHbn {
 	public static void saveCiSupportStuffAll(String cwid, Long ciId,
 			String userAuthorizationSupportedByDocumentation, String userAuthorizationProcess, String changeManagementSupportedByTool, String userManagementProcess, String applicationDocumentation, String rootDirectory, String dataDirectory, String providedServices, String providedMachineUsers) {
 
-		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
-				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserAuthorizationSupportedByDocumentation, userAuthorizationSupportedByDocumentation);
-		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
-				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserAuthorizationProcess, userAuthorizationProcess);
-		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
-				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ChangeManagementSupportedByTool, changeManagementSupportedByTool);
-		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
-				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_UserManagementProcess, userManagementProcess);
-		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
-				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ApplicationDocumentation, applicationDocumentation);
-		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
-				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_RootDirectory, rootDirectory);
-		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
-				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_DataDirectory, dataDirectory);
-		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
-				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ProvidedServices, providedServices);
-		saveSupportStuff(cwid, ApplreposConstants.TABLE_ID_APPLICATION,
-				ciId, ApplreposConstants.CI_SUPPORT_STUFF_TYPE_ProvidedMachineUsers, providedMachineUsers);
+		saveSupportStuff(cwid, AirKonstanten.TABLE_ID_APPLICATION,
+				ciId, AirKonstanten.CI_SUPPORT_STUFF_TYPE_UserAuthorizationSupportedByDocumentation, userAuthorizationSupportedByDocumentation);
+		saveSupportStuff(cwid, AirKonstanten.TABLE_ID_APPLICATION,
+				ciId, AirKonstanten.CI_SUPPORT_STUFF_TYPE_UserAuthorizationProcess, userAuthorizationProcess);
+		saveSupportStuff(cwid, AirKonstanten.TABLE_ID_APPLICATION,
+				ciId, AirKonstanten.CI_SUPPORT_STUFF_TYPE_ChangeManagementSupportedByTool, changeManagementSupportedByTool);
+		saveSupportStuff(cwid, AirKonstanten.TABLE_ID_APPLICATION,
+				ciId, AirKonstanten.CI_SUPPORT_STUFF_TYPE_UserManagementProcess, userManagementProcess);
+		saveSupportStuff(cwid, AirKonstanten.TABLE_ID_APPLICATION,
+				ciId, AirKonstanten.CI_SUPPORT_STUFF_TYPE_ApplicationDocumentation, applicationDocumentation);
+		saveSupportStuff(cwid, AirKonstanten.TABLE_ID_APPLICATION,
+				ciId, AirKonstanten.CI_SUPPORT_STUFF_TYPE_RootDirectory, rootDirectory);
+		saveSupportStuff(cwid, AirKonstanten.TABLE_ID_APPLICATION,
+				ciId, AirKonstanten.CI_SUPPORT_STUFF_TYPE_DataDirectory, dataDirectory);
+		saveSupportStuff(cwid, AirKonstanten.TABLE_ID_APPLICATION,
+				ciId, AirKonstanten.CI_SUPPORT_STUFF_TYPE_ProvidedServices, providedServices);
+		saveSupportStuff(cwid, AirKonstanten.TABLE_ID_APPLICATION,
+				ciId, AirKonstanten.CI_SUPPORT_STUFF_TYPE_ProvidedMachineUsers, providedMachineUsers);
 	}
 
-	public static void saveSupportStuff(String cwid, Long tableId, Long ciId,
-			Long supportStuffTypeId, String value) {
+	public static void saveSupportStuff(String cwid, int tableId, Long ciId, Long supportStuffTypeId, String value) {
 
 		boolean update = true;
 		
@@ -133,7 +131,7 @@ public class CiSupportStuffHbn {
 					&& null == supportStuff.getDeleteTimestamp()) {
 				// set deletion information
 				supportStuff
-						.setDeleteQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				supportStuff.setDeleteUser(cwid);
 				supportStuff.setDeleteTimestamp(ApplReposTS
 						.getDeletionTimestamp());
@@ -142,13 +140,13 @@ public class CiSupportStuffHbn {
 			// update existing entry
 			supportStuff.setCiSupportStuffValue(value);
 			supportStuff
-					.setUpdateQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+					.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			supportStuff.setUpdateUser(cwid.toUpperCase());
 			supportStuff.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 			if (null != supportStuff.getDeleteTimestamp()) {
 				// oh it is deleted, so reactivate it
 				supportStuff
-						.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+						.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				supportStuff.setInsertUser(cwid);
 				supportStuff.setInsertTimestamp(supportStuff
 						.getUpdateTimestamp());
@@ -161,7 +159,7 @@ public class CiSupportStuffHbn {
 			update = false;
 			supportStuff = new CiSupportStuff();
 			supportStuff
-					.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			supportStuff.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 			supportStuff.setInsertUser(cwid);
 			// --

@@ -5,13 +5,21 @@ import java.io.Serializable;
 public class BuildingDTO extends LocationDTO implements Serializable {
 	private static final long serialVersionUID = 1853465853927062074L;
 	
+	private String alias;
+	
 	private String buildingCode;
 	private String street;
 	private String streetNumber;
 	private String postalCode;
 	private String location;
 	
-	
+
+	public String getAlias() {
+		return alias;
+	}
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
 	public String getBuildingCode() {
 		return buildingCode;
 	}

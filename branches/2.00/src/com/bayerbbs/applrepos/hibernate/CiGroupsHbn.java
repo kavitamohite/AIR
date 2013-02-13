@@ -11,7 +11,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiGroups;
 import com.bayerbbs.applrepos.dto.CiGroupsDTO;
 
@@ -123,12 +123,12 @@ public class CiGroupsHbn {
 		return result;
 	}
 	
-	private static void stampCiGroups(Long tableId, Long ciId, Long groupTypeId, String cwid, Session session) {
+	private static void stampCiGroups(Integer tableId, Long ciId, Long groupTypeId, String cwid, Session session) {
 		String stampSQL = "UPDATE ci_groups SET last_sync_source = ?, syncing = ? WHERE table_id = ? AND ci_id = ? AND group_type_id = ? AND del_timestamp IS NULL";
 		try {
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
-			stmt.setString(1, ApplreposConstants.APPLICATION_GUI_NAME);
-			stmt.setString(2, ApplreposConstants.APPLICATION_GUI_NAME + '_' + cwid);
+			stmt.setString(1, AirKonstanten.APPLICATION_GUI_NAME);
+			stmt.setString(2, AirKonstanten.APPLICATION_GUI_NAME + '_' + cwid);
 			stmt.setLong(3, tableId);
 			stmt.setLong(4, ciId);
 			stmt.setLong(5, groupTypeId);
@@ -141,17 +141,17 @@ public class CiGroupsHbn {
 
 	}
 	
-	private static void purgeCiGroups(Long tableId, Long ciId, Long groupTypeId, String cwid, Session session) {
+	private static void purgeCiGroups(Integer tableId, Long ciId, Long groupTypeId, String cwid, Session session) {
 		String stampSQL = "UPDATE ci_groups SET del_timestamp=sysdate, del_quelle = ?, del_user=?, syncing = NULL "
 				+ "WHERE table_id = ? AND ci_id = ? AND group_type_id = ? AND del_timestamp IS NULL AND syncing=?";
 		try {
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
-			stmt.setString(1, ApplreposConstants.APPLICATION_GUI_NAME);
+			stmt.setString(1, AirKonstanten.APPLICATION_GUI_NAME);
 			stmt.setString(2, cwid);
 			stmt.setLong(3, tableId);
 			stmt.setLong(4, ciId);
 			stmt.setLong(5, groupTypeId);
-			stmt.setString(6, ApplreposConstants.APPLICATION_GUI_NAME + "_" + cwid);
+			stmt.setString(6, AirKonstanten.APPLICATION_GUI_NAME + "_" + cwid);
 			stmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -160,14 +160,14 @@ public class CiGroupsHbn {
 		}
 	}
 
-	private static void syncCiGroups(Long tableId, Long ciId, String groupType, String[] ciGroupNamesArray,
+	private static void syncCiGroups(Integer tableId, Long ciId, String groupType, String[] ciGroupNamesArray,
 			String cwid, Session session) {
 
 		CallableStatement stmt = null;
 		try {
 			stmt = session.connection().prepareCall(
 					"{? = call  TOOLS.FV_SYNC_CONTACT(" + tableId + "," + ciId + ",'" + groupType + "', NULL, ?, '"
-							+ ApplreposConstants.APPLICATION_GUI_NAME + "','" + cwid + "')}");
+							+ AirKonstanten.APPLICATION_GUI_NAME + "','" + cwid + "')}");
 		} catch (HibernateException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -214,7 +214,7 @@ public class CiGroupsHbn {
 
 		cwid = cwid.toUpperCase();
 
-		Long tableId = ApplreposConstants.TABLE_ID_APPLICATION;
+		Integer tableId = AirKonstanten.TABLE_ID_APPLICATION;
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
 		tx = session.beginTransaction();

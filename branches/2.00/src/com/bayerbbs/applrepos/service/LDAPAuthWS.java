@@ -8,7 +8,7 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
 import com.bayerbbs.applrepos.common.LDAPAuthCeye;
-import com.bayerbbs.applrepos.constants.ApplreposConstants;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.AppRepAuthData;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
@@ -39,7 +39,7 @@ public class LDAPAuthWS {
 		List<RolePersonDTO> listAIRRolesDTO = ApplReposHbn.findRolePerson(cwid);
 		
 		if (listAIRRolesDTO.isEmpty()) {
-			output.setResult(ApplreposConstants.RESULT_ERROR);
+			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { "AIR roles are needed to access the application" });
 		}
 		else {
@@ -49,7 +49,7 @@ public class LDAPAuthWS {
 	
 			if (1 == rcCode) {
 				// login successful
-				output.setResult(ApplreposConstants.RESULT_OK);
+				output.setResult(AirKonstanten.RESULT_OK);
 				output.setMessages(new String[] { "login successful" });
 				Cache myCache = (Cache) CacheManager.getInstance().getCache(
 						CACHENAME);
@@ -119,7 +119,7 @@ public class LDAPAuthWS {
 	
 			}
 			else {
-				output.setResult(ApplreposConstants.RESULT_ERROR);
+				output.setResult(AirKonstanten.RESULT_ERROR);
 				output.setMessages(new String[] { "Login failed. Please check username and password!" });
 			}
 		}
@@ -148,7 +148,7 @@ public class LDAPAuthWS {
 	
 	private static LDAPAuthParameterOutput isTokenValidInternal(LDAPAuthParameterInput paramInput, boolean withRefresh) {
 		LDAPAuthParameterOutput output = new LDAPAuthParameterOutput();
-		output.setResult(ApplreposConstants.RESULT_ERROR);
+		output.setResult(AirKonstanten.RESULT_ERROR);
 		int rcCode = 0;
 		
 		String username = paramInput.getCwid();
@@ -170,7 +170,7 @@ public class LDAPAuthWS {
 					if (token.equals(cachedToken)) {
 						// isTokenValid = true;
 						rcCode = 1;
-						output.setResult(ApplreposConstants.RESULT_OK);
+						output.setResult(AirKonstanten.RESULT_OK);
 						output.setCwid(authData.getCwid());
 						output.setToken(authData.getToken());
 						output.setUsername(authData.getUsername());

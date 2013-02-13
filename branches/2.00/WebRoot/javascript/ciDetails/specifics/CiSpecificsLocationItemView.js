@@ -21,6 +21,12 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        anchor: '70%'
 //			        width: 230,
 		    },{
+		        id: 'tfRoom',
+		    	xtype: 'textfield',
+		        fieldLabel: 'Room',
+		        anchor: '70%'
+//			        width: 230,
+	        },{
 		        id: 'tfBuildingArea',
 		    	xtype: 'textfield',
 		        fieldLabel: 'BuildingArea',
@@ -124,39 +130,70 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 
     
 	update: function(data) {
-		var field = this.getComponent('tfLocationCiAlias');
-		field.setValue(data.alias);
+		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
 		
 		var tfRoomFloor = this.getComponent('tfRoomFloor');
+		var tfRoom = this.getComponent('tfRoom');
 		var tfBuildingArea = this.getComponent('tfBuildingArea');
 		var tfBuilding = this.getComponent('tfBuilding');
+		var tfTerrain = this.getComponent('tfTerrain');
+		var tfSite = this.getComponent('tfSite');
+		var tfCountry = this.getComponent('tfCountry');
+
 		
 		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
 		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');
 		
 		switch(parseInt(data.tableId)) {
 			case AC.TABLE_ID_ROOM:
+				tfLocationCiAlias.setVisible(true);
+				tfLocationCiAlias.setValue(data.alias);
 				tfRoomFloor.setVisible(true);
 				tfRoomFloor.setValue(data.floor);
+				
+				tfRoom.setVisible(false);
+				tfRoom.reset();
 				tfBuildingArea.setVisible(true);
 				tfBuildingArea.setValue(data.areaName);
 				tfBuilding.setVisible(true);
 				tfBuilding.setValue(data.gebaeudeName);
 				
-				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data);
+				tfTerrain.setVisible(true);
+				tfTerrain.setValue(data.terrainName);
+				tfSite.setVisible(true);
+				tfSite.setValue(data.standortName);
+				tfCountry.setVisible(true);
+				tfCountry.setValue(data.landNameEn);
+				
+				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, true);
 				break;
 			case AC.TABLE_ID_BUILDING_AREA:
+				tfLocationCiAlias.setVisible(false);
+				tfLocationCiAlias.reset();
 				tfRoomFloor.setVisible(false);
 				tfRoomFloor.reset();
+				tfRoom.setVisible(false);
+				tfRoom.reset();
 				tfBuildingArea.setVisible(false);
 				tfBuildingArea.reset();
 				tfBuilding.setVisible(true);
 				tfBuilding.setValue(data.gebaeudeName);
 				
-				pSpecificsLocationStreet.setVisible(false);
-				pSpecificsLocationAddress.setVisible(false);
+				tfTerrain.setVisible(true);
+				tfTerrain.setValue(data.terrainName);
+				tfSite.setVisible(true);
+				tfSite.setValue(data.standortName);
+				
+				tfCountry.setVisible(false);
+				tfCountry.reset();
+				
+				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
 				break;
 			case AC.TABLE_ID_BUILDING:
+				tfLocationCiAlias.setValue(data.alias);
+				tfLocationCiAlias.setVisible(true);
+				tfRoom.setVisible(false);
+				tfRoom.reset();
 				tfRoomFloor.setVisible(false);
 				tfRoomFloor.reset();
 				tfBuildingArea.setVisible(false);
@@ -164,9 +201,43 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				tfBuilding.setVisible(false);
 				tfBuilding.reset;
 				
-				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data);
+				tfTerrain.setVisible(true);
+				tfTerrain.setValue(data.terrainName);
+				tfSite.setVisible(true);
+				tfSite.setValue(data.standortName);
+				tfCountry.setVisible(true);
+				tfCountry.setValue(data.landNameEn);
+				
+				
+				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, true);
 				break;
-			default:
+			case AC.TABLE_ID_POSITION:
+				tfLocationCiAlias.setVisible(false);
+				tfLocationCiAlias.reset();
+				tfRoomFloor.setVisible(false);
+				tfRoomFloor.reset();
+				tfRoom.setVisible(true);
+				tfRoom.setValue(data.raumName);
+				tfBuildingArea.setVisible(true);
+				tfBuildingArea.setValue(data.areaName);
+				tfBuilding.setVisible(true);
+				tfBuilding.setValue(data.gebaeudeName);
+				
+				tfTerrain.setVisible(true);
+				tfTerrain.setValue(data.terrainName);
+				tfSite.setVisible(true);
+				tfSite.setValue(data.standortName);
+				
+				tfCountry.setVisible(false);
+				tfCountry.reset();
+				
+				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
+				break;
+			case AC.TABLE_ID_TERRAIN:
+				tfLocationCiAlias.setVisible(false);
+				tfLocationCiAlias.reset();
+				tfRoom.setVisible(false);
+				tfRoom.reset();
 				tfRoomFloor.setVisible(false);
 				tfRoomFloor.reset();
 				tfBuildingArea.setVisible(false);
@@ -174,29 +245,82 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				tfBuilding.setVisible(false);
 				tfBuilding.reset();
 				
-				pSpecificsLocationStreet.setVisible(false);
-				pSpecificsLocationAddress.setVisible(false);
+				tfTerrain.setVisible(false);
+				tfTerrain.reset();
+				tfSite.setVisible(true);
+				tfSite.setValue(data.standortName);
+				tfCountry.setVisible(true);
+				tfCountry.setValue(data.landNameEn);
+				
+				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
 				break;
+			case AC.TABLE_ID_SITE:
+				tfLocationCiAlias.setVisible(false);
+				tfLocationCiAlias.reset();
+				tfRoom.setVisible(false);
+				tfRoom.reset();
+				tfRoomFloor.setVisible(false);
+				tfRoomFloor.reset();
+				tfBuildingArea.setVisible(false);
+				tfBuildingArea.reset();
+				tfBuilding.setVisible(false);
+				tfBuilding.reset();
+				
+				tfTerrain.setVisible(false);
+				tfTerrain.reset();
+				tfSite.setVisible(false);
+				tfSite.reset();
+				tfCountry.setVisible(true);
+				tfCountry.setValue(data.landNameEn);
+				
+				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
+				break;
+//			default:
+//				tfLocationCiAlias.setVisible(false);
+//				tfLocationCiAlias.reset();
+//				tfRoomFloor.setVisible(false);
+//				tfRoomFloor.reset();
+//				tfRoom.setVisible(false);
+//				tfRoom.reset();
+//				tfBuildingArea.setVisible(false);
+//				tfBuildingArea.reset();
+//				tfBuilding.setVisible(false);
+//				tfBuilding.reset();
+//				
+//				tfTerrain.setVisible(false);
+//				tfTerrain.reset();
+//				tfSite.setVisible(false);
+//				tfSite.reset();
+//				
+//				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
+//				break;
 		}
 		
-		field = this.getComponent('tfTerrain');
-		field.setValue(data.terrainName);
+
 		
-		field = this.getComponent('tfSite');
-		field.setValue(data.standortName);
 		
-		field = this.getComponent('tfCountry');
-		field.setValue(data.landNameEn);
+		
+
 	},
 	
-	updateLocation: function(pSpecificsLocationStreet, pSpecificsLocationAddress, data) {
-		pSpecificsLocationStreet.setVisible(true);
-		pSpecificsLocationStreet.getComponent('tfStreet').setValue(data.street);
-		pSpecificsLocationStreet.getComponent('tfStreetNumber').setValue(data.streetNumber);
-		
-		pSpecificsLocationAddress.setVisible(true);
-		pSpecificsLocationAddress.getComponent('tfPostalCode').setValue(data.postalCode);
-		pSpecificsLocationAddress.getComponent('tfLocation').setValue(data.location);
+	updateLocation: function(pSpecificsLocationStreet, pSpecificsLocationAddress, data, exists) {
+		if(exists) {
+			pSpecificsLocationStreet.getComponent('tfStreet').setValue(data.street);
+			pSpecificsLocationStreet.getComponent('tfStreetNumber').setValue(data.streetNumber);
+			pSpecificsLocationStreet.setVisible(true);
+			
+			pSpecificsLocationAddress.getComponent('tfPostalCode').setValue(data.postalCode);
+			pSpecificsLocationAddress.getComponent('tfLocation').setValue(data.location);
+			pSpecificsLocationAddress.setVisible(true);
+		} else {
+			pSpecificsLocationStreet.getComponent('tfStreet').reset();
+			pSpecificsLocationStreet.getComponent('tfStreetNumber').reset();
+			pSpecificsLocationStreet.setVisible(false);
+			
+			pSpecificsLocationAddress.getComponent('tfPostalCode').reset();
+			pSpecificsLocationAddress.getComponent('tfLocation').reset();
+			pSpecificsLocationAddress.setVisible(false);
+		}
 	},
 
 	setData: function(data) {
