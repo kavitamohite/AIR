@@ -97,6 +97,7 @@ public class ApplicationWS {
 
 			if (null != ouUnit && !"".equals(ouUnit)) {
 				// advanced search by ou
+				ouUnit = GroupHbn.getCleanedGroupname(ouUnit);
 				if ("BEGINS_WITH".equals(ouQueryMode)) {
 					ouQueryMode = "START";
 				}

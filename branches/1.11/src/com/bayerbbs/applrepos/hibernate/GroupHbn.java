@@ -31,7 +31,7 @@ public class GroupHbn {
 			StringBuffer sb = new StringBuffer();
 			sb.append(data.getGroupName());
 			if (null != data.getOrgUnit()) {
-				sb.append(" (").append(data.getOrgUnit()).append(")");	
+				sb.append(" [").append(data.getOrgUnit()).append("]");	
 			}
 			
 			dto.setGroupName(sb.toString());
@@ -250,8 +250,8 @@ public class GroupHbn {
 	}
 	
 	public static String getCleanedGroupname(String input) {
-		if (null != input && -1 != input.indexOf(" (")) {
-			return input.substring(0, input.indexOf(" ("));
+		if (null != input && -1 != input.indexOf(" [")) {
+			return input.substring(0, input.indexOf(" ["));
 		}
 		return input;
 	}

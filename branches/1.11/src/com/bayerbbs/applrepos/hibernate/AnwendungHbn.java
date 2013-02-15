@@ -2234,16 +2234,16 @@ public class AnwendungHbn {
 
 		
 		if (null != advsearchappownerHidden) {//advsearchappowner
-			advsearchappownerHidden = advsearchappownerHidden.replace("*", "%");//advsearchappowner
+			advsearchappownerHidden = GroupHbn.getCleanedGroupname(advsearchappownerHidden.replace("*", "%"));//advsearchappowner
 		}
 		if (null != advsearchappdelegate) {
-			advsearchappdelegate = advsearchappdelegate.replace("*", "%");
+			advsearchappdelegate = GroupHbn.getCleanedGroupname(advsearchappdelegate.replace("*", "%"));
 		}
 		if (null != advsearchciownerHidden) {//advsearchciowner
-			advsearchciownerHidden = advsearchciownerHidden.replace("*", "%");//advsearchciowner
+			advsearchciownerHidden = GroupHbn.getCleanedGroupname(advsearchciownerHidden.replace("*", "%"));//advsearchciowner
 		}
 		if (null != advsearchcidelegate) {
-			advsearchcidelegate = advsearchcidelegate.replace("*", "%");
+			advsearchcidelegate = GroupHbn.getCleanedGroupname(advsearchcidelegate.replace("*", "%"));
 		}
 		if (null != advsearchstewardHidden) {//advsearchsteward
 			advsearchstewardHidden = advsearchstewardHidden.replace("*", "%");//advsearchsteward
