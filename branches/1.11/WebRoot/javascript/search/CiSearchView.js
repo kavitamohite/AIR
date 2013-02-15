@@ -578,7 +578,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 		
 		params.isAdvSearchExt = this.isAdvSearchExt;
-		this.getComponent('ciSearchResultView').search(params, isUpdate, this);
+		this.getComponent('ciSearchResultView').search(params, isUpdate, this.onExcelExport.createDelegate(this));
 	},
 	
 	onTabChange: function(tabPanel, tab, options) {
