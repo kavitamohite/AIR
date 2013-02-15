@@ -28,6 +28,7 @@ import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
 import com.bayerbbs.applrepos.hibernate.CiPersonsHbn;
 import com.bayerbbs.applrepos.hibernate.CiSupportStuffHbn;
+import com.bayerbbs.applrepos.hibernate.GroupHbn;
 import com.bayerbbs.applrepos.hibernate.InterfacesHbn;
 import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 
@@ -224,7 +225,7 @@ public class ApplicationWS {
 							} else { // Group(s)
 								CiGroupsHbn.saveCiGroup(editInput.getCwid(),
 										 dto.getId(), new Long(grouptype[0]), grouptype[3],
-										 gpscContact);
+										 GroupHbn.getCleanedGroupname(gpscContact));
 							}
 						}
 					}

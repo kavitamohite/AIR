@@ -23,6 +23,8 @@ public class Group implements Serializable {
 	private String managerCwid;
 	private String managerSubstituteCwid;
 	
+	private Long orgUnit;
+	
 	// search parameter attributes
 	private String changeTeamYN;
 	private String ciOwnerYN;
@@ -319,6 +321,15 @@ public class Group implements Serializable {
 	 */
 	public void setSupportGroupImResolverYN(String supportGroupImResolverYN) {
 		this.supportGroupImResolverYN = supportGroupImResolverYN;
+	}
+
+	@Column(name = "OU")
+	public Long getOrgUnit() {
+		return orgUnit;
+	}
+
+	public void setOrgUnit(Long orgUnit) {
+		this.orgUnit = orgUnit;
 	}
 
 }

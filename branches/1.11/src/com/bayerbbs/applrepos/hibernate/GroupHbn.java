@@ -27,7 +27,14 @@ public class GroupHbn {
 			GroupsDTO dto = new GroupsDTO();
 
 			dto.setGroupId(data.getGroupId());
-			dto.setGroupName(data.getGroupName());
+			
+			StringBuffer sb = new StringBuffer();
+			sb.append(data.getGroupName());
+			if (null != data.getOrgUnit()) {
+				sb.append(" (").append(data.getOrgUnit()).append(")");	
+			}
+			
+			dto.setGroupName(sb.toString());
 			dto.setManagerCwid(data.getManagerCwid());
 			dto.setManagerSubstituteCwid(data.getManagerSubstituteCwid());
 
@@ -240,5 +247,12 @@ public class GroupHbn {
 		}
 
 		return listResult;
+	}
+	
+	public static String getCleanedGroupname(String input) {
+		if (null != input && -1 != input.indexOf(" (")) {
+			return input.substring(0, input.indexOf(" ("));
+		}
+		return input;
 	}
 }

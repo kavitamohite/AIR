@@ -1165,13 +1165,14 @@ public class AnwendungHbn {
 			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getApplicationOwnerDelegateHidden());
 			if (null == listPersons || listPersons.isEmpty()) {
 				// not a valid person, maybe a group?
-				GroupsDTO group = GroupHbn.findGroupByName(dto.getApplicationOwnerDelegate());
+				String groupname = GroupHbn.getCleanedGroupname(dto.getApplicationOwnerDelegate());
+				GroupsDTO group = GroupHbn.findGroupByName(groupname);
 				if (null == group) {
 					messages.add(errorCodeManager.getErrorMessage("1105"));
 				}
 				else {
 					// sub responsible is a valid group
-					dto.setApplicationOwnerDelegateHidden(dto.getApplicationOwnerDelegate());
+					dto.setApplicationOwnerDelegateHidden(groupname);
 				}
 			}
 			else if (1 != listPersons.size()) {
@@ -1184,14 +1185,14 @@ public class AnwendungHbn {
 			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getCiOwnerDelegateHidden());
 			if (null == listPersons || listPersons.isEmpty()) {
 				// not a valid person, maybe a group?
-				GroupsDTO group = GroupHbn.findGroupByName(dto.getCiOwnerDelegate());//getSubResponsible
+				String groupname = GroupHbn.getCleanedGroupname(dto.getCiOwnerDelegate());
+				GroupsDTO group = GroupHbn.findGroupByName(groupname);//getSubResponsible
 				if (null == group) {
 					messages.add(errorCodeManager.getErrorMessage("1107")); // "subresponsible is not valid");
 				}
 				else {
 					// sub responsible is a valid group
-//					dto.setSubResponsibleHidden(dto.getSubResponsible());
-					dto.setCiOwnerDelegateHidden(dto.getCiOwnerDelegate());//
+					dto.setCiOwnerDelegateHidden(groupname);//
 				}
 			}
 			else if (1 != listPersons.size()) {
