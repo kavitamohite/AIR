@@ -142,6 +142,16 @@ Util = {
 		var regExp = new RegExp(/^\d+$/);//das ^ und $ Zeichen bewirken die exakte Validierung. Ohne diese liefert string=23v454 liefert die Funktion nicht false!
 		var result = value && value.length > 0 && value.match(regExp) ? true : false;
 		return result;
+	},
+	
+	getComboRecord: function(combo, sourceAttr, sourceValue) {
+		return this.getStoreRecord(combo.getStore(), sourceAttr, sourceValue);
+	},
+	
+	getStoreRecord: function(store, sourceAttr, sourceValue) {
+		var record = store.getAt(store.findExact(sourceAttr, sourceValue));
+		
+		return record;
 	}
 	
 	/*

@@ -354,20 +354,6 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var connectionsObjectType = cbConnectionsObjectType.getRawValue();//getValue
 		var connectionsQuickSearch = tfConnectionsQuickSearch.getValue();
 		
-		
-		/*var params = {
-			start: 0,
-			limit: 20,
-			queryMode: 'CONTAINS',
-			searchAction: 'search',
-			advsearchObjectTypeId: connectionsObjectType,
-			advancedsearch: 'true',
-		 	cwid: AIR.AirApplicationManager.getCwid(),
-		 	token: AIR.AirApplicationManager.getToken(),
-			query: '',//NOT NULL wenn advancedsearch: 'true',
-			template: 'N'
-		};*/
-		
 				
 		var params = {
 		 	cwid: AIR.AirApplicationManager.getCwid(),
@@ -804,10 +790,10 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
     	var appDetail = AIR.AirApplicationManager.getAppDetail();//applicationDetailStore.data.items[0].data;//AIR.AirApplicationManager.getAppDetail();
     	
     	// TODO... bitte in eine globale Funktion auslagern.
-    	var isAdmin = AIR.AirApplicationManager.hasRole(AC.USER_ROLE_ADMINISTRATOR);
-    	
+    	var isAdmin = AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);//AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_MANAGER) || 
 		var isEditable = appDetail.relevanceStrategic == 'Y' || appDetail.relevanceOperational == 'Y' || isAdmin;
     	
+		
         raDeleteConnection.tpl.html = '<div class="ux-row-action">';
         if(isEditable)
         	raDeleteConnection.tpl.html += '<div class="ux-row-action-item icon-delete " style="" qtip=""></div>';

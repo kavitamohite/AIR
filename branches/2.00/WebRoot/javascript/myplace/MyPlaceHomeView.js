@@ -360,16 +360,12 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			var value = item.data.itsecUserOptionValue;
 			
 			if ('AIR_APPLICATION_ONLY' === key) {
-//				selectedOnlyApplications = true;
 			}
 			else if ('AIR_LANGUAGE' === key) {
-				// invert selected language and switch
 				if ('DE' == value) {
-//					selectedLanguage = 'EN';
 					this.getComponent('fsUserOptions').getComponent('useroptionLanguage').setValue(true);
 				}
 				else if('EN' === value) {
-//					selectedLanguage = 'DE';
 					this.getComponent('fsUserOptions').getComponent('useroptionLanguage').setValue(false);
 				}
 			}
@@ -395,29 +391,22 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 			else if ('AIR_TOOLTIP' === key) {
 				if ('YES' == value) {
-//					isDisableTooltip = true;
 					this.getComponent('fsUserOptions').getComponent('useroptionDisableTooltip').setValue(true);					
 				}
 				else {
-//					isDisableTooltip = false;
 					this.getComponent('fsUserOptions').getComponent('useroptionDisableTooltip').setValue(false);
 				}
 			}
 			else if ('AIR_NUMBER_FORMAT' === key) {
-				// invert selected language and switch
 				if ('DE' == value) {
-//					selectedNumberFormat = 'DE';
 					this.getComponent('fsUserOptions').getComponent('useroptionNumberFormat').setValue(true);
 				}
 				else if('EN' === value) {
-//					selectedNumberFormat = 'US';
 					this.getComponent('fsUserOptions').getComponent('useroptionNumberFormat').setValue(false);
 				}
 			}
 			else if ('AIR_CURRENCY' === key) {
-				// set the currency				
 				this.getComponent('fsUserOptions').getComponent('useroptionCurrency').setValue(value);
-//				selectedCurrency = value;
 			}
 		}.createDelegate(this));
 		
@@ -426,6 +415,7 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	handleUserRoles: function(store, records, options) {
 		var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
+
 		
 		var anzeigetext = '';
 
@@ -438,23 +428,6 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 				anzeigetext = anzeigetext + '\n';
 			
 			anzeigetext = anzeigetext + value;
-			
-			/*if(rolenameApplicationLayer === value) {
-				selectedOnlyApplications = true;
-				hasRoleApplicationLayer = true;
-			} else if(rolenameDefault === value) {
-				hasRoleDefault = true;
-			} else if(rolenameInfrastructure === value) {
-				hasRoleInfrastructure = true;
-			} else if(rolenameApplicationManager === value) {
-				hasRoleApplicationManager = true;
-			} else if(rolenameAdministrator === value) {
-				hasRoleAdministrator = true;
-			} else if(rolenameDeveloper === value) {
-				hasRoleDeveloper = true;
-			} else if(rolenameBusinessEssentialEditor === value) {
-				hasRoleBusinessEssentialEditor = true;
-			}*/
 		});
 				
 		this.getComponent('myplaceroleperson').setValue(anzeigetext);

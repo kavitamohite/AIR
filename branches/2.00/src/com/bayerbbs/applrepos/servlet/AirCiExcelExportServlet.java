@@ -164,10 +164,10 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					req.getParameter("hadvsearchcidelegate"),
 					req.getParameter("hadvsearchcidelegateHidden"),
 					false,
-					req.getParameter("hadvsearchObjectTypeId").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchObjectTypeId")) : null,
 					null/*req.getParameter("sort?")*/,
 					null/*req.getParameter("dir?")*/,
-					null/*req.getParameter("advsearchcitypeid")*/,
+					req.getParameter("htableId").length() > 0 ? Integer.parseInt(req.getParameter("htableId")) : null,//hadvsearchObjectTypeId
+					req.getParameter("hciSubTypeId").length() > 0 ? Integer.parseInt(req.getParameter("hciSubTypeId")) : null/**/,//null advsearchcitypeid
 					req.getParameter("hadvsearchdescription"),
 					req.getParameter("hadvsearchoperationalStatusid").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchoperationalStatusid")) : null,
 					req.getParameter("hadvsearchapplicationcat2id").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchapplicationcat2id")) : null,

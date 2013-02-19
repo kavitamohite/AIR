@@ -130,6 +130,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 
     
 	update: function(data) {
+		this.updateAccessMode(data);
+		
 		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
 		
 		var tfRoomFloor = this.getComponent('tfRoomFloor');
@@ -329,7 +331,22 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 
 	
 	updateAccessMode: function(data) {
-
+		AIR.AirAclManager.setAccessMode(this.getComponent('tfLocationCiAlias'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('tfRoomFloor'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('tfRoom'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('tfBuildingArea'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('tfBuilding'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('tfTerrain'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('tfSite'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('tfCountry'), data);
+		
+		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
+		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');
+		
+		AIR.AirAclManager.setAccessMode(pSpecificsLocationStreet.getComponent('tfStreet'), data);
+		AIR.AirAclManager.setAccessMode(pSpecificsLocationStreet.getComponent('tfStreetNumber'), data);
+		AIR.AirAclManager.setAccessMode(pSpecificsLocationAddress.getComponent('tfPostalCode'), data);
+		AIR.AirAclManager.setAccessMode(pSpecificsLocationAddress.getComponent('tfLocation'), data);
 	},
 	
 	validate: function(item) {
@@ -337,7 +354,20 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	
 	updateLabels: function(labels) {
-
+		this.setFieldLabel(this.getComponent('tfLocationCiAlias'), labels.alias);
+		this.setFieldLabel(this.getComponent('tfRoomFloor'), labels.floor);
+		this.setFieldLabel(this.getComponent('tfRoom'), labels.floor);
+		this.setFieldLabel(this.getComponent('tfBuildingArea'), labels.buildingArea);
+		this.setFieldLabel(this.getComponent('tfBuilding'), labels.building);
+		this.setFieldLabel(this.getComponent('tfTerrain'), labels.terrain);
+		this.setFieldLabel(this.getComponent('tfSite'), labels.site);
+		this.setFieldLabel(this.getComponent('tfCountry'), labels.country);
+		
+		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
+		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');
+		
+		pSpecificsLocationStreet.getComponent('lStreetAndNumber').setText(labels.streetAndNumber);
+		pSpecificsLocationAddress.getComponent('lPostalCodeLocation').setText(labels.postalCodeLocation);
 	},
 	
 	updateToolTips: function(toolTips) {

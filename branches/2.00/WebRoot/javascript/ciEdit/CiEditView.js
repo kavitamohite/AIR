@@ -12,7 +12,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		    
 		    items: [{
 		    	xtype: 'label',
-		    	id: 'editpanelheader',
+		    	id: 'lCiName',
 				
 				style: {
 //					textAlign: 'left',
@@ -27,7 +27,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				xtype: 'container'
 			},{
 		    	xtype: 'label',
-		    	id: 'editpanelsubheader',
+		    	id: 'lCiType',
 				
 				style: {
 //					textAlign: 'left',
@@ -314,9 +314,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			var message = labels.CiEinsprungCiIdMarkedAsDeleted.replace('{0}', AAM.getCiId());
 			this.openEinsprungDataWarnungWindow(message);
 		} else {
-			this.getComponent('editpanelheader').setText(ciDetail.name);//applicationName
-			this.getComponent('editpanelsubheader').setText(ciDetail.applicationCat1Txt);//applicationName
-	
+			this.update(ciDetail);
+			
 			//---------------------------------------------------------------------------------------------------------
 			//AIR.AirAclManager.updateAcl(ciDetail);// RFC 8225: added ciDetail param
 			var ciEditTabView = this.getComponent('ciEditTabView');
@@ -680,9 +679,19 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.saveApplication();
 	},
 	
-//	update: function() {
-//
-//	},
+	update: function(data) {
+		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+		var record;
+		
+		if(data.tableId == AC.TABLE_ID_APPLICATION) {
+			record = Util.getStoreRecord(store, 'ciSubTypeId', parseInt(data.applicationCat1Id));
+		} else {
+			record = Util.getStoreRecord(store, 'ciTypeId', parseInt(data.tableId));
+		}
+
+		this.getComponent('lCiName').setText(data.name);//applicationName
+		this.getComponent('lCiType').setText(record.get('text'));//ciDetail.applicationCat1Txt applicationName
+	},
 	
 	updateLabels: function(labels) {
 //		this.getComponent('editpanelmessage').setText(labels.header_applicationIsIncomplete.replace('##', ACM.getRequiredFields(AAM.getAppDetail())));
@@ -695,9 +704,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		//falls kein CI vor dem Start ausgewählt war, gibt es natürlich keine gesicherte tableId. Folge: kein specificsView Label kann gesetzt werden
 		//ODER die Lebels aller specificsView CI Typ Seiten müssen gesetzt werden ODER CiSpecificsAnwendungView Labels werden per Default gesetzt, wie hier:
-		var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
+//		var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
-		ciSpecificsView.updateLabels(labels, tableId);
+		ciSpecificsView.updateLabels(labels);//, tableId
 		
 		var ciContactsView = ciEditTabView.getComponent('clCiContacts');
 		ciContactsView.updateLabels(labels);

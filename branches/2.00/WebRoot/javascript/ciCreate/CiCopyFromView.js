@@ -174,9 +174,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 				query: this.query,
 				queryMode: 'CONTAINS',
 				searchAction: 'search',
-				advsearchObjectTypeId: AC.APP_CAT1_APPLICATION,//applicationObjectTypeId,
 				onlyapplications: 'true',
-	//			advancedsearch: 'true',
    			 	cwid: AIR.AirApplicationManager.getCwid(),
    			 	token: AIR.AirApplicationManager.getToken()
 			};
@@ -247,20 +245,6 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 	},
 	
 	onGridBeforeLoaded: function(store, options) {
-//		//why is this necessary for the paging bar?!
-//		//Update on normal search this parameters wre not submitted. The service worked anyway.
-//		
-//		if(!store.baseParams.cwid) {
-//			store.baseParams.cwid = cwid;
-//			store.baseParams.token = token;
-//			store.baseParams.searchAction = searchAction;
-//			
-//			store.baseParams.query = this.query;
-//			store.baseParams.queryMode = 'CONTAINS';
-//			store.baseParams.advsearchObjectTypeId = applicationObjectTypeId;
-//		}
-		
-		
 		AAM.getMask(AC.MASK_TYPE_LOAD).show();
 	},
 	

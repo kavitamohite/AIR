@@ -105,7 +105,7 @@
 			<advancedsearchminuslink>less options</advancedsearchminuslink>
 			
 		<advsearchPanelTitle>Advanced Search</advsearchPanelTitle>
-		<advsearchObjectType>Type</advsearchObjectType>
+		<cbCiType>Type</cbCiType>
 		<advsearchdescription>Description</advsearchdescription>
 		
 		<advsearchowner>Owner</advsearchowner>
@@ -514,5 +514,18 @@
 		<CiEinsprungCiIdDoesNotExistMessage>The CI id={0} does not exist</CiEinsprungCiIdDoesNotExistMessage>
 		<CiEinsprungInvalidCiTypeMessage>The CI type={0} is invalid</CiEinsprungInvalidCiTypeMessage>
 		<CiEinsprungCiIdMarkedAsDeleted>The CI id={0} is marked as deleted</CiEinsprungCiIdMarkedAsDeleted>
+		
+		<alias>Alias</alias>
+		<floor>Floor</floor>
+		<buildingArea>Building Area</buildingArea>
+		<building>Building</building>
+		<terrain>Terrain</terrain>
+		<site>Site</site>
+		<country>Country</country>
+		<street>Street</street>
+		<streetNumber>No.</streetNumber>
+		
+		<streetAndNumber>Street / No.</streetAndNumber>
+		<postalCodeLocation>Postal Code / Location</postalCodeLocation>
 	</Items>
 </LanguageItems>

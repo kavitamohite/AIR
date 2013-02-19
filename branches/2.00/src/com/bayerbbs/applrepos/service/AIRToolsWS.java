@@ -39,7 +39,6 @@ import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.AccountHbn;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
-import com.bayerbbs.applrepos.hibernate.ApplicationCat1Hbn;
 import com.bayerbbs.applrepos.hibernate.BusinessEssentialHbn;
 import com.bayerbbs.applrepos.hibernate.CategoryBusinessHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
@@ -257,7 +256,7 @@ public class AIRToolsWS {
 	}
 	
 	public CiTypeDTO[] getCiTypes() {
-		return ApplicationCat1Hbn.getCiTypes();
+		return CiEntitiesHbn.getCiTypes().toArray(new CiTypeDTO[0]);//ApplicationCat1Hbn.getCiTypes();
 	}
 	
 	public LinkCITypeDTO[] getLinkCITypeList() {
@@ -267,5 +266,6 @@ public class AIRToolsWS {
 	public LinkCIDTO[] getLinkCIList(CiComplianceParameterInput input) {
 		return ComplianceHbn.getArrayFromListLinkCIList(ComplianceHbn.findLinkCIList(input.getZielotypGSToolId(), input.getItSetId(), input.getApplicationId(), input.getMassnahmeId(), input.getApplicationCat1Id()));
 	}
-	
+
+
 }

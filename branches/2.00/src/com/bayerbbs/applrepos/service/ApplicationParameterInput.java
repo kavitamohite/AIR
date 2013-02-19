@@ -21,9 +21,12 @@ public class ApplicationParameterInput implements Serializable {
 	private String advancedsearch;
 	
 	/** advanced search parameters */
-	private Long advsearchObjectTypeId;
-	private String advsearchObjectTypeText;
-	private Long advsearchcitypeid;
+//	private Long advsearchObjectTypeId;
+//	private Long advsearchcitypeid;
+	
+//	private String advsearchObjectTypeText;
+	private Integer tableId;
+	private Integer ciSubTypeId;
 	
 	
 	private String advsearchappowner;
@@ -252,13 +255,12 @@ public class ApplicationParameterInput implements Serializable {
 		this.dir = dir;
 	}
 
-	public Long getAdvsearchcitypeid() {
-		return advsearchcitypeid;
-	}
-
-	public void setAdvsearchcitypeid(Long advsearchcitypeid) {
-		this.advsearchcitypeid = advsearchcitypeid;
-	}
+//	public Long getAdvsearchcitypeid() {
+//		return advsearchcitypeid;
+//	}
+//	public void setAdvsearchcitypeid(Long advsearchcitypeid) {
+//		this.advsearchcitypeid = advsearchcitypeid;
+//	}
 
 	public String getAdvsearchdescription() {
 		return advsearchdescription;
@@ -316,20 +318,18 @@ public class ApplicationParameterInput implements Serializable {
 		this.advsearchappdelegate = advsearchappdelegate;
 	}
 
-	public Long getAdvsearchObjectTypeId() {
-		return advsearchObjectTypeId;
+	public Integer getTableId() {
+		return tableId;
+	}
+	public void setTableId(Integer tableId) {
+		this.tableId = tableId;
 	}
 
-	public void setAdvsearchObjectTypeId(Long advsearchObjectTypeId) {
-		this.advsearchObjectTypeId = advsearchObjectTypeId;
+	public Integer getCiSubTypeId() {
+		return ciSubTypeId;
 	}
-
-	public String getAdvsearchObjectTypeText() {
-		return advsearchObjectTypeText;
-	}
-
-	public void setAdvsearchObjectTypeText(String advsearchObjectTypeText) {
-		this.advsearchObjectTypeText = advsearchObjectTypeText;
+	public void setCiSubTypeId(Integer ciSubTypeId) {
+		this.ciSubTypeId = ciSubTypeId;
 	}
 
 	public String getQueryMode() {

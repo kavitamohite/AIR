@@ -15,6 +15,7 @@ import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
@@ -28,12 +29,7 @@ public class CiEntitiesHbn {
 	private static final String PARAMETER_QUERYMODE_EXACT = "EXACT";
 
 	
-	/**
-	 * find all the ci's 
-	 * @return
-	 */
 	public static List<ApplicationDTO> findExistantCisByNameOrAlias(String searchName, boolean withDeletedApplications) {
-
 		ArrayList<ApplicationDTO> listResult = new ArrayList<ApplicationDTO>();
 
 		boolean commit = false;
@@ -284,10 +280,7 @@ public class CiEntitiesHbn {
 		return listResult;
 	}
 
-	/**
-	 * find all the ci's or only the applications
-	 * @return
-	 */
+
 	public static List<CiBaseDTO> findCisByNameOrAlias(String searchName, int ciTableId, boolean withDeleted) {
 		ArrayList<CiBaseDTO> listResult = new ArrayList<CiBaseDTO>();
 
@@ -423,7 +416,7 @@ public class CiEntitiesHbn {
 	
 	private static ApplicationDTO getApplicationDTOFromResultSet(ResultSet rset) {
 		String type = null;
-		String id = null;
+//		String id = null;
 		String name = null;
 		String assetIdOrAlias = null;
 		String responsible = null;
@@ -438,7 +431,7 @@ public class CiEntitiesHbn {
 		
 		try {
 			type = rset.getString("TYPE");
-			id = rset.getString("ID");
+//			id = rset.getString("ID");
 			name = rset.getString("NAME");
 			assetIdOrAlias = rset.getString("ASSET_ID_OR_ALIAS");
 			responsible = rset.getString("RESPONSIBLE");
@@ -840,7 +833,51 @@ public class CiEntitiesHbn {
 			HibernateUtil.close(ta, session, commit);
 		}
 		
-		int size = templates.size();
 		return templates;
+	}
+	
+	public static List<CiTypeDTO> getCiTypes() {
+		List<CiTypeDTO> ciTypes = new ArrayList<CiTypeDTO>();
+		
+		Transaction ta = null;
+		Statement stmt = null;
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();//"SELECT ci_id, table_id, type, name, itset, FROM dwh_entity WHERE template = 'Yes'";
+		sql.
+		append("select t.tabelle_name, cit.config_item_type_name, tcit.table_id, ").
+		append("  case when tcit.table_id = 2 then ak1.anwendung_kat1_id ").
+		append("       when cit.config_item_type_name = 'Hardware System' then 1 ").
+		append("       when cit.config_item_type_name = 'Transient System Platform' then 2 ").
+		append("       else null end as ci_sub_type_id ").
+		append("from table_config_item_type tcit ").
+		append("join config_item_type cit on cit.config_item_type_id = tcit.config_item_type_id ").
+		append("join tabellen t on t.tabelle_id = tcit.table_id ").
+		append("left join anwendung_kat1 ak1 on ak1.anwendung_kat1_en = cit.config_item_type_name ").
+		append("where t.type = 'CI TABLE (class 1)' ").
+		append("order by t.tabelle_id ");
+		
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+			
+			int i = 0;
+			while (rs.next()) {
+				//roles getRolePerson(cwid): evtl. nur zu Rollen passende CI-Typen liefern 
+				ciTypes.add(new CiTypeDTO(i++, rs.getString("CONFIG_ITEM_TYPE_NAME"), rs.getInt("TABLE_ID"), rs.getInt("CI_SUB_TYPE_ID")));
+			}
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		return ciTypes;
 	}
 }

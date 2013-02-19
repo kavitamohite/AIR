@@ -866,7 +866,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceInfo').getComponent('bEditNonBytSec'), data);
 		
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate'), data);
-//		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup'), data);
 		//Compliance Controls sind nur sichtbar, nicht editierbar. Sie sollen immer über bEditItSecGroup zu öffnen sein
 		//AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup'), data);
@@ -875,10 +875,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('CBrelevanceGxp'), data);
 	},
 	
-	//getData: function() {
 	setData: function(data) {
-		//var data = {};
-
 		var rgRelevanceBYTSEC = this.getComponent('fsComplianceMgmt').getComponent('rgRelevanceBYTSEC');
 		var bytSecStatus = rgRelevanceBYTSEC.getValue().inputValue;
 		
@@ -931,8 +928,6 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbRelevanceGxp = this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('CBrelevanceGxp');
 		data.gxpFlag = cbRelevanceGxp.getValue();
-		
-		return data;
 	},
 	
 	onMassnahmeSaved: function(complianceControlsWindow, massnahmen) {//complianceControls, ciComplianceRequestId		

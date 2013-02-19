@@ -118,6 +118,7 @@ AIR.AirApplicationManager = function() {
 //            ];
 			
 			this.storeIds = {
+				ciTypeListStore: null,
 				aclStore: null,
 				currencyListStore: null,
 				licenseTypeListStore: null,

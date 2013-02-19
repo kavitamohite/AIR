@@ -160,6 +160,24 @@ AIR.AirBootstrap = Ext.extend(Object, {
         AIR.AirStoreManager.setStores(storeMap);
         storeLoader.destroy();
         
+		
+		/*
+		//TEST
+		var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
+		var roleRecord = new Ext.data.Record({
+			id: '4711',
+			cwid: 'ERCVA',
+			roleName: AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
+		});
+		
+		rolePersonListStore.removeAll();
+		rolePersonListStore.add(roleRecord);
+		rolePersonListStore.commitChanges();
+		//TEST
+		*/
+		
+		
+        
         //neu
         this.checkItsecUserOptions(this.launchAir.createDelegate(this));
     	//neu

@@ -118,8 +118,8 @@ public class ApplicationWS {
 					listAnwendungen = AnwendungHbn.findApplications(searchname, input.getQueryMode(),
 						input.getAdvsearchappowner(), input.getAdvsearchappownerHidden(), input.getAdvsearchappdelegate(), input.getAdvsearchappdelegateHidden(),
 						input.getAdvsearchciowner(), input.getAdvsearchciownerHidden(), input.getAdvsearchcidelegate(), input.getAdvsearchcidelegateHidden(), 
-						onlyApplications, input.getAdvsearchObjectTypeId(), input.getSort(), input.getDir(),
-						input.getAdvsearchcitypeid(), input.getAdvsearchdescription(),
+						onlyApplications, input.getSort(), input.getDir(),
+						input.getTableId(), input.getCiSubTypeId(), input.getAdvsearchdescription(),//input.getAdvsearchcitypeid(), input.getAdvsearchObjectTypeId()
 						input.getAdvsearchoperationalstatusid(), input.getAdvsearchapplicationcat2id(),
 						input.getAdvsearchlifecyclestatusid(), input.getAdvsearchprocessid(), input.getTemplate(), 
 						input.getAdvsearchsteward(), input.getAdvsearchstewardHidden(), input.getBarRelevance(), input.getOrganisationalScope(),
@@ -132,8 +132,7 @@ public class ApplicationWS {
 						input.getProcessOptions(), input.getSourceOptions(), input.getBusinessEssentialOptions()
 					);
 				} else {
-					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchname, input.getQueryMode(),
-							onlyApplications, input.getSort(), input.getDir());
+					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchname, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir());
 				}
 			}
 		}

@@ -459,11 +459,11 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	fillEmptyCurrency: function() {
 		var cbCurrency = this.getComponent('licensecosts').getComponent('currency');
-		if(cbCurrency.getValue() == '') {
-			if('' == selectedCurrency)
-				selectedCurrency = 1;
+		if(cbCurrency.getValue().length === 0) {
+//			if('' == selectedCurrency)
+//				selectedCurrency = 1;
 			
-			cbCurrency.setValue(selectedCurrency);
+			cbCurrency.setValue(AAM.getDefaultCurrency());//selectedCurrency
 		}
 	},
 	

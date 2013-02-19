@@ -2193,8 +2193,8 @@ public class AnwendungHbn {
 	public static List<ApplicationDTO> findApplications(
 			String query, String queryMode, String advsearchappowner, String advsearchappownerHidden, String advsearchappdelegate, 
 			String advsearchappdelegateHidden, String advsearchciowner, String advsearchciownerHidden, String advsearchcidelegate, 
-			String advsearchcidelegateHidden, boolean onlyapplications, Long kat1Id, String sort, String dir,
-			Long advsearchcitypeid, String advsearchdescription, Long advsearchoperationalstatusid,
+			String advsearchcidelegateHidden, boolean onlyapplications, String sort, String dir,
+			Integer tableId, Integer ciSubType, String advsearchdescription, Long advsearchoperationalstatusid,
 			Long advsearchapplicationcat2id,
 			Long advsearchlifecyclestatusid,
 			Long advsearchprocessid,
@@ -2212,13 +2212,6 @@ public class AnwendungHbn {
 			String generalUsageOptions, String itCategoryOptions, String lifecycleStatusOptions, String organisationalScopeOptions,
 			String itSecGroupOptions, String processOptions, String sourceOptions, String businessEssentialOptions) {
 		
-//		String advsearchcountry;
-//		String advsearchsite;
-//		String advsearchbuilding;
-//		String advsearchroom;
-//		Long advsearchcitypeid,
-//		Long advsearchapplicationcat2id,
-
 		
 		if (null != advsearchappownerHidden) {//advsearchappowner
 			advsearchappownerHidden = advsearchappownerHidden.replace("*", "%");//advsearchappowner
@@ -2423,9 +2416,9 @@ public class AnwendungHbn {
 			sql.append(" and kat1.anwendung_kat1_id="+AirKonstanten.APPLICATION_CAT1_APPLICATION);
 		}
 		
-		if (null != kat1Id) {
+		if (null != ciSubType) {
 			isNot = isNot(ciTypeOptions);
-			sql.append(" and kat1.anwendung_kat1_id "+ getEqualNotEqualOperator(isNot) +" ").append(kat1Id);
+			sql.append(" and kat1.anwendung_kat1_id "+ getEqualNotEqualOperator(isNot) +" ").append(ciSubType);
 		}
 
 		if (null != barRelevance && !EMPTY.equals(barRelevance)) {

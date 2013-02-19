@@ -57,11 +57,15 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 	
 
 	
-	updateLabels: function(labels, tableId) {
+	updateLabels: function(labels) {//, tableId
 		this.setTitle(labels.specificsPanelTitle);
 
-		var specificsView = this.getSpecificsViewByTableId(parseInt(tableId));//parseInt(
-		specificsView.updateLabels(labels);
+//		var specificsView = this.getSpecificsViewByTableId(parseInt(tableId));//parseInt(
+//		specificsView.updateLabels(labels);
+		
+		for(var i = 0; i < this.items.items.length; i++)
+			this.items.items[i].updateLabels(labels);
+			
 	},
 	
 	updateToolTips: function(toolTips, tableId) {

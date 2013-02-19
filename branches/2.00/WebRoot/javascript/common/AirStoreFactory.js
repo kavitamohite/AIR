@@ -1129,7 +1129,7 @@ AIR.AirStoreFactory = function() {
 			        
 			        // search
 			        {name: 'advsearchPanelTitle'},
-			        {name: 'advsearchObjectType'},
+			        {name: 'cbCiType'},
 			        {name: 'advsearchdescription'},
 			        
 			        {name: 'advsearchowner'},
@@ -1349,7 +1349,17 @@ AIR.AirStoreFactory = function() {
 					{name: 'CiEinsprungCiIdInvalidMessage'},
 					{name: 'CiEinsprungCiIdDoesNotExistMessage'},
 					{name: 'CiEinsprungInvalidCiTypeMessage'},
-					{name: 'CiEinsprungCiIdMarkedAsDeleted'}
+					{name: 'CiEinsprungCiIdMarkedAsDeleted'},
+					
+					{name: 'alias'},
+					{name: 'floor'},
+					{name: 'buildingArea'},
+					{name: 'building'},
+					{name: 'terrain'},
+					{name: 'site'},
+					{name: 'country'},
+					{name: 'streetAndNumber'},
+					{name: 'postalCodeLocation'}
 			    ]
 			});
 		
@@ -1691,15 +1701,15 @@ AIR.AirStoreFactory = function() {
 		
 		createCiTypeListStore: function() {
 			var ciTypeListRecord = Ext.data.Record.create([
-		        {name: 'ciTypeId'},
-		        {name: 'ciTypeName'}
+                {name: 'id', type: 'int'},
+				{name: 'text', mapping: 'ciTypeName'},
+				{name: 'ciTypeId', type: 'int'},
+				{name: 'ciSubTypeId', type: 'int'}
 		    ]);
 		
 		    var ciTypeListReader = new Ext.data.XmlReader({
 		    	record: 'return',//return ciTypeDTO
-		        idProperty: 'ciTypeId',
-		        	
-		        fields: ['ciTypeId', 'ciTypeName']
+		        idProperty: 'id'//'ciTypeName'
 		    }, ciTypeListRecord); 
 			
 		    var ciTypeListStore = new Ext.data.XmlStore({
@@ -1707,8 +1717,6 @@ AIR.AirStoreFactory = function() {
 		    	storeId: 'ciTypeListStore',
 		    	autoLoad: false,
 		    	
-		      	fields: ['ciTypeId', 'ciTypeName'],
-		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
 		      		url: webcontext + '/AIRToolsWSPort',
 		      		loadMethod: 'getCiTypes',
