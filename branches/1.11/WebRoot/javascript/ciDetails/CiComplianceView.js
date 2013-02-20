@@ -655,7 +655,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var params = {
 		 	cwid: AIR.AirApplicationManager.getCwid(),
 		 	token: AIR.AirApplicationManager.getToken(),
-			ciId: AIR.AirApplicationManager.getCiId(),//selectedCIId,
+		 	ciId: AAM.getAppDetail().ciId || AAM.getCiId(),//.applicationId
 			language: AAM.getLanguage(),//'en',//selectedLanguage
 			tableId: 2//2=CI Typ Application (?)
 		};
