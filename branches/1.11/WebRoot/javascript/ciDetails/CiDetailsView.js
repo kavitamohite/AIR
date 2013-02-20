@@ -125,7 +125,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			barApplicationId: ciDetail.barApplicationId,
 			applicationCat2: applicationCat2,
 			categoryBusiness: categoryBusiness,
-			ciResponsible: ciDetail.ciOwner,//ciResponsible
+			ciOwner: ciDetail.ciOwner,//ciResponsible
 			applicationOwner: ciDetail.applicationOwner,
 			slaName: slaName,//AIR.AirStoreManager.getStoreByName('slaListStore').getById(ciDetail.slaId).data.text,
 			businessEssential: businessEssential,//AIR.AirStoreManager.getStoreByName('businessEssentialListStore').getById(ciDetail.businessEssentialId).data.text,
@@ -200,7 +200,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 		
 		var field = this.getComponent('detailsCiOwner');
-		field.setValue(data.ciResponsible);
+		field.setValue(data.ciOwner);
 		var labels = AIR.AirApplicationManager.getLabels();
 		var label = data.applicationCat1Id == AC.APP_CAT1_APPLICATION ? labels.applicationManager : labels.label_details_ciOwner;
 		this.setFieldLabel(field, label);
