@@ -657,7 +657,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		 	token: AIR.AirApplicationManager.getToken(),
 		 	ciId: AAM.getAppDetail().ciId || AAM.getCiId(),//.applicationId
 			language: AAM.getLanguage(),//'en',//selectedLanguage
-			tableId: 2//2=CI Typ Application (?)
+			tableId: AC.TABLE_ID_APPLICATION//2=CI Typ Application (?)
 		};
 		
 		massnahmenStore.load({
@@ -683,7 +683,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			language: AAM.getLanguage(),//selectedLanguage,
 			itSet: AAM.getAppDetail().itset,//this.getComponent('fsComplianceDetails').getComponent('pItSet').getComponent('tfItsetName').getValue()
 //			itSetId: AAM.getAppDetail().itsetId,
-			ciId: AAM.getAppDetail().applicationId,
+			ciId: AAM.getAppDetail().ciId || AAM.getCiId(),//.applicationId
 			applicationCat1Id: AAM.getAppDetail().applicationCat1Id,
 			hasEditRights: !hasTemplate && hasEditRights
 		};
