@@ -1,4 +1,8 @@
-<%@page import="com.bayerbbs.applrepos.service.LDAPAuthWS"%><%@page import="com.bayerbbs.applrepos.service.LDAPAuthParameterInput"%><%@page import="com.bayerbbs.applrepos.service.LDAPAuthParameterOutput"%><%@page import="com.bayerbbs.applrepos.constants.ApplreposConstants"%><% 
+<%@page import="com.bayerbbs.applrepos.service.LDAPAuthWS"%>
+<%@page import="com.bayerbbs.applrepos.service.LDAPAuthParameterInput"%>
+<%@page import="com.bayerbbs.applrepos.service.LDAPAuthParameterOutput"%>
+<%@page import="com.bayerbbs.applrepos.constants.AirKonstanten"%>
+<% 
 String cwid = request.getParameter("cwid");
 String token = request.getParameter("token");
 
@@ -11,7 +15,7 @@ LDAPAuthParameterOutput paramOutput = ldapAuthWS.isTokenValid(paramInput);
 
 String output = null;
 
-if (ApplreposConstants.RESULT_OK.equals(paramOutput.getResult())) {
+if (AirKonstanten.RESULT_OK.equals(paramOutput.getResult())) {
 	// logged in
 	output = "{\"success\": true, \"token\": \"" + paramOutput.getToken() + "\",\"cwid\":\"" + cwid + "\",\"username\":\"" + paramOutput.getUsername() + "\", \"lastlogon\": \"" + paramOutput.getLastLogon()+ "\"}";
 }

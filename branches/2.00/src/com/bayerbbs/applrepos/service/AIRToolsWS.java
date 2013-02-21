@@ -264,7 +264,8 @@ public class AIRToolsWS {
 	}
 	
 	public LinkCIDTO[] getLinkCIList(CiComplianceParameterInput input) {
-		return ComplianceHbn.getArrayFromListLinkCIList(ComplianceHbn.findLinkCIList(input.getZielotypGSToolId(), input.getItSetId(), input.getApplicationId(), input.getMassnahmeId(), input.getApplicationCat1Id()));
+		Long appCat1Id = input.getApplicationCat1Id() != null ? input.getApplicationCat1Id() : 0;
+		return ComplianceHbn.getArrayFromListLinkCIList(ComplianceHbn.findLinkCIList(input.getZielotypGSToolId(), input.getItSetId(), input.getApplicationId(), input.getMassnahmeId(), appCat1Id));
 	}
 
 

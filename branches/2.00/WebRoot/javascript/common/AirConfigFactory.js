@@ -56,6 +56,8 @@ AIR.AirConfigFactory = function() {
 		createBuildingAreaCiRecord: function() {
 			var buildingAreaCiFields = this.getLocationCiFields();
 			
+			buildingAreaCiFields.push('buildingData');
+			
 			return Ext.data.Record.create(buildingAreaCiFields);
 		},
 		
@@ -92,6 +94,7 @@ AIR.AirConfigFactory = function() {
 			
 			roomCiFields.push('severityLevelIdAcl');
 			roomCiFields.push('businessEssentialIdAcl');
+			roomCiFields.push('buildingAreaData');
 			
 			return Ext.data.Record.create(roomCiFields);
 		},

@@ -24,37 +24,89 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        id: 'tfRoom',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Room',
-		        anchor: '70%'
+		        anchor: '70%',
+		        disabled: true
 //			        width: 230,
 	        },{
-		        id: 'tfBuildingArea',
-		    	xtype: 'textfield',
-		        fieldLabel: 'BuildingArea',
-		        anchor: '70%'
-//			        width: 230,
+//		        id: 'cbBuildingArea',
+//		    	xtype: 'textfield',
+//		        fieldLabel: 'BuildingArea',
+//		        anchor: '70%',
+//		        disabled: true
+////			        width: 230,
+	        	
+		        xtype: 'filterCombo',//combo
+		        id: 'cbBuildingArea',
+
+//		        width: 230,
+		        anchor: '70%',
+		        fieldLabel: 'Building Area',
+				
+		        
+		        store: AIR.AirStoreFactory.createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
+		        valueField: 'id',
+		        displayField: 'name',
+				lastQuery: '',
+		        
+//		        typeAhead: true,
+//		        forceSelection: true,
+//		        autoSelect: false,
+		        
+		        triggerAction: 'all',//all query
+		        lazyRender: true,
+		        lazyInit: false,
+		        mode: 'local'
 	        },{
-		        id: 'tfBuilding',
-		    	xtype: 'textfield',
+//		        id: 'cbBuilding',
+//		    	xtype: 'textfield',
+//		        fieldLabel: 'Building',
+//		        anchor: '70%',
+//		        disabled: true
+////			        width: 230,
+	        	
+	        	
+		        xtype: 'combo',//combo filterCombo
+		        id: 'cbBuilding',
+
+//		        width: 230,
+		        anchor: '70%',
 		        fieldLabel: 'Building',
-		        anchor: '70%'
-//			        width: 230,
+				
+		        
+		        store: AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
+		        valueField: 'id',
+		        displayField: 'name',
+				lastQuery: '',
+		        
+//		        typeAhead: true,
+//		        forceSelection: true,
+//		        autoSelect: false,
+		        
+		        triggerAction: 'all',//all query
+//		        lazyRender: true,
+//		        lazyInit: false
+//		        mode: 'remote'//local
+		        queryParam: 'id'
 		    },{
 		        id: 'tfTerrain',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Terrain',
-		        anchor: '70%'
+		        anchor: '70%',
+		        disabled: true
 //			        width: 230,
 	        },{
 		        id: 'tfSite',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Site',
-		        anchor: '70%'
+		        anchor: '70%',
+		        disabled: true
 //			        width: 230,
 		    },{
 		        id: 'tfCountry',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Country',
-		        anchor: '70%'
+		        anchor: '70%',
+		        disabled: true
 //			        width: 230,
 		    },{
 		    	xtype: 'panel',
@@ -126,26 +178,42 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		AIR.CiSpecificsLocationItemView.superclass.initComponent.call(this);
 		
 		this.addEvents('ciBeforeChange', 'ciChange');
+		
+//		var cbBuilding = this.getComponent('cbBuilding');
+//		cbBuilding.on('beforequery', this.onBeforeBuildingSelect, this);
+//		cbBuilding.on('select', this.onBuildingSelect, this);
 	},
+	
+//	onBeforeBuildingSelect: function(queryEvent) {
+//		return this.isInitial;
+//	},
+//	onBuildingSelect: function(combo, record, index) {
+//		this.isInitial = false;
+//	},
 
     
 	update: function(data) {
+		this.isInitial = true;
 		this.updateAccessMode(data);
 		
 		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
 		
 		var tfRoomFloor = this.getComponent('tfRoomFloor');
 		var tfRoom = this.getComponent('tfRoom');
-		var tfBuildingArea = this.getComponent('tfBuildingArea');
-		var tfBuilding = this.getComponent('tfBuilding');
+		var cbBuildingArea = this.getComponent('cbBuildingArea');
+		var cbBuilding = this.getComponent('cbBuilding');
 		var tfTerrain = this.getComponent('tfTerrain');
 		var tfSite = this.getComponent('tfSite');
 		var tfCountry = this.getComponent('tfCountry');
+		
+		Util.disableCombo(cbBuilding);
+		Util.disableCombo(cbBuildingArea);
 
 		
 		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
 		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');
 		
+		//use builder pattern managing each field depending on tableId instead of switch/case?
 		switch(parseInt(data.tableId)) {
 			case AC.TABLE_ID_ROOM:
 				tfLocationCiAlias.setVisible(true);
@@ -153,12 +221,26 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				tfRoomFloor.setVisible(true);
 				tfRoomFloor.setValue(data.floor);
 				
+				
 				tfRoom.setVisible(false);
 				tfRoom.reset();
-				tfBuildingArea.setVisible(true);
-				tfBuildingArea.setValue(data.areaName);
-				tfBuilding.setVisible(true);
-				tfBuilding.setValue(data.gebaeudeName);
+				cbBuildingArea.setVisible(true);
+				cbBuildingArea.setValue(data.areaName);
+				if(AIR.AirAclManager.isRelevance(cbBuildingArea, data))
+					Util.enableCombo(cbBuildingArea);
+				
+				
+				var buildingAreas = data.buildingAreaData.split(',');
+				var buildingAreaObjects = [];
+				for(var i = 0; i < buildingAreas.length; i++) {
+					var buildingArea = buildingAreas[i].split('=');
+					buildingAreaObjects.push(buildingArea);
+				}
+				cbBuildingArea.getStore().loadData(buildingAreaObjects);
+				
+				
+				cbBuilding.setVisible(true);
+				cbBuilding.setValue(data.gebaeudeName);
 				
 				tfTerrain.setVisible(true);
 				tfTerrain.setValue(data.terrainName);
@@ -169,17 +251,37 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, true);
 				break;
-			case AC.TABLE_ID_BUILDING_AREA:
+			case AC.TABLE_ID_BUILDING_AREA://Test Areas: E 39 I400,E 39 T001
 				tfLocationCiAlias.setVisible(false);
 				tfLocationCiAlias.reset();
 				tfRoomFloor.setVisible(false);
 				tfRoomFloor.reset();
 				tfRoom.setVisible(false);
 				tfRoom.reset();
-				tfBuildingArea.setVisible(false);
-				tfBuildingArea.reset();
-				tfBuilding.setVisible(true);
-				tfBuilding.setValue(data.gebaeudeName);
+				cbBuildingArea.setVisible(false);
+				cbBuildingArea.reset();
+				
+				cbBuilding.setValue(data.areaId);
+				cbBuilding.setRawValue(data.areaName);
+				cbBuilding.getStore().setBaseParam('ciId', data.areaId);
+//				cbBuilding.query = data.areaId;
+//				cbBuilding.id = data.areaId;
+//				cbBuilding.lastQuery = data.areaId;
+				cbBuilding.allQuery = data.areaId;
+				
+//				cbBuilding.setValue(data.gebaeudeName);
+				cbBuilding.setVisible(true);
+				if(AIR.AirAclManager.isRelevance(cbBuilding, data))
+					Util.enableCombo(cbBuilding);
+				
+//				var buildings = data.buildingData.split(',');
+//				var buildingObjects = [];
+//				for(var i = 0; i < buildings.length; i++) {
+//					var building = buildings[i].split('=');
+//					buildingObjects.push(building);
+//				}
+//				cbBuilding.getStore().loadData(buildingObjects);
+				
 				
 				tfTerrain.setVisible(true);
 				tfTerrain.setValue(data.terrainName);
@@ -198,10 +300,10 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				tfRoom.reset();
 				tfRoomFloor.setVisible(false);
 				tfRoomFloor.reset();
-				tfBuildingArea.setVisible(false);
-				tfBuildingArea.reset();
-				tfBuilding.setVisible(false);
-				tfBuilding.reset;
+				cbBuildingArea.setVisible(false);
+				cbBuildingArea.reset();
+				cbBuilding.setVisible(false);
+				cbBuilding.reset;
 				
 				tfTerrain.setVisible(true);
 				tfTerrain.setValue(data.terrainName);
@@ -220,10 +322,10 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				tfRoomFloor.reset();
 				tfRoom.setVisible(true);
 				tfRoom.setValue(data.raumName);
-				tfBuildingArea.setVisible(true);
-				tfBuildingArea.setValue(data.areaName);
-				tfBuilding.setVisible(true);
-				tfBuilding.setValue(data.gebaeudeName);
+				cbBuildingArea.setVisible(true);
+				cbBuildingArea.setValue(data.areaName);
+				cbBuilding.setVisible(true);
+				cbBuilding.setValue(data.gebaeudeName);
 				
 				tfTerrain.setVisible(true);
 				tfTerrain.setValue(data.terrainName);
@@ -242,10 +344,10 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				tfRoom.reset();
 				tfRoomFloor.setVisible(false);
 				tfRoomFloor.reset();
-				tfBuildingArea.setVisible(false);
-				tfBuildingArea.reset();
-				tfBuilding.setVisible(false);
-				tfBuilding.reset();
+				cbBuildingArea.setVisible(false);
+				cbBuildingArea.reset();
+				cbBuilding.setVisible(false);
+				cbBuilding.reset();
 				
 				tfTerrain.setVisible(false);
 				tfTerrain.reset();
@@ -263,10 +365,10 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				tfRoom.reset();
 				tfRoomFloor.setVisible(false);
 				tfRoomFloor.reset();
-				tfBuildingArea.setVisible(false);
-				tfBuildingArea.reset();
-				tfBuilding.setVisible(false);
-				tfBuilding.reset();
+				cbBuildingArea.setVisible(false);
+				cbBuildingArea.reset();
+				cbBuilding.setVisible(false);
+				cbBuilding.reset();
 				
 				tfTerrain.setVisible(false);
 				tfTerrain.reset();
@@ -284,10 +386,10 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //				tfRoomFloor.reset();
 //				tfRoom.setVisible(false);
 //				tfRoom.reset();
-//				tfBuildingArea.setVisible(false);
-//				tfBuildingArea.reset();
-//				tfBuilding.setVisible(false);
-//				tfBuilding.reset();
+//				cbBuildingArea.setVisible(false);
+//				cbBuildingArea.reset();
+//				cbBuilding.setVisible(false);
+//				cbBuilding.reset();
 //				
 //				tfTerrain.setVisible(false);
 //				tfTerrain.reset();
@@ -298,11 +400,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //				break;
 		}
 		
-
-		
-		
-		
-
+		this.doLayout();//nötig wegen cbBuildingArea, ansonsten wird deren width=20 gesetzt?
 	},
 	
 	updateLocation: function(pSpecificsLocationStreet, pSpecificsLocationAddress, data, exists) {
@@ -333,12 +431,14 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	updateAccessMode: function(data) {
 		AIR.AirAclManager.setAccessMode(this.getComponent('tfLocationCiAlias'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('tfRoomFloor'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('tfRoom'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('tfBuildingArea'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('tfBuilding'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('tfTerrain'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('tfSite'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('tfCountry'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('cbBuildingArea'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('cbBuilding'), data);
+		
+		//werden nie geändert:
+//		AIR.AirAclManager.setAccessMode(this.getComponent('tfRoom'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('tfTerrain'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('tfSite'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('tfCountry'), data);
 		
 		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
 		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');
@@ -356,9 +456,9 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	updateLabels: function(labels) {
 		this.setFieldLabel(this.getComponent('tfLocationCiAlias'), labels.alias);
 		this.setFieldLabel(this.getComponent('tfRoomFloor'), labels.floor);
-		this.setFieldLabel(this.getComponent('tfRoom'), labels.floor);
-		this.setFieldLabel(this.getComponent('tfBuildingArea'), labels.buildingArea);
-		this.setFieldLabel(this.getComponent('tfBuilding'), labels.building);
+		this.setFieldLabel(this.getComponent('tfRoom'), labels.room);
+		this.setFieldLabel(this.getComponent('cbBuildingArea'), labels.buildingArea);
+		this.setFieldLabel(this.getComponent('cbBuilding'), labels.building);
 		this.setFieldLabel(this.getComponent('tfTerrain'), labels.terrain);
 		this.setFieldLabel(this.getComponent('tfSite'), labels.site);
 		this.setFieldLabel(this.getComponent('tfCountry'), labels.country);

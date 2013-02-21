@@ -37,7 +37,7 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 //		    	xtype: 'panel',
 //		    	id: 'pLCiCenterView',
 //		    	
-////				layout: 'form',//fit form
+//				layout: 'form',//fit form
 //				border: false,
 //				
 //				bodyStyle: {
@@ -45,13 +45,13 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 //		    	},
 //		    	
 //		    	items: [
-//		    	{
-//		    		html: '<div style="background-color: white; border-radius:25px 25px 0px 0px; height: 25px;"></div>'
-//		    	},
+////		    	{
+////		    		html: '<div style="background-color: white; border-radius:25px 25px 0px 0px; height: 25px;"></div>'
+////		    	},
 //		    	{
 //		    		xtype: 'panel',
 //		    		border: false,
-////		    		height: 25,
+//		    		height: 25,
 //		    		
 //				    bodyStyle: {
 //			    		borderRadius: '25px 25px 0px 0px'
@@ -99,7 +99,7 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		var ciInfoView = this.getComponent('eastpanel');
 		var ciTitleView = this.getComponent('ciTitleView');
 		var navigationV = this.getComponent('ciNavigationView');
-		var myPlaceHomeView = this/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView').getComponent('myPlaceHomeView');
+		var myPlaceHomeView = this.getCenterView().getComponent('myPlaceHomeView');
 		
 		ciInfoView.update(AC.HELP_ID_INFOTEXT);
 		ciTitleView.update(AAM.getLanguage());
@@ -130,7 +130,10 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		this.updateLabels(AIR.AirApplicationManager.getLabels());
 		this.updateToolTips(AIR.AirApplicationManager.getToolTips());//countryCode AIR.AirApplicationManager.getToolTips()
 	},
-		
+	
+	getCenterView: function() {
+		return this/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView');
+	},
 
 	updateLabels: function(labels) {
 		var ciTitleView = this.getComponent('ciTitleView');
@@ -139,12 +142,12 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		var ciNavigationView = this.getComponent('ciNavigationView');
 		ciNavigationView.updateLabels(labels);
 		
-		var ciCenterView = this/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView');
+		var ciCenterView = this.getCenterView();
 		ciCenterView.updateLabels(labels);
 	},
 
 	updateToolTips: function(toolTips) {
-		var ciCenterView = this/*.getComponent('pLCiCenterView')*/.getComponent('ciCenterView');
+		var ciCenterView = this.getCenterView();
 		ciCenterView.updateToolTips(toolTips);
 	},
 	

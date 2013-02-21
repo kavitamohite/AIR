@@ -1,6 +1,9 @@
 package com.bayerbbs.applrepos.dto;
 
 import java.io.Serializable;
+import java.util.Set;
+
+import com.bayerbbs.applrepos.domain.BuildingArea;
 
 public class RoomDTO extends LocationDTO implements Serializable {
 	private static final long serialVersionUID = 1853465853927062074L;
@@ -23,6 +26,9 @@ public class RoomDTO extends LocationDTO implements Serializable {
 //	private String businessEssentialIdAcl;//Rollenbasierte Sonderfall: wenn User Rolle BusinessEssential-Editor hat: editierbar!
 	//====================
 
+	private Set<BuildingAreaDTO> buildingAreas;
+	private String buildingAreaData;
+	
 
 	public String getAlias() {
 		return alias;
@@ -101,12 +107,26 @@ public class RoomDTO extends LocationDTO implements Serializable {
 	public void setSeverityLevelIdAcl(String severityLevelIdAcl) {
 		this.severityLevelIdAcl = severityLevelIdAcl;
 	}
-	
-	
+
 //	public String getBusinessEssentialIdAcl() {
 //		return businessEssentialIdAcl;
 //	}
 //	public void setBusinessEssentialIdAcl(String businessEssentialIdAcl) {
 //		this.businessEssentialIdAcl = businessEssentialIdAcl;
 //	}
+
+	
+	public Set<BuildingAreaDTO> getBuildingAreas() {
+		return buildingAreas;
+	}
+	public void setBuildingAreas(Set<BuildingAreaDTO> buildingAreas) {
+		this.buildingAreas = buildingAreas;
+	}
+
+	public String getBuildingAreaData() {
+		return buildingAreaData;
+	}
+	public void setBuildingAreaData(String buildingAreaData) {
+		this.buildingAreaData = buildingAreaData;
+	}
 }

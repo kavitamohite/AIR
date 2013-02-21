@@ -1,6 +1,9 @@
 package com.bayerbbs.applrepos.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
@@ -17,6 +20,7 @@ import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
@@ -34,6 +38,8 @@ import com.bayerbbs.applrepos.hibernate.TerrainHbn;
 public class CiEntityWS {
 	static final String YES = "Y";
 	static final String NO = "N";
+	static final String KOMMA = ",";
+	static final String EQUAL = "=";
 
 	public CiEntityParameterOutput findCiEntities(CiEntityParameterInput input) {		
 		CiEntityParameterOutput output = new CiEntityParameterOutput();
@@ -131,7 +137,7 @@ public class CiEntityWS {
 		BuildingDTO buildingDTO = new BuildingDTO();
 
 		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
-			Building building = BuildingHbn.findById(input.getCiId());
+			Building building = BuildingHbn.findById(Building.class, input.getCiId());
 			CiLokationsKette lokationsKette = BuildingHbn.findLokationsKetteById(input.getCiId());
 			
 			//wenn noch alle Räume aller BuildingAreas irgendwie auf die GUI sollen
@@ -155,8 +161,9 @@ public class CiEntityWS {
 		BuildingAreaDTO buildingAreaDTO = new BuildingAreaDTO();
 
 		if(LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
-			BuildingArea buildingArea = BuildingHbn.findBuildingAreaById(detailInput.getCiId());
+			BuildingArea buildingArea = BuildingHbn.findById(BuildingArea.class, detailInput.getCiId());//BuildingHbn.findBuildingAreaById(detailInput.getCiId());
 			CiLokationsKette lokationsKette = BuildingHbn.findLokationsKetteByAreaId(detailInput.getCiId());
+
 			
 			//wenn noch alle Räume irgendwie auf die GUI sollen
 //			Set<Room> rooms = buildingArea.getRooms();
@@ -164,9 +171,52 @@ public class CiEntityWS {
 			
 			setCiBaseData(buildingAreaDTO, buildingArea);
 			buildingAreaDTO.setCiLokationsKette(lokationsKette);
+			
+			
+			/*
+			Terrain terrain = buildingArea.getBuilding().getTerrain();
+			Set<Building> buildings = terrain.getBuildings();
+			
+			if(buildings != null && buildings.size() > 0) {
+//				BuildingDTO area = null;
+//				Set<BuildingDTO> areas = new HashSet<BuildingDTO>();
+//				for(Building building : buildings) {
+//					building = new BuildingAreaDTO();
+//					building.setAreaId(building.getId());
+//					building.setName(building.getName());
+//					buildings.add(building);
+//				}
+//				buildingAreaDTO.setBuildingAreas(buildings);
+				
+				StringBuilder data = new StringBuilder();
+				for(Building building : buildings) {
+					if(data.length() > 0)
+						data.append(KOMMA);
+					data.append(building.getId()).append(EQUAL).append(building.getName());
+				}
+				buildingAreaDTO.setBuildingData(data.toString());
+			}*/
 		}
 
 		return buildingAreaDTO;
+	}
+	
+	public KeyValueOutput getBuildingsByBuildingArea(CiDetailParameterInput detailInput) {
+		KeyValueOutput output = new KeyValueOutput();
+		List<KeyValueDTO> buildingDataList = new ArrayList<KeyValueDTO>();
+		
+		BuildingArea buildingArea = BuildingHbn.findById(BuildingArea.class, detailInput.getCiId());//findBuildingAreaById(detailInput.getCiId());
+		Terrain terrain = buildingArea.getBuilding().getTerrain();
+		Set<Building> buildings = terrain.getBuildings();
+		
+		if(buildings != null && buildings.size() > 0)
+			for(Building building : buildings)
+				buildingDataList.add(new KeyValueDTO(building.getId(), building.getName()));
+			
+		Collections.sort(buildingDataList);
+		output.setKeyValueDTO(buildingDataList.toArray(new KeyValueDTO[0]));
+		
+		return output;
 	}
 	
 	
@@ -178,7 +228,7 @@ public class CiEntityWS {
 			Room room = RoomHbn.findById(detailInput.getCiId());
 			CiLokationsKette lokationsKette = RoomHbn.findLokationsKetteById(detailInput.getCiId());
 			Building building = room.getBuildingArea().getBuilding();
-			
+			Set<BuildingArea> buildingAreas = building.getBuildingAreas();
 
 			setCiBaseData(roomDTO, room);
 			roomDTO.setAlias(room.getAlias());
@@ -208,6 +258,27 @@ public class CiEntityWS {
 			String source = room.getInsertQuelle();
 			if(!source.equals(AirKonstanten.INSERT_QUELLE_SISEC) && !source.equals(AirKonstanten.APPLICATION_GUI_NAME)) {
 				roomDTO.setSeverityLevelIdAcl(AirKonstanten.NO_SHORT);
+			}
+			
+			
+			if(buildingAreas != null && buildingAreas.size() > 0) {
+//				BuildingAreaDTO area = null;
+//				Set<BuildingAreaDTO> areas = new HashSet<BuildingAreaDTO>();
+//				for(BuildingArea buildingArea : buildingAreas) {
+//					area = new BuildingAreaDTO();
+//					area.setAreaId(buildingArea.getId());
+//					area.setName(buildingArea.getName());
+//					areas.add(area);
+//				}
+//				roomDTO.setBuildingAreas(areas);
+				
+				StringBuilder data = new StringBuilder();
+				for(BuildingArea buildingArea : buildingAreas) {
+					if(data.length() > 0)
+						data.append(KOMMA);
+					data.append(buildingArea.getId()).append(EQUAL).append(buildingArea.getName());
+				}
+				roomDTO.setBuildingAreaData(data.toString());
 			}
 		}
 		

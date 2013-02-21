@@ -1353,6 +1353,7 @@ AIR.AirStoreFactory = function() {
 					
 					{name: 'alias'},
 					{name: 'floor'},
+					{name: 'room'},
 					{name: 'buildingArea'},
 					{name: 'building'},
 					{name: 'terrain'},
@@ -2324,6 +2325,40 @@ AIR.AirStoreFactory = function() {
 			return ciDetailStore;
 		},
 		
+		createBuildingsByBuildingAreaStore: function() {
+//			var record = Ext.data.Record.create([
+//			    'id','name'
+//			]);
+			
+			var record = Ext.data.Record.create([{
+ 				name: 'id'
+ 			}, {
+ 				name: 'name'
+ 			}]);
+			
+			
+			var reader = new Ext.data.XmlReader({
+				record: 'keyValueDTO',
+				idProperty: 'id'
+			}, record);
+
+			var store = new Ext.data.XmlStore({
+				autoDestroy: true,
+				autoLoad: false,
+				storeId: 'buildingsByBuildingAreaStore',
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getBuildingsByBuildingArea',
+					timeout: 120000,
+					reader: reader
+				})
+			});
+			
+			return store;
+		},
+		
+		
 		createApplicationDetailStore: function() {
 			var applicationDetailRecord = Ext.data.Record.create([{
 				name : 'id',//applicationId
@@ -3045,22 +3080,22 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		
-		createGenericIdNameStore: function() {
-	//		var genericIdNameRecord = Ext.data.Record.create([
-	//  	      	{ name: 'id' },
-	//  	      	{ name: 'name' }
-	//  	    ]);
-	//  	
-	//  	    var genericIdNameReader = new Ext.data.XmlReader({
-	//  			record: 'return',
-	//  			idProperty: 'id'
-	//  	    }, genericIdNameRecord); 
+		createIdNameStore: function() {
+//			var idNameRecord = Ext.data.Record.create([
+//	  	      	'id', 'name'
+//	  	    ]);
+//	  	
+//	  	    var idNameReader = new Ext.data.DataReader({
+//	  			record: 'return',
+//	  			idProperty: 'id'
+//	  	    }, idNameRecord); 
 			
 		    var genericIdNameStore = new Ext.data.ArrayStore({
-		    	autoDestroy: true,
-				autoLoad: false,
+//		    	autoDestroy: true,
+//				autoLoad: false,
 	
 		      	fields: ['id', 'name']
+//				reader: idNameReader
 		    });
 		    
 		    return genericIdNameStore;

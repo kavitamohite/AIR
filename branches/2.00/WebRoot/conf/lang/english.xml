@@ -517,6 +517,7 @@
 		
 		<alias>Alias</alias>
 		<floor>Floor</floor>
+		<room>Room</room>
 		<buildingArea>Building Area</buildingArea>
 		<building>Building</building>
 		<terrain>Terrain</terrain>

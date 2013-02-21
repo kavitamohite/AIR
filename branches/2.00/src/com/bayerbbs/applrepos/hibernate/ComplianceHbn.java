@@ -95,10 +95,11 @@ public class ComplianceHbn {
 		return output;
 	}
 
-
+//	public static List<LinkCIDTO> findLinkCIList(long zielotypGSToolId, long itSetId, long applicationId, long massnahmeId) {
+//		return findLinkCIList(zielotypGSToolId, itSetId, applicationId, massnahmeId, 0);
+//	}
 
 	public static List<LinkCIDTO> findLinkCIList(long zielotypGSToolId, long itSetId, long applicationId, long massnahmeId, long applicationCat1Id) {
-
 		List<LinkCIDTO> listResult = new ArrayList<LinkCIDTO>();
 		
 		boolean commit = false;

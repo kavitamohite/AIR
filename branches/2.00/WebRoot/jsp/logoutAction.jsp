@@ -1,4 +1,7 @@
-<%@page import="com.bayerbbs.applrepos.service.LDAPAuthWS"%><%@page import="com.bayerbbs.applrepos.service.LDAPAuthParameterInput"%><%@page import="com.bayerbbs.applrepos.service.LDAPAuthParameterOutput"%><%@page import="com.bayerbbs.applrepos.constants.ApplreposConstants"%><% 
+<%@page import="com.bayerbbs.applrepos.service.LDAPAuthWS"%>
+<%@page import="com.bayerbbs.applrepos.service.LDAPAuthParameterInput"%>
+<%@page import="com.bayerbbs.applrepos.service.LDAPAuthParameterOutput"%>
+<% 
 String cwid = request.getParameter("cwid");
 String token = request.getParameter("token");
 
@@ -8,4 +11,3 @@ ldapAuthWS.logout(cwid, token);
 
 response.sendRedirect("/AIR");//htdocs/index.html authenticate.html
 %>
-

@@ -1,7 +1,7 @@
 <%@page import="com.bayerbbs.applrepos.service.LDAPAuthWS"%>
 <%@page import="com.bayerbbs.applrepos.service.LDAPAuthParameterInput"%>
 <%@page import="com.bayerbbs.applrepos.service.LDAPAuthParameterOutput"%>
-<%@page import="com.bayerbbs.applrepos.constants.ApplreposConstants"%>
+<%@page import="com.bayerbbs.applrepos.constants.AirKonstanten"%>
 <% 
 	String cwid = request.getParameter("cwid");
 	String password = request.getParameter("password");
@@ -15,8 +15,7 @@
 	
 	String output = null;
 	
-	if (ApplreposConstants.RESULT_OK.equals(paramOutput.getResult())) {
-		// logged in
+	if (AirKonstanten.RESULT_OK.equals(paramOutput.getResult())) {
 		request.setAttribute("token", paramOutput.getToken());
 		output = "{\"success\": true, \"token\": \"" + paramOutput.getToken() + "\", \"cwid\": \"" + paramOutput.getCwid() + "\", \"lastlogon\": \"" + paramOutput.getLastLogon()+ "\"}";
 	}

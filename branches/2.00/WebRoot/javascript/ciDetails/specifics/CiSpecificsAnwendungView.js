@@ -84,6 +84,8 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		        }
 		    },{
 		        xtype: 'filterCombo',//combo
+		        id: 'applicationCat2',
+
 		        width: 230,
 //		        anchor: '70%',//siehe (*1)
 		        fieldLabel: 'Category',
@@ -91,7 +93,6 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 				//transform: this.getEl(),
 				//disabledClass: Ext.isIE ? 'x-item-disabled-ie' : 'x-item-disabled',
 		        
-		        id: 'applicationCat2',
 		        store: AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
 		        displayField: 'text',
