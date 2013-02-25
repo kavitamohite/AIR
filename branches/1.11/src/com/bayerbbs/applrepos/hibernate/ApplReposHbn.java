@@ -170,6 +170,8 @@ public class ApplReposHbn {
 			sql.append("select count(*) from role_person rp join role rl on rp.role_id = rl.role_id and rl.role_name = '");
 			sql.append(rolename).append("'");
 			sql.append(" where upper(cwid)='").append(cwid.toUpperCase()).append("'");
+			sql.append(" and rp.date_end >= SYSDATE");
+			sql.append(" and rp.del_timestamp is null");
 			
 			try {
 				tx = session.beginTransaction();
