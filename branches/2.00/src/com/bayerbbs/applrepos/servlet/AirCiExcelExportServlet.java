@@ -23,7 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
-import com.bayerbbs.applrepos.service.ApplicationParameterInput;
+import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.ApplicationWS;
 
 public class AirCiExcelExportServlet extends HttpServlet {
@@ -142,7 +142,7 @@ public class AirCiExcelExportServlet extends HttpServlet {
 	}
 	
 	private List<ApplicationDTO> getCIs(HttpServletRequest req) {
-		String query = req.getParameter("query");
+		String ciNameAliasQuery = req.getParameter("hciNameAliasQuery");//query
 		String cwid = req.getParameter("cwid");
 		String token = req.getParameter("token");
 		String searchAction = req.getParameter("searchAction");
@@ -150,32 +150,33 @@ public class AirCiExcelExportServlet extends HttpServlet {
         List<ApplicationDTO> applications = null;
         
         if(searchAction.equals(SEARCH_POINT_SEARCH)) {
-        	boolean isAdvancedSearch = Boolean.parseBoolean(req.getParameter("advancedsearch"));
+        	boolean isAdvancedSearch = Boolean.parseBoolean(req.getParameter("isAdvancedSearch"));//advancedsearch
         	
         	applications = isAdvancedSearch ?
-    			AnwendungHbn.findApplications(query, 
+    			AnwendungHbn.findApplications(
+    				ciNameAliasQuery,
 					req.getParameter("queryMode"),
-					req.getParameter("hadvsearchappowner"),
-					req.getParameter("hadvsearchappownerHidden"),
-					req.getParameter("hadvsearchappdelegate"),
-					req.getParameter("hadvsearchappdelegateHidden"),
-					req.getParameter("hadvsearchciowner"),
-					req.getParameter("hadvsearchciownerHidden"),
-					req.getParameter("hadvsearchcidelegate"),
-					req.getParameter("hadvsearchcidelegateHidden"),
+					req.getParameter("happOwner"),//hadvsearchappowner
+					req.getParameter("happOwnerHidden"),//hadvsearchappownerHidden
+					req.getParameter("happOwnerDelegate"),//hadvsearchappdelegate
+					req.getParameter("happOwnerDelegateHidden"),//hadvsearchappdelegateHidden
+					req.getParameter("hciOwner"),//hadvsearchciowner
+					req.getParameter("hciOwnerHidden"),//hadvsearchciownerHidden
+					req.getParameter("hciOwnerDelegate"),//hadvsearchcidelegate
+					req.getParameter("hciOwnerDelegateHidden"),//hadvsearchcidelegateHidden
 					false,
-					null/*req.getParameter("sort?")*/,
-					null/*req.getParameter("dir?")*/,
-					req.getParameter("htableId").length() > 0 ? Integer.parseInt(req.getParameter("htableId")) : null,//hadvsearchObjectTypeId
+					null,//req.getParameter("sort?")
+					null,//req.getParameter("dir?")
+					req.getParameter("hciTypeId").length() > 0 ? Integer.parseInt(req.getParameter("hciTypeId")) : null,//htableId hadvsearchObjectTypeId
 					req.getParameter("hciSubTypeId").length() > 0 ? Integer.parseInt(req.getParameter("hciSubTypeId")) : null/**/,//null advsearchcitypeid
-					req.getParameter("hadvsearchdescription"),
-					req.getParameter("hadvsearchoperationalStatusid").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchoperationalStatusid")) : null,
-					req.getParameter("hadvsearchapplicationcat2id").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchapplicationcat2id")) : null,
-					req.getParameter("hadvsearchlifecyclestatusid").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchlifecyclestatusid")) : null,
-					req.getParameter("hadvsearchprocessid").length() > 0 ? Long.parseLong(req.getParameter("hadvsearchprocessid")) : null,
-					null,/*req.getParameter("template")?*/
-					req.getParameter("hadvsearchsteward"),
-					req.getParameter("hadvsearchstewardHidden"),
+					req.getParameter("hdescription"),//hadvsearchdescription
+					req.getParameter("hoperationalStatusId").length() > 0 ? Long.parseLong(req.getParameter("hoperationalStatusId")) : null,//hadvsearchoperationalStatusid
+					req.getParameter("happlicationCat2Id").length() > 0 ? Long.parseLong(req.getParameter("happlicationCat2Id")) : null,//hadvsearchapplicationcat2id
+					req.getParameter("hlifecycleStatusId").length() > 0 ? Long.parseLong(req.getParameter("hlifecycleStatusId")) : null,//hadvsearchlifecyclestatusid
+					req.getParameter("hprocessId").length() > 0 ? Long.parseLong(req.getParameter("hprocessId")) : null,//hadvsearchprocessid
+					null,//req.getParameter("template")?
+					req.getParameter("happSteward"),//hadvsearchsteward
+					req.getParameter("happStewardHidden"),//hadvsearchstewardHidden
 					req.getParameter("hbarRelevance"),
 					req.getParameter("horganisationalScope"),
 					req.getParameter("hitSetId"),
@@ -184,9 +185,10 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					req.getParameter("hbusinessEssentialId"),
 					null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
 				) :
-        		AnwendungHbn.findApplications(query, null, null, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        		AnwendungHbn.findApplications(ciNameAliasQuery, null, null, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         } else if(searchAction.equals(SEARCH_POINT_MY_DELEGATE_CIS) || searchAction.equals(SEARCH_POINT_MY_CIS)) {
-        	ApplicationParameterInput input = new ApplicationParameterInput();
+//        	ApplicationParameterInput input = new ApplicationParameterInput();
+        	ApplicationSearchParamsDTO input = new ApplicationSearchParamsDTO();
         	input.setSearchAction(searchAction);
         	input.setCwid(cwid);
         	input.setToken(token);
@@ -195,7 +197,7 @@ public class AirCiExcelExportServlet extends HttpServlet {
         	applications = Arrays.asList(new ApplicationWS().findApplications(input).getApplicationDTO());
         } else if(searchAction.equals(SEARCH_POINT_OUSEARCH)) {
         	applications = CiEntitiesHbn.findCisByOUunit(
-    			req.getParameter("hciType"),
+    			req.getParameter("houCiType"),
     			req.getParameter("houUnit"),
 				req.getParameter("hciOwnerType"),
 				req.getParameter("houQueryMode")

@@ -99,9 +99,40 @@ AIR.AirConfigFactory = function() {
 			return Ext.data.Record.create(roomCiFields);
 		},
 		
-		//von Feldern id bis tableId wie BaseDTO in function verlagern
+
 		getLocationCiFields: function() {
-			var locationCiFields = [{
+			var locationCiFields = this.getBaseCiFields();
+			
+			locationCiFields.push('hasMarkedDeletedItems');
+			locationCiFields.push({	name: 'standordLoeschung', type: 'int' });
+			locationCiFields.push({	name: 'terrainLoeschung', type: 'int' });
+			locationCiFields.push({	name: 'gebaeudeLoeschung', type: 'int' });
+			locationCiFields.push({	name: 'aereaLoeschung', type: 'int' });
+			locationCiFields.push({	name: 'raumLoeschung', type: 'int' });
+			locationCiFields.push({	name: 'schrankLoeschung', type: 'int' });
+			locationCiFields.push({	name: 'landId', type: 'int' });
+			locationCiFields.push('landName');
+			locationCiFields.push('landNameEn');
+			locationCiFields.push('landKennzeichen');
+			locationCiFields.push({	name: 'standortId', type: 'int' });
+			locationCiFields.push('standortName');
+			locationCiFields.push('standortCode');
+			locationCiFields.push({ name: 'terrainId', type: 'int' });
+			locationCiFields.push('terrainName');
+			locationCiFields.push({ name: 'gebaeudeId', type: 'int' });
+			locationCiFields.push('gebaeudeName');
+			locationCiFields.push({ name: 'areaId', type: 'int' });
+			locationCiFields.push('areaName');
+			locationCiFields.push({ name: 'raumId', type: 'int' });
+			locationCiFields.push('raumName');
+			locationCiFields.push({ name: 'schrankId', type: 'int' });
+			locationCiFields.push('schrankName');
+			
+			return locationCiFields;
+		},
+		
+		getBaseCiFields: function() {
+			var baseCiFields = [{
 				name: 'id', type: 'int'
 			}, 'name', 'alias', 'relevanceOperational', 'ciOwner', 'ciOwnerDelegate', 'insertQuelle', 'insertTimestamp', 'insertUser', 
 			   'updateQuelle', 'updateTimestamp', 'updateUser', 'deleteQuelle', 'deleteTimestamp', 'deleteUser',
@@ -110,38 +141,9 @@ AIR.AirConfigFactory = function() {
 			   'ciOwnerAcl', 'ciOwnerDelegateAcl', 'relevanceGR1435Acl', 'relevanceGR1920Acl', 'gxpFlagIdAcl',
 			   'refIdAcl', 'itsecGroupIdAcl', 'slaIdAcl', 'serviceContractIdAcl', {
 				name: 'tableId', type: 'int'
-			},{
-				name: 'areaId', type: 'int'//nötig, da schon vorhanden --> nur Room??
-			},
-			   'hasMarkedDeletedItems',{
-				name: 'standordLoeschung', type: 'int'
-			},{
-				name: 'terrainLoeschung', type: 'int'
-			},{
-				name: 'gebaeudeLoeschung', type: 'int'
-			},{
-				name: 'aereaLoeschung', type: 'int'
-			},{
-				name: 'raumLoeschung', type: 'int'
-			},{
-				name: 'schrankLoeschung', type: 'int'
-			},{
-				name: 'landId', type: 'int'
-			}, 'landName', 'landNameEn', 'landKennzeichen',{
-				name: 'standortId', type: 'int'
-			}, 'standortName', 'standortCode',{
-				name: 'terrainId', type: 'int'
-			},'terrainName',{
-				name: 'gebaeudeId', type: 'int'
-			},'gebaeudeName',{
-				name: 'areaId', type: 'int'
-			},'areaName',{
-				name: 'raumId', type: 'int'
-			},'raumName',{
-				name: 'schrankId', type: 'int'
-			},'schrankName'];
+			}];
 			
-			return locationCiFields;
+			return baseCiFields;
 		}
 	};
 }();

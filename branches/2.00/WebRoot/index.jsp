@@ -28,7 +28,7 @@
   </head>
   
   <body>
-  	<script type="text/javascript" src="config/config.js"></script><!-- htdocs/ -->
+  	<script type="text/javascript" src="conf/config.js"></script><!-- htdocs/ -->
   	<script>
   		document.writeln("<br>Starting <b>" + app_name + "</b> v"+ app_version + " ...<br>");
   	</script>

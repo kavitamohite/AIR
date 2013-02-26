@@ -7,7 +7,6 @@ import com.bayerbbs.applrepos.domain.CiLokationsKette;
 public abstract class LocationDTO extends CiBaseDTO implements Serializable {
 	private static final long serialVersionUID = 2827211748912639421L;
 	
-	//Lokationskette
 	private String hasMarkedDeletedItems;
 	private Long standordLoeschung;
 	private Long terrainLoeschung;

@@ -3,8 +3,6 @@ package com.bayerbbs.applrepos.dto;
 import java.io.Serializable;
 import java.util.Set;
 
-import com.bayerbbs.applrepos.domain.BuildingArea;
-
 public class RoomDTO extends LocationDTO implements Serializable {
 	private static final long serialVersionUID = 1853465853927062074L;
 	

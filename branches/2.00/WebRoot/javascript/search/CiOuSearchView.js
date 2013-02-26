@@ -187,8 +187,10 @@ AIR.CiOuSearchView = Ext.extend(AIR.AirView, {
 	
 	update: function(params) {
 		var cbOuSearchObjectType = this.getComponent('cbOuSearchObjectType');
-		if(params.ciType.length > 0)
-			cbOuSearchObjectType.setValue(cbOuSearchObjectType.getStore().getAt(cbOuSearchObjectType.getStore().findExact('english', params.ciType)).get('id'));//text
+		if(params.ouCiType.length > 0)
+			cbOuSearchObjectType.setValue(cbOuSearchObjectType.getStore().getAt(cbOuSearchObjectType.getStore().findExact('english', params.ouCiType)).get('id'));//text
+//		if(params.ciTypeId)
+//			cbOuSearchObjectType.setValue(params.ciTypeId);
 		else
 			cbOuSearchObjectType.reset();
 		

@@ -51,16 +51,13 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				//hidden: true,
 				border: false,
 				
-				//Important: h prefix for all hidden fields where the id corresponds the fields of CiAdvancedSearchView
+				//Important: h prefix for all hidden fields where the id corresponds the fields of CiAdvancedSearchView to avoid duplicate ExtJS Component field IDs
 				items: [{
 					xtype: 'hidden',
-					id: 'query'
+					id: 'hciNameAliasQuery'//query
 				},{
 					xtype: 'hidden',
 					id: 'cwid'
-				},{
-					xtype: 'hidden',
-					id: 'searchAction'//searchPoint
 				},{
 					xtype: 'hidden',
 					id: 'token'
@@ -72,19 +69,22 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					id: 'limit'
 				},{
 					xtype: 'hidden',
-					id: 'onlyapplications'
+					id: 'searchAction'//searchPoint
+				},{
+					xtype: 'hidden',
+					id: 'isOnlyApplications'//onlyapplications
 				},{
 					xtype: 'hidden',
 					id: 'queryMode'
 				},{
 					xtype: 'hidden',
-					id: 'advancedsearch'
+					id: 'isAdvancedSearch'//advancedsearch
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchdescription'
+					id: 'hdescription'//hadvsearchdescription
 				},{
 					xtype: 'hidden',
-					id: 'htableId'//hadvsearchObjectTypeId
+					id: 'hciTypeId'//htableId hadvsearchObjectTypeId
 				},{
 					xtype: 'hidden',
 					id: 'hciSubTypeId'
@@ -93,46 +93,46 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					id: 'hadvsearchObjectTypeText'
 				}*/,{
 					xtype: 'hidden',
-					id: 'hadvsearchappowner'
+					id: 'happOwner'//hadvsearchappowner
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchappownerHidden'
+					id: 'happOwnerHidden'//hadvsearchappownerHidden
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchappdelegate'
+					id: 'happOwnerDelegate'//hadvsearchappdelegate
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchappdelegateHidden'
+					id: 'happOwnerDelegateHidden'//hadvsearchappdelegateHidden
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchsteward'
+					id: 'happSteward'//hadvsearchsteward
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchstewardHidden'
+					id: 'happStewardHidden'//hadvsearchstewardHidden
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchciowner'
+					id: 'hciOwner'//hadvsearchciowner
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchciownerHidden'
+					id: 'hciOwnerHidden'//hadvsearchciownerHidden
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchcidelegate'
+					id: 'hciOwnerDelegate'//hadvsearchcidelegate
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchcidelegateHidden'
+					id: 'hciOwnerDelegateHidden'//hadvsearchcidelegateHidden
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchoperationalStatusid'
+					id: 'hoperationalStatusId'//hadvsearchoperationalStatusid
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchapplicationcat2id'
+					id: 'happlicationCat2Id'//hadvsearchoperationalStatusid
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchlifecyclestatusid'
+					id: 'hlifecycleStatusId'//hadvsearchoperationalStatusid
 				},{
 					xtype: 'hidden',
-					id: 'hadvsearchprocessid'
+					id: 'hprocessId'//hadvsearchoperationalStatusid
 				},
 				
 				
@@ -159,7 +159,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				
 				{
 					xtype: 'hidden',
-					id: 'hciType'
+					id: 'houCiType'
 				},{
 					xtype: 'hidden',
 					id: 'houUnit'

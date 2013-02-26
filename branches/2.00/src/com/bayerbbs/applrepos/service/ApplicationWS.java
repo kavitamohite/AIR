@@ -33,10 +33,6 @@ import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 
 public class ApplicationWS {
 
-	// request functions
-	private static final String MY_CIS_SUBSTITUTE = "myCisSubstitute";
-	private static final String MY_CIS = "myCis";
-	private static final String MY_CIS_FOR_DELETE = "myCisForDelete";
 
 	/**
 	 * checks if the name (or alias) is already in usage. Return the count of
@@ -60,18 +56,15 @@ public class ApplicationWS {
 	}
 
 
-	public ApplicationParamOutput findApplications(ApplicationParameterInput input) {
-		String searchname = input.getQuery();
+	public ApplicationParamOutput findApplications(ApplicationSearchParamsDTO input) {//ApplicationParameterInput
+		String searchname = input.getCiNameAliasQuery();//getQuery
 		Long startwert = input.getStart();
 		Long limit = input.getLimit();
 
 		String cwid = input.getCwid();
 		String searchAction = input.getSearchAction();
 		
-		String ciType = input.getCiType();
-		String ouUnit = input.getOuUnit(); // "BBS-ITO-SOL-BPS-SEeB"
-		String ciOwnerType = input.getCiOwnerType(); // "APP", "CI" oder "ALL"
-		String ouQueryMode = input.getOuQueryMode(); //  "EXAKT" oder "START"
+
 
 		List<ApplicationDTO> listAnwendungen = null;
 
@@ -84,7 +77,7 @@ public class ApplicationWS {
 			}
 			
 			boolean onlyApplications = false;
-			if (null != input.getOnlyapplications()	&& AirKonstanten.STRING_TRUE.equals(input.getOnlyapplications())) {
+			if (null != input.getIsOnlyApplications() && AirKonstanten.STRING_TRUE.equals(input.getIsOnlyApplications())) {//getOnlyapplications
 				onlyApplications = true;
 			}
 			
@@ -93,36 +86,47 @@ public class ApplicationWS {
 				input.setSort("applicationName");
 			}
 
-			if (null != ouUnit && !"".equals(ouUnit)) {
+//			if (null != ouUnit && ouUnit.length() > 0) {
+			
+			if (AirKonstanten.SEARCH_TYPE_OU_SEARCH.equals(searchAction)) {
+//				String ciType = input.getCiTypeId() != null ? Integer.toString(input.getCiTypeId()) : AirKonstanten.STRING_EMPTY;
+				String ouUnit = input.getOuUnit(); // "BBS-ITO-SOL-BPS-SEeB"
+				String ciOwnerType = input.getCiOwnerType(); // "APP", "CI" oder "ALL"
+				String ouQueryMode = input.getOuQueryMode(); //  "EXAKT" oder "START"
+				
 				// advanced search by ou
 				if ("BEGINS_WITH".equals(ouQueryMode)) {
 					ouQueryMode = "START";
 				}
 				
-				listAnwendungen = CiEntitiesHbn.findCisByOUunit(ciType, ouUnit, ciOwnerType, ouQueryMode);
-			}
-			else if (MY_CIS.equals(searchAction)) {
+				String ouCiType = input.getOuCiType();
+				listAnwendungen = CiEntitiesHbn.findCisByOUunit(ouCiType, ouUnit, ciOwnerType, ouQueryMode);//ciType
+			} else if (AirKonstanten.MY_CIS.equals(searchAction)) {
 				if (StringUtils.isNotNullOrEmpty(cwid)) {
 					listAnwendungen = CiEntitiesHbn.findMyCisOwner(cwid, input.getSort(), input.getDir(), onlyApplications);
 				}
-			} else if (MY_CIS_SUBSTITUTE.equals(searchAction)) {
+			} else if (AirKonstanten.MY_CIS_SUBSTITUTE.equals(searchAction)) {
 				if (StringUtils.isNotNullOrEmpty(cwid)) {
 					listAnwendungen = CiEntitiesHbn.findMyCisDelegate(cwid, input.getSort(), input.getDir(), onlyApplications);
 				}
-			} else if (MY_CIS_FOR_DELETE.equals(searchAction)) {
+			} else if (AirKonstanten.MY_CIS_FOR_DELETE.equals(searchAction)) {
 				if (StringUtils.isNotNullOrEmpty(cwid)) {
 					listAnwendungen = CiEntitiesHbn.findMyCisForDelete(cwid, input.getSort(), input.getDir(), onlyApplications);
 				}
 			} else {
-				if (AirKonstanten.STRING_TRUE.equals(input.getAdvancedsearch())) {
+				if (AirKonstanten.STRING_TRUE.equals(input.getIsAdvSearch())) {//getAdvancedsearch
 					listAnwendungen = AnwendungHbn.findApplications(searchname, input.getQueryMode(),
-						input.getAdvsearchappowner(), input.getAdvsearchappownerHidden(), input.getAdvsearchappdelegate(), input.getAdvsearchappdelegateHidden(),
-						input.getAdvsearchciowner(), input.getAdvsearchciownerHidden(), input.getAdvsearchcidelegate(), input.getAdvsearchcidelegateHidden(), 
+//						input.getAdvsearchappowner(), input.getAdvsearchappownerHidden(), input.getAdvsearchappdelegate(), input.getAdvsearchappdelegateHidden(),
+						input.getAppOwner(), input.getAppOwnerHidden(), input.getAppOwnerDelegate(), input.getAppOwnerDelegateHidden(), 
+//						input.getAdvsearchciowner(), input.getAdvsearchciownerHidden(), input.getAdvsearchcidelegate(), input.getAdvsearchcidelegateHidden(),
+						input.getCiOwner(), input.getCiOwnerHidden(), input.getCiOwnerDelegate(), input.getCiOwnerDelegateHidden(),
 						onlyApplications, input.getSort(), input.getDir(),
-						input.getTableId(), input.getCiSubTypeId(), input.getAdvsearchdescription(),//input.getAdvsearchcitypeid(), input.getAdvsearchObjectTypeId()
-						input.getAdvsearchoperationalstatusid(), input.getAdvsearchapplicationcat2id(),
-						input.getAdvsearchlifecyclestatusid(), input.getAdvsearchprocessid(), input.getTemplate(), 
-						input.getAdvsearchsteward(), input.getAdvsearchstewardHidden(), input.getBarRelevance(), input.getOrganisationalScope(),
+						input.getCiTypeId(), input.getCiSubTypeId(), input.getDescription(),//input.getTableId() input.getAdvsearchdescription() input.getAdvsearchcitypeid(), input.getAdvsearchObjectTypeId()
+//						input.getAdvsearchoperationalstatusid(), input.getAdvsearchapplicationcat2id(),
+						input.getOperationalStatusId(), input.getApplicationCat2Id(),
+//						input.getAdvsearchlifecyclestatusid(), input.getAdvsearchprocessid(), input.getIsTemplate(),//getTemplate
+						input.getLifecycleStatusId(), input.getProcessId(), input.getIsTemplate(),
+						input.getAppSteward(), input.getAppStewardHidden(), input.getBarRelevance(), input.getOrganisationalScope(),//input.getAdvsearchsteward(), input.getAdvsearchstewardHidden()
 						input.getItSetId(), input.getItSecGroupId(), input.getSource(), input.getBusinessEssentialId(),
 						input.getCiTypeOptions(),input.getItSetOptions(), input.getDescriptionOptions(),
 						input.getAppOwnerOptions(), input.getAppOwnerDelegateOptions(), input.getAppStewardOptions(),
@@ -143,7 +147,7 @@ public class ApplicationWS {
 
 		ApplicationDTO anwendungen[] = null;
 
-		if (listAnwendungen.size() > (startwert)) {
+		if (listAnwendungen.size() > startwert) {
 			List<ApplicationDTO> listAnwTemp = new ArrayList<ApplicationDTO>();
 			long tempCounter = startwert;
 			long anzCounter = 0;

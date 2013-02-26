@@ -34,6 +34,23 @@ public final class AirKonstanten {
 	public final static String STRING_ONE_BLANK = " ";
 	public final static String STRING_TRUE = "true";
 	
+	public static final String PARAMETER_QUERYMODE_BEGINS_WITH = "BEGINS_WITH";
+	public static final String PARAMETER_QUERYMODE_CONTAINS = "CONTAINS";
+	public static final String PARAMETER_QUERYMODE_EMPTYSTRING = "";
+	public static final String PARAMETER_QUERYMODE_EXACT = "EXACT";
+	
+
+	// request functions
+	public static final String MY_CIS_SUBSTITUTE = "myCisSubstitute";
+	public static final String MY_CIS = "myCis";
+	public static final String MY_CIS_FOR_DELETE = "myCisForDelete";
+	public static final String SEARCH_ACTION_OU = "ouSearch";
+	
+//	public static final String SEARCH_TYPE_SEARCH = "Search";
+//	public static final String SEARCH_TYPE_ADV_SEARCH = "Advanced Search";//Adv. Search
+	public static final String SEARCH_TYPE_OU_SEARCH = "Ou Search";//OU Search
+	
+	
 	// ROLEs
 	public final static String ROLE_AIR_ADMINISTRATOR 			= "AIR Administrator";
 	public final static String ROLE_AIR_APPLICATION_LAYER 		= "AIR Application Layer";

@@ -23,10 +23,7 @@ import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
 
 public class CiEntitiesHbn {
 
-	private static final String PARAMETER_QUERYMODE_BEGINS_WITH = "BEGINS_WITH";
-	private static final String PARAMETER_QUERYMODE_CONTAINS = "CONTAINS";
-	private static final String PARAMETER_QUERYMODE_EMPTYSTRING = "";
-	private static final String PARAMETER_QUERYMODE_EXACT = "EXACT";
+
 
 	
 	public static List<ApplicationDTO> findExistantCisByNameOrAlias(String searchName, boolean withDeletedApplications) {
@@ -107,13 +104,13 @@ public class CiEntitiesHbn {
 	 * @return
 	 */
 	public static List<ApplicationDTO> findCisByNameOrAlias(String searchName) {
-		return findCisByNameOrAlias(searchName, PARAMETER_QUERYMODE_EXACT, false, null, null);
+		return findCisByNameOrAlias(searchName, AirKonstanten.PARAMETER_QUERYMODE_EXACT, false, null, null);
 	}	 
  
 	public static boolean isLikeStart(String queryMode) {
 		boolean isLikeStart = false;
 		
-		if (null == queryMode || PARAMETER_QUERYMODE_EMPTYSTRING.equals(queryMode) || PARAMETER_QUERYMODE_CONTAINS.equals(queryMode)) {
+		if (null == queryMode || AirKonstanten.PARAMETER_QUERYMODE_EMPTYSTRING.equals(queryMode) || AirKonstanten.PARAMETER_QUERYMODE_CONTAINS.equals(queryMode)) {
 			isLikeStart = true;
 		}
 		
@@ -123,7 +120,7 @@ public class CiEntitiesHbn {
 	public static boolean isLikeEnd(String queryMode) {
 		boolean isLikeEnd = false;
 
-		if (null == queryMode || PARAMETER_QUERYMODE_EMPTYSTRING.equals(queryMode) || PARAMETER_QUERYMODE_CONTAINS.equals(queryMode) || PARAMETER_QUERYMODE_BEGINS_WITH.equals(queryMode)) {
+		if (null == queryMode || AirKonstanten.PARAMETER_QUERYMODE_EMPTYSTRING.equals(queryMode) || AirKonstanten.PARAMETER_QUERYMODE_CONTAINS.equals(queryMode) || AirKonstanten.PARAMETER_QUERYMODE_BEGINS_WITH.equals(queryMode)) {
 			isLikeEnd = true;
 		}
 		return isLikeEnd;
@@ -481,7 +478,7 @@ public class CiEntitiesHbn {
 		return anw;
 	}
 
-	public static List<ApplicationDTO> findCisByOUunit(String ciTypeaa, String ouUnit, String ciOwnerType, String ouQueryMode) {
+	public static List<ApplicationDTO> findCisByOUunit(String ouCiType, String ouUnit, String ciOwnerType, String ouQueryMode) {
 		if (null == ouUnit || null == ciOwnerType) {
 			return new ArrayList<ApplicationDTO>();
 		}
@@ -494,9 +491,9 @@ public class CiEntitiesHbn {
 			sql.append("', '");
 			sql.append(ouQueryMode);
 			
-			if (null != ciTypeaa && ciTypeaa.length() > 0) {
+			if (null != ouCiType && ouCiType.length() > 0) {
 				sql.append("', '");
-				sql.append(ciTypeaa);
+				sql.append(ouCiType);
 			}
 			
 			sql.append("')) order by name");

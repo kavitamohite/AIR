@@ -212,7 +212,7 @@ public class CiEntityWS {
 		if(buildings != null && buildings.size() > 0)
 			for(Building building : buildings)
 				buildingDataList.add(new KeyValueDTO(building.getId(), building.getName()));
-			
+		
 		Collections.sort(buildingDataList);
 		output.setKeyValueDTO(buildingDataList.toArray(new KeyValueDTO[0]));
 		
@@ -247,7 +247,7 @@ public class CiEntityWS {
 			roomDTO.setTableId(AirKonstanten.TABLE_ID_ROOM);
 			
 			
-			//Zugriffsrechte setzen
+			//Standard Zugriffsrechte setzen.
 			AccessRightChecker checker = new AccessRightChecker();
 			if (checker.isRelevanceOperational(detailInput.getCwid().toUpperCase(), room)) {
 				roomDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
@@ -255,11 +255,16 @@ public class CiEntityWS {
 				roomDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
 			}
 			
+			//spezifisches Rechte-Setzen pro Feld. Überschreibt Standard Zugriffsrechte für ausgewählte Felder.
+			//Bisher in AttributeProperties.xml clientseitig gemacht.
+			//Wenn RFC 9161 AIR_editable umgesetzt ist, kann folgendes für jeden CI-Typ vervollständigt werden:
+			//--------------------------
 			String source = room.getInsertQuelle();
 			if(!source.equals(AirKonstanten.INSERT_QUELLE_SISEC) && !source.equals(AirKonstanten.APPLICATION_GUI_NAME)) {
 				roomDTO.setSeverityLevelIdAcl(AirKonstanten.NO_SHORT);
 			}
-			
+			//...
+			//--------------------------
 			
 			if(buildingAreas != null && buildingAreas.size() > 0) {
 //				BuildingAreaDTO area = null;

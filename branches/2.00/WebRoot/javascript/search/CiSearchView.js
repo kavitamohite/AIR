@@ -193,7 +193,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    	var params = this.getOuSearchParams();
 //	    	params.limit = 100000;
 	    	
-	    	form.searchAction.value = params.searchType;//searchAction
+	    	form.searchAction.value = params.searchAction;//searchAction searchType
 	    	
 	    	for(var key in params)
 	    		if(form['h'+key])
@@ -264,8 +264,8 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    ciAdvancedSearchView.collapse(false);
 //	    ciAdvancedSearchView.setVisible(false);
 	    
-	    var searchType = this.isAdvSearch ? AC.SEARCH_TYPE_ADV_SEARCH : AC.SEARCH_TYPE_SEARCH;
-	    params.searchType = searchType;
+	    var searchAction = this.isAdvSearch ? AC.SEARCH_TYPE_ADV_SEARCH : AC.SEARCH_TYPE_SEARCH;//searchType
+	    params.searchAction = searchAction;//searchType
 	    
 	    this.processSearch(params);
 	},
@@ -309,11 +309,11 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    
 	    var store = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
 	    var isAppOnly = AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_LAYER) || store.findExact('itsecUserOptionName', 'AIR_APPLICATION_ONLY') > -1;
-	    params.onlyapplications = '' + isAppOnly;//selectedOnlyApplications;
+	    params.isOnlyApplications = '' + isAppOnly;//onlyapplications;
 
-	    params.query = searchString;
+	    params.ciNameAliasQuery = searchString;//params.query
 	    params.queryMode = queryMode;
-		params.advancedsearch = '' + this.isAdvSearch;
+		params.isAdvSearch = '' + this.isAdvSearch;//params.advancedsearch
 		
 		return params;
 	},
@@ -549,10 +549,12 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    var params = this.getBaseSearchParams();
 		
 	    params.ouUnit = tfOrgUnit.getValue();
-		params.ciType = cbOuSearchObjectType.getRawValue();
+		params.ouCiType = cbOuSearchObjectType.getRawValue();
+//	    params.ciTypeId = cbOuSearchObjectType.getValue();
 		params.ciOwnerType = rbgOUSearchOwnerType.getValue().inputValue;
 		params.ouQueryMode = rbgOUSearchQueryMode.getValue().inputValue;
-		params.searchType = AC.SEARCH_TYPE_OU_SEARCH;
+//		params.searchType = AC.SEARCH_TYPE_OU_SEARCH;
+		params.searchAction = AC.SEARCH_TYPE_OU_SEARCH;
 		params.isOuSearch = true;
 		
 		return params;
@@ -644,17 +646,17 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 //		this.updateParams(params, searchType);
 	},
 	
-	updateParams: function(params, searchType) {
+	updateParams: function(params, searchAction) {//searchType
 		var ciStandardSearchView = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView');
 		
-		switch(searchType) {
+		switch(searchAction) {
 			case AC.SEARCH_TYPE_ADV_SEARCH:
 				
 				ciStandardSearchView.update(params);
 			case AC.SEARCH_TYPE_SEARCH:
 				
 				var tfSearch = ciStandardSearchView.getComponent('pSearch').getComponent('tfSearch');
-				tfSearch.setValue(params.query);
+				tfSearch.setValue(params.ciNameAliasQuery);//query
 				
 				break;
 
@@ -670,14 +672,14 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	onUpdateCiSearchResult: function(button, event) {
 		var params = this.getComponent('ciSearchResultView').getSearchParams();
 		
-		var searchType = params.searchType;
+		var searchAction = params.searchAction;//searchType
 		
-		switch(searchType) {
+		switch(searchAction) {
 			case AC.SEARCH_TYPE_ADV_SEARCH://!!
 			case AC.SEARCH_TYPE_SEARCH:
 				params = this.getSearchParams();
 				
-				if(searchType === AC.SEARCH_TYPE_SEARCH)
+				if(searchAction === AC.SEARCH_TYPE_SEARCH)//searchType
 					break;
 			case AC.SEARCH_TYPE_ADV_SEARCH:
 				params = this.getAdvancedSearchParams(params);
@@ -693,7 +695,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 				break;
 		};
 		
-		params.searchType = searchType;
+		params.searchAction = searchAction;//searchType
 		this.processSearch(params, true);
 	},
 	

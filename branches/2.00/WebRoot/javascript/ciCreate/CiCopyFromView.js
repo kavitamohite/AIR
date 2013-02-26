@@ -171,10 +171,10 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 			var params = {
 				start: 0,
 				limit: 20,
-				query: this.query,
+				ciNameAliasQuery: this.query,//query
 				queryMode: 'CONTAINS',
 				searchAction: 'search',
-				onlyapplications: 'true',
+				isOnlyApplications: 'true',//onlyapplications
    			 	cwid: AIR.AirApplicationManager.getCwid(),
    			 	token: AIR.AirApplicationManager.getToken()
 			};
@@ -189,8 +189,8 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 //				}
 			});
 			
-			delete params.start;
-			delete params.limit;
+//			delete params.start;
+//			delete params.limit;
 			grid.setPagingParams(params);
 		}
 	},

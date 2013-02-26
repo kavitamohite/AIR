@@ -71,7 +71,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			this.ciResultGridParamSets[ciResultGridId] = params;
 		} else {
 			var tabCount = ++this.tabCount;//tpCiSearchResultTables.items.items.length;
-			ciResultGridId = params.searchType + '_' + tabCount;
+			ciResultGridId = params.searchAction + '_' + tabCount;//searchType
 			this.ciResultGridParamSets[ciResultGridId] = params;
 			
 			ciResultGrid = new AIR.CiResultGrid({
@@ -111,10 +111,10 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	},
 	
 	getTabTitle: function(ciResultGridId) {
-		var searchType = ciResultGridId.substring(0, ciResultGridId.indexOf('_'));
+		var searchAction = ciResultGridId.substring(0, ciResultGridId.indexOf('_'));
 		var label;
 		
-		switch(searchType) {
+		switch(searchAction) {
 			case AC.SEARCH_TYPE_SEARCH:
 				label = AAM.getLabels().searchTypeSearch;
 				break;

@@ -206,6 +206,12 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 							{ boxLabel: '', name: 'cbgAdvSearchDescriptionOptions', width: 30 }
 	                    ]
 					}/*,{
+						xtype: 'spacer'
+//						id: 'sAdvSearchCIOwnerOptions',
+//		    			style: {
+//							marginTop: 35
+//						}
+					}*//*,{
 			            xtype: 'checkboxgroup',
 		    			id: 'cbgAdvSearchSpace',
 		    			
@@ -999,7 +1005,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	},
 	
 	processCiTypeChange: function(cbCiType, newValue) {
-		cbCiType.view.refresh();
+//		cbCiType.view.refresh();
 		var cbAdvSearchITCategoryW = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchITCategoryW');
 		
 		
@@ -1012,15 +1018,16 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 				var filterData = {
 					applicationCat1Id: record.get('ciSubTypeId')
 				};
-				cbAdvSearchITCategoryW.reset();
+//				cbAdvSearchITCategoryW.reset();
 				cbAdvSearchITCategoryW.filterByData(filterData);
 			} else {
-				cbAdvSearchITCategoryW.reset();
+//				cbAdvSearchITCategoryW.reset();
 			}
 		} else {
 			cbAdvSearchITCategoryW.setVisible(false);
-			cbAdvSearchITCategoryW.reset();
+//			cbAdvSearchITCategoryW.reset();
 		}
+		cbAdvSearchITCategoryW.reset();
 		
     	
     	var fsCIOwner = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner');
@@ -1040,37 +1047,108 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	
     	var labels = AIR.AirApplicationManager.getLabels();
     	var label = labels.label_details_ciOwner;
-//		var isCat1AppOrNone = true;
-//		var isApplication = record && record.get('ciSubTypeId') == AC.APP_CAT1_APPLICATION ? true : false;
-		
-//    	if(isApplication) {
-//    		label = labels.applicationManager;
-//    	} else {
-//    		if(typeof newValue == 'number')
-//    			isCat1AppOrNone = false;
-//    	}
-		
-    	var isCat1AppOrNone = !record || record.get('ciSubTypeId') == AC.APP_CAT1_APPLICATION ? true : false;
+    	
+    	
+    	//------------------------------------------------------------------------------------------
+    	//NEU
+    	var pAdvSearchSingleAttrsFrame = this.getComponent('pAdvSearchSingleAttrsFrame');
+    	var tfDescription = pAdvSearchSingleAttrsFrame.getComponent('pAdvSearchSingleAttrs').getComponent('advsearchdescription');
+    	var cbgAdvSearchDescriptionOptions = pAdvSearchSingleAttrsFrame.getComponent('pAdvSearchSingleAttrsOptions').getComponent('cbgAdvSearchDescriptionOptions');
+    	
+//    	var cbAdvSearchITCategoryW = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchITCategoryW');
+    	var fsCategoriesAndStatus = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus');
+    	var pAdvSearchCategoriesAndStatusOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchCategoriesAndStatusOptions');
+    	var cbAdvSearchProcessW = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchProcessW');
+    	var pAdvSearchSpecialSearchAttributesOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchSpecialSearchAttributesOptions');
+    	var cbgAdvSearchSpecialSearchAttributesSourceOptions = pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesSourceOptions');
+    	
+    	
+    	var searchMode = !record || record.get('ciSubTypeId') == AC.APP_CAT1_APPLICATION ? 2 : 
+						 record.get('ciTypeId') == AC.TABLE_ID_APPLICATION ? 1 : 0;
+    	var isActive = false;
+    	
+    	switch(searchMode) {
+    		case 2://ANWENDUNG::Application
+    			label = labels.applicationManager;
+    			isActive = true;
+
+    			tfDescription.setVisible(true);
+    			cbgAdvSearchDescriptionOptions.setVisible(true);
+    			rgAdvSearchBARrelevance.setVisible(true);
+//    			cbAdvSearchITCategoryW.setVisible(true);
+    			
+    			fsCategoriesAndStatus.setVisible(true);
+    			pAdvSearchCategoriesAndStatusOptions.setVisible(true);
+    			cbAdvSearchProcessW.setVisible(true);
+    			cbgAdvSearchSpecialSearchAttributesSourceOptions.setVisible(true);
+    			break;
+    		case 1://ANWENDUNG::non Application
+    			tfDescription.setVisible(true);
+    			cbgAdvSearchDescriptionOptions.setVisible(true);
+    			rgAdvSearchBARrelevance.setVisible(false);
+//    			cbAdvSearchITCategoryW.setVisible(true);
+    			
+    			fsCategoriesAndStatus.setVisible(true);
+    			pAdvSearchCategoriesAndStatusOptions.setVisible(true);
+    			
+    			cbAdvSearchProcessW.setVisible(false);
+    			cbgAdvSearchSpecialSearchAttributesSourceOptions.setVisible(false);
+    			break;
+    		case 0://non ANWENDUNG
+    			tfDescription.setVisible(false);
+    			cbgAdvSearchDescriptionOptions.setVisible(false);
+    			rgAdvSearchBARrelevance.setVisible(false);
+    			
+//    			cbAdvSearchITCategoryW.setVisible(false);
+    			fsCategoriesAndStatus.setVisible(false);
+    			pAdvSearchCategoriesAndStatusOptions.setVisible(false);
+    			cbAdvSearchProcessW.setVisible(false);
+    			cbgAdvSearchSpecialSearchAttributesSourceOptions.setVisible(false);
+    			break;
+    	}
     	
     	fsCIOwner.setTitle(label);
-		fsApplicationOwner.setVisible(isCat1AppOrNone);
-		fsApplicationSteward.setVisible(isCat1AppOrNone);
+		fsApplicationOwner.setVisible(isActive);
+		fsApplicationSteward.setVisible(isActive);
 		
-		pAdvSearchAppOwnerOptions.setVisible(isCat1AppOrNone);
-//		pAdvSearchAppOwnerOptions.getComponent('lAdvSearchAppOwnerOptions').setVisible(true);
-		pAdvSearchAppStewardOptions.setVisible(isCat1AppOrNone);
-
-//		pAdvSearchAppOwnerOptions.getComponent('cbgAdvSearchAppOwnerOptions').setVisible(isCat1AppOrNone);
-//		pAdvSearchAppOwnerOptions.getComponent('cbgAdvSearchAppOwnerDelegateOptions').setVisible(isCat1AppOrNone);
-//		pAdvSearchAppStewardOptions.getComponent('cbgAdvSearchAppStewardOptions').setVisible(isCat1AppOrNone);
-//		lAdvSearchAppStewardOptions.setVisible(!isCat1AppOrNone);
+		pAdvSearchAppOwnerOptions.setVisible(isActive);
+		pAdvSearchAppStewardOptions.setVisible(isActive);
 		
-		lAdvSearchCIOwnerOptions.setVisible(!isCat1AppOrNone);
-		sAdvSearchCIOwnerOptions.setVisible(isCat1AppOrNone);
+		lAdvSearchCIOwnerOptions.setVisible(!isActive);
+		sAdvSearchCIOwnerOptions.setVisible(isActive);
 
-		rgAdvSearchBARrelevance.setVisible(isCat1AppOrNone);
-		lvAdvSearchOrganisationalScope.setVisible(isCat1AppOrNone);
-		cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions.setVisible(isCat1AppOrNone);
+//		rgAdvSearchBARrelevance.setVisible(isActive);
+		lvAdvSearchOrganisationalScope.setVisible(isActive);
+		cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions.setVisible(isActive);
+		//------------------------------------------------------------------------------------------
+    	
+    	
+    	//ORIG:
+//    	var isCat1AppOrNone = !record || record.get('ciSubTypeId') == AC.APP_CAT1_APPLICATION ? true : false;
+    	
+    	//zuvor auskommentiert
+	//    	if(isApplication) {
+	//			label = labels.applicationManager;
+	//		} else {
+	//			if(typeof newValue == 'number')
+	//				isCat1AppOrNone = false;
+	//		}
+    	
+//    	
+//    	fsCIOwner.setTitle(label);
+//		fsApplicationOwner.setVisible(isCat1AppOrNone);
+//		fsApplicationSteward.setVisible(isCat1AppOrNone);
+//		
+//		pAdvSearchAppOwnerOptions.setVisible(isCat1AppOrNone);
+////		pAdvSearchAppOwnerOptions.getComponent('lAdvSearchAppOwnerOptions').setVisible(true);
+//		pAdvSearchAppStewardOptions.setVisible(isCat1AppOrNone);
+//		
+//		lAdvSearchCIOwnerOptions.setVisible(!isCat1AppOrNone);
+//		sAdvSearchCIOwnerOptions.setVisible(isCat1AppOrNone);
+//
+//		rgAdvSearchBARrelevance.setVisible(isCat1AppOrNone);
+//		lvAdvSearchOrganisationalScope.setVisible(isCat1AppOrNone);
+//		cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions.setVisible(isCat1AppOrNone);
 		
     	this.doLayout();
 	},
@@ -1147,7 +1225,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		this.setTitle(labels.advsearchPanelTitle);
 		
 		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbCiType'), labels.cbCiType);
-		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchdescription'), labels.advsearchdescription);
+		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchdescription'), labels.description);
 		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbAdvSearchITset'), labels.itSet);
 		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance'), labels.rgBARrelevance);
 		this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[0], labels.general_yes);
@@ -1190,7 +1268,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    field.setValue(data.cbCiTypesId);//value data.advsearchObjectTypeId
 	    
 	    field = pAdvSearchSingleAttrs.getComponent('advsearchdescription');
-	    field.setValue(data.advsearchdescription);
+	    field.setValue(data.description);
 	    
 	    field = pAdvSearchSingleAttrs.getComponent('cbAdvSearchITset');
     	field.setValue(data.itSetId);
@@ -1324,18 +1402,18 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    	
 	    	
 			field = fsCategoriesAndStatus.getComponent('cbAdvSearchGeneralUsageW');
-			if(data.advsearchoperationalstatusid && data.advsearchoperationalstatusid.length > 0)
-				field.setValue(data.advsearchoperationalstatusid);
+			if(data.operationalStatusId && data.operationalStatusId.length > 0)
+				field.setValue(data.operationalStatusId);
 			else field.reset();
 			
 			field = fsCategoriesAndStatus.getComponent('cbAdvSearchITCategoryW');
-			if(data.advsearchapplicationcat2id && data.advsearchapplicationcat2id.length > 0)
-				field.setValue(data.advsearchapplicationcat2id);
+			if(data.applicationCat2Id && data.applicationCat2Id.length > 0)
+				field.setValue(data.applicationCat2Id);
 			else field.reset();
 			
 			field = fsCategoriesAndStatus.getComponent('cbAdvSearchLifecycleStatusW');
-			if(data.advsearchlifecyclestatusid && data.advsearchlifecyclestatusid.length > 0)
-				field.setValue(data.advsearchlifecyclestatusid);
+			if(data.lifecycleStatusId && data.lifecycleStatusId.length > 0)
+				field.setValue(data.lifecycleStatusId);
 			else field.reset();
 			
 			
@@ -1360,8 +1438,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			else field.reset();
 			
 			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchProcessW');
-			if(data.advsearchprocessid && data.advsearchprocessid.length > 0)
-				field.setValue(data.advsearchprocessid);
+			if(data.processId && data.processId.length > 0)
+				field.setValue(data.processId);
 			else field.reset();
 			
 //			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW');
@@ -1420,13 +1498,13 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    var value = field.getValue();//field.getEl().dom.value;
 	    if(typeof value == 'number') {
 		    var record = field.getStore().getById(value);//getAt(field.getStore().findExact('text', value));
-		    params.tableId = record.get('ciTypeId');
+		    params.ciTypeId = record.get('ciTypeId');//params.tableId
 		    params.ciSubTypeId = record.get('ciSubTypeId');
 		    params.cbCiTypesId = value;
 	    }
 	    
 	    field = pAdvSearchSingleAttrs.getComponent('advsearchdescription');
-	    params.advsearchdescription = field.getRawValue().trim();
+	    params.description = field.getRawValue().trim();
 	    
 	    field = pAdvSearchSingleAttrs.getComponent('cbAdvSearchITset');
 	    if(field.getValue().length > 0)
@@ -1447,19 +1525,19 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
 ////	    var cbCiType = pAdvSearchSingleAttrs.getComponent('cbCiType');
 //	    var cat1 = params.ciSubTypeId;//params.advsearchObjectTypeId;//cbCiType.getValue();
-	    if(params.tableId === AC.TABLE_ID_APPLICATION && params.ciSubTypeId == AC.APP_CAT1_APPLICATION) {//cat1 === AC.APP_CAT1_APPLICATION || cat1.length === 0
+	    if(params.ciTypeId === AC.TABLE_ID_APPLICATION && params.ciSubTypeId == AC.APP_CAT1_APPLICATION) {//params.tableId cat1 === AC.APP_CAT1_APPLICATION || cat1.length === 0
 	    	var barRelevance = pAdvSearchSingleAttrs.getComponent('rgAdvSearchBARrelevance').getValue();
 	    	if(barRelevance)
 	    		params.barRelevance = barRelevance.inputValue;
 	    	
 	    	//params.xHidden = ...getComponent('x'); und params.x = ...getComponent('xHidden'); sind vertauscht 
 	    	//weil es momtan in ApplicationWS.findApplications nur ein Feld x (ohne Hidden) gibt und die cwid im Feld x dort ausgelesen wird
-		    params.advsearchappowner = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner').getValue();//applicationOwner
-		    params.advsearchappownerHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden').getValue();
-		    params.advsearchappdelegate = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate').getValue();//applicationOwnerDelegate
-		    params.advsearchappdelegateHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateHidden').getValue();
-		    params.advsearchsteward = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward').getValue();//applicationSteward
-		    params.advsearchstewardHidden = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardHidden').getValue();
+		    params.appOwner = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner').getValue();//params.advsearchappowner applicationOwner
+		    params.appOwnerHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden').getValue();//params.advsearchappownerHidden
+		    params.appOwnerDelegate = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegate').getValue();//params.advsearchappdelegate applicationOwnerDelegate
+		    params.appOwnerDelegateHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwnerDelegate').getComponent(this.ownerId + 'applicationOwnerDelegateHidden').getValue();//params.advsearchappdelegateHidden
+		    params.appSteward = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationSteward').getValue();//params.advsearchsteward applicationSteward
+		    params.appStewardHidden = this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent(this.ownerId + 'applicationStewardHidden').getValue();//params.advsearchstewardHidden
 		    
 //		    params.advsearchappdelegate = params.advsearchappdelegateHidden && params.advsearchappdelegateHidden.length > 0 && params.advsearchappdelegateHidden.indexOf(')') === -1 ? params.advsearchappdelegateHidden : params.advsearchappdelegate;
 		    
@@ -1478,10 +1556,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			params.appStewardOptions = Util.getChbYesNoValues(cbgAdvSearchAppStewardOptions);
 	    }
 	    
-	    params.advsearchciowner = fsCIOwner.getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible').getValue();//ciResponsible
-	    params.advsearchciownerHidden = fsCIOwner.getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleHidden').getValue();
-	    params.advsearchcidelegate = fsCIOwner.getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible').getValue();
-	    params.advsearchcidelegateHidden = fsCIOwner.getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleHidden').getValue();
+	    params.ciOwner = fsCIOwner.getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsible').getValue();//ciResponsible
+	    params.ciOwnerHidden = fsCIOwner.getComponent('p' + this.ownerId + 'CIOwner').getComponent(this.ownerId + 'ciResponsibleHidden').getValue();
+	    params.ciOwnerDelegate = fsCIOwner.getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsible').getValue();
+	    params.ciOwnerDelegateHidden = fsCIOwner.getComponent('p' + this.ownerId + 'CiSubResponsible').getComponent(this.ownerId + 'ciSubResponsibleHidden').getValue();
 	    
 	    
 		var pAdvSearchCIOwnerOptions = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('pAdvSearchCIOwnerOptions');
@@ -1503,15 +1581,15 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    	
 			field = fsCategoriesAndStatus.getComponent('cbAdvSearchGeneralUsageW');
 			if(field.getValue().length > 0)
-				params.advsearchoperationalstatusid = field.getValue();
+				params.operationalStatusId = field.getValue();
 			
 			field = fsCategoriesAndStatus.getComponent('cbAdvSearchITCategoryW');
 			if(field.getValue().length > 0)
-				params.advsearchapplicationcat2id = field.getValue();
+				params.applicationCat2Id = field.getValue();
 			
 			field = fsCategoriesAndStatus.getComponent('cbAdvSearchLifecycleStatusW');
 			if(field.getValue().length > 0)
-				params.advsearchlifecyclestatusid = field.getValue();
+				params.lifecycleStatusId = field.getValue();
 			
 			var scopeRecords = fsCategoriesAndStatus.getComponent('lvAdvSearchOrganisationalScope').getSelectedRecords();
 			var scopes = '';
@@ -1532,7 +1610,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			
 			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchProcessW');
 			if(field.getValue().length > 0)
-				params.advsearchprocessid = field.getValue();
+				params.processId = field.getValue();
 			
 //			field = fsSpecialSearchAttributes.getComponent('cbAdvSearchOStypeW');
 //			if(field.getValue().length > 0)
