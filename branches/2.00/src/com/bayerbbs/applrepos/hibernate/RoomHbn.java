@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
+import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
@@ -20,13 +20,15 @@ import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
+import com.bayerbbs.applrepos.service.CiItemsResultDTO;
+import com.bayerbbs.applrepos.service.CiSearchParamsDTO;
 
 public class RoomHbn extends LokationItemHbn {
 	private static final Log log = LogFactory.getLog(RoomHbn.class);
 	private static final String EMPTY = "";
 	
 	public static Room findById(Long id) {
-		Room room = null;
+		/*Room room = null;
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
 		
@@ -51,7 +53,9 @@ public class RoomHbn extends LokationItemHbn {
 				throw e;
 			}
 		}
-		return room;
+		return room;*/
+		
+		return findById(Room.class, id);
 	}
 	
 	public static CiLokationsKette findLokationsKetteById(Long ciId) {
@@ -59,7 +63,7 @@ public class RoomHbn extends LokationItemHbn {
 	}
 	
 	public static List<ItSystem> getSystemPlatformsById(Long roomId) {
-		List<ItSystem> itSystems = null;
+		List<ItSystem> itSystems = new ArrayList<ItSystem>();
 		
 //		select its.it_system_name, its.hw_ident_or_trans from it_system its 
 //		join it_system_hw itshw on itshw.it_system_id = its.it_system_id 
@@ -69,6 +73,155 @@ public class RoomHbn extends LokationItemHbn {
 //		order by its.it_system_name
 		
 		return itSystems;
+	}
+	
+	//CiItemDTO[]
+	public static CiItemsResultDTO findRoomsBy(CiSearchParamsDTO input) {
+		CiMetaData metaData = new CiMetaData("raum_id", "raum_name", "raumalias", "Room", "raum", AirKonstanten.TABLE_ID_ROOM);
+		return findLocationCisBy(input, metaData);
+		
+		/*
+		StringBuilder sql = new StringBuilder();
+		sql.
+		append("SELECT raum_id, raum_name, raumalias, responsible, sub_responsible FROM raum ").
+		append("WHERE ").
+		append("UPPER(raum_name) like '");
+		
+		
+		if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
+			sql.append("%");
+		
+		sql.append(input.getCiNameAliasQuery().toUpperCase());
+		
+		if(CiEntitiesHbn.isLikeEnd(input.getQueryMode()))
+			sql.append("%");
+		
+		sql.append("'");// )
+		
+		
+		sql.append(" OR UPPER(raumalias) like '");
+		
+		if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
+			sql.append("%");
+		
+		sql.append(input.getCiNameAliasQuery().toUpperCase());
+		
+		if(CiEntitiesHbn.isLikeEnd(input.getQueryMode()))
+			sql.append("%");
+		
+		sql.append("'");// )
+		
+		
+		boolean isNot = false;
+		
+		if(StringUtils.isNotNullOrEmpty(input.getCiOwnerHidden())) {
+			isNot = isNot(input.getCiOwnerOptions());
+			
+			sql.append(" AND ");
+			if(isNot)
+				sql.append("UPPER(responsible) IS NULL OR ");
+			
+			sql.append("UPPER(responsible) " + getLikeNotLikeOperator(isNot) + " '").append(input.getCiOwnerHidden().toUpperCase()).append("')");
+		}
+		
+		if(StringUtils.isNotNullOrEmpty(input.getCiOwnerDelegate())) {
+			boolean isCwid = input.getCiOwnerDelegate().indexOf(')') > -1;
+			String delegate = isCwid ? input.getCiOwnerDelegateHidden() : input.getCiOwnerDelegate();//gruppe oder cwid?
+			
+			isNot = isNot(input.getCiOwnerDelegateOptions());
+			
+			sql.append(" AND ");
+			if(isNot)
+				sql.append("UPPER(sub_responsible) IS NULL OR ");
+			
+			sql.append("UPPER(sub_responsible) "+ getLikeNotLikeOperator(isNot) +" '").append(delegate.toUpperCase()).append("')");
+			
+			if(!isCwid)
+				sql.insert(sql.length() - 2, '%');
+		}
+		
+		List<CiItemDTO> rooms = new ArrayList<CiItemDTO>();
+
+		Session session = null;
+		Transaction ta = null;
+		Connection conn = null;
+		Statement stmt = null;//PreparedStatement
+		ResultSet rs = null;
+		
+		Integer start = input.getStart();
+		Integer limit = input.getLimit();
+		Integer i = 0;
+		boolean commit = false;
+				
+		try {
+			session = HibernateUtil.getSession();
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql.toString());
+			
+//			stmt = conn.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//			rs = stmt.executeQuery();
+//			if(0 != start)
+//				rs.absolute(start + 1);//relative
+			
+			
+			if(null == start)
+				start = 0;
+			if(null == limit)
+				limit = 20;
+			
+			
+			CiItemDTO room = null;
+			
+			while(rs.next()) {
+				if(i >= start && i < limit + start) {
+					room = new CiItemDTO();
+					room.setId(rs.getLong("raum_id"));
+					room.setName(rs.getString("raum_name"));
+					room.setAlias(rs.getString("raumalias"));
+					room.setApplicationCat1Txt("Room");
+					room.setCiOwner(rs.getString("responsible"));
+					room.setCiOwnerDelegate(rs.getString("sub_responsible"));
+					room.setTableId(AirKonstanten.TABLE_ID_ROOM);
+					
+					rooms.add(room);
+					//i++;
+				}// else break;
+				
+				i++;
+			}
+						
+			ta.commit();
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+			commit = true;
+		} catch(SQLException e) {
+			if(ta.isActive())
+				ta.rollback();
+			
+			System.out.println(e);
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+
+//			try {
+//				rs.close();
+//				stmt.close();
+//				conn.close();
+//				session.close();
+//			} catch (SQLException e) {
+//				System.out.println(e);
+//			}
+		}
+		
+		CiItemsResultDTO result = new CiItemsResultDTO();
+		result.setCiItemDTO(rooms.toArray(new CiItemDTO[0]));
+		result.setCountResultSet(i);//i + start
+		return result;
+		
+//		return rooms.toArray(new CiItemDTO[0]);*/
 	}
 
 

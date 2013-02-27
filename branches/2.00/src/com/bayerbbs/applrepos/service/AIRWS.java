@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.dto.ApplicationDTO;
 import com.bayerbbs.applrepos.dto.ItsecUserOptionDTO;
 import com.bayerbbs.applrepos.dto.PersonOptionDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
@@ -26,7 +25,8 @@ public class AIRWS {
 	 * @param anwParamInp
 	 * @return
 	 */
-	public ApplicationParamOutput findCIsByOrganisationUnit(ApplicationParameterInput anwParamInp) {
+	//ApplicationParamOutput
+	public CiItemsResultDTO findCIsByOrganisationUnit(ApplicationParameterInput anwParamInp) {
 		
 		Long startwert = anwParamInp.getStart();
 		Long limit = anwParamInp.getLimit();
@@ -44,23 +44,25 @@ public class AIRWS {
 		String ciOwnerType = anwParamInp.getCiOwnerType(); // "APP", "CI" oder "ALL"
 		String ouQueryMode = anwParamInp.getOuQueryMode(); //  "EXAKT" oder "START"
 
-		List<ApplicationDTO> listAnwendungen = null;
+		//ApplicationDTO
+		List<CiItemDTO> listAnwendungen = null;
 
 		if (LDAPAuthWS.isLoginValid(anwParamInp.getCwid(), anwParamInp.getToken())) {
-				listAnwendungen = CiEntitiesHbn.findCisByOUunit(ciType, ouUnit, ciOwnerType, ouQueryMode);
+			listAnwendungen = CiEntitiesHbn.findCisByOUunit(ciType, ouUnit, ciOwnerType, ouQueryMode);
 		}
 		
 		
 		if (null == listAnwendungen) {
-			listAnwendungen = new ArrayList<ApplicationDTO>();
+			listAnwendungen = new ArrayList<CiItemDTO>();//ApplicationDTO
 		}
 
-		ApplicationDTO anwendungen[] = null;
+		CiItemDTO anwendungen[] = null;//ApplicationDTO
 
 		if (listAnwendungen.size() > (startwert)) {
-			List<ApplicationDTO> listAnwTemp = new ArrayList<ApplicationDTO>();
+			List<CiItemDTO> listAnwTemp = new ArrayList<CiItemDTO>();//ApplicationDTO
 			long tempCounter = startwert;
 			long anzCounter = 0;
+			
 			while (tempCounter < listAnwendungen.size() && anzCounter < limit) {
 				listAnwTemp.add(listAnwendungen.get((int) tempCounter));
 				tempCounter++;
@@ -68,30 +70,34 @@ public class AIRWS {
 			}
 
 			// weniger CI's / Anwendungen als erwartet
-			anwendungen = new ApplicationDTO[listAnwTemp.size()];
+			anwendungen = new CiItemDTO[listAnwTemp.size()];//ApplicationDTO
 
 			int i = 0;
-			for (final ApplicationDTO anw : listAnwTemp) {
+			for (CiItemDTO anw : listAnwTemp) {//ApplicationDTO
 				anwendungen[i] = anw;
 				i++;
 			}
 
 		} else {
 			// weniger CI's / Anwendungen als erwartet
-			anwendungen = new ApplicationDTO[listAnwendungen.size()];
+			anwendungen = new CiItemDTO[listAnwendungen.size()];//ApplicationDTO
 
 			int i = 0;
-			for (final ApplicationDTO anw : listAnwendungen) {
+			for (CiItemDTO anw : listAnwendungen) {//ApplicationDTO
 				anwendungen[i] = anw;
 				i++;
 			}
 		}
 
-		ApplicationParamOutput anwendungParamOut = new ApplicationParamOutput();
-		anwendungParamOut.setCountResultSet(listAnwendungen.size());
-		anwendungParamOut.setApplicationDTO(anwendungen);
-
-		return anwendungParamOut;
+//		ApplicationParamOutput anwendungParamOut = new ApplicationParamOutput();
+//		anwendungParamOut.setCountResultSet(listAnwendungen.size());
+//		anwendungParamOut.setApplicationDTO(anwendungen);
+//		return anwendungParamOut;
+		
+		CiItemsResultDTO result = new CiItemsResultDTO();
+		result.setCiItemDTO(anwendungen);
+		result.setCountResultSet(anwendungen.length);
+		return result;
 	}
 
 	public ItsecUserOptionDTO[] getItsecUserOption(ItsecUserOptionParameter parameter) {

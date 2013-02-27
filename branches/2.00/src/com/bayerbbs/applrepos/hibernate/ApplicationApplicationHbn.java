@@ -42,39 +42,30 @@ public class ApplicationApplicationHbn {
 
 
 	public static void saveApplicationApplication(String cwid, Long applicationHigherId, Long applicationLowerId, String value) {
-
 		boolean update = true;
-		
 		cwid = cwid.toUpperCase();
 
 		ApplicationApplication applicationApplication = findApplicationApplication(applicationHigherId, applicationLowerId);
-
 		
 		if (null == value || "".equals(value.trim()) || "DELETE".equals(value)) {
 			// no input - try to delete the old entries
 
-			if (null != applicationApplication
-					&& null == applicationApplication.getDeleteTimestamp()) {
+			if (null != applicationApplication && null == applicationApplication.getDeleteTimestamp()) {
 				// set deletion information
-				applicationApplication
-						.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+				applicationApplication.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				applicationApplication.setDeleteUser(cwid);
-				applicationApplication.setDeleteTimestamp(ApplReposTS
-						.getDeletionTimestamp());
+				applicationApplication.setDeleteTimestamp(ApplReposTS.getDeletionTimestamp());
 			}
 		} else if (null != applicationApplication) {
 			// update existing entry
-			applicationApplication
-					.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			applicationApplication.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			applicationApplication.setUpdateUser(cwid.toUpperCase());
 			applicationApplication.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 			if (null != applicationApplication.getDeleteTimestamp()) {
 				// oh it is deleted, so reactivate it
-				applicationApplication
-						.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+				applicationApplication.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				applicationApplication.setInsertUser(cwid);
-				applicationApplication.setInsertTimestamp(applicationApplication
-						.getUpdateTimestamp());
+				applicationApplication.setInsertTimestamp(applicationApplication.getUpdateTimestamp());
 				applicationApplication.setDeleteQuelle(null);
 				applicationApplication.setDeleteUser(null);
 				applicationApplication.setDeleteTimestamp(null);
@@ -86,8 +77,7 @@ public class ApplicationApplicationHbn {
 			// application - insert values
 			update = false;
 			applicationApplication = new ApplicationApplication();
-			applicationApplication
-					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			applicationApplication.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			applicationApplication.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 			applicationApplication.setInsertUser(cwid);
 			// --

@@ -5,31 +5,26 @@ import com.bayerbbs.applrepos.dto.RolePersonDTO;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "AIRWSService", portName = "AIRWSPort")
 public class AIRWSDelegate {
+	com.bayerbbs.applrepos.service.AIRWS airWS = new com.bayerbbs.applrepos.service.AIRWS();
 
-	com.bayerbbs.applrepos.service.AIRWS aIRWS = new com.bayerbbs.applrepos.service.AIRWS();
-
-	public ApplicationParamOutput findCIsByOrganisationUnit(
-			ApplicationParameterInput anwParamInp) {
-		return aIRWS.findCIsByOrganisationUnit(anwParamInp);
+	//ApplicationParamOutput
+	public CiItemsResultDTO findCIsByOrganisationUnit(ApplicationParameterInput anwParamInp) {
+		return airWS.findCIsByOrganisationUnit(anwParamInp);
 	}
 
-	public ItsecUserOptionDTO[] getItsecUserOption(
-			ItsecUserOptionParameter parameter) {
-		return aIRWS.getItsecUserOption(parameter);
+	public ItsecUserOptionDTO[] getItsecUserOption(ItsecUserOptionParameter parameter) {
+		return airWS.getItsecUserOption(parameter);
 	}
 
 	public RolePersonDTO[] getRolePerson(ItsecUserOptionParameter parameter) {
-		return aIRWS.getRolePerson(parameter);
+		return airWS.getRolePerson(parameter);
 	}
 
-	public RolePersonDTO[] getRolePersonBusinessEssentialEditor(
-			ItsecUserOptionParameter parameter) {
-		return aIRWS.getRolePersonBusinessEssentialEditor(parameter);
+	public RolePersonDTO[] getRolePersonBusinessEssentialEditor(ItsecUserOptionParameter parameter) {
+		return airWS.getRolePersonBusinessEssentialEditor(parameter);
 	}
 
-	public ApplicationEditParameterOutput saveUserOption(
-			UserOptionParameterInput editInput) {
-		return aIRWS.saveUserOption(editInput);
+	public ApplicationEditParameterOutput saveUserOption(UserOptionParameterInput editInput) {
+		return airWS.saveUserOption(editInput);
 	}
-
 }

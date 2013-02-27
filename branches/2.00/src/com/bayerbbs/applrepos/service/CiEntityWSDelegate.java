@@ -52,4 +52,8 @@ public class CiEntityWSDelegate {
 	public KeyValueOutput getBuildingsByBuildingArea(CiDetailParameterInput input) {//CiDetailParameterOutput
 		return ciEntityWS.getBuildingsByBuildingArea(input);
 	}
+	
+	public CiItemsResultDTO findCis(ApplicationSearchParamsDTO input) {//CiDetailParameterOutput CiSearchParamsDTO
+		return ciEntityWS.findCis(input);
+	}
 }

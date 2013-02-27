@@ -128,39 +128,30 @@ public class ApplicationRegionHbn {
 	
 	
 	public static void saveApplicationRegion(String cwid, Long applicationId, Long regionId, String value) {
-
 		boolean update = true;
-		
 		cwid = cwid.toUpperCase();
 
 		ApplicationRegion applicationRegion = findApplicationRegion(applicationId, regionId);
-
 		
 		if (null == value || "".equals(value.trim())) {
 			// no input - try to delete the old entries
 
-			if (null != applicationRegion
-					&& null == applicationRegion.getDeleteTimestamp()) {
+			if (null != applicationRegion && null == applicationRegion.getDeleteTimestamp()) {
 				// set deletion information
-				applicationRegion
-						.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+				applicationRegion.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				applicationRegion.setDeleteUser(cwid);
-				applicationRegion.setDeleteTimestamp(ApplReposTS
-						.getDeletionTimestamp());
+				applicationRegion.setDeleteTimestamp(ApplReposTS.getDeletionTimestamp());
 			}
 		} else if (null != applicationRegion) {
 			// update existing entry
-			applicationRegion
-					.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			applicationRegion.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			applicationRegion.setUpdateUser(cwid.toUpperCase());
 			applicationRegion.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 			if (null != applicationRegion.getDeleteTimestamp()) {
 				// oh it is deleted, so reactivate it
-				applicationRegion
-						.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+				applicationRegion.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				applicationRegion.setInsertUser(cwid);
-				applicationRegion.setInsertTimestamp(applicationRegion
-						.getUpdateTimestamp());
+				applicationRegion.setInsertTimestamp(applicationRegion.getUpdateTimestamp());
 				applicationRegion.setDeleteQuelle(null);
 				applicationRegion.setDeleteUser(null);
 				applicationRegion.setDeleteTimestamp(null);
@@ -169,8 +160,7 @@ public class ApplicationRegionHbn {
 			// application - insert values
 			update = false;
 			applicationRegion = new ApplicationRegion();
-			applicationRegion
-					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			applicationRegion.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			applicationRegion.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 			applicationRegion.setInsertUser(cwid);
 			// --
@@ -183,6 +173,7 @@ public class ApplicationRegionHbn {
 			Transaction tx = null;
 			tx = session.beginTransaction();
 			boolean toCommit = false;
+			
 			try {
 				session.saveOrUpdate(applicationRegion);
 				session.flush();
@@ -208,7 +199,5 @@ public class ApplicationRegionHbn {
 				}
 			}
 		}
-
 	}
-
 }

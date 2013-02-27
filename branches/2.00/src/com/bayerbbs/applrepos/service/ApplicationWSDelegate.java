@@ -7,11 +7,13 @@ import com.bayerbbs.applrepos.dto.HistoryViewDataDTO;
 public class ApplicationWSDelegate {
 	com.bayerbbs.applrepos.service.ApplicationWS applicationWS = new com.bayerbbs.applrepos.service.ApplicationWS();
 
-	public ApplicationParamOutput checkAllowedApplicationName(ApplicationParameterInput anwParamInp) {
+	//ApplicationParamOutput
+	public CiItemsResultDTO checkAllowedApplicationName(ApplicationParameterInput anwParamInp) {
 		return applicationWS.checkAllowedApplicationName(anwParamInp);
 	}
 
-	public ApplicationParamOutput findApplications(ApplicationSearchParamsDTO anwParamInp) {//ApplicationParameterInput
+	//ApplicationParamOutput
+	public CiItemsResultDTO findApplications(ApplicationSearchParamsDTO anwParamInp) {//ApplicationParameterInput
 		return applicationWS.findApplications(anwParamInp);
 	}
 

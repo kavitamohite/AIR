@@ -25,6 +25,7 @@ import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.ApplicationWS;
+import com.bayerbbs.applrepos.service.CiItemDTO;
 
 public class AirCiExcelExportServlet extends HttpServlet {
 	private static final long serialVersionUID = 3569239290421829949L;
@@ -107,9 +108,10 @@ public class AirCiExcelExportServlet extends HttpServlet {
         Row row = null;
         Cell cell = null;
         
-        List<ApplicationDTO> applications = getCIs(req);
+        //ApplicationDTO
+        List<CiItemDTO> applications = getCIs(req);
         
-        for(ApplicationDTO app : applications) {
+        for(CiItemDTO app : applications) {//ApplicationDTO
         	row = sheet.createRow(i++);
         	cell = row.createCell(0);
         	cell.setCellValue(app.getName());
@@ -141,13 +143,15 @@ public class AirCiExcelExportServlet extends HttpServlet {
 		return workbook;
 	}
 	
-	private List<ApplicationDTO> getCIs(HttpServletRequest req) {
+	//ApplicationDTO
+	private List<CiItemDTO> getCIs(HttpServletRequest req) {
 		String ciNameAliasQuery = req.getParameter("hciNameAliasQuery");//query
 		String cwid = req.getParameter("cwid");
 		String token = req.getParameter("token");
 		String searchAction = req.getParameter("searchAction");
 		
-        List<ApplicationDTO> applications = null;
+		//ApplicationDTO
+        List<CiItemDTO> applications = null;
         
         if(searchAction.equals(SEARCH_POINT_SEARCH)) {
         	boolean isAdvancedSearch = Boolean.parseBoolean(req.getParameter("isAdvancedSearch"));//advancedsearch
@@ -192,9 +196,9 @@ public class AirCiExcelExportServlet extends HttpServlet {
         	input.setSearchAction(searchAction);
         	input.setCwid(cwid);
         	input.setToken(token);
-        	input.setLimit(10000L);
+        	input.setLimit(10000);
         	
-        	applications = Arrays.asList(new ApplicationWS().findApplications(input).getApplicationDTO());
+        	applications = Arrays.asList(new ApplicationWS().findApplications(input).getCiItemDTO());//getApplicationDTO
         } else if(searchAction.equals(SEARCH_POINT_OUSEARCH)) {
         	applications = CiEntitiesHbn.findCisByOUunit(
     			req.getParameter("houCiType"),

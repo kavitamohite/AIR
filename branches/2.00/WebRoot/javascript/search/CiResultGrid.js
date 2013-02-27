@@ -19,7 +19,7 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 			singleSelect: true
 		});
 
-		var applicationListStore = AIR.AirStoreFactory.createApplicationListStore();
+		var applicationListStore = AIR.AirStoreFactory.createCiItemListStore();//createApplicationListStore
 		
 		
 		var pagingBar = new AIR.AirPagingToolbar({

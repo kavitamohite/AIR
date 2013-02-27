@@ -4,8 +4,8 @@ package com.bayerbbs.applrepos.service;
 public class CiSearchParamsDTO { //implements Serializable
 	private String cwid;
 	private String token;
-	private Long start;
-	private Long limit;
+	private Integer start;
+	private Integer limit;
 	private String sort;
 	private String dir;
 	
@@ -60,17 +60,17 @@ public class CiSearchParamsDTO { //implements Serializable
 		this.ciNameAliasQuery = ciNameAliasQuery;
 	}
 
-	public Long getStart() {
+	public Integer getStart() {
 		return start;
 	}
-	public void setStart(Long start) {
+	public void setStart(Integer start) {
 		this.start = start;
 	}
 
-	public Long getLimit() {
+	public Integer getLimit() {
 		return limit;
 	}
-	public void setLimit(Long limit) {
+	public void setLimit(Integer limit) {
 		this.limit = limit;
 	}
 

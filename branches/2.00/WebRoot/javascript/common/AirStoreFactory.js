@@ -2062,6 +2062,42 @@ AIR.AirStoreFactory = function() {
 //	        return ciConnectionListStore;
 //		},
 		
+		createCiItemListStore: function() {
+			var ciItemListRecord = Ext.data.Record.create([
+			    {name: 'id'},
+			    {name: 'name'},
+			    {name: 'alias'},
+			    {name: 'applicationCat1Txt'},
+			    {name: 'applicationCat2Txt'},
+			    {name: 'ciOwner'},
+			    {name: 'ciOwnerDelegate'},
+			    {name: 'applicationOwner'},
+			    {name: 'applicationSteward'},
+			    {name: 'applicationOwnerDelegate'},
+			    {name: 'tableId'}
+			]);
+	
+			var ciItemListReader = new Ext.data.XmlReader({
+			    totalProperty: 'countResultSet',
+			    record: 'ciItemDTO',
+			    idProperty: 'id'
+			}, ciItemListRecord); 
+	
+			var ciItemListStore = new Ext.data.GroupingStore({//XmlStore
+			    autoDestroy: true,
+			    autoLoad: false,
+			    
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext +'/CiEntityWSPort',
+					loadMethod: 'findCis',
+					timeout: 120000,
+					reader: ciItemListReader
+				})
+			});
+			
+			return ciItemListStore;
+		},
+		
 		createApplicationListStore: function() {
 			var applicationListRecord = Ext.data.Record.create([
 			    {name: 'id'},//applicationId

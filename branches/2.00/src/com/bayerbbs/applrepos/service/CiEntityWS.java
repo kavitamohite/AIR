@@ -291,13 +291,52 @@ public class CiEntityWS {
 		return roomDTO;
 	}
 	
-	public ItSystemDTO getSystemPlatformsById(CiEntityParameterInput detailInput) {
+	public ItSystemDTO[] getSystemPlatformsById(CiEntityParameterInput detailInput) {
 		List<ItSystem> itSystems = RoomHbn.getSystemPlatformsById(detailInput.getCiId());
 		
-		
-		 
 		return null;
 	}
+	
+	
+	
+	public CiItemsResultDTO findCis(ApplicationSearchParamsDTO input) {//CiSearchParamsDTO <T extends CiSearchParamsDTO>
+//		CiItemDTO[] ciItemDTOs = null;
+		CiItemsResultDTO result = null;
+		
+		if(input.getCiTypeId() != null) {
+			switch(input.getCiTypeId()) {
+				case AirKonstanten.TABLE_ID_APPLICATION:
+					return new ApplicationWS().findApplications(input);//(ApplicationSearchParamsDTO)
+				case AirKonstanten.TABLE_ID_POSITION:
+					result = SchrankHbn.findSchraenkeBy(input);//ciItemDTOs
+					break;
+				case AirKonstanten.TABLE_ID_ROOM:
+					result = RoomHbn.findRoomsBy(input);//ciItemDTOs
+					break;
+				case AirKonstanten.TABLE_ID_BUILDING_AREA:
+					result = BuildingHbn.findBuildingAreasBy(input);//ciItemDTOs
+					break;
+				case AirKonstanten.TABLE_ID_BUILDING:
+					result = BuildingHbn.findBuildingsBy(input);//ciItemDTOs
+					break;
+				case AirKonstanten.TABLE_ID_TERRAIN:
+					result = TerrainHbn.findTerrainsBy(input);//ciItemDTOs
+					break;
+				case AirKonstanten.TABLE_ID_SITE:
+					result = StandortHbn.findSitesBy(input);//ciItemDTOs
+					break;
+				default:
+					//ciItemDTOs = new CiItemDTO[0];
+					result = new CiItemsResultDTO();
+					break;
+			}
+			
+			return result;
+		} else {
+			return new ApplicationWS().findApplications(input);
+		}
+	}
+	
 	
 	private void setCiBaseData(CiBaseDTO ciBaseDTO, CiBase ciBase) {
 		ciBaseDTO.setId(ciBase.getId());
@@ -454,7 +493,6 @@ public class CiEntityWS {
 
 	
 	public CiEntityEditParameterOutput createRoom(RoomEditParameterInput editInput) {
-
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
 		if (null != editInput && (LDAPAuthWS.isLoginValid(editInput.getCwid(), editInput.getToken())) ) {

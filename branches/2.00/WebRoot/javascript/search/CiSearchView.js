@@ -160,7 +160,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		bExpandAdvSearchParams.setText(AAM.getLabels().bCollapseAdvSearchParams);
 		bExpandAdvSearchParams.toggle(true, true);
 		
-		this.updateAdvSearchHeight();
+		this.updateAdvSearchHeight(this.isAdvSearchExt, true);
 	},
 	onAdvSearchCollapse: function(panel) {
 		var bExpandAdvSearchParams = this.getComponent('ciSearchResultView').getComponent('pSearchResultOptions').getComponent('bExpandAdvSearchParams');

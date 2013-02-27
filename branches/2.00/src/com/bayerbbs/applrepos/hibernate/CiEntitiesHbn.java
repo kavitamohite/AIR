@@ -19,15 +19,16 @@ import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
+import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
 
 public class CiEntitiesHbn {
 
 
 
-	
-	public static List<ApplicationDTO> findExistantCisByNameOrAlias(String searchName, boolean withDeletedApplications) {
-		ArrayList<ApplicationDTO> listResult = new ArrayList<ApplicationDTO>();
+	//ApplicationDTO
+	public static List<CiItemDTO> findExistantCisByNameOrAlias(String searchName, boolean withDeletedApplications) {
+		ArrayList<CiItemDTO> listResult = new ArrayList<CiItemDTO>();
 
 		boolean commit = false;
 		Transaction tx = null;
@@ -72,8 +73,8 @@ public class CiEntitiesHbn {
 
 			if (null != rset) {
 				while (rset.next()) {
-					ApplicationDTO anw = getApplicationDTOFromResultSet(rset);
-					listResult.add(anw);
+					CiItemDTO anwendung = getApplicationDTOFromResultSet(rset);//ApplicationDTO
+					listResult.add(anwendung);
 				}
 				commit = true;
 			}
@@ -99,11 +100,8 @@ public class CiEntitiesHbn {
 	}
 
 	
-	/**
-	 * find all the ci's by exact name search
-	 * @return
-	 */
-	public static List<ApplicationDTO> findCisByNameOrAlias(String searchName) {
+	//ApplicationDTO
+	public static List<CiItemDTO> findCisByNameOrAlias(String searchName) {
 		return findCisByNameOrAlias(searchName, AirKonstanten.PARAMETER_QUERYMODE_EXACT, false, null, null);
 	}	 
  
@@ -126,13 +124,11 @@ public class CiEntitiesHbn {
 		return isLikeEnd;
 	}
 	
-	/**
-	 * find all the ci's or only the applications
-	 * @return
-	 */
-	public static List<ApplicationDTO> findCisByNameOrAlias(String searchName, String queryMode, boolean onlyapplications, String sort, String dir) {
 
-		ArrayList<ApplicationDTO> listResult = new ArrayList<ApplicationDTO>();
+	//ApplicationDTO
+	public static List<CiItemDTO> findCisByNameOrAlias(String searchName, String queryMode, boolean onlyapplications, String sort, String dir) {
+
+		ArrayList<CiItemDTO> listResult = new ArrayList<CiItemDTO>();
 
 		boolean commit = false;
 		Transaction tx = null;
@@ -251,8 +247,8 @@ public class CiEntitiesHbn {
 
 			if (null != rset) {
 				while (rset.next()) {
-					ApplicationDTO anw = getApplicationDTOFromResultSet(rset);
-					listResult.add(anw);
+					CiItemDTO anwendung = getApplicationDTOFromResultSet(rset);//ApplicationDTO
+					listResult.add(anwendung);
 				}
 				commit = true;
 			}
@@ -411,7 +407,7 @@ public class CiEntitiesHbn {
 	}
 
 	
-	private static ApplicationDTO getApplicationDTOFromResultSet(ResultSet rset) {
+	private static CiItemDTO getApplicationDTOFromResultSet(ResultSet rset) {//ApplicationDTO
 		String type = null;
 //		String id = null;
 		String name = null;
@@ -461,26 +457,27 @@ public class CiEntitiesHbn {
 */		
 		
 		// TODO rename fields application to ci entities
-		ApplicationDTO anw = new ApplicationDTO();
+		CiItemDTO anw = new CiItemDTO();//ApplicationDTO
 		anw.setId(ci_id);
 		anw.setName(name);
 		anw.setAlias(assetIdOrAlias);
 		anw.setCiOwner(responsible);
-		anw.setApplicationSteward(applicationSteward);
 		anw.setCiOwnerDelegate(subResponsible);
 		anw.setApplicationCat1Txt(type);
 		anw.setApplicationCat2Txt(category);
 		anw.setApplicationOwner(applicationOwner);
 		anw.setApplicationOwnerDelegate(applicationOwnerDelegate);
-		anw.setTableId(tableId);
+		anw.setApplicationSteward(applicationSteward);
 		anw.setDeleteQuelle(deleted);
+		anw.setTableId(tableId);
 		
 		return anw;
 	}
 
-	public static List<ApplicationDTO> findCisByOUunit(String ouCiType, String ouUnit, String ciOwnerType, String ouQueryMode) {
+	//ApplicationDTO
+	public static List<CiItemDTO> findCisByOUunit(String ouCiType, String ouUnit, String ciOwnerType, String ouQueryMode) {
 		if (null == ouUnit || null == ciOwnerType) {
-			return new ArrayList<ApplicationDTO>();
+			return new ArrayList<CiItemDTO>();//ApplicationDTO
 		}
 		else {
 			StringBuffer sql = new StringBuffer();
@@ -502,19 +499,23 @@ public class CiEntitiesHbn {
 		}
 	}
 	
-	public static List<ApplicationDTO> findMyCisOwner(String cwid, String sort, String dir, boolean onlyApplications) {
+	//ApplicationDTO
+	public static List<CiItemDTO> findMyCisOwner(String cwid, String sort, String dir, boolean onlyApplications) {
 		return findMyCisOwnerOrDelegate("pck_air.FT_App_Owner", cwid, sort, dir, onlyApplications);
 	}
 	
-	public static List<ApplicationDTO> findMyCisDelegate(String cwid, String sort, String dir, boolean onlyApplications) {
+	//ApplicationDTO
+	public static List<CiItemDTO> findMyCisDelegate(String cwid, String sort, String dir, boolean onlyApplications) {
 		return findMyCisOwnerOrDelegate("pck_air.FT_App_Owner_Delegate", cwid, sort, dir, onlyApplications);
 	}
 	
-	public static List<ApplicationDTO> findMyCisForDelete(String cwid, String sort, String dir, boolean onlyApplications) {
+	//ApplicationDTO
+	public static List<CiItemDTO> findMyCisForDelete(String cwid, String sort, String dir, boolean onlyApplications) {
 		return findMyCisOwnerOrDelegate("pck_air.FT_My_CIs", cwid, sort, dir, onlyApplications);
 	}
 	
-	private static List<ApplicationDTO> findMyCisOwnerOrDelegate(String ownerDelegate, String cwid, String sort, String dir, boolean onlyApplications) {
+	//ApplicationDTO
+	private static List<CiItemDTO> findMyCisOwnerOrDelegate(String ownerDelegate, String cwid, String sort, String dir, boolean onlyApplications) {
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("SELECT * FROM TABLE (").append(ownerDelegate).append("('").append(cwid.toUpperCase()).append("'))");
@@ -564,8 +565,8 @@ public class CiEntitiesHbn {
 	}
 
 	
-	private static List<ApplicationDTO> findCis(String sql) {
-		ArrayList<ApplicationDTO> listeAnwendungen = new ArrayList<ApplicationDTO>();
+	private static List<CiItemDTO> findCis(String sql) {//ApplicationDTO
+		ArrayList<CiItemDTO> listeAnwendungen = new ArrayList<CiItemDTO>();//ApplicationDTO
 
 		boolean commit = false;
 		Transaction ta = null;
@@ -583,7 +584,7 @@ public class CiEntitiesHbn {
 			
 			while (rset.next()) {
 				// TODO rename fields application to ci entities
-				ApplicationDTO anw = getApplicationDTOFromResultSet(rset);
+				CiItemDTO anw = getApplicationDTOFromResultSet(rset);//ApplicationDTO
 				listeAnwendungen.add(anw);
 			}
 

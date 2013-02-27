@@ -34,6 +34,7 @@ import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.service.ApplicationEditParameterOutput;
+import com.bayerbbs.applrepos.service.CiItemDTO;
 
 
 public class AnwendungHbn {
@@ -689,8 +690,9 @@ public class AnwendungHbn {
 					Application application = new Application();
 					boolean isApplicationNameAndAliasNameAllowed = true;
 					
+					//ApplicationDTO
 					if (isApplicationNameAndAliasNameAllowed) {
-						List<ApplicationDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getName(), true);
+						List<CiItemDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getName(), true);
 						if (null != listApplications && 0 < listApplications.size()) {
 							// application name is not allowed
 							isApplicationNameAndAliasNameAllowed = false;
@@ -718,8 +720,9 @@ public class AnwendungHbn {
 						}
 					}
 					
+					//ApplicationDTO
 					if (isApplicationNameAndAliasNameAllowed) {
-						List<ApplicationDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getAlias(), true);
+						List<CiItemDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getAlias(), true);
 						if (null != listApplications && 0 < listApplications.size()) {
 							// application alias is not allowed
 							isApplicationNameAndAliasNameAllowed = false;
@@ -1086,7 +1089,7 @@ public class AnwendungHbn {
 		return output;
 	}
 	
-	
+	//ApplicationDTO CiItemDTO
 	private static List<String> validateApplication(ApplicationDTO dto) {
 		List<String> messages = new ArrayList<String>();
 		
@@ -1094,9 +1097,8 @@ public class AnwendungHbn {
 
 		if (StringUtils.isNullOrEmpty(dto.getName())) {
 			// messages.add("application name is empty");
-		}
-		else {
-			List<ApplicationDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+		} else {//ApplicationDTO
+			List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
 			if (!listCi.isEmpty()) {
 				// check if the name is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
@@ -1108,9 +1110,8 @@ public class AnwendungHbn {
 		if (StringUtils.isNullOrEmpty(dto.getAlias())) {
 			// messages.add("application alias is empty");
 			dto.setAlias(dto.getName());
-		}
-		else {
-			List<ApplicationDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias());
+		} else {//ApplicationDTO
+			List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias());
 			if (!listCi.isEmpty()) {
 				// check if the alias is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
@@ -1119,6 +1120,7 @@ public class AnwendungHbn {
 			}
 		}
 
+		
 		if (null == dto.getTemplate()) {
 			// TODO 1 TESTCODE Template
 			dto.setTemplate(new Long (0)); // no template
@@ -2189,8 +2191,8 @@ public class AnwendungHbn {
 		return listResult;
 	}
 
-	
-	public static List<ApplicationDTO> findApplications(
+	//ApplicationDTO
+	public static List<CiItemDTO> findApplications(
 			String query, String queryMode, String advsearchappowner, String advsearchappownerHidden, String advsearchappdelegate, 
 			String advsearchappdelegateHidden, String advsearchciowner, String advsearchciownerHidden, String advsearchcidelegate, 
 			String advsearchcidelegateHidden, boolean onlyapplications, String sort, String dir,
@@ -2229,7 +2231,8 @@ public class AnwendungHbn {
 			advsearchstewardHidden = advsearchstewardHidden.replace("*", "%");//advsearchsteward
 		}
 		
-		ArrayList<ApplicationDTO> listResult = new ArrayList<ApplicationDTO>();
+		//ApplicationDTO
+		ArrayList<CiItemDTO> listResult = new ArrayList<CiItemDTO>();
 
 		Transaction tx = null;
 		Statement selectStmt = null;
@@ -2497,7 +2500,7 @@ public class AnwendungHbn {
 			if (null != rset) {
 				while (rset.next()) {
 					long anwendungId = rset.getLong("ANWENDUNG_ID");
-					String barApplicationId = rset.getString("BAR_APPLICATION_ID");
+//					String barApplicationId = rset.getString("BAR_APPLICATION_ID");
 					String anwendungName = rset.getString("ANWENDUNG_NAME");
 					String anwendungAlias = rset.getString("ALIAS");
 					//--
@@ -2509,9 +2512,9 @@ public class AnwendungHbn {
 					String applicationOwnerDelegate = rset.getString("APPLICATION_OWNER_DELEGATE");
 					String applicationSteward = rset.getString("APPLICATION_STEWARD");
 					
-					ApplicationDTO anw = new ApplicationDTO();
+					CiItemDTO anw = new CiItemDTO();//ApplicationDTO
 					anw.setId(anwendungId);
-					anw.setBarApplicationId(barApplicationId);
+//					anw.setBarApplicationId(barApplicationId);
 					anw.setName(anwendungName);
 					anw.setAlias(anwendungAlias);
 					anw.setCiOwner(responsible);//setResponsible

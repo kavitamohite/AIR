@@ -41,11 +41,12 @@ public class ApplicationWS {
 	 * @param input
 	 * @return
 	 */
-	public ApplicationParamOutput checkAllowedApplicationName(ApplicationParameterInput input) {
+	//ApplicationParamOutput
+	public CiItemsResultDTO checkAllowedApplicationName(ApplicationParameterInput input) {
 		String searchname = input.getQuery();
-		List<ApplicationDTO> listAnwendungen = null;
+		List<CiItemDTO> listAnwendungen = null;//ApplicationDTO
 		listAnwendungen = CiEntitiesHbn.findExistantCisByNameOrAlias(searchname, false);
-		ApplicationParamOutput output = new ApplicationParamOutput();
+		CiItemsResultDTO output = new CiItemsResultDTO();//ApplicationParamOutput
 		output.setCountResultSet(listAnwendungen.size());
 		
 		if (0 != listAnwendungen.size()) {
@@ -55,25 +56,22 @@ public class ApplicationWS {
 		return output;
 	}
 
-
-	public ApplicationParamOutput findApplications(ApplicationSearchParamsDTO input) {//ApplicationParameterInput
+	//ApplicationParamOutput
+	public CiItemsResultDTO findApplications(ApplicationSearchParamsDTO input) {//ApplicationParameterInput
 		String searchname = input.getCiNameAliasQuery();//getQuery
-		Long startwert = input.getStart();
-		Long limit = input.getLimit();
-
+		Integer startwert = input.getStart();
+		Integer limit = input.getLimit();
 		String cwid = input.getCwid();
 		String searchAction = input.getSearchAction();
-		
 
-
-		List<ApplicationDTO> listAnwendungen = null;
+		List<CiItemDTO> listAnwendungen = null;//ApplicationDTO
 
 		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 			if (null == startwert) {
-				startwert = 0L;
+				startwert = 0;
 			}
 			if (null == limit) {
-				limit = 20L;
+				limit = 20;
 			}
 			
 			boolean onlyApplications = false;
@@ -142,46 +140,52 @@ public class ApplicationWS {
 		}
 
 		if (null == listAnwendungen) {
-			listAnwendungen = new ArrayList<ApplicationDTO>();
+			listAnwendungen = new ArrayList<CiItemDTO>();//ApplicationDTO
 		}
 
-		ApplicationDTO anwendungen[] = null;
+//		ApplicationDTO anwendungen[] = null;
+		CiItemDTO[] anwendungen = null;
 
 		if (listAnwendungen.size() > startwert) {
-			List<ApplicationDTO> listAnwTemp = new ArrayList<ApplicationDTO>();
+			List<CiItemDTO> listAnwTemp = new ArrayList<CiItemDTO>();//ApplicationDTO
 			long tempCounter = startwert;
 			long anzCounter = 0;
+			
 			while (tempCounter < listAnwendungen.size() && anzCounter < limit) {
 				listAnwTemp.add(listAnwendungen.get((int) tempCounter));
 				tempCounter++;
 				anzCounter++;
 			}
-
+//
 			// weniger Anwendungen als erwartet
-			anwendungen = new ApplicationDTO[listAnwTemp.size()];
+			anwendungen = new CiItemDTO[listAnwTemp.size()];//ApplicationDTO
 
 			int i = 0;
-			for (final ApplicationDTO anw : listAnwTemp) {
-				anwendungen[i] = anw;
+			for (CiItemDTO anwendung : listAnwTemp) {//ApplicationDTO
+				anwendungen[i] = anwendung;
 				i++;
 			}
 
 		} else {
 			// weniger Anwendungen als erwartet
-			anwendungen = new ApplicationDTO[listAnwendungen.size()];
+			anwendungen = new CiItemDTO[listAnwendungen.size()];//ApplicationDTO
 
 			int i = 0;
-			for (final ApplicationDTO anw : listAnwendungen) {
-				anwendungen[i] = anw;
+			for (CiItemDTO anwendung : listAnwendungen) {//ApplicationDTO
+				anwendungen[i] = anwendung;
 				i++;
 			}
 		}
 
-		ApplicationParamOutput anwendungParamOut = new ApplicationParamOutput();
-		anwendungParamOut.setCountResultSet(listAnwendungen.size());
-		anwendungParamOut.setApplicationDTO(anwendungen);
-
-		return anwendungParamOut;
+		CiItemsResultDTO output = new CiItemsResultDTO();
+		output.setCountResultSet(listAnwendungen.size());
+		output.setCiItemDTO(anwendungen);
+		return output;
+		
+//		ApplicationParamOutput anwendungParamOut = new ApplicationParamOutput();
+//		anwendungParamOut.setCountResultSet(listAnwendungen.size());
+//		anwendungParamOut.setApplicationDTO(anwendungen);
+//		return anwendungParamOut;
 	}
 
 	public ApplicationEditParameterOutput saveApplication(ApplicationEditParameterInput editInput) {
