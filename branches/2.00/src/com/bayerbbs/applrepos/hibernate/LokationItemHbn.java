@@ -59,7 +59,7 @@ public class LokationItemHbn {
 		if(metaData.getAliasField() != null)
 			sql.append(", ").append(metaData.getAliasField());
 		
-		sql.append(", responsible, sub_responsible FROM ").append(metaData.getTableName()).append(" WHERE").
+		sql.append(", responsible, sub_responsible FROM ").append(metaData.getTableName()).append(" WHERE (").
 		append(" UPPER(").append(metaData.getNameField()).append(") like '");
 		
 		
@@ -87,8 +87,30 @@ public class LokationItemHbn {
 			sql.append("'");
 		}
 		
+		sql.append(")");
 		
 		boolean isNot = false;
+		
+		
+		if(StringUtils.isNotNullOrEmpty(input.getItSetId())) {
+			isNot = isNot(input.getItSetOptions());
+			sql.append(" AND itset "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getItSetId()));
+		}
+		
+		if(StringUtils.isNotNullOrEmpty(input.getBusinessEssentialId())) {
+			isNot = isNot(input.getBusinessEssentialOptions());
+			sql.append(" AND business_essential_id "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getBusinessEssentialId()));
+		}
+		
+		if(StringUtils.isNotNullOrEmpty(input.getItSecGroupId())) {
+			isNot = isNot(input.getItSecGroupOptions());
+			sql.append(" AND itsec_gruppe_id "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getItSecGroupId()));
+		}
+		
+		if(StringUtils.isNotNullOrEmpty(input.getSource())) {
+			isNot = isNot(input.getSourceOptions());
+			sql.append(" AND insert_quelle "+ getEqualNotEqualOperator(isNot) +" '").append(input.getSource()).append("'");
+		}
 		
 		if(StringUtils.isNotNullOrEmpty(input.getCiOwnerHidden())) {
 			isNot = isNot(input.getCiOwnerOptions());
@@ -125,7 +147,7 @@ public class LokationItemHbn {
 		
 		StringBuilder sql = getLocationCiBaseSql(input, metaData);
 		
-		List<CiItemDTO> rooms = new ArrayList<CiItemDTO>();
+		List<CiItemDTO> cis = new ArrayList<CiItemDTO>();
 
 		Session session = null;
 		Transaction ta = null;
@@ -155,21 +177,21 @@ public class LokationItemHbn {
 			if(null == limit)
 				limit = 20;
 			
-			CiItemDTO room = null;
+			CiItemDTO ci = null;
 			
 			while(rs.next()) {
 				if(i >= start && i < limit + start) {
-					room = new CiItemDTO();
-					room.setId(rs.getLong(metaData.getIdField()));
-					room.setName(rs.getString(metaData.getNameField()));
+					ci = new CiItemDTO();
+					ci.setId(rs.getLong(metaData.getIdField()));
+					ci.setName(rs.getString(metaData.getNameField()));
 					if(metaData.getAliasField() != null)
-						room.setAlias(rs.getString(metaData.getAliasField()));
-					room.setApplicationCat1Txt(metaData.getTypeName());
-					room.setCiOwner(rs.getString("responsible"));
-					room.setCiOwnerDelegate(rs.getString("sub_responsible"));
-					room.setTableId(metaData.getTableId());
+						ci.setAlias(rs.getString(metaData.getAliasField()));
+					ci.setApplicationCat1Txt(metaData.getTypeName());
+					ci.setCiOwner(rs.getString("responsible"));
+					ci.setCiOwnerDelegate(rs.getString("sub_responsible"));
+					ci.setTableId(metaData.getTableId());
 					
-					rooms.add(room);
+					cis.add(ci);
 					//i++;
 				}// else break;
 				
@@ -201,7 +223,7 @@ public class LokationItemHbn {
 		}
 		
 		CiItemsResultDTO result = new CiItemsResultDTO();
-		result.setCiItemDTO(rooms.toArray(new CiItemDTO[0]));
+		result.setCiItemDTO(cis.toArray(new CiItemDTO[0]));
 		result.setCountResultSet(i);//i + start
 		return result;
 	}

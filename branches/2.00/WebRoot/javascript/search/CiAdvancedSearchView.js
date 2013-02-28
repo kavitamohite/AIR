@@ -54,7 +54,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    border: false,
 		    
 		    layout: 'form',
-		    labelWidth: 100,
+//		    labelWidth: 100,
 			
 			autoScroll: true,
 			collapsible: true,
@@ -111,6 +111,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					    fieldLabel: 'IT Set',
 					    valueField: 'id',
 				        displayField: 'text',
+				        width: 240,
 				        
 		//			        typeAhead: true,
 		//			        autoSelect: false,
@@ -120,16 +121,19 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 				        triggerAction: 'all',
 				        lazyRender: true,
 				        lazyInit: false,
-				        mode: 'local',
-				        
-				        width: 240
+				        mode: 'local'
 				    },{
 			        	xtype: 'textfield',
 			        	id: 'advsearchdescription',
 			        	
 			        	width: 240,
 			        	hidden: false,
-			        	hasSearch: false
+			        	hasSearch: false,
+			        	
+			        	//um zu verhindern, dass die Labels der cbAdvSearchITset und cbCiType ungewollt verschwinden,
+			        	//wenn rgAdvSearchBARrelevance und advsearchdescription aufgrund der entspr. CI-Typen
+			        	//ausgeblendet werden
+			        	hideMode: 'visibility'
 			        },{
 			            xtype: 'radiogroup',
 		    			id: 'rgAdvSearchBARrelevance',
@@ -137,13 +141,20 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			fieldLabel: 'BAR relevant',
 		    			
 		    			columns: 3,
+//		    			hideMode: 'visibility',
 		
 			            items: [
 		                    { id: 'rgAdvSearchBARrelevanceYes',		itemId: 'rgAdvSearchBARrelevanceYes', 			boxLabel: 'Yes',		name: 'rgAdvSearchBARrelevance', inputValue: 'Y', width: 80 },//, width: 80 wenn gedatscht
 			                { id: 'rgAdvSearchBARrelevanceNo',		itemId: 'rgAdvSearchBARrelevanceNo',			boxLabel: 'No',			name: 'rgAdvSearchBARrelevance', inputValue: 'N', width: 80 },
 			                { id: 'rgAdvSearchBARrelevanceUndefined',itemId: 'rgAdvSearchBARrelevanceUndefined', 	boxLabel: 'Undefined',	name: 'rgAdvSearchBARrelevance', inputValue: 'U', width: 80 }//, checked: true
 			            ]
-			        }]
+			        }/*,{
+//			        	xtype: 'textfield',
+//			        	width: 240,
+//			        	hidden: true
+			        	xtype: 'spacer',
+			        	width: 240
+			        }*/]
 				}, {
 					xtype: 'panel',
 					id: 'pAdvSearchSingleAttrsOptions',
@@ -879,8 +890,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		cbCiType.on('change', this.onCiTypeChange, this);
 		
 		var cbAdvSearchITset = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbAdvSearchITset');
-		cbAdvSearchITset.on('change', this.onComboChange, this);
-		
+		cbAdvSearchITset.on('change', this.onItSetChange, this);
+		cbAdvSearchITset.on('select', this.onItSetChange, this);
 
 		
 		var cbAdvSearchGeneralUsageW = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchGeneralUsageW');
@@ -1004,6 +1015,13 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		this.processCiTypeChange(combo, newValue);
 	},
 	
+	onItSetChange: function(combo) {//, record, options
+		var cbAdvSearchITSecGroupW = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchITSecGroupW');
+		var cbCiType = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbCiType');
+		var record = cbCiType.getStore().getById(cbCiType.getValue());
+		this.filterItSecGroup(cbAdvSearchITSecGroupW, combo.getValue(), record);
+	},
+	
 	processCiTypeChange: function(cbCiType, newValue) {
 //		cbCiType.view.refresh();
 		var cbAdvSearchITCategoryW = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchITCategoryW');
@@ -1055,14 +1073,24 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	var tfDescription = pAdvSearchSingleAttrsFrame.getComponent('pAdvSearchSingleAttrs').getComponent('advsearchdescription');
     	var cbgAdvSearchDescriptionOptions = pAdvSearchSingleAttrsFrame.getComponent('pAdvSearchSingleAttrsOptions').getComponent('cbgAdvSearchDescriptionOptions');
     	
+    	
 //    	var cbAdvSearchITCategoryW = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('cbAdvSearchITCategoryW');
     	var fsCategoriesAndStatus = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus');
+    	var fsSpecialSearchAttributes = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes');
+    	
     	var pAdvSearchCategoriesAndStatusOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchCategoriesAndStatusOptions');
-    	var cbAdvSearchProcessW = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchProcessW');
     	var pAdvSearchSpecialSearchAttributesOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchSpecialSearchAttributesOptions');
-    	var cbgAdvSearchSpecialSearchAttributesSourceOptions = pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesSourceOptions');
+    	
+    	var cbAdvSearchProcessW = fsSpecialSearchAttributes.getComponent('cbAdvSearchProcessW');
+    	var cbgAdvSearchSpecialSearchAttributesProcessOptions = pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesProcessOptions');
+    	var cbAdvSearchBusinessEssentialW = fsSpecialSearchAttributes.getComponent('cbAdvSearchBusinessEssentialW');
+    	var cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions = pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions');
+
     	
     	
+    	//2: wenn kein CI-Typ oder wenn Anwendung CI-Typ mit appCat1 = 5 (Anwendung)
+    	//1: wenn kein CI-Typ oder wenn Anwendung CI-Typ mit appCat1 != 5 (Anwendung) 
+    	//0: alle anderen Lokation CI-Typen
     	var searchMode = !record || record.get('ciSubTypeId') == AC.APP_CAT1_APPLICATION ? 2 : 
 						 record.get('ciTypeId') == AC.TABLE_ID_APPLICATION ? 1 : 0;
     	var isActive = false;
@@ -1080,7 +1108,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     			fsCategoriesAndStatus.setVisible(true);
     			pAdvSearchCategoriesAndStatusOptions.setVisible(true);
     			cbAdvSearchProcessW.setVisible(true);
-    			cbgAdvSearchSpecialSearchAttributesSourceOptions.setVisible(true);
+    			cbgAdvSearchSpecialSearchAttributesProcessOptions.setVisible(true);
+    			
+				cbAdvSearchBusinessEssentialW.setVisible(true);
+				cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions.setVisible(true);
     			break;
     		case 1://ANWENDUNG::non Application
     			tfDescription.setVisible(true);
@@ -1092,7 +1123,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     			pAdvSearchCategoriesAndStatusOptions.setVisible(true);
     			
     			cbAdvSearchProcessW.setVisible(false);
-    			cbgAdvSearchSpecialSearchAttributesSourceOptions.setVisible(false);
+    			cbgAdvSearchSpecialSearchAttributesProcessOptions.setVisible(false);
+				cbAdvSearchBusinessEssentialW.setVisible(true);
+				cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions.setVisible(true);
     			break;
     		case 0://non ANWENDUNG
     			tfDescription.setVisible(false);
@@ -1103,7 +1136,16 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     			fsCategoriesAndStatus.setVisible(false);
     			pAdvSearchCategoriesAndStatusOptions.setVisible(false);
     			cbAdvSearchProcessW.setVisible(false);
-    			cbgAdvSearchSpecialSearchAttributesSourceOptions.setVisible(false);
+    			cbgAdvSearchSpecialSearchAttributesProcessOptions.setVisible(false);
+    			
+    			var tableId = record.get('ciTypeId');
+    			if(tableId == AC.TABLE_ID_ROOM || tableId == AC.TABLE_ID_POSITION) {
+    				cbAdvSearchBusinessEssentialW.setVisible(true);
+    				cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions.setVisible(true);
+    			} else {
+    				cbAdvSearchBusinessEssentialW.setVisible(false);
+    				cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions.setVisible(false);
+    			}
     			break;
     	}
     	
@@ -1120,6 +1162,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //		rgAdvSearchBARrelevance.setVisible(isActive);
 		lvAdvSearchOrganisationalScope.setVisible(isActive);
 		cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions.setVisible(isActive);
+		
+		var cbAdvSearchITset = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbAdvSearchITset');
+		var cbAdvSearchITSecGroupW = fsSpecialSearchAttributes.getComponent('cbAdvSearchITSecGroupW');
+		this.filterItSecGroup(cbAdvSearchITSecGroupW, cbAdvSearchITset.getValue(), record);
 		//------------------------------------------------------------------------------------------
     	
     	
@@ -1221,11 +1267,28 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	},
 	
 	
+	filterItSecGroup: function(combo, itset, ciTypeRecord) {
+		var filterData = {};
+		
+		if(itset)
+			filterData.itsetId = itset;
+	
+		
+		if(ciTypeRecord.get('ciTypeId') == AC.TABLE_ID_APPLICATION) {
+			filterData.ciKat1 = ciTypeRecord.get('ciSubTypeId');
+		} else {
+			filterData.tableId = ciTypeRecord.get('ciTypeId');
+		}
+		
+		combo.filterByData(filterData);
+	},
+	
+	
 	updateLabels: function(labels) {
 		this.setTitle(labels.advsearchPanelTitle);
 		
 		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbCiType'), labels.cbCiType);
-		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchdescription'), labels.description);
+		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchdescription'), labels.advsearchdescription);
 		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbAdvSearchITset'), labels.itSet);
 		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance'), labels.rgBARrelevance);
 		this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[0], labels.general_yes);
