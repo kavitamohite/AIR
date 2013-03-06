@@ -25,6 +25,19 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	private Long slaId;
 	private Long serviceContractId;
 	
+	private Long itSecSbAvailability;
+	private String itSecSbAvailabilityText;
+	
+	//nur Application!!
+//	private Long classInformationId;
+//	private String classInformationExplanation;
+	private Long itSecSbIntegrityId;
+//	private String itSecSbIntegrityTxt;
+	private String itSecSbIntegrityDescription;
+
+	private Long itSecSbConfidentialityId;
+//	private String itSecSbConfidentialityTxt;
+	private String itSecSbConfidentialityDescription;
 	
 	
 	@Transient
@@ -146,5 +159,88 @@ public abstract class CiBase extends DeletableRevisionInfo {
 
 	public void setSlaId(Long slaId) {
 		this.slaId = slaId;
+	}
+	
+	
+	@Column(name = "ITSEC_SB_VERFG_ID")
+	public Long getItSecSbAvailability() {
+		return itSecSbAvailability;
+	}
+	public void setItSecSbAvailability(Long itSecSbAvailability) {
+		this.itSecSbAvailability = itSecSbAvailability;
+	}
+
+
+	@Column(name = "ITSEC_SB_VERFG_TXT")
+	public String getItSecSbAvailabilityText() {
+		return itSecSbAvailabilityText;
+	}
+	public void setItSecSbAvailabilityText(String itSecSbAvailabilityText) {
+		this.itSecSbAvailabilityText = itSecSbAvailabilityText;
+	}
+	
+	
+	//nur Application!!
+//	@Column(name = "CLASS_INFORMATION_ID")
+//	public Long getClassInformationId() {
+//		return classInformationId;
+//	}
+//
+//	public void setClassInformationId(Long classInformationId) {
+//		this.classInformationId = classInformationId;
+//	}
+//
+//	@Column(name = "CLASS_INFORMATION_EXPLANATION")
+//	public String getClassInformationExplanation() {
+//		return classInformationExplanation;
+//	}
+//
+//	public void setClassInformationExplanation(String classInformationExplanation) {
+//		this.classInformationExplanation = classInformationExplanation;
+//	}
+	
+	@Column(name = "ITSEC_SB_INTEG_ID")
+	public Long getItSecSbIntegrityId() {
+		return itSecSbIntegrityId;
+	}
+	public void setItSecSbIntegrityId(Long itSecSbIntegrityId) {
+		this.itSecSbIntegrityId = itSecSbIntegrityId;
+	}
+//	public String getItSecSbIntegrityTxt() {
+//		return itSecSbIntegrityTxt;
+//	}
+//	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
+//		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
+//	}
+	
+	@Column(name = "ITSEC_SB_INTEG_TXT")
+	public String getItSecSbIntegrityDescription() {
+		return itSecSbIntegrityDescription;
+	}
+	public void setItSecSbIntegrityDescription(String itSecSbIntegrityDescription) {
+		this.itSecSbIntegrityDescription = itSecSbIntegrityDescription;
+	}
+
+	
+	@Column(name = "ITSEC_SB_VERTR_ID")
+	public Long getItSecSbConfidentialityId() {
+		return itSecSbConfidentialityId;
+	}
+	public void setItSecSbConfidentialityId(Long itSecSbConfidentialityId) {
+		this.itSecSbConfidentialityId = itSecSbConfidentialityId;
+	}
+//	public String getItSecSbConfidentialityTxt() {
+//		return itSecSbConfidentialityTxt;
+//	}
+//	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
+//		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
+//	}
+	
+	@Column(name = "ITSEC_SB_VERTR_TXT")
+	public String getItSecSbConfidentialityDescription() {
+		return itSecSbConfidentialityDescription;
+	}
+	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
+		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
 	}
 }

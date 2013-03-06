@@ -7,7 +7,6 @@ public class RoomDTO extends LocationDTO implements Serializable {
 	private static final long serialVersionUID = 1853465853927062074L;
 	
 	private String alias;
-
 	private String floor;
 	private String roomType;
 	
@@ -31,7 +30,6 @@ public class RoomDTO extends LocationDTO implements Serializable {
 	public String getAlias() {
 		return alias;
 	}
-
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}

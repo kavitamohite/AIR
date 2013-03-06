@@ -380,10 +380,10 @@ public class ApplicationWS {
 		// TODO business category
 
 		// Agreements
-		dto.setSlaId(editInput.getSlaName());
-		dto.setPriorityLevelId(editInput.getPriorityLevel());
-		dto.setServiceContractId(editInput.getServiceContract());
-		dto.setSeverityLevelId(editInput.getSeverityLevel());
+		dto.setSlaId(editInput.getSlaId());
+		dto.setPriorityLevelId(editInput.getPriorityLevelId());
+		dto.setServiceContractId(editInput.getServiceContractId());
+		dto.setSeverityLevelId(editInput.getSeverityLevelId());
 		dto.setBusinessEssentialId(editInput.getBusinessEssentialId());
 
 //		dto.setClusterCode(editInput.getClusterCode());
@@ -470,14 +470,14 @@ public class ApplicationWS {
 		dto.setCiSupportStuffProvidedServices(editInput.getCiSupportStuffProvidedServices());
 		dto.setCiSupportStuffProvidedMachineUsers(editInput.getCiSupportStuffProvidedMachineUsers());
 
-		dto.setItSecSbAvailabilityId(editInput.getItSecSbAvailability());
+		dto.setItSecSbAvailabilityId(editInput.getItSecSbAvailabilityId());
 		dto.setItSecSbAvailabilityDescription(editInput.getItSecSbAvailabilityDescription());
-
-		dto.setCategoryBusinessId(editInput.getCategoryBusinessId());
-		
-		dto.setClassDataId(editInput.getClassDataId());
 		dto.setClassInformationId(editInput.getClassInformationId());
 		dto.setClassInformationExplanation(editInput.getClassInformationExplanation());
+		
+		dto.setCategoryBusinessId(editInput.getCategoryBusinessId());
+		dto.setClassDataId(editInput.getClassDataId());
+
 
 		// business Process
 		dto.setBusinessProcess(editInput.getBusinessProcess());
@@ -485,8 +485,8 @@ public class ApplicationWS {
 		
 		// compliance request
 		dto.setRelevanceGR1435(editInput.getRelevanceGR1435());
-		dto.setRelevanceGR2059(editInput.getRelevanceGR2059());
 		dto.setRelevanceGR1920(editInput.getRelevanceGR1920());
+		dto.setRelevanceGR2059(editInput.getRelevanceGR2059());
 		dto.setRelevanceGR2008(editInput.getRelevanceGR2008());
 		
 		// connections

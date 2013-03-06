@@ -329,7 +329,7 @@ public class AnwendungHbn {
 						if (hasBusinessEssentialChanged) {
 							sendBusinessEssentialChangedMail(application, dto, businessEssentialIdOld);
 						}
-
+						
 						
 						if (null != dto.getItSecSbAvailabilityId()) {
 							if (-1 == dto.getItSecSbAvailabilityId()) {
@@ -339,10 +339,23 @@ public class AnwendungHbn {
 								application.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
 							}
 						}
-
 						if (null != dto.getItSecSbAvailabilityDescription()) {
 							application.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
 						}
+						
+						
+						if (null != dto.getClassInformationId()) {
+							if (-1 == dto.getClassInformationId()) {
+								application.setClassInformationId(null);
+							}
+							else {
+								application.setClassInformationId(dto.getClassInformationId());
+							}
+						}
+						if (null != dto.getClassInformationExplanation()) {
+							application.setClassInformationExplanation(dto.getClassInformationExplanation());
+						}
+						
 						
 //						if (null != dto.getClusterCode()) {
 //							application.setClusterCode(dto.getClusterCode());
@@ -413,7 +426,7 @@ public class AnwendungHbn {
 						}
 						
 						if (null != dto.getRelevanceICS()) {
-								application.setRelevanceICS(dto.getRelevanceICS());
+							application.setRelevanceICS(dto.getRelevanceICS());
 						}
 
 						if (null != dto.getRelevanzItsec()) {
@@ -487,10 +500,8 @@ public class AnwendungHbn {
 							}
 						}
 						
-						if (null != dto
-								.getCostRunAccountId()) {
-							if (-1 == dto
-								.getCostRunAccountId()) {
+						if (null != dto.getCostRunAccountId()) {
+							if (-1 == dto.getCostRunAccountId()) {
 								application.setCostRunAccountId(null);
 							} else {
 								application.setCostRunAccountId(dto.getCostRunAccountId());
@@ -553,18 +564,6 @@ public class AnwendungHbn {
 							}
 						}
 						
-						if (null != dto.getClassInformationId()) {
-							if (-1 == dto.getClassInformationId()) {
-								application.setClassInformationId(null);
-							}
-							else {
-								application.setClassInformationId(dto.getClassInformationId());
-							}
-						}
-						
-						if (null != dto.getClassInformationExplanation()) {
-							application.setClassInformationExplanation(dto.getClassInformationExplanation());
-						}
 						
 						if (null != dto.getServiceModel()) {
 							if (" ".equals(dto.getServiceModel())) {
@@ -597,12 +596,12 @@ public class AnwendungHbn {
 					boolean toCommit = false;
 					try {
 						if (null == validationMessage) {
-							if (null != application && null != application.getDeleteTimestamp()) {
+							if (null != application && null == application.getDeleteTimestamp()) {
 								session.saveOrUpdate(application);
 								session.flush();
+								
+								toCommit = true;
 							}
-							
-							toCommit = true;
 						}
 					} catch (Exception e) {
 						String message = e.getMessage();
@@ -1561,7 +1560,7 @@ public class AnwendungHbn {
 				applicationDTO.setItSecSbIntegrityTxt(rsMessage.getString("ITSECSBINTEG"));
 				applicationDTO.setItSecSbIntegrityDescription(rsMessage.getString("ITSEC_SB_INTEG_TXT"));
 				applicationDTO.setItSecSbAvailabilityId(rsMessage.getLong("ITSEC_SB_VERFG_ID"));
-				applicationDTO.setItSecSbAvailabilityTxt(rsMessage.getString("ITSECSBVERFG"));
+//				applicationDTO.setItSecSbAvailabilityTxt(rsMessage.getString("ITSECSBVERFG"));
 				applicationDTO.setItSecSbAvailabilityDescription(rsMessage.getString("ITSEC_SB_VERFG_TXT"));
 				applicationDTO.setItSecSbConfidentialityId(rsMessage.getLong("ITSEC_SB_VERTR_ID"));
 				applicationDTO.setItSecSbConfidentialityTxt(rsMessage.getString("ITSECSBVERTR"));

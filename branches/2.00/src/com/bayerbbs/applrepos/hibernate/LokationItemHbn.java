@@ -13,9 +13,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
+import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
 import com.bayerbbs.applrepos.service.CiSearchParamsDTO;
@@ -34,6 +38,8 @@ public class LokationItemHbn {
 	
 	private static final String NOT_EQUAL = "<>";
 	private static final String EQUAL = "=";
+	protected static final String EMPTY = "";
+
 	
 	private static final String NOT_LIKE = "not like";
 	private static final String LIKE = "like";
@@ -272,5 +278,42 @@ public class LokationItemHbn {
 	
 	protected static String getEqualNotEqualOperator(boolean isNot) {
 		return isNot ? NOT_EQUAL : EQUAL;
+	}
+	
+	protected static List<String> validateCi(CiBaseDTO dto) {
+		List<String> messages = new ArrayList<String>();
+		
+		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+
+		if (StringUtils.isNullOrEmpty(dto.getName())) {
+			messages.add("room name is empty");
+		}
+		else {
+			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
+			if (!listCi.isEmpty()) {
+				// check if the name is unique
+				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
+					messages.add(errorCodeManager.getErrorMessage("1100", dto.getName()));
+				}
+			}
+		}
+
+		//evtl. berücksichtigen, dass nicht alle CI-Typen einen alias haben. Z.B wenn CI-Typ ohne Alias "-1" zurückgibt
+		//nicht den Namen für den Alias setzen.
+		if (StringUtils.isNullOrEmpty(dto.getAlias())) {
+			// messages.add("application alias is empty");
+			dto.setAlias(dto.getName());
+		}
+		else {
+			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
+			if (!listCi.isEmpty()) {
+				// check if the alias is unique
+				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
+					messages.add(errorCodeManager.getErrorMessage("1101", dto.getAlias()));
+				}
+			}
+		}
+
+		return messages;
 	}
 }

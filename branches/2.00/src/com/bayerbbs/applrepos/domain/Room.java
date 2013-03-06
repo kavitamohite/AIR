@@ -15,15 +15,18 @@ public class Room extends CiBase implements Serializable {
 	private static final long serialVersionUID = -1270064907617489118L;
 
 	private String alias;
-	
 	private String roomType;
 	private String floor;
 	
 	private Long severityLevelId;
 	private Long businessEssentialId;
 	
+//	ITSEC_SB_VERTR_ID,ITSEC_SB_VERTR_TXT: confidentiality
+//	ITSEC_SB_INTEG_ID,ITSEC_SB_INTEG_TXT: integrity
+	
 	private Long buildingAreaId;
 	private BuildingArea buildingArea;
+	
 
 
 	@Id

@@ -437,9 +437,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			return;
 		}
 
-		var applicationSaveStore = AIR.AirStoreFactory.createApplicationSaveStore();
+		var ciSaveStore = AIR.AirStoreFactory.createCiSaveStore(ciDetail.tableId);//AIR.AirStoreFactory.createApplicationSaveStore();
 		var callback = options && options.callback ? options.callback : this.onApplicationSave;
-		applicationSaveStore.on('load', callback, this);
+		ciSaveStore.on('load', callback, this);
 		this.skipLoading = options && options.skipLoading ? true : false;
 
 		var ciEditTabView = this.getComponent('ciEditTabView');
@@ -467,14 +467,18 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.setData(data);
 
-		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
-		ciLicenseView.setData(data);
+		if(ciDetail.tableId === AC.TABLE_ID_APPLICATION) {//&& ciDetail.ciSubTypeId === AC.APP_CAT1_APPLICATION?
+			var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
+			ciLicenseView.setData(data);
+		}
 		
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.setData(data);
 		
-		var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
-		ciSupportStuffView.setData(data);
+		if(ciDetail.tableId === AC.TABLE_ID_APPLICATION) {//&& ciDetail.ciSubTypeId === AC.APP_CAT1_APPLICATION?
+			var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
+			ciSupportStuffView.setData(data);
+		}
 		
 		var saveCallback = function() {
 			AAM.getMask(AC.MASK_TYPE_SAVE).show();
@@ -490,7 +494,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 //			this.mergeCiChanges(data);//(noch) nicht notwendig, da noch keine Fälle in denen Daten zusammengeführt werden müssen
 			
-			applicationSaveStore.load({
+			ciSaveStore.load({
 				params: data
 			});
 		}.createDelegate(this);

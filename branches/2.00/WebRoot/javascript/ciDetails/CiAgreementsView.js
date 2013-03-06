@@ -215,7 +215,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
     	
 		this.getComponent('serviceContract').getStore().load({
 			params: { 
-				slaName: record.data.id
+				slaId: record.data.id//slaName
 			},
 			callback: function(records, options, success) {
 				switch(records.length) {
@@ -362,68 +362,76 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	updateAccessMode: function(data) {
 		AIR.AirAclManager.setAccessMode(this.getComponent('sla'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('serviceContract'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('priorityLevel'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('severityLevel'), data);
 		
+		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION)
+			AIR.AirAclManager.setAccessMode(this.getComponent('priorityLevel'), data);
 		
-		var cbBusinessEssential = this.getComponent('businessEssential');
-		if(AIR.AirApplicationManager.hasRole(AC.ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)) {//hasRoleBusinessEssentialEditor (#8)
-			// nur für die Rolle BusinessEssential-Editor
-			// unter Prüfung der Insert-Source mittels isEditable
-			if (AIR.AirAclManager.isEditable(cbBusinessEssential)) {
-				Util.enableCombo(cbBusinessEssential);
-				
-				AIR.AirAclManager.setMandatory(cbBusinessEssential, 'mandatory');
-				// this.setEditable(aclItemCmp); // diese Methode prüft die Rechte und verhindert das Editieren...
-				// deshalb setzen wir das FormElement einzeln auf true
-//				AIR.AirAclManager.setFormElementEnable(cbBusinessEssential, true);
-			}
-		} else {
-			//cbBusinessEssential.disable();
-			Util.disableCombo(cbBusinessEssential);
+		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION ||
+		   parseInt(data.tableId) === AC.TABLE_ID_ROOM ||
+		   parseInt(data.tableId) === AC.TABLE_ID_POSITION) {
+			AIR.AirAclManager.setAccessMode(this.getComponent('severityLevel'), data);
 			
-			AIR.AirAclManager.setMandatory(cbBusinessEssential, 'optional');
+			var cbBusinessEssential = this.getComponent('businessEssential');
+			if(AIR.AirApplicationManager.hasRole(AC.ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)) {//hasRoleBusinessEssentialEditor (#8)
+				// nur für die Rolle BusinessEssential-Editor
+				// unter Prüfung der Insert-Source mittels isEditable
+				if (AIR.AirAclManager.isEditable(cbBusinessEssential)) {
+					Util.enableCombo(cbBusinessEssential);
+					
+					AIR.AirAclManager.setMandatory(cbBusinessEssential, 'mandatory');
+					// this.setEditable(aclItemCmp); // diese Methode prüft die Rechte und verhindert das Editieren...
+					// deshalb setzen wir das FormElement einzeln auf true
+	//				AIR.AirAclManager.setFormElementEnable(cbBusinessEssential, true);
+				}
+			} else {
+				//cbBusinessEssential.disable();
+				Util.disableCombo(cbBusinessEssential);
+				
+				AIR.AirAclManager.setMandatory(cbBusinessEssential, 'optional');
+			}
 		}
 	},
 	
-	//getData: function() {
 	setData: function(data) {
-		//var data = {};
-		
 		var field = this.getComponent('sla');
 		if (!field.disabled)
 			if(field.getValue().length > 0)
-				data.slaName = field.getValue();
+				data.slaId = field.getValue();
 		
 		field = this.getComponent('serviceContract');
 		if (!field.disabled)
 //			if(field.getValue().length > 0)
-				data[field.id] = field.getValue();
+				data.serviceContractId = field.getValue();
 		
-		
-		field = this.getComponent('priorityLevel');
-		if (!field.disabled) {
-			if(field.getValue().length > 0) {
-				data.priorityLevel = field.getValue();
-			} else {
-				data.priorityLevel = -1;
+		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION) {
+			field = this.getComponent('priorityLevel');
+			if (!field.disabled) {
+				if(field.getValue().length > 0) {
+					data.priorityLevelId = field.getValue();
+				} else {
+					data.priorityLevelId = -1;
+				}
 			}
 		}
 		
-		field = this.getComponent('severityLevel');
-		if (!field.disabled) {
-			if(field.getValue().length > 0) {
-				data.severityLevel = field.getValue();
-			} else {
-				data.severityLevel = -1;
+		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION ||
+		   parseInt(data.tableId) === AC.TABLE_ID_ROOM ||
+		   parseInt(data.tableId) === AC.TABLE_ID_POSITION) {
+		
+			field = this.getComponent('severityLevel');
+			if (!field.disabled) {
+				if(field.getValue().length > 0) {
+					data.severityLevelId = field.getValue();
+				} else {
+					data.severityLevelId = -1;
+				}
 			}
+			
+			field = this.getComponent('businessEssential');
+			if (!field.disabled)
+				if(field.getValue().length > 0)
+					data.businessEssentialId = field.getValue();
 		}
-		
-		field = this.getComponent('businessEssential');
-		if (!field.disabled)
-			if(field.getValue().length > 0)
-				data.businessEssentialId = field.getValue();
-		
 		
 		return data;
 	},

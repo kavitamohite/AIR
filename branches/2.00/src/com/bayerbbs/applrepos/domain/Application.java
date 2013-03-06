@@ -13,8 +13,6 @@ import javax.persistence.Transient;
 @Table(name = "ANWENDUNG")
 @SequenceGenerator(name = "MySeqAnwendung", sequenceName = "TBADM.SEQ_ANWENDUNG")
 public class Application extends DeletableRevisionInfo {
-
-
 	// basics
 	private Long applicationId;
 	private String barApplicationId;	// Bayer application register id
@@ -44,7 +42,8 @@ public class Application extends DeletableRevisionInfo {
 	// protection
 	private Long itSecSbAvailability;
 	private String itSecSbAvailabilityText;
-	
+	private Long classInformationId;
+	private String classInformationExplanation;
 
 	// compliance
 	private Long itset;
@@ -83,16 +82,11 @@ public class Application extends DeletableRevisionInfo {
 	private String applicationSteward;
 	
 	private Long categoryBusiness;
+	private Long classDataId;
 
 	
-	private Long classDataId;
-	private Long classInformationId;
-	private String classInformationExplanation;
-	
 	private String serviceModel;
-	
 	private String organisationalScope;
-	
 	private String barRelevance;
 	
 
@@ -453,6 +447,27 @@ public class Application extends DeletableRevisionInfo {
 	public void setItSecSbAvailabilityText(String itSecSbAvailabilityText) {
 		this.itSecSbAvailabilityText = itSecSbAvailabilityText;
 	}
+	
+
+	@Column(name = "CLASS_INFORMATION_ID")
+	public Long getClassInformationId() {
+		return classInformationId;
+	}
+
+	public void setClassInformationId(Long classInformationId) {
+		this.classInformationId = classInformationId;
+	}
+
+	@Column(name = "CLASS_INFORMATION_EXPLANATION")
+	public String getClassInformationExplanation() {
+		return classInformationExplanation;
+	}
+
+	public void setClassInformationExplanation(String classInformationExplanation) {
+		this.classInformationExplanation = classInformationExplanation;
+	}
+	
+	
 
 	//in Basisklasse
 	@Column(name = "SLA_ID")
@@ -538,23 +553,6 @@ public class Application extends DeletableRevisionInfo {
 		this.classDataId = classDataId;
 	}
 
-	@Column(name = "CLASS_INFORMATION_ID")
-	public Long getClassInformationId() {
-		return classInformationId;
-	}
-
-	public void setClassInformationId(Long classInformationId) {
-		this.classInformationId = classInformationId;
-	}
-
-	@Column(name = "CLASS_INFORMATION_EXPLANATION")
-	public String getClassInformationExplanation() {
-		return classInformationExplanation;
-	}
-
-	public void setClassInformationExplanation(String classInformationExplanation) {
-		this.classInformationExplanation = classInformationExplanation;
-	}
 
 	@Column(name = "SERVICE_MODEL")
 	public String getServiceModel() {

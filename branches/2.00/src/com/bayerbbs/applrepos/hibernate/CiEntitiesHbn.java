@@ -776,33 +776,37 @@ public class CiEntitiesHbn {
 		
 		boolean commit = false;
 
+		//evtl. and r.del_timestamp IS NULL weg UND r.del_timestamp dazu, damit man untersuchen kann ob 
+		//gesetztes template löschmarkiert und damit invalid ist auf der Compliance Seite.
+		//wenn r.del_timestamp hier dazukommt, spart man zwei joins beim Laden der CI Detaildaten,
+		//wenn man den Text/Namen des Templates und der ItSecGruppe als ungültig anzeigen will.
 		StringBuilder sql = new StringBuilder();//"SELECT ci_id, table_id, type, name, itset, FROM dwh_entity WHERE template = 'Yes'";
 		sql.
-		append("select r.raum_name as ci_name, r.raum_id as ci_id, r.itset, r.itsec_gruppe_id, (3) as table_id, (0) as ci_sub_type from raum r ").
-		append("where r.template = -1 ").
-		append("union ").// --all
-		append("select g.gebaeude_name, g.gebaeude_id, g.itset, g.itsec_gruppe_id, (4) as table_id, (0) as ci_sub_type from gebaeude g ").
-		append("where g.template = -1 ").
-		append("union ").// --all
-		append("select ba.area_name, ba.area_id, ba.itset, ba.itsec_gruppe_id, (88) as table_id, (0) as ci_sub_type from building_area ba ").
-		append("where ba.template = -1 ").
-		append("union ").// --all
-		append("select i.it_system_name, i.it_system_id, i.itset, i.itsec_gruppe_id, (1) as table_id, i.hw_ident_or_trans as ci_sub_type from it_system i ").
-		append("where i.template = -1 ").
-		append("union ").// --all
-		append("select s.schrank_name as ci_name, s.schrank_id as ci_id, s.itset, s.itsec_gruppe_id, (13) as table_id, (0) as ci_sub_type from schrank s ").
-		append("where s.template = -1 ").
-		append("union ").// --all
-		append("select st.standort_name as ci_name, st.standort_id as ci_id, st.itset, st.itsec_gruppe_id, (12) as table_id, (0) as ci_sub_type from standort st ").
-		append("where st.template = -1 ").
-		append("union ").// --all
-		append("select t.terrain_name as ci_name, t.terrain_id as ci_id, t.itset, t.itsec_gruppe_id, (30) as table_id, (0) as ci_sub_type from terrain t ").
-		append("where t.template = -1 ").
-		append("union ").// --all
-		append("select an.anwendung_name, an.anwendung_id, an.itset, an.itsec_gruppe_id, (2) as table_id, ak2.anwendung_kat1_id from anwendung an ").
-		append("  inner join anwendung_kat2 ak2 on an.anwendung_kat2_id = ak2.anwendung_kat2_id ").
-		append("where an.template = -1 ").
-		append("order by table_id, ci_sub_type");
+		append("SELECT r.raum_name as ci_name, r.raum_id as ci_id, r.itset, r.itsec_gruppe_id, r.del_timestamp, (3) as table_id, (0) as ci_sub_type FROM raum r ").
+		append("WHERE r.template = -1 ").// and r.del_timestamp IS NULL
+		append("UNION ").// --all
+		append("SELECT g.gebaeude_name, g.gebaeude_id, g.itset, g.itsec_gruppe_id, g.del_timestamp, (4) as table_id, (0) as ci_sub_type FROM gebaeude g ").
+		append("WHERE g.template = -1 ").// and g.del_timestamp IS NULL
+		append("UNION ").// --all
+		append("SELECT ba.area_name, ba.area_id, ba.itset, ba.itsec_gruppe_id, ba.del_timestamp, (88) as table_id, (0) as ci_sub_type FROM building_area ba ").
+		append("WHERE ba.template = -1 ").// and ba.del_timestamp IS NULL
+		append("UNION ").// --all
+		append("SELECT i.it_system_name, i.it_system_id, i.itset, i.itsec_gruppe_id, i.del_timestamp, (1) as table_id, i.hw_ident_or_trans as ci_sub_type FROM it_system i ").
+		append("WHERE i.template = -1 ").// and i.del_timestamp IS NULL
+		append("UNION ").// --all
+		append("SELECT s.schrank_name as ci_name, s.schrank_id as ci_id, s.itset, s.itsec_gruppe_id, s.del_timestamp, (13) as table_id, (0) as ci_sub_type FROM schrank s ").
+		append("WHERE s.template = -1 ").// and s.del_timestamp IS NULL
+		append("UNION ").// --all
+		append("SELECT st.standort_name as ci_name, st.standort_id as ci_id, st.itset, st.itsec_gruppe_id, st.del_timestamp, (12) as table_id, (0) as ci_sub_type FROM standort st ").
+		append("WHERE st.template = -1 ").// and st.del_timestamp IS NULL
+		append("UNION ").// --all
+		append("SELECT t.terrain_name as ci_name, t.terrain_id as ci_id, t.itset, t.itsec_gruppe_id, t.del_timestamp, (30) as table_id, (0) as ci_sub_type FROM terrain t ").
+		append("WHERE t.template = -1 ").// and t.del_timestamp IS NULL
+		append("UNION ").// --all
+		append("SELECT an.anwendung_name, an.anwendung_id, an.itset, an.itsec_gruppe_id, an.del_timestamp, (2) as table_id, ak2.anwendung_kat1_id FROM anwendung an ").
+		append("INNER JOIN anwendung_kat2 ak2 on an.anwendung_kat2_id = ak2.anwendung_kat2_id ").
+		append("WHERE an.template = -1 ").// and an.del_timestamp IS NULL
+		append("ORDER BY table_id, ci_sub_type");
 
 		try {
 			ta = session.beginTransaction();
@@ -818,6 +822,7 @@ public class CiEntitiesHbn {
 				templateDTO.setName(rs.getString("CI_NAME"));
 				templateDTO.setItsetId(rs.getLong("ITSET"));
 				templateDTO.setItsecGroupId(rs.getLong("ITSEC_GRUPPE_ID"));
+				templateDTO.setDelTimestamp(rs.getTimestamp("DEL_TIMESTAMP") != null ? rs.getTimestamp("DEL_TIMESTAMP").getTime() : null);
 				templateDTO.setTableId(rs.getInt("TABLE_ID"));
 				templateDTO.setCiKat1(rs.getLong("CI_SUB_TYPE"));
 				

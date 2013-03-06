@@ -1,5 +1,6 @@
 <?xml version = "1.0"?>
-<endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
+<endpoints version="2.0"
+	xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
 	<endpoint name="ApplicationWSPort"
 		implementation="com.bayerbbs.applrepos.service.ApplicationWSDelegate"
 		url-pattern="/ApplicationWSPort">
@@ -68,11 +69,37 @@
 		implementation="com.bayerbbs.applrepos.service.ItsecMassnahmenWSDelegate"
 		url-pattern="/ItsecMassnahmenWSPort">
 	</endpoint>
-	<endpoint name="AIRWSPort"
-		implementation="com.bayerbbs.applrepos.service.AIRWSDelegate"
+	<endpoint name="AIRWSPort" implementation="com.bayerbbs.applrepos.service.AIRWSDelegate"
 		url-pattern="/AIRWSPort">
 	</endpoint>
 	<endpoint name="AIRToolsWSPort"
 		implementation="com.bayerbbs.applrepos.service.AIRToolsWSDelegate"
 		url-pattern="/AIRToolsWSPort">
-	</endpoint></endpoints>
+	</endpoint>
+	
+	
+	<endpoint name="SchrankWSPort"
+		implementation="com.bayerbbs.applrepos.service.SchrankWSDelegate"
+		url-pattern="/SchrankWSPort">
+	</endpoint>	
+	<endpoint name="RoomWSPort"
+		implementation="com.bayerbbs.applrepos.service.RoomWSDelegate"
+		url-pattern="/RoomWSPort">
+	</endpoint>
+	<!--<endpoint name="BuildingWSPort"
+		implementation="com.bayerbbs.applrepos.service.BuildingWSDelegate"
+		url-pattern="/BuildingWSPort">
+	</endpoint>
+	<endpoint name="BuildingAreaWSPort"
+		implementation="com.bayerbbs.applrepos.service.BuildingAreaWSDelegate"
+		url-pattern="/BuildingAreaWSPort">
+	</endpoint>
+	<endpoint name="TerrainWSPort"
+		implementation="com.bayerbbs.applrepos.service.TerrainWSDelegate"
+		url-pattern="/TerrainWSPort">
+	</endpoint>
+	<endpoint name="StandortWSPort"
+		implementation="com.bayerbbs.applrepos.service.StandortWSDelegate"
+		url-pattern="/StandortWSPort">
+	</endpoint>-->
+</endpoints>

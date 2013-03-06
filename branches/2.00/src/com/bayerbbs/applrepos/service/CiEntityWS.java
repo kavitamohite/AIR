@@ -93,6 +93,13 @@ public class CiEntityWS {
 			
 			setCiBaseData(standortDTO, standort);
 			standortDTO.setCiLokationsKette(lokationsKette);
+			
+			AccessRightChecker checker = new AccessRightChecker();
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), standort)) {
+				standortDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
+			} else {
+				standortDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
+			}
 		}
 		
 		return standortDTO;
@@ -110,6 +117,13 @@ public class CiEntityWS {
 			
 			setCiBaseData(terrainDTO, terrain);
 			terrainDTO.setCiLokationsKette(lokationsKette);
+			
+			AccessRightChecker checker = new AccessRightChecker();
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), terrain)) {
+				terrainDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
+			} else {
+				terrainDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
+			}
 		}
 		
 		return terrainDTO;
@@ -128,6 +142,14 @@ public class CiEntityWS {
 			
 			setCiBaseData(schrankDTO, schrank);
 			schrankDTO.setCiLokationsKette(lokationsKette);
+			
+			//Standard Zugriffsrechte setzen.
+			AccessRightChecker checker = new AccessRightChecker();
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), schrank)) {
+				schrankDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
+			} else {
+				schrankDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
+			}
 		}
 		
 		return schrankDTO;
@@ -152,17 +174,24 @@ public class CiEntityWS {
 			
 			setCiBaseData(buildingDTO, building);
 			buildingDTO.setCiLokationsKette(lokationsKette);
+			
+			AccessRightChecker checker = new AccessRightChecker();
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), building)) {
+				buildingDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
+			} else {
+				buildingDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
+			}
 		}
 
 		return buildingDTO;
 	}
 	
-	public BuildingAreaDTO getBuildingArea(CiDetailParameterInput detailInput) {
+	public BuildingAreaDTO getBuildingArea(CiDetailParameterInput input) {
 		BuildingAreaDTO buildingAreaDTO = new BuildingAreaDTO();
 
-		if(LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
-			BuildingArea buildingArea = BuildingHbn.findById(BuildingArea.class, detailInput.getCiId());//BuildingHbn.findBuildingAreaById(detailInput.getCiId());
-			CiLokationsKette lokationsKette = BuildingHbn.findLokationsKetteByAreaId(detailInput.getCiId());
+		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+			BuildingArea buildingArea = BuildingHbn.findById(BuildingArea.class, input.getCiId());//BuildingHbn.findBuildingAreaById(detailInput.getCiId());
+			CiLokationsKette lokationsKette = BuildingHbn.findLokationsKetteByAreaId(input.getCiId());
 
 			
 			//wenn noch alle Räume irgendwie auf die GUI sollen
@@ -196,6 +225,13 @@ public class CiEntityWS {
 				}
 				buildingAreaDTO.setBuildingData(data.toString());
 			}*/
+			
+			AccessRightChecker checker = new AccessRightChecker();
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), buildingArea)) {
+				buildingAreaDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
+			} else {
+				buildingAreaDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
+			}
 		}
 
 		return buildingAreaDTO;
@@ -368,6 +404,9 @@ public class CiEntityWS {
 		ciBaseDTO.setSlaId(ciBase.getSlaId());
 		ciBaseDTO.setServiceContractId(ciBase.getServiceContractId());
 		
+		ciBaseDTO.setItSecSbAvailabilityId(ciBase.getItSecSbAvailability());
+		ciBaseDTO.setItSecSbAvailabilityDescription(ciBase.getItSecSbAvailabilityText());
+		
 		ciBaseDTO.setItset(ciBase.getItset());
 		ciBaseDTO.setTemplate(ciBase.getTemplate());
 		ciBaseDTO.setItsecGroupId(ciBase.getItsecGroupId());
@@ -414,6 +453,9 @@ public class CiEntityWS {
 		else {//(0 == relevanceICS) {
 			ciBaseDTO.setRelevanceGR1920(NO);
 		}
+		
+		ciBaseDTO.setGxpFlagId(ciBase.getGxpFlag());
+		ciBaseDTO.setGxpFlag(ciBase.getGxpFlag());
 
 		
 		String source = ciBaseDTO.getInsertQuelle();
@@ -435,101 +477,4 @@ public class CiEntityWS {
 //			Itsec_SB_Verfg_ID,Itsec_SB_Verfg_Txt,Itsec_SB_Vertr_ID,Itsec_SB_Vertr_Txt
 		}
 	}
-
-	protected RoomDTO getRoomDTOFromEditInput(RoomEditParameterInput editInput) {
-		RoomDTO roomDTO = new RoomDTO();
-		roomDTO.setId(editInput.getId());
-		roomDTO.setName(editInput.getName());
-		roomDTO.setAlias(editInput.getAlias());
-		roomDTO.setFloor(editInput.getFloor());
-		roomDTO.setAreaId(editInput.getAreaId());
-		
-		roomDTO.setCiOwner(editInput.getCiOwner());
-		roomDTO.setCiOwnerHidden(editInput.getCiOwnerHidden());
-		roomDTO.setCiOwnerDelegate(editInput.getCiOwnerDelegate());
-		roomDTO.setCiOwnerDelegateHidden(editInput.getCiOwnerDelegateHidden());
-
-		roomDTO.setBusinessEssentialId(editInput.getBusinessEssentialId());
-		
-		roomDTO.setItset(editInput.getItset());
-		roomDTO.setTemplate(editInput.getTemplate());
-		roomDTO.setItsecGroupId(editInput.getItsecGroupId());
-		roomDTO.setRefId(editInput.getRefId());
-		
-		roomDTO.setRelevanceICS(editInput.getRelevanceICS());
-		roomDTO.setRelevanzItsec(editInput.getRelevanzITSEC());
-		roomDTO.setGxpFlag(editInput.getGxpFlag());
-		roomDTO.setGxpFlagId(editInput.getGxpFlagId());
-
-		return roomDTO;
-	}
-	
-	public CiEntityEditParameterOutput saveRoom(RoomEditParameterInput editInput) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-
-		if (null != editInput) {
-			RoomDTO dto = getRoomDTOFromEditInput(editInput);
-			output = RoomHbn.saveRoom(editInput.getCwid(), dto);
-		}
-		
-		return output;
-	}
-	
-	public CiEntityEditParameterOutput deleteRoom(RoomEditParameterInput editInput) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-
-		if (null != editInput) {
-			if (LDAPAuthWS.isLoginValid(editInput.getCwid(), editInput.getToken())) {
-				RoomDTO dto = getRoomDTOFromEditInput(editInput);
-
-				output = RoomHbn.deleteRoom(editInput.getCwid(), dto);
-			} else {
-				// TODO MESSAGE LOGGED OUT
-			}
-		}
-
-		return output;
-	}
-
-	
-	public CiEntityEditParameterOutput createRoom(RoomEditParameterInput editInput) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-
-		if (null != editInput && (LDAPAuthWS.isLoginValid(editInput.getCwid(), editInput.getToken())) ) {
-			RoomDTO dto = getRoomDTOFromEditInput(editInput);
-
-			// create Application - fill attributes
-			if (null == dto.getCiOwner()) {
-				dto.setCiOwner(editInput.getCwid().toUpperCase());
-				dto.setCiOwnerHidden(editInput.getCwid().toUpperCase());
-			}
-			if (null == dto.getBusinessEssentialId()) {
-				dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-			}
-
-			// save / create application
-			output = RoomHbn.createRoom(editInput.getCwid(), dto, true);
-
-			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
-				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
-				if (null != listCi && 1 == listCi.size()) {
-					Long ciId = listCi.get(0).getId();
-					output.setCiId(ciId);
-				} else {
-					// unknown?
-					output.setCiId(new Long(-1));
-				}
-			} else {
-				// TODO errorcodes / Texte
-				if (null != output.getMessages() && output.getMessages().length > 0) {
-					output.setDisplayMessage(output.getMessages()[0]);
-				}
-			}
-		}
-
-		return output;
-	}
-
-	
 }

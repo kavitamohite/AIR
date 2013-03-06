@@ -7,6 +7,7 @@ public class ReferenzDTO {
 	private Long itsecGroupId;
 	private Long ciKat1;
 	private Integer tableId;
+	private Long delTimestamp;
 
 	public Long getId() {
 		return id;
@@ -48,5 +49,11 @@ public class ReferenzDTO {
 	}
 	public void setTableId(Integer tableId) {
 		this.tableId = tableId;
+	}
+	public Long getDelTimestamp() {
+		return delTimestamp;
+	}
+	public void setDelTimestamp(Long delTimestamp) {
+		this.delTimestamp = delTimestamp;
 	}
 }

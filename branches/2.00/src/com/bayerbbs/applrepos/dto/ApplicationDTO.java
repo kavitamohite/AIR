@@ -139,7 +139,7 @@ public class ApplicationDTO extends CiBaseDTO {
 	private String itSecSbIntegrityTxt;
 	private String itSecSbIntegrityDescription;
 	private Long itSecSbAvailabilityId;
-	private String itSecSbAvailabilityTxt;
+//	private String itSecSbAvailabilityTxt;
 	private String itSecSbAvailabilityDescription;
 	private Long itSecSbConfidentialityId;
 	private String itSecSbConfidentialityTxt;
@@ -849,8 +849,7 @@ public class ApplicationDTO extends CiBaseDTO {
 		return ciSupportStuffProvidedMachineUsers;
 	}
 
-	public void setCiSupportStuffProvidedMachineUsers(
-			String ciSupportStuffProvidedMachineUsers) {
+	public void setCiSupportStuffProvidedMachineUsers(String ciSupportStuffProvidedMachineUsers) {
 		this.ciSupportStuffProvidedMachineUsers = ciSupportStuffProvidedMachineUsers;
 	}
 
@@ -866,16 +865,19 @@ public class ApplicationDTO extends CiBaseDTO {
 	public Long getItSecSbAvailabilityId() {
 		return itSecSbAvailabilityId;
 	}
-
 	public void setItSecSbAvailabilityId(Long itSecSbAvailabilityId) {
 		this.itSecSbAvailabilityId = itSecSbAvailabilityId;
 	}
-
+//	public String getItSecSbAvailabilityTxt() {
+//		return itSecSbAvailabilityTxt;
+//	}
+//	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
+//		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
+//	}
 
 	public Long getItSecSbConfidentialityId() {
 		return itSecSbConfidentialityId;
 	}
-
 	public void setItSecSbConfidentialityId(Long itSecSbConfidentialityId) {
 		this.itSecSbConfidentialityId = itSecSbConfidentialityId;
 	}
@@ -883,7 +885,6 @@ public class ApplicationDTO extends CiBaseDTO {
 	public String getItSecSbIntegrityTxt() {
 		return itSecSbIntegrityTxt;
 	}
-
 	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
 		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
 	}
@@ -891,45 +892,32 @@ public class ApplicationDTO extends CiBaseDTO {
 	public String getItSecSbIntegrityDescription() {
 		return itSecSbIntegrityDescription;
 	}
-
 	public void setItSecSbIntegrityDescription(String itSecSbIntegrityDescription) {
 		this.itSecSbIntegrityDescription = itSecSbIntegrityDescription;
 	}
 
-	public String getItSecSbAvailabilityTxt() {
-		return itSecSbAvailabilityTxt;
-	}
-
-	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
-		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
-	}
 
 	public String getItSecSbAvailabilityDescription() {
 		return itSecSbAvailabilityDescription;
 	}
-
-	public void setItSecSbAvailabilityDescription(
-			String itSecSbAvailabilityDescription) {
+	public void setItSecSbAvailabilityDescription(String itSecSbAvailabilityDescription) {
 		this.itSecSbAvailabilityDescription = itSecSbAvailabilityDescription;
 	}
 
 	public String getItSecSbConfidentialityTxt() {
 		return itSecSbConfidentialityTxt;
 	}
-
 	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
 		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
 	}
-
 	public String getItSecSbConfidentialityDescription() {
 		return itSecSbConfidentialityDescription;
 	}
-
-	public void setItSecSbConfidentialityDescription(
-			String itSecSbConfidentialityDescription) {
+	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
 		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
 	}
 
+	
 	public Long getPrimaryFunctionId() {
 		return primaryFunctionId;
 	}

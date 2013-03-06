@@ -48,6 +48,25 @@ public class CiBaseDTO implements Serializable {
 	private String gxpFlag;
 	private String gxpFlagId;// falls später über id referenziert wird
 	
+	// Protection
+	private Long itSecSbAvailabilityId;
+//	private String itSecSbAvailabilityTxt;
+	private String itSecSbAvailabilityDescription;
+	
+	
+	//nur Application!!
+//	private Long classInformationId;
+//	private String classInformationExplanation;
+	
+	
+	private Long itSecSbIntegrityId;
+//	private String itSecSbIntegrityTxt;
+	private String itSecSbIntegrityDescription;
+
+	private Long itSecSbConfidentialityId;
+//	private String itSecSbConfidentialityTxt;
+	private String itSecSbConfidentialityDescription;
+	
 	//====================
 	private String relevanceOperational = AirKonstanten.NO_SHORT;
 	
@@ -261,13 +280,6 @@ public class CiBaseDTO implements Serializable {
 		}
 	}
 
-	public Long getRelevanzItsec() {
-		return relevanzItsec;
-	}
-	public void setRelevanzItsec(Long relevanzItsec) {
-		this.relevanzItsec = relevanzItsec;
-	}
-	
 	public String getRelevanceGR1920() {
 		return relevanceGR1920;
 	}
@@ -281,6 +293,12 @@ public class CiBaseDTO implements Serializable {
 		}
 	}
 	
+	public Long getRelevanzItsec() {
+		return relevanzItsec;
+	}
+	public void setRelevanzItsec(Long relevanzItsec) {
+		this.relevanzItsec = relevanzItsec;
+	}
 	public Long getRelevanceICS() {
 		return relevanceICS;
 	}
@@ -371,4 +389,80 @@ public class CiBaseDTO implements Serializable {
 	public void setRelevanceOperational(String relevanceOperational) {
 		this.relevanceOperational = relevanceOperational;
 	}
+	
+
+	
+	public Long getItSecSbAvailabilityId() {
+		return itSecSbAvailabilityId;
+	}
+	public void setItSecSbAvailabilityId(Long itSecSbAvailabilityId) {
+		this.itSecSbAvailabilityId = itSecSbAvailabilityId;
+	}
+//	public String getItSecSbAvailabilityTxt() {
+//		return itSecSbAvailabilityTxt;
+//	}
+//	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
+//		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
+//	}
+	public String getItSecSbAvailabilityDescription() {
+		return itSecSbAvailabilityDescription;
+	}
+	public void setItSecSbAvailabilityDescription(String itSecSbAvailabilityDescription) {
+		this.itSecSbAvailabilityDescription = itSecSbAvailabilityDescription;
+	}
+	
+	//nur Application!!
+//	public Long getClassInformationId() {
+//		return classInformationId;
+//	}
+//	public void setClassInformationId(Long classInformationId) {
+//		this.classInformationId = classInformationId;
+//	}
+//	public String getClassInformationExplanation() {
+//		return classInformationExplanation;
+//	}
+//	public void setClassInformationExplanation(String classInformationExplanation) {
+//		this.classInformationExplanation = classInformationExplanation;
+//	}
+
+	public Long getItSecSbIntegrityId() {
+		return itSecSbIntegrityId;
+	}
+	public void setItSecSbIntegrityId(Long itSecSbIntegrityId) {
+		this.itSecSbIntegrityId = itSecSbIntegrityId;
+	}
+//	public String getItSecSbIntegrityTxt() {
+//		return itSecSbIntegrityTxt;
+//	}
+//	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
+//		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
+//	}
+	public String getItSecSbIntegrityDescription() {
+		return itSecSbIntegrityDescription;
+	}
+	public void setItSecSbIntegrityDescription(String itSecSbIntegrityDescription) {
+		this.itSecSbIntegrityDescription = itSecSbIntegrityDescription;
+	}
+
+	
+	public Long getItSecSbConfidentialityId() {
+		return itSecSbConfidentialityId;
+	}
+	public void setItSecSbConfidentialityId(Long itSecSbConfidentialityId) {
+		this.itSecSbConfidentialityId = itSecSbConfidentialityId;
+	}
+//	public String getItSecSbConfidentialityTxt() {
+//		return itSecSbConfidentialityTxt;
+//	}
+//	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
+//		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
+//	}
+	public String getItSecSbConfidentialityDescription() {
+		return itSecSbConfidentialityDescription;
+	}
+	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
+		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
+	}
+
+	
 }

@@ -570,36 +570,36 @@ AIR.AirAclManager = function() {
 //		
 		getRequiredFields: function(data) {
 			var incompleteFieldList = '';
-			var records = this.aclStore.getRange();
-			var labels = AIR.AirApplicationManager.getLabels();
+			var aclItems = this.aclStore.getRange();
+			var labels = AAM.getLabels();
 			
 			
-//			Ext.each(records, function(item, index, allItems) {
-			for(var i = 0; i < records.length; i++) {
+//			Ext.each(aclItems, function(item, index, allItems) {
+			for(var i = 0; i < aclItems.length; i++) {
 //				if(item.data.Mandatory === 'mandatory' && item.data.id.charAt(item.data.id.length - 1) !== 'W') { //'required'
-				if(records[i].data.Mandatory === 'mandatory' && records[i].data.id.charAt(records[i].data.id.length - 1) !== 'W') { //'required'
-					var reqItemCmp = Ext.getCmp(records[i].data.id);
+				if(aclItems[i].data.Mandatory === 'mandatory' && aclItems[i].data.id.charAt(aclItems[i].data.id.length - 1) !== 'W') { //'required'
+					var uiElement = Ext.getCmp(aclItems[i].data.id);
 					
-					if(reqItemCmp && this.isCiTypeField(data, reqItemCmp)) {
-						switch (reqItemCmp.getXType()) {
+					if(uiElement && this.isCiTypeField(data, uiElement, aclItems[i])) {
+						switch (uiElement.getXType()) {
 							case 'textfield':
 							case 'textarea':
 							case 'combo':
 							case 'filterCombo':
-								//if(!reqItemCmp.disabled && (reqItemCmp.getValue()===undefined || reqItemCmp.getValue()==='')) {
-								if(!reqItemCmp.disabled && (!reqItemCmp.getValue() || reqItemCmp.getValue().length === 0))
-									if(labels[reqItemCmp.id])											
-										incompleteFieldList += labels[reqItemCmp.id] + ', ';
+								//if(!uiElement.disabled && (uiElement.getValue()===undefined || uiElement.getValue()==='')) {
+								if(!uiElement.disabled && (!uiElement.getValue() || uiElement.getValue().length === 0))
+									if(labels[uiElement.id])											
+										incompleteFieldList += labels[uiElement.id] + ', ';
 									
 								break;
 							case 'listview':
-								if(!reqItemCmp.disabled && reqItemCmp.getSelectedRecords().length === 0)
-									incompleteFieldList += labels[reqItemCmp.id] + ', ';
+								if(!uiElement.disabled && uiElement.getSelectedRecords().length === 0)
+									incompleteFieldList += labels[uiElement.id] + ', ';
 								break;
 							case 'radiogroup':
-								var selected = reqItemCmp.getValue();
-								if(!reqItemCmp.disabled && (!selected || selected.inputValue === 'U'))//selected === null
-									incompleteFieldList += labels[reqItemCmp.id] + ', ';
+								var selected = uiElement.getValue();
+								if(!uiElement.disabled && (!selected || selected.inputValue === 'U'))//selected === null
+									incompleteFieldList += labels[uiElement.id] + ', ';
 								break;
 						}
 					}
@@ -614,8 +614,19 @@ AIR.AirAclManager = function() {
 			return incompleteFieldList;
 		},
 		
-		isCiTypeField: function(data, reqItemCmp) {//mit allen CI Typen: tableId, ciSubType
-			return !(data.applicationCat1Id !== AC.APP_CAT1_APPLICATION && AC.APP_CAT1_ONLY_FIELDS.indexOf(reqItemCmp.getId()) > -1);
+		isCiTypeField: function(data, uiElement, aclItem) {//mit allen CI Typen: tableId, ciSubType
+			var aclCiType = aclItem.get('ciTypeId');
+			var aclCiSubType = aclItem.get('ciSubTypeId');
+			
+			var isCiType = !aclCiType || aclCiType === data.tableId.toString() || aclCiType.indexOf(data.tableId.toString()) > 0;
+			var isCiSubType = !data.applicationCat1Id || data.applicationCat1Id === data.applicationCat1Id.toString() || aclCiSubType.indexOf(data.applicationCat1Id.toString()) > 0;
+			
+			return isCiType && isCiSubType;
+			
+//			var index = this.aclStore.find('id', uiElement.id);
+//			var accessMode = this.aclStore.getAt(index);
+			
+//			return !(data.applicationCat1Id !== AC.APP_CAT1_APPLICATION && AC.APP_CAT1_ONLY_FIELDS.indexOf(reqItemCmp.getId()) > -1);
 		},
 		
 		

@@ -12,8 +12,10 @@ import javax.persistence.Table;
 public class Schrank extends CiBase implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	
+	private Long severityLevelId;
+	private Long businessEssentialId;
+	
 //	private Long roomId;
-//	
 //	private Room room;
 
 	
@@ -35,6 +37,22 @@ public class Schrank extends CiBase implements Serializable {
 		setName(schrankName);
 	}
 
+	@Column(name = "SEVERITY_LEVEL_ID")
+	public Long getSeverityLevelId() {
+		return severityLevelId;
+	}
+	public void setSeverityLevelId(Long severityLevelId) {
+		this.severityLevelId = severityLevelId;
+	}
+	
+	@Column(name = "BUSINESS_ESSENTIAL_ID")
+	public Long getBusinessEssentialId() {
+		return businessEssentialId;
+	}
+
+	public void setBusinessEssentialId(Long businessEssentialId) {
+		this.businessEssentialId = businessEssentialId;
+	}
 	
 //	@ManyToOne
 //	@JoinColumn(name="RAUM_ID")

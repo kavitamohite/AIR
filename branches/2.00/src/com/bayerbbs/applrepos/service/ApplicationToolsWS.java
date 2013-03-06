@@ -122,11 +122,11 @@ public class ApplicationToolsWS {
 	}
 */	
 	public ServiceContractDTO[] getServiceContractList(ApplicationEditParameterInput editInput) {
-		if (null == editInput.getSlaName() || 0 == editInput.getSlaName().longValue()) {
+		if (null == editInput.getSlaId() || 0 == editInput.getSlaId().longValue()) {
 			return ServiceContractHbn.getArrayFromList(ServiceContractHbn.listServiceContract());
 		}
 		else {
-			return ServiceContractHbn.getArrayFromList(ServiceContractHbn.findServiceContractsBySlaId(editInput.getSlaName()));	
+			return ServiceContractHbn.getArrayFromList(ServiceContractHbn.findServiceContractsBySlaId(editInput.getSlaId()));	
 		}
 	}
 	

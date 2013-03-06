@@ -1795,7 +1795,7 @@ AIR.AirStoreFactory = function() {
 
 			    record: 'Identifier', // records will have an 'Identifier' tag
 			    
-			    fields: [ 'id', 'Mandatory', 'Relevance', 'EditableIfSource', 'attributeType', 'attributeLength', 'attributeMask', 'UseInWizard', 'rolesAllowed' ]//restrictionLevel
+			    fields: [ 'id', 'ciTypeId', 'ciSubTypeId', 'Mandatory', 'Relevance', 'EditableIfSource', 'attributeType', 'attributeLength', 'attributeMask', 'UseInWizard', 'rolesAllowed' ]//restrictionLevel
 			});
 			
 			return aclStore;
@@ -2643,12 +2643,12 @@ AIR.AirStoreFactory = function() {
 				name : 'itSecSbAvailabilityId',
 				mapping : 'applicationDTO > itSecSbAvailabilityId'
 			}, {
-				name : 'itSecSbAvailabilityTxt',
-				mapping : 'applicationDTO > itSecSbAvailabilityTxt'
-			}, {
+				name : 'itSecSbAvailabilityDescription',//itSecSbAvailabilityTxt
+				mapping : 'applicationDTO > itSecSbAvailabilityDescription'//itSecSbAvailabilityTxt
+			}/*, {
 				name : 'protectionAvailabilityDescription',
 				mapping : 'applicationDTO > itSecSbAvailabilityDescription'
-			}, {
+			}*/, {
 				name : 'classInformationId',
 				mapping : 'applicationDTO > classInformationId'
 			}, {
@@ -2871,6 +2871,45 @@ AIR.AirStoreFactory = function() {
 			return applicationCreateStore;
 		},
 		
+		createCiSaveStore: function(ciType) {
+			var ciSaveRecord = Ext.data.Record.create(['result', 'displayMessage', 'messages']);
+			
+			var ciSaveReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, ciSaveRecord);
+			
+			var wsName;
+			switch(parseInt(ciType)) {
+				case AC.TABLE_ID_IT_SYSTEM:			wsName = 'ItSystem'; break;
+				case AC.TABLE_ID_APPLICATION:		wsName = 'Application'; break;
+				case AC.TABLE_ID_ROOM:				wsName = 'Room'; break;
+				case AC.TABLE_ID_BUILDING:			wsName = 'Building'; break;
+				case AC.TABLE_ID_BUILDING_AREA:		wsName = 'BuildingArea'; break;
+				case AC.TABLE_ID_SITE:				wsName = 'Standort'; break;
+				case AC.TABLE_ID_POSITION:			wsName = 'Schrank'; break;
+				case AC.TABLE_ID_TERRAIN:			wsName = 'Terrain'; break;
+				default: wsName = 'Application'; break;
+			}
+	
+			var url = webcontext + '/'+ wsName +'WSPort';//AC.TABLE_ID_CI_NAME[ciType]
+			var loadMethod = 'save' + wsName;//AC.TABLE_ID_CI_NAME[ciType]
+			
+			var ciSaveStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+//				storeId: 'appSaveStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: url,
+					loadMethod: loadMethod,
+					timeout: 120000,
+					reader: ciSaveReader
+				})
+			});
+			
+			return ciSaveStore;
+		},
+		
 		createApplicationSaveStore: function() {
 			var applicationSaveRecord = Ext.data.Record.create(['result', 'displayMessage', 'messages']);
 	
@@ -3050,6 +3089,7 @@ AIR.AirStoreFactory = function() {
 		      	{ name: 'tableId' },
 		      	{ name: 'itsetId' },
 		      	{ name: 'itsecGroupId' },
+		      	{ name: 'delTimestamp' },
 				{ name: 'ciKat1' }
 		    ]);
 		
@@ -3068,15 +3108,7 @@ AIR.AirStoreFactory = function() {
 		      		loadMethod: 'getTemplateCIs',//getReferenzList
 		      		timeout: 120000,
 		      		reader: referencesListReader
-		      	}),
-		      	
-//		      	fields: ['id', 'name', 'itsetId', 'itsecGroupId', 'ciKat1'],
-//		      	baseParams: {
-//				 	cwid: AIR.AirApplicationManager.getCwid(),
-//				 	token: AIR.AirApplicationManager.getToken()
-//		      	},
-
-		      	reader: referencesListReader
+		      	})
 		    });
 		    
 		    return referencesListStore;

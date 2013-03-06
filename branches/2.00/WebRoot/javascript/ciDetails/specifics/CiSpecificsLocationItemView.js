@@ -128,7 +128,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		    	}, {
 			    	xtype: 'textfield',
 			        id: 'tfStreet',
-			    	width: 250
+			    	width: 250,
+			    	disabled: true
 		    	},{
 			    	xtype: 'textfield',
 			        id: 'tfStreetNumber',
@@ -136,7 +137,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 			    	
 			    	style: {
 						marginLeft: 5
-					}
+					},
+			    	disabled: true
 		    	}]
 		    },{
 		    	xtype: 'panel',
@@ -162,7 +164,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		    	}, {
 			    	xtype: 'textfield',
 			        id: 'tfPostalCode',
-			    	width: 50
+			    	width: 50,
+			    	disabled: true
 		    	},{
 			    	xtype: 'textfield',
 			        id: 'tfLocation',
@@ -170,7 +173,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 			    	
 			    	style: {
 						marginLeft: 5
-					}
+					},
+			    	disabled: true
 		    	}]
 		    }]
 		});
@@ -182,6 +186,19 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //		var cbBuilding = this.getComponent('cbBuilding');
 //		cbBuilding.on('beforequery', this.onBeforeBuildingSelect, this);
 //		cbBuilding.on('select', this.onBuildingSelect, this);
+		
+		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
+		var tfRoomFloor = this.getComponent('tfRoomFloor');
+		var cbBuildingArea = this.getComponent('cbBuildingArea');
+		var cbBuilding = this.getComponent('cbBuilding');
+		
+		cbBuildingArea.on('select', this.onComboSelect, this);
+		cbBuildingArea.on('change', this.onComboChange, this);
+		cbBuilding.on('select', this.onComboSelect, this);
+		cbBuilding.on('change', this.onComboChange, this);
+		
+		tfLocationCiAlias.on('change', this.onFieldChange, this);
+		tfRoomFloor.on('change', this.onFieldChange, this);
 	},
 	
 //	onBeforeBuildingSelect: function(queryEvent) {
@@ -191,9 +208,23 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //		this.isInitial = false;
 //	},
 
+	onComboSelect: function(combo, record, index) {
+		this.ownerCt.fireEvent('ciChange', this, combo);
+	},
+	onComboChange: function(combo, newValue, oldValue) {
+		if(this.isComboValueValid(combo, newValue, oldValue))
+			this.ownerCt.fireEvent('ciChange', this, combo);
+	},
+
+	onFieldChange: function(textfield, newValue, oldValue) {
+		this.ownerCt.fireEvent('ciChange', this, textfield, newValue);
+	},
     
 	update: function(data) {
-		this.isInitial = true;
+		this.ciId = data.id;
+		this.name = data.name;
+		
+//		this.isInitial = true;
 		this.updateAccessMode(data);
 		
 		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
@@ -225,7 +256,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				tfRoom.setVisible(false);
 				tfRoom.reset();
 				cbBuildingArea.setVisible(true);
-				cbBuildingArea.setValue(data.areaName);
+				cbBuildingArea.setValue(data.areaId);
+				cbBuildingArea.setRawValue(data.areaName);
 				if(AIR.AirAclManager.isRelevance(cbBuildingArea, data))
 					Util.enableCombo(cbBuildingArea);
 				
@@ -262,7 +294,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				cbBuildingArea.reset();
 				
 				cbBuilding.setValue(data.areaId);
-				cbBuilding.setRawValue(data.areaName);
+//				cbBuilding.setRawValue(data.areaName);
 				cbBuilding.getStore().setBaseParam('ciId', data.areaId);
 //				cbBuilding.query = data.areaId;
 //				cbBuilding.id = data.areaId;
@@ -424,7 +456,52 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 
 	setData: function(data) {
+		data.id = this.ciId;
+		data.name = this.name;
 		
+		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
+		var tfRoomFloor = this.getComponent('tfRoomFloor');
+		var tfRoom = this.getComponent('tfRoom');
+		var cbBuildingArea = this.getComponent('cbBuildingArea');
+		var cbBuilding = this.getComponent('cbBuilding');
+		var tfTerrain = this.getComponent('tfTerrain');
+		var tfSite = this.getComponent('tfSite');
+		var tfCountry = this.getComponent('tfCountry');
+		
+//		var tfStreet = this.getComponent('pSpecificsLocationStreet').getComponent('tfStreet');
+//		var tfStreetNumber = this.getComponent('pSpecificsLocationStreet').getComponent('tfStreetNumber');
+//
+//		var tfPostalCode = this.getComponent('pSpecificsLocationAddress').getComponent('tfPostalCode');
+//		var tfLocation = this.getComponent('pSpecificsLocationAddress').getComponent('tfLocation');
+		
+//		var field = this.getComponent('applicationId');
+//		data.id = field.getValue();
+		
+		switch(parseInt(data.tableId)) {
+			case AC.TABLE_ID_ROOM:
+				if(!tfLocationCiAlias.disabled)
+					data.alias = tfLocationCiAlias.getValue();
+				
+				if(!tfRoomFloor.disabled)
+					data.floor = tfRoomFloor.getValue();
+				
+				if(!cbBuildingArea.disabled)
+					data.areaId = cbBuildingArea.getValue();
+				
+//				if(!tfStreet.disabled)
+//					data.street = tfStreet.getValue();
+//				
+//				if(!tfStreetNumber.disabled)
+//					data.streetNumber = tfStreetNumber.getValue();
+//				
+//				if(!tfPostalCode.disabled)
+//					data.postalCode = tfPostalCode.getValue();
+//				
+//				if(!tfLocation.disabled)
+//					data.location = tfLocation.getValue();
+				
+				break;
+		}
 	},
 
 	
@@ -440,13 +517,13 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //		AIR.AirAclManager.setAccessMode(this.getComponent('tfSite'), data);
 //		AIR.AirAclManager.setAccessMode(this.getComponent('tfCountry'), data);
 		
-		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
-		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');
-		
-		AIR.AirAclManager.setAccessMode(pSpecificsLocationStreet.getComponent('tfStreet'), data);
-		AIR.AirAclManager.setAccessMode(pSpecificsLocationStreet.getComponent('tfStreetNumber'), data);
-		AIR.AirAclManager.setAccessMode(pSpecificsLocationAddress.getComponent('tfPostalCode'), data);
-		AIR.AirAclManager.setAccessMode(pSpecificsLocationAddress.getComponent('tfLocation'), data);
+//		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
+//		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');
+//		
+//		AIR.AirAclManager.setAccessMode(pSpecificsLocationStreet.getComponent('tfStreet'), data);
+//		AIR.AirAclManager.setAccessMode(pSpecificsLocationStreet.getComponent('tfStreetNumber'), data);
+//		AIR.AirAclManager.setAccessMode(pSpecificsLocationAddress.getComponent('tfPostalCode'), data);
+//		AIR.AirAclManager.setAccessMode(pSpecificsLocationAddress.getComponent('tfLocation'), data);
 	},
 	
 	validate: function(item) {

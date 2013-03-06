@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <AttributePropertyItems>
 
-
 	<!-- General -->
 	<Identifier>
 		<id>objectType</id>
@@ -16,7 +15,7 @@
 	</Identifier>
 
 
-	<!-- Specific -->
+	<!-- Specific
 	<Identifier>
 		<id>applicationName</id>
 		<Mandatory>mandatory</Mandatory>
@@ -27,7 +26,7 @@
 		<attributeType>Text</attributeType>
 		<attributeLength>656</attributeLength>
 		<attributeMask>/[0-9a-zA-Z#=\+\-\_\/\\. ]/g</attributeMask>
-	</Identifier>
+	</Identifier> -->
 
 	<Identifier>
 		<id>applicationAlias</id>
@@ -54,6 +53,8 @@
 	</Identifier>
 	<Identifier>
 		<id>rgBARrelevance</id>
+		<ciTypeId>2</ciTypeId>
+		<ciSubTypeId>5</ciSubTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -92,6 +93,8 @@
 
 	<Identifier>
 		<id>lifecycleStatus</id>
+		<ciTypeId>2</ciTypeId>
+		<ciSubTypeId>5,-10006,-10007,-10013</ciSubTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -104,6 +107,8 @@
 	
 	<Identifier>
 		<id>organisationalScope</id>
+		<ciTypeId>2</ciTypeId>
+		<ciSubTypeId>5</ciSubTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -139,6 +144,8 @@
 
 	<Identifier>
 		<id>comments</id>
+		<ciTypeId>2</ciTypeId>
+		<ciSubTypeId>5,-10006,-10007,-10013</ciSubTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -326,6 +333,8 @@
 	<!-- Contacts -->
 	<Identifier>
 		<id>applicationOwner</id>
+		<ciTypeId>2</ciTypeId>
+		<ciSubTypeId>5</ciSubTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -338,6 +347,8 @@
 	
 	<Identifier>
 		<id>applicationSteward</id>
+		<ciTypeId>2</ciTypeId>
+		<ciSubTypeId>5</ciSubTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -350,6 +361,8 @@
 
 	<Identifier>
 		<id>applicationOwnerDelegate</id>
+		<ciTypeId>2</ciTypeId>
+		<ciSubTypeId>5</ciSubTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -579,6 +592,11 @@
 
 	<Identifier>
 		<id>serviceContract</id>
+		
+		<!-- TEST
+		<ciTypeId>3</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+		 -->
 		<Mandatory>dependent</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>

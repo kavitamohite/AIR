@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.4" 
-	xmlns="http://java.sun.com/xml/ns/javaee" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
-	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app>
   <servlet>
   	<description>JAX-WS endpoint - ApplicationService</description>
   	<display-name>ApplicationService</display-name>
@@ -107,6 +103,32 @@
   	<servlet-name>ApplicationService</servlet-name>
   	<url-pattern>/HistoryComplianceWSPort</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/SchrankWSPort</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/RoomWSPort</url-pattern>
+  </servlet-mapping>
+  <!--<servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/BuildingWSPort</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/BuildingAreaWSPort</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/TerrainWSPort</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/StandortWSPort</url-pattern>
+  </servlet-mapping>-->
+
   
   <servlet>
   	<description>AirCiExcelExportServlet</description>

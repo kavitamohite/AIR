@@ -11,7 +11,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    layout: 'form',
 		    
 		    items: [{
-		        xtype: 'combo',
+		        xtype: 'filterCombo',//combo
 		        width: 230,
 		        fieldLabel: 'Availability',
 		        id: 'protectionAvailability',
@@ -37,7 +37,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        enableKeyEvents: true,
 		        allowBlank: true
 		    },{
-		        xtype: 'combo',
+		        xtype: 'filterCombo',//combo
 		        width: 230,
 		        fieldLabel: 'Information Class',
 		        id: 'protectionClassInformation',
@@ -143,8 +143,8 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 			this.getComponent('protectionAvailability').setValue('');
 		}
 		
-		if (data.protectionAvailabilityDescription && data.protectionAvailabilityDescription != 0) {
-			this.getComponent('protectionAvailabilityDescription').setValue(data.protectionAvailabilityDescription);
+		if (data.itSecSbAvailabilityDescription && data.itSecSbAvailabilityDescription != 0) {//protectionAvailabilityDescription
+			this.getComponent('protectionAvailabilityDescription').setValue(data.itSecSbAvailabilityDescription);//protectionAvailabilityDescription
 		} else {
 			this.getComponent('protectionAvailabilityDescription').setValue('');
 		}
@@ -178,17 +178,13 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		//AIR.AirAclManager.setAccessMode(this.getComponent('protectionApplicationProtection'), data);
 	},
 	
-	//getData: function() {
 	setData: function(data) {
-		//var data = {};
-		
 		field = this.getComponent('protectionAvailability');
 		if (!field.disabled) {
-			if (undefined !== field.getValue() && '' !== field.getValue()) {
-				data.itSecSbAvailability = field.getValue();
-			}
-			else {
-				data.itSecSbAvailability = -1;
+			if (field.getValue() && field.getValue().length > 0) {
+				data.itSecSbAvailabilityId = field.getValue();
+			} else {
+				data.itSecSbAvailabilityId = -1;
 			}
 		}
 		field = this.getComponent('protectionAvailabilityDescription');
@@ -196,23 +192,19 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 			data.itSecSbAvailabilityDescription = field.getValue();
 		}
 		
+		
 		field = this.getComponent('protectionClassInformation');
 		if (!field.disabled) {
-			if (undefined !== field.getValue() && '' !== field.getValue()) {
+			if (field.getValue() && field.getValue().length > 0) {
 				data.classInformationId = field.getValue();
-			}
-			else {
+			} else {
 				data.classInformationId = -1;
 			}
-
 		}
-		
 		field = this.getComponent('protectionClassInformationExplanation');
 		if (!field.disabled) {
 			data.classInformationExplanation = field.getValue();
 		}
-		
-		return data;
 	},
 	
 	updateLabels: function(labels) {
@@ -227,9 +219,9 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 	updateToolTips: function(toolTips) {
 		this.setTooltipData(this.getComponent('protectionAvailability').label, toolTips.itSecSbAvailabilityId, toolTips.itSecSbAvailabilityIdText);
 		this.setTooltipData(this.getComponent('protectionAvailabilityDescription').label, toolTips.itSecSbAvailabilityDescription, toolTips.itSecSbAvailabilityDescriptionText);
-		this.setTooltipData(this.getComponent('protectionApplicationProtection').label, toolTips.itSecSbAppProtection, toolTips.itSecSbAppProtectionText);
 		this.setTooltipData(this.getComponent('protectionClassInformation').label, toolTips.protectionClassInformation, toolTips.protectionClassInformationText);
 		this.setTooltipData(this.getComponent('protectionClassInformationExplanation').label, toolTips.protectionClassInformationExplanation, toolTips.protectionClassInformationExplanationText);
+		this.setTooltipData(this.getComponent('protectionApplicationProtection').label, toolTips.itSecSbAppProtection, toolTips.itSecSbAppProtectionText);
 	}
 
 });

@@ -548,14 +548,15 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				Util.disableCombo(cbItSecGroup);
 				
 				//nicht getStore().getById() damit gegen die gefilterten Daten geprüft wird
-				var isTemplateValid = cbReferencedTemplate.getStore().data.key(data.refId);
+				var templateRecord = cbReferencedTemplate.getStore().snapshot.key(data.refId);//data.key
+				var isTemplateValid = templateRecord.get('delTimestamp').length === 0;
 				if(isTemplateValid) {
 					cbReferencedTemplate.setValue(data.refId);
 					//lReferencedTemplateError.hide();
 					//cbReferencedTemplate.isInvalid = false;
 				} else {
 					//cbReferencedTemplate.setRawValue(data.refTxt);
-					cbReferencedTemplate.setRawValue(AC.LABEL_INVALID + data.refTxt);
+					cbReferencedTemplate.setRawValue(AC.LABEL_INVALID + templateRecord.get('name'));//data.refTxt
 					//lReferencedTemplateError.show();
 					//cbReferencedTemplate.isInvalid = true;
 	
@@ -981,6 +982,9 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			itsetId: ciDetail.itset
 		};
 		
+		if(combo.getId() === 'cbReferencedTemplate')
+			filterData.delTimestamp = '';
+
 		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION) {
 			filterData.ciKat1 = ciDetail.applicationCat1Id;
 		} else {
