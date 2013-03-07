@@ -2894,6 +2894,9 @@ AIR.AirStoreFactory = function() {
 			var url = webcontext + '/'+ wsName +'WSPort';//AC.TABLE_ID_CI_NAME[ciType]
 			var loadMethod = 'save' + wsName;//AC.TABLE_ID_CI_NAME[ciType]
 			
+			if(parseInt(ciType) === AC.TABLE_ID_BUILDING_AREA)
+				url = webcontext + '/BuildingWSPort';
+			
 			var ciSaveStore = new Ext.data.XmlStore({
 				autoDestroy: true,
 //				storeId: 'appSaveStore',

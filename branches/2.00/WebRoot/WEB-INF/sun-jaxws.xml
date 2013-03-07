@@ -86,13 +86,9 @@
 		implementation="com.bayerbbs.applrepos.service.RoomWSDelegate"
 		url-pattern="/RoomWSPort">
 	</endpoint>
-	<!--<endpoint name="BuildingWSPort"
+	<endpoint name="BuildingWSPort"
 		implementation="com.bayerbbs.applrepos.service.BuildingWSDelegate"
 		url-pattern="/BuildingWSPort">
-	</endpoint>
-	<endpoint name="BuildingAreaWSPort"
-		implementation="com.bayerbbs.applrepos.service.BuildingAreaWSDelegate"
-		url-pattern="/BuildingAreaWSPort">
 	</endpoint>
 	<endpoint name="TerrainWSPort"
 		implementation="com.bayerbbs.applrepos.service.TerrainWSDelegate"
@@ -101,5 +97,5 @@
 	<endpoint name="StandortWSPort"
 		implementation="com.bayerbbs.applrepos.service.StandortWSDelegate"
 		url-pattern="/StandortWSPort">
-	</endpoint>-->
+	</endpoint>
 </endpoints>

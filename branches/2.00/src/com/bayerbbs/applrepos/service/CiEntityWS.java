@@ -398,8 +398,25 @@ public class CiEntityWS {
 		if (null != ciBase.getDeleteTimestamp())
 			ciBaseDTO.setDeleteTimestamp(ciBase.getDeleteTimestamp().toString());
 
+		
 		ciBaseDTO.setCiOwnerHidden(ciBase.getCiOwner());
 		ciBaseDTO.setCiOwnerDelegateHidden(ciBase.getCiOwnerDelegate());
+//		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwner())) {
+//			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwner());
+//			if (null != listPers && 1 == listPers.size()) {
+//				PersonsDTO tempPers = listPers.get(0);
+//				ciBaseDTO.setCiOwner(tempPers.getDisplayNameFull());
+//			}
+//		}
+//
+//		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerDelegate())) {
+//			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerDelegate());
+//			if (null != listPers && 1 == listPers.size()) {
+//				PersonsDTO tempPers = listPers.get(0);
+//				ciBaseDTO.setCiOwnerDelegate(tempPers.getDisplayNameFull());
+//			}
+//		}
+		
 		
 		ciBaseDTO.setSlaId(ciBase.getSlaId());
 		ciBaseDTO.setServiceContractId(ciBase.getServiceContractId());

@@ -29,6 +29,7 @@ public final class AirKonstanten {
 	public final static String YES_SHORT = "Y";
 	public final static String NO_SHORT = "N";
 	
+	public final static String KOMMA = ",";
 	public final static String STRING_0 = "0";
 	public final static String STRING_EMPTY = "";
 	public final static String STRING_ONE_BLANK = " ";

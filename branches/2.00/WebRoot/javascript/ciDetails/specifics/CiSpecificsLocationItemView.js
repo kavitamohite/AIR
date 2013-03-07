@@ -12,21 +12,21 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        id: 'tfLocationCiAlias',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Alias',
-		        anchor: '70%'
-//			        width: 230,
+		        width: 230
+//		        anchor: '70%',
 	        },{
 		        id: 'tfRoomFloor',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Floor',
-		        anchor: '70%'
-//			        width: 230,
+		        width: 230
+//		        anchor: '70%',
 		    },{
 		        id: 'tfRoom',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Room',
-		        anchor: '70%',
-		        disabled: true
-//			        width: 230,
+		        disabled: true,
+//		        anchor: '70%'
+		        width: 230
 	        },{
 //		        id: 'cbBuildingArea',
 //		    	xtype: 'textfield',
@@ -38,10 +38,11 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        xtype: 'filterCombo',//combo
 		        id: 'cbBuildingArea',
 
-//		        width: 230,
-		        anchor: '70%',
+		        width: 230,
+//		        anchor: '70%',
 		        fieldLabel: 'Building Area',
-				
+		        disabled: true,
+		        hideTrigger: true,
 		        
 		        store: AIR.AirStoreFactory.createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
@@ -65,11 +66,13 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 ////			        width: 230,
 	        	
 	        	
-		        xtype: 'combo',//combo filterCombo
+		        xtype: 'filterCombo',//combo filterCombo
 		        id: 'cbBuilding',
-
-//		        width: 230,
-		        anchor: '70%',
+		        disabled: true,
+		        hideTrigger: true,
+		        
+		        width: 230,
+//		        anchor: '70%',
 		        fieldLabel: 'Building',
 				
 		        
@@ -91,23 +94,23 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        id: 'tfTerrain',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Terrain',
-		        anchor: '70%',
-		        disabled: true
-//			        width: 230,
+		        disabled: true,
+//		        anchor: '70%'
+		        width: 230
 	        },{
 		        id: 'tfSite',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Site',
-		        anchor: '70%',
-		        disabled: true
-//			        width: 230,
+		        disabled: true,
+//		        anchor: '70%'
+		        width: 230
 		    },{
 		        id: 'tfCountry',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Country',
-		        anchor: '70%',
-		        disabled: true
-//			        width: 230,
+		        disabled: true,
+//		        anchor: '70%'
+		        width: 230
 		    },{
 		    	xtype: 'panel',
 		    	id: 'pSpecificsLocationStreet',
@@ -190,12 +193,12 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
 		var tfRoomFloor = this.getComponent('tfRoomFloor');
 		var cbBuildingArea = this.getComponent('cbBuildingArea');
-		var cbBuilding = this.getComponent('cbBuilding');
+//		var cbBuilding = this.getComponent('cbBuilding');
 		
 		cbBuildingArea.on('select', this.onComboSelect, this);
 		cbBuildingArea.on('change', this.onComboChange, this);
-		cbBuilding.on('select', this.onComboSelect, this);
-		cbBuilding.on('change', this.onComboChange, this);
+//		cbBuilding.on('select', this.onComboSelect, this);
+//		cbBuilding.on('change', this.onComboChange, this);
 		
 		tfLocationCiAlias.on('change', this.onFieldChange, this);
 		tfRoomFloor.on('change', this.onFieldChange, this);
@@ -237,7 +240,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		var tfSite = this.getComponent('tfSite');
 		var tfCountry = this.getComponent('tfCountry');
 		
-		Util.disableCombo(cbBuilding);
+//		Util.disableCombo(cbBuilding);
 		Util.disableCombo(cbBuildingArea);
 
 		
@@ -257,7 +260,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				tfRoom.reset();
 				cbBuildingArea.setVisible(true);
 				cbBuildingArea.setValue(data.areaId);
-				cbBuildingArea.setRawValue(data.areaName);
+//				cbBuildingArea.setRawValue(data.areaName);
 				if(AIR.AirAclManager.isRelevance(cbBuildingArea, data))
 					Util.enableCombo(cbBuildingArea);
 				
@@ -303,8 +306,9 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				
 //				cbBuilding.setValue(data.gebaeudeName);
 				cbBuilding.setVisible(true);
-				if(AIR.AirAclManager.isRelevance(cbBuilding, data))
-					Util.enableCombo(cbBuilding);
+//				if(AIR.AirAclManager.isRelevance(cbBuilding, data))
+//					Util.enableCombo(cbBuilding);
+				
 				
 //				var buildings = data.buildingData.split(',');
 //				var buildingObjects = [];
@@ -478,6 +482,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //		data.id = field.getValue();
 		
 		switch(parseInt(data.tableId)) {
+			case AC.TABLE_ID_POSITION:
+				break;
 			case AC.TABLE_ID_ROOM:
 				if(!tfLocationCiAlias.disabled)
 					data.alias = tfLocationCiAlias.getValue();
@@ -500,6 +506,14 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //				if(!tfLocation.disabled)
 //					data.location = tfLocation.getValue();
 				
+				break;
+			case AC.TABLE_ID_BUILDING:
+				if(!tfLocationCiAlias.disabled)
+					data.alias = tfLocationCiAlias.getValue();
+				break;
+			case AC.TABLE_ID_BUILDING_AREA:
+				//BuildingHbn.saveBuildingArea(String, BuildingAreaDTO): ORA-20000: Building area 1157 cannot be moved to another building. Set parameter CHECK_LOCATION_INTEGRITY to N to disable this check.
+//				data.buildingId = cbBuilding.getValue();
 				break;
 		}
 	},

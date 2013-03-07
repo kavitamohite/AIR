@@ -8,6 +8,7 @@ public class BuildingAreaDTO extends LocationDTO {
 //	private Set<BuildingDTO> buildings;
 	private String buildingData;
 	
+	private Long buildingId;
 	
 //	public Set<BuildingDTO> getBuildings() {
 //		return buildings;
@@ -21,5 +22,12 @@ public class BuildingAreaDTO extends LocationDTO {
 	}
 	public void setBuildingData(String buildingData) {
 		this.buildingData = buildingData;
+	}
+	
+	public Long getBuildingId() {
+		return buildingId;
+	}
+	public void setBuildingId(Long buildingId) {
+		this.buildingId = buildingId;
 	}
 }

@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class BuildingArea extends CiBase implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	
-	private Long buldingId;
+	private Long buildingId;
 	
     private Set<Room> rooms;
 	private Building building;
@@ -51,11 +51,11 @@ public class BuildingArea extends CiBase implements Serializable {
 		this.building = building;
 	}
 	@Column(name = "GEBAEUDE_ID", insertable=false, updatable=false)
-	public Long getBuldingId() {
-		return buldingId;
+	public Long getBuildingId() {
+		return buildingId;
 	}
-	public void setBuldingId(Long buldingId) {
-		this.buldingId = buldingId;
+	public void setBuildingId(Long buildingId) {
+		this.buildingId = buildingId;
 	}
 	
 	

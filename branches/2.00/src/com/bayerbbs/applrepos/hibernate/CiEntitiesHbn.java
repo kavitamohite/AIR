@@ -13,7 +13,6 @@ import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
-import com.bayerbbs.applrepos.dto.ApplicationDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
@@ -23,9 +22,7 @@ import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
 
 public class CiEntitiesHbn {
-
-
-
+	
 	//ApplicationDTO
 	public static List<CiItemDTO> findExistantCisByNameOrAlias(String searchName, boolean withDeletedApplications) {
 		ArrayList<CiItemDTO> listResult = new ArrayList<CiItemDTO>();
@@ -126,15 +123,13 @@ public class CiEntitiesHbn {
 	
 
 	//ApplicationDTO
-	public static List<CiItemDTO> findCisByNameOrAlias(String searchName, String queryMode, boolean onlyapplications, String sort, String dir) {
-
+	public static List<CiItemDTO> findCisByNameOrAlias(String searchName, String queryMode, boolean onlyApplications, String sort, String dir) {
 		ArrayList<CiItemDTO> listResult = new ArrayList<CiItemDTO>();
 
 		boolean commit = false;
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
-
 		Connection conn = null;
 
 		searchName = searchName.toUpperCase();
@@ -144,60 +139,49 @@ public class CiEntitiesHbn {
 		sql.append("select /*+ INDEX (DWH_ENTITY FIX_143_16) */ * from DWH_ENTITY  where");
 		sql.append(" upper(deleted) = 'NO'");
 		sql.append(" and TABLE_ID in (");
-		if (!onlyapplications) {
-			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
-			sql.append(",");
-		}
 		sql.append(AirKonstanten.TABLE_ID_APPLICATION);
-		if (!onlyapplications) {
-			sql.append(",");
+
+		if (!onlyApplications) {
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
+			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.TABLE_ID_ROOM);
-			sql.append(",");
+			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.TABLE_ID_BUILDING);//TABLE_ID_WAYS
-			sql.append(",");
+			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.TABLE_ID_BUILDING_AREA);
-			sql.append(",");
+			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.TABLE_ID_TERRAIN);
-			sql.append(",");
+			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.TABLE_ID_POSITION);
-			sql.append(",");
+			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.TABLE_ID_SITE);
-		}
-		sql.append(")");
-		
-		if (onlyapplications) {
-			sql.append(" and UPPER(type) = UPPER('Application')");
+			sql.append(")");
+		} else {
+			sql.append(") and UPPER(type) = UPPER('Application')");
 		}
 		
 		sql.append(" and (upper(name) like '");
-
-		// alles andere führt zu einer exacten Suche
+		if (isLikeStart(queryMode)) {
+			sql.append("%");
+		}
 		
-			if (isLikeStart(queryMode)) {
-				sql.append("%");
-			}
-			
-			sql.append(searchName);
-			
-			if (isLikeEnd(queryMode)) {
-				sql.append("%");
-			}
+		sql.append(searchName);
+		if (isLikeEnd(queryMode)) {
+			sql.append("%");
+		}
 
 		sql.append("'  or upper(ASSET_ID_OR_ALIAS) like '");
+		if (isLikeStart(queryMode)) {
+			sql.append("%");
+		}
 		
-			if (isLikeStart(queryMode)) {
-				sql.append("%");
-			}
-			
-			sql.append(searchName);
-			
-			if (isLikeEnd(queryMode)) {
-				sql.append("%");
-			}
+		sql.append(searchName);
+		if (isLikeEnd(queryMode)) {
+			sql.append("%");
+		}
 		
 		sql.append("')");
-		
-		
 		
 		
 		if (StringUtils.isNotNullOrEmpty(sort)) {
@@ -225,8 +209,6 @@ public class CiEntitiesHbn {
 			else if ("applicationOwnerDelegate".equals(sort)) {
 				sql.append(" order by APP_OWNER_DELEGATE");
 			}
-
-			
 		}
 		else {
 			sql.append(" order by name");
@@ -238,11 +220,8 @@ public class CiEntitiesHbn {
 		
 		try {
 			tx = session.beginTransaction();
-
 			conn = session.connection();
-
 			selectStmt = conn.createStatement();
-			//System.out.println(sql.toString());
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
 
 			if (null != rset) {
@@ -263,7 +242,6 @@ public class CiEntitiesHbn {
 				conn.close();
 			}
 		} catch (Exception e) {
-			//
 			System.out.println(e.toString());
 		}
 		finally {
@@ -860,7 +838,8 @@ public class CiEntitiesHbn {
 		append("join config_item_type cit on cit.config_item_type_id = tcit.config_item_type_id ").
 		append("join tabellen t on t.tabelle_id = tcit.table_id ").
 		append("left join anwendung_kat1 ak1 on ak1.anwendung_kat1_en = cit.config_item_type_name ").
-		append("where t.type = 'CI TABLE (class 1)' ").
+//		append("where t.type = 'CI TABLE (class 1)' ").
+		append("where (t.type = 'CI TABLE (class 1)' AND t.tabelle_id NOT IN (19,123)) OR (t.type = 'CI TABLE (class 2)' AND t.tabelle_id = 12)").
 		append("order by t.tabelle_id ");
 		
 		try {

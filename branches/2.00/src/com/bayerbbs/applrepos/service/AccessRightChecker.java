@@ -118,10 +118,12 @@ public class AccessRightChecker {
 		if(cwid == null || ci == null)// || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)
 			return false;
 		
-		if(cwid.equals(ci.getCiOwner()) || cwid.equals(ci.getCiOwnerDelegate()) || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null))
+		if(cwid.equals(ci.getCiOwner()) || 
+		   cwid.equals(ci.getCiOwnerDelegate()) || 
+		   (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null))//wenn kein owner oder delegate, dürfen alle editieren
 			return true;
 		
-		String groupCount = ApplReposHbn.getCountFromGroupNameAndCwid(ci.getCiOwnerDelegate(), cwid);
+		String groupCount = ci.getCiOwnerDelegate() != null ? ApplReposHbn.getCountFromGroupNameAndCwid(ci.getCiOwnerDelegate(), cwid) : AirKonstanten.STRING_0;
 		if (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(AirKonstanten.STRING_0))
 			return true;
 		
@@ -146,10 +148,8 @@ public class AccessRightChecker {
 				isRelevanceOperational = true;
 			}
 			
-			if (!isRelevanceOperational && StringUtils.isNotNullOrEmpty(application
-					.getSubResponsible())) {
-				if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(
-						application.getSubResponsible(), cwid))) {
+			if (!isRelevanceOperational && StringUtils.isNotNullOrEmpty(application.getSubResponsible())) {
+				if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(application.getSubResponsible(), cwid))) {
 					// allowed by group rights
 					isRelevanceOperational = true;
 				}

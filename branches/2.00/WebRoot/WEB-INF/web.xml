@@ -112,13 +112,9 @@
   	<servlet-name>ApplicationService</servlet-name>
   	<url-pattern>/RoomWSPort</url-pattern>
   </servlet-mapping>
-  <!--<servlet-mapping>
-  	<servlet-name>ApplicationService</servlet-name>
-  	<url-pattern>/BuildingWSPort</url-pattern>
-  </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>ApplicationService</servlet-name>
-  	<url-pattern>/BuildingAreaWSPort</url-pattern>
+  	<url-pattern>/BuildingWSPort</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>ApplicationService</servlet-name>
@@ -127,7 +123,7 @@
   <servlet-mapping>
   	<servlet-name>ApplicationService</servlet-name>
   	<url-pattern>/StandortWSPort</url-pattern>
-  </servlet-mapping>-->
+  </servlet-mapping>
 
   
   <servlet>
