@@ -141,7 +141,9 @@ public class CiEntitiesHbn {
 		sql.append(" and TABLE_ID in (");
 		sql.append(AirKonstanten.TABLE_ID_APPLICATION);
 
-		if (!onlyApplications) {
+		if (onlyApplications) {
+			sql.append(") and UPPER(type) = UPPER('Application')");
+		} else {
 			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
 			sql.append(AirKonstanten.KOMMA);
@@ -157,8 +159,6 @@ public class CiEntitiesHbn {
 			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.TABLE_ID_SITE);
 			sql.append(")");
-		} else {
-			sql.append(") and UPPER(type) = UPPER('Application')");
 		}
 		
 		sql.append(" and (upper(name) like '");
