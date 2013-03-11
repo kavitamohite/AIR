@@ -185,7 +185,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		ciComplianceView.on('itsecGroupEdit', this.onItsecGroupEdit, this);
 		
 		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
-		ciLicenseView.on('ciChange', this.onCiChange, this);
+		if(ciLicenseView)
+			ciLicenseView.on('ciChange', this.onCiChange, this);
 		
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.on('ciChange', this.onCiChange, this);
@@ -228,7 +229,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	onNavigation: function(viewId, link, options) {
 		this.getComponent('ciEditTabView').getLayout().setActiveItem(viewId);
 		
-		this.handleNavigation(viewId);
+		this.handleNavigation(viewId, options);
 		if(this.isLoaded || (options && options.skipReload)) {
 			//this.handleNavigation(viewId);
 		} else {
@@ -237,7 +238,24 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		}
 	},
 	
-	handleNavigation: function(viewId) {
+	handleNavigation: function(viewId, options) {
+		//TEST dynamisches Laden der Detailseiten anhand clCiLicense
+//		var ciEditTabView = this.getComponent('ciEditTabView');
+//		var ciDetailView = ciEditTabView.getComponent(viewId);
+//		
+//		if(ciDetailView) {
+//			this.navigate(options);
+//			delete this.options;
+//		} else {
+//			//hier das view dem ciEditTabView hinzufügen und danach loadCiDetails().
+//			this.options = options;
+//			
+//			var ciLicenseView = new AIR.CiLicenseView({ id: 'clCiLicense', height: 600 });
+//			ciEditTabView.on('afterlayout', this.navigate, this);// this.onViewAdded ciEditView afterrender .getComponent('clCiCompliance')
+//			ciEditTabView.add(ciLicenseView);
+//		}
+		
+		//ORIG
 		switch(viewId) {
 			case 'clCiHistory':
 				var ciHistory = this.getComponent('ciEditTabView').getComponent('clCiHistory');
@@ -246,6 +264,17 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			default: break;
 		}
 	},
+	
+//	navigate: function(parentCt, layout, options) {
+//		var options = options ? options : this.options;
+//		
+//		if(this.isLoaded || (options && options.skipReload)) {
+//			//this.handleNavigation(viewId);
+//		} else {
+//			this.isLoaded = true;
+//			this.loadCiDetails();
+//		}
+//	},
 	
 	validateCiChange: function(view, viewElement, changedViewItems) {
 		switch(view.getId()) {
@@ -336,7 +365,17 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			ciProtectionView.update(ciDetail);
 	
 			var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
-			ciLicenseView.update(ciDetail);
+			if(ciLicenseView)
+				ciLicenseView.update(ciDetail);
+			
+			//-------- TEST -------
+//			var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
+//			if(!ciLicenseView) {
+//				ciLicenseView = new AIR.CiLicenseView({ id: 'clCiLicense', height: 600 });
+////				AIR.CiDetailsCommon.initView(ciEditTabView, ciLicenseView);
+//				this.initView(ciEditTabView, ciLicenseView);
+//			}
+			//-------- TEST -------
 			
 			var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 			ciComplianceView.update(ciDetail);
@@ -469,7 +508,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 		if(ciDetail.tableId === AC.TABLE_ID_APPLICATION) {//&& ciDetail.ciSubTypeId === AC.APP_CAT1_APPLICATION?
 			var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
-			ciLicenseView.setData(data);
+			if(ciLicenseView)
+				ciLicenseView.setData(data);
 		}
 		
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
@@ -728,7 +768,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		ciConnectionsView.updateLabels(labels);
 
 		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
-		ciLicenseView.updateLabels(labels);
+		if(ciLicenseView)
+			ciLicenseView.updateLabels(labels);
 
 		var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 		ciSupportStuffView.updateLabels(labels);
@@ -766,7 +807,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		ciConnectionsView.updateToolTips(toolTips);
 
 		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
-		ciLicenseView.updateToolTips(toolTips);
+		if(ciLicenseView)
+			ciLicenseView.updateToolTips(toolTips);
 
 		var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 		ciSupportStuffView.updateToolTips(toolTips);
@@ -800,5 +842,20 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	isCiModified: function() {
 		return this.ciModified;
 	}
+	
+	//============================================================
+//	initView: function(parentView, childView, callback) {
+//		parentView.on('afterlayout', this.onViewAdded, this);//ciEditView afterrender .getComponent('clCiCompliance')
+//		parentView.add(childView);
+//	},
+//	
+//	onViewAdded: function(parentCt, layout) {
+//		Util.log('CiEditView::onViewAdded(): '+parentCt.getId());
+//		//ciLicenseView.on('ciChange', this.onCiChange, this);
+//		//ciLicenseView.update(ciDetail);
+//		//ciLicenseView.updateLabels(labels);
+////		parentCt.doLayout();
+//	}
+	//============================================================
 });
 Ext.reg('AIR.CiEditView', AIR.CiEditView);

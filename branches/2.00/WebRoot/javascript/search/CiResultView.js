@@ -142,7 +142,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		   record.data.tableId == AC.TABLE_ID_BUILDING_AREA ||
 		   record.data.tableId == AC.TABLE_ID_POSITION ||
 		   record.data.tableId == AC.TABLE_ID_TERRAIN ||
-		   record.data.tableId == AC.TABLE_ID_SITE) {
+		   record.data.tableId == AC.TABLE_ID_SITE ||
+		   record.data.tableId == AC.TABLE_ID_IT_SYSTEM) {
 			
 			AAM.setCiId(ciId);
 			AAM.setTableId(parseInt(record.data.tableId));//AC.TABLE_ID_APPLICATION

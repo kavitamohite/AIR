@@ -13,19 +13,15 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
-import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
-import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
 import com.bayerbbs.applrepos.service.CiSearchParamsDTO;
 import com.bayerbbs.applrepos.service.LDAPAuthWS;
 
-public class LokationItemHbn {
+public class LokationItemHbn extends BaseHbn {
 	private static final Log log = LogFactory.getLog(LokationItemHbn.class);
 
 	static final String RAUM_TYPE_LOCATION = "raumId";
@@ -36,27 +32,12 @@ public class LokationItemHbn {
 	static final String AREA_TYPE_LOCATION = "areaId";
 	static final String SCHRANK_TYPE_LOCATION = "schrankId";
 	
-	private static final String NOT_EQUAL = "<>";
-	private static final String EQUAL = "=";
-	protected static final String EMPTY = "";
 
 	
-	private static final String NOT_LIKE = "not like";
-	private static final String LIKE = "like";
 	
-	private static final String Y = "Y";
-	private static final String COMMA = ",";
-	
-	
-	public static <T> T findById(Class<T> ci, Long id) {
-		Session session = HibernateUtil.getSession();
 
-		T t = (T)session.get(ci, id);
-
-		return t;
-	}
 	
-	protected static StringBuilder getLocationCiBaseSql(CiSearchParamsDTO input, CiMetaData metaData) {
+	protected static StringBuilder getAdvSearchCiBaseSql(CiSearchParamsDTO input, CiMetaData metaData) {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.
@@ -151,7 +132,7 @@ public class LokationItemHbn {
 		if(!LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))
 			return new CiItemsResultDTO();//new CiItemDTO[0];
 		
-		StringBuilder sql = getLocationCiBaseSql(input, metaData);
+		StringBuilder sql = getAdvSearchCiBaseSql(input, metaData);
 		
 		List<CiItemDTO> cis = new ArrayList<CiItemDTO>();
 
@@ -263,57 +244,7 @@ public class LokationItemHbn {
 		return lokationsKette;
 	}
 	
-	protected static boolean isNot(String options) {
-		if(options == null)
-			return false;
-		
-		boolean isNot = options.indexOf(',') > 0 ? options.split(COMMA)[0].equals(Y) : options.equals(Y);//options != null && 
-		
-		return isNot;
-	}
-	
-	protected static String getLikeNotLikeOperator(boolean isNot) {
-		return isNot ? NOT_LIKE : LIKE;
-	}
-	
-	protected static String getEqualNotEqualOperator(boolean isNot) {
-		return isNot ? NOT_EQUAL : EQUAL;
-	}
-	
-	protected static List<String> validateCi(CiBaseDTO dto) {
-		List<String> messages = new ArrayList<String>();
-		
-		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 
-		if (StringUtils.isNullOrEmpty(dto.getName())) {
-			messages.add("room name is empty");
-		}
-		else {
-			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
-			if (!listCi.isEmpty()) {
-				// check if the name is unique
-				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
-					messages.add(errorCodeManager.getErrorMessage("1100", dto.getName()));
-				}
-			}
-		}
+	
 
-		//evtl. berücksichtigen, dass nicht alle CI-Typen einen alias haben. Z.B wenn CI-Typ ohne Alias "-1" zurückgibt
-		//nicht den Namen für den Alias setzen.
-		if (StringUtils.isNullOrEmpty(dto.getAlias())) {
-			// messages.add("application alias is empty");
-			dto.setAlias(dto.getName());
-		}
-		else {
-			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
-			if (!listCi.isEmpty()) {
-				// check if the alias is unique
-				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
-					messages.add(errorCodeManager.getErrorMessage("1101", dto.getAlias()));
-				}
-			}
-		}
-
-		return messages;
-	}
 }

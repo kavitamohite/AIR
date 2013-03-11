@@ -8,7 +8,7 @@ public class CiMetaData {
 	private String tableName;
 	private Integer tableId;
 	
-	public CiMetaData(String idField,String nameField,String aliasField,String typeName,String tableName,Integer tableId) {
+	public CiMetaData(String idField, String nameField, String aliasField, String typeName, String tableName, Integer tableId) {
 		this.idField = idField;
 		this.nameField = nameField;
 		this.aliasField = aliasField;

@@ -455,13 +455,15 @@ AIR.AirAclManager = function() {
 		isEditMaskValid: function() {
 			var valid = true;
 			
+			//get and check UI elements by CI (and Sub) Type... !!
+			
 			Ext.each(this.aclStore.getRange(), function(item, index, allItems) {
 				var aclItemCmp = Ext.getCmp(item.data.id);
-				if(aclItemCmp !== undefined && !aclItemCmp.disabled) {
+				if(aclItemCmp && !aclItemCmp.disabled) {
 					switch (aclItemCmp.getXType()) {
 						case 'textfield':
 						case 'textarea':
-							if(aclItemCmp.getValue() !== aclItemCmp.getValue().trim())
+							if(aclItemCmp.getValue() && aclItemCmp.getValue() !== aclItemCmp.getValue().trim())
 								aclItemCmp.setValue(aclItemCmp.getValue().trim());
 							
 							// no break!

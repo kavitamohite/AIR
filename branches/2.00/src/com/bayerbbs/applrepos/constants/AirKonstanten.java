@@ -59,10 +59,8 @@ public final class AirKonstanten {
 	public final static String ROLE_AIR_DEFAULT			 		= "AIR Default";
 	public final static String ROLE_AIR_DEVELOPER			 	= "AIR Developer";
 	public final static String ROLE_AIR_INFRASTRUCTURE_LAYER 	= "AIR Infrastructure Layer";
-	public final static String ROLE_AIR_INFRASTRUCTURE_MANAGER 	= "AIR Infrastructure Manager";
-	
-	public final static String ROLE_BUSINESS_ESSENTIAL_EDITOR = "AIR BusinessEssential-Editor";
-
+	public final static String ROLE_AIR_INFRASTRUCTURE_MANAGER 	= "AIR Infrastructure Manager";	
+	public final static String ROLE_BUSINESS_ESSENTIAL_EDITOR	= "AIR BusinessEssential-Editor";
 	public final static String ROLE_SUBSTITUTE = "Substitute";
 
 	public final static Long CI_SUPPORT_STUFF_TYPE_UserAuthorizationSupportedByDocumentation = new Long(1);
@@ -99,10 +97,14 @@ public final class AirKonstanten {
 		{"15", "gpsccontactBusinessOwnerRepresentative", "Y", "Business Owner Representative"}
 	};
 	
-	public final static Long APPLICATION_CAT1_APPLICATION = new Long(5);
-	public final static Long APPLICATION_CAT1_COMMON_SERVICE = new Long(-10013);
-	public final static Long APPLICATION_CAT1_COMMON_MIDDLEWARE = new Long(-10007);
-	public final static Long APPLICATION_CAT1_COMMON_APPLICATIONPLATFORM = new Long(-10006);
+	public final static Integer APPLICATION_CAT1_APPLICATION = new Integer(5);
+	public final static Integer APPLICATION_CAT1_COMMON_SERVICE = new Integer(-10013);
+	public final static Integer APPLICATION_CAT1_COMMON_MIDDLEWARE = new Integer(-10007);
+	public final static Integer APPLICATION_CAT1_COMMON_APPLICATIONPLATFORM = new Integer(-10006);
 	
-
+	public final static Integer IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING = new Integer(1);
+	public final static Integer IT_SYSTEM_TYPE_SYSTEM_PLATFORM_TRANSIENT = new Integer(2);
+	
+	public final static String IT_SYSTEM_TYPE_HARDWARE_SYSTEM = "Hardware System";
+	public final static String IT_SYSTEM_TYPE_SYSTEM_PLATFORM = "Transient System Platform";
 }

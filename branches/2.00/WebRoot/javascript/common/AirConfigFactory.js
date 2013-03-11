@@ -41,6 +41,12 @@ AIR.AirConfigFactory = function() {
 			return columnConfig;
 		},
 		
+		createItSystemCiRecord: function() {
+			var itSystemCiFields = this.getBaseCiFields();
+			
+			return itSystemCiFields;
+		},
+		
 		createBuildingCiRecord: function() {
 			var buildingCiFields = this.getLocationCiFields();
 			

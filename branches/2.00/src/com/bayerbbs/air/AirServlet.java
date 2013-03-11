@@ -138,6 +138,7 @@ public class AirServlet extends HttpServlet {
 				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsAnwendungView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsLocationItemView.js'></script>\n").//CiSpecificsTerrainView.js
+				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsItItemView.js'></script>\n").
 				
 				append("<script type='text/javascript' src='javascript/ciDetails/CiContactsView.js'></script>\n").
 				append("<script type='text/javascript' src='javascript/ciDetails/CiAgreementsView.js'></script>\n").

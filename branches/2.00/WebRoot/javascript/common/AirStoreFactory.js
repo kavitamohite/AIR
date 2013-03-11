@@ -2216,8 +2216,34 @@ AIR.AirStoreFactory = function() {
 				case AC.TABLE_ID_SITE:
 					ciDetailStore = this.createStandortDetailStore();
 					break;
+				case AC.TABLE_ID_IT_SYSTEM:
+					ciDetailStore = this.createItSystemDetailStore();
+					break;
 				default: break;
 			}
+			
+			return ciDetailStore;
+		},
+		
+		createItSystemDetailStore: function() {
+			var itSystemRecord = AIR.AirConfigFactory.createItSystemCiRecord();
+
+			var ciDetailReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, itSystemRecord);
+
+			var ciDetailStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'itSystemStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getItSystem',
+					timeout: 120000,
+					reader: ciDetailReader
+				})
+			});
 			
 			return ciDetailStore;
 		},

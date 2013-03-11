@@ -31,6 +31,7 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	//nur Application!!
 //	private Long classInformationId;
 //	private String classInformationExplanation;
+	
 	private Long itSecSbIntegrityId;
 //	private String itSecSbIntegrityTxt;
 	private String itSecSbIntegrityDescription;

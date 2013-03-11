@@ -1,9 +1,12 @@
 package com.bayerbbs.applrepos.service;
 
+import javax.persistence.Column;
+
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.CiBase;
+import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 
@@ -112,6 +115,24 @@ public class AccessRightChecker {
 		}
 
 		return isEditable;
+	}
+	
+	//Doppelt weil: siehe @Column(name = "CWID_VERANTW_BETR") ciOwner Feld in Hibernateklasse ItSystem
+	//anstatt @Column(name = "RESPONSIBLE") wie in allen anderen Transbase CI Tabellen
+	public boolean isRelevanceOperational(String cwid, ItSystem ci) {
+		if(cwid == null || ci == null)// || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)
+			return false;
+		
+		if(cwid.equals(ci.getCiOwner()) || 
+		   cwid.equals(ci.getCiOwnerDelegate()) || 
+		   (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null))//wenn kein owner oder delegate, dürfen alle editieren
+			return true;
+		
+		String groupCount = ci.getCiOwnerDelegate() != null ? ApplReposHbn.getCountFromGroupNameAndCwid(ci.getCiOwnerDelegate(), cwid) : AirKonstanten.STRING_0;
+		if (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(AirKonstanten.STRING_0))
+			return true;
+		
+		return false;
 	}
 
 	public boolean isRelevanceOperational(String cwid, CiBase ci) {

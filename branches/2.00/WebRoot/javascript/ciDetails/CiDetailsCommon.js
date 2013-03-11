@@ -16,9 +16,18 @@ AIR.CiDetailsCommon = function() {
 				listview.clearSelections();
 				listview.select(defaultRecord, true, true);
 			}
+		},
+		
+		initView: function(parentView, childView, callback) {
+			childView.on('afterlayout', this.onViewAdded, this);//ciEditView afterrender .getComponent('clCiCompliance')
+			parentView.add(childView);
+		},
+		
+		onViewAdded: function(parentCt, layout) {
+			Util.log('CiDetailsCommon::onViewAdded(): '+parentCt.getId());
+			//ciLicenseView.on('ciChange', this.onCiChange, this);
+			//ciLicenseView.update(ciDetail);
 		}
-		
-		
 	};
 
 }();

@@ -29,6 +29,7 @@ import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
+import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
 import com.bayerbbs.applrepos.hibernate.SchrankHbn;
@@ -79,6 +80,27 @@ public class CiEntityWS {
 			output = CiEntitiesHbn.getDwhEntityRelations(input.getTableId(), input.getCiId(), input.getDirection());
 		
 		return output;
+	}
+	
+	
+	public ItSystemDTO getItSystem(CiDetailParameterInput input) {
+		ItSystemDTO itSystemDTO = new ItSystemDTO();
+
+		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+			ItSystem itSystem = ItSystemHbn.findById(ItSystem.class, input.getCiId());
+			
+			itSystemDTO.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
+			setCiBaseData(itSystemDTO, itSystem);
+			
+			AccessRightChecker checker = new AccessRightChecker();
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), itSystem)) {
+				itSystemDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
+			} else {
+				itSystemDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
+			}
+		}
+		
+		return itSystemDTO;
 	}
 	
 	public StandortDTO getStandort(CiDetailParameterInput input) {
@@ -343,6 +365,10 @@ public class CiEntityWS {
 			switch(input.getCiTypeId()) {
 				case AirKonstanten.TABLE_ID_APPLICATION:
 					return new ApplicationWS().findApplications(input);//(ApplicationSearchParamsDTO)
+					
+				case AirKonstanten.TABLE_ID_IT_SYSTEM:
+					result = ItSystemHbn.findItSystemsBy(input);
+					break;
 				case AirKonstanten.TABLE_ID_POSITION:
 					result = SchrankHbn.findSchraenkeBy(input);//ciItemDTOs
 					break;
@@ -377,6 +403,130 @@ public class CiEntityWS {
 	private void setCiBaseData(CiBaseDTO ciBaseDTO, CiBase ciBase) {
 		ciBaseDTO.setId(ciBase.getId());
 		ciBaseDTO.setName(ciBase.getName());
+		
+		
+		//			applicationDTO.setItsecGroupId(application.getItsecGroupId());
+		ciBaseDTO.setInsertQuelle(ciBase.getInsertQuelle());
+		ciBaseDTO.setInsertUser(ciBase.getInsertUser());
+		
+		if (null != ciBase.getInsertTimestamp())
+			ciBaseDTO.setInsertTimestamp(ciBase.getInsertTimestamp().toString());
+		
+		ciBaseDTO.setUpdateQuelle(ciBase.getUpdateQuelle());
+		ciBaseDTO.setUpdateUser(ciBase.getUpdateUser());
+		
+		if (null != ciBase.getUpdateTimestamp())
+			ciBaseDTO.setUpdateTimestamp(ciBase.getUpdateTimestamp().toString());
+		
+		ciBaseDTO.setDeleteQuelle(ciBase.getDeleteQuelle());
+		ciBaseDTO.setDeleteUser(ciBase.getDeleteUser());
+		
+		if (null != ciBase.getDeleteTimestamp())
+			ciBaseDTO.setDeleteTimestamp(ciBase.getDeleteTimestamp().toString());
+
+		
+		ciBaseDTO.setCiOwnerHidden(ciBase.getCiOwner());
+		ciBaseDTO.setCiOwnerDelegateHidden(ciBase.getCiOwnerDelegate());
+//		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwner())) {
+//			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwner());
+//			if (null != listPers && 1 == listPers.size()) {
+//				PersonsDTO tempPers = listPers.get(0);
+//				ciBaseDTO.setCiOwner(tempPers.getDisplayNameFull());
+//			}
+//		}
+//
+//		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerDelegate())) {
+//			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerDelegate());
+//			if (null != listPers && 1 == listPers.size()) {
+//				PersonsDTO tempPers = listPers.get(0);
+//				ciBaseDTO.setCiOwnerDelegate(tempPers.getDisplayNameFull());
+//			}
+//		}
+		
+		
+		ciBaseDTO.setSlaId(ciBase.getSlaId());
+		ciBaseDTO.setServiceContractId(ciBase.getServiceContractId());
+		
+		ciBaseDTO.setItSecSbAvailabilityId(ciBase.getItSecSbAvailability());
+		ciBaseDTO.setItSecSbAvailabilityDescription(ciBase.getItSecSbAvailabilityText());
+		
+		ciBaseDTO.setItset(ciBase.getItset());
+		ciBaseDTO.setTemplate(ciBase.getTemplate());
+		ciBaseDTO.setItsecGroupId(ciBase.getItsecGroupId());
+		
+		Long template = ciBase.getTemplate();
+		if (-1 == template.longValue()) {
+			// TODO -1 != 1 - Achtung beim Speichern
+			template = new Long(1);
+			//FEHLT NOCH siehe ApplicationWS!!
+		}
+
+		ciBaseDTO.setRefId(ciBase.getRefId());
+		
+		
+		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerHidden())) {
+			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerHidden());
+			if (null != persons && 1 == persons.size()) {
+				PersonsDTO person = persons.get(0);
+				ciBaseDTO.setCiOwner(person.getDisplayNameFull());
+			}
+		}
+
+		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerDelegateHidden())) {
+			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerDelegateHidden());
+			if (null != persons && 1 == persons.size()) {
+				PersonsDTO person = persons.get(0);
+				ciBaseDTO.setCiOwnerDelegate(person.getDisplayNameFull());
+			}
+		}
+		
+		
+		Long relevanceItsec = ciBase.getRelevanceITSEC();
+		Long relevanceICS = ciBase.getRelevanceICS();
+		
+		if (-1 == relevanceItsec) {
+			ciBaseDTO.setRelevanceGR1435(YES);
+		}
+		else {// if (0 == relevanceItsec) {
+			ciBaseDTO.setRelevanceGR1435(NO);
+		}
+		if (-1 == relevanceICS) {
+			ciBaseDTO.setRelevanceGR1920(YES);
+		}
+		else {//(0 == relevanceICS) {
+			ciBaseDTO.setRelevanceGR1920(NO);
+		}
+		
+		ciBaseDTO.setGxpFlagId(ciBase.getGxpFlag());
+		ciBaseDTO.setGxpFlag(ciBase.getGxpFlag());
+
+		
+		String source = ciBaseDTO.getInsertQuelle();
+		if(!source.equals(AirKonstanten.INSERT_QUELLE_SISEC) &&
+		   !source.equals(AirKonstanten.APPLICATION_GUI_NAME)) {
+			
+			ciBaseDTO.setCiOwnerAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setCiOwnerDelegateAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setRelevanceGR1435Acl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setRelevanceGR1920Acl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
+			ciBaseDTO.setServiceContractIdAcl(AirKonstanten.NO_SHORT);
+			
+			//fehlt, nötig?
+//			License_Scanning,Sample_Test_Date,Sample_Test_Result,Itsec_SB_Integ_ID,Itsec_SB_Integ_Txt,
+//			Itsec_SB_Verfg_ID,Itsec_SB_Verfg_Txt,Itsec_SB_Vertr_ID,Itsec_SB_Vertr_Txt
+		}
+	}
+	
+	//Doppelt weil: siehe @Column(name = "CWID_VERANTW_BETR") ciOwner Feld in Hibernateklasse ItSystem
+	//anstatt @Column(name = "RESPONSIBLE") wie in allen anderen Transbase CI Tabellen
+	private void setCiBaseData(ItSystemDTO ciBaseDTO, ItSystem ciBase) {
+		ciBaseDTO.setId(ciBase.getId());
+		ciBaseDTO.setName(ciBase.getName());
+		ciBaseDTO.setAlias(ciBase.getAlias());
 		
 		
 		//			applicationDTO.setItsecGroupId(application.getItsecGroupId());

@@ -977,6 +977,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			switch(tableId) {
 				case AC.TABLE_ID_APPLICATION:
 					return isApplicationAllowed;
+				case AC.TABLE_ID_IT_SYSTEM:
 				case AC.TABLE_ID_ROOM:
 				case AC.TABLE_ID_BUILDING:
 				case AC.TABLE_ID_SITE:

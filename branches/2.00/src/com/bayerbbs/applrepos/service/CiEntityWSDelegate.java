@@ -2,6 +2,7 @@ package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
+import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
@@ -55,5 +56,9 @@ public class CiEntityWSDelegate {
 	
 	public CiItemsResultDTO findCis(ApplicationSearchParamsDTO input) {//CiDetailParameterOutput CiSearchParamsDTO
 		return ciEntityWS.findCis(input);
+	}
+	
+	public ItSystemDTO getItSystem(CiDetailParameterInput input) {
+		return ciEntityWS.getItSystem(input);
 	}
 }

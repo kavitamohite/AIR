@@ -1,12 +1,8 @@
 package com.bayerbbs.applrepos.dto;
 
-import java.io.Serializable;
-
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 
-public class CiBaseDTO implements Serializable {
-	private static final long serialVersionUID = -7096067985931326775L;
-	
+public class CiBaseDTO {// implements Serializable
 	private Long id;
 	private Integer tableId;
 	private String name;
