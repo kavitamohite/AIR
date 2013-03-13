@@ -9,6 +9,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "IT_SYSTEM")
+//@NamedQueries(
+//	@NamedQuery(name="getItSystemClusterTypes", query="...")
+//)
 public class ItSystem extends DeletableRevisionInfo implements Serializable {
 	private static final long serialVersionUID = -9152390693208339445L;
 

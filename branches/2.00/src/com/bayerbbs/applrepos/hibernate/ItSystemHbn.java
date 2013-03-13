@@ -20,6 +20,8 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.dto.KeyValueType2DTO;
 import com.bayerbbs.applrepos.dto.KeyValueTypeDTO;
 import com.bayerbbs.applrepos.dto.OsTypeDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
@@ -830,7 +832,7 @@ public class ItSystemHbn extends BaseHbn {
 		boolean commit = false;
 
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT DISTINCT os_type_id, os_type, os_group, hw_ident_or_trans FROM v_md_os");
+		sql.append("SELECT DISTINCT os_type_id, os_type, os_group, hw_ident_or_trans FROM v_md_os ORDER BY os_type");
 		
 		try {
 			ta = session.beginTransaction();
@@ -848,6 +850,7 @@ public class ItSystemHbn extends BaseHbn {
 			HibernateUtil.close(ta, session, commit);
 		}
 		
+		
 		return osTypes;
 	}
 	
@@ -862,7 +865,7 @@ public class ItSystemHbn extends BaseHbn {
 		boolean commit = false;
 
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT os_name_id, os_name, os_type_id FROM v_md_os");
+		sql.append("SELECT os_name_id, os_name, os_type_id FROM v_md_os ORDER BY os_name");
 		
 		try {
 			ta = session.beginTransaction();
@@ -881,5 +884,139 @@ public class ItSystemHbn extends BaseHbn {
 		}
 		
 		return osNames;
+	}
+	
+	public static List<KeyValueType2DTO> getItSystemClusterCodes() {
+		List<KeyValueType2DTO> clusterCodes = new ArrayList<KeyValueType2DTO>();
+		
+		//wichtig: mit id=1 und nicht 0, sonst wird in der combo immer ein Wert gesetzt, auch dann wenn
+		//er gerade manuell gelöscht wurde.
+		clusterCodes.add(new KeyValueType2DTO(1, "Cluster", "C"));
+		clusterCodes.add(new KeyValueType2DTO(2, "Cluster Partner", "CP"));
+		clusterCodes.add(new KeyValueType2DTO(3, "Cluster Ressource", "CR"));
+		clusterCodes.add(new KeyValueType2DTO(4, "no Cluster", "N"));
+		clusterCodes.add(new KeyValueType2DTO(5, "Virtual Machine", "VM"));
+		
+		return clusterCodes;
+	}
+	
+	public static List<KeyValueDTO> getItSystemClusterTypes() {
+		List<KeyValueDTO> clusterTypes = new ArrayList<KeyValueDTO>();
+		
+		Transaction ta = null;
+		Statement stmt = null;
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT DISTINCT cluster_type FROM it_system WHERE cluster_type IS NOT NULL ORDER BY cluster_type");
+		
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+			
+			long i = 0;
+			while (rs.next())
+				clusterTypes.add(new KeyValueDTO(i++, rs.getString("cluster_type")));
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		return clusterTypes;
+	}
+	
+	public static List<KeyValueDTO> getVirtualHardwareSoftwareTypes() {
+		List<KeyValueDTO> virtualHWSWTypes = new ArrayList<KeyValueDTO>();
+		
+		Transaction ta = null;
+		Statement stmt = null;
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();
+		sql.
+		append("SELECT DISTINCT ").
+		append("	CASE WHEN virtual_host_sw = 'VMWare' then 'VMware' ").
+		append("		 ELSE virtual_host_sw ").
+		append("	END AS virtual_host_sw ").
+		append("FROM it_system WHERE virtual_host_sw IS NOT NULL ORDER BY virtual_host_sw");
+		
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+			
+			long i = 1;
+			while (rs.next())
+				virtualHWSWTypes.add(new KeyValueDTO(i++, rs.getString("virtual_host_sw")));
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		return virtualHWSWTypes;
+	}
+
+	public static List<KeyValueDTO> getItSystemPrimaryFunctions() {
+		List<KeyValueDTO> clusterTypes = new ArrayList<KeyValueDTO>();
+		
+		Transaction ta = null;
+		Statement stmt = null;
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT primary_function_id, primary_function_name FROM v_md_primary_function WHERE table_id = 1 ORDER BY primary_function_name");
+		
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+			
+			while (rs.next())
+				clusterTypes.add(new KeyValueDTO(rs.getLong("primary_function_id"), rs.getString("primary_function_name")));
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		return clusterTypes;
+	}
+	
+	public static List<KeyValueDTO> getItSystemLicenseScannings() {
+		List<KeyValueDTO> licenseScannings = new ArrayList<KeyValueDTO>();
+		
+		//wichtig: mit id=1 und nicht 0, sonst wird in der combo immer ein Wert gesetzt, auch dann wenn
+		//er gerade manuell gelöscht wurde.
+		licenseScannings.add(new KeyValueDTO(1L, "no exception from scanning"));
+		licenseScannings.add(new KeyValueDTO(2L, "OS not supported"));
+		licenseScannings.add(new KeyValueDTO(3L, "Embedded System, no scanner can be installed"));
+		licenseScannings.add(new KeyValueDTO(4L, "Customer declined"));
+		licenseScannings.add(new KeyValueDTO(5L, "OEM Software installed, loss of warranty by scanner installation"));
+		licenseScannings.add(new KeyValueDTO(6L, "Access to system not possible"));
+		licenseScannings.add(new KeyValueDTO(7L, "Other Scanning Method Used"));
+		licenseScannings.add(new KeyValueDTO(8L, "Internal Lab / Test Systems"));
+		
+		return licenseScannings;
 	}
 }

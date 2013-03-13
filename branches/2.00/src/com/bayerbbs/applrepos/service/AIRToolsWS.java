@@ -20,6 +20,8 @@ import com.bayerbbs.applrepos.dto.GxpFlagDTO;
 import com.bayerbbs.applrepos.dto.ItSecGroupDTO;
 import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
 import com.bayerbbs.applrepos.dto.ItSetDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.dto.KeyValueType2DTO;
 import com.bayerbbs.applrepos.dto.KeyValueTypeDTO;
 import com.bayerbbs.applrepos.dto.LicenseTypeDTO;
 import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
@@ -271,18 +273,39 @@ public class AIRToolsWS {
 		return ComplianceHbn.getArrayFromListLinkCIList(ComplianceHbn.findLinkCIList(input.getZielotypGSToolId(), input.getItSetId(), input.getApplicationId(), input.getMassnahmeId(), appCat1Id));
 	}
 	
+	
 	public KeyValueTypeDTO[] getItSystemOsGroups() {
 		List<KeyValueTypeDTO> osGroups = ItSystemHbn.getItSystemOsGroups();
 		return osGroups.toArray(new KeyValueTypeDTO[0]);
 	}
-	
 	public OsTypeDTO[] getItSystemOsTypes() {
 		List<OsTypeDTO> osTypes = ItSystemHbn.getItSystemOsTypes();
 		return osTypes.toArray(new OsTypeDTO[0]);
 	}
-	
 	public KeyValueTypeDTO[] getItSystemOsNames() {
-		List<KeyValueTypeDTO> osNames = ItSystemHbn.getItSystemOsNames();
-		return osNames.toArray(new KeyValueTypeDTO[0]);
+		List<KeyValueTypeDTO> osTypes = ItSystemHbn.getItSystemOsNames();
+		return osTypes.toArray(new KeyValueTypeDTO[0]);
+	}
+	
+	
+	public KeyValueType2DTO[] getItSystemClusterCodes() {
+		List<KeyValueType2DTO> clusterCodes = ItSystemHbn.getItSystemClusterCodes();
+		return clusterCodes.toArray(new KeyValueType2DTO[0]);
+	}
+	public KeyValueDTO[] getItSystemClusterTypes() {
+		List<KeyValueDTO> clusterCodes = ItSystemHbn.getItSystemClusterTypes();
+		return clusterCodes.toArray(new KeyValueDTO[0]);
+	}
+	public KeyValueDTO[] getVirtualHardwareSoftwareTypes() {
+		List<KeyValueDTO> virtualHWSWTypes = ItSystemHbn.getVirtualHardwareSoftwareTypes();
+		return virtualHWSWTypes.toArray(new KeyValueDTO[0]);
+	}
+	public KeyValueDTO[] getItSystemPrimaryFunctions() {
+		List<KeyValueDTO> functions = ItSystemHbn.getItSystemPrimaryFunctions();
+		return functions.toArray(new KeyValueDTO[0]);
+	}
+	public KeyValueDTO[] getItSystemLicenseScannings() {
+		List<KeyValueDTO> licenseScannings = ItSystemHbn.getItSystemLicenseScannings();
+		return licenseScannings.toArray(new KeyValueDTO[0]);
 	}
 }

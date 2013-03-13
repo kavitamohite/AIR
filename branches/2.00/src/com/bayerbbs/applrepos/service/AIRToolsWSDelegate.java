@@ -12,6 +12,8 @@ import com.bayerbbs.applrepos.dto.GxpFlagDTO;
 import com.bayerbbs.applrepos.dto.ItSecGroupDTO;
 import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
 import com.bayerbbs.applrepos.dto.ItSetDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.dto.KeyValueType2DTO;
 import com.bayerbbs.applrepos.dto.KeyValueTypeDTO;
 import com.bayerbbs.applrepos.dto.LicenseTypeDTO;
 import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
@@ -152,15 +154,31 @@ public class AIRToolsWSDelegate {
 		return airToolsWS.getTemplateCIs();
 	}
 	
+	
 	public KeyValueTypeDTO[] getItSystemOsGroups() {
 		return airToolsWS.getItSystemOsGroups();
 	}
-	
 	public OsTypeDTO[] getItSystemOsTypes() {
 		return airToolsWS.getItSystemOsTypes();
 	}
-	
 	public KeyValueTypeDTO[] getItSystemOsNames() {
 		return airToolsWS.getItSystemOsNames();
 	}
+	
+	public KeyValueType2DTO[] getItSystemClusterCodes() {
+		return airToolsWS.getItSystemClusterCodes();
+	}
+	public KeyValueDTO[] getItSystemClusterTypes() {
+		return airToolsWS.getItSystemClusterTypes();
+	}
+	public KeyValueDTO[] getVirtualHardwareSoftwareTypes() {
+		return airToolsWS.getVirtualHardwareSoftwareTypes();
+	}
+	public KeyValueDTO[] getItSystemPrimaryFunctions() {
+		return airToolsWS.getItSystemPrimaryFunctions();
+	}
+	public KeyValueDTO[] getItSystemLicenseScannings() {
+		return airToolsWS.getItSystemLicenseScannings();
+	}
+	
 }

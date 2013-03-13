@@ -259,7 +259,12 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		var storeIds = {
 			osGroupsListStore: null,
 			osTypesListStore: null,
-			osNamesListStore: null
+			osNamesListStore: null,
+			clusterCodesListStore: null,
+			clusterTypesListStore: null,
+			virtualSoftwareListStore: null,
+			itSystemPrimaryFunctionsListStore: null,
+			itSystemLicenseScanningsListStore: null
 		};
 		
 		var storeCount = 0;
@@ -279,9 +284,20 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		var cbOsGroup = this.getComponent('fsOs').getComponent('cbOsGroup');
 		var cbOsType = this.getComponent('fsOs').getComponent('cbOsType');
 		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
+		var cbClusterCode = this.getComponent('cbClusterCode');
+		var cbClusterType = this.getComponent('cbClusterType');
+		var cbVirtualSoftware = this.getComponent('cbVirtualSoftware');
+		var cbPrimaryFunction = this.getComponent('cbPrimaryFunction');
+		var cbLicenseScanning = this.getComponent('cbLicenseScanning');
+		
 		cbOsGroup.bindStore(AIR.AirStoreManager.getStoreByName('osGroupsListStore'), true);
 		cbOsType.bindStore(AIR.AirStoreManager.getStoreByName('osTypesListStore'), true);
 		cbOsName.bindStore(AIR.AirStoreManager.getStoreByName('osNamesListStore'), true);
+		cbClusterCode.bindStore(AIR.AirStoreManager.getStoreByName('clusterCodesListStore'), true);
+		cbClusterType.bindStore(AIR.AirStoreManager.getStoreByName('clusterTypesListStore'), true);
+		cbVirtualSoftware.bindStore(AIR.AirStoreManager.getStoreByName('virtualSoftwareListStore'), true);
+		cbPrimaryFunction.bindStore(AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore'), true);
+		cbLicenseScanning.bindStore(AIR.AirStoreManager.getStoreByName('itSystemLicenseScanningsListStore'), true);
 		
 		cbOsGroup.getStore().filter('type', AAM.getAppDetail().ciSubTypeId);
         storeLoader.destroy();
@@ -289,25 +305,29 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
         cbOsGroup.on('select', this.onOsGroupSelect, this);
         cbOsType.on('select', this.onOsTypeSelect, this);
         cbOsName.on('select', this.onOsNameSelect, this);
+        cbClusterCode.on('select', this.onSelect, this);
+        cbClusterType.on('select', this.onSelect, this);
+        cbVirtualSoftware.on('select', this.onSelect, this);
+        cbPrimaryFunction.on('select', this.onSelect, this);
+        cbLicenseScanning.on('select', this.onSelect, this);
+        
 //        cbOsGroup.on('change', this.onOsGroupChange, this);
 //        cbOsType.on('change', this.onOsTypeChange, this);
 //        cbOsName.on('change', this.onOsNameChange, this);
 	},
 	
+	onSelect: function(combo, record, index) {
+		//fire ciChange
+	},
+	
 	onOsGroupSelect: function(combo, record, index) {
-//		//TEST
-//		combo.getStore().filter('type', AAM.getAppDetail().ciSubTypeId);
-//		//TEST
+		var filterData = {
+			osGroup: record.get('name'),
+			itSystemType: record.get('type')
+		};
 		
-		if(record) {
-			var filterData = {
-				osGroup: record.get('name'),
-				itSystemType: record.get('type')
-			};
-			
-			var cbOsType = this.getComponent('fsOs').getComponent('cbOsType');
-			cbOsType.filterByData(filterData);
-		}
+		var cbOsType = this.getComponent('fsOs').getComponent('cbOsType');
+		cbOsType.filterByData(filterData);
 	},
 	onOsTypeSelect: function(combo, record, index) {
 		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
