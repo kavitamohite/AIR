@@ -12,6 +12,7 @@ import com.bayerbbs.applrepos.dto.GxpFlagDTO;
 import com.bayerbbs.applrepos.dto.ItSecGroupDTO;
 import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
 import com.bayerbbs.applrepos.dto.ItSetDTO;
+import com.bayerbbs.applrepos.dto.KeyValueTypeDTO;
 import com.bayerbbs.applrepos.dto.LicenseTypeDTO;
 import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
 import com.bayerbbs.applrepos.dto.LinkCIDTO;
@@ -19,6 +20,7 @@ import com.bayerbbs.applrepos.dto.LinkCITypeDTO;
 import com.bayerbbs.applrepos.dto.LoadClassDTO;
 import com.bayerbbs.applrepos.dto.OperationalStatusDTO;
 import com.bayerbbs.applrepos.dto.OrganisationalScopeDTO;
+import com.bayerbbs.applrepos.dto.OsTypeDTO;
 import com.bayerbbs.applrepos.dto.PriorityLevelDTO;
 import com.bayerbbs.applrepos.dto.ProcessDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
@@ -32,121 +34,133 @@ import com.bayerbbs.applrepos.dto.ViewDataDTO;
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "AIRToolsWSService", portName = "AIRToolsWSPort")
 public class AIRToolsWSDelegate {
 
-	com.bayerbbs.applrepos.service.AIRToolsWS aIRToolsWS = new com.bayerbbs.applrepos.service.AIRToolsWS();
+	com.bayerbbs.applrepos.service.AIRToolsWS airToolsWS = new com.bayerbbs.applrepos.service.AIRToolsWS();
 
 	public AccountDTO[] getAccountList() {
-		return aIRToolsWS.getAccountList();
+		return airToolsWS.getAccountList();
 	}
 
 	public BusinessEssentialDTO[] getBusinessEssentialList() {
-		return aIRToolsWS.getBusinessEssentialList();
+		return airToolsWS.getBusinessEssentialList();
 	}
 
 	public CurrencyDTO[] getCurrencyList() {
-		return aIRToolsWS.getCurrencyList();
+		return airToolsWS.getCurrencyList();
 	}
 
 	public GroupsDTO[] getGroupByGroupUsage(String groupUsageName) {
-		return aIRToolsWS.getGroupByGroupUsage(groupUsageName);
+		return airToolsWS.getGroupByGroupUsage(groupUsageName);
 	}
 
 	public GxpFlagDTO[] getGxpFlagList() {
-		return aIRToolsWS.getGxpFlagList();
+		return airToolsWS.getGxpFlagList();
 	}
 	
 	public OrganisationalScopeDTO[] getOrganisationalScopeList() {
-		return aIRToolsWS.getOrganisationalScopeList();
+		return airToolsWS.getOrganisationalScopeList();
 	}
 
 	public DedicatedDTO[] getDedicatedList() {
-		return aIRToolsWS.getDedicatedList();
+		return airToolsWS.getDedicatedList();
 	}
 
 	public LoadClassDTO[] getLoadClassList() {
-		return aIRToolsWS.getLoadClassList();
+		return airToolsWS.getLoadClassList();
 	}
 
 	public ServiceModelDTO[] getServiceModelList() {
-		return aIRToolsWS.getServiceModelList();
+		return airToolsWS.getServiceModelList();
 	}
 
 	public ItSecGroupDTO[] getItSecGroupList() {
-		return aIRToolsWS.getItSecGroupList();
+		return airToolsWS.getItSecGroupList();
 	}
 
 	public ItSecSBWerteDTO[] getItSecSBWerteList() {
-		return aIRToolsWS.getItSecSBWerteList();
+		return airToolsWS.getItSecSBWerteList();
 	}
 
 	public ItSetDTO[] getItSetList() {
-		return aIRToolsWS.getItSetList();
+		return airToolsWS.getItSetList();
 	}
 
 	public LicenseTypeDTO[] getLicenseTypeList() {
-		return aIRToolsWS.getLicenseTypeList();
+		return airToolsWS.getLicenseTypeList();
 	}
 
 	public LifecycleStatusDTO[] getLifecycleStatusList() {
-		return aIRToolsWS.getLifecycleStatusList();
+		return airToolsWS.getLifecycleStatusList();
 	}
 
 	public ProcessDTO[] getProcessList() {
-		return aIRToolsWS.getProcessList();
+		return airToolsWS.getProcessList();
 	}
 
 	public OperationalStatusDTO[] getOperationalStatusList() {
-		return aIRToolsWS.getOperationalStatusList();
+		return airToolsWS.getOperationalStatusList();
 	}
 
 	public PriorityLevelDTO[] getPriorityLevelList() {
-		return aIRToolsWS.getPriorityLevelList();
+		return airToolsWS.getPriorityLevelList();
 	}
 
 	public ReferenzDTO[] getReferenzList() {
-		return aIRToolsWS.getReferenzList();
+		return airToolsWS.getReferenzList();
 	}
 
 	public SeverityLevelDTO[] getSeverityLevelList() {
-		return aIRToolsWS.getSeverityLevelList();
+		return airToolsWS.getSeverityLevelList();
 	}
 
 	public SlaDTO[] getSlaList() {
-		return aIRToolsWS.getSlaList();
+		return airToolsWS.getSlaList();
 	}
 
 	public SlaServiceContractDTO[] getSlaServiceContractList() {
-		return aIRToolsWS.getSlaServiceContractList();
+		return airToolsWS.getSlaServiceContractList();
 	}
 
 	public CategoryBusinessDTO[] getCategoryBusinessList() {
-		return aIRToolsWS.getCategoryBusinessList();
+		return airToolsWS.getCategoryBusinessList();
 	}
 
 	public ClassInformationDTO[] getClassInformationList() {
-		return aIRToolsWS.getClassInformationList();
+		return airToolsWS.getClassInformationList();
 	}
 
 	public ViewDataDTO getDatabaseDisplayName() {
-		return aIRToolsWS.getDatabaseDisplayName();
+		return airToolsWS.getDatabaseDisplayName();
 	}
 
 	public SISoogleAttribute[] getSISoogleAttributesByType(SisoogleAttributesInput input) {//String type
-		return aIRToolsWS.getSISoogleAttributesByType(input);//type
+		return airToolsWS.getSISoogleAttributesByType(input);//type
 	}
 	
 	public CiTypeDTO[] getCiTypes() {
-		return aIRToolsWS.getCiTypes();
+		return airToolsWS.getCiTypes();
 	}
 	
 	public LinkCITypeDTO[] getLinkCITypeList() {
-		return aIRToolsWS.getLinkCITypeList();
+		return airToolsWS.getLinkCITypeList();
 	}
 
 	public LinkCIDTO[] getLinkCIList(CiComplianceParameterInput input) {
-		return aIRToolsWS.getLinkCIList(input);
+		return airToolsWS.getLinkCIList(input);
 	}
 	
 	public ReferenzDTO[] getTemplateCIs() {
-		return aIRToolsWS.getTemplateCIs();
+		return airToolsWS.getTemplateCIs();
+	}
+	
+	public KeyValueTypeDTO[] getItSystemOsGroups() {
+		return airToolsWS.getItSystemOsGroups();
+	}
+	
+	public OsTypeDTO[] getItSystemOsTypes() {
+		return airToolsWS.getItSystemOsTypes();
+	}
+	
+	public KeyValueTypeDTO[] getItSystemOsNames() {
+		return airToolsWS.getItSystemOsNames();
 	}
 }

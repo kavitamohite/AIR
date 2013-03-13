@@ -47,6 +47,8 @@ public class ItSystem extends DeletableRevisionInfo implements Serializable {
 //	private String itSecSbConfidentialityTxt;
 	private String itSecSbConfidentialityDescription;
 
+	private Integer ciSubType;
+	
 	
 	@Id
 	@Column(name = "IT_SYSTEM_ID")
@@ -259,4 +261,13 @@ public class ItSystem extends DeletableRevisionInfo implements Serializable {
 	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
 		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
 	}
+	
+	@Column(name = "HW_IDENT_OR_TRANS")
+	public Integer getCiSubType() {
+		return ciSubType;
+	}
+	public void setCiSubType(Integer ciSubType) {
+		this.ciSubType = ciSubType;
+	}
+	
 }

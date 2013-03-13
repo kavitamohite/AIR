@@ -44,6 +44,8 @@ AIR.AirConfigFactory = function() {
 		createItSystemCiRecord: function() {
 			var itSystemCiFields = this.getBaseCiFields();
 			
+			itSystemCiFields.push('ciSubTypeId');
+			
 			return itSystemCiFields;
 		},
 		

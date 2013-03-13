@@ -1351,6 +1351,7 @@ AIR.AirStoreFactory = function() {
 					{name: 'CiEinsprungInvalidCiTypeMessage'},
 					{name: 'CiEinsprungCiIdMarkedAsDeleted'},
 					
+					//CiSpecificsLocationItemView
 					{name: 'alias'},
 					{name: 'floor'},
 					{name: 'room'},
@@ -1360,7 +1361,17 @@ AIR.AirStoreFactory = function() {
 					{name: 'site'},
 					{name: 'country'},
 					{name: 'streetAndNumber'},
-					{name: 'postalCodeLocation'}
+					{name: 'postalCodeLocation'},
+					
+					//CiSpecificsItItemView
+					{name: 'osGroup'},
+					{name: 'clusterCode'},
+					{name: 'clusterType'},
+					{name: 'virtualHardwareClient'},
+					{name: 'virtualHardwareHost'},
+					{name: 'virtualHardwareSoftware'},
+					{name: 'primaryFunction'},
+					{name: 'licenseScanning'}
 			    ]
 			});
 		
@@ -3356,6 +3367,94 @@ AIR.AirStoreFactory = function() {
 	//		});
 			
 			return store;
+		},
+		
+		createOsGroupsListStore: function() {
+			var osGroupsListRecord = Ext.data.Record.create([
+  		      	{ name: 'id', type: 'int' },
+  		      	{ name: 'name' },
+  		      	{ name: 'type', type: 'int' }
+  		    ]);
+  		
+  		    var osGroupsListReader = new Ext.data.XmlReader({
+  				record: 'return',
+  				idProperty: 'id'
+  		    }, osGroupsListRecord); 
+  		
+  		    var osGroupsListStore = new Ext.data.XmlStore({
+  		    	autoDestroy: true,
+  				autoLoad: false,
+  				storeId: 'osGroupsListStore',
+  				
+  		      	proxy: new Ext.ux.soap.SoapProxy({
+  		      		url: webcontext +'/AIRToolsWSPort',
+  		      		loadMethod: 'getItSystemOsGroups',
+  		      		timeout: 120000,
+  		      		reader: osGroupsListReader
+  		      	}),
+  		      	fields: [ 'id', 'name', 'type' ]
+  		    });
+  		    
+  		    return osGroupsListStore;
+		},
+		
+		createOsTypesListStore: function() {
+			var osTypesListRecord = Ext.data.Record.create([
+  		      	{ name: 'osTypeId', type: 'int' },
+  		      	{ name: 'osName' },
+  		      	{ name: 'osGroup' },
+  		      	{ name: 'itSystemType', type: 'int' }
+  		    ]);
+  		
+  		    var osTypesListReader = new Ext.data.XmlReader({
+  				record: 'return',
+  				idProperty: 'id'
+  		    }, osTypesListRecord); 
+  		
+  		    var osTypesListStore = new Ext.data.XmlStore({
+  		    	autoDestroy: true,
+  				autoLoad: false,
+  				storeId: 'osTypesListStore',
+  				
+  		      	proxy: new Ext.ux.soap.SoapProxy({
+  		      		url: webcontext +'/AIRToolsWSPort',
+  		      		loadMethod: 'getItSystemOsTypes',
+  		      		timeout: 120000,
+  		      		reader: osTypesListReader
+  		      	}),
+  		      	fields: [ 'osTypeId', 'osName', 'osGroup', 'itSystemType' ]
+  		    });
+  		    
+  		    return osTypesListStore;
+		},
+		
+		createOsNamesListStore: function() {
+			var osNamesListRecord = Ext.data.Record.create([
+  		      	{ name: 'id', type: 'int' },
+  		      	{ name: 'name' },
+  		      	{ name: 'type', type: 'int' }
+  		    ]);
+  		
+  		    var osNamesListReader = new Ext.data.XmlReader({
+  				record: 'return',
+  				idProperty: 'id'
+  		    }, osNamesListRecord); 
+  		
+  		    var osNamesListStore = new Ext.data.XmlStore({
+  		    	autoDestroy: true,
+  				autoLoad: false,
+  				storeId: 'osNamesListStore',
+  				
+  		      	proxy: new Ext.ux.soap.SoapProxy({
+  		      		url: webcontext +'/AIRToolsWSPort',
+  		      		loadMethod: 'getItSystemOsNames',
+  		      		timeout: 120000,
+  		      		reader: osNamesListReader
+  		      	}),
+  		      	fields: [ 'id', 'name', 'type' ]
+  		    });
+  		    
+  		    return osNamesListStore;
 		},
 		
 		createSisoogleOsTypeListStore: function() {

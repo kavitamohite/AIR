@@ -20,6 +20,8 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
+import com.bayerbbs.applrepos.dto.KeyValueTypeDTO;
+import com.bayerbbs.applrepos.dto.OsTypeDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemDTO;
@@ -781,5 +783,103 @@ public class ItSystemHbn extends BaseHbn {
 		result.setCiItemDTO(cis.toArray(new CiItemDTO[0]));
 		result.setCountResultSet(i);//i + start
 		return result;
+	}
+	
+	public static List<KeyValueTypeDTO> getItSystemOsGroups() {
+		List<KeyValueTypeDTO> osGroups = new ArrayList<KeyValueTypeDTO>();
+		
+		Transaction ta = null;
+		Statement stmt = null;
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();//"SELECT ci_id, table_id, type, name, itset, FROM dwh_entity WHERE template = 'Yes'";
+		sql.append("SELECT DISTINCT os_group, hw_ident_or_trans FROM v_md_os WHERE hw_ident_or_trans IS NOT NULL ORDER BY hw_ident_or_trans");
+		
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+			
+			int i = 0;
+			while (rs.next())
+				osGroups.add(new KeyValueTypeDTO(i++, rs.getString("os_group"), rs.getInt("hw_ident_or_trans")));
+			
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		return osGroups;
+	}
+	
+	public static List<OsTypeDTO> getItSystemOsTypes() {
+		List<OsTypeDTO> osTypes = new ArrayList<OsTypeDTO>();
+		
+		Transaction ta = null;
+		Statement stmt = null;
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT DISTINCT os_type_id, os_type, os_group, hw_ident_or_trans FROM v_md_os");
+		
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+			
+			while (rs.next())
+				osTypes.add(new OsTypeDTO(rs.getInt("os_type_id"), rs.getString("os_type"), rs.getString("os_group"), rs.getLong("hw_ident_or_trans")));
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		return osTypes;
+	}
+	
+	public static List<KeyValueTypeDTO> getItSystemOsNames() {
+		List<KeyValueTypeDTO> osNames = new ArrayList<KeyValueTypeDTO>();
+		
+		Transaction ta = null;
+		Statement stmt = null;
+		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT os_name_id, os_name, os_type_id FROM v_md_os");
+		
+		try {
+			ta = session.beginTransaction();
+			conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+			
+			while (rs.next())
+				osNames.add(new KeyValueTypeDTO(rs.getInt("os_name_id"), rs.getString("os_name"), rs.getInt("os_type_id")));
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		return osNames;
 	}
 }

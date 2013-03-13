@@ -43,8 +43,8 @@ AIR.AirStoreLoader = Ext.extend(Ext.util.Observable, {
     
     onLoad: function(store, records, options) {
     	this.fireEvent('storeLoaded', store, records, options);
-    	if(store.storeId === 'organisationalScopeListStore')
-    		Util.log('organisationalScopeListStore loaded');
+//    	if(store.storeId === 'organisationalScopeListStore')
+//    		Util.log('organisationalScopeListStore loaded');
 //    	Util.log(store.storeId+' loaded');
         
         if(this.loadCount == this.storeCounter) {

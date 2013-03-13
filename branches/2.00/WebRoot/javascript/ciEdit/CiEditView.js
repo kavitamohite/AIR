@@ -727,11 +727,18 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
 		var record;
 		
-		if(data.tableId == AC.TABLE_ID_APPLICATION) {
-			record = Util.getStoreRecord(store, 'ciSubTypeId', parseInt(data.applicationCat1Id));
-		} else {
-			record = Util.getStoreRecord(store, 'ciTypeId', parseInt(data.tableId));
+		switch(parseInt(data.tableId)) {
+			case AC.TABLE_ID_APPLICATION:
+				record = Util.getStoreRecord(store, 'ciSubTypeId', parseInt(data.applicationCat1Id));
+				break;
+			case AC.TABLE_ID_IT_SYSTEM:
+				record = Util.getStoreRecord(store, 'ciSubTypeId', parseInt(data.ciSubTypeId));
+				break;
+			default:
+				record = Util.getStoreRecord(store, 'ciTypeId', parseInt(data.tableId));
+				break;
 		}
+
 
 		this.getComponent('lCiName').setText(data.name);//applicationName
 		this.getComponent('lCiType').setText(record.get('text'));//ciDetail.applicationCat1Txt applicationName

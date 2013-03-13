@@ -222,6 +222,10 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	onFieldChange: function(textfield, newValue, oldValue) {
 		this.ownerCt.fireEvent('ciChange', this, textfield, newValue);
 	},
+	
+	init: function() {
+		
+	},
     
 	update: function(data) {
 		this.ciId = data.id;

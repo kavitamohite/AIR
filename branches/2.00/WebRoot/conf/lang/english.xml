@@ -515,6 +515,7 @@
 		<CiEinsprungInvalidCiTypeMessage>The CI type={0} is invalid</CiEinsprungInvalidCiTypeMessage>
 		<CiEinsprungCiIdMarkedAsDeleted>The CI id={0} is marked as deleted</CiEinsprungCiIdMarkedAsDeleted>
 		
+		<!-- CiSpecificsLocationItemView -->
 		<alias>Alias</alias>
 		<floor>Floor</floor>
 		<room>Room</room>
@@ -523,10 +524,22 @@
 		<terrain>Terrain</terrain>
 		<site>Site</site>
 		<country>Country</country>
-		<street>Street</street>
-		<streetNumber>No.</streetNumber>
-		
 		<streetAndNumber>Street / No.</streetAndNumber>
 		<postalCodeLocation>Postal Code / Location</postalCodeLocation>
+		
+		<!-- CiSpecificsItItemView -->
+		<osGroup>Group</osGroup>
+<!--		<osType></osType>-->
+<!--		<osName></osName>-->
+		<clusterCode>Cluster Code</clusterCode>
+		<clusterType>Cluster Type</clusterType>
+		<virtualHardwareClient>Virtual Hardware Client</virtualHardwareClient>
+		<virtualHardwareHost>Virtual Hardware Host</virtualHardwareHost>
+		<virtualHardwareSoftware>Virtual Software</virtualHardwareSoftware>
+<!--		<lifecycleStatus></lifecycleStatus>-->
+<!--		<operationalStatus></operationalStatus>-->
+		<primaryFunction>Primary Function</primaryFunction>
+		<licenseScanning>License Scanning</licenseScanning>
+		
 	</Items>
 </LanguageItems>

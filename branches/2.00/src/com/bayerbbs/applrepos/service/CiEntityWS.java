@@ -89,8 +89,10 @@ public class CiEntityWS {
 		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 			ItSystem itSystem = ItSystemHbn.findById(ItSystem.class, input.getCiId());
 			
-			itSystemDTO.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
 			setCiBaseData(itSystemDTO, itSystem);
+			itSystemDTO.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
+			Integer ciSubType = itSystem.getCiSubType() != null ? itSystem.getCiSubType() : AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM_TRANSIENT;
+			itSystemDTO.setCiSubTypeId(ciSubType);
 			
 			AccessRightChecker checker = new AccessRightChecker();
 			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), itSystem)) {

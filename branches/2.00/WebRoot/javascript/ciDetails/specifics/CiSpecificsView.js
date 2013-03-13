@@ -49,11 +49,11 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 			//! Sonst springt er wieder zur Maske des vorherig ausgewählten CI Typs. Grund: setActiveItem löst
 			//intern nochmal ein afterlayout aus. Dadurch wird in this.onViewAdded() wieder setActiveItem aufgerufen
 			//und so wieder zur Maske des vorherig ausgewählten CI Typs zurückgeschaltet.
-			this.un('afterlayout', this.onViewAdded, this);
+			this.un('add', this.onViewAdded, this);//afterlayout
 			this.getLayout().setActiveItem(specificsView.getId());
 		} else {
 			this.data = data;
-			this.on('afterlayout', this.onViewAdded, this);
+			this.on('add', this.onViewAdded, this);//afterlayout
 			this.add(specificsView);
 		}
 	},
@@ -105,10 +105,10 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 					specificsView = new AIR.CiSpecificsAnwendungView({ id: 'clCiSpecificsAnwendung', height: 800 });
 				//NEW TEST
 				break;
+			case AC.TABLE_ID_POSITION:
 			case AC.TABLE_ID_ROOM:
 			case AC.TABLE_ID_BUILDING:
 			case AC.TABLE_ID_BUILDING_AREA:
-			case AC.TABLE_ID_POSITION:
 			case AC.TABLE_ID_TERRAIN:
 			case AC.TABLE_ID_SITE:
 				specificsView = this.getComponent('clCiSpecificsLocationItem');
@@ -137,7 +137,10 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 		specificsView.update(this.data);
 		
 		this.getLayout().setActiveItem(specificsView.getId());
-//		delete this.data;
+		specificsView.updateLabels(AAM.getLabels());
+		specificsView.init();
+		
+		//		delete this.data;
 	}
 });
 Ext.reg('AIR.CiSpecificsView', AIR.CiSpecificsView);

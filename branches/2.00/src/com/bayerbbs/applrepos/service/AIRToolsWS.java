@@ -20,6 +20,7 @@ import com.bayerbbs.applrepos.dto.GxpFlagDTO;
 import com.bayerbbs.applrepos.dto.ItSecGroupDTO;
 import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
 import com.bayerbbs.applrepos.dto.ItSetDTO;
+import com.bayerbbs.applrepos.dto.KeyValueTypeDTO;
 import com.bayerbbs.applrepos.dto.LicenseTypeDTO;
 import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
 import com.bayerbbs.applrepos.dto.LinkCIDTO;
@@ -27,6 +28,7 @@ import com.bayerbbs.applrepos.dto.LinkCITypeDTO;
 import com.bayerbbs.applrepos.dto.LoadClassDTO;
 import com.bayerbbs.applrepos.dto.OperationalStatusDTO;
 import com.bayerbbs.applrepos.dto.OrganisationalScopeDTO;
+import com.bayerbbs.applrepos.dto.OsTypeDTO;
 import com.bayerbbs.applrepos.dto.PriorityLevelDTO;
 import com.bayerbbs.applrepos.dto.ProcessDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
@@ -49,6 +51,7 @@ import com.bayerbbs.applrepos.hibernate.GroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSecGroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSecSBWerteHbn;
 import com.bayerbbs.applrepos.hibernate.ItSetHbn;
+import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 import com.bayerbbs.applrepos.hibernate.LicenseTypeHbn;
 import com.bayerbbs.applrepos.hibernate.LifecycleStatusHbn;
 import com.bayerbbs.applrepos.hibernate.OperationalStatusHbn;
@@ -267,6 +270,19 @@ public class AIRToolsWS {
 		Long appCat1Id = input.getApplicationCat1Id() != null ? input.getApplicationCat1Id() : 0;
 		return ComplianceHbn.getArrayFromListLinkCIList(ComplianceHbn.findLinkCIList(input.getZielotypGSToolId(), input.getItSetId(), input.getApplicationId(), input.getMassnahmeId(), appCat1Id));
 	}
-
-
+	
+	public KeyValueTypeDTO[] getItSystemOsGroups() {
+		List<KeyValueTypeDTO> osGroups = ItSystemHbn.getItSystemOsGroups();
+		return osGroups.toArray(new KeyValueTypeDTO[0]);
+	}
+	
+	public OsTypeDTO[] getItSystemOsTypes() {
+		List<OsTypeDTO> osTypes = ItSystemHbn.getItSystemOsTypes();
+		return osTypes.toArray(new OsTypeDTO[0]);
+	}
+	
+	public KeyValueTypeDTO[] getItSystemOsNames() {
+		List<KeyValueTypeDTO> osNames = ItSystemHbn.getItSystemOsNames();
+		return osNames.toArray(new KeyValueTypeDTO[0]);
+	}
 }
