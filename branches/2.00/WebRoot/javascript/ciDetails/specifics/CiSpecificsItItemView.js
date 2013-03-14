@@ -34,7 +34,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 					xtype: 'filterCombo',//combo
 			        id: 'cbOsGroup',
 					
-					enableKeyEvents: true,
+//					enableKeyEvents: true,
 			        
 			        width: 230,
 			        fieldLabel: 'Group',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
@@ -53,7 +53,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 					xtype: 'filterCombo',//combo
 			        id: 'cbOsType',
 					
-					enableKeyEvents: true,
+//					enableKeyEvents: true,
 			        
 			        width: 230,
 			        fieldLabel: 'Type',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
@@ -72,7 +72,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 					xtype: 'filterCombo',//combo
 			        id: 'cbOsName',
 					
-					enableKeyEvents: true,
+//					enableKeyEvents: true,
 			        
 			        width: 230,
 			        fieldLabel: 'Name',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
@@ -92,7 +92,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 				xtype: 'filterCombo',//combo
 		        id: 'cbClusterCode',
 				
-				enableKeyEvents: true,
+//				enableKeyEvents: true,
 		        
 		        width: 230,
 		        fieldLabel: 'Cluster Code',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
@@ -111,7 +111,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 				xtype: 'filterCombo',//combo
 		        id: 'cbClusterType',
 				
-				enableKeyEvents: true,
+//				enableKeyEvents: true,
 		        
 		        width: 230,
 		        fieldLabel: 'Cluster Type',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
@@ -156,7 +156,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 				xtype: 'filterCombo',//combo
 		        id: 'cbVirtualSoftware',
 				
-				enableKeyEvents: true,
+//				enableKeyEvents: true,
 		        
 		        width: 230,
 		        fieldLabel: 'Virtual Software',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
@@ -175,7 +175,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 				xtype: 'filterCombo',//combo
 		        id: 'cbLifecycle',
 				
-				enableKeyEvents: true,
+//				enableKeyEvents: true,
 		        
 		        width: 230,
 		        fieldLabel: 'Lifecycle',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
@@ -194,7 +194,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 				xtype: 'filterCombo',//combo
 		        id: 'cbItSystemOperationalStatus',
 				
-				enableKeyEvents: true,
+//				enableKeyEvents: true,
 		        
 		        width: 230,
 		        fieldLabel: 'Operational Status',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
@@ -213,7 +213,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 				xtype: 'filterCombo',//combo
 		        id: 'cbPrimaryFunction',
 				
-				enableKeyEvents: true,
+//				enableKeyEvents: true,
 		        
 		        width: 230,
 		        fieldLabel: 'Primary Function',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
@@ -232,7 +232,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 				xtype: 'filterCombo',//combo
 		        id: 'cbLicenseScanning',
 				
-				enableKeyEvents: true,
+//				enableKeyEvents: true,
 		        
 		        width: 230,
 		        fieldLabel: 'License Scanning',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
@@ -299,12 +299,13 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		cbPrimaryFunction.bindStore(AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore'), true);
 		cbLicenseScanning.bindStore(AIR.AirStoreManager.getStoreByName('itSystemLicenseScanningsListStore'), true);
 		
-		cbOsGroup.getStore().filter('type', AAM.getAppDetail().ciSubTypeId);
+		var ciDetail = AAM.getAppDetail();
+		cbOsGroup.getStore().filter('type', ciDetail.ciSubTypeId);
         storeLoader.destroy();
         
         cbOsGroup.on('select', this.onOsGroupSelect, this);
         cbOsType.on('select', this.onOsTypeSelect, this);
-        cbOsName.on('select', this.onOsNameSelect, this);
+        cbOsName.on('select', this.onSelect, this);//onOsNameSelect
         cbClusterCode.on('select', this.onSelect, this);
         cbClusterType.on('select', this.onSelect, this);
         cbVirtualSoftware.on('select', this.onSelect, this);
@@ -314,12 +315,16 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 //        cbOsGroup.on('change', this.onOsGroupChange, this);
 //        cbOsType.on('change', this.onOsTypeChange, this);
 //        cbOsName.on('change', this.onOsNameChange, this);
+        cbClusterCode.on('change', this.onChange, this);
+        cbClusterType.on('change', this.onChange, this);
+        cbVirtualSoftware.on('change', this.onChange, this);
+        cbPrimaryFunction.on('change', this.onChange, this);
+        cbLicenseScanning.on('change', this.onChange, this);
+        
+        
+        this.update(ciDetail);
 	},
-	
-	onSelect: function(combo, record, index) {
-		//fire ciChange
-	},
-	
+
 	onOsGroupSelect: function(combo, record, index) {
 		var filterData = {
 			osGroup: record.get('name'),
@@ -328,24 +333,96 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		
 		var cbOsType = this.getComponent('fsOs').getComponent('cbOsType');
 		cbOsType.filterByData(filterData);
+		cbOsType.setValue('');
+		
+		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
+		cbOsName.getStore().filter('type', record.get('osTypeId'));
+		cbOsName.setValue('');
+		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
 	onOsTypeSelect: function(combo, record, index) {
 		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
 		cbOsName.getStore().filter('type', record.get('osTypeId'));
-	},
-	onOsNameSelect: function(combo, record, index) {
+		cbOsName.setValue('');
 		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
+//	onOsNameSelect: function(combo, record, index) {
+//		
+//	},
+	onSelect: function(combo, record, index) {
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
+	},
+	onChange: function(combo, newValue, oldValue) {
+		if(this.isComboValueValid(combo, newValue, oldValue))
+			this.fireEvent('ciChange', this, combo, newValue, oldValue);
+	},
+	
 	
 	
 	update: function(data) {
-//		this.getComponent('cbSite1').setRawValue(data.alias);
+		var cbLifecycle = this.getComponent('cbLifecycle');
+		var filterData = { tableId: data.tableId };
+		cbLifecycle.filterByData(filterData);
+//		cbLifecycle.getStore().filter('tableId', data.tableId);
 		
-		//select event triggern, um filterung so wie erwartet, aber nicht geschehen, beim ersten Mal wirksam zu machen?
+		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
+		var cbOsType = this.getComponent('fsOs').getComponent('cbOsType');
 		var cbOsGroup = this.getComponent('fsOs').getComponent('cbOsGroup');
+
+		
+		var osNameRecord = Util.getComboRecord(cbOsName, 'id', parseInt(data.osNameId));
+		var osTypeRecord = Util.getComboRecord(cbOsType, 'osTypeId', osNameRecord.get('type'));
+		var osGroupRecord = Util.getComboRecord(cbOsGroup, 'name', osTypeRecord.get('osGroup'));
+		
+		cbOsName.setValue(data.osNameId);
+		cbOsType.setValue(osTypeRecord.get('osTypeId'));
+		cbOsGroup.setValue(osGroupRecord.get('id'));
+		
 		cbOsGroup.getStore().filter('type', data.ciSubTypeId);//parseInt(data.ciSubTypeId)
+		cbOsType.getStore().filter('osGroup', osGroupRecord.get('name'));
+		cbOsName.getStore().filter('type', osTypeRecord.get('osTypeId'));
+
+
+		
+		var cbClusterCode = this.getComponent('cbClusterCode');
+		var cbClusterType = this.getComponent('cbClusterType');
+		var cbVirtualSoftware = this.getComponent('cbVirtualSoftware');
+		var cbItSystemOperationalStatus = this.getComponent('cbItSystemOperationalStatus');
+		var cbPrimaryFunction = this.getComponent('cbPrimaryFunction');
+		var cbLicenseScanning = this.getComponent('cbLicenseScanning');
+		
+		var clusterCodeRecord = Util.getComboRecord(cbClusterCode, 'type', data.clusterCode);
+		
+		cbClusterCode.setValue(clusterCodeRecord.get('id'));//data.clusterCode
+		cbClusterType.setValue(data.clusterType);
+		cbVirtualSoftware.setValue(data.virtualHardwareSoftware);
 		
 		
+		cbLifecycle.setValue(data.lifecycleStatusId);
+		cbItSystemOperationalStatus.setValue(data.einsatzStatusId);
+		
+		cbPrimaryFunction.setValue(data.primaryFunctionId);
+		
+//		if(data.licenseScanningId != 0)
+			cbLicenseScanning.setValue(data.licenseScanningId);
+//		else cbLicenseScanning.setValue('');
+		
+		var rgVirtualHWClient = this.getComponent('rgVirtualHWClient');
+		var rgVirtualHWHost = this.getComponent('rgVirtualHWHost');
+		
+		if(data.isVirtualHardwareClient) {
+			rgVirtualHWClient.setValue(data.isVirtualHardwareClient);
+		} else {
+			rgVirtualHWClient.reset();
+		}
+		
+		if(data.isVirtualHardwareHost) {
+			rgVirtualHWHost.setValue(data.isVirtualHardwareHost);
+		} else {
+			rgVirtualHWHost.reset();
+		}
 	},
 	
 	

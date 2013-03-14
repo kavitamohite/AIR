@@ -1,20 +1,15 @@
 package com.bayerbbs.applrepos.dto;
 
 public class LifecycleStatusDTO {
-
-	/**
-	 * The DTO (Data transfer object) for the database table "LIFECYCLE_STATUS"
-	 * 
-	 * @author evafl
-	 *
-	 */
-	
 	private Long lcStatusId;
 	private String lcStatus;
 	private String lcStatusTxt;
-	private Long sort;
-	private Long tabelleId;
 	private String lcStatusEn;
+	private Long sort;
+	
+	private Long lcSubStatusId;
+	private Long tableId;
+	
 	
 	public Long getLcStatusId() {
 		return lcStatusId;
@@ -40,12 +35,6 @@ public class LifecycleStatusDTO {
 	public void setSort(Long sort) {
 		this.sort = sort;
 	}
-	public Long getTabelleId() {
-		return tabelleId;
-	}
-	public void setTabelleId(Long tabelleId) {
-		this.tabelleId = tabelleId;
-	}
 	public String getLcStatusEn() {
 		return lcStatusEn;
 	}
@@ -53,4 +42,17 @@ public class LifecycleStatusDTO {
 		this.lcStatusEn = lcStatusEn;
 	}
 	
+	
+	public Long getTableId() {
+		return tableId;
+	}
+	public void setTableId(Long tableId) {
+		this.tableId = tableId;
+	}	
+	public void setLcSubStatusId(Long lcSubStatusId) {
+		this.lcSubStatusId = lcSubStatusId;
+	}
+	public Long getLcSubStatusId() {
+		return lcSubStatusId;
+	}
 }

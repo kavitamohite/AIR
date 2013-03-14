@@ -484,19 +484,21 @@ AIR.AirStoreFactory = function() {
 		
 		createLifecycleStatusListStore: function() {
 			var lifecycleStatusListRecord = Ext.data.Record.create([
-	            {name: 'text', mapping: 'lcStatus'},
-	            {name: 'id', mapping: 'lcStatusId'}
+   	            { name: 'id', mapping: 'lcStatusId' },
+	            { name: 'lcSubStatusId' },
+	            { name: 'tableId', type: 'int' },
+	            { name: 'text', mapping: 'lcStatus' }
 	        ]);
 	
 			var lifecycleStatusListReader = new Ext.data.XmlReader({
 				record: 'return',
-				idProperty: 'id'
+				idProperty: 'lcSubStatusId'
 			}, lifecycleStatusListRecord); 
 	
 			var lifecycleStatusListStore = new Ext.data.XmlStore({
 				autoDestroy: true,
-				storeId: 'lifecycleStatusListStore',
 				autoLoad: false,
+				storeId: 'lifecycleStatusListStore',
 				
 	          	proxy: new Ext.ux.soap.SoapProxy({
 	          		url: webcontext +'/AIRToolsWSPort',
@@ -505,9 +507,7 @@ AIR.AirStoreFactory = function() {
 	          		reader: lifecycleStatusListReader
 	          	}),
 	          	
-	          	fields: [ 'id', 'text' ],
-	
-	          	reader: lifecycleStatusListReader
+	          	fields: [ 'id', 'lcSubStatusId', 'text', 'tableId' ]
 	        });
 			
 			return lifecycleStatusListStore;
@@ -3467,7 +3467,7 @@ AIR.AirStoreFactory = function() {
   		
   		    var osTypesListReader = new Ext.data.XmlReader({
   				record: 'return',
-  				idProperty: 'id'
+  				idProperty: 'osTypeId'
   		    }, osTypesListRecord); 
   		
   		    var osTypesListStore = new Ext.data.XmlStore({

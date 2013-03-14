@@ -18,16 +18,9 @@ import com.bayerbbs.applrepos.domain.LifecycleStatus;
 import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
 
 public class LifecycleStatusHbn {
-
-	/** The logger. */
 	private static final Log log = LogFactory.getLog(LifecycleStatusHbn.class);
 	
-	/**
-	 * converts the list entry database table to dto
-	 * 
-	 * @param input
-	 * @return
-	 */
+
 	private static List<LifecycleStatusDTO> getDTOList(
 			List<LifecycleStatus> input) {
 		ArrayList<LifecycleStatusDTO> listDTO = new ArrayList<LifecycleStatusDTO>();
@@ -39,7 +32,7 @@ public class LifecycleStatusHbn {
 			dto.setLcStatusId(data.getLcStatusId());
 			dto.setLcStatus(data.getlcStatus());
 			dto.setLcStatusTxt(data.getlcStatusTxt());
-			dto.setTabelleId(data.getTabelleId());
+			dto.setTableId(data.getTabelleId());
 			dto.setLcStatusEn(data.getlcStatusEn());
 
 			if (null != data.getSort()) {
@@ -50,12 +43,7 @@ public class LifecycleStatusHbn {
 		return listDTO;
 	}
 
-	/**
-	 * returns the array from list
-	 * 
-	 * @param input
-	 * @return
-	 */
+
 	public static LifecycleStatusDTO[] getArrayFromList(
 			List<LifecycleStatusDTO> input) {
 		LifecycleStatusDTO output[] = new LifecycleStatusDTO[input.size()];
@@ -75,10 +63,7 @@ public class LifecycleStatusHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<LifecycleStatus> values = session
-					.createQuery(
-							"select h from LifecycleStatus as h where h.tabelleId = " + AirKonstanten.TABLE_ID_APPLICATION + "  order by h.sort")
-					.list();
+			List<LifecycleStatus> values = session.createQuery("select h from LifecycleStatus as h where h.tabelleId = " + AirKonstanten.TABLE_ID_APPLICATION + "  order by h.sort").list();
 
 			listResult = getDTOList(values);
 
@@ -101,59 +86,61 @@ public class LifecycleStatusHbn {
 	}
 	
 	
-	
-	/**
-	 * find the application contacts
-	 * @param applicationId
-	 * @return
-	 */
 	public static List<LifecycleStatusDTO> listLifecycleStatus(Integer tableId) {
-		
 		ArrayList<LifecycleStatusDTO> listResult = new ArrayList<LifecycleStatusDTO>();
 
 		Transaction tx = null;
-		Statement selectStmt = null;
+		Statement stmt = null;
 		Session session = HibernateUtil.getSession();
-
 		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
-		sql.append("select lcsubstat.*");
-		sql.append(" ,lcstat.lc_status_en");
-		sql.append(" from lifecycle_sub_stat lcsubstat");
-		sql.append(" left join lifecycle_status lcstat on lcstat.lc_status_id = lcsubstat.lc_status_id");
-		sql.append(" where lcsubstat.tabelle_id = ");
-		sql.append(tableId);
-		sql.append(" ORDER BY lcstat.SORT, lcsubstat.SORT"); 
+//		sql.append("select lcsubstat.*");
+//		sql.append(" ,lcstat.lc_status_en");
+//		sql.append(" from lifecycle_sub_stat lcsubstat");
+//		sql.append(" left join lifecycle_status lcstat on lcstat.lc_status_id = lcsubstat.lc_status_id");
+//		sql.append(" where lcsubstat.tabelle_id = ");
+//		sql.append(tableId);
+//		sql.append(" ORDER BY lcstat.SORT, lcsubstat.SORT");
+		
+		sql.
+		append("SELECT subStatus.tabelle_id, subStatus.lc_sub_stat_id, subStatus.lc_sub_stat_staten, status.lc_status_id, status.lc_status_en ").
+		append("FROM lifecycle_sub_stat subStatus ").
+		append("JOIN lifecycle_status status ON status.lc_status_id = subStatus.lc_status_id ").
+//		append("WHERE subStatus.tabelle_id = 1 "). 
+//		append("ORDER BY status.SORT, subStatus.SORT ").
+		append("WHERE subStatus.tabelle_id IN(1,2,13,3,4,88,30,12,37) ").
+		append("ORDER BY subStatus.tabelle_id, status.lc_status_en");
 
 		try {
 			tx = session.beginTransaction();
-
 			conn = session.connection();
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql.toString());
 
-			selectStmt = conn.createStatement();
-			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
-
-			if (null != rsMessage) {
-				while (rsMessage.next()) {
+			if (null != rs) {
+				while (rs.next()) {
 					LifecycleStatusDTO dto = new LifecycleStatusDTO();
-					dto.setLcStatusId(rsMessage.getLong("LC_SUB_STAT_ID"));
-					String lcStatusEn = rsMessage.getString("LC_STATUS_EN");
-					String lcSubStatusEn = rsMessage.getString("LC_SUB_STAT_STATEN");
+					dto.setLcStatusId(rs.getLong("LC_SUB_STAT_ID"));
+					String lcStatusEn = rs.getString("LC_STATUS_EN");
+					String lcSubStatusEn = rs.getString("LC_SUB_STAT_STATEN");
 					
 					dto.setLcStatus(lcStatusEn + " :: " + lcSubStatusEn);
 					dto.setLcStatusTxt(lcStatusEn + " :: " + lcSubStatusEn);
+					
+					dto.setTableId(rs.getLong("TABELLE_ID"));
+					dto.setLcSubStatusId(rs.getLong("LC_SUB_STAT_ID"));
 					
 					listResult.add(dto);
 				}
 			}
 
-			if (null != rsMessage) {
-				rsMessage.close();
+			if (null != rs) {
+				rs.close();
 			}
-			if (null != selectStmt) {
-				selectStmt.close();
+			if (null != stmt) {
+				stmt.close();
 			}
 			if (null != conn) {
 				conn.close();
@@ -170,10 +157,7 @@ public class LifecycleStatusHbn {
 				// throw again the first exception
 				// throw e;
 			}
-
 		}
 		return listResult;
 	}
-
-
 }

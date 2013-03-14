@@ -89,10 +89,23 @@ public class CiEntityWS {
 		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 			ItSystem itSystem = ItSystemHbn.findById(ItSystem.class, input.getCiId());
 			
-			setCiBaseData(itSystemDTO, itSystem);
 			itSystemDTO.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
 			Integer ciSubType = itSystem.getCiSubType() != null ? itSystem.getCiSubType() : AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM_TRANSIENT;
 			itSystemDTO.setCiSubTypeId(ciSubType);
+
+			setCiBaseData(itSystemDTO, itSystem);
+
+			itSystemDTO.setOsNameId(itSystem.getOsNameId());
+			itSystemDTO.setClusterCode(itSystem.getClusterCode());
+			itSystemDTO.setClusterType(itSystem.getClusterType());
+			itSystemDTO.setIsVirtualHardwareClient(itSystem.getIsVirtualHardwareClient());
+			itSystemDTO.setIsVirtualHardwareHost(itSystem.getIsVirtualHardwareHost());
+			itSystemDTO.setVirtualHardwareSoftware(itSystem.getVirtualHardwareSoftware());
+			itSystemDTO.setLifecycleStatusId(itSystem.getLifecycleStatusId());
+			itSystemDTO.setEinsatzStatusId(itSystem.getEinsatzStatusId());
+			itSystemDTO.setPrimaryFunctionId(itSystem.getPrimaryFunctionId());
+			itSystemDTO.setLicenseScanningId(itSystem.getLicenseScanningId());
+			
 			
 			AccessRightChecker checker = new AccessRightChecker();
 			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), itSystem)) {

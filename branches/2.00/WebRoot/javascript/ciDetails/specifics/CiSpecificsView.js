@@ -52,7 +52,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 			this.un('add', this.onViewAdded, this);//afterlayout
 			this.getLayout().setActiveItem(specificsView.getId());
 		} else {
-			this.data = data;
+//			this.data = data;
 			this.on('add', this.onViewAdded, this);//afterlayout
 			this.add(specificsView);
 		}
@@ -115,15 +115,15 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 				
 				//NEW TEST
 				if(!specificsView)
-					specificsView = new AIR.CiSpecificsLocationItemView({ id: 'clCiSpecificsLocationItem', height: 600 });
+					specificsView = new AIR.CiSpecificsLocationItemView({ id: 'clCiSpecificsLocationItem', height: 250 });
 				//NEW TEST
 				break;
-			case AC.TABLE_ID_IT_SYSTEM://ADEFFMS0402
+			case AC.TABLE_ID_IT_SYSTEM://ADEFFMS0446 ADEFFMS0402
 				specificsView = this.getComponent('clCiSpecificsItItem');
 				
 				//NEW TEST
 				if(!specificsView)
-					specificsView = new AIR.CiSpecificsItItemView({ id: 'clCiSpecificsItItem', height: 600 });
+					specificsView = new AIR.CiSpecificsItItemView({ id: 'clCiSpecificsItItem', height: 250 });
 				//NEW TEST
 				
 				break;
@@ -133,8 +133,9 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 	},
 	
 	onViewAdded: function(parentCt, layout) {//wird 2 vom framework mal aufgerufen. warum?
-		var specificsView = this.getSpecificsViewByTableId(parseInt(this.data.tableId));//parseInt(
-		specificsView.update(this.data);
+		var data = AAM.getAppDetail();
+		var specificsView = this.getSpecificsViewByTableId(parseInt(data.tableId));//parseInt(
+//		specificsView.update(data);
 		
 		this.getLayout().setActiveItem(specificsView.getId());
 		specificsView.updateLabels(AAM.getLabels());

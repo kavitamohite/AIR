@@ -5,17 +5,17 @@ AIR.AirConfigFactory = function() {
 		createCiResultGridConfig: function(isComplete) {
 		    var columnConfig = [];
 		    		
-			columnConfig.push({ id: 'name', header: 'Name', dataIndex: 'name', width: 150, sortable: true});//applicationName
-			columnConfig.push({ id: 'alias', header: 'Alias', dataIndex: 'alias', width: 150, sortable: true});//applicationAlias
+			columnConfig.push({ id: 'name', header: 'Name', dataIndex: 'name', width: 150, sortable: true});// applicationName
+			columnConfig.push({ id: 'alias', header: 'Alias', dataIndex: 'alias', width: 150, sortable: true});// applicationAlias
 			columnConfig.push({ id: 'applicationCat1Txt', header: 'Type', dataIndex: 'applicationCat1Txt', width: 150, sortable: true});
 			
 			if(isComplete) {
-				columnConfig.push({ id: 'applicationCat2Txt', header: 'Category', dataIndex: 'applicationCat2Txt', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'applicationOwner', header: 'App owner', dataIndex: 'applicationOwner', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'applicationOwnerDelegate', header: 'App owner delegate', dataIndex: 'applicationOwnerDelegate', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'applicationSteward', header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'ciOwner', header: 'Responsible', dataIndex: 'ciOwner', width: 150, sortable: true});//responsible , menuDisabled: true
-				columnConfig.push({ id: 'ciOwnerDelegate', header: 'Sub responsible', dataIndex: 'ciOwnerDelegate', width: 150, sortable: true});//subResponsible , menuDisabled: true
+				columnConfig.push({ id: 'applicationCat2Txt', header: 'Category', dataIndex: 'applicationCat2Txt', width: 150, sortable: true});// ,
+				columnConfig.push({ id: 'applicationOwner', header: 'App owner', dataIndex: 'applicationOwner', width: 150, sortable: true});// ,
+				columnConfig.push({ id: 'applicationOwnerDelegate', header: 'App owner delegate', dataIndex: 'applicationOwnerDelegate', width: 150, sortable: true});// ,																																	// true
+				columnConfig.push({ id: 'applicationSteward', header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});// ,
+				columnConfig.push({ id: 'ciOwner', header: 'Responsible', dataIndex: 'ciOwner', width: 150, sortable: true});// responsible
+				columnConfig.push({ id: 'ciOwnerDelegate', header: 'Sub responsible', dataIndex: 'ciOwnerDelegate', width: 150, sortable: true});// subResponsible
 			}
 			
 			return columnConfig;
@@ -29,13 +29,13 @@ AIR.AirConfigFactory = function() {
 			columnConfig.push({ id: 'ciType', header: 'Type', dataIndex: 'ciType', width: 150, sortable: true});
 			
 			if(isComplete) {
-				columnConfig.push({ id: 'categoryIt', header: 'Category', dataIndex: 'categoryIt', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'lifecycleStatus', header: 'Lifecycle Status', dataIndex: 'lifecycleStatus', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'appOwner', header: 'App owner', dataIndex: 'appOwner', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'appOwnerDelegate', header: 'App owner delegate', dataIndex: 'appOwnerDelegate', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'appSteward', header: 'App steward', dataIndex: 'appSteward', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'ciOwner', header: 'Responsible', dataIndex: 'ciOwner', width: 150, sortable: true});//, menuDisabled: true
-				columnConfig.push({ id: 'ciOwnerDelegate', header: 'Sub responsible', dataIndex: 'ciOwnerDelegate', width: 150, sortable: true});//, menuDisabled: true
+				columnConfig.push({ id: 'categoryIt', header: 'Category', dataIndex: 'categoryIt', width: 150, sortable: true});// ,
+				columnConfig.push({ id: 'lifecycleStatus', header: 'Lifecycle Status', dataIndex: 'lifecycleStatus', width: 150, sortable: true});// ,
+				columnConfig.push({ id: 'appOwner', header: 'App owner', dataIndex: 'appOwner', width: 150, sortable: true});// ,
+				columnConfig.push({ id: 'appOwnerDelegate', header: 'App owner delegate', dataIndex: 'appOwnerDelegate', width: 150, sortable: true});// ,
+				columnConfig.push({ id: 'appSteward', header: 'App steward', dataIndex: 'appSteward', width: 150, sortable: true});// ,
+				columnConfig.push({ id: 'ciOwner', header: 'Responsible', dataIndex: 'ciOwner', width: 150, sortable: true});// ,
+				columnConfig.push({ id: 'ciOwnerDelegate', header: 'Sub responsible', dataIndex: 'ciOwnerDelegate', width: 150, sortable: true});// ,																																					// true
 			}
 			
 			return columnConfig;
@@ -45,6 +45,16 @@ AIR.AirConfigFactory = function() {
 			var itSystemCiFields = this.getBaseCiFields();
 			
 			itSystemCiFields.push('ciSubTypeId');
+			itSystemCiFields.push('osNameId');//bestimmt gleichzeitig auch noch osType und osGroup
+			itSystemCiFields.push('clusterCode');
+			itSystemCiFields.push('clusterType');
+			itSystemCiFields.push('isVirtualHardwareClient');
+			itSystemCiFields.push('isVirtualHardwareHost');
+			itSystemCiFields.push('virtualHardwareSoftware');
+			itSystemCiFields.push('lifecycleStatusId');
+			itSystemCiFields.push('einsatzStatusId');
+			itSystemCiFields.push('primaryFunctionId');
+			itSystemCiFields.push('licenseScanningId');
 			
 			return itSystemCiFields;
 		},
@@ -155,5 +165,5 @@ AIR.AirConfigFactory = function() {
 		}
 	};
 }();
-//};
+// };
 Ext.reg('AIR.AirConfigFactory', AIR.AirConfigFactory);

@@ -107,7 +107,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		        lazyInit: false,
 		        mode: 'local'
 			},{
-		        xtype: 'combo',
+		        xtype: 'filterCombo',//combo
 		        width: 230,
 //		        anchor: '70%',//siehe (*1)
 		        fieldLabel: 'Lifecycle',
@@ -594,6 +594,10 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		this.getComponent('applicationId').setValue(data.id);//applicationId
 		this.getComponent('applicationAlias').setValue(data.alias);//applicationAlias
 		this.getComponent('applicationVersion').setValue(data.applicationVersion);
+		var cbLifecycleStatus = this.getComponent('lifecycleStatus');
+		var filterData = { tableId: data.tableId };
+		cbLifecycleStatus.filterByData(filterData);
+//		cbLifecycleStatus.getStore().filter('tableId', parseInt(data.tableId));
 		
 		
 		var rgBARrelevance = this.getComponent('rgBARrelevance');
@@ -635,12 +639,12 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 			this.getComponent('specificsCategory').getComponent('cbDataClass').clearValue();
 			Util.disableCombo(this.getComponent('specificsCategory').getComponent('cbDataClass'));
 		}
-				
-//		selectedLifecycleStatusId = data.lifecycleStatusId;
+		
+
 		if (data.lifecycleStatusId && data.lifecycleStatusId != 0) {
-			this.getComponent('lifecycleStatus').setValue(data.lifecycleStatusId);
+			cbLifecycleStatus.setValue(data.lifecycleStatusId);
 		} else {
-			this.getComponent('lifecycleStatus').setValue('');
+			cbLifecycleStatus.setValue('');
 		}
 		
 //		if (data.organisationalScope && data.organisationalScope != 0) {
@@ -649,10 +653,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 //			this.getComponent('organisationalScope').setValue('');
 //		}
 		
-
 		
-		
-//		selectedOperationalStatusId = data.operationalStatusId;
 		if (data.operationalStatusId && data.operationalStatusId != 0) {
 			this.getComponent('operationalStatus').setValue(data.operationalStatusId);
 		} else {

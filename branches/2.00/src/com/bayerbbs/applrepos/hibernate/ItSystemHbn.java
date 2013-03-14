@@ -1008,14 +1008,14 @@ public class ItSystemHbn extends BaseHbn {
 		
 		//wichtig: mit id=1 und nicht 0, sonst wird in der combo immer ein Wert gesetzt, auch dann wenn
 		//er gerade manuell gelöscht wurde.
-		licenseScannings.add(new KeyValueDTO(1L, "no exception from scanning"));
-		licenseScannings.add(new KeyValueDTO(2L, "OS not supported"));
-		licenseScannings.add(new KeyValueDTO(3L, "Embedded System, no scanner can be installed"));
-		licenseScannings.add(new KeyValueDTO(4L, "Customer declined"));
-		licenseScannings.add(new KeyValueDTO(5L, "OEM Software installed, loss of warranty by scanner installation"));
-		licenseScannings.add(new KeyValueDTO(6L, "Access to system not possible"));
-		licenseScannings.add(new KeyValueDTO(7L, "Other Scanning Method Used"));
-		licenseScannings.add(new KeyValueDTO(8L, "Internal Lab / Test Systems"));
+		licenseScannings.add(new KeyValueDTO(0L, "no exception from scanning"));
+		licenseScannings.add(new KeyValueDTO(1L, "OS not supported"));
+		licenseScannings.add(new KeyValueDTO(2L, "Embedded System, no scanner can be installed"));
+		licenseScannings.add(new KeyValueDTO(3L, "Customer declined"));
+		licenseScannings.add(new KeyValueDTO(4L, "OEM Software installed, loss of warranty by scanner installation"));
+		licenseScannings.add(new KeyValueDTO(5L, "Access to system not possible"));
+		licenseScannings.add(new KeyValueDTO(6L, "Other Scanning Method Used"));
+		licenseScannings.add(new KeyValueDTO(7L, "Internal Lab / Test Systems"));
 		
 		return licenseScannings;
 	}

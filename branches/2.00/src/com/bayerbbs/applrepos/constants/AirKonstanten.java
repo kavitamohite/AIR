@@ -7,13 +7,13 @@ public final class AirKonstanten {
 	
 	public final static int TABLE_ID_IT_SYSTEM		= 1;
 	public final static int TABLE_ID_APPLICATION	= 2;
+	public final static int TABLE_ID_POSITION		= 13;
 	public final static int TABLE_ID_ROOM			= 3;
 	public final static int TABLE_ID_BUILDING		= 4;
-	public final static int TABLE_ID_POSITION		= 13;
-	public final static int TABLE_ID_TERRAIN		= 30;
-	public final static int TABLE_ID_WAYS			= 37;
 	public final static int TABLE_ID_BUILDING_AREA	= 88;
+	public final static int TABLE_ID_TERRAIN		= 30;
 	public final static int TABLE_ID_SITE			= 12;
+	public final static int TABLE_ID_WAYS			= 37;
 
 	
 	public final static String APPLICATION_GUI_NAME = "AIR";

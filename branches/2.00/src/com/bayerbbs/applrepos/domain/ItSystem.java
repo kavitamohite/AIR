@@ -22,7 +22,6 @@ public class ItSystem extends DeletableRevisionInfo implements Serializable {
 	private String ciOwner;
 	private String ciOwnerDelegate;
 	
-	// compliance
 	private Long itset;
 	private Long template;
 	private Long itsecGroupId;
@@ -38,10 +37,6 @@ public class ItSystem extends DeletableRevisionInfo implements Serializable {
 	private Long itSecSbAvailability;
 	private String itSecSbAvailabilityText;
 	
-	//nur Application!!
-//	private Long classInformationId;
-//	private String classInformationExplanation;
-	
 	private Long itSecSbIntegrityId;
 //	private String itSecSbIntegrityTxt;
 	private String itSecSbIntegrityDescription;
@@ -51,6 +46,21 @@ public class ItSystem extends DeletableRevisionInfo implements Serializable {
 	private String itSecSbConfidentialityDescription;
 
 	private Integer ciSubType;
+	
+	//Specifics
+	private Integer osNameId;//bestimmt gleichzeitig auch noch osType und osGroup
+	private String clusterCode;
+	private String clusterType;
+	
+	private String isVirtualHardwareClient;
+	private String isVirtualHardwareHost;
+	private String virtualHardwareSoftware;
+	
+	private Integer lifecycleStatusId;
+	private Integer einsatzStatusId;
+	
+	private Integer primaryFunctionId;
+	private Integer licenseScanningId;
 	
 	
 	@Id
@@ -272,5 +282,87 @@ public class ItSystem extends DeletableRevisionInfo implements Serializable {
 	public void setCiSubType(Integer ciSubType) {
 		this.ciSubType = ciSubType;
 	}
+	
+	@Column(name = "OS_NAME_ID")
+	public Integer getOsNameId() {
+		return osNameId;
+	}
+	public void setOsNameId(Integer osNameId) {
+		this.osNameId = osNameId;
+	}
+	
+	@Column(name = "CLUSTER_CODE")
+	public String getClusterCode() {
+		return clusterCode;
+	}
+	public void setClusterCode(String clusterCode) {
+		this.clusterCode = clusterCode;
+	}
+	
+	@Column(name = "CLUSTER_TYPE")
+	public String getClusterType() {
+		return clusterType;
+	}
+	public void setClusterType(String clusterType) {
+		this.clusterType = clusterType;
+	}
+	
+	@Column(name = "VIRTUAL_HOST_Y_N")
+	public String getIsVirtualHardwareClient() {
+		return isVirtualHardwareClient;
+	}
+	public void setIsVirtualHardwareClient(String isVirtualHardwareClient) {
+		this.isVirtualHardwareClient = isVirtualHardwareClient;
+	}
+	
+	@Column(name = "VIRTUAL_HW_Y_N")
+	public String getIsVirtualHardwareHost() {
+		return isVirtualHardwareHost;
+	}
+	public void setIsVirtualHardwareHost(String isVirtualHardwareHost) {
+		this.isVirtualHardwareHost = isVirtualHardwareHost;
+	}
+	
+	@Column(name = "VIRTUAL_HOST_SW")
+	public String getVirtualHardwareSoftware() {
+		return virtualHardwareSoftware;
+	}
+	public void setVirtualHardwareSoftware(String virtualHardwareSoftware) {
+		this.virtualHardwareSoftware = virtualHardwareSoftware;
+	}
+	
+	@Column(name = "LC_SUB_STATUS_ID")
+	public Integer getLifecycleStatusId() {
+		return lifecycleStatusId;
+	}
+	public void setLifecycleStatusId(Integer lifecycleStatusId) {
+		this.lifecycleStatusId = lifecycleStatusId;
+	}
+	
+	@Column(name = "EINSATZ_STATUS_ID")
+	public Integer getEinsatzStatusId() {
+		return einsatzStatusId;
+	}
+	public void setEinsatzStatusId(Integer einsatzStatusId) {
+		this.einsatzStatusId = einsatzStatusId;
+	}
+	
+	@Column(name = "PRIMARY_FUNCTION_ID")
+	public Integer getPrimaryFunctionId() {
+		return primaryFunctionId;
+	}
+	public void setPrimaryFunctionId(Integer primaryFunctionId) {
+		this.primaryFunctionId = primaryFunctionId;
+	}
+	
+	@Column(name = "LICENSE_SCANNING")
+	public Integer getLicenseScanningId() {
+		return licenseScanningId;
+	}
+	public void setLicenseScanningId(Integer licenseScanningId) {
+		this.licenseScanningId = licenseScanningId;
+	}
+	
+	
 	
 }
