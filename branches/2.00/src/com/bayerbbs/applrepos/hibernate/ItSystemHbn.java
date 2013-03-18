@@ -161,8 +161,69 @@ public class ItSystemHbn extends BaseHbn {
 //						if (null != dto.getName()) {
 //							itSystem.setItSystemName(dto.getName());
 //						}
-
+						if (null != dto.getAlias())
+							itSystem.setAlias(dto.getAlias());
 						
+						
+						if(null != dto.getOsNameId()) {
+							if(dto.getOsNameId() > -1)
+								itSystem.setOsNameId(dto.getOsNameId());
+							else
+								itSystem.setOsNameId(null);
+						}
+						
+						
+						if(DELETE.equals(dto.getClusterCode()))
+							itSystem.setClusterCode(null);
+						else
+							itSystem.setClusterCode(dto.getClusterCode());
+							
+						if(DELETE.equals(dto.getClusterType()))
+							itSystem.setClusterType(null);
+						else
+							itSystem.setClusterType(dto.getClusterType());
+						
+						if(DELETE.equals(dto.getVirtualHardwareSoftware()))
+							itSystem.setVirtualHardwareSoftware(null);
+						else
+							itSystem.setVirtualHardwareSoftware(dto.getVirtualHardwareSoftware());
+						
+						if(null != dto.getIsVirtualHardwareClient())
+							itSystem.setIsVirtualHardwareClient(dto.getIsVirtualHardwareClient());
+						
+						if(null != dto.getIsVirtualHardwareHost())
+							itSystem.setIsVirtualHardwareHost(dto.getIsVirtualHardwareHost());
+						
+						
+						if(null != dto.getLifecycleStatusId()) {
+							if(dto.getOsNameId() > -1)
+								itSystem.setLifecycleStatusId(dto.getLifecycleStatusId());
+							else
+								itSystem.setLifecycleStatusId(null);
+						}
+							
+						if(null != dto.getEinsatzStatusId()) {
+							if(dto.getOsNameId() > -1)
+								itSystem.setEinsatzStatusId(dto.getEinsatzStatusId());
+							else
+								itSystem.setEinsatzStatusId(null);
+						}
+
+							
+						if(null != dto.getPrimaryFunctionId()) {
+							if(dto.getOsNameId() > -1)
+								itSystem.setPrimaryFunctionId(dto.getPrimaryFunctionId());
+							else
+								itSystem.setPrimaryFunctionId(null);
+						}
+
+							
+						if(null != dto.getLicenseScanningId()) {
+							if(dto.getOsNameId() > -1)
+								itSystem.setLicenseScanningId(dto.getLicenseScanningId());
+							else
+								itSystem.setLicenseScanningId(null);
+						}
 
 						
 						// ================
@@ -187,13 +248,28 @@ public class ItSystemHbn extends BaseHbn {
 						
 						itSystem.setSlaId(dto.getSlaId());
 						itSystem.setServiceContractId(dto.getServiceContractId());
+						itSystem.setSeverityLevelId(dto.getSeverityLevelId());
 
-
+						boolean hasBusinessEssentialChanged = false;
+						if (null == dto.getBusinessEssentialId()) {
+							if (null == itSystem.getBusinessEssentialId()) {
+								// set the default value
+								itSystem.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+								hasBusinessEssentialChanged = true;
+							}
+						}
+						else {
+							if (null == itSystem.getBusinessEssentialId() || itSystem.getBusinessEssentialId().longValue() != dto.getBusinessEssentialId().longValue()) {
+								hasBusinessEssentialChanged = true;
+							}
+							itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
+						}
 						
-//						Long businessEssentialIdOld = itSystem.getBusinessEssentialId();
-//						if (hasBusinessEssentialChanged) {
+						Long businessEssentialIdOld = itSystem.getBusinessEssentialId();
+						if (hasBusinessEssentialChanged) {
 //							sendBusinessEssentialChangedMail(itSystem, dto, businessEssentialIdOld);
-//						}
+						}
+						
 						
 						if (null != dto.getItSecSbAvailabilityId()) {
 							if (-1 == dto.getItSecSbAvailabilityId()) {
@@ -269,8 +345,8 @@ public class ItSystemHbn extends BaseHbn {
 							}
 						}
 						
-						itSystem.setRelevanceITSEC(dto.getRelevanzItsec());
-						itSystem.setRelevanceICS(dto.getRelevanceICS());
+//						itSystem.setRelevanceITSEC(dto.getRelevanzItsec());
+//						itSystem.setRelevanceICS(dto.getRelevanceICS());
 						
 
 						if (null == dto.getGxpFlag()) {
@@ -695,7 +771,7 @@ public class ItSystemHbn extends BaseHbn {
 
 	public static CiItemsResultDTO findItSystemsBy(ApplicationSearchParamsDTO input) {
 		String typeName = input.getCiSubTypeId().equals(AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING) ? AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM : AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM;
-		CiMetaData metaData = new CiMetaData("it_system_id", "it_system_name", null, typeName, "it_system", AirKonstanten.TABLE_ID_IT_SYSTEM);
+		CiMetaData metaData = new CiMetaData("it_system_id", "it_system_name", "alias", typeName, "it_system", AirKonstanten.TABLE_ID_IT_SYSTEM);
 		return findItSystemCisBy(input, metaData);
 	}
 	

@@ -9,6 +9,18 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		    layout: 'form',
 		    
 		    items: [{
+		        id: 'tfItSystemCiName',//NUR für CREATE ItSystem !!
+		    	xtype: 'textfield',
+		        fieldLabel: 'Alias',
+		        width: 230,
+		        
+		        hidden: true
+	        },{
+		        id: 'tfItSystemCiAlias',
+		    	xtype: 'textfield',
+		        fieldLabel: 'Alias',
+		        width: 230
+	        },{
 		    	xtype: 'fieldset',
 		        id: 'fsOs',
 		        layout: 'form',//form hbox
@@ -173,7 +185,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		        mode: 'local'
 			},{
 				xtype: 'filterCombo',//combo
-		        id: 'cbLifecycle',
+		        id: 'cbItSystemLifecycleStatus',
 				
 //				enableKeyEvents: true,
 		        
@@ -253,6 +265,24 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		AIR.CiSpecificsItItemView.superclass.initComponent.call(this);
 		
 		this.addEvents('ciBeforeChange', 'ciChange');
+		
+		var tfItSystemCiAlias = this.getComponent('tfItSystemCiAlias');
+		tfItSystemCiAlias.on('change', this.onFieldChange, this);
+		
+		
+		var cbItSystemLifecycleStatus = this.getComponent('cbItSystemLifecycleStatus');
+		var cbItSystemOperationalStatus = this.getComponent('cbItSystemOperationalStatus');
+		
+		cbItSystemLifecycleStatus.on('select', this.onSelect, this);
+		cbItSystemOperationalStatus.on('select', this.onSelect, this);
+        cbItSystemLifecycleStatus.on('change', this.onChange, this);
+        cbItSystemOperationalStatus.on('change', this.onChange, this);
+        
+		var rgVirtualHWClient = this.getComponent('rgVirtualHWClient');
+		var rgVirtualHWHost = this.getComponent('rgVirtualHWHost');
+		
+		rgVirtualHWClient.on('change', this.onRadioGroupChange, this);
+		rgVirtualHWHost.on('change', this.onRadioGroupChange, this);
 	},
 	
 	init: function() {
@@ -299,9 +329,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		cbPrimaryFunction.bindStore(AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore'), true);
 		cbLicenseScanning.bindStore(AIR.AirStoreManager.getStoreByName('itSystemLicenseScanningsListStore'), true);
 		
-		var ciDetail = AAM.getAppDetail();
-		cbOsGroup.getStore().filter('type', ciDetail.ciSubTypeId);
-        storeLoader.destroy();
+
         
         cbOsGroup.on('select', this.onOsGroupSelect, this);
         cbOsType.on('select', this.onOsTypeSelect, this);
@@ -322,7 +350,23 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
         cbLicenseScanning.on('change', this.onChange, this);
         
         
-        this.update(ciDetail);
+		var ciDetail = AAM.getAppDetail();
+		cbOsGroup.getStore().filter('type', ciDetail.ciSubTypeId);
+        storeLoader.destroy();
+        
+//        this.update(ciDetail);
+		var delayedTask = new Ext.util.DelayedTask(function() {
+			this.update(ciDetail);
+		}.createDelegate(this));
+		delayedTask.delay(1000);
+	},
+	
+	onFieldChange: function(textfield, newValue, oldValue) {
+		this.ownerCt.fireEvent('ciChange', this, textfield, newValue);
+	},
+	
+	onRadioGroupChange: function(rgb, checkedRadio) {
+		this.ownerCt.fireEvent('ciChange', this, rgb, checkedRadio);
 	},
 
 	onOsGroupSelect: function(combo, record, index) {
@@ -362,27 +406,39 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 	
 	
 	update: function(data) {
-		var cbLifecycle = this.getComponent('cbLifecycle');
+		this.ciId = data.id;
+		this.name = data.name;
+		
+		this.updateAccessMode(data);
+
+		var tfItSystemCiAlias = this.getComponent('tfItSystemCiAlias');
+		tfItSystemCiAlias.setValue(data.alias);
+		
+		var cbItSystemLifecycleStatus = this.getComponent('cbItSystemLifecycleStatus');
 		var filterData = { tableId: data.tableId };
-		cbLifecycle.filterByData(filterData);
-//		cbLifecycle.getStore().filter('tableId', data.tableId);
+		cbItSystemLifecycleStatus.filterByData(filterData);
+//		cbItSystemLifecycleStatus.getStore().filter('tableId', data.tableId);
 		
 		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
 		var cbOsType = this.getComponent('fsOs').getComponent('cbOsType');
 		var cbOsGroup = this.getComponent('fsOs').getComponent('cbOsGroup');
-
 		
+		cbOsName.reset();
+		cbOsType.reset();
+		cbOsGroup.reset();
+
 		var osNameRecord = Util.getComboRecord(cbOsName, 'id', parseInt(data.osNameId));
 		var osTypeRecord = Util.getComboRecord(cbOsType, 'osTypeId', osNameRecord.get('type'));
 		var osGroupRecord = Util.getComboRecord(cbOsGroup, 'name', osTypeRecord.get('osGroup'));
 		
-		cbOsName.setValue(data.osNameId);
-		cbOsType.setValue(osTypeRecord.get('osTypeId'));
-		cbOsGroup.setValue(osGroupRecord.get('id'));
-		
 		cbOsGroup.getStore().filter('type', data.ciSubTypeId);//parseInt(data.ciSubTypeId)
 		cbOsType.getStore().filter('osGroup', osGroupRecord.get('name'));
 		cbOsName.getStore().filter('type', osTypeRecord.get('osTypeId'));
+		
+
+		cbOsName.setValue(data.osNameId);
+		cbOsType.setValue(osTypeRecord.get('osTypeId'));
+		cbOsGroup.setValue(osGroupRecord.get('id'));
 
 
 		
@@ -400,14 +456,11 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		cbVirtualSoftware.setValue(data.virtualHardwareSoftware);
 		
 		
-		cbLifecycle.setValue(data.lifecycleStatusId);
+		cbItSystemLifecycleStatus.setValue(data.lifecycleStatusId);
 		cbItSystemOperationalStatus.setValue(data.einsatzStatusId);
 		
 		cbPrimaryFunction.setValue(data.primaryFunctionId);
-		
-//		if(data.licenseScanningId != 0)
-			cbLicenseScanning.setValue(data.licenseScanningId);
-//		else cbLicenseScanning.setValue('');
+		cbLicenseScanning.setValue(data.licenseScanningId);
 		
 		var rgVirtualHWClient = this.getComponent('rgVirtualHWClient');
 		var rgVirtualHWHost = this.getComponent('rgVirtualHWHost');
@@ -426,20 +479,112 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 	},
 	
 	
-	updateAccessMode: function(data) {
-
-	},
-	
 	setData: function(data) {
+		data.id = this.ciId;
+		data.name = this.name;
 		
+		
+		var field = this.getComponent('tfItSystemCiAlias');
+		if(!field.disabled)
+			data.alias = field.getValue();
+		
+		field = this.getComponent('fsOs').getComponent('cbOsName');
+		if(!field.disabled)
+			if(field.getValue())//.length > 0
+				data.osNameId = field.getValue();
+			else 
+				data.osNameId = -1;
+		
+
+		
+		
+		field = this.getComponent('cbClusterCode');
+		if(!field.disabled)
+			if(field.getValue())//.length > 0
+				data.clusterCode = field.getStore().getById(field.getValue()).get('type');
+			else
+				data.clusterCode = '-1';
+		
+		field = this.getComponent('cbClusterType');
+		if(!field.disabled)
+			if(field.getValue())//.length > 0
+				data.clusterType = field.getRawValue();
+			else
+				data.clusterType = '-1';
+		
+		
+		field = this.getComponent('cbVirtualSoftware');
+		if(!field.disabled)
+			if(field.getValue())//.length > 0
+				data.virtualHardwareSoftware = field.getRawValue();
+			else
+				data.virtualHardwareSoftware = '-1';
+		 
+		
+		field = this.getComponent('cbItSystemLifecycleStatus');
+		if(!field.disabled)
+			if(field.getValue().length > 0)
+				data.lifecycleStatusId = field.getValue();
+			else
+				data.lifecycleStatusId = -1;
+		
+		field = this.getComponent('cbItSystemOperationalStatus');
+		if(!field.disabled)
+			if(field.getValue())//.length > 0
+				data.einsatzStatusId = field.getValue();//operationalStatusId
+			else
+				data.einsatzStatusId = -1;//operationalStatusId
+		
+		
+		field = this.getComponent('cbPrimaryFunction');
+		if(!field.disabled)
+			if(field.getValue())//.length > 0
+				data.primaryFunctionId = field.getValue();
+			else 
+				data.primaryFunctionId = -1;
+		
+		field = this.getComponent('cbLicenseScanning');
+		if(!field.disabled)
+			if(field.getValue())//.length > 0
+				data.licenseScanningId = field.getValue();
+			else
+				data.licenseScanningId = -1;
+		
+		
+		field = this.getComponent('rgVirtualHWClient');
+		if(!field.disabled)
+			if(field.getValue() && field.getValue().inputValue)//.length > 0
+				data.isVirtualHardwareClient = field.getValue().inputValue;
+		
+		field = this.getComponent('rgVirtualHWHost');
+		if(!field.disabled)
+			if(field.getValue() && field.getValue().inputValue)//.length > 0
+				data.isVirtualHardwareHost = field.getValue().inputValue;
 	},
 
+	updateAccessMode: function(data) {
+		AIR.AirAclManager.setAccessMode(this.getComponent('tfItSystemCiAlias'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsOs').getComponent('cbOsGroup'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsOs').getComponent('cbOsType'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsOs').getComponent('cbOsName'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('cbClusterCode'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('cbClusterType'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('rgVirtualHWClient'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('rgVirtualHWHost'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('cbVirtualSoftware'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('cbItSystemLifecycleStatus'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('cbItSystemOperationalStatus'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('cbPrimaryFunction'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('cbLicenseScanning'), data);
+	},
 	
 	validate: function(item) {
 		
 	},
 	
 	updateLabels: function(labels) {
+		this.setFieldLabel(this.getComponent('tfItSystemCiAlias'), labels.applicationAlias);
+		
 		this.setFieldLabel(this.getComponent('fsOs').getComponent('cbOsGroup'), labels.osGroup);
 		this.setFieldLabel(this.getComponent('fsOs').getComponent('cbOsType'), labels.osType);
 		this.setFieldLabel(this.getComponent('fsOs').getComponent('cbOsName'), labels.osName);
@@ -453,7 +598,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		this.setBoxLabel(this.getComponent('rgVirtualHWHost').items.items[0], labels.general_yes);
 		this.setBoxLabel(this.getComponent('rgVirtualHWHost').items.items[1], labels.general_no);
 		this.setFieldLabel(this.getComponent('cbVirtualSoftware'), labels.virtualHardwareSoftware);
-		this.setFieldLabel(this.getComponent('cbLifecycle'), labels.lifecycleStatus);
+		this.setFieldLabel(this.getComponent('cbItSystemLifecycleStatus'), labels.lifecycleStatus);
 		this.setFieldLabel(this.getComponent('cbItSystemOperationalStatus'), labels.operationalStatus);
 		this.setFieldLabel(this.getComponent('cbPrimaryFunction'), labels.primaryFunction);
 		this.setFieldLabel(this.getComponent('cbLicenseScanning'), labels.licenseScanning);

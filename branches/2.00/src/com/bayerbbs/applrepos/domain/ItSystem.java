@@ -33,6 +33,8 @@ public class ItSystem extends DeletableRevisionInfo implements Serializable {
 	
 	private Long slaId;
 	private Long serviceContractId;
+	private Long severityLevelId;
+	private Long businessEssentialId;
 	
 	private Long itSecSbAvailability;
 	private String itSecSbAvailabilityText;
@@ -172,26 +174,40 @@ public class ItSystem extends DeletableRevisionInfo implements Serializable {
 	}
 	
 	
-	@Column(name = "SERVICE_CONTRACT_ID")
-	public Long getServiceContractId() {
-		return serviceContractId;
-	}
-
-	public void setServiceContractId(Long serviceContractId) {
-		this.serviceContractId = serviceContractId;
-	}
-
-
-	
 	@Column(name = "SLA_ID")
 	public Long getSlaId() {
 		return slaId;
 	}
-
 	public void setSlaId(Long slaId) {
 		this.slaId = slaId;
 	}
 	
+	
+	@Column(name = "SERVICE_CONTRACT_ID")
+	public Long getServiceContractId() {
+		return serviceContractId;
+	}
+	public void setServiceContractId(Long serviceContractId) {
+		this.serviceContractId = serviceContractId;
+	}
+
+	@Column(name = "SEVERITY_LEVEL_ID")
+	public Long getSeverityLevelId() {
+		return severityLevelId;
+	}
+	public void setSeverityLevelId(Long severityLevelId) {
+		this.severityLevelId = severityLevelId;
+	}
+	
+	@Column(name = "BUSINESS_ESSENTIAL_ID")
+	public Long getBusinessEssentialId() {
+		return businessEssentialId;
+	}
+	public void setBusinessEssentialId(Long businessEssentialId) {
+		this.businessEssentialId = businessEssentialId;
+	}
+
+
 	
 	@Column(name = "ITSEC_SB_VERFG_ID")
 	public Long getItSecSbAvailability() {

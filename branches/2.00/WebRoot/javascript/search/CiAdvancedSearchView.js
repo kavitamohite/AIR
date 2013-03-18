@@ -1166,7 +1166,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
 		var cbAdvSearchITset = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbAdvSearchITset');
 		var cbAdvSearchITSecGroupW = fsSpecialSearchAttributes.getComponent('cbAdvSearchITSecGroupW');
-		this.filterItSecGroup(cbAdvSearchITSecGroupW, cbAdvSearchITset.getValue(), record);
+		
+		if(record)
+			this.filterItSecGroup(cbAdvSearchITSecGroupW, cbAdvSearchITset.getValue(), record);
 		//------------------------------------------------------------------------------------------
     	
     	

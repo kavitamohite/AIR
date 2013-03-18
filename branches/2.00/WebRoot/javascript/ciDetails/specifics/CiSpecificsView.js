@@ -123,7 +123,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 				
 				//NEW TEST
 				if(!specificsView)
-					specificsView = new AIR.CiSpecificsItItemView({ id: 'clCiSpecificsItItem', height: 250 });
+					specificsView = new AIR.CiSpecificsItItemView({ id: 'clCiSpecificsItItem', height: 400 });
 				//NEW TEST
 				
 				break;

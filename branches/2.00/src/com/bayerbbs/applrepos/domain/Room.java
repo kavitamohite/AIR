@@ -82,7 +82,6 @@ public class Room extends CiBase implements Serializable {
 	public Long getBusinessEssentialId() {
 		return businessEssentialId;
 	}
-
 	public void setBusinessEssentialId(Long businessEssentialId) {
 		this.businessEssentialId = businessEssentialId;
 	}

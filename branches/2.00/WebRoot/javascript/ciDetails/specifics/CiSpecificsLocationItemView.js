@@ -224,7 +224,13 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	
 	init: function() {
-		
+		var ciDetail = AAM.getAppDetail();
+        
+        this.update(ciDetail);
+//		var delayedTask = new Ext.util.DelayedTask(function() {
+//			this.update(ciDetail);
+//		}.createDelegate(this));
+//		delayedTask.delay(1000);
 	},
     
 	update: function(data) {

@@ -1,10 +1,8 @@
-package com.bayerbbs.applrepos.dto;
+package com.bayerbbs.applrepos.service;
 
 
-public class ItSystemDTO extends CiBaseDTO {
-	private Integer ciSubTypeId;
-	
-	//Specifics
+public class ItSystemEditParameterInput extends BaseEditParameterInput {
+	private String alias;
 	private Integer osNameId;//bestimmt gleichzeitig auch noch osType und osGroup
 	private String clusterCode;
 	private String clusterType;
@@ -21,13 +19,14 @@ public class ItSystemDTO extends CiBaseDTO {
 	
 	private Long severityLevelId;
 	private Long businessEssentialId;
+
 	
 	
-	public Integer getCiSubTypeId() {
-		return ciSubTypeId;
+	public String getAlias() {
+		return alias;
 	}
-	public void setCiSubTypeId(Integer ciSubTypeId) {
-		this.ciSubTypeId = ciSubTypeId;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 	
 	public Integer getOsNameId() {

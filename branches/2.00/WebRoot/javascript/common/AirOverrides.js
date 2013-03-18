@@ -16,6 +16,11 @@ Ext.override(Ext.form.ComboBox, {
 	}).createSequence(Ext.form.ComboBox.prototype.initList)
 });
 
+//Ext.override(Ext.data.Store, {
+//	clearFilter : function(suppressEvent){
+//	}
+//});
+
 Ext.override(Ext.form.DateField, {
 	onBlur : function(){
 	    this.beforeBlur();

@@ -21,6 +21,7 @@ public class BaseHbn {
 	
 	protected static final String Y = "Y";
 	protected static final String N = "N";
+	protected static final String DELETE = "-1";
 	
 	
 	public static <T> T findById(Class<T> ci, Long id) {

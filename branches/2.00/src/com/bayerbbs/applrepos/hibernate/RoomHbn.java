@@ -407,10 +407,10 @@ public class RoomHbn extends LokationItemHbn {
 							room.setBusinessEssentialId(dto.getBusinessEssentialId());
 						}
 						
-//						Long businessEssentialIdOld = room.getBusinessEssentialId();
-//						if (hasBusinessEssentialChanged) {
+						Long businessEssentialIdOld = room.getBusinessEssentialId();
+						if (hasBusinessEssentialChanged) {
 //							sendBusinessEssentialChangedMail(room, dto, businessEssentialIdOld);
-//						}
+						}
 						
 						if (null != dto.getItSecSbAvailabilityId()) {
 							if (-1 == dto.getItSecSbAvailabilityId()) {

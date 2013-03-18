@@ -215,6 +215,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'cbReferencedTemplate',
 						
 						enableKeyEvents: true,
+//						clearFilterOnReset: false,
 				        
 //				        flex: 8,//hbox
 				        width: 350,//layout: 'column'
@@ -527,8 +528,18 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 
-		this.filterCombo(cbReferencedTemplate);
+		//der filter der cbReferencedTemplate verschwindet unerwartet und unregelmäßig nach dem Speichern (und Laden). 
+		//Evtl. eine Ladezeitüberschneidung mit anderen Ladeoperationen in den update Methoden der CiDetailView Komponenten. 
+		//Daher für cbReferencedTemplate ein delay. Effektivität empirisch zu prüfen.
+		var delayedTask = new Ext.util.DelayedTask(function() {
+			this.filterCombo(cbReferencedTemplate);
+//			this.filterCombo(cbItSecGroup);
+		}.createDelegate(this));
+		delayedTask.delay(1000);
+		
+//		this.filterCombo(cbReferencedTemplate);
 		this.filterCombo(cbItSecGroup);
+		
 		
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
 		var text = AIR.AirApplicationManager.getLabels().relevanceViewButton;
@@ -548,7 +559,14 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				Util.disableCombo(cbItSecGroup);
 				
 				//nicht getStore().getById() damit gegen die gefilterten Daten geprüft wird
-				var templateRecord = cbReferencedTemplate.getStore().snapshot.key(data.refId);//data.key
+				//snapshot.key statt data.key, da nur nicht löschmarkierte Templates gültig sind. Siehe auch 
+				//filterCombo(cbReferencedTemplate) mit deleteTimestamp.
+				
+				var storeData = cbReferencedTemplate.getStore().snapshot ? cbReferencedTemplate.getStore().snapshot : cbReferencedTemplate.getStore().data;
+				var templateRecord = storeData.key(data.refId);//data.key snapshot.key
+				
+//				var templateRecord = cbReferencedTemplate.getStore().data.key(data.refId);//data.key snapshot.key
+				
 				var isTemplateValid = templateRecord.get('delTimestamp').length === 0;
 				if(isTemplateValid) {
 					cbReferencedTemplate.setValue(data.refId);
