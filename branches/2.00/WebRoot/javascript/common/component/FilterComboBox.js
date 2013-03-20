@@ -893,10 +893,14 @@ AIR.FilterComboBox = Ext.extend(Ext.form.ComboBox, {
 			this.filterData = filterData;
 			
 		var filterFn = function(record) {
+//			for(var key in this.filterData)
+//				if(record.get(key) == this.filterData[key])
+//					return true;
+//			return false;
+			
 			for(var key in this.filterData)
 				if(record.get(key) != this.filterData[key])//!==
 					return false;
-			
 			return true;
 		}.createDelegate(this);
 		this.getStore().filterBy(filterFn);

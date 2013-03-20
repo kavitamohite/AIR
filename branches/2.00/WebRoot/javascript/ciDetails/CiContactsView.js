@@ -925,23 +925,34 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.fireEvent('ciChange', this, element, hiddenElement);
 	},
 	
-	setContactInformation: function(myRecord) {
-		if (myRecord) {
-			var contact = myRecord.data;
+	setContactInformation: function(record) {
+		if (record) {
+			var contact = record.data;
+			
 			if ('Y' === contact.individualContactYN) {
-				contactcwid = contact.cwid;
-				personName = contact.personName;
-				Ext.getCmp(this.gpscContactsMap[contact.groupTypeId]).setValue(personName);
-				Ext.getCmp(this.gpscContactsMap[contact.groupTypeId] + 'Hidden').setValue(contactcwid);
+				if(AAM.getAppDetail().isCiCreate) {
+					Ext.getCmp(this.gpscContactsMap[contact.groupTypeId]).reset();
+					Ext.getCmp(this.gpscContactsMap[contact.groupTypeId] + 'Hidden').reset();
+				} else {
+					Ext.getCmp(this.gpscContactsMap[contact.groupTypeId]).setValue(contact.personName);
+					Ext.getCmp(this.gpscContactsMap[contact.groupTypeId] + 'Hidden').setValue(contact.cwid);
+				}
 			} else {
-				groupName = contact.groupName;
-				groupId = contact.groupId;
-				Ext.getCmp(this.gpscContactsMap[contact.groupTypeId]).setValue(groupName);
-				Ext.getCmp(this.gpscContactsMap[contact.groupTypeId] + 'Hidden').setValue(groupId);
+				if(AAM.getAppDetail().isCiCreate) {
+					Ext.getCmp(this.gpscContactsMap[contact.groupTypeId]).reset();
+					Ext.getCmp(this.gpscContactsMap[contact.groupTypeId] + 'Hidden').reset();
+				} else {
+					Ext.getCmp(this.gpscContactsMap[contact.groupTypeId]).setValue(contact.groupName);
+					Ext.getCmp(this.gpscContactsMap[contact.groupTypeId] + 'Hidden').setValue(contact.groupId);
+				}
 			}
 		}
 		
 		Ext.getCmp(this.gpscContactsMap[contact.groupTypeId]).show();
+	},
+	
+	clear: function(data) {
+		this.update(data);
 	},
 	
 	update: function(data) {
@@ -954,8 +965,13 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			var pApplicationOwner = fsApplicationOwner.getComponent('pApplicationOwner');
 			if(data.applicationOwnerHidden) {// && data.applicationOwnerHidden != 0
-				pApplicationOwner.getComponent('applicationOwnerHidden').setValue(data.applicationOwnerHidden);
-				pApplicationOwner.getComponent('applicationOwner').setValue(data.applicationOwner);
+				if(data.isCiCreate) {
+					pApplicationOwner.getComponent('applicationOwnerHidden').reset();
+					pApplicationOwner.getComponent('applicationOwner').reset();
+				} else {
+					pApplicationOwner.getComponent('applicationOwnerHidden').setValue(data.applicationOwnerHidden);
+					pApplicationOwner.getComponent('applicationOwner').setValue(data.applicationOwner);
+				}
 			} else {
 				pApplicationOwner.getComponent('applicationOwnerHidden').setValue('');
 				pApplicationOwner.getComponent('applicationOwner').setValue('');
@@ -963,8 +979,13 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			var pApplicationSteward = fsApplicationSteward.getComponent('pApplicationSteward');
 			if(data.applicationStewardHidden) {// && data.applicationStewardHidden != 0
-				pApplicationSteward.getComponent('applicationStewardHidden').setValue(data.applicationStewardHidden);
-				pApplicationSteward.getComponent('applicationSteward').setValue(data.applicationSteward);
+				if(data.isCiCreate) {
+					pApplicationSteward.getComponent('applicationStewardHidden').reset();
+					pApplicationSteward.getComponent('applicationSteward').reset();
+				} else {
+					pApplicationSteward.getComponent('applicationStewardHidden').setValue(data.applicationOwnerHidden);
+					pApplicationSteward.getComponent('applicationSteward').setValue(data.applicationOwner);
+				}
 			} else {
 				pApplicationSteward.getComponent('applicationStewardHidden').setValue('');
 				pApplicationSteward.getComponent('applicationSteward').setValue('');
@@ -972,8 +993,13 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			var pApplicationOwnerDelegate = fsApplicationOwner.getComponent('pApplicationOwnerDelegate');
 			if(data.applicationOwnerDelegateHidden && data.applicationOwnerDelegateHidden != 0) {
-				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue(data.applicationOwnerDelegateHidden);
-				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue(data.applicationOwnerDelegate);
+				if(data.isCiCreate) {
+					pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').reset();
+					pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').reset();					
+				} else {
+					pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue(data.applicationOwnerDelegateHidden);
+					pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue(data.applicationOwnerDelegate);
+				}
 			} else {
 				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue('');
 				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue('');
@@ -1027,7 +1053,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var params = {
 			cwid: AIR.AirApplicationManager.getCwid(),
 			token: AIR.AirApplicationManager.getToken(),
-			applicationId: AIR.AirApplicationManager.getCiId()//selectedCIId
+			applicationId: AIR.AirApplicationManager.getCiId()
 		};
 		
 		applicationContactsStore.load({

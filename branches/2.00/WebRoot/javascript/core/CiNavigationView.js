@@ -275,7 +275,13 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					break;
 			}
 			
-			AIR.AirApplicationManager.updateCookie({ navigation: link.getId() });//, true
+//			AAM.updateCookie({ navigation: link.getId() });
+			AAM.updateCookie({
+				navigation: link.getId(),//viewId,
+				ciId: AAM.getCiId(),
+				tableId: AAM.getTableId()
+			});
+			
 //			AIR.AirHistoryManager.add(link);
 			
 			

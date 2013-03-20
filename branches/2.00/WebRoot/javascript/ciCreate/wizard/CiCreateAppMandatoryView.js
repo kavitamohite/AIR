@@ -345,6 +345,22 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		lvOrganisationalScope.on('selectionchange', this.onOrganisationalScopeChange, this);
 	},
 	
+	update: function(data) {
+		var isApplicationCi = data.applicationCat1Id == AC.APP_CAT1_APPLICATION;
+		
+		var rgBARrelevanceW = this.getComponent('rgBARrelevanceW');
+		var lvOrganisationalScope = this.getComponent('lvOrganisationalScopeW');
+		
+		var fsApplicationOwnerW = this.getComponent('fsApplicationOwnerW');
+		var fsApplicationStewardW = this.getComponent('fsApplicationStewardW');
+		
+		rgBARrelevanceW.setVisible(isApplicationCi);
+		lvOrganisationalScope.setVisible(isApplicationCi);
+		fsApplicationOwnerW.setVisible(isApplicationCi);
+		fsApplicationStewardW.setVisible(isApplicationCi);
+	},
+
+	
 	onOrganisationalScopeChange: function(listview, selections) {
 		var scopeRecords = listview.getSelectedRecords();
 

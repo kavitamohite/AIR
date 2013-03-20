@@ -9,6 +9,12 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		    layout: 'form',
 		    
 		    items: [{
+		        id: 'tfLocationCiName',
+		    	xtype: 'textfield',
+		        fieldLabel: 'Name',
+		        width: 230,
+		        hidden: true
+	        },{
 		        id: 'tfLocationCiAlias',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Alias',
@@ -223,22 +229,36 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		this.ownerCt.fireEvent('ciChange', this, textfield, newValue);
 	},
 	
+	
+	clear: function(data) {
+		
+	},
+	
 	init: function() {
+		//if(isCiCreate)
+		
+		
+		//else
 		var ciDetail = AAM.getAppDetail();
-        
         this.update(ciDetail);
-//		var delayedTask = new Ext.util.DelayedTask(function() {
-//			this.update(ciDetail);
-//		}.createDelegate(this));
-//		delayedTask.delay(1000);
 	},
     
 	update: function(data) {
 		this.ciId = data.id;
 		this.name = data.name;
 		
-//		this.isInitial = true;
 		this.updateAccessMode(data);
+
+		
+		var tfLocationCiName = this.getComponent('tfLocationCiName');
+		
+//		this.isInitial = true;
+		if(data.isCiCreate) {
+			//enable all fields
+			tfLocationCiName.setVisible(true);
+		} else {
+			tfLocationCiName.setVisible(false);
+		}
 		
 		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
 		
@@ -261,40 +281,48 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		switch(parseInt(data.tableId)) {
 			case AC.TABLE_ID_ROOM:
 				tfLocationCiAlias.setVisible(true);
-				tfLocationCiAlias.setValue(data.alias);
 				tfRoomFloor.setVisible(true);
-				tfRoomFloor.setValue(data.floor);
-				
-				
 				tfRoom.setVisible(false);
-				tfRoom.reset();
 				cbBuildingArea.setVisible(true);
-				cbBuildingArea.setValue(data.areaId);
-//				cbBuildingArea.setRawValue(data.areaName);
-				if(AIR.AirAclManager.isRelevance(cbBuildingArea, data))
-					Util.enableCombo(cbBuildingArea);
-				
-				
-				var buildingAreas = data.buildingAreaData.split(',');
-				var buildingAreaObjects = [];
-				for(var i = 0; i < buildingAreas.length; i++) {
-					var buildingArea = buildingAreas[i].split('=');
-					buildingAreaObjects.push(buildingArea);
-				}
-				cbBuildingArea.getStore().loadData(buildingAreaObjects);
-				
-				
 				cbBuilding.setVisible(true);
-				cbBuilding.setValue(data.gebaeudeName);
-				
 				tfTerrain.setVisible(true);
-				tfTerrain.setValue(data.terrainName);
 				tfSite.setVisible(true);
-				tfSite.setValue(data.standortName);
 				tfCountry.setVisible(true);
-				tfCountry.setValue(data.landNameEn);
+				tfRoom.reset();
+
+				
+				if(data.isCiCreate) {
+					tfLocationCiAlias.reset();
+					tfRoomFloor.reset();
+					cbBuildingArea.reset();//remote statt local combo?
+					cbBuilding.reset();//remote statt local combo?
+					tfTerrain.reset();//remote statt local combo?
+					tfSite.reset();//remote statt local combo?
+					tfCountry.reset();//remote statt local combo?
+				} else {
+					if(AIR.AirAclManager.isRelevance(cbBuildingArea, data))
+						Util.enableCombo(cbBuildingArea);
+					
+					
+					var buildingAreas = data.buildingAreaData.split(',');
+					var buildingAreaObjects = [];
+					for(var i = 0; i < buildingAreas.length; i++) {
+						var buildingArea = buildingAreas[i].split('=');
+						buildingAreaObjects.push(buildingArea);
+					}
+					cbBuildingArea.getStore().loadData(buildingAreaObjects);
+					
+					tfLocationCiAlias.setValue(data.alias);
+					tfRoomFloor.setValue(data.floor);
+					cbBuildingArea.setValue(data.areaId);
+					cbBuilding.setValue(data.gebaeudeName);
+					tfTerrain.setValue(data.terrainName);
+					tfSite.setValue(data.standortName);
+					tfCountry.setValue(data.landNameEn);
+				}
 				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, true);
+
 				break;
 			case AC.TABLE_ID_BUILDING_AREA://Test Areas: E 39 I400,E 39 T001
 				tfLocationCiAlias.setVisible(false);
@@ -330,9 +358,15 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				
 				
 				tfTerrain.setVisible(true);
-				tfTerrain.setValue(data.terrainName);
 				tfSite.setVisible(true);
-				tfSite.setValue(data.standortName);
+				
+				if(data.isCiCreate) {
+					tfTerrain.setValue(data.terrainName);
+					tfSite.setValue(data.standortName);
+				} else {
+					tfTerrain.reset();
+					tfSite.reset();
+				}
 				
 				tfCountry.setVisible(false);
 				tfCountry.reset();
@@ -352,12 +386,18 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				cbBuilding.reset;
 				
 				tfTerrain.setVisible(true);
-				tfTerrain.setValue(data.terrainName);
 				tfSite.setVisible(true);
-				tfSite.setValue(data.standortName);
 				tfCountry.setVisible(true);
-				tfCountry.setValue(data.landNameEn);
 				
+				if(data.isCiCreate) {
+					tfTerrain.setValue(data.terrainName);
+					tfSite.setValue(data.standortName);
+					tfCountry.setValue(data.landNameEn);
+				} else {
+					tfTerrain.reset();
+					tfSite.reset();
+					tfCountry.reset();
+				}
 				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, true);
 				break;
@@ -374,9 +414,15 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				cbBuilding.setValue(data.gebaeudeName);
 				
 				tfTerrain.setVisible(true);
-				tfTerrain.setValue(data.terrainName);
 				tfSite.setVisible(true);
-				tfSite.setValue(data.standortName);
+				
+				if(data.isCiCreate) {
+					tfTerrain.setValue(data.terrainName);
+					tfSite.setValue(data.standortName);
+				} else {
+					tfTerrain.reset();
+					tfSite.reset();
+				}
 				
 				tfCountry.setVisible(false);
 				tfCountry.reset();
@@ -395,12 +441,20 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				cbBuilding.setVisible(false);
 				cbBuilding.reset();
 				
+
+				tfSite.setVisible(true);
+				tfCountry.setVisible(true);
+				
+				if(data.isCiCreate) {
+					tfSite.setValue(data.standortName);
+					tfCountry.setValue(data.landNameEn);
+				} else {
+					tfTerrain.reset();
+					tfSite.reset();
+				}
+				
 				tfTerrain.setVisible(false);
 				tfTerrain.reset();
-				tfSite.setVisible(true);
-				tfSite.setValue(data.standortName);
-				tfCountry.setVisible(true);
-				tfCountry.setValue(data.landNameEn);
 				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
 				break;
@@ -420,30 +474,17 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				tfTerrain.reset();
 				tfSite.setVisible(false);
 				tfSite.reset();
+				
 				tfCountry.setVisible(true);
-				tfCountry.setValue(data.landNameEn);
+				
+				if(data.isCiCreate) {
+					tfCountry.setValue(data.landNameEn);
+				} else {
+					tfCountry.reset();
+				}
 				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
 				break;
-//			default:
-//				tfLocationCiAlias.setVisible(false);
-//				tfLocationCiAlias.reset();
-//				tfRoomFloor.setVisible(false);
-//				tfRoomFloor.reset();
-//				tfRoom.setVisible(false);
-//				tfRoom.reset();
-//				cbBuildingArea.setVisible(false);
-//				cbBuildingArea.reset();
-//				cbBuilding.setVisible(false);
-//				cbBuilding.reset();
-//				
-//				tfTerrain.setVisible(false);
-//				tfTerrain.reset();
-//				tfSite.setVisible(false);
-//				tfSite.reset();
-//				
-//				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
-//				break;
 		}
 		
 		this.doLayout();//nötig wegen cbBuildingArea, ansonsten wird deren width=20 gesetzt?
@@ -451,12 +492,21 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	
 	updateLocation: function(pSpecificsLocationStreet, pSpecificsLocationAddress, data, exists) {
 		if(exists) {
-			pSpecificsLocationStreet.getComponent('tfStreet').setValue(data.street);
-			pSpecificsLocationStreet.getComponent('tfStreetNumber').setValue(data.streetNumber);
-			pSpecificsLocationStreet.setVisible(true);
+			if(!data.isCiCreate) {
+				pSpecificsLocationStreet.getComponent('tfStreet').setValue(data.street);
+				pSpecificsLocationStreet.getComponent('tfStreetNumber').setValue(data.streetNumber);
+				
+				pSpecificsLocationAddress.getComponent('tfPostalCode').setValue(data.postalCode);
+				pSpecificsLocationAddress.getComponent('tfLocation').setValue(data.location);
+			} else {
+				pSpecificsLocationStreet.getComponent('tfStreet').reset();
+				pSpecificsLocationStreet.getComponent('tfStreetNumber').reset();
+				
+				pSpecificsLocationAddress.getComponent('tfPostalCode').reset();
+				pSpecificsLocationAddress.getComponent('tfLocation').reset();
+			}
 			
-			pSpecificsLocationAddress.getComponent('tfPostalCode').setValue(data.postalCode);
-			pSpecificsLocationAddress.getComponent('tfLocation').setValue(data.location);
+			pSpecificsLocationStreet.setVisible(true);
 			pSpecificsLocationAddress.setVisible(true);
 		} else {
 			pSpecificsLocationStreet.getComponent('tfStreet').reset();
@@ -504,18 +554,6 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				if(!cbBuildingArea.disabled)
 					data.areaId = cbBuildingArea.getValue();
 				
-//				if(!tfStreet.disabled)
-//					data.street = tfStreet.getValue();
-//				
-//				if(!tfStreetNumber.disabled)
-//					data.streetNumber = tfStreetNumber.getValue();
-//				
-//				if(!tfPostalCode.disabled)
-//					data.postalCode = tfPostalCode.getValue();
-//				
-//				if(!tfLocation.disabled)
-//					data.location = tfLocation.getValue();
-				
 				break;
 			case AC.TABLE_ID_BUILDING:
 				if(!tfLocationCiAlias.disabled)
@@ -555,6 +593,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	
 	updateLabels: function(labels) {
+		this.setFieldLabel(this.getComponent('tfLocationCiName'), labels.name);
 		this.setFieldLabel(this.getComponent('tfLocationCiAlias'), labels.alias);
 		this.setFieldLabel(this.getComponent('tfRoomFloor'), labels.floor);
 		this.setFieldLabel(this.getComponent('tfRoom'), labels.room);

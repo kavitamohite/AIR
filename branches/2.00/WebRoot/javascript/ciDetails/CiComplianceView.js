@@ -512,7 +512,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var tfItsetName = this.getComponent('fsComplianceDetails').getComponent('pItSet').getComponent('tfItsetName');
 		if(data.tableId == AC.TABLE_ID_APPLICATION) {
 			tfItsetName.setValue(data.itsetName);
-		} else {
+		} else if(!data.isCiCreate) {
 			var itsetStore = AIR.AirStoreManager.getStoreByName('itSetListStore');
 			var itsetName = itsetStore.getById(data.itset).get('text');
 			tfItsetName.setValue(itsetName);
@@ -531,13 +531,13 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		//der filter der cbReferencedTemplate verschwindet unerwartet und unregelmäßig nach dem Speichern (und Laden). 
 		//Evtl. eine Ladezeitüberschneidung mit anderen Ladeoperationen in den update Methoden der CiDetailView Komponenten. 
 		//Daher für cbReferencedTemplate ein delay. Effektivität empirisch zu prüfen.
-		var delayedTask = new Ext.util.DelayedTask(function() {
+		/*var delayedTask = new Ext.util.DelayedTask(function() {
 			this.filterCombo(cbReferencedTemplate);
 //			this.filterCombo(cbItSecGroup);
 		}.createDelegate(this));
-		delayedTask.delay(1000);
+		delayedTask.delay(1000);*/
 		
-//		this.filterCombo(cbReferencedTemplate);
+		this.filterCombo(cbReferencedTemplate);
 		this.filterCombo(cbItSecGroup);
 		
 		
@@ -828,11 +828,37 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		return statusWertDisplayField;
 //	},
 	
-	update: function(data) {
-		this.updateAccessMode(data);
+	clear: function(data) {
+		this.update(data);
+	},
 	
-		var value = data.itsecGroupId ? data.itsecGroupId : AC.CI_GROUP_ID_DELETE_ID;//AC.CI_GROUP_ID_EMPTY;
+	update: function(data) {
 		var rgRelevanceBYTSEC = this.getComponent('fsComplianceMgmt').getComponent('rgRelevanceBYTSEC');
+		
+		var tfItsetName = this.getComponent('fsComplianceDetails').getComponent('pItSet').getComponent('tfItsetName');
+		var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
+
+		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
+		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
+		
+		var cbgRegulations = this.getComponent('fsRelevantRegulations').getComponent('cbgRegulations');
+		var pGxp = this.getComponent('fsRelevantRegulations').getComponent('pGxp');
+		var cbRelevanceGxp = pGxp.getComponent('CBrelevanceGxp');
+		
+		
+//		if(data.isCiCreate) {
+//			rgRelevanceBYTSEC.enable();
+//			tfItsetName.enable();
+//			cbIsTemplate.enable();
+//			
+//			Util.enableCombo(cbReferencedTemplate);
+//			Util.enableCombo(cbItSecGroup);
+//		} else {
+			this.updateAccessMode(data);
+//		}
+	
+		var value = data.isCiCreate ? AC.CI_GROUP_ID_DELETE_ID :
+					data.itsecGroupId ? data.itsecGroupId : AC.CI_GROUP_ID_DELETE_ID;//AC.CI_GROUP_ID_EMPTY;
 		
 		this.previousComplianceType = value;
 		
@@ -841,6 +867,9 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 //			case AC.CI_GROUP_ID_EMPTY:
 			case AC.CI_GROUP_ID_DELETE_ID:
 				rgRelevanceBYTSEC.setValue(value);
+//				if(data.isCiCreate)//für alle UI Elemente an einer Stelle
+//					rgRelevanceBYTSEC.enable();
+				
 //				rgRelevanceBYTSEC.enable();
 
 				break;
@@ -860,23 +889,31 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				break;
 		}
 		
-		var cbgRegulations = this.getComponent('fsRelevantRegulations').getComponent('cbgRegulations');
+
 		
-		var values = [];
-		for(var i = 0; i < cbgRegulations.items.items.length; i++) {
-			var regulation = cbgRegulations.items.items[i].boxLabel;
-			var regulationId = 'relevance' + regulation;
-			values[values.length] = data[regulationId] == 'Y' ? true : false;
+		if(data.isCiCreate) {
+			cbgRegulations.reset();
+			cbRelevanceGxp.reset();
 			
-			var exists = AIR.AirBusinessRules.existsItsecRegulationByCiType(data.tableId, regulation);
-			cbgRegulations.items.items[i].setVisible(exists);
+
+			tfItsetName.reset();
+			cbIsTemplate.reset();
+			cbReferencedTemplate.reset();
+			cbItSecGroup.reset();
+		} else {
+			var values = [];
+			for(var i = 0; i < cbgRegulations.items.items.length; i++) {
+				var regulation = cbgRegulations.items.items[i].boxLabel;
+				var regulationId = 'relevance' + regulation;
+				values[values.length] = data[regulationId] == 'Y' ? true : false;
+				
+				var exists = AIR.AirBusinessRules.existsItsecRegulationByCiType(data.tableId, regulation);
+				cbgRegulations.items.items[i].setVisible(exists);
+			}
+			
+			cbgRegulations.setValue(values);
+			cbRelevanceGxp.setValue(data.gxpFlagId);
 		}
-		
-		cbgRegulations.setValue(values);
-		
-		var pGxp = this.getComponent('fsRelevantRegulations').getComponent('pGxp');
-		var cbRelevanceGxp = pGxp.getComponent('CBrelevanceGxp');
-		cbRelevanceGxp.setValue(data.gxpFlagId);
 	},
 	
 	updateAccessMode: function(data) {
@@ -1000,8 +1037,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			itsetId: ciDetail.itset
 		};
 		
-		if(combo.getId() === 'cbReferencedTemplate')
-			filterData.delTimestamp = '';
+//		if(combo.getId() === 'cbReferencedTemplate')
+//			filterData.delTimestamp = '';
 
 		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION) {
 			filterData.ciKat1 = ciDetail.applicationCat1Id;

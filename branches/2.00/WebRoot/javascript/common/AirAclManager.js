@@ -479,25 +479,21 @@ AIR.AirAclManager = function() {
 					}
 				}
 			});
+			
 			return valid;
 		},
 		
-		
-		
-		//consistency.js
-		//wenn ein needed Feld nicht ausgefüllt ist, dann ist das CI im Draft Modus
+		//wenn ein required Feld nicht ausgefüllt ist, dann ist das CI im Draft Modus
 		isDraft: function() {
 			records = this.aclStore.getRange();
 			var commonRetValue = false;
 			var oppositeRetValue = false;
 			
-//			Ext.each(records, function(item, index, allItems) {
 			for(var i = 0; i < records.length; i++) {
 				var item = records[i];
 				
 				if(item.data.Mandatory === 'required') {
 					var draftItemCmp = Ext.getCmp(item.data.id);
-//					if(draftItemCmp!==undefined) {
 					
 					if(draftItemCmp && draftItemCmp.getId().charAt(draftItemCmp.getId().length - 1) !== 'W') {
 						switch (draftItemCmp.getXType()) {
@@ -505,19 +501,10 @@ AIR.AirAclManager = function() {
 							case 'textarea':
 							case 'combo':
 							case 'filterCombo':
-//								Util.log(draftItemCmp.getId()+': ['+draftItemCmp.getValue()+'] length='+draftItemCmp.getValue().length);
 								var length = draftItemCmp.getValue().length;
 								if(length === 0)
 									return true;
 								
-								
-//								if(draftItemCmp.getValue()===undefined || draftItemCmp.getValue()==='') {
-//									if(draftItemCmp.disabled) {
-//										oppositeRetValue = oppositeRetValue || true;
-//									} else {
-//										commonRetValue = commonRetValue || true;
-//									}
-//								}
 								break;
 						}
 					}
@@ -525,27 +512,6 @@ AIR.AirAclManager = function() {
 			}
 			
 			return false;
-			
-			/*var appDetail = AIR.AirApplicationManager.getAppDetail();
-			var relevanceOperational = appDetail.relevanceOperational;
-			var relevanceStrategic = appDetail.relevanceStrategic;
-			
-			if(commonRetValue || ('Y' === relevanceOperational && 'Y' === relevanceStrategic)) {//'Y'===op && 'Y'===st
-				draftFlag = '';
-				return commonRetValue;
-			}
-			if('Y' === relevanceOperational) {//'Y'===op
-				draftFlag = '(' + AIR.AirApplicationManager.getLabels().wizardAppowner + ')'; // TODO hier das richtige Element aus der Editmaske ziehen
-				return oppositeRetValue;
-			}
-			if('Y' === relevanceStrategic) {//'Y'===st
-				draftFlag =  '(' + AIR.AirApplicationManager.getLabels().wizardCiowner + ')'; // TODO hier das richtige Element aus der Editmaske ziehen
-				return oppositeRetValue;
-			}
-			
-			draftFlag = '(unknown)';*/
-			
-//			return commonRetValue;
 		},
 
 		setDraft: function(isDraft) {
@@ -556,20 +522,7 @@ AIR.AirAclManager = function() {
 				Ext.getCmp('editpaneldraft').hide();
 			}
 		},
-//
-//
-//		setPanelMessage: function(message) {
-//			if(Ext.getCmp('ciCenterView').layout.activeItem.id === 'editPanel') {//REFAC!!
-//				if(message!==undefined && message!=='') {
-////					Ext.get('editpanelmessage').dom.innerHTML = message;
-//					Ext.getCmp('editpanelmessage').setText(message);
-//					Ext.getCmp('editpanelmessage').show();
-//				} else {
-//					Ext.getCmp('editpanelmessage').hide();
-//				}
-//			}
-//		},
-//		
+		
 		getRequiredFields: function(data) {
 			var incompleteFieldList = '';
 			var aclItems = this.aclStore.getRange();

@@ -132,37 +132,40 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.fireEvent('ciChange', this, textarea, newValue);
 	},
     
+	clear: function(data) {
+		this.update(data);
+	},
 	
 	update: function(data) {
 		this.updateAccessMode(data);
 		
 //		selectedItSecSbAvailabilityId = data.itSecSbAvailabilityId;
-		if (data.itSecSbAvailabilityId && data.itSecSbAvailabilityId != 0) {
+		if (data.itSecSbAvailabilityId && data.itSecSbAvailabilityId != 0 && !data.isCiCreate) {
 			this.getComponent('protectionAvailability').setValue(data.itSecSbAvailabilityId);
 		} else {
 			this.getComponent('protectionAvailability').setValue('');
 		}
 		
-		if (data.itSecSbAvailabilityDescription && data.itSecSbAvailabilityDescription != 0) {//protectionAvailabilityDescription
+		if (data.itSecSbAvailabilityDescription && data.itSecSbAvailabilityDescription != 0 && !data.isCiCreate) {//protectionAvailabilityDescription
 			this.getComponent('protectionAvailabilityDescription').setValue(data.itSecSbAvailabilityDescription);//protectionAvailabilityDescription
 		} else {
 			this.getComponent('protectionAvailabilityDescription').setValue('');
 		}
 	
 //		selectedClassInformationId = data.classInformationId;
-		if (data.classInformationId && data.classInformationId != 0) {
+		if (data.classInformationId && data.classInformationId != 0 && !data.isCiCreate) {
 			this.getComponent('protectionClassInformation').setValue(data.classInformationId);
 		} else {
 			this.getComponent('protectionClassInformation').setValue('');
 		}
 		
-		if (data.protectionClassInformationExplanation && data.protectionClassInformationExplanation != 0) {
+		if (data.protectionClassInformationExplanation && data.protectionClassInformationExplanation != 0 && !data.isCiCreate) {
 			this.getComponent('protectionClassInformationExplanation').setValue(data.protectionClassInformationExplanation);
 		} else {
 			this.getComponent('protectionClassInformationExplanation').setValue('');
 		}
 		
-		if (data.protectionApplicationProtection && data.protectionApplicationProtection != 0) {
+		if (data.protectionApplicationProtection && data.protectionApplicationProtection != 0 && !data.isCiCreate) {
 			this.getComponent('protectionApplicationProtection').setValue(data.protectionApplicationProtection);
 		} else {
 			this.getComponent('protectionApplicationProtection').setValue('');

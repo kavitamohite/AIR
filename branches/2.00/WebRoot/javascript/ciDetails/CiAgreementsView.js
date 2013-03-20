@@ -264,42 +264,24 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onSlaChange: function(combo, newValue, oldValue) {
-		/*if (newValue!==oldValue) {
-			this.getComponent('serviceContract').setValue('');
-		}
-		
-		if (newValue=='') {
-			this.getComponent('serviceContract').store.removeAll();
-			this.getComponent('serviceContract').disable();
-			this.getComponent('serviceContract').setHideTrigger(true);
-		}
-		
-//    		activateButtonSaveApplication();*/
 		if(this.isComboValueValid(combo, newValue, oldValue))
 			this.fireEvent('ciChange', this, combo);
 	},
 	
-//	onSlaBlur: function(field) {		
-//		if(1 == this.getComponent('serviceContract').store.getCount()) {
-//			// Vorbelegung
-//			// TODO LAYOUT REFRESH
-//        	selectedServiceContractId = this.getComponent('serviceContract').store.getAt(0).data.id;
-//        	this.getComponent('serviceContract').setValue(selectedServiceContractId);
-//        }
-//    },
-    
+	clear: function(data) {
+		this.update(data);
+	},    
 	
 	
 	update: function(data) {
 		//selectedSlaId = data.slaId;
-		if (data.slaId != 0) {//selectedSlaId !== undefined && selectedSlaId != 0
+		if (data.slaId != 0 && !data.isCiCreate) {//selectedSlaId !== undefined && selectedSlaId != 0
 			this.getComponent('sla').setValue(data.slaId);
 		} else {
 			this.getComponent('sla').setValue('');
 		}
 		
 		
-//		this.getComponent('serviceContract').getStore().on('load', this.onServiceContractLoad, this);
 		this.getComponent('serviceContract').getStore().load({
 			params: {
 				slaName: data.slaId
@@ -307,20 +289,13 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			callback: this.onServiceContractLoad.createDelegate(this)
 		});
 		
-		
-//		selectedServiceContractId = data.serviceContractId;
-//		if (selectedServiceContractId !== undefined && selectedServiceContractId != 0) {
-//			this.getComponent('serviceContract').setValue(data.serviceContractId);//setRawValue data.serviceContract
-//		} else {
-//			this.getComponent('serviceContract').setValue('');
-//		}
 
 		
 		var cbPriorityLevel = this.getComponent('priorityLevel');
 		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION) {
 			cbPriorityLevel.setVisible(true);
 			
-			if (data.priorityLevelId && data.priorityLevelId != 0) {
+			if (data.priorityLevelId && data.priorityLevelId != 0 && !data.isCiCreate) {
 				cbPriorityLevel.setValue(data.priorityLevelId);
 			} else {
 				cbPriorityLevel.setValue('');
@@ -342,13 +317,16 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			cbSeverityLevel.setVisible(true);
 			cbBusinessEssential.setVisible(true);
 			
-			if (data.severityLevelId && data.severityLevelId != 0) {
+			if (data.severityLevelId && data.severityLevelId != 0 && !data.isCiCreate) {
 				cbSeverityLevel.setValue(data.severityLevelId);
 			} else {
 				cbSeverityLevel.setValue('');
 			}
 			
-			cbBusinessEssential.setValue(data.businessEssentialId);
+			if(data.isCiCreate)
+				cbBusinessEssential.setValue('');
+			else
+				cbBusinessEssential.setValue(data.businessEssentialId);
 		} else {
 			cbSeverityLevel.reset();
 			cbBusinessEssential.reset();

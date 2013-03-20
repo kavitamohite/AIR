@@ -515,33 +515,33 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			case 'clCiSupportStuff':
 			case 'clCiHistory':
 				
-				AAM.updateCookie({
-					navigation: viewId,
-					ciId: AAM.getCiId(),
-					tableId: AAM.getTableId()
-				});
-
+				this.forwardNavigation(options);
 				
-				//A)
-//				if(ciEditView)
-//					ciEditView.onNavigation(viewId, link);
-				
-				//B)
-				if(ciEditView) {
-					this.forwardNavigation(options);
+				/*if(options.isCiCreate) {
+					this.getLayout().setActiveItem('ciEditView');
+					ciEditView.createCi(viewId, link, options);
 				} else {
-					ciEditView = new AIR.CiEditView({ id: 'ciEditView' });
-//					var v = ciEditView.getComponent('clCiHistory');
-					ciEditView.getComponent('clCiHistory').on('afterlayout', this.onCiEditTabViewAdded, this);//ciEditView afterrender .getComponent('clCiCompliance')
-//					ciEditView.on('afterlayout', this.onCiEditTabViewAdded, this);//ciEditView afterrender .getComponent('clCiCompliance')
-//					
-//					for(var i = 0; i < ciEditView.items.items.length; i++)
-//						ciEditView.items.items[i].on('afterlayout', this.onCiEditTabViewAdded, this);
-					
-					//ciEditView.add(ciEditTabView);
-					ciEditView.doLayout(true, true);
-				}
-				
+					AAM.updateCookie({
+						navigation: viewId,
+						ciId: AAM.getCiId(),
+						tableId: AAM.getTableId()
+					});
+	
+					if(ciEditView) {
+						this.forwardNavigation(options);
+					} else {
+						ciEditView = new AIR.CiEditView({ id: 'ciEditView' });
+	//					var v = ciEditView.getComponent('clCiHistory');
+						ciEditView.getComponent('clCiHistory').on('afterlayout', this.onCiEditTabViewAdded, this);//ciEditView afterrender .getComponent('clCiCompliance')
+	//					ciEditView.on('afterlayout', this.onCiEditTabViewAdded, this);//ciEditView afterrender .getComponent('clCiCompliance')
+	//					
+	//					for(var i = 0; i < ciEditView.items.items.length; i++)
+	//						ciEditView.items.items[i].on('afterlayout', this.onCiEditTabViewAdded, this);
+						
+						//ciEditView.add(ciEditTabView);
+						ciEditView.doLayout(true, true);
+					}
+				}*/
 				break;
 			
 			default: break;

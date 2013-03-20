@@ -40,8 +40,26 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 //		this.getLayout().setActiveItem(specificsView.getId());
 //	},
 	
+	clear: function(data) {
+		this.update(data);
+		
+//		this.isCiCreate = true;
+//		var specificsView = this.getSpecificsViewByTableId(data.tableId);
+//		
+//		if(specificsView.rendered) {
+//			specificsView.clear(data);
+//			
+//			this.getLayout().setActiveItem(specificsView.getId());
+//		} else {
+//			
+//			
+//			this.add(specificsView);
+//		}
+	},
 
 	update: function(data) {//ADEFFMS0402
+		this.isCiCreate = data.isCiCreate;
+		
 		var specificsView = this.getSpecificsViewByTableId(parseInt(data.tableId));
 		if(specificsView.rendered) {
 			specificsView.update(data);

@@ -111,6 +111,21 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		this.addEvents('ciBeforeChange', 'ciChange');
 	},
 	
+	clear: function(data) {
+//		this.update(data);
+		
+		this.getComponent('detailsApplicationAlias').reset();
+		this.getComponent('detailsApplicationBusinessCat').reset();
+		this.getComponent('detailsApplicationCat2').reset();
+		this.getComponent('detailsApplicationOwner').reset();
+		this.getComponent('detailsCiOwner').reset();
+		this.getComponent('detailsSlaName').reset();
+		this.getComponent('detailsBusinessEssential').reset();
+		
+		this.getComponent('detailsInsertdata').reset();
+		this.getComponent('detailsUpdatedata').reset();
+	},
+	
 	update: function(ciDetail) {//data
 		var store = AIR.AirStoreManager.getStoreByName('slaListStore');
 		var slaName = ciDetail.slaId && ciDetail.slaId != 0 ? store.getById(ciDetail.slaId).data.text : '';
@@ -123,8 +138,8 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			applicationCat1Id: ciDetail.applicationCat1Id,
 			alias: ciDetail.alias,//applicationAlias
 			barApplicationId: ciDetail.barApplicationId,
-			applicationCat2: applicationCat2,
-			categoryBusiness: categoryBusiness,
+//			applicationCat2: applicationCat2,
+//			categoryBusiness: categoryBusiness,
 			ciOwner: ciDetail.ciOwner,//ciResponsible
 			applicationOwner: ciDetail.applicationOwner,
 			slaName: slaName,//AIR.AirStoreManager.getStoreByName('slaListStore').getById(ciDetail.slaId).data.text,
@@ -143,30 +158,48 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		};
 
 		
+		var tfAlias = this.getComponent('detailsApplicationAlias');
 		var tfBusinessCat = this.getComponent('detailsApplicationBusinessCat');
 		var tfAppCat2 = this.getComponent('detailsApplicationCat2');
+		var tfCiOwner = this.getComponent('detailsCiOwner');
 		var tfAppOwner = this.getComponent('detailsApplicationOwner');
+		var tfSla = this.getComponent('detailsSlaName');
+		var cbBusinessEssential = this.getComponent('detailsBusinessEssential');
+		var tfInsertData = this.getComponent('detailsInsertdata');
+		var tfUpdateData = this.getComponent('detailsUpdatedata')
+		
 
 		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION) {
-			store = AIR.AirStoreManager.getStoreByName('applicationCat2ListStore');
-			var applicationCat2 = ciDetail.applicationCat2;
-			applicationCat2 = applicationCat2.length > 0 && applicationCat2 != '0' && store.getById(ciDetail.applicationCat2) ? store.getById(ciDetail.applicationCat2).data.text : '';
-			data.applicationCat2 = applicationCat2;
-			
-			store = AIR.AirStoreManager.getStoreByName('categoryBusinessListStore');
-			var categoryBusiness = ciDetail.categoryBusinessId;
-			categoryBusiness = categoryBusiness.length > 0 && categoryBusiness != '0' && store.getById(ciDetail.categoryBusinessId) ? store.getById(ciDetail.categoryBusinessId).data.text : '';
-			data.categoryBusiness = categoryBusiness;
-			
-			
-			tfBusinessCat.setValue(data.categoryBusiness);
-			tfAppCat2.setValue(data.applicationCat2);
+			if(!ciDetail.isCiCreate) {
+				store = AIR.AirStoreManager.getStoreByName('applicationCat2ListStore');
+				var applicationCat2 = ciDetail.applicationCat2;
+				applicationCat2 = applicationCat2.length > 0 && applicationCat2 != '0' && store.getById(ciDetail.applicationCat2) ? store.getById(ciDetail.applicationCat2).data.text : '';
+				data.applicationCat2 = applicationCat2;
+				
+				store = AIR.AirStoreManager.getStoreByName('categoryBusinessListStore');
+				var categoryBusiness = ciDetail.categoryBusinessId;
+				categoryBusiness = categoryBusiness.length > 0 && categoryBusiness != '0' && store.getById(ciDetail.categoryBusinessId) ? store.getById(ciDetail.categoryBusinessId).data.text : '';
+				data.categoryBusiness = categoryBusiness;
+				
+				
+				tfBusinessCat.setValue(data.categoryBusiness);
+				tfAppCat2.setValue(data.applicationCat2);
+			} else {
+				tfBusinessCat.reset();
+				tfAppCat2.reset();
+			}
 			
 			tfBusinessCat.setVisible(true);
 			tfAppCat2.setVisible(true);
 			
+			
 			if(data.applicationCat1Id == AC.APP_CAT1_APPLICATION) {
-				tfAppOwner.setValue(data.applicationOwner);
+				if(!ciDetail.isCiCreate) {
+					tfAppOwner.setValue(data.applicationOwner);
+				} else {
+					tfAppOwner.reset();
+				}
+				
 				tfAppOwner.setVisible(true);
 			} else {
 				tfAppOwner.reset();
@@ -182,40 +215,41 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			tfAppOwner.setVisible(false);
 		}
 		
-		var cbBusinessEssential = this.getComponent('detailsBusinessEssential');
 		
 		if(parseInt(ciDetail.tableId) === AC.TABLE_ID_APPLICATION ||
 		   parseInt(ciDetail.tableId) === AC.TABLE_ID_ROOM ||
 		   parseInt(ciDetail.tableId) === AC.TABLE_ID_POSITION) {
+			if(!ciDetail.isCiCreate) {
+				cbBusinessEssential.setValue(data.businessEssential);
+			} else {
+				cbBusinessEssential.reset();
+			}
 			
-			cbBusinessEssential.setValue(data.businessEssential);
 			cbBusinessEssential.setVisible(true);
 		} else {
 			cbBusinessEssential.reset();
 			cbBusinessEssential.setVisible(false);
 		}
 		
-		var tfAlias = this.getComponent('detailsApplicationAlias');
-		tfAlias.setValue(data.alias);
-
-		
-		var field = this.getComponent('detailsCiOwner');
-		field.setValue(data.ciOwner);
-		var labels = AIR.AirApplicationManager.getLabels();
-		var label = data.applicationCat1Id == AC.APP_CAT1_APPLICATION ? labels.applicationManager : labels.label_details_ciOwner;
-		this.setFieldLabel(field, label);
-		
-		
-		field = this.getComponent('detailsSlaName');
-		field.setValue(data.slaName);
-		
-
-		var value = ciDetail.insertQuelle + ' ' + ciDetail.insertUser + ' ' + ciDetail.insertTimestamp;
-		this.getComponent('detailsInsertdata').setValue(value);
-
-		value = ciDetail.updateQuelle + ' ' + ciDetail.updateUser + ' ' + ciDetail.updateTimestamp;
-		this.getComponent('detailsUpdatedata').setValue(value);
-		
+		if(!ciDetail.isCiCreate) {
+			tfAlias.setValue(data.alias);
+			tfCiOwner.setValue(data.ciOwner);
+			var labels = AIR.AirApplicationManager.getLabels();
+			var label = data.applicationCat1Id == AC.APP_CAT1_APPLICATION ? labels.applicationManager : labels.label_details_ciOwner;
+			this.setFieldLabel(tfCiOwner, label);
+			tfSla.setValue(data.slaName);
+	
+			var value = ciDetail.insertQuelle + ' ' + ciDetail.insertUser + ' ' + ciDetail.insertTimestamp;
+			tfInsertData.setValue(value);
+			value = ciDetail.updateQuelle + ' ' + ciDetail.updateUser + ' ' + ciDetail.updateTimestamp;
+			tfUpdateData.setValue(value);
+		} else {
+			tfAlias.reset();
+			tfCiOwner.reset();
+			tfAlias.reset();
+			tfInsertData.reset();
+			tfUpdateData.reset();
+		}
 		
 		this.updateMailTemplate(data);
 	},

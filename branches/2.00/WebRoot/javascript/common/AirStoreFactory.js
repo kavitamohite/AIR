@@ -867,6 +867,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'indefinite_article'},
 			        {name: 'indefinite_article_no'},
 			        {name: 'OR'},
+			        'New',
 			        
 			        {name: 'dynamicWindowOKButtonText'},
 			        {name: 'objectType'},
@@ -952,7 +953,8 @@ AIR.AirStoreFactory = function() {
 			        
 			        // specific
 			        {name: 'specificsPanelTitle'},
-			        {name: 'applicationName'},
+//			        {name: 'applicationName'},
+			        'name',
 			        {name: 'applicationAlias'},
 			        {name: 'barApplicationId'},
 			        {name: 'rgBARrelevance'},
@@ -3662,7 +3664,7 @@ AIR.AirStoreFactory = function() {
 		
 		    var linkCiTypeListReader = new Ext.data.XmlReader({
 				record: 'return'
-//				idProperty: 'id'//damit nicht deutsche oder englische Einträge überschrieben werden, wenn id als Schlüssel feld gesetzt ist
+//				idProperty: 'id'//damit nicht deutsche oder englische Einträge überschrieben werden, wenn id als Schlüsselfeld gesetzt ist
 		    }, linkCiTypeListRecord);
 		
 		    var linkCiTypeListStore = new Ext.data.XmlStore({

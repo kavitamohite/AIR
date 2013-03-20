@@ -50,6 +50,8 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		
 		var tfCiNameW = this.getComponent('ciCreateWizardP1').getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView').getComponent('tfCiNameW');
 		tfCiNameW.on('change', this.onCiNameChange, this);
+		var cbCiTypeW = this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW');
+		cbCiTypeW.on('select', this.onCiTypeSelect, this);
 		
 		
 		this.objectNameAllowedStore = AIR.AirStoreFactory.getObjectNameAllowedStore();
@@ -57,6 +59,23 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		
 		this.objectNameAllowedStore.on('load', this.onNameAllowedCheck, this);
 		this.objectAliasAllowedStore.on('load', this.onAliasAllowedCheck, this);
+	},
+	
+	onCiTypeSelect: function(combo, record, index) {
+		if(record.get('ciTypeId') !== AC.TABLE_ID_APPLICATION) {
+			var options = {
+				isCiCreate: true,
+				tableId: record.get('ciTypeId')
+//				viewId: 'clCiSpecifics'
+				//ciOwner(Hidden),ciOwnerDelegate(Hidden) hinzufügen,
+				//um in CiContactsView.clear(data) vorbelegen zu können?
+			};
+			
+			if(options.tableId === AC.TABLE_ID_IT_SYSTEM)
+				options.ciSubTypeId = record.get('ciSubTypeId');
+			
+			this.fireEvent('externalNavigation', this, combo, 'clCiSpecifics', options);//options.viewId
+		}
 	},
 	
 	onCiNameChange: function(textfield, newValue, oldValue) {
@@ -265,7 +284,6 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		
 		switch(records[0].data.result) {
 			case 'OK':
-//				selectedCIId = records[0].data.applicationId;
 				AIR.AirApplicationManager.setCiId(records[0].data.applicationId);
 				AIR.AirApplicationManager.setTableId(AC.TABLE_ID_APPLICATION);
 				
@@ -300,9 +318,9 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 				}.createDelegate(this);
 	
 				var callbackMap = {
-					'continueEditing': continueEditingCallback,
-					'createNewCi': createNewCiCallback,
-					'redirectToSearch': redirectToSearchCallback
+					continueEditing: continueEditingCallback,
+					createNewCi: createNewCiCallback,
+					redirectToSearch: redirectToSearchCallback
 				};
 				
 				var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('AFTER_APP_SAVE', callbackMap);
@@ -320,7 +338,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 					}.createDelegate(this);
 					
 					var callbackMap = {
-						'yes': reactivateCallback
+						yes: reactivateCallback
 					};
 					
 					var afterSaveAppFailWindow = AIR.AirWindowFactory.createDynamicMessageWindow('AFTER_APP_SAVE_FAIL', callbackMap, AIR.AirApplicationManager.getLabels().dynamicWindowCIreactivationPrompt);

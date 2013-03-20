@@ -1428,7 +1428,7 @@
 	<!-- WIZARD -->
 	<!-- CiCreateAppMandatoryView -->
 	<Identifier>
-		<id>cbAppCat1W</id>
+		<id>cbCiTypeW</id>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>

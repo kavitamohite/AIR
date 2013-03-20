@@ -13,7 +13,6 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		    	xtype: 'textfield',
 		        fieldLabel: 'Alias',
 		        width: 230,
-		        
 		        hidden: true
 	        },{
 		        id: 'tfItSystemCiAlias',
@@ -285,6 +284,10 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		rgVirtualHWHost.on('change', this.onRadioGroupChange, this);
 	},
 	
+	clear: function(data) {
+		
+	},
+	
 	init: function() {
 		var storeIds = {
 			osGroupsListStore: null,
@@ -409,7 +412,15 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		this.ciId = data.id;
 		this.name = data.name;
 		
-		this.updateAccessMode(data);
+		var tfItSystemCiName = this.getComponent('tfItSystemCiName');
+		
+		if(data.isCiCreate) {
+			//enable all fields
+			tfItSystemCiName.setVisible(true);
+		} else {
+			tfItSystemCiName.setVisible(false);
+			this.updateAccessMode(data);
+		}
 
 		var tfItSystemCiAlias = this.getComponent('tfItSystemCiAlias');
 		tfItSystemCiAlias.setValue(data.alias);
@@ -427,18 +438,8 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		cbOsType.reset();
 		cbOsGroup.reset();
 
-		var osNameRecord = Util.getComboRecord(cbOsName, 'id', parseInt(data.osNameId));
-		var osTypeRecord = Util.getComboRecord(cbOsType, 'osTypeId', osNameRecord.get('type'));
-		var osGroupRecord = Util.getComboRecord(cbOsGroup, 'name', osTypeRecord.get('osGroup'));
 		
-		cbOsGroup.getStore().filter('type', data.ciSubTypeId);//parseInt(data.ciSubTypeId)
-		cbOsType.getStore().filter('osGroup', osGroupRecord.get('name'));
-		cbOsName.getStore().filter('type', osTypeRecord.get('osTypeId'));
-		
-
-		cbOsName.setValue(data.osNameId);
-		cbOsType.setValue(osTypeRecord.get('osTypeId'));
-		cbOsGroup.setValue(osGroupRecord.get('id'));
+		cbOsGroup.getStore().filter('type', data.ciSubTypeId);
 
 
 		
@@ -449,32 +450,60 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		var cbPrimaryFunction = this.getComponent('cbPrimaryFunction');
 		var cbLicenseScanning = this.getComponent('cbLicenseScanning');
 		
-		var clusterCodeRecord = Util.getComboRecord(cbClusterCode, 'type', data.clusterCode);
-		
-		cbClusterCode.setValue(clusterCodeRecord.get('id'));//data.clusterCode
-		cbClusterType.setValue(data.clusterType);
-		cbVirtualSoftware.setValue(data.virtualHardwareSoftware);
-		
-		
-		cbItSystemLifecycleStatus.setValue(data.lifecycleStatusId);
-		cbItSystemOperationalStatus.setValue(data.einsatzStatusId);
-		
-		cbPrimaryFunction.setValue(data.primaryFunctionId);
-		cbLicenseScanning.setValue(data.licenseScanningId);
-		
 		var rgVirtualHWClient = this.getComponent('rgVirtualHWClient');
 		var rgVirtualHWHost = this.getComponent('rgVirtualHWHost');
 		
-		if(data.isVirtualHardwareClient) {
-			rgVirtualHWClient.setValue(data.isVirtualHardwareClient);
-		} else {
+		if(data.isCiCreate) {
+			cbClusterCode.reset();
+			cbClusterType.reset();
+			cbVirtualSoftware.reset();
+			cbItSystemOperationalStatus.reset();
+			cbPrimaryFunction.reset();
+			cbLicenseScanning.reset();
+			
 			rgVirtualHWClient.reset();
-		}
-		
-		if(data.isVirtualHardwareHost) {
-			rgVirtualHWHost.setValue(data.isVirtualHardwareHost);
-		} else {
 			rgVirtualHWHost.reset();
+		} else {
+			if(data.osNameId) {
+				var osNameRecord = Util.getComboRecord(cbOsName, 'id', parseInt(data.osNameId));
+				var osTypeRecord = Util.getComboRecord(cbOsType, 'osTypeId', osNameRecord.get('type'));
+				var osGroupRecord = Util.getComboRecord(cbOsGroup, 'name', osTypeRecord.get('osGroup'));
+				
+				
+				cbOsType.getStore().filter('osGroup', osGroupRecord.get('name'));
+				cbOsName.getStore().filter('type', osTypeRecord.get('osTypeId'));
+		
+				cbOsName.setValue(data.osNameId);
+				cbOsType.setValue(osTypeRecord.get('osTypeId'));
+				cbOsGroup.setValue(osGroupRecord.get('id'));
+			}
+			
+			var clusterCodeRecord = Util.getComboRecord(cbClusterCode, 'type', data.clusterCode);
+			
+			cbClusterCode.setValue(clusterCodeRecord.get('id'));//data.clusterCode
+			cbClusterType.setValue(data.clusterType);
+			cbVirtualSoftware.setValue(data.virtualHardwareSoftware);
+			
+			
+			cbItSystemLifecycleStatus.setValue(data.lifecycleStatusId);
+			cbItSystemOperationalStatus.setValue(data.einsatzStatusId);
+			
+			cbPrimaryFunction.setValue(data.primaryFunctionId);
+			cbLicenseScanning.setValue(data.licenseScanningId);
+			
+
+			
+			if(data.isVirtualHardwareClient) {
+				rgVirtualHWClient.setValue(data.isVirtualHardwareClient);
+			} else {
+				rgVirtualHWClient.reset();
+			}
+			
+			if(data.isVirtualHardwareHost) {
+				rgVirtualHWHost.setValue(data.isVirtualHardwareHost);
+			} else {
+				rgVirtualHWHost.reset();
+			}
 		}
 	},
 	
@@ -583,6 +612,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 	},
 	
 	updateLabels: function(labels) {
+		this.setFieldLabel(this.getComponent('tfItSystemCiName'), labels.name);
 		this.setFieldLabel(this.getComponent('tfItSystemCiAlias'), labels.applicationAlias);
 		
 		this.setFieldLabel(this.getComponent('fsOs').getComponent('cbOsGroup'), labels.osGroup);

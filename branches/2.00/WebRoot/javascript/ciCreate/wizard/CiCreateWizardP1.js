@@ -13,12 +13,12 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			items: [{
 				xtype: 'filterCombo',
-				id: 'cbAppCat1W',//wizardobjectType
+				id: 'cbCiTypeW',//wizardobjectType
 			    fieldLabel: 'Type',
 			    
 			    valueField: 'id',
-		        displayField: 'english',
-		        editable: false,
+		        displayField: 'text',//english
+//		        editable: false,
 		        lastQuery: '',
 		        
 //		        typeAhead: true,
@@ -36,7 +36,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		        msgTarget: 'under',
 		        width: 250,
 		        
-			    store: AIR.AirStoreManager.getStoreByName('applicationCat1ListStore')
+			    store: AIR.AirStoreManager.getStoreByName('ciTypeListStore')//AIR.AirStoreManager.getStoreByName('applicationCat1ListStore')
 		    },{
 				xtype: 'filterCombo',
 				id: 'cbAppCat2W',
@@ -90,16 +90,16 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		AIR.CiCreateWizardP1.superclass.initComponent.call(this);
 		
-		var cbAppCat1W = this.getComponent('cbAppCat1W');
-		cbAppCat1W.on('select', this.onAppCat1Select, this);
-		cbAppCat1W.setValue(AC.APP_CAT1_APPLICATION);
+		var cbCiTypeW = this.getComponent('cbCiTypeW');
+		cbCiTypeW.on('select', this.onCiTypeSelect, this);
+//		cbCiTypeW.setValue(AC.APP_CAT1_APPLICATION);
 		
 		var cbAppCat2W = this.getComponent('cbAppCat2W');
 		cbAppCat2W.on('select', this.onAppCat2Select, this);
 		cbAppCat2W.on('change', this.onAppCat2Change, this);
-//		cbAppCat2W.getStore().filter('applicationCat1Id', cbAppCat1W.getValue());//AC.APP_CAT1_APPLICATION
+//		cbAppCat2W.getStore().filter('applicationCat1Id', cbCiTypeW.getValue());//AC.APP_CAT1_APPLICATION
 		var filterData = {
-			applicationCat1Id: cbAppCat1W.getValue()
+			applicationCat1Id: cbCiTypeW.getValue()
 		};
 		cbAppCat2W.filterByData(filterData);
 		cbAppCat2W.getStore().sort('text', 'ASC');
@@ -111,22 +111,17 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 //		this.objectAliasAllowedStore = AIR.AirStoreFactory.getObjectAliasAllowedStore();
 	},
 	
-	onAppCat1Select: function(store, record, index) {
-		var appCat1Id = record.get('id');
-		
-		switch(appCat1Id) {
-			case AC.APP_CAT1_APPLICATION:
-				this.getComponent('wizardCat1MandatoryPages').getLayout().setActiveItem('ciCreateAppMandatoryView');
-				break;
-			case AC.APP_CAT1_MIDDLEWARE:
-				this.getComponent('wizardCat1MandatoryPages').getLayout().setActiveItem('ciCreateAppMandatoryView');
-				break;
-			case AC.APP_CAT1_APPLICATION_PLATFORM:
-			case AC.APP_CAT1_COMMON_SERVICE:
-			default: break;
+	onCiTypeSelect: function(combo, record, index) {
+		if(record.get('ciTypeId') === AC.TABLE_ID_APPLICATION) {
+			var data = {
+				applicationCat1Id: record.get('ciSubTypeId')
+			};
+			
+			this.update(data);
 		}
-		
-		//reload cbAppCat2W...
+//		else {
+//			this.fireEvent('externalNavigation', this, combo, 'clCiSpecifics');
+//		}
 	},
 	
 	
@@ -153,8 +148,22 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 	},
 	
+	update: function(data) {
+		//reload cbAppCat2W...
+		
+		var cbAppCat2W = this.getComponent('cbAppCat2W');
+		cbAppCat2W.filterByData(data);
+		cbAppCat2W.getStore().sort('text', 'ASC');
+		cbAppCat2W.setValue(AC.APP_CAT2_DEFAULT_UNKOWN);
+
+		//show/hide BAR relevance, Organisational Scope, Primary Person, Delegate, Steward
+		var ciCreateAppMandatoryView = this.getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView');
+		ciCreateAppMandatoryView.update(data);
+
+	},
+	
 	setData: function(params) {
-		params.applicationCat1Id = this.getComponent('cbAppCat1W').getValue();
+		params.applicationCat1Id = this.getComponent('cbCiTypeW').getValue();
 		params.applicationCat2Id = this.getComponent('cbAppCat2W').getValue();
 		params.isCat2Sap = this.isCat2Sap;
 		
@@ -168,7 +177,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		//falls durch CI Auswahl mit Kat1 != Application eine für Application unpassende Kat2 Liste gefiltert wurde,
 		//für den Wizard wieder zurücksetzen:
-		this.getComponent('cbAppCat2W').getStore().filter('applicationCat1Id', this.getComponent('cbAppCat1W').getValue());
+		this.getComponent('cbAppCat2W').getStore().filter('applicationCat1Id', this.getComponent('cbCiTypeW').getValue());
 		this.getComponent('cbAppCat2W').setValue(AC.APP_CAT2_DEFAULT_UNKOWN);
 		this.switchNameFields();
 	},
@@ -178,13 +187,15 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		//gehört hier eigentlich nicht hin. Da aber keine update Methode gibt und der IE diese cb zerschiesst 
 		//oder gar nicht darstellt wenn cb mit den Attributen disabled: true, und hideTrigger: true konfiguriert wird:
-		//AIR.AirAclManager.setAccessMode(this.getComponent('cbAppCat1W'), null); appDetail müsste übergeben werden, gibt es hier aber nicht
-		Util.disableCombo(this.getComponent('cbAppCat1W'));
+		//AIR.AirAclManager.setAccessMode(this.getComponent('cbCiTypeW'), null); appDetail müsste übergeben werden, gibt es hier aber nicht
 		
-		this.setFieldLabel(this.getComponent('cbAppCat1W'), labels.wizardobjectType);
+		//AIR 2.0 RFC 9022
+//		Util.disableCombo(this.getComponent('cbCiTypeW'));
+		
+		this.setFieldLabel(this.getComponent('cbCiTypeW'), labels.wizardobjectType);
 		this.setFieldLabel(this.getComponent('cbAppCat2W'), labels.label_details_category);
 		
-		AIR.AirAclManager.setNecessity(this.getComponent('cbAppCat1W'));
+		AIR.AirAclManager.setNecessity(this.getComponent('cbCiTypeW'));
 		AIR.AirAclManager.setNecessity(this.getComponent('cbAppCat2W'));
 		
 		

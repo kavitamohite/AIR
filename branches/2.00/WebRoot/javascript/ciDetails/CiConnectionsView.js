@@ -566,69 +566,46 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		if(downStreamDelete.length > 0)
 			data.downStreamDelete = downStreamDelete;
-			
-			
-		
-		/*var modifiedCiConnectionData = {
-			upStreamAdd: upStreamAdd,
-			upStreamDelete: upStreamDelete,
-			downStreamAdd: downStreamAdd,
-			downStreamDelete: downStreamDelete
-		};
-		
-		return modifiedCiConnectionData;*/
+	},
+	
+	clear: function(data) {
+		this.update(data);
 	},
 	
 	update: function(data) {
-//		this.isEditable = applicationDetailStore.data.items[0] ? applicationDetailStore.data.items[0].data.isEditable == 'Y' : false;
-//		var lvUpStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvUpStreamConnections');
-//		var lvDownStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvDownStreamConnections');
-//		lvUpStreamConnections.view.refresh();
-//		lvDownStreamConnections.view.refresh();
-		
-		
-//		if(this.isLoaded) {
-//			return;
-//		} else {
-//			this.isLoaded = true;
-//		}
-
-//		
-//		var bEditConnections = this.getComponent('p1').getComponent('p11').getComponent('bEditConnections');
-//		if(this.isEditable) {
-//			bEditConnections.enable();
-//		} else {
-//			bEditConnections.disable();
-//		}
-		
 		this.reset();
 		
 		var lvUpStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvUpStreamConnections');
 		var lvDownStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvDownStreamConnections');
 		
-		lvUpStreamConnections.getStore().load({
-			params: {
-			 	cwid: AIR.AirApplicationManager.getCwid(),
-			 	token: AIR.AirApplicationManager.getToken(),
-//				applicationId: AIR.AirApplicationManager.getCiId()//selectedCIId
-			 	
-			 	tableId: AIR.AirApplicationManager.getTableId(),
-		 		ciId: AIR.AirApplicationManager.getCiId(),
-	 			direction: 'UPSTREAM'
-			}
-		});
-
-		lvDownStreamConnections.getStore().load({
-			params: {
-			 	cwid: AIR.AirApplicationManager.getCwid(),
-			 	token: AIR.AirApplicationManager.getToken(),
-//				applicationId: AIR.AirApplicationManager.getCiId()//selectedCIId
-			 	
-			 	tableId: AIR.AirApplicationManager.getTableId(),
-		 		ciId: AIR.AirApplicationManager.getCiId(),
-	 			direction: 'DOWNSTREAM'
-			}
-		});
+		if(data.isCiCreate) {
+			lvUpStreamConnections.getStore().removeAll();
+			lvDownStreamConnections.getStore().removeAll();
+		} else {
+			lvUpStreamConnections.getStore().load({
+				params: {
+				 	cwid: AIR.AirApplicationManager.getCwid(),
+				 	token: AIR.AirApplicationManager.getToken(),
+	//				applicationId: AIR.AirApplicationManager.getCiId()//selectedCIId
+				 	
+				 	tableId: AIR.AirApplicationManager.getTableId(),
+			 		ciId: AIR.AirApplicationManager.getCiId(),
+		 			direction: 'UPSTREAM'
+				}
+			});
+	
+			lvDownStreamConnections.getStore().load({
+				params: {
+				 	cwid: AIR.AirApplicationManager.getCwid(),
+				 	token: AIR.AirApplicationManager.getToken(),
+	//				applicationId: AIR.AirApplicationManager.getCiId()//selectedCIId
+				 	
+				 	tableId: AIR.AirApplicationManager.getTableId(),
+			 		ciId: AIR.AirApplicationManager.getCiId(),
+		 			direction: 'DOWNSTREAM'
+				}
+			});
+		}
 		
 		this.resetToolbar();
 		

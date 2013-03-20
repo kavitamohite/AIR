@@ -10,6 +10,7 @@
 		<indefinite_article>eine</indefinite_article>
 		<indefinite_article_no>keine</indefinite_article_no>
 		<OR>ODER</OR>
+		<New>Neu</New>
 		
 		<general_button_save>Speichern</general_button_save>
 		<general_button_back>Zurück</general_button_back>
@@ -156,7 +157,7 @@
 			<label_details_updatedata>Änderungsquelle, User, Datum</label_details_updatedata>
 		
 		<specificsPanelTitle>Spezifisches</specificsPanelTitle>
-			<applicationName>Name</applicationName>
+			<name>Name</name>
 			<applicationAlias>Alias</applicationAlias>
 			<barApplicationId>Bayer Application Registry ID</barApplicationId>
 			<rgBARrelevance>BAR Relevance</rgBARrelevance>
