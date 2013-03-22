@@ -9,7 +9,7 @@
   		<property name="hibernate.connection.autoReconnect">true</property>
   		<property name="hibernate.connection.validationQuery">SELECT 1</property>
   
-  		<property name="show_sql">true</property>
+  		<property name="show_sql">false</property>
   		<property name="dialect">org.hibernate.dialect.OracleDialect</property>
 
 		<mapping package="com.bayerbbs.applrepos.domain" />
@@ -56,5 +56,14 @@
 		<mapping class="com.bayerbbs.applrepos.domain.Sla" />
 <!--		<mapping class="com.bayerbbs.applrepos.domain.SystemPlatform" />-->
 <!--		<mapping class="com.bayerbbs.applrepos.domain.SeverityLevel" />??-->
+		
+		<mapping class="com.bayerbbs.applrepos.domain.CiLokationsKette" />
+		<mapping class="com.bayerbbs.applrepos.domain.Room" />
+		<mapping class="com.bayerbbs.applrepos.domain.Building" />
+		<mapping class="com.bayerbbs.applrepos.domain.BuildingArea" />
+		<mapping class="com.bayerbbs.applrepos.domain.Schrank" />
+		<mapping class="com.bayerbbs.applrepos.domain.Terrain" />
+		<mapping class="com.bayerbbs.applrepos.domain.Standort" />
+		<mapping class="com.bayerbbs.applrepos.domain.Land" />
 	</session-factory>
 </hibernate-configuration>

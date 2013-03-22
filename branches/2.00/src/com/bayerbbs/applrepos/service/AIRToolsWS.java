@@ -8,6 +8,7 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.Land;
 import com.bayerbbs.applrepos.dto.AccountDTO;
 import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.CategoryBusinessDTO;
@@ -56,6 +57,7 @@ import com.bayerbbs.applrepos.hibernate.ItSetHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 import com.bayerbbs.applrepos.hibernate.LicenseTypeHbn;
 import com.bayerbbs.applrepos.hibernate.LifecycleStatusHbn;
+import com.bayerbbs.applrepos.hibernate.LokationItemHbn;
 import com.bayerbbs.applrepos.hibernate.OperationalStatusHbn;
 import com.bayerbbs.applrepos.hibernate.PriorityLevelHbn;
 import com.bayerbbs.applrepos.hibernate.ProcessHbn;
@@ -307,5 +309,9 @@ public class AIRToolsWS {
 	public KeyValueDTO[] getItSystemLicenseScannings() {
 		List<KeyValueDTO> licenseScannings = ItSystemHbn.getItSystemLicenseScannings();
 		return licenseScannings.toArray(new KeyValueDTO[0]);
+	}
+	
+	public List<Land> getLaender() {
+		return LokationItemHbn.findAllLand();
 	}
 }

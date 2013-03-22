@@ -1,10 +1,13 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -15,6 +18,7 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
@@ -189,8 +193,22 @@ public class StandortHbn extends LokationItemHbn {
 							}
 						}
 						
-						standort.setSlaId(dto.getSlaId());
-						standort.setServiceContractId(dto.getServiceContractId());
+//						standort.setSlaId(dto.getSlaId());
+//						standort.setServiceContractId(dto.getServiceContractId());
+						
+						if (null != dto.getSlaId()) {
+							if (-1 == dto.getSlaId()) {
+								standort.setSlaId(null);
+							}
+							else {
+								standort.setSlaId(dto.getSlaId());
+							}
+						}
+						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
+							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
+							standort.setServiceContractId(dto.getServiceContractId());
+						}
+
 
 
 						
@@ -603,4 +621,22 @@ public class StandortHbn extends LokationItemHbn {
 		return output;
 	}
 
+	public static KeyValueDTO[] findSitesByLandId(Long id) {//DefaultDataInput input
+		Session session = HibernateUtil.getSession();
+		
+		Query q = session.getNamedQuery("findSitesByLandId");
+		q.setParameter("landId", id);//input.getId()
+
+		List<Standort> sites = q.list();
+		
+		
+		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		for(Standort site : sites)
+			data.add(new KeyValueDTO(site.getId(), site.getName()));
+		
+		Collections.sort(data);
+		
+		return data.toArray(new KeyValueDTO[0]);
+	}
+	
 }

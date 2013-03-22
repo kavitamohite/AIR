@@ -6,6 +6,7 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 
@@ -229,5 +230,17 @@ public class BuildingWS {
 		}
 
 		return output;
+	}
+	
+	public KeyValueOutput getBuildingsByBuildingArea(CiDetailParameterInput detailInput) {//DefaultDataInput input
+		return BuildingHbn.getBuildingsByBuildingArea(detailInput);//input
+	}
+
+	public KeyValueDTO[] findBuildingsByTerrainId(Long id) {
+		return BuildingHbn.findBuildingsByTerrainId(id);
+	}
+
+	public KeyValueDTO[] findBuildingAreasByBuildingId(Long id) {
+		return BuildingHbn.findBuildingAreasByBuildingId(id);
 	}
 }

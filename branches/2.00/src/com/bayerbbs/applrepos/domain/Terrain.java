@@ -14,6 +14,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TERRAIN")
+//@NamedQueries(
+//	@NamedQuery(name="findTerrainsBySiteId", query="FROM Terrain t WHERE t.standortId=:standortId")
+//)
 public class Terrain extends CiBase implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	

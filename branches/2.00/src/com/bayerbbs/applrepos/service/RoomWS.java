@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
+import com.bayerbbs.applrepos.hibernate.StandortHbn;
 
 public class RoomWS {
 	
@@ -126,6 +128,10 @@ public class RoomWS {
 		}
 
 		return output;
+	}
+
+	public KeyValueDTO[] findRoomsByBuildingAreaId(Long id) {
+		return RoomHbn.findRoomsByBuildingAreaId(id);//input
 	}
 
 }

@@ -5,17 +5,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
+import com.bayerbbs.applrepos.domain.Land;
 import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
 import com.bayerbbs.applrepos.service.CiSearchParamsDTO;
@@ -32,10 +35,6 @@ public class LokationItemHbn extends BaseHbn {
 	static final String AREA_TYPE_LOCATION = "areaId";
 	static final String SCHRANK_TYPE_LOCATION = "schrankId";
 	
-
-	
-	
-
 	
 	protected static StringBuilder getAdvSearchCiBaseSql(CiSearchParamsDTO input, CiMetaData metaData) {
 		StringBuilder sql = new StringBuilder();
@@ -46,8 +45,9 @@ public class LokationItemHbn extends BaseHbn {
 		if(metaData.getAliasField() != null)
 			sql.append(", ").append(metaData.getAliasField());
 		
-		sql.append(", responsible, sub_responsible FROM ").append(metaData.getTableName()).append(" WHERE (").
-		append(" UPPER(").append(metaData.getNameField()).append(") like '");
+		sql.append(", responsible, sub_responsible FROM ").append(metaData.getTableName()).append(" WHERE").// (
+		append(" del_timestamp IS NULL AND (").
+		append(" UPPER(").append(metaData.getNameField()).append(") LIKE '");
 		
 		
 		if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
@@ -61,7 +61,7 @@ public class LokationItemHbn extends BaseHbn {
 		sql.append("'");
 		
 		if(metaData.getAliasField() != null) {
-			sql.append(" OR UPPER(").append(metaData.getAliasField()).append(") like '");
+			sql.append(" OR UPPER(").append(metaData.getAliasField()).append(") LIKE '");
 			
 			if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
 				sql.append("%");
@@ -244,7 +244,16 @@ public class LokationItemHbn extends BaseHbn {
 		return lokationsKette;
 	}
 	
-
+	public static List<Land> findAllLand() {
+		Session session = HibernateUtil.getSession();
+		
+		Query q = session.getNamedQuery("findAllLand");
+		List<Land> laender = q.list();
+		
+		Collections.sort(laender);
+		
+		return laender;
+	}
 	
 
 }

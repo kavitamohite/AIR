@@ -1,5 +1,7 @@
 package com.bayerbbs.applrepos.service;
 
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
+
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "RoomWSService", portName = "RoomWSPort")
 public class RoomWSDelegate {
@@ -15,5 +17,9 @@ public class RoomWSDelegate {
 	
 	public CiEntityEditParameterOutput createRoom(RoomEditParameterInput editInput) {
 		return roomWSPort.createRoom(editInput);
+	}
+	
+	public KeyValueDTO[] findRoomsByBuildingAreaId(DefaultDataInput detailInput) {
+		return roomWSPort.findRoomsByBuildingAreaId(detailInput.getId());
 	}
 }

@@ -231,6 +231,14 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			cbBusinessEssential.setVisible(false);
 		}
 		
+		if(parseInt(ciDetail.tableId) === AC.TABLE_ID_APPLICATION ||
+		   parseInt(ciDetail.tableId) === AC.TABLE_ID_ROOM ||
+		   parseInt(ciDetail.tableId) === AC.TABLE_ID_BUILDING) {
+			tfAlias.setVisible(true);
+		} else {
+			tfAlias.setVisible(false);
+		}
+		
 		if(!ciDetail.isCiCreate) {
 			tfAlias.setValue(data.alias);
 			tfCiOwner.setValue(data.ciOwner);

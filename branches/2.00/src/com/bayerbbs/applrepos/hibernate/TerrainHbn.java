@@ -1,7 +1,10 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,8 +16,10 @@ import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
+import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
@@ -189,9 +194,22 @@ public class TerrainHbn extends LokationItemHbn {
 							}
 						}
 						
-						terrain.setSlaId(dto.getSlaId());
-						terrain.setServiceContractId(dto.getServiceContractId());
-
+//						terrain.setSlaId(dto.getSlaId());
+//						terrain.setServiceContractId(dto.getServiceContractId());
+						
+						if (null != dto.getSlaId()) {
+							if (-1 == dto.getSlaId()) {
+								terrain.setSlaId(null);
+							}
+							else {
+								terrain.setSlaId(dto.getSlaId());
+							}
+						}
+						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
+							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
+							terrain.setServiceContractId(dto.getServiceContractId());
+						}
+						
 
 						
 //						Long businessEssentialIdOld = terrain.getBusinessEssentialId();
@@ -603,4 +621,21 @@ public class TerrainHbn extends LokationItemHbn {
 		return output;
 	}
 
+	public static KeyValueDTO[] findTerrainsBySiteId(Long id) {
+		Standort site = StandortHbn.findById(id);
+		Set<Terrain> terrains = site.getTerrains();
+		
+//		Session session = HibernateUtil.getSession();
+//		Query q = session.getNamedQuery("findTerrainsBySiteId");
+//		q.setParameter("standortId", id);
+//		List<Terrain> terrains = q.list();
+		
+		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		for(Terrain terrain : terrains)
+			data.add(new KeyValueDTO(terrain.getId(), terrain.getName()));
+		
+		Collections.sort(data);
+		
+		return data.toArray(new KeyValueDTO[0]);
+	}
 }

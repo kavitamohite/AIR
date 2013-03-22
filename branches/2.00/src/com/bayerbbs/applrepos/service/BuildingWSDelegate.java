@@ -1,5 +1,7 @@
 package com.bayerbbs.applrepos.service;
 
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
+
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "BuildingWSService", portName = "BuildingWSPort")
 public class BuildingWSDelegate {
@@ -28,5 +30,18 @@ public class BuildingWSDelegate {
 	
 	public CiEntityEditParameterOutput createBuildingArea(BuildingAreaEditParameterInput editInput) {
 		return buildingWS.createBuildingArea(editInput);
+	}
+	
+	
+	public KeyValueOutput getBuildingsByBuildingArea(CiDetailParameterInput input) {//CiDetailParameterOutput
+		return buildingWS.getBuildingsByBuildingArea(input);
+	}
+	
+	public KeyValueDTO[] findBuildingsByTerrainId(DefaultDataInput detailInput) {
+		return buildingWS.findBuildingsByTerrainId(detailInput.getId());
+	}
+	
+	public KeyValueDTO[] findBuildingAreasByBuildingId(DefaultDataInput detailInput) {
+		return buildingWS.findBuildingAreasByBuildingId(detailInput.getId());
 	}
 }

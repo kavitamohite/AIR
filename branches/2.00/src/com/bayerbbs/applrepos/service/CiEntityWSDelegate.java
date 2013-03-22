@@ -49,11 +49,7 @@ public class CiEntityWSDelegate {
 	public SchrankDTO getSchrank(CiDetailParameterInput input) {//CiDetailParameterOutput
 		return ciEntityWS.getSchrank(input);
 	}
-	
-	public KeyValueOutput getBuildingsByBuildingArea(CiDetailParameterInput input) {//CiDetailParameterOutput
-		return ciEntityWS.getBuildingsByBuildingArea(input);
-	}
-	
+
 	public CiItemsResultDTO findCis(ApplicationSearchParamsDTO input) {//CiDetailParameterOutput CiSearchParamsDTO
 		return ciEntityWS.findCis(input);
 	}

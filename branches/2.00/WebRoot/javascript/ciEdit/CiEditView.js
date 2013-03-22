@@ -206,7 +206,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 //	createCi: function(data) {
 //	createCi: function(viewId, link, options) {
-	createCi: function(viewId, options) {
+	prepareCiCreation: function(viewId, options) {
 		options.name = AAM.getLabels().New;//data		
 		this.update(options);//data
 		
@@ -245,17 +245,24 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 //		ciSupportStuff.update(ciData);
 		
 		var ciHistory = ciEditTabView.getComponent('clCiHistory');
-		ciHistory.update();
+		ciHistory.update();*/
 		
 		
-		this.isUserChange = true;
+//		this.isUserChange = true;
+		var task = new Ext.util.DelayedTask(function() {
+			this.isUserChange = true;
+			this.doLayout();
+
+		}.createDelegate(this));
+		task.delay(1000);
 		
-		var panelMsg = ACM.getRequiredFields(ciData);
+		
+		var panelMsg = ACM.getRequiredFields(options);
 		if(panelMsg.length > 0) {
 			this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
 		} else {
 			this.setPanelMessage(panelMsg);
-		}*/
+		}
 		
 		AIR.AirAclManager.setDraft(AIR.AirAclManager.isDraft());
 	},
@@ -285,8 +292,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		if(options.isCiCreate) {
 			options.relevanceOperational = 'Y';
 //			options.relevanceStrategic = 'Y';
-			this.createCi(viewId, options);
+			this.prepareCiCreation(viewId, options);//createCi
+			
 			this.isLoaded = true;
+			this.disableButtons();
 		}
 		
 		
@@ -398,6 +407,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	loadCi: function(ciData) {
+		ciData.templateChanged = this.templateChanged;
 		AAM.setAppDetail(ciData);
 		
 		if(ciData.id.length === 0 && !ciData.isCiCreate) {//applicationId
@@ -518,38 +528,33 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	onSaveApplication: function(button, event) {
 //		this.disableButtons();
 		
-		//mySaveMask.show();
-		this.saveApplication();
-	},
-	
-	//move to CiCenterView ?
-	saveApplication: function(options) {//button, event
-		if(!options)//damit nach compl. status Wechsel von Undefined auf External nicht der save button deaktiviert bleibt
-			this.isUserChange = false;
-		this.ciModified = false;
-		
-//		var labels = AIR.AirApplicationManager.getLabels();
-		
 		var ciData = AAM.getAppDetail();
 		
-		if(!AIR.AirAclManager.isEditMaskValid()) {
-			msgtext = AIR.AirApplicationManager.getLabels().editDataNotValid.replace(/##/, ciData.applicationName);//this.getComponent('applicationName').getValue()
-			
-			Ext.MessageBox.show({
-				title: 'Error',
-				msg: msgtext,
-				buttons: Ext.MessageBox.OK,
-				icon: Ext.MessageBox.ERROR
-			});
-			
-			return;
+		if(ciData.isCiCreate) {//ciData.tableId === AC.TABLE_ID_APPLICATION
+			this.tableId = ciData.tableId;
+			this.createCi(ciData);
+		} else {
+			//mySaveMask.show();
+			this.saveApplication();
 		}
-
-		var ciSaveStore = AIR.AirStoreFactory.createCiSaveStore(ciData.tableId);//AIR.AirStoreFactory.createApplicationSaveStore();
-		var callback = options && options.callback ? options.callback : this.onApplicationSave;
-		ciSaveStore.on('load', callback, this);
-		this.skipLoading = options && options.skipLoading ? true : false;
-
+	},
+	
+	createCi: function(data) {
+		var ciCreateStore = AIR.AirStoreFactory.createCiCreateStore(data.tableId);
+		ciCreateStore.on('load', this.onCiCreated, this);
+		
+		var data = this.getCiData(data);
+		
+		ciCreateStore.load({
+			params: data
+		});
+	},
+	
+	onCiCreated: function(store, records, options) {
+		
+	},
+	
+	getCiData: function(ciData) {
 		var ciEditTabView = this.getComponent('ciEditTabView');
 		
 		var data = {
@@ -589,17 +594,46 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			ciSupportStuffView.setData(data);
 		}
 		
+		return data;
+	},
+	
+	//move to CiCenterView ?
+	saveApplication: function(options) {//button, event
+		if(!options)//damit nach compl. status Wechsel von Undefined auf External nicht der save button deaktiviert bleibt
+			this.isUserChange = false;
+		this.ciModified = false;
+		
+//		var labels = AIR.AirApplicationManager.getLabels();
+		
+		var ciData = AAM.getAppDetail();
+		
+		if(!AIR.AirAclManager.isEditMaskValid()) {
+			var msgtext = AIR.AirApplicationManager.getLabels().editDataNotValid.replace(/##/, ciData.applicationName);//this.getComponent('applicationName').getValue()
+			
+			Ext.MessageBox.show({
+				title: 'Error',
+				msg: msgtext,
+				buttons: Ext.MessageBox.OK,
+				icon: Ext.MessageBox.ERROR
+			});
+			
+			return;
+		}
+
+		var ciSaveStore = AIR.AirStoreFactory.createCiSaveStore(ciData.tableId);//AIR.AirStoreFactory.createApplicationSaveStore();
+		var callback = options && options.callback ? options.callback : this.onApplicationSave;
+		ciSaveStore.on('load', callback, this);
+		this.skipLoading = options && options.skipLoading ? true : false;
+
+		
+		var data = this.getCiData(ciData);
+		
+		
 		var saveCallback = function() {
 			AAM.getMask(AC.MASK_TYPE_SAVE).show();
 			
-			/*
-			Util.log('new template? data.template='+data.template+'   ciData.isTemplate='+ciData.template);
-			//isTemplate
-			if(data.template !== ciData.template) {//new template or removed template of the changed CI?
-				var referencesListStore = AIR.AirStoreManager.getStoreByName('referencesListStore');
-				referencesListStore.load();
-			}*/
-			this.templateChanged = data.template !== ciData.template;
+			// wurde dieses CI zu einem Template gemacht oder war es ein Template und wurde der Template Status entfernt?
+			this.templateChanged = data.template != ciData.template;
 			
 //			this.mergeCiChanges(data);//(noch) nicht notwendig, da noch keine Fälle in denen Daten zusammengeführt werden müssen
 			
@@ -613,12 +647,12 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	checkItsecGroup: function(newCiDetail, ciData, saveCallback) {
 		if(ciData.itsecGroupId.length > 0 &&
-		   ciData.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && // wenn itsecGroupId = 10136 (Default ITsec Group), wird cbItSecGroup nicht gesetzt. Sie ist in diesem Fall leer. Die Überprüfung findet aber über ciData.itsecGroupId statt
-		   ciData.itsecGroupId !== newCiDetail.itSecGroupId &&
-		   newCiDetail.itSecGroupId &&
-		   newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_NON_BYTSEC &&
-		   newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_DELETE_ID &&
-		   newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_EMPTY) {
+			ciData.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && // wenn itsecGroupId = 10136 (Default ITsec Group), wird cbItSecGroup nicht gesetzt. Sie ist in diesem Fall leer. Die Überprüfung findet aber über ciData.itsecGroupId statt
+			ciData.itsecGroupId !== newCiDetail.itSecGroupId &&
+			newCiDetail.itSecGroupId &&
+			newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_NON_BYTSEC &&
+			newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_DELETE_ID &&
+			newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_EMPTY) {
 			
 			var callbackMap = {
 				yes: saveCallback
@@ -713,26 +747,17 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		AAM.getMask(AC.MASK_TYPE_SAVE).hide();
 		
 		if('OK' === records[0].data.result) {
-//			deactivateButtonSaveApplication();
 			this.disableButtons();
 			
 			var ciConnectionsView = this.getComponent('ciEditTabView').getComponent('clCiConnections');
 			ciConnectionsView.commitChanges();
 			
-			this.checkTemplateChange();
+//			this.checkTemplateChange();
 
 			if(!this.skipLoading)
 				this.loadCiDetails();//hier ein itsecGroupCallback übergeben (das ComplianceControlWindow), wenn er nach dem Neuladen aufgerufen werden soll
 			
 			this.fireEvent('airAction', this, 'appSaveSuccess');//(bestimmte) ciData Daten mitgeben?
-			
-			
-			//refactor remove global bIsDynamicWindowSpeichern and delegateCallback. See also commonfunctions::AIR.AirWindowFactory.createDynamicMessageWindow
-			//--> case 'DATA_CHANGED', case 'DATA_SAVED'
-//			if(bIsDynamicWindowSpeichern) {
-//				delegateCallback();//wird durch commonfunctions::AIR.AirWindowFactory.createDynamicMessageWindow: case 'DATA_CHANGED' delegateCallback = callbackMap['verwerfen']; gesetzt
-//				bIsDynamicWindowSpeichern = false;//see commonvars.js
-//			}
 		} else {
 			var dataSavedErrorWindow = AIR.AirWindowFactory.createDynamicMessageWindow('AFTER_APP_SAVE_FAIL', null, records[0].data.messages);//callbackMap
 			dataSavedErrorWindow.show();
@@ -748,7 +773,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 						
 			this.onCiChange(ciComplianceView, rgb);
 			
-			this.checkTemplateChange();
+//			this.checkTemplateChange();
 			
 			AAM.getMask(AC.MASK_TYPE_SAVE).hide();
 		};
@@ -760,12 +785,13 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.saveApplication(options);
 	},
 	
-	checkTemplateChange: function() {
-		if(this.templateChanged) {//new template or removed template?
-			var referencesListStore = AIR.AirStoreManager.getStoreByName('referencesListStore');
-			referencesListStore.load();
-		}
-	},
+	//siehe CiComplianceView.updateComplianceDetails
+//	checkTemplateChange: function() {
+//		if(this.templateChanged) {//new template or removed template?
+//			var referencesListStore = AIR.AirStoreManager.getStoreByName('referencesListStore');
+//			referencesListStore.load();
+//		}
+//	},
 	
 	
 	onItsecGroupEdit: function(ciComplianceView, itsecGroupCallback, newItSecGroup) {

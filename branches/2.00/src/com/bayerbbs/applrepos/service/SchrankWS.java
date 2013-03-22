@@ -79,10 +79,11 @@ public class SchrankWS {
 			SchrankDTO dto = getSchrankDTOFromEditInput(input);
 
 			// create Application - fill attributes
-			if (null == dto.getCiOwner()) {
-				dto.setCiOwner(input.getCwid().toUpperCase());
-				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
-			}
+//			if (null == dto.getCiOwner()) {
+//				dto.setCiOwner(input.getCwid().toUpperCase());
+//				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
+//			}
+			
 //			if (null == dto.getBusinessEssentialId()) {
 //				dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
 //			}
@@ -92,7 +93,7 @@ public class SchrankWS {
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
 				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
+				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_POSITION, false);
 				if (null != listCi && 1 == listCi.size()) {
 					Long ciId = listCi.get(0).getId();
 					output.setCiId(ciId);

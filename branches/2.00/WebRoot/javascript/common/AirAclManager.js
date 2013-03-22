@@ -573,8 +573,8 @@ AIR.AirAclManager = function() {
 			var aclCiType = aclItem.get('ciTypeId');
 			var aclCiSubType = aclItem.get('ciSubTypeId');
 			
-			var isCiType = !aclCiType || aclCiType === data.tableId.toString() || aclCiType.indexOf(data.tableId.toString()) > 0;
-			var isCiSubType = !data.applicationCat1Id || data.applicationCat1Id === data.applicationCat1Id.toString() || aclCiSubType.indexOf(data.applicationCat1Id.toString()) > 0;
+			var isCiType = !aclCiType || aclCiType.length === 0 || aclCiType === data.tableId.toString() || aclCiType.indexOf(data.tableId.toString()) > 0;
+			var isCiSubType = !data.applicationCat1Id || aclCiSubType.length === 0 || aclCiSubType === data.applicationCat1Id.toString() || aclCiSubType.indexOf(data.applicationCat1Id.toString()) > 0;
 			
 			return isCiType && isCiSubType;
 			

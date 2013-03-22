@@ -2203,6 +2203,172 @@ AIR.AirStoreFactory = function() {
 			return applicationStore;
 		},
 		
+		createRoomListStore: function() {
+			var record = Ext.data.Record.create([
+ 			    { name: 'id', type: 'int' },
+ 			    'name',
+ 			]);
+
+ 			var reader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'//return keyValueDTO
+ 			}, record);
+
+ 			var store = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'roomListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/RoomWSPort',
+ 					loadMethod: 'findRoomsByBuildingAreaId',
+ 					timeout: 120000,
+ 					reader: reader
+ 				})
+ 			});
+ 			
+ 			return store;
+ 		},
+		
+ 		createBuildingAreaListStore: function() {
+			var record = Ext.data.Record.create([
+ 			    { name: 'id', type: 'int' },
+ 			    'name',
+ 			]);
+
+ 			var reader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'//return keyValueDTO
+ 			}, record);
+
+ 			var store = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'buildingAreaListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/BuildingWSPort',
+ 					loadMethod: 'findBuildingAreasByBuildingId',
+ 					timeout: 120000,
+ 					reader: reader
+ 				})
+ 			});
+ 			
+ 			return store;
+ 		},
+		
+ 		createBuildingListStore: function() {
+			var record = Ext.data.Record.create([
+ 			    { name: 'id', type: 'int' },
+ 			    'name',
+ 			]);
+
+ 			var reader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'//return keyValueDTO
+ 			}, record);
+
+ 			var store = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'buildingListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/BuildingWSPort',
+ 					loadMethod: 'findBuildingsByTerrainId',
+ 					timeout: 120000,
+ 					reader: reader
+ 				})
+ 			});
+ 			
+ 			return store;
+ 		},
+		
+ 		createTerrainListStore: function() {
+			var record = Ext.data.Record.create([
+ 			    { name: 'id', type: 'int' },
+ 			    'name',
+ 			]);
+
+ 			var reader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'//return keyValueDTO
+ 			}, record);
+
+ 			var store = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'terrainListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/TerrainWSPort',
+ 					loadMethod: 'findTerrainsBySiteId',
+ 					timeout: 120000,
+ 					reader: reader
+ 				})
+ 			});
+ 			
+ 			return store;
+ 		},
+ 		
+		
+		createSiteListStore: function() {
+			var siteRecord = Ext.data.Record.create([
+ 			    { name: 'id', type: 'int' },
+ 			    'name',
+ 			]);
+
+ 			var siteReader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'//return keyValueDTO
+ 			}, siteRecord);
+
+ 			var siteStore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'siteListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/StandortWSPort',
+ 					loadMethod: 'findSitesByLandId',
+ 					timeout: 120000,
+ 					reader: siteReader
+ 				})
+ 			});
+ 			
+ 			return siteStore;
+ 		},
+
+ 		
+		createLandListStore: function() {
+			var landRecord = Ext.data.Record.create([
+			    { name: 'id', type: 'int' },
+			    { name: 'itSetId', type: 'int' },
+			    'locale',
+			    'name',
+			    'nameEn'
+			]);
+
+			var landReader = new Ext.data.XmlReader({
+				idProperty: 'id',
+				record: 'return'
+			}, landRecord);
+
+			var landStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				autoLoad: false,
+				storeId: 'landListStore',
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/AIRToolsWSPort',
+					loadMethod: 'getLaender',
+					timeout: 120000,
+					reader: landReader
+				})
+			});
+			
+			return landStore;
+		},
 		
 		createCiDetailStore: function(tableId) {
 			var ciDetailStore;
@@ -2400,6 +2566,7 @@ AIR.AirStoreFactory = function() {
 			return ciDetailStore;
 		},
 		
+		/*
 		createBuildingsByBuildingAreaStore: function() {
 //			var record = Ext.data.Record.create([
 //			    'id','name'
@@ -2423,7 +2590,7 @@ AIR.AirStoreFactory = function() {
 				storeId: 'buildingsByBuildingAreaStore',
 				
 				proxy: new Ext.ux.soap.SoapProxy({
-					url: webcontext + '/CiEntityWSPort',
+					url: webcontext + '/BuildingWSPort',//CiEntityWSPort
 					loadMethod: 'getBuildingsByBuildingArea',
 					timeout: 120000,
 					reader: reader
@@ -2431,7 +2598,8 @@ AIR.AirStoreFactory = function() {
 			});
 			
 			return store;
-		},
+		},*/
+		
 		
 		
 		createApplicationDetailStore: function() {
@@ -2910,7 +3078,11 @@ AIR.AirStoreFactory = function() {
 			return applicationCreateStore;
 		},
 		
-		createCiSaveStore: function(ciType) {
+		createCiCreateStore: function(ciType) {
+			return this.createCiSaveStore(ciType, true);
+		},
+		
+		createCiSaveStore: function(ciType, isCreate) {
 			var ciSaveRecord = Ext.data.Record.create(['result', 'displayMessage', 'messages']);
 			
 			var ciSaveReader = new Ext.data.XmlReader({
@@ -2922,8 +3094,8 @@ AIR.AirStoreFactory = function() {
 				case AC.TABLE_ID_IT_SYSTEM:			wsName = 'ItSystem'; break;
 				case AC.TABLE_ID_APPLICATION:		wsName = 'Application'; break;
 				case AC.TABLE_ID_ROOM:				wsName = 'Room'; break;
+				case AC.TABLE_ID_BUILDING_AREA:		//wsName = 'BuildingArea'; break;
 				case AC.TABLE_ID_BUILDING:			wsName = 'Building'; break;
-				case AC.TABLE_ID_BUILDING_AREA:		wsName = 'BuildingArea'; break;
 				case AC.TABLE_ID_SITE:				wsName = 'Standort'; break;
 				case AC.TABLE_ID_POSITION:			wsName = 'Schrank'; break;
 				case AC.TABLE_ID_TERRAIN:			wsName = 'Terrain'; break;
@@ -2931,14 +3103,16 @@ AIR.AirStoreFactory = function() {
 			}
 	
 			var url = webcontext + '/'+ wsName +'WSPort';//AC.TABLE_ID_CI_NAME[ciType]
-			var loadMethod = 'save' + wsName;//AC.TABLE_ID_CI_NAME[ciType]
 			
 			if(parseInt(ciType) === AC.TABLE_ID_BUILDING_AREA)
-				url = webcontext + '/BuildingWSPort';
+				wsName = 'BuildingArea';
+			var loadMethod = (isCreate ? 'create' : 'save') + wsName;//AC.TABLE_ID_CI_NAME[ciType]
+			
+//			if(parseInt(ciType) === AC.TABLE_ID_BUILDING_AREA)
+//				url = webcontext + '/BuildingWSPort';
 			
 			var ciSaveStore = new Ext.data.XmlStore({
 				autoDestroy: true,
-//				storeId: 'appSaveStore',
 				autoLoad: false,
 				
 				proxy: new Ext.ux.soap.SoapProxy({

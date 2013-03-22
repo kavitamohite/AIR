@@ -19,38 +19,73 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		    	xtype: 'textfield',
 		        fieldLabel: 'Alias',
 		        width: 230
-//		        anchor: '70%',
 	        },{
 		        id: 'tfRoomFloor',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Floor',
 		        width: 230
-//		        anchor: '70%',
 		    },{
-		        id: 'tfRoom',
-		    	xtype: 'textfield',
-		        fieldLabel: 'Room',
-		        disabled: true,
-//		        anchor: '70%'
-		        width: 230
-	        },{
-//		        id: 'cbBuildingArea',
+//		        id: 'cbRoom',
 //		    	xtype: 'textfield',
-//		        fieldLabel: 'BuildingArea',
-//		        anchor: '70%',
-//		        disabled: true
-////			        width: 230,
-	        	
+//		        fieldLabel: 'Room',
+//		        disabled: true,
+//		        width: 230
+		    	
 		        xtype: 'filterCombo',//combo
-		        id: 'cbBuildingArea',
-
-		        width: 230,
-//		        anchor: '70%',
-		        fieldLabel: 'Building Area',
+		        id: 'cbRoom',
 		        disabled: true,
 		        hideTrigger: true,
 		        
-		        store: AIR.AirStoreFactory.createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
+		        width: 230,
+		        fieldLabel: 'Room',
+		        
+		        store: AIR.AirStoreFactory.createRoomListStore(),//AIR.AirStoreFactory.createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
+		        valueField: 'id',
+		        displayField: 'name',
+				lastQuery: '',
+		        
+//		        typeAhead: true,
+//		        forceSelection: true,
+//		        autoSelect: false,
+		        
+		        triggerAction: 'all',//all query
+//		        lazyRender: true,
+//		        lazyInit: false,
+//		        mode: 'local',
+		        queryParam: 'id'
+	        },{
+		        xtype: 'filterCombo',//combo
+		        id: 'cbBuildingArea',
+		        disabled: true,
+		        hideTrigger: true,
+		        
+		        width: 230,
+		        fieldLabel: 'Building Area',
+		        
+		        store: AIR.AirStoreFactory.createBuildingAreaListStore(),//AIR.AirStoreFactory.createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
+		        valueField: 'id',
+		        displayField: 'name',
+				lastQuery: '',
+		        
+//		        typeAhead: true,
+//		        forceSelection: true,
+//		        autoSelect: false,
+		        
+		        triggerAction: 'all',//all query
+//		        lazyRender: true,
+//		        lazyInit: false,
+//		        mode: 'local',
+		        queryParam: 'id'
+	        },{
+		        xtype: 'filterCombo',//combo filterCombo
+		        id: 'cbBuilding',
+		        disabled: true,
+		        hideTrigger: true,
+		        
+		        width: 230,
+		        fieldLabel: 'Building',
+		        
+		        store: AIR.AirStoreFactory.createBuildingListStore(),//AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
 		        displayField: 'name',
 				lastQuery: '',
@@ -62,27 +97,16 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        triggerAction: 'all',//all query
 		        lazyRender: true,
 		        lazyInit: false,
-		        mode: 'local'
-	        },{
-//		        id: 'cbBuilding',
-//		    	xtype: 'textfield',
-//		        fieldLabel: 'Building',
-//		        anchor: '70%',
-//		        disabled: true
-////			        width: 230,
-	        	
-	        	
-		        xtype: 'filterCombo',//combo filterCombo
-		        id: 'cbBuilding',
+//		        mode: 'remote'//local
+		        queryParam: 'id'
+		    },{
+		        id: 'cbTerrain',//tfTerrain
+		    	xtype: 'combo',//textfield
+		        fieldLabel: 'Terrain',
 		        disabled: true,
-		        hideTrigger: true,
-		        
 		        width: 230,
-//		        anchor: '70%',
-		        fieldLabel: 'Building',
-				
 		        
-		        store: AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
+		        store: AIR.AirStoreFactory.createTerrainListStore(),//new Ext.data.Store(),//AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
 		        displayField: 'name',
 				lastQuery: '',
@@ -95,28 +119,55 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //		        lazyRender: true,
 //		        lazyInit: false
 //		        mode: 'remote'//local
-		        queryParam: 'id'
-		    },{
-		        id: 'tfTerrain',
-		    	xtype: 'textfield',
-		        fieldLabel: 'Terrain',
-		        disabled: true,
-//		        anchor: '70%'
-		        width: 230
+		        queryParam: 'id'//id landId
 	        },{
-		        id: 'tfSite',
-		    	xtype: 'textfield',
+		        id: 'cbSite',
+		    	xtype: 'combo',//textfield
+		    	
 		        fieldLabel: 'Site',
 		        disabled: true,
-//		        anchor: '70%'
-		        width: 230
+		        width: 230,
+		        
+		        store: AIR.AirStoreFactory.createSiteListStore(),//new Ext.data.Store(),//AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
+		        valueField: 'id',
+		        displayField: 'name',
+				lastQuery: '',
+		        
+//		        typeAhead: true,
+//		        forceSelection: true,
+//		        autoSelect: false,
+		        
+		        triggerAction: 'all',//all query
+//		        lazyRender: true,
+//		        lazyInit: false
+//		        mode: 'remote'//local
+		        queryParam: 'id'//id landId
 		    },{
-		        id: 'tfCountry',
-		    	xtype: 'textfield',
+		        id: 'cbCountry',
+		        xtype: 'filterCombo',//'textfield',
+		    	
 		        fieldLabel: 'Country',
 		        disabled: true,
 //		        anchor: '70%'
-		        width: 230
+		        width: 230,
+		        
+//		        anchor: '70%',
+				
+		        
+		        store: AIR.AirStoreFactory.createLandListStore(),//new Ext.data.Store(),//AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
+		        valueField: 'id',
+		        displayField: 'name',
+				lastQuery: '',
+		        
+//		        typeAhead: true,
+//		        forceSelection: true,
+//		        autoSelect: false,
+		        
+		        triggerAction: 'all'//all query
+//		        lazyRender: true,
+//		        lazyInit: false
+//		        mode: 'remote'//local
+//		        queryParam: 'locale'//id
 		    },{
 		    	xtype: 'panel',
 		    	id: 'pSpecificsLocationStreet',
@@ -208,6 +259,22 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		
 		tfLocationCiAlias.on('change', this.onFieldChange, this);
 		tfRoomFloor.on('change', this.onFieldChange, this);
+		
+		var cbCountry = this.getComponent('cbCountry');
+		cbCountry.on('select', this.onCountrySelect, this);
+		cbCountry.allQuery = 'CONSTANT';
+		
+		var cbSite = this.getComponent('cbSite');
+		cbSite.on('select', this.onSiteSelect, this);
+		
+		var cbTerrain = this.getComponent('cbTerrain');
+		cbTerrain.on('select', this.onTerrainSelect, this);
+		
+		var cbBuilding = this.getComponent('cbBuilding');
+		cbBuilding.on('select', this.onBuildingSelect, this);
+		
+		var cbBuildingArea = this.getComponent('cbBuildingArea');
+		cbBuildingArea.on('select', this.onBuildingAreaSelect, this);
 	},
 	
 //	onBeforeBuildingSelect: function(queryEvent) {
@@ -216,6 +283,42 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //	onBuildingSelect: function(combo, record, index) {
 //		this.isInitial = false;
 //	},
+	
+	
+	onBuildingAreaSelect: function(combo, record, index) {
+		var cbRoom = this.getComponent('cbRoom');
+		
+		cbRoom.getStore().setBaseParam('id', record.get('id'));
+		cbRoom.allQuery = record.get('id');
+	},
+	
+	onBuildingSelect: function(combo, record, index) {
+		var cbBuildingArea = this.getComponent('cbBuildingArea');
+		
+		cbBuildingArea.getStore().setBaseParam('id', record.get('id'));
+		cbBuildingArea.allQuery = record.get('id');
+	},
+	
+	onTerrainSelect: function(combo, record, index) {
+		var cbBuilding = this.getComponent('cbBuilding');
+		
+		cbBuilding.getStore().setBaseParam('id', record.get('id'));
+		cbBuilding.allQuery = record.get('id');
+	},
+	
+	onSiteSelect: function(combo, record, index) {
+		var cbTerrain = this.getComponent('cbTerrain');
+		
+		cbTerrain.getStore().setBaseParam('id', record.get('id'));//landId ciId
+		cbTerrain.allQuery = record.get('id');
+	},
+	
+	onCountrySelect: function(combo, record, index) {
+		var cbSite = this.getComponent('cbSite');
+		
+		cbSite.getStore().setBaseParam('id', record.get('id'));//landId ciId
+		cbSite.allQuery = record.get('id');
+	},
 
 	onComboSelect: function(combo, record, index) {
 		this.ownerCt.fireEvent('ciChange', this, combo);
@@ -230,15 +333,11 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	
 	
-	clear: function(data) {
-		
-	},
+//	clear: function(data) {
+//		
+//	},
 	
 	init: function() {
-		//if(isCiCreate)
-		
-		
-		//else
 		var ciDetail = AAM.getAppDetail();
         this.update(ciDetail);
 	},
@@ -263,15 +362,15 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
 		
 		var tfRoomFloor = this.getComponent('tfRoomFloor');
-		var tfRoom = this.getComponent('tfRoom');
+		var cbRoom = this.getComponent('cbRoom');
 		var cbBuildingArea = this.getComponent('cbBuildingArea');
 		var cbBuilding = this.getComponent('cbBuilding');
-		var tfTerrain = this.getComponent('tfTerrain');
-		var tfSite = this.getComponent('tfSite');
-		var tfCountry = this.getComponent('tfCountry');
+		var cbTerrain = this.getComponent('cbTerrain');
+		var cbSite = this.getComponent('cbSite');
+		var cbCountry = this.getComponent('cbCountry');
 		
 //		Util.disableCombo(cbBuilding);
-		Util.disableCombo(cbBuildingArea);
+//		Util.disableCombo(cbBuildingArea);
 
 		
 		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
@@ -279,31 +378,107 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		
 		//use builder pattern managing each field depending on tableId instead of switch/case?
 		switch(parseInt(data.tableId)) {
+			case AC.TABLE_ID_POSITION:
+				tfLocationCiAlias.setVisible(false);
+				tfLocationCiAlias.reset();
+				tfRoomFloor.setVisible(false);
+				tfRoomFloor.reset();
+				cbRoom.setVisible(true);
+				cbBuildingArea.setVisible(true);
+				cbBuilding.setVisible(true);
+				
+				cbTerrain.setVisible(true);
+				cbSite.setVisible(true);
+				cbCountry.setVisible(true);
+				cbRoom.reset();
+				
+				if(data.isCiCreate) {
+					Util.clearCombo(cbRoom);
+					Util.clearCombo(cbBuildingArea);
+					Util.clearCombo(cbBuilding);
+					Util.clearCombo(cbTerrain);
+					Util.clearCombo(cbSite);
+//					Util.clearCombo(cbCountry);
+//					cbRoom.reset();
+//					cbBuildingArea.reset();//remote statt local combo?
+//					cbBuilding.reset();
+//					cbTerrain.reset();
+//					cbSite.reset();
+					cbCountry.reset();
+					
+					Util.enableCombo(cbRoom);
+					Util.enableCombo(cbBuildingArea);
+					Util.enableCombo(cbBuilding);
+					Util.enableCombo(cbTerrain);
+					Util.enableCombo(cbSite);
+					Util.enableCombo(cbCountry);
+				} else {
+					if(AIR.AirAclManager.isRelevance(cbRoom, data)) {
+						Util.enableCombo(cbRoom);
+						cbRoom.getStore().setBaseParam('id', data.areaId);
+						cbRoom.allQuery = data.areaId;
+					} else {
+						Util.disableCombo(cbRoom);
+					}
+					
+					cbRoom.setValue(data.raumName);
+					cbBuildingArea.setValue(data.areaName);
+					cbBuilding.setValue(data.gebaeudeName);
+					cbTerrain.setValue(data.terrainName);
+					cbSite.setValue(data.standortName);
+					
+					Util.disableCombo(cbBuildingArea);
+					Util.disableCombo(cbBuilding);
+					Util.disableCombo(cbTerrain);
+					Util.disableCombo(cbSite);
+					Util.disableCombo(cbCountry);
+				}
+
+				
+				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
+				break;
 			case AC.TABLE_ID_ROOM:
 				tfLocationCiAlias.setVisible(true);
 				tfRoomFloor.setVisible(true);
-				tfRoom.setVisible(false);
+				cbRoom.setVisible(false);
 				cbBuildingArea.setVisible(true);
 				cbBuilding.setVisible(true);
-				tfTerrain.setVisible(true);
-				tfSite.setVisible(true);
-				tfCountry.setVisible(true);
-				tfRoom.reset();
+				cbTerrain.setVisible(true);
+				cbSite.setVisible(true);
+				cbCountry.setVisible(true);
+				cbRoom.reset();
 
 				
 				if(data.isCiCreate) {
 					tfLocationCiAlias.reset();
 					tfRoomFloor.reset();
-					cbBuildingArea.reset();//remote statt local combo?
-					cbBuilding.reset();//remote statt local combo?
-					tfTerrain.reset();//remote statt local combo?
-					tfSite.reset();//remote statt local combo?
-					tfCountry.reset();//remote statt local combo?
+					
+					Util.clearCombo(cbBuildingArea);
+					Util.clearCombo(cbBuilding);
+					Util.clearCombo(cbTerrain);
+					Util.clearCombo(cbSite);
+//					Util.clearCombo(cbCountry);
+//					cbBuildingArea.reset();//remote statt local combo?
+//					cbBuilding.reset();
+//					cbTerrain.reset();
+//					cbSite.reset();
+					cbCountry.reset();
+					
+					Util.enableCombo(cbBuildingArea);
+					Util.enableCombo(cbBuilding);
+					Util.enableCombo(cbTerrain);
+					Util.enableCombo(cbSite);
+					Util.enableCombo(cbCountry);
 				} else {
-					if(AIR.AirAclManager.isRelevance(cbBuildingArea, data))
+					if(AIR.AirAclManager.isRelevance(cbBuildingArea, data)) {
 						Util.enableCombo(cbBuildingArea);
+						cbBuildingArea.getStore().setBaseParam('id', data.gebaeudeId);
+						cbBuildingArea.allQuery = data.gebaeudeId;
+					} else {
+						Util.disableCombo(cbBuildingArea);
+					}
 					
-					
+					/*
 					var buildingAreas = data.buildingAreaData.split(',');
 					var buildingAreaObjects = [];
 					for(var i = 0; i < buildingAreas.length; i++) {
@@ -311,17 +486,23 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 						buildingAreaObjects.push(buildingArea);
 					}
 					cbBuildingArea.getStore().loadData(buildingAreaObjects);
+					*/
 					
 					tfLocationCiAlias.setValue(data.alias);
 					tfRoomFloor.setValue(data.floor);
-					cbBuildingArea.setValue(data.areaId);
+					cbBuildingArea.setValue(data.areaName);//areaId
 					cbBuilding.setValue(data.gebaeudeName);
-					tfTerrain.setValue(data.terrainName);
-					tfSite.setValue(data.standortName);
-					tfCountry.setValue(data.landNameEn);
+					cbTerrain.setValue(data.terrainName);
+					cbSite.setValue(data.standortName);
+					cbCountry.setValue(data.landNameEn);
+					
+					Util.disableCombo(cbBuilding);
+					Util.disableCombo(cbTerrain);
+					Util.disableCombo(cbSite);
+					Util.disableCombo(cbCountry);
 				}
 				
-				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, true);
+				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, !data.isCiCreate);//true
 
 				break;
 			case AC.TABLE_ID_BUILDING_AREA://Test Areas: E 39 I400,E 39 T001
@@ -329,55 +510,68 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				tfLocationCiAlias.reset();
 				tfRoomFloor.setVisible(false);
 				tfRoomFloor.reset();
-				tfRoom.setVisible(false);
-				tfRoom.reset();
+				cbRoom.setVisible(false);
+				cbRoom.reset();
 				cbBuildingArea.setVisible(false);
 				cbBuildingArea.reset();
 				
-				cbBuilding.setValue(data.areaId);
-//				cbBuilding.setRawValue(data.areaName);
-				cbBuilding.getStore().setBaseParam('ciId', data.areaId);
-//				cbBuilding.query = data.areaId;
-//				cbBuilding.id = data.areaId;
-//				cbBuilding.lastQuery = data.areaId;
-				cbBuilding.allQuery = data.areaId;
 				
-//				cbBuilding.setValue(data.gebaeudeName);
 				cbBuilding.setVisible(true);
-//				if(AIR.AirAclManager.isRelevance(cbBuilding, data))
-//					Util.enableCombo(cbBuilding);
-				
-				
-//				var buildings = data.buildingData.split(',');
-//				var buildingObjects = [];
-//				for(var i = 0; i < buildings.length; i++) {
-//					var building = buildings[i].split('=');
-//					buildingObjects.push(building);
-//				}
-//				cbBuilding.getStore().loadData(buildingObjects);
-				
-				
-				tfTerrain.setVisible(true);
-				tfSite.setVisible(true);
+				cbTerrain.setVisible(true);
 				
 				if(data.isCiCreate) {
-					tfTerrain.setValue(data.terrainName);
-					tfSite.setValue(data.standortName);
+					cbSite.setVisible(true);
+					cbCountry.setVisible(true);
+					
+					Util.clearCombo(cbBuilding);
+					Util.clearCombo(cbTerrain);
+					Util.clearCombo(cbSite);
+//					Util.clearCombo(cbCountry);
+//					cbBuilding.reset();
+//					cbTerrain.reset();
+//					cbSite.reset();
+					cbCountry.reset();
+					
+					Util.enableCombo(cbBuilding);
+					Util.enableCombo(cbTerrain);
+					Util.enableCombo(cbSite);
+					Util.enableCombo(cbCountry);
 				} else {
-					tfTerrain.reset();
-					tfSite.reset();
+					cbBuilding.setValue(data.gebaeudeName);
+					cbTerrain.setValue(data.terrainName);
+					cbSite.setValue(data.standortName);
+					cbCountry.setValue(data.landNameEn);
+					
+//					cbBuilding.setValue(data.areaId);
+//					cbBuilding.setRawValue(data.areaName);
+//					cbBuilding.query = data.areaId;
+//					cbBuilding.lastQuery = data.areaId;
+					
+//					cbBuilding.getStore().setBaseParam('ciId', data.areaId);
+//					cbBuilding.allQuery = data.areaId;
+					
+					cbBuilding.getStore().setBaseParam('id', data.terrainId);
+					cbBuilding.allQuery = data.terrainId;
+					
+					if(AIR.AirAclManager.isRelevance(cbBuilding, data))
+						Util.enableCombo(cbBuilding);
+					else
+						Util.disableCombo(cbBuilding);
+					
+					Util.disableCombo(cbTerrain);
+					Util.disableCombo(cbSite);
+					
+					cbCountry.setVisible(false);
+					cbCountry.reset();
 				}
 				
-				tfCountry.setVisible(false);
-				tfCountry.reset();
-				
-				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
+				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);//false !data.isCiCreate
 				break;
 			case AC.TABLE_ID_BUILDING:
 				tfLocationCiAlias.setValue(data.alias);
 				tfLocationCiAlias.setVisible(true);
-				tfRoom.setVisible(false);
-				tfRoom.reset();
+				cbRoom.setVisible(false);
+				cbRoom.reset();
 				tfRoomFloor.setVisible(false);
 				tfRoomFloor.reset();
 				cbBuildingArea.setVisible(false);
@@ -385,55 +579,39 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				cbBuilding.setVisible(false);
 				cbBuilding.reset;
 				
-				tfTerrain.setVisible(true);
-				tfSite.setVisible(true);
-				tfCountry.setVisible(true);
+				cbTerrain.setVisible(true);
+				cbSite.setVisible(true);
+				cbCountry.setVisible(true);
 				
 				if(data.isCiCreate) {
-					tfTerrain.setValue(data.terrainName);
-					tfSite.setValue(data.standortName);
-					tfCountry.setValue(data.landNameEn);
+					Util.clearCombo(cbTerrain);
+					Util.clearCombo(cbSite);
+//					Util.clearCombo(cbCountry);
+//					cbTerrain.reset();
+//					cbSite.reset();
+					cbCountry.reset();
+					
+					Util.enableCombo(cbTerrain);
+					Util.enableCombo(cbSite);
+					Util.enableCombo(cbCountry);
 				} else {
-					tfTerrain.reset();
-					tfSite.reset();
-					tfCountry.reset();
+					cbTerrain.setValue(data.terrainName);
+					cbSite.setValue(data.standortName);
+					cbCountry.setValue(data.landNameEn);
+					
+					Util.disableCombo(cbTerrain);
+					Util.disableCombo(cbSite);
+					Util.disableCombo(cbCountry);
 				}
 				
-				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, true);
+				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, true);//true !data.isCiCreate
 				break;
-			case AC.TABLE_ID_POSITION:
-				tfLocationCiAlias.setVisible(false);
-				tfLocationCiAlias.reset();
-				tfRoomFloor.setVisible(false);
-				tfRoomFloor.reset();
-				tfRoom.setVisible(true);
-				tfRoom.setValue(data.raumName);
-				cbBuildingArea.setVisible(true);
-				cbBuildingArea.setValue(data.areaName);
-				cbBuilding.setVisible(true);
-				cbBuilding.setValue(data.gebaeudeName);
-				
-				tfTerrain.setVisible(true);
-				tfSite.setVisible(true);
-				
-				if(data.isCiCreate) {
-					tfTerrain.setValue(data.terrainName);
-					tfSite.setValue(data.standortName);
-				} else {
-					tfTerrain.reset();
-					tfSite.reset();
-				}
-				
-				tfCountry.setVisible(false);
-				tfCountry.reset();
-				
-				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
-				break;
+
 			case AC.TABLE_ID_TERRAIN:
 				tfLocationCiAlias.setVisible(false);
 				tfLocationCiAlias.reset();
-				tfRoom.setVisible(false);
-				tfRoom.reset();
+				cbRoom.setVisible(false);
+				cbRoom.reset();
 				tfRoomFloor.setVisible(false);
 				tfRoomFloor.reset();
 				cbBuildingArea.setVisible(false);
@@ -442,27 +620,35 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				cbBuilding.reset();
 				
 
-				tfSite.setVisible(true);
-				tfCountry.setVisible(true);
+				cbSite.setVisible(true);
+				cbCountry.setVisible(true);
 				
 				if(data.isCiCreate) {
-					tfSite.setValue(data.standortName);
-					tfCountry.setValue(data.landNameEn);
+					Util.clearCombo(cbSite);
+//					Util.clearCombo(cbCountry);
+//					cbSite.reset();
+					cbCountry.reset();
+					
+					Util.enableCombo(cbSite);
+					Util.enableCombo(cbCountry);
 				} else {
-					tfTerrain.reset();
-					tfSite.reset();
+					cbSite.setValue(data.standortName);
+					cbCountry.setValue(data.landNameEn);
+					
+					Util.disableCombo(cbSite);
+					Util.disableCombo(cbCountry);
 				}
 				
-				tfTerrain.setVisible(false);
-				tfTerrain.reset();
+				cbTerrain.setVisible(false);
+				cbTerrain.reset();
 				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
 				break;
 			case AC.TABLE_ID_SITE:
 				tfLocationCiAlias.setVisible(false);
 				tfLocationCiAlias.reset();
-				tfRoom.setVisible(false);
-				tfRoom.reset();
+				cbRoom.setVisible(false);
+				cbRoom.reset();
 				tfRoomFloor.setVisible(false);
 				tfRoomFloor.reset();
 				cbBuildingArea.setVisible(false);
@@ -470,17 +656,21 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				cbBuilding.setVisible(false);
 				cbBuilding.reset();
 				
-				tfTerrain.setVisible(false);
-				tfTerrain.reset();
-				tfSite.setVisible(false);
-				tfSite.reset();
+				cbTerrain.setVisible(false);
+				cbTerrain.reset();
+				cbSite.setVisible(false);
+				cbSite.reset();
 				
-				tfCountry.setVisible(true);
+				cbCountry.setVisible(true);
 				
 				if(data.isCiCreate) {
-					tfCountry.setValue(data.landNameEn);
+//					Util.clearCombo(cbCountry);
+					cbCountry.reset();
+					
+					Util.enableCombo(cbCountry);
 				} else {
-					tfCountry.reset();
+					cbCountry.setValue(data.landNameEn);
+					Util.disableCombo(cbCountry);
 				}
 				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
@@ -492,22 +682,36 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	
 	updateLocation: function(pSpecificsLocationStreet, pSpecificsLocationAddress, data, exists) {
 		if(exists) {
-			if(!data.isCiCreate) {
-				pSpecificsLocationStreet.getComponent('tfStreet').setValue(data.street);
-				pSpecificsLocationStreet.getComponent('tfStreetNumber').setValue(data.streetNumber);
-				
-				pSpecificsLocationAddress.getComponent('tfPostalCode').setValue(data.postalCode);
-				pSpecificsLocationAddress.getComponent('tfLocation').setValue(data.location);
-			} else {
+			pSpecificsLocationStreet.setVisible(true);
+			pSpecificsLocationAddress.setVisible(true);
+			
+			if(data.isCiCreate) {
 				pSpecificsLocationStreet.getComponent('tfStreet').reset();
 				pSpecificsLocationStreet.getComponent('tfStreetNumber').reset();
 				
 				pSpecificsLocationAddress.getComponent('tfPostalCode').reset();
 				pSpecificsLocationAddress.getComponent('tfLocation').reset();
+				
+				if(data.tableId == AC.TABLE_ID_BUILDING) {
+					pSpecificsLocationStreet.getComponent('tfStreet').enable();
+					pSpecificsLocationStreet.getComponent('tfStreetNumber').enable();
+					
+					pSpecificsLocationAddress.getComponent('tfPostalCode').enable();
+					pSpecificsLocationAddress.getComponent('tfLocation').enable();
+				} else {
+					pSpecificsLocationStreet.getComponent('tfStreet').disable();
+					pSpecificsLocationStreet.getComponent('tfStreetNumber').disable();
+					
+					pSpecificsLocationAddress.getComponent('tfPostalCode').disable();
+					pSpecificsLocationAddress.getComponent('tfLocation').disable();
+				}
+			} else {
+				pSpecificsLocationStreet.getComponent('tfStreet').setValue(data.street);
+				pSpecificsLocationStreet.getComponent('tfStreetNumber').setValue(data.streetNumber);
+				
+				pSpecificsLocationAddress.getComponent('tfPostalCode').setValue(data.postalCode);
+				pSpecificsLocationAddress.getComponent('tfLocation').setValue(data.location);
 			}
-			
-			pSpecificsLocationStreet.setVisible(true);
-			pSpecificsLocationAddress.setVisible(true);
 		} else {
 			pSpecificsLocationStreet.getComponent('tfStreet').reset();
 			pSpecificsLocationStreet.getComponent('tfStreetNumber').reset();
@@ -525,12 +729,12 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		
 		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
 		var tfRoomFloor = this.getComponent('tfRoomFloor');
-		var tfRoom = this.getComponent('tfRoom');
+		var cbRoom = this.getComponent('cbRoom');
 		var cbBuildingArea = this.getComponent('cbBuildingArea');
 		var cbBuilding = this.getComponent('cbBuilding');
-		var tfTerrain = this.getComponent('tfTerrain');
-		var tfSite = this.getComponent('tfSite');
-		var tfCountry = this.getComponent('tfCountry');
+		var cbTerrain = this.getComponent('cbTerrain');
+		var cbSite = this.getComponent('cbSite');
+		var cbCountry = this.getComponent('cbCountry');
 		
 //		var tfStreet = this.getComponent('pSpecificsLocationStreet').getComponent('tfStreet');
 //		var tfStreetNumber = this.getComponent('pSpecificsLocationStreet').getComponent('tfStreetNumber');
@@ -574,10 +778,10 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //		AIR.AirAclManager.setAccessMode(this.getComponent('cbBuilding'), data);
 		
 		//werden nie geändert:
-//		AIR.AirAclManager.setAccessMode(this.getComponent('tfRoom'), data);
-//		AIR.AirAclManager.setAccessMode(this.getComponent('tfTerrain'), data);
-//		AIR.AirAclManager.setAccessMode(this.getComponent('tfSite'), data);
-//		AIR.AirAclManager.setAccessMode(this.getComponent('tfCountry'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('cbRoom'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('cbTerrain'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('cbSite'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('cbCountry'), data);
 		
 //		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
 //		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');
@@ -596,12 +800,12 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		this.setFieldLabel(this.getComponent('tfLocationCiName'), labels.name);
 		this.setFieldLabel(this.getComponent('tfLocationCiAlias'), labels.alias);
 		this.setFieldLabel(this.getComponent('tfRoomFloor'), labels.floor);
-		this.setFieldLabel(this.getComponent('tfRoom'), labels.room);
+		this.setFieldLabel(this.getComponent('cbRoom'), labels.room);
 		this.setFieldLabel(this.getComponent('cbBuildingArea'), labels.buildingArea);
 		this.setFieldLabel(this.getComponent('cbBuilding'), labels.building);
-		this.setFieldLabel(this.getComponent('tfTerrain'), labels.terrain);
-		this.setFieldLabel(this.getComponent('tfSite'), labels.site);
-		this.setFieldLabel(this.getComponent('tfCountry'), labels.country);
+		this.setFieldLabel(this.getComponent('cbTerrain'), labels.terrain);
+		this.setFieldLabel(this.getComponent('cbSite'), labels.site);
+		this.setFieldLabel(this.getComponent('cbCountry'), labels.country);
 		
 		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
 		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');

@@ -1,7 +1,10 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,12 +18,16 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
+import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.service.CiDetailParameterInput;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
 import com.bayerbbs.applrepos.service.CiSearchParamsDTO;
+import com.bayerbbs.applrepos.service.KeyValueOutput;
 
 public class BuildingHbn extends LokationItemHbn {
 	private static final Log log = LogFactory.getLog(BuildingHbn.class);
@@ -431,8 +438,21 @@ public class BuildingHbn extends LokationItemHbn {
 							}
 						}
 						
-						building.setSlaId(dto.getSlaId());
-						building.setServiceContractId(dto.getServiceContractId());
+//						building.setSlaId(dto.getSlaId());
+//						building.setServiceContractId(dto.getServiceContractId());
+						if (null != dto.getSlaId()) {
+							if (-1 == dto.getSlaId()) {
+								building.setSlaId(null);
+							}
+							else {
+								building.setSlaId(dto.getSlaId());
+							}
+						}
+						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
+							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
+							building.setServiceContractId(dto.getServiceContractId());
+						}
+
 
 						
 //						Long businessEssentialIdOld = building.getBusinessEssentialId();
@@ -705,8 +725,23 @@ public class BuildingHbn extends LokationItemHbn {
 							}
 						}
 						
-						buildingArea.setSlaId(dto.getSlaId());
-						buildingArea.setServiceContractId(dto.getServiceContractId());
+//						buildingArea.setSlaId(dto.getSlaId());
+//						buildingArea.setServiceContractId(dto.getServiceContractId());
+						
+						if (null != dto.getSlaId()) {
+							if (-1 == dto.getSlaId()) {
+								buildingArea.setSlaId(null);
+							}
+							else {
+								buildingArea.setSlaId(dto.getSlaId());
+							}
+						}
+						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
+							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
+							buildingArea.setServiceContractId(dto.getServiceContractId());
+						}
+						
+
 
 						
 //						Long businessEssentialIdOld = building.getBusinessEssentialId();
@@ -1184,5 +1219,49 @@ public class BuildingHbn extends LokationItemHbn {
 		}
 
 		return output;
+	}
+	
+	public static KeyValueOutput getBuildingsByBuildingArea(CiDetailParameterInput detailInput) {
+		KeyValueOutput output = new KeyValueOutput();
+		List<KeyValueDTO> buildingDataList = new ArrayList<KeyValueDTO>();
+		
+		BuildingArea buildingArea = BuildingHbn.findById(BuildingArea.class, detailInput.getCiId());//findBuildingAreaById(detailInput.getCiId());
+		Terrain terrain = buildingArea.getBuilding().getTerrain();
+		Set<Building> buildings = terrain.getBuildings();
+		
+		if(buildings != null && buildings.size() > 0)
+			for(Building building : buildings)
+				buildingDataList.add(new KeyValueDTO(building.getId(), building.getName()));
+		
+		Collections.sort(buildingDataList);
+		output.setKeyValueDTO(buildingDataList.toArray(new KeyValueDTO[0]));
+		
+		return output;
+	}
+	
+	public static KeyValueDTO[] findBuildingsByTerrainId(Long id) {
+		Terrain terrain = TerrainHbn.findById(id);
+		Set<Building> buildings = terrain.getBuildings();
+		
+		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		for(Building building : buildings)
+			data.add(new KeyValueDTO(building.getId(), building.getName()));
+		
+		Collections.sort(data);
+		
+		return data.toArray(new KeyValueDTO[0]);
+	}
+	
+	public static KeyValueDTO[] findBuildingAreasByBuildingId(Long id) {
+		Building building = BuildingHbn.findById(id);
+		Set<BuildingArea> buildingAreas = building.getBuildingAreas();
+		
+		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		for(BuildingArea buildingArea : buildingAreas)
+			data.add(new KeyValueDTO(buildingArea.getId(), buildingArea.getName()));
+		
+		Collections.sort(data);
+		
+		return data.toArray(new KeyValueDTO[0]);
 	}
 }

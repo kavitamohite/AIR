@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.service;
 
+import java.util.List;
+
+import com.bayerbbs.applrepos.domain.Land;
 import com.bayerbbs.applrepos.dto.AccountDTO;
 import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.CategoryBusinessDTO;
@@ -32,6 +35,7 @@ import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
 import com.bayerbbs.applrepos.dto.SlaDTO;
 import com.bayerbbs.applrepos.dto.SlaServiceContractDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
+import com.bayerbbs.applrepos.hibernate.LokationItemHbn;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "AIRToolsWSService", portName = "AIRToolsWSPort")
 public class AIRToolsWSDelegate {
@@ -164,7 +168,6 @@ public class AIRToolsWSDelegate {
 	public KeyValueTypeDTO[] getItSystemOsNames() {
 		return airToolsWS.getItSystemOsNames();
 	}
-	
 	public KeyValueType2DTO[] getItSystemClusterCodes() {
 		return airToolsWS.getItSystemClusterCodes();
 	}
@@ -181,4 +184,8 @@ public class AIRToolsWSDelegate {
 		return airToolsWS.getItSystemLicenseScannings();
 	}
 	
+	
+	public List<Land> getLaender() {
+		return airToolsWS.getLaender();
+	}
 }

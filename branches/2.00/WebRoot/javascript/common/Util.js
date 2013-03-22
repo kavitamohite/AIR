@@ -42,6 +42,11 @@ Util = {
 			combo.disable();
 	},
 	
+	clearCombo: function(combo) {
+		combo.reset();
+		combo.getStore().removeAll();
+	},
+	
 	setChbGroup: function(chbGroup, yesNoValues) {
 		var values = yesNoValues.split(',');
 		var data = [];

@@ -2,7 +2,9 @@ package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,6 +20,7 @@ import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
@@ -388,9 +391,31 @@ public class RoomHbn extends LokationItemHbn {
 							}
 						}
 						
-						room.setSlaId(dto.getSlaId());
-						room.setServiceContractId(dto.getServiceContractId());
-						room.setSeverityLevelId(dto.getSeverityLevelId());
+//						room.setSlaId(dto.getSlaId());
+//						room.setServiceContractId(dto.getServiceContractId());
+//						room.setSeverityLevelId(dto.getSeverityLevelId());
+						
+						if (null != dto.getSlaId()) {
+							if (-1 == dto.getSlaId()) {
+								room.setSlaId(null);
+							}
+							else {
+								room.setSlaId(dto.getSlaId());
+							}
+						}
+						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
+							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
+							room.setServiceContractId(dto.getServiceContractId());
+						}
+						
+						if (null != dto.getSeverityLevelId()) {
+							if (-1 == dto.getSeverityLevelId()) {
+								room.setSeverityLevelId(null);
+							}
+							else {
+								room.setSeverityLevelId(dto.getSeverityLevelId());
+							}
+						}
 
 						boolean hasBusinessEssentialChanged = false;
 						if (null == dto.getBusinessEssentialId()) {
@@ -821,5 +846,18 @@ public class RoomHbn extends LokationItemHbn {
 		}
 
 		return output;
+	}
+
+	public static KeyValueDTO[] findRoomsByBuildingAreaId(Long id) {
+		BuildingArea buildingArea = BuildingHbn.findBuildingAreaById(id);
+		Set<Room> rooms = buildingArea.getRooms();
+		
+		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		for(Room room : rooms)
+			data.add(new KeyValueDTO(room.getId(), room.getName()));
+		
+		Collections.sort(data);
+		
+		return data.toArray(new KeyValueDTO[0]);
 	}
 }

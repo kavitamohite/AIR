@@ -273,25 +273,7 @@ public class CiEntityWS {
 
 		return buildingAreaDTO;
 	}
-	
-	public KeyValueOutput getBuildingsByBuildingArea(CiDetailParameterInput detailInput) {
-		KeyValueOutput output = new KeyValueOutput();
-		List<KeyValueDTO> buildingDataList = new ArrayList<KeyValueDTO>();
 		
-		BuildingArea buildingArea = BuildingHbn.findById(BuildingArea.class, detailInput.getCiId());//findBuildingAreaById(detailInput.getCiId());
-		Terrain terrain = buildingArea.getBuilding().getTerrain();
-		Set<Building> buildings = terrain.getBuildings();
-		
-		if(buildings != null && buildings.size() > 0)
-			for(Building building : buildings)
-				buildingDataList.add(new KeyValueDTO(building.getId(), building.getName()));
-		
-		Collections.sort(buildingDataList);
-		output.setKeyValueDTO(buildingDataList.toArray(new KeyValueDTO[0]));
-		
-		return output;
-	}
-	
 	
 	public RoomDTO getRoom(CiDetailParameterInput detailInput) {
 		RoomDTO roomDTO = new RoomDTO();
@@ -339,6 +321,7 @@ public class CiEntityWS {
 			//...
 			//--------------------------
 			
+			/*
 			if(buildingAreas != null && buildingAreas.size() > 0) {
 //				BuildingAreaDTO area = null;
 //				Set<BuildingAreaDTO> areas = new HashSet<BuildingAreaDTO>();
@@ -357,7 +340,7 @@ public class CiEntityWS {
 					data.append(buildingArea.getId()).append(EQUAL).append(buildingArea.getName());
 				}
 				roomDTO.setBuildingAreaData(data.toString());
-			}
+			}*/
 		}
 		
 //		output.setCiDetailDTO(roomDTO);//setRoomDTO setCiDetailDTO

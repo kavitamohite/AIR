@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
@@ -123,4 +124,7 @@ public class StandortWS {
 		return output;
 	}
 
+	public KeyValueDTO[] findSitesByLandId(Long id) {//DefaultDataInput input
+		return StandortHbn.findSitesByLandId(id);//input
+	}
 }

@@ -7,17 +7,23 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "STANDORT")
+@NamedQueries(
+	@NamedQuery(name="findSitesByLandId", query="FROM Standort s WHERE s.landId=:landId")
+)
 public class Standort extends CiBase implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
-		
+	
     private Set<Terrain> terrains;
     //PLANT_SAP, SITE_CATEGORY wie in SISec?
-
+    private Long landId;
+    
 	
 	@Id
 	@Column(name = "STANDORT_ID")
@@ -27,7 +33,6 @@ public class Standort extends CiBase implements Serializable {
 	public void setStandortId(Long terrainId) {
 		setId(terrainId);
 	}
-
 	
 	@Column(name = "STANDORT_NAME")
 	public String getStandortName() {
@@ -36,9 +41,6 @@ public class Standort extends CiBase implements Serializable {
 	public void setStandortName(String standortName) {
 		setName(standortName);
 	}
-
-
-	
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "standort")//EAGER
 	public Set<Terrain> getTerrains() {
@@ -46,5 +48,13 @@ public class Standort extends CiBase implements Serializable {
 	}
 	public void setTerrains(Set<Terrain> terrains) {
 		this.terrains = terrains;
+	}
+	
+	@Column(name = "LAND_ID")
+	public Long getLandId() {
+		return landId;
+	}
+	public void setLandId(Long landId) {
+		this.landId = landId;
 	}
 }

@@ -110,9 +110,31 @@ public class SchrankHbn extends LokationItemHbn {
 							}
 						}
 						
-						schrank.setSlaId(dto.getSlaId());
-						schrank.setServiceContractId(dto.getServiceContractId());
-						schrank.setSeverityLevelId(dto.getSeverityLevelId());
+//						schrank.setSlaId(dto.getSlaId());
+//						schrank.setServiceContractId(dto.getServiceContractId());
+//						schrank.setSeverityLevelId(dto.getSeverityLevelId());
+						
+						if (null != dto.getSlaId()) {
+							if (-1 == dto.getSlaId()) {
+								schrank.setSlaId(null);
+							}
+							else {
+								schrank.setSlaId(dto.getSlaId());
+							}
+						}
+						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
+							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
+							schrank.setServiceContractId(dto.getServiceContractId());
+						}
+						
+						if (null != dto.getSeverityLevelId()) {
+							if (-1 == dto.getSeverityLevelId()) {
+								schrank.setSeverityLevelId(null);
+							}
+							else {
+								schrank.setSeverityLevelId(dto.getSeverityLevelId());
+							}
+						}
 	
 						boolean hasBusinessEssentialChanged = false;
 						if (null == dto.getBusinessEssentialId()) {

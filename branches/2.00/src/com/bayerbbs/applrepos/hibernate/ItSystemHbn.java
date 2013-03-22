@@ -246,9 +246,32 @@ public class ItSystemHbn extends BaseHbn {
 							}
 						}
 						
-						itSystem.setSlaId(dto.getSlaId());
-						itSystem.setServiceContractId(dto.getServiceContractId());
-						itSystem.setSeverityLevelId(dto.getSeverityLevelId());
+//						itSystem.setSlaId(dto.getSlaId());
+//						itSystem.setServiceContractId(dto.getServiceContractId());
+//						itSystem.setSeverityLevelId(dto.getSeverityLevelId());
+						
+						if (null != dto.getSlaId()) {
+							if (-1 == dto.getSlaId()) {
+								itSystem.setSlaId(null);
+							}
+							else {
+								itSystem.setSlaId(dto.getSlaId());
+							}
+						}
+						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
+							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
+							itSystem.setServiceContractId(dto.getServiceContractId());
+						}
+						
+						if (null != dto.getSeverityLevelId()) {
+							if (-1 == dto.getSeverityLevelId()) {
+								itSystem.setSeverityLevelId(null);
+							}
+							else {
+								itSystem.setSeverityLevelId(dto.getSeverityLevelId());
+							}
+						}
+						
 
 						boolean hasBusinessEssentialChanged = false;
 						if (null == dto.getBusinessEssentialId()) {
@@ -687,7 +710,7 @@ public class ItSystemHbn extends BaseHbn {
 			sql.append(" OR hw_ident_or_trans IS NULL");
 //		append(" hw_ident_or_trans = ").append(input.getCiSubTypeId()).
 		
-		sql.append(") AND UPPER(").append(metaData.getNameField()).append(") like '");
+		sql.append(") AND del_timestamp IS NULL AND UPPER(").append(metaData.getNameField()).append(") LIKE '");
 		
 		
 		if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))

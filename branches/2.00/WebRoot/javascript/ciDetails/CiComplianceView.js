@@ -483,7 +483,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 					this.fireEvent('complianceTypeChange', this, rgb, this.previousComplianceType, this.complianceType);
 					
 //					this.isChanged = false;
-					//use additional internal class variable to stop ciChange event from bering fired? Do so, if the save/cancel buttons are not
+					//use additional internal class variable to stop ciChange event from being fired? Do so, if the save/cancel buttons are not
 					//supposed to appear in a complianceTypeChange triggered saveApplication by CiEditTabView (*1)
 					//Alternative: just disable the save/cancel buttons again within CiEditTabView.onComplianceTypeChange after they are appear
 					//always after each arbitrary user edit action
@@ -528,16 +528,16 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 
-		//der filter der cbReferencedTemplate verschwindet unerwartet und unregelmäßig nach dem Speichern (und Laden). 
-		//Evtl. eine Ladezeitüberschneidung mit anderen Ladeoperationen in den update Methoden der CiDetailView Komponenten. 
-		//Daher für cbReferencedTemplate ein delay. Effektivität empirisch zu prüfen.
-		/*var delayedTask = new Ext.util.DelayedTask(function() {
-			this.filterCombo(cbReferencedTemplate);
-//			this.filterCombo(cbItSecGroup);
-		}.createDelegate(this));
-		delayedTask.delay(1000);*/
 		
-		this.filterCombo(cbReferencedTemplate);
+		if(data.templateChanged) {
+			cbReferencedTemplate.getStore().load({
+				callback: function() {
+					this.filterCombo(cbReferencedTemplate);
+				}.createDelegate(this)
+			});
+		} else {
+			this.filterCombo(cbReferencedTemplate);
+		}
 		this.filterCombo(cbItSecGroup);
 		
 		
@@ -553,7 +553,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			if(AIR.AirAclManager.isRelevance(bEditItSecGroup, data))
 				text = AIR.AirApplicationManager.getLabels().relevanceEditButton;
-		} else {
+		} else if(!data.isCiCreate) {
 			var hasTemplate = data.refId !== '0' && data.refId.length > 0;
 			if(hasTemplate) {
 				Util.disableCombo(cbItSecGroup);
@@ -893,6 +893,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		if(data.isCiCreate) {
 			cbgRegulations.reset();
+//			cbgRegulations.setValue([false, false, false, false]);
 			cbRelevanceGxp.reset();
 			
 
@@ -1037,8 +1038,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			itsetId: ciDetail.itset
 		};
 		
-//		if(combo.getId() === 'cbReferencedTemplate')
-//			filterData.delTimestamp = '';
+		if(combo.getId() === 'cbReferencedTemplate')
+			filterData.delTimestamp = '';
 
 		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION) {
 			filterData.ciKat1 = ciDetail.applicationCat1Id;

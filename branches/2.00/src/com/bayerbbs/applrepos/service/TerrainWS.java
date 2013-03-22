@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.TerrainHbn;
@@ -123,4 +124,7 @@ public class TerrainWS {
 		return output;
 	}
 
+	public KeyValueDTO[] findTerrainsBySiteId(Long id) {//DefaultDataInput input
+		return TerrainHbn.findTerrainsBySiteId(id);//input
+	}
 }
