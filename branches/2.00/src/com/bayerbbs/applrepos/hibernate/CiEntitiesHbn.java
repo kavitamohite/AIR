@@ -41,11 +41,28 @@ public class CiEntitiesHbn {
 		sql.append("select * from DWH_ENTITY  where");
 		// sql.append(" upper(deleted) = 'NO'");
 		sql.append(" TABLE_ID in (");
-			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
+			/*sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
 			sql.append(",");
 			sql.append(AirKonstanten.TABLE_ID_APPLICATION);
 			sql.append(",");
-			sql.append(AirKonstanten.TABLE_ID_WAYS);
+			sql.append(AirKonstanten.TABLE_ID_WAYS);*/
+		
+//			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_APPLICATION);
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_ROOM);
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_BUILDING);//TABLE_ID_WAYS
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_BUILDING_AREA);
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_TERRAIN);
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_POSITION);
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_SITE);
 		sql.append(")");
 		
 		sql.append(" and (upper(name) = '" + searchName + "'  or upper(ASSET_ID_OR_ALIAS) = '" +searchName + "')");

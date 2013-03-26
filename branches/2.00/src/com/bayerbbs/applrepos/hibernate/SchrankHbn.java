@@ -477,7 +477,6 @@ public class SchrankHbn extends LokationItemHbn {
 						setUpCi(schrank, dto, cwid);
 						
 						// ci - attributes
-						schrank.setSchrankName(dto.getName());
 						schrank.setRoomId(dto.getRoomId());
 						Room room = RoomHbn.findById(dto.getRoomId());
 						schrank.setRoom(room);

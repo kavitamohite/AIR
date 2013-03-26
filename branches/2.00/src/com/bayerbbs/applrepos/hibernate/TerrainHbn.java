@@ -542,6 +542,11 @@ public class TerrainHbn extends LokationItemHbn {
 					if (isNameAndAliasNameAllowed) {
 						// create the ci
 
+						Session session = HibernateUtil.getSession();
+						Transaction tx = null;
+						tx = session.beginTransaction();
+						
+						/*
 						// calculates the ItSet
 						Long itSet = null;
 						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
@@ -552,11 +557,6 @@ public class TerrainHbn extends LokationItemHbn {
 							// set default itSet
 							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
 						}
-
-
-						Session session = HibernateUtil.getSession();
-						Transaction tx = null;
-						tx = session.beginTransaction();
 
 						// ci - insert values
 						terrain.setInsertUser(cwid);
@@ -570,10 +570,7 @@ public class TerrainHbn extends LokationItemHbn {
 
 						// ci - attributes
 						terrain.setTerrainName(dto.getName());
-						terrain.setStandortId(dto.getStandortId());
-						Standort standort = StandortHbn.findById(dto.getStandortId());
-						terrain.setStandort(standort);
-						
+
 						
 						if (null != dto.getCiOwnerHidden()) {
 							terrain.setCiOwner(dto.getCiOwnerHidden());
@@ -585,7 +582,13 @@ public class TerrainHbn extends LokationItemHbn {
 						terrain.setTemplate(dto.getTemplate());
 
 						terrain.setRelevanceITSEC(dto.getRelevanzItsec());
-						terrain.setRelevanceICS(dto.getRelevanceICS());
+						terrain.setRelevanceICS(dto.getRelevanceICS());*/
+						
+						setUpCi(terrain, dto, cwid);
+						
+						terrain.setStandortId(dto.getStandortId());
+						Standort standort = StandortHbn.findById(dto.getStandortId());
+						terrain.setStandort(standort);
 
 						
 						boolean toCommit = false;

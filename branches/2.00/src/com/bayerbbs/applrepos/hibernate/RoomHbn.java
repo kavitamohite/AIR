@@ -752,9 +752,13 @@ public class RoomHbn extends LokationItemHbn {
 					
 					if (isNameAndAliasNameAllowed) {
 						// create the ci
+						Session session = HibernateUtil.getSession();
+						Transaction tx = null;
+						tx = session.beginTransaction();
 
+						
 						// calculates the ItSet
-						Long itSet = null;
+						/*Long itSet = null;
 						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
 						if (null != strItSet) {
 							itSet = Long.parseLong(strItSet);
@@ -764,13 +768,8 @@ public class RoomHbn extends LokationItemHbn {
 							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
 						}
 
-
-						Session session = HibernateUtil.getSession();
-						Transaction tx = null;
-						tx = session.beginTransaction();
-
 						// ci - insert values
-						/*room.setInsertUser(cwid);
+						room.setInsertUser(cwid);
 						room.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						room.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 
@@ -784,12 +783,12 @@ public class RoomHbn extends LokationItemHbn {
 						room.setFloor(dto.getFloor());
 						room.setRoomType(dto.getRoomType());
 						
+						setUpCi(room, dto, cwid);
+						
 						room.setBuildingAreaId(dto.getAreaId());
 						BuildingArea buildingArea = BuildingHbn.findBuildingAreaById(dto.getAreaId());
 						room.setBuildingArea(buildingArea);
 						
-						
-						setUpCi(room, dto, cwid);
 						room.setBusinessEssentialId(dto.getBusinessEssentialId());
 						
 						

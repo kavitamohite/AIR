@@ -123,6 +123,11 @@ public class BuildingHbn extends LokationItemHbn {
 					if (isNameAndAliasNameAllowed) {
 						// create the ci
 
+						Session session = HibernateUtil.getSession();
+						Transaction tx = null;
+						tx = session.beginTransaction();
+						
+						/*
 						// calculates the ItSet
 						Long itSet = null;
 						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
@@ -133,11 +138,6 @@ public class BuildingHbn extends LokationItemHbn {
 							// set default itSet
 							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
 						}
-
-
-						Session session = HibernateUtil.getSession();
-						Transaction tx = null;
-						tx = session.beginTransaction();
 
 						// ci - insert values
 						building.setInsertUser(cwid);
@@ -151,15 +151,6 @@ public class BuildingHbn extends LokationItemHbn {
 
 						// ci - attributes
 						building.setBuildingName(dto.getName());
-						building.setAlias(dto.getAlias());
-						building.setTerrainId(dto.getTerrainId());
-						Terrain terrain = TerrainHbn.findById(dto.getTerrainId());
-						building.setTerrain(terrain);
-						
-						building.setStreet(dto.getStreet());
-						building.setStreetNumber(dto.getStreetNumber());
-						building.setPostalCode(dto.getPostalCode());
-						building.setLocation(dto.getLocation());
 						
 						
 						if (null != dto.getCiOwnerHidden()) {
@@ -173,7 +164,21 @@ public class BuildingHbn extends LokationItemHbn {
 //						building.setBusinessEssentialId(dto.getBusinessEssentialId());
 						
 						building.setRelevanceITSEC(dto.getRelevanzItsec());
-						building.setRelevanceICS(dto.getRelevanceICS());
+						building.setRelevanceICS(dto.getRelevanceICS());*/
+						
+						
+						building.setAlias(dto.getAlias());
+						
+						setUpCi(building, dto, cwid);
+						
+						building.setTerrainId(dto.getTerrainId());
+						Terrain terrain = TerrainHbn.findById(dto.getTerrainId());
+						building.setTerrain(terrain);
+						
+						building.setStreet(dto.getStreet());
+						building.setStreetNumber(dto.getStreetNumber());
+						building.setPostalCode(dto.getPostalCode());
+						building.setLocation(dto.getLocation());
 
 						
 						boolean toCommit = false;
@@ -287,6 +292,28 @@ public class BuildingHbn extends LokationItemHbn {
 					if (isNameAndAliasNameAllowed) {
 						// create the ci
 
+						Session session = HibernateUtil.getSession();
+						Transaction tx = null;
+						tx = session.beginTransaction();
+
+
+						
+						/*buildingArea.setName(dto.getName());
+						
+						// ci - insert values
+						buildingArea.setInsertUser(cwid);
+						buildingArea.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						buildingArea.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+
+						// ci - update values
+						buildingArea.setUpdateUser(buildingArea.getInsertUser());
+						buildingArea.setUpdateQuelle(buildingArea.getInsertQuelle());
+						buildingArea.setUpdateTimestamp(buildingArea.getInsertTimestamp());
+
+						
+
+						
+						
 						// calculates the ItSet
 						Long itSet = null;
 						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
@@ -298,26 +325,6 @@ public class BuildingHbn extends LokationItemHbn {
 							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
 						}
 
-
-						Session session = HibernateUtil.getSession();
-						Transaction tx = null;
-						tx = session.beginTransaction();
-
-						// ci - insert values
-						buildingArea.setInsertUser(cwid);
-						buildingArea.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-						buildingArea.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
-
-						// ci - update values
-						buildingArea.setUpdateUser(buildingArea.getInsertUser());
-						buildingArea.setUpdateQuelle(buildingArea.getInsertQuelle());
-						buildingArea.setUpdateTimestamp(buildingArea.getInsertTimestamp());
-
-						// ci - attributes
-						buildingArea.setName(dto.getName());
-						buildingArea.setBuildingId(dto.getBuildingId());
-						Building building = BuildingHbn.findById(dto.getBuildingId());
-						buildingArea.setBuilding(building);
 						
 						if (null != dto.getCiOwnerHidden()) {
 							buildingArea.setCiOwner(dto.getCiOwnerHidden());
@@ -329,8 +336,15 @@ public class BuildingHbn extends LokationItemHbn {
 						buildingArea.setTemplate(dto.getTemplate());
 						
 						buildingArea.setRelevanceITSEC(dto.getRelevanzItsec());
-						buildingArea.setRelevanceICS(dto.getRelevanceICS());
-
+						buildingArea.setRelevanceICS(dto.getRelevanceICS());*/
+						
+						setUpCi(buildingArea, dto, cwid);
+						
+						// ci - attributes
+						buildingArea.setBuildingId(dto.getBuildingId());
+						Building building = BuildingHbn.findById(dto.getBuildingId());
+						buildingArea.setBuilding(building);
+						
 						
 						boolean toCommit = false;
 						try {
@@ -677,7 +691,7 @@ public class BuildingHbn extends LokationItemHbn {
 
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
 				List<String> messages = validateCi(dto);//, listCi
 
 				if (messages.isEmpty()) {

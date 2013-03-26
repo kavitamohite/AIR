@@ -486,16 +486,17 @@ public class StandortHbn extends LokationItemHbn {
 
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
 				List<String> messages = validateCi(dto);//, listCi
-				
+				List<CiItemDTO> listCi = null;
 
 				if (messages.isEmpty()) {
 					Standort standort = new Standort();
 					boolean isNameAndAliasNameAllowed = true;
 					
 					if (isNameAndAliasNameAllowed) {
-//						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
+						listCi = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getName(), true);
+						
 						if (null != listCi && 0 < listCi.size()) {
 							// name is not allowed
 							isNameAndAliasNameAllowed = false;
@@ -525,7 +526,7 @@ public class StandortHbn extends LokationItemHbn {
 					}
 					
 					if (isNameAndAliasNameAllowed) {
-//						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
+						listCi = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getAlias(), true);
 						if (null != listCi && 0 < listCi.size()) {
 							// alias is not allowed
 							isNameAndAliasNameAllowed = false;
@@ -543,8 +544,12 @@ public class StandortHbn extends LokationItemHbn {
 					if (isNameAndAliasNameAllowed) {
 						// create the ci
 
+						Session session = HibernateUtil.getSession();
+						Transaction tx = null;
+						tx = session.beginTransaction();
+						
 						// calculates the ItSet
-						Long itSet = null;
+						/*Long itSet = null;
 						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
 						if (null != strItSet) {
 							itSet = Long.parseLong(strItSet);
@@ -553,11 +558,6 @@ public class StandortHbn extends LokationItemHbn {
 							// set default itSet
 							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
 						}
-
-
-						Session session = HibernateUtil.getSession();
-						Transaction tx = null;
-						tx = session.beginTransaction();
 
 						// ci - insert values
 						standort.setInsertUser(cwid);
@@ -584,7 +584,11 @@ public class StandortHbn extends LokationItemHbn {
 						standort.setTemplate(dto.getTemplate());
 
 						standort.setRelevanceITSEC(dto.getRelevanzItsec());
-						standort.setRelevanceICS(dto.getRelevanceICS());
+						standort.setRelevanceICS(dto.getRelevanceICS());*/
+						
+						setUpCi(standort, dto, cwid);
+						
+						standort.setLandId(dto.getLandId());
 						
 						
 						boolean toCommit = false;
