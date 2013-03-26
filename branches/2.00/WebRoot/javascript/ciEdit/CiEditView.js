@@ -543,8 +543,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciCreateStore = AIR.AirStoreFactory.createCiCreateStore(data.tableId);
 		ciCreateStore.on('load', this.onCiCreated, this);
 		
-//		var data = 
-			this.setCiData(data);//getCiData
+		this.setCiData(data);
+		AAM.getMask(AC.MASK_TYPE_SAVE).show();
 		
 		ciCreateStore.load({
 			params: data
@@ -552,7 +552,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	onCiCreated: function(store, records, options) {
+		AAM.setCiId(records[0].data.ciId);
 		
+		this.afterCiSave(store, records, options);
 	},
 	
 	
@@ -752,6 +754,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	onApplicationSave: function(store, records, options) {
+		this.afterCiSave(store, records, options);
+	},
+	
+	afterCiSave: function(store, records, options) {
 		AAM.getMask(AC.MASK_TYPE_SAVE).hide();
 		
 		if('OK' === records[0].data.result) {
