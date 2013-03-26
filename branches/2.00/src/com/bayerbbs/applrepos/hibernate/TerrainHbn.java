@@ -18,11 +18,11 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.domain.Terrain;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
+import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
 
 public class TerrainHbn extends LokationItemHbn {
@@ -122,8 +122,9 @@ public class TerrainHbn extends LokationItemHbn {
 				Long id = new Long(dto.getId());
 
 				// check der InputWerte
-				List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-				List<String> messages = validateCi(dto, listCI);
+//				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+				List<String> messages = validateCi(dto);//, listCi
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -484,8 +485,9 @@ public class TerrainHbn extends LokationItemHbn {
 			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
-				List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-				List<String> messages = validateCi(dto, listCI);
+//				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+				List<String> messages = validateCi(dto);//, listCi
 
 				if (messages.isEmpty()) {
 					Terrain terrain = new Terrain();
@@ -493,17 +495,17 @@ public class TerrainHbn extends LokationItemHbn {
 					
 					if (isNameAndAliasNameAllowed) {
 //						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
-						if (null != listCI && 0 < listCI.size()) {
+						if (null != listCi && 0 < listCi.size()) {
 							// name is not allowed
 							isNameAndAliasNameAllowed = false;
 							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCI.get(0).getDeleteQuelle()) {
+							if (null != listCi.get(0).getDeleteQuelle()) {
 								boolean override = forceOverride != null && forceOverride.booleanValue();
 								
 								if(override) {
 									// ENTWICKLUNG RFC8279
 									Session session = HibernateUtil.getSession();
-									Terrain terrainDeleted = (Terrain)session.get(Terrain.class, listCI.get(0).getId());
+									Terrain terrainDeleted = (Terrain)session.get(Terrain.class, listCi.get(0).getId());
 									
 									// reactivate
 									reactivateTerrain(cwid, dto, terrainDeleted);
@@ -512,26 +514,26 @@ public class TerrainHbn extends LokationItemHbn {
 									return saveTerrain(cwid, dto);
 
 								} else {
-									output.setMessages(new String[] {"Terrain Name '" + listCI.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+									output.setMessages(new String[] {"Terrain Name '" + listCi.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 								}
 							}
 							else {
-								output.setMessages(new String[] {"Terrain Name '" + listCI.get(0).getName() + "' already exists."});
+								output.setMessages(new String[] {"Terrain Name '" + listCi.get(0).getName() + "' already exists."});
 							}
 						}
 					}
 					
 					if (isNameAndAliasNameAllowed) {
 //						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
-						if (null != listCI && 0 < listCI.size()) {
+						if (null != listCi && 0 < listCi.size()) {
 							// alias is not allowed
 							isNameAndAliasNameAllowed = false;
 							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCI.get(0).getDeleteQuelle()) {
-								output.setMessages(new String[] {"Terrain Alias '" + listCI.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+							if (null != listCi.get(0).getDeleteQuelle()) {
+								output.setMessages(new String[] {"Terrain Alias '" + listCi.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 							}
 							else {
-								output.setMessages(new String[] {"Terrain Alias '" + listCI.get(0).getAlias() + "' already exists."});
+								output.setMessages(new String[] {"Terrain Alias '" + listCi.get(0).getAlias() + "' already exists."});
 							}
 						}						
 					}

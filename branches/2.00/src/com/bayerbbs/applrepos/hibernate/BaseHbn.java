@@ -11,6 +11,7 @@ import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.service.CiItemDTO;
 
 public class BaseHbn {
 	protected static final String NOT_EQUAL = "<>";
@@ -34,16 +35,19 @@ public class BaseHbn {
 		return t;
 	}
 	
-	protected static List<String> validateCi(CiBaseDTO dto, List<CiBaseDTO> listCi) {
+	protected static List<String> validateCi(CiBaseDTO dto) {//, List<CiBaseDTO> listCi
 		List<String> messages = new ArrayList<String>();
 		
 		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
-//		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), false);
+
 
 		if (StringUtils.isNullOrEmpty(dto.getName())) {
 			messages.add("name must not be is empty");
 		}
 		else {
+			List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+//			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), false);//true
+			
 			if (!listCi.isEmpty()) {
 				// check if the name is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
@@ -59,6 +63,9 @@ public class BaseHbn {
 			dto.setAlias(dto.getName());
 		}
 		else {
+			List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias());
+//			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), dto.getTableId(), false);//true
+
 			if (!listCi.isEmpty()) {
 				// check if the alias is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {

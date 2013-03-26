@@ -864,8 +864,8 @@ public class RoomHbn extends LokationItemHbn {
 	}
 	
 	protected static List<String> validateCi(RoomDTO dto) {
-		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-		List<String> messages = validateCi(dto, listCi);
+//		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+		List<String> messages = BaseHbn.validateCi(dto);//, listCi
 		
 		
 		if (null == dto.getBusinessEssentialId()) {
