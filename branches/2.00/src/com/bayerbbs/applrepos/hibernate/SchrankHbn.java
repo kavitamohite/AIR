@@ -595,7 +595,7 @@ public class SchrankHbn extends LokationItemHbn {
 
 	protected static List<String> validateCi(SchrankDTO dto) {
 //		List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), false);//true
-		List<String> messages = validateCi(dto);//, listCI
+		List<String> messages = BaseHbn.validateCi(dto);//, listCI
 		
 		
 		if (null == dto.getBusinessEssentialId()) {
