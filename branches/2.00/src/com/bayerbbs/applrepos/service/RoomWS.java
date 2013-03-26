@@ -8,7 +8,6 @@ import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
-import com.bayerbbs.applrepos.hibernate.StandortHbn;
 
 public class RoomWS {
 	
@@ -97,14 +96,14 @@ public class RoomWS {
 		if (null != input && (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) ) {
 			RoomDTO dto = getRoomDTOFromEditInput(input);
 
-			// create Application - fill attributes
-			if (null == dto.getCiOwner()) {
-				dto.setCiOwner(input.getCwid().toUpperCase());
-				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
-			}
-			if (null == dto.getBusinessEssentialId()) {
-				dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-			}
+//			// create Application - fill attributes
+//			if (null == dto.getCiOwner()) {
+//				dto.setCiOwner(input.getCwid().toUpperCase());
+//				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
+//			}
+//			if (null == dto.getBusinessEssentialId()) {
+//				dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+//			}
 
 			// save / create application
 			output = RoomHbn.createRoom(input.getCwid(), dto, true);

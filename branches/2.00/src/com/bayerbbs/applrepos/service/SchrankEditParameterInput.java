@@ -1,11 +1,18 @@
 package com.bayerbbs.applrepos.service;
 
 public class SchrankEditParameterInput extends BaseEditParameterInput {
-
+	private Long roomId;
+	
 	private Long severityLevelId;
 	private Long businessEssentialId;
-		
 	
+	
+	public Long getRoomId() {
+		return roomId;
+	}
+	public void setRoomId(Long roomId) {
+		this.roomId = roomId;
+	}
 	public Long getSeverityLevelId() {
 		return severityLevelId;
 	}

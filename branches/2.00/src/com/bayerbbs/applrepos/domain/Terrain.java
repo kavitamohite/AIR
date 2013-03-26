@@ -6,10 +6,13 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +20,7 @@ import javax.persistence.Table;
 //@NamedQueries(
 //	@NamedQuery(name="findTerrainsBySiteId", query="FROM Terrain t WHERE t.standortId=:standortId")
 //)
+@SequenceGenerator(name = "MySeqTerrain", sequenceName = "TBADM.SEQ_TERRAIN")
 public class Terrain extends CiBase implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	
@@ -27,6 +31,7 @@ public class Terrain extends CiBase implements Serializable {
 
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "MySeqTerrain")
 	@Column(name = "TERRAIN_ID")
 	public Long getTerrainId() {
 		return getId();

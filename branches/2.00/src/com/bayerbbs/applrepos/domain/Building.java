@@ -6,14 +6,18 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "GEBAEUDE")
+@SequenceGenerator(name = "MySeqGebaeude", sequenceName = "TBADM.SEQ_GEBAEUDE")
 public class Building extends CiBase implements Serializable {
 	private static final long serialVersionUID = 2431254723377623846L;
 	
@@ -31,6 +35,7 @@ public class Building extends CiBase implements Serializable {
 
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "MySeqGebaeude")
 	@Column(name = "GEBAEUDE_ID")
 	public Long getBuildingId() {
 		return getId();

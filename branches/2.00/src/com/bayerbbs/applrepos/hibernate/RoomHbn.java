@@ -13,7 +13,6 @@ import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
-import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
@@ -336,16 +335,6 @@ public class RoomHbn extends LokationItemHbn {
 //						}
 						
 
-						room.setUpdateUser(cwid);
-						room.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-						room.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
-						
-						// RFC8344 change Insert-Quelle? // RFC 8532
-//						if (ApplreposConstants.INSERT_QUELLE_ANT.equals(application.getInsertQuelle()) ||
-//							ApplreposConstants.INSERT_QUELLE_RFC.equals(application.getInsertQuelle())  ||
-//							ApplreposConstants.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())) {
-//							application.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
-//						}
 
 						// ======
 						// Basics
@@ -363,14 +352,28 @@ public class RoomHbn extends LokationItemHbn {
 //						if (null != dto.getRoomType()) {
 //							room.setRoomType(dto.getRoomType());
 //						}
-						if (null != dto.getAreaId()) {
+
+						
+						setUpCi(room, dto, cwid);
+						
+						if (null != dto.getAreaId() && !room.getBuildingAreaId().equals(dto.getAreaId())) {
 							BuildingArea area = BuildingHbn.findBuildingAreaById(dto.getAreaId());
 							room.setBuildingArea(area);
 							room.setBuildingAreaId(dto.getAreaId());
 						}
 						
-
+						/*
+						room.setUpdateUser(cwid);
+						room.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						room.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 						
+						// RFC8344 change Insert-Quelle? // RFC 8532
+//						if (ApplreposConstants.INSERT_QUELLE_ANT.equals(application.getInsertQuelle()) ||
+//							ApplreposConstants.INSERT_QUELLE_RFC.equals(application.getInsertQuelle())  ||
+//							ApplreposConstants.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())) {
+//							application.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
+//						}
+ * 
 						// ================
 						// Owner / Delegate
 						// ================
@@ -408,34 +411,7 @@ public class RoomHbn extends LokationItemHbn {
 							room.setServiceContractId(dto.getServiceContractId());
 						}
 						
-						if (null != dto.getSeverityLevelId()) {
-							if (-1 == dto.getSeverityLevelId()) {
-								room.setSeverityLevelId(null);
-							}
-							else {
-								room.setSeverityLevelId(dto.getSeverityLevelId());
-							}
-						}
 
-						boolean hasBusinessEssentialChanged = false;
-						if (null == dto.getBusinessEssentialId()) {
-							if (null == room.getBusinessEssentialId()) {
-								// set the default value
-								room.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-								hasBusinessEssentialChanged = true;
-							}
-						}
-						else {
-							if (null == room.getBusinessEssentialId() || room.getBusinessEssentialId().longValue() != dto.getBusinessEssentialId().longValue()) {
-								hasBusinessEssentialChanged = true;
-							}
-							room.setBusinessEssentialId(dto.getBusinessEssentialId());
-						}
-						
-						Long businessEssentialIdOld = room.getBusinessEssentialId();
-						if (hasBusinessEssentialChanged) {
-//							sendBusinessEssentialChangedMail(room, dto, businessEssentialIdOld);
-						}
 						
 						if (null != dto.getItSecSbAvailabilityId()) {
 							if (-1 == dto.getItSecSbAvailabilityId()) {
@@ -549,7 +525,18 @@ public class RoomHbn extends LokationItemHbn {
 //						}
 //						if (null != dto.getClassInformationExplanation()) {
 //							room.setClassInformationExplanation(dto.getClassInformationExplanation());
-//						}
+//						}*/
+						
+						if (null != dto.getSeverityLevelId()) {
+							if (-1 == dto.getSeverityLevelId()) {
+								room.setSeverityLevelId(null);
+							}
+							else {
+								room.setSeverityLevelId(dto.getSeverityLevelId());
+							}
+						}
+
+						room.setBusinessEssentialId(dto.getBusinessEssentialId());
 					}
 					
 					boolean toCommit = false;
@@ -713,19 +700,21 @@ public class RoomHbn extends LokationItemHbn {
 					Room room = new Room();
 					boolean isNameAndAliasNameAllowed = true;
 					
+					List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
+					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
-						if (null != listCi && 0 < listCi.size()) {
+						
+						if (null != listCI && 0 < listCI.size()) {
 							// name is not allowed
 							isNameAndAliasNameAllowed = false;
 							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCi.get(0).getDeleteQuelle()) {
+							if (null != listCI.get(0).getDeleteQuelle()) {
 								boolean override = forceOverride != null && forceOverride.booleanValue();
 								
 								if(override) {
 									// ENTWICKLUNG RFC8279
 									Session session = HibernateUtil.getSession();
-									Room roomDeleted = (Room)session.get(Room.class, listCi.get(0).getId());
+									Room roomDeleted = (Room)session.get(Room.class, listCI.get(0).getId());
 									
 									// reactivate
 									reactivateRoom(cwid, dto, roomDeleted);
@@ -734,17 +723,19 @@ public class RoomHbn extends LokationItemHbn {
 									return saveRoom(cwid, dto);
 
 								} else {
-									output.setMessages(new String[] {"Room Name '" + listCi.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+									output.setMessages(new String[] {"Room Name '" + listCI.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 								}
 							}
 							else {
-								output.setMessages(new String[] {"Room Name '" + listCi.get(0).getName() + "' already exists."});
+								output.setMessages(new String[] {"Room Name '" + listCI.get(0).getName() + "' already exists."});
 							}
 						}
 					}
 					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
+						if(listCI == null)
+							listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
+						
 						if (null != listCI && 0 < listCI.size()) {
 							// alias is not allowed
 							isNameAndAliasNameAllowed = false;
@@ -779,29 +770,40 @@ public class RoomHbn extends LokationItemHbn {
 						tx = session.beginTransaction();
 
 						// ci - insert values
-						room.setInsertUser(cwid);
+						/*room.setInsertUser(cwid);
 						room.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						room.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 
 						// ci - update values
 						room.setUpdateUser(room.getInsertUser());
 						room.setUpdateQuelle(room.getInsertQuelle());
-						room.setUpdateTimestamp(room.getInsertTimestamp());
+						room.setUpdateTimestamp(room.getInsertTimestamp());*/
 
 						// ci - attributes
-						room.setRoomName(dto.getName());
 						room.setAlias(dto.getAlias());
 						room.setFloor(dto.getFloor());
 						room.setRoomType(dto.getRoomType());
-						room.setBuildingAreaId(dto.getAreaId());
 						
-						if (null != dto.getCiOwnerHidden()) {
+						room.setBuildingAreaId(dto.getAreaId());
+						BuildingArea buildingArea = BuildingHbn.findBuildingAreaById(dto.getAreaId());
+						room.setBuildingArea(buildingArea);
+						
+						
+						setUpCi(room, dto, cwid);
+						
+						/*
+						if (null != dto.getCiOwnerHidden())
 							room.setCiOwner(dto.getCiOwnerHidden());
-						}
-						if (null != dto.getCiOwnerDelegateHidden()) {
+						
+						if (null != dto.getCiOwnerDelegateHidden())
 							room.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
-						}
-
+						
+						room.setTemplate(dto.getTemplate());
+						room.setBusinessEssentialId(dto.getBusinessEssentialId());
+						
+						room.setRelevanceITSEC(dto.getRelevanzItsec());
+						room.setRelevanceICS(dto.getRelevanceICS());*/
+						
 						
 						boolean toCommit = false;
 						try {
@@ -859,5 +861,19 @@ public class RoomHbn extends LokationItemHbn {
 		Collections.sort(data);
 		
 		return data.toArray(new KeyValueDTO[0]);
+	}
+	
+	protected static List<String> validateCi(RoomDTO dto) {
+		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+		List<String> messages = validateCi(dto, listCi);
+		
+		
+		if (null == dto.getBusinessEssentialId()) {
+			// messages.add("business essential is empty");
+			// TODO 1 TESTCODE getBusinessEssentialId
+			dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+		}
+		
+		return messages;
 	}
 }

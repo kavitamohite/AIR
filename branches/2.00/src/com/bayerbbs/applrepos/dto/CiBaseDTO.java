@@ -459,6 +459,5 @@ public class CiBaseDTO {// implements Serializable
 	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
 		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
 	}
-
 	
 }

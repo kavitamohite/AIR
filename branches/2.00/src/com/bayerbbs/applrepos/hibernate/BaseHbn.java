@@ -6,8 +6,10 @@ import java.util.List;
 import org.hibernate.Session;
 
 import com.bayerbbs.air.error.ErrorCodeManager;
+import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 
 public class BaseHbn {
@@ -32,16 +34,16 @@ public class BaseHbn {
 		return t;
 	}
 	
-	protected static List<String> validateCi(CiBaseDTO dto) {
+	protected static List<String> validateCi(CiBaseDTO dto, List<CiBaseDTO> listCi) {
 		List<String> messages = new ArrayList<String>();
 		
 		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+//		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), false);
 
 		if (StringUtils.isNullOrEmpty(dto.getName())) {
-			messages.add("room name is empty");
+			messages.add("name must not be is empty");
 		}
 		else {
-			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
 			if (!listCi.isEmpty()) {
 				// check if the name is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
@@ -57,7 +59,6 @@ public class BaseHbn {
 			dto.setAlias(dto.getName());
 		}
 		else {
-			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
 			if (!listCi.isEmpty()) {
 				// check if the alias is unique
 				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
@@ -65,6 +66,12 @@ public class BaseHbn {
 				}
 			}
 		}
+		
+		if (null == dto.getTemplate()) {
+			// TODO 1 TESTCODE Template
+			dto.setTemplate(new Long(0)); // no template
+		}
+
 
 		return messages;
 	}
@@ -85,5 +92,146 @@ public class BaseHbn {
 	
 	protected static String getEqualNotEqualOperator(boolean isNot) {
 		return isNot ? NOT_EQUAL : EQUAL;
+	}
+	
+	protected static void setUpCi(CiBase ci, CiBaseDTO ciDTO, String cwid) {
+		ci.setName(ciDTO.getName());
+		
+		// calculates the ItSet
+		Long itSet = null;
+		String strItSet = ApplReposHbn.getItSetFromCwid(ciDTO.getCiOwner());
+		if (null != strItSet) {
+			itSet = Long.parseLong(strItSet);
+		}
+		if (null == itSet) {
+			// set default itSet
+			itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
+		}
+		
+		
+		// ci - insert values
+		ci.setInsertUser(cwid);
+		ci.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+		ci.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+
+		// ci - update values
+		ci.setUpdateUser(ci.getInsertUser());
+		ci.setUpdateQuelle(ci.getInsertQuelle());
+		ci.setUpdateTimestamp(ci.getInsertTimestamp());
+		
+		
+//		if (null != ciDTO.getCiOwnerHidden()) {
+//			ci.setCiOwner(ciDTO.getCiOwnerHidden());
+//		}
+//		if (null != ciDTO.getCiOwnerDelegateHidden()) {
+//			ci.setCiOwnerDelegate(ciDTO.getCiOwnerDelegateHidden());
+//		}
+		if (null != ciDTO.getCiOwnerHidden()) {
+			if(StringUtils.isNullOrEmpty(ciDTO.getCiOwnerHidden())) {
+				ci.setCiOwner(null);
+			}
+			else {
+				ci.setCiOwner(ciDTO.getCiOwnerHidden());
+			}
+		}
+		if (null != ciDTO.getCiOwnerDelegateHidden()) {
+			if(StringUtils.isNullOrEmpty(ciDTO.getCiOwnerDelegateHidden())) {
+				ci.setCiOwnerDelegate(null);
+			}
+			else {
+				ci.setCiOwnerDelegate(ciDTO.getCiOwnerDelegateHidden());
+			}
+		}
+		
+		
+		if (null != ciDTO.getSlaId()) {
+			if (-1 == ciDTO.getSlaId()) {
+				ci.setSlaId(null);
+			}
+			else {
+				ci.setSlaId(ciDTO.getSlaId());
+			}
+		}
+		if (null != ciDTO.getServiceContractId() || null != ciDTO.getSlaId()) {
+			// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
+			ci.setServiceContractId(ciDTO.getServiceContractId());
+		}
+		
+		
+		
+		if (null != ciDTO.getItSecSbAvailabilityId()) {
+			if (-1 == ciDTO.getItSecSbAvailabilityId()) {
+				ci.setItSecSbAvailability(null);
+			}
+			else if (0 != ciDTO.getItSecSbAvailabilityId().longValue()) {
+				ci.setItSecSbAvailability(ciDTO.getItSecSbAvailabilityId());
+			}
+		}
+		if (null != ciDTO.getItSecSbAvailabilityDescription()) {
+			ci.setItSecSbAvailabilityText(ciDTO.getItSecSbAvailabilityDescription());
+		}
+		
+		
+//		ci.setTemplate(ciDTO.getTemplate());
+		
+		if (null != ciDTO.getTemplate()) {
+			if (-1 == ciDTO.getTemplate()) {
+				ci.setTemplate(null);
+			}
+			else {
+				ci.setTemplate(ciDTO.getTemplate());
+			}
+		}
+		
+		if (null != ciDTO.getItsecGroupId() && 0 != ciDTO.getItsecGroupId()) {
+			if (-1 == ciDTO.getItsecGroupId()) {
+				ci.setItsecGroupId(null);
+			}
+			else {
+				ci.setItsecGroupId(ciDTO.getItsecGroupId());
+			}
+		}
+		
+		if (null != ciDTO.getRefId()) {
+			if (-1 == ciDTO.getRefId()) {
+				ci.setRefId(null);
+			}
+			else {
+				ci.setRefId(ciDTO.getRefId());
+			}
+		}
+		
+		if (null == ciDTO.getRelevanzItsec()) {
+			if ("Y".equals(ciDTO.getRelevanceGR1435())) {
+				ciDTO.setRelevanzItsec(new Long(-1));
+			}
+			else if ("N".equals(ciDTO.getRelevanceGR1435())) {
+				ciDTO.setRelevanzItsec(new Long(0));
+			}
+		}
+		if (null == ciDTO.getRelevanceICS()) {
+			if ("Y".equals(ciDTO.getRelevanceGR1920())) {
+				ciDTO.setRelevanceICS(new Long(-1));
+			}
+			else if ("N".equals(ciDTO.getRelevanceGR1920())) {
+				ciDTO.setRelevanceICS(new Long(0));
+			}
+		}
+		
+//		ci.setRelevanceITSEC(ciDTO.getRelevanzItsec());
+//		ci.setRelevanceICS(ciDTO.getRelevanceICS());
+		
+		
+		if (null == ciDTO.getGxpFlag()) {
+			//	we don't know, let the current value 
+		}
+		else {
+			if (EMPTY.equals(ciDTO.getGxpFlag())) {
+				ci.setGxpFlag(null);
+			}
+			else {
+				ci.setGxpFlag(ciDTO.getGxpFlag());
+			}
+		}
 	}
 }

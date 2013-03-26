@@ -13,17 +13,13 @@ public class TerrainWS {
 	
 	protected TerrainDTO getTerrainDTOFromEditInput(TerrainEditParameterInput input) {
 		TerrainDTO terrainDTO = new TerrainDTO();
+		terrainDTO.setTableId(AirKonstanten.TABLE_ID_TERRAIN);
 		
 		//Specifics
 		terrainDTO.setId(input.getId());//für RoomHbn.saveRoom
 		terrainDTO.setName(input.getName());//für RoomHbn.validateRoom
+		terrainDTO.setStandortId(input.getStandortId());
 
-		
-//		terrainDTO.setStreet(input.getStreet());
-//		terrainDTO.setStreetNumber(input.getStreetNumber());
-//		terrainDTO.setPostalCode(input.getPostalCode());
-//		terrainDTO.setLocation(input.getLocation());
-		
 		//Contacts
 		terrainDTO.setCiOwner(input.getCiOwner());
 		terrainDTO.setCiOwnerHidden(input.getCiOwnerHidden());
@@ -94,10 +90,10 @@ public class TerrainWS {
 			TerrainDTO dto = getTerrainDTOFromEditInput(input);
 
 			// create Application - fill attributes
-			if (null == dto.getCiOwner()) {
-				dto.setCiOwner(input.getCwid().toUpperCase());
-				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
-			}
+//			if (null == dto.getCiOwner()) {
+//				dto.setCiOwner(input.getCwid().toUpperCase());
+//				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
+//			}
 
 
 			// save / create application

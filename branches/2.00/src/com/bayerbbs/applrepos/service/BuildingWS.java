@@ -14,17 +14,19 @@ public class BuildingWS {
 	
 	protected BuildingDTO getBuildingDTOFromEditInput(BuildingEditParameterInput input) {
 		BuildingDTO buildingDTO = new BuildingDTO();
+		buildingDTO.setTableId(AirKonstanten.TABLE_ID_BUILDING);
 		
 		//Specifics
 		buildingDTO.setId(input.getId());//für BuildingHbn.saveBuilding
 		buildingDTO.setName(input.getName());//für BuildingHbn.validateBuilding
 		buildingDTO.setAlias(input.getAlias());
-
+		buildingDTO.setTerrainId(input.getTerrainId());
 		
-//		buildingDTO.setStreet(input.getStreet());
-//		buildingDTO.setStreetNumber(input.getStreetNumber());
-//		buildingDTO.setPostalCode(input.getPostalCode());
-//		buildingDTO.setLocation(input.getLocation());
+		
+		buildingDTO.setStreet(input.getStreet());
+		buildingDTO.setStreetNumber(input.getStreetNumber());
+		buildingDTO.setPostalCode(input.getPostalCode());
+		buildingDTO.setLocation(input.getLocation());
 		
 		//Contacts
 		buildingDTO.setCiOwner(input.getCiOwner());
@@ -62,16 +64,13 @@ public class BuildingWS {
 	
 	protected BuildingAreaDTO getBuildingAreaDTOFromEditInput(BuildingAreaEditParameterInput input) {
 		BuildingAreaDTO buildingAreaDTO = new BuildingAreaDTO();
+		buildingAreaDTO.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
 		
 		//Specifics
 		buildingAreaDTO.setId(input.getId());//für BuildingHbn.saveBuilding
 		buildingAreaDTO.setName(input.getName());//für BuildingHbn.validateBuilding
 		buildingAreaDTO.setBuildingId(input.getBuildingId());
 		
-//		buildingAreaDTO.setStreet(input.getStreet());
-//		buildingAreaDTO.setStreetNumber(input.getStreetNumber());
-//		buildingAreaDTO.setPostalCode(input.getPostalCode());
-//		buildingAreaDTO.setLocation(input.getLocation());
 		
 		//Contacts
 		buildingAreaDTO.setCiOwner(input.getCiOwner());
@@ -167,10 +166,10 @@ public class BuildingWS {
 			BuildingDTO dto = getBuildingDTOFromEditInput(input);
 
 			// create Application - fill attributes
-			if (null == dto.getCiOwner()) {
-				dto.setCiOwner(input.getCwid().toUpperCase());
-				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
-			}
+//			if (null == dto.getCiOwner()) {
+//				dto.setCiOwner(input.getCwid().toUpperCase());
+//				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
+//			}
 
 			// save / create application
 			output = BuildingHbn.createBuilding(input.getCwid(), dto, true);
@@ -203,10 +202,10 @@ public class BuildingWS {
 			BuildingAreaDTO dto = getBuildingAreaDTOFromEditInput(input);
 
 			// create Application - fill attributes
-			if (null == dto.getCiOwner()) {
-				dto.setCiOwner(input.getCwid().toUpperCase());
-				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
-			}
+//			if (null == dto.getCiOwner()) {
+//				dto.setCiOwner(input.getCwid().toUpperCase());
+//				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
+//			}
 
 			// save / create application
 			output = BuildingHbn.createBuildingArea(input.getCwid(), dto, true);

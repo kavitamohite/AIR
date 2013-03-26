@@ -11,8 +11,11 @@ import com.bayerbbs.applrepos.hibernate.SchrankHbn;
 public class SchrankWS {
 	protected SchrankDTO getSchrankDTOFromEditInput(SchrankEditParameterInput input) {
 		SchrankDTO schrankDTO = new SchrankDTO();
+		schrankDTO.setTableId(AirKonstanten.TABLE_ID_POSITION);
+		
 		schrankDTO.setId(input.getId());
 		schrankDTO.setName(input.getName());
+		schrankDTO.setRoomId(input.getRoomId());
 		
 		schrankDTO.setCiOwner(input.getCiOwner());
 		schrankDTO.setCiOwnerHidden(input.getCiOwnerHidden());

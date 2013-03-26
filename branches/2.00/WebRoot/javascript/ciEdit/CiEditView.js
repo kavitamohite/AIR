@@ -543,7 +543,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciCreateStore = AIR.AirStoreFactory.createCiCreateStore(data.tableId);
 		ciCreateStore.on('load', this.onCiCreated, this);
 		
-		var data = this.getCiData(data);
+//		var data = 
+			this.setCiData(data);//getCiData
 		
 		ciCreateStore.load({
 			params: data
@@ -554,16 +555,21 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 	},
 	
-	getCiData: function(ciData) {
+	
+	setCiData: function(data) {//getCiData	ciData
 		var ciEditTabView = this.getComponent('ciEditTabView');
 		
-		var data = {
-		 	cwid: AIR.AirApplicationManager.getCwid(),
-		 	token: AIR.AirApplicationManager.getToken()
-		};
+//		var data = {
+//		 	cwid: AIR.AirApplicationManager.getCwid(),
+//		 	token: AIR.AirApplicationManager.getToken()
+//		};
+		data.cwid = AAM.getCwid();
+		data.token = AAM.getToken();
 		
-		var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
-		data.tableId = tableId;
+		if(!data.tableId) {
+			var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
+			data.tableId = tableId;
+		}
 		
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.setData(data);
@@ -580,7 +586,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.setData(data);
 
-		if(ciData.tableId === AC.TABLE_ID_APPLICATION) {//&& ciData.ciSubTypeId === AC.APP_CAT1_APPLICATION?
+		if(data.tableId === AC.TABLE_ID_APPLICATION) {//ciData && ciData.ciSubTypeId === AC.APP_CAT1_APPLICATION?
 			var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
 			if(ciLicenseView)
 				ciLicenseView.setData(data);
@@ -589,12 +595,12 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.setData(data);
 		
-		if(ciData.tableId === AC.TABLE_ID_APPLICATION) {//&& ciData.ciSubTypeId === AC.APP_CAT1_APPLICATION?
+		if(data.tableId === AC.TABLE_ID_APPLICATION) {//ciData && ciData.ciSubTypeId === AC.APP_CAT1_APPLICATION?
 			var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 			ciSupportStuffView.setData(data);
 		}
 		
-		return data;
+//		return data;
 	},
 	
 	//move to CiCenterView ?
@@ -605,7 +611,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 //		var labels = AIR.AirApplicationManager.getLabels();
 		
-		var ciData = AAM.getAppDetail();
+		var ciData = AAM.getAppDetail();//ciData
 		
 		if(!AIR.AirAclManager.isEditMaskValid()) {
 			var msgtext = AIR.AirApplicationManager.getLabels().editDataNotValid.replace(/##/, ciData.applicationName);//this.getComponent('applicationName').getValue()
@@ -626,7 +632,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.skipLoading = options && options.skipLoading ? true : false;
 
 		
-		var data = this.getCiData(ciData);
+//		var data = this.getCiData(ciData);
+		var data = {};
+		this.setCiData(data);
 		
 		
 		var saveCallback = function() {

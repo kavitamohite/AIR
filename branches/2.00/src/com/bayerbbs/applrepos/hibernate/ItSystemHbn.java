@@ -113,7 +113,8 @@ public class ItSystemHbn extends BaseHbn {
 				Long id = new Long(dto.getId());
 
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+				List<String> messages = validateCi(dto, listCi);
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -552,25 +553,26 @@ public class ItSystemHbn extends BaseHbn {
 			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+				List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+				List<String> messages = validateCi(dto, listCI);
 
 				if (messages.isEmpty()) {
 					ItSystem itSystem = new ItSystem();
 					boolean isNameAndAliasNameAllowed = true;
 					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
-						if (null != listCi && 0 < listCi.size()) {
+//						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
+						if (null != listCI && 0 < listCI.size()) {
 							// name is not allowed
 							isNameAndAliasNameAllowed = false;
 							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCi.get(0).getDeleteQuelle()) {
+							if (null != listCI.get(0).getDeleteQuelle()) {
 								boolean override = forceOverride != null && forceOverride.booleanValue();
 								
 								if(override) {
 									// ENTWICKLUNG RFC8279
 									Session session = HibernateUtil.getSession();
-									ItSystem itSystemDeleted = (ItSystem)session.get(ItSystem.class, listCi.get(0).getId());
+									ItSystem itSystemDeleted = (ItSystem)session.get(ItSystem.class, listCI.get(0).getId());
 									
 									// reactivate
 									reactivateItSystem(cwid, dto, itSystemDeleted);
@@ -579,17 +581,17 @@ public class ItSystemHbn extends BaseHbn {
 									return saveItSystem(cwid, dto);
 
 								} else {
-									output.setMessages(new String[] {"ItSystem Name '" + listCi.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+									output.setMessages(new String[] {"ItSystem Name '" + listCI.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 								}
 							}
 							else {
-								output.setMessages(new String[] {"ItSystem Name '" + listCi.get(0).getName() + "' already exists."});
+								output.setMessages(new String[] {"ItSystem Name '" + listCI.get(0).getName() + "' already exists."});
 							}
 						}
 					}
 					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
+//						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
 						if (null != listCI && 0 < listCI.size()) {
 							// alias is not allowed
 							isNameAndAliasNameAllowed = false;

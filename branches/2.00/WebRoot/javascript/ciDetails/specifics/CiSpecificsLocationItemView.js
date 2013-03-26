@@ -243,20 +243,12 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		
 		this.addEvents('ciBeforeChange', 'ciChange');
 		
-//		var cbBuilding = this.getComponent('cbBuilding');
-//		cbBuilding.on('beforequery', this.onBeforeBuildingSelect, this);
-//		cbBuilding.on('select', this.onBuildingSelect, this);
-		
+		var tfLocationCiName = this.getComponent('tfLocationCiName');
 		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
 		var tfRoomFloor = this.getComponent('tfRoomFloor');
-		var cbBuildingArea = this.getComponent('cbBuildingArea');
-//		var cbBuilding = this.getComponent('cbBuilding');
+
 		
-		cbBuildingArea.on('select', this.onComboSelect, this);
-		cbBuildingArea.on('change', this.onComboChange, this);
-//		cbBuilding.on('select', this.onComboSelect, this);
-//		cbBuilding.on('change', this.onComboChange, this);
-		
+		tfLocationCiName.on('change', this.onFieldChange, this);
 		tfLocationCiAlias.on('change', this.onFieldChange, this);
 		tfRoomFloor.on('change', this.onFieldChange, this);
 		
@@ -277,19 +269,18 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		cbBuildingArea.on('select', this.onBuildingAreaSelect, this);
 	},
 	
-//	onBeforeBuildingSelect: function(queryEvent) {
-//		return this.isInitial;
-//	},
-//	onBuildingSelect: function(combo, record, index) {
-//		this.isInitial = false;
-//	},
 	
+	onRoomSelect: function(combo, record, index) {
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
+	},
 	
 	onBuildingAreaSelect: function(combo, record, index) {
 		var cbRoom = this.getComponent('cbRoom');
 		
 		cbRoom.getStore().setBaseParam('id', record.get('id'));
 		cbRoom.allQuery = record.get('id');
+		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
 	
 	onBuildingSelect: function(combo, record, index) {
@@ -297,6 +288,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		
 		cbBuildingArea.getStore().setBaseParam('id', record.get('id'));
 		cbBuildingArea.allQuery = record.get('id');
+		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
 	
 	onTerrainSelect: function(combo, record, index) {
@@ -304,6 +297,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		
 		cbBuilding.getStore().setBaseParam('id', record.get('id'));
 		cbBuilding.allQuery = record.get('id');
+		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
 	
 	onSiteSelect: function(combo, record, index) {
@@ -311,6 +306,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		
 		cbTerrain.getStore().setBaseParam('id', record.get('id'));//landId ciId
 		cbTerrain.allQuery = record.get('id');
+		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
 	
 	onCountrySelect: function(combo, record, index) {
@@ -318,10 +315,12 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		
 		cbSite.getStore().setBaseParam('id', record.get('id'));//landId ciId
 		cbSite.allQuery = record.get('id');
+		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
 
 	onComboSelect: function(combo, record, index) {
-		this.ownerCt.fireEvent('ciChange', this, combo);
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
 	onComboChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue))
@@ -355,6 +354,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		if(data.isCiCreate) {
 			//enable all fields
 			tfLocationCiName.setVisible(true);
+			tfLocationCiName.reset();
 		} else {
 			tfLocationCiName.setVisible(false);
 		}
@@ -413,20 +413,26 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					Util.enableCombo(cbSite);
 					Util.enableCombo(cbCountry);
 				} else {
-					if(AIR.AirAclManager.isRelevance(cbRoom, data)) {
-						Util.enableCombo(cbRoom);
-						cbRoom.getStore().setBaseParam('id', data.areaId);
-						cbRoom.allQuery = data.areaId;
-					} else {
-						Util.disableCombo(cbRoom);
-					}
+//					ORA-20000: Rack 101526 cannot be moved to another room. Set parameter CHECK_LOCATION_INTEGRITY to N to disable this check.
+//					ORA-06512: at "TBADM.TRG_013_BIU", line 224
+					
+//					if(AIR.AirAclManager.isRelevance(cbRoom, data)) {
+//						Util.enableCombo(cbRoom);
+//						cbRoom.getStore().setBaseParam('id', data.areaId);
+//						cbRoom.allQuery = data.areaId;
+//					} else {
+//						Util.disableCombo(cbRoom);
+//					}
+					
 					
 					cbRoom.setValue(data.raumName);
 					cbBuildingArea.setValue(data.areaName);
 					cbBuilding.setValue(data.gebaeudeName);
 					cbTerrain.setValue(data.terrainName);
 					cbSite.setValue(data.standortName);
+					cbCountry.setValue(data.landNameEn);
 					
+					Util.disableCombo(cbRoom);
 					Util.disableCombo(cbBuildingArea);
 					Util.disableCombo(cbBuilding);
 					Util.disableCombo(cbTerrain);
@@ -724,8 +730,13 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 
 	setData: function(data) {
-		data.id = this.ciId;
-		data.name = this.name;
+		if(data.isCiCreate) {
+			data.id = 0;
+			data.name = this.getComponent('tfLocationCiName').getValue();
+		} else {
+			data.name = this.name;
+			data.id = this.ciId;
+		}
 		
 		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
 		var tfRoomFloor = this.getComponent('tfRoomFloor');
@@ -736,17 +747,15 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		var cbSite = this.getComponent('cbSite');
 		var cbCountry = this.getComponent('cbCountry');
 		
-//		var tfStreet = this.getComponent('pSpecificsLocationStreet').getComponent('tfStreet');
-//		var tfStreetNumber = this.getComponent('pSpecificsLocationStreet').getComponent('tfStreetNumber');
-//
-//		var tfPostalCode = this.getComponent('pSpecificsLocationAddress').getComponent('tfPostalCode');
-//		var tfLocation = this.getComponent('pSpecificsLocationAddress').getComponent('tfLocation');
+
 		
 //		var field = this.getComponent('applicationId');
 //		data.id = field.getValue();
 		
 		switch(parseInt(data.tableId)) {
 			case AC.TABLE_ID_POSITION:
+				if(!cbRoom.disabled)
+					data.roomId = cbRoom.getValue();
 				break;
 			case AC.TABLE_ID_ROOM:
 				if(!tfLocationCiAlias.disabled)
@@ -759,13 +768,40 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					data.areaId = cbBuildingArea.getValue();
 				
 				break;
+
+			case AC.TABLE_ID_BUILDING_AREA:
+				//BuildingHbn.saveBuildingArea(String, BuildingAreaDTO): ORA-20000: Building area 1157 cannot be moved to another building. Set parameter CHECK_LOCATION_INTEGRITY to N to disable this check.
+				if(!cbBuilding.disabled)
+					data.buildingId = cbBuilding.getValue();
+				
+				break;
 			case AC.TABLE_ID_BUILDING:
 				if(!tfLocationCiAlias.disabled)
 					data.alias = tfLocationCiAlias.getValue();
+				if(!cbTerrain.disabled)
+					data.terrainId = cbTerrain.getValue();
+				
+				if(data.isCiCreate) {
+					var tfStreet = this.getComponent('pSpecificsLocationStreet').getComponent('tfStreet');
+					var tfStreetNumber = this.getComponent('pSpecificsLocationStreet').getComponent('tfStreetNumber');
+	
+					var tfPostalCode = this.getComponent('pSpecificsLocationAddress').getComponent('tfPostalCode');
+					var tfLocation = this.getComponent('pSpecificsLocationAddress').getComponent('tfLocation');
+					
+					data.street = tfStreet.getValue();
+					data.streetNumber = tfStreetNumber.getValue();
+					data.postalCode = tfPostalCode.getValue();
+					data.location = tfLocation.getValue();
+				}
+				
 				break;
-			case AC.TABLE_ID_BUILDING_AREA:
-				//BuildingHbn.saveBuildingArea(String, BuildingAreaDTO): ORA-20000: Building area 1157 cannot be moved to another building. Set parameter CHECK_LOCATION_INTEGRITY to N to disable this check.
-//				data.buildingId = cbBuilding.getValue();
+			case AC.TABLE_ID_TERRAIN:
+				if(!cbSite.disabled)
+					data.standortId = cbSite.getValue();
+				break;
+			case AC.TABLE_ID_SITE:
+				if(!cbCountry.disabled)
+					data.landId = cbCountry.getValue();
 				break;
 		}
 	},

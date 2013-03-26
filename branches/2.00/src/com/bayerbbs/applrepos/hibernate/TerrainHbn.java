@@ -122,7 +122,8 @@ public class TerrainHbn extends LokationItemHbn {
 				Long id = new Long(dto.getId());
 
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+				List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+				List<String> messages = validateCi(dto, listCI);
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -483,25 +484,26 @@ public class TerrainHbn extends LokationItemHbn {
 			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+				List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+				List<String> messages = validateCi(dto, listCI);
 
 				if (messages.isEmpty()) {
 					Terrain terrain = new Terrain();
 					boolean isNameAndAliasNameAllowed = true;
 					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
-						if (null != listCi && 0 < listCi.size()) {
+//						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
+						if (null != listCI && 0 < listCI.size()) {
 							// name is not allowed
 							isNameAndAliasNameAllowed = false;
 							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCi.get(0).getDeleteQuelle()) {
+							if (null != listCI.get(0).getDeleteQuelle()) {
 								boolean override = forceOverride != null && forceOverride.booleanValue();
 								
 								if(override) {
 									// ENTWICKLUNG RFC8279
 									Session session = HibernateUtil.getSession();
-									Terrain terrainDeleted = (Terrain)session.get(Terrain.class, listCi.get(0).getId());
+									Terrain terrainDeleted = (Terrain)session.get(Terrain.class, listCI.get(0).getId());
 									
 									// reactivate
 									reactivateTerrain(cwid, dto, terrainDeleted);
@@ -510,17 +512,17 @@ public class TerrainHbn extends LokationItemHbn {
 									return saveTerrain(cwid, dto);
 
 								} else {
-									output.setMessages(new String[] {"Terrain Name '" + listCi.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+									output.setMessages(new String[] {"Terrain Name '" + listCI.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 								}
 							}
 							else {
-								output.setMessages(new String[] {"Terrain Name '" + listCi.get(0).getName() + "' already exists."});
+								output.setMessages(new String[] {"Terrain Name '" + listCI.get(0).getName() + "' already exists."});
 							}
 						}
 					}
 					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
+//						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
 						if (null != listCI && 0 < listCI.size()) {
 							// alias is not allowed
 							isNameAndAliasNameAllowed = false;
@@ -565,8 +567,11 @@ public class TerrainHbn extends LokationItemHbn {
 						terrain.setUpdateTimestamp(terrain.getInsertTimestamp());
 
 						// ci - attributes
-//						terrain.setTerrainName(dto.getName());
-
+						terrain.setTerrainName(dto.getName());
+						terrain.setStandortId(dto.getStandortId());
+						Standort standort = StandortHbn.findById(dto.getStandortId());
+						terrain.setStandort(standort);
+						
 						
 						if (null != dto.getCiOwnerHidden()) {
 							terrain.setCiOwner(dto.getCiOwnerHidden());
@@ -574,6 +579,11 @@ public class TerrainHbn extends LokationItemHbn {
 						if (null != dto.getCiOwnerDelegateHidden()) {
 							terrain.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
 						}
+						
+						terrain.setTemplate(dto.getTemplate());
+
+						terrain.setRelevanceITSEC(dto.getRelevanzItsec());
+						terrain.setRelevanceICS(dto.getRelevanceICS());
 
 						
 						boolean toCommit = false;

@@ -4,22 +4,29 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "SCHRANK")
+@SequenceGenerator(name = "MySeqSchrank", sequenceName = "TBADM.SEQ_SCHRANK")
 public class Schrank extends CiBase implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	
 	private Long severityLevelId;
 	private Long businessEssentialId;
 	
-//	private Long roomId;
-//	private Room room;
+	private Long roomId;
+	private Room room;
 
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "MySeqSchrank")
 	@Column(name = "SCHRANK_ID")
 	public Long getSchrankId() {
 		return getId();
@@ -54,21 +61,21 @@ public class Schrank extends CiBase implements Serializable {
 		this.businessEssentialId = businessEssentialId;
 	}
 	
-//	@ManyToOne
-//	@JoinColumn(name="RAUM_ID")
-//	public Room getRoom() {
-//		return room;
-//	}
-//	public void setRoom(Room room) {
-//		this.room = room;
-//	}
-//	
-//	
-//	@Column(name = "RAUM_ID", insertable=false, updatable=false)
-//	public Long getRoomId() {
-//		return roomId;
-//	}
-//	public void setRoomId(Long roomId) {
-//		this.roomId = roomId;
-//	}
+	@ManyToOne
+	@JoinColumn(name="RAUM_ID")
+	public Room getRoom() {
+		return room;
+	}
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+	
+	
+	@Column(name = "RAUM_ID", insertable=false, updatable=false)
+	public Long getRoomId() {
+		return roomId;
+	}
+	public void setRoomId(Long roomId) {
+		this.roomId = roomId;
+	}
 }

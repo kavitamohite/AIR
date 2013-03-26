@@ -1,7 +1,5 @@
 package com.bayerbbs.applrepos.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -20,7 +18,6 @@ import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
-import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
@@ -175,6 +172,8 @@ public class CiEntityWS {
 			
 			//wenn noch alle Räume irgendwie auf die GUI sollen
 //			Set<Room> rooms = buildingArea.getRooms();
+			schrankDTO.setSeverityLevelId(schrank.getSeverityLevelId());
+			schrankDTO.setBusinessEssentialId(schrank.getBusinessEssentialId());
 			schrankDTO.setTableId(AirKonstanten.TABLE_ID_POSITION);
 			
 			setCiBaseData(schrankDTO, schrank);

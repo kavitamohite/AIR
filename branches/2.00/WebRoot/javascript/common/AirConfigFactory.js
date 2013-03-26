@@ -82,6 +82,9 @@ AIR.AirConfigFactory = function() {
 		createSchrankCiRecord: function() {
 			var schrankCiFields = this.getLocationCiFields();
 			
+			schrankCiFields.push('severityLevelId');
+			schrankCiFields.push('businessEssentialId');
+			
 			return Ext.data.Record.create(schrankCiFields);
 		},
 		

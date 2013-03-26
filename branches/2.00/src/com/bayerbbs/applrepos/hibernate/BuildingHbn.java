@@ -66,14 +66,14 @@ public class BuildingHbn extends LokationItemHbn {
 			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+				List<String> messages = validateCi(dto, listCi);
 
 				if (messages.isEmpty()) {
 					Building building = new Building();
 					boolean isNameAndAliasNameAllowed = true;
 					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
 						if (null != listCi && 0 < listCi.size()) {
 							// name is not allowed
 							isNameAndAliasNameAllowed = false;
@@ -150,6 +150,15 @@ public class BuildingHbn extends LokationItemHbn {
 						// ci - attributes
 						building.setBuildingName(dto.getName());
 						building.setAlias(dto.getAlias());
+						building.setTerrainId(dto.getTerrainId());
+						Terrain terrain = TerrainHbn.findById(dto.getTerrainId());
+						building.setTerrain(terrain);
+						
+						building.setStreet(dto.getStreet());
+						building.setStreetNumber(dto.getStreetNumber());
+						building.setPostalCode(dto.getPostalCode());
+						building.setLocation(dto.getLocation());
+						
 						
 						if (null != dto.getCiOwnerHidden()) {
 							building.setCiOwner(dto.getCiOwnerHidden());
@@ -157,6 +166,12 @@ public class BuildingHbn extends LokationItemHbn {
 						if (null != dto.getCiOwnerDelegateHidden()) {
 							building.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
 						}
+						
+						building.setTemplate(dto.getTemplate());
+//						building.setBusinessEssentialId(dto.getBusinessEssentialId());
+						
+						building.setRelevanceITSEC(dto.getRelevanzItsec());
+						building.setRelevanceICS(dto.getRelevanceICS());
 
 						
 						boolean toCommit = false;
@@ -213,14 +228,16 @@ public class BuildingHbn extends LokationItemHbn {
 			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING_AREA, true);
+				List<String> messages = validateCi(dto, listCi);
 
 				if (messages.isEmpty()) {
 					BuildingArea buildingArea = new BuildingArea();
 					boolean isNameAndAliasNameAllowed = true;
 					
 					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
+//						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING_AREA, true);
+						
 						if (null != listCi && 0 < listCi.size()) {
 							// name is not allowed
 							isNameAndAliasNameAllowed = false;
@@ -296,6 +313,9 @@ public class BuildingHbn extends LokationItemHbn {
 
 						// ci - attributes
 						buildingArea.setName(dto.getName());
+						buildingArea.setBuildingId(dto.getBuildingId());
+						Building building = BuildingHbn.findById(dto.getBuildingId());
+						buildingArea.setBuilding(building);
 						
 						if (null != dto.getCiOwnerHidden()) {
 							buildingArea.setCiOwner(dto.getCiOwnerHidden());
@@ -303,6 +323,11 @@ public class BuildingHbn extends LokationItemHbn {
 						if (null != dto.getCiOwnerDelegateHidden()) {
 							buildingArea.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
 						}
+						
+						buildingArea.setTemplate(dto.getTemplate());
+						
+						buildingArea.setRelevanceITSEC(dto.getRelevanzItsec());
+						buildingArea.setRelevanceICS(dto.getRelevanceICS());
 
 						
 						boolean toCommit = false;
@@ -363,7 +388,8 @@ public class BuildingHbn extends LokationItemHbn {
 				Long id = new Long(dto.getId());
 
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+				List<String> messages = validateCi(dto, listCi);
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -647,7 +673,8 @@ public class BuildingHbn extends LokationItemHbn {
 				Long id = new Long(dto.getId());
 
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+				List<String> messages = validateCi(dto, listCi);
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();

@@ -187,7 +187,6 @@ public class Application extends DeletableRevisionInfo {
 	public String getResponsible() {
 		return responsible;
 	}
-
 	public void setResponsible(String responsible) {
 		this.responsible = responsible;
 	}
@@ -198,7 +197,6 @@ public class Application extends DeletableRevisionInfo {
 	public String getSubResponsible() {
 		return subResponsible;
 	}
-
 	public void setSubResponsible(String subResponsible) {
 		this.subResponsible = subResponsible;
 	}
@@ -208,7 +206,6 @@ public class Application extends DeletableRevisionInfo {
 	public String getGxpFlag() {
 		return gxpFlag;
 	}
-
 	public void setGxpFlag(String gxpFlag) {
 		this.gxpFlag = gxpFlag;
 	}
@@ -217,7 +214,6 @@ public class Application extends DeletableRevisionInfo {
 	public Long getOperationalStatusId() {
 		return operationalStatusId;
 	}
-
 	public void setOperationalStatusId(Long operationalStatusId) {
 		this.operationalStatusId = operationalStatusId;
 	}
@@ -227,7 +223,6 @@ public class Application extends DeletableRevisionInfo {
 	public Long getItset() {
 		return itset;
 	}
-
 	public void setItset(Long itset) {
 		this.itset = itset;
 	}
@@ -237,7 +232,6 @@ public class Application extends DeletableRevisionInfo {
 	public Long getTemplate() {
 		return template;
 	}
-
 	public void setTemplate(Long template) {
 		this.template = template;
 	}
@@ -247,7 +241,6 @@ public class Application extends DeletableRevisionInfo {
 	public Long getItsecGroupId() {
 		return itsecGroupId;
 	}
-
 	public void setItsecGroupId(Long itsecGroupId) {
 		this.itsecGroupId = itsecGroupId;
 	}
@@ -257,7 +250,6 @@ public class Application extends DeletableRevisionInfo {
 	public Long getRefId() {
 		return refId;
 	}
-
 	public void setRefId(Long refId) {
 		this.refId = refId;
 	}
@@ -267,7 +259,6 @@ public class Application extends DeletableRevisionInfo {
 	public Long getRelevanceICS() {
 		return relevanceICS;
 	}
-
 	public void setRelevanceICS(Long relevanceICS) {
 		this.relevanceICS = relevanceICS;
 	}
@@ -277,7 +268,6 @@ public class Application extends DeletableRevisionInfo {
 	public Long getRelevanzITSEC() {
 		return relevanzITSEC;
 	}
-
 	public void setRelevanzITSEC(Long relevanzITSEC) {
 		this.relevanzITSEC = relevanzITSEC;
 	}
@@ -286,7 +276,6 @@ public class Application extends DeletableRevisionInfo {
 	public Long getRelevance2059() {
 		return relevance2059;
 	}
-
 	public void setRelevance2059(Long relevance2059) {
 		this.relevance2059 = relevance2059;
 	}
@@ -295,7 +284,6 @@ public class Application extends DeletableRevisionInfo {
 	public Long getRelevance2008() {
 		return relevance2008;
 	}
-
 	public void setRelevance2008(Long relevance2008) {
 		this.relevance2008 = relevance2008;
 	}
@@ -305,7 +293,6 @@ public class Application extends DeletableRevisionInfo {
 	public Long getBusinessEssentialId() {
 		return businessEssentialId;
 	}
-
 	public void setBusinessEssentialId(Long businessEssentialId) {
 		this.businessEssentialId = businessEssentialId;
 	}

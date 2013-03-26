@@ -13,16 +13,13 @@ public class StandortWS {
 	
 	protected StandortDTO getStandortDTOFromEditInput(StandortEditParameterInput input) {
 		StandortDTO standortDTO = new StandortDTO();
+		standortDTO.setTableId(AirKonstanten.TABLE_ID_SITE);
 		
 		//Specifics
 		standortDTO.setId(input.getId());//für RoomHbn.saveRoom
 		standortDTO.setName(input.getName());//für RoomHbn.validateRoom
+		standortDTO.setLandId(input.getLandId());
 
-		
-//		standortDTO.setStreet(input.getStreet());
-//		standortDTO.setStreetNumber(input.getStreetNumber());
-//		standortDTO.setPostalCode(input.getPostalCode());
-//		standortDTO.setLocation(input.getLocation());
 		
 		//Contacts
 		standortDTO.setCiOwner(input.getCiOwner());
