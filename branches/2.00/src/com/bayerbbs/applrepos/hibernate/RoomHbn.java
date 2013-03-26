@@ -790,19 +790,7 @@ public class RoomHbn extends LokationItemHbn {
 						
 						
 						setUpCi(room, dto, cwid);
-						
-						/*
-						if (null != dto.getCiOwnerHidden())
-							room.setCiOwner(dto.getCiOwnerHidden());
-						
-						if (null != dto.getCiOwnerDelegateHidden())
-							room.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
-						
-						room.setTemplate(dto.getTemplate());
 						room.setBusinessEssentialId(dto.getBusinessEssentialId());
-						
-						room.setRelevanceITSEC(dto.getRelevanzItsec());
-						room.setRelevanceICS(dto.getRelevanceICS());*/
 						
 						
 						boolean toCommit = false;

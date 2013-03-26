@@ -225,8 +225,8 @@ public class BaseHbn {
 			}
 		}
 		
-//		ci.setRelevanceITSEC(ciDTO.getRelevanzItsec());
-//		ci.setRelevanceICS(ciDTO.getRelevanceICS());
+		ci.setRelevanceITSEC(ciDTO.getRelevanzItsec());
+		ci.setRelevanceICS(ciDTO.getRelevanceICS());
 		
 		
 		if (null == ciDTO.getGxpFlag()) {
