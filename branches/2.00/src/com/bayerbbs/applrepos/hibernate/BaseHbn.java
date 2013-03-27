@@ -10,6 +10,8 @@ import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiBase;
+import com.bayerbbs.applrepos.domain.CiBase1;
+import com.bayerbbs.applrepos.domain.CiBase2;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.service.CiItemDTO;
 
@@ -101,10 +103,38 @@ public class BaseHbn {
 		return isNot ? NOT_EQUAL : EQUAL;
 	}
 	
-	protected static void setUpCi(CiBase ci, CiBaseDTO ciDTO, String cwid) {
-		ci.setName(ciDTO.getName());
+	protected static void setUpCi(CiBase1 ci, CiBaseDTO ciDTO, String cwid) {
+		if (null != ciDTO.getCiOwnerHidden()) {
+			if(StringUtils.isNullOrEmpty(ciDTO.getCiOwnerHidden())) {
+				ci.setCiOwner(null);
+			}
+			else {
+				ci.setCiOwner(ciDTO.getCiOwnerHidden());
+			}
+		}
 		
-		// calculates the ItSet
+		Long itSet = null;
+		String strItSet = ApplReposHbn.getItSetFromCwid(ciDTO.getCiOwner());
+		if (null != strItSet) {
+			itSet = Long.parseLong(strItSet);
+			ci.setItset(itSet);
+		}
+		
+		
+		CiBase ci0 = (CiBase)ci;
+		setUpCi(ci0, ciDTO, cwid);
+	}
+	
+	protected static void setUpCi(CiBase2 ci, CiBaseDTO ciDTO, String cwid) {
+		if (null != ciDTO.getCiOwnerHidden()) {
+			if(StringUtils.isNullOrEmpty(ciDTO.getCiOwnerHidden())) {
+				ci.setCiOwner(null);
+			}
+			else {
+				ci.setCiOwner(ciDTO.getCiOwnerHidden());
+			}
+		}
+		
 		Long itSet = null;
 		String strItSet = ApplReposHbn.getItSetFromCwid(ciDTO.getCiOwner());
 		if (null != strItSet) {
@@ -114,7 +144,19 @@ public class BaseHbn {
 			// set default itSet
 			itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
 		}
+		ci.setItset(itSet);
 		
+		
+		CiBase ci0 = (CiBase)ci;
+		setUpCi(ci0, ciDTO, cwid);
+	}
+	
+	private static void setUpCi(CiBase ci, CiBaseDTO ciDTO, String cwid) {
+//	protected <T extends CiBase>  void setUpCi(T ci, CiBaseDTO ciDTO, String cwid) {
+		ci.setName(ciDTO.getName());
+		
+		// calculates the ItSet
+
 		
 		// ci - insert values
 		ci.setInsertUser(cwid);
@@ -128,19 +170,13 @@ public class BaseHbn {
 		
 		
 //		if (null != ciDTO.getCiOwnerHidden()) {
-//			ci.setCiOwner(ciDTO.getCiOwnerHidden());
+//			if(StringUtils.isNullOrEmpty(ciDTO.getCiOwnerHidden())) {
+//				ci.setCiOwner(null);
+//			}
+//			else {
+//				ci.setCiOwner(ciDTO.getCiOwnerHidden());
+//			}
 //		}
-//		if (null != ciDTO.getCiOwnerDelegateHidden()) {
-//			ci.setCiOwnerDelegate(ciDTO.getCiOwnerDelegateHidden());
-//		}
-		if (null != ciDTO.getCiOwnerHidden()) {
-			if(StringUtils.isNullOrEmpty(ciDTO.getCiOwnerHidden())) {
-				ci.setCiOwner(null);
-			}
-			else {
-				ci.setCiOwner(ciDTO.getCiOwnerHidden());
-			}
-		}
 		if (null != ciDTO.getCiOwnerDelegateHidden()) {
 			if(StringUtils.isNullOrEmpty(ciDTO.getCiOwnerDelegateHidden())) {
 				ci.setCiOwnerDelegate(null);
@@ -209,18 +245,18 @@ public class BaseHbn {
 		}
 		
 		if (null == ciDTO.getRelevanzItsec()) {
-			if ("Y".equals(ciDTO.getRelevanceGR1435())) {
+			if (Y.equals(ciDTO.getRelevanceGR1435())) {
 				ciDTO.setRelevanzItsec(new Long(-1));
 			}
-			else if ("N".equals(ciDTO.getRelevanceGR1435())) {
+			else if (N.equals(ciDTO.getRelevanceGR1435())) {
 				ciDTO.setRelevanzItsec(new Long(0));
 			}
 		}
 		if (null == ciDTO.getRelevanceICS()) {
-			if ("Y".equals(ciDTO.getRelevanceGR1920())) {
+			if (Y.equals(ciDTO.getRelevanceGR1920())) {
 				ciDTO.setRelevanceICS(new Long(-1));
 			}
-			else if ("N".equals(ciDTO.getRelevanceGR1920())) {
+			else if (N.equals(ciDTO.getRelevanceGR1920())) {
 				ciDTO.setRelevanceICS(new Long(0));
 			}
 		}

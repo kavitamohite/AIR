@@ -101,10 +101,11 @@ public class TerrainWS {
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
 				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
+				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_TERRAIN, false);
 				if (null != listCi && 1 == listCi.size()) {
 					Long ciId = listCi.get(0).getId();
 					output.setCiId(ciId);
+					output.setTableId(AirKonstanten.TABLE_ID_TERRAIN);
 				} else {
 					// unknown?
 					output.setCiId(new Long(-1));

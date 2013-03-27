@@ -68,12 +68,14 @@ public class BuildingHbn extends LokationItemHbn {
 
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
 				List<String> messages = validateCi(dto);//, listCi
 
 				if (messages.isEmpty()) {
 					Building building = new Building();
 					boolean isNameAndAliasNameAllowed = true;
+					
+					List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
 					
 					if (isNameAndAliasNameAllowed) {
 						if (null != listCi && 0 < listCi.size()) {

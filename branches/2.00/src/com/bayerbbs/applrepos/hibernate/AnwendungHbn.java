@@ -746,8 +746,9 @@ public class AnwendungHbn {
 						}
 						if (null == itSet) {
 							// set default itSet
-							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
+							itSet = new Long(AirKonstanten.IT_SET_GERMANY);//nicht IT_SET_DEFAULT ?
 						}
+						application.setItset(itSet);
 
 						if (0 == dto.getBusinessEssentialId().longValue()) {
 							dto.setBusinessEssentialId(new Long(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT));
@@ -797,7 +798,6 @@ public class AnwendungHbn {
 						}
 						
 						application.setBusinessEssentialId(dto.getBusinessEssentialId());
-						application.setItset(itSet);
 
 						// TODO !!!
 						if (null == dto.getRelevanzItsec()) {

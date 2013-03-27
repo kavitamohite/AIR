@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "GEBAEUDE")
 @SequenceGenerator(name = "MySeqGebaeude", sequenceName = "TBADM.SEQ_GEBAEUDE")
-public class Building extends CiBase implements Serializable {
+public class Building extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = 2431254723377623846L;
 	
 	private String alias;

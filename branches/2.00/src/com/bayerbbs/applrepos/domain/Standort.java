@@ -21,7 +21,7 @@ import javax.persistence.Table;
 	@NamedQuery(name="findSitesByLandId", query="FROM Standort s WHERE s.landId=:landId")
 )
 @SequenceGenerator(name = "MySeqStandort", sequenceName = "TBADM.SEQ_STANDORT")
-public class Standort extends CiBase implements Serializable {
+public class Standort extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	
     private Set<Terrain> terrains;

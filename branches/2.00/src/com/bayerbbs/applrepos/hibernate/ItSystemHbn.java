@@ -18,11 +18,13 @@ import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.ItSystem;
+import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.KeyValueType2DTO;
 import com.bayerbbs.applrepos.dto.KeyValueTypeDTO;
 import com.bayerbbs.applrepos.dto.OsTypeDTO;
+import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemDTO;
@@ -113,7 +115,7 @@ public class ItSystemHbn extends BaseHbn {
 
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
 				List<String> messages = validateCi(dto);//, listCi
 
 				if (messages.isEmpty()) {
@@ -162,9 +164,14 @@ public class ItSystemHbn extends BaseHbn {
 //						if (null != dto.getName()) {
 //							itSystem.setItSystemName(dto.getName());
 //						}
+
+						
+						setUpCi(itSystem, dto, cwid);
+//						setUpItSystem(itSystem, dto, cwid);
+						
+						
 						if (null != dto.getAlias())
 							itSystem.setAlias(dto.getAlias());
-						
 						
 						if(null != dto.getOsNameId()) {
 							if(dto.getOsNameId() > -1)
@@ -172,7 +179,6 @@ public class ItSystemHbn extends BaseHbn {
 							else
 								itSystem.setOsNameId(null);
 						}
-						
 						
 						if(DELETE.equals(dto.getClusterCode()))
 							itSystem.setClusterCode(null);
@@ -189,11 +195,22 @@ public class ItSystemHbn extends BaseHbn {
 						else
 							itSystem.setVirtualHardwareSoftware(dto.getVirtualHardwareSoftware());
 						
-						if(null != dto.getIsVirtualHardwareClient())
+						
+						if(DELETE.equals(dto.getIsVirtualHardwareClient()))
+							itSystem.setIsVirtualHardwareClient(null);
+						else
 							itSystem.setIsVirtualHardwareClient(dto.getIsVirtualHardwareClient());
 						
-						if(null != dto.getIsVirtualHardwareHost())
+						if(DELETE.equals(dto.getIsVirtualHardwareHost()))
+							itSystem.setIsVirtualHardwareHost(null);
+						else
 							itSystem.setIsVirtualHardwareHost(dto.getIsVirtualHardwareHost());
+						
+//						if(null != dto.getIsVirtualHardwareClient())
+//							itSystem.setIsVirtualHardwareClient(dto.getIsVirtualHardwareClient());
+//						
+//						if(null != dto.getIsVirtualHardwareHost())
+//							itSystem.setIsVirtualHardwareHost(dto.getIsVirtualHardwareHost());
 						
 						
 						if(null != dto.getLifecycleStatusId()) {
@@ -209,7 +226,6 @@ public class ItSystemHbn extends BaseHbn {
 							else
 								itSystem.setEinsatzStatusId(null);
 						}
-
 							
 						if(null != dto.getPrimaryFunctionId()) {
 							if(dto.getOsNameId() > -1)
@@ -217,7 +233,6 @@ public class ItSystemHbn extends BaseHbn {
 							else
 								itSystem.setPrimaryFunctionId(null);
 						}
-
 							
 						if(null != dto.getLicenseScanningId()) {
 							if(dto.getOsNameId() > -1)
@@ -225,8 +240,29 @@ public class ItSystemHbn extends BaseHbn {
 							else
 								itSystem.setLicenseScanningId(null);
 						}
-
 						
+
+						if (null != dto.getSeverityLevelId()) {
+							if (-1 == dto.getSeverityLevelId()) {
+								itSystem.setSeverityLevelId(null);
+							}
+							else {
+								itSystem.setSeverityLevelId(dto.getSeverityLevelId());
+							}
+						}
+						
+						if (null != dto.getSeverityLevelId()) {
+							if (-1 == dto.getSeverityLevelId()) {
+								itSystem.setSeverityLevelId(null);
+							}
+							else {
+								itSystem.setSeverityLevelId(dto.getSeverityLevelId());
+							}
+						}
+						
+						itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
+						
+						/*
 						// ================
 						// Owner / Delegate
 						// ================
@@ -407,7 +443,7 @@ public class ItSystemHbn extends BaseHbn {
 //						}
 //						if (null != dto.getClassInformationExplanation()) {
 //							itSystem.setClassInformationExplanation(dto.getClassInformationExplanation());
-//						}
+//						}*/
 					}
 					
 					boolean toCommit = false;
@@ -470,6 +506,93 @@ public class ItSystemHbn extends BaseHbn {
 		return output;
 	}
 	
+
+	private static void setUpItSystem(ItSystem itSystem, ItSystemDTO dto, String cwid) {
+		if (null != dto.getAlias())
+			itSystem.setAlias(dto.getAlias());
+		
+		if(null != dto.getOsNameId()) {
+			if(dto.getOsNameId() > -1)
+				itSystem.setOsNameId(dto.getOsNameId());
+			else
+				itSystem.setOsNameId(null);
+		}
+		
+		if(DELETE.equals(dto.getClusterCode()))
+			itSystem.setClusterCode(null);
+		else
+			itSystem.setClusterCode(dto.getClusterCode());
+			
+		if(DELETE.equals(dto.getClusterType()))
+			itSystem.setClusterType(null);
+		else
+			itSystem.setClusterType(dto.getClusterType());
+		
+		if(DELETE.equals(dto.getVirtualHardwareSoftware()))
+			itSystem.setVirtualHardwareSoftware(null);
+		else
+			itSystem.setVirtualHardwareSoftware(dto.getVirtualHardwareSoftware());
+		
+		
+		if(DELETE.equals(dto.getIsVirtualHardwareClient()))
+			itSystem.setIsVirtualHardwareClient(null);
+		else
+			itSystem.setIsVirtualHardwareClient(dto.getIsVirtualHardwareClient());
+		
+		if(DELETE.equals(dto.getIsVirtualHardwareHost()))
+			itSystem.setIsVirtualHardwareHost(null);
+		else
+			itSystem.setIsVirtualHardwareHost(dto.getIsVirtualHardwareHost());
+		
+//		if(null != dto.getIsVirtualHardwareClient())
+//			itSystem.setIsVirtualHardwareClient(dto.getIsVirtualHardwareClient());
+//		
+//		if(null != dto.getIsVirtualHardwareHost())
+//			itSystem.setIsVirtualHardwareHost(dto.getIsVirtualHardwareHost());
+		
+		
+		if(null != dto.getLifecycleStatusId()) {
+			if(dto.getOsNameId() > -1)
+				itSystem.setLifecycleStatusId(dto.getLifecycleStatusId());
+			else
+				itSystem.setLifecycleStatusId(null);
+		}
+			
+		if(null != dto.getEinsatzStatusId()) {
+			if(dto.getOsNameId() > -1)
+				itSystem.setEinsatzStatusId(dto.getEinsatzStatusId());
+			else
+				itSystem.setEinsatzStatusId(null);
+		}
+			
+		if(null != dto.getPrimaryFunctionId()) {
+			if(dto.getOsNameId() > -1)
+				itSystem.setPrimaryFunctionId(dto.getPrimaryFunctionId());
+			else
+				itSystem.setPrimaryFunctionId(null);
+		}
+			
+		if(null != dto.getLicenseScanningId()) {
+			if(dto.getOsNameId() > -1)
+				itSystem.setLicenseScanningId(dto.getLicenseScanningId());
+			else
+				itSystem.setLicenseScanningId(null);
+		}
+		
+
+		if (null != dto.getSeverityLevelId()) {
+			if (-1 == dto.getSeverityLevelId()) {
+				itSystem.setSeverityLevelId(null);
+			}
+			else {
+				itSystem.setSeverityLevelId(dto.getSeverityLevelId());
+			}
+		}
+		
+		itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
+		itSystem.setCiSubTypeId(dto.getCiSubTypeId());
+	}
+
 
 	public static CiEntityEditParameterOutput reactivateItSystem(String cwid, ItSystemDTO dto, ItSystem itSystem) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
@@ -554,26 +677,28 @@ public class ItSystemHbn extends BaseHbn {
 
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
 				List<String> messages = validateCi(dto);//, listCi
 
 				if (messages.isEmpty()) {
 					ItSystem itSystem = new ItSystem();
 					boolean isNameAndAliasNameAllowed = true;
 					
+					
 					if (isNameAndAliasNameAllowed) {
-//						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
-						if (null != listCi && 0 < listCi.size()) {
+						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_IT_SYSTEM, true);
+
+						if (null != listCI && 0 < listCI.size()) {
 							// name is not allowed
 							isNameAndAliasNameAllowed = false;
 							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCi.get(0).getDeleteQuelle()) {
+							if (null != listCI.get(0).getDeleteQuelle()) {
 								boolean override = forceOverride != null && forceOverride.booleanValue();
 								
 								if(override) {
 									// ENTWICKLUNG RFC8279
 									Session session = HibernateUtil.getSession();
-									ItSystem itSystemDeleted = (ItSystem)session.get(ItSystem.class, listCi.get(0).getId());
+									ItSystem itSystemDeleted = (ItSystem)session.get(ItSystem.class, listCI.get(0).getId());
 									
 									// reactivate
 									reactivateItSystem(cwid, dto, itSystemDeleted);
@@ -582,26 +707,27 @@ public class ItSystemHbn extends BaseHbn {
 									return saveItSystem(cwid, dto);
 
 								} else {
-									output.setMessages(new String[] {"ItSystem Name '" + listCi.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+									output.setMessages(new String[] {"ItSystem Name '" + listCI.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 								}
 							}
 							else {
-								output.setMessages(new String[] {"ItSystem Name '" + listCi.get(0).getName() + "' already exists."});
+								output.setMessages(new String[] {"ItSystem Name '" + listCI.get(0).getName() + "' already exists."});
 							}
 						}
 					}
 					
 					if (isNameAndAliasNameAllowed) {
-//						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
-						if (null != listCi && 0 < listCi.size()) {
+						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_IT_SYSTEM, true);
+						
+						if (null != listCI && 0 < listCI.size()) {
 							// alias is not allowed
 							isNameAndAliasNameAllowed = false;
 							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCi.get(0).getDeleteQuelle()) {
-								output.setMessages(new String[] {"ItSystem Alias '" + listCi.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
+							if (null != listCI.get(0).getDeleteQuelle()) {
+								output.setMessages(new String[] {"ItSystem Alias '" + listCI.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
 							}
 							else {
-								output.setMessages(new String[] {"ItSystem Alias '" + listCi.get(0).getAlias() + "' already exists."});
+								output.setMessages(new String[] {"ItSystem Alias '" + listCI.get(0).getAlias() + "' already exists."});
 							}
 						}						
 					}
@@ -609,7 +735,16 @@ public class ItSystemHbn extends BaseHbn {
 					
 					if (isNameAndAliasNameAllowed) {
 						// create the ci
+						
+						Session session = HibernateUtil.getSession();
+						Transaction tx = null;
+						tx = session.beginTransaction();
 
+						setUpCi(itSystem, dto, cwid);
+						setUpItSystem(itSystem, dto, cwid);
+						
+						/*
+						
 						// calculates the ItSet
 						Long itSet = null;
 						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
@@ -620,12 +755,7 @@ public class ItSystemHbn extends BaseHbn {
 							// set default itSet
 							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
 						}
-
-
-						Session session = HibernateUtil.getSession();
-						Transaction tx = null;
-						tx = session.beginTransaction();
-
+						
 						// ci - insert values
 						itSystem.setInsertUser(cwid);
 						itSystem.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
@@ -645,7 +775,7 @@ public class ItSystemHbn extends BaseHbn {
 						}
 						if (null != dto.getCiOwnerDelegateHidden()) {
 							itSystem.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
-						}
+						}*/
 
 						
 						boolean toCommit = false;
@@ -1120,5 +1250,19 @@ public class ItSystemHbn extends BaseHbn {
 		licenseScannings.add(new KeyValueDTO(7L, "Internal Lab / Test Systems"));
 		
 		return licenseScannings;
+	}
+	
+	protected static List<String> validateCi(ItSystemDTO dto) {
+//		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+		List<String> messages = BaseHbn.validateCi(dto);//, listCi
+		
+		
+		if (null == dto.getBusinessEssentialId()) {
+			// messages.add("business essential is empty");
+			// TODO 1 TESTCODE getBusinessEssentialId
+			dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+		}
+		
+		return messages;
 	}
 }

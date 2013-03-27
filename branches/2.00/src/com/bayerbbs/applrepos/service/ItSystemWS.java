@@ -12,6 +12,8 @@ public class ItSystemWS {
 	
 	protected ItSystemDTO getItSystemDTOFromEditInput(ItSystemEditParameterInput input) {
 		ItSystemDTO itSystemDTO = new ItSystemDTO();
+		itSystemDTO.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
+		itSystemDTO.setCiSubTypeId(input.getCiSubTypeId());
 		
 		//Specifics
 		itSystemDTO.setId(input.getId());//für ItSystemHbn.saveItSystem
@@ -102,23 +104,24 @@ public class ItSystemWS {
 			ItSystemDTO dto = getItSystemDTOFromEditInput(input);
 
 			// create Application - fill attributes
-			if (null == dto.getCiOwner()) {
-				dto.setCiOwner(input.getCwid().toUpperCase());
-				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
-			}
-			if (null == dto.getBusinessEssentialId()) {
-				dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-			}
+//			if (null == dto.getCiOwner()) {
+//				dto.setCiOwner(input.getCwid().toUpperCase());
+//				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
+//			}
+//			if (null == dto.getBusinessEssentialId()) {
+//				dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+//			}
 
 			// save / create application
 			output = ItSystemHbn.createItSystem(input.getCwid(), dto, true);
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
 				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
+				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_IT_SYSTEM, false);
 				if (null != listCi && 1 == listCi.size()) {
 					Long ciId = listCi.get(0).getId();
 					output.setCiId(ciId);
+					output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
 				} else {
 					// unknown?
 					output.setCiId(new Long(-1));

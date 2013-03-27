@@ -19,7 +19,7 @@ public class ItSystemEditParameterInput extends BaseEditParameterInput {
 	
 	private Long severityLevelId;
 	private Long businessEssentialId;
-
+	private Integer ciSubTypeId;
 	
 	
 	public String getAlias() {
@@ -101,5 +101,12 @@ public class ItSystemEditParameterInput extends BaseEditParameterInput {
 	}
 	public void setBusinessEssentialId(Long businessEssentialId) {
 		this.businessEssentialId = businessEssentialId;
+	}
+	
+	public Integer getCiSubTypeId() {
+		return ciSubTypeId;
+	}
+	public void setCiSubTypeId(Integer ciSubTypeId) {
+		this.ciSubTypeId = ciSubTypeId;
 	}
 }

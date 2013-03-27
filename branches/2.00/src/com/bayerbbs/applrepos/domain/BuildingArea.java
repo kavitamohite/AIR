@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "BUILDING_AREA")
 @SequenceGenerator(name = "MySeqBuildingArea", sequenceName = "TBADM.SEQ_BUILDING_AREA")
-public class BuildingArea extends CiBase implements Serializable {
+public class BuildingArea extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	
 	private Long buildingId;

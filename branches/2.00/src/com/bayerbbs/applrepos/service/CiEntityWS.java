@@ -1,13 +1,12 @@
 package com.bayerbbs.applrepos.service;
 
 import java.util.List;
-import java.util.Set;
 
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
-import com.bayerbbs.applrepos.domain.CiBase;
+import com.bayerbbs.applrepos.domain.CiBase1;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.domain.Room;
@@ -87,7 +86,7 @@ public class CiEntityWS {
 			ItSystem itSystem = ItSystemHbn.findById(ItSystem.class, input.getCiId());
 			
 			itSystemDTO.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
-			Integer ciSubType = itSystem.getCiSubType() != null ? itSystem.getCiSubType() : AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM_TRANSIENT;
+			Integer ciSubType = itSystem.getCiSubTypeId() != null ? itSystem.getCiSubTypeId() : AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM_TRANSIENT;
 			itSystemDTO.setCiSubTypeId(ciSubType);
 
 			setCiBaseData(itSystemDTO, itSystem);
@@ -120,7 +119,7 @@ public class CiEntityWS {
 
 		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 			Standort standort = StandortHbn.findById(Standort.class, input.getCiId());
-			CiLokationsKette lokationsKette = TerrainHbn.findLokationsKetteById(input.getCiId());
+			CiLokationsKette lokationsKette = StandortHbn.findLokationsKetteById(input.getCiId());
 			
 //			Set<Terrain> terrains = standort.getTerrains();
 			standortDTO.setTableId(AirKonstanten.TABLE_ID_SITE);
@@ -282,7 +281,7 @@ public class CiEntityWS {
 			Room room = RoomHbn.findById(detailInput.getCiId());
 			CiLokationsKette lokationsKette = RoomHbn.findLokationsKetteById(detailInput.getCiId());
 			Building building = room.getBuildingArea().getBuilding();
-			Set<BuildingArea> buildingAreas = building.getBuildingAreas();
+//			Set<BuildingArea> buildingAreas = building.getBuildingAreas();
 
 			setCiBaseData(roomDTO, room);
 			roomDTO.setAlias(room.getAlias());
@@ -346,11 +345,11 @@ public class CiEntityWS {
 		return roomDTO;
 	}
 	
-	public ItSystemDTO[] getSystemPlatformsById(CiEntityParameterInput detailInput) {
-		List<ItSystem> itSystems = RoomHbn.getSystemPlatformsById(detailInput.getCiId());
-		
-		return null;
-	}
+//	public ItSystemDTO[] getSystemPlatformsById(CiEntityParameterInput detailInput) {
+//		List<ItSystem> itSystems = RoomHbn.getSystemPlatformsById(detailInput.getCiId());
+//		
+//		return null;
+//	}
 	
 	
 	
@@ -397,7 +396,7 @@ public class CiEntityWS {
 	}
 	
 	
-	private void setCiBaseData(CiBaseDTO ciBaseDTO, CiBase ciBase) {
+	private void setCiBaseData(CiBaseDTO ciBaseDTO, CiBase1 ciBase) {
 		ciBaseDTO.setId(ciBase.getId());
 		ciBaseDTO.setName(ciBase.getName());
 		

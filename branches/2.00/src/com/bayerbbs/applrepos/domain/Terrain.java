@@ -21,7 +21,7 @@ import javax.persistence.Table;
 //	@NamedQuery(name="findTerrainsBySiteId", query="FROM Terrain t WHERE t.standortId=:standortId")
 //)
 @SequenceGenerator(name = "MySeqTerrain", sequenceName = "TBADM.SEQ_TERRAIN")
-public class Terrain extends CiBase implements Serializable {
+public class Terrain extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	
 	private Long standortId;

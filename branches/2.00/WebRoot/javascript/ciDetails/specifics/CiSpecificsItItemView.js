@@ -509,8 +509,13 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 	
 	
 	setData: function(data) {
-		data.id = this.ciId;
-		data.name = this.name;
+		if(data.isCiCreate) {
+			data.id = 0;
+			data.name = this.getComponent('tfItSystemCiName').getValue();
+		} else {
+			data.name = this.name;
+			data.id = this.ciId;
+		}
 		
 		
 		var field = this.getComponent('tfItSystemCiAlias');

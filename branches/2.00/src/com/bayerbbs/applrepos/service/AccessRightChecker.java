@@ -1,12 +1,10 @@
 package com.bayerbbs.applrepos.service;
 
-import javax.persistence.Column;
-
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
-import com.bayerbbs.applrepos.domain.CiBase;
-import com.bayerbbs.applrepos.domain.ItSystem;
+import com.bayerbbs.applrepos.domain.CiBase1;
+import com.bayerbbs.applrepos.domain.CiBase2;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 
@@ -119,7 +117,7 @@ public class AccessRightChecker {
 	
 	//Doppelt weil: siehe @Column(name = "CWID_VERANTW_BETR") ciOwner Feld in Hibernateklasse ItSystem
 	//anstatt @Column(name = "RESPONSIBLE") wie in allen anderen Transbase CI Tabellen
-	public boolean isRelevanceOperational(String cwid, ItSystem ci) {
+	public boolean isRelevanceOperational(String cwid, CiBase2 ci) {//ItSystem ci
 		if(cwid == null || ci == null)// || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)
 			return false;
 		
@@ -135,7 +133,7 @@ public class AccessRightChecker {
 		return false;
 	}
 
-	public boolean isRelevanceOperational(String cwid, CiBase ci) {
+	public boolean isRelevanceOperational(String cwid, CiBase1 ci) {
 		if(cwid == null || ci == null)// || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)
 			return false;
 		

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SCHRANK")
 @SequenceGenerator(name = "MySeqSchrank", sequenceName = "TBADM.SEQ_SCHRANK")
-public class Schrank extends CiBase implements Serializable {
+public class Schrank extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	
 	private Long severityLevelId;

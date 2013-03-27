@@ -114,6 +114,7 @@ public class RoomWS {
 				if (null != listCi && 1 == listCi.size()) {
 					Long ciId = listCi.get(0).getId();
 					output.setCiId(ciId);
+					output.setTableId(AirKonstanten.TABLE_ID_ROOM);
 				} else {
 					// unknown?
 					output.setCiId(new Long(-1));

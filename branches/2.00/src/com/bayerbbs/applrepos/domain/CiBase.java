@@ -9,7 +9,7 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	private Long id;
 	private String name;
 	
-	private String ciOwner;
+//	private String ciOwner;
 	private String ciOwnerDelegate;
 	
 	// compliance
@@ -59,14 +59,14 @@ public abstract class CiBase extends DeletableRevisionInfo {
 
 	
 	
-	@Column(name = "RESPONSIBLE")
-	public String getCiOwner() {
-		return ciOwner;
-	}
-
-	public void setCiOwner(String ciOwner) {
-		this.ciOwner = ciOwner;
-	}
+//	@Column(name = "RESPONSIBLE")
+//	public String getCiOwner() {
+//		return ciOwner;
+//	}
+//
+//	public void setCiOwner(String ciOwner) {
+//		this.ciOwner = ciOwner;
+//	}
 
 	@Column(name = "SUB_RESPONSIBLE")
 	public String getCiOwnerDelegate() {

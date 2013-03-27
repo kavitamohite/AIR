@@ -553,6 +553,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	onCiCreated: function(store, records, options) {
 		AAM.setCiId(records[0].data.ciId);
+		AAM.setTableId(parseInt(records[0].data.tableId));
 		
 		this.afterCiSave(store, records, options);
 	},

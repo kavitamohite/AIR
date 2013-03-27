@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "RAUM")
 @SequenceGenerator(name = "MySeqRoom", sequenceName = "TBADM.SEQ_RAUM")
-public class Room extends CiBase implements Serializable {
+public class Room extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -1270064907617489118L;
 
 	private String alias;

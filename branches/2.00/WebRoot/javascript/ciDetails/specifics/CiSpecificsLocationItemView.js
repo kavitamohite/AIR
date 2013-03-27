@@ -33,8 +33,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		    	
 		        xtype: 'filterCombo',//combo
 		        id: 'cbRoom',
-		        disabled: true,
-		        hideTrigger: true,
+//		        disabled: true,
+//		        hideTrigger: true,
 		        
 		        width: 230,
 		        fieldLabel: 'Room',
@@ -56,8 +56,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	        },{
 		        xtype: 'filterCombo',//combo
 		        id: 'cbBuildingArea',
-		        disabled: true,
-		        hideTrigger: true,
+//		        disabled: true,
+//		        hideTrigger: true,
 		        
 		        width: 230,
 		        fieldLabel: 'Building Area',
@@ -79,8 +79,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	        },{
 		        xtype: 'filterCombo',//combo filterCombo
 		        id: 'cbBuilding',
-		        disabled: true,
-		        hideTrigger: true,
+//		        disabled: true,
+//		        hideTrigger: true,
 		        
 		        width: 230,
 		        fieldLabel: 'Building',
@@ -103,9 +103,10 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        id: 'cbTerrain',//tfTerrain
 		    	xtype: 'combo',//textfield
 		        fieldLabel: 'Terrain',
-		        disabled: true,
-		        width: 230,
+//		        disabled: true,
+//		        hideTrigger: true,
 		        
+		        width: 230,
 		        store: AIR.AirStoreFactory.createTerrainListStore(),//new Ext.data.Store(),//AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
 		        displayField: 'name',
@@ -123,11 +124,11 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	        },{
 		        id: 'cbSite',
 		    	xtype: 'combo',//textfield
-		    	
 		        fieldLabel: 'Site',
-		        disabled: true,
+//		        disabled: true,
+//		        hideTrigger: true,
 		        width: 230,
-		        
+
 		        store: AIR.AirStoreFactory.createSiteListStore(),//new Ext.data.Store(),//AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
 		        displayField: 'name',
@@ -147,8 +148,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        xtype: 'filterCombo',//'textfield',
 		    	
 		        fieldLabel: 'Country',
-		        disabled: true,
-//		        anchor: '70%'
+//		        disabled: true,
+//		        hideTrigger: true,
 		        width: 230,
 		        
 //		        anchor: '70%',
@@ -612,7 +613,6 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, true);//true !data.isCiCreate
 				break;
-
 			case AC.TABLE_ID_TERRAIN:
 				tfLocationCiAlias.setVisible(false);
 				tfLocationCiAlias.reset();
