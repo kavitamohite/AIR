@@ -1,12 +1,9 @@
 package com.bayerbbs.applrepos.service;
 
-import java.util.List;
-
 import com.bayerbbs.applrepos.constants.AirKonstanten;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
-import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
 
 public class RoomWS {
@@ -109,6 +106,11 @@ public class RoomWS {
 			output = RoomHbn.createRoom(input.getCwid(), dto, true);
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
+				Room room = RoomHbn.findByNameAndBuildingAreaId(dto.getName(), dto.getAreaId());
+				output.setCiId(room.getId());
+				output.setTableId(AirKonstanten.TABLE_ID_ROOM);
+				
+				/*
 				// get detail
 				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
 				if (null != listCi && 1 == listCi.size()) {
@@ -118,7 +120,7 @@ public class RoomWS {
 				} else {
 					// unknown?
 					output.setCiId(new Long(-1));
-				}
+				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {

@@ -8,9 +8,11 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
@@ -21,7 +23,6 @@ import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.service.CiDetailParameterInput;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
@@ -69,13 +70,14 @@ public class BuildingHbn extends LokationItemHbn {
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
 //				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateCi(dto);//, listCi
+				List<String> messages = validateBuilding(dto);//validateCi  , listCi
 
+				
 				if (messages.isEmpty()) {
 					Building building = new Building();
 					boolean isNameAndAliasNameAllowed = true;
 					
-					List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+					/*List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
 					
 					if (isNameAndAliasNameAllowed) {
 						if (null != listCi && 0 < listCi.size()) {
@@ -119,7 +121,7 @@ public class BuildingHbn extends LokationItemHbn {
 								output.setMessages(new String[] {"Building Alias '" + listCI.get(0).getAlias() + "' already exists."});
 							}
 						}						
-					}
+					}*/
 					
 					
 					if (isNameAndAliasNameAllowed) {
@@ -171,7 +173,7 @@ public class BuildingHbn extends LokationItemHbn {
 						
 						building.setAlias(dto.getAlias());
 						
-						setUpCi(building, dto, cwid);
+						setUpCi(building, dto, cwid, true);
 						
 						building.setTerrainId(dto.getTerrainId());
 						Terrain terrain = TerrainHbn.findById(dto.getTerrainId());
@@ -238,12 +240,13 @@ public class BuildingHbn extends LokationItemHbn {
 
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING_AREA, true);
-				List<String> messages = validateCi(dto);//, listCi
+				List<String> messages = validateBuildingArea(dto);//validateCi, listCi
 
 				if (messages.isEmpty()) {
 					BuildingArea buildingArea = new BuildingArea();
 					boolean isNameAndAliasNameAllowed = true;
 					
+					/*
 					if (isNameAndAliasNameAllowed) {
 						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING_AREA, true);
 						
@@ -288,7 +291,7 @@ public class BuildingHbn extends LokationItemHbn {
 								output.setMessages(new String[] {"Building Alias '" + listCI.get(0).getAlias() + "' already exists."});
 							}
 						}						
-					}
+					}*/
 					
 					
 					if (isNameAndAliasNameAllowed) {
@@ -340,7 +343,7 @@ public class BuildingHbn extends LokationItemHbn {
 						buildingArea.setRelevanceITSEC(dto.getRelevanzItsec());
 						buildingArea.setRelevanceICS(dto.getRelevanceICS());*/
 						
-						setUpCi(buildingArea, dto, cwid);
+						setUpCi(buildingArea, dto, cwid, true);
 						
 						// ci - attributes
 						buildingArea.setBuildingId(dto.getBuildingId());
@@ -1310,5 +1313,78 @@ public class BuildingHbn extends LokationItemHbn {
 		Collections.sort(data);
 		
 		return data.toArray(new KeyValueDTO[0]);
+	}
+	
+	
+	public static List<Building> findByNameOrAliasAndTerrainId(String name, String alias, Long terrainId) {
+		Session session = HibernateUtil.getSession();
+		
+		Query q = session.getNamedQuery("findByNameOrAliasAndTerrainId");
+		q.setParameter("name", name);
+		q.setParameter("alias", alias);
+		q.setParameter("terrainId", terrainId);
+
+		List<Building> areas = q.list();
+		
+		return areas;
+	}
+	public static Building findByNameAndTerrainId(String name,	Long terrainId) {
+		Session session = HibernateUtil.getSession();
+		
+		Query q = session.getNamedQuery("findByNameAndTerrainId");
+		q.setParameter("name", name);
+		q.setParameter("terrainId", terrainId);
+
+		Building building = (Building)q.uniqueResult();
+		
+		return building;
+	}
+	
+	
+	public static BuildingArea findByNameAndBuildingId(String name,	Long buildingId) {
+		Session session = HibernateUtil.getSession();
+		
+		Query q = session.getNamedQuery("findByNameAndBuildingId");
+		q.setParameter("name", name);
+		q.setParameter("buildingId", buildingId);
+
+		BuildingArea room = (BuildingArea)q.uniqueResult();
+		
+		return room;
+	}
+	
+	
+	private static List<String> validateBuilding(BuildingDTO dto) {
+		List<Building> buildings = findByNameOrAliasAndTerrainId(dto.getName(), dto.getAlias(), dto.getTerrainId());
+		
+		List<String> messages = new ArrayList<String>();
+		if(buildings.size() > 0) {
+			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+			
+//			Building building = buildings.get(0);
+//			if(building.getDeleteTimestamp() == null)
+				messages.add(errorCodeManager.getErrorMessage("4000", null));
+//			else
+//				messages.add(errorCodeManager.getErrorMessage("4001", null));
+		}
+		
+		return messages;
+	}
+	
+	private static List<String> validateBuildingArea(BuildingAreaDTO dto) {
+		BuildingArea buildingArea = findByNameAndBuildingId(dto.getName(), dto.getBuildingId());
+		
+		List<String> messages = new ArrayList<String>();
+		if(buildingArea != null) {
+			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+			
+//			Building building = buildings.get(0);
+//			if(building.getDeleteTimestamp() == null)
+				messages.add(errorCodeManager.getErrorMessage("5000", null));
+//			else
+//				messages.add(errorCodeManager.getErrorMessage("5001", null));
+		}
+		
+		return messages;
 	}
 }

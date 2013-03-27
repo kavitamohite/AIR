@@ -11,6 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
@@ -487,13 +488,14 @@ public class StandortHbn extends LokationItemHbn {
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
 //				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateCi(dto);//, listCi
-				List<CiItemDTO> listCi = null;
+				List<String> messages = validateStandort(dto);//validateCi , listCi
+//				List<CiItemDTO> listCi = null;
 
 				if (messages.isEmpty()) {
 					Standort standort = new Standort();
 					boolean isNameAndAliasNameAllowed = true;
 					
+					/*
 					if (isNameAndAliasNameAllowed) {
 						listCi = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getName(), true);
 						
@@ -538,7 +540,7 @@ public class StandortHbn extends LokationItemHbn {
 								output.setMessages(new String[] {"Standort Alias '" + listCi.get(0).getAlias() + "' already exists."});
 							}
 						}						
-					}
+					}*/
 					
 					
 					if (isNameAndAliasNameAllowed) {
@@ -586,7 +588,7 @@ public class StandortHbn extends LokationItemHbn {
 						standort.setRelevanceITSEC(dto.getRelevanzItsec());
 						standort.setRelevanceICS(dto.getRelevanceICS());*/
 						
-						setUpCi(standort, dto, cwid);
+						setUpCi(standort, dto, cwid, true);
 						
 						standort.setLandId(dto.getLandId());
 						
@@ -654,4 +656,35 @@ public class StandortHbn extends LokationItemHbn {
 		return data.toArray(new KeyValueDTO[0]);
 	}
 	
+	public static Standort findByNameAndCountryId(String name, Long landId) {
+		Session session = HibernateUtil.getSession();
+		
+		Query q = session.getNamedQuery("findByNameAndCountryId");
+		q.setParameter("name", name);
+		q.setParameter("landId", landId);
+
+		Standort standort = (Standort)q.uniqueResult();
+		
+		return standort;
+	}
+	
+	private static List<String> validateStandort(StandortDTO dto) {
+		Standort standort = findByNameAndCountryId(dto.getName(), dto.getLandId());
+		
+		List<String> messages = new ArrayList<String>();
+		if(standort != null) {
+			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+			
+//			Building building = buildings.get(0);
+//			if(building.getDeleteTimestamp() == null)
+				messages.add(errorCodeManager.getErrorMessage("7000", null));
+//			else
+//				messages.add(errorCodeManager.getErrorMessage("7001", null));
+		}
+		
+		return messages;
+	}
+
+
+
 }

@@ -1,12 +1,10 @@
 package com.bayerbbs.applrepos.service;
 
-import java.util.List;
-
 import com.bayerbbs.applrepos.constants.AirKonstanten;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
-import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
+import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
 
 public class StandortWS {
@@ -101,6 +99,11 @@ public class StandortWS {
 			output = StandortHbn.createStandort(input.getCwid(), dto, true);
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
+				Standort standort = StandortHbn.findByNameAndCountryId(dto.getName(), dto.getLandId());
+				output.setCiId(standort.getId());
+				output.setTableId(AirKonstanten.TABLE_ID_SITE);
+				
+				/*
 				// get detail
 				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_SITE, false);
 				if (null != listCi && 1 == listCi.size()) {
@@ -110,7 +113,7 @@ public class StandortWS {
 				} else {
 					// unknown?
 					output.setCiId(new Long(-1));
-				}
+				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {

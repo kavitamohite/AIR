@@ -61,6 +61,59 @@
 		<code>1108</code>
 		<message>Delegate Person/Group is not unique</message>
 	</Error>
+	
+	
+	<Error>
+		<code>2000</code>
+		<message>A position with this name already exists in this room</message>
+	</Error>
+	<Error>
+		<code>2001</code>
+		<message>A position which is marked as deleted with this name already exists in this room. Reactivate?</message>
+	</Error>
+	<Error>
+		<code>3000</code>
+		<message>A room with this name or alias already exists in this building area</message>
+	</Error>
+	<Error>
+		<code>3001</code>
+		<message>A room which is marked as deleted with this name or alias already exists in this building area. Reactivate?</message>
+	</Error>
+	
+	<Error>
+		<code>4000</code>
+		<message>A building with this name or alias already exists in this terrain</message>
+	</Error>
+	<Error>
+		<code>4001</code>
+		<message>A building which is marked as deleted with this name or alias already exists in this terrain. Reactivate?</message>
+	</Error>
+	
+	<Error>
+		<code>5000</code>
+		<message>A building area with this name exists in this building</message>
+	</Error>
+	<Error>
+		<code>5001</code>
+		<message>A building area which is marked as deleted with this name or alias already exists in this building. Reactivate?</message>
+	</Error>
 
+	<Error>
+		<code>6000</code>
+		<message>A terrain with this name exists in this site</message>
+	</Error>
+	<Error>
+		<code>6001</code>
+		<message>A terrain which is marked as deleted with this name already exists in this site. Reactivate?</message>
+	</Error>
+	
+	<Error>
+		<code>7000</code>
+		<message>A site with this name exists in this country</message>
+	</Error>
+	<Error>
+		<code>7001</code>
+		<message>A site which is marked as deleted with this name already exists in this country. Reactivate?</message>
+	</Error>
 </ErrorCodeItems>
 		

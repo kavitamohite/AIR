@@ -8,9 +8,11 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
@@ -486,13 +488,14 @@ public class TerrainHbn extends LokationItemHbn {
 
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateCi(dto);//, listCi
+//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+				List<String> messages = validateTerrain(dto);//validateCi , listCi
 
 				if (messages.isEmpty()) {
 					Terrain terrain = new Terrain();
 					boolean isNameAndAliasNameAllowed = true;
 					
+					/*
 					if (isNameAndAliasNameAllowed) {
 //						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
 						if (null != listCi && 0 < listCi.size()) {
@@ -536,7 +539,7 @@ public class TerrainHbn extends LokationItemHbn {
 								output.setMessages(new String[] {"Terrain Alias '" + listCi.get(0).getAlias() + "' already exists."});
 							}
 						}						
-					}
+					}*/
 					
 					
 					if (isNameAndAliasNameAllowed) {
@@ -584,7 +587,7 @@ public class TerrainHbn extends LokationItemHbn {
 						terrain.setRelevanceITSEC(dto.getRelevanzItsec());
 						terrain.setRelevanceICS(dto.getRelevanceICS());*/
 						
-						setUpCi(terrain, dto, cwid);
+						setUpCi(terrain, dto, cwid, true);
 						
 						terrain.setStandortId(dto.getStandortId());
 						Standort standort = StandortHbn.findById(dto.getStandortId());
@@ -653,4 +656,34 @@ public class TerrainHbn extends LokationItemHbn {
 		
 		return data.toArray(new KeyValueDTO[0]);
 	}
+
+	public static Terrain findByNameAndSiteId(String name, Long standortId) {
+		Session session = HibernateUtil.getSession();
+		
+		Query q = session.getNamedQuery("findByNameAndSiteId");
+		q.setParameter("name", name);
+		q.setParameter("standortId", standortId);
+
+		Terrain terrain = (Terrain)q.uniqueResult();
+		
+		return terrain;
+	}
+	
+	private static List<String> validateTerrain(TerrainDTO dto) {
+		Terrain terrain = findByNameAndSiteId(dto.getName(), dto.getStandortId());
+		
+		List<String> messages = new ArrayList<String>();
+		if(terrain != null) {
+			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+			
+//			Building building = buildings.get(0);
+//			if(building.getDeleteTimestamp() == null)
+				messages.add(errorCodeManager.getErrorMessage("6000", null));
+//			else
+//				messages.add(errorCodeManager.getErrorMessage("6001", null));
+		}
+		
+		return messages;
+	}
+
 }

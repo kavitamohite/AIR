@@ -8,9 +8,11 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
@@ -18,7 +20,6 @@ import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.domain.Room;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
@@ -354,7 +355,7 @@ public class RoomHbn extends LokationItemHbn {
 //						}
 
 						
-						setUpCi(room, dto, cwid);
+						setUpCi(room, dto, cwid, false);
 						
 						if (null != dto.getAreaId() && !room.getBuildingAreaId().equals(dto.getAreaId())) {
 							BuildingArea area = BuildingHbn.findBuildingAreaById(dto.getAreaId());
@@ -694,13 +695,13 @@ public class RoomHbn extends LokationItemHbn {
 			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+				List<String> messages = validateRoom(dto);//validateCi
 
 				if (messages.isEmpty()) {
 					Room room = new Room();
 					boolean isNameAndAliasNameAllowed = true;
 					
-					List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
+					/*List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
 					
 					if (isNameAndAliasNameAllowed) {
 						
@@ -747,7 +748,7 @@ public class RoomHbn extends LokationItemHbn {
 								output.setMessages(new String[] {"Room Alias '" + listCI.get(0).getAlias() + "' already exists."});
 							}
 						}						
-					}
+					}*/
 					
 					
 					if (isNameAndAliasNameAllowed) {
@@ -783,7 +784,7 @@ public class RoomHbn extends LokationItemHbn {
 						room.setFloor(dto.getFloor());
 						room.setRoomType(dto.getRoomType());
 						
-						setUpCi(room, dto, cwid);
+						setUpCi(room, dto, cwid, true);
 						
 						room.setBuildingAreaId(dto.getAreaId());
 						BuildingArea buildingArea = BuildingHbn.findBuildingAreaById(dto.getAreaId());
@@ -817,11 +818,14 @@ public class RoomHbn extends LokationItemHbn {
 				} else {
 					// messages
 					output.setResult(AirKonstanten.RESULT_ERROR);
-					String astrMessages[] = new String[messages.size()];
-					for (int i = 0; i < messages.size(); i++) {
-						astrMessages[i] = messages.get(i);
-					}
-					output.setMessages(astrMessages);
+					output.setMessages(messages.toArray(new String[0]));
+					
+					
+//					String astrMessages[] = new String[messages.size()];
+//					for (int i = 0; i < messages.size(); i++) {
+//						astrMessages[i] = messages.get(i);
+//					}
+//					output.setMessages(astrMessages);
 				}
 			} else {
 				// ci id not 0
@@ -850,11 +854,46 @@ public class RoomHbn extends LokationItemHbn {
 		return data.toArray(new KeyValueDTO[0]);
 	}
 	
-	protected static List<String> validateCi(RoomDTO dto) {
-//		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-		List<String> messages = BaseHbn.validateCi(dto);//, listCi
+	public static List<Room> findByNameOrAliasAndBuildingAreaId(String name, String alias, Long buildingAreaId) {
+		Session session = HibernateUtil.getSession();
 		
+		Query q = session.getNamedQuery("findByNameOrAliasAndBuildingAreaId");
+		q.setParameter("name", name);
+		q.setParameter("alias", alias);
+		q.setParameter("buildingAreaId", buildingAreaId);
+
+		List<Room> rooms = q.list();
 		
+		return rooms;
+	}
+	
+	public static Room findByNameAndBuildingAreaId(String name, Long buildingAreaId) {
+		Session session = HibernateUtil.getSession();
+		
+		Query q = session.getNamedQuery("findByNameAndBuildingAreaId");
+		q.setParameter("name", name);
+		q.setParameter("buildingAreaId", buildingAreaId);
+
+		Room room = (Room)q.uniqueResult();
+		
+		return room;
+	}
+	
+	private static List<String> validateRoom(RoomDTO dto) {
+//		List<String> messages = BaseHbn.validateCi(dto);//, listCi
+		List<Room> rooms = findByNameOrAliasAndBuildingAreaId(dto.getRaumName(), dto.getAlias(), dto.getAreaId());
+		
+		List<String> messages = new ArrayList<String>();
+		if(rooms.size() > 0) {
+			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+			
+//			Room room = rooms.get(0);
+//			if(room.getDeleteTimestamp() == null)
+				messages.add(errorCodeManager.getErrorMessage("3000", null));
+//			else
+//				messages.add(errorCodeManager.getErrorMessage("3001", null));
+		}
+
 		if (null == dto.getBusinessEssentialId()) {
 			// messages.add("business essential is empty");
 			// TODO 1 TESTCODE getBusinessEssentialId

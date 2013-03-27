@@ -517,7 +517,6 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			data.id = this.ciId;
 		}
 		
-		
 		var field = this.getComponent('tfItSystemCiAlias');
 		if(!field.disabled)
 			data.alias = field.getValue();
@@ -528,9 +527,6 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 				data.osNameId = field.getValue();
 			else 
 				data.osNameId = -1;
-		
-
-		
 		
 		field = this.getComponent('cbClusterCode');
 		if(!field.disabled)

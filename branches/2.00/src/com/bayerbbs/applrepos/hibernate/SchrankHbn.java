@@ -1,20 +1,22 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
@@ -65,7 +67,7 @@ public class SchrankHbn extends LokationItemHbn {
 					} else {
 						// schrank found - change values
 						
-						setUpCi(schrank, dto, cwid);
+						setUpCi(schrank, dto, cwid, false);
 						
 						/*
 						if(dto.getRoomId() != null && schrank.getRoomId() != null && !schrank.getRoomId().equals(dto.getRoomId())) {
@@ -413,11 +415,13 @@ public class SchrankHbn extends LokationItemHbn {
 			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+				List<String> messages = validateSchrank(dto);//validateCi
 
 				if (messages.isEmpty()) {
 					Schrank schrank = new Schrank();
 					boolean isNameAndAliasNameAllowed = true;
+					
+					/*
 					List<CiBaseDTO> listCI = null;
 					
 					if (isNameAndAliasNameAllowed) {
@@ -466,7 +470,7 @@ public class SchrankHbn extends LokationItemHbn {
 								output.setMessages(new String[] {"Standort Alias '" + listCI.get(0).getAlias() + "' already exists."});
 							}
 						}						
-					}
+					}*/
 					
 					
 					if (isNameAndAliasNameAllowed) {
@@ -474,7 +478,7 @@ public class SchrankHbn extends LokationItemHbn {
 						Transaction tx = null;
 						tx = session.beginTransaction();
 
-						setUpCi(schrank, dto, cwid);
+						setUpCi(schrank, dto, cwid, true);
 						
 						// ci - attributes
 						schrank.setRoomId(dto.getRoomId());
@@ -592,10 +596,35 @@ public class SchrankHbn extends LokationItemHbn {
 		return null;
 	}
 
-	protected static List<String> validateCi(SchrankDTO dto) {
-//		List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), false);//true
-		List<String> messages = BaseHbn.validateCi(dto);//, listCI
+
+	public static Schrank findByNameAndRoomId(String name, Long roomId) {
+		Session session = HibernateUtil.getSession();
 		
+		Query q = session.getNamedQuery("findByNameAndRoomId");
+		q.setParameter("name", name);
+		q.setParameter("roomId", roomId);
+
+		Schrank schrank = (Schrank)q.uniqueResult();
+		
+		return schrank;
+	}
+	
+	private static List<String> validateSchrank(SchrankDTO dto) {
+//		List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), false);//true
+//		List<String> messages = BaseHbn.validateCi(dto);//, listCI
+		
+		Schrank schrank = findByNameAndRoomId(dto.getName(), dto.getRoomId());
+		
+		List<String> messages = new ArrayList<String>();
+		if(schrank != null) {
+			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+			
+//			Building building = buildings.get(0);
+//			if(building.getDeleteTimestamp() == null)
+				messages.add(errorCodeManager.getErrorMessage("2000", null));
+//			else
+//				messages.add(errorCodeManager.getErrorMessage("2001", null));
+		}
 		
 		if (null == dto.getBusinessEssentialId()) {
 			// messages.add("business essential is empty");
@@ -605,4 +634,6 @@ public class SchrankHbn extends LokationItemHbn {
 		
 		return messages;
 	}
+
+
 }

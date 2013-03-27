@@ -9,12 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "RAUM")
 @SequenceGenerator(name = "MySeqRoom", sequenceName = "TBADM.SEQ_RAUM")
+@NamedQueries({
+	@NamedQuery(name="findByNameOrAliasAndBuildingAreaId", query="FROM Room r WHERE (r.roomName=:name OR r.alias=:alias) AND buildingAreaId=:buildingAreaId"),
+	@NamedQuery(name="findByNameAndBuildingAreaId", query="FROM Room r WHERE r.roomName=:name AND buildingAreaId=:buildingAreaId")
+})
 public class Room extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -1270064907617489118L;
 

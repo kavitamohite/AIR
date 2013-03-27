@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -18,6 +20,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "GEBAEUDE")
 @SequenceGenerator(name = "MySeqGebaeude", sequenceName = "TBADM.SEQ_GEBAEUDE")
+@NamedQueries({
+	@NamedQuery(name="findByNameOrAliasAndTerrainId", query="FROM Building b WHERE (b.buildingName=:name OR b.alias=:alias) AND terrainId=:terrainId"),
+	@NamedQuery(name="findByNameAndTerrainId", query="FROM Building b WHERE b.buildingName=:name AND terrainId=:terrainId")
+})
 public class Building extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = 2431254723377623846L;
 	

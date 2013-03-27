@@ -9,11 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "SCHRANK")
+@NamedQueries({
+	@NamedQuery(name="findByNameAndRoomId", query="FROM Schrank s WHERE s.schrankName=:name AND s.roomId=:roomId")
+})
 @SequenceGenerator(name = "MySeqSchrank", sequenceName = "TBADM.SEQ_SCHRANK")
 public class Schrank extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;

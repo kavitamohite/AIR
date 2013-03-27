@@ -1,14 +1,12 @@
 package com.bayerbbs.applrepos.service;
 
-import java.util.List;
-
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.Building;
+import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
-import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 
 public class BuildingWS {
 	
@@ -175,6 +173,11 @@ public class BuildingWS {
 			output = BuildingHbn.createBuilding(input.getCwid(), dto, true);
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
+				Building building = BuildingHbn.findByNameAndTerrainId(dto.getName(), dto.getTerrainId());
+				output.setCiId(building.getId());
+				output.setTableId(AirKonstanten.TABLE_ID_BUILDING);
+				
+				/*
 				// get detail
 				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING, false);
 				if (null != listCi && 1 == listCi.size()) {
@@ -184,7 +187,7 @@ public class BuildingWS {
 				} else {
 					// unknown?
 					output.setCiId(new Long(-1));
-				}
+				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {
@@ -212,6 +215,11 @@ public class BuildingWS {
 			output = BuildingHbn.createBuildingArea(input.getCwid(), dto, true);
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
+				BuildingArea buildingArea = BuildingHbn.findByNameAndBuildingId(dto.getName(), dto.getBuildingId());
+				output.setCiId(buildingArea.getId());
+				output.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
+				
+				/*
 				// get detail
 				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING_AREA, false);
 				if (null != listCi && 1 == listCi.size()) {
@@ -221,7 +229,7 @@ public class BuildingWS {
 				} else {
 					// unknown?
 					output.setCiId(new Long(-1));
-				}
+				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {

@@ -1,12 +1,10 @@
 package com.bayerbbs.applrepos.service;
 
-import java.util.List;
-
 import com.bayerbbs.applrepos.constants.AirKonstanten;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.TerrainDTO;
-import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
+import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.TerrainHbn;
 
 public class TerrainWS {
@@ -100,6 +98,11 @@ public class TerrainWS {
 			output = TerrainHbn.createTerrain(input.getCwid(), dto, true);
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
+				Terrain terrain = TerrainHbn.findByNameAndSiteId(dto.getName(), dto.getStandortId());
+				output.setCiId(terrain.getId());
+				output.setTableId(AirKonstanten.TABLE_ID_TERRAIN);
+				
+				/*
 				// get detail
 				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_TERRAIN, false);
 				if (null != listCi && 1 == listCi.size()) {
@@ -109,7 +112,7 @@ public class TerrainWS {
 				} else {
 					// unknown?
 					output.setCiId(new Long(-1));
-				}
+				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {

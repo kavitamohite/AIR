@@ -166,10 +166,10 @@ public class ItSystemHbn extends BaseHbn {
 //						}
 
 						
-						setUpCi(itSystem, dto, cwid);
-//						setUpItSystem(itSystem, dto, cwid);
+						setUpCi(itSystem, dto, cwid, false);
+						setUpItSystem(itSystem, dto, cwid);
 						
-						
+						/*
 						if (null != dto.getAlias())
 							itSystem.setAlias(dto.getAlias());
 						
@@ -262,7 +262,7 @@ public class ItSystemHbn extends BaseHbn {
 						
 						itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
 						
-						/*
+						
 						// ================
 						// Owner / Delegate
 						// ================
@@ -740,7 +740,7 @@ public class ItSystemHbn extends BaseHbn {
 						Transaction tx = null;
 						tx = session.beginTransaction();
 
-						setUpCi(itSystem, dto, cwid);
+						setUpCi(itSystem, dto, cwid, true);
 						setUpItSystem(itSystem, dto, cwid);
 						
 						/*

@@ -103,7 +103,7 @@ public class BaseHbn {
 		return isNot ? NOT_EQUAL : EQUAL;
 	}
 	
-	protected static void setUpCi(CiBase1 ci, CiBaseDTO ciDTO, String cwid) {
+	protected static void setUpCi(CiBase1 ci, CiBaseDTO ciDTO, String cwid, boolean isCiCreate) {
 		if (null != ciDTO.getCiOwnerHidden()) {
 			if(StringUtils.isNullOrEmpty(ciDTO.getCiOwnerHidden())) {
 				ci.setCiOwner(null);
@@ -122,10 +122,10 @@ public class BaseHbn {
 		
 		
 		CiBase ci0 = (CiBase)ci;
-		setUpCi(ci0, ciDTO, cwid);
+		setUpCi(ci0, ciDTO, cwid, isCiCreate);
 	}
 	
-	protected static void setUpCi(CiBase2 ci, CiBaseDTO ciDTO, String cwid) {
+	protected static void setUpCi(CiBase2 ci, CiBaseDTO ciDTO, String cwid, boolean isCiCreate) {
 		if (null != ciDTO.getCiOwnerHidden()) {
 			if(StringUtils.isNullOrEmpty(ciDTO.getCiOwnerHidden())) {
 				ci.setCiOwner(null);
@@ -148,25 +148,30 @@ public class BaseHbn {
 		
 		
 		CiBase ci0 = (CiBase)ci;
-		setUpCi(ci0, ciDTO, cwid);
+		setUpCi(ci0, ciDTO, cwid, isCiCreate);
 	}
 	
-	private static void setUpCi(CiBase ci, CiBaseDTO ciDTO, String cwid) {
+	private static void setUpCi(CiBase ci, CiBaseDTO ciDTO, String cwid, boolean isCiCreate) {
 //	protected <T extends CiBase>  void setUpCi(T ci, CiBaseDTO ciDTO, String cwid) {
 		ci.setName(ciDTO.getName());
 		
 		// calculates the ItSet
 
 		
-		// ci - insert values
-		ci.setInsertUser(cwid);
-		ci.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-		ci.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
-
-		// ci - update values
-		ci.setUpdateUser(ci.getInsertUser());
-		ci.setUpdateQuelle(ci.getInsertQuelle());
-		ci.setUpdateTimestamp(ci.getInsertTimestamp());
+		if(isCiCreate) {
+			ci.setInsertUser(cwid);
+			ci.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			ci.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+	
+			// ci - update values
+			ci.setUpdateUser(ci.getInsertUser());
+			ci.setUpdateQuelle(ci.getInsertQuelle());
+			ci.setUpdateTimestamp(ci.getInsertTimestamp());
+		} else {
+			ci.setUpdateUser(cwid);
+			ci.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			ci.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+		}
 		
 		
 //		if (null != ciDTO.getCiOwnerHidden()) {
@@ -216,6 +221,10 @@ public class BaseHbn {
 		
 		
 //		ci.setTemplate(ciDTO.getTemplate());
+		
+		if (isCiCreate && null == ciDTO.getTemplate()) {
+			ciDTO.setTemplate(new Long (0)); // no template
+		}
 		
 		if (null != ciDTO.getTemplate()) {
 			if (-1 == ciDTO.getTemplate()) {

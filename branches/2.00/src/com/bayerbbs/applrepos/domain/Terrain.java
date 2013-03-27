@@ -11,15 +11,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "TERRAIN")
-//@NamedQueries(
-//	@NamedQuery(name="findTerrainsBySiteId", query="FROM Terrain t WHERE t.standortId=:standortId")
-//)
+@NamedQueries({
+	@NamedQuery(name="findByNameAndSiteId", query="FROM Terrain t WHERE t.terrainName=:name AND standortId=:standortId")
+})
 @SequenceGenerator(name = "MySeqTerrain", sequenceName = "TBADM.SEQ_TERRAIN")
 public class Terrain extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;

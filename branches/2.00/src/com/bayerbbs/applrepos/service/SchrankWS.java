@@ -1,11 +1,8 @@
 package com.bayerbbs.applrepos.service;
 
-import java.util.List;
-
 import com.bayerbbs.applrepos.constants.AirKonstanten;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
-import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.SchrankHbn;
 
 public class SchrankWS {
@@ -95,6 +92,11 @@ public class SchrankWS {
 			output = SchrankHbn.createSchrank(input.getCwid(), dto, true);
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
+				Schrank schrank = SchrankHbn.findByNameAndRoomId(dto.getName(), dto.getRoomId());
+				output.setCiId(schrank.getId());
+				output.setTableId(AirKonstanten.TABLE_ID_POSITION);
+				
+				/*
 				// get detail
 				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_POSITION, false);
 				if (null != listCi && 1 == listCi.size()) {
@@ -104,7 +106,7 @@ public class SchrankWS {
 				} else {
 					// unknown?
 					output.setCiId(new Long(-1));
-				}
+				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {
