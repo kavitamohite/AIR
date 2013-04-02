@@ -479,6 +479,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				} else {
 					if(AIR.AirAclManager.isRelevance(cbBuildingArea, data)) {
 						Util.enableCombo(cbBuildingArea);
+						cbBuildingArea.reset();
+						cbBuildingArea.getStore().removeAll();
 						cbBuildingArea.getStore().setBaseParam('id', data.gebaeudeId);
 						cbBuildingArea.allQuery = data.gebaeudeId;
 					} else {
@@ -765,8 +767,12 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					data.floor = tfRoomFloor.getValue();
 				
 				if(!cbBuildingArea.disabled)
-					data.areaId = cbBuildingArea.getValue();
-				
+					data.areaId = data.isCiCreate ? 
+									cbBuildingArea.getValue() :
+									typeof cbBuildingArea.getValue() === 'string' ? AAM.getAppDetail().areaId : cbBuildingArea.getValue();
+				//2. Möglichkeit: 
+				//3. Möglichkeit: nur untersuchen ob cbBuildingArea.getValue() String ist oder nicht. Wenn ja, areadId von getAppDetail()
+									
 				break;
 
 			case AC.TABLE_ID_BUILDING_AREA:

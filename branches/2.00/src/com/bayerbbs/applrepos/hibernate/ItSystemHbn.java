@@ -10,13 +10,16 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
@@ -24,7 +27,6 @@ import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.KeyValueType2DTO;
 import com.bayerbbs.applrepos.dto.KeyValueTypeDTO;
 import com.bayerbbs.applrepos.dto.OsTypeDTO;
-import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemDTO;
@@ -116,7 +118,9 @@ public class ItSystemHbn extends BaseHbn {
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
 //				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateCi(dto);//, listCi
+//				List<String> messages = validateCi(dto);//, listCi
+				
+				List<String> messages = validate(dto, true);
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -145,7 +149,10 @@ public class ItSystemHbn extends BaseHbn {
 //							}
 //						}
 						
-
+						setUpCi(itSystem, dto, cwid, false);
+						setUpItSystem(itSystem, dto, cwid);
+						
+						/*
 						itSystem.setUpdateUser(cwid);
 						itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
@@ -164,12 +171,7 @@ public class ItSystemHbn extends BaseHbn {
 //						if (null != dto.getName()) {
 //							itSystem.setItSystemName(dto.getName());
 //						}
-
-						
-						setUpCi(itSystem, dto, cwid, false);
-						setUpItSystem(itSystem, dto, cwid);
-						
-						/*
+						 
 						if (null != dto.getAlias())
 							itSystem.setAlias(dto.getAlias());
 						
@@ -519,7 +521,7 @@ public class ItSystemHbn extends BaseHbn {
 		}
 		
 		if(DELETE.equals(dto.getClusterCode()))
-			itSystem.setClusterCode(null);
+			itSystem.setClusterCode(null);//DB (Trigger?) defaults to "N"
 		else
 			itSystem.setClusterCode(dto.getClusterCode());
 			
@@ -552,28 +554,28 @@ public class ItSystemHbn extends BaseHbn {
 		
 		
 		if(null != dto.getLifecycleStatusId()) {
-			if(dto.getOsNameId() > -1)
+			if(dto.getLifecycleStatusId() > -1)
 				itSystem.setLifecycleStatusId(dto.getLifecycleStatusId());
 			else
 				itSystem.setLifecycleStatusId(null);
 		}
 			
 		if(null != dto.getEinsatzStatusId()) {
-			if(dto.getOsNameId() > -1)
+			if(dto.getEinsatzStatusId() > -1)
 				itSystem.setEinsatzStatusId(dto.getEinsatzStatusId());
 			else
 				itSystem.setEinsatzStatusId(null);
 		}
 			
 		if(null != dto.getPrimaryFunctionId()) {
-			if(dto.getOsNameId() > -1)
+			if(dto.getPrimaryFunctionId() > -1)
 				itSystem.setPrimaryFunctionId(dto.getPrimaryFunctionId());
 			else
 				itSystem.setPrimaryFunctionId(null);
 		}
 			
 		if(null != dto.getLicenseScanningId()) {
-			if(dto.getOsNameId() > -1)
+			if(dto.getLicenseScanningId() > -1)
 				itSystem.setLicenseScanningId(dto.getLicenseScanningId());
 			else
 				itSystem.setLicenseScanningId(null);
@@ -587,6 +589,13 @@ public class ItSystemHbn extends BaseHbn {
 			else {
 				itSystem.setSeverityLevelId(dto.getSeverityLevelId());
 			}
+		}
+		
+		
+		if (null == dto.getBusinessEssentialId()) {
+			// messages.add("business essential is empty");
+			// TODO 1 TESTCODE getBusinessEssentialId
+			dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
 		}
 		
 		itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
@@ -678,13 +687,13 @@ public class ItSystemHbn extends BaseHbn {
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
 //				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateCi(dto);//, listCi
+				List<String> messages = validate(dto, false);//validateCi , listCi
 
 				if (messages.isEmpty()) {
 					ItSystem itSystem = new ItSystem();
 					boolean isNameAndAliasNameAllowed = true;
 					
-					
+					/*
 					if (isNameAndAliasNameAllowed) {
 						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_IT_SYSTEM, true);
 
@@ -730,7 +739,7 @@ public class ItSystemHbn extends BaseHbn {
 								output.setMessages(new String[] {"ItSystem Alias '" + listCI.get(0).getAlias() + "' already exists."});
 							}
 						}						
-					}
+					}*/
 					
 					
 					if (isNameAndAliasNameAllowed) {
@@ -744,7 +753,6 @@ public class ItSystemHbn extends BaseHbn {
 						setUpItSystem(itSystem, dto, cwid);
 						
 						/*
-						
 						// calculates the ItSet
 						Long itSet = null;
 						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
@@ -837,14 +845,11 @@ public class ItSystemHbn extends BaseHbn {
 		
 		
 		//cwid_verantw_betr statt responsible
-		sql.append(", cwid_verantw_betr, sub_responsible FROM ").append(metaData.getTableName()).append(" WHERE (").
-		append("(hw_ident_or_trans = ").append(input.getCiSubTypeId());
-		if(input.getCiSubTypeId().equals(AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM_TRANSIENT))
-			sql.append(" OR hw_ident_or_trans IS NULL");
+		sql.append(", cwid_verantw_betr, sub_responsible FROM ").append(metaData.getTableName()).append(" WHERE ").
+
 //		append(" hw_ident_or_trans = ").append(input.getCiSubTypeId()).
 		
-		sql.append(") AND del_timestamp IS NULL AND UPPER(").append(metaData.getNameField()).append(") LIKE '");
-		
+		append("del_timestamp IS NULL AND (UPPER(").append(metaData.getNameField()).append(") LIKE '");
 		
 		if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
 			sql.append("%");
@@ -867,8 +872,12 @@ public class ItSystemHbn extends BaseHbn {
 			if(CiEntitiesHbn.isLikeEnd(input.getQueryMode()))
 				sql.append("%");
 			
-			sql.append("'");
+			sql.append("') ");
 		}
+		
+		sql.append("AND (hw_ident_or_trans = ").append(input.getCiSubTypeId());
+		if(input.getCiSubTypeId().equals(AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM_TRANSIENT))
+			sql.append(" OR hw_ident_or_trans IS NULL");
 		
 		sql.append(")");
 		
@@ -1038,7 +1047,7 @@ public class ItSystemHbn extends BaseHbn {
 			stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery(sql.toString());
 			
-			int i = 0;
+			int i = 1;
 			while (rs.next())
 				osGroups.add(new KeyValueTypeDTO(i++, rs.getString("os_group"), rs.getInt("hw_ident_or_trans")));
 			
@@ -1151,7 +1160,7 @@ public class ItSystemHbn extends BaseHbn {
 			stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery(sql.toString());
 			
-			long i = 0;
+			long i = 1;
 			while (rs.next())
 				clusterTypes.add(new KeyValueDTO(i++, rs.getString("cluster_type")));
 			
@@ -1240,29 +1249,106 @@ public class ItSystemHbn extends BaseHbn {
 		
 		//wichtig: mit id=1 und nicht 0, sonst wird in der combo immer ein Wert gesetzt, auch dann wenn
 		//er gerade manuell gelöscht wurde.
-		licenseScannings.add(new KeyValueDTO(0L, "no exception from scanning"));
-		licenseScannings.add(new KeyValueDTO(1L, "OS not supported"));
-		licenseScannings.add(new KeyValueDTO(2L, "Embedded System, no scanner can be installed"));
-		licenseScannings.add(new KeyValueDTO(3L, "Customer declined"));
-		licenseScannings.add(new KeyValueDTO(4L, "OEM Software installed, loss of warranty by scanner installation"));
-		licenseScannings.add(new KeyValueDTO(5L, "Access to system not possible"));
-		licenseScannings.add(new KeyValueDTO(6L, "Other Scanning Method Used"));
-		licenseScannings.add(new KeyValueDTO(7L, "Internal Lab / Test Systems"));
+		licenseScannings.add(new KeyValueDTO(1L, "no exception from scanning"));
+		licenseScannings.add(new KeyValueDTO(2L, "OS not supported"));
+		licenseScannings.add(new KeyValueDTO(3L, "Embedded System, no scanner can be installed"));
+		licenseScannings.add(new KeyValueDTO(4L, "Customer declined"));
+		licenseScannings.add(new KeyValueDTO(5L, "OEM Software installed, loss of warranty by scanner installation"));
+		licenseScannings.add(new KeyValueDTO(6L, "Access to system not possible"));
+		licenseScannings.add(new KeyValueDTO(7L, "Other Scanning Method Used"));
+		licenseScannings.add(new KeyValueDTO(8L, "Internal Lab / Test Systems"));
 		
 		return licenseScannings;
 	}
+	public static ItSystem findItSystemByName(String name) {
+		Session session = HibernateUtil.getSession();
+		
+		Query q = session.getNamedQuery("findItSystemByName");
+		q.setParameter("name", name);
+
+		ItSystem itSystem = (ItSystem)q.uniqueResult();
+		
+		return itSystem;
+	}
+
+	public static List<ItSystem> findItSystemsByNameOrAlias(String name, String alias) {
+		Session session = HibernateUtil.getSession();
+		
+		Query q = session.getNamedQuery("findItSystemsByNameOrAlias");
+		q.setParameter("name", name);
+		q.setParameter("alias", alias);
+
+		List<ItSystem> itSystems = q.list();
+		
+		return itSystems;
+	}
+	public static List<Application> findApplicationsByNameOrAlias(String name, String alias) {
+		Session session = HibernateUtil.getSession();
+		
+		Query q = session.getNamedQuery("findApplicationsByNameOrAlias");
+		q.setParameter("name", name);
+		q.setParameter("alias", alias);
+
+		List<Application> applications = q.list();
+		
+		return applications;
+	}
 	
-	protected static List<String> validateCi(ItSystemDTO dto) {
+	static List<String> validate(CiBaseDTO dto, boolean isUpdate) {
 //		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-		List<String> messages = BaseHbn.validateCi(dto);//, listCi
+//		List<String> messages = BaseHbn.validateCi(dto);//, listCi
 		
+		List<String> messages = new ArrayList<String>();
+
 		
-		if (null == dto.getBusinessEssentialId()) {
-			// messages.add("business essential is empty");
-			// TODO 1 TESTCODE getBusinessEssentialId
-			dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+		if(isUpdate) {
+			List<Application> applications = findApplicationsByNameOrAlias(dto.getAlias(), dto.getAlias());
+			List<ItSystem> itSystems = findItSystemsByNameOrAlias(dto.getAlias(), dto.getAlias());
+			
+			if(itSystems.size() > 0 && itSystems.get(0).getId().longValue() != dto.getId().longValue()) {
+				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+				
+//				Building building = buildings.get(0);
+//				if(building.getDeleteTimestamp() == null)
+					messages.add(errorCodeManager.getErrorMessage("8000", null));
+//				else
+//					messages.add(errorCodeManager.getErrorMessage("8001", null));
+			}
+			
+			if(applications.size() > 0 && applications.get(0).getId().longValue() != dto.getId().longValue()) {
+				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+				
+//				Building building = buildings.get(0);
+//				if(building.getDeleteTimestamp() == null)
+					messages.add(errorCodeManager.getErrorMessage("9000", null));
+//				else
+//					messages.add(errorCodeManager.getErrorMessage("9001", null));
+			}
+		} else {
+			List<Application> applications = findApplicationsByNameOrAlias(dto.getName(), dto.getAlias());
+			List<ItSystem> itSystems = findItSystemsByNameOrAlias(dto.getName(), dto.getAlias());
+			
+			if(itSystems.size() > 0) {
+				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+				
+//				Building building = buildings.get(0);
+//				if(building.getDeleteTimestamp() == null)
+					messages.add(errorCodeManager.getErrorMessage("8000", null));
+//				else
+//					messages.add(errorCodeManager.getErrorMessage("8001", null));
+			}
+
+			if(applications.size() > 0) {
+				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+				
+//				Building building = buildings.get(0);
+//				if(building.getDeleteTimestamp() == null)
+					messages.add(errorCodeManager.getErrorMessage("9000", null));
+//				else
+//					messages.add(errorCodeManager.getErrorMessage("9001", null));
+			}
 		}
-		
+
 		return messages;
 	}
 }

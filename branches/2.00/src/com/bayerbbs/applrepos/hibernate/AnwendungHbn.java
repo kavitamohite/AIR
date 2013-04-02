@@ -181,8 +181,25 @@ public class AnwendungHbn {
 			if (null != dto.getId()	|| 0 < dto.getId().longValue()) {
 				Long id = new Long(dto.getId());
 
+				//ORIG
 				// check der InputWerte
-				List<String> messages = AnwendungHbn.validateApplication(dto);
+//				List<String> messages = AnwendungHbn.validateApplication(dto);
+				//ORIG
+				
+				//NEU
+				List<String> messages = ItSystemHbn.validate(dto, true);
+				if (null == dto.getTemplate()) {
+					// TODO 1 TESTCODE Template
+					dto.setTemplate(new Long (0)); // no template
+				}
+
+				if (null == dto.getBusinessEssentialId()) {
+					// messages.add("business essential is empty");
+					// TODO 1 TESTCODE getBusinessEssentialId
+					dto.setBusinessEssentialId(null);
+				}
+				//NEU
+				
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();

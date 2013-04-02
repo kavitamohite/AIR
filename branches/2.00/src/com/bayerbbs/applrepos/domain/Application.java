@@ -5,12 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ANWENDUNG")
+@NamedQueries({
+	@NamedQuery(name="findApplicationsByNameOrAlias", query="FROM Application a WHERE a.applicationName=:name OR a.applicationAlias=:alias")
+//	@NamedQuery(name="findApplicationByName", query="FROM Application a WHERE a.applicationName=:name")
+})
 @SequenceGenerator(name = "MySeqAnwendung", sequenceName = "TBADM.SEQ_ANWENDUNG")
 public class Application extends DeletableRevisionInfo {
 	// basics

@@ -69,7 +69,7 @@
 	</Error>
 	<Error>
 		<code>2001</code>
-		<message>A position which is marked as deleted with this name already exists in this room. Reactivate?</message>
+		<message>A position marked as deleted with this name already exists in this room. Reactivate?</message>
 	</Error>
 	<Error>
 		<code>3000</code>
@@ -77,7 +77,7 @@
 	</Error>
 	<Error>
 		<code>3001</code>
-		<message>A room which is marked as deleted with this name or alias already exists in this building area. Reactivate?</message>
+		<message>A room marked as deleted with this name or alias already exists in this building area. Reactivate?</message>
 	</Error>
 	
 	<Error>
@@ -86,7 +86,7 @@
 	</Error>
 	<Error>
 		<code>4001</code>
-		<message>A building which is marked as deleted with this name or alias already exists in this terrain. Reactivate?</message>
+		<message>A building marked as deleted with this name or alias already exists in this terrain. Reactivate?</message>
 	</Error>
 	
 	<Error>
@@ -95,7 +95,7 @@
 	</Error>
 	<Error>
 		<code>5001</code>
-		<message>A building area which is marked as deleted with this name or alias already exists in this building. Reactivate?</message>
+		<message>A building area marked as deleted with this name or alias already exists in this building. Reactivate?</message>
 	</Error>
 
 	<Error>
@@ -104,7 +104,7 @@
 	</Error>
 	<Error>
 		<code>6001</code>
-		<message>A terrain which is marked as deleted with this name already exists in this site. Reactivate?</message>
+		<message>A terrain marked as deleted with this name already exists in this site. Reactivate?</message>
 	</Error>
 	
 	<Error>
@@ -113,7 +113,25 @@
 	</Error>
 	<Error>
 		<code>7001</code>
-		<message>A site which is marked as deleted with this name already exists in this country. Reactivate?</message>
+		<message>A site marked as deleted with this name already exists in this country. Reactivate?</message>
+	</Error>
+	
+	<Error>
+		<code>8000</code>
+		<message>An IT system with this name or alias already exists</message>
+	</Error>
+	<Error>
+		<code>8001</code>
+		<message>An IT system marked as deleted with this name or alias already exists. Reactivate?</message>
+	</Error>
+	
+	<Error>
+		<code>9000</code>
+		<message>An application with this name or alias already exists</message>
+	</Error>
+	<Error>
+		<code>9001</code>
+		<message>An application marked as deleted with this name or alias already exists. Reactivate?</message>
 	</Error>
 </ErrorCodeItems>
 		

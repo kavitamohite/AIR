@@ -1,11 +1,8 @@
 package com.bayerbbs.applrepos.service;
 
-import java.util.List;
-
 import com.bayerbbs.applrepos.constants.AirKonstanten;
-import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
-import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 
 public class ItSystemWS {
@@ -116,6 +113,11 @@ public class ItSystemWS {
 			output = ItSystemHbn.createItSystem(input.getCwid(), dto, true);
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
+				ItSystem itSystem = ItSystemHbn.findItSystemByName(dto.getName());
+				output.setCiId(itSystem.getId());
+				output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
+				
+				/*
 				// get detail
 				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_IT_SYSTEM, false);
 				if (null != listCi && 1 == listCi.size()) {
@@ -125,7 +127,7 @@ public class ItSystemWS {
 				} else {
 					// unknown?
 					output.setCiId(new Long(-1));
-				}
+				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {

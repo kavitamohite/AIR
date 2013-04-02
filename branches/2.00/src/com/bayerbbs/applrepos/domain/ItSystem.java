@@ -7,15 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "IT_SYSTEM")
-//@NamedQueries(
-//	@NamedQuery(name="getItSystemClusterTypes", query="...")
-//)
 @SequenceGenerator(name = "MySeqItSystem", sequenceName = "TBADM.SEQ_IT_SYSTEM")
+@NamedQueries({
+	@NamedQuery(name="findItSystemsByNameOrAlias", query="FROM ItSystem i WHERE i.itSystemName=:name OR i.alias=:alias"),
+	@NamedQuery(name="findItSystemByName", query="FROM ItSystem i WHERE i.itSystemName=:name")
+})
 public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisionInfo
 	private static final long serialVersionUID = -9152390693208339445L;
 

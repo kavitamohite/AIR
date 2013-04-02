@@ -306,7 +306,7 @@ public class RoomHbn extends LokationItemHbn {
 				Long id = new Long(dto.getId());
 
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+				List<String> messages = validateRoom(dto, true);//validateCi
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -695,7 +695,7 @@ public class RoomHbn extends LokationItemHbn {
 			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
-				List<String> messages = validateRoom(dto);//validateCi
+				List<String> messages = validateRoom(dto, false);//validateCi
 
 				if (messages.isEmpty()) {
 					Room room = new Room();
@@ -790,6 +790,12 @@ public class RoomHbn extends LokationItemHbn {
 						BuildingArea buildingArea = BuildingHbn.findBuildingAreaById(dto.getAreaId());
 						room.setBuildingArea(buildingArea);
 						
+
+						if (null == dto.getBusinessEssentialId()) {
+							// messages.add("business essential is empty");
+							// TODO 1 TESTCODE getBusinessEssentialId
+							dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+						}
 						room.setBusinessEssentialId(dto.getBusinessEssentialId());
 						
 						
@@ -879,12 +885,16 @@ public class RoomHbn extends LokationItemHbn {
 		return room;
 	}
 	
-	private static List<String> validateRoom(RoomDTO dto) {
+	private static List<String> validateRoom(RoomDTO dto, boolean isUpdate) {
 //		List<String> messages = BaseHbn.validateCi(dto);//, listCi
-		List<Room> rooms = findByNameOrAliasAndBuildingAreaId(dto.getRaumName(), dto.getAlias(), dto.getAreaId());
+		List<Room> rooms = findByNameOrAliasAndBuildingAreaId(dto.getName(), dto.getAlias(), dto.getAreaId());
 		
 		List<String> messages = new ArrayList<String>();
-		if(rooms.size() > 0) {
+		
+		boolean alreadyExists = isUpdate ? rooms.size() > 0 && rooms.get(0).getId().longValue() != dto.getId().longValue() :
+										   rooms.size() > 0;
+		
+		if(alreadyExists) {
 			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 			
 //			Room room = rooms.get(0);
@@ -892,12 +902,6 @@ public class RoomHbn extends LokationItemHbn {
 				messages.add(errorCodeManager.getErrorMessage("3000", null));
 //			else
 //				messages.add(errorCodeManager.getErrorMessage("3001", null));
-		}
-
-		if (null == dto.getBusinessEssentialId()) {
-			// messages.add("business essential is empty");
-			// TODO 1 TESTCODE getBusinessEssentialId
-			dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
 		}
 		
 		return messages;

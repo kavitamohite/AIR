@@ -1328,7 +1328,7 @@ public class BuildingHbn extends LokationItemHbn {
 		
 		return areas;
 	}
-	public static Building findByNameAndTerrainId(String name,	Long terrainId) {
+	public static Building findByNameAndTerrainId(String name, Long terrainId) {
 		Session session = HibernateUtil.getSession();
 		
 		Query q = session.getNamedQuery("findByNameAndTerrainId");
