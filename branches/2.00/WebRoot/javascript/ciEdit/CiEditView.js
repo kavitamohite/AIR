@@ -169,6 +169,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.on('ciChange', this.onCiChange, this);
 		ciSpecificsView.on('ciInvalid', this.onCiInvalid, this);
+		ciSpecificsView.on('viewInitialized', this.onViewInitialized, this);
 		
 		var ciContactsView = ciEditTabView.getComponent('clCiContacts');
 		ciContactsView.on('ciChange', this.onCiChange, this);
@@ -958,6 +959,19 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	isCiModified: function() {
 		return this.ciModified;
+	},
+	
+	onViewInitialized: function(childView) {//view, 
+		
+		var options = AAM.getAppDetail();
+		
+		var panelMsg = ACM.getRequiredFields(options);
+		if(panelMsg.length > 0) {
+			this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
+		} else {
+			this.setPanelMessage(panelMsg);
+		}
+		
 	}
 	
 	//============================================================

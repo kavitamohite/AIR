@@ -16,6 +16,7 @@ import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.GroupsDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
@@ -25,6 +26,7 @@ import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
+import com.bayerbbs.applrepos.hibernate.GroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
@@ -423,21 +425,22 @@ public class CiEntityWS {
 		
 		ciBaseDTO.setCiOwnerHidden(ciBase.getCiOwner());
 		ciBaseDTO.setCiOwnerDelegateHidden(ciBase.getCiOwnerDelegate());
-//		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwner())) {
-//			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwner());
-//			if (null != listPers && 1 == listPers.size()) {
-//				PersonsDTO tempPers = listPers.get(0);
-//				ciBaseDTO.setCiOwner(tempPers.getDisplayNameFull());
-//			}
-//		}
-//
-//		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerDelegate())) {
-//			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerDelegate());
-//			if (null != listPers && 1 == listPers.size()) {
-//				PersonsDTO tempPers = listPers.get(0);
-//				ciBaseDTO.setCiOwnerDelegate(tempPers.getDisplayNameFull());
-//			}
-//		}
+		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerHidden())) {//getCiOwner
+			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerHidden());//getCiOwner
+			if (null != listPers && 1 == listPers.size()) {
+				PersonsDTO tempPers = listPers.get(0);
+				ciBaseDTO.setCiOwner(tempPers.getDisplayNameFull());
+			}
+		}
+
+		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerDelegateHidden())) {//getCiOwnerDelegate
+			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerDelegateHidden());//getCiOwnerDelegate
+			if (null != listPersons && 1 == listPersons.size()) {
+				PersonsDTO tempPers = listPersons.get(0);
+				ciBaseDTO.setCiOwnerDelegate(tempPers.getDisplayNameFull());
+			}
+			else ciBaseDTO.setCiOwnerDelegate(ciBaseDTO.getCiOwnerDelegateHidden());//Delegate is Group
+		}
 		
 		
 		ciBaseDTO.setSlaId(ciBase.getSlaId());

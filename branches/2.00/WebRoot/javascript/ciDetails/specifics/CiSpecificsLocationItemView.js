@@ -51,7 +51,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        triggerAction: 'all',//all query
 //		        lazyRender: true,
 //		        lazyInit: false,
-//		        mode: 'local',
+		        mode: 'local',
 		        queryParam: 'id'
 	        },{
 		        xtype: 'filterCombo',//combo
@@ -71,10 +71,11 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //		        forceSelection: true,
 //		        autoSelect: false,
 		        
+//				isFilterLocal: true,
 		        triggerAction: 'all',//all query
 //		        lazyRender: true,
 //		        lazyInit: false,
-//		        mode: 'local',
+		        mode: 'local',
 		        queryParam: 'id'
 	        },{
 		        xtype: 'filterCombo',//combo filterCombo
@@ -95,13 +96,13 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //		        autoSelect: false,
 		        
 		        triggerAction: 'all',//all query
-		        lazyRender: true,
-		        lazyInit: false,
-//		        mode: 'remote'//local
+//		        lazyRender: true,
+//		        lazyInit: false,
+		        mode: 'local',//local
 		        queryParam: 'id'
 		    },{
 		        id: 'cbTerrain',//tfTerrain
-		    	xtype: 'combo',//textfield
+		    	xtype: 'filterCombo',//combo textfield
 		        fieldLabel: 'Terrain',
 //		        disabled: true,
 //		        hideTrigger: true,
@@ -119,11 +120,11 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        triggerAction: 'all',//all query
 //		        lazyRender: true,
 //		        lazyInit: false
-//		        mode: 'remote'//local
+		        mode: 'local',//local
 		        queryParam: 'id'//id landId
 	        },{
 		        id: 'cbSite',
-		    	xtype: 'combo',//textfield
+		    	xtype: 'filterCombo',//combo textfield
 		        fieldLabel: 'Site',
 //		        disabled: true,
 //		        hideTrigger: true,
@@ -138,22 +139,19 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //		        forceSelection: true,
 //		        autoSelect: false,
 		        
+//				isFilterLocal: true,//custom combo field
+				minChars: 0,
 		        triggerAction: 'all',//all query
 //		        lazyRender: true,
 //		        lazyInit: false
-//		        mode: 'remote'//local
+		        mode: 'local',//local remote
 		        queryParam: 'id'//id landId
 		    },{
 		        id: 'cbCountry',
 		        xtype: 'filterCombo',//'textfield',
 		    	
 		        fieldLabel: 'Country',
-//		        disabled: true,
-//		        hideTrigger: true,
 		        width: 230,
-		        
-//		        anchor: '70%',
-				
 		        
 		        store: AIR.AirStoreFactory.createLandListStore(),//new Ext.data.Store(),//AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
@@ -164,10 +162,14 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //		        forceSelection: true,
 //		        autoSelect: false,
 		        
-		        triggerAction: 'all'//all query
+		        //!! sonst findet kein filtern bei manueller Eingabe statt, da default minChars:4.
+		        //Siehe ab FilterComboBox.initQuery()
+//				isFilterLocal: true,//custom combo field
+		        minChars: 0,
+		        triggerAction: 'all',//all query
 //		        lazyRender: true,
-//		        lazyInit: false
-//		        mode: 'remote'//local
+//		        lazyInit: false,
+		        mode: 'local'//local remote
 //		        queryParam: 'locale'//id
 		    },{
 		    	xtype: 'panel',
@@ -254,22 +256,39 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		tfRoomFloor.on('change', this.onFieldChange, this);
 		
 		var cbCountry = this.getComponent('cbCountry');
-		cbCountry.on('select', this.onCountrySelect, this);
 		cbCountry.allQuery = 'CONSTANT';
+		cbCountry.on('select', this.onCountrySelect, this);
+		cbCountry.on('change', this.onComboChange, this);
 		
 		var cbSite = this.getComponent('cbSite');
 		cbSite.on('select', this.onSiteSelect, this);
+		cbSite.on('change', this.onComboChange, this);
 		
 		var cbTerrain = this.getComponent('cbTerrain');
 		cbTerrain.on('select', this.onTerrainSelect, this);
+		cbTerrain.on('change', this.onComboChange, this);
 		
 		var cbBuilding = this.getComponent('cbBuilding');
 		cbBuilding.on('select', this.onBuildingSelect, this);
+		cbBuilding.on('change', this.onComboChange, this);
 		
 		var cbBuildingArea = this.getComponent('cbBuildingArea');
 		cbBuildingArea.on('select', this.onBuildingAreaSelect, this);
+		cbBuildingArea.on('change', this.onComboChange, this);
+//		cbBuildingArea.getStore().on('load', this.onStoreLoad, this);
+		cbBuildingArea.on('expand', this.onStoreLoad, this);
+		
+		var cbRoom = this.getComponent('cbRoom');
+		cbRoom.on('select', this.onRoomSelect, this);
+		cbRoom.on('change', this.onComboChange, this);
 	},
 	
+	onStoreLoad: function(combo) {//store, records, options
+		if(combo.mode === 'remote') {
+			combo.mode = 'local';
+//			combo.isUpdateInit = true;
+		}
+	},
 	
 	onRoomSelect: function(combo, record, index) {
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
@@ -280,42 +299,98 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		
 		cbRoom.getStore().setBaseParam('id', record.get('id'));
 		cbRoom.allQuery = record.get('id');
+		cbRoom.reset();
+		cbRoom.getStore().load({
+			params: {
+				id: record.get('id')
+			}
+		});
+		
+		Util.enableCombo(cbRoom);
 		
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
 	
 	onBuildingSelect: function(combo, record, index) {
+		this.getComponent('cbRoom').reset();
+		
 		var cbBuildingArea = this.getComponent('cbBuildingArea');
 		
 		cbBuildingArea.getStore().setBaseParam('id', record.get('id'));
 		cbBuildingArea.allQuery = record.get('id');
+		cbBuildingArea.reset();
+		cbBuildingArea.getStore().load({
+			params: {
+				id: record.get('id')
+			}
+		});
+		
+		Util.enableCombo(cbBuildingArea);
 		
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
 	
 	onTerrainSelect: function(combo, record, index) {
+		this.getComponent('cbRoom').reset();
+		this.getComponent('cbBuildingArea').reset();
+
+		
 		var cbBuilding = this.getComponent('cbBuilding');
 		
 		cbBuilding.getStore().setBaseParam('id', record.get('id'));
 		cbBuilding.allQuery = record.get('id');
+		cbBuilding.reset();
+		cbBuilding.getStore().load({
+			params: {
+				id: record.get('id')
+			}
+		});
+		
+		Util.enableCombo(cbBuilding);
 		
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
 	
 	onSiteSelect: function(combo, record, index) {
+		this.getComponent('cbRoom').reset();
+		this.getComponent('cbBuildingArea').reset();
+		this.getComponent('cbBuilding').reset();
+
+		
 		var cbTerrain = this.getComponent('cbTerrain');
 		
 		cbTerrain.getStore().setBaseParam('id', record.get('id'));//landId ciId
 		cbTerrain.allQuery = record.get('id');
+		cbTerrain.reset();
+		cbTerrain.getStore().load({
+			params: {
+				id: record.get('id')
+			}
+		});
+		
+		Util.enableCombo(cbTerrain);
 		
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
 	
 	onCountrySelect: function(combo, record, index) {
+		this.getComponent('cbRoom').reset();
+		this.getComponent('cbBuildingArea').reset();
+		this.getComponent('cbBuilding').reset();
+		this.getComponent('cbTerrain').reset();
+		
 		var cbSite = this.getComponent('cbSite');
 		
 		cbSite.getStore().setBaseParam('id', record.get('id'));//landId ciId
 		cbSite.allQuery = record.get('id');
+		cbSite.reset();
+		cbSite.getStore().load({
+			params: {
+				id: record.get('id')
+			}
+		});
+		
+		Util.enableCombo(cbSite);
 		
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
@@ -338,6 +413,14 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //	},
 	
 	init: function() {
+		var cbCountry = this.getComponent('cbCountry');
+		cbCountry.getStore().load();
+		
+        //!! sonst findet das Filtern bei manueller Eingabe unerwünschterweise immer per remote Load statt.
+        //Siehe minChars: 0 bei cbCountry Definition,
+//		cbCountry.mode = 'local';
+		
+		
 		var ciDetail = AAM.getAppDetail();
         this.update(ciDetail);
 	},
@@ -347,19 +430,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		this.name = data.name;
 		
 		this.updateAccessMode(data);
-
 		
 		var tfLocationCiName = this.getComponent('tfLocationCiName');
-		
-//		this.isInitial = true;
-		if(data.isCiCreate) {
-			//enable all fields
-			tfLocationCiName.setVisible(true);
-			tfLocationCiName.reset();
-		} else {
-			tfLocationCiName.setVisible(false);
-		}
-		
 		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
 		
 		var tfRoomFloor = this.getComponent('tfRoomFloor');
@@ -370,12 +442,35 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		var cbSite = this.getComponent('cbSite');
 		var cbCountry = this.getComponent('cbCountry');
 		
-//		Util.disableCombo(cbBuilding);
-//		Util.disableCombo(cbBuildingArea);
-
-		
 		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
 		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');
+		
+		
+//		this.isInitial = true;
+		if(data.isCiCreate) {
+			//enable all fields
+			tfLocationCiName.setVisible(true);
+			tfLocationCiName.reset();
+			
+			//wegen filterung bei Buchstabeneingabe. Um remote Filtern/Neu laden zu verhindern
+//			cbRoom.mode = 'local';
+//			cbBuildingArea.mode = 'local';
+//			cbBuilding.mode = 'local';
+//			cbTerrain.mode = 'local';
+//			cbSite.mode = 'local';
+		} else {
+			tfLocationCiName.setVisible(false);
+			tfLocationCiName.setValue(data.name);//tfLocationCiName ist mandatory. Deshalb für update setzen
+			
+			//bei update soll erst geladen wernde, wenn der anwender die entspr. combo benutzt
+//			cbRoom.mode = 'remote';
+//			cbBuildingArea.mode = 'remote';
+//			cbBuildingArea.isUpdateInit = false;
+//			cbBuilding.mode = 'remote';
+//			cbTerrain.mode = 'remote';
+//			cbSite.mode = 'remote';
+		}
+		
 		
 		//use builder pattern managing each field depending on tableId instead of switch/case?
 		switch(parseInt(data.tableId)) {
@@ -407,11 +502,11 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //					cbSite.reset();
 					cbCountry.reset();
 					
-					Util.enableCombo(cbRoom);
-					Util.enableCombo(cbBuildingArea);
-					Util.enableCombo(cbBuilding);
-					Util.enableCombo(cbTerrain);
-					Util.enableCombo(cbSite);
+					Util.disableCombo(cbRoom);//enableCombo
+					Util.disableCombo(cbBuildingArea);//enableCombo
+					Util.disableCombo(cbBuilding);//enableCombo
+					Util.disableCombo(cbTerrain);//enableCombo
+					Util.disableCombo(cbSite);//enableCombo
 					Util.enableCombo(cbCountry);
 				} else {
 //					ORA-20000: Rack 101526 cannot be moved to another room. Set parameter CHECK_LOCATION_INTEGRITY to N to disable this check.
@@ -471,10 +566,10 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //					cbSite.reset();
 					cbCountry.reset();
 					
-					Util.enableCombo(cbBuildingArea);
-					Util.enableCombo(cbBuilding);
-					Util.enableCombo(cbTerrain);
-					Util.enableCombo(cbSite);
+					Util.disableCombo(cbBuildingArea);//enableCombo
+					Util.disableCombo(cbBuilding);//enableCombo
+					Util.disableCombo(cbTerrain);//enableCombo
+					Util.disableCombo(cbSite);//enableCombo
 					Util.enableCombo(cbCountry);
 				} else {
 					if(AIR.AirAclManager.isRelevance(cbBuildingArea, data)) {
@@ -483,6 +578,13 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 						cbBuildingArea.getStore().removeAll();
 						cbBuildingArea.getStore().setBaseParam('id', data.gebaeudeId);
 						cbBuildingArea.allQuery = data.gebaeudeId;
+						
+						//Alternative zu remote loading: um Eingabefilterung local zu machen.
+						//Alternativ beim remote loading müsste auf combo.mode = 'local' zurückgesetzt
+						//werden direkt nachdem der combo hideTrigger betätigt wurde
+						cbBuildingArea.getStore().load();
+						
+//						cbBuildingArea.isUpdateInit = true;
 					} else {
 						Util.disableCombo(cbBuildingArea);
 					}
@@ -541,9 +643,9 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //					cbSite.reset();
 					cbCountry.reset();
 					
-					Util.enableCombo(cbBuilding);
-					Util.enableCombo(cbTerrain);
-					Util.enableCombo(cbSite);
+					Util.disableCombo(cbBuilding);//enableCombo
+					Util.disableCombo(cbTerrain);//enableCombo
+					Util.disableCombo(cbSite);//enableCombo
 					Util.enableCombo(cbCountry);
 				} else {
 					cbBuilding.setValue(data.gebaeudeName);
@@ -562,10 +664,18 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					cbBuilding.getStore().setBaseParam('id', data.terrainId);
 					cbBuilding.allQuery = data.terrainId;
 					
-					if(AIR.AirAclManager.isRelevance(cbBuilding, data))
+					if(AIR.AirAclManager.isRelevance(cbBuilding, data)) {
 						Util.enableCombo(cbBuilding);
-					else
+
+						cbBuilding.reset();
+						cbBuilding.getStore().removeAll();
+						cbBuilding.getStore().setBaseParam('id', data.terrainId);
+						cbBuilding.allQuery = data.terrainId;
+	
+						cbBuilding.getStore().load();
+					} else
 						Util.disableCombo(cbBuilding);
+					
 					
 					Util.disableCombo(cbTerrain);
 					Util.disableCombo(cbSite);
@@ -600,13 +710,28 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //					cbSite.reset();
 					cbCountry.reset();
 					
-					Util.enableCombo(cbTerrain);
-					Util.enableCombo(cbSite);
+					Util.disableCombo(cbTerrain);//enableCombo
+					Util.disableCombo(cbSite);//enableCombo
 					Util.enableCombo(cbCountry);
 				} else {
 					cbTerrain.setValue(data.terrainName);
 					cbSite.setValue(data.standortName);
 					cbCountry.setValue(data.landNameEn);
+					
+					/*cbTerrain.getStore().setBaseParam('id', data.standortId);
+					cbTerrain.allQuery = data.terrainId;
+					
+					if(AIR.AirAclManager.isRelevance(cbBuilding, data)) {
+						Util.enableCombo(cbBuilding);
+
+						cbTerrain.reset();
+						cbTerrain.getStore().removeAll();
+						cbTerrain.getStore().setBaseParam('id', data.standortId);
+						cbTerrain.allQuery = data.standortId;
+	
+						cbTerrain.getStore().load();
+					} else
+						Util.disableCombo(cbTerrain);*/
 					
 					Util.disableCombo(cbTerrain);
 					Util.disableCombo(cbSite);
@@ -637,7 +762,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 //					cbSite.reset();
 					cbCountry.reset();
 					
-					Util.enableCombo(cbSite);
+					Util.disableCombo(cbSite);//enableCombo
 					Util.enableCombo(cbCountry);
 				} else {
 					cbSite.setValue(data.standortName);
@@ -750,14 +875,14 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		var cbCountry = this.getComponent('cbCountry');
 		
 
-		
-//		var field = this.getComponent('applicationId');
-//		data.id = field.getValue();
-		
+//		typeof cbRoom.getValue() === 'string' - wichtig weil: wurde die Combobox durch Bedienung geladen und ergibt daher combo.getValue()
+//		einen Integer Wert und keinen String wie wenn der Combobox Wert nur mit einem String gesetzt wurde.
 		switch(parseInt(data.tableId)) {
 			case AC.TABLE_ID_POSITION:
-				if(!cbRoom.disabled)
-					data.roomId = cbRoom.getValue();
+				//if(!cbRoom.disabled)
+					data.roomId = data.isCiCreate ?
+									cbRoom.getValue() :
+									typeof cbRoom.getValue() === 'string' ? AAM.getAppDetail().raumId : cbRoom.getValue();
 				break;
 			case AC.TABLE_ID_ROOM:
 				if(!tfLocationCiAlias.disabled)

@@ -4,6 +4,8 @@
 	<!-- General -->
 	<Identifier>
 		<id>objectType</id>
+		<ciTypeId>2</ciTypeId>
+		<ciSubTypeId>5,-10006,-10007,-10013</ciSubTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -195,6 +197,8 @@
 	<!-- Specifics - Location Items -->
 	<Identifier>
 		<id>tfLocationCiAlias</id>
+		<ciTypeId>3,4,12,13,30,88</ciTypeId>
+<!--		<Mandatory>mandatory</Mandatory>-->
 		<Mandatory>optional</Mandatory>
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
@@ -218,7 +222,9 @@
 	<Identifier>
 		<id>cbRoom</id>
 		<Mandatory>optional</Mandatory>
-		<Relevance>operational</Relevance>
+		<ciTypeId>13</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+<!--		<Mandatory>optional</Mandatory>-->
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
 		<UseInWizard>N</UseInWizard>
@@ -228,7 +234,9 @@
 	</Identifier>
 	<Identifier>
 		<id>cbBuildingArea</id>
-		<Mandatory>optional</Mandatory>
+		<ciTypeId>3</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -239,7 +247,9 @@
 	</Identifier>
 	<Identifier>
 		<id>cbBuilding</id>
-		<Mandatory>optional</Mandatory>
+		<ciTypeId>88</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -250,7 +260,9 @@
 	</Identifier>
 	<Identifier>
 		<id>cbTerrain</id>
-		<Mandatory>optional</Mandatory>
+		<ciTypeId>4</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -261,7 +273,9 @@
 	</Identifier>
 	<Identifier>
 		<id>cbSite</id>
-		<Mandatory>optional</Mandatory>
+		<ciTypeId>30</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -315,8 +329,10 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	<Identifier>
-		<id>tfLocation</id>
-		<Mandatory>optional</Mandatory>
+		<id>tfLocationCiName</id>
+		<ciTypeId>3,4,12,13,30,88</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -328,7 +344,22 @@
 	
 	<!-- Specifics - IT Items -->
 	<Identifier>
+		<id>tfItSystemCiName</id>
+		<ciTypeId>1</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+<!--		<Mandatory>optional</Mandatory>-->
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
 		<id>tfItSystemCiAlias</id>
+		<ciTypeId>1</ciTypeId>
+<!--		<Mandatory>mandatory</Mandatory>-->
 		<Mandatory>optional</Mandatory>
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>

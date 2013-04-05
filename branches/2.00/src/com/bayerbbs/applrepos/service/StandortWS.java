@@ -4,7 +4,6 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
-import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
 
 public class StandortWS {

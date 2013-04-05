@@ -1,7 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -51,7 +50,8 @@ public class SchrankHbn extends LokationItemHbn {
 				Long id = new Long(dto.getId());
 	
 				// check der InputWerte
-				List<String> messages = validateCi(dto);
+//				List<String> messages = validateCi(dto);
+				List<String> messages = validateSchrank(dto, true);
 	
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -415,7 +415,7 @@ public class SchrankHbn extends LokationItemHbn {
 			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
-				List<String> messages = validateSchrank(dto);//validateCi
+				List<String> messages = validateSchrank(dto, false);//validateCi
 
 				if (messages.isEmpty()) {
 					Schrank schrank = new Schrank();
@@ -609,14 +609,17 @@ public class SchrankHbn extends LokationItemHbn {
 		return schrank;
 	}
 	
-	private static List<String> validateSchrank(SchrankDTO dto) {
+	private static List<String> validateSchrank(SchrankDTO dto, boolean isUpdate) {
 //		List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), false);//true
 //		List<String> messages = BaseHbn.validateCi(dto);//, listCI
 		
 		Schrank schrank = findByNameAndRoomId(dto.getName(), dto.getRoomId());
 		
-		List<String> messages = new ArrayList<String>();
-		if(schrank != null) {
+		boolean alreadyExists = isUpdate ? schrank.getId().longValue() != dto.getId().longValue() : schrank != null;
+		
+		List<String> messages = validateCi(dto);//new ArrayList<String>();
+		
+		if(alreadyExists) {//schrank != null
 			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 			
 //			Building building = buildings.get(0);

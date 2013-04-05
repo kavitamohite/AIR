@@ -22,7 +22,6 @@ import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
-import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
 
 public class StandortHbn extends LokationItemHbn {
@@ -123,8 +122,9 @@ public class StandortHbn extends LokationItemHbn {
 
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateCi(dto);//, listCi
+//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+//				List<String> messages = validateCi(dto);//, listCi
+				List<String> messages = validateStandort(dto, true);
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -488,8 +488,7 @@ public class StandortHbn extends LokationItemHbn {
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
 //				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateStandort(dto);//validateCi , listCi
-//				List<CiItemDTO> listCi = null;
+				List<String> messages = validateStandort(dto, false);//validateCi , listCi
 
 				if (messages.isEmpty()) {
 					Standort standort = new Standort();
@@ -668,11 +667,13 @@ public class StandortHbn extends LokationItemHbn {
 		return standort;
 	}
 	
-	private static List<String> validateStandort(StandortDTO dto) {
+	private static List<String> validateStandort(StandortDTO dto, boolean isUpdate) {
 		Standort standort = findByNameAndCountryId(dto.getName(), dto.getLandId());
 		
-		List<String> messages = new ArrayList<String>();
-		if(standort != null) {
+		boolean alreadyExists = isUpdate ? standort.getId().longValue() != dto.getId().longValue() : standort != null;
+		
+		List<String> messages = validateCi(dto);//new ArrayList<String>();
+		if(alreadyExists) {
 			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 			
 //			Building building = buildings.get(0);

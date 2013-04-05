@@ -265,7 +265,9 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		
 		this.addEvents('ciBeforeChange', 'ciChange');
 		
+		var tfItSystemCiName = this.getComponent('tfItSystemCiName');
 		var tfItSystemCiAlias = this.getComponent('tfItSystemCiAlias');
+		tfItSystemCiName.on('change', this.onFieldChange, this);
 		tfItSystemCiAlias.on('change', this.onFieldChange, this);
 		
 		
@@ -360,6 +362,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 //        this.update(ciDetail);
 		var delayedTask = new Ext.util.DelayedTask(function() {
 			this.update(ciDetail);
+			this.ownerCt.fireEvent('viewInitialized', this);//ciChange .ownerCt
 		}.createDelegate(this));
 		delayedTask.delay(1000);
 	},
@@ -419,6 +422,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			tfItSystemCiName.setVisible(true);
 		} else {
 			tfItSystemCiName.setVisible(false);
+			tfItSystemCiName.setValue(data.name);
 			this.updateAccessMode(data);
 		}
 

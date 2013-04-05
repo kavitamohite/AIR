@@ -26,7 +26,6 @@ import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.service.CiDetailParameterInput;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
-import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
 import com.bayerbbs.applrepos.service.CiSearchParamsDTO;
 import com.bayerbbs.applrepos.service.KeyValueOutput;
@@ -70,7 +69,7 @@ public class BuildingHbn extends LokationItemHbn {
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
 //				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateBuilding(dto);//validateCi  , listCi
+				List<String> messages = validateBuilding(dto, false);//validateCi  , listCi
 
 				
 				if (messages.isEmpty()) {
@@ -240,7 +239,7 @@ public class BuildingHbn extends LokationItemHbn {
 
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING_AREA, true);
-				List<String> messages = validateBuildingArea(dto);//validateCi, listCi
+				List<String> messages = validateBuildingArea(dto, false);//validateCi, listCi
 
 				if (messages.isEmpty()) {
 					BuildingArea buildingArea = new BuildingArea();
@@ -410,8 +409,8 @@ public class BuildingHbn extends LokationItemHbn {
 
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateCi(dto);//, listCi
+//				List<String> messages = validateCi(dto);//, listCi
+				List<String> messages = validateBuilding(dto, true);
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -697,7 +696,8 @@ public class BuildingHbn extends LokationItemHbn {
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
 //				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateCi(dto);//, listCi
+//				List<String> messages = validateCi(dto);//, listCi
+				List<String> messages = validateBuildingArea(dto, true);
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -1354,11 +1354,25 @@ public class BuildingHbn extends LokationItemHbn {
 	}
 	
 	
-	private static List<String> validateBuilding(BuildingDTO dto) {
+	private static List<String> validateBuilding(BuildingDTO dto, boolean isUpdate) {
 		List<Building> buildings = findByNameOrAliasAndTerrainId(dto.getName(), dto.getAlias(), dto.getTerrainId());
 		
-		List<String> messages = new ArrayList<String>();
-		if(buildings.size() > 0) {
+		boolean alreadyExists = false;
+		
+		if(isUpdate) {
+			for(Building building : buildings) {
+				//wenn es nicht das selbe CI ist, gibt es schon ein CI mit diesem Namen und dieser terrain id
+				if(building.getId().longValue() != dto.getId().longValue()) {
+					alreadyExists = true;
+					break;
+				}
+			}
+		} else {
+			alreadyExists = buildings.size() > 0;
+		}
+		
+		List<String> messages = validateCi(dto);//new ArrayList<String>();
+		if(alreadyExists) {
 			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 			
 //			Building building = buildings.get(0);
@@ -1371,11 +1385,13 @@ public class BuildingHbn extends LokationItemHbn {
 		return messages;
 	}
 	
-	private static List<String> validateBuildingArea(BuildingAreaDTO dto) {
+	private static List<String> validateBuildingArea(BuildingAreaDTO dto, boolean isUpdate) {
 		BuildingArea buildingArea = findByNameAndBuildingId(dto.getName(), dto.getBuildingId());
 		
-		List<String> messages = new ArrayList<String>();
-		if(buildingArea != null) {
+		boolean alreadyExists = isUpdate ? buildingArea.getId().longValue() != dto.getId().longValue() : buildingArea != null;
+		
+		List<String> messages = validateCi(dto);//new ArrayList<String>();
+		if(alreadyExists) {
 			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 			
 //			Building building = buildings.get(0);

@@ -24,7 +24,6 @@ import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
-import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
 
 public class TerrainHbn extends LokationItemHbn {
@@ -125,8 +124,10 @@ public class TerrainHbn extends LokationItemHbn {
 
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateCi(dto);//, listCi
+//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+//				List<String> messages = validateCi(dto);//, listCi
+				
+				List<String> messages = validateTerrain(dto, true);
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -489,7 +490,7 @@ public class TerrainHbn extends LokationItemHbn {
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
 //				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validateTerrain(dto);//validateCi , listCi
+				List<String> messages = validateTerrain(dto, false);//validateCi , listCi
 
 				if (messages.isEmpty()) {
 					Terrain terrain = new Terrain();
@@ -669,11 +670,13 @@ public class TerrainHbn extends LokationItemHbn {
 		return terrain;
 	}
 	
-	private static List<String> validateTerrain(TerrainDTO dto) {
+	private static List<String> validateTerrain(TerrainDTO dto, boolean isUpdate) {
 		Terrain terrain = findByNameAndSiteId(dto.getName(), dto.getStandortId());
 		
-		List<String> messages = new ArrayList<String>();
-		if(terrain != null) {
+		boolean alreadyExists = isUpdate ? terrain.getId().longValue() != dto.getId().longValue() : terrain != null;
+		
+		List<String> messages = validateCi(dto);//new ArrayList<String>();
+		if(alreadyExists) {
 			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 			
 //			Building building = buildings.get(0);

@@ -14,7 +14,7 @@ AIR.AirAclManager = function() {
 			Ext.apply(Ext.form.VTypes, {
 			    //  vtype validation function
 			    required: function(val, field) {
-			        return val!==undefined && val !=='';
+			        return val && val.length > 0;
 			    },
 			    // vtype Text property: The error text to display when the validation function returns false
 			    requiredText: 'This field ist mandatory.' // requiredText:
@@ -541,11 +541,13 @@ AIR.AirAclManager = function() {
 							case 'textarea':
 							case 'combo':
 							case 'filterCombo':
-								//if(!uiElement.disabled && (uiElement.getValue()===undefined || uiElement.getValue()==='')) {
-								if(!uiElement.disabled && (!uiElement.getValue() || uiElement.getValue().length === 0))
-									if(labels[uiElement.id])											
-										incompleteFieldList += labels[uiElement.id] + ', ';
-									
+
+								//nur wenn tableId == AC.TABLE_ID_APPLICATION wird bei, aufgrund von Benutzerrechten deaktivierten, Pflichtfeldern nicht auf ein auszufüllendes Feld hingewiesen
+								if((!uiElement.disabled || data.tableId != AC.TABLE_ID_APPLICATION) && (!uiElement.getValue() || uiElement.getValue().length === 0)) {
+									var label = labels[uiElement.id] || uiElement.label.dom.innerHTML;
+									if(label)											
+										incompleteFieldList += label + ', ';
+								}
 								break;
 							case 'listview':
 								if(!uiElement.disabled && uiElement.getSelectedRecords().length === 0)
@@ -573,8 +575,12 @@ AIR.AirAclManager = function() {
 			var aclCiType = aclItem.get('ciTypeId');
 			var aclCiSubType = aclItem.get('ciSubTypeId');
 			
-			var isCiType = !aclCiType || aclCiType.length === 0 || aclCiType === data.tableId.toString() || aclCiType.indexOf(data.tableId.toString()) > 0;
-			var isCiSubType = !data.applicationCat1Id || aclCiSubType.length === 0 || aclCiSubType === data.applicationCat1Id.toString() || aclCiSubType.indexOf(data.applicationCat1Id.toString()) > 0;
+			var t = data.tableId.toString();
+			var isCiType = !aclCiType || 
+							aclCiType.length === 0 || 
+							aclCiType === t || //data.tableId.toString()
+							Util.isValueInCommaString(aclCiType, t);//data.tableId.toString()
+			var isCiSubType = !data.applicationCat1Id || aclCiSubType.length === 0 || aclCiSubType === data.applicationCat1Id.toString() || aclCiSubType.indexOf(data.applicationCat1Id.toString()) > -1;
 			
 			return isCiType && isCiSubType;
 			
@@ -583,6 +589,8 @@ AIR.AirAclManager = function() {
 			
 //			return !(data.applicationCat1Id !== AC.APP_CAT1_APPLICATION && AC.APP_CAT1_ONLY_FIELDS.indexOf(reqItemCmp.getId()) > -1);
 		},
+		
+		
 		
 		
 		setAccessMode: function(uiElement, appDetail) {

@@ -18,7 +18,8 @@ import javax.persistence.Table;
 @Table(name = "RAUM")
 @SequenceGenerator(name = "MySeqRoom", sequenceName = "TBADM.SEQ_RAUM")
 @NamedQueries({
-	@NamedQuery(name="findByNameOrAliasAndBuildingAreaId", query="FROM Room r WHERE (r.roomName=:name OR r.alias=:alias) AND buildingAreaId=:buildingAreaId"),
+//	@NamedQuery(name="findByNameOrAliasAndBuildingAreaId", query="FROM Room r WHERE (r.roomName=:name OR r.alias=:alias) AND buildingAreaId=:buildingAreaId"),
+	@NamedQuery(name="findByNameOrAliasAndBuildingAreaId", query="FROM Room r WHERE (r.roomName=:name OR r.alias=:alias OR r.roomName=:alias OR r.alias=:name) AND buildingAreaId=:buildingAreaId"),
 	@NamedQuery(name="findByNameAndBuildingAreaId", query="FROM Room r WHERE r.roomName=:name AND buildingAreaId=:buildingAreaId")
 })
 public class Room extends CiBase1 implements Serializable {
@@ -37,7 +38,6 @@ public class Room extends CiBase1 implements Serializable {
 	private Long buildingAreaId;
 	private BuildingArea buildingArea;
 	
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "MySeqRoom")

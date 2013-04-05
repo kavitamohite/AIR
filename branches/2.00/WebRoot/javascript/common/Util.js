@@ -131,6 +131,15 @@ Util = {
 		return scopes;
 	},
 	
+	isValueInCommaString: function(commaString, value) {
+		var arrayString = commaString.split(',');
+		for(var i = 0; i < arrayString.length; i++)
+			if(arrayString[i] === value)
+				return true;
+		
+		return false;
+	},
+	
 //	initLoadMasks: function() {
 //		this.masks = {};
 //		this.masks.startupMask = new Ext.LoadMask(Ext.getBody(), { msg: 'Initializing AIR...' });

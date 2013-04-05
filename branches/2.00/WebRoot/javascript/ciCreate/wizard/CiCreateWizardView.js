@@ -113,7 +113,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		this.page++;
 		
 		var labels = AIR.AirApplicationManager.getLabels();
-		var title = this.getComponent('ciCreateWizardP1').getComponent('cbAppCat1W').getValue() === AC.APP_CAT1_APPLICATION ? labels.contactsCIOwnerApplication : labels.contactsCIOwner;
+		var title = this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW').getValue() === AC.APP_CAT1_APPLICATION ? labels.contactsCIOwnerApplication : labels.contactsCIOwner;
 		
 		this.getComponent('ciCreateWizardP2').getComponent('ciCreateAppRequiredView').getComponent('fsCiOwnerW').setTitle(title);
 		this.getLayout().setActiveItem(this.page);
@@ -152,7 +152,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 			if(params.name.length === 0)
 				errorData.push(labels.wizardapplicationName);
 			else if(params.name.match(AC.REGEX_SAP_NAME) != null) {
-				errorData.push(labels.wizardapplicationNameSAPillegal.replace('{0}', this.getComponent('ciCreateWizardP1').getComponent('cbAppCat1W').getRawValue()).replace('{1}', this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getRawValue()));
+				errorData.push(labels.wizardapplicationNameSAPillegal.replace('{0}', this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW').getRawValue()).replace('{1}', this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getRawValue()));
 			}
 		}
 		
@@ -289,7 +289,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 				
 				var data = {
 					applicationName: this.getComponent('ciCreateWizardP1').getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView').getComponent('tfCiNameW').getValue(),
-					applicationCat1: this.getComponent('ciCreateWizardP1').getComponent('cbAppCat1W').getRawValue()
+					applicationCat1: this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW').getRawValue()
 				};
 				this.fireEvent('airAction', this, 'appCreateSuccess', data);
 	

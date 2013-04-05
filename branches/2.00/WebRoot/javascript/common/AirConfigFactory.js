@@ -155,7 +155,7 @@ AIR.AirConfigFactory = function() {
 		getBaseCiFields: function() {
 			var baseCiFields = [{
 				name: 'id', type: 'int'
-			}, 'name', 'alias', 'relevanceOperational', 'ciOwner', 'ciOwnerDelegate', 'insertQuelle', 'insertTimestamp', 'insertUser', 
+			}, 'name', 'alias', 'relevanceOperational', 'ciOwner', 'ciOwnerHidden', 'ciOwnerDelegate', 'ciOwnerDelegateHidden', 'insertQuelle', 'insertTimestamp', 'insertUser', 
 			   'updateQuelle', 'updateTimestamp', 'updateUser', 'deleteQuelle', 'deleteTimestamp', 'deleteUser', 'itSecSbAvailabilityId', 'itSecSbAvailabilityDescription',
 			   'slaId', 'serviceContractId', 'itset', 'template', 'itsecGroupId', 'refId', 'relevanceGR1435', 'relevanceGR1920',
 			   

@@ -23,6 +23,7 @@ import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
+import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.dto.ApplicationCat2DTO;
 import com.bayerbbs.applrepos.dto.ApplicationContact;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
@@ -37,56 +38,26 @@ import com.bayerbbs.applrepos.service.ApplicationEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemDTO;
 
 
-public class AnwendungHbn {
+public class AnwendungHbn extends BaseHbn {
 //	private static final String PARAMETER_QUERYMODE_BEGINS_WITH = "BEGINS_WITH";
 //	private static final String PARAMETER_QUERYMODE_CONTAINS = "CONTAINS";
 //	private static final String PARAMETER_QUERYMODE_EMPTYSTRING = "";
 	
 	private static final String SQL_GET_ITSET = "SELECT pck_sync_tools.fn_ITSet(:responsible, :subResponsible, :tableID, :itemID, :source) AS ITSet FROM DUAL";
-	private static final String Y = "Y";
-	private static final String COMMA = ",";
+//	private static final String Y = "Y";
+//	private static final String COMMA = ",";
+//	
+//	private static final String NOT_EQUAL = "<>";
+//	private static final String EQUAL = "=";
+//	
+//	private static final String NOT_LIKE = "not like";
+//	private static final String LIKE = "like";
 	
-	private static final String NOT_EQUAL = "<>";
-	private static final String EQUAL = "=";
-	
-	private static final String NOT_LIKE = "not like";
-	private static final String LIKE = "like";
-	
-	private static final String EMPTY = "";
+//	private static final String EMPTY = "";
 	
 
 	private static final Log log = LogFactory.getLog(AnwendungHbn.class);
 	
-	/**
-	 * only for testing
-	 */
-	public static void listAnwendungenHbn() {
-		Transaction tx = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		try {
-			tx = session.beginTransaction();
-			List<Application> honeys = session.createQuery(
-					"select h from Anwendung as h").list();
-			for (Iterator<Application> iter = honeys.iterator(); iter.hasNext();) {
-				Application element = (Application) iter.next();
-				// logger.debug("{}", element);
-				// System.out.println(element);
-			}
-			tx.commit();
-		} catch (RuntimeException e) {
-			if (tx != null && tx.isActive()) {
-				try {
-					// Second try catch as the rollback could fail as well
-					tx.rollback();
-				} catch (HibernateException e1) {
-					log.error(e1.getMessage());
-					
-				}
-				// throw again the first exception
-				throw e;
-			}
-		}
-	}
 
 	public static Application findApplicationById(Long applicationId) {
 		Application application = null;
@@ -187,7 +158,7 @@ public class AnwendungHbn {
 				//ORIG
 				
 				//NEU
-				List<String> messages = ItSystemHbn.validate(dto, true);
+				List<String> messages = validateAnwendung(dto, true);//ItSystemHbn.validateItSystem
 				if (null == dto.getTemplate()) {
 					// TODO 1 TESTCODE Template
 					dto.setTemplate(new Long (0)); // no template
@@ -700,7 +671,8 @@ public class AnwendungHbn {
 			cwid = cwid.toUpperCase();
 			
 			if (null != dto.getId() && 0 == dto.getId()) {
-				List<String> messages = AnwendungHbn.validateApplication(dto);
+//				List<String> messages = AnwendungHbn.validateApplication(dto);
+				List<String> messages = validateAnwendung(dto, false);//ItSystemHbn.validateItSystem
 
 				if (messages.isEmpty()) {
 					Application application = new Application();
@@ -1183,8 +1155,7 @@ public class AnwendungHbn {
 			else if (1 != listPersons.size()) {
 				messages.add(errorCodeManager.getErrorMessage("1106"));
 			}
-			
-		}		
+		}
 		// subresponsible
 		if (!StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {//getSubResponsibleHidden
 			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getCiOwnerDelegateHidden());
@@ -3073,8 +3044,130 @@ public class AnwendungHbn {
 			ApplReposHbn.sendMail(sendTo, copyTo, sbSubject.toString(), sb.toString(), AirKonstanten.APPLICATION_GUI_NAME);
 		}
 	}
+	
+	
+	static List<String> validateAnwendung(ApplicationDTO dto, boolean isUpdate) {
+//		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
+//		List<String> messages = BaseHbn.validateCi(dto);//, listCi
+		
+		List<String> messages = validateCi(dto);//new ArrayList<String>();
+		
+		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 
-	private static boolean isNot(String options) {
+		
+		if(isUpdate) {
+			List<Application> applications = ItSystemHbn.findApplicationsByNameOrAlias(dto.getName(), dto.getAlias());
+			List<ItSystem> itSystems = ItSystemHbn.findItSystemsByNameOrAlias(dto.getName(), dto.getAlias());
+			
+			if(itSystems.size() > 0 && itSystems.get(0).getId().longValue() != dto.getId().longValue()) {
+				
+//				Building building = buildings.get(0);
+//				if(building.getDeleteTimestamp() == null)
+					messages.add(errorCodeManager.getErrorMessage("8000", null));
+//				else
+//					messages.add(errorCodeManager.getErrorMessage("8001", null));
+			}
+			
+			if(applications.size() > 0 && applications.get(0).getId().longValue() != dto.getId().longValue()) {
+				
+//				Building building = buildings.get(0);
+//				if(building.getDeleteTimestamp() == null)
+					messages.add(errorCodeManager.getErrorMessage("9000", null));
+//				else
+//					messages.add(errorCodeManager.getErrorMessage("9001", null));
+			}
+		} else {
+			List<Application> applications = ItSystemHbn.findApplicationsByNameOrAlias(dto.getName(), dto.getAlias());
+			List<ItSystem> itSystems = ItSystemHbn.findItSystemsByNameOrAlias(dto.getName(), dto.getAlias());
+			
+			if(itSystems.size() > 0) {
+//				Building building = buildings.get(0);
+//				if(building.getDeleteTimestamp() == null)
+					messages.add(errorCodeManager.getErrorMessage("8000", null));
+//				else
+//					messages.add(errorCodeManager.getErrorMessage("8001", null));
+			}
+
+			if(applications.size() > 0) {
+//				Building building = buildings.get(0);
+//				if(building.getDeleteTimestamp() == null)
+					messages.add(errorCodeManager.getErrorMessage("9000", null));
+//				else
+//					messages.add(errorCodeManager.getErrorMessage("9001", null));
+			}
+		}
+		
+		if (null == dto.getTemplate()) {
+			// TODO 1 TESTCODE Template
+			dto.setTemplate(new Long (0)); // no template
+		}
+
+		if (null == dto.getBusinessEssentialId()) {
+			// messages.add("business essential is empty");
+			// TODO 1 TESTCODE getBusinessEssentialId
+			dto.setBusinessEssentialId(null);
+		}
+
+
+		if (StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {//getResponsibleHidden
+			// RFC 9102 - darf jetzt nicht mehr leer sein und wird automatisch vorbelegt.
+			dto.setCiOwnerHidden(dto.getApplicationOwnerHidden());
+		}
+		else {
+			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getCiOwnerHidden());//getResponsibleHidden
+			if (null == listPersons || listPersons.isEmpty()) {
+				messages.add(errorCodeManager.getErrorMessage("1103"));
+			}
+			else if (1 != listPersons.size()) {
+				messages.add(errorCodeManager.getErrorMessage("1104"));
+			}
+		}
+
+		// application owner delegate
+		if (!StringUtils.isNullOrEmpty(dto.getApplicationOwnerDelegateHidden())) {
+			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getApplicationOwnerDelegateHidden());
+			if (null == listPersons || listPersons.isEmpty()) {
+				// not a valid person, maybe a group?
+				GroupsDTO group = GroupHbn.findGroupByName(dto.getApplicationOwnerDelegate());
+				if (null == group) {
+					messages.add(errorCodeManager.getErrorMessage("1105"));
+				}
+				else {
+					// sub responsible is a valid group
+					dto.setApplicationOwnerDelegateHidden(dto.getApplicationOwnerDelegate());
+				}
+			}
+			else if (1 != listPersons.size()) {
+				messages.add(errorCodeManager.getErrorMessage("1106"));
+			}
+		}
+		// subresponsible
+		if (!StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {//getSubResponsibleHidden
+			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getCiOwnerDelegateHidden());
+			if (null == listPersons || listPersons.isEmpty()) {
+				// not a valid person, maybe a group?
+				GroupsDTO group = GroupHbn.findGroupByName(dto.getCiOwnerDelegate());//getSubResponsible
+				if (null == group) {
+					messages.add(errorCodeManager.getErrorMessage("1107")); // "subresponsible is not valid");
+				}
+				else {
+					// sub responsible is a valid group
+//					dto.setSubResponsibleHidden(dto.getSubResponsible());
+					dto.setCiOwnerDelegateHidden(dto.getCiOwnerDelegate());//
+				}
+			}
+			else if (1 != listPersons.size()) {
+				messages.add(errorCodeManager.getErrorMessage("1108")); 
+			}
+		}
+
+		
+
+
+		return messages;
+	}
+
+	/*private static boolean isNot(String options) {
 		if(options == null)
 			return false;
 		
@@ -3089,5 +3182,5 @@ public class AnwendungHbn {
 	
 	private static String getEqualNotEqualOperator(boolean isNot) {
 		return isNot ? NOT_EQUAL : EQUAL;
-	}
+	}*/
 }

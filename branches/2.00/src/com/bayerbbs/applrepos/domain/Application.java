@@ -14,7 +14,8 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "ANWENDUNG")
 @NamedQueries({
-	@NamedQuery(name="findApplicationsByNameOrAlias", query="FROM Application a WHERE a.applicationName=:name OR a.applicationAlias=:alias")
+	@NamedQuery(name="findApplicationsByNameOrAlias", query="FROM Application a WHERE a.applicationName=:name OR a.applicationAlias=:alias OR a.applicationName=:alias OR a.applicationAlias=:name"),
+//	@NamedQuery(name="findApplicationsByNameOrAlias", query="FROM Application a WHERE a.applicationName=:name OR a.applicationAlias=:alias")
 //	@NamedQuery(name="findApplicationByName", query="FROM Application a WHERE a.applicationName=:name")
 })
 @SequenceGenerator(name = "MySeqAnwendung", sequenceName = "TBADM.SEQ_ANWENDUNG")

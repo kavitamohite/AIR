@@ -25,12 +25,14 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 		});
 		
 		AIR.CiSpecificsView.superclass.initComponent.call(this);
+		
+		this.addEvents('viewInitialized');
 	},
 	
 
-	ciChange: function(event, view, item, values) {
-		this.fireEvent(event, this, item, values);
-	},
+//	ciChange: function(event, view, item, values) {
+//		this.fireEvent(event, this, item, values);
+//	},
 
 	//ORIG
 //	update: function(data) {
@@ -69,6 +71,9 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 			//und so wieder zur Maske des vorherig ausgewählten CI Typs zurückgeschaltet.
 			this.un('add', this.onViewAdded, this);//afterlayout
 			this.getLayout().setActiveItem(specificsView.getId());
+			
+//			var h = specificsView.getHeight();
+			this.updateHeight(specificsView);
 		} else {
 //			this.data = data;
 			this.on('add', this.onViewAdded, this);//afterlayout
@@ -159,7 +164,32 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 		specificsView.updateLabels(AAM.getLabels());
 		specificsView.init();
 		
-		//		delete this.data;
+		this.updateHeight(specificsView);
+		
+//		specificsView.on('viewInitialized', this.onViewInitialized, this);
+	},
+	
+//	onViewInitialized: function(childView) {
+//		this.fireEvent('viewInitialized', this, childView);
+//	},
+	
+	updateHeight: function(specificsView) {
+		var h;
+		switch(specificsView.getId()) {
+			case 'clCiSpecificsAnwendung':
+				h = 650;
+				break;
+			case 'clCiSpecificsLocationItem':
+				h = 300;
+				break;
+			case 'clCiSpecificsItItem':
+				h = 440;
+				break;
+		}
+		
+//		h = specificsView.getHeight();
+		
+		this.setHeight(h);
 	}
 });
 Ext.reg('AIR.CiSpecificsView', AIR.CiSpecificsView);

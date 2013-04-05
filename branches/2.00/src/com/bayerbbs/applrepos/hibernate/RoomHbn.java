@@ -889,10 +889,26 @@ public class RoomHbn extends LokationItemHbn {
 //		List<String> messages = BaseHbn.validateCi(dto);//, listCi
 		List<Room> rooms = findByNameOrAliasAndBuildingAreaId(dto.getName(), dto.getAlias(), dto.getAreaId());
 		
-		List<String> messages = new ArrayList<String>();
+		List<String> messages = validateCi(dto);//new ArrayList<String>();
 		
-		boolean alreadyExists = isUpdate ? rooms.size() > 0 && rooms.get(0).getId().longValue() != dto.getId().longValue() :
-										   rooms.size() > 0;
+		//über evtl. alle Räume anstatt nur den ersten?
+//		boolean alreadyExists = isUpdate ? rooms.size() > 0 && rooms.get(0).getId().longValue() != dto.getId().longValue() :
+//										   rooms.size() > 0;
+		
+		boolean alreadyExists = false;
+		
+		if(isUpdate) {
+			for(Room room : rooms) {
+				//wenn es nicht das selbe CI ist, gibt es schon ein CI mit diesem Namen und dieser terrain id
+				if(room.getId().longValue() != dto.getId().longValue()) {
+					alreadyExists = true;
+					break;
+				}
+			}
+		} else {
+			alreadyExists = rooms.size() > 0;
+		}
+		
 		
 		if(alreadyExists) {
 			ErrorCodeManager errorCodeManager = new ErrorCodeManager();

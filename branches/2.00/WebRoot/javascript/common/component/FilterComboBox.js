@@ -777,7 +777,7 @@ AIR.FilterComboBox = Ext.extend(Ext.form.ComboBox, {
         if(forceAll === true || (q.length >= this.minChars)){
             if(this.lastQuery !== q){
                 this.lastQuery = q;
-                if(this.mode == 'local'){
+                if(this.mode == 'local'){// || this.isFilterLocal
                     this.selectedIndex = -1;
                     if(forceAll){
                         //this.store.clearFilter();

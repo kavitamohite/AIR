@@ -13,7 +13,8 @@ import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiBase1;
 import com.bayerbbs.applrepos.domain.CiBase2;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
-import com.bayerbbs.applrepos.service.CiItemDTO;
+import com.bayerbbs.applrepos.dto.GroupsDTO;
+import com.bayerbbs.applrepos.dto.PersonsDTO;
 
 public class BaseHbn {
 	protected static final String NOT_EQUAL = "<>";
@@ -43,6 +44,28 @@ public class BaseHbn {
 		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 
 
+		if (!StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {//getSubResponsibleHidden
+			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getCiOwnerDelegateHidden());
+			if (null == listPersons || listPersons.isEmpty()) {
+				// not a valid person, maybe a group?
+				GroupsDTO group = GroupHbn.findGroupByName(dto.getCiOwnerDelegate());//getSubResponsible
+				if (null == group) {
+					messages.add(errorCodeManager.getErrorMessage("1107")); // "subresponsible is not valid");
+				}
+				else {
+					// sub responsible is a valid group
+//					dto.setSubResponsibleHidden(dto.getSubResponsible());
+					dto.setCiOwnerDelegateHidden(dto.getCiOwnerDelegate());//
+				}
+			}
+			else if (1 != listPersons.size()) {
+				messages.add(errorCodeManager.getErrorMessage("1108")); 
+			}
+		}
+		
+		return messages;
+		
+		/*
 		if (StringUtils.isNullOrEmpty(dto.getName())) {
 			messages.add("name must not be is empty");
 		}
@@ -82,7 +105,7 @@ public class BaseHbn {
 		}
 
 
-		return messages;
+		return messages;*/
 	}
 
 	

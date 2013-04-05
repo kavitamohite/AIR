@@ -120,7 +120,7 @@ public class ItSystemHbn extends BaseHbn {
 //				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
 //				List<String> messages = validateCi(dto);//, listCi
 				
-				List<String> messages = validate(dto, true);
+				List<String> messages = validateItSystem(dto, true);
 
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
@@ -687,7 +687,7 @@ public class ItSystemHbn extends BaseHbn {
 				// check der InputWerte
 //				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
 //				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-				List<String> messages = validate(dto, false);//validateCi , listCi
+				List<String> messages = validateItSystem(dto, false);//validateCi , listCi
 
 				if (messages.isEmpty()) {
 					ItSystem itSystem = new ItSystem();
@@ -1294,16 +1294,16 @@ public class ItSystemHbn extends BaseHbn {
 		return applications;
 	}
 	
-	static List<String> validate(CiBaseDTO dto, boolean isUpdate) {
+	static List<String> validateItSystem(CiBaseDTO dto, boolean isUpdate) {
 //		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
 //		List<String> messages = BaseHbn.validateCi(dto);//, listCi
 		
-		List<String> messages = new ArrayList<String>();
+		List<String> messages = validateCi(dto);//new ArrayList<String>();
 
 		
 		if(isUpdate) {
-			List<Application> applications = findApplicationsByNameOrAlias(dto.getAlias(), dto.getAlias());
-			List<ItSystem> itSystems = findItSystemsByNameOrAlias(dto.getAlias(), dto.getAlias());
+			List<Application> applications = findApplicationsByNameOrAlias(dto.getName(), dto.getAlias());
+			List<ItSystem> itSystems = findItSystemsByNameOrAlias(dto.getName(), dto.getAlias());
 			
 			if(itSystems.size() > 0 && itSystems.get(0).getId().longValue() != dto.getId().longValue()) {
 				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
