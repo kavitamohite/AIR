@@ -11,13 +11,15 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    bodyStyle: 'padding:10px',
 		    
 		    layout: 'form',
+			height: 360,
+			autoScroll: true,
 		    
 		    items: [{
 		        xtype: 'fieldset',
 		        id: 'licenselicense',
 		        title: 'License',
 		        labelWidth: 150,
-		        anchor: '60%',
+		        anchor: '70%',
 		        
 				items: [{
 			    	xtype: 'combo',
@@ -161,7 +163,7 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        id: 'licensecosts',
 		        title: 'Costs',
 		        labelWidth: 150,
-		        anchor: '60%',
+		        anchor: '70%',
 		        
 				items: [{
 					xtype: 'textfield',

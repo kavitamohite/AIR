@@ -29,10 +29,12 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		Ext.apply(this, {
 		    title: 'Contacts',
 		    layout: 'form',
-		    height: 900,
 		    border: false,
 //		    bodyStyle: 'padding:10px',
 //		    autoScroll: true,
+		    
+			height: 360,//900 600
+			autoScroll: true,
 		    
 		    items: [
 		        appOwnerStewardFieldsets.fsApplicationOwner,

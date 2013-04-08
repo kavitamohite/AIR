@@ -4,7 +4,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	initComponent: function() {
 		Ext.apply(this, {
 			padding: 20,
-			autoScroll: true,
+//			autoScroll: true,
+//			height: 600,
 		    
 			layout: 'form',//urspr. kein layout
 		    border: false,
@@ -41,7 +42,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			},{ 
 				xtype: 'container',	  
 				html: '<hr>',
-				id: 'editpanelhr',
+//				id: 'editpanelhr',
 				cls: 'x-plain',
 				
 				style: {
@@ -95,11 +96,12 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				layout: 'card',
 				activeItem: 0,
 				margins: '5 5 5 5',
-				hidden: false,
-				plain: true,
 				border: false,
 				
-				autoScroll: true,
+//				boxMaxHeight: 600,
+				height: 430,
+//				autoScroll: true,
+				
 				style: {
 					marginTop: 30
 				},
@@ -178,7 +180,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		ciAgreementsView.on('ciChange', this.onCiChange, this);
 
 		var ciProtectionView = ciEditTabView.getComponent('clCiProtection');
-		ciProtectionView.on('ciChange', this.onCiChange, this);		
+		ciProtectionView.on('ciChange', this.onCiChange, this);
 		
 		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.on('ciChange', this.onCiChange, this);
@@ -252,7 +254,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 //		this.isUserChange = true;
 		var task = new Ext.util.DelayedTask(function() {
 			this.isUserChange = true;
-			this.doLayout();
+//			this.doLayout();
 
 		}.createDelegate(this));
 		task.delay(1000);
@@ -484,7 +486,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	//		this.isUserChange = true;
 			var task = new Ext.util.DelayedTask(function() {
 				this.isUserChange = true;
-				this.doLayout();
+//				this.doLayout();
 	
 			}.createDelegate(this));
 			task.delay(1000);//1000 2000
@@ -555,6 +557,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	onCiCreated: function(store, records, options) {
 		AAM.setCiId(records[0].data.ciId);
 		AAM.setTableId(parseInt(records[0].data.tableId));
+		AAM.setCiSubTypeId(records[0].get('ciSubTypeId'));
 		
 		this.afterCiSave(store, records, options);
 	},

@@ -285,8 +285,8 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 		
 		switch(records[0].data.result) {
 			case 'OK':
-				AIR.AirApplicationManager.setCiId(records[0].data.applicationId);//applicationId!! id
-				AIR.AirApplicationManager.setTableId(AC.TABLE_ID_APPLICATION);
+				AAM.setCiId(records[0].data.applicationId);//applicationId!! id
+				AAM.setTableId(AC.TABLE_ID_APPLICATION);
 				
 				var data = {
 					applicationName: this.applicationName,
@@ -301,7 +301,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 					
 					var options = {
 						tableId: record.get('tableId'),
-						ciSubType: record.get('applicationCat1Id')
+						ciSubTypeId: parseInt(record.get('applicationCat1Id'))
 					};
 
 					this.fireEvent('externalNavigation', this, null, 'clCiDetails', options);
@@ -314,8 +314,8 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 				}.createDelegate(this);
 				
 				var redirectToSearchCallback = function() {
-					AIR.AirApplicationManager.setCiId(-1);
-					AIR.AirApplicationManager.setTableId(-1);
+					AAM.setCiId(-1);
+					AAM.setTableId(-1);
 
 					
 					this.fireEvent('externalNavigation', this, null, 'clSearch');

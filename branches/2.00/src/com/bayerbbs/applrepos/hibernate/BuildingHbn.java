@@ -199,6 +199,7 @@ public class BuildingHbn extends LokationItemHbn {
 								if (null == hbnMessage) {
 									output.setResult(AirKonstanten.RESULT_OK);
 									output.setMessages(new String[] { EMPTY });
+									output.setTableId(AirKonstanten.TABLE_ID_BUILDING);
 								} else {
 									output.setResult(AirKonstanten.RESULT_ERROR);
 									output.setMessages(new String[] { hbnMessage });
@@ -365,6 +366,7 @@ public class BuildingHbn extends LokationItemHbn {
 								if (null == hbnMessage) {
 									output.setResult(AirKonstanten.RESULT_OK);
 									output.setMessages(new String[] { EMPTY });
+									output.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
 								} else {
 									output.setResult(AirKonstanten.RESULT_ERROR);
 									output.setMessages(new String[] { hbnMessage });

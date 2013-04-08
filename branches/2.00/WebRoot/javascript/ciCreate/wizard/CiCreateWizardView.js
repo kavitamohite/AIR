@@ -62,6 +62,8 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 	},
 	
 	onCiTypeSelect: function(combo, record, index) {
+		AAM.setTableId(record.get('ciTypeId'));
+
 		if(record.get('ciTypeId') !== AC.TABLE_ID_APPLICATION) {
 			var options = {
 				isCiCreate: true,
@@ -284,8 +286,13 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		
 		switch(records[0].data.result) {
 			case 'OK':
-				AIR.AirApplicationManager.setCiId(records[0].data.applicationId);
-				AIR.AirApplicationManager.setTableId(AC.TABLE_ID_APPLICATION);
+				//noch ciSubTypeId (und tableId) aus combo holen
+				var cbCiTypeW = this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW');
+				var r = cbCiTypeW.getStore().getById(cbCiTypeW.getValue());
+				
+				AAM.setCiId(records[0].data.applicationId);
+				AAM.setTableId(r.get('tableId'));//AC.TABLE_ID_APPLICATION
+				AAM.setCiSubTypeId(r.get('ciSubTypeId'));
 				
 				var data = {
 					applicationName: this.getComponent('ciCreateWizardP1').getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView').getComponent('tfCiNameW').getValue(),
@@ -309,8 +316,9 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 				}.createDelegate(this);
 				
 				var redirectToSearchCallback = function() {
-					AIR.AirApplicationManager.setCiId(-1);
-					AIR.AirApplicationManager.setTableId(-1);
+					AAM.setCiId(-1);
+					AAM.setTableId(-1);
+					AAM.setCiSubTypeId(-1);
 					
 					this.wizardStarted = false;
 

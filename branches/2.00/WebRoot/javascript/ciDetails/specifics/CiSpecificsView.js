@@ -11,7 +11,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 
 		    layout: 'card',
 		    activeItem: 0,
-		    
+		    		    
 		    items: [{
 		    	id: 'clCiSpecificsAnwendung',
 		        xtype: 'AIR.CiSpecificsAnwendungView'
@@ -125,7 +125,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 				
 				//NEW TEST
 				if(!specificsView)
-					specificsView = new AIR.CiSpecificsAnwendungView({ id: 'clCiSpecificsAnwendung', height: 800 });
+					specificsView = new AIR.CiSpecificsAnwendungView({ id: 'clCiSpecificsAnwendung', height: 400 });//800
 				//NEW TEST
 				break;
 			case AC.TABLE_ID_POSITION:
@@ -146,7 +146,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 				
 				//NEW TEST
 				if(!specificsView)
-					specificsView = new AIR.CiSpecificsItItemView({ id: 'clCiSpecificsItItem', height: 400 });
+					specificsView = new AIR.CiSpecificsItItemView({ id: 'clCiSpecificsItItem', height: 400 });//400
 				//NEW TEST
 				
 				break;
@@ -177,13 +177,13 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 		var h;
 		switch(specificsView.getId()) {
 			case 'clCiSpecificsAnwendung':
-				h = 650;
+				h = 400;//650
 				break;
 			case 'clCiSpecificsLocationItem':
-				h = 300;
+				h = 250;//300
 				break;
 			case 'clCiSpecificsItItem':
-				h = 440;
+				h = 400;//450
 				break;
 		}
 		

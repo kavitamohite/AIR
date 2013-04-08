@@ -3083,7 +3083,7 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createCiSaveStore: function(ciType, isCreate) {
-			var ciSaveRecord = Ext.data.Record.create(['result', 'displayMessage', 'messages', 'ciId', 'tableId']);
+			var ciSaveRecord = Ext.data.Record.create(['result', 'displayMessage', 'messages', 'ciId', 'tableId', 'ciSubTypeId']);
 			
 			var ciSaveReader = new Ext.data.XmlReader({
 				record: 'return'

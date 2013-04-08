@@ -605,10 +605,17 @@ AIR.AirApplicationManager = function() {
 		getTableId: function() {
 			return this.tableId;
 		},
-		
 		setTableId: function(tableId) {
 			this.tableId = tableId;
 		},
+		getCiSubTypeId: function() {
+			return this.ciSubTypeId;
+		},
+		setCiSubTypeId: function(ciSubTypeId) {
+			this.ciSubTypeId = ciSubTypeId;
+		},
+		
+		
 //		getCiData: function() {
 //			return this.ciData;
 //		},
@@ -674,6 +681,7 @@ AIR.AirApplicationManager = function() {
 			
 			if(airCookie.ciId) {
 				this.setCiId(airCookie.ciId);
+				this.setCiSubTypeId(airCookie.ciSubTypeId);
 				this.setTableId(airCookie.tableId);
 			}
 		},

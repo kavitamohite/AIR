@@ -610,6 +610,7 @@ public class TerrainHbn extends LokationItemHbn {
 								if (null == hbnMessage) {
 									output.setResult(AirKonstanten.RESULT_OK);
 									output.setMessages(new String[] { EMPTY });
+									output.setTableId(AirKonstanten.TABLE_ID_TERRAIN);
 								} else {
 									output.setResult(AirKonstanten.RESULT_ERROR);
 									output.setMessages(new String[] { hbnMessage });

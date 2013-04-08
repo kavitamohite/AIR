@@ -7,6 +7,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		    
 		    border: false,
 		    layout: 'form',
+		    autoScroll: true,
 		    
 		    items: [{
 		        id: 'tfItSystemCiName',//NUR für CREATE ItSystem !!
@@ -49,7 +50,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			        
 			        width: 230,
 			        fieldLabel: 'Group',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
-					
+					editable: false,
 			        
 					lastQuery: '',
 			        store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('referencesListStore'),//referencesListStore,//AIR.AirStoreFactory.createReferencesListStore(),//this.referencesListStore,
@@ -68,7 +69,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			        
 			        width: 230,
 			        fieldLabel: 'Type',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
-					
+			        editable: false,
 			        
 					lastQuery: '',
 			        store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('referencesListStore'),//referencesListStore,//AIR.AirStoreFactory.createReferencesListStore(),//this.referencesListStore,
@@ -87,7 +88,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			        
 			        width: 230,
 			        fieldLabel: 'Name',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
-					
+			        editable: false,
 			        
 					lastQuery: '',
 			        store: new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('referencesListStore'),//referencesListStore,//AIR.AirStoreFactory.createReferencesListStore(),//this.referencesListStore,
@@ -345,9 +346,9 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
         cbPrimaryFunction.on('select', this.onSelect, this);
         cbLicenseScanning.on('select', this.onSelect, this);
         
-//        cbOsGroup.on('change', this.onOsGroupChange, this);
-//        cbOsType.on('change', this.onOsTypeChange, this);
-//        cbOsName.on('change', this.onOsNameChange, this);
+        cbOsGroup.on('change', this.onOsGroupChange, this);
+        cbOsType.on('change', this.onOsTypeChange, this);
+        cbOsName.on('change', this.onChange, this);
         cbClusterCode.on('change', this.onChange, this);
         cbClusterType.on('change', this.onChange, this);
         cbVirtualSoftware.on('change', this.onChange, this);
@@ -376,6 +377,45 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 	},
 
 	onOsGroupSelect: function(combo, record, index) {
+		this.setOsType(record);
+		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
+	},
+	onOsTypeSelect: function(combo, record, index) {
+		this.setOsName(record);
+		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
+	},
+//	onOsNameSelect: function(combo, record, index) {
+//		
+//	},
+	
+	onOsGroupChange: function(combo, newValue, oldValue) {
+    	if(this.isComboValueValid(combo, newValue, oldValue))
+    		this.ownerCt.fireEvent('ciChange', this, combo, newValue);
+    	
+    	var osGroupRecord = combo.getStore().getById(newValue);
+//    	var cbOsType = this.getComponent('fsOs').getComponent('cbOsType');
+//		var osTypeRecord = Util.getComboRecord(cbOsType, 'osGroup', osGroupRecord.get('name'));
+		
+//		var osNameRecord = Util.getComboRecord(cbOsName, 'id', parseInt(data.osNameId));
+//		var osTypeRecord = Util.getComboRecord(cbOsType, 'osTypeId', osNameRecord.get('type'));
+//		var osGroupRecord = Util.getComboRecord(cbOsGroup, 'name', osTypeRecord.get('osGroup'));//
+//
+//		
+		this.setOsType(osGroupRecord);//osTypeRecord
+	},
+	onOsTypeChange: function(combo, newValue, oldValue) {
+    	if(this.isComboValueValid(combo, newValue, oldValue))
+    		this.ownerCt.fireEvent('ciChange', this, combo, newValue);
+		
+    	var osTypeRecord = combo.getStore().getById(newValue);
+		
+		this.setOsName(osTypeRecord);
+	},
+	
+	
+	setOsType: function(record) {
 		var filterData = {
 			osGroup: record.get('name'),
 			itSystemType: record.get('type')
@@ -385,22 +425,16 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		cbOsType.filterByData(filterData);
 		cbOsType.setValue('');
 		
+		var osTypeRecord = Util.getComboRecord(cbOsType, 'osGroup', record.get('name'));
+		
+		this.setOsName(osTypeRecord);
+	},
+	setOsName: function(record) {
 		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
 		cbOsName.getStore().filter('type', record.get('osTypeId'));
 		cbOsName.setValue('');
-		
-		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
-	onOsTypeSelect: function(combo, record, index) {
-		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
-		cbOsName.getStore().filter('type', record.get('osTypeId'));
-		cbOsName.setValue('');
-		
-		this.ownerCt.fireEvent('ciChange', this, combo, record);
-	},
-//	onOsNameSelect: function(combo, record, index) {
-//		
-//	},
+	
 	onSelect: function(combo, record, index) {
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
@@ -420,9 +454,10 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		if(data.isCiCreate) {
 			//enable all fields
 			tfItSystemCiName.setVisible(true);
+			tfItSystemCiName.reset();
 		} else {
 			tfItSystemCiName.setVisible(false);
-			tfItSystemCiName.setValue(data.name);
+			tfItSystemCiName.setValue(data.name);//wegen mandatory fields check setzen!
 			this.updateAccessMode(data);
 		}
 
@@ -642,5 +677,33 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 	updateToolTips: function(toolTips) {
 
 	}
+	
+	/*
+	onOsGroupSelect: function(combo, record, index) {
+		var filterData = {
+			osGroup: record.get('name'),
+			itSystemType: record.get('type')
+		};
+		
+		var cbOsType = this.getComponent('fsOs').getComponent('cbOsType');
+		cbOsType.filterByData(filterData);
+		cbOsType.setValue('');
+		
+		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
+		cbOsName.getStore().filter('type', record.get('osTypeId'));
+		cbOsName.setValue('');
+		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
+	},
+	onOsTypeSelect: function(combo, record, index) {
+		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
+		cbOsName.getStore().filter('type', record.get('osTypeId'));
+		cbOsName.setValue('');
+		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
+	},
+//	onOsNameSelect: function(combo, record, index) {
+//		
+//	},*/
 });
 Ext.reg('AIR.CiSpecificsItItemView', AIR.CiSpecificsItItemView);

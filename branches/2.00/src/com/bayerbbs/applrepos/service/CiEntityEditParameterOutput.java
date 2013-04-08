@@ -9,6 +9,8 @@ public class CiEntityEditParameterOutput {
 	private String messages[];
 	private Long ciId;
 	private Integer tableId;
+	private Integer ciSubTypeId;
+	
 	
 	public CiEntityEditParameterOutput() {
 	}
@@ -40,26 +42,28 @@ public class CiEntityEditParameterOutput {
 	public Long getCiId() {
 		return ciId;
 	}
-
 	public void setCiId(Long ciId) {
 		this.ciId = ciId;
 	}
-	
-	
 
 	public Integer getTableId() {
 		return tableId;
 	}
-
 	public void setTableId(Integer tableId) {
 		this.tableId = tableId;
 	}
+	
+	public Integer getCiSubTypeId() {
+		return ciSubTypeId;
+	}
+	public void setCiSubTypeId(Integer ciSubTypeId) {
+		this.ciSubTypeId = ciSubTypeId;
+	}
 
+	
 	public void setErrorMessage(String code) {
 		setErrorMessage(code, null);
 	}
-
-		
 	public void setErrorMessage(String code, String replacement) {
 		setResult(AirKonstanten.RESULT_ERROR);
 		ErrorCodeManager errorCodeManager = new ErrorCodeManager();

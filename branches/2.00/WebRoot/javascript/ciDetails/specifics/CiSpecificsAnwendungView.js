@@ -5,10 +5,13 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		this.objectAliasAllowedStore = AIR.AirStoreFactory.getObjectAliasAllowedStore();
 		
 		Ext.apply(this, {
-			labelWidth: 200, // label settings here cascade unless overridden
+			labelWidth: 160, //200 label settings here cascade unless overridden
 		    
 		    border: false,
 		    layout: 'form',
+		    
+			height: 360,
+			autoScroll: true,
 		    
 		    items: [{
 		        xtype: 'textfield',
@@ -216,9 +219,9 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		        id: 'specificsCategory',
 		        
 		        title: 'Categories',
-		        labelWidth: 190,
+		        labelWidth: 145,
 //		        height: 170,//sollte nicht notwendig sein!
-		        anchor: '70%',
+		        anchor: '80%',
 		        layout: 'form',//orig: auskommentiert, anchor
 		        
 				items: [{
@@ -230,8 +233,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	    	        displayField: 'text',
 	    	        fieldLabel: 'applicationBusinessCat',
 	    	        
-//	    	        anchor: '100%',
-	    	        width: 250,
+	    	        width: 270,
 			        
 //			        typeAhead: true,
 //			        forceSelection: true,
@@ -250,8 +252,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	    	        displayField: 'text',
 	    	        fieldLabel: 'dataClass',	        
 	    	        
-//	    	        anchor: '100%',
-	    	        width: 250,
+	    	        width: 270,
 			        
 //			        typeAhead: true,
 //			        forceSelection: true,
@@ -273,7 +274,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
     				items: [{
     					xtype: 'label',
     					id: 'labelbusinessProcess',
-    					width: 195,
+    					width: 150,//195
     					
     					style: {
     						fontSize: 12

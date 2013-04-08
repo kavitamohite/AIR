@@ -801,6 +801,8 @@ public class ItSystemHbn extends BaseHbn {
 								if (null == hbnMessage) {
 									output.setResult(AirKonstanten.RESULT_OK);
 									output.setMessages(new String[] { EMPTY });
+									output.setTableId(dto.getTableId());
+									output.setCiSubTypeId(dto.getCiSubTypeId());
 								} else {
 									output.setResult(AirKonstanten.RESULT_ERROR);
 									output.setMessages(new String[] { hbnMessage });

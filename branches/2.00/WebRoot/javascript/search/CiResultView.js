@@ -145,11 +145,16 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		   record.data.tableId == AC.TABLE_ID_SITE ||
 		   record.data.tableId == AC.TABLE_ID_IT_SYSTEM) {
 			
+			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+			var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
+			
 			AAM.setCiId(ciId);
 			AAM.setTableId(parseInt(record.data.tableId));//AC.TABLE_ID_APPLICATION
+			AAM.setCiSubTypeId(r.get('ciSubTypeId'));
 		} else {
 			AAM.setCiId(-1);
 			AAM.setTableId(-1);
+			AAM.setCiSubTypeId(-1);
 			
 			ciId = -1;//damit Ci Detail-Menu ausgeblendet wird
 			

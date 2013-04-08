@@ -49,7 +49,9 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    layout: 'hbox',//form hbox
 		    border: false,
 		    
-		    height: 800,//650 550
+//		    height: 800,//650 550
+			height: 350,
+			autoScroll: true,
 		    			
 		    items: [
 //		    {//connectionGrid

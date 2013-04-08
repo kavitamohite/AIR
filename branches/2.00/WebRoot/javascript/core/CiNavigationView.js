@@ -279,7 +279,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			AAM.updateCookie({
 				navigation: link.getId(),//viewId,
 				ciId: AAM.getCiId(),
-				tableId: AAM.getTableId()
+				tableId: AAM.getTableId(),
+				ciSubTypeId: AAM.getCiSubTypeId()
 			});
 			
 //			AIR.AirHistoryManager.add(link);
@@ -323,6 +324,18 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		switch(target) {
 			case 'clCiDetails':
 			case 'clCiSpecifics':
+				//nicht ausreichend, da z.B. nach reload kein Menuupdate stattfindet
+				if(options && options.isCiCreate) {
+					this.updateMenu(options.tableId);//, options.ciSubTypeId
+
+					//REFAC/konsolidieren
+					var pCiDetailsMenuItems = this.getComponent('pCiDetailsMenuItems');
+					pCiDetailsMenuItems.setVisible(true);
+					var link = this.getComponent('pCiDetailsMenuItems').getComponent(target);
+					link.fireEvent('click', link, null, options);
+					
+					break;
+				}
 			case 'clCiContacts':
 			case 'clCiAgreements':
 			case 'clCiProtection':
@@ -333,6 +346,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			case 'clCiHistory':
 				var pCiDetailsMenuItems = this.getComponent('pCiDetailsMenuItems');
 				pCiDetailsMenuItems.setVisible(true);
+				
+				this.updateMenu(AAM.getTableId(), AAM.getCiSubTypeId());
 				
 				var link = this.getComponent('pCiDetailsMenuItems').getComponent(target);//clCiDetails
 				
@@ -345,6 +360,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					};
 				}
 				link.fireEvent('click', link, null, options);
+				
 				break;
 			case 'clSearch':
 			case 'clAdvancedSearch':
@@ -383,7 +399,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					var pCiDetailsMenuItems = this.getComponent('pCiDetailsMenuItems');
 					pCiDetailsMenuItems.setVisible(true);
 					
-					this.updateMenu(parseInt(record.get('tableId')), record.get('applicationCat1Txt'));
+//					this.updateMenu(parseInt(record.get('tableId')), record.get('applicationCat1Txt'));
+					this.updateMenu(AAM.getTableId(), AAM.getCiSubTypeId());
 				}
 				break;
 		}
@@ -398,10 +415,11 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		
 		switch(tableId) {
 			case AC.TABLE_ID_APPLICATION:
-				var store = AIR.AirStoreManager.getStoreByName('applicationCat1ListStore');
-				var cat1Id = store.getAt(store.findExact('english', ciSubType)).get('id');
-				
-				if(cat1Id == AC.APP_CAT1_APPLICATION) {
+//				var store = AIR.AirStoreManager.getStoreByName('applicationCat1ListStore');
+//				var cat1Id = store.getAt(store.findExact('english', ciSubType)).get('id');
+//				
+//				if(cat1Id == AC.APP_CAT1_APPLICATION) {
+				if(ciSubType == AC.APP_CAT1_APPLICATION) {
 					clCiLicense.setVisible(true);
 					clCiSupportStuff.setVisible(true);
 					break;
