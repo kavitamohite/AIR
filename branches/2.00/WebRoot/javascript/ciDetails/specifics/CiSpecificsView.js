@@ -173,6 +173,8 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 //		this.fireEvent('viewInitialized', this, childView);
 //	},
 	
+	//damit die Höhenänderung auch für clCiSpecificsLocationItem mit 250 sichtbar ist, muss auch die Höhe
+	//430 von ciEditTabView geändert werden.
 	updateHeight: function(specificsView) {
 		var h;
 		switch(specificsView.getId()) {

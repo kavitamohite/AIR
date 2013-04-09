@@ -648,10 +648,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					Util.disableCombo(cbSite);//enableCombo
 					Util.enableCombo(cbCountry);
 				} else {
-					cbBuilding.setValue(data.gebaeudeName);
-					cbTerrain.setValue(data.terrainName);
-					cbSite.setValue(data.standortName);
-					cbCountry.setValue(data.landNameEn);
+
 					
 //					cbBuilding.setValue(data.areaId);
 //					cbBuilding.setRawValue(data.areaName);
@@ -675,6 +672,12 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 						cbBuilding.getStore().load();
 					} else
 						Util.disableCombo(cbBuilding);
+					
+					
+					cbBuilding.setValue(data.gebaeudeName);
+					cbTerrain.setValue(data.terrainName);
+					cbSite.setValue(data.standortName);
+					cbCountry.setValue(data.landNameEn);
 					
 					
 					Util.disableCombo(cbTerrain);
@@ -714,14 +717,10 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					Util.disableCombo(cbSite);//enableCombo
 					Util.enableCombo(cbCountry);
 				} else {
-					cbTerrain.setValue(data.terrainName);
-					cbSite.setValue(data.standortName);
-					cbCountry.setValue(data.landNameEn);
-					
 					/*cbTerrain.getStore().setBaseParam('id', data.standortId);
 					cbTerrain.allQuery = data.terrainId;
 					
-					if(AIR.AirAclManager.isRelevance(cbBuilding, data)) {
+					if(AIR.AirAclManager.isRelevance(cbTerrain, data)) {
 						Util.enableCombo(cbBuilding);
 
 						cbTerrain.reset();
@@ -732,6 +731,10 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 						cbTerrain.getStore().load();
 					} else
 						Util.disableCombo(cbTerrain);*/
+					
+					cbTerrain.setValue(data.terrainName);
+					cbSite.setValue(data.standortName);
+					cbCountry.setValue(data.landNameEn);
 					
 					Util.disableCombo(cbTerrain);
 					Util.disableCombo(cbSite);

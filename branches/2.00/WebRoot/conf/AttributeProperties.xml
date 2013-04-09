@@ -221,7 +221,6 @@
 	</Identifier>
 	<Identifier>
 		<id>cbRoom</id>
-		<Mandatory>optional</Mandatory>
 		<ciTypeId>13</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
 <!--		<Mandatory>optional</Mandatory>-->

@@ -16,7 +16,6 @@ import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
-import com.bayerbbs.applrepos.dto.GroupsDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
@@ -26,7 +25,6 @@ import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
-import com.bayerbbs.applrepos.hibernate.GroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
@@ -169,6 +167,14 @@ public class CiEntityWS {
 
 		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 			Schrank schrank = SchrankHbn.findById(input.getCiId());
+			
+			/*
+			//wenn bei Schrank Neuanlage ein reload vor dem Speichern gemacht wird, gibt es nich keine ID. Es wird die ID des
+			//zuletzt geladenen CIs aus den Cookie Daten in input.getCiId() geliefert. Es gibt sehr wahrscheinlich kein Schrank
+			//mit der ID des zuletzt geladenen CIs. Daher ein leeres schrankDTO zurückgeben.
+			if(schrank == null)
+				return schrankDTO;*/
+			
 			CiLokationsKette lokationsKette = SchrankHbn.findLokationsKetteById(input.getCiId());
 			
 			//wenn noch alle Räume irgendwie auf die GUI sollen

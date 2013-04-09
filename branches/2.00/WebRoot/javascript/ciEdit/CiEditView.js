@@ -98,8 +98,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				margins: '5 5 5 5',
 				border: false,
 				
-//				boxMaxHeight: 600,
-				height: 430,
+//				height: 430,
 //				autoScroll: true,
 				
 				style: {
