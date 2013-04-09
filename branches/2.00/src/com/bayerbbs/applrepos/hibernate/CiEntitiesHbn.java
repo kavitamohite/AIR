@@ -99,7 +99,7 @@ public class CiEntitiesHbn {
 	
 	//ApplicationDTO
 	public static List<CiItemDTO> findCisByNameOrAlias(String searchName) {
-		return findCisByNameOrAlias(searchName, AirKonstanten.PARAMETER_QUERYMODE_EXACT, false, null, null);
+		return findCisByNameOrAlias(searchName, AirKonstanten.PARAMETER_QUERYMODE_EXACT, false, null, null, 0, 1000);
 	}	 
  
 	public static boolean isLikeStart(String queryMode) {
@@ -123,7 +123,7 @@ public class CiEntitiesHbn {
 	
 
 	//ApplicationDTO
-	public static List<CiItemDTO> findCisByNameOrAlias(String searchName, String queryMode, boolean onlyApplications, String sort, String dir) {
+	public static List<CiItemDTO> findCisByNameOrAlias(String searchName, String queryMode, boolean onlyApplications, String sort, String dir, Integer startwert, Integer limit) {
 		ArrayList<CiItemDTO> listResult = new ArrayList<CiItemDTO>();
 
 		boolean commit = false;
@@ -222,12 +222,20 @@ public class CiEntitiesHbn {
 			tx = session.beginTransaction();
 			conn = session.connection();
 			selectStmt = conn.createStatement();
+			
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
-
+			
 			if (null != rset) {
-				while (rset.next()) {
-					CiItemDTO anwendung = getApplicationDTOFromResultSet(rset);//ApplicationDTO
-					listResult.add(anwendung);
+
+				long counter = 0;
+				
+				while (rset.next() && (counter < startwert + limit)) {
+					
+					if (counter < startwert + limit) {
+						CiItemDTO anwendung = getApplicationDTOFromResultSet(rset);//ApplicationDTO
+						listResult.add(anwendung);
+					}
+					counter++;
 				}
 				commit = true;
 			}
@@ -251,7 +259,101 @@ public class CiEntitiesHbn {
 		return listResult;
 	}
 
+	public static Long findCountCisByNameOrAlias(String searchName, String queryMode, boolean onlyApplications) {
+		boolean commit = false;
+		Transaction tx = null;
+		Statement selectStmt = null;
+		Session session = HibernateUtil.getSession();
+		Connection conn = null;
 
+		searchName = searchName.toUpperCase();
+		
+		StringBuffer sql = new StringBuffer();
+
+		sql.append("select count(*) from DWH_ENTITY  where");
+		sql.append(" upper(deleted) = 'NO'");
+		sql.append(" and TABLE_ID in (");
+		sql.append(AirKonstanten.TABLE_ID_APPLICATION);
+
+		if (onlyApplications) {
+			sql.append(") and UPPER(type) = UPPER('Application')");
+		} else {
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_ROOM);
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_BUILDING);//TABLE_ID_WAYS
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_BUILDING_AREA);
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_TERRAIN);
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_POSITION);
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.TABLE_ID_SITE);
+			sql.append(")");
+		}
+		
+		sql.append(" and (upper(name) like '");
+		if (isLikeStart(queryMode)) {
+			sql.append("%");
+		}
+		
+		sql.append(searchName);
+		if (isLikeEnd(queryMode)) {
+			sql.append("%");
+		}
+
+		sql.append("'  or upper(ASSET_ID_OR_ALIAS) like '");
+		if (isLikeStart(queryMode)) {
+			sql.append("%");
+		}
+		
+		sql.append(searchName);
+		if (isLikeEnd(queryMode)) {
+			sql.append("%");
+		}
+		
+		sql.append("')");
+		
+		Long anzahlDatensaetze = 0L;
+		
+		
+		try {
+			tx = session.beginTransaction();
+			conn = session.connection();
+			selectStmt = conn.createStatement();
+			
+			ResultSet rset = selectStmt.executeQuery(sql.toString());
+
+			if (null != rset) {
+				rset.next();
+				anzahlDatensaetze = rset.getLong(1);
+			}
+			commit = true;
+			
+			if (null != rset) {
+				rset.close();
+			}
+			if (null != selectStmt) {
+				selectStmt.close();
+			}
+			if (null != conn) {
+				conn.close();
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		finally {
+			HibernateUtil.close(tx, session, commit);
+		}
+
+		return anzahlDatensaetze;
+	}
+
+	
+	
 	public static List<CiBaseDTO> findCisByNameOrAlias(String searchName, int ciTableId, boolean withDeleted) {
 		ArrayList<CiBaseDTO> listResult = new ArrayList<CiBaseDTO>();
 

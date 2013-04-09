@@ -65,6 +65,8 @@ public class ApplicationWS {
 		String searchAction = input.getSearchAction();
 
 		List<CiItemDTO> listAnwendungen = null;//ApplicationDTO
+		
+		Long anzahlDatensaetze = null;
 
 		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 			if (null == startwert) {
@@ -134,7 +136,8 @@ public class ApplicationWS {
 						input.getProcessOptions(), input.getSourceOptions(), input.getBusinessEssentialOptions()
 					);
 				} else {
-					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchname, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir());
+					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchname, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir(), startwert, limit);
+					anzahlDatensaetze = CiEntitiesHbn.findCountCisByNameOrAlias(searchname, input.getQueryMode(), onlyApplications);
 				}
 			}
 		}
@@ -177,8 +180,13 @@ public class ApplicationWS {
 			}
 		}
 
+		
+		
 		CiItemsResultDTO output = new CiItemsResultDTO();
 		output.setCountResultSet(listAnwendungen.size());
+		if (null != anzahlDatensaetze) {
+			output.setCountResultSet(anzahlDatensaetze);
+		}
 		output.setCiItemDTO(anwendungen);
 		return output;
 		
