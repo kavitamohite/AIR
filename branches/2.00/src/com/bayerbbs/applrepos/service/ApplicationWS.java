@@ -232,11 +232,11 @@ public class ApplicationWS {
 						String gpscContactHidden = (String) ApplicationDTO.class.getMethod(methodHidden).invoke(dto);
 						if (!(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContact)) && !(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContactHidden))) {
 							if ("Y".equals(grouptype[2])) { // Individual Contact(s)
-								CiPersonsHbn.saveCiPerson(editInput.getCwid(),
+								CiPersonsHbn.saveCiPerson(editInput.getCwid(), dto.getTableId(),
 										 dto.getId(), new Long(grouptype[0]), grouptype[3],
 										 gpscContactHidden);
 							} else { // Group(s)
-								CiGroupsHbn.saveCiGroup(editInput.getCwid(),
+								CiGroupsHbn.saveCiGroup(editInput.getCwid(), dto.getTableId(),
 										 dto.getId(), new Long(grouptype[0]), grouptype[3],
 										 gpscContact);
 							}
@@ -312,12 +312,12 @@ public class ApplicationWS {
 					//--- neu seit Wizard RFC 8271 - required Attributes
 					
 					if (null != editInput.getGpsccontactSupportGroupHidden()) {
-						CiGroupsHbn.saveCiGroup(editInput.getCwid(),
+						CiGroupsHbn.saveCiGroup(editInput.getCwid(), dto.getTableId(),
 								ciId, new Long(1), "SUPPORT GROUP - IM RESOLVER",
 										dto.getGpsccontactSupportGroup());//getGpsccontactSupportGroupHidden
 					}
 					if (null != editInput.getGpsccontactOwningBusinessGroupHidden()) {
-						CiGroupsHbn.saveCiGroup(editInput.getCwid(),
+						CiGroupsHbn.saveCiGroup(editInput.getCwid(), dto.getTableId(),
 								ciId, new Long(6), "OWNING BUSINESS GROUP",
 								dto.getGpsccontactOwningBusinessGroup());//getGpsccontactOwningBusinessGroupHidden
 					}
@@ -374,6 +374,7 @@ public class ApplicationWS {
 	private ApplicationDTO getApplicationDTOFromEditInput(ApplicationEditParameterInput editInput) {
 		ApplicationDTO dto = new ApplicationDTO();
 		dto.setId(editInput.getId());
+		dto.setTableId(AirKonstanten.TABLE_ID_APPLICATION);
 
 		// Basics
 		dto.setName(editInput.getName());
@@ -1075,12 +1076,12 @@ public class ApplicationWS {
 	 * @param contactsInput
 	 * @return
 	 */
-	public ApplicationContactsParameterOutput getApplicationContacts(ApplicationContactsParameterInput contactsInput) {
+	public ApplicationContactsParameterOutput getApplicationContacts(ApplicationContactsParameterInput input) {
 		ApplicationContactsParameterOutput output = new ApplicationContactsParameterOutput();
 
 		ApplicationContactsDTO applicationContactsDTO = new ApplicationContactsDTO();
 
-		List<ApplicationContact> listContacts = AnwendungHbn.findApplicationContacts(contactsInput.getApplicationId());
+		List<ApplicationContact> listContacts = AnwendungHbn.findApplicationContacts(input.getApplicationId(), input.getTableId());
 
 		String lastGroupTypeName = AirKonstanten.STRING_EMPTY;
 

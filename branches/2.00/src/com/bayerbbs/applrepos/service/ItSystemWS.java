@@ -3,6 +3,8 @@ package com.bayerbbs.applrepos.service;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
+import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
+import com.bayerbbs.applrepos.hibernate.CiPersonsHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 
 public class ItSystemWS {
@@ -63,6 +65,30 @@ public class ItSystemWS {
 		itSystemDTO.setGxpFlag(input.getGxpFlag());
 		itSystemDTO.setGxpFlagId(input.getGxpFlag());
 		
+		
+		itSystemDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
+		itSystemDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
+		itSystemDTO.setGpsccontactServiceCoordinatorHidden(input.getGpsccontactServiceCoordinatorHidden());
+		itSystemDTO.setGpsccontactEscalationHidden(input.getGpsccontactEscalationHidden());
+		itSystemDTO.setGpsccontactCiOwnerHidden(input.getGpsccontactCiOwnerHidden());
+		itSystemDTO.setGpsccontactServiceCoordinatorIndivHidden(input.getGpsccontactServiceCoordinatorIndivHidden());
+		itSystemDTO.setGpsccontactEscalationIndivHidden(input.getGpsccontactEscalationIndivHidden());
+		itSystemDTO.setGpsccontactResponsibleAtCustomerSideHidden(input.getGpsccontactResponsibleAtCustomerSideHidden());
+		itSystemDTO.setGpsccontactSystemResponsibleHidden(input.getGpsccontactSystemResponsibleHidden());
+		itSystemDTO.setGpsccontactImpactedBusinessHidden(input.getGpsccontactImpactedBusinessHidden()); 
+
+		itSystemDTO.setGpsccontactSupportGroup(input.getGpsccontactSupportGroup());
+		itSystemDTO.setGpsccontactChangeTeam(input.getGpsccontactChangeTeam());
+		itSystemDTO.setGpsccontactServiceCoordinator(input.getGpsccontactServiceCoordinator());
+		itSystemDTO.setGpsccontactEscalation(input.getGpsccontactEscalation());
+		itSystemDTO.setGpsccontactCiOwner(input.getGpsccontactCiOwner());
+		itSystemDTO.setGpsccontactServiceCoordinatorIndiv(input.getGpsccontactServiceCoordinatorIndiv());
+		itSystemDTO.setGpsccontactEscalationIndiv(input.getGpsccontactEscalationIndiv());
+		itSystemDTO.setGpsccontactResponsibleAtCustomerSide(input.getGpsccontactResponsibleAtCustomerSide());
+		itSystemDTO.setGpsccontactSystemResponsible(input.getGpsccontactSystemResponsible());
+		itSystemDTO.setGpsccontactImpactedBusiness(input.getGpsccontactImpactedBusiness()); 
+		
+		
 		return itSystemDTO;
 	}
 	
@@ -72,6 +98,37 @@ public class ItSystemWS {
 		if (null != input) {
 			ItSystemDTO dto = getItSystemDTOFromEditInput(input);
 			output = ItSystemHbn.saveItSystem(input.getCwid(), dto);
+			
+			
+			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
+				try {
+					for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) {
+						if(grouptype[4].indexOf(dto.getTableId().toString()) > -1) {//IT System GPSC Kontakt?
+							char d[] = grouptype[1].toCharArray();
+							d[0] = String.valueOf(d[0]).toUpperCase().charAt(0);
+							String method = "get" + new String(d);
+							String methodHidden = "get" + new String(d) + AirKonstanten.GPSCGROUP_HIDDEN_DESCRIPTOR;
+
+							String gpscContact = (String) ItSystemDTO.class.getMethod(method).invoke(dto);
+							String gpscContactHidden = (String) ItSystemDTO.class.getMethod(methodHidden).invoke(dto);
+							if (!(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContact)) && !(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContactHidden))) {
+								if (AirKonstanten.YES_SHORT.equals(grouptype[2])) { // Individual Contact(s)
+									CiPersonsHbn.saveCiPerson(input.getCwid(), dto.getTableId(),
+											 dto.getId(), new Long(grouptype[0]), grouptype[3],
+											 gpscContactHidden);
+								} else { // Group(s)
+									CiGroupsHbn.saveCiGroup(input.getCwid(), dto.getTableId(),
+											 dto.getId(), new Long(grouptype[0]), grouptype[3],
+											 gpscContact);
+								}
+							}
+						}
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println(e.toString());
+				}
+			}
 		}
 		
 		return output;

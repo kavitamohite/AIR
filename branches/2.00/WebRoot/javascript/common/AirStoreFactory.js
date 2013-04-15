@@ -3898,7 +3898,7 @@ AIR.AirStoreFactory = function() {
 			var statusWertDisplayField = language == 'EN' ? 'statusWertEn' : 'statusWert';
 			
 			var itsecMassnahmenRecord = Ext.data.Record.create([
-		        'ident', 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'massnahmeTitel', 'statusWert', 'zobId', 'massnahmeLink', 'chocoMerkmal'//, 'statusWertId'
+		        'ident', 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'massnahmeTitel', 'statusWert', 'statusWertEn', 'zobId', 'massnahmeLink', 'chocoMerkmal'//, 'statusWertId'
 		    ]);
 		
 		    var itsecMassnahmenReader = new Ext.data.XmlReader({
@@ -3910,7 +3910,7 @@ AIR.AirStoreFactory = function() {
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: [ 'ident', 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'massnahmeTitel', 'statusWert', 'zobId', 'massnahmeLink', 'chocoMerkmal' ],//, 'statusWertId'
+//		      	fields: [ 'ident', 'itsecMassnahmenStatusId', 'massnahmeGstoolId', 'massnahmeTitel', 'statusWert', 'zobId', 'massnahmeLink', 'chocoMerkmal' ],//, 'statusWertId'
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
 		      		url: webcontext + '/ItsecMassnahmenWSPort',

@@ -43,7 +43,9 @@ public class StandortHbn extends LokationItemHbn {
 	}
 
 	public static CiEntityEditParameterOutput deleteStandort(String cwid, StandortDTO dto) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		return deleteCi(cwid, dto, Standort.class);
+		
+		/*CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
@@ -106,7 +108,7 @@ public class StandortHbn extends LokationItemHbn {
 			output.setMessages(new String[] { "cwid missing" });
 		}
 
-		return output;
+		return output;*/
 	}
 
 	

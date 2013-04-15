@@ -974,6 +974,11 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			this.setPanelMessage(panelMsg);
 		}
 		
+//		this.disableButtons();
+		var task = new Ext.util.DelayedTask(function() {
+			this.disableButtons();
+		}.createDelegate(this));
+		task.delay(1000);
 	}
 	
 	//============================================================

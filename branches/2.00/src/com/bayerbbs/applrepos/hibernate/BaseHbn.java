@@ -3,7 +3,10 @@ package com.bayerbbs.applrepos.hibernate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
@@ -15,6 +18,7 @@ import com.bayerbbs.applrepos.domain.CiBase2;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
+import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 
 public class BaseHbn {
 	protected static final String NOT_EQUAL = "<>";
@@ -309,4 +313,79 @@ public class BaseHbn {
 			}
 		}
 	}
+	
+	static <T> CiEntityEditParameterOutput deleteCi(String cwid, CiBaseDTO dto, Class<T> clazz) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		if (null != cwid) {
+			cwid = cwid.toUpperCase();
+			if (null != dto.getId()	&& 0 < dto.getId().longValue()) {
+				Long id = new Long(dto.getId());
+
+				// TODO check der InputWerte
+				Session session = HibernateUtil.getSession();
+				Transaction tx = null;
+				tx = session.beginTransaction();
+				
+//				T ci = findById(clazz, id);
+				CiBase ci = (CiBase) session.get(clazz, id);
+				
+				if (null == ci) {
+					// application was not found in database
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the "+clazz.getClass().getName()+" id "	+ id + " was not found in database" });
+				}
+
+				// if it is not already marked as deleted, we can do it
+				else if (null == ci.getDeleteTimestamp()) {
+					ci.setDeleteUser(cwid);
+					ci.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+					ci.setDeleteTimestamp(ApplReposTS.getDeletionTimestamp());
+
+					boolean toCommit = false;
+					try {
+						session.saveOrUpdate(ci);
+						session.flush();
+						toCommit = true;
+					} catch (Exception e) {
+						log.error(e.getMessage());
+						// handle exception
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { e.getMessage() });
+					} finally {
+						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+						if (toCommit) {
+							if (null == hbnMessage) {
+								output.setResult(AirKonstanten.RESULT_OK);
+								output.setMessages(new String[] { EMPTY });
+							} else {
+								output.setResult(AirKonstanten.RESULT_ERROR);
+								output.setMessages(new String[] { hbnMessage });
+							}
+						}
+					}
+
+				} else {
+					// application is already deleted
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the "+clazz.getClass().getName()+" is already deleted" });
+				}
+
+			} else {
+				// application id is missing
+				output.setResult(AirKonstanten.RESULT_ERROR);
+				output.setMessages(new String[] { "the "+clazz.getClass().getName()+" id is missing or invalid" });
+			}
+
+		} else {
+			// cwid missing
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { "cwid missing" });
+		}
+
+		return output;
+	}
+	
+	private static final Log log = LogFactory.getLog(BaseHbn.class);
+
 }

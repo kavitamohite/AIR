@@ -1140,7 +1140,9 @@ public class BuildingHbn extends LokationItemHbn {
 	}
 	
 	public static CiEntityEditParameterOutput deleteBuilding(String cwid, BuildingDTO dto) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		return deleteCi(cwid, dto, Building.class);
+		
+		/*CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
@@ -1203,11 +1205,13 @@ public class BuildingHbn extends LokationItemHbn {
 			output.setMessages(new String[] { "cwid missing" });
 		}
 
-		return output;
+		return output;*/
 	}
 	
 	public static CiEntityEditParameterOutput deleteBuildingArea(String cwid, BuildingAreaDTO dto) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		return deleteCi(cwid, dto, BuildingArea.class);
+		
+		/*CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
@@ -1270,7 +1274,7 @@ public class BuildingHbn extends LokationItemHbn {
 			output.setMessages(new String[] { "cwid missing" });
 		}
 
-		return output;
+		return output;*/
 	}
 	
 	public static KeyValueOutput getBuildingsByBuildingArea(CiDetailParameterInput detailInput) {

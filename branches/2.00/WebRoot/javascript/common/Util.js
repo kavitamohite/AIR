@@ -166,6 +166,13 @@ Util = {
 		var record = store.getAt(store.findExact(sourceAttr, sourceValue));
 		
 		return record;
+	},
+	
+	getCiTypeByTableId: function(tableId) {
+		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+		var r = Util.getStoreRecord(store, 'ciTypeId', parseInt(tableId));
+		
+		return r;
 	}
 	
 	/*

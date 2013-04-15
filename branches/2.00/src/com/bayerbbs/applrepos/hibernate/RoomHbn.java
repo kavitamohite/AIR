@@ -228,7 +228,9 @@ public class RoomHbn extends LokationItemHbn {
 
 
 	public static CiEntityEditParameterOutput deleteRoom(String cwid, RoomDTO dto) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		return deleteCi(cwid, dto, Room.class);
+		
+		/*CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
@@ -291,7 +293,7 @@ public class RoomHbn extends LokationItemHbn {
 			output.setMessages(new String[] { "cwid missing" });
 		}
 
-		return output;
+		return output;*/
 	}
 
 	

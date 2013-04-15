@@ -45,6 +45,9 @@ public class TerrainHbn extends LokationItemHbn {
 	}
 
 	public static CiEntityEditParameterOutput deleteTerrain(String cwid, TerrainDTO dto) {
+		return deleteCi(cwid, dto, Terrain.class);
+		
+		/*
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
 		if (null != cwid) {
@@ -108,7 +111,7 @@ public class TerrainHbn extends LokationItemHbn {
 			output.setMessages(new String[] { "cwid missing" });
 		}
 
-		return output;
+		return output;*/
 	}
 
 	

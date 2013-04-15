@@ -22,6 +22,29 @@ public class ItSystemEditParameterInput extends BaseEditParameterInput {
 	private Integer ciSubTypeId;
 	
 	
+	private String gpsccontactResponsibleAtCustomerSideHidden;
+	private String gpsccontactSupportGroupHidden;
+	private String gpsccontactChangeTeamHidden;
+	private String gpsccontactServiceCoordinatorHidden;
+	private String gpsccontactEscalationHidden;
+	private String gpsccontactCiOwnerHidden;
+	private String gpsccontactServiceCoordinatorIndivHidden;
+	private String gpsccontactEscalationIndivHidden;
+	private String gpsccontactSystemResponsibleHidden;
+	private String gpsccontactImpactedBusinessHidden;
+	
+	private String gpsccontactResponsibleAtCustomerSide;
+	private String gpsccontactSupportGroup;
+	private String gpsccontactChangeTeam;
+	private String gpsccontactServiceCoordinator;
+	private String gpsccontactEscalation;
+	private String gpsccontactCiOwner;
+	private String gpsccontactServiceCoordinatorIndiv;
+	private String gpsccontactEscalationIndiv;
+	private String gpsccontactSystemResponsible;
+	private String gpsccontactImpactedBusiness;
+	
+	
 	public String getAlias() {
 		return alias;
 	}
@@ -108,5 +131,127 @@ public class ItSystemEditParameterInput extends BaseEditParameterInput {
 	}
 	public void setCiSubTypeId(Integer ciSubTypeId) {
 		this.ciSubTypeId = ciSubTypeId;
+	}
+	
+	
+	public String getGpsccontactResponsibleAtCustomerSideHidden() {
+		return gpsccontactResponsibleAtCustomerSideHidden;
+	}
+	public void setGpsccontactResponsibleAtCustomerSideHidden(String gpsccontactResponsibleAtCustomerSideHidden) {
+		this.gpsccontactResponsibleAtCustomerSideHidden = gpsccontactResponsibleAtCustomerSideHidden;
+	}
+	public String getGpsccontactSupportGroupHidden() {
+		return gpsccontactSupportGroupHidden;
+	}
+	public void setGpsccontactSupportGroupHidden(String gpsccontactSupportGroupHidden) {
+		this.gpsccontactSupportGroupHidden = gpsccontactSupportGroupHidden;
+	}
+	public String getGpsccontactChangeTeamHidden() {
+		return gpsccontactChangeTeamHidden;
+	}
+	public void setGpsccontactChangeTeamHidden(String gpsccontactChangeTeamHidden) {
+		this.gpsccontactChangeTeamHidden = gpsccontactChangeTeamHidden;
+	}
+	public String getGpsccontactServiceCoordinatorHidden() {
+		return gpsccontactServiceCoordinatorHidden;
+	}
+	public void setGpsccontactServiceCoordinatorHidden(String gpsccontactServiceCoordinatorHidden) {
+		this.gpsccontactServiceCoordinatorHidden = gpsccontactServiceCoordinatorHidden;
+	}
+	public String getGpsccontactEscalationHidden() {
+		return gpsccontactEscalationHidden;
+	}
+	public void setGpsccontactEscalationHidden(String gpsccontactEscalationHidden) {
+		this.gpsccontactEscalationHidden = gpsccontactEscalationHidden;
+	}
+	public String getGpsccontactCiOwnerHidden() {
+		return gpsccontactCiOwnerHidden;
+	}
+	public void setGpsccontactCiOwnerHidden(String gpsccontactCiOwnerHidden) {
+		this.gpsccontactCiOwnerHidden = gpsccontactCiOwnerHidden;
+	}
+	public String getGpsccontactServiceCoordinatorIndivHidden() {
+		return gpsccontactServiceCoordinatorIndivHidden;
+	}
+	public void setGpsccontactServiceCoordinatorIndivHidden(String gpsccontactServiceCoordinatorIndivHidden) {
+		this.gpsccontactServiceCoordinatorIndivHidden = gpsccontactServiceCoordinatorIndivHidden;
+	}
+	public String getGpsccontactEscalationIndivHidden() {
+		return gpsccontactEscalationIndivHidden;
+	}
+	public void setGpsccontactEscalationIndivHidden(String gpsccontactEscalationIndivHidden) {
+		this.gpsccontactEscalationIndivHidden = gpsccontactEscalationIndivHidden;
+	}
+	public String getGpsccontactSystemResponsibleHidden() {
+		return gpsccontactSystemResponsibleHidden;
+	}
+	public void setGpsccontactSystemResponsibleHidden(String gpsccontactSystemResponsibleHidden) {
+		this.gpsccontactSystemResponsibleHidden = gpsccontactSystemResponsibleHidden;
+	}
+	public String getGpsccontactImpactedBusinessHidden() {
+		return gpsccontactImpactedBusinessHidden;
+	}
+	public void setGpsccontactImpactedBusinessHidden(String gpsccontactImpactedBusinessHidden) {
+		this.gpsccontactImpactedBusinessHidden = gpsccontactImpactedBusinessHidden;
+	}
+	public String getGpsccontactResponsibleAtCustomerSide() {
+		return gpsccontactResponsibleAtCustomerSide;
+	}
+	public void setGpsccontactResponsibleAtCustomerSide(String gpsccontactResponsibleAtCustomerSide) {
+		this.gpsccontactResponsibleAtCustomerSide = gpsccontactResponsibleAtCustomerSide;
+	}
+	public String getGpsccontactSupportGroup() {
+		return gpsccontactSupportGroup;
+	}
+	public void setGpsccontactSupportGroup(String gpsccontactSupportGroup) {
+		this.gpsccontactSupportGroup = gpsccontactSupportGroup;
+	}
+	public String getGpsccontactChangeTeam() {
+		return gpsccontactChangeTeam;
+	}
+	public void setGpsccontactChangeTeam(String gpsccontactChangeTeam) {
+		this.gpsccontactChangeTeam = gpsccontactChangeTeam;
+	}
+	public String getGpsccontactServiceCoordinator() {
+		return gpsccontactServiceCoordinator;
+	}
+	public void setGpsccontactServiceCoordinator(String gpsccontactServiceCoordinator) {
+		this.gpsccontactServiceCoordinator = gpsccontactServiceCoordinator;
+	}
+	public String getGpsccontactEscalation() {
+		return gpsccontactEscalation;
+	}
+	public void setGpsccontactEscalation(String gpsccontactEscalation) {
+		this.gpsccontactEscalation = gpsccontactEscalation;
+	}
+	public String getGpsccontactCiOwner() {
+		return gpsccontactCiOwner;
+	}
+	public void setGpsccontactCiOwner(String gpsccontactCiOwner) {
+		this.gpsccontactCiOwner = gpsccontactCiOwner;
+	}
+	public String getGpsccontactServiceCoordinatorIndiv() {
+		return gpsccontactServiceCoordinatorIndiv;
+	}
+	public void setGpsccontactServiceCoordinatorIndiv(String gpsccontactServiceCoordinatorIndiv) {
+		this.gpsccontactServiceCoordinatorIndiv = gpsccontactServiceCoordinatorIndiv;
+	}
+	public String getGpsccontactEscalationIndiv() {
+		return gpsccontactEscalationIndiv;
+	}
+	public void setGpsccontactEscalationIndiv(String gpsccontactEscalationIndiv) {
+		this.gpsccontactEscalationIndiv = gpsccontactEscalationIndiv;
+	}
+	public String getGpsccontactSystemResponsible() {
+		return gpsccontactSystemResponsible;
+	}
+	public void setGpsccontactSystemResponsible(String gpsccontactSystemResponsible) {
+		this.gpsccontactSystemResponsible = gpsccontactSystemResponsible;
+	}
+	public String getGpsccontactImpactedBusiness() {
+		return gpsccontactImpactedBusiness;
+	}
+	public void setGpsccontactImpactedBusiness(String gpsccontactImpactedBusiness) {
+		this.gpsccontactImpactedBusiness = gpsccontactImpactedBusiness;
 	}
 }

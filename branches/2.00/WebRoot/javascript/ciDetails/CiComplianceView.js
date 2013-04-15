@@ -17,7 +17,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    
 		    border: false,
 		    padding: 10,
-		    height: 400,//500 430
+		    height: 420,//500 430
 		    autoScroll: true,
 		    
 		    layout: 'form',//form vbox anchor

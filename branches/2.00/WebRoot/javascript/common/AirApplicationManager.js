@@ -353,21 +353,24 @@ AIR.AirApplicationManager = function() {
 			var icon = 'ok_type2_16x16.png';
 			var message = '';
 			
+			var tableId = this.appDetail ? this.appDetail.tableId : AAM.getTableId();
+			var r = Util.getCiTypeByTableId(tableId);
+			
 			switch(airActionType) {
 				case 'appSaveSuccess':
-					message = this.appDetail.applicationCat1Txt + ' ' + this.appDetail.applicationName + ' saved';
+					message = r.get('text') + ' ' + this.appDetail.name + ' saved';//this.appDetail.applicationCat1Txt
 					break;
 				case 'appCopySuccess':
-					var message = data.applicationCat1 + ' ' + data.applicationNameNew + ' as copy of ' + data.applicationName + ' created';
+					var message = data.applicationCat1 + ' ' + data.applicationNameNew + ' as copy of ' + data.name + ' created';
 					break;
 				case 'appCreateSuccess':
-					message = 'New ' + data.applicationCat1 + ' ' + data.applicationName + ' created';
+					message = 'New ' + data.applicationCat1 + ' ' + data.name + ' created';
 					break;
 				case 'appDeleteSuccess':
-					message = data.applicationCat1 + ' ' + data.applicationName + ' deleted';
+					message = data.applicationCat1 + ' ' + data.name + ' deleted';
 					break;
 				case 'appLoadSuccess':
-					message = this.appDetail.applicationCat1Txt + ' ' + this.appDetail.applicationName + ' loaded';
+					message = r.get('text') + ' ' + this.appDetail.name + ' loaded';//this.appDetail.applicationCat1Txt
 					break;
 				case 'airReady':
 					message = 'AIR ready';
@@ -378,7 +381,7 @@ AIR.AirApplicationManager = function() {
 					switch(data.airErrorId) {
 						case AC.AIR_ERROR_INVALID_CAT2_SAP:
 							message = data.isSapApp ? this.getLabels().SAPNameToStandardNameInvalid : this.getLabels().StandardNameToSAPNameInvalid;
-							message = message.replace('{0}', data.applicationName).replace('{1}', data.sapApplicationCat2);//message.replace('{0}', data.applicationCat1).replace('{1}', data.applicationName);
+							message = message.replace('{0}', data.name).replace('{1}', data.sapApplicationCat2);//message.replace('{0}', data.applicationCat1).replace('{1}', data.applicationName);
 							if(data.isSapApp)
 								message = message.replace('{2}', data.applicationCat2);
 //							message = this.getLabels().ToolbarInvalidCat2SAP;
@@ -388,7 +391,7 @@ AIR.AirApplicationManager = function() {
 							break;
 						case AC.AIR_ERROR_INVALID_TEMPLATE:
 							message = this.getLabels().ToolbarInvalidTemplate;
-							message = message.replace('{0}', data.applicationCat1).replace('{1}', data.applicationName);
+							message = message.replace('{0}', data.applicationCat1).replace('{1}', data.name);
 							break;
 						default: break;
 					}

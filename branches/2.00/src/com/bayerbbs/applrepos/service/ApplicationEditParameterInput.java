@@ -684,8 +684,7 @@ public class ApplicationEditParameterInput {
 	}
 
 
-	public void setGpsccontactResponsibleAtCustomerSide(
-			String gpsccontactResponsibleAtCustomerSide) {
+	public void setGpsccontactResponsibleAtCustomerSide(String gpsccontactResponsibleAtCustomerSide) {
 		this.gpsccontactResponsibleAtCustomerSide = gpsccontactResponsibleAtCustomerSide;
 	}
 
@@ -809,8 +808,7 @@ public class ApplicationEditParameterInput {
 	}
 
 
-	public void setGpsccontactBusinessOwnerRepresentative(
-			String gpsccontactBusinessOwnerRepresentative) {
+	public void setGpsccontactBusinessOwnerRepresentative(String gpsccontactBusinessOwnerRepresentative) {
 		this.gpsccontactBusinessOwnerRepresentative = gpsccontactBusinessOwnerRepresentative;
 	}
 

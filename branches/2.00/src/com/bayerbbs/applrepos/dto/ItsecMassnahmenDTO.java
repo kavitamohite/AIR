@@ -9,6 +9,7 @@ public class ItsecMassnahmenDTO {
 	// Link
 	private String statusWert;
 	private Long statusWertId;
+	private String statusWertEn;
 
 	private Long massnahmeGstoolId;
 	private Long zobId;
@@ -39,8 +40,14 @@ public class ItsecMassnahmenDTO {
 	public String getStatusWert() {
 		return statusWert;
 	}
-	public void setStatusWert(String statusWert) {
+	public void setStatusWertEn(String statusWert) {
 		this.statusWert = statusWert;
+	}
+	public String getStatusWertEn() {
+		return statusWertEn;
+	}
+	public void setStatusWert(String statusWertEn) {
+		this.statusWertEn = statusWertEn;
 	}
 	public Long getMassnahmeGstoolId() {
 		return massnahmeGstoolId;

@@ -146,7 +146,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 							fontSize: 12
 						}
 		    		},{
-						xtype: 'textarea',
+						xtype: 'textarea',//
 						width: taWidth,
 				        id: 'gpsccontactSystemResponsible',
 				        allowBlank: true,
@@ -1049,18 +1049,41 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var label = data.applicationCat1Txt === 'Application' ? labels.applicationManager : labels.label_details_ciOwner;
 		this.getComponent('fsCIOwner').setTitle(label);
 		
-		var applicationContactsStore = AIR.AirStoreFactory.createApplicationContactsStore();
-		applicationContactsStore.on('load', this.applicationContactsLoaded, this);
 		
-		var params = {
-			cwid: AIR.AirApplicationManager.getCwid(),
-			token: AIR.AirApplicationManager.getToken(),
-			applicationId: AIR.AirApplicationManager.getCiId()
-		};
-		
-		applicationContactsStore.load({
-			params: params
-		});
+		var fsContactsGPSC = this.getComponent('contactsGPSC');
+		if(data.tableId == AC.TABLE_ID_APPLICATION || data.tableId == AC.TABLE_ID_IT_SYSTEM) {
+			fsContactsGPSC.setVisible(true);
+			
+			var pGpsccontactOwningBusinessGroup = fsContactsGPSC.getComponent('pGpsccontactOwningBusinessGroup');
+			var pGpsccontactImplementationTeam = fsContactsGPSC.getComponent('pGpsccontactImplementationTeam');
+			var pGpsccontactBusinessOwnerRepresentative = fsContactsGPSC.getComponent('pGpsccontactBusinessOwnerRepresentative');
+
+			if(data.tableId == AC.TABLE_ID_APPLICATION) {
+				pGpsccontactOwningBusinessGroup.setVisible(true);
+				pGpsccontactImplementationTeam.setVisible(true);
+				pGpsccontactBusinessOwnerRepresentative.setVisible(true);
+			} else {
+				pGpsccontactOwningBusinessGroup.setVisible(false);
+				pGpsccontactImplementationTeam.setVisible(false);
+				pGpsccontactBusinessOwnerRepresentative.setVisible(false);
+			}
+			
+			var applicationContactsStore = AIR.AirStoreFactory.createApplicationContactsStore();
+			applicationContactsStore.on('load', this.applicationContactsLoaded, this);
+			
+			var params = {
+				cwid: AAM.getCwid(),
+				token: AAM.getToken(),
+				applicationId: AAM.getCiId(),
+				tableId: data.tableId//AAM.getTableId()
+			};
+			
+			applicationContactsStore.load({
+				params: params
+			});
+		} else {
+			fsContactsGPSC.setVisible(false);
+		}
 	},
 	
 	updateAccessMode: function(data) {
@@ -1135,166 +1158,166 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSide');
-		if (!field.disabled) {
-//			var value = field.getValue();
-			data.gpsccontactResponsibleAtCustomerSide = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSideHidden');
-//			var value2 = field.getValue();
-			if (field.getValue()) {// && field.getValue().length > 0
-				//Entfernt, weil bei mit personpicker hinzugefügten Einträgen und durch den recordremover wieder entfernten
-				//Einträgen hier mit applicationSaveStore.setBaseParam nichts gesetzt wird, wenn ALLE Einträge gelöscht werden sollen
-				//Wenn '' nicht gesetzt/übertragen wird, werden die alten Daten wieder geladen.
-				data.gpsccontactResponsibleAtCustomerSideHidden = field.getValue();
+		if(AAM.getTableId() == AC.TABLE_ID_APPLICATION || AAM.getTableId() == AC.TABLE_ID_IT_SYSTEM) {
+			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSide');
+			if (!field.disabled) {
+	//			var value = field.getValue();
+				data.gpsccontactResponsibleAtCustomerSide = field.getValue();
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSideHidden');
+	//			var value2 = field.getValue();
+				if (field.getValue()) {// && field.getValue().length > 0
+					//Entfernt, weil bei mit personpicker hinzugefügten Einträgen und durch den recordremover wieder entfernten
+					//Einträgen hier mit applicationSaveStore.setBaseParam nichts gesetzt wird, wenn ALLE Einträge gelöscht werden sollen
+					//Wenn '' nicht gesetzt/übertragen wird, werden die alten Daten wieder geladen.
+					data.gpsccontactResponsibleAtCustomerSideHidden = field.getValue();
+				}
+			} else {
+				data.gpsccontactResponsibleAtCustomerSide = 'DISABLED';
 			}
-		} else {
-			data.gpsccontactResponsibleAtCustomerSide = 'DISABLED';
-		}
 
 		
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner');
-		if (!field.disabled) {
-			data.gpsccontactCiOwner = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwnerHidden');
-			if (field.getValue() && field.getValue().length > 0) {
-				data.gpsccontactCiOwnerHidden = field.getValue();
+			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner');
+			if (!field.disabled) {
+				data.gpsccontactCiOwner = field.getValue();
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwnerHidden');
+				if (field.getValue() && field.getValue().length > 0) {
+					data.gpsccontactCiOwnerHidden = field.getValue();
+				}
+			} else {
+				data.gpsccontactCiOwnerHidden = 'DISABLED';
 			}
-		} else {
-			data.gpsccontactCiOwnerHidden = 'DISABLED';
-		}
-
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactSystemResponsible').getComponent('gpsccontactSystemResponsible');
-		if (!field.disabled) {
-			data.gpsccontactSystemResponsible = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactSystemResponsible').getComponent('gpsccontactSystemResponsibleHidden');
-			if(field.getValue() && field.getValue().length > 0)
-				data.gpsccontactSystemResponsibleHidden = field.getValue();
+	
+			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactSystemResponsible').getComponent('gpsccontactSystemResponsible');
+			if (!field.disabled) {
+				data.gpsccontactSystemResponsible = field.getValue();
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactSystemResponsible').getComponent('gpsccontactSystemResponsibleHidden');
+				if(field.getValue() && field.getValue().length > 0)
+					data.gpsccontactSystemResponsibleHidden = field.getValue();
+				
+			} else {
+				data.gpsccontactSystemResponsibleHidden = 'DISABLED';
+			}
+	
+			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroup');
+			if (!field.disabled) {
+				data.gpsccontactSupportGroup = field.getValue();
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroupHidden');
+				if(field.getValue() && field.getValue().length > 0)
+					data.gpsccontactSupportGroupHidden = field.getValue();
+				
+			} else {
+				data.gpsccontactSupportGroup = 'DISABLED';
+			}
+	
 			
-		} else {
-			data.gpsccontactSystemResponsibleHidden = 'DISABLED';
-		}
-
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroup');
-		if (!field.disabled) {
-			data.gpsccontactSupportGroup = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroupHidden');
-			if(field.getValue() && field.getValue().length > 0)
-				data.gpsccontactSupportGroupHidden = field.getValue();
+			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactChangeTeam').getComponent('gpsccontactChangeTeam');
+			if (!field.disabled) {
+				data.gpsccontactChangeTeam = field.getValue();
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactChangeTeam').getComponent('gpsccontactChangeTeamHidden');
+				if(field.getValue() && field.getValue().length > 0)
+					data.gpsccontactChangeTeamHidden = field.getValue();
+				
+			} else {
+				data.gpsccontactChangeTeamHidden = 'DISABLED';
+			}
 			
-		} else {
-			data.gpsccontactSupportGroup = 'DISABLED';
-		}
-
-		
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactChangeTeam').getComponent('gpsccontactChangeTeam');
-		if (!field.disabled) {
-			data.gpsccontactChangeTeam = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactChangeTeam').getComponent('gpsccontactChangeTeamHidden');
-			if(field.getValue() && field.getValue().length > 0)
-				data.gpsccontactChangeTeamHidden = field.getValue();
+			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinator').getComponent('gpsccontactServiceCoordinator');
+			if (!field.disabled) {
+				data.gpsccontactServiceCoordinator = field.getValue();
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinator').getComponent('gpsccontactServiceCoordinatorHidden');
+				if(field.getValue() && field.getValue().length > 0)
+					data.gpsccontactServiceCoordinatorHidden = field.getValue();
+				
+			} else {
+				data.gpsccontactImplementationTeamHidden = 'DISABLED';
+			}
+	
 			
-		} else {
-			data.gpsccontactChangeTeamHidden = 'DISABLED';
-		}
-		
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinator').getComponent('gpsccontactServiceCoordinator');
-		if (!field.disabled) {
-			data.gpsccontactServiceCoordinator = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinator').getComponent('gpsccontactServiceCoordinatorHidden');
-			if(field.getValue() && field.getValue().length > 0)
-				data.gpsccontactServiceCoordinatorHidden = field.getValue();
+			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinatorIndiv').getComponent('gpsccontactServiceCoordinatorIndiv');
+			if (!field.disabled) {
+	//			var v = field.getValue();
+				data.gpsccontactServiceCoordinatorIndiv = field.getValue();
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinatorIndiv').getComponent('gpsccontactServiceCoordinatorIndivHidden');
+	//			var v2 = field.getValue();
+				if(field.getValue())// && field.getValue().length > 0
+					data.gpsccontactServiceCoordinatorIndivHidden = field.getValue();
+				
+			} else {
+				data.gpsccontactServiceCoordinatorIndivHidden = 'DISABLED';
+			}
+	
 			
-		} else {
-			data.gpsccontactImplementationTeamHidden = 'DISABLED';
-		}
-
-		
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinatorIndiv').getComponent('gpsccontactServiceCoordinatorIndiv');
-		if (!field.disabled) {
-//			var v = field.getValue();
-			data.gpsccontactServiceCoordinatorIndiv = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinatorIndiv').getComponent('gpsccontactServiceCoordinatorIndivHidden');
-//			var v2 = field.getValue();
-			if(field.getValue())// && field.getValue().length > 0
-				data.gpsccontactServiceCoordinatorIndivHidden = field.getValue();
+			if(AAM.getTableId() == AC.TABLE_ID_APPLICATION) {
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactImplementationTeam').getComponent('gpsccontactImplementationTeam');
+				if (!field.disabled) {
+					data.gpsccontactImplementationTeam = field.getValue();
+					field = this.getComponent('contactsGPSC').getComponent('pGpsccontactImplementationTeam').getComponent('gpsccontactImplementationTeamHidden');
+					if(field.getValue() && field.getValue().length > 0)
+						data.gpsccontactImplementationTeamHidden = field.getValue();
+					
+				} else {
+					data.gpsccontactImplementationTeamHidden = 'DISABLED';
+				}
+				
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactOwningBusinessGroup').getComponent('gpsccontactOwningBusinessGroup');
+				if (!field.disabled) {
+					data.gpsccontactOwningBusinessGroup = field.getValue();
+					field = this.getComponent('contactsGPSC').getComponent('pGpsccontactOwningBusinessGroup').getComponent('gpsccontactOwningBusinessGroupHidden');
+					if(field.getValue() && field.getValue().length > 0)
+						data.gpsccontactOwningBusinessGroupHidden = field.getValue();
+					
+				} else {
+					data.gpsccontactOwningBusinessGroupHidden = 'DISABLED';
+				}
+				
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactBusinessOwnerRepresentative').getComponent('gpsccontactBusinessOwnerRepresentative');
+				if (!field.disabled) {
+					data.gpsccontactBusinessOwnerRepresentative = field.getValue();
+					field = this.getComponent('contactsGPSC').getComponent('pGpsccontactBusinessOwnerRepresentative').getComponent('gpsccontactBusinessOwnerRepresentativeHidden');
+					if(field.getValue() && field.getValue().length > 0)
+						data.gpsccontactBusinessOwnerRepresentativeHidden = field.getValue();
+					
+				} else {
+					data.gpsccontactBusinessOwnerRepresentativeHidden = 'DISABLED';
+				}
+			}
+			//====================================================================================================
 			
-		} else {
-			data.gpsccontactServiceCoordinatorIndivHidden = 'DISABLED';
-		}
-
-		
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactImplementationTeam').getComponent('gpsccontactImplementationTeam');
-		if (!field.disabled) {
-			data.gpsccontactImplementationTeam = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactImplementationTeam').getComponent('gpsccontactImplementationTeamHidden');
-			if(field.getValue() && field.getValue().length > 0)
-				data.gpsccontactImplementationTeamHidden = field.getValue();
 			
-		} else {
-			data.gpsccontactImplementationTeamHidden = 'DISABLED';
-		}
-		//====================================================================================================
-		
-		
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalation').getComponent('gpsccontactEscalation');
-		if (!field.disabled) {
-			data.gpsccontactEscalation = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalation').getComponent('gpsccontactEscalationHidden');
-			if(field.getValue() && field.getValue().length > 0)
-				data.gpsccontactEscalationHidden = field.getValue();
-			
-		} else {
-			data.gpsccontactImplementationTeamHidden = 'DISABLED';
-		}
-
-
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalationIndiv').getComponent('gpsccontactEscalationIndiv');
-		if (!field.disabled) {
-			data.gpsccontactEscalationIndiv = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalationIndiv').getComponent('gpsccontactEscalationIndivHidden');
-			if(field.getValue())// && field.getValue().length > 0
-				data.gpsccontactEscalationIndivHidden = field.getValue();
-			
-		} else {
-			data.gpsccontactEscalationIndivHidden = 'DISABLED';
-		}
-
-
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactImpactedBusiness').getComponent('gpsccontactImpactedBusiness');
-		if (!field.disabled) {
-			data.gpsccontactImpactedBusiness = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactImpactedBusiness').getComponent('gpsccontactImpactedBusinessHidden');
-			if(field.getValue() && field.getValue().length > 0)
-				data.gpsccontactImpactedBusinessHidden = field.getValue();
-			
-		} else {
-			data.gpsccontactImpactedBusinessHidden = 'DISABLED';
-		}
-
-
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactOwningBusinessGroup').getComponent('gpsccontactOwningBusinessGroup');
-		if (!field.disabled) {
-			data.gpsccontactOwningBusinessGroup = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactOwningBusinessGroup').getComponent('gpsccontactOwningBusinessGroupHidden');
-			if(field.getValue() && field.getValue().length > 0)
-				data.gpsccontactOwningBusinessGroupHidden = field.getValue();
-			
-		} else {
-			data.gpsccontactOwningBusinessGroupHidden = 'DISABLED';
-		}
-		//--------------
-//		this.getComponent('contactsGPSC').getComponent('pGpsccontactBusinessOwnerRepresentative').getComponent
-		
-		
-		field = this.getComponent('contactsGPSC').getComponent('pGpsccontactBusinessOwnerRepresentative').getComponent('gpsccontactBusinessOwnerRepresentative');
-		if (!field.disabled) {
-			data.gpsccontactBusinessOwnerRepresentative = field.getValue();
-			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactBusinessOwnerRepresentative').getComponent('gpsccontactBusinessOwnerRepresentativeHidden');
-			if(field.getValue() && field.getValue().length > 0)
-				data.gpsccontactBusinessOwnerRepresentativeHidden = field.getValue();
-			
-		} else {
-			data.gpsccontactBusinessOwnerRepresentativeHidden = 'DISABLED';
+			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalation').getComponent('gpsccontactEscalation');
+			if (!field.disabled) {
+				data.gpsccontactEscalation = field.getValue();
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalation').getComponent('gpsccontactEscalationHidden');
+				if(field.getValue() && field.getValue().length > 0)
+					data.gpsccontactEscalationHidden = field.getValue();
+				
+			} else {
+				data.gpsccontactImplementationTeamHidden = 'DISABLED';
+			}
+	
+	
+			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalationIndiv').getComponent('gpsccontactEscalationIndiv');
+			if (!field.disabled) {
+				data.gpsccontactEscalationIndiv = field.getValue();
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalationIndiv').getComponent('gpsccontactEscalationIndivHidden');
+				if(field.getValue())// && field.getValue().length > 0
+					data.gpsccontactEscalationIndivHidden = field.getValue();
+				
+			} else {
+				data.gpsccontactEscalationIndivHidden = 'DISABLED';
+			}
+	
+	
+			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactImpactedBusiness').getComponent('gpsccontactImpactedBusiness');
+			if (!field.disabled) {
+				data.gpsccontactImpactedBusiness = field.getValue();
+				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactImpactedBusiness').getComponent('gpsccontactImpactedBusinessHidden');
+				if(field.getValue() && field.getValue().length > 0)
+					data.gpsccontactImpactedBusinessHidden = field.getValue();
+				
+			} else {
+				data.gpsccontactImpactedBusinessHidden = 'DISABLED';
+			}
 		}
 	},
 	

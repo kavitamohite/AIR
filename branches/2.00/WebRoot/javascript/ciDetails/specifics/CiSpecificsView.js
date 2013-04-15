@@ -30,9 +30,9 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 	},
 	
 
-//	ciChange: function(event, view, item, values) {
-//		this.fireEvent(event, this, item, values);
-//	},
+	ciChange: function(event, view, item, values) {
+		this.fireEvent(event, this, item, values);
+	},
 
 	//ORIG
 //	update: function(data) {
@@ -138,7 +138,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 				
 				//NEW TEST
 				if(!specificsView)
-					specificsView = new AIR.CiSpecificsLocationItemView({ id: 'clCiSpecificsLocationItem', height: 250 });
+					specificsView = new AIR.CiSpecificsLocationItemView({ id: 'clCiSpecificsLocationItem', height: 280 });
 				//NEW TEST
 				break;
 			case AC.TABLE_ID_IT_SYSTEM://ADEFFMS0446 ADEFFMS0402
@@ -166,7 +166,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 		
 		this.updateHeight(specificsView);
 		
-//		specificsView.on('viewInitialized', this.onViewInitialized, this);
+//		this.ownerCt.disableButtons();
 	},
 	
 //	onViewInitialized: function(childView) {
@@ -182,7 +182,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 				h = 400;//650
 				break;
 			case 'clCiSpecificsLocationItem':
-				h = 250;//300
+				h = 280;//300
 				break;
 			case 'clCiSpecificsItItem':
 				h = 400;//450

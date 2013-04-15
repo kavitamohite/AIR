@@ -441,14 +441,14 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		var cbTerrain = this.getComponent('cbTerrain');
 		var cbSite = this.getComponent('cbSite');
 		var cbCountry = this.getComponent('cbCountry');
+//		cbCountry.displayField = AAM.getLanguage() == 'DE' ? 'name' : 'nameEn';
+//		cbCountry.view.refresh();
 		
 		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
 		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');
 		
 		
-//		this.isInitial = true;
 		if(data.isCiCreate) {
-			//enable all fields
 			tfLocationCiName.setVisible(true);
 			tfLocationCiName.reset();
 			
@@ -869,7 +869,6 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		}
 		
 		var tfLocationCiAlias = this.getComponent('tfLocationCiAlias');
-		var tfRoomFloor = this.getComponent('tfRoomFloor');
 		var cbRoom = this.getComponent('cbRoom');
 		var cbBuildingArea = this.getComponent('cbBuildingArea');
 		var cbBuilding = this.getComponent('cbBuilding');
@@ -891,6 +890,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				if(!tfLocationCiAlias.disabled)
 					data.alias = tfLocationCiAlias.getValue();
 				
+				var tfRoomFloor = this.getComponent('tfRoomFloor');
 				if(!tfRoomFloor.disabled)
 					data.floor = tfRoomFloor.getValue();
 				

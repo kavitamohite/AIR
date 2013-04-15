@@ -593,8 +593,7 @@ public class SchrankHbn extends LokationItemHbn {
 
 
 	public static CiEntityEditParameterOutput deleteSchrank(String cwid, SchrankDTO dto) {
-
-		return null;
+		return deleteCi(cwid, dto, Schrank.class);
 	}
 
 

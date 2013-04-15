@@ -1608,7 +1608,7 @@ public class AnwendungHbn extends BaseHbn {
 	 * @param applicationId
 	 * @return
 	 */
-	public static List<ApplicationContact> findApplicationContacts(Long applicationId) {
+	public static List<ApplicationContact> findApplicationContacts(Long ciId, Integer tableId) {
 		ArrayList<ApplicationContact> listResult = new ArrayList<ApplicationContact>();
 
 		Transaction tx = null;
@@ -1633,9 +1633,9 @@ public class AnwendungHbn extends BaseHbn {
 
 		sql.append(" from group_types gt");
 
-		sql.append(" left join ci_groups cigr on gt.GROUP_TYPE_ID = cigr.GROUP_TYPE_ID and cigr.table_id=2 and cigr.ci_id=").append(applicationId);
+		sql.append(" left join ci_groups cigr on gt.GROUP_TYPE_ID = cigr.GROUP_TYPE_ID and cigr.table_id="+tableId+" and cigr.ci_id=").append(ciId);//cigr.table_id=2
 		sql.append(" and cigr.del_timestamp is null");
-		sql.append(" left join ci_persons cipers on gt.INDIVIDUAL_CONTACT_Y_N='Y' and gt.group_type_id = cipers.group_type_id and cipers.table_id=2 and cipers.del_timestamp is null and cipers.ci_id=").append(applicationId);
+		sql.append(" left join ci_persons cipers on gt.INDIVIDUAL_CONTACT_Y_N='Y' and gt.group_type_id = cipers.group_type_id and cipers.table_id="+tableId+" and cipers.del_timestamp is null and cipers.ci_id=").append(ciId);
 		sql.append(" left join persons pers on cipers.cwid = pers.cwid");
 		sql.append(" left join groups grp on gt.INDIVIDUAL_CONTACT_Y_N='N' and cigr.group_id= grp.group_id");
 		sql.append(" where gt.visible_application = 1 and gt.del_timestamp is null");

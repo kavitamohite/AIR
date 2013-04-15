@@ -47,7 +47,8 @@ public class ItsecHbn {
 			sql.append("SELECT   STA.Itsec_Massn_St_Id,");
 			sql.append(" TO_CHAR(MAS.Katalog_Id, 'fm00') || '.' || TO_CHAR(MAS.Massnahme_Nr,'fm000') AS Ident,");
 			sql.append(" MTX.Massnahme_Titel,");
-			sql.append(" DECODE(MTX.Langu, '").append("de").append("', STW.Status_Wert, STW.Status_Wert_En) AS Status_Wert,");//language.toLowerCase()
+//			sql.append(" DECODE(MTX.Langu, '").append("de").append("', STW.Status_Wert, STW.Status_Wert_En) AS Status_Wert,");//language.toLowerCase()
+			sql.append(" STW.Status_Wert, STW.Status_Wert_En,");//language.toLowerCase()
 
 			// für die Liste laut Simon
 //			sql.append(" STW.ITSEC_MASSN_WERTID AS STATUS_WERT_ID,");
@@ -84,7 +85,8 @@ public class ItsecHbn {
 						dto.setItsecMassnahmenStatusId(rsSet.getLong("ITSEC_MASSN_ST_ID"));
 						dto.setIdent(rsSet.getString("IDENT"));
 						dto.setMassnahmeTitel(rsSet.getString("MASSNAHME_TITEL"));
-						dto.setStatusWert(rsSet.getString("STATUS_WERT"));
+						dto.setStatusWert(rsSet.getString("STATUS_WERT"));//STATUS_WERT STATUS_WERT_EN
+						dto.setStatusWertEn(rsSet.getString("STATUS_WERT_EN"));//STATUS_WERT_EN STATUS_WERT
 //						dto.setStatusWertId(rsSet.getLong("STATUS_WERT_ID"));
 						dto.setMassnahmeGstoolId(rsSet.getLong("MASSNAHME_GSTOOLID"));
 						dto.setZobId(rsSet.getLong("ZOB_ID"));

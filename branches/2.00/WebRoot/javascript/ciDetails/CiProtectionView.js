@@ -152,23 +152,43 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 			this.getComponent('protectionAvailabilityDescription').setValue('');
 		}
 	
-//		selectedClassInformationId = data.classInformationId;
-		if (data.classInformationId && data.classInformationId != 0 && !data.isCiCreate) {
-			this.getComponent('protectionClassInformation').setValue(data.classInformationId);
-		} else {
-			this.getComponent('protectionClassInformation').setValue('');
-		}
+
+
+
+		var cbProtectionClassInformation = this.getComponent('protectionClassInformation');
+		var taProtectionClassInformationExplanation = this.getComponent('protectionClassInformationExplanation');
+		var tfProtectionApplicationProtection = this.getComponent('protectionApplicationProtection');
 		
-		if (data.protectionClassInformationExplanation && data.protectionClassInformationExplanation != 0 && !data.isCiCreate) {
-			this.getComponent('protectionClassInformationExplanation').setValue(data.protectionClassInformationExplanation);
+		if(data.tableId == AC.TABLE_ID_APPLICATION) {
+			cbProtectionClassInformation.setVisible(true);
+			taProtectionClassInformationExplanation.setVisible(true);
+			tfProtectionApplicationProtection.setVisible(true);
+			
+			if (data.classInformationId && data.classInformationId != 0 && !data.isCiCreate) {
+				cbProtectionClassInformation.setValue(data.classInformationId);
+			} else {
+				cbProtectionClassInformation.setValue('');
+			}
+			
+			if (data.protectionClassInformationExplanation && data.protectionClassInformationExplanation != 0 && !data.isCiCreate) {
+				taProtectionClassInformationExplanation.setValue(data.protectionClassInformationExplanation);
+			} else {
+				taProtectionClassInformationExplanation.setValue('');
+			}
+			
+			if (data.protectionApplicationProtection && data.protectionApplicationProtection != 0 && !data.isCiCreate) {
+				tfProtectionApplicationProtection.setValue(data.protectionApplicationProtection);
+			} else {
+				tfProtectionApplicationProtection.setValue('');
+			}
 		} else {
-			this.getComponent('protectionClassInformationExplanation').setValue('');
-		}
-		
-		if (data.protectionApplicationProtection && data.protectionApplicationProtection != 0 && !data.isCiCreate) {
-			this.getComponent('protectionApplicationProtection').setValue(data.protectionApplicationProtection);
-		} else {
-			this.getComponent('protectionApplicationProtection').setValue('');
+			cbProtectionClassInformation.setVisible(false);
+			taProtectionClassInformationExplanation.setVisible(false);
+			tfProtectionApplicationProtection.setVisible(false);
+			
+			cbProtectionClassInformation.reset();
+			taProtectionClassInformationExplanation.reset();
+			tfProtectionApplicationProtection.reset();
 		}
 		
 	},

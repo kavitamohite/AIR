@@ -941,7 +941,7 @@ public class CiEntitiesHbn {
 		append("join tabellen t on t.tabelle_id = tcit.table_id ").
 		append("left join anwendung_kat1 ak1 on ak1.anwendung_kat1_en = cit.config_item_type_name ").
 //		append("where t.type = 'CI TABLE (class 1)' ").
-		append("where (t.type = 'CI TABLE (class 1)' AND t.tabelle_id NOT IN (19,123)) OR (t.type = 'CI TABLE (class 2)' AND t.tabelle_id = 12)").
+		append("where (t.type = 'CI TABLE (class 1)' AND t.tabelle_id NOT IN (19,37,123)) OR (t.type = 'CI TABLE (class 2)' AND t.tabelle_id = 12)").
 		append("order by t.tabelle_id ");
 		
 		try {

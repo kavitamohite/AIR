@@ -83,19 +83,19 @@ public final class AirKonstanten {
 	public final static String GPSCGROUP_DISABLED_MARKER = "DISABLED";
 	public final static String GPSCGROUP_HIDDEN_DESCRIPTOR = "Hidden";
 	public final static String[][] GPSCGROUP_MAPPING = new String [][] {
-		{"1", "gpsccontactSupportGroup", "N", "SUPPORT GROUP - IM RESOLVER"},
-		{"2", "gpsccontactChangeTeam", "N", "CHANGE TEAM"},
-		{"3", "gpsccontactServiceCoordinator", "N", "SERVICE COORDINATOR"},
-		{"4", "gpsccontactEscalation", "N", "ESCALATION LIST"},
-		{"5", "gpsccontactCiOwner", "N", "CI OWNER"},
-		{"6", "gpsccontactOwningBusinessGroup", "N", "OWNING BUSINESS GROUP"},
-		{"8", "gpsccontactImplementationTeam", "N", "IMPLEMENTATION TEAM"},
-		{"9", "gpsccontactServiceCoordinatorIndiv", "Y", "(INDIV) SERVICE COORDINATOR"},
-		{"10", "gpsccontactEscalationIndiv", "Y", "(INDIV) ESCALATION LIST"},
-		{"11", "gpsccontactResponsibleAtCustomerSide", "Y", "RESPONSIBLE AT CUSTOMER SIDE"},
-		{"13", "gpsccontactSystemResponsible", "Y", "SYSTEM RESPONSIBLE"},
-		{"14", "gpsccontactImpactedBusiness", "N", "Impacted Business Group"},
-		{"15", "gpsccontactBusinessOwnerRepresentative", "Y", "Business Owner Representative"}
+		{"1", "gpsccontactSupportGroup", "N", "SUPPORT GROUP - IM RESOLVER", "1,2"},
+		{"2", "gpsccontactChangeTeam", "N", "CHANGE TEAM", "1,2"},
+		{"3", "gpsccontactServiceCoordinator", "N", "SERVICE COORDINATOR", "1,2"},
+		{"4", "gpsccontactEscalation", "N", "ESCALATION LIST", "1,2"},
+		{"5", "gpsccontactCiOwner", "N", "CI OWNER", "1,2"},
+		{"6", "gpsccontactOwningBusinessGroup", "N", "OWNING BUSINESS GROUP", "2"},
+		{"8", "gpsccontactImplementationTeam", "N", "IMPLEMENTATION TEAM", "2"},
+		{"9", "gpsccontactServiceCoordinatorIndiv", "Y", "(INDIV) SERVICE COORDINATOR", "1,2"},
+		{"10", "gpsccontactEscalationIndiv", "Y", "(INDIV) ESCALATION LIST", "1,2"},
+		{"11", "gpsccontactResponsibleAtCustomerSide", "Y", "RESPONSIBLE AT CUSTOMER SIDE", "1,2"},
+		{"13", "gpsccontactSystemResponsible", "Y", "SYSTEM RESPONSIBLE", "1,2"},
+		{"14", "gpsccontactImpactedBusiness", "N", "Impacted Business Group", "1,2"},
+		{"15", "gpsccontactBusinessOwnerRepresentative", "Y", "Business Owner Representative", "2"}
 	};
 	
 	public final static Integer APPLICATION_CAT1_APPLICATION = new Integer(5);

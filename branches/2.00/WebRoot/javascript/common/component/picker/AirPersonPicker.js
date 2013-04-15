@@ -133,8 +133,9 @@ AIR.AirPersonPicker = Ext.extend(Ext.Tip, {
 		var element = comp;//Ext.getCmp(comp);
 		var hiddenElement = Ext.getCmp(comp.getId() + 'Hidden');
 		var contains = false;
-		if (element !== undefined) {
-			if (element.maxContacts !== undefined && element.maxContacts > 1) {
+		
+		if (element) {
+			if (element.maxContacts && element.maxContacts > 1) {
 				if (element.getValue().length == 0) {
 					element.setValue(record.get('lastname') + ', ' + record.get('firstname') + ' (' + record.get('cwid') + ')');
 				} else if (element.getValue().indexOf(record.get('firstname') + ' ' + record.get('lastname') + ' (' + record.get('cwid') + ')') === -1) {
@@ -153,11 +154,18 @@ AIR.AirPersonPicker = Ext.extend(Ext.Tip, {
 					this.pickerConfig.callback();
 			}
 		}
-		if (hiddenElement !== undefined) {
-			if (element.maxContacts !== undefined && element.maxContacts > 1) {
-				if(!contains)
-					hiddenElement.setValue(hiddenElement.getValue() + ',' + record.get('cwid'));
-				
+		if (hiddenElement) {
+			if (element.maxContacts && element.maxContacts > 1) {
+				if(!contains) {
+					var v = hiddenElement.getValue();
+					
+					if(v.length > 0)
+						v += ',';
+					
+					v += record.get('cwid');
+					
+					hiddenElement.setValue(v);
+				}
 			} else {
 				hiddenElement.setValue(record.get('cwid'));
 			}

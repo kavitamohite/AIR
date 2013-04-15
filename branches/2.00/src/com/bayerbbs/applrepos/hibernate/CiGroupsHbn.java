@@ -209,12 +209,12 @@ public class CiGroupsHbn {
 	 * @param value
 	 * @return
 	 */
-	public static boolean saveCiGroup(String cwid, Long ciId, Long groupTypeId, String groupType, String ciGroupNames) {
+	public static boolean saveCiGroup(String cwid, Integer tableId, Long ciId, Long groupTypeId, String groupType, String ciGroupNames) {
 		boolean result = false;
 
 		cwid = cwid.toUpperCase();
 
-		Integer tableId = AirKonstanten.TABLE_ID_APPLICATION;
+//		Integer tableId = AirKonstanten.TABLE_ID_APPLICATION;
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
 		tx = session.beginTransaction();
