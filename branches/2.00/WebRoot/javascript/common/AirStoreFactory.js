@@ -3302,7 +3302,7 @@ AIR.AirStoreFactory = function() {
 			var referencesListRecord = Ext.data.Record.create([
 		      	{ name: 'id' },//,{ name: 'id', mapping: 'id' }
 		      	{ name: 'name' },//{ name: 'text', mapping: 'name' }
-		      	{ name: 'tableId' },
+		      	{ name: 'tableId', type: 'int' },
 		      	{ name: 'itsetId' },
 		      	{ name: 'itsecGroupId' },
 		      	{ name: 'delTimestamp' },
@@ -3665,14 +3665,15 @@ AIR.AirStoreFactory = function() {
 		
 		createOsNamesListStore: function() {
 			var osNamesListRecord = Ext.data.Record.create([
-  		      	{ name: 'id', type: 'int' },
-  		      	{ name: 'name' },
-  		      	{ name: 'type', type: 'int' }
+  		      	{ name: 'osNameId', type: 'int' },//id
+  		      	{ name: 'osName' },//name
+  		      	{ name: 'osTypeId', type: 'int' },//type
+  		      	{ name: 'itSystemType', type: 'int' }
   		    ]);
   		
   		    var osNamesListReader = new Ext.data.XmlReader({
   				record: 'return',
-  				idProperty: 'id'
+  				idProperty: 'osNameId'//id
   		    }, osNamesListRecord); 
   		
   		    var osNamesListStore = new Ext.data.XmlStore({
@@ -3686,7 +3687,7 @@ AIR.AirStoreFactory = function() {
   		      		timeout: 120000,
   		      		reader: osNamesListReader
   		      	}),
-  		      	fields: [ 'id', 'name', 'type' ]
+  		      	fields: [ 'id', 'name', 'type', 'itSystemType' ]
   		    });
   		    
   		    return osNamesListStore;

@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public final class AirKonstanten {
 	public final static Long IT_SET_DEFAULT = new Long(11397);
@@ -108,4 +111,21 @@ public final class AirKonstanten {
 	
 	public final static String IT_SYSTEM_TYPE_HARDWARE_SYSTEM = "Hardware System";
 	public final static String IT_SYSTEM_TYPE_SYSTEM_PLATFORM = "Transient System Platform";
+	
+	public final static Map<String, Integer> CI_TYPE_ORDERING = new HashMap<String, Integer>();
+	
+	static {
+		CI_TYPE_ORDERING.put("Application", 1);
+		CI_TYPE_ORDERING.put("Application Platform", 2);
+		CI_TYPE_ORDERING.put("Middleware", 3);
+		CI_TYPE_ORDERING.put("Common Service", 4);
+		CI_TYPE_ORDERING.put("Transient System Platform", 5);
+		CI_TYPE_ORDERING.put("Hardware System", 6);
+		CI_TYPE_ORDERING.put("Position", 7);
+		CI_TYPE_ORDERING.put("Room", 8);
+		CI_TYPE_ORDERING.put("Building Area", 9);
+		CI_TYPE_ORDERING.put("Building", 10);
+		CI_TYPE_ORDERING.put("Terrain", 11);
+		CI_TYPE_ORDERING.put("Site", 12);
+	}
 }

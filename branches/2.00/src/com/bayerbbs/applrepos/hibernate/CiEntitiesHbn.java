@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -952,8 +954,14 @@ public class CiEntitiesHbn {
 			
 			int i = 0;
 			while (rs.next()) {
-				//roles getRolePerson(cwid): evtl. nur zu Rollen passende CI-Typen liefern 
-				ciTypes.add(new CiTypeDTO(i++, rs.getString("CONFIG_ITEM_TYPE_NAME"), rs.getInt("TABLE_ID"), rs.getInt("CI_SUB_TYPE_ID")));
+				//roles getRolePerson(cwid): evtl. nur zu Rollen passende CI-Typen liefern
+				CiTypeDTO ciTypeDTO = new CiTypeDTO(i++, rs.getString("CONFIG_ITEM_TYPE_NAME"), rs.getInt("TABLE_ID"), rs.getInt("CI_SUB_TYPE_ID"));
+				String x = ciTypeDTO.getCiTypeName();
+				Integer y = AirKonstanten.CI_TYPE_ORDERING.get(ciTypeDTO.getCiTypeName());
+				
+				ciTypeDTO.setSortId(AirKonstanten.CI_TYPE_ORDERING.get(ciTypeDTO.getCiTypeName()));
+				ciTypes.add(ciTypeDTO);
+				Collections.sort(ciTypes);
 			}
 			commit = true;
 		} catch (Exception e) {

@@ -236,9 +236,9 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        displayField: 'name',
 	//			        value: this.viewData.link,
 				        
-				        triggerAction: 'all',
-				        lazyRender: true,
-				        lazyInit: false,
+//				        triggerAction: 'all',
+//				        lazyRender: true,
+//				        lazyInit: false,
 				        mode: 'local'
 				        
 //				        editable: false
@@ -787,6 +787,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			//this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('lReferencedTemplateError').hide();
 			this.fireEvent('ciChange', this, combo, newValue, oldValue);
 		}
+		
+		this.filterCombo(combo);
 	},
 	onReferencedTemplateKeyUp: function(combo, event) {
 		if(combo.getRawValue().length === 0) {
@@ -797,7 +799,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceEditButton);
 		}
 		
-		this.filterCombo(combo);
+//		this.filterCombo(combo);
 	},
 
 	

@@ -26,6 +26,7 @@ import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.KeyValueType2DTO;
 import com.bayerbbs.applrepos.dto.KeyValueTypeDTO;
+import com.bayerbbs.applrepos.dto.OsNameDTO;
 import com.bayerbbs.applrepos.dto.OsTypeDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
@@ -1097,8 +1098,8 @@ public class ItSystemHbn extends BaseHbn {
 		return osTypes;
 	}
 	
-	public static List<KeyValueTypeDTO> getItSystemOsNames() {
-		List<KeyValueTypeDTO> osNames = new ArrayList<KeyValueTypeDTO>();
+	public static List<OsNameDTO> getItSystemOsNames() {//KeyValueTypeDTO
+		List<OsNameDTO> osNames = new ArrayList<OsNameDTO>();//KeyValueTypeDTO
 		
 		Transaction ta = null;
 		Statement stmt = null;
@@ -1108,7 +1109,7 @@ public class ItSystemHbn extends BaseHbn {
 		boolean commit = false;
 
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT os_name_id, os_name, os_type_id FROM v_md_os ORDER BY os_name");
+		sql.append("SELECT os_name_id, os_name, os_type_id, hw_ident_or_trans FROM v_md_os ORDER BY os_name");
 		
 		try {
 			ta = session.beginTransaction();
@@ -1117,7 +1118,8 @@ public class ItSystemHbn extends BaseHbn {
 			ResultSet rs = stmt.executeQuery(sql.toString());
 			
 			while (rs.next())
-				osNames.add(new KeyValueTypeDTO(rs.getInt("os_name_id"), rs.getString("os_name"), rs.getInt("os_type_id")));
+				osNames.add(new OsNameDTO(rs.getInt("os_name_id"), rs.getString("os_name"), rs.getInt("os_type_id"), rs.getLong("hw_ident_or_trans")));
+//				osNames.add(new KeyValueTypeDTO(rs.getInt("os_name_id"), rs.getString("os_name"), rs.getInt("os_type_id")));
 			
 			commit = true;
 		} catch (Exception e) {

@@ -1,10 +1,11 @@
 package com.bayerbbs.applrepos.dto;
 
-public class CiTypeDTO {
+public class CiTypeDTO implements Comparable<CiTypeDTO> {
 	private int id;
 	private String ciTypeName;
 	private Integer ciTypeId;
 	private Integer ciSubTypeId;
+	private int sortId;
 	
 	public CiTypeDTO() {}
 	
@@ -47,5 +48,17 @@ public class CiTypeDTO {
 	}
 	public void setCiSubTypeId(Integer ciSubTypeId) {
 		this.ciSubTypeId = ciSubTypeId;
+	}
+
+	public int getSortId() {
+		return sortId;
+	}
+	public void setSortId(int sortId) {
+		this.sortId = sortId;
+	}
+
+	@Override
+	public int compareTo(CiTypeDTO o) {
+		return getSortId() > o.getSortId() ? 1 : getSortId() < o.getSortId() ? -1 : 0;
 	}
 }

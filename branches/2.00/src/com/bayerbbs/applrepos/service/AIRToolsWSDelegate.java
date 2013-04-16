@@ -25,6 +25,7 @@ import com.bayerbbs.applrepos.dto.LinkCITypeDTO;
 import com.bayerbbs.applrepos.dto.LoadClassDTO;
 import com.bayerbbs.applrepos.dto.OperationalStatusDTO;
 import com.bayerbbs.applrepos.dto.OrganisationalScopeDTO;
+import com.bayerbbs.applrepos.dto.OsNameDTO;
 import com.bayerbbs.applrepos.dto.OsTypeDTO;
 import com.bayerbbs.applrepos.dto.PriorityLevelDTO;
 import com.bayerbbs.applrepos.dto.ProcessDTO;
@@ -35,7 +36,6 @@ import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
 import com.bayerbbs.applrepos.dto.SlaDTO;
 import com.bayerbbs.applrepos.dto.SlaServiceContractDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
-import com.bayerbbs.applrepos.hibernate.LokationItemHbn;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "AIRToolsWSService", portName = "AIRToolsWSPort")
 public class AIRToolsWSDelegate {
@@ -165,7 +165,7 @@ public class AIRToolsWSDelegate {
 	public OsTypeDTO[] getItSystemOsTypes() {
 		return airToolsWS.getItSystemOsTypes();
 	}
-	public KeyValueTypeDTO[] getItSystemOsNames() {
+	public OsNameDTO[] getItSystemOsNames() {//KeyValueTypeDTO
 		return airToolsWS.getItSystemOsNames();
 	}
 	public KeyValueType2DTO[] getItSystemClusterCodes() {

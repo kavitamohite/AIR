@@ -31,6 +31,7 @@ import com.bayerbbs.applrepos.dto.LinkCITypeDTO;
 import com.bayerbbs.applrepos.dto.LoadClassDTO;
 import com.bayerbbs.applrepos.dto.OperationalStatusDTO;
 import com.bayerbbs.applrepos.dto.OrganisationalScopeDTO;
+import com.bayerbbs.applrepos.dto.OsNameDTO;
 import com.bayerbbs.applrepos.dto.OsTypeDTO;
 import com.bayerbbs.applrepos.dto.PriorityLevelDTO;
 import com.bayerbbs.applrepos.dto.ProcessDTO;
@@ -284,9 +285,9 @@ public class AIRToolsWS {
 		List<OsTypeDTO> osTypes = ItSystemHbn.getItSystemOsTypes();
 		return osTypes.toArray(new OsTypeDTO[0]);
 	}
-	public KeyValueTypeDTO[] getItSystemOsNames() {
-		List<KeyValueTypeDTO> osTypes = ItSystemHbn.getItSystemOsNames();
-		return osTypes.toArray(new KeyValueTypeDTO[0]);
+	public OsNameDTO[] getItSystemOsNames() {//KeyValueTypeDTO
+		List<OsNameDTO> osTypes = ItSystemHbn.getItSystemOsNames();//KeyValueTypeDTO
+		return osTypes.toArray(new OsNameDTO[0]);//KeyValueTypeDTO
 	}
 	
 	

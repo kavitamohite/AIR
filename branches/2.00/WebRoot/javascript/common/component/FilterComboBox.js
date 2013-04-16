@@ -783,7 +783,8 @@ AIR.FilterComboBox = Ext.extend(Ext.form.ComboBox, {
                         //this.store.clearFilter();
 						this.filterByData();
                     }else{
-                        this.store.filter(this.displayField, q);
+						this.filterByDataAndQuery(this.displayField, q);
+                        //this.store.filter(this.displayField, q);
                     }
                     this.onLoad();
                 }else{
@@ -904,8 +905,32 @@ AIR.FilterComboBox = Ext.extend(Ext.form.ComboBox, {
 			return true;
 		}.createDelegate(this);
 		this.getStore().filterBy(filterFn);
-	}
+	},
     
-
+	filterByDataAndQuery: function(displayField, query) {
+		if(query.length === 0) {
+			this.filterByData();
+		} else {
+		
+			var filterFn = function(record) {
+				/*for(var key in this.filterData)
+					if(record.get(key) == this.filterData[key]) {
+						var b = record.get(displayField).startsWith(query);//true
+						return b;
+					}
+				
+				return false;*/
+				
+				
+				
+				for(var key in this.filterData)
+					if(record.get(key) != this.filterData[key])//!==
+						return false;
+				
+				return record.get(displayField).startsWith(query);
+			}.createDelegate(this);
+			this.getStore().filterBy(filterFn);
+		}
+	}
 });
 Ext.reg('filterCombo', AIR.FilterComboBox);
