@@ -3550,18 +3550,18 @@ AIR.AirStoreFactory = function() {
 		createClusterTypesListStore: function() {
 			var clusterTypesListRecord = Ext.data.Record.create([
   		      	{ name: 'id', type: 'int' },
-  		      	{ name: 'name' },
+  		      	{ name: 'name' }
   		    ]);
   		
   		    var clusterTypesListReader = new Ext.data.XmlReader({
   				record: 'return',
   				idProperty: 'id'
-  		    }, clusterTypesListRecord); 
+  		    }, clusterTypesListRecord);
   		
   		    var clusterTypesListStore = new Ext.data.XmlStore({
   		    	autoDestroy: true,
   				autoLoad: false,
-  				storeId: 'clusterCodesListStore',
+  				storeId: 'clusterTypesListStore',
   				
   		      	proxy: new Ext.ux.soap.SoapProxy({
   		      		url: webcontext +'/AIRToolsWSPort',
@@ -3696,7 +3696,7 @@ AIR.AirStoreFactory = function() {
 		createVirtualSoftwareListStore: function() {
 			var virtualHardwareSoftwareTypesRecord = Ext.data.Record.create([
   		      	{ name: 'id', type: 'int' },
-  		      	{ name: 'name' },
+  		      	{ name: 'name' }
   		    ]);
   		
   		    var virtualHardwareSoftwareTypesReader = new Ext.data.XmlReader({
@@ -3724,7 +3724,7 @@ AIR.AirStoreFactory = function() {
 		createItSystemPrimaryFunctionsListStore: function() {
 			var virtualHardwareSoftwareTypesRecord = Ext.data.Record.create([
   		      	{ name: 'id', type: 'int' },
-  		      	{ name: 'name' },
+  		      	{ name: 'name' }
   		    ]);
   		
   		    var virtualHardwareSoftwareTypesReader = new Ext.data.XmlReader({
@@ -3752,7 +3752,7 @@ AIR.AirStoreFactory = function() {
 		createItSystemLicenseScanningsListStore: function() {
 			var itSystemLicenseScanningsRecord = Ext.data.Record.create([
   		      	{ name: 'id', type: 'int' },
-  		      	{ name: 'name' },
+  		      	{ name: 'name' }
   		    ]);
   		
   		    var itSystemLicenseScanningsReader = new Ext.data.XmlReader({

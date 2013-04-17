@@ -33,7 +33,7 @@ AIR.AirStoreLoader = Ext.extend(Ext.util.Observable, {
     
     load: function() {
         for(var key in this.storeMap) {
-        	if(this.storeIds[key] != null && this.storeIds[key].params) {
+        	if(this.storeIds[key] && this.storeIds[key].params) {// != null
         		this.storeMap[key].load(this.storeIds[key].params);
         	} else {
         		this.storeMap[key].load();

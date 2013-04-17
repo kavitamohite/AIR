@@ -976,7 +976,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 //		this.disableButtons();
 		var task = new Ext.util.DelayedTask(function() {
-			this.isUserChange = false;
+			this.isUserChange = true;
 			this.ciModified = false;
 			
 			this.disableButtons();

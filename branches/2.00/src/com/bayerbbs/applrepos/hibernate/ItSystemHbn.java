@@ -1309,24 +1309,30 @@ public class ItSystemHbn extends BaseHbn {
 			List<Application> applications = findApplicationsByNameOrAlias(dto.getName(), dto.getAlias());
 			List<ItSystem> itSystems = findItSystemsByNameOrAlias(dto.getName(), dto.getAlias());
 			
-			if(itSystems.size() > 0 && itSystems.get(0).getId().longValue() != dto.getId().longValue()) {
-				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
-				
-//				Building building = buildings.get(0);
-//				if(building.getDeleteTimestamp() == null)
-					messages.add(errorCodeManager.getErrorMessage("8000", null));
-//				else
-//					messages.add(errorCodeManager.getErrorMessage("8001", null));
+//			if(itSystems.size() > 0 && itSystems.get(0).getId().longValue() != dto.getId().longValue()) {
+			for(ItSystem itSystem : itSystems) {
+				if(itSystem.getId().longValue() != dto.getId().longValue()) {
+					ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+					
+	//				Building building = buildings.get(0);
+	//				if(building.getDeleteTimestamp() == null)
+						messages.add(errorCodeManager.getErrorMessage("8000", null));
+	//				else
+	//					messages.add(errorCodeManager.getErrorMessage("8001", null));
+				}
 			}
 			
-			if(applications.size() > 0 && applications.get(0).getId().longValue() != dto.getId().longValue()) {
-				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
-				
-//				Building building = buildings.get(0);
-//				if(building.getDeleteTimestamp() == null)
-					messages.add(errorCodeManager.getErrorMessage("9000", null));
-//				else
-//					messages.add(errorCodeManager.getErrorMessage("9001", null));
+//			if(applications.size() > 0 && applications.get(0).getId().longValue() != dto.getId().longValue()) {
+			for(Application application : applications) {
+				if(application.getId().longValue() != dto.getId().longValue()) {
+					ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+					
+	//				Building building = buildings.get(0);
+	//				if(building.getDeleteTimestamp() == null)
+						messages.add(errorCodeManager.getErrorMessage("9000", null));
+	//				else
+	//					messages.add(errorCodeManager.getErrorMessage("9001", null));
+				}
 			}
 		} else {
 			List<Application> applications = findApplicationsByNameOrAlias(dto.getName(), dto.getAlias());

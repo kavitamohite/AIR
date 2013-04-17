@@ -329,14 +329,14 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		var cbPrimaryFunction = this.getComponent('cbPrimaryFunction');
 		var cbLicenseScanning = this.getComponent('cbLicenseScanning');
 		
-		cbOsGroup.bindStore(AIR.AirStoreManager.getStoreByName('osGroupsListStore'), true);
-		cbOsType.bindStore(AIR.AirStoreManager.getStoreByName('osTypesListStore'), true);
-		cbOsName.bindStore(AIR.AirStoreManager.getStoreByName('osNamesListStore'), true);
-		cbClusterCode.bindStore(AIR.AirStoreManager.getStoreByName('clusterCodesListStore'), true);
-		cbClusterType.bindStore(AIR.AirStoreManager.getStoreByName('clusterTypesListStore'), true);
-		cbVirtualSoftware.bindStore(AIR.AirStoreManager.getStoreByName('virtualSoftwareListStore'), true);
-		cbPrimaryFunction.bindStore(AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore'), true);
-		cbLicenseScanning.bindStore(AIR.AirStoreManager.getStoreByName('itSystemLicenseScanningsListStore'), true);
+		cbOsGroup.bindStore(AIR.AirStoreManager.getStoreByName('osGroupsListStore'));
+		cbOsType.bindStore(AIR.AirStoreManager.getStoreByName('osTypesListStore'));
+		cbOsName.bindStore(AIR.AirStoreManager.getStoreByName('osNamesListStore'));
+		cbClusterCode.bindStore(AIR.AirStoreManager.getStoreByName('clusterCodesListStore'));
+		cbClusterType.bindStore(AIR.AirStoreManager.getStoreByName('clusterTypesListStore'));
+		cbVirtualSoftware.bindStore(AIR.AirStoreManager.getStoreByName('virtualSoftwareListStore'));
+		cbPrimaryFunction.bindStore(AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore'));
+		cbLicenseScanning.bindStore(AIR.AirStoreManager.getStoreByName('itSystemLicenseScanningsListStore'));
 		
 
         
@@ -367,7 +367,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			this.update(ciDetail);
 			this.ownerCt.fireEvent('viewInitialized', this);//ciChange .ownerCt
 		}.createDelegate(this));
-		delayedTask.delay(1000);
+		delayedTask.delay(1000);//1000
 	},
 	
 	onFieldChange: function(textfield, newValue, oldValue) {
@@ -530,6 +530,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		var cbClusterCode = this.getComponent('cbClusterCode');
 		var cbClusterType = this.getComponent('cbClusterType');
 		var cbVirtualSoftware = this.getComponent('cbVirtualSoftware');
+		var cbItSystemLifecycleStatus = this.getComponent('cbItSystemLifecycleStatus');
 		var cbItSystemOperationalStatus = this.getComponent('cbItSystemOperationalStatus');
 		var cbPrimaryFunction = this.getComponent('cbPrimaryFunction');
 		var cbLicenseScanning = this.getComponent('cbLicenseScanning');
@@ -547,16 +548,13 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 //		cbOsType.getStore().filter('itSystemType', data.ciSubTypeId);
 //		cbOsName.getStore().filter('itSystemType', data.ciSubTypeId);
 		
-		var cbItSystemLifecycleStatus = this.getComponent('cbItSystemLifecycleStatus');
-		var filterData = { tableId: data.tableId };
-		cbItSystemLifecycleStatus.filterByData(filterData);
 //		cbItSystemLifecycleStatus.getStore().filter('tableId', data.tableId);
 		
 		
 		if(data.isCiCreate) {
-			//enable all fields
 			tfItSystemCiName.setVisible(true);
 			tfItSystemCiName.reset();
+			tfItSystemCiAlias.enable();
 			tfItSystemCiAlias.reset();
 			
 			
@@ -570,9 +568,14 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			rgVirtualHWClient.reset();
 			rgVirtualHWHost.reset();
 			
+			Util.enableCombo(cbOsGroup);
+			Util.enableCombo(cbOsType);
+			Util.enableCombo(cbOsName);
+			
 			Util.enableCombo(cbClusterCode);
 			Util.enableCombo(cbClusterType);
 			Util.enableCombo(cbVirtualSoftware);
+			Util.enableCombo(cbItSystemLifecycleStatus);
 			Util.enableCombo(cbItSystemOperationalStatus);
 			Util.enableCombo(cbPrimaryFunction);
 			Util.enableCombo(cbLicenseScanning);
@@ -639,6 +642,9 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		cbOsGroup.filterByData(fd1);
 		cbOsType.filterByData(fd2);
 		cbOsName.filterByData(fd2);
+		
+		var filterData = { tableId: data.tableId };
+		cbItSystemLifecycleStatus.filterByData(filterData);
 	},
 	
 	

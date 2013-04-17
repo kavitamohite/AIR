@@ -1,6 +1,6 @@
 package com.bayerbbs.applrepos.dto;
 
-public class KeyValueTypeDTO {// implements Comparable<KeyValueTypeDTO>
+public class KeyValueTypeDTO implements Comparable<KeyValueTypeDTO> {
 	private Integer id;
 	private Integer type;
 	private String name;
@@ -38,8 +38,8 @@ public class KeyValueTypeDTO {// implements Comparable<KeyValueTypeDTO>
 		this.type = type;
 	}
 	
-//	@Override
-//	public int compareTo(KeyValueTypeDTO other) {
-//		return name.compareTo(other.getName());
-//	}
+	@Override
+	public int compareTo(KeyValueTypeDTO other) {
+		return name.compareTo(other.getName());
+	}
 }

@@ -894,16 +894,13 @@ AIR.FilterComboBox = Ext.extend(Ext.form.ComboBox, {
 			this.filterData = filterData;
 			
 		var filterFn = function(record) {
-//			for(var key in this.filterData)
-//				if(record.get(key) == this.filterData[key])
-//					return true;
-//			return false;
-			
 			for(var key in this.filterData)
 				if(record.get(key) != this.filterData[key])//!==
 					return false;
+			
 			return true;
 		}.createDelegate(this);
+		
 		this.getStore().filterBy(filterFn);
 	},
     
@@ -911,24 +908,14 @@ AIR.FilterComboBox = Ext.extend(Ext.form.ComboBox, {
 		if(query.length === 0) {
 			this.filterByData();
 		} else {
-		
 			var filterFn = function(record) {
-				/*for(var key in this.filterData)
-					if(record.get(key) == this.filterData[key]) {
-						var b = record.get(displayField).startsWith(query);//true
-						return b;
-					}
-				
-				return false;*/
-				
-				
-				
 				for(var key in this.filterData)
 					if(record.get(key) != this.filterData[key])//!==
 						return false;
 				
-				return record.get(displayField).startsWith(query);
+				return record.get(displayField).indexOf(query, 0) > -1;//startsWith(query);
 			}.createDelegate(this);
+			
 			this.getStore().filterBy(filterFn);
 		}
 	}
