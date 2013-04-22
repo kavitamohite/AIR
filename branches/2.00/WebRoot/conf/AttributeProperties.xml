@@ -1136,7 +1136,7 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	
-	
+	<!--
 	<Identifier>
 		<id>relevanceGxp</id>
 		<Mandatory>optional</Mandatory>
@@ -1147,7 +1147,54 @@
 		<attributeType>Text</attributeType>
 		<attributeLength>10</attributeLength>
 		<attributeMask></attributeMask>
+	</Identifier>-->
+	<Identifier>
+		<id>chbGR1435</id>
+		<ciTypeId>13,3,88</ciTypeId>
+		<Mandatory>required</Mandatory>
+		<Relevance>strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>APAC,HPED,SHAREPOINT,VPCC,APERTURE,DBVS,MSSQL,SNS,ERA,FW,BVS,COMMAND,VCenter,NAAC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType>Text</attributeType>
+		<attributeLength>10</attributeLength>
+		<attributeMask></attributeMask>
 	</Identifier>
+	<Identifier>
+		<id>chbGR1920</id>
+		<ciTypeId>13,3,88</ciTypeId>
+		<Mandatory>required</Mandatory>
+		<Relevance>strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>APAC,HPED,SHAREPOINT,VPCC,APERTURE,DBVS,MSSQL,SNS,ERA,FW,BVS,COMMAND,VCenter,NAAC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType>Text</attributeType>
+		<attributeLength>10</attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
+		<id>chbGR2008</id>
+		<Mandatory>optional</Mandatory>
+		<Relevance>strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>APAC,HPED,SHAREPOINT,VPCC,APERTURE,DBVS,MSSQL,SNS,ERA,FW,BVS,COMMAND,VCenter,NAAC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType>Text</attributeType>
+		<attributeLength>10</attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
+		<id>chbGR2059</id>
+		<Mandatory>optional</Mandatory>
+		<Relevance>strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>APAC,HPED,SHAREPOINT,VPCC,APERTURE,DBVS,MSSQL,SNS,ERA,FW,BVS,COMMAND,VCenter,NAAC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType>Text</attributeType>
+		<attributeLength>10</attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	
 
 	<!-- Compliance Details-->
 	<Identifier>
@@ -1187,7 +1234,20 @@
 	</Identifier>
 
 	<Identifier>
-		<id>cbItSecGroup</id><!-- itsecGroup -->
+		<id>lItSecGroup</id><!-- cbItSecGroup itsecGroup -->
+		<ciTypeId>13,3</ciTypeId>
+		<Mandatory>required</Mandatory>
+<!--		<Mandatory>dependent on other</Mandatory>-->
+		<Relevance>operational and strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>AKZV,NAAC,SNS,BARDO,BBSam,BKV,BSHARP,BVS,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,OLA,QIP,SAP,SDB,SIEBEL,SOFTWARE,VCenter,SHAREPOINT,APAC,HPED,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
+		<id>cbItSecGroup</id>
 		<Mandatory>dependent on other</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>

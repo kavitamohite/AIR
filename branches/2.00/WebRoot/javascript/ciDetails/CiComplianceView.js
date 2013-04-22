@@ -360,14 +360,14 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        	xtype: 'checkboxgroup',
 		        	id: 'cbgRegulations',
 		        	columns: 2,
-        			width: 200,
+        			width: 220,
         			hideLabel: true,
         			
         			items: [
-						{ boxLabel: 'GR1435', name: 'cbgRegulations', width: 100 },
-    			        { boxLabel: 'GR1920', name: 'cbgRegulations', width: 100 },
-    			        { boxLabel: 'GR2059', name: 'cbgRegulations', width: 100 },
-    			        { boxLabel: 'GR2008', name: 'cbgRegulations', width: 100 }
+						{ id: 'chbGR1435', boxLabel: 'GR1435', name: 'cbgRegulations', width: 110 },
+    			        { id: 'chbGR1920', boxLabel: 'GR1920', name: 'cbgRegulations', width: 110 },
+    			        { id: 'chbGR2059', boxLabel: 'GR2059', name: 'cbgRegulations', width: 110 },
+    			        { id: 'chbGR2008', boxLabel: 'GR2008', name: 'cbgRegulations', width: 110 }
 			        ]
 		        }, {
 		        	xtype: 'panel',
@@ -927,11 +927,20 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate'), data);
+		
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('lItSecGroup'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup'), data);
 		//Compliance Controls sind nur sichtbar, nicht editierbar. Sie sollen immer über bEditItSecGroup zu öffnen sein
 		//AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup'), data);
 		
-		AIR.AirAclManager.setAccessMode(this.getComponent('fsRelevantRegulations').getComponent('cbgRegulations'), data);
+		
+		var cbgRegulations = this.getComponent('fsRelevantRegulations').getComponent('cbgRegulations');
+		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[0], data);//1435
+		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[2], data);//1920
+		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[1], data);//1435
+		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[3], data);//1920
+		
+//		AIR.AirAclManager.setAccessMode(this.getComponent('fsRelevantRegulations').getComponent('cbgRegulations'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('CBrelevanceGxp'), data);
 	},
 	

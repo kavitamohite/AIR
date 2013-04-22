@@ -173,6 +173,28 @@ Util = {
 		var r = Util.getStoreRecord(store, 'ciTypeId', parseInt(tableId));
 		
 		return r;
+	},
+	
+	addClass: function(domElement, cssClass) {
+		if(Ext.isIE) {
+			if(domElement.className.indexOf(cssClass) == -1)
+				domElement.className += ' ' + cssClass;
+		} else {
+			domElement.addClass(cssClass);
+		}
+	},
+	
+	removeClass: function(domElement, cssClass) {
+		if(Ext.isIE) {
+			if(domElement.className.indexOf(cssClass) > -1) {
+				var className = domElement.className;
+				className = className.substring(0, className.indexOf(cssClass)) + className.substring(className.indexOf(cssClass) + cssClass.length, className.length);
+				
+				domElement.className = className.trim();
+			}
+		} else {
+			domElement.removeClass(cssClass);
+		}
 	}
 	
 	/*

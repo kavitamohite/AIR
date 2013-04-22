@@ -179,24 +179,31 @@ AIR.AirAclManager = function() {
 
 		setLabelNeeded: function(item) {
 			switch (item.getXType()) {
+				case 'checkbox':
+//					item.el.dom.nextSibling.addClass('x-form-text-required');
+					Util.addClass(item.el.dom.nextSibling, 'x-form-text-required');
+					break;
 				case 'textfield':
 				case 'textarea':
-				case 'checkbox':
 				case 'combo':
 				case 'filterCombo':
 				case 'radiogroup':
 					if(item.label) {
 						item.label.dom.style.fontWeight = 'normal';
-						if(item.label.dom.className.indexOf('x-form-text-required') == -1) {
-							item.label.dom.className += ' x-form-text-required';
-						}
+//						if(item.label.dom.className.indexOf('x-form-text-required') == -1) {
+//							item.label.dom.className += ' x-form-text-required';
+//						}
+						
+						item.label.addClass('x-form-text-required');
 					} else {
 						var labelItem = Ext.getCmp('label' + item.id);
 						if(labelItem) {
 							labelItem.el.dom.style.fontWeight = 'normal';
-							if(labelItem.el.dom.className.indexOf('x-form-text-required')==-1) {
-								labelItem.el.dom.className += ' x-form-text-required';
-							}
+//							if(labelItem.el.dom.className.indexOf('x-form-text-required')==-1) {
+//								labelItem.el.dom.className += ' x-form-text-required';
+//							}
+							
+							labelItem.el.addClass('x-form-text-required');
 						}
 					}
 					break;
@@ -210,14 +217,19 @@ AIR.AirAclManager = function() {
 						this.setNecessity(item);
 					}
 					break;
+				case 'label':
+					this.setNecessity(item);
 			}
 		},
 
 		setLabelDefault: function(item) {
 			switch (item.getXType()) {
+				case 'checkbox':
+//					item.el.dom.nextSibling.removeClass('x-form-text-required');
+					Util.removeClass(item.el.dom.nextSibling, 'x-form-text-required');
+					break;
 				case 'textfield':
 				case 'textarea':
-				case 'checkbox':
 				case 'combo':
 				case 'filterCombo':
 					if(item.label) {
@@ -660,10 +672,15 @@ AIR.AirAclManager = function() {
 			switch(necessity) {
 				case 'mandatory':
 					labelEl.dom.style.fontWeight = 'bold';
-//					labelEl.addClass('x-form-text-required');
-//					break;
-				case 'required':
 					labelEl.addClass('x-form-text-required');
+					break;
+				case 'required':
+					labelEl.dom.style.fontWeight = 'normal';
+					labelEl.addClass('x-form-text-required');
+					break;
+				default:
+					labelEl.dom.style.fontWeight = 'normal';
+					labelEl.removeClass('x-form-text-required');
 					break;
 			}
 		}

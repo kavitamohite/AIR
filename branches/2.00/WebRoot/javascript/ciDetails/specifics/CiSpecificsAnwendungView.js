@@ -734,6 +734,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	},
 	
 	updateAccessMode: function(data) {
+		AIR.AirAclManager.setAccessMode(this.getComponent('applicationName'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationAlias'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('barApplicationId'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('rgBARrelevance'), data);
