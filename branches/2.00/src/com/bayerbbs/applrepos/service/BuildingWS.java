@@ -38,7 +38,7 @@ public class BuildingWS {
 
 		//Protection
 		buildingDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
-		buildingDTO.setItSecSbAvailabilityDescription(input.getItSecSbAvailabilityDescription());
+		buildingDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
 //		buildingDTO.setClassInformationId(input.getClassInformationId());
 //		buildingDTO.setClassInformationExplanation(input.getClassInformationExplanation());
 		
@@ -82,7 +82,8 @@ public class BuildingWS {
 
 		//Protection
 		buildingAreaDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
-		buildingAreaDTO.setItSecSbAvailabilityDescription(input.getItSecSbAvailabilityDescription());
+		buildingAreaDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
+//		buildingAreaDTO.setItSecSbAvailabilityDescription(input.getItSecSbAvailabilityDescription());
 //		buildingAreaDTO.setClassInformationId(input.getClassInformationId());
 //		buildingAreaDTO.setClassInformationExplanation(input.getClassInformationExplanation());
 		

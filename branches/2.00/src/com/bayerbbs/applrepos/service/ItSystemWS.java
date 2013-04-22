@@ -46,7 +46,8 @@ public class ItSystemWS {
 		
 		//Protection
 		itSystemDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
-		itSystemDTO.setItSecSbAvailabilityDescription(input.getItSecSbAvailabilityDescription());
+		itSystemDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
+
 //		itSystemDTO.setClassInformationId(input.getClassInformationId());
 //		itSystemDTO.setClassInformationExplanation(input.getClassInformationExplanation());
 		

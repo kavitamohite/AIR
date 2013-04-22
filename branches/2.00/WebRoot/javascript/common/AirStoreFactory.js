@@ -1006,7 +1006,7 @@ AIR.AirStoreFactory = function() {
 			        // protection
 					{name: 'protectionPanelTitle'},
 					{name: 'itSecSbAvailabilityId'},
-					{name: 'itSecSbAvailabilityDescription'},
+					{name: 'itSecSbAvailabilityDescription'},//itSecSbAvailabilityDescription
 					{name: 'protectionClassInformation'},
 					{name: 'protectionClassInformationExplanation'},
 					{name: 'protectionApplicationProtection'},
@@ -2853,8 +2853,8 @@ AIR.AirStoreFactory = function() {
 				name : 'itSecSbAvailabilityId',
 				mapping : 'applicationDTO > itSecSbAvailabilityId'
 			}, {
-				name : 'itSecSbAvailabilityDescription',//itSecSbAvailabilityTxt
-				mapping : 'applicationDTO > itSecSbAvailabilityDescription'//itSecSbAvailabilityTxt
+				name : 'itSecSbAvailabilityTxt',//itSecSbAvailabilityTxt itSecSbAvailabilityDescription
+				mapping : 'applicationDTO > itSecSbAvailabilityTxt'//itSecSbAvailabilityTxt itSecSbAvailabilityDescription
 			}/*, {
 				name : 'protectionAvailabilityDescription',
 				mapping : 'applicationDTO > itSecSbAvailabilityDescription'

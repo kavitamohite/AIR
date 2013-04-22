@@ -182,8 +182,6 @@ public class BaseHbn {
 //	protected <T extends CiBase>  void setUpCi(T ci, CiBaseDTO ciDTO, String cwid) {
 		ci.setName(ciDTO.getName());
 		
-		// calculates the ItSet
-
 		
 		if(isCiCreate) {
 			ci.setInsertUser(cwid);
@@ -242,8 +240,8 @@ public class BaseHbn {
 				ci.setItSecSbAvailability(ciDTO.getItSecSbAvailabilityId());
 			}
 		}
-		if (null != ciDTO.getItSecSbAvailabilityDescription()) {
-			ci.setItSecSbAvailabilityText(ciDTO.getItSecSbAvailabilityDescription());
+		if (null != ciDTO.getItSecSbAvailabilityTxt()) {//getItSecSbAvailabilityDescription
+			ci.setItSecSbAvailabilityTxt(ciDTO.getItSecSbAvailabilityTxt());//getItSecSbAvailabilityDescription
 		}
 		
 		

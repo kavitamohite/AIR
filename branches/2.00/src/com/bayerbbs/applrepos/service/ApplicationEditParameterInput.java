@@ -114,8 +114,8 @@ public class ApplicationEditParameterInput {
 	
 	// itSecSb
 	private Long itSecSbAvailabilityId;
-//	private String itSecSbAvailabilityTxt;
-	private String itSecSbAvailabilityDescription;
+	private String itSecSbAvailabilityTxt;
+//	private String itSecSbAvailabilityDescription;
 	private Long classInformationId;
 	private String classInformationExplanation;
 	
@@ -436,18 +436,18 @@ public class ApplicationEditParameterInput {
 	public void setItSecSbAvailabilityId(Long itSecSbAvailabilityId) {
 		this.itSecSbAvailabilityId = itSecSbAvailabilityId;
 	}
-//	public String getItSecSbAvailabilityTxt() {
-//		return itSecSbAvailabilityTxt;
-//	}
-//	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
-//		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
-//	}
-	public String getItSecSbAvailabilityDescription() {
-		return itSecSbAvailabilityDescription;
+	public String getItSecSbAvailabilityTxt() {
+		return itSecSbAvailabilityTxt;
 	}
-	public void setItSecSbAvailabilityDescription(String itSecSbAvailabilityDescription) {
-		this.itSecSbAvailabilityDescription = itSecSbAvailabilityDescription;
+	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
+		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
 	}
+//	public String getItSecSbAvailabilityDescription() {
+//		return itSecSbAvailabilityDescription;
+//	}
+//	public void setItSecSbAvailabilityDescription(String itSecSbAvailabilityDescription) {
+//		this.itSecSbAvailabilityDescription = itSecSbAvailabilityDescription;
+//	}
 
 	public Long getClassInformationId() {
 		return classInformationId;

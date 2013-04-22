@@ -48,7 +48,7 @@ public class Application extends DeletableRevisionInfo {
 
 	// protection
 	private Long itSecSbAvailability;
-	private String itSecSbAvailabilityText;
+	private String itSecSbAvailabilityTxt;
 	private Long classInformationId;
 	private String classInformationExplanation;
 
@@ -434,12 +434,12 @@ public class Application extends DeletableRevisionInfo {
 
 	//in Basisklasse
 	@Column(name = "ITSEC_SB_VERFG_TXT")
-	public String getItSecSbAvailabilityText() {
-		return itSecSbAvailabilityText;
+	public String getItSecSbAvailabilityTxt() {
+		return itSecSbAvailabilityTxt;
 	}
 
-	public void setItSecSbAvailabilityText(String itSecSbAvailabilityText) {
-		this.itSecSbAvailabilityText = itSecSbAvailabilityText;
+	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
+		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
 	}
 	
 

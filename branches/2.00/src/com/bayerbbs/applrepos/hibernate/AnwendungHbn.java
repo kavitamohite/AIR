@@ -327,8 +327,8 @@ public class AnwendungHbn extends BaseHbn {
 								application.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
 							}
 						}
-						if (null != dto.getItSecSbAvailabilityDescription()) {
-							application.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
+						if (null != dto.getItSecSbAvailabilityTxt()) {//getItSecSbAvailabilityDescription
+							application.setItSecSbAvailabilityTxt(dto.getItSecSbAvailabilityTxt());//getItSecSbAvailabilityDescription
 						}
 						
 						
@@ -843,8 +843,8 @@ public class AnwendungHbn extends BaseHbn {
 						if (null != dto.getItSecSbAvailabilityId()) {
 							application.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
 						}
-						if (StringUtils.isNotNullOrEmpty(dto.getItSecSbAvailabilityDescription())) {
-							application.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
+						if (StringUtils.isNotNullOrEmpty(dto.getItSecSbAvailabilityTxt())) {//getItSecSbAvailabilityDescription
+							application.setItSecSbAvailabilityTxt(dto.getItSecSbAvailabilityTxt());//getItSecSbAvailabilityDescription
 						}
 						if (StringUtils.isNotNullOrEmpty(dto.getOrganisationalScope())) {
 							application.setOrganisationalScope(dto.getOrganisationalScope());
@@ -994,7 +994,7 @@ public class AnwendungHbn extends BaseHbn {
 
 			// protection
 			application.setItSecSbAvailability(null);
-			application.setItSecSbAvailabilityText(null);
+			application.setItSecSbAvailabilityTxt(null);
 
 			// compliance
 			
@@ -1545,14 +1545,16 @@ public class AnwendungHbn extends BaseHbn {
 				
 				// itSec
 				applicationDTO.setItSecSbIntegrityId(rsMessage.getLong("ITSEC_SB_INTEG_ID"));
-				applicationDTO.setItSecSbIntegrityTxt(rsMessage.getString("ITSECSBINTEG"));
-				applicationDTO.setItSecSbIntegrityDescription(rsMessage.getString("ITSEC_SB_INTEG_TXT"));
+				applicationDTO.setItSecSbIntegrityTxt(rsMessage.getString("ITSEC_SB_INTEG_TXT"));//ITSECSBINTEG
+//				applicationDTO.setItSecSbIntegrityDescription(rsMessage.getString("ITSEC_SB_INTEG_TXT"));
+				
 				applicationDTO.setItSecSbAvailabilityId(rsMessage.getLong("ITSEC_SB_VERFG_ID"));
-//				applicationDTO.setItSecSbAvailabilityTxt(rsMessage.getString("ITSECSBVERFG"));
-				applicationDTO.setItSecSbAvailabilityDescription(rsMessage.getString("ITSEC_SB_VERFG_TXT"));
+				applicationDTO.setItSecSbAvailabilityTxt(rsMessage.getString("ITSEC_SB_VERFG_TXT"));//ITSECSBVERFG
+//				applicationDTO.setItSecSbAvailabilityDescription(rsMessage.getString("ITSEC_SB_VERFG_TXT"));
+				
 				applicationDTO.setItSecSbConfidentialityId(rsMessage.getLong("ITSEC_SB_VERTR_ID"));
-				applicationDTO.setItSecSbConfidentialityTxt(rsMessage.getString("ITSECSBVERTR"));
-				applicationDTO.setItSecSbConfidentialityDescription(rsMessage.getString("ITSEC_SB_VERTR_TXT"));
+				applicationDTO.setItSecSbConfidentialityTxt(rsMessage.getString("ITSEC_SB_VERTR_TXT"));//ITSECSBVERTR
+//				applicationDTO.setItSecSbConfidentialityDescription(rsMessage.getString("ITSEC_SB_VERTR_TXT"));
 
 				
 				if (null == applicationDTO.getItSecSbIntegrityId()) {
@@ -2731,7 +2733,7 @@ public class AnwendungHbn extends BaseHbn {
 						// ==============================
 
 						applicationTarget.setItSecSbAvailability(applicationSource.getItSecSbAvailability());
-						applicationTarget.setItSecSbAvailabilityText(applicationSource.getItSecSbAvailabilityText());
+						applicationTarget.setItSecSbAvailabilityTxt(applicationSource.getItSecSbAvailabilityTxt());//getItSecSbAvailabilityText
 						applicationTarget.setClusterCode(applicationSource.getClusterCode());
 						applicationTarget.setClusterType(applicationSource.getClusterType());
 						

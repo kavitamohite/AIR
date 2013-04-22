@@ -37,7 +37,7 @@ public class RoomWS {
 		
 		//Protection
 		roomDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
-		roomDTO.setItSecSbAvailabilityDescription(input.getItSecSbAvailabilityDescription());
+		roomDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
 //		roomDTO.setClassInformationId(input.getClassInformationId());
 //		roomDTO.setClassInformationExplanation(input.getClassInformationExplanation());
 		

@@ -140,20 +140,18 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 	update: function(data) {
 		this.updateAccessMode(data);
 		
-//		selectedItSecSbAvailabilityId = data.itSecSbAvailabilityId;
 		if (data.itSecSbAvailabilityId && data.itSecSbAvailabilityId != 0 && !data.isCiCreate) {
 			this.getComponent('protectionAvailability').setValue(data.itSecSbAvailabilityId);
 		} else {
 			this.getComponent('protectionAvailability').setValue('');
 		}
 		
-		if (data.itSecSbAvailabilityDescription && data.itSecSbAvailabilityDescription != 0 && !data.isCiCreate) {//protectionAvailabilityDescription
-			this.getComponent('protectionAvailabilityDescription').setValue(data.itSecSbAvailabilityDescription);//protectionAvailabilityDescription
+		if (data.itSecSbAvailabilityTxt && data.itSecSbAvailabilityTxt != 0 && !data.isCiCreate) {//protectionAvailabilityDescription
+			this.getComponent('protectionAvailabilityDescription').setValue(data.itSecSbAvailabilityTxt);//protectionAvailabilityDescription
 		} else {
 			this.getComponent('protectionAvailabilityDescription').setValue('');
 		}
-	
-
+		
 
 
 		var cbProtectionClassInformation = this.getComponent('protectionClassInformation');
@@ -214,21 +212,22 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		field = this.getComponent('protectionAvailabilityDescription');
 		if (!field.disabled) {
-			data.itSecSbAvailabilityDescription = field.getValue();
+			data.itSecSbAvailabilityTxt = field.getValue();
 		}
 		
-		
-		field = this.getComponent('protectionClassInformation');
-		if (!field.disabled) {
-			if (field.getValue() && field.getValue().length > 0) {
-				data.classInformationId = field.getValue();
-			} else {
-				data.classInformationId = -1;
+		if(data.tableId == AC.TABLE_ID_APPLICATION) {
+			field = this.getComponent('protectionClassInformation');
+			if (!field.disabled) {
+				if (field.getValue() && field.getValue().length > 0) {
+					data.classInformationId = field.getValue();
+				} else {
+					data.classInformationId = -1;
+				}
 			}
-		}
-		field = this.getComponent('protectionClassInformationExplanation');
-		if (!field.disabled) {
-			data.classInformationExplanation = field.getValue();
+			field = this.getComponent('protectionClassInformationExplanation');
+			if (!field.disabled) {
+				data.classInformationExplanation = field.getValue();
+			}
 		}
 	},
 	

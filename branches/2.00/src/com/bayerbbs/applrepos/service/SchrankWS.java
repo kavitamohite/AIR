@@ -25,7 +25,7 @@ public class SchrankWS {
 		schrankDTO.setBusinessEssentialId(input.getBusinessEssentialId());
 		
 		schrankDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
-		schrankDTO.setItSecSbAvailabilityDescription(input.getItSecSbAvailabilityDescription());
+		schrankDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
 //		schrankDTO.setClassInformationId(input.getClassInformationId());
 //		schrankDTO.setClassInformationExplanation(input.getClassInformationExplanation());
 		

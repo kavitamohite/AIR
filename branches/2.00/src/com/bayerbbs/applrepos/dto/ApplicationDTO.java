@@ -139,8 +139,8 @@ public class ApplicationDTO extends CiBaseDTO {
 	private String itSecSbIntegrityTxt;
 	private String itSecSbIntegrityDescription;
 	private Long itSecSbAvailabilityId;
-//	private String itSecSbAvailabilityTxt;
-	private String itSecSbAvailabilityDescription;
+	private String itSecSbAvailabilityTxt;
+//	private String itSecSbAvailabilityDescription;
 	private Long itSecSbConfidentialityId;
 	private String itSecSbConfidentialityTxt;
 	private String itSecSbConfidentialityDescription;
@@ -897,12 +897,18 @@ public class ApplicationDTO extends CiBaseDTO {
 	}
 
 
-	public String getItSecSbAvailabilityDescription() {
-		return itSecSbAvailabilityDescription;
+	public String getItSecSbAvailabilityTxt() {
+		return itSecSbAvailabilityTxt;
 	}
-	public void setItSecSbAvailabilityDescription(String itSecSbAvailabilityDescription) {
-		this.itSecSbAvailabilityDescription = itSecSbAvailabilityDescription;
+	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
+		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
 	}
+//	public String getItSecSbAvailabilityDescription() {
+//		return itSecSbAvailabilityDescription;
+//	}
+//	public void setItSecSbAvailabilityDescription(String itSecSbAvailabilityDescription) {
+//		this.itSecSbAvailabilityDescription = itSecSbAvailabilityDescription;
+//	}
 
 	public String getItSecSbConfidentialityTxt() {
 		return itSecSbConfidentialityTxt;

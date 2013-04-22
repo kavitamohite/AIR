@@ -476,7 +476,7 @@ public class ApplicationWS {
 		dto.setCiSupportStuffProvidedMachineUsers(editInput.getCiSupportStuffProvidedMachineUsers());
 
 		dto.setItSecSbAvailabilityId(editInput.getItSecSbAvailabilityId());
-		dto.setItSecSbAvailabilityDescription(editInput.getItSecSbAvailabilityDescription());
+		dto.setItSecSbAvailabilityTxt(editInput.getItSecSbAvailabilityTxt());//getItSecSbAvailabilityDescription
 		dto.setClassInformationId(editInput.getClassInformationId());
 		dto.setClassInformationExplanation(editInput.getClassInformationExplanation());
 		

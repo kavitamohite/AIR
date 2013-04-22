@@ -87,8 +87,6 @@ public class RoomHbn extends LokationItemHbn {
 						// room is deleted
 						output.setErrorMessage("1001", EMPTY+id);
 					} else {
-						// room found - change values
-						
 						// validate template
 //						if (null != room.getTemplate() && -1 == room.getTemplate().longValue()) {
 //							if (null != dto.getTemplate()) {
@@ -102,15 +100,9 @@ public class RoomHbn extends LokationItemHbn {
 //							}
 //						}
 						
+						setUpCi(room, dto, cwid, false);
 
 
-						// ======
-						// Basics
-						// ======
-
-//						if (null != dto.getName()) {
-//							room.setRoomName(dto.getName());
-//						}
 						if (null != dto.getAlias()) {
 							room.setAlias(dto.getAlias());
 						}
@@ -120,9 +112,6 @@ public class RoomHbn extends LokationItemHbn {
 //						if (null != dto.getRoomType()) {
 //							room.setRoomType(dto.getRoomType());
 //						}
-
-						
-						setUpCi(room, dto, cwid, false);
 						
 						if (null != dto.getAreaId() && !room.getBuildingAreaId().equals(dto.getAreaId())) {
 							BuildingArea area = BuildingHbn.findBuildingAreaById(dto.getAreaId());
@@ -130,170 +119,6 @@ public class RoomHbn extends LokationItemHbn {
 							room.setBuildingAreaId(dto.getAreaId());
 						}
 						
-						/*
-						room.setUpdateUser(cwid);
-						room.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-						room.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
-						
-						// RFC8344 change Insert-Quelle? // RFC 8532
-//						if (ApplreposConstants.INSERT_QUELLE_ANT.equals(application.getInsertQuelle()) ||
-//							ApplreposConstants.INSERT_QUELLE_RFC.equals(application.getInsertQuelle())  ||
-//							ApplreposConstants.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())) {
-//							application.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
-//						}
- * 
-						// ================
-						// Owner / Delegate
-						// ================
-						if (null != dto.getCiOwnerHidden()) {
-							if(StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {
-								room.setCiOwner(null);
-							}
-							else {
-								room.setCiOwner(dto.getCiOwnerHidden());
-							}
-						}
-						if (null != dto.getCiOwnerDelegateHidden()) {
-							if(StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {
-								room.setCiOwnerDelegate(null);
-							}
-							else {
-								room.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
-							}
-						}
-						
-//						room.setSlaId(dto.getSlaId());
-//						room.setServiceContractId(dto.getServiceContractId());
-//						room.setSeverityLevelId(dto.getSeverityLevelId());
-						
-						if (null != dto.getSlaId()) {
-							if (-1 == dto.getSlaId()) {
-								room.setSlaId(null);
-							}
-							else {
-								room.setSlaId(dto.getSlaId());
-							}
-						}
-						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
-							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
-							room.setServiceContractId(dto.getServiceContractId());
-						}
-						
-
-						
-						if (null != dto.getItSecSbAvailabilityId()) {
-							if (-1 == dto.getItSecSbAvailabilityId()) {
-								room.setItSecSbAvailability(null);
-							}
-							else if (0 != dto.getItSecSbAvailabilityId().longValue()) {
-								room.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
-							}
-						}
-						if (null != dto.getItSecSbAvailabilityDescription()) {
-							room.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
-						}
-						
-						// ==========
-						// compliance
-						// ==========
-						// Template
-						if (null != dto.getTemplate()) {
-//							if (-1 == dto.getTemplate()) {
-//								application.setTemplate(null);
-//							}
-//							else {
-							room.setTemplate(dto.getTemplate());
-//							}
-						}
-						
-						if (null != dto.getItsecGroupId() && 0 != dto.getItsecGroupId()) {
-							if (-1 == dto.getItsecGroupId()) {
-								room.setItsecGroupId(null);
-							}
-							else {
-								room.setItsecGroupId(dto.getItsecGroupId());
-							}
-						}
-						
-						if (null != dto.getRefId()) {
-							if (-1 == dto.getRefId()) {
-								room.setRefId(null);
-							}
-							else {
-								room.setRefId(dto.getRefId());
-							}
-						}
-						
-//						if (null != dto.getRelevanceICS()) {
-//							room.setRelevanceICS(dto.getRelevanceICS());
-//						}
-//						if (null != dto.getRelevanzItsec()) {//getRelevanceITSEC
-//							room.setRelevanceITSEC(dto.getRelevanzItsec());//getRelevanceITSEC
-//						}
-						
-//						if (null != dto.getRelevanceICS()) {
-//							room.setRelevanceICS(dto.getRelevanceGR1920());
-//						}
-//						if (null != dto.getRelevanzItsec()) {
-//							room.setRelevanceITSEC(dto.getRelevanceGR1435());
-//						}
-						
-						if (null == dto.getRelevanzItsec()) {
-							if ("Y".equals(dto.getRelevanceGR1435())) {
-								dto.setRelevanzItsec(new Long(-1));
-							}
-							else if ("N".equals(dto.getRelevanceGR1435())) {
-								dto.setRelevanzItsec(new Long(0));
-							}
-						}
-						if (null == dto.getRelevanceICS()) {
-							if ("Y".equals(dto.getRelevanceGR1920())) {
-								dto.setRelevanceICS(new Long(-1));
-							}
-							else if ("N".equals(dto.getRelevanceGR1920())) {
-								dto.setRelevanceICS(new Long(0));
-							}
-						}
-						
-						room.setRelevanceITSEC(dto.getRelevanzItsec());
-						room.setRelevanceICS(dto.getRelevanceICS());
-						
-
-						if (null == dto.getGxpFlag()) {
-							//	we don't know, let the current value 
-						}
-						else {
-							if (EMPTY.equals(dto.getGxpFlag())) {
-								room.setGxpFlag(null);
-							}
-							else {
-								room.setGxpFlag(dto.getGxpFlag());
-							}
-						}
-
-						if (null != dto.getItSecSbAvailabilityId()) {
-							if (-1 == dto.getItSecSbAvailabilityId()) {
-								room.setItSecSbAvailability(null);
-							}
-							else if (0 != dto.getItSecSbAvailabilityId().longValue()) {
-								room.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
-							}
-						}
-						if (null != dto.getItSecSbAvailabilityDescription()) {
-							room.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
-						}
-						
-						
-//						if (null != dto.getClassInformationId()) {
-//							if (-1 == dto.getClassInformationId()) {
-//								room.setClassInformationId(null);
-//							} else {
-//								room.setClassInformationId(dto.getClassInformationId());
-//							}
-//						}
-//						if (null != dto.getClassInformationExplanation()) {
-//							room.setClassInformationExplanation(dto.getClassInformationExplanation());
-//						}*/
 						
 						if (null != dto.getSeverityLevelId()) {
 							if (-1 == dto.getSeverityLevelId()) {

@@ -32,7 +32,7 @@ public class StandortWS {
 		
 		//Protection
 		standortDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
-		standortDTO.setItSecSbAvailabilityDescription(input.getItSecSbAvailabilityDescription());
+		standortDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
 //		standortDTO.setClassInformationId(input.getClassInformationId());
 //		standortDTO.setClassInformationExplanation(input.getClassInformationExplanation());
 		

@@ -14,7 +14,6 @@ import org.hibernate.Transaction;
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
-import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Standort;
@@ -155,7 +154,9 @@ public class StandortHbn extends LokationItemHbn {
 //							}
 //						}
 						
-
+						setUpCi(standort, dto, cwid, false);
+						
+						/*
 						standort.setUpdateUser(cwid);
 						standort.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						standort.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
@@ -334,9 +335,10 @@ public class StandortHbn extends LokationItemHbn {
 //						}
 //						if (null != dto.getClassInformationExplanation()) {
 //							standort.setClassInformationExplanation(dto.getClassInformationExplanation());
-//						}
+//						}*/
 						
-						standort.setStandortCode(dto.getStandortCode());
+						if(dto.getStandortCode() != null)
+							standort.setStandortCode(dto.getStandortCode());
 					}
 					
 					boolean toCommit = false;
@@ -550,8 +552,7 @@ public class StandortHbn extends LokationItemHbn {
 						// create the ci
 
 						Session session = HibernateUtil.getSession();
-						Transaction tx = null;
-						tx = session.beginTransaction();
+						Transaction tx = session.beginTransaction();
 						
 						// calculates the ItSet
 						/*Long itSet = null;

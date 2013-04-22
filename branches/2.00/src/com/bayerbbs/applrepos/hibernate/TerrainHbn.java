@@ -15,7 +15,6 @@ import org.hibernate.Transaction;
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
-import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Standort;
@@ -144,8 +143,6 @@ public class TerrainHbn extends LokationItemHbn {
 						// terrain is deleted
 						output.setErrorMessage("1001", EMPTY+id);
 					} else {
-						// terrain found - change values
-						
 						// validate template
 //						if (null != terrain.getTemplate() && -1 == terrain.getTemplate().longValue()) {
 //							if (null != dto.getTemplate()) {
@@ -159,7 +156,9 @@ public class TerrainHbn extends LokationItemHbn {
 //							}
 //						}
 						
+						setUpCi(terrain, dto, cwid, false);
 
+						/*
 						terrain.setUpdateUser(cwid);
 						terrain.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						terrain.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
@@ -178,8 +177,6 @@ public class TerrainHbn extends LokationItemHbn {
 //						if (null != dto.getName()) {
 //							terrain.setTerrainName(dto.getName());
 //						}
-
-						
 
 						
 						// ================
@@ -337,7 +334,7 @@ public class TerrainHbn extends LokationItemHbn {
 //						}
 //						if (null != dto.getClassInformationExplanation()) {
 //							terrain.setClassInformationExplanation(dto.getClassInformationExplanation());
-//						}
+//						}*/
 					}
 					
 					boolean toCommit = false;

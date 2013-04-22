@@ -46,8 +46,8 @@ public class CiBaseDTO {// implements Serializable
 	
 	// Protection
 	private Long itSecSbAvailabilityId;
-//	private String itSecSbAvailabilityTxt;
-	private String itSecSbAvailabilityDescription;
+	private String itSecSbAvailabilityTxt;
+//	private String itSecSbAvailabilityDescription;
 	
 	
 	//nur Application!!
@@ -56,12 +56,12 @@ public class CiBaseDTO {// implements Serializable
 	
 	
 	private Long itSecSbIntegrityId;
-//	private String itSecSbIntegrityTxt;
-	private String itSecSbIntegrityDescription;
+	private String itSecSbIntegrityTxt;
+//	private String itSecSbIntegrityDescription;
 
 	private Long itSecSbConfidentialityId;
-//	private String itSecSbConfidentialityTxt;
-	private String itSecSbConfidentialityDescription;
+	private String itSecSbConfidentialityTxt;
+//	private String itSecSbConfidentialityDescription;
 	
 	//====================
 	private String relevanceOperational = AirKonstanten.NO_SHORT;
@@ -394,18 +394,18 @@ public class CiBaseDTO {// implements Serializable
 	public void setItSecSbAvailabilityId(Long itSecSbAvailabilityId) {
 		this.itSecSbAvailabilityId = itSecSbAvailabilityId;
 	}
-//	public String getItSecSbAvailabilityTxt() {
-//		return itSecSbAvailabilityTxt;
-//	}
-//	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
-//		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
-//	}
-	public String getItSecSbAvailabilityDescription() {
-		return itSecSbAvailabilityDescription;
+	public String getItSecSbAvailabilityTxt() {
+		return itSecSbAvailabilityTxt;
 	}
-	public void setItSecSbAvailabilityDescription(String itSecSbAvailabilityDescription) {
-		this.itSecSbAvailabilityDescription = itSecSbAvailabilityDescription;
+	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
+		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
 	}
+//	public String getItSecSbAvailabilityDescription() {
+//		return itSecSbAvailabilityDescription;
+//	}
+//	public void setItSecSbAvailabilityDescription(String itSecSbAvailabilityDescription) {
+//		this.itSecSbAvailabilityDescription = itSecSbAvailabilityDescription;
+//	}
 	
 	//nur Application!!
 //	public Long getClassInformationId() {
@@ -427,18 +427,18 @@ public class CiBaseDTO {// implements Serializable
 	public void setItSecSbIntegrityId(Long itSecSbIntegrityId) {
 		this.itSecSbIntegrityId = itSecSbIntegrityId;
 	}
-//	public String getItSecSbIntegrityTxt() {
-//		return itSecSbIntegrityTxt;
-//	}
-//	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
-//		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
-//	}
-	public String getItSecSbIntegrityDescription() {
-		return itSecSbIntegrityDescription;
+	public String getItSecSbIntegrityTxt() {
+		return itSecSbIntegrityTxt;
 	}
-	public void setItSecSbIntegrityDescription(String itSecSbIntegrityDescription) {
-		this.itSecSbIntegrityDescription = itSecSbIntegrityDescription;
+	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
+		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
 	}
+//	public String getItSecSbIntegrityDescription() {
+//		return itSecSbIntegrityDescription;
+//	}
+//	public void setItSecSbIntegrityDescription(String itSecSbIntegrityDescription) {
+//		this.itSecSbIntegrityDescription = itSecSbIntegrityDescription;
+//	}
 
 	
 	public Long getItSecSbConfidentialityId() {
@@ -447,17 +447,17 @@ public class CiBaseDTO {// implements Serializable
 	public void setItSecSbConfidentialityId(Long itSecSbConfidentialityId) {
 		this.itSecSbConfidentialityId = itSecSbConfidentialityId;
 	}
-//	public String getItSecSbConfidentialityTxt() {
-//		return itSecSbConfidentialityTxt;
-//	}
-//	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
-//		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
-//	}
-	public String getItSecSbConfidentialityDescription() {
-		return itSecSbConfidentialityDescription;
+	public String getItSecSbConfidentialityTxt() {
+		return itSecSbConfidentialityTxt;
 	}
-	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
-		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
+	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
+		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
 	}
+//	public String getItSecSbConfidentialityDescription() {
+//		return itSecSbConfidentialityDescription;
+//	}
+//	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
+//		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
+//	}
 	
 }

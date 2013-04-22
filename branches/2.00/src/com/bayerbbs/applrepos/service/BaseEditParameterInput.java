@@ -30,10 +30,18 @@ public class BaseEditParameterInput {
 	private String gxpFlagId;	// falls später über id referenziert wird
 	
 	private Long itSecSbAvailabilityId;
-//	private String itSecSbAvailabilityTxt;
-	private String itSecSbAvailabilityDescription;
-	private Long classInformationId;
-	private String classInformationExplanation;
+	private String itSecSbAvailabilityTxt;
+//	private String itSecSbAvailabilityDescription;
+	
+	private Long itSecSbIntegrityId;
+	private String itSecSbIntegrityTxt;
+//	private String itSecSbIntegrityDescription;
+
+	private Long itSecSbConfidentialityId;
+	private String itSecSbConfidentialityTxt;
+	
+//	private Long classInformationId;
+//	private String classInformationExplanation;
 
 
 	
@@ -171,29 +179,55 @@ public class BaseEditParameterInput {
 	public void setItSecSbAvailabilityId(Long itSecSbAvailabilityId) {
 		this.itSecSbAvailabilityId = itSecSbAvailabilityId;
 	}
-//	public String getItSecSbAvailabilityTxt() {
-//		return itSecSbAvailabilityTxt;
-//	}
-//	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
-//		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
-//	}
-	public String getItSecSbAvailabilityDescription() {
-		return itSecSbAvailabilityDescription;
+	public String getItSecSbAvailabilityTxt() {
+		return itSecSbAvailabilityTxt;
 	}
-	public void setItSecSbAvailabilityDescription(String itSecSbAvailabilityDescription) {
-		this.itSecSbAvailabilityDescription = itSecSbAvailabilityDescription;
+	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
+		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
+	}
+//	public String getItSecSbAvailabilityDescription() {
+//		return itSecSbAvailabilityDescription;
+//	}
+//	public void setItSecSbAvailabilityDescription(String itSecSbAvailabilityDescription) {
+//		this.itSecSbAvailabilityDescription = itSecSbAvailabilityDescription;
+//	}
+	
+	public Long getItSecSbIntegrityId() {
+		return itSecSbIntegrityId;
+	}
+	public void setItSecSbIntegrityId(Long itSecSbIntegrityId) {
+		this.itSecSbIntegrityId = itSecSbIntegrityId;
+	}
+	public String getItSecSbIntegrityTxt() {
+		return itSecSbIntegrityTxt;
+	}
+	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
+		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
+	}
+	
+	public Long getItSecSbConfidentialityId() {
+		return itSecSbConfidentialityId;
+	}
+	public void setItSecSbConfidentialityId(Long itSecSbConfidentialityId) {
+		this.itSecSbConfidentialityId = itSecSbConfidentialityId;
+	}
+	public String getItSecSbConfidentialityTxt() {
+		return itSecSbConfidentialityTxt;
+	}
+	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
+		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
 	}
 
-	public Long getClassInformationId() {
-		return classInformationId;
-	}
-	public void setClassInformationId(Long classInformationId) {
-		this.classInformationId = classInformationId;
-	}
-	public String getClassInformationExplanation() {
-		return classInformationExplanation;
-	}
-	public void setClassInformationExplanation(String classInformationExplanation) {
-		this.classInformationExplanation = classInformationExplanation;
-	}
+//	public Long getClassInformationId() {
+//		return classInformationId;
+//	}
+//	public void setClassInformationId(Long classInformationId) {
+//		this.classInformationId = classInformationId;
+//	}
+//	public String getClassInformationExplanation() {
+//		return classInformationExplanation;
+//	}
+//	public void setClassInformationExplanation(String classInformationExplanation) {
+//		this.classInformationExplanation = classInformationExplanation;
+//	}
 }

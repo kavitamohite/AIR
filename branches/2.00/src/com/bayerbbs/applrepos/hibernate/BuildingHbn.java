@@ -15,7 +15,6 @@ import org.hibernate.Transaction;
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
-import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
@@ -298,8 +297,7 @@ public class BuildingHbn extends LokationItemHbn {
 						// create the ci
 
 						Session session = HibernateUtil.getSession();
-						Transaction tx = null;
-						tx = session.beginTransaction();
+						Transaction tx = session.beginTransaction();
 
 
 						
@@ -441,7 +439,14 @@ public class BuildingHbn extends LokationItemHbn {
 //							}
 //						}
 						
-
+						setUpCi(building, dto, cwid, false);
+						
+						building.setStreet(dto.getStreet());
+						building.setStreetNumber(dto.getStreetNumber());
+						building.setPostalCode(dto.getPostalCode());
+						building.setLocation(dto.getLocation());
+						
+						/*
 						building.setUpdateUser(cwid);
 						building.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						building.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
@@ -621,7 +626,7 @@ public class BuildingHbn extends LokationItemHbn {
 //						}
 //						if (null != dto.getClassInformationExplanation()) {
 //							building.setClassInformationExplanation(dto.getClassInformationExplanation());
-//						}
+//						}*/
 					}
 					
 					boolean toCommit = false;
@@ -728,7 +733,9 @@ public class BuildingHbn extends LokationItemHbn {
 //							}
 //						}
 						
-
+						setUpCi(buildingArea, dto, cwid, false);
+						
+						/*
 						buildingArea.setUpdateUser(cwid);
 						buildingArea.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						buildingArea.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
@@ -913,7 +920,7 @@ public class BuildingHbn extends LokationItemHbn {
 //						}
 //						if (null != dto.getClassInformationExplanation()) {
 //							building.setClassInformationExplanation(dto.getClassInformationExplanation());
-//						}
+//						}*/
 					}
 					
 					boolean toCommit = false;

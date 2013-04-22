@@ -26,19 +26,19 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	private Long serviceContractId;
 	
 	private Long itSecSbAvailability;
-	private String itSecSbAvailabilityText;
+	private String itSecSbAvailabilityTxt;
 	
 	//nur Application!!
 //	private Long classInformationId;
 //	private String classInformationExplanation;
 	
 	private Long itSecSbIntegrityId;
-//	private String itSecSbIntegrityTxt;
-	private String itSecSbIntegrityDescription;
+	private String itSecSbIntegrityTxt;
+//	private String itSecSbIntegrityDescription;
 
 	private Long itSecSbConfidentialityId;
-//	private String itSecSbConfidentialityTxt;
-	private String itSecSbConfidentialityDescription;
+	private String itSecSbConfidentialityTxt;
+//	private String itSecSbConfidentialityDescription;
 	
 	
 	@Transient
@@ -173,11 +173,11 @@ public abstract class CiBase extends DeletableRevisionInfo {
 
 
 	@Column(name = "ITSEC_SB_VERFG_TXT")
-	public String getItSecSbAvailabilityText() {
-		return itSecSbAvailabilityText;
+	public String getItSecSbAvailabilityTxt() {
+		return itSecSbAvailabilityTxt;
 	}
-	public void setItSecSbAvailabilityText(String itSecSbAvailabilityText) {
-		this.itSecSbAvailabilityText = itSecSbAvailabilityText;
+	public void setItSecSbAvailabilityTxt(String itSecSbAvailabilityTxt) {
+		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
 	}
 	
 	
@@ -215,12 +215,18 @@ public abstract class CiBase extends DeletableRevisionInfo {
 //	}
 	
 	@Column(name = "ITSEC_SB_INTEG_TXT")
-	public String getItSecSbIntegrityDescription() {
-		return itSecSbIntegrityDescription;
+	public String getItSecSbIntegrityTxt() {
+		return itSecSbIntegrityTxt;
 	}
-	public void setItSecSbIntegrityDescription(String itSecSbIntegrityDescription) {
-		this.itSecSbIntegrityDescription = itSecSbIntegrityDescription;
+	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
+		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
 	}
+//	public String getItSecSbIntegrityDescription() {
+//		return itSecSbIntegrityDescription;
+//	}
+//	public void setItSecSbIntegrityDescription(String itSecSbIntegrityDescription) {
+//		this.itSecSbIntegrityDescription = itSecSbIntegrityDescription;
+//	}
 
 	
 	@Column(name = "ITSEC_SB_VERTR_ID")
@@ -237,11 +243,18 @@ public abstract class CiBase extends DeletableRevisionInfo {
 //		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
 //	}
 	
+	
 	@Column(name = "ITSEC_SB_VERTR_TXT")
-	public String getItSecSbConfidentialityDescription() {
-		return itSecSbConfidentialityDescription;
+	public String getItSecSbConfidentialityTxt() {
+		return itSecSbConfidentialityTxt;
 	}
-	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
-		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
+	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
+		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
 	}
+//	public String getItSecSbConfidentialityDescription() {
+//		return itSecSbConfidentialityDescription;
+//	}
+//	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
+//		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
+//	}
 }

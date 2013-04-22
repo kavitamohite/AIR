@@ -31,7 +31,7 @@ public class TerrainWS {
 		
 		//Protection
 		terrainDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
-		terrainDTO.setItSecSbAvailabilityDescription(input.getItSecSbAvailabilityDescription());
+		terrainDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
 //		terrainDTO.setClassInformationId(input.getClassInformationId());
 //		terrainDTO.setClassInformationExplanation(input.getClassInformationExplanation());
 		

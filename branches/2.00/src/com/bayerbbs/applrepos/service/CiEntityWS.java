@@ -454,7 +454,8 @@ public class CiEntityWS {
 		ciBaseDTO.setServiceContractId(ciBase.getServiceContractId());
 		
 		ciBaseDTO.setItSecSbAvailabilityId(ciBase.getItSecSbAvailability());
-		ciBaseDTO.setItSecSbAvailabilityDescription(ciBase.getItSecSbAvailabilityText());
+		ciBaseDTO.setItSecSbAvailabilityTxt(ciBase.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription
+				  
 		
 		ciBaseDTO.setItset(ciBase.getItset());
 		ciBaseDTO.setTemplate(ciBase.getTemplate());
@@ -578,7 +579,7 @@ public class CiEntityWS {
 		ciBaseDTO.setServiceContractId(ciBase.getServiceContractId());
 		
 		ciBaseDTO.setItSecSbAvailabilityId(ciBase.getItSecSbAvailability());
-		ciBaseDTO.setItSecSbAvailabilityDescription(ciBase.getItSecSbAvailabilityText());
+		ciBaseDTO.setItSecSbAvailabilityTxt(ciBase.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription
 		
 		ciBaseDTO.setItset(ciBase.getItset());
 		ciBaseDTO.setTemplate(ciBase.getTemplate());
