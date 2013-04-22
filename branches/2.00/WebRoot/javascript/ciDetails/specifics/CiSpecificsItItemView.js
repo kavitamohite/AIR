@@ -13,8 +13,8 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		        id: 'tfItSystemCiName',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Alias',
-		        width: 230,
-		        hidden: true
+		        width: 230
+//		        hidden: true
 	        },{
 		        id: 'tfItSystemCiAlias',
 		    	xtype: 'textfield',
@@ -365,6 +365,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 //        this.update(ciDetail);
 		var delayedTask = new Ext.util.DelayedTask(function() {
 			this.update(ciDetail);
+			this.updateAccessMode(ciDetail);
 			this.ownerCt.fireEvent('viewInitialized', this);//ciChange .ownerCt
 		}.createDelegate(this));
 		delayedTask.delay(1000);//1000
@@ -511,7 +512,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 	},
 	onChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue))
-			this.fireEvent('ciChange', this, combo, newValue, oldValue);
+			this.ownerCt.fireEvent('ciChange', this, combo, newValue, oldValue);
 	},
 	
 	
@@ -550,9 +551,11 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		
 //		cbItSystemLifecycleStatus.getStore().filter('tableId', data.tableId);
 		
+//		this.updateAccessMode(data);//es reicht bei der Initialisierung
+
 		
 		if(data.isCiCreate) {
-			tfItSystemCiName.setVisible(true);
+//			tfItSystemCiName.setVisible(true);
 			tfItSystemCiName.reset();
 			tfItSystemCiAlias.enable();
 			tfItSystemCiAlias.reset();
@@ -583,11 +586,10 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			rgVirtualHWClient.enable();
 			rgVirtualHWHost.enable();
 		} else {
-			tfItSystemCiName.setVisible(false);
+//			tfItSystemCiName.setVisible(false);
 			tfItSystemCiName.setValue(data.name);//wegen mandatory fields check setzen!
 			tfItSystemCiAlias.setValue(data.alias);
 			
-			this.updateAccessMode(data);
 			
 			
 			if(data.osNameId) {
@@ -737,6 +739,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 	},
 
 	updateAccessMode: function(data) {
+		AIR.AirAclManager.setAccessMode(this.getComponent('tfItSystemCiName'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('tfItSystemCiAlias'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsOs').getComponent('cbOsGroup'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsOs').getComponent('cbOsType'), data);

@@ -515,6 +515,9 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			case 'clCiSupportStuff':
 			case 'clCiHistory':
 				
+				if(ciCreateWizardView)
+					ciCreateWizardView.wizardStarted = false;
+				
 				this.forwardNavigation(options);
 				
 				/*if(options.isCiCreate) {

@@ -42,11 +42,11 @@ public class BuildingHbn extends LokationItemHbn {
 	
 	
 	public static CiItemsResultDTO findBuildingsBy(CiSearchParamsDTO input) {
-		CiMetaData metaData = new CiMetaData("gebaeude_id", "gebaeude_name", "alias", "Building", "gebaeude", AirKonstanten.TABLE_ID_BUILDING);
+		CiMetaData metaData = new CiMetaData("gebaeude_id", "gebaeude_name", "alias", "land_kennzeichen,standort_code,terrain_name", "Building", "gebaeude", AirKonstanten.TABLE_ID_BUILDING);
 		return findLocationCisBy(input, metaData);
 	}
 	public static CiItemsResultDTO findBuildingAreasBy(CiSearchParamsDTO input) {
-		CiMetaData metaData = new CiMetaData("area_id", "area_name", null, "Building Area", "building_area", AirKonstanten.TABLE_ID_BUILDING_AREA);
+		CiMetaData metaData = new CiMetaData("area_id", "area_name", null, "land_kennzeichen,standort_code,terrain_name,gebaeude_name", "Building Area", "building_area", AirKonstanten.TABLE_ID_BUILDING_AREA);
 		return findLocationCisBy(input, metaData);
 	}
 	

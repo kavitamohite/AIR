@@ -15,6 +15,7 @@ public class StandortWS {
 		//Specifics
 		standortDTO.setId(input.getId());//für RoomHbn.saveRoom
 		standortDTO.setName(input.getName());//für RoomHbn.validateRoom
+		standortDTO.setStandortCode(input.getStandortCode());
 		standortDTO.setLandId(input.getLandId());
 
 		

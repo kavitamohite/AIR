@@ -1356,6 +1356,7 @@ AIR.AirStoreFactory = function() {
 					//CiSpecificsLocationItemView
 					{name: 'alias'},
 					{name: 'floor'},
+					{name: 'code'},
 					{name: 'room'},
 					{name: 'buildingArea'},
 					{name: 'building'},
@@ -2105,7 +2106,9 @@ AIR.AirStoreFactory = function() {
 					loadMethod: 'findCis',
 					timeout: 120000,
 					reader: ciItemListReader
-				})
+				}),
+				
+				reader: ciItemListReader//zum Sortieren !!
 			});
 			
 			return ciItemListStore;
@@ -2206,7 +2209,7 @@ AIR.AirStoreFactory = function() {
 		createRoomListStore: function() {
 			var record = Ext.data.Record.create([
  			    { name: 'id', type: 'int' },
- 			    'name',
+ 			    'name'
  			]);
 
  			var reader = new Ext.data.XmlReader({
@@ -2233,7 +2236,7 @@ AIR.AirStoreFactory = function() {
  		createBuildingAreaListStore: function() {
 			var record = Ext.data.Record.create([
  			    { name: 'id', type: 'int' },
- 			    'name',
+ 			    'name'
  			]);
 
  			var reader = new Ext.data.XmlReader({
@@ -2260,7 +2263,7 @@ AIR.AirStoreFactory = function() {
  		createBuildingListStore: function() {
 			var record = Ext.data.Record.create([
  			    { name: 'id', type: 'int' },
- 			    'name',
+ 			    'name'
  			]);
 
  			var reader = new Ext.data.XmlReader({
@@ -2287,7 +2290,7 @@ AIR.AirStoreFactory = function() {
  		createTerrainListStore: function() {
 			var record = Ext.data.Record.create([
  			    { name: 'id', type: 'int' },
- 			    'name',
+ 			    'name'
  			]);
 
  			var reader = new Ext.data.XmlReader({
@@ -2315,7 +2318,7 @@ AIR.AirStoreFactory = function() {
 		createSiteListStore: function() {
 			var siteRecord = Ext.data.Record.create([
  			    { name: 'id', type: 'int' },
- 			    'name',
+ 			    'name'
  			]);
 
  			var siteReader = new Ext.data.XmlReader({

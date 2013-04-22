@@ -17,6 +17,7 @@ import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Land;
 import com.bayerbbs.applrepos.service.CiItemDTO;
@@ -39,15 +40,20 @@ public class LokationItemHbn extends BaseHbn {
 	protected static StringBuilder getAdvSearchCiBaseSql(CiSearchParamsDTO input, CiMetaData metaData) {
 		StringBuilder sql = new StringBuilder();
 		
+		final String CI = "ci.";
+		final String LK = "lk.";
+		String locationFields = new StringBuilder(LK).append(metaData.getLocationFields()).toString().replace(AirKonstanten.KOMMA, AirKonstanten.KOMMA.concat(LK));
+		
 		sql.
-		append("SELECT ").append(metaData.getIdField()).append(", ").append(metaData.getNameField());
+		append("SELECT DISTINCT ").append(CI).append(metaData.getIdField()).append(", ").append(CI).append(metaData.getNameField());
 		
 		if(metaData.getAliasField() != null)
-			sql.append(", ").append(metaData.getAliasField());
+			sql.append(", ").append(CI).append(metaData.getAliasField());
 		
-		sql.append(", responsible, sub_responsible FROM ").append(metaData.getTableName()).append(" WHERE").// (
-		append(" del_timestamp IS NULL AND (").
-		append(" UPPER(").append(metaData.getNameField()).append(") LIKE '");
+		sql.append(", responsible, sub_responsible, ").append(locationFields).append(" FROM ").append(metaData.getTableName()).append(" ci").
+		append(" JOIN search_loc lk on ").append(LK).append(metaData.getIdField()).append(" = ").append(CI).append(metaData.getIdField()).
+		append(" WHERE del_timestamp IS NULL AND (").
+		append("UPPER(").append(CI).append(metaData.getNameField()).append(") LIKE '");
 		
 		
 		if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
@@ -61,7 +67,7 @@ public class LokationItemHbn extends BaseHbn {
 		sql.append("'");
 		
 		if(metaData.getAliasField() != null) {
-			sql.append(" OR UPPER(").append(metaData.getAliasField()).append(") LIKE '");
+			sql.append(" OR UPPER(").append(CI).append(metaData.getAliasField()).append(") LIKE '");
 			
 			if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
 				sql.append("%");
@@ -169,11 +175,27 @@ public class LokationItemHbn extends BaseHbn {
 			while(rs.next()) {
 				if(i >= start && i < limit + start) {
 					ci = new CiItemDTO();
-					ci.setId(rs.getLong(metaData.getIdField()));
-					ci.setName(rs.getString(metaData.getNameField()));
+					ci.setId(rs.getLong(metaData.getIdField().substring(metaData.getIdField().indexOf('.') + 1, metaData.getIdField().length())));
+					ci.setName(rs.getString(metaData.getNameField().substring(metaData.getNameField().indexOf('.') + 1, metaData.getNameField().length())));
 					if(metaData.getAliasField() != null)
-						ci.setAlias(rs.getString(metaData.getAliasField()));
+						ci.setAlias(rs.getString(metaData.getAliasField().substring(metaData.getAliasField().indexOf('.') + 1, metaData.getAliasField().length())));
 					ci.setApplicationCat1Txt(metaData.getTypeName());
+					
+					
+					String lkString = getLokationsKetteAsString(rs, metaData.getLocationFields());
+					ci.setApplicationCat2Txt(lkString);
+
+//					StringBuffer kette = new StringBuffer();
+//					String[] locationFields = metaData.getLocationFields().split(AirKonstanten.KOMMA);
+//					for(String locationField : locationFields) {
+//						if(kette.length() > 0)
+//							kette.append(AirKonstanten.LOCATION_SEPARATOR);
+//						
+//						kette.append(rs.getString(locationField));
+//					}
+//					ci.setApplicationCat2Txt(kette.toString());
+					
+					
 					ci.setCiOwner(rs.getString("responsible"));
 					ci.setCiOwnerDelegate(rs.getString("sub_responsible"));
 					ci.setTableId(metaData.getTableId());
@@ -255,5 +277,18 @@ public class LokationItemHbn extends BaseHbn {
 		return laender;
 	}
 	
-
+	private static String getLokationsKetteAsString(ResultSet rs, String locationFieldString) throws SQLException {//String... args
+		StringBuffer kette = new StringBuffer();
+		
+		String[] locationFields = locationFieldString.split(AirKonstanten.KOMMA);
+		
+		for(String locationField : locationFields) {
+			if(kette.length() > 0)
+				kette.append(AirKonstanten.LOCATION_SEPARATOR);
+			
+			kette.append(rs.getString(locationField));
+		}
+		
+		return kette.toString();
+	}
 }

@@ -122,6 +122,7 @@ public class CiEntityWS {
 			CiLokationsKette lokationsKette = StandortHbn.findLokationsKetteById(input.getCiId());
 			
 //			Set<Terrain> terrains = standort.getTerrains();
+			standortDTO.setStandortCode(standort.getStandortCode());
 			standortDTO.setTableId(AirKonstanten.TABLE_ID_SITE);
 			
 			setCiBaseData(standortDTO, standort);

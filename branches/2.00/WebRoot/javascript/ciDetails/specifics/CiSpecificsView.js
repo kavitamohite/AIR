@@ -138,7 +138,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 				
 				//NEW TEST
 				if(!specificsView)
-					specificsView = new AIR.CiSpecificsLocationItemView({ id: 'clCiSpecificsLocationItem', height: 280 });
+					specificsView = new AIR.CiSpecificsLocationItemView({ id: 'clCiSpecificsLocationItem', height: 310 });
 				//NEW TEST
 				break;
 			case AC.TABLE_ID_IT_SYSTEM://ADEFFMS0446 ADEFFMS0402
@@ -182,7 +182,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 				h = 400;//650
 				break;
 			case 'clCiSpecificsLocationItem':
-				h = 280;//300
+				h = 310;//300
 				break;
 			case 'clCiSpecificsItItem':
 				h = 400;//450

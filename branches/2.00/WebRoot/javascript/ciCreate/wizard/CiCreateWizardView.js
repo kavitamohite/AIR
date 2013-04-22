@@ -158,8 +158,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 			}
 		}
 		
-		if(!params.barRelevance || params.barRelevance === 'U')
-			errorData.push(labels.rgBARrelevance);
+
 		
 		if(params.comments.length === 0)
 			errorData.push(labels.comments);
@@ -167,15 +166,22 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		if(params.lifecycleStatusId.length === 0)
 			errorData.push(labels.lifecycleStatus);
 		
-		if(params.applicationOwnerHidden.length === 0)
-			errorData.push(labels.applicationOwner);
-		
-		if(params.applicationStewardHidden.length === 0)
-			errorData.push(labels.applicationSteward);
-		
-		if(params.applicationOwnerDelegateHidden.length === 0)
-			errorData.push(labels.applicationOwnerDelegate);
-		
+		if(params.applicationCat1Id == AC.APP_CAT1_APPLICATION) {
+			if(!params.organisationalScope)
+				errorData.push(labels.organisationalScope);
+			
+			if(!params.barRelevance || params.barRelevance === 'U')
+				errorData.push(labels.rgBARrelevance);
+			
+			if(params.applicationOwnerHidden.length === 0)
+				errorData.push(labels.applicationOwner);
+			
+			if(params.applicationStewardHidden.length === 0)
+				errorData.push(labels.applicationSteward);
+			
+			if(params.applicationOwnerDelegateHidden.length === 0)
+				errorData.push(labels.applicationOwnerDelegate);
+		}
 		
 		if(errorData.length === 0) {
 			var checkParams = {};
@@ -291,9 +297,10 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 				var r = cbCiTypeW.getStore().getById(cbCiTypeW.getValue());
 				
 				AAM.setCiId(records[0].data.applicationId);
-				AAM.setTableId(r.get('tableId'));//AC.TABLE_ID_APPLICATION
+				AAM.setTableId(r.get('ciTypeId'));//AC.TABLE_ID_APPLICATION
 				AAM.setCiSubTypeId(r.get('ciSubTypeId'));
 				
+				//ci type, ci sub type und name bei der response dazu?
 				var data = {
 					applicationName: this.getComponent('ciCreateWizardP1').getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView').getComponent('tfCiNameW').getValue(),
 					applicationCat1: this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW').getRawValue()

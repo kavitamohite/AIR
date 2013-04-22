@@ -30,33 +30,6 @@ public class RoomHbn extends LokationItemHbn {
 	private static final Log log = LogFactory.getLog(RoomHbn.class);
 	
 	public static Room findById(Long id) {
-		/*Room room = null;
-		Transaction tx = null;
-		Session session = HibernateUtil.getSession();
-		
-		try {
-			tx = session.beginTransaction();
-			List<Room> list = session.createQuery("select h from Room as h where h.roomId=" + id).list();
-
-			if (null != list && 0 < list.size()) {
-				room = (Room) list.get(0);
-			}
-
-			tx.commit();
-		} catch (RuntimeException e) {
-			if (tx != null && tx.isActive()) {
-				try {
-					// Second try catch as the rollback could fail as well
-					tx.rollback();
-				} catch (HibernateException e1) {
-					log.error(e1.getMessage());
-				}
-				// throw again the first exception
-				throw e;
-			}
-		}
-		return room;*/
-		
 		return findById(Room.class, id);
 	}
 	
@@ -79,221 +52,13 @@ public class RoomHbn extends LokationItemHbn {
 	
 	//CiItemDTO[]
 	public static CiItemsResultDTO findRoomsBy(CiSearchParamsDTO input) {
-		CiMetaData metaData = new CiMetaData("raum_id", "raum_name", "raumalias", "Room", "raum", AirKonstanten.TABLE_ID_ROOM);
+		CiMetaData metaData = new CiMetaData("raum_id", "raum_name", "raumalias", "land_kennzeichen,standort_code,terrain_name,gebaeude_name,area_name", "Room", "raum", AirKonstanten.TABLE_ID_ROOM);//land_name_en,standort_name
 		return findLocationCisBy(input, metaData);
-		
-		/*
-		StringBuilder sql = new StringBuilder();
-		sql.
-		append("SELECT raum_id, raum_name, raumalias, responsible, sub_responsible FROM raum ").
-		append("WHERE ").
-		append("UPPER(raum_name) like '");
-		
-		
-		if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
-			sql.append("%");
-		
-		sql.append(input.getCiNameAliasQuery().toUpperCase());
-		
-		if(CiEntitiesHbn.isLikeEnd(input.getQueryMode()))
-			sql.append("%");
-		
-		sql.append("'");// )
-		
-		
-		sql.append(" OR UPPER(raumalias) like '");
-		
-		if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
-			sql.append("%");
-		
-		sql.append(input.getCiNameAliasQuery().toUpperCase());
-		
-		if(CiEntitiesHbn.isLikeEnd(input.getQueryMode()))
-			sql.append("%");
-		
-		sql.append("'");// )
-		
-		
-		boolean isNot = false;
-		
-		if(StringUtils.isNotNullOrEmpty(input.getCiOwnerHidden())) {
-			isNot = isNot(input.getCiOwnerOptions());
-			
-			sql.append(" AND ");
-			if(isNot)
-				sql.append("UPPER(responsible) IS NULL OR ");
-			
-			sql.append("UPPER(responsible) " + getLikeNotLikeOperator(isNot) + " '").append(input.getCiOwnerHidden().toUpperCase()).append("')");
-		}
-		
-		if(StringUtils.isNotNullOrEmpty(input.getCiOwnerDelegate())) {
-			boolean isCwid = input.getCiOwnerDelegate().indexOf(')') > -1;
-			String delegate = isCwid ? input.getCiOwnerDelegateHidden() : input.getCiOwnerDelegate();//gruppe oder cwid?
-			
-			isNot = isNot(input.getCiOwnerDelegateOptions());
-			
-			sql.append(" AND ");
-			if(isNot)
-				sql.append("UPPER(sub_responsible) IS NULL OR ");
-			
-			sql.append("UPPER(sub_responsible) "+ getLikeNotLikeOperator(isNot) +" '").append(delegate.toUpperCase()).append("')");
-			
-			if(!isCwid)
-				sql.insert(sql.length() - 2, '%');
-		}
-		
-		List<CiItemDTO> rooms = new ArrayList<CiItemDTO>();
-
-		Session session = null;
-		Transaction ta = null;
-		Connection conn = null;
-		Statement stmt = null;//PreparedStatement
-		ResultSet rs = null;
-		
-		Integer start = input.getStart();
-		Integer limit = input.getLimit();
-		Integer i = 0;
-		boolean commit = false;
-				
-		try {
-			session = HibernateUtil.getSession();
-			ta = session.beginTransaction();
-			conn = session.connection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql.toString());
-			
-//			stmt = conn.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//			rs = stmt.executeQuery();
-//			if(0 != start)
-//				rs.absolute(start + 1);//relative
-			
-			
-			if(null == start)
-				start = 0;
-			if(null == limit)
-				limit = 20;
-			
-			
-			CiItemDTO room = null;
-			
-			while(rs.next()) {
-				if(i >= start && i < limit + start) {
-					room = new CiItemDTO();
-					room.setId(rs.getLong("raum_id"));
-					room.setName(rs.getString("raum_name"));
-					room.setAlias(rs.getString("raumalias"));
-					room.setApplicationCat1Txt("Room");
-					room.setCiOwner(rs.getString("responsible"));
-					room.setCiOwnerDelegate(rs.getString("sub_responsible"));
-					room.setTableId(AirKonstanten.TABLE_ID_ROOM);
-					
-					rooms.add(room);
-					//i++;
-				}// else break;
-				
-				i++;
-			}
-						
-			ta.commit();
-			rs.close();
-			stmt.close();
-			conn.close();
-			
-			commit = true;
-		} catch(SQLException e) {
-			if(ta.isActive())
-				ta.rollback();
-			
-			System.out.println(e);
-		} finally {
-			HibernateUtil.close(ta, session, commit);
-
-//			try {
-//				rs.close();
-//				stmt.close();
-//				conn.close();
-//				session.close();
-//			} catch (SQLException e) {
-//				System.out.println(e);
-//			}
-		}
-		
-		CiItemsResultDTO result = new CiItemsResultDTO();
-		result.setCiItemDTO(rooms.toArray(new CiItemDTO[0]));
-		result.setCountResultSet(i);//i + start
-		return result;
-		
-//		return rooms.toArray(new CiItemDTO[0]);*/
 	}
 
 
 	public static CiEntityEditParameterOutput deleteRoom(String cwid, RoomDTO dto) {
 		return deleteCi(cwid, dto, Room.class);
-		
-		/*CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-
-		if (null != cwid) {
-			cwid = cwid.toUpperCase();
-			
-			if (null != dto.getId()	&& 0 < dto.getId().longValue()) {
-				Long id = new Long(dto.getId());
-
-				Session session = HibernateUtil.getSession();
-				Transaction tx = session.beginTransaction();
-				Room room = (Room) session.get(Room.class, id);
-				
-				if (null == room) {
-					// application was not found in database
-					output.setResult(AirKonstanten.RESULT_ERROR);
-					output.setMessages(new String[] { "the room id " + id + " was not found in database" });
-				}
-
-				// if it is not already marked as deleted, we can do it
-				else if (null == room.getDeleteTimestamp()) {
-					room.setDeleteUser(cwid);
-					room.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-					room.setDeleteTimestamp(ApplReposTS.getDeletionTimestamp());
-
-					boolean toCommit = false;
-					try {
-						session.saveOrUpdate(room);
-						session.flush();
-						toCommit = true;
-					} catch (Exception e) {
-						log.error(e.getMessage());
-						// handle exception
-						output.setResult(AirKonstanten.RESULT_ERROR);
-						output.setMessages(new String[] { e.getMessage() });
-					} finally {
-						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
-						
-						if (toCommit) {
-							if (null == hbnMessage) {
-								output.setResult(AirKonstanten.RESULT_OK);
-								output.setMessages(new String[] { EMPTY });
-							} else {
-								output.setResult(AirKonstanten.RESULT_ERROR);
-								output.setMessages(new String[] { hbnMessage });
-							}
-						}
-					}
-				} else {
-					// application is already deleted
-					output.setResult(AirKonstanten.RESULT_ERROR);
-					output.setMessages(new String[] { "the room is already deleted" });
-				}
-			} else {
-				// application id is missing
-				output.setResult(AirKonstanten.RESULT_ERROR);
-				output.setMessages(new String[] { "the room id is missing or invalid" });
-			}
-		} else {
-			// cwid missing
-			output.setResult(AirKonstanten.RESULT_ERROR);
-			output.setMessages(new String[] { "cwid missing" });
-		}
-
-		return output;*/
 	}
 
 	
@@ -539,6 +304,11 @@ public class RoomHbn extends LokationItemHbn {
 							}
 						}
 
+						if (null == dto.getBusinessEssentialId()) {
+							// messages.add("business essential is empty");
+							// TODO 1 TESTCODE getBusinessEssentialId
+							dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+						}
 						room.setBusinessEssentialId(dto.getBusinessEssentialId());
 					}
 					

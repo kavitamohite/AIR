@@ -38,7 +38,8 @@ public final class AirKonstanten {
 	public final static String STRING_EMPTY = "";
 	public final static String STRING_ONE_BLANK = " ";
 	public final static String STRING_TRUE = "true";
-	
+	public static final String LOCATION_SEPARATOR = " / ";
+
 	public static final String PARAMETER_QUERYMODE_BEGINS_WITH = "BEGINS_WITH";
 	public static final String PARAMETER_QUERYMODE_CONTAINS = "CONTAINS";
 	public static final String PARAMETER_QUERYMODE_EMPTYSTRING = "";

@@ -608,9 +608,9 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				cbItSecGroup.setValue(data.itsecGroupId);
 				//lReferencedTemplateError.hide();
 				//cbReferencedTemplate.isInvalid = false;
-			} else {
+			} else if(!data.isCiCreate) {
 				//cbReferencedTemplate.setRawValue(data.refTxt);
-				cbItSecGroup.setRawValue(AC.LABEL_INVALID+data.itsecGroupTxt);
+				cbItSecGroup.setRawValue(AC.LABEL_INVALID + data.itsecGroupTxt);
 			}
 		} else
 			cbItSecGroup.setValue('');//clearValue();

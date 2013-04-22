@@ -7,14 +7,16 @@ public class CiMetaData {
 	private String typeName;
 	private String tableName;
 	private Integer tableId;
+	private String locationFields;
 	
-	public CiMetaData(String idField, String nameField, String aliasField, String typeName, String tableName, Integer tableId) {
+	public CiMetaData(String idField, String nameField, String aliasField, String locationFields, String typeName, String tableName, Integer tableId) {
 		this.idField = idField;
 		this.nameField = nameField;
 		this.aliasField = aliasField;
 		this.typeName = typeName;
 		this.tableName = tableName;
 		this.tableId = tableId;
+		this.locationFields = locationFields;
 	}
 	
 	public String getIdField() {
@@ -34,5 +36,11 @@ public class CiMetaData {
 	}
 	public Integer getTableId() {
 		return tableId;
+	}
+	public void setLocationFields(String locationFields) {
+		this.locationFields = locationFields;
+	}
+	public String getLocationFields() {
+		return locationFields;
 	}
 }

@@ -6,10 +6,11 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		Ext.apply(this, {
 			labelWidth: 200,
 		    title: 'Agreements',
-		    
 		    border: false,
 		    bodyStyle: 'padding:10px',
+		    
 		    layout: 'form',
+		    height: 150,
 		    
 		    items: [{
 		        xtype: 'combo',
@@ -20,9 +21,9 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        valueField: 'id',
 		        displayField: 'text',
 		        
-		        typeAhead: true,
+//		        typeAhead: true,
 //		        forceSelection: true,
-		        autoSelect: false,
+//		        autoSelect: false,
 		        
 		        triggerAction: 'all',
 		        lazyRender: true,
@@ -37,9 +38,9 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        valueField: 'id',
 		        displayField: 'text',
 		        
-		        typeAhead: true,
+//		        typeAhead: true,
 //		        forceSelection: true,
-		        autoSelect: false,
+//		        autoSelect: false,
 		        
 		        triggerAction: 'all',
 		        lazyRender: true,
@@ -58,9 +59,9 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        valueField: 'id',
 		        displayField: 'text',
 		        
-		        typeAhead: true,
+//		        typeAhead: true,
 //		        forceSelection: true,
-		        autoSelect: false,
+//		        autoSelect: false,
 		        
 		        triggerAction: 'all',
 		        lazyRender: true,
@@ -76,9 +77,9 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        valueField: 'id',
 		        displayField: 'text',
 		        
-		        typeAhead: true,
+//		        typeAhead: true,
 //		        forceSelection: true,
-		        autoSelect: false,
+//		        autoSelect: false,
 		        
 		        triggerAction: 'all',
 		        lazyRender: true,
@@ -95,9 +96,9 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        valueField: 'id',
 		        displayField: 'text',
 		        
-		        typeAhead: true,
+//		        typeAhead: true,
 //		        forceSelection: true,
-		        autoSelect: false,
+//		        autoSelect: false,
 		        
 		        triggerAction: 'all',
 		        lazyRender: true,
@@ -335,6 +336,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		this.updateAccessMode(data);
+		
+		this.doLayout();
 	},
 	
 	updateAccessMode: function(data) {
@@ -356,7 +359,12 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				if (AIR.AirAclManager.isEditable(cbBusinessEssential)) {
 					Util.enableCombo(cbBusinessEssential);
 					
-					AIR.AirAclManager.setMandatory(cbBusinessEssential, 'mandatory');
+					//alt
+//					AIR.AirAclManager.setMandatory(cbBusinessEssential, 'mandatory');
+					//neu
+//					AIR.AirAclManager.setNecessity(cbBusinessEssential);
+					AIR.AirAclManager.setNecessityInternal(cbBusinessEssential.label, 'mandatory');
+					
 					// this.setEditable(aclItemCmp); // diese Methode prüft die Rechte und verhindert das Editieren...
 					// deshalb setzen wir das FormElement einzeln auf true
 	//				AIR.AirAclManager.setFormElementEnable(cbBusinessEssential, true);

@@ -25,7 +25,18 @@ import javax.persistence.Table;
 public class Standort extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	
-    private Set<Terrain> terrains;
+	private String standortCode;
+	
+	
+	@Column(name = "STANDORT_CODE")
+    public String getStandortCode() {
+		return standortCode;
+	}
+	public void setStandortCode(String code) {
+		this.standortCode = code;
+	}
+	
+	private Set<Terrain> terrains;
     //PLANT_SAP, SITE_CATEGORY wie in SISec?
     private Long landId;
     

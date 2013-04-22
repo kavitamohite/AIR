@@ -9,6 +9,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    bodyStyle: 'padding:10px',
 		    
 		    layout: 'form',
+		    height: 220,
 		    
 		    items: [{
 		        xtype: 'filterCombo',//combo
@@ -191,6 +192,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 			tfProtectionApplicationProtection.reset();
 		}
 		
+		this.doLayout();
 	},
 	
 	updateAccessMode: function(data) {

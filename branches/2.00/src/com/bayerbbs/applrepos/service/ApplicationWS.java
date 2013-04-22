@@ -114,19 +114,15 @@ public class ApplicationWS {
 					listAnwendungen = CiEntitiesHbn.findMyCisForDelete(cwid, input.getSort(), input.getDir(), onlyApplications);
 				}
 			} else {
-				if (AirKonstanten.STRING_TRUE.equals(input.getIsAdvSearch())) {//getAdvancedsearch
+				if (AirKonstanten.STRING_TRUE.equals(input.getIsAdvSearch())) {
 					listAnwendungen = AnwendungHbn.findApplications(searchname, input.getQueryMode(),
-//						input.getAdvsearchappowner(), input.getAdvsearchappownerHidden(), input.getAdvsearchappdelegate(), input.getAdvsearchappdelegateHidden(),
 						input.getAppOwner(), input.getAppOwnerHidden(), input.getAppOwnerDelegate(), input.getAppOwnerDelegateHidden(), 
-//						input.getAdvsearchciowner(), input.getAdvsearchciownerHidden(), input.getAdvsearchcidelegate(), input.getAdvsearchcidelegateHidden(),
 						input.getCiOwner(), input.getCiOwnerHidden(), input.getCiOwnerDelegate(), input.getCiOwnerDelegateHidden(),
 						onlyApplications, input.getSort(), input.getDir(),
-						input.getCiTypeId(), input.getCiSubTypeId(), input.getDescription(),//input.getTableId() input.getAdvsearchdescription() input.getAdvsearchcitypeid(), input.getAdvsearchObjectTypeId()
-//						input.getAdvsearchoperationalstatusid(), input.getAdvsearchapplicationcat2id(),
+						input.getCiTypeId(), input.getCiSubTypeId(), input.getDescription(),
 						input.getOperationalStatusId(), input.getApplicationCat2Id(),
-//						input.getAdvsearchlifecyclestatusid(), input.getAdvsearchprocessid(), input.getIsTemplate(),//getTemplate
 						input.getLifecycleStatusId(), input.getProcessId(), input.getIsTemplate(),
-						input.getAppSteward(), input.getAppStewardHidden(), input.getBarRelevance(), input.getOrganisationalScope(),//input.getAdvsearchsteward(), input.getAdvsearchstewardHidden()
+						input.getAppSteward(), input.getAppStewardHidden(), input.getBarRelevance(), input.getOrganisationalScope(),
 						input.getItSetId(), input.getItSecGroupId(), input.getSource(), input.getBusinessEssentialId(),
 						input.getCiTypeOptions(),input.getItSetOptions(), input.getDescriptionOptions(),
 						input.getAppOwnerOptions(), input.getAppOwnerDelegateOptions(), input.getAppStewardOptions(),

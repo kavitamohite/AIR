@@ -38,7 +38,7 @@ public class StandortHbn extends LokationItemHbn {
 
 
 	public static CiItemsResultDTO findSitesBy(ApplicationSearchParamsDTO input) {
-		CiMetaData metaData = new CiMetaData("standort_id", "standort_name", null, "site", "standort", AirKonstanten.TABLE_ID_SITE);
+		CiMetaData metaData = new CiMetaData("standort_id", "standort_name", null, "land_kennzeichen", "Site", "standort", AirKonstanten.TABLE_ID_SITE);
 		return findLocationCisBy(input, metaData);
 	}
 
@@ -335,6 +335,8 @@ public class StandortHbn extends LokationItemHbn {
 //						if (null != dto.getClassInformationExplanation()) {
 //							standort.setClassInformationExplanation(dto.getClassInformationExplanation());
 //						}
+						
+						standort.setStandortCode(dto.getStandortCode());
 					}
 					
 					boolean toCommit = false;
@@ -592,7 +594,7 @@ public class StandortHbn extends LokationItemHbn {
 						setUpCi(standort, dto, cwid, true);
 						
 						standort.setLandId(dto.getLandId());
-						
+						standort.setStandortCode(dto.getStandortCode());
 						
 						boolean toCommit = false;
 						try {

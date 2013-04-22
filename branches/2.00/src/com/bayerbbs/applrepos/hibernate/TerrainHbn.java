@@ -40,7 +40,7 @@ public class TerrainHbn extends LokationItemHbn {
 
 
 	public static CiItemsResultDTO findTerrainsBy(ApplicationSearchParamsDTO input) {
-		CiMetaData metaData = new CiMetaData("terrain_id", "terrain_name", null, "Terrain", "terrain", AirKonstanten.TABLE_ID_TERRAIN);
+		CiMetaData metaData = new CiMetaData("terrain_id", "terrain_name", null, "land_kennzeichen,standort_code", "Terrain", "terrain", AirKonstanten.TABLE_ID_TERRAIN);
 		return findLocationCisBy(input, metaData);
 	}
 

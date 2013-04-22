@@ -238,13 +238,13 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    		xtype: 'container',
 			    		height: 5
 			    	}, {
-			    		xtype: 'combo',
+			    		xtype: 'filterCombo',//combo
 			    		id: 'cbConnectionsObjectType',
-			            store: AIR.AirStoreManager.getStoreByName('ciTypeListStore'),// applicationCat1ListStore,
+			            store: AIR.AirStoreFactory.createCiTypeListStore(),//AIR.AirStoreManager.getStoreByName('ciTypeListStore'),// applicationCat1ListStore,
 			    	    
 			            fieldLabel: 'Object Type',
-			    	    valueField: 'ciTypeId',//id
-			            displayField: 'ciTypeName',//english
+			    	    valueField: 'id',//id ciTypeId
+			            displayField: 'text',//english ciTypeName
 			            mode: 'local',
 			            anchor: '100%',
 
@@ -320,21 +320,13 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			{ name: 'dwhEntityId' }	
 		]);
 		
-		
-		
-		// in CiEditView, CiEditTabView oder einen ViewManager/Mediator verlagern (da View übergreifende Funktionalität)
-//		var myOwnCIsGrid = Ext.getCmp('card-mycis').getComponent('myOwnCisView').getComponent('myOwnCIsGrid');
-//		myOwnCIsGrid.on('rowclick', this.onCiSelected, this);
-//
-//		var myDelegateCIsGrid = Ext.getCmp('card-myapps').getComponent('myDelegateCisView').getComponent('myDelegateCIsGrid');
-//		myDelegateCIsGrid.on('rowclick', this.onCiSelected, this);
-//		
-//		var ciSearchView = Ext.getCmp('searchpanel');//searchpanel CiSearchView
-//		var ciSearchGrid = ciSearchView.getComponent('ciSearchResultView').getComponent('ciSearchGrid');
-//		ciSearchGrid.on('rowclick', this.onCiSelected, this);
-
-		// in CiEditView, CiEditTabView oder einen ViewManager/Mediator verlagern (da View übergreifende Funktionalität)
-		
+		var cbConnectionsObjectType = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('cbConnectionsObjectType');
+		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+		var records = store.getRange();
+		for(var i = 0; i < records.length; i++)
+			if(records[i].get('ciTypeId') === AC.TABLE_ID_IT_SYSTEM || 
+			   records[i].get('ciTypeId') === AC.TABLE_ID_APPLICATION)
+				cbConnectionsObjectType.getStore().add(records[i]);
 	},
 	
 	editConnections: function(button, event) {
@@ -706,6 +698,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				
 		cbConnectionsObjectType.el.up('.x-form-item', 10, true).child('.x-form-item-label').update(labels['CiConnectionsViewObjectType']);
 		tfConnectionsQuickSearch.el.up('.x-form-item', 10, true).child('.x-form-item-label').update(labels['CiConnectionsViewQuickSearch']);
+				
 		
 //		this.doLayout();//getComponent('p1').getComponent('p11'). bringt nichts für bEditConnections Größe
 	},

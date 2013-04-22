@@ -126,7 +126,7 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		        allowBlank: true,
 		        msgTarget: 'under'
 		    },{
-		        xtype: 'combo',
+		        xtype: 'filterCombo',//combo
 		        width: 250,
 //		        anchor: '70%',//siehe (*1)
 		        fieldLabel: 'Lifecycle',
@@ -358,6 +358,11 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		lvOrganisationalScope.setVisible(isApplicationCi);
 		fsApplicationOwnerW.setVisible(isApplicationCi);
 		fsApplicationStewardW.setVisible(isApplicationCi);
+		
+		var cbLifecycleStatusW = this.getComponent('cbLifecycleStatusW');
+		
+		var filterData = { tableId: AC.TABLE_ID_APPLICATION };
+		cbLifecycleStatusW.filterByData(filterData);
 	},
 
 	

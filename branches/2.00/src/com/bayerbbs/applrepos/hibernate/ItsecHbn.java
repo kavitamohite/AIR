@@ -85,8 +85,8 @@ public class ItsecHbn {
 						dto.setItsecMassnahmenStatusId(rsSet.getLong("ITSEC_MASSN_ST_ID"));
 						dto.setIdent(rsSet.getString("IDENT"));
 						dto.setMassnahmeTitel(rsSet.getString("MASSNAHME_TITEL"));
-						dto.setStatusWert(rsSet.getString("STATUS_WERT"));//STATUS_WERT STATUS_WERT_EN
-						dto.setStatusWertEn(rsSet.getString("STATUS_WERT_EN"));//STATUS_WERT_EN STATUS_WERT
+						dto.setStatusWertEn(rsSet.getString("STATUS_WERT"));//STATUS_WERT STATUS_WERT_EN
+						dto.setStatusWert(rsSet.getString("STATUS_WERT_EN"));//STATUS_WERT_EN STATUS_WERT
 //						dto.setStatusWertId(rsSet.getLong("STATUS_WERT_ID"));
 						dto.setMassnahmeGstoolId(rsSet.getLong("MASSNAHME_GSTOOLID"));
 						dto.setZobId(rsSet.getLong("ZOB_ID"));

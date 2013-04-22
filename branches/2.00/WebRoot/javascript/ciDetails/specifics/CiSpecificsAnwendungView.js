@@ -22,7 +22,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		        hidden: true,
 //		        width: 230,
 		        anchor: '70%'
-		    },{
+		    }/*,{
 		        xtype: 'textfield',
 		    	fieldLabel: 'Object Type',
 		        id: 'objectType',
@@ -31,17 +31,25 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		        hidden: true,
 //		        width: 230,
 		        anchor: '70%'
-		    }/*,{
+		    }*/,{
 		    	xtype: 'textfield',
+		        id: 'applicationName',
 //		        width: 230,
 		        fieldLabel: 'Application Name',
-		        id: 'applicationName',
-		        hidden: true,
-		        anchor: '70%',
+		        anchor: '70%'
 		        
-		        enableKeyEvents: true
-		    }*/
-		    ,{
+//		        enableKeyEvents: true
+		    },{
+		    	xtype: 'textfield',
+		        id: 'applicationAlias',
+//		        width: 230,
+		        fieldLabel: 'Application Alias',
+		        anchor: '70%'
+		        
+//		        cls: 'required',
+		        
+//		        enableKeyEvents: true //Stop IE to always set the cursor at the end when pushing left/right or setting the cursor with the mouse
+		    },{
 	            xtype: 'radiogroup',
     			id: 'rgBARrelevance',
     			width: 250,
@@ -64,16 +72,6 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		        
 		        id: 'barApplicationId'
 	        },{
-		    	xtype: 'textfield',
-//		        width: 230,
-		        fieldLabel: 'Application Alias',
-		        anchor: '70%',
-		        
-		        cls: 'required',
-		        
-		        id: 'applicationAlias'
-//		        enableKeyEvents: true //Stop IE to always set the cursor at the end when pushing left/right or setting the cursor with the mouse
-		    },{
 		    	xtype: 'textfield',
 //		    	width: 230,
 		    	anchor: '70%',
@@ -310,7 +308,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		
 		this.addEvents('ciBeforeChange', 'ciChange', 'ciInvalid');
 		
-//		var tfApplicationName = this.getComponent('applicationName');
+		var tfApplicationName = this.getComponent('applicationName');
 		var tfApplicationAlias = this.getComponent('applicationAlias');
 		var tfApplicationVersion = this.getComponent('applicationVersion');
 		var rgBARrelevance = this.getComponent('rgBARrelevance');
@@ -328,7 +326,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		var cbDataClass = this.getComponent('specificsCategory').getComponent('cbDataClass');
 			
 		
-//		tfApplicationName.on('change', this.onApplicationNameChange, this);
+		tfApplicationName.on('change', this.onApplicationAliasChange, this);//onApplicationNameChange
 		tfApplicationAlias.on('change', this.onApplicationAliasChange, this);
 		tfApplicationVersion.on('change', this.onApplicationVersionChange, this);
 		
@@ -407,12 +405,12 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 				callback: function() {
 					// the function to handle the response
 	        		if(this.objectAliasAllowedStore.getAt(0) === undefined ? true : this.objectAliasAllowedStore.getAt(0).data.countResultSet == 0 ? true : false) {
-						this.getComponent('applicationAlias').clearInvalid();
+	        			textfield.clearInvalid();
 		    			// data changed - activate save button	
 		    			// activateButtonSaveApplication();
 						this.ownerCt.fireEvent('ciChange', this, textfield, newValue);//this
 					} else {
-						this.getComponent('applicationAlias').markInvalid();
+						textfield.markInvalid();
 		    			// data changed - but not valid deactivate save button
 		    			// deactivateButtonSaveApplication();
 						
@@ -591,8 +589,9 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		//this.updateAccessMode(data);
 //		var isApplication = AAM.getTableId() === AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION;
 		
-		this.getComponent('objectType').setValue(data.applicationCat1Id);
+//		this.getComponent('objectType').setValue(data.applicationCat1Id);
 		this.getComponent('applicationId').setValue(data.id);//applicationId
+		this.getComponent('applicationName').setValue(data.name);
 		this.getComponent('applicationAlias').setValue(data.alias);//applicationAlias
 		this.getComponent('applicationVersion').setValue(data.applicationVersion);
 		var cbLifecycleStatus = this.getComponent('lifecycleStatus');
@@ -798,9 +797,9 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		var field = this.getComponent('applicationId');
 		data.id = field.getValue();//applicationId
 
-//		field = this.getComponent('applicationName');
-//		if(!field.disabled)
-//			data.name = field.getValue();//applicationName
+		field = this.getComponent('applicationName');
+		if(!field.disabled)
+			data.name = field.getValue();//applicationName
 		
 
 		field = this.getComponent('applicationAlias');
@@ -926,7 +925,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	
 	updateLabels: function(labels) {
 //		this.setTitle(labels.specificsPanelTitle);
-//		this.setFieldLabel(this.getComponent('applicationName'), labels.applicationName);
+		this.setFieldLabel(this.getComponent('applicationName'), labels.name);
 		this.setFieldLabel(this.getComponent('applicationAlias'), labels.applicationAlias);
 		this.setFieldLabel(this.getComponent('barApplicationId'), labels.barApplicationId);
 		this.setFieldLabel(this.getComponent('rgBARrelevance'), labels.rgBARrelevance);
@@ -952,7 +951,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	},
 	
 	updateToolTips: function(toolTips) {
-//		this.setTooltipData(this.getComponent('applicationName').label,  toolTips.applicationName,  toolTips.applicationNameText);
+		this.setTooltipData(this.getComponent('applicationName').label,  toolTips.applicationName,  toolTips.applicationNameText);
 		this.setTooltipData(this.getComponent('applicationAlias').label,  toolTips.applicationAlias, toolTips.applicationAliasText);
 		this.setTooltipData(this.getComponent('rgBARrelevance').label,  toolTips.barApplicationRelevant, toolTips.barApplicationRelevantText);
 		this.setTooltipData(this.getComponent('barApplicationId').label,  toolTips.barApplicationId, toolTips.barApplicationIdText);

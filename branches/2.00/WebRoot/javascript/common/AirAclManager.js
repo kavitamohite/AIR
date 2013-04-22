@@ -149,17 +149,17 @@ AIR.AirAclManager = function() {
 				case 'combo':
 				case 'filterCombo':
 				case 'radiogroup':
-					if(item.label===undefined) {
+					if(item.label) {
+						item.label.dom.style.fontWeight = 'bold';
+						if(item.label.dom.className.indexOf('x-form-text-required') == -1)
+							item.label.dom.className += ' x-form-text-required';
+					} else {
 						var labelItem = Ext.getCmp('label' + item.id);
-						if(labelItem && labelItem.el) {//labelItem!==undefined
+						if(labelItem && labelItem.el) {
 							labelItem.el.dom.style.fontWeight = 'bold';
 							if(labelItem.el.dom.className.indexOf('x-form-text-required') == -1)
 								labelItem.el.dom.className += ' x-form-text-required';
-						}  
-					} else {
-						item.label.dom.style.fontWeight = 'bold';
-						if(item.label.dom.className.indexOf('x-form-text-required') == -1)
-							item.label.dom.className += ' x-form-text-required';					
+						}
 					}
 					break;
 				case 'listview'://grid
@@ -172,6 +172,8 @@ AIR.AirAclManager = function() {
 						this.setNecessity(item);
 					}
 					break;
+				case 'label':
+					this.setNecessity(item);
 			}
 		},
 
@@ -183,18 +185,18 @@ AIR.AirAclManager = function() {
 				case 'combo':
 				case 'filterCombo':
 				case 'radiogroup':
-					if(item.label===undefined) {
+					if(item.label) {
+						item.label.dom.style.fontWeight = 'normal';
+						if(item.label.dom.className.indexOf('x-form-text-required') == -1) {
+							item.label.dom.className += ' x-form-text-required';
+						}
+					} else {
 						var labelItem = Ext.getCmp('label' + item.id);
-						if(labelItem!==undefined) {
+						if(labelItem) {
 							labelItem.el.dom.style.fontWeight = 'normal';
 							if(labelItem.el.dom.className.indexOf('x-form-text-required')==-1) {
 								labelItem.el.dom.className += ' x-form-text-required';
 							}
-						} 
-					} else {
-						item.label.dom.style.fontWeight = 'normal';
-						if(item.label.dom.className.indexOf('x-form-text-required')==-1) {
-							item.label.dom.className += ' x-form-text-required';
 						}
 					}
 					break;
@@ -218,28 +220,33 @@ AIR.AirAclManager = function() {
 				case 'checkbox':
 				case 'combo':
 				case 'filterCombo':
-					if(item.label===undefined) {
+					if(item.label) {
+						item.label.dom.style.fontWeight = 'normal';
+						
+						item.label.removeClass('x-form-text-required');
+//						if(item.label.dom.className.indexOf('x-form-text-required')>-1) {
+//							var cls = item.label.dom.className.split(' ');
+//							item.label.dom.className = '';
+//							
+//							for(var x=0;x<cls.length;++x)
+//								if(cls[x]!=='x-form-text-required')
+//									item.label.dom.className += ' '+ cls[x];
+//						}
+					} else {
 						var labelItem = Ext.getCmp('label' + item.id);
 						if(labelItem) {
 							labelItem.el.dom.style.fontWeight = 'normal';
-							if(labelItem.el.dom.className.indexOf('x-form-text-required')>-1) {
-								var cls = labelItem.el.dom.className.split(' ');
-								labelItem.el.dom.className = '';
-								for(var x=0;x<cls.length;++x)
-									if(cls[x]!=='x-form-text-required')
-										labelItem.el.dom.className += ' '+ cls[x];
-								
-							}
-						}
-					} else {
-						item.label.dom.style.fontWeight = 'normal';
-						if(item.label.dom.className.indexOf('x-form-text-required')>-1) {
-							var cls = item.label.dom.className.split(' ');
-							item.label.dom.className = '';
 							
-							for(var x=0;x<cls.length;++x)
-								if(cls[x]!=='x-form-text-required')
-									item.label.dom.className += ' '+ cls[x];
+							labelItem.el.removeClass('x-form-text-required');
+//							if(labelItem.el.dom.className.indexOf('x-form-text-required')>-1) {
+//								var cls = labelItem.el.dom.className.split(' ');
+//								labelItem.el.dom.className = '';
+//								
+//								for(var x=0;x<cls.length;++x)
+//									if(cls[x]!=='x-form-text-required')
+//										labelItem.el.dom.className += ' '+ cls[x];
+//								
+//							}
 						}
 					}
 					break;
@@ -255,6 +262,17 @@ AIR.AirAclManager = function() {
 								fieldsetItem.el.dom.firstChild.firstChild.className += ' '+ cls[x];
 							
 						
+					}
+					break;
+				case 'label':
+//					this.setNecessity(item);
+					
+					if(item.el) {
+						item.el.dom.style.fontWeight = 'normal';
+						item.el.removeClass('x-form-text-required');
+					} else {
+						item.style.fontWeight = 'normal';
+						item.removeClass('x-form-text-required');
 					}
 					break;
 			}
@@ -293,56 +311,52 @@ AIR.AirAclManager = function() {
 			}
 		},
 		
-		setMandatory: function(item, mandatory) {
-			switch(mandatory) {
-				case 'mandatory': 
-//					 * Diese Attribute sollten im Wizard auftauchen. 
-//					 * Das Speichern eines Datensatzes, bei dem ein Attribut von diesem Typ leer ist, 
-//					 * ist nicht zulässig 
-//					 * Vorschlag zu Anzeige: Fett und mit * hinter dem Attributnamen
-					this.setLabelRequired(item);
-					item.vtype = 'required';
-					item.allowBlank = false;
-					break;
-				case 'required':
-//					 * needed: Diese Attribute sollen als 'Pflichtfeld' markiert werden. 
-//					 * Anders als required, kann man jedoch diese auch leer speichern. 
-//					 * In 'MyPlace' sind diese dann zu einem späteren Zeitpunkt (nicht Bestandteil diese RfCs) als to-do aufzuführen.
-//						Vorschlag zu Anzeige: mit * hinter dem Attributnamen
-					this.setLabelNeeded(item);
-					item.vtype = null;
-					item.allowBlank = true;
-					break;
-				/*case 'optional':
-//					 * optional: Diese Attribute sind nicht hervorzuheben. 
-//					 * Sie können leer gespeichert werden.
-					this.setLabelDefault(item);
-					item.vtype = null;
-					item.allowBlank = true;
-					break;
-				case 'by reference':
-//					 * by reference: Felder sind nicht editierbar. 
-//					 * Deren Inhalt ergibt sich in Abhängigkeit von einem anderen Attribut.
-//					 * (z.B. Primary Function wird in Abhängigkeit der Category gesetzt)
-					this.setLabelDefault(item);
-					item.vtype = null;
-					item.allowBlank = true;
-					item.setDisabled(true);
-					break;
-				case 'dependent on other':
-//					 * dependent on other: Pflichtfeld (needed), falls ein Attribut einen bestimmten Wert hat. 
-//					 * Programmintern abzubilden. 
-//					 * (z.B. ITSecGroup oder Link sind Pflichtfelder (needed), 
-//					 * wenn relevanceGR1435 oder relevanceGR1920 gesetzt sind)
-					this.setLabelDefault(item);
-					item.vtype = null;
-					item.allowBlank = true;
-					break;
-				default: 
-					this.setLabelDefault(item);
-					item.vtype = null;
-					item.allowBlank = true;
-					break;*/
+		setMandatory: function(item, aclItem, data) {//mandatory
+			if(this.isCiTypeField(data, item, aclItem)) {
+				switch(aclItem.data.Mandatory) {//mandatory
+					case 'mandatory':
+						this.setLabelRequired(item);
+						item.vtype = 'required';
+						item.allowBlank = false;
+						break;
+					case 'required':
+						this.setLabelNeeded(item);
+						item.vtype = null;
+						item.allowBlank = true;
+						break;
+					/*case 'optional':
+	//					 * optional: Diese Attribute sind nicht hervorzuheben. 
+	//					 * Sie können leer gespeichert werden.
+						this.setLabelDefault(item);
+						item.vtype = null;
+						item.allowBlank = true;
+						break;
+					case 'by reference':
+	//					 * by reference: Felder sind nicht editierbar. 
+	//					 * Deren Inhalt ergibt sich in Abhängigkeit von einem anderen Attribut.
+	//					 * (z.B. Primary Function wird in Abhängigkeit der Category gesetzt)
+						this.setLabelDefault(item);
+						item.vtype = null;
+						item.allowBlank = true;
+						item.setDisabled(true);
+						break;
+					case 'dependent on other':
+	//					 * dependent on other: Pflichtfeld (needed), falls ein Attribut einen bestimmten Wert hat. 
+	//					 * Programmintern abzubilden. 
+	//					 * (z.B. ITSecGroup oder Link sind Pflichtfelder (needed), 
+	//					 * wenn relevanceGR1435 oder relevanceGR1920 gesetzt sind)
+						this.setLabelDefault(item);
+						item.vtype = null;
+						item.allowBlank = true;
+						break;
+					default: 
+						this.setLabelDefault(item);
+						item.vtype = null;
+						item.allowBlank = true;
+						break;*/
+				}
+			} else {
+				this.setLabelDefault(item);
 			}
 		},
 		
@@ -357,7 +371,7 @@ AIR.AirAclManager = function() {
 			var appDetail = AAM.getAppDetail();//applicationDetailStore.data.items[0].data;//AIR.ApplicationManager.getAppDetail();(#3)
 			var insertSource = appDetail.insertQuelle;
 			
-			var index = this.aclStore.find('id', item.id);
+			var index = this.aclStore.findExact('id', item.id);
 			var editableIfSource = this.aclStore.getAt(index).get('EditableIfSource');
 			if(app_interfacename === insertSource || editableIfSource.indexOf(insertSource) > -1)
 				return true;
@@ -378,7 +392,7 @@ AIR.AirAclManager = function() {
 			var userOperational = appDetail.relevanceOperational;
 			var userStrategic = appDetail.relevanceStrategic;
 			
-			var index = this.aclStore.find('id', item.id);
+			var index = this.aclStore.findExact('id', item.id);
 			if(index > -1) {
 				rec = this.aclStore.getAt(index);
 			
@@ -409,7 +423,7 @@ AIR.AirAclManager = function() {
 				
 				this.setFormElementEnable(item, true);//hasEditRights
 			} else {
-				var index = this.aclStore.find('id', item.id);
+				var index = this.aclStore.findExact('id', item.id);
 				var rolesAllowed = this.aclStore.getAt(index).get('rolesAllowed');//restrictionLevel
 				
 				if(rolesAllowed) {
@@ -595,7 +609,7 @@ AIR.AirAclManager = function() {
 		
 		setAccessMode: function(uiElement, appDetail) {
 			//var accessMode = this.aclStore.getById(uiElement.getId());//.get('Mandatory');
-			var index = this.aclStore.find('id', uiElement.id);
+			var index = this.aclStore.findExact('id', uiElement.id);
 			var accessMode = this.aclStore.getAt(index);//.get('Mandatory');
 			
 			this.setEditable(uiElement);//editableIfSource and isAdmin check
@@ -608,7 +622,7 @@ AIR.AirAclManager = function() {
 				//var necessity = this.aclStore.getAt(index).get('Mandatory');
 				
 				
-				this.setMandatory(uiElement, accessMode.data.Mandatory);			
+				this.setMandatory(uiElement, accessMode, appDetail);//accessMode.data.Mandatory ohne appDetail
 				this.setAttributeProperty(
 					uiElement, 
 					accessMode.data.attributeType, 
@@ -623,7 +637,7 @@ AIR.AirAclManager = function() {
 		//===================================================================================================================
 		setNecessity: function(item) {
 			var xtype = item.getXType();
-			var index = this.aclStore.find('id', item.id);
+			var index = this.aclStore.findExact('id', item.id);
 			var necessity = this.aclStore.getAt(index).get('Mandatory');
 			
 			switch(xtype) {
@@ -644,11 +658,11 @@ AIR.AirAclManager = function() {
 		
 		setNecessityInternal: function(labelEl, necessity) {
 			switch(necessity) {
-				case 'mandatory': 
+				case 'mandatory':
 					labelEl.dom.style.fontWeight = 'bold';
 //					labelEl.addClass('x-form-text-required');
 //					break;
-				case 'required': 
+				case 'required':
 					labelEl.addClass('x-form-text-required');
 					break;
 			}
