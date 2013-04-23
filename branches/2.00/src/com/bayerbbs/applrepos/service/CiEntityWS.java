@@ -177,15 +177,20 @@ public class CiEntityWS {
 				return schrankDTO;*/
 			
 			CiLokationsKette lokationsKette = SchrankHbn.findLokationsKetteById(input.getCiId());
+			Building building = BuildingHbn.findById(lokationsKette.getGebaeudeId());
 			
 			//wenn noch alle Räume irgendwie auf die GUI sollen
 //			Set<Room> rooms = buildingArea.getRooms();
 			schrankDTO.setSeverityLevelId(schrank.getSeverityLevelId());
 			schrankDTO.setBusinessEssentialId(schrank.getBusinessEssentialId());
-			schrankDTO.setTableId(AirKonstanten.TABLE_ID_POSITION);
 			
 			setCiBaseData(schrankDTO, schrank);
 			schrankDTO.setCiLokationsKette(lokationsKette);
+			schrankDTO.setStreet(building.getStreet());
+			schrankDTO.setStreetNumber(building.getStreetNumber());
+			schrankDTO.setPostalCode(building.getPostalCode());
+			schrankDTO.setLocation(building.getLocation());
+			schrankDTO.setTableId(AirKonstanten.TABLE_ID_POSITION);
 			
 			//Standard Zugriffsrechte setzen.
 			AccessRightChecker checker = new AccessRightChecker();
@@ -236,16 +241,20 @@ public class CiEntityWS {
 		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 			BuildingArea buildingArea = BuildingHbn.findById(BuildingArea.class, input.getCiId());//BuildingHbn.findBuildingAreaById(detailInput.getCiId());
 			CiLokationsKette lokationsKette = BuildingHbn.findLokationsKetteByAreaId(input.getCiId());
-
+			Building building = BuildingHbn.findById(lokationsKette.getGebaeudeId());
 			
 			//wenn noch alle Räume irgendwie auf die GUI sollen
 //			Set<Room> rooms = buildingArea.getRooms();
-			buildingAreaDTO.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
 			
 			setCiBaseData(buildingAreaDTO, buildingArea);
 			buildingAreaDTO.setCiLokationsKette(lokationsKette);
 			
-			
+			buildingAreaDTO.setStreet(building.getStreet());
+			buildingAreaDTO.setStreetNumber(building.getStreetNumber());
+			buildingAreaDTO.setPostalCode(building.getPostalCode());
+			buildingAreaDTO.setLocation(building.getLocation());
+			buildingAreaDTO.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
+
 			/*
 			Terrain terrain = buildingArea.getBuilding().getTerrain();
 			Set<Building> buildings = terrain.getBuildings();
@@ -455,7 +464,11 @@ public class CiEntityWS {
 		
 		ciBaseDTO.setItSecSbAvailabilityId(ciBase.getItSecSbAvailability());
 		ciBaseDTO.setItSecSbAvailabilityTxt(ciBase.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription
-				  
+		ciBaseDTO.setItSecSbIntegrityId(ciBase.getItSecSbIntegrityId());
+		ciBaseDTO.setItSecSbIntegrityTxt(ciBase.getItSecSbIntegrityTxt());
+		ciBaseDTO.setItSecSbConfidentialityId(ciBase.getItSecSbConfidentialityId());
+		ciBaseDTO.setItSecSbConfidentialityTxt(ciBase.getItSecSbConfidentialityTxt());
+
 		
 		ciBaseDTO.setItset(ciBase.getItset());
 		ciBaseDTO.setTemplate(ciBase.getTemplate());

@@ -41,6 +41,11 @@ public class BuildingWS {
 		buildingDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
 //		buildingDTO.setClassInformationId(input.getClassInformationId());
 //		buildingDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		buildingDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
+		buildingDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
+		buildingDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
+		buildingDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
+		
 		
 		//Compliance
 		buildingDTO.setItset(input.getItset());
@@ -86,6 +91,11 @@ public class BuildingWS {
 //		buildingAreaDTO.setItSecSbAvailabilityDescription(input.getItSecSbAvailabilityDescription());
 //		buildingAreaDTO.setClassInformationId(input.getClassInformationId());
 //		buildingAreaDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		buildingAreaDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
+		buildingAreaDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
+		buildingAreaDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
+		buildingAreaDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
+		
 		
 		//Compliance
 		buildingAreaDTO.setItset(input.getItset());

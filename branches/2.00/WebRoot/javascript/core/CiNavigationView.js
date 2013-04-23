@@ -275,13 +275,14 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					break;
 			}
 			
+			/*
 //			AAM.updateCookie({ navigation: link.getId() });
 			AAM.updateCookie({
 				navigation: link.getId(),//viewId,
 				ciId: AAM.getCiId(),
 				tableId: AAM.getTableId(),
 				ciSubTypeId: AAM.getCiSubTypeId()
-			});
+			});*/
 			
 //			AIR.AirHistoryManager.add(link);
 			

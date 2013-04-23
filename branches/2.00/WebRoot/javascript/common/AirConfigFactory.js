@@ -75,6 +75,10 @@ AIR.AirConfigFactory = function() {
 			var buildingAreaCiFields = this.getLocationCiFields();
 			
 			buildingAreaCiFields.push('buildingData');
+			buildingAreaCiFields.push('street');
+			buildingAreaCiFields.push('streetNumber');
+			buildingAreaCiFields.push('location');
+			buildingAreaCiFields.push('postalCode');
 			
 			return Ext.data.Record.create(buildingAreaCiFields);
 		},
@@ -84,6 +88,10 @@ AIR.AirConfigFactory = function() {
 			
 			schrankCiFields.push('severityLevelId');
 			schrankCiFields.push('businessEssentialId');
+			schrankCiFields.push('street');
+			schrankCiFields.push('streetNumber');
+			schrankCiFields.push('location');
+			schrankCiFields.push('postalCode');
 			
 			return Ext.data.Record.create(schrankCiFields);
 		},
@@ -156,7 +164,8 @@ AIR.AirConfigFactory = function() {
 			var baseCiFields = [{
 				name: 'id', type: 'int'
 			}, 'name', 'alias', 'relevanceOperational', 'ciOwner', 'ciOwnerHidden', 'ciOwnerDelegate', 'ciOwnerDelegateHidden', 'insertQuelle', 'insertTimestamp', 'insertUser', 
-			   'updateQuelle', 'updateTimestamp', 'updateUser', 'deleteQuelle', 'deleteTimestamp', 'deleteUser', 'itSecSbAvailabilityId', 'itSecSbAvailabilityDescription',
+			   'updateQuelle', 'updateTimestamp', 'updateUser', 'deleteQuelle', 'deleteTimestamp', 'deleteUser', 'itSecSbAvailabilityId', 'itSecSbAvailabilityTxt',
+			   'itSecSbIntegrityId', 'itSecSbIntegrityTxt', 'itSecSbConfidentialityId', 'itSecSbConfidentialityTxt',
 			   'slaId', 'serviceContractId', 'itset', 'template', 'itsecGroupId', 'refId', 'relevanceGR1435', 'relevanceGR1920',
 			   
 			   'ciOwnerAcl', 'ciOwnerDelegateAcl', 'relevanceGR1435Acl', 'relevanceGR1920Acl', 'gxpFlag', 'gxpFlagId', 'gxpFlagIdAcl',

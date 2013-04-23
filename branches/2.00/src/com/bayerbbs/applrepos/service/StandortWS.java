@@ -35,6 +35,10 @@ public class StandortWS {
 		standortDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
 //		standortDTO.setClassInformationId(input.getClassInformationId());
 //		standortDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		standortDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
+		standortDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
+		standortDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
+		standortDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
 		
 		//Compliance
 		standortDTO.setItset(input.getItset());

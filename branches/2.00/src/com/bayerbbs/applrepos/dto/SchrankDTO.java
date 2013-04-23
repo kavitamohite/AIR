@@ -9,6 +9,11 @@ public class SchrankDTO extends LocationDTO {
 	private Long severityLevelId;
 	private Long businessEssentialId;
 	private Long roomId;
+	
+	private String street;
+	private String streetNumber;
+	private String postalCode;
+	private String location;
 
 	public SchrankDTO() {
 		setTableId(AirKonstanten.TABLE_ID_POSITION);
@@ -44,5 +49,36 @@ public class SchrankDTO extends LocationDTO {
 	}
 	public void setSeverityLevelIdAcl(String severityLevelIdAcl) {
 		this.severityLevelIdAcl = severityLevelIdAcl;
+	}
+	
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	
+	public String getStreetNumber() {
+		return streetNumber;
+	}
+	public void setStreetNumber(String streetNumber) {
+		this.streetNumber = streetNumber;
+	}
+
+	
+	public String getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

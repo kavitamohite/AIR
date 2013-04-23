@@ -40,6 +40,10 @@ public class RoomWS {
 		roomDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
 //		roomDTO.setClassInformationId(input.getClassInformationId());
 //		roomDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		roomDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
+		roomDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
+		roomDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
+		roomDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
 		
 		//Compliance
 		roomDTO.setItset(input.getItset());

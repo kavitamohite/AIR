@@ -1010,7 +1010,10 @@ AIR.AirStoreFactory = function() {
 					{name: 'protectionClassInformation'},
 					{name: 'protectionClassInformationExplanation'},
 					{name: 'protectionApplicationProtection'},
-					
+					{name: 'itSecSbIntegrityId'},
+					{name: 'itSecSbIntegrityDescription'},
+					{name: 'itSecSbConfidentialityId'},
+					{name: 'itSecSbConfidentialityDescription'},
 			        
 					// compliance
 					{name: 'compliancePanelTitle'},

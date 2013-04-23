@@ -231,7 +231,6 @@ public class BaseHbn {
 		}
 		
 		
-		
 		if (null != ciDTO.getItSecSbAvailabilityId()) {
 			if (-1 == ciDTO.getItSecSbAvailabilityId()) {
 				ci.setItSecSbAvailability(null);
@@ -245,12 +244,36 @@ public class BaseHbn {
 		}
 		
 		
-//		ci.setTemplate(ciDTO.getTemplate());
-		
-		if (isCiCreate && null == ciDTO.getTemplate()) {
-			ciDTO.setTemplate(new Long (0)); // no template
+		if (null != ciDTO.getItSecSbIntegrityId()) {
+			if (-1 == ciDTO.getItSecSbIntegrityId()) {
+				ci.setItSecSbIntegrityId(null);
+			}
+			else if (0 != ciDTO.getItSecSbIntegrityId().longValue()) {
+				ci.setItSecSbIntegrityId(ciDTO.getItSecSbIntegrityId());
+			}
+		}
+		if (null != ciDTO.getItSecSbIntegrityTxt()) {
+			ci.setItSecSbIntegrityTxt(ciDTO.getItSecSbIntegrityTxt());
 		}
 		
+		
+		if (null != ciDTO.getItSecSbConfidentialityId()) {
+			if (-1 == ciDTO.getItSecSbConfidentialityId()) {
+				ci.setItSecSbConfidentialityId(null);
+			}
+			else if (0 != ciDTO.getItSecSbConfidentialityId().longValue()) {
+				ci.setItSecSbConfidentialityId(ciDTO.getItSecSbConfidentialityId());
+			}
+		}
+		if (null != ciDTO.getItSecSbConfidentialityTxt()) {
+			ci.setItSecSbConfidentialityTxt(ciDTO.getItSecSbConfidentialityTxt());
+		}
+		
+
+		
+		if (isCiCreate && null == ciDTO.getTemplate()) {
+			ciDTO.setTemplate(new Long(0)); // no template
+		}
 		if (null != ciDTO.getTemplate()) {
 			if (-1 == ciDTO.getTemplate()) {
 				ci.setTemplate(null);

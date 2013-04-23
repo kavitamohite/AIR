@@ -115,7 +115,7 @@ public class BusinessEssentialHbn {
 		List<BusinessEssentialDTO> listResult = new ArrayList<BusinessEssentialDTO>();
 		String where = "";
 		if (usage=="Business Essential") {
-			where = "h.usage = 'ITSCM' and h.beCode in (0,1,2,3)";//neu wegen eins application CI loading bugs: 2 dazugenommen (22042013)
+			where = "h.usage = 'ITSCM' and h.beCode in (0,1,2,3)";//neu wegen eins application CI loading bugs: 2 dazugenommen (22042013): Z.B. Application P69M000C000
 		} else if (usage=="Severity Level") {
 			where = "h.usage = 'non-ITSCM'";
 		} else {

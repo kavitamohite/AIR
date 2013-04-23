@@ -28,6 +28,11 @@ public class SchrankWS {
 		schrankDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
 //		schrankDTO.setClassInformationId(input.getClassInformationId());
 //		schrankDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		schrankDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
+		schrankDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
+		schrankDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
+		schrankDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
+		
 		
 		schrankDTO.setItset(input.getItset());
 		schrankDTO.setTemplate(input.getTemplate());

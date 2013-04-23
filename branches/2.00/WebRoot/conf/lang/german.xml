@@ -218,6 +218,11 @@
 			<protectionClassInformationExplanation>Erklärung</protectionClassInformationExplanation>
 			<protectionApplicationProtection>Schutzklasse</protectionApplicationProtection>
 			
+			<itSecSbIntegrityId>Integrität</itSecSbIntegrityId>
+			<itSecSbIntegrityDescription>Erklärung</itSecSbIntegrityDescription>
+			<itSecSbConfidentialityId>Vertraulichkeit</itSecSbConfidentialityId>
+			<itSecSbConfidentialityDescription>Erklärung</itSecSbConfidentialityDescription>
+			
 		<compliancePanelTitle>Compliance</compliancePanelTitle>
 			<complianceBYTSEC>Integriert</complianceBYTSEC>
 			<complianceNonBYTSEC>Extern</complianceNonBYTSEC>

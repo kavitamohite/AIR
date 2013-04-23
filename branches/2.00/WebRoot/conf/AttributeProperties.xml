@@ -259,7 +259,20 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	<Identifier>
-		<id>cbBuilding</id>
+		<id>cbBuilding</id><!-- cbBuilding -->
+		<ciTypeId>88</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+<!--		<Mandatory>optional</Mandatory>-->
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
+		<id>lBuilding</id><!-- cbBuilding -->
 		<ciTypeId>88</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
 <!--		<Mandatory>optional</Mandatory>-->
@@ -310,7 +323,9 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
-	<!--<Identifier>
+	
+	<!--
+	<Identifier>
 		<id>tfStreet</id>
 		<Mandatory>mandatory</Mandatory>
 		<ciTypeId>4</ciTypeId>
@@ -347,7 +362,7 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	<Identifier>
-		<id>tfPostalCode</id>
+		<id>tfLocation</id>
 		<Mandatory>mandatory</Mandatory>
 		<ciTypeId>4</ciTypeId>
 		<Relevance>operational</Relevance>
@@ -910,6 +925,7 @@
 	<!-- Protection -->
 	<Identifier>
 		<id>protectionAvailability</id>
+		<ciTypeId>1,2,3</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -919,9 +935,9 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
-
 	<Identifier>
 		<id>protectionAvailabilityDescription</id>
+		<ciTypeId>1,2,3</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -931,6 +947,56 @@
 		<attributeLength>1020</attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+
+	<Identifier>
+		<id>protectionIntegrity</id>
+		<ciTypeId>1,3,13</ciTypeId>
+		<Mandatory>required</Mandatory>
+		<Relevance>strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>AKZ,ANT,APERTURE,DSS,MSSQL,DBVS,ERA,BARDO,BBSam,BKV,BSHARP,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,OLA,QIP,SAP,SDB,SIEBEL,Software,COMMAND,BVS,NAAC,FW,SNS,VCenter,SHAREPOINT,APAC,HPED,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
+		<id>protectionIntegrityDescription</id>
+		<ciTypeId>1,13</ciTypeId>
+		<Mandatory>required</Mandatory>
+		<Relevance>strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>AKZ,ANT,APERTURE,DSS,MSSQL,DBVS,ERA,BARDO,BBSam,BKV,BSHARP,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,OLA,QIP,SAP,SDB,SIEBEL,Software,COMMAND,BVS,NAAC,FW,SNS,VCenter,SHAREPOINT,APAC,HPED,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType>Text</attributeType>
+		<attributeLength>1020</attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
+		<id>protectionConfidentiality</id>
+		<ciTypeId>1,3,13</ciTypeId>
+		<Mandatory>required</Mandatory>
+		<Relevance>strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>AKZ,ANT,APERTURE,DSS,MSSQL,DBVS,ERA,BARDO,BBSam,BKV,BSHARP,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,OLA,QIP,SAP,SDB,SIEBEL,Software,COMMAND,BVS,NAAC,FW,SNS,VCenter,SHAREPOINT,APAC,HPED,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
+		<id>protectionConfidentialityDescription</id>
+		<ciTypeId>1,3,13</ciTypeId>
+		<Mandatory>required</Mandatory>
+		<Relevance>strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>AKZ,ANT,APERTURE,DSS,MSSQL,DBVS,ERA,BARDO,BBSam,BKV,BSHARP,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,OLA,QIP,SAP,SDB,SIEBEL,Software,COMMAND,BVS,NAAC,FW,SNS,VCenter,SHAREPOINT,APAC,HPED,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType>Text</attributeType>
+		<attributeLength>1020</attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	
 
 	<Identifier>
 		<id>protectionClassInformation</id>

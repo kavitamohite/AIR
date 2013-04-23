@@ -34,6 +34,10 @@ public class TerrainWS {
 		terrainDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
 //		terrainDTO.setClassInformationId(input.getClassInformationId());
 //		terrainDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		terrainDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
+		terrainDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
+		terrainDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
+		terrainDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
 		
 		//Compliance
 		terrainDTO.setItset(input.getItset());
