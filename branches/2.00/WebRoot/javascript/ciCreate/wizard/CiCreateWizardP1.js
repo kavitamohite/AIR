@@ -36,7 +36,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		        msgTarget: 'under',
 		        width: 250,
 		        
-			    store: AIR.AirStoreManager.createLinkCiTypeListStore()//AIR.AirStoreManager.getStoreByName('ciTypeListStore')//AIR.AirStoreManager.getStoreByName('applicationCat1ListStore')
+			    store: AIR.AirStoreFactory.createLinkCiTypeListStore()//AIR.AirStoreManager.getStoreByName('ciTypeListStore')//AIR.AirStoreManager.getStoreByName('applicationCat1ListStore')
 		    },{
 				xtype: 'filterCombo',
 				id: 'cbAppCat2W',

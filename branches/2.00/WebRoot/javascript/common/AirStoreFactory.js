@@ -3933,7 +3933,7 @@ AIR.AirStoreFactory = function() {
 		    	
 		      	reader: itsecMassnahmenReader,
 		      	
-		      	groupField: 'statusWert'//'statusWert' statusWertDisplayField
+		      	groupField: statusWertDisplayField//'statusWert' statusWertDisplayField
 	//	      	sortInfo: { field: statusWertDisplayField, direction: "ASC" }
 		    });
 		    

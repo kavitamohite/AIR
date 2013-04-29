@@ -146,7 +146,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							menuDisabled: true
 						},{
 							header: 'Implemented',
-							dataIndex: 'statusWert',//'statusWert', this.statusWertDisplayField
+							dataIndex: this.statusWertDisplayField,//'statusWert', this.statusWertDisplayField
 							width: 100,
 							
 							hidden: true
@@ -1471,7 +1471,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var options = { compliantStatusClearInvalid: true };
 		this.onMassnahmeChange(options);
 		
-		this.updateMassnahmenTable(status, record.data[this.statusWertDisplayField]);//record.data.statusWert
+		this.updateMassnahmenTable(status, record.data[this.statusWertDisplayField]);//this.statusWertDisplayField record.data.statusWert
 //		this.onMassnahmeChange();
 		
 		
@@ -1499,7 +1499,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	updateMassnahmenTable: function(status, statusWert, index) {
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 		
-		grid.getStore().getAt(this.previousSelection).data.statusWert = statusWert;
+		grid.getStore().getAt(this.previousSelection).data[this.statusWertDisplayField] = statusWert;//data.statusWert data.statusWertEn
 		var itsecMassnahmenStatusId = grid.getStore().getAt(this.previousSelection).data.itsecMassnahmenStatusId;
 		
 		this.ignoreInvalidMassnahme = true;
@@ -1507,7 +1507,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 //		grid.getStore().skipDataChanged = true;
 //		grid.getStore().clearGrouping();
-		grid.getStore().groupBy('statusWert', true);//'statusWert'  multisort in Z. 24730 löst mit this.fireEvent('datachanged', this); selectionModel's beforeselect event aus 
+		grid.getStore().groupBy(this.statusWertDisplayField, true);//'statusWert'  multisort in Z. 24730 löst mit this.fireEvent('datachanged', this); selectionModel's beforeselect event aus 
 //		grid.getView().refresh();
 //		grid.getStore().skipDataChanged = false;
 		
@@ -2413,7 +2413,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //				this.updateMassnahmenTable(this.previousLoadedMassnahme.statusId, cbCompliantStatus.getStore().getById(massnahme.statusId).get('statusWert'));
 //				delete this.previousLoadedMassnahme;
 //			} else {
-				this.updateMassnahmenTable(massnahme.statusId, cbCompliantStatus.getStore().getById(massnahme.statusId).get('statusWert'));//fire compliantStatus change/select event
+				this.updateMassnahmenTable(massnahme.statusId, cbCompliantStatus.getStore().getById(massnahme.statusId).get(this.statusWertDisplayField));//fire compliantStatus change/select event
 //			}
 		}
 		
