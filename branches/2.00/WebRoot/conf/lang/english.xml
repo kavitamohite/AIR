@@ -12,6 +12,7 @@
 		<OR>OR</OR>
 		<New>New</New>
 		<code>Code</code>
+		<nameEn>English</nameEn>
 		
 		<general_button_save>Save</general_button_save>
 		<general_button_back>Back</general_button_back>
@@ -533,6 +534,10 @@
 		<country>Country</country>
 		<streetAndNumber>Street / No.</streetAndNumber>
 		<postalCodeLocation>Postal Code / Location</postalCodeLocation>
+		<tfStreet>Street</tfStreet>
+		<tfStreetNumber>No.</tfStreetNumber>
+		<tfPostalCode>PostalCode</tfPostalCode>
+		<tfLocation>Location</tfLocation>
 		
 		<!-- CiSpecificsItItemView -->
 		<osGroup>Group</osGroup>

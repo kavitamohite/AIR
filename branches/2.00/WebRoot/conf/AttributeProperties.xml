@@ -33,6 +33,7 @@
 	<Identifier>
 		<id>applicationAlias</id>
 		<Mandatory>required</Mandatory>
+		<ciTypeId>2</ciTypeId>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -84,6 +85,7 @@
 	<Identifier>
 		<id>applicationCat2</id>
 		<Mandatory>required</Mandatory>
+		<ciTypeId>2</ciTypeId>
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -185,6 +187,7 @@
 	<Identifier>
 		<id>businessProcess</id>
 		<Mandatory>required</Mandatory>
+		<ciTypeId>2</ciTypeId>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -232,6 +235,18 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+	<Identifier>
+		<id>tfStandortNameEn</id>
+		<ciTypeId>12</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
 	
 	<Identifier>
 		<id>cbRoom</id>
@@ -261,8 +276,8 @@
 	<Identifier>
 		<id>cbBuilding</id><!-- cbBuilding -->
 		<ciTypeId>88</ciTypeId>
-		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
+<!--		<Mandatory>mandatory</Mandatory>-->
+		<Mandatory>optional</Mandatory>
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -324,7 +339,7 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	
-	<!--
+	<!---->
 	<Identifier>
 		<id>tfStreet</id>
 		<Mandatory>mandatory</Mandatory>
@@ -372,7 +387,7 @@
 		<attributeType></attributeType>
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
-	</Identifier>-->
+	</Identifier>
 	
 	<Identifier>
 		<id>lStreetAndNumber</id>
@@ -626,7 +641,7 @@
 	<Identifier>
 		<id>ciResponsible</id>
 <!--		<Mandatory>required</Mandatory>-->
-		<ciTypeId>1,3,4,12,13,30,88</ciTypeId>
+		<ciTypeId>1,3,13,88</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -640,7 +655,7 @@
 	<Identifier>
 		<id>ciSubResponsible</id>
 <!--		<Mandatory>optional</Mandatory>-->
-		<ciTypeId>1,3,4,12,13,30,88</ciTypeId>
+		<ciTypeId>1,3,13</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
@@ -834,6 +849,7 @@
 	<!-- Agreements -->
 	<Identifier>
 		<id>sla</id>
+		<ciTypeId>1,2</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID>serviceContract</DependencyID>
@@ -846,12 +862,8 @@
 
 	<Identifier>
 		<id>serviceContract</id>
-		
-		<!-- TEST
-		<ciTypeId>3</ciTypeId>
-		<Mandatory>mandatory</Mandatory>
-		 -->
-		<Mandatory>dependent</Mandatory>
+		<ciTypeId>1</ciTypeId>
+		<Mandatory>required</Mandatory><!-- dependent -->
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>APAC,HPED,VPCC,BSHARP,FW,SNS,VCenter,SHAREPOINT,SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -876,6 +888,7 @@
 	<Identifier>
 		<id>severityLevel</id>
 		<Mandatory>required</Mandatory>
+		<ciTypeId>2</ciTypeId>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>AKZ,ANT,SHAREPOINT,APAC,HPED,VPCC,BARDO,BBSam,BKV,BSHARP,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,OLA,QIP,SAP,SDB,SIEBEL,Software,DSS,DBVS,MSSQL,ERA,COMMAND,BVS,NAAC,FW,SNS,Vcenter,SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -888,6 +901,7 @@
 	<Identifier>
 		<id>businessEssential</id>
 		<Mandatory>required</Mandatory>
+		<ciTypeId>2</ciTypeId>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>AKZ,ANT,BARDO,VCenter,BBSam,BKV,BSHARP,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,OLA,QIP,SAP,SDB,SIEBEL,Software,DSS,DBVS,ERA,COMMAND,BVS,NAAC,FW,SNS,Software,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -925,7 +939,7 @@
 	<!-- Protection -->
 	<Identifier>
 		<id>protectionAvailability</id>
-		<ciTypeId>1,2,3</ciTypeId>
+		<ciTypeId>1,2,3,13</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -937,7 +951,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionAvailabilityDescription</id>
-		<ciTypeId>1,2,3</ciTypeId>
+		<ciTypeId>1,2,3,13</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -962,7 +976,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionIntegrityDescription</id>
-		<ciTypeId>1,13</ciTypeId>
+		<ciTypeId>1,3,13</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -1001,6 +1015,7 @@
 	<Identifier>
 		<id>protectionClassInformation</id>
 		<Mandatory>required</Mandatory>
+		<ciTypeId>2</ciTypeId>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -1087,6 +1102,7 @@
 	<Identifier>
 		<id>relevanceICS</id>
 		<Mandatory>required</Mandatory>
+		<ciTypeId>2</ciTypeId>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>AKZ,ANT,DBVS,MSSQL,SNS,BVS,ERA,FW,NAAC,VCenter,COMMAND,SHAREPOINT,APAC,BARDO,BBSam,BKV,BSHARP,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,HPED,OLA,QIP,SAP,SDB,SIEBEL,Software,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -1490,6 +1506,7 @@
 	<Identifier>
 		<id>applicationUsingRegions</id>
 		<Mandatory>required</Mandatory>
+		<ciTypeId>2</ciTypeId>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -1513,6 +1530,7 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	
+	<!--
 	<Identifier>
 		<id>connections</id>
 		<Mandatory>required</Mandatory>
@@ -1535,7 +1553,7 @@
 		<attributeType></attributeType>
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
-	</Identifier>
+	</Identifier>-->
 
 
 	<!-- Documentation-->

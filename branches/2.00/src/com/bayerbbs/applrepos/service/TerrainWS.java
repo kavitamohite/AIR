@@ -54,6 +54,9 @@ public class TerrainWS {
 		terrainDTO.setGxpFlag(input.getGxpFlag());
 		terrainDTO.setGxpFlagId(input.getGxpFlag());
 		
+		terrainDTO.setDownStreamAdd(input.getDownStreamAdd());
+		terrainDTO.setDownStreamDelete(input.getDownStreamDelete());
+		
 		return terrainDTO;
 	}
 	

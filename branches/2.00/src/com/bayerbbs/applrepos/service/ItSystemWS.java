@@ -87,8 +87,12 @@ public class ItSystemWS {
 		itSystemDTO.setGpsccontactEscalationIndiv(input.getGpsccontactEscalationIndiv());
 		itSystemDTO.setGpsccontactResponsibleAtCustomerSide(input.getGpsccontactResponsibleAtCustomerSide());
 		itSystemDTO.setGpsccontactSystemResponsible(input.getGpsccontactSystemResponsible());
-		itSystemDTO.setGpsccontactImpactedBusiness(input.getGpsccontactImpactedBusiness()); 
+		itSystemDTO.setGpsccontactImpactedBusiness(input.getGpsccontactImpactedBusiness());
 		
+		itSystemDTO.setUpStreamAdd(input.getUpStreamAdd());
+		itSystemDTO.setUpStreamDelete(input.getUpStreamDelete());
+		itSystemDTO.setDownStreamAdd(input.getDownStreamAdd());
+		itSystemDTO.setDownStreamDelete(input.getDownStreamDelete());
 		
 		return itSystemDTO;
 	}

@@ -26,6 +26,7 @@ public class Standort extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	
 	private String standortCode;
+	private String nameEn;
 	
 	
 	@Column(name = "STANDORT_CODE")
@@ -74,4 +75,13 @@ public class Standort extends CiBase1 implements Serializable {
 	public void setLandId(Long landId) {
 		this.landId = landId;
 	}
+	
+	@Column(name = "SITE_NAME_EN")
+	public String getNameEn() {
+		return nameEn;
+	}
+	public void setNameEn(String nameEn) {
+		this.nameEn = nameEn;
+	}
+
 }

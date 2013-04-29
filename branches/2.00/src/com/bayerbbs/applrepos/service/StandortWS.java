@@ -16,6 +16,7 @@ public class StandortWS {
 		standortDTO.setId(input.getId());//für RoomHbn.saveRoom
 		standortDTO.setName(input.getName());//für RoomHbn.validateRoom
 		standortDTO.setStandortCode(input.getStandortCode());
+		standortDTO.setNameEn(input.getNameEn());
 		standortDTO.setLandId(input.getLandId());
 
 		
@@ -54,6 +55,9 @@ public class StandortWS {
 //		standortDTO.setRelevanzItsec(input.getRelevanzITSEC());
 		standortDTO.setGxpFlag(input.getGxpFlag());
 		standortDTO.setGxpFlagId(input.getGxpFlag());
+		
+		standortDTO.setDownStreamAdd(input.getDownStreamAdd());
+		standortDTO.setDownStreamDelete(input.getDownStreamDelete());
 		
 		return standortDTO;
 	}

@@ -44,6 +44,7 @@ AIR.AirConstants = {
 	USER_ROLE_AIR_INFRASTRUCTURE_LAYER: 'AIR Infrastructure Layer',
 	USER_ROLE_AIR_APPLICATION_MANAGER: 'AIR Application Manager',
 	USER_ROLE_AIR_ADMINISTRATOR: 'AIR Administrator',//AIR Administrator RFC 8231
+	USER_ROLE_AIR_MASTER_DATA_MAINTENANCE: 'AIR Master Data Maintenance',
 	USER_ROLE_DEVELOPER: 'AIR Developer',
 	
 	TABLE_ID_IT_SYSTEM: 1,
@@ -57,6 +58,10 @@ AIR.AirConstants = {
 	TABLE_ID_WAY: 37,
 	TABLE_ID_BUILDING_AREA: 88,
 	TABLE_ID_SERVICE: 123,
+	
+	CI_TYPE_CREATION_BY_ROLE: {
+		2: [ 'AIR Application Layer', 'AIR Default', 'AIR Master Data Maintenance' ]
+	},
 	
 	
 	APP_CAT1_APPLICATION: '5',//'Application',
@@ -113,6 +118,7 @@ AIR.AirConstants = {
 	INSERT_QUELLE_SHAREPOINT: 'SHAREPOINT',
 	UPSTREAM: 'Upstream',
 	DOWNSTREAM: 'Downstream',
+	UNKNOWN: 'unknown',
 	
 	SEARCH_TYPE_SEARCH: 'Search',
 	SEARCH_TYPE_ADV_SEARCH: 'Advanced Search',//Adv. Search
@@ -122,13 +128,13 @@ AIR.AirConstants = {
 	//commonvars.js Ersetzung
 	SEARCH_MODE_CONTAINS: 'CONTAINS',
 	
-	ROLE_AIR_APPLICATION_LAYER: 'AIR Application Layer',
-	ROLE_AIR_DEFAULT: 'AIR Default',
-	ROLE_AIR_INFRASTRUCTURE_LAYER: 'AIR Infrastructure Layer',
-	ROLE_AIR_APPLICATION_MANAGER: 'AIR Application Manager',
-	ROLE_AIR_ADMINISTRATOR: 'AIR Administrator',
-	ROLE_AIR_DEVELOPER: 'AIR Developer',
-	ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR: 'AIR BusinessEssential-Editor',
+//	ROLE_AIR_APPLICATION_LAYER: 'AIR Application Layer',
+//	ROLE_AIR_DEFAULT: 'AIR Default',
+//	ROLE_AIR_INFRASTRUCTURE_LAYER: 'AIR Infrastructure Layer',
+//	ROLE_AIR_APPLICATION_MANAGER: 'AIR Application Manager',
+//	ROLE_AIR_ADMINISTRATOR: 'AIR Administrator',
+//	ROLE_AIR_DEVELOPER: 'AIR Developer',
+//	ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR: 'AIR BusinessEssential-Editor',
 	
 	AIR_BG_COLOR: '#FFFFFF',//panelbgcolor
 	AIR_FONT_COLOR: '#085E8B',//fontColor

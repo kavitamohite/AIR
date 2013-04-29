@@ -266,7 +266,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			this.setPanelMessage(panelMsg);
 		}
 		
-		AIR.AirAclManager.setDraft(AIR.AirAclManager.isDraft());
+		AIR.AirAclManager.setDraft(AIR.AirAclManager.isDraft(options));//.tableId
 	},
 	
 	updateToolTips: function(toolTips) {
@@ -472,7 +472,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			
 			var task = new Ext.util.DelayedTask(function() {
-				AIR.AirAclManager.setDraft(AIR.AirAclManager.isDraft());
+				AIR.AirAclManager.setDraft(AIR.AirAclManager.isDraft(ciData));//ciData.tableId
 	//			AIR.AirAclManager.updateAcl();
 			}.createDelegate(this));
 			task.delay(1500);
@@ -492,7 +492,11 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			this.disableButtons();
 			
-			var panelMsg = ACM.getRequiredFields(ciData);
+			
+			var isUnkownLocationCI = AAM.isLocationCi(ciData.tableId) && ciData.name === AC.UNKNOWN;
+			var isRelevance = ciData.relevanceOperational == 'Y' || (ciData.relevanceStrategic && ciData.relevanceStrategic == 'Y');
+			
+			var panelMsg = isUnkownLocationCI || !isRelevance ? '' : ACM.getRequiredFields(ciData);
 			if(panelMsg.length > 0) {
 				this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
 			} else {
@@ -963,8 +967,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		return this.ciModified;
 	},
 	
-	onViewInitialized: function(childView) {//view, 
-		
+	onViewInitialized: function(childView) {//view,
 		var options = AAM.getAppDetail();
 		
 		var panelMsg = ACM.getRequiredFields(options);
@@ -981,7 +984,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			this.disableButtons();
 		}.createDelegate(this));
-		task.delay(1000);
+		task.delay(2000);// 1000
 	}
 	
 	//============================================================

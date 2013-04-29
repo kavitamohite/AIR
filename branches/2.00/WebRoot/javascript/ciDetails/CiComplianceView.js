@@ -911,12 +911,18 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				var regulationId = 'relevance' + regulation;
 				values[values.length] = data[regulationId] == 'Y' ? true : false;
 				
-				var exists = AIR.AirBusinessRules.existsItsecRegulationByCiType(data.tableId, regulation);
-				cbgRegulations.items.items[i].setVisible(exists);
+//				var exists = AIR.AirBusinessRules.existsItsecRegulationByCiType(data.tableId, regulation);
+//				cbgRegulations.items.items[i].setVisible(exists);
 			}
 			
 			cbgRegulations.setValue(values);
 			cbRelevanceGxp.setValue(data.gxpFlagId);
+		}
+		
+		for(var i = 0; i < cbgRegulations.items.items.length; i++) {
+			var regulation = cbgRegulations.items.items[i].boxLabel;
+			var exists = AIR.AirBusinessRules.existsItsecRegulationByCiType(data.tableId, regulation);
+			cbgRegulations.items.items[i].setVisible(exists);
 		}
 	},
 	

@@ -140,7 +140,7 @@ public class ApplicationEditParameterInput {
 	private String downStreamDelete;
 	
 	private Boolean forceOverride;
-	private long tableId;
+	private Integer tableId;
 	
 	public ApplicationEditParameterInput() {
 	}
@@ -883,10 +883,10 @@ public class ApplicationEditParameterInput {
 	}
 
 
-	public void setTableId(long tableId) {
+	public void setTableId(Integer tableId) {
 		this.tableId = tableId;
 	}
-	public long getTableId() {
+	public Integer getTableId() {
 		return tableId;
 	}
 }

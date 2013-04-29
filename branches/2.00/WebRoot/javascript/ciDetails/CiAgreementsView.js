@@ -373,7 +373,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				//cbBusinessEssential.disable();
 				Util.disableCombo(cbBusinessEssential);
 				
-				AIR.AirAclManager.setMandatory(cbBusinessEssential, 'optional');
+//				AIR.AirAclManager.setMandatory(cbBusinessEssential, 'optional');
+				AIR.AirAclManager.setNecessityInternal(cbBusinessEssential.label, 'optional');
 			}
 		}
 	},

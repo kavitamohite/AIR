@@ -238,7 +238,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    		xtype: 'container',
 			    		height: 5
 			    	}, {
-			    		xtype: 'filterCombo',//combo
+			    		xtype: 'filterCombo',//combo filterCombo
 			    		id: 'cbConnectionsObjectType',
 			            store: AIR.AirStoreFactory.createCiTypeListStore(),//AIR.AirStoreManager.getStoreByName('ciTypeListStore'),// applicationCat1ListStore,
 			    	    
@@ -320,12 +320,13 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			{ name: 'dwhEntityId' }	
 		]);
 		
+		
 		var cbConnectionsObjectType = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('cbConnectionsObjectType');
 		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
 		var records = store.getRange();
 		for(var i = 0; i < records.length; i++)
-			if(records[i].get('ciTypeId') === AC.TABLE_ID_IT_SYSTEM || 
-			   records[i].get('ciTypeId') === AC.TABLE_ID_APPLICATION)
+//			if(records[i].get('ciTypeId') === AC.TABLE_ID_IT_SYSTEM || 
+//			   records[i].get('ciTypeId') === AC.TABLE_ID_APPLICATION)
 				cbConnectionsObjectType.getStore().add(records[i]);
 	},
 	
@@ -453,11 +454,16 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		newCiRecord.id = newCiData.id;
 		newCiRecord.dwhEntityId = newCiData.dwhEntityId;
 		
+
 		
 		var exists = this.isAlreadyUpDownStream(newCiRecord.data.dwhEntityId);//newCiRecord.data.id listView.getStore().getById(newCiRecord.data.id);
 		var appDetail = AIR.AirApplicationManager.getAppDetail();//applicationDetailStore.data.items[0].data;//
-		var ciName = appDetail.applicationName;
-		var ciType = appDetail.applicationCat1Txt;
+		
+		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+		var r = Util.getStoreRecord(store, 'ciTypeId', parseInt(appDetail.tableId));
+		
+		var ciName = appDetail.name;
+		var ciType = r.get('text');//appDetail.applicationCat1Txt;
 		var newCiName = newCiRecord.data.ciName;
 		var newCiType = newCiRecord.data.ciType;
 		
@@ -603,7 +609,62 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		this.resetToolbar();
 		
+		var cbConnectionsObjectType = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('cbConnectionsObjectType');
+		
+//		cbConnectionsObjectType.reset();
+		this.filterCiTypes(cbConnectionsObjectType, data);
+		
+		var r = cbConnectionsObjectType.getStore().getAt(0);
+		var v = r ? r.get('text') : '';
+		cbConnectionsObjectType.setValue(v);
+		
 		AIR.AirAclManager.setAccessMode(this.getComponent('p1').getComponent('p11').getComponent('bEditConnections'), data);
+	},
+	
+	filterCiTypes: function(cbConnectionsObjectType, data) {
+		/* Variante 3 */
+		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+		var r = Util.getStoreRecord(store, 'ciTypeId', parseInt(data.tableId));//tableId
+		var ciTypeSource = r.get('text');
+		var records = store.getRange();
+		
+		cbConnectionsObjectType.getStore().removeAll();
+		for(var i = 0; i < records.length; i++) {
+			var ciTypeDest = records[i].get('text');
+			if(AAM.isConnectionCiTypeAllowed(ciTypeSource, ciTypeDest))
+				cbConnectionsObjectType.getStore().add(records[i]);
+		}
+		
+		// Variante 1 (die beste) und 2 funktionieren/greifen erst ab zweitem CI Neuladen und Combobox Bedienung/expand.
+		// Grund unbekannt. Daher unschöne aber sichere Variante 3.
+		
+		/* Variante 2
+		var r = Util.getComboRecord(cbConnectionsObjectType, 'ciTypeId', parseInt(data.tableId));//tableId
+		var ciTypeSource = r.get('text');
+		var records = cbConnectionsObjectType.getStore().getRange();
+		
+		
+		var matches = [];
+		for(var i = 0; i < records.length; i++) {
+			var ciTypeDest = records[i].get('text');
+			if(AAM.isConnectionCiTypeAllowed(ciTypeSource, ciTypeDest))
+				matches.push(ciTypeDest);
+		}
+		var filterData = { text: matches };//matches[0]
+		cbConnectionsObjectType.filterByDataValueList(filterData);//filterByData
+		*/
+		
+		/* Variante 1
+		cbConnectionsObjectType.reset();
+		var r = Util.getComboRecord(cbConnectionsObjectType, 'ciTypeId', parseInt(data.tableId));
+		var ciTypeSource = r.get('text');
+		
+		var filterFn = function(record) {
+			var ciTypeDest = record.get('text');
+			return AAM.isConnectionCiTypeAllowed(ciTypeSource, ciTypeDest);
+		};
+		
+		cbConnectionsObjectType.getStore().filterBy(filterFn);*/
 	},
 	
 //	onRowDoubleClick: function (grid, rowIndex, e) {
@@ -638,8 +699,10 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var tfConnectionsQuickSearch = pConnectionsCiSearchV.getComponent('tfConnectionsQuickSearch');
 		tfConnectionsQuickSearch.reset();
 		
-		var cbConnectionsObjectType = pConnectionsCiSearchV.getComponent('cbConnectionsObjectType');
-		cbConnectionsObjectType.reset();
+//		var cbConnectionsObjectType = pConnectionsCiSearchV.getComponent('cbConnectionsObjectType');
+//		cbConnectionsObjectType.reset();
+//		var data = { tableId: AAM.getTableId() };
+//		this.filterCiTypes(cbConnectionsObjectType, data);
 		
 		pConnectionsCiSearchV.setVisible(false);
 		var bEditConnections = this.getComponent('p1').getComponent('p11').getComponent('bEditConnections');
@@ -687,17 +750,17 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		lDownStreamConnections.setText(labels.CiConnectionsViewDownStreamConnections);
 		
 		var bEditConnections = this.getComponent('p1').getComponent('p11').getComponent('bEditConnections');
-		bEditConnections.setText(labels['CiConnectionsViewEditConnections']);
+		bEditConnections.setText(labels.CiConnectionsViewEditConnections);
 		
 		var bConnectionsSearch = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('bConnectionsSearch');
-		bConnectionsSearch.setText(labels['CiConnectionsViewSearch']);
+		bConnectionsSearch.setText(labels.CiConnectionsViewSearch);
 		
 		var cbConnectionsObjectType = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('cbConnectionsObjectType');
 		var tfConnectionsQuickSearch = this.getComponent('p1').getComponent('pConnectionsCiSearchV').getComponent('tfConnectionsQuickSearch');
 		
 				
-		cbConnectionsObjectType.el.up('.x-form-item', 10, true).child('.x-form-item-label').update(labels['CiConnectionsViewObjectType']);
-		tfConnectionsQuickSearch.el.up('.x-form-item', 10, true).child('.x-form-item-label').update(labels['CiConnectionsViewQuickSearch']);
+		cbConnectionsObjectType.el.up('.x-form-item', 10, true).child('.x-form-item-label').update(labels.CiConnectionsViewObjectType);
+		tfConnectionsQuickSearch.el.up('.x-form-item', 10, true).child('.x-form-item-label').update(labels.CiConnectionsViewQuickSearch);
 				
 		
 //		this.doLayout();//getComponent('p1').getComponent('p11'). bringt nichts für bEditConnections Größe
@@ -748,23 +811,25 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
     	var lvUpStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvUpStreamConnections');
         var raDeleteUpStreamConnection = lvUpStreamConnections.getColumnModel().getColumnById('raDeleteUpStreamConnectionColumn');
         
-        return this.getDeleteConnectionRenderer(value, cell, record, row, col, store, raDeleteUpStreamConnection);
+        return this.getDeleteConnectionRenderer(value, cell, record, row, col, store, raDeleteUpStreamConnection, AC.UPSTREAM);
 	},
 	
 	getDeleteDownStreamConnectionRenderer: function(value, cell, record, row, col, store) {
     	var lvDownStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvDownStreamConnections');
         var raDeleteDownStreamConnection = lvDownStreamConnections.getColumnModel().getColumnById('raDeleteDownStreamConnectionColumn');
         
-        return this.getDeleteConnectionRenderer(value, cell, record, row, col, store, raDeleteDownStreamConnection);
+        return this.getDeleteConnectionRenderer(value, cell, record, row, col, store, raDeleteDownStreamConnection, AC.DOWNSTREAM);
 	},
 	
-    getDeleteConnectionRenderer: function(value, cell, record, row, col, store, raDeleteConnection) {
-    	var appDetail = AIR.AirApplicationManager.getAppDetail();//applicationDetailStore.data.items[0].data;//AIR.AirApplicationManager.getAppDetail();
+    getDeleteConnectionRenderer: function(value, cell, record, row, col, store, raDeleteConnection, direction) {
+    	var data = AIR.AirApplicationManager.getAppDetail();//applicationDetailStore.data.items[0].data;//AIR.AirApplicationManager.getAppDetail();
     	
     	// TODO... bitte in eine globale Funktion auslagern.
     	var isAdmin = AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);//AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_MANAGER) || 
-		var isEditable = appDetail.relevanceStrategic == 'Y' || appDetail.relevanceOperational == 'Y' || isAdmin;
-    	
+		var isEditable = (data.relevanceStrategic == 'Y' || data.relevanceOperational == 'Y' || isAdmin);
+		
+		//location CI - upstream: nicht löschbar - downstream und name=unknown: nicht löschbar
+		isEditable = (direction === AC.UPSTREAM && data.tableId == AC.TABLE_ID_IT_SYSTEM || data.tableId == AC.TABLE_ID_APPLICATION) || (direction === AC.DOWNSTREAM && record.get('ciName') !== AC.UNKNOWN);// AAM.isLocationCi(data.tableId) && 
 		
         raDeleteConnection.tpl.html = '<div class="ux-row-action">';
         if(isEditable)

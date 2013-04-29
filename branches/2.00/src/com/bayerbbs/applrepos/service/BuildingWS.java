@@ -62,6 +62,9 @@ public class BuildingWS {
 		buildingDTO.setGxpFlag(input.getGxpFlag());
 		buildingDTO.setGxpFlagId(input.getGxpFlag());
 		
+		buildingDTO.setDownStreamAdd(input.getDownStreamAdd());
+		buildingDTO.setDownStreamDelete(input.getDownStreamDelete());
+		
 		return buildingDTO;
 	}
 	
@@ -111,6 +114,9 @@ public class BuildingWS {
 //		buildingAreaDTO.setRelevanzItsec(input.getRelevanzITSEC());
 		buildingAreaDTO.setGxpFlag(input.getGxpFlag());
 		buildingAreaDTO.setGxpFlagId(input.getGxpFlag());
+		
+		buildingAreaDTO.setDownStreamAdd(input.getDownStreamAdd());
+		buildingAreaDTO.setDownStreamDelete(input.getDownStreamDelete());
 		
 		return buildingAreaDTO;
 	}

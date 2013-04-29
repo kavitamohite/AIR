@@ -1360,6 +1360,7 @@ AIR.AirStoreFactory = function() {
 					{name: 'alias'},
 					{name: 'floor'},
 					{name: 'code'},
+					{name: 'nameEn'},
 					{name: 'room'},
 					{name: 'buildingArea'},
 					{name: 'building'},
@@ -1368,6 +1369,10 @@ AIR.AirStoreFactory = function() {
 					{name: 'country'},
 					{name: 'streetAndNumber'},
 					{name: 'postalCodeLocation'},
+					{name: 'tfStreet'},
+					{name: 'tfStreetNumber'},
+					{name: 'tfPostalCode'},
+					{name: 'tfLocation'},
 					
 					//CiSpecificsItItemView
 					{name: 'osGroup'},

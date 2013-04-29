@@ -601,6 +601,12 @@ public class ItSystemHbn extends BaseHbn {
 		
 		itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
 		itSystem.setCiSubTypeId(dto.getCiSubTypeId());
+		
+		if(dto.getUpStreamAdd() != null && dto.getUpStreamAdd().length() > 0 || dto.getUpStreamDelete() != null && dto.getUpStreamDelete().length() > 0)
+			CiEntitiesHbn.saveCiRelations(dto.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", cwid);
+		
+		if(dto.getDownStreamAdd() != null && dto.getDownStreamAdd().length() > 0 || dto.getDownStreamDelete() != null && dto.getDownStreamDelete().length() > 0)
+			CiEntitiesHbn.saveCiRelations(dto.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", cwid);
 	}
 
 

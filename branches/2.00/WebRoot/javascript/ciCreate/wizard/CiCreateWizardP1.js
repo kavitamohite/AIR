@@ -36,7 +36,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		        msgTarget: 'under',
 		        width: 250,
 		        
-			    store: AIR.AirStoreManager.getStoreByName('ciTypeListStore')//AIR.AirStoreManager.getStoreByName('applicationCat1ListStore')
+			    store: AIR.AirStoreManager.createLinkCiTypeListStore()//AIR.AirStoreManager.getStoreByName('ciTypeListStore')//AIR.AirStoreManager.getStoreByName('applicationCat1ListStore')
 		    },{
 				xtype: 'filterCombo',
 				id: 'cbAppCat2W',
@@ -94,6 +94,8 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbCiTypeW.on('select', this.onCiTypeSelect, this);
 //		cbCiTypeW.setValue(AC.APP_CAT1_APPLICATION);
 		
+		this.filterCiTypes(cbCiTypeW);
+		
 		var cbAppCat2W = this.getComponent('cbAppCat2W');
 		cbAppCat2W.on('select', this.onAppCat2Select, this);
 		cbAppCat2W.on('change', this.onAppCat2Change, this);
@@ -109,6 +111,16 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 //		this.objectNameAllowedStore = AIR.AirStoreFactory.getObjectNameAllowedStore();
 //		this.objectAliasAllowedStore = AIR.AirStoreFactory.getObjectAliasAllowedStore();
+	},
+	
+	filterCiTypes: function(cbCiTypeW) {
+		var x = AC.CI_TYPE_CREATION_BY_ROLE;
+
+		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+		var records = store.getRange();
+		for(var i = 0; i < records.length; i++)
+//			if()
+			cbCiTypeW.getStore().add(records[i]);
 	},
 	
 	onCiTypeSelect: function(combo, record, index) {

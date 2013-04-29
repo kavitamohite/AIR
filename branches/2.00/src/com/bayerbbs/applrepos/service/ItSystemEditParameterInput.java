@@ -44,6 +44,9 @@ public class ItSystemEditParameterInput extends BaseEditParameterInput {
 	private String gpsccontactSystemResponsible;
 	private String gpsccontactImpactedBusiness;
 	
+	private String upStreamAdd;
+	private String upStreamDelete;
+	
 	
 	public String getAlias() {
 		return alias;
@@ -253,5 +256,18 @@ public class ItSystemEditParameterInput extends BaseEditParameterInput {
 	}
 	public void setGpsccontactImpactedBusiness(String gpsccontactImpactedBusiness) {
 		this.gpsccontactImpactedBusiness = gpsccontactImpactedBusiness;
+	}
+	
+	public String getUpStreamAdd() {
+		return upStreamAdd;
+	}
+	public void setUpStreamAdd(String upStreamAdd) {
+		this.upStreamAdd = upStreamAdd;
+	}
+	public String getUpStreamDelete() {
+		return upStreamDelete;
+	}
+	public void setUpStreamDelete(String upStreamDelete) {
+		this.upStreamDelete = upStreamDelete;
 	}
 }

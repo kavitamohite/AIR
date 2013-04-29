@@ -908,16 +908,81 @@ AIR.FilterComboBox = Ext.extend(Ext.form.ComboBox, {
 		if(query.length === 0) {
 			this.filterByData();
 		} else {
+//			query = query.replace(query.charAt(0), query.charAt(0).toUpperCase());
+			
 			var filterFn = function(record) {
 				for(var key in this.filterData)
 					if(record.get(key) != this.filterData[key])//!==
 						return false;
 				
-				return record.get(displayField).indexOf(query, 0) > -1;//startsWith(query);
+				return record.get(displayField).toUpperCase().startsWith(query.toUpperCase());//indexOf(query, 0) > -1;//startsWith(query);
 			}.createDelegate(this);
 			
 			this.getStore().filterBy(filterFn);
 		}
+	},
+	
+	
+	
+	
+	
+	filterByDataValueList: function(filterData) {
+		if(filterData)
+			this.filterData = filterData;
+			
+		var filterFn = function(record) {
+			for(var key in this.filterData) {
+				var value = this.filterData[key];
+				if(Array.isArray(value)) {
+					for(var i = 0; i < value.length; i++)
+						if(value[i] == record.get(key))
+							return true;
+					return false;
+				
+//				if(value.indexOf(',') > -1) {
+//					var valueList = value.split(',');
+//					for(var i = 0; i < valueList.length; i++)
+//						if(valueList[i] == record.get(key))
+//							return true;
+//					return false;
+				} else {
+					if(record.get(key) != data)//!==
+						return false;
+				}
+			}
+			return true;
+		}.createDelegate(this);
+		
+		this.getStore().filterBy(filterFn);
 	}
+	
+	
+//	filterCiTypes: function(data) {
+//		this.reset();
+//		var r = Util.getComboRecord(this, 'ciTypeId', parseInt(data.ciTypeId));//tableId
+//		var ciTypeSource = r.get('text');
+//		
+//		var records = this.getStore().getRange();
+//		var matches = [];
+//		for(var i = 0; i < records.length; i++) {
+//			var ciTypeDest = records[i].get('text');
+//			if(AAM.isConnectionCiTypeAllowed(ciTypeSource, ciTypeDest))
+//				matches.push(ciTypeDest);
+//		}
+//		
+//		var filterFn = function(record) {
+//			/*var ciTypeDest = record.get('text');
+//			var b = AAM.isConnectionCiTypeAllowed(ciTypeSource, ciTypeDest);
+//			Util.log(b + ': '+ ciTypeSource + ' '+ciTypeDest);
+//			return b;//AAM.isConnectionCiTypeAllowed(ciTypeSource, ciTypeDest);*/
+//			
+//			for(var i = 0; i < matches.length; i++)
+//				if(record.get('text') == matches[i])
+//					return true;
+//			return false;
+//		};
+//		
+//		this.getStore().filterBy(filterFn);
+//	}
 });
 Ext.reg('filterCombo', AIR.FilterComboBox);

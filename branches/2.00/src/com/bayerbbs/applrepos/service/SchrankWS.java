@@ -45,6 +45,9 @@ public class SchrankWS {
 //		schrankDTO.setRelevanzItsec(input.getRelevanzITSEC());
 		schrankDTO.setGxpFlag(input.getGxpFlag());
 		schrankDTO.setGxpFlagId(input.getGxpFlag());
+		
+		schrankDTO.setDownStreamAdd(input.getDownStreamAdd());
+		schrankDTO.setDownStreamDelete(input.getDownStreamDelete());
 
 		return schrankDTO;
 	}

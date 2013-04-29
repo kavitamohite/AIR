@@ -85,6 +85,10 @@ public class CiBaseDTO {// implements Serializable
 //	private String serviceLevelAcl; //Application, Room/Raum, Position/Schrank
 //	private String priorityLevelAcl; //Application
 	
+	
+	private String downStreamAdd;
+	private String downStreamDelete;
+	
 	//====================
 	
 	public CiBaseDTO() {}
@@ -460,4 +464,18 @@ public class CiBaseDTO {// implements Serializable
 //		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
 //	}
 	
+	
+	
+	public String getDownStreamAdd() {
+		return downStreamAdd;
+	}
+	public void setDownStreamAdd(String downStreamAdd) {
+		this.downStreamAdd = downStreamAdd;
+	}
+	public String getDownStreamDelete() {
+		return downStreamDelete;
+	}
+	public void setDownStreamDelete(String downStreamDelete) {
+		this.downStreamDelete = downStreamDelete;
+	}
 }

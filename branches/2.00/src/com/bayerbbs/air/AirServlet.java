@@ -1,7 +1,11 @@
 package com.bayerbbs.air;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -10,22 +14,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bayerbbs.air.error.ErrorCodeReader;
-import com.bayerbbs.applrepos.validation.ValidationReader;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 
 public class AirServlet extends HttpServlet {
 	private static final long serialVersionUID = 3569239290421829949L;
+//	private String version;
+	private String configFilePath;
 		
 	public void init(ServletConfig config) {
-		String configFile = config.getServletContext().getRealPath("conf/AttributeProperties.xml");//config htdocs
-		ValidationReader.setValidationConfigFile(configFile);
+//		String attrPropFile = config.getServletContext().getRealPath("conf/AttributeProperties.xml");//config htdocs
+//		ValidationReader.setValidationConfigFile(attrPropFile);
 		
 		String errorMessageFile = config.getServletContext().getRealPath("conf/lang/english_errormessages.xml");//lang htdocs
 		ErrorCodeReader.setErrorMessageConfigFile(errorMessageFile);
 		
 //		String connectionPropertiesFile = config.getServletContext().getRealPath("htdocs/config/ConnectionProperties.xml");
 //		ConnectionPropertiesReader.setConfigFile(connectionPropertiesFile);
+		
+		configFilePath = config.getServletContext().getRealPath("conf/config.js");
+//		try {
+//			version = getVersion(configFilePath);
+//		} catch (IOException e) {
+//			
+//			version = String.valueOf(new Random().nextInt());
+//		}
 	}
 	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -33,6 +48,15 @@ public class AirServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 //		String ciId = req.getParameter("id");
 		
+//		String configFilePath = req.getServletPath().concat("conf/config.js");
+		String version = null;
+		try {
+			//verwendet als Pseudo Parameter um nach Versionswechsel kein refresh zu benötigen, wenn Browser alte Versionen von Dateien cached.
+			version = getVersion(configFilePath);
+		} catch (IOException e) {
+			version = AirKonstanten.QUESTION_MARK.concat(String.valueOf(new Random().nextInt()));
+		}
+//		String ignoreCacheParam = AirKonstanten.QUESTION_MARK.concat(String.valueOf(new Random().nextInt()));
 		StringBuffer html = new StringBuffer();
 		
 		String userAgent = req.getHeader("user-agent");
@@ -68,117 +92,117 @@ public class AirServlet extends HttpServlet {
 				append("<link rel='stylesheet' id='standardTheme' type='text/css' href='javascript/lib/extjs/resources/css/ext-all-air.css'>\n").
 					
 				append("<script type='text/javascript' src='javascript/lib/extjs/adapter/ext/ext-base-debug.js'></script><!-- ext-base.js ext-base-debug.js -->\n").
-				append("<script type='text/javascript' src='javascript/lib/extjs/ext-all-debug.js'></script><!-- ext-all.js ext-all-debug.js -->\n").
+				append("<script type='text/javascript' src='javascript/lib/extjs/ext-all-debug.js").append(version).append("'></script><!-- ext-all.js ext-all-debug.js -->\n").
 					
 	//			===================================================================================================================
 
-				append("<script type='text/javascript' src='javascript/lib/extjs/ux/Ext.ux.grid.RowActions.js'></script>\n").
-				append("<link rel='stylesheet' type='text/css' href='javascript/lib/extjs/ux/css/air.css'>\n").
-				append("<link rel='stylesheet' type='text/css' href='javascript/lib/extjs/ux/css/rowactions.css'>\n").
-				append("<link rel='stylesheet' type='text/css' href='javascript/lib/extjs/ux/css/Ext.ux.grid.RowActions.css'>\n").
+				append("<script type='text/javascript' src='javascript/lib/extjs/ux/Ext.ux.grid.RowActions.js").append(version).append("'></script>\n").
+				append("<link rel='stylesheet' type='text/css' href='javascript/lib/extjs/ux/css/air.css").append(version).append("'>\n").
+				append("<link rel='stylesheet' type='text/css' href='javascript/lib/extjs/ux/css/rowactions.css").append(version).append("'>\n").
+				append("<link rel='stylesheet' type='text/css' href='javascript/lib/extjs/ux/css/Ext.ux.grid.RowActions.css").append(version).append("'>\n").
 				
-				append("<script type='text/javascript' src='javascript/lib/extjs/ux/searchfield/SearchField.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/lib/extjs/ux/Soap1/WsdlContainer.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/lib/extjs/ux/Soap1/SoapProxy.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/lib/extjs/ux/Soap1/SoapReader.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/lib/extjs/ux/searchfield/SearchField.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/lib/extjs/ux/Soap1/WsdlContainer.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/lib/extjs/ux/Soap1/SoapProxy.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/lib/extjs/ux/Soap1/SoapReader.js").append(version).append("'></script>\n").
 				
-				append("<script type='text/javascript' src='javascript/lib/jquery/1.7.1/jquery.min.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/lib/jquery/jquery.corner.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/lib/mootools/mootools-core-1.4.5-full-compat.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/lib/jquery/1.7.1/jquery.min.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/lib/jquery/jquery.corner.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/lib/mootools/mootools-core-1.4.5-full-compat.js").append(version).append("'></script>\n").
 					
 	//			===================================================================================================================
 					
-				append("<script type='text/javascript' src='javascript/common/AirConstants.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/Util.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/data/AirStoreLoader.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/data/AirStoreManager.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/data/CiLocationRecord.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirConstants.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/Util.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/data/AirStoreLoader.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/data/AirStoreManager.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/data/CiLocationRecord.js").append(version).append("'></script>\n").
 				 
-				append("<script type='text/javascript' src='javascript/common/component/picker/AirPickerManager.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/component/picker/AirPersonPicker.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/component/picker/AirGroupPicker.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/component/picker/AirRemovePicker.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/component/picker/AirRecordPicker.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/picker/AirPickerManager.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/picker/AirPersonPicker.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/picker/AirGroupPicker.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/picker/AirRemovePicker.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/picker/AirRecordPicker.js").append(version).append("'></script>\n").
 				
-				append("<script type='text/javascript' src='javascript/common/component/AppLabelTag.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/component/CommandLink.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/component/DynamicWindow.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/component/AirView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/component/SearchField.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/component/FilterComboBox.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/component/RowExpander.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/AppLabelTag.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/CommandLink.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/DynamicWindow.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/AirView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/SearchField.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/FilterComboBox.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/component/RowExpander.js").append(version).append("'></script>\n").
 	
-				append("<script type='text/javascript' src='javascript/common/AirWindowFactory.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/AirAclManager.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/AirTaskManager.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/AirApplicationManager.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/AirPagingToolbar.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/AirStoreFactory.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/AirOverrides.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/AirUiFactory.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/AirConfigFactory.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/AirHistoryManager.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/AirCallbackManager.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/common/AirBusinessRules.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirWindowFactory.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirAclManager.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirTaskManager.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirApplicationManager.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirPagingToolbar.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirStoreFactory.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirOverrides.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirUiFactory.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirConfigFactory.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirHistoryManager.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirCallbackManager.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/common/AirBusinessRules.js").append(version).append("'></script>\n").
 				
-				append("<script type='text/javascript' src='javascript/search/CiAdvancedSearchView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/search/CiSearchView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/search/CiResultView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/search/CiResultGrid.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/search/CiStandardSearchView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/search/CiOuSearchView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/search/DwhEntityGrid.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/search/CiAdvancedSearchView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/search/CiSearchView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/search/CiResultView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/search/CiResultGrid.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/search/CiStandardSearchView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/search/CiOuSearchView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/search/DwhEntityGrid.js").append(version).append("'></script>\n").
 				
-				append("<script type='text/javascript' src='javascript/myplace/MyPlaceTabView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/myplace/MyPlaceView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/myplace/MyPlaceHomeView.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/myplace/MyPlaceTabView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/myplace/MyPlaceView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/myplace/MyPlaceHomeView.js").append(version).append("'></script>\n").
 				
-				append("<script type='text/javascript' src='javascript/ciEdit/CiEditView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/CiDetailsView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsAnwendungView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsLocationItemView.js'></script>\n").//CiSpecificsTerrainView.js
-				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsItItemView.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciEdit/CiEditView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/CiDetailsView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsAnwendungView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsLocationItemView.js").append(version).append("'></script>\n").//CiSpecificsTerrainView.js
+				append("<script type='text/javascript' src='javascript/ciDetails/specifics/CiSpecificsItItemView.js").append(version).append("'></script>\n").
 				
-				append("<script type='text/javascript' src='javascript/ciDetails/CiContactsView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/CiAgreementsView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/CiProtectionView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/CiComplianceView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/CiLicenseView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/CiConnectionsView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/CiSupportStuffView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/CiHistoryView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/ComplianceControlsWindow.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/ComplianceLinkView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciDetails/CiDetailsCommon.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/CiContactsView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/CiAgreementsView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/CiProtectionView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/CiComplianceView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/CiLicenseView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/CiConnectionsView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/CiSupportStuffView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/CiHistoryView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/ComplianceControlsWindow.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/ComplianceLinkView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciDetails/CiDetailsCommon.js").append(version).append("'></script>\n").
 				
-				append("<script type='text/javascript' src='javascript/ciCreate/CiCopyFromDetailView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciCreate/CiCopyFromView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciCreate/CiCreateView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciCreate/CiDeleteView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateInfoView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateWizardView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateWizardP1.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateAppMandatoryView.js'></script>\n").
-				append("<!-- 		<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateApplicationPlatformView.js'></script> -->\n").
-				append("<!-- 		<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateCommonServiceView.js'></script> -->\n").
-				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateWizardP2.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateAppRequiredView.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciCreate/CiCopyFromDetailView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciCreate/CiCopyFromView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciCreate/CiCreateView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciCreate/CiDeleteView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateInfoView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateWizardView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateWizardP1.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateAppMandatoryView.js").append(version).append("'></script>\n").
+				append("<!-- 		<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateApplicationPlatformView.js").append(version).append("'></script> -->\n").
+				append("<!-- 		<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateCommonServiceView.js").append(version).append("'></script> -->\n").
+				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateWizardP2.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/ciCreate/wizard/CiCreateAppRequiredView.js").append(version).append("'></script>\n").
 	
-				append("<script type='text/javascript' src='javascript/core/CiTitleView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/core/CiInfoView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/core/CiCenterView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/core/CiNavigationView.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/core/AirMainPanel.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/core/AirViewport.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/core/AirLoginWindow.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/core/AirBootstrap.js'></script>\n").
-				append("<script type='text/javascript' src='javascript/core/Main.js'></script>\n").
+				append("<script type='text/javascript' src='javascript/core/CiTitleView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/core/CiInfoView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/core/CiCenterView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/core/CiNavigationView.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/core/AirMainPanel.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/core/AirViewport.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/core/AirLoginWindow.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/core/AirBootstrap.js").append(version).append("'></script>\n").
+				append("<script type='text/javascript' src='javascript/core/Main.js").append(version).append("'></script>\n").
 				
-//				append("<script type='text/javascript' src='javascript/core/temp.js'></script>\n").
+//				append("<script type='text/javascript' src='javascript/core/temp.js").append(version).append("'></script>\n").
 	//			===================================================================================================================
 				
-				append("<script type='text/javascript' src='conf/config.js'></script>\n").
+				append("<script type='text/javascript' src='conf/config.js").append(version).append("'></script>\n").
 			append("</head>\n").
 			
 			
@@ -208,5 +232,21 @@ public class AirServlet extends HttpServlet {
 
 		res.setContentType("text/html");
 		res.setCharacterEncoding(encoding);//Windows-1252 UTF-8 ISO-8859-1
+	}
+	
+	private String getVersion(String configFilePath) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(new File(configFilePath)));
+		
+		String line = null;
+		while((line = reader.readLine()) != null) {
+			if(line.contains(AirKonstanten.VERSION_PARAM)) {
+				line = line.split(AirKonstanten.EQUAL)[1].trim();
+				break;
+			}
+		}
+				
+		line = AirKonstanten.QUESTION_MARK.concat(line.replace("'", "").replace(";", ""));
+
+		return line;
 	}
 }

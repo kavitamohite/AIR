@@ -12,7 +12,6 @@ import org.w3c.dom.NodeList;
 
 
 public class ValidationReader {
-	
 	private static String AIR_VALIDATION_FILE;
 	
 	public static void setValidationConfigFile(String filename) {
@@ -20,25 +19,20 @@ public class ValidationReader {
 	}
 
 	public HashMap<String, ValidationData> readConfigData() {
-		
 		HashMap<String, ValidationData> hmValidation = new HashMap<String, ValidationData>();
 		
 		try {
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
-			.newInstance();
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			dbFactory.setValidating(false);
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(new File( AIR_VALIDATION_FILE ));
 			doc.getDocumentElement().normalize();
 
 			NodeList paramsList = doc.getElementsByTagName("AttributePropertyItems");
-	
 			if (null != paramsList) {
-				
 				NodeList propertyList = ((Element) paramsList.item(0)).getElementsByTagName("Identifier");
 				
 				for (int i = 0; i < propertyList.getLength(); i++) {
-					
 					Element currentZeile = (Element) propertyList.item(i);
 					String id = getValue(currentZeile, "id");
 					String mandatory = getValue(currentZeile, "Mandatory");
@@ -61,17 +55,10 @@ public class ValidationReader {
 					data.setAttributeMask(attributeMask);
 					
 					hmValidation.put(data.getId() , data);
-					
-					// System.out.println(data.getId() + " " + data.getMandatory() + " " + data.getRelevance());
-					
 				}
 				// Element elemRequest = (Element) requestList.item(0);
 //				getItemAvailability.setRequestname(elemRequest.getAttribute("Name"));
 			}
-			
-			
-			//			document.getC
-			
 		} 
 		catch (Exception e) {
 			// TODO: handle exception

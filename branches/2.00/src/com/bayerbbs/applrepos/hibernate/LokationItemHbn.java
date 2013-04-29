@@ -18,8 +18,11 @@ import org.hibernate.Transaction;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.CiBase1;
+import com.bayerbbs.applrepos.domain.CiBase2;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Land;
+import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
 import com.bayerbbs.applrepos.service.CiSearchParamsDTO;
@@ -290,5 +293,19 @@ public class LokationItemHbn extends BaseHbn {
 		}
 		
 		return kette.toString();
+	}
+	
+	protected static void setUpCi(CiBase1 ci, CiBaseDTO ciDTO, String cwid, boolean isCiCreate) {
+		BaseHbn.setUpCi(ci, ciDTO, cwid, isCiCreate);
+		
+		if(ciDTO.getDownStreamAdd() != null && ciDTO.getDownStreamAdd().length() > 0 || ciDTO.getDownStreamDelete() != null && ciDTO.getDownStreamDelete().length() > 0)
+			CiEntitiesHbn.saveCiRelations(ciDTO.getTableId(), ciDTO.getId(), ciDTO.getDownStreamAdd(), ciDTO.getDownStreamDelete(), "DOWNSTREAM", cwid);
+	}
+	
+	protected static void setUpCi(CiBase2 ci, CiBaseDTO ciDTO, String cwid, boolean isCiCreate) {
+		BaseHbn.setUpCi(ci, ciDTO, cwid, isCiCreate);
+		
+		if(ciDTO.getDownStreamAdd() != null && ciDTO.getDownStreamAdd().length() > 0 || ciDTO.getDownStreamDelete() != null && ciDTO.getDownStreamDelete().length() > 0)
+			CiEntitiesHbn.saveCiRelations(ciDTO.getTableId(), ciDTO.getId(), ciDTO.getDownStreamAdd(), ciDTO.getDownStreamDelete(), "DOWNSTREAM", cwid);
 	}
 }

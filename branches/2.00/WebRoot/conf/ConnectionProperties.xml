@@ -427,4 +427,76 @@
 		<Upstream>N</Upstream>
 		<Downstream>N</Downstream>
 	</Identifier>
+	
+	
+	<!--<Identifier>
+		<Source>Position</Source>
+		<Destination>Room</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>Y</Upstream>
+		<Downstream>N</Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Room</Source>
+		<Destination>Building Area</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>Y</Upstream>
+		<Downstream>N</Downstream>
+	</Identifier>-->
+	<Identifier>
+		<Source>Room</Source>
+		<Destination>Position</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>N</Upstream>
+		<Downstream>Y</Downstream>
+	</Identifier>
+	<!--<Identifier>
+		<Source>Building Area</Source>
+		<Destination>Building</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>Y</Upstream>
+		<Downstream>N</Downstream>
+	</Identifier>-->
+	<Identifier>
+		<Source>Building Area</Source>
+		<Destination>Room</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>N</Upstream>
+		<Downstream>Y</Downstream>
+	</Identifier>
+	<!--<Identifier>
+		<Source>Building</Source>
+		<Destination>Terrain</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>Y</Upstream>
+		<Downstream>N</Downstream>
+	</Identifier>-->
+	<Identifier>
+		<Source>Building</Source>
+		<Destination>Building Area</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>N</Upstream>
+		<Downstream>Y</Downstream>
+	</Identifier>
+	<!--<Identifier>
+		<Source>Terrain</Source>
+		<Destination>Site</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>Y</Upstream>
+		<Downstream>N</Downstream>
+	</Identifier>-->
+	<Identifier>
+		<Source>Terrain</Source>
+		<Destination>Building</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>N</Upstream>
+		<Downstream>Y</Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Site</Source>
+		<Destination>Terrain</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>N</Upstream>
+		<Downstream>Y</Downstream>
+	</Identifier>
 </ConnectionPropertyItems>

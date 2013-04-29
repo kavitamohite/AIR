@@ -449,7 +449,7 @@ AIR.AirApplicationManager = function() {
 			return false;
 		},
 		
-		validateCreateConnection: function(exists, ciType, ciName, newCiType, newCiName, direction) {
+		validateCreateConnection: function(exists, newCiType, newCiName, ciType, ciName, direction) {//exists, ciType, ciName, newCiType, newCiName, direction
 			var result = { 
 				isSuccessful: false,
 				messageType: 'warning'
@@ -468,6 +468,16 @@ AIR.AirApplicationManager = function() {
 			}
 			
 			return result;
+		},
+		
+		isConnectionCiTypeAllowed: function(ciTypeSource, ciTypeDest) {
+			for(var source in this.connectionProperties)
+				if(source == ciTypeSource)
+					for(var i = 0; i < this.connectionProperties[source].length; i++)
+						if(this.connectionProperties[source][i].Destination == ciTypeDest)
+							return true;
+			
+			return false;
 		},
 		
 		validateDeleteConnection: function() {
@@ -786,6 +796,20 @@ AIR.AirApplicationManager = function() {
 		
 		getTableIdByTLA: function(ciTypeTLA) {
 			return AC.CI_TYPE_TLA[ciTypeTLA];
+		},
+		
+		isLocationCi: function(tableId) {
+			var t = parseInt(tableId);
+			
+			var is =
+				t === AC.TABLE_ID_POSITION ||
+				t === AC.TABLE_ID_ROOM ||
+				t === AC.TABLE_ID_BUILDING_AREA ||
+				t === AC.TABLE_ID_BUILDING ||
+				t === AC.TABLE_ID_TERRAIN ||
+				t === AC.TABLE_ID_SITE;
+			
+			return is;
 		}
 	};
 }();

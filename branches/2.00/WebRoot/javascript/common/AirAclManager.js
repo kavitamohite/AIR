@@ -324,7 +324,7 @@ AIR.AirAclManager = function() {
 		},
 		
 		setMandatory: function(item, aclItem, data) {//mandatory
-			if(this.isCiTypeField(data, item, aclItem)) {
+			if(this.isCiTypeField(data, aclItem)) {//, item
 				switch(aclItem.data.Mandatory) {//mandatory
 					case 'mandatory':
 						this.setLabelRequired(item);
@@ -510,7 +510,7 @@ AIR.AirAclManager = function() {
 		},
 		
 		//wenn ein required Feld nicht ausgefüllt ist, dann ist das CI im Draft Modus
-		isDraft: function() {
+		isDraft: function(data) {
 			records = this.aclStore.getRange();
 			var commonRetValue = false;
 			var oppositeRetValue = false;
@@ -518,20 +518,22 @@ AIR.AirAclManager = function() {
 			for(var i = 0; i < records.length; i++) {
 				var item = records[i];
 				
-				if(item.data.Mandatory === 'required') {
-					var draftItemCmp = Ext.getCmp(item.data.id);
-					
-					if(draftItemCmp && draftItemCmp.getId().charAt(draftItemCmp.getId().length - 1) !== 'W') {
-						switch (draftItemCmp.getXType()) {
-							case 'textfield':
-							case 'textarea':
-							case 'combo':
-							case 'filterCombo':
-								var length = draftItemCmp.getValue().length;
-								if(length === 0)
-									return true;
-								
-								break;
+				if(this.isCiTypeField(data, item)) {
+					if(item.data.Mandatory === 'required') {
+						var draftItemCmp = Ext.getCmp(item.data.id);
+						
+						if(draftItemCmp && draftItemCmp.getId().charAt(draftItemCmp.getId().length - 1) !== 'W') {
+							switch (draftItemCmp.getXType()) {
+								case 'textfield':
+								case 'textarea':
+								case 'combo':
+								case 'filterCombo':
+									var length = draftItemCmp.getValue().length;
+									if(length === 0)
+										return true;
+									
+									break;
+							}
 						}
 					}
 				}
@@ -542,7 +544,7 @@ AIR.AirAclManager = function() {
 
 		setDraft: function(isDraft) {
 			if(isDraft) {
-				Ext.getCmp('editpaneldraft').el.dom.innerHTML = AIR.AirApplicationManager.getLabels().header_applicationIsDraft.replace('##', '');//draftFlag '' (#8)
+				Ext.getCmp('editpaneldraft').el.dom.innerHTML = AAM.getLabels().header_applicationIsDraft.replace('##', '');//draftFlag '' (#8)
 				Ext.getCmp('editpaneldraft').show();
 			} else {
 				Ext.getCmp('editpaneldraft').hide();
@@ -561,7 +563,7 @@ AIR.AirAclManager = function() {
 				if(aclItems[i].data.Mandatory === 'mandatory' && aclItems[i].data.id.charAt(aclItems[i].data.id.length - 1) !== 'W') { //'required'
 					var uiElement = Ext.getCmp(aclItems[i].data.id);
 					
-					if(uiElement && this.isCiTypeField(data, uiElement, aclItems[i])) {
+					if(uiElement && this.isCiTypeField(data, aclItems[i])) {//, uiElement
 						switch (uiElement.getXType()) {
 							case 'textfield':
 							case 'textarea':
@@ -597,7 +599,7 @@ AIR.AirAclManager = function() {
 			return incompleteFieldList;
 		},
 		
-		isCiTypeField: function(data, uiElement, aclItem) {//mit allen CI Typen: tableId, ciSubType
+		isCiTypeField: function(data, aclItem) {//mit allen CI Typen: tableId, ciSubType; , uiElement nicht mehr nötig
 			var aclCiType = aclItem.get('ciTypeId');
 			var aclCiSubType = aclItem.get('ciSubTypeId');
 			
@@ -671,8 +673,10 @@ AIR.AirAclManager = function() {
 		setNecessityInternal: function(labelEl, necessity) {
 			switch(necessity) {
 				case 'mandatory':
-					labelEl.dom.style.fontWeight = 'bold';
-					labelEl.addClass('x-form-text-required');
+					if(labelEl) {
+						labelEl.dom.style.fontWeight = 'bold';
+						labelEl.addClass('x-form-text-required');
+					}
 					break;
 				case 'required':
 					labelEl.dom.style.fontWeight = 'normal';

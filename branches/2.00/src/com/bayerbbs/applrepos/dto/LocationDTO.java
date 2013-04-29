@@ -38,7 +38,7 @@ public abstract class LocationDTO extends CiBaseDTO implements Serializable {
 	
 	private Long schrankId;
 	private String schrankName;
-	
+
 	
 	public void setCiLokationsKette(CiLokationsKette kette) {
 		setHasMarkedDeletedItems(kette.getHasMarkedDeletedItems());
@@ -225,4 +225,6 @@ public abstract class LocationDTO extends CiBaseDTO implements Serializable {
 	public void setSchrankName(String schrankName) {
 		this.schrankName = schrankName;
 	}
+	
+
 }

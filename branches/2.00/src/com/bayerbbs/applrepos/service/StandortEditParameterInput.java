@@ -3,6 +3,7 @@ package com.bayerbbs.applrepos.service;
 public class StandortEditParameterInput extends BaseEditParameterInput {
 	private String standortCode;
 	private Long landId;
+	private String nameEn;
 	
     public String getStandortCode() {
 		return standortCode;
@@ -16,5 +17,12 @@ public class StandortEditParameterInput extends BaseEditParameterInput {
 	}
 	public void setLandId(Long landId) {
 		this.landId = landId;
+	}
+	
+	public void setNameEn(String nameEn) {
+		this.nameEn = nameEn;
+	}
+	public String getNameEn() {
+		return nameEn;
 	}
 }

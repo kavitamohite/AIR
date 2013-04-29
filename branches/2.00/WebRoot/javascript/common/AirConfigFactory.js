@@ -55,6 +55,8 @@ AIR.AirConfigFactory = function() {
 			itSystemCiFields.push('einsatzStatusId');
 			itSystemCiFields.push('primaryFunctionId');
 			itSystemCiFields.push('licenseScanningId');
+			itSystemCiFields.push('upStreamAdd');
+			itSystemCiFields.push('upStreamDelete');
 			
 			return itSystemCiFields;
 		},
@@ -104,6 +106,9 @@ AIR.AirConfigFactory = function() {
 		
 		createStandortCiRecord: function() {
 			var standortCiFields = this.getLocationCiFields();
+			
+			standortCiFields.push('standortCode');
+			standortCiFields.push('nameEn');
 			
 			return Ext.data.Record.create(standortCiFields);
 		},
@@ -171,7 +176,8 @@ AIR.AirConfigFactory = function() {
 			   'ciOwnerAcl', 'ciOwnerDelegateAcl', 'relevanceGR1435Acl', 'relevanceGR1920Acl', 'gxpFlag', 'gxpFlagId', 'gxpFlagIdAcl',
 			   'refIdAcl', 'itsecGroupIdAcl', 'slaIdAcl', 'serviceContractIdAcl', {
 				name: 'tableId', type: 'int'
-			}];
+			}, 'downStreamAdd', 'downStreamDelete'];
+
 			
 			return baseCiFields;
 		}

@@ -127,6 +127,7 @@ public class CiEntityWS {
 			
 			setCiBaseData(standortDTO, standort);
 			standortDTO.setCiLokationsKette(lokationsKette);
+			standortDTO.setNameEn(standort.getNameEn());
 			
 			AccessRightChecker checker = new AccessRightChecker();
 			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), standort)) {

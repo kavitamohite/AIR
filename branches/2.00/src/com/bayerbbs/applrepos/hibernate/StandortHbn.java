@@ -156,6 +156,15 @@ public class StandortHbn extends LokationItemHbn {
 						
 						setUpCi(standort, dto, cwid, false);
 						
+						if (null != dto.getNameEn()) {
+							if (EMPTY.equals(dto.getNameEn())) {
+								standort.setNameEn(null);
+							}
+							else {
+								standort.setNameEn(dto.getNameEn());
+							}
+						}
+						
 						/*
 						standort.setUpdateUser(cwid);
 						standort.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
@@ -596,6 +605,15 @@ public class StandortHbn extends LokationItemHbn {
 						
 						standort.setLandId(dto.getLandId());
 						standort.setStandortCode(dto.getStandortCode());
+						
+						if (null != dto.getNameEn()) {
+							if (EMPTY.equals(dto.getNameEn())) {
+								standort.setNameEn(null);
+							}
+							else {
+								standort.setNameEn(dto.getNameEn());
+							}
+						}
 						
 						boolean toCommit = false;
 						try {

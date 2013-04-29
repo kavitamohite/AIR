@@ -10,6 +10,7 @@ public class RoomWS {
 	
 	protected RoomDTO getRoomDTOFromEditInput(RoomEditParameterInput input) {
 		RoomDTO roomDTO = new RoomDTO();
+		roomDTO.setTableId(AirKonstanten.TABLE_ID_ROOM);
 		
 		//Specifics
 		roomDTO.setId(input.getId());//für RoomHbn.saveRoom
@@ -59,6 +60,9 @@ public class RoomWS {
 //		roomDTO.setRelevanzItsec(input.getRelevanzITSEC());
 		roomDTO.setGxpFlag(input.getGxpFlag());
 		roomDTO.setGxpFlagId(input.getGxpFlag());
+		
+		roomDTO.setDownStreamAdd(input.getDownStreamAdd());
+		roomDTO.setDownStreamDelete(input.getDownStreamDelete());
 		
 		return roomDTO;
 	}

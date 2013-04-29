@@ -43,7 +43,9 @@ public class BaseEditParameterInput {
 //	private Long classInformationId;
 //	private String classInformationExplanation;
 
-
+	private String downStreamAdd;
+	private String downStreamDelete;
+	
 	
 	public String getCwid() {
 		return cwid;
@@ -230,4 +232,17 @@ public class BaseEditParameterInput {
 //	public void setClassInformationExplanation(String classInformationExplanation) {
 //		this.classInformationExplanation = classInformationExplanation;
 //	}
+	
+	public String getDownStreamAdd() {
+		return downStreamAdd;
+	}
+	public void setDownStreamAdd(String downStreamAdd) {
+		this.downStreamAdd = downStreamAdd;
+	}
+	public String getDownStreamDelete() {
+		return downStreamDelete;
+	}
+	public void setDownStreamDelete(String downStreamDelete) {
+		this.downStreamDelete = downStreamDelete;
+	}
 }

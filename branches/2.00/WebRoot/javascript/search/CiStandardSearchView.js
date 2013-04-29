@@ -29,7 +29,7 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        	padding: 5,
 		        	
 		        	hasSearch: false,
-		        	maskRe: /[0-9a-zA-Z%#=\+\-\_\/\\.:*? ]/,
+//		        	maskRe: /[0-9a-zA-Z%#=\+\-\_\/\\.:*? ]/,
 		        	maxLength: 656
 		        },{
 					xtype: 'button',//commandlink
