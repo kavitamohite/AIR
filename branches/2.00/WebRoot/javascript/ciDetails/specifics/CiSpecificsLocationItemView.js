@@ -1119,7 +1119,6 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				//3. Möglichkeit: nur untersuchen ob cbBuildingArea.getValue() String ist oder nicht. Wenn ja, areadId von getAppDetail()
 									
 				break;
-
 			case AC.TABLE_ID_BUILDING_AREA:
 				//BuildingHbn.saveBuildingArea(String, BuildingAreaDTO): ORA-20000: Building area 1157 cannot be moved to another building. Set parameter CHECK_LOCATION_INTEGRITY to N to disable this check.
 //				if(!cbBuilding.disabled)
@@ -1127,8 +1126,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				
 				data.buildingId = data.isCiCreate ? 
 									cbBuilding.getValue() :
-									typeof cbBuilding.getValue() === 'string' ? AAM.getAppDetail().buildingId : cbBuilding.getValue();
-
+									typeof cbBuilding.getValue() === 'string' ? AAM.getAppDetail().gebaeudeId : cbBuilding.getValue();
 				
 				break;
 			case AC.TABLE_ID_BUILDING:
@@ -1181,9 +1179,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 								cbCountry.getValue() :
 								typeof cbCountry.getValue() === 'string' ? AAM.getAppDetail().landId : cbCountry.getValue();
 
-						
 				break;
-
 			default: break;
 		}
 	},

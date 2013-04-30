@@ -810,6 +810,22 @@ AIR.AirApplicationManager = function() {
 				t === AC.TABLE_ID_SITE;
 			
 			return is;
+		},
+		
+		getCreationCiTypesByUserRoles: function() {
+			var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
+			var records = rolePersonListStore.getRange();
+			
+			var creationCiTypes = [];
+			for(var i = 0; i < records.length; i++) {
+				var roleName = records[i].get('roleName').replace(/ /g, '');
+				var roleCiTypes = AC.CI_TYPE_CREATION_BY_ROLE[roleName];
+				
+				if(roleCiTypes)
+					creationCiTypes.push(roleCiTypes);
+			}
+			
+			return creationCiTypes;
 		}
 	};
 }();

@@ -13,7 +13,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    height: 150,
 		    
 		    items: [{
-		        xtype: 'combo',
+		        xtype: 'filterCombo',//combo
 		        width: 230,
 		        fieldLabel: 'SLA',
 		        id: 'sla',
@@ -30,7 +30,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        lazyInit: false,
 		        mode: 'local'
 		    }, {
-		        xtype: 'combo',
+		        xtype: 'filterCombo',//combo
 		        width: 230,
 		        fieldLabel: 'Service Contract',
 		        id: 'serviceContract',
@@ -381,14 +381,28 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	setData: function(data) {
 		var field = this.getComponent('sla');
-		if (!field.disabled)
-			if(field.getValue().length > 0)
+//		if (!field.disabled)
+//			if(field.getValue().length > 0)
+//				data.slaId = field.getValue();
+		if (!field.disabled) {
+			if(field.getValue().length > 0) {
 				data.slaId = field.getValue();
+			} else {
+				data.slaId = -1;
+			}
+		}
 		
 		field = this.getComponent('serviceContract');
-		if (!field.disabled)
+//		if (!field.disabled)
 //			if(field.getValue().length > 0)
+//				data.serviceContractId = field.getValue();
+		if (!field.disabled) {
+			if(field.getValue().length > 0) {
 				data.serviceContractId = field.getValue();
+			} else {
+				data.serviceContractId = -1;
+			}
+		}
 		
 		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION) {
 			field = this.getComponent('priorityLevel');

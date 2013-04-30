@@ -531,8 +531,12 @@ AIR.AirAclManager = function() {
 									var length = draftItemCmp.getValue().length;
 									if(length === 0)
 										return true;
-									
 									break;
+								case 'checkbox':
+									if(!draftItemCmp.getValue())
+										return true;
+									break;
+								default: break;
 							}
 						}
 					}

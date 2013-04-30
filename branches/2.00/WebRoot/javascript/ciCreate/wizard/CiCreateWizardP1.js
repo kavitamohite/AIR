@@ -114,13 +114,29 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	filterCiTypes: function(cbCiTypeW) {
-		var x = AC.CI_TYPE_CREATION_BY_ROLE;
+		var ciTypesByRole = AAM.getCreationCiTypesByUserRoles();
 
 		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
 		var records = store.getRange();
-		for(var i = 0; i < records.length; i++)
-//			if()
-			cbCiTypeW.getStore().add(records[i]);
+		
+		for(var j = 0; j < ciTypesByRole.length; j++) {
+			for(var i = 0; i < records.length; i++) {
+				var ciTypeId = records[i].get('ciTypeId');
+				var ciType = ciTypesByRole[j][ciTypeId];
+				if(ciType) {
+					if(ciType.length === 0) {
+						cbCiTypeW.getStore().add(records[i]);
+					} else {
+						for(var k = 0; k < ciType.length; k++)
+							if(records[i].get('ciSubTypeId') == ciType[k])
+								cbCiTypeW.getStore().add(records[i]);
+					}
+				}
+			}
+		}
+		
+		var x = cbCiTypeW.getStore().getRange();
+		var y;
 	},
 	
 	onCiTypeSelect: function(combo, record, index) {

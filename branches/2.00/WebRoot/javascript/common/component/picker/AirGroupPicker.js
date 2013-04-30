@@ -329,7 +329,8 @@ AIR.AirGroupPicker = Ext.extend(Ext.Window, {//Ext.Tip
 		this.comp = comp;
 		this.groupType = groupType;
 		
-		var tfSearch = this.getComponent('cfGroupSearch').getComponent('gpQueryField');//this.getComponent('cfGroupSearch').items.items[0];
+		var cfGroupSearch = this.getComponent('cfGroupSearch');
+		var tfSearch = cfGroupSearch.getComponent('gpQueryField');//this.getComponent('cfGroupSearch').items.items[0];
 		tfSearch.reset();
 		tfSearch.focus(true, 500);
 		
@@ -340,11 +341,11 @@ AIR.AirGroupPicker = Ext.extend(Ext.Window, {//Ext.Tip
 		
 		this.setTitle(title);
 		
-		var bGroupPickerFindAll = this.getComponent('cfGroupSearch').getComponent('bGroupPickerFindAll');//this.getComponent('cfGroupSearch').items.items[1]
+		var bGroupPickerFindAll = cfGroupSearch.getComponent('bGroupPickerFindAll');//this.getComponent('cfGroupSearch').items.items[1]
 		bGroupPickerFindAll.setText(AAM.getLabels().findFirst + ' ' + this.limit);
 		
-		var bGroupPickerBackward = this.getComponent('cfGroupSearch').getComponent('bGroupPickerBackward');
-		var bGroupPickerForward = this.getComponent('cfGroupSearch').getComponent('bGroupPickerForward');
+		var bGroupPickerBackward = cfGroupSearch.getComponent('bGroupPickerBackward');
+		var bGroupPickerForward = cfGroupSearch.getComponent('bGroupPickerForward');
 		
 		bGroupPickerBackward.setText(AAM.getLabels().button_general_back);
 		bGroupPickerForward.setText(AAM.getLabels().button_general_next);
@@ -359,10 +360,10 @@ AIR.AirGroupPicker = Ext.extend(Ext.Window, {//Ext.Tip
 			this.getComponent('cfGroupSearch').getComponent('bGroupPickerBackward').show();
 		}*/
 		
-		lGroupPickerOr = this.getComponent('cfGroupSearch').getComponent('lGroupPickerOr');
+		var lGroupPickerOr = cfGroupSearch.getComponent('lGroupPickerOr');
 		lGroupPickerOr.setText(AAM.getLabels().OR);
 		
-		this.getComponent('cfGroupSearch').doLayout();
+		cfGroupSearch.doLayout();
 	},
 	
 	close: function() {

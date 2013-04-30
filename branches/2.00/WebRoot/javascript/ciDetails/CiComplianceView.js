@@ -943,8 +943,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbgRegulations = this.getComponent('fsRelevantRegulations').getComponent('cbgRegulations');
 		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[0], data);//1435
 		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[2], data);//1920
-		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[1], data);//1435
-		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[3], data);//1920
+		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[1], data);
+		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[3], data);
 		
 //		AIR.AirAclManager.setAccessMode(this.getComponent('fsRelevantRegulations').getComponent('cbgRegulations'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('CBrelevanceGxp'), data);

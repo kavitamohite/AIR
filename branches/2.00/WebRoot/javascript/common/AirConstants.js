@@ -44,7 +44,7 @@ AIR.AirConstants = {
 	USER_ROLE_AIR_INFRASTRUCTURE_LAYER: 'AIR Infrastructure Layer',
 	USER_ROLE_AIR_APPLICATION_MANAGER: 'AIR Application Manager',
 	USER_ROLE_AIR_ADMINISTRATOR: 'AIR Administrator',//AIR Administrator RFC 8231
-	USER_ROLE_AIR_MASTER_DATA_MAINTENANCE: 'AIR Master Data Maintenance',
+	USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE: 'AIR Location Data Maintenance',
 	USER_ROLE_DEVELOPER: 'AIR Developer',
 	
 	TABLE_ID_IT_SYSTEM: 1,
@@ -58,10 +58,6 @@ AIR.AirConstants = {
 	TABLE_ID_WAY: 37,
 	TABLE_ID_BUILDING_AREA: 88,
 	TABLE_ID_SERVICE: 123,
-	
-	CI_TYPE_CREATION_BY_ROLE: {
-		2: [ 'AIR Application Layer', 'AIR Default', 'AIR Master Data Maintenance' ]
-	},
 	
 	
 	APP_CAT1_APPLICATION: '5',//'Application',
@@ -171,3 +167,35 @@ AIR.AirConstants = {
 AC = AIR.AirConstants;
 
 AC.SUPPORTED_COUNTRIES = [AC.IMG_COUNTRY_EN, AC.IMG_COUNTRY_DE];
+
+AC.CI_TYPE_CREATION_BY_ROLE = {
+//	AIRApplicationLayer: [{ ciTypeId: 2, ciSubType: [ 5 ] }],
+//	AIRDefault: [{ ciTypeId: 1 }, { ciTypeId: 2, ciSubType: [ 5, -10006, -10007, -10013 ] }],
+//	
+//	AIRInfrastructureLayer: [{ ciTypeId: 1 }, { ciTypeId: 2, ciSubType: [ -10006, -10007, -10013 ] }],
+//	AIRLocationDataMaintenance: [{ ciTypeId: 13 }, { ciTypeId: 3 }, { ciTypeId: 88 }, { ciTypeId: 4 }, { ciTypeId: 30 }, { ciTypeId: 21 }],
+	
+	
+	AIRApplicationLayer: {
+		2: [ 5 ]
+	},
+	
+	AIRDefault: {
+		1: [],
+		2: [ 5, -10006, -10007, -10013 ]
+	},
+	
+	AIRInfrastructureLayer: {
+		1: [],
+		2: [ -10006, -10007, -10013 ]
+	},
+	
+	AIRLocationDataMaintenance: {
+		13: [],
+		3: [],
+		88: [],
+		4: [],
+		30: [],
+		12: []
+	}
+};

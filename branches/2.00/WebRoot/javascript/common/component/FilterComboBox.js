@@ -908,14 +908,12 @@ AIR.FilterComboBox = Ext.extend(Ext.form.ComboBox, {
 		if(query.length === 0) {
 			this.filterByData();
 		} else {
-//			query = query.replace(query.charAt(0), query.charAt(0).toUpperCase());
-			
 			var filterFn = function(record) {
 				for(var key in this.filterData)
 					if(record.get(key) != this.filterData[key])//!==
 						return false;
 				
-				return record.get(displayField).toUpperCase().startsWith(query.toUpperCase());//indexOf(query, 0) > -1;//startsWith(query);
+				return record.get(displayField).toUpperCase().substr(0, query.length) == query.toUpperCase();// startsWith(query.toUpperCase())
 			}.createDelegate(this);
 			
 			this.getStore().filterBy(filterFn);

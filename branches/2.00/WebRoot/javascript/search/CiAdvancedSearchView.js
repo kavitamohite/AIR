@@ -93,12 +93,13 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					    valueField: 'id',//id ciTypeName
 				        displayField: 'text',//english ciTypeName
 				        width: 240,
-
+				        editable: false,
+				        
 		//			        typeAhead: true,
 		//			        autoSelect: false,
 		//			        triggerAction: 'all',
 				        
-				        forceSelection: true,
+//				        forceSelection: true,
 				        triggerAction: 'all',
 				        lazyRender: true,
 				        lazyInit: false,
@@ -888,6 +889,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		var cbCiType = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbCiType');
 		cbCiType.on('select', this.onCiTypeSelect, this);//select beforeselect
 		cbCiType.on('change', this.onCiTypeChange, this);
+		cbCiType.setValue(cbCiType.getStore().getAt(0).get('id'));
 		
 		var cbAdvSearchITset = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbAdvSearchITset');
 		cbAdvSearchITset.on('change', this.onItSetChange, this);

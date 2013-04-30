@@ -167,6 +167,12 @@ public class AccessRightChecker {
 				isRelevanceOperational = true;
 			}
 			
+			//wenn kein ciOwner, ciOwnerDelegate und kein Steward vorhanden, dürfen alle editieren!
+			if(StringUtils.isNullOrEmpty(application.getResponsible()) &&
+			   StringUtils.isNullOrEmpty(application.getSubResponsible()) &&
+			   StringUtils.isNullOrEmpty(application.getApplicationSteward()))
+				isRelevanceOperational = true;
+			
 			if (!isRelevanceOperational && StringUtils.isNotNullOrEmpty(application.getSubResponsible())) {
 				if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(application.getSubResponsible(), cwid))) {
 					// allowed by group rights

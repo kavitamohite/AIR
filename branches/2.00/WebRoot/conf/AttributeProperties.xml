@@ -200,7 +200,7 @@
 	<!-- Specifics - Location Items -->
 	<Identifier>
 		<id>tfLocationCiAlias</id>
-		<ciTypeId>3,4,12,13,30,88</ciTypeId>
+<!--		<ciTypeId>3,4,12,13,30,88</ciTypeId>-->
 <!--		<Mandatory>mandatory</Mandatory>-->
 		<Mandatory>optional</Mandatory>
 		<Relevance>operational</Relevance>

@@ -227,7 +227,13 @@ public class BaseHbn {
 		}
 		if (null != ciDTO.getServiceContractId() || null != ciDTO.getSlaId()) {
 			// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
-			ci.setServiceContractId(ciDTO.getServiceContractId());
+//			ci.setServiceContractId(ciDTO.getServiceContractId());
+			if (-1 == ciDTO.getServiceContractId()) {
+				ci.setServiceContractId(null);
+			}
+			else {
+				ci.setServiceContractId(ciDTO.getServiceContractId());
+			}
 		}
 		
 		
