@@ -155,10 +155,15 @@ public class AirCiExcelExportServlet extends HttpServlet {
         
         if(searchAction.equals(SEARCH_POINT_SEARCH)) {
         	boolean isAdvancedSearch = Boolean.parseBoolean(req.getParameter("isAdvancedSearch"));//advancedsearch
+        	boolean isShowDeleted = false;
+        	if ("Y".equals(req.getParameter("showDeleted"))) {
+        		isShowDeleted = true;
+        	}
         	
         	applications = isAdvancedSearch ?
     			AnwendungHbn.findApplications(
     				ciNameAliasQuery,
+    				isShowDeleted,
 					req.getParameter("queryMode"),
 					req.getParameter("happOwner"),//hadvsearchappowner
 					req.getParameter("happOwnerHidden"),//hadvsearchappownerHidden
@@ -189,7 +194,7 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					req.getParameter("hbusinessEssentialId"),
 					null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
 				) :
-        		AnwendungHbn.findApplications(ciNameAliasQuery, null, null, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        		AnwendungHbn.findApplications(ciNameAliasQuery, isShowDeleted, null, null, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         } else if(searchAction.equals(SEARCH_POINT_MY_DELEGATE_CIS) || searchAction.equals(SEARCH_POINT_MY_CIS)) {
 //        	ApplicationParameterInput input = new ApplicationParameterInput();
         	ApplicationSearchParamsDTO input = new ApplicationSearchParamsDTO();
