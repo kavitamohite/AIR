@@ -931,6 +931,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'label_useroptions_help'},
 			        {name: 'label_useroptions_createwizard'},
 			        {name: 'label_useroptions_disableTooltip'},
+			        {name: 'label_useroptions_showDeleted'},
 			        
 			        //validation Messages
 			        {name: 'editDataNotValid'},
@@ -950,6 +951,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'label_details_businessessential'},
 			        {name: 'label_details_insertdata'},
 			        {name: 'label_details_updatedata'},
+			        {name: 'label_details_deletedata'},
 			        
 			        // specific
 			        {name: 'specificsPanelTitle'},
@@ -1412,6 +1414,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'insertDataText'},
 			        {name: 'updateData'},
 			        {name: 'updateDataText'},
+			        {name: 'deleteDataText'},
 			        
 			        //specifics
 			        {name: 'applicationName'},

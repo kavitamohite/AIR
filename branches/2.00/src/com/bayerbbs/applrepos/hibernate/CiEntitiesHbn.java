@@ -100,7 +100,10 @@ public class CiEntitiesHbn {
 	
 	//ApplicationDTO
 	public static List<CiItemDTO> findCisByNameOrAlias(String searchName) {
-		return findCisByNameOrAlias(searchName, AirKonstanten.PARAMETER_QUERYMODE_EXACT, false, null, null, 0, 1000);
+		
+		boolean showDeleted = false;
+		
+		return findCisByNameOrAlias(searchName, showDeleted, AirKonstanten.PARAMETER_QUERYMODE_EXACT, false, null, null, 0, 1000);
 	}	 
  
 	public static boolean isLikeStart(String queryMode) {
@@ -124,7 +127,7 @@ public class CiEntitiesHbn {
 	
 
 	//ApplicationDTO
-	public static List<CiItemDTO> findCisByNameOrAlias(String searchName, String queryMode, boolean onlyApplications, String sort, String dir, Integer startwert, Integer limit) {
+	public static List<CiItemDTO> findCisByNameOrAlias(String searchName, boolean showDeleted, String queryMode, boolean onlyApplications, String sort, String dir, Integer startwert, Integer limit) {
 		ArrayList<CiItemDTO> listResult = new ArrayList<CiItemDTO>();
 
 		boolean commit = false;
@@ -138,7 +141,11 @@ public class CiEntitiesHbn {
 		StringBuffer sql = new StringBuffer();
 
 		sql.append("select /*+ INDEX (DWH_ENTITY FIX_143_16) */ * from DWH_ENTITY  where");
-		sql.append(" upper(deleted) = 'NO'");
+		sql.append(" 1=1");
+		if (!showDeleted) {
+			sql.append(" and upper(deleted) = 'NO'");
+		}
+		
 		sql.append(" and TABLE_ID in (");
 		sql.append(AirKonstanten.TABLE_ID_APPLICATION);
 
@@ -234,6 +241,11 @@ public class CiEntitiesHbn {
 					
 					if (counter < startwert + limit) {
 						CiItemDTO anwendung = getApplicationDTOFromResultSet(rset);//ApplicationDTO
+						
+						if (null != anwendung.getDeleteQuelle() && !"No".equals(anwendung.getDeleteQuelle())) {
+							anwendung.setName(anwendung.getName() + " (DELETED)");
+						}
+						
 						listResult.add(anwendung);
 					}
 					counter++;
@@ -260,7 +272,7 @@ public class CiEntitiesHbn {
 		return listResult;
 	}
 
-	public static Long findCountCisByNameOrAlias(String searchName, String queryMode, boolean onlyApplications) {
+	public static Long findCountCisByNameOrAlias(String searchName, boolean showDeleted, String queryMode, boolean onlyApplications) {
 		boolean commit = false;
 		Transaction tx = null;
 		Statement selectStmt = null;
@@ -272,7 +284,13 @@ public class CiEntitiesHbn {
 		StringBuffer sql = new StringBuffer();
 
 		sql.append("select count(*) from DWH_ENTITY  where");
-		sql.append(" upper(deleted) = 'NO'");
+		
+		sql.append(" 1=1");
+		
+		if (!showDeleted) {
+			sql.append(" and upper(deleted) = 'NO'");
+		}
+		
 		sql.append(" and TABLE_ID in (");
 		sql.append(AirKonstanten.TABLE_ID_APPLICATION);
 

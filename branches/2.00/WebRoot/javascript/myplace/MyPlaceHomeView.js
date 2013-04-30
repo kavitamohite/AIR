@@ -204,6 +204,17 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    			this.activateButtonSaveUserOptions();
 			    		}.createDelegate(this)
 			    	}
+				}, {
+			    	xtype: 'checkbox',
+			        fieldLabel: 'Show Deleted',
+			        name: 'useroptionShowDeleted',
+			        id: 'useroptionShowDeleted',
+			        allowBlank: true,
+		          	listeners: {
+			    		check: function() {
+			    			this.activateButtonSaveUserOptions();
+			    		}.createDelegate(this)
+			    	}
 				}]
 			},{
 				id: 'saveuseroptionbutton',
@@ -260,6 +271,8 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 		field = this.getComponent('fsUserOptions').getComponent('useroptionCurrency');
 		params.currency = field.getValue();
 		
+		field = this.getComponent('fsUserOptions').getComponent('useroptionShowDeleted');
+		params.showDeleted = field.getValue() ? 'YES' : 'NO';
 		
 		userOptionSaveStore.load({
 			params: params
@@ -313,6 +326,7 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionCurrency'), labels.label_useroptions_currency);
 		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionNumberFormat'), labels.label_useroptions_numberformat);
 		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionDisableTooltip'), labels.label_useroptions_disableTooltip);
+		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionShowDeleted'), labels.label_useroptions_showDeleted);
 		
 		this.getComponent('saveuseroptionbutton').setText(labels['button_general_save']);//this.getFooterToolbar()
 	},
@@ -408,6 +422,15 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			else if ('AIR_CURRENCY' === key) {
 				this.getComponent('fsUserOptions').getComponent('useroptionCurrency').setValue(value);
 			}
+			else if ('AIR_SHOW_DELETED' === key) {
+				if ('YES' == value) {
+					this.getComponent('fsUserOptions').getComponent('useroptionShowDeleted').setValue(true);					
+				}
+				else {
+					this.getComponent('fsUserOptions').getComponent('useroptionShowDeleted').setValue(false);
+				}
+			}
+
 		}.createDelegate(this));
 		
 		this.inactivateButtonSaveUserOptions();

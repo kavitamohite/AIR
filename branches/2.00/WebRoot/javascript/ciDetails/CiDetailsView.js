@@ -66,6 +66,12 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        fieldLabel: 'Update data',
 		        id: 'detailsUpdatedata',
 		        disabled: true
+			},{
+		    	xtype: 'textfield',
+		        width: 230,
+		        fieldLabel: 'Delete data',
+		        id: 'detailsDeletedata',
+		        disabled: true
 			}],
 		    tbar: {
 		    	style: {
@@ -124,6 +130,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		this.getComponent('detailsInsertdata').reset();
 		this.getComponent('detailsUpdatedata').reset();
+		this.getComponent('detailsDeletedata').reset();
 	},
 	
 	update: function(ciDetail) {//data
@@ -166,7 +173,8 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var tfSla = this.getComponent('detailsSlaName');
 		var cbBusinessEssential = this.getComponent('detailsBusinessEssential');
 		var tfInsertData = this.getComponent('detailsInsertdata');
-		var tfUpdateData = this.getComponent('detailsUpdatedata')
+		var tfUpdateData = this.getComponent('detailsUpdatedata');
+		var tfDeleteData = this.getComponent('detailsDeletedata');
 		
 
 		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION) {
@@ -251,12 +259,15 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			tfInsertData.setValue(value);
 			value = ciDetail.updateQuelle + ' ' + ciDetail.updateUser + ' ' + ciDetail.updateTimestamp;
 			tfUpdateData.setValue(value);
+			value = ciDetail.deleteQuelle + ' ' + ciDetail.deleteUser + ' ' + ciDetail.deleteTimestamp;
+			tfDeleteData.setValue(value);
 		} else {
 			tfAlias.reset();
 			tfCiOwner.reset();
 			tfAlias.reset();
 			tfInsertData.reset();
 			tfUpdateData.reset();
+			tfDeleteData.reset();
 		}
 		
 		this.updateMailTemplate(data);
@@ -301,6 +312,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setFieldLabel(this.getComponent('detailsBusinessEssential'), labels.label_details_businessessential);
 		this.setFieldLabel(this.getComponent('detailsInsertdata'), labels.label_details_insertdata);
 		this.setFieldLabel(this.getComponent('detailsUpdatedata'), labels.label_details_updatedata);
+		this.setFieldLabel(this.getComponent('detailsDeletedata'), labels.label_details_deletedata);
 	},
 	
 	updateToolTips: function(toolTips) {
@@ -314,6 +326,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		this.setTooltipData(this.getComponent('detailsInsertdata').label, toolTips.insertData, toolTips.insertDataText);
 		this.setTooltipData(this.getComponent('detailsUpdatedata').label, toolTips.updateData, toolTips.updateDataText);
+		this.setTooltipData(this.getComponent('detailsDeletedata').label, toolTips.deleteData, toolTips.deleteDataText);
 	}
 });
 Ext.reg('AIR.CiDetailsView', AIR.CiDetailsView);

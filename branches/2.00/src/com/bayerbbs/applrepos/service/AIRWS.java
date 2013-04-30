@@ -169,6 +169,7 @@ public class AIRWS {
 				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_HELP_ACTIVATE", editInput.getHelp());
 				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_SKIP_WIZARD", editInput.getSkipWizard());
 				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_TOOLTIP", editInput.getTooltip());
+				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_SHOW_DELETED", editInput.getShowDeleted());
 			}
 			else {
 				List<ItsecUserOptionDTO> listOptions = ItsecUserOptionHbn.findItSecUserOptions(editInput.getCwid());

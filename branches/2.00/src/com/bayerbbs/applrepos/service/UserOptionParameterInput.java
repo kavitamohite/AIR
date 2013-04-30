@@ -11,6 +11,7 @@ public class UserOptionParameterInput {
 	private String help;			// YES, NO
 	private String skipWizard;		// YES, NO
 	private String tooltip;			// YES, NO
+	private String showDeleted;		// YES, NO
 	
 	
 	public String getCwid() {
@@ -60,6 +61,12 @@ public class UserOptionParameterInput {
 	}
 	public void setTooltip(String tooltip) {
 		this.tooltip = tooltip;
+	}
+	public String getShowDeleted() {
+		return showDeleted;
+	}
+	public void setShowDeleted(String showDeleted) {
+		this.showDeleted = showDeleted;
 	}
 	
 }

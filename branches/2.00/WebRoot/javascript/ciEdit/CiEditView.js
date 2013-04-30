@@ -419,10 +419,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			var labels = AAM.getLabels();
 			var message = labels.CiEinsprungCiIdDoesNotExistMessage.replace('{0}', AAM.getCiId());
 			this.openEinsprungDataWarnungWindow(message);
-		} else if(ciData.deleteTimestamp && ciData.deleteTimestamp.length > 0) {
-			var labels = AAM.getLabels();
-			var message = labels.CiEinsprungCiIdMarkedAsDeleted.replace('{0}', AAM.getCiId());
-			this.openEinsprungDataWarnungWindow(message);
+//		} else if(ciData.deleteTimestamp && ciData.deleteTimestamp.length > 0) {
+//			var labels = AAM.getLabels();
+//			var message = labels.CiEinsprungCiIdMarkedAsDeleted.replace('{0}', AAM.getCiId());
+//			this.openEinsprungDataWarnungWindow(message);
 		} else {
 			this.update(ciData);
 			

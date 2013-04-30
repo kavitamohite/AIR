@@ -353,7 +353,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			AIR.AirAclManager.setAccessMode(this.getComponent('severityLevel'), data);
 			
 			var cbBusinessEssential = this.getComponent('businessEssential');
-			if(AIR.AirApplicationManager.hasRole(AC.ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)) {//hasRoleBusinessEssentialEditor (#8)
+			if(AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)) {
+
 				// nur für die Rolle BusinessEssential-Editor
 				// unter Prüfung der Insert-Source mittels isEditable
 				if (AIR.AirAclManager.isEditable(cbBusinessEssential)) {
@@ -376,6 +377,16 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //				AIR.AirAclManager.setMandatory(cbBusinessEssential, 'optional');
 				AIR.AirAclManager.setNecessityInternal(cbBusinessEssential.label, 'optional');
 			}
+
+
+			if ('' === data.deleteTimestamp) {
+				// normal ci data
+			}
+			else {
+				// we can't edit deleted entries
+				Util.disableCombo(cbBusinessEssential);
+			}
+			
 		}
 	},
 	

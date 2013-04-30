@@ -75,6 +75,7 @@
 			<label_useroptions_currency>Currency</label_useroptions_currency>
 			<label_useroptions_numberformat>Number Format DE</label_useroptions_numberformat>
 			<label_useroptions_disableTooltip>Disable Tooltip</label_useroptions_disableTooltip>
+			<label_useroptions_showDeleted>Show deleted data</label_useroptions_showDeleted>
 		
 		
 		<label_menu_searchmenuitem>Search</label_menu_searchmenuitem>
@@ -157,6 +158,7 @@
 			<label_details_businessessential>Business Essential</label_details_businessessential>
 			<label_details_insertdata>Insert source, user, date</label_details_insertdata>
 			<label_details_updatedata>Update source, user, date</label_details_updatedata>
+			<label_details_deletedata>Delete source, user, date</label_details_deletedata>
 		
 		<specificsPanelTitle>Specifics</specificsPanelTitle>
 			<name>Name</name>

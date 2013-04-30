@@ -76,6 +76,12 @@ public class ApplicationWS {
 				limit = 20;
 			}
 			
+			boolean showDeleted = false;
+			if (null != input.getShowDeleted() && AirKonstanten.YES_SHORT.equals(input.getShowDeleted())) {
+				showDeleted = true;
+			}
+			
+			
 			boolean onlyApplications = false;
 			if (null != input.getIsOnlyApplications() && AirKonstanten.STRING_TRUE.equals(input.getIsOnlyApplications())) {//getOnlyapplications
 				onlyApplications = true;
@@ -115,7 +121,7 @@ public class ApplicationWS {
 				}
 			} else {
 				if (AirKonstanten.STRING_TRUE.equals(input.getIsAdvSearch())) {
-					listAnwendungen = AnwendungHbn.findApplications(searchname, input.getQueryMode(),
+					listAnwendungen = AnwendungHbn.findApplications(searchname, showDeleted, input.getQueryMode(),
 						input.getAppOwner(), input.getAppOwnerHidden(), input.getAppOwnerDelegate(), input.getAppOwnerDelegateHidden(), 
 						input.getCiOwner(), input.getCiOwnerHidden(), input.getCiOwnerDelegate(), input.getCiOwnerDelegateHidden(),
 						onlyApplications, input.getSort(), input.getDir(),
@@ -132,8 +138,10 @@ public class ApplicationWS {
 						input.getProcessOptions(), input.getSourceOptions(), input.getBusinessEssentialOptions()
 					);
 				} else {
-					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchname, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir(), startwert, limit);
-					anzahlDatensaetze = CiEntitiesHbn.findCountCisByNameOrAlias(searchname, input.getQueryMode(), onlyApplications);
+//					boolean showDeleted = true;
+					
+					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchname, showDeleted, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir(), startwert, limit);
+					anzahlDatensaetze = CiEntitiesHbn.findCountCisByNameOrAlias(searchname, showDeleted, input.getQueryMode(), onlyApplications);
 				}
 			}
 		}
@@ -955,8 +963,21 @@ public class ApplicationWS {
 			} else {
 				accessDTO.setBusiness_Essential_Id(AirKonstanten.NO_SHORT);
 			}
+
+			// DELETED Application
+			if (StringUtils.isNotNullOrEmpty(application.getDeleteQuelle())) {
+				// der Datensatz ist löschmarkiert und darf nicht editiert werden!
+				// auch nicht vom Admin!
+				accessDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
+				accessDTO.setRelevanceStrategic(AirKonstanten.NO_SHORT);
+				accessDTO.setBusiness_Essential_Id(AirKonstanten.NO_SHORT);
+				dto.setIsEditable(AirKonstanten.NO_SHORT);
+			}
+
+		
 		} // end of if valid session
 
+		
 		output.setApplicationDTO(dto);
 		output.setApplicationAccessDTO(accessDTO);
 

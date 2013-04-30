@@ -311,6 +311,11 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    var isAppOnly = AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_LAYER) || store.findExact('itsecUserOptionName', 'AIR_APPLICATION_ONLY') > -1;
 	    params.isOnlyApplications = '' + isAppOnly;//onlyapplications;
 
+	    params.showDeleted = 'N';
+	    if (this.isShowDeleted()) {
+		    params.showDeleted = 'Y';
+		}
+	    
 	    params.ciNameAliasQuery = searchString;//params.query
 	    params.queryMode = queryMode;
 		params.isAdvSearch = '' + this.isAdvSearch;//params.advancedsearch
@@ -321,6 +326,12 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	getAdvancedSearchParams: function(params) {
 		params.isAdvSearch = this.isAdvSearch;
 		params.isAdvSearchExt = this.isAdvSearchExt;
+		
+	    params.showDeleted = 'N';
+	    if (this.isShowDeleted()) {
+		    params.showDeleted = 'Y';
+		}
+
 		
 //		var ciAdvancedSearchView = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('ciAdvancedSearchView');
 		
@@ -778,6 +789,19 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	
 	setAdvSearch: function(isAdvSearch) {
 		this.isAdvSearch = isAdvSearch;
+	},
+	
+	isShowDeleted: function() {
+		var isShowDeleted = false;
+		var store = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
+	    var userOptionRecord = Util.getStoreRecord(store, 'itsecUserOptionName', 'AIR_SHOW_DELETED');
+
+	    if ('YES' == userOptionRecord.get('itsecUserOptionValue')) {
+	    	isShowDeleted = true;
+		}
+	    return isShowDeleted;
 	}
+	
+	
 });
 Ext.reg('AIR.CiSearchView', AIR.CiSearchView);

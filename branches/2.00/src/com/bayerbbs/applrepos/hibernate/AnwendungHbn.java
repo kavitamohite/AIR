@@ -2182,7 +2182,7 @@ public class AnwendungHbn extends BaseHbn {
 
 	//ApplicationDTO
 	public static List<CiItemDTO> findApplications(
-			String query, String queryMode, String advsearchappowner, String advsearchappownerHidden, String advsearchappdelegate, 
+			String query, boolean showDeleted, String queryMode, String advsearchappowner, String advsearchappownerHidden, String advsearchappdelegate, 
 			String advsearchappdelegateHidden, String advsearchciowner, String advsearchciownerHidden, String advsearchcidelegate, 
 			String advsearchcidelegateHidden, boolean onlyapplications, String sort, String dir,
 			Integer tableId, Integer ciSubType, String advsearchdescription, Long advsearchoperationalstatusid,
@@ -2441,8 +2441,9 @@ public class AnwendungHbn extends BaseHbn {
 			sql.append(")");
 		}
 
-		
-		sql.append("  and anw.DEL_TIMESTAMP is null");
+		if (!showDeleted) {
+			sql.append("  and anw.DEL_TIMESTAMP is null");
+		}
 		
 		if (StringUtils.isNotNullOrEmpty(sort)) {
 			if ("applicationName".equals(sort)) {
@@ -2501,6 +2502,8 @@ public class AnwendungHbn extends BaseHbn {
 					String applicationOwnerDelegate = rset.getString("APPLICATION_OWNER_DELEGATE");
 					String applicationSteward = rset.getString("APPLICATION_STEWARD");
 					
+					String deleteQuelle = rset.getString("DEL_QUELLE");
+					
 					CiItemDTO anw = new CiItemDTO();//ApplicationDTO
 					anw.setId(anwendungId);
 //					anw.setBarApplicationId(barApplicationId);
@@ -2514,6 +2517,13 @@ public class AnwendungHbn extends BaseHbn {
 					anw.setApplicationOwnerDelegate(applicationOwnerDelegate);
 					anw.setApplicationSteward(applicationSteward);
 					anw.setTableId(AirKonstanten.TABLE_ID_APPLICATION);
+					
+					anw.setDeleteQuelle(deleteQuelle);
+					
+					if (null != anw.getDeleteQuelle()) {
+						anw.setName(anw.getName() + " (DELETED)");
+					}
+					
 					listResult.add(anw);
 				}
 			}
