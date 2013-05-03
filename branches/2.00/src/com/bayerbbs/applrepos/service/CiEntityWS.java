@@ -104,7 +104,7 @@ public class CiEntityWS {
 			
 			
 			AccessRightChecker checker = new AccessRightChecker();
-			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), itSystem)) {
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), input.getToken(), itSystem)) {
 				itSystemDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 			} else {
 				itSystemDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
@@ -130,7 +130,7 @@ public class CiEntityWS {
 			standortDTO.setNameEn(standort.getNameEn());
 			
 			AccessRightChecker checker = new AccessRightChecker();
-			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), standort)) {
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), input.getToken(), standort)) {
 				standortDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 			} else {
 				standortDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
@@ -154,7 +154,7 @@ public class CiEntityWS {
 			terrainDTO.setCiLokationsKette(lokationsKette);
 			
 			AccessRightChecker checker = new AccessRightChecker();
-			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), terrain)) {
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), input.getToken(), terrain)) {
 				terrainDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 			} else {
 				terrainDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
@@ -195,7 +195,7 @@ public class CiEntityWS {
 			
 			//Standard Zugriffsrechte setzen.
 			AccessRightChecker checker = new AccessRightChecker();
-			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), schrank)) {
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), input.getToken(), schrank)) {
 				schrankDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 			} else {
 				schrankDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
@@ -226,7 +226,7 @@ public class CiEntityWS {
 			buildingDTO.setCiLokationsKette(lokationsKette);
 			
 			AccessRightChecker checker = new AccessRightChecker();
-			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), building)) {
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), input.getToken(), building)) {
 				buildingDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 			} else {
 				buildingDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
@@ -281,7 +281,7 @@ public class CiEntityWS {
 			}*/
 			
 			AccessRightChecker checker = new AccessRightChecker();
-			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), buildingArea)) {
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), input.getToken(), buildingArea)) {
 				buildingAreaDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 			} else {
 				buildingAreaDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
@@ -292,13 +292,13 @@ public class CiEntityWS {
 	}
 		
 	
-	public RoomDTO getRoom(CiDetailParameterInput detailInput) {
+	public RoomDTO getRoom(CiDetailParameterInput input) {
 		RoomDTO roomDTO = new RoomDTO();
 //		CiDetailParameterOutput<RoomDTO> output = new CiDetailParameterOutput<RoomDTO>();
 
-		if(LDAPAuthWS.isLoginValid(detailInput.getCwid(), detailInput.getToken())) {
-			Room room = RoomHbn.findById(detailInput.getCiId());
-			CiLokationsKette lokationsKette = RoomHbn.findLokationsKetteById(detailInput.getCiId());
+		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+			Room room = RoomHbn.findById(input.getCiId());
+			CiLokationsKette lokationsKette = RoomHbn.findLokationsKetteById(input.getCiId());
 			Building building = room.getBuildingArea().getBuilding();
 //			Set<BuildingArea> buildingAreas = building.getBuildingAreas();
 
@@ -321,7 +321,7 @@ public class CiEntityWS {
 			
 			//Standard Zugriffsrechte setzen.
 			AccessRightChecker checker = new AccessRightChecker();
-			if (checker.isRelevanceOperational(detailInput.getCwid().toUpperCase(), room)) {
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), input.getToken(), room)) {
 				roomDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 			} else {
 				roomDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
@@ -572,21 +572,24 @@ public class CiEntityWS {
 		
 		ciBaseDTO.setCiOwnerHidden(ciBase.getCiOwner());
 		ciBaseDTO.setCiOwnerDelegateHidden(ciBase.getCiOwnerDelegate());
-//		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwner())) {
-//			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwner());
-//			if (null != listPers && 1 == listPers.size()) {
-//				PersonsDTO tempPers = listPers.get(0);
-//				ciBaseDTO.setCiOwner(tempPers.getDisplayNameFull());
-//			}
-//		}
-//
-//		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerDelegate())) {
-//			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerDelegate());
-//			if (null != listPers && 1 == listPers.size()) {
-//				PersonsDTO tempPers = listPers.get(0);
-//				ciBaseDTO.setCiOwnerDelegate(tempPers.getDisplayNameFull());
-//			}
-//		}
+		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerHidden())) {//getCiOwner
+			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerHidden());//getCiOwner
+			if (null != listPers && 1 == listPers.size()) {
+				PersonsDTO tempPers = listPers.get(0);
+				ciBaseDTO.setCiOwner(tempPers.getDisplayNameFull());
+			}
+		}
+
+		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerDelegateHidden())) {//getCiOwnerDelegate
+			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerDelegateHidden());//getCiOwnerDelegate
+			if (null != listPersons && 1 == listPersons.size()) {
+				PersonsDTO tempPers = listPersons.get(0);
+				ciBaseDTO.setCiOwnerDelegate(tempPers.getDisplayNameFull());
+			}
+			else ciBaseDTO.setCiOwnerDelegate(ciBaseDTO.getCiOwnerDelegateHidden());//Delegate is Group
+		}
+		
+		
 		
 		
 		ciBaseDTO.setSlaId(ciBase.getSlaId());
@@ -594,6 +597,10 @@ public class CiEntityWS {
 		
 		ciBaseDTO.setItSecSbAvailabilityId(ciBase.getItSecSbAvailability());
 		ciBaseDTO.setItSecSbAvailabilityTxt(ciBase.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription
+		ciBaseDTO.setItSecSbIntegrityId(ciBase.getItSecSbIntegrityId());
+		ciBaseDTO.setItSecSbIntegrityTxt(ciBase.getItSecSbIntegrityTxt());
+		ciBaseDTO.setItSecSbConfidentialityId(ciBase.getItSecSbConfidentialityId());
+		ciBaseDTO.setItSecSbConfidentialityTxt(ciBase.getItSecSbConfidentialityTxt());
 		
 		ciBaseDTO.setItset(ciBase.getItset());
 		ciBaseDTO.setTemplate(ciBase.getTemplate());

@@ -186,7 +186,7 @@ public class LokationItemHbn extends BaseHbn {
 					
 					
 					String lkString = getLokationsKetteAsString(rs, metaData.getLocationFields());
-					ci.setApplicationCat2Txt(lkString);
+					ci.setLocation(lkString);//setApplicationCat2Txt
 
 //					StringBuffer kette = new StringBuffer();
 //					String[] locationFields = metaData.getLocationFields().split(AirKonstanten.KOMMA);

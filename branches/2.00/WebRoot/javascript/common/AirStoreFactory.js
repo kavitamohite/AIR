@@ -280,7 +280,7 @@ AIR.AirStoreFactory = function() {
 		createSlaListStore: function() {
 			var slaListRecord = Ext.data.Record.create([
 	           {name: 'text', mapping: 'slaName'},
-	           {name: 'id', mapping: 'slaId'}
+	           {name: 'id', type: 'int', mapping: 'slaId'}
 	        ]);
 	
 			var slaListReader = new Ext.data.XmlReader({
@@ -311,7 +311,8 @@ AIR.AirStoreFactory = function() {
 		createServiceContractListStore: function() {
 			var serviceContractListRecord = Ext.data.Record.create([
 	            {name: 'text', mapping: 'serviceContractName'},
-	            {name: 'id', mapping: 'serviceContractId'}
+	            {name: 'id', type: 'int', mapping: 'serviceContractId'},
+	            {name: 'slaId', type: 'int'}
 	        ]);
 	
 			var serviceContractListReader = new Ext.data.XmlReader({
@@ -331,7 +332,7 @@ AIR.AirStoreFactory = function() {
 		      		reader: serviceContractListReader
 		      	}),
 		      	
-		      	fields: [ 'id', 'text' ],
+//		      	fields: [ 'id', 'text', 'slaId' ],
 	
 		      	reader: serviceContractListReader
 			});
@@ -1730,7 +1731,8 @@ AIR.AirStoreFactory = function() {
                 {name: 'id', type: 'int'},
 				{name: 'text', mapping: 'ciTypeName'},
 				{name: 'ciTypeId', type: 'int'},
-				{name: 'ciSubTypeId', type: 'int'}
+				{name: 'ciSubTypeId', type: 'int'},
+				{name: 'sortId', type: 'int'}
 		    ]);
 		
 		    var ciTypeListReader = new Ext.data.XmlReader({
@@ -1750,6 +1752,7 @@ AIR.AirStoreFactory = function() {
 		      		reader: ciTypeListReader
 		      	}),
 		    	
+		      	fields: [ 'id', 'text', 'ciTypeId', 'ciSubTypeId', 'sortId' ],//für store.sort
 		      	reader: ciTypeListReader
 		    });
 		    
@@ -2094,6 +2097,7 @@ AIR.AirStoreFactory = function() {
 			    {name: 'alias'},
 			    {name: 'applicationCat1Txt'},
 			    {name: 'applicationCat2Txt'},
+			    {name: 'location'},
 			    {name: 'ciOwner'},
 			    {name: 'ciOwnerDelegate'},
 			    {name: 'applicationOwner'},

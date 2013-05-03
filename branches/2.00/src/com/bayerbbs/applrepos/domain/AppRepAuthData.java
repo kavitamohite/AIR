@@ -1,15 +1,20 @@
 package com.bayerbbs.applrepos.domain;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.bayerbbs.applrepos.dto.RolePersonDTO;
 
 public class AppRepAuthData implements Serializable {
-
 	private static final long serialVersionUID = -8255363056759491716L;
 	
 	private String cwid;
 	private String token;
 	private String username;
 	private String lastlogon;
+	
+	private List<RolePersonDTO> roles;
+	
 	
 	public String getCwid() {
 		return cwid;
@@ -36,4 +41,10 @@ public class AppRepAuthData implements Serializable {
 		this.lastlogon = lastlogon;
 	}
 	
+	public void setRoles(List<RolePersonDTO> roles) {
+		this.roles = roles;
+	}
+	public List<RolePersonDTO> getRoles() {
+		return roles;
+	}
 }

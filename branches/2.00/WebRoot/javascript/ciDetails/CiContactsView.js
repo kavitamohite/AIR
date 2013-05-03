@@ -1046,9 +1046,14 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	
 		var labels = AIR.AirApplicationManager.getLabels();
-		var label = data.applicationCat1Txt === 'Application' ? labels.applicationManager : labels.label_details_ciOwner;
+//		var label = data.applicationCat1Txt === 'Application' ? labels.applicationManager : labels.label_details_ciOwner;
+//		var label = AAM.getAppDetail().tableId == AC.TABLE_ID_APPLICATION && AAM.getAppDetail().applicationCat1Id && AAM.getAppDetail().applicationCat1Id == AC.APP_CAT1_APPLICATION ? labels.applicationManager : labels.label_details_ciOwner;
+		var ciTypeId = AAM.getAppDetail() ? AAM.getAppDetail().tableId : AAM.getTableId();
+		var ciSubTypeId = AAM.getAppDetail() ? AAM.getAppDetail().applicationCat1Id ? AAM.getAppDetail().applicationCat1Id : AAM.getAppDetail().ciSubTypeId : AAM.getCiSubTypeId();
+		var label = ciTypeId == AC.TABLE_ID_APPLICATION && ciSubTypeId == AC.APP_CAT1_APPLICATION ? labels.applicationManager : labels.label_details_ciOwner;
+
 		this.getComponent('fsCIOwner').setTitle(label);
-		
+		this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('labelgpsccontactCiOwner').setText(label);
 		
 		var fsContactsGPSC = this.getComponent('contactsGPSC');
 		if(data.tableId == AC.TABLE_ID_APPLICATION || data.tableId == AC.TABLE_ID_IT_SYSTEM) {
@@ -1057,15 +1062,22 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			var pGpsccontactOwningBusinessGroup = fsContactsGPSC.getComponent('pGpsccontactOwningBusinessGroup');
 			var pGpsccontactImplementationTeam = fsContactsGPSC.getComponent('pGpsccontactImplementationTeam');
 			var pGpsccontactBusinessOwnerRepresentative = fsContactsGPSC.getComponent('pGpsccontactBusinessOwnerRepresentative');
+			var pGpsccontactImpactedBusiness = fsContactsGPSC.getComponent('pGpsccontactImpactedBusiness');
 
 			if(data.tableId == AC.TABLE_ID_APPLICATION) {
 				pGpsccontactOwningBusinessGroup.setVisible(true);
 				pGpsccontactImplementationTeam.setVisible(true);
 				pGpsccontactBusinessOwnerRepresentative.setVisible(true);
+				
+				if(data.applicationCat1Id && data.applicationCat1Id == AC.APP_CAT1_APPLICATION)
+					pGpsccontactImpactedBusiness.setVisible(true);
+				else
+					pGpsccontactImpactedBusiness.setVisible(false);
 			} else {
 				pGpsccontactOwningBusinessGroup.setVisible(false);
 				pGpsccontactImplementationTeam.setVisible(false);
 				pGpsccontactBusinessOwnerRepresentative.setVisible(false);
+				pGpsccontactImpactedBusiness.setVisible(false);
 			}
 			
 			var applicationContactsStore = AIR.AirStoreFactory.createApplicationContactsStore();
@@ -1180,9 +1192,8 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if (!field.disabled) {
 				data.gpsccontactCiOwner = field.getValue();
 				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwnerHidden');
-				if (field.getValue() && field.getValue().length > 0) {
+				if (field.getValue() && field.getValue().length > 0)
 					data.gpsccontactCiOwnerHidden = field.getValue();
-				}
 			} else {
 				data.gpsccontactCiOwnerHidden = 'DISABLED';
 			}
@@ -1193,7 +1204,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactSystemResponsible').getComponent('gpsccontactSystemResponsibleHidden');
 				if(field.getValue() && field.getValue().length > 0)
 					data.gpsccontactSystemResponsibleHidden = field.getValue();
-				
 			} else {
 				data.gpsccontactSystemResponsibleHidden = 'DISABLED';
 			}
@@ -1204,7 +1214,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroupHidden');
 				if(field.getValue() && field.getValue().length > 0)
 					data.gpsccontactSupportGroupHidden = field.getValue();
-				
 			} else {
 				data.gpsccontactSupportGroup = 'DISABLED';
 			}
@@ -1216,7 +1225,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactChangeTeam').getComponent('gpsccontactChangeTeamHidden');
 				if(field.getValue() && field.getValue().length > 0)
 					data.gpsccontactChangeTeamHidden = field.getValue();
-				
 			} else {
 				data.gpsccontactChangeTeamHidden = 'DISABLED';
 			}
@@ -1227,7 +1235,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinator').getComponent('gpsccontactServiceCoordinatorHidden');
 				if(field.getValue() && field.getValue().length > 0)
 					data.gpsccontactServiceCoordinatorHidden = field.getValue();
-				
 			} else {
 				data.gpsccontactImplementationTeamHidden = 'DISABLED';
 			}
@@ -1241,7 +1248,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	//			var v2 = field.getValue();
 				if(field.getValue())// && field.getValue().length > 0
 					data.gpsccontactServiceCoordinatorIndivHidden = field.getValue();
-				
 			} else {
 				data.gpsccontactServiceCoordinatorIndivHidden = 'DISABLED';
 			}
@@ -1254,7 +1260,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					field = this.getComponent('contactsGPSC').getComponent('pGpsccontactImplementationTeam').getComponent('gpsccontactImplementationTeamHidden');
 					if(field.getValue() && field.getValue().length > 0)
 						data.gpsccontactImplementationTeamHidden = field.getValue();
-					
 				} else {
 					data.gpsccontactImplementationTeamHidden = 'DISABLED';
 				}
@@ -1265,7 +1270,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					field = this.getComponent('contactsGPSC').getComponent('pGpsccontactOwningBusinessGroup').getComponent('gpsccontactOwningBusinessGroupHidden');
 					if(field.getValue() && field.getValue().length > 0)
 						data.gpsccontactOwningBusinessGroupHidden = field.getValue();
-					
 				} else {
 					data.gpsccontactOwningBusinessGroupHidden = 'DISABLED';
 				}
@@ -1276,7 +1280,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					field = this.getComponent('contactsGPSC').getComponent('pGpsccontactBusinessOwnerRepresentative').getComponent('gpsccontactBusinessOwnerRepresentativeHidden');
 					if(field.getValue() && field.getValue().length > 0)
 						data.gpsccontactBusinessOwnerRepresentativeHidden = field.getValue();
-					
 				} else {
 					data.gpsccontactBusinessOwnerRepresentativeHidden = 'DISABLED';
 				}
@@ -1290,7 +1293,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalation').getComponent('gpsccontactEscalationHidden');
 				if(field.getValue() && field.getValue().length > 0)
 					data.gpsccontactEscalationHidden = field.getValue();
-				
 			} else {
 				data.gpsccontactImplementationTeamHidden = 'DISABLED';
 			}
@@ -1302,19 +1304,17 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactEscalationIndiv').getComponent('gpsccontactEscalationIndivHidden');
 				if(field.getValue())// && field.getValue().length > 0
 					data.gpsccontactEscalationIndivHidden = field.getValue();
-				
 			} else {
 				data.gpsccontactEscalationIndivHidden = 'DISABLED';
 			}
-	
-	
+
+
 			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactImpactedBusiness').getComponent('gpsccontactImpactedBusiness');
 			if (!field.disabled) {
 				data.gpsccontactImpactedBusiness = field.getValue();
 				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactImpactedBusiness').getComponent('gpsccontactImpactedBusinessHidden');
 				if(field.getValue() && field.getValue().length > 0)
 					data.gpsccontactImpactedBusinessHidden = field.getValue();
-				
 			} else {
 				data.gpsccontactImpactedBusinessHidden = 'DISABLED';
 			}
@@ -1342,7 +1342,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('labelciSubResponsible').setText(labels.ciSubResponsible);
 
 		this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('labelgpsccontactResponsibleAtCustomerSide').setText(labels.gpsccontactResponsibleAtCustomerSide);
-		this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('labelgpsccontactCiOwner').setText(labels.gpsccontactCiOwner);
+//		var ciTypeId = AAM.getAppDetail() ? AAM.getAppDetail().tableId : AAM.getTableId();
+//		var ciSubTypeId = AAM.getAppDetail() ? AAM.getAppDetail().applicationCat1Id ? AAM.getAppDetail().applicationCat1Id : AAM.getAppDetail().ciSubTypeId : AAM.getCiSubTypeId();
+//		var label = ciTypeId == AC.TABLE_ID_APPLICATION && ciSubTypeId == AC.APP_CAT1_APPLICATION ? labels.applicationManager : labels.label_details_ciOwner;
+		
+//		this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('labelgpsccontactCiOwner').setText(label);//labels.gpsccontactCiOwner
 		this.getComponent('contactsGPSC').getComponent('pGpsccontactSystemResponsible').getComponent('labelgpsccontactSystemResponsible').setText(labels.gpsccontactSystemResponsible);
 		this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('labelgpsccontactSupportGroup').setText(labels.gpsccontactSupportGroup);
 		this.getComponent('contactsGPSC').getComponent('pGpsccontactChangeTeam').getComponent('labelgpsccontactChangeTeam').setText(labels.gpsccontactChangeTeam);

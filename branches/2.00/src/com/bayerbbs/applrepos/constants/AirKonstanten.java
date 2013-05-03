@@ -5,6 +5,9 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
+	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
+
+
 	public final static Long IT_SET_DEFAULT = new Long(11397);
 	public final static Long IT_SET_GERMANY = new Long(10002);
 	public final static Long BUSINESS_ESSENTIAL_DEFAULT = new Long(16);
@@ -21,7 +24,8 @@ public final class AirKonstanten {
 
 	
 	public static final String APPLICATION_GUI_NAME = "AIR";
-	
+	public static final String UNKNOWN = "unknown";
+
 	public static final String INSERT_QUELLE_ANT 	= "ANT";
 	public static final String INSERT_QUELLE_RFC 	= "RFC";
 	public static final String INSERT_QUELLE_SISEC 	= "SISecGUI";
@@ -62,14 +66,16 @@ public final class AirKonstanten {
 	
 	
 	// ROLEs
-	public static final String ROLE_AIR_ADMINISTRATOR 			= "AIR Administrator";
-	public static final String ROLE_AIR_APPLICATION_LAYER 		= "AIR Application Layer";
-	public static final String ROLE_AIR_APPLICATION_MANAGER 	= "AIR Application Manager";
-	public static final String ROLE_AIR_DEFAULT			 		= "AIR Default";
-	public static final String ROLE_AIR_DEVELOPER			 	= "AIR Developer";
-	public static final String ROLE_AIR_INFRASTRUCTURE_LAYER 	= "AIR Infrastructure Layer";
-	public static final String ROLE_AIR_INFRASTRUCTURE_MANAGER 	= "AIR Infrastructure Manager";	
-	public static final String ROLE_BUSINESS_ESSENTIAL_EDITOR	= "AIR BusinessEssential-Editor";
+	public static final String ROLE_AIR_ADMINISTRATOR 				= "AIR Administrator";
+	public static final String ROLE_AIR_APPLICATION_LAYER 			= "AIR Application Layer";
+	public static final String ROLE_AIR_APPLICATION_MANAGER 		= "AIR Application Manager";
+	public static final String ROLE_AIR_DEFAULT			 			= "AIR Default";
+	public static final String ROLE_AIR_DEVELOPER			 		= "AIR Developer";
+	public static final String ROLE_AIR_INFRASTRUCTURE_LAYER 		= "AIR Infrastructure Layer";
+	public static final String ROLE_AIR_INFRASTRUCTURE_MANAGER 		= "AIR Infrastructure Manager";	
+	public static final String ROLE_BUSINESS_ESSENTIAL_EDITOR		= "AIR BusinessEssential-Editor";
+	public static final String ROLE_AIR_LOCATION_DATA_MAINTENANCE	= "AIR Location Data Maintenance";
+
 	public static final String ROLE_SUBSTITUTE = "Substitute";
 
 	public static final Long CI_SUPPORT_STUFF_TYPE_UserAuthorizationSupportedByDocumentation = new Long(1);

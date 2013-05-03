@@ -694,7 +694,7 @@ public class StandortHbn extends LokationItemHbn {
 	private static List<String> validateStandort(StandortDTO dto, boolean isUpdate) {
 		Standort standort = findByNameAndCountryId(dto.getName(), dto.getLandId());
 		
-		boolean alreadyExists = isUpdate ? standort.getId().longValue() != dto.getId().longValue() : standort != null;
+		boolean alreadyExists = isUpdate ? standort != null && standort.getId().longValue() != dto.getId().longValue() : standort != null;
 		
 		List<String> messages = validateCi(dto);//new ArrayList<String>();
 		if(alreadyExists) {

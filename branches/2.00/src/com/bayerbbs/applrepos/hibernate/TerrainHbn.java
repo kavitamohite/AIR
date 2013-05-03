@@ -674,7 +674,7 @@ public class TerrainHbn extends LokationItemHbn {
 	private static List<String> validateTerrain(TerrainDTO dto, boolean isUpdate) {
 		Terrain terrain = findByNameAndSiteId(dto.getName(), dto.getStandortId());
 		
-		boolean alreadyExists = isUpdate ? terrain.getId().longValue() != dto.getId().longValue() : terrain != null;
+		boolean alreadyExists = isUpdate ? terrain != null && terrain.getId().longValue() != dto.getId().longValue() : terrain != null;
 		
 		List<String> messages = validateCi(dto);//new ArrayList<String>();
 		if(alreadyExists) {

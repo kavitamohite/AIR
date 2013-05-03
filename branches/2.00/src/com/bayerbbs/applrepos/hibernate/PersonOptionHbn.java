@@ -22,8 +22,7 @@ public class PersonOptionHbn {
 	 * @param input
 	 * @return
 	 */
-	public static PersonOptionDTO[] getArrayFromList(
-			List<PersonOptionDTO> input) {
+	public static PersonOptionDTO[] getArrayFromList(List<PersonOptionDTO> input) {
 		PersonOptionDTO output[] = new PersonOptionDTO[input.size()];
 		int i = 0;
 		for (final PersonOptionDTO data : input) {
@@ -39,8 +38,7 @@ public class PersonOptionHbn {
 	 * @param input
 	 * @return
 	 */
-	private static List<PersonOptionDTO> getDTOList(
-			List<PersonOption> input) {
+	private static List<PersonOptionDTO> getDTOList(List<PersonOption> input) {
 		ArrayList<PersonOptionDTO> listDTO = new ArrayList<PersonOptionDTO>();
 
 		for (Iterator<PersonOption> iter = input.iterator(); iter.hasNext();) {
@@ -48,8 +46,7 @@ public class PersonOptionHbn {
 			PersonOptionDTO dto = new PersonOptionDTO();
 
 			dto.setPersonOptionId(data.getPersonOptionId());
-			dto.setInterfaceId(data
-					.getInterfaceId());
+			dto.setInterfaceId(data.getInterfaceId());
 			dto.setCWID(data.getCWID());
 			dto.setName(data.getName());
 			dto.setValue(data.getValue());
@@ -67,21 +64,18 @@ public class PersonOptionHbn {
 		// Long interfaceId = new Long(value);
 
 		String interfaceAIRid = ApplReposHbn.getInterfaceIdFromApplication();
-		
+
 		StringBuffer sb = new StringBuffer();
 		sb.append("select h from PersonOption as h");
-		sb.append(" where h.interfaceId = ").append(
-				interfaceAIRid);
-		sb.append(" and h.CWID = '").append(cwid.toUpperCase())
-				.append("'");
+		sb.append(" where h.interfaceId = ").append(interfaceAIRid);
+		sb.append(" and h.CWID = '").append(cwid.toUpperCase()).append("'");
 		sb.append(" and h.deleteTimestamp is null");
 
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
 		try {
 			tx = session.beginTransaction();
-			List<PersonOption> values = session.createQuery(sb.toString())
-					.list();
+			List<PersonOption> values = session.createQuery(sb.toString()).list();
 
 			listResult = getDTOList(values);
 
@@ -93,10 +87,11 @@ public class PersonOptionHbn {
 		return listResult;
 	}
 
-	public static boolean savePersonOption(String cwid, PersonOption personOption) {
+	public static boolean savePersonOption(String cwid,
+			PersonOption personOption) {
 
 		boolean result = false;
-		
+
 		cwid = cwid.toUpperCase();
 
 		if (null != personOption) {
@@ -104,20 +99,20 @@ public class PersonOptionHbn {
 			Transaction tx = null;
 			tx = session.beginTransaction();
 			boolean toCommit = false;
-			
+
 			// Update data
 			personOption.setUpdateUser(cwid);
-			personOption
-					.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-			personOption.setUpdateTimestamp(ApplReposTS
-					.getCurrentTimestamp());
-			if (null == personOption.getId() || null == personOption.getInsertQuelle()) {
+			personOption.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			personOption.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+			if (null == personOption.getId()
+					|| null == personOption.getInsertQuelle()) {
 				// Insert data
 				personOption.setInsertQuelle(personOption.getUpdateQuelle());
 				personOption.setInsertUser(personOption.getUpdateUser());
-				personOption.setInsertTimestamp(personOption.getUpdateTimestamp());
+				personOption.setInsertTimestamp(personOption
+						.getUpdateTimestamp());
 			}
-			
+
 			try {
 				session.saveOrUpdate(personOption);
 				session.flush();
@@ -148,16 +143,16 @@ public class PersonOptionHbn {
 		return result;
 	}
 
-	
-	public static boolean savePersonOptions(String cwid, List<PersonOptionDTO> listOptions, String key, String value) {
+	public static boolean savePersonOptions(String cwid,
+			List<PersonOptionDTO> listOptions, String key, String value) {
 		boolean result = false;
-		
+
 		boolean isUpdate = false;
-		
+
 		String strInterfaceAIRid = ApplReposHbn.getInterfaceIdFromApplication();
-		
+
 		Long interfaceAirId = Long.parseLong(strInterfaceAIRid);
-		
+
 		if (null != listOptions && !listOptions.isEmpty()) {
 			for (Iterator iterator = listOptions.iterator(); iterator.hasNext();) {
 				PersonOptionDTO personOptionDTO = (PersonOptionDTO) iterator
@@ -166,15 +161,16 @@ public class PersonOptionHbn {
 					// found
 					PersonOption option = new PersonOption();
 					option.setInterfaceId(interfaceAirId);
-					option.setPersonOptionId(personOptionDTO.getPersonOptionId());
+					option.setPersonOptionId(personOptionDTO
+							.getPersonOptionId());
 					option.setCWID(personOptionDTO.getCWID());
 					option.setName(personOptionDTO.getName());
 					option.setValue(value);
-					
+
 					result = savePersonOption(cwid, option);
 					isUpdate = true;
 				}
-				
+
 			}
 		}
 
@@ -185,43 +181,43 @@ public class PersonOptionHbn {
 			option.setCWID(cwid.toUpperCase());
 			option.setName(key);
 			option.setValue(value);
-			
+
 			result = savePersonOption(cwid, option);
-			
+
 		}
-		
+
 		return result;
 	}
 
 	public static void saveLastLogon(String cwid) {
 		List<PersonOptionDTO> listOptions = findPersonOptions(cwid);
-		savePersonOptions(cwid, listOptions, "LAST_LOGON", ApplReposTS.getCurrentTimestamp().toString());
+		savePersonOptions(cwid, listOptions, "LAST_LOGON", ApplReposTS
+				.getCurrentTimestamp().toString());
 	}
-	
+
 	public static void saveLastLogoff(String cwid) {
 		List<PersonOptionDTO> listOptions = findPersonOptions(cwid);
-		savePersonOptions(cwid, listOptions, "LAST_LOGOFF", ApplReposTS.getCurrentTimestamp().toString());
+		savePersonOptions(cwid, listOptions, "LAST_LOGOFF", ApplReposTS
+				.getCurrentTimestamp().toString());
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	public static String findLastLogon(String cwid) {
 
 		String lastLogon = null;
-		
+
 		List<PersonOptionDTO> listResult = new ArrayList<PersonOptionDTO>();
 
 		// Long interfaceId = new Long(value);
 
 		String interfaceAIRid = ApplReposHbn.getInterfaceIdFromApplication();
-		
+
 		StringBuffer sb = new StringBuffer();
 		sb.append("select h from PersonOption as h");
-		sb.append(" where h.interfaceId = ").append(
-				interfaceAIRid);
-		sb.append(" and h.CWID = '").append(cwid.toUpperCase())
-				.append("'");
-		sb.append(" and h.deleteTimestamp is null and h.name='").append("LAST_LOGON").append("'");
+		sb.append(" where h.interfaceId = ").append(interfaceAIRid);
+		sb.append(" and h.CWID = '").append(cwid.toUpperCase()).append("'");
+		sb.append(" and h.deleteTimestamp is null and h.name='").append(
+				"LAST_LOGON").append("'");
 
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
@@ -239,20 +235,19 @@ public class PersonOptionHbn {
 
 		if (0 < listResult.size()) {
 			lastLogon = listResult.get(0).getValue();
-			
+
 			Timestamp timestamp = Timestamp.valueOf(lastLogon);
-			
+
 			if (null != timestamp) {
 				// String DATE_FORMAT = "dd-MM-yyyy HH:mm";
 				String DATE_FORMAT = "yyyy-MM-dd HH:mm";
 				SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-				lastLogon =  sdf.format(timestamp);
+				lastLogon = sdf.format(timestamp);
 			}
-			
+
 		}
-		
+
 		return lastLogon;
 	}
 
 }
-

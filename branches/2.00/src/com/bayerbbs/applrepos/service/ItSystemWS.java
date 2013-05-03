@@ -47,7 +47,10 @@ public class ItSystemWS {
 		//Protection
 		itSystemDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
 		itSystemDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
-
+		itSystemDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
+		itSystemDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
+		itSystemDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
+		itSystemDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
 //		itSystemDTO.setClassInformationId(input.getClassInformationId());
 //		itSystemDTO.setClassInformationExplanation(input.getClassInformationExplanation());
 		

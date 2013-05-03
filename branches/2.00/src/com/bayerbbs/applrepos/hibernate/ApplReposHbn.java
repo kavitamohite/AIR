@@ -616,10 +616,13 @@ public class ApplReposHbn {
 					// throw again the first exception
 					// throw e;
 				}
-	
 			}
-	
 		}
-	}	
+	}
+	
+	public boolean hasRole(String cwid) {
+		
+		return false;
+	}
 }
 

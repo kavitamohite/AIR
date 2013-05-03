@@ -18,17 +18,6 @@ import com.bayerbbs.applrepos.hibernate.PersonOptionHbn;
 import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 
 public class LDAPAuthWS {
-
-	private final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
-
-	/**
-	 * login checks the username / password combination by accessing the
-	 * LDAP-Server
-	 * 
-	 * @param username
-	 * @param password
-	 * @return
-	 */
 	public LDAPAuthParameterOutput login(LDAPAuthParameterInput paramInput) {
 		
 		String cwid = paramInput.getCwid();
@@ -36,9 +25,9 @@ public class LDAPAuthWS {
 		
 		LDAPAuthParameterOutput output = new LDAPAuthParameterOutput();
 		
-		List<RolePersonDTO> listAIRRolesDTO = ApplReposHbn.findRolePerson(cwid);
+		List<RolePersonDTO> roles = ApplReposHbn.findRolePerson(cwid);
 		
-		if (listAIRRolesDTO.isEmpty()) {
+		if (roles.isEmpty()) {
 			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { "AIR roles are needed to access the application" });
 		}
@@ -51,10 +40,9 @@ public class LDAPAuthWS {
 				// login successful
 				output.setResult(AirKonstanten.RESULT_OK);
 				output.setMessages(new String[] { "login successful" });
-				Cache myCache = (Cache) CacheManager.getInstance().getCache(
-						CACHENAME);
+				
+				Cache myCache = (Cache) CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
 				if (null != myCache) {
-	
 					Random random = new Random();
 	
 					// genereate token
@@ -72,13 +60,10 @@ public class LDAPAuthWS {
 					AppRepAuthData authData = new AppRepAuthData();
 					authData.setCwid(cwid);
 					authData.setToken(token);
-	
-					// find Person for Personname
-					PersonsWS personWS = new PersonsWS();
+					authData.setRoles(roles);
 					
 					// PersonsDTO[] aPersonsDTO = personWS.findPersonsByCWID(cwid);
-					PersonsDTO[] aPersonsDTO =  PersonsHbn.getArrayFromList(PersonsHbn.findPersonByCWID(cwid));
-					
+					PersonsDTO[] aPersonsDTO = PersonsHbn.getArrayFromList(PersonsHbn.findPersonByCWID(cwid));
 					
 					
 					if (null != aPersonsDTO && 1 == aPersonsDTO.length) {
@@ -106,8 +91,6 @@ public class LDAPAuthWS {
 						else {
 							ItSecUserHbn.updateItSecUserLastLogon(cwid);
 						}
-						
-						
 					}
 					
 					Element element = new Element(getKeyname(cwid, token), authData);
@@ -116,7 +99,6 @@ public class LDAPAuthWS {
 					output.setCwid(authData.getCwid());
 					output.setUsername(authData.getUsername());
 				}
-	
 			}
 			else {
 				output.setResult(AirKonstanten.RESULT_ERROR);
@@ -155,16 +137,13 @@ public class LDAPAuthWS {
 		String token = paramInput.getToken();
 
 		if (null != token) {
-		
-			Cache myCache = (Cache) CacheManager.getInstance().getCache(CACHENAME);
+			Cache myCache = (Cache) CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
+			
 			if (null != myCache) {
 				Element element = myCache.get(getKeyname(username, token));
+				
 				if (null != element) {
-					
 					AppRepAuthData authData = (AppRepAuthData) element.getObjectValue();
-					
-					
-					
 					String cachedToken = authData.getToken();
 	
 					if (token.equals(cachedToken)) {
@@ -184,12 +163,10 @@ public class LDAPAuthWS {
 					}
 				}
 			}
-		
 		}
 		
 		output.setRcCode(new Long(rcCode));
 		return output;
-
 	}
 	
 	
@@ -198,7 +175,7 @@ public class LDAPAuthWS {
 		
 		if (null != token) {
 			
-			Cache myCache = (Cache) CacheManager.getInstance().getCache(CACHENAME);
+			Cache myCache = (Cache) CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
 			if (null != myCache) {
 				Element element = myCache.get(getKeyname(username, token));
 				if (null != element) {
@@ -227,7 +204,7 @@ public class LDAPAuthWS {
 	 * @param username
 	 */
 	public void logout(String cwid, String token) {
-		Cache myCache = (Cache) CacheManager.getInstance().getCache(CACHENAME);
+		Cache myCache = (Cache) CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
 		if (null != myCache) {
 			myCache.remove(getKeyname(cwid, token));
 		}
@@ -243,12 +220,6 @@ public class LDAPAuthWS {
 		}
 	}
 
-	
-	/**
-	 * @param cwid
-	 * @param token
-	 * @return
-	 */
 	private static String getKeyname(String cwid, String token) {
 		return cwid + ":" + token;
 	}

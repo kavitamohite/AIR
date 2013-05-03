@@ -236,7 +236,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        displayField: 'name',
 	//			        value: this.viewData.link,
 				        
-//				        triggerAction: 'all',
+				        triggerAction: 'all',
 //				        lazyRender: true,
 //				        lazyInit: false,
 				        mode: 'local'

@@ -276,8 +276,8 @@
 	<Identifier>
 		<id>cbBuilding</id><!-- cbBuilding -->
 		<ciTypeId>88</ciTypeId>
-<!--		<Mandatory>mandatory</Mandatory>-->
-		<Mandatory>optional</Mandatory>
+		<Mandatory>mandatory</Mandatory>
+<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -584,7 +584,8 @@
 	</Identifier>
 	<Identifier>
 		<id>cbLicenseScanning</id>
-		<Mandatory>optional</Mandatory>
+		<ciTypeId>1</ciTypeId>
+		<Mandatory>required</Mandatory>
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -939,7 +940,7 @@
 	<!-- Protection -->
 	<Identifier>
 		<id>protectionAvailability</id>
-		<ciTypeId>1,2,3,13</ciTypeId>
+		<ciTypeId>1,2</ciTypeId><!-- ,3,13 -->
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -951,7 +952,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionAvailabilityDescription</id>
-		<ciTypeId>1,2,3,13</ciTypeId>
+		<ciTypeId>1,2</ciTypeId><!-- ,3,13 -->
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -964,7 +965,7 @@
 
 	<Identifier>
 		<id>protectionIntegrity</id>
-		<ciTypeId>1,3,13</ciTypeId>
+		<ciTypeId>1</ciTypeId><!-- ,3,13 -->
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -976,7 +977,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionIntegrityDescription</id>
-		<ciTypeId>1,3,13</ciTypeId>
+		<ciTypeId>1</ciTypeId><!-- ,3,13 -->
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -988,7 +989,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionConfidentiality</id>
-		<ciTypeId>1,3,13</ciTypeId>
+		<ciTypeId>1</ciTypeId><!-- ,3,13 -->
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -1000,7 +1001,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionConfidentialityDescription</id>
-		<ciTypeId>1,3,13</ciTypeId>
+		<ciTypeId>1</ciTypeId><!-- ,3,13 -->
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -1232,7 +1233,7 @@
 	</Identifier>-->
 	<Identifier>
 		<id>chbGR1435</id>
-		<ciTypeId>13,3,88</ciTypeId>
+		<ciTypeId>13,3,88,1</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -1244,7 +1245,7 @@
 	</Identifier>
 	<Identifier>
 		<id>chbGR1920</id>
-		<ciTypeId>13,3,88</ciTypeId>
+		<ciTypeId>13,3,88,1</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -1330,7 +1331,9 @@
 	</Identifier>
 	<Identifier>
 		<id>cbItSecGroup</id>
-		<Mandatory>dependent on other</Mandatory>
+		<ciTypeId>13,3</ciTypeId>
+		<Mandatory>required</Mandatory>
+<!--		<Mandatory>dependent on other</Mandatory>-->
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>AKZV,NAAC,SNS,BARDO,BBSam,BKV,BSHARP,BVS,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,OLA,QIP,SAP,SDB,SIEBEL,SOFTWARE,VCenter,SHAREPOINT,APAC,HPED,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>

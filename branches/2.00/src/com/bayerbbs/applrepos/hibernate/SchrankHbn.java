@@ -615,7 +615,7 @@ public class SchrankHbn extends LokationItemHbn {
 		
 		Schrank schrank = findByNameAndRoomId(dto.getName(), dto.getRoomId());
 		
-		boolean alreadyExists = isUpdate ? schrank.getId().longValue() != dto.getId().longValue() : schrank != null;
+		boolean alreadyExists = isUpdate ? schrank != null && schrank.getId().longValue() != dto.getId().longValue() : schrank != null;
 		
 		List<String> messages = validateCi(dto);//new ArrayList<String>();
 		

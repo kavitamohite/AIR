@@ -8,9 +8,8 @@ public class ApplicationToolsWSDelegate {
 
 	com.bayerbbs.applrepos.service.ApplicationToolsWS applicationToolsWS = new com.bayerbbs.applrepos.service.ApplicationToolsWS();
 
-	public ServiceContractDTO[] getServiceContractList(
-			ApplicationEditParameterInput editInput) {
-		return applicationToolsWS.getServiceContractList(editInput);
+	public ServiceContractDTO[] getServiceContractList() {//ApplicationEditParameterInput editInput
+		return applicationToolsWS.getServiceContractList();//editInput
 	}
 
 	public ClassDataDTO[] getClassDataList(

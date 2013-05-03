@@ -1,10 +1,16 @@
 package com.bayerbbs.applrepos.service;
 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
+
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.AppRepAuthData;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.CiBase1;
 import com.bayerbbs.applrepos.domain.CiBase2;
+import com.bayerbbs.applrepos.dto.RolePersonDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 
@@ -117,7 +123,7 @@ public class AccessRightChecker {
 	
 	//Doppelt weil: siehe @Column(name = "CWID_VERANTW_BETR") ciOwner Feld in Hibernateklasse ItSystem
 	//anstatt @Column(name = "RESPONSIBLE") wie in allen anderen Transbase CI Tabellen
-	public boolean isRelevanceOperational(String cwid, CiBase2 ci) {//ItSystem ci
+	public boolean isRelevanceOperational(String cwid, String token, CiBase2 ci) {//ItSystem ci
 		if(cwid == null || ci == null)// || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)
 			return false;
 		
@@ -133,20 +139,25 @@ public class AccessRightChecker {
 		return false;
 	}
 
-	public boolean isRelevanceOperational(String cwid, CiBase1 ci) {
+	//Location CIs mit dem Namen unknown dürfen nicht editiert werden !!
+	public boolean isRelevanceOperational(String cwid, String token, CiBase1 ci) {
 		if(cwid == null || ci == null)// || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)
 			return false;
 		
-		if(cwid.equals(ci.getCiOwner()) || 
+		boolean isUnknown = ci.getName().equalsIgnoreCase(AirKonstanten.UNKNOWN);
+		
+		if(!isUnknown && (cwid.equals(ci.getCiOwner()) || 
 		   cwid.equals(ci.getCiOwnerDelegate()) || 
-		   (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null))//wenn kein owner oder delegate, dürfen alle editieren
+		   (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)))//wenn kein owner oder delegate, dürfen alle editieren
 			return true;
 		
 		String groupCount = ci.getCiOwnerDelegate() != null ? ApplReposHbn.getCountFromGroupNameAndCwid(ci.getCiOwnerDelegate(), cwid) : AirKonstanten.STRING_0;
-		if (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(AirKonstanten.STRING_0))
+		if (!isUnknown && (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(AirKonstanten.STRING_0)))
 			return true;
 		
-		return false;
+		boolean hasEditRights = !isUnknown && hasRole(cwid, token, AirKonstanten.ROLE_AIR_LOCATION_DATA_MAINTENANCE);
+		
+		return hasEditRights;//false
 	}
 	
 	public boolean isRelevanceOperational(String cwidInput, Application application) {
@@ -204,15 +215,14 @@ public class AccessRightChecker {
 			}
 			
 			if (!isRelevanceStrategic && StringUtils.isNotNullOrEmpty(application.getApplicationOwnerDelegate())) {
-				if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(
-						application.getApplicationOwnerDelegate(), cwid))) {
+				if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(application.getApplicationOwnerDelegate(), cwid))) {
 					// allowed by group rights
 					isRelevanceStrategic = true;
 				}
 			}
 			
 			if (!isRelevanceStrategic) {
-				if (isEditableRoleApplicationManager( cwid)) {
+				if (isEditableRoleApplicationManager(cwid)) {
 					// allowed by role rights for admin
 					isRelevanceStrategic = true;
 				}
@@ -224,8 +234,7 @@ public class AccessRightChecker {
 
 	private boolean isEditableByRoleAdminType(String adminTypeRoleName, String cwidInput) {
 		boolean isEditableByRoleAdminType = false;
-		if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromRoleNameAndCwid(
-				adminTypeRoleName, cwidInput))) {
+		if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromRoleNameAndCwid(adminTypeRoleName, cwidInput))) {
 			// allowed by role rights for admin type
 			isEditableByRoleAdminType = true;
 		}
@@ -241,4 +250,19 @@ public class AccessRightChecker {
 		return isEditableByRoleAdminType(AirKonstanten.ROLE_AIR_INFRASTRUCTURE_MANAGER, cwidInput);
 	}
 	
+	private String getCacheKey(String cwid, String token) {
+		return cwid + ":" + token;
+	}
+	
+	private boolean hasRole(String cwid, String token, String roleName) {
+		Cache cache = CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
+		Element element = cache.get(getCacheKey(cwid.toLowerCase(), token));
+		AppRepAuthData authData = (AppRepAuthData)element.getObjectValue();
+		
+		for(RolePersonDTO role : authData.getRoles())
+			if(role.getRoleName().equals(roleName))
+				return true;
+			
+		return false;
+	}
 }

@@ -299,6 +299,13 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    while(searchString.indexOf('?') > -1)
 	    	searchString = searchString.replace('?', '_');
 	    
+	    var i = searchString.indexOf('\'');
+	    if(i > -1) {
+	    	var hasSecondApos = searchString.charAt(i + 1) === '\'';
+	    	if(!hasSecondApos)
+	    		searchString = searchString.replace('\'', '\'\'');
+	    }
+	    
 		
 		var rbgQueryMode = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('pSearch').getComponent('rbgQueryMode');
 		var rbQueryMode = rbgQueryMode.getValue();

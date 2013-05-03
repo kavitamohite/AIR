@@ -1401,7 +1401,7 @@ public class BuildingHbn extends LokationItemHbn {
 	private static List<String> validateBuildingArea(BuildingAreaDTO dto, boolean isUpdate) {
 		BuildingArea buildingArea = findByNameAndBuildingId(dto.getName(), dto.getBuildingId());
 		
-		boolean alreadyExists = isUpdate ? buildingArea.getId().longValue() != dto.getId().longValue() : buildingArea != null;
+		boolean alreadyExists = isUpdate ? buildingArea != null && buildingArea.getId().longValue() != dto.getId().longValue() : buildingArea != null;
 		
 		List<String> messages = validateCi(dto);//new ArrayList<String>();
 		if(alreadyExists) {

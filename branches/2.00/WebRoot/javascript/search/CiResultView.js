@@ -60,6 +60,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	},
 	
 	search: function(params, isUpdate, callback) {//ownerView
+		this.ciTypeId = params.ciTypeId;
+		
 		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
 		
 		var ciResultGrid;
@@ -184,6 +186,41 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		
 //		AAM.getMask('loadMask').hide();
 //		myLoadMask.hide();
+		
+		
+		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
+		ciResultGrid = tpCiSearchResultTables.getActiveTab();
+		var cm = ciResultGrid.getColumnModel();
+		
+		switch(this.ciTypeId) {
+			case AC.TABLE_ID_APPLICATION:
+				cm.setHidden(cm.getIndexById('applicationCat2Txt'), false);
+				cm.setHidden(cm.getIndexById('location'), true);
+				cm.setHidden(cm.getIndexById('applicationOwner'), false);
+				cm.setHidden(cm.getIndexById('applicationOwnerDelegate'), false);
+				cm.setHidden(cm.getIndexById('applicationSteward'), false);
+				break;
+			case AC.TABLE_ID_IT_SYSTEM:
+				cm.setHidden(cm.getIndexById('applicationCat2Txt'), true);
+				cm.setHidden(cm.getIndexById('location'), true);
+				cm.setHidden(cm.getIndexById('applicationOwner'), true);
+				cm.setHidden(cm.getIndexById('applicationOwnerDelegate'), true);
+				cm.setHidden(cm.getIndexById('applicationSteward'), true);
+				break;
+			case AC.TABLE_ID_POSITION:
+			case AC.TABLE_ID_ROOM:
+			case AC.TABLE_ID_BUILDING_AREA:
+			case AC.TABLE_ID_BUILDING:
+			case AC.TABLE_ID_TERRAIN:
+			case AC.TABLE_ID_SITE:
+				cm.setHidden(cm.getIndexById('applicationCat2Txt'), true);
+				cm.setHidden(cm.getIndexById('location'), false);
+				cm.setHidden(cm.getIndexById('applicationOwner'), true);
+				cm.setHidden(cm.getIndexById('applicationOwnerDelegate'), true);
+				cm.setHidden(cm.getIndexById('applicationSteward'), true);
+				break;
+			default: break;
+		}
 	},
 	
 	

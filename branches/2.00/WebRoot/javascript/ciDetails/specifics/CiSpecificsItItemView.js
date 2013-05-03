@@ -564,6 +564,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			cbClusterCode.reset();
 			cbClusterType.reset();
 			cbVirtualSoftware.reset();
+			cbItSystemLifecycleStatus.reset();
 			cbItSystemOperationalStatus.reset();
 			cbPrimaryFunction.reset();
 			cbLicenseScanning.reset();

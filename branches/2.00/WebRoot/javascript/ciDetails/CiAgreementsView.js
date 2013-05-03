@@ -26,8 +26,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		        autoSelect: false,
 		        
 		        triggerAction: 'all',
-		        lazyRender: true,
-		        lazyInit: false,
+//		        lazyRender: true,
+//		        lazyInit: false,
 		        mode: 'local'
 		    }, {
 		        xtype: 'filterCombo',//combo
@@ -43,8 +43,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		        autoSelect: false,
 		        
 		        triggerAction: 'all',
-		        lazyRender: true,
-		        lazyInit: false,
+//		        lazyRender: true,
+//		        lazyInit: false,
 		        mode: 'local',
 		        
 		        listEmptyText: 'No matching items found'
@@ -64,8 +64,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		        autoSelect: false,
 		        
 		        triggerAction: 'all',
-		        lazyRender: true,
-		        lazyInit: false,
+//		        lazyRender: true,
+//		        lazyInit: false,
 		        mode: 'local'
 		    },{
 		        xtype: 'combo',
@@ -82,8 +82,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		        autoSelect: false,
 		        
 		        triggerAction: 'all',
-		        lazyRender: true,
-		        lazyInit: false,
+//		        lazyRender: true,
+//		        lazyInit: false,
 		        mode: 'local'
 		    },{
 		        xtype: 'combo',
@@ -101,8 +101,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		        autoSelect: false,
 		        
 		        triggerAction: 'all',
-		        lazyRender: true,
-		        lazyInit: false,
+//		        lazyRender: true,
+//		        lazyInit: false,
 		        mode: 'local'
 		        
 //		        disabledClass: 'x-item-disabled disabled'
@@ -196,77 +196,36 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onSlaSelect: function(combo, record, index) {
-        //combo.setValue(record.data['text']);
-		if(!record || !record.data)
-			return;
-    	
-        //sollte nicht aufgerufen werden, wenn nach Speichern und continueEditing der Wert automatisch gesetzt wird!!
-    	//Oder direkt nach dem Neuladen der CI Detail Daten. Entschieden werden muss im CiEditTabView/CiEditView,
-    	//ob eine Änderung tatsächlich eine User Interaktion nach dem Laden war oder das Event durch das Setzen
-    	//eines UI Elements durch das CI Detail Datenladen ausgelöst wurde.
-//        activateButtonSaveApplication();
-    	this.fireEvent('ciChange', this, combo);
-    	
-    	
-    	
-    	
-//		var index = this.getComponent('sla').getStore().findExact('id', this.getComponent('sla').getValue());
-//		this.getComponent('sla').fireEvent('select', this.getComponent('sla'), this.getComponent('sla').getStore().getAt(index), index);
+		var cbServiceContract = this.getComponent('serviceContract');
+		cbServiceContract.reset();
 
+		var filterData = { slaId: record.data.id };
+		cbServiceContract.filterByData(filterData);
+		
+		if(cbServiceContract.getStore().getCount() === 1)
+			cbServiceContract.setValue(cbServiceContract.getStore().getAt(0).get('id'));
     	
-		this.getComponent('serviceContract').getStore().load({
-			params: { 
-				slaId: record.data.id//slaName
-			},
-			callback: function(records, options, success) {
-				switch(records.length) {
-					case 1:
-						var serviceContractId = records[0].data.id;
-						this.getComponent('serviceContract').setValue(serviceContractId);
-						break;
-//					case 0:
-					default:
-						this.getComponent('serviceContract').reset();
-						break;
-				}
-			}.createDelegate(this)
-		});
-    	
-    	/*
-//    	var slaId = record.data.id;
-//    	this.getComponent('serviceContract').getStore().load({
-//    		params: {
-//    			slaName: slaId,
-//    			serviceContract: 0
-//    		}
-//    	});
-    	
-    	
-        // reload service contracts
-        if (record) {// !== undefined
-            selectedSlaId = record.data['id'];
-            this.getComponent('serviceContract').store.load();
-            selectedServiceContractId = 0;
-            this.getComponent('serviceContract').setValue('');
-            
-     		// activate service contract
-//            if (isRelevance(this.getComponent('serviceContract'))) {
-            
-            var appDetail = AIR.AirApplicationManager.getAppDetail();
-            if (AIR.AirAclManager.isRelevance(this.getComponent('serviceContract'), appDetail)) {
-            	this.getComponent('serviceContract').enable();
-            	this.getComponent('serviceContract').setHideTrigger(false);
-			}
-			else {
-				this.getComponent('serviceContract').disable();
-				this.getComponent('serviceContract').setHideTrigger(true);
-			}
-        }*/
+    	this.fireEvent('ciChange', this, combo);
 	},
 	
 	onSlaChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue))
 			this.fireEvent('ciChange', this, combo);
+		
+		var cbServiceContract = this.getComponent('serviceContract');
+
+		if(typeof newValue === 'string' && newValue.length === 0) {
+			combo.reset();
+			cbServiceContract.reset();
+		} else {
+			cbServiceContract.reset();
+
+			var filterData = { slaId: newValue };
+			cbServiceContract.filterByData(filterData);
+			
+			if(cbServiceContract.getStore().getCount() === 1)
+				cbServiceContract.setValue(cbServiceContract.getStore().getAt(0).get('id'));
+		}
 	},
 	
 	clear: function(data) {
@@ -275,22 +234,19 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	
 	update: function(data) {
-		//selectedSlaId = data.slaId;
+		var cbSla = this.getComponent('sla');
+		var cbServiceContract = this.getComponent('serviceContract');
+
 		if (data.slaId != 0 && !data.isCiCreate) {//selectedSlaId !== undefined && selectedSlaId != 0
 			this.getComponent('sla').setValue(data.slaId);
+
+			var filterData = { slaId: data.slaId };
+			cbServiceContract.filterByData(filterData);
 		} else {
-			this.getComponent('sla').setValue('');
+			cbSla.reset();//setValue('');
+			cbServiceContract.reset();//.setValue('');
 		}
 		
-		
-		this.getComponent('serviceContract').getStore().load({
-			params: {
-				slaName: data.slaId
-			},
-			callback: this.onServiceContractLoad.createDelegate(this)
-		});
-		
-
 		
 		var cbPriorityLevel = this.getComponent('priorityLevel');
 		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION) {
@@ -396,7 +352,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //			if(field.getValue().length > 0)
 //				data.slaId = field.getValue();
 		if (!field.disabled) {
-			if(field.getValue().length > 0) {
+			if(field.getValue()) {//.length > 0
 				data.slaId = field.getValue();
 			} else {
 				data.slaId = -1;
@@ -408,7 +364,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //			if(field.getValue().length > 0)
 //				data.serviceContractId = field.getValue();
 		if (!field.disabled) {
-			if(field.getValue().length > 0) {
+			if(field.getValue()) {//.length > 0
 				data.serviceContractId = field.getValue();
 			} else {
 				data.serviceContractId = -1;

@@ -11,6 +11,7 @@ AIR.AirConfigFactory = function() {
 			
 			if(isComplete) {
 				columnConfig.push({ id: 'applicationCat2Txt', header: 'Category', dataIndex: 'applicationCat2Txt', width: 150, sortable: true});// ,
+				columnConfig.push({ id: 'location', header: 'Location', dataIndex: 'location', width: 150, sortable: true});// ,
 				columnConfig.push({ id: 'applicationOwner', header: 'App owner', dataIndex: 'applicationOwner', width: 150, sortable: true});// ,
 				columnConfig.push({ id: 'applicationOwnerDelegate', header: 'App owner delegate', dataIndex: 'applicationOwnerDelegate', width: 150, sortable: true});// ,																																	// true
 				columnConfig.push({ id: 'applicationSteward', header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});// ,

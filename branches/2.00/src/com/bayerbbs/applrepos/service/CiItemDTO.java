@@ -7,7 +7,8 @@ public class CiItemDTO { //implements Serializable
     private String alias;
     private String applicationCat1Txt;
     private String applicationCat2Txt;
-    private Integer tableId;
+    private String location;
+	private Integer tableId;
 	
 //	isTemplate Y = 0, N = -1, else = all
 	private String isTemplate;
@@ -71,6 +72,12 @@ public class CiItemDTO { //implements Serializable
 	}
 	public void setApplicationCat2Txt(String applicationCat2Txt) {
 		this.applicationCat2Txt = applicationCat2Txt;
+	}
+    public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	public Integer getTableId() {
 		return tableId;

@@ -210,7 +210,7 @@ public class AnwendungHbn extends BaseHbn {
 						application.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						application.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 						
-						// RFC8344 change Insert-Quelle? // RFC 8532
+						// RFC 8344 change Insert-Quelle? // RFC 8532
 						if (AirKonstanten.INSERT_QUELLE_ANT.equals(application.getInsertQuelle()) ||
 							AirKonstanten.INSERT_QUELLE_RFC.equals(application.getInsertQuelle())  ||
 							AirKonstanten.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())) {

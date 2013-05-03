@@ -36,7 +36,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		        msgTarget: 'under',
 		        width: 250,
 		        
-			    store: AIR.AirStoreFactory.createLinkCiTypeListStore()//AIR.AirStoreManager.getStoreByName('ciTypeListStore')//AIR.AirStoreManager.getStoreByName('applicationCat1ListStore')
+			    store: AIR.AirStoreFactory.createCiTypeListStore()//AIR.AirStoreManager.getStoreByName('ciTypeListStore')//AIR.AirStoreManager.getStoreByName('applicationCat1ListStore')
 		    },{
 				xtype: 'filterCombo',
 				id: 'cbAppCat2W',
@@ -135,8 +135,8 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 		}
 		
-		var x = cbCiTypeW.getStore().getRange();
-		var y;
+		cbCiTypeW.getStore().commitChanges();
+		cbCiTypeW.getStore().sort('sortId');//sort singleSort
 	},
 	
 	onCiTypeSelect: function(combo, record, index) {
