@@ -12,7 +12,7 @@
 			[User Options]&lt;p&gt;Change default settings:&lt;br&gt;
 			- &lt;i&gt;Language: German&lt;/i&gt;:German instead of english&lt;br&gt;
 			- &lt;i&gt;Help panne hidden&lt;/i&gt;:Hide help pane&lt;br&gt;&lt;br&gt;
-			- &lt;i&gt;Skup wizrad intro:&lt;/i&gt;:No info page when creating a new record&lt;br&gt;&lt;br&gt;
+			- &lt;i&gt;Skip wizard intro:&lt;/i&gt;:No info page when creating a new record&lt;br&gt;&lt;br&gt;
 			[I'm Owner]&lt;p&gt;Shows all records where you are the owner of.&lt;br&gt;&lt;br&gt;
 			[I'm Delegate]&lt;p&gt;Shows all records where you are defined as delegate.
 		</help_myplace>
