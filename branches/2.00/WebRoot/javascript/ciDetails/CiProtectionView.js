@@ -9,7 +9,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    bodyStyle: 'padding:10px',
 		    
 		    layout: 'form',
-		    height: 280,
+		    height: 300,
 		    
 		    items: [{
 		        xtype: 'filterCombo',//combo
@@ -141,11 +141,12 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbProtectionAvailability.on('select', this.onComboSelect, this);
 		cbProtectionAvailability.on('change', this.onComboChange, this);
 		taProtectionAvailabilityDescription.on('change', this.onTextAreaChange, this);
+		taProtectionAvailabilityDescription.on('keyup', this.onFieldKeyUp, this);
 		
 		cbProtectionClassInformation.on('select', this.onProtectionClassInformationSelect, this);
 		cbProtectionClassInformation.on('change', this.onProtectionClassInformationChange, this);
 		taProtectionClassInformationExplanation.on('change', this.onProtectionClassInformationExplanationChange, this);
-		
+		taProtectionClassInformationExplanation.on('keyup', this.onFieldKeyUp, this);
 		
 		
 		var cbProtectionIntegrity = this.getComponent('protectionIntegrity');
@@ -158,11 +159,12 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbProtectionIntegrity.on('select', this.onComboSelect, this);
 		cbProtectionIntegrity.on('change', this.onComboChange, this);
 		taProtectionIntegrityDescription.on('change', this.onTextAreaChange, this);
+		taProtectionIntegrityDescription.on('keyup', this.onFieldKeyUp, this);
 		
 		cbProtectionConfidentiality.on('select', this.onComboSelect, this);
 		cbProtectionConfidentiality.on('change', this.onComboChange, this);
 		taProtectionConfidentialityDescription.on('change', this.onTextAreaChange, this);
-		
+		taProtectionConfidentialityDescription.on('keyup', this.onFieldKeyUp, this);
 	},
 	
 	onComboSelect: function(combo, record, index) {
@@ -193,6 +195,10 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
     onProtectionClassInformationExplanationChange: function(textarea, newValue, oldValue) {
 //		activateButtonSaveApplication();
 		this.fireEvent('ciChange', this, textarea, newValue);
+	},
+	
+	onFieldKeyUp: function(textfield, event) {
+		this.fireEvent('ciChange', this, textfield);
 	},
     
 	clear: function(data) {

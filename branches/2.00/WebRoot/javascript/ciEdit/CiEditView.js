@@ -596,7 +596,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.setData(data);
 
-		if(data.tableId === AC.TABLE_ID_APPLICATION) {//ciData && ciData.ciSubTypeId === AC.APP_CAT1_APPLICATION?
+		if(data.tableId == AC.TABLE_ID_APPLICATION) {//ciData && ciData.ciSubTypeId === AC.APP_CAT1_APPLICATION?
 			var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
 			if(ciLicenseView)
 				ciLicenseView.setData(data);
@@ -605,7 +605,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.setData(data);
 		
-		if(data.tableId === AC.TABLE_ID_APPLICATION) {//ciData && ciData.ciSubTypeId === AC.APP_CAT1_APPLICATION?
+		if(data.tableId == AC.TABLE_ID_APPLICATION) {//ciData && ciData.ciSubTypeId === AC.APP_CAT1_APPLICATION?
 			var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 			ciSupportStuffView.setData(data);
 		}
@@ -856,8 +856,11 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				break;
 		}
 
-
-		this.getComponent('lCiName').setText(data.name);//applicationName
+		var name = data.name;
+		if(data.deleteTimestamp && data.deleteTimestamp.length > 0)
+			name += ' (' + AAM.getLabels().deleted + ')';
+			
+		this.getComponent('lCiName').setText(name);//data.name applicationName
 		this.getComponent('lCiType').setText(record.get('text'));//ciData.applicationCat1Txt applicationName
 	},
 	

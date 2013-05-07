@@ -357,12 +357,17 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbLicenseType.on('change', this.onLicenseTypeChange, this);
 		tfApplicationAccessingUserCount.on('change', this.onApplicationAccessingUserCountChange, this);
 		tfApplicationAccessingUserCountMeasured.on('change', this.onApplicationAccessingUserCountMeasuredChange, this);
+		tfApplicationAccessingUserCount.on('keyup', this.onFieldKeyUp, this);
+		tfApplicationAccessingUserCountMeasured.on('keyup', this.onFieldKeyUp, this);
+		
 		cbDedicated.on('select', this.onDedicatedSelect, this);
 		cbLoadClass.on('select', this.onLoadClassSelect, this);
 		cbServiceModel.on('select', this.onServiceModelSelect, this);
 		
 		tfCostRunPa.on('change', this.onCostRunPaChange, this);
+		tfCostRunPa.on('keyup', this.onFieldKeyUp, this);
 		tfCostChangePa.on('change', this.onCostChangePaChange, this);
+		tfCostChangePa.on('keyup', this.onFieldKeyUp, this);
 		
 		cbCurrency.on('select', this.onCurrencySelect, this);
 		cbCurrency.on('change', this.onCurrencyChange, this);
@@ -387,6 +392,9 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
     	if(this.isComboValueValid(combo, newValue, oldValue))
     		this.fireEvent('ciChange', this, combo, newValue);
     },
+	onFieldKeyUp: function(textfield, event) {
+		this.fireEvent('ciChange', this, textfield);
+	},
     onDedicatedSelect: function (combo, newValue, oldValue) {
 //      activateButtonSaveApplication();
 	  	this.fireEvent('ciChange', this, combo, newValue);
@@ -481,16 +489,16 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		
-		if (data.dedicated && data.dedicated != 0) {
+//		if (data.dedicated && data.dedicated != 0) {
 			this.getComponent('licenselicense').getComponent('applicationAccessingUserCount').setValue(data.applicationAccessingUserCount);
-		} else {
-			this.getComponent('licenselicense').getComponent('applicationAccessingUserCount').setValue('');
-		}
-		if (data.dedicated && data.dedicated != 0) {
+//		} else {
+//			this.getComponent('licenselicense').getComponent('applicationAccessingUserCount').setValue('');
+//		}
+//		if (data.dedicated && data.dedicated != 0) {
 			this.getComponent('licenselicense').getComponent('applicationAccessingUserCountMeasured').setValue(data.applicationAccessingUserCountMeasured);
-		} else {
-			this.getComponent('licenselicense').getComponent('applicationAccessingUserCountMeasured').setValue('');
-		}
+//		} else {
+//			this.getComponent('licenselicense').getComponent('applicationAccessingUserCountMeasured').setValue('');
+//		}
 		
 		
 		if (data.dedicated && data.dedicated != 0) {

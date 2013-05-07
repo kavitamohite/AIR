@@ -231,11 +231,12 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(1, labels.searchResultAlias);
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(2, labels.searchResultType);
 		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(3, labels.searchResultCategory);
-		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(4, labels.searchResultAppOwner);
-		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(5, labels.searchResultAppOwnerDelegate);
-		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(6, labels.searchResultAppSteward);
-		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(7, labels.searchResultResponsible);
-		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(8, labels.searchResultSubResponsible);
+		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(4, labels.searchResultLocation);
+		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(5, labels.searchResultAppOwner);
+		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(6, labels.searchResultAppOwnerDelegate);
+		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(7, labels.searchResultAppSteward);
+		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(8, labels.searchResultResponsible);
+		myOwnCisView.getComponent('myOwnCIsGrid').getColumnModel().setColumnHeader(9, labels.searchResultSubResponsible);
 
 		
 		var myDelegateCisView = this.getComponent('card-myapps')/*.getComponent('myDelegateCisView')*/;
@@ -244,11 +245,12 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(1, labels.searchResultAlias);
 		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(2, labels.searchResultType);
 		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(3, labels.searchResultCategory);
-		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(4, labels.searchResultAppOwner);
-		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(5, labels.searchResultAppOwnerDelegate);
-		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(6, labels.searchResultAppSteward);
-		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(7, labels.searchResultResponsible);
-		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(8, labels.searchResultSubResponsible);
+		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(4, labels.searchResultLocation);
+		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(5, labels.searchResultAppOwner);
+		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(6, labels.searchResultAppOwnerDelegate);
+		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(7, labels.searchResultAppSteward);
+		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(8, labels.searchResultResponsible);
+		myDelegateCisView.getComponent('myDelegateCIsGrid').getColumnModel().setColumnHeader(9, labels.searchResultSubResponsible);
 	}
 	
 });

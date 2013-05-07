@@ -478,7 +478,7 @@ public class ApplicationEditParameterInput {
 	public Long getServiceContractId() {
 		return serviceContractId;
 	}
-	public void setServiceContract(Long serviceContractId) {
+	public void setServiceContractId(Long serviceContractId) {
 		this.serviceContractId = serviceContractId;
 	}
 	public Long getSeverityLevelId() {

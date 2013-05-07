@@ -12,28 +12,33 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        id: 'tfLocationCiName',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Name',
-		        width: 230
+		        width: 230,
+		        enableKeyEvents: true
 //		        hidden: true
 	        },{
 		        id: 'tfLocationCiAlias',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Alias',
-		        width: 230
+		        width: 230,
+		        enableKeyEvents: true
 	        },{
 		        id: 'tfStandortCode',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Code',
-		        width: 230
+		        width: 230,
+		        enableKeyEvents: true
 		    },{
 		        id: 'tfStandortNameEn',
 		    	xtype: 'textfield',
 		        fieldLabel: 'English',
-		        width: 230
+		        width: 230,
+		        enableKeyEvents: true
 		    },{
 		        id: 'tfRoomFloor',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Floor',
-		        width: 230
+		        width: 230,
+		        enableKeyEvents: true
 		    },{
 //		        id: 'cbRoom',
 //		    	xtype: 'textfield',
@@ -48,6 +53,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        
 		        width: 230,
 		        fieldLabel: 'Room',
+		        enableKeyEvents: true,
 		        
 		        store: AIR.AirStoreFactory.createRoomListStore(),//AIR.AirStoreFactory.createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
@@ -71,6 +77,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        
 		        width: 230,
 		        fieldLabel: 'Building Area',
+		        enableKeyEvents: true,
 		        
 		        store: AIR.AirStoreFactory.createBuildingAreaListStore(),//AIR.AirStoreFactory.createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
@@ -95,6 +102,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        
 		        width: 230,
 		        fieldLabel: 'Building',
+		        enableKeyEvents: true,
 		        
 //		        style: {
 //        			marginLeft: 160
@@ -172,6 +180,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        id: 'cbTerrain',//tfTerrain
 		    	xtype: 'filterCombo',//combo textfield
 		        fieldLabel: 'Terrain',
+		        enableKeyEvents: true,
 //		        disabled: true,
 //		        hideTrigger: true,
 		        
@@ -220,6 +229,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		    	
 		        fieldLabel: 'Country',
 		        width: 230,
+		        enableKeyEvents: true,
 		        
 		        store: AIR.AirStoreFactory.createLandListStore(),//new Ext.data.Store(),//AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
@@ -260,7 +270,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 			    	xtype: 'textfield',
 			        id: 'tfStreet',
 			    	width: 250,
-			    	disabled: true
+			    	disabled: true,
+			        enableKeyEvents: true
 		    	},{
 			    	xtype: 'textfield',
 			        id: 'tfStreetNumber',
@@ -269,7 +280,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 			    	style: {
 						marginLeft: 5
 					},
-			    	disabled: true
+			    	disabled: true,
+			        enableKeyEvents: true
 		    	}]
 		    },{
 		    	xtype: 'panel',
@@ -296,7 +308,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 			    	xtype: 'textfield',
 			        id: 'tfPostalCode',
 			    	width: 50,
-			    	disabled: true
+			    	disabled: true,
+			        enableKeyEvents: true
 		    	},{
 			    	xtype: 'textfield',
 			        id: 'tfLocation',
@@ -305,7 +318,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 			    	style: {
 						marginLeft: 5
 					},
-			    	disabled: true
+			    	disabled: true,
+			        enableKeyEvents: true
 		    	}]
 		    }]
 		});
@@ -339,32 +353,50 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		tfLocation.on('change', this.onFieldChange, this);
 		
 		
+		tfLocationCiName.on('keyup', this.onFieldKeyUp, this);
+		tfLocationCiAlias.on('keyup', this.onFieldKeyUp, this);
+		tfStandortCode.on('keyup', this.onFieldKeyUp, this);
+		tfStandortNameEn.on('keyup', this.onFieldKeyUp, this);
+		tfRoomFloor.on('keyup', this.onFieldKeyUp, this);
+		
+		tfStreet.on('keyup', this.onFieldKeyUp, this);
+		tfStreetNumber.on('keyup', this.onFieldKeyUp, this);
+		tfPostalCode.on('keyup', this.onFieldKeyUp, this);
+		tfLocation.on('keyup', this.onFieldKeyUp, this);
+		
+		
 		var cbCountry = this.getComponent('cbCountry');
 		cbCountry.allQuery = 'CONSTANT';
 		cbCountry.on('select', this.onCountrySelect, this);
 		cbCountry.on('change', this.onComboChange, this);
+		cbCountry.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbSite = this.getComponent('cbSite');
 		cbSite.on('select', this.onSiteSelect, this);
 		cbSite.on('change', this.onComboChange, this);
+		cbSite.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbTerrain = this.getComponent('cbTerrain');
 		cbTerrain.on('select', this.onTerrainSelect, this);
 		cbTerrain.on('change', this.onComboChange, this);
+		cbTerrain.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbBuilding = this.getComponent('cbBuilding');//.getComponent('pBuilding')
 		cbBuilding.on('select', this.onBuildingSelect, this);
 		cbBuilding.on('change', this.onComboChange, this);
+		cbBuilding.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbBuildingArea = this.getComponent('cbBuildingArea');
 		cbBuildingArea.on('select', this.onBuildingAreaSelect, this);
 		cbBuildingArea.on('change', this.onComboChange, this);
 //		cbBuildingArea.getStore().on('load', this.onStoreLoad, this);
 		cbBuildingArea.on('expand', this.onStoreLoad, this);
+		cbBuildingArea.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbRoom = this.getComponent('cbRoom');
 		cbRoom.on('select', this.onRoomSelect, this);
 		cbRoom.on('change', this.onComboChange, this);
+		cbRoom.on('keyup', this.onFieldKeyUp, this);
 	},
 	
 	onStoreLoad: function(combo) {//store, records, options
@@ -490,7 +522,9 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	onFieldChange: function(textfield, newValue, oldValue) {
 		this.ownerCt.fireEvent('ciChange', this, textfield, newValue);
 	},
-	
+	onFieldKeyUp: function(textfield, event) {
+		this.ownerCt.fireEvent('ciChange', this, textfield);
+	},
 	
 //	clear: function(data) {
 //		

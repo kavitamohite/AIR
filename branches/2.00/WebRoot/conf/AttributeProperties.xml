@@ -262,7 +262,7 @@
 	</Identifier>
 	<Identifier>
 		<id>cbBuildingArea</id>
-		<ciTypeId>3</ciTypeId>
+		<ciTypeId>3,13</ciTypeId><!-- 3 -->
 		<Mandatory>mandatory</Mandatory>
 <!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
@@ -275,7 +275,7 @@
 	</Identifier>
 	<Identifier>
 		<id>cbBuilding</id><!-- cbBuilding -->
-		<ciTypeId>88</ciTypeId>
+		<ciTypeId>3,13,88</ciTypeId><!-- 88 -->
 		<Mandatory>mandatory</Mandatory>
 <!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
@@ -288,7 +288,7 @@
 	</Identifier>
 	<Identifier>
 		<id>lBuilding</id><!-- cbBuilding -->
-		<ciTypeId>88</ciTypeId>
+		<ciTypeId>3,13,88</ciTypeId><!-- 88 -->
 		<Mandatory>mandatory</Mandatory>
 <!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
@@ -301,7 +301,7 @@
 	</Identifier>
 	<Identifier>
 		<id>cbTerrain</id>
-		<ciTypeId>4</ciTypeId>
+		<ciTypeId>4,3,13,88</ciTypeId><!-- 4 -->
 		<Mandatory>mandatory</Mandatory>
 <!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
@@ -314,7 +314,7 @@
 	</Identifier>
 	<Identifier>
 		<id>cbSite</id>
-		<ciTypeId>30</ciTypeId>
+		<ciTypeId>30,4,3,13,88</ciTypeId><!-- 30 -->
 		<Mandatory>mandatory</Mandatory>
 <!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
@@ -327,7 +327,7 @@
 	</Identifier>
 	<Identifier>
 		<id>cbCountry</id>
-		<ciTypeId>12</ciTypeId>
+		<ciTypeId>12,30,4,3,13,88</ciTypeId><!-- 12 -->
 		<Mandatory>mandatory</Mandatory>
 <!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>

@@ -13,13 +13,15 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		        id: 'tfItSystemCiName',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Alias',
-		        width: 230
+		        width: 230,
+		        enableKeyEvents: true
 //		        hidden: true
 	        },{
 		        id: 'tfItSystemCiAlias',
 		    	xtype: 'textfield',
 		        fieldLabel: 'Alias',
-		        width: 230
+		        width: 230,
+		        enableKeyEvents: true
 	        },{
 		    	xtype: 'fieldset',
 		        id: 'fsOs',
@@ -273,7 +275,8 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		var tfItSystemCiAlias = this.getComponent('tfItSystemCiAlias');
 		tfItSystemCiName.on('change', this.onFieldChange, this);
 		tfItSystemCiAlias.on('change', this.onFieldChange, this);
-		
+		tfItSystemCiName.on('keyup', this.onFieldKeyUp, this);
+		tfItSystemCiAlias.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbItSystemLifecycleStatus = this.getComponent('cbItSystemLifecycleStatus');
 		var cbItSystemOperationalStatus = this.getComponent('cbItSystemOperationalStatus');
@@ -374,7 +377,12 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 	onFieldChange: function(textfield, newValue, oldValue) {
 		this.ownerCt.fireEvent('ciChange', this, textfield, newValue);
 	},
-	
+	onFieldKeyUp: function(textfield, event) {
+		this.ownerCt.fireEvent('ciChange', this, textfield);
+	},
+	onFieldKeyUp: function(textfield, event) {
+		this.ownerCt.fireEvent('ciChange', this, textfield);
+	},
 	onRadioGroupChange: function(rgb, checkedRadio) {
 		this.ownerCt.fireEvent('ciChange', this, rgb, checkedRadio);
 	},

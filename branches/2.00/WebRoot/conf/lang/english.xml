@@ -13,6 +13,7 @@
 		<New>New</New>
 		<code>Code</code>
 		<nameEn>English</nameEn>
+		<deleted>DELETED</deleted>
 		
 		<general_button_save>Save</general_button_save>
 		<general_button_back>Back</general_button_back>
@@ -130,6 +131,7 @@
 		<searchResultAlias>Alias</searchResultAlias>
 		<searchResultType>Type</searchResultType>
 		<searchResultCategory>IT Category/Technology</searchResultCategory>
+		<searchResultLocation>Location</searchResultLocation>
 		<searchResultResponsible>CI Owner / Application Manager</searchResultResponsible>
 		<searchResultSubResponsible>CI Owner / Application Manager Delegate</searchResultSubResponsible>
 		<searchResultAppOwner>Application Owner</searchResultAppOwner>

@@ -278,14 +278,15 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			params: params
 		});
 		
-		var itsecUserOptionListStore = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
-		params = {
-			cwid: AIR.AirApplicationManager.getCwid()
-		};
 		
-		itsecUserOptionListStore.load({
-			params: params
-		});
+//		var itsecUserOptionListStore = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
+//		params = {
+//			cwid: AIR.AirApplicationManager.getCwid()
+//		};
+//		
+//		itsecUserOptionListStore.load({
+//			params: params
+//		});
 	},
 	
 	onUserOptionBeforeSaved: function(store, options) {
@@ -295,7 +296,21 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 	onUserOptionSaved: function(store, records, options) {
 		AAM.getMask(AC.MASK_TYPE_SAVE).hide();
 		
-		this.update(AIR.AirStoreFactory.createItsecUserOptionListStore());
+		var itsecUserOptionListStore = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
+		params = {
+			cwid: AIR.AirApplicationManager.getCwid()
+		};
+		
+		itsecUserOptionListStore.load({
+			params: params,
+			callback: function() {
+				this.update();//itsecUserOptionListStore
+			}.createDelegate(this)
+		});
+		
+		
+		
+//		this.update(AIR.AirStoreFactory.createItsecUserOptionListStore());
 	},
 	
 	activateButtonSaveUserOptions: function() {
@@ -305,31 +320,7 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 	inactivateButtonSaveUserOptions: function() {
 		this/*.getFooterToolbar()*/.getComponent('saveuseroptionbutton').hide();
 	},
-	
-	updateLabels: function(labels) {
-//		var myplacepanelheader = this.getComponent('myplacepanelheader');
-//		myplacepanelheader.el.dom.innerHTML = labels.label_menu_myplacemenuitem;
-//		this.getComponent('myplaceuser').label.dom.textContent = labels.label_myplace_user;//innerHTML textContent
-		
-		var myplacepanelheader = this.getComponent('myplacepanelheader');
-		myplacepanelheader.setText(labels.label_menu_myplacemenuitem);
-		
-		this.setFieldLabel(this.getComponent('myplaceuser'), labels.label_myplace_user);
-		this.setFieldLabel(this.getComponent('myplacecwid'), labels.label_myplace_cwid);
-		this.setFieldLabel(this.getComponent('myplacelastlogon'), labels.label_myplace_lastlogon);
-		this.setFieldLabel(this.getComponent('myplaceroleperson'), labels.label_myplace_roleperson);
 
-		this.getComponent('fsUserOptions').setTitle(labels.label_myplace_useroption);
-		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionLanguage'), labels.label_useroptions_language);
-		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionHelp'), labels.label_useroptions_help);
-		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionSkipWizardMessage'), labels.label_useroptions_createwizard);
-		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionCurrency'), labels.label_useroptions_currency);
-		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionNumberFormat'), labels.label_useroptions_numberformat);
-		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionDisableTooltip'), labels.label_useroptions_disableTooltip);
-		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionShowDeleted'), labels.label_useroptions_showDeleted);
-		
-		this.getComponent('saveuseroptionbutton').setText(labels['button_general_save']);//this.getFooterToolbar()
-	},
 	
 	update: function(store) {
 		this.getComponent('myplaceuser').setValue(AIR.AirApplicationManager.getUserName());
@@ -454,7 +445,31 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 		});
 				
 		this.getComponent('myplaceroleperson').setValue(anzeigetext);
-	}
+	},
+	
+	updateLabels: function(labels) {
+//		var myplacepanelheader = this.getComponent('myplacepanelheader');
+//		myplacepanelheader.el.dom.innerHTML = labels.label_menu_myplacemenuitem;
+//		this.getComponent('myplaceuser').label.dom.textContent = labels.label_myplace_user;//innerHTML textContent
+		
+		var myplacepanelheader = this.getComponent('myplacepanelheader');
+		myplacepanelheader.setText(labels.label_menu_myplacemenuitem);
+		
+		this.setFieldLabel(this.getComponent('myplaceuser'), labels.label_myplace_user);
+		this.setFieldLabel(this.getComponent('myplacecwid'), labels.label_myplace_cwid);
+		this.setFieldLabel(this.getComponent('myplacelastlogon'), labels.label_myplace_lastlogon);
+		this.setFieldLabel(this.getComponent('myplaceroleperson'), labels.label_myplace_roleperson);
 
+		this.getComponent('fsUserOptions').setTitle(labels.label_myplace_useroption);
+		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionLanguage'), labels.label_useroptions_language);
+		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionHelp'), labels.label_useroptions_help);
+		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionSkipWizardMessage'), labels.label_useroptions_createwizard);
+		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionCurrency'), labels.label_useroptions_currency);
+		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionNumberFormat'), labels.label_useroptions_numberformat);
+		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionDisableTooltip'), labels.label_useroptions_disableTooltip);
+		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionShowDeleted'), labels.label_useroptions_showDeleted);
+		
+		this.getComponent('saveuseroptionbutton').setText(labels['button_general_save']);//this.getFooterToolbar()
+	}
 });
 Ext.reg('AIR.MyPlaceHomeView', AIR.MyPlaceHomeView);

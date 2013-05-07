@@ -68,7 +68,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		        lazyInit: false,
 		        mode: 'local'
 		    },{
-		        xtype: 'combo',
+		        xtype: 'filterCombo',//combo
 		        width: 230,
 		        fieldLabel: 'Severity Level',
 		        
@@ -86,7 +86,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		        lazyInit: false,
 		        mode: 'local'
 		    },{
-		        xtype: 'combo',
+		        xtype: 'filterCombo',//combo
 		        width: 230,
 		        fieldLabel: 'Business Essential',
 //		        name: 'businessEssential',
@@ -150,49 +150,46 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onBusinessEssentialSelect: function(combo, record, index) {
-        //combo.setValue(record.data['text']);
-//    	activateButtonSaveApplication();
     	this.fireEvent('ciChange', this, combo);
     },
     onBusinessEssentialChange: function (combo, newValue, oldValue) {
-//    	activateButtonSaveApplication();
     	if(this.isComboValueValid(combo, newValue, oldValue))
     		this.fireEvent('ciChange', this, combo);
     },
 	
 	
 	onSeverityLevelSelect: function(combo, record, index) {
-        //combo.setValue(record.data['text']);
-//    	activateButtonSaveApplication();
     	this.fireEvent('ciChange', this, combo);
     },
     onSeverityLevelChange: function (combo, newValue, oldValue) {
-//    	activateButtonSaveApplication();
     	if(this.isComboValueValid(combo, newValue, oldValue))
     		this.fireEvent('ciChange', this, combo);
     },
 	
 	onPriorityLevelSelect: function(combo, record, index) {
-        //combo.setValue(record.data['text']);
-//    	activateButtonSaveApplication();
     	this.fireEvent('ciChange', this, combo);
     },
     onPriorityLevelChange: function (combo, newValue, oldValue) {
-//    	activateButtonSaveApplication();
     	if(this.isComboValueValid(combo, newValue, oldValue))
     		this.fireEvent('ciChange', this, combo);
     },
 	
 	
 	onServiceContractSelect: function(combo, record, index) {
-//        combo.setValue(record.data['text']);
-//		activateButtonSaveApplication();
-//		this.fireEvent('ciChange', this, combo);
+		var cbSla = this.getComponent('sla');
+		cbSla.setValue(record.get('slaId'));
+		
+		this.fireEvent('ciChange', this, combo);
 	},
 	onServiceContractChange: function (combo, newValue, oldValue) {
-//		activateButtonSaveApplication();
-		if(this.isComboValueValid(combo, newValue, oldValue))
+		if(this.isComboValueValid(combo, newValue, oldValue)) {
 			this.fireEvent('ciChange', this, combo);
+			
+			var cbSla = this.getComponent('sla');
+			var r = Util.getComboRecord(combo, 'id', parseInt(newValue));//cbServiceContract.getStore().getById(parseInt(data.serviceContractId));
+			if(r)
+				cbSla.setValue(r.get('slaId'));
+		}
 	},
 	
 	onSlaSelect: function(combo, record, index) {
@@ -245,6 +242,19 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		} else {
 			cbSla.reset();//setValue('');
 			cbServiceContract.reset();//.setValue('');
+		}
+		
+		if (data.serviceContractId && data.serviceContractId != 0 && !data.isCiCreate) {
+			cbServiceContract.setValue(data.serviceContractId);
+			
+			var sla = cbSla.getValue();
+			if(!sla || sla.length === 0) {
+				var r = Util.getComboRecord(cbServiceContract, 'id', parseInt(data.serviceContractId));//cbServiceContract.getStore().getById(parseInt(data.serviceContractId));
+				if(r)
+					cbSla.setValue(r.get('slaId'));
+			}
+		} else {
+			cbServiceContract.setValue('');
 		}
 		
 		

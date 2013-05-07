@@ -155,7 +155,7 @@ public class AccessRightChecker {
 		if (!isUnknown && (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(AirKonstanten.STRING_0)))
 			return true;
 		
-		boolean hasEditRights = !isUnknown && hasRole(cwid, token, AirKonstanten.ROLE_AIR_LOCATION_DATA_MAINTENANCE);
+		boolean hasEditRights = !isUnknown && hasRole(cwid, token, AirKonstanten.ROLE_AIR_LOCATION_DATA_MAINTENANCE);//&& false;// 
 		
 		return hasEditRights;//false
 	}
@@ -177,12 +177,7 @@ public class AccessRightChecker {
 			if (!isRelevanceOperational && cwid.equals(application.getApplicationSteward())) {
 				isRelevanceOperational = true;
 			}
-			
-			//wenn kein ciOwner, ciOwnerDelegate und kein Steward vorhanden, dürfen alle editieren!
-			if(StringUtils.isNullOrEmpty(application.getResponsible()) &&
-			   StringUtils.isNullOrEmpty(application.getSubResponsible()) &&
-			   StringUtils.isNullOrEmpty(application.getApplicationSteward()))
-				isRelevanceOperational = true;
+
 			
 			if (!isRelevanceOperational && StringUtils.isNotNullOrEmpty(application.getSubResponsible())) {
 				if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(application.getSubResponsible(), cwid))) {
@@ -190,6 +185,19 @@ public class AccessRightChecker {
 					isRelevanceOperational = true;
 				}
 			}
+		
+			/*
+			//wenn kein ciOwner, ciOwnerDelegate und kein Steward vorhanden, dürfen alle editieren, wenn die
+			//app nicht löschmarkiert ist!
+			if(!isRelevanceOperational &&
+			   StringUtils.isNullOrEmpty(application.getResponsible()) &&
+			   StringUtils.isNullOrEmpty(application.getSubResponsible()) &&
+			   StringUtils.isNullOrEmpty(application.getApplicationSteward()) &&
+			   application.getDeleteTimestamp() == null)
+				isRelevanceOperational = true;*/
+			
+			if(isRelevanceOperational && application.getDeleteTimestamp() != null)
+				isRelevanceOperational = false;
 		}
 		
 		return isRelevanceOperational;
@@ -227,6 +235,18 @@ public class AccessRightChecker {
 					isRelevanceStrategic = true;
 				}
 			}
+			
+			
+			//wenn kein ciOwner, ciOwnerDelegate und kein Steward vorhanden, dürfen alle editieren, wenn die
+			//app nicht löschmarkiert ist!
+			if(!isRelevanceStrategic &&
+			   StringUtils.isNullOrEmpty(application.getApplicationOwner()) &&
+			   StringUtils.isNullOrEmpty(application.getApplicationOwnerDelegate()) &&
+			   StringUtils.isNullOrEmpty(application.getApplicationSteward()))
+				isRelevanceStrategic = true;
+			
+			if(isRelevanceStrategic && application.getDeleteTimestamp() != null)
+				isRelevanceStrategic = false;
 		}
 		
 		return isRelevanceStrategic;

@@ -46,6 +46,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        title: 'GPSC contacts',
 		        labelWidth: 200,
 		        //autoScroll: true,
+		        anchor: '80%',
 		        
 				items: [{
 					xtype: 'container',

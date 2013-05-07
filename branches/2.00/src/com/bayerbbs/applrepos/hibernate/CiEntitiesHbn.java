@@ -516,6 +516,7 @@ public class CiEntitiesHbn {
 		String applicationOwner = null;
 		String applicationSteward = null;
 		String applicationOwnerDelegate = null;
+		String location = null;
 		Long ci_id = null;
 		String category = null;
 		Integer tableId = null;
@@ -530,6 +531,7 @@ public class CiEntitiesHbn {
 			subResponsible = rset.getString("SUB_RESPONSIBLE");
 			category = rset.getString("CATEGORY");
 			ci_id = rset.getLong("CI_ID");
+			location = rset.getString("LOCATION");
 			applicationOwner = rset.getString("APP_OWNER");
 			applicationOwnerDelegate = rset.getString("APP_OWNER_DELEGATE");
 			tableId = rset.getInt("TABLE_ID");
@@ -564,6 +566,7 @@ public class CiEntitiesHbn {
 		anw.setCiOwnerDelegate(subResponsible);
 		anw.setApplicationCat1Txt(type);
 		anw.setApplicationCat2Txt(category);
+		anw.setLocation(location);
 		anw.setApplicationOwner(applicationOwner);
 		anw.setApplicationOwnerDelegate(applicationOwnerDelegate);
 		anw.setApplicationSteward(applicationSteward);

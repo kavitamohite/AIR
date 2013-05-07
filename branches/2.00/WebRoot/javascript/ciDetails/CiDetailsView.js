@@ -260,14 +260,23 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			value = ciDetail.updateQuelle + ' ' + ciDetail.updateUser + ' ' + ciDetail.updateTimestamp;
 			tfUpdateData.setValue(value);
 			value = ciDetail.deleteQuelle + ' ' + ciDetail.deleteUser + ' ' + ciDetail.deleteTimestamp;
-			tfDeleteData.setValue(value);
+			
+			if(ciDetail.deleteTimestamp && ciDetail.deleteTimestamp.length > 0) {
+				tfDeleteData.setValue(value);
+				tfDeleteData.setVisible(true);
+			} else {
+				tfDeleteData.setVisible(false);
+			}
 		} else {
 			tfAlias.reset();
 			tfCiOwner.reset();
 			tfAlias.reset();
 			tfInsertData.reset();
 			tfUpdateData.reset();
+			
+			
 			tfDeleteData.reset();
+			tfDeleteData.setVisible(false);
 		}
 		
 		this.updateMailTemplate(data);

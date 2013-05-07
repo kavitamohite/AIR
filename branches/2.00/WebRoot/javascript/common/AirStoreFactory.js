@@ -631,7 +631,7 @@ AIR.AirStoreFactory = function() {
 		       		reader: itsecUserOptionListReader
 		       	}),
 		       
-		       	fields: [ 'id', 'itsecUserOptionId', 'itsecUserOptionName',	'itsecUserOptionValue' ],
+//		       	fields: [ 'id', 'itsecUserOptionId', 'itsecUserOptionName',	'itsecUserOptionValue' ],
 		
 		       	reader: itsecUserOptionListReader
 		       	
@@ -869,6 +869,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'indefinite_article_no'},
 			        {name: 'OR'},
 			        'New',
+			        'deleted',
 			        
 			        {name: 'dynamicWindowOKButtonText'},
 			        {name: 'objectType'},
@@ -1159,6 +1160,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'searchResultAlias'},
 			        {name: 'searchResultType'},
 			        {name: 'searchResultCategory'},
+			        {name: 'searchResultLocation'},
 			        {name: 'searchResultResponsible'},
 			        {name: 'searchResultSubResponsible'},
 			        {name: 'searchResultAppOwner'},

@@ -8,6 +8,7 @@ AIR.AirUiFactory = function() {
 		        id: 'fs' + ownerId + 'ApplicationOwner',
 		        title: 'Application Owner',
 		        labelWidth: 200,
+		        anchor: '90%',
 		        
 		        style: {
 					marginTop: 10//5
@@ -93,6 +94,7 @@ AIR.AirUiFactory = function() {
 		        xtype: 'fieldset',
 		        id: 'fs' + ownerId + 'ApplicationSteward',//pApplicationOwner
 		        labelWidth: 200,
+		        anchor: '90%',
 		        
 				items: [{
 					xtype: 'panel',
@@ -141,6 +143,7 @@ AIR.AirUiFactory = function() {
 		        id: 'fs' + ownerId + 'CIOwner',
 		        title: 'CI Owner',
 		        labelWidth: 200,
+		        anchor: '90%',
 		        
 		        style: {
 					marginTop: 10//5

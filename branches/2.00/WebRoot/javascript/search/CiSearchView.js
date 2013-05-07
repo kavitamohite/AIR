@@ -803,7 +803,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		var store = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
 	    var userOptionRecord = Util.getStoreRecord(store, 'itsecUserOptionName', 'AIR_SHOW_DELETED');
 
-	    if ('YES' == userOptionRecord.get('itsecUserOptionValue')) {
+	    if (userOptionRecord && 'YES' == userOptionRecord.get('itsecUserOptionValue')) {
 	    	isShowDeleted = true;
 		}
 	    return isShowDeleted;

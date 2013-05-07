@@ -36,19 +36,17 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		        id: 'applicationName',
 //		        width: 230,
 		        fieldLabel: 'Application Name',
-		        anchor: '70%'
+		        anchor: '70%',
 		        
-//		        enableKeyEvents: true
+		        enableKeyEvents: true
 		    },{
 		    	xtype: 'textfield',
 		        id: 'applicationAlias',
 //		        width: 230,
 		        fieldLabel: 'Application Alias',
-		        anchor: '70%'
-		        
-//		        cls: 'required',
-		        
-//		        enableKeyEvents: true //Stop IE to always set the cursor at the end when pushing left/right or setting the cursor with the mouse
+		        anchor: '70%',
+		        		        
+		        enableKeyEvents: true //Stop IE to always set the cursor at the end when pushing left/right or setting the cursor with the mouse
 		    },{
 	            xtype: 'radiogroup',
     			id: 'rgBARrelevance',
@@ -329,9 +327,15 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		tfApplicationName.on('change', this.onApplicationAliasChange, this);//onApplicationNameChange
 		tfApplicationAlias.on('change', this.onApplicationAliasChange, this);
 		tfApplicationVersion.on('change', this.onApplicationVersionChange, this);
+		tfComments.on('change', this.onCommentsChange, this);
+		
+		tfApplicationName.on('keyup', this.onFieldKeyUp, this);//onApplicationNameChange
+		tfApplicationAlias.on('keyup', this.onFieldKeyUp, this);
+		tfApplicationVersion.on('keyup', this.onFieldKeyUp, this);
+		tfComments.on('keyup', this.onFieldKeyUp, this);
+
 		
 		rgBARrelevance.on('change', this.onBARrelevanceChange, this);
-		
 		cbApplicationCat2.on('select', this.onApplicationCat2Select, this);
 		cbApplicationCat2.on('beforeselect', this.onApplicationCat2BeforeSelect, this);
 		cbApplicationCat2.on('change', this.onApplicationCat2Change, this);
@@ -350,7 +354,6 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		cbOperationalStatus.on('select', this.onOperationalStatusSelect, this);
 		cbOperationalStatus.on('change', this.onOperationalStatusChange, this);
 		
-		tfComments.on('change', this.onCommentsChange, this);
 		
 		cbApplicationBusinessCat.on('select', this.onApplicationBusinessCatSelect, this);
 		cbApplicationBusinessCat.on('change', this.onApplicationBusinessCatChange, this);
@@ -424,6 +427,9 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	
 	onApplicationVersionChange: function(textfield, newValue, oldValue) {
 		this.ownerCt.fireEvent('ciChange', this, textfield, newValue);//this
+	},
+	onFieldKeyUp: function(textfield, event) {
+		this.ownerCt.fireEvent('ciChange', this, textfield);
 	},
 	
 	onBARrelevanceChange: function(rgb, checkedRadio) {
