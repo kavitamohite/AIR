@@ -12,6 +12,10 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 	    });
 	    		
 	    var columns = AIR.AirConfigFactory.createCiResultGridConfig(this.complete);
+	    
+	    for(var i = 0; i <  columns.length; i++)
+	    	columns[i].renderer = this.columnRenderer;
+	    
 		this.defaultColumnConfig = columns;
 	    
 		var colModel = new Ext.grid.ColumnModel(columns);
@@ -119,6 +123,14 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 	
 	getDefaultColumnConfig: function() {
 		return this.defaultColumnConfig;
+	},
+	
+	columnRenderer: function(value, metadata, record, rowIndex, colIndex, store) {
+		var deleteQuelle = record.get('deleteQuelle') || '';
+		var isDeleted = deleteQuelle === 'No' || deleteQuelle.length === 0 ? false : true;
+		if(isDeleted)
+			metadata.css += ' gridCellMarkedAsDeleted';//'style="color:red;';
+		return value;
 	}
 });
 Ext.reg('AIR.CiResultGrid', AIR.CiResultGrid);

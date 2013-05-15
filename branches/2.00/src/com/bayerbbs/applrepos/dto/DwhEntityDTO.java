@@ -17,6 +17,8 @@ public class DwhEntityDTO {
 	private String source;
 	private String template;
 	
+	private boolean isReferenced;
+	
 //	private String operationalStatus;
 //	private String gxpRelevance;
 //	private String itSet;
@@ -165,4 +167,10 @@ public class DwhEntityDTO {
 //	public void setBusinessEssential(String businessEssential) {
 //		this.businessEssential = businessEssential;
 //	}
+	public void setIsReferenced(boolean isReferenced) {
+		this.isReferenced = isReferenced;
+	}
+	public boolean getIsReferenced() {
+		return isReferenced;
+	}
 }

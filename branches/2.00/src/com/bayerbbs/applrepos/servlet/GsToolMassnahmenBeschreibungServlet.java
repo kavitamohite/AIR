@@ -102,7 +102,8 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 			throw new ServletException("Description of control id=" + massnahmeGstoolId + " cannot be retrieved from GsTool Database", e);
 		} finally {
 			try {
-				rs.close();
+				if(rs != null)
+					rs.close();
 			} catch (SQLException e) {
 			}
 			

@@ -6,7 +6,6 @@ public class ApplicationSearchParamsDTO extends CiSearchParamsDTO {
 	private String searchAction;
 	private String isOnlyApplications;//onlyapplications
 	
-	private String showDeleted;	// show deleted entries Y, N
 	
 	// advanced search true/false
 	private String isAdvSearch;//advancedsearch
@@ -372,12 +371,5 @@ public class ApplicationSearchParamsDTO extends CiSearchParamsDTO {
 		this.businessEssentialOptions = businessEssentialOptions;
 	}
 
-	public String getShowDeleted() {
-		return showDeleted;
-	}
-
-	public void setShowDeleted(String showDeleted) {
-		this.showDeleted = showDeleted;
-	}
 	
 }

@@ -278,7 +278,12 @@ public class AnwendungHbn extends BaseHbn {
 						}
 						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
 							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
-							application.setServiceContractId(dto.getServiceContractId());
+							if (-1 == dto.getServiceContractId()) {
+								application.setServiceContractId(null);
+							}
+							else {
+								application.setServiceContractId(dto.getServiceContractId());
+							}
 						}
 
 						if (null != dto.getPriorityLevelId()) {

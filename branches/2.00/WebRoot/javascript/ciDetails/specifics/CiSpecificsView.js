@@ -146,7 +146,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 				
 				//NEW TEST
 				if(!specificsView)
-					specificsView = new AIR.CiSpecificsItItemView({ id: 'clCiSpecificsItItem', height: 400 });//400
+					specificsView = new AIR.CiSpecificsItItemView({ id: 'clCiSpecificsItItem', height: 460 });//400
 				//NEW TEST
 				
 				break;
@@ -185,7 +185,7 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 				h = 310;//300
 				break;
 			case 'clCiSpecificsItItem':
-				h = 400;//450
+				h = 460;//400 450
 				break;
 		}
 		

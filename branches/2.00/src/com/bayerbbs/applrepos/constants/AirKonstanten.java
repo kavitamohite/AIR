@@ -36,6 +36,8 @@ public final class AirKonstanten {
 	
 	public static final String YES_SHORT = "Y";
 	public static final String NO_SHORT = "N";
+	public static final String YES = "Yes";
+	public static final String NO = "No";
 	
 	public static final String QUESTION_MARK = "?";
 	public static final String EQUAL = "=";

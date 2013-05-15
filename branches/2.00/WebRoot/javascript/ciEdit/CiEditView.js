@@ -26,6 +26,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				}
 			},{
 				xtype: 'container'
+//				html: '<br/>'
 			},{
 		    	xtype: 'label',
 		    	id: 'lCiType',
@@ -37,6 +38,26 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: '8pt'
+//					float: 'left'
+				}
+			},{
+				xtype: 'container'
+//				html: '<br/>'
+			},{
+		    	xtype: 'label',
+		    	id: 'lCiIsDeleted',
+		    	text: 'DELETED',
+				
+				style: {
+//					textAlign: 'left',
+					backgroundColor: AC.AIR_BG_COLOR,
+					color: 'red',
+					fontFamily: AC.AIR_FONT_TYPE,
+					fontWeight: 'bold',
+					fontSize: 18,
+					marginTop: 5
+//					hidden: true,
+					
 //					float: 'left'
 				}
 			},{ 
@@ -256,7 +277,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 //			this.doLayout();
 
 		}.createDelegate(this));
-		task.delay(1000);
+		task.delay(2000);//1000
 		
 		
 		var panelMsg = ACM.getRequiredFields(options);
@@ -548,6 +569,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	createCi: function(data) {
 		var ciCreateStore = AIR.AirStoreFactory.createCiCreateStore(data.tableId);
 		ciCreateStore.on('load', this.onCiCreated, this);
+		
+		this.isUserChange = false;
 		
 		this.setCiData(data);
 		AAM.getMask(AC.MASK_TYPE_SAVE).show();
@@ -856,12 +879,16 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				break;
 		}
 
-		var name = data.name;
-		if(data.deleteTimestamp && data.deleteTimestamp.length > 0)
-			name += ' (' + AAM.getLabels().deleted + ')';
+//		var name = data.name;
+//		if(data.deleteTimestamp && data.deleteTimestamp.length > 0)
+//			name += ' (' + AAM.getLabels().deleted + ')';
 			
-		this.getComponent('lCiName').setText(name);//data.name applicationName
+
+		this.getComponent('lCiName').setText(data.name);//name data.name applicationName
 		this.getComponent('lCiType').setText(record.get('text'));//ciData.applicationCat1Txt applicationName
+		
+		var isDeleted = data.deleteTimestamp && data.deleteTimestamp.length > 0;
+		this.getComponent('lCiIsDeleted').setVisible(isDeleted);
 	},
 	
 	updateLabels: function(labels) {
@@ -906,6 +933,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		ciEditTabView.getFooterToolbar().getComponent('savebutton').setText(labels.button_general_save);
 		ciEditTabView.getFooterToolbar().getComponent('cancelbutton').setText(labels.button_general_cancel);
+
+		this.getComponent('lCiIsDeleted').setText(labels.deleted);
 	},
 	
 	updateToolTips: function(toolTips) {

@@ -511,7 +511,7 @@ public class ItSystemHbn extends BaseHbn {
 	
 
 	private static void setUpItSystem(ItSystem itSystem, ItSystemDTO dto, String cwid) {
-		if (null != dto.getAlias())
+		if (null != dto.getAlias() && dto.getAlias().length() > 0)
 			itSystem.setAlias(dto.getAlias());
 		
 		if(null != dto.getOsNameId()) {
@@ -854,7 +854,7 @@ public class ItSystemHbn extends BaseHbn {
 		
 		
 		//cwid_verantw_betr statt responsible
-		sql.append(", cwid_verantw_betr, sub_responsible FROM ").append(metaData.getTableName()).append(" WHERE ").
+		sql.append(", cwid_verantw_betr, sub_responsible, del_quelle FROM ").append(metaData.getTableName()).append(" WHERE ").
 
 //		append(" hw_ident_or_trans = ").append(input.getCiSubTypeId()).
 		
@@ -999,6 +999,7 @@ public class ItSystemHbn extends BaseHbn {
 					ci.setCiOwner(rs.getString("cwid_verantw_betr"));
 					ci.setCiOwnerDelegate(rs.getString("sub_responsible"));
 					ci.setTableId(metaData.getTableId());
+					ci.setDeleteQuelle(rs.getString("del_quelle"));
 					
 					cis.add(ci);
 					//i++;

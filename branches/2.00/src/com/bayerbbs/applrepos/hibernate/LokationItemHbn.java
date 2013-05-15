@@ -53,9 +53,9 @@ public class LokationItemHbn extends BaseHbn {
 		if(metaData.getAliasField() != null)
 			sql.append(", ").append(CI).append(metaData.getAliasField());
 		
-		sql.append(", responsible, sub_responsible, ").append(locationFields).append(" FROM ").append(metaData.getTableName()).append(" ci").
+		sql.append(", responsible, sub_responsible, del_quelle, ").append(locationFields).append(" FROM ").append(metaData.getTableName()).append(" ci").
 		append(" JOIN search_loc lk on ").append(LK).append(metaData.getIdField()).append(" = ").append(CI).append(metaData.getIdField()).
-		append(" WHERE del_timestamp IS NULL AND (").
+		append(" WHERE (").//del_timestamp IS NULL AND 
 		append("UPPER(").append(CI).append(metaData.getNameField()).append(") LIKE '");
 		
 		
@@ -134,6 +134,10 @@ public class LokationItemHbn extends BaseHbn {
 				sql.insert(sql.length() - 2, '%');
 		}
 		
+		if(input.getShowDeleted() == null || !input.getShowDeleted().equals(AirKonstanten.YES_SHORT))
+			sql.append(" AND del_timestamp IS NULL");
+		
+		
 		return sql;
 	}
 	
@@ -202,6 +206,7 @@ public class LokationItemHbn extends BaseHbn {
 					ci.setCiOwner(rs.getString("responsible"));
 					ci.setCiOwnerDelegate(rs.getString("sub_responsible"));
 					ci.setTableId(metaData.getTableId());
+					ci.setDeleteQuelle(rs.getString("del_quelle"));
 					
 					cis.add(ci);
 					//i++;

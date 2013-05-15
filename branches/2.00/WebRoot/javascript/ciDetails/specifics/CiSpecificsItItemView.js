@@ -273,9 +273,9 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		
 		var tfItSystemCiName = this.getComponent('tfItSystemCiName');
 		var tfItSystemCiAlias = this.getComponent('tfItSystemCiAlias');
-		tfItSystemCiName.on('change', this.onFieldChange, this);
+		tfItSystemCiName.on('change', this.onCiNameChange, this);//onFieldChange
 		tfItSystemCiAlias.on('change', this.onFieldChange, this);
-		tfItSystemCiName.on('keyup', this.onFieldKeyUp, this);
+		tfItSystemCiName.on('keyup', this.onFieldKeyUp, this);//onFieldKeyUp onCiNameKeyUp
 		tfItSystemCiAlias.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbItSystemLifecycleStatus = this.getComponent('cbItSystemLifecycleStatus');
@@ -372,6 +372,15 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			this.ownerCt.fireEvent('viewInitialized', this);//ciChange .ownerCt
 		}.createDelegate(this));
 		delayedTask.delay(1000);//1000
+	},
+	
+	//onCiNameKeyUp: function(textfield, event) {
+	onCiNameChange: function(textfield, newValue, oldValue) {
+		var tfItSystemCiAlias = this.getComponent('tfItSystemCiAlias');
+		if(tfItSystemCiAlias.getValue().length === 0)
+			tfItSystemCiAlias.setValue(textfield.getValue());
+		
+		this.ownerCt.fireEvent('ciChange', this, textfield);
 	},
 	
 	onFieldChange: function(textfield, newValue, oldValue) {
@@ -598,7 +607,6 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 //			tfItSystemCiName.setVisible(false);
 			tfItSystemCiName.setValue(data.name);//wegen mandatory fields check setzen!
 			tfItSystemCiAlias.setValue(data.alias);
-			
 			
 			
 			if(data.osNameId) {

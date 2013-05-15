@@ -8,6 +8,8 @@ public class CiSearchParamsDTO { //implements Serializable
 	private Integer limit;
 	private String sort;
 	private String dir;
+	private String showDeleted;	// show deleted entries Y, N
+
 	
 	private String ciNameAliasQuery;
 	private String queryMode;	// BEGINS_WITH, CONTAINS, EXACT (Default = CONTAINS)
@@ -86,6 +88,14 @@ public class CiSearchParamsDTO { //implements Serializable
 	}
 	public void setToken(String token) {
 		this.token = token;
+	}
+	
+
+	public String getShowDeleted() {
+		return showDeleted;
+	}
+	public void setShowDeleted(String showDeleted) {
+		this.showDeleted = showDeleted;
 	}
 
 

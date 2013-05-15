@@ -68,7 +68,9 @@ a:active {text-decoration: none; color:#085E8B;}
 }
 
 
-
+.gridCellMarkedAsDeleted {
+	color: #778899;
+}
 
 .choco-actioncolumn {
 	background-image: url("../../../../../images/itSecMassnahmeLinkType.png");

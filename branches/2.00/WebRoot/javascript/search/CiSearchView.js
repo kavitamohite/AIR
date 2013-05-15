@@ -443,8 +443,8 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 //		var cbCat1 = ciAdvancedSearchView.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbCiType');
 //		var isCat1OrNone = cbCat1.getValue() === AC.APP_CAT1_APPLICATION || cbCat1.getValue() === '' ? true : false;
 		var cbCiType = ciAdvancedSearchView.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbCiType');
-		ciAdvancedSearchView.filterCiTypesByUserRole(cbCiType);
-//		cbCiType.view.refresh();
+//		ciAdvancedSearchView.filterCiTypesByUserRole(cbCiType);
+		ciAdvancedSearchView.processCiTypeChange(cbCiType, cbCiType.getValue());
 		
 		var record = Util.getComboRecord(cbCiType, 'ciTypeId', AC.TABLE_ID_APPLICATION);
 		var isCat1OrNone = record && record.get('ciSubTypeId') == AC.APP_CAT1_APPLICATION || cbCiType.getValue().length === 0 ? true : false;

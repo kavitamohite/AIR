@@ -459,11 +459,15 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var exists = this.isAlreadyUpDownStream(newCiRecord.data.dwhEntityId);//newCiRecord.data.id listView.getStore().getById(newCiRecord.data.id);
 		var appDetail = AIR.AirApplicationManager.getAppDetail();//applicationDetailStore.data.items[0].data;//
 		
-		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
-		var r = Util.getStoreRecord(store, 'ciTypeId', parseInt(appDetail.tableId));
+//		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+//		var typeField = appDetail.applicationCat1Id || appDetail.ciSubTypeId ? 'ciSubTypeId' : 'ciTypeId';
+//		var typeFieldId = appDetail.applicationCat1Id || appDetail.ciSubTypeId || appDetail.tableId;
+//		var r = Util.getStoreRecord(store, typeField, parseInt(typeFieldId));//appDetail.tableId
+		var r = Util.getCiTypeRecord(appDetail);
+		
 		
 		var ciName = appDetail.name;
-		var ciType = r.get('text');//appDetail.applicationCat1Txt;
+		var ciType = r.get('text');//appDetail.applicationCat1Txt;//
 		var newCiName = newCiRecord.data.ciName;
 		var newCiType = newCiRecord.data.ciType;
 		
@@ -575,6 +579,9 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	update: function(data) {
 		this.reset();
 		
+		var isLocationCI = AAM.isLocationCi(data.tableId);
+		this.getComponent('p1').setVisible(!isLocationCI);
+		
 		var lvUpStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvUpStreamConnections');
 		var lvDownStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvDownStreamConnections');
 		
@@ -624,9 +631,12 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	filterCiTypes: function(cbConnectionsObjectType, data) {
 		/* Variante 3 */
 		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
-		var r = Util.getStoreRecord(store, 'ciTypeId', parseInt(data.tableId));//tableId
-		var ciTypeSource = r.get('text');
 		var records = store.getRange();
+		
+//		var r = Util.getStoreRecord(store, 'ciTypeId', parseInt(data.tableId));//tableId
+//		var ciTypeSource = r.get('text');
+		var r = Util.getCiTypeRecord(data);
+		var ciTypeSource = r.get('text');//appDetail.applicationCat1Txt;//
 		
 		cbConnectionsObjectType.getStore().removeAll();
 		for(var i = 0; i < records.length; i++) {
@@ -829,7 +839,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var isEditable = (data.relevanceStrategic == 'Y' || data.relevanceOperational == 'Y' || isAdmin);
 		
 		//location CI - upstream: nicht löschbar - downstream und name=unknown: nicht löschbar
-		isEditable = (direction === AC.UPSTREAM && data.tableId == AC.TABLE_ID_IT_SYSTEM || data.tableId == AC.TABLE_ID_APPLICATION) || (direction === AC.DOWNSTREAM && record.get('ciName') !== AC.UNKNOWN);// AAM.isLocationCi(data.tableId) && 
+		isEditable = !record.get('isReferenced') && ((direction === AC.UPSTREAM && data.tableId == AC.TABLE_ID_IT_SYSTEM || data.tableId == AC.TABLE_ID_APPLICATION) || (direction === AC.DOWNSTREAM && record.get('ciName') !== AC.UNKNOWN));// AAM.isLocationCi(data.tableId) && 
 		
         raDeleteConnection.tpl.html = '<div class="ux-row-action">';
         if(isEditable)

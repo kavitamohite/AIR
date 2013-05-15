@@ -87,7 +87,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					items: [{
 						xtype: 'filterCombo',//combo
 						id: 'cbCiType',
-					    store: AIR.AirStoreManager.getStoreByName('ciTypeListStore'),//applicationCat1ListStore
+					    store: AIR.AirStoreFactory.createCiTypeListStore(),//AIR.AirStoreManager.getStoreByName('ciTypeListStore'),//applicationCat1ListStore
 						
 					    fieldLabel: 'Type',
 					    valueField: 'id',//id ciTypeName
@@ -185,6 +185,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 5
 						},
+						hidden: true,
 	        			
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCiTypeOptions', width: 30 }
@@ -197,7 +198,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 10
+							marginTop: 30
 						},
 						
 	        			items: [
@@ -482,6 +483,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						fieldLabel: 'IT Category',
 						valueField: 'id',
 						displayField: 'text',
+						
+						clearFilterOnReset: false,
 						
 //				        typeAhead: true,
 //				        forceSelection: true,
@@ -889,7 +892,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		var cbCiType = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbCiType');
 		cbCiType.on('select', this.onCiTypeSelect, this);//select beforeselect
 		cbCiType.on('change', this.onCiTypeChange, this);
+		this.filterCiTypes(cbCiType);
 		cbCiType.setValue(cbCiType.getStore().getAt(0).get('id'));
+		
+		
 		
 		var cbAdvSearchITset = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbAdvSearchITset');
 		cbAdvSearchITset.on('change', this.onItSetChange, this);
@@ -969,34 +975,40 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		clAdvSearchCiOwnerDelegateRemove.on('click', this.onAdvSearchCiOwnerDelegateRemove, this);
 	},
 	
-	filterCiTypesByUserRole: function(cbCiType) {
-		var isApplicationAllowed = AAM.hasRole(AC.USER_ROLE_AIR_DEFAULT) || AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_LAYER) || AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_MANAGER) || AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
-		var isInfrastructureAllowed = AAM.hasRole(AC.USER_ROLE_AIR_DEFAULT) || AAM.hasRole(AC.USER_ROLE_AIR_INFRASTRUCTURE_LAYER) || AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
-		
-		var filterFn = function(record, id) {
-			var tableId = record.get('ciTypeId');
-			
-			switch(tableId) {
-				case AC.TABLE_ID_APPLICATION:
-					return isApplicationAllowed;
-				case AC.TABLE_ID_IT_SYSTEM:
-				case AC.TABLE_ID_ROOM:
-				case AC.TABLE_ID_BUILDING:
-				case AC.TABLE_ID_SITE:
-				case AC.TABLE_ID_POSITION:
-				case AC.TABLE_ID_HARDWARE_COMPONENT:
-				case AC.TABLE_ID_TERRAIN:
-				case AC.TABLE_ID_WAY:
-				case AC.TABLE_ID_BUILDING_AREA:
-				case AC.TABLE_ID_SERVICE:
-					return isInfrastructureAllowed;
-				default: return false;
-			}
-		};//.createDelegate(this)
-		
-		cbCiType.getStore().filterBy(filterFn);
-		cbCiType.view.refresh();
+	filterCiTypes: function(combo) {
+		var ciTypesByRole = AAM.getAdvSearchCiTypes();
+
+		AAM.filterCiTypes(combo, ciTypesByRole);
 	},
+	
+//	filterCiTypesByUserRole: function(cbCiType) {
+//		var isApplicationAllowed = AAM.hasRole(AC.USER_ROLE_AIR_DEFAULT) || AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_LAYER) || AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_MANAGER) || AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
+//		var isInfrastructureAllowed = AAM.hasRole(AC.USER_ROLE_AIR_DEFAULT) || AAM.hasRole(AC.USER_ROLE_AIR_INFRASTRUCTURE_LAYER) || AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
+//		
+//		var filterFn = function(record, id) {
+//			var tableId = record.get('ciTypeId');
+//			
+//			switch(tableId) {
+//				case AC.TABLE_ID_APPLICATION:
+//					return isApplicationAllowed;
+//				case AC.TABLE_ID_IT_SYSTEM:
+//				case AC.TABLE_ID_ROOM:
+//				case AC.TABLE_ID_BUILDING:
+//				case AC.TABLE_ID_SITE:
+//				case AC.TABLE_ID_POSITION:
+//				case AC.TABLE_ID_HARDWARE_COMPONENT:
+//				case AC.TABLE_ID_TERRAIN:
+//				case AC.TABLE_ID_WAY:
+//				case AC.TABLE_ID_BUILDING_AREA:
+//				case AC.TABLE_ID_SERVICE:
+//					return isInfrastructureAllowed;
+//				default: return false;
+//			}
+//		};//.createDelegate(this)
+//		
+//		cbCiType.getStore().filterBy(filterFn);
+//		cbCiType.view.refresh();
+//	},
 	
 	onOrganisationalScopeChange: function(listview, selections) {
 		AIR.CiDetailsCommon.orgScopeChange(listview, selections);
@@ -1042,23 +1054,16 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 				var filterData = {
 					applicationCat1Id: record.get('ciSubTypeId')
 				};
-//				cbAdvSearchITCategoryW.reset();
 				cbAdvSearchITCategoryW.filterByData(filterData);
-			} else {
-//				cbAdvSearchITCategoryW.reset();
 			}
-			
-			cbAdvSearchITCategoryW.filterByData(filterData);
 			
 			var filterData = { tableId: record.get('ciTypeId') };
 			cbAdvSearchLifecycleStatusW.filterByData(filterData);
 		} else {
 			cbAdvSearchITCategoryW.setVisible(false);
 //			cbAdvSearchITCategoryW.reset();
-			
 			cbAdvSearchLifecycleStatusW.reset();
 		}
-		cbAdvSearchITCategoryW.reset();
 		
     	
     	var fsCIOwner = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner');
@@ -1150,11 +1155,12 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //    			cbAdvSearchITCategoryW.setVisible(false);
     			fsCategoriesAndStatus.setVisible(false);
     			pAdvSearchCategoriesAndStatusOptions.setVisible(false);
+    			
     			cbAdvSearchProcessW.setVisible(false);
     			cbgAdvSearchSpecialSearchAttributesProcessOptions.setVisible(false);
     			
     			var tableId = record.get('ciTypeId');
-    			if(tableId == AC.TABLE_ID_ROOM || tableId == AC.TABLE_ID_POSITION) {
+    			if(tableId == AC.TABLE_ID_ROOM || tableId == AC.TABLE_ID_POSITION || tableId == AC.TABLE_ID_IT_SYSTEM) {
     				cbAdvSearchBusinessEssentialW.setVisible(true);
     				cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions.setVisible(true);
     			} else {
@@ -1165,11 +1171,16 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     			if(tableId == AC.TABLE_ID_IT_SYSTEM) {
     				var filterData = { tableId: record.get('ciTypeId') };
     				cbAdvSearchLifecycleStatusW.filterByData(filterData);
-    				
     				cbAdvSearchLifecycleStatusW.setVisible(true);
+    				
+//    				fsCategoriesAndStatus.setVisible(true);
+//    				pAdvSearchCategoriesAndStatusOptions.setVisible(true);
     			} else {
     				cbAdvSearchLifecycleStatusW.setVisible(false);
     				cbAdvSearchLifecycleStatusW.reset();
+    				
+//    				fsCategoriesAndStatus.setVisible(false);
+//    				pAdvSearchCategoriesAndStatusOptions.setVisible(false);
     			}
     			
     			break;
@@ -1758,7 +1769,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	},
 	
 
-	
+	//für button reset bei mehreren tabs
 	reset: function() {//link
 		/*if(!link) {
 			var cbCiType = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbCiType');

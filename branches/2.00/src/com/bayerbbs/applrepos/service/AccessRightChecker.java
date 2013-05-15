@@ -127,6 +127,9 @@ public class AccessRightChecker {
 		if(cwid == null || ci == null)// || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)
 			return false;
 		
+		if(ci.getDeleteQuelle() != null)
+			return false;
+		
 		if(cwid.equals(ci.getCiOwner()) || 
 		   cwid.equals(ci.getCiOwnerDelegate()) || 
 		   (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null))//wenn kein owner oder delegate, dürfen alle editieren
@@ -144,20 +147,24 @@ public class AccessRightChecker {
 		if(cwid == null || ci == null)// || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)
 			return false;
 		
-		boolean isUnknown = ci.getName().equalsIgnoreCase(AirKonstanten.UNKNOWN);
+//		boolean isUnknown = ci.getName().equalsIgnoreCase(AirKonstanten.UNKNOWN);
+//		boolean isDeleted = ci.getDeleteQuelle() != null;
+		boolean isLocked = ci.getName().equalsIgnoreCase(AirKonstanten.UNKNOWN) || ci.getDeleteQuelle() != null;
 		
-		if(!isUnknown && (cwid.equals(ci.getCiOwner()) || 
+		/*
+		if((!isLocked && cwid.equals(ci.getCiOwner()) ||//!isUnknown && !isDeleted && 
 		   cwid.equals(ci.getCiOwnerDelegate()) || 
 		   (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)))//wenn kein owner oder delegate, dürfen alle editieren
 			return true;
 		
 		String groupCount = ci.getCiOwnerDelegate() != null ? ApplReposHbn.getCountFromGroupNameAndCwid(ci.getCiOwnerDelegate(), cwid) : AirKonstanten.STRING_0;
-		if (!isUnknown && (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(AirKonstanten.STRING_0)))
-			return true;
+		if ((!isLocked && StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(AirKonstanten.STRING_0)))
+			return true;//!isUnknown && !isDeleted && 
+		*/
 		
-		boolean hasEditRights = !isUnknown && hasRole(cwid, token, AirKonstanten.ROLE_AIR_LOCATION_DATA_MAINTENANCE);//&& false;// 
+		boolean isEditable = !isLocked && hasRole(cwid, token, AirKonstanten.ROLE_AIR_LOCATION_DATA_MAINTENANCE);//!isDeleted && !isUnknown && && false;// 
 		
-		return hasEditRights;//false
+		return isEditable;//false
 	}
 	
 	public boolean isRelevanceOperational(String cwidInput, Application application) {

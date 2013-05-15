@@ -138,7 +138,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var slaName = ciDetail.slaId && ciDetail.slaId != 0 ? store.getById(ciDetail.slaId).data.text : '';
 
 		store = AIR.AirStoreManager.getStoreByName('businessEssentialListStore');
-		var businessEssential = ciDetail.businessEssentialId && ciDetail.businessEssentialId != 0 ? store.getById(ciDetail.businessEssentialId).data.text : '';
+		var businessEssential = ciDetail.businessEssentialId && ciDetail.businessEssentialId != 0 && store.getById(ciDetail.businessEssentialId) ? store.getById(ciDetail.businessEssentialId).data.text : '';
 		
 		
 		var data = {

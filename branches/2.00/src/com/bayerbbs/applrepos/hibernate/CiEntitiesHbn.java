@@ -242,9 +242,9 @@ public class CiEntitiesHbn {
 					if (counter < startwert + limit) {
 						CiItemDTO anwendung = getApplicationDTOFromResultSet(rset);//ApplicationDTO
 						
-						if (null != anwendung.getDeleteQuelle() && !"No".equals(anwendung.getDeleteQuelle())) {
-							anwendung.setName(anwendung.getName() + " (DELETED)");
-						}
+//						if (null != anwendung.getDeleteQuelle() && !"No".equals(anwendung.getDeleteQuelle())) {
+//							anwendung.setName(anwendung.getName() + " (DELETED)");
+//						}
 						
 						listResult.add(anwendung);
 					}
@@ -822,7 +822,7 @@ public class CiEntitiesHbn {
 
 
 	public static DwhEntityParameterOutput getDwhEntityRelations(Long tableId, Long ciId, String direction) {
-		String sql = "SELECT * FROM TABLE (pck_air.ft_relatedcis("+tableId+","+ciId+",'"+direction+"'))";//"begin pck_air.p_save_relations(?,?,?,?,?,?);//"EXEC pck_air.p_save_relations ("+tableId+", "+ciId+", "+ciRelationsAddList+", "+ciRelationsDeleteList+", "+direction+", "+cwid+")";
+		String sql = "SELECT ci_id, type, name, id, source, contains_hw FROM TABLE (pck_air.ft_relatedcis("+tableId+","+ciId+",'"+direction+"'))";//"begin pck_air.p_save_relations(?,?,?,?,?,?);//"EXEC pck_air.p_save_relations ("+tableId+", "+ciId+", "+ciRelationsAddList+", "+ciRelationsDeleteList+", "+direction+", "+cwid+")";
 		
 		Transaction ta = null;
 		Statement stmt = null;
@@ -840,7 +840,7 @@ public class CiEntitiesHbn {
 			stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
-			
+			boolean irReferenced = false;
 			DwhEntityDTO dwhEntity = null;
 			
 			while (rs.next()) {
@@ -852,6 +852,8 @@ public class CiEntitiesHbn {
 //				dwhEntity.setCiAlias(rs.getString("ASSET_ID_OR_ALIAS"));
 				dwhEntity.setDwhEntityId(rs.getString("ID"));
 				dwhEntity.setSource(rs.getString("SOURCE"));
+				irReferenced = rs.getString("CONTAINS_HW") != null && rs.getString("CONTAINS_HW").equals(AirKonstanten.YES);
+				dwhEntity.setIsReferenced(irReferenced);
 				
 				dwhEntities.add(dwhEntity);
 			}

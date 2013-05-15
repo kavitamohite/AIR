@@ -69,7 +69,8 @@ AIR.AirStoreFactory = function() {
 			return licenseTypeListStore;
 		},
 		
-		createChangeAccountListStore: function() {
+//		createChangeAccountListStore: function() {
+		createAccountListStore: function() {
 			var changeAccountListRecord = Ext.data.Record.create([
 	             {name: 'text', mapping: 'accountName'},
 	             {name: 'id', mapping: 'accountId'}
@@ -82,7 +83,7 @@ AIR.AirStoreFactory = function() {
 	
 	        var changeAccountListStore = new Ext.data.XmlStore({
 	            autoDestroy: true,
-	            storeId: 'changeAccountListStore',
+	            storeId: 'accountListStore',//changeAccountListStore
 	            autoLoad: false,
 	            
 	        	proxy: new Ext.ux.soap.SoapProxy({
@@ -100,36 +101,36 @@ AIR.AirStoreFactory = function() {
 	        return changeAccountListStore;
 		},
 	        
-		createRunAccountListStore: function() {
-			var runAccountListRecord = Ext.data.Record.create([
-	              {name: 'text', mapping: 'accountName'},
-	              {name: 'id', mapping: 'accountId'}
-	         ]);
-	
-	         var runAccountListReader = new Ext.data.XmlReader({
-	             record: 'return',
-	             idProperty: 'id'
-	         }, runAccountListRecord); 
-	
-	        var runAccountListStore = new Ext.data.XmlStore({
-	        	autoDestroy: true,
-	        	storeId: 'runAccountListStore',
-	        	autoLoad: false,
-	             
-	         	proxy: new Ext.ux.soap.SoapProxy({
-	         		url: webcontext +'/AIRToolsWSPort',
-	         		loadMethod: 'getAccountList',
-	         		timeout: 120000,
-	         		reader: runAccountListReader
-	         	}),
-	         	
-	         	fields: [ 'id', 'text' ],
-	
-	         	reader: runAccountListReader
-	         });
-	         
-	         return runAccountListStore;
-		},
+//		createRunAccountListStore: function() {
+//			var runAccountListRecord = Ext.data.Record.create([
+//	              {name: 'text', mapping: 'accountName'},
+//	              {name: 'id', mapping: 'accountId'}
+//	         ]);
+//	
+//	         var runAccountListReader = new Ext.data.XmlReader({
+//	             record: 'return',
+//	             idProperty: 'id'
+//	         }, runAccountListRecord); 
+//	
+//	        var runAccountListStore = new Ext.data.XmlStore({
+//	        	autoDestroy: true,
+//	        	storeId: 'runAccountListStore',
+//	        	autoLoad: false,
+//	             
+//	         	proxy: new Ext.ux.soap.SoapProxy({
+//	         		url: webcontext +'/AIRToolsWSPort',
+//	         		loadMethod: 'getAccountList',
+//	         		timeout: 120000,
+//	         		reader: runAccountListReader
+//	         	}),
+//	         	
+//	         	fields: [ 'id', 'text' ],
+//	
+//	         	reader: runAccountListReader
+//	         });
+//	         
+//	         return runAccountListStore;
+//		},
 		
 		createItSetListStore: function() {
 			var itSetListRecord = Ext.data.Record.create([
@@ -2105,7 +2106,8 @@ AIR.AirStoreFactory = function() {
 			    {name: 'applicationOwner'},
 			    {name: 'applicationSteward'},
 			    {name: 'applicationOwnerDelegate'},
-			    {name: 'tableId'}
+			    {name: 'tableId'},
+			    {name: 'deleteQuelle'}
 			]);
 	
 			var ciItemListReader = new Ext.data.XmlReader({
@@ -2133,17 +2135,18 @@ AIR.AirStoreFactory = function() {
 		
 		createApplicationListStore: function() {
 			var applicationListRecord = Ext.data.Record.create([
-			    {name: 'id'},//applicationId
-			    {name: 'name'},//applicationName
-			    {name: 'alias'},//applicationAlias
-			    {name: 'applicationCat1Txt'},
-			    {name: 'applicationCat2Txt'},
-			    {name: 'ciOwner'},//responsible
-			    {name: 'ciOwnerDelegate'},//subResponsible
-			    {name: 'applicationOwner'},
-			    {name: 'applicationSteward'},
-			    {name: 'applicationOwnerDelegate'},
-			    {name: 'tableId'}
+			    'id',//applicationId
+			    'name',//applicationName
+			    'alias',//applicationAlias
+			    'applicationCat1Txt',
+			    'applicationCat2Txt',
+			    'ciOwner',//responsible
+			    'ciOwnerDelegate',//subResponsible
+			    'applicationOwner',
+			    'applicationSteward',
+			    'applicationOwnerDelegate',
+			    'tableId',
+			    'deleteQuelle'
 			]);
 	
 			var applicationListReader = new Ext.data.XmlReader({
@@ -3413,21 +3416,22 @@ AIR.AirStoreFactory = function() {
 		        {name: 'ciName'},//name
 		        {name: 'ciType'},//type
 		        {name: 'source'},
-		        {name: 'dwhEntityId'}
+		        {name: 'dwhEntityId'},
+		        {name: 'isReferenced', type: 'boolean'}
 		    ]);
 		
 		    var ciConnectionsReader = new Ext.data.XmlReader({
 		    	record: 'dwhEntityDTO',//viewdataDTO
 		        idProperty: 'dwhEntityId',//id
 		        	
-		        fields: ['id', 'ciName', 'ciType', 'source', 'dwhEntityId']//name type
+		        fields: ['id', 'ciName', 'ciType', 'source', 'dwhEntityId', 'isReferenced']//name type
 		    }, ciConnectionsRecord);
 			
 		    var ciConnectionsStore = new Ext.data.XmlStore({
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: ['id', 'ciName', 'ciType', 'source', 'dwhEntityId'],//name type
+//		      	fields: ['id', 'ciName', 'ciType', 'source', 'dwhEntityId', 'isReferenced'],//name type
 //		      	idProperty: 'dwhEntityId',//id
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({

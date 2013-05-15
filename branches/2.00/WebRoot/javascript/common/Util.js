@@ -168,6 +168,19 @@ Util = {
 		return record;
 	},
 	
+	
+	getCiTypeRecord: function(ciData) {
+		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+		var r = Util.getStoreRecord(store, this.getCiTypeField(ciData), parseInt(this.getCiTypeFieldId(ciData)));
+		return r;
+	},
+	getCiTypeField: function(ciData) {
+		return ciData.applicationCat1Id || ciData.ciSubTypeId ? 'ciSubTypeId' : 'ciTypeId';
+	},
+	getCiTypeFieldId: function(ciData) {
+		return ciData.applicationCat1Id || ciData.ciSubTypeId || ciData.tableId;
+	},
+	
 	getCiTypeByTableId: function(tableId) {
 		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
 		var r = Util.getStoreRecord(store, 'ciTypeId', parseInt(tableId));

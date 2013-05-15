@@ -519,7 +519,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			tfItsetName.setValue(itsetName);
 		}
 		
-		var isTemplate = data.template === '1';
+		var isTemplate = data.template == '1' || data.template == '-1';
 		var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
 		cbIsTemplate.setValue(isTemplate);
 		if(data.barRelevance === 'Y')
@@ -568,14 +568,15 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				
 //				var templateRecord = cbReferencedTemplate.getStore().data.key(data.refId);//data.key snapshot.key
 				
-				var isTemplateValid = templateRecord.get('delTimestamp').length === 0;
+				var isTemplateValid = templateRecord && templateRecord.get('delTimestamp').length === 0;
 				if(isTemplateValid) {
 					cbReferencedTemplate.setValue(data.refId);
 					//lReferencedTemplateError.hide();
 					//cbReferencedTemplate.isInvalid = false;
 				} else {
 					//cbReferencedTemplate.setRawValue(data.refTxt);
-					cbReferencedTemplate.setRawValue(AC.LABEL_INVALID + templateRecord.get('name'));//data.refTxt
+					var invalidTemplateName = templateRecord ? templateRecord.get('name') : data.refTxt || data.refId;
+					cbReferencedTemplate.setRawValue(AC.LABEL_INVALID + invalidTemplateName);//data.refTxt
 					//lReferencedTemplateError.show();
 					//cbReferencedTemplate.isInvalid = true;
 	

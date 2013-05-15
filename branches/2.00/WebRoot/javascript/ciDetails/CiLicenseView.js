@@ -236,7 +236,7 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 			        fieldLabel: 'Cost run account',
 			        id: 'runAccount',
 			        
-			        store: AIR.AirStoreManager.getStoreByName('runAccountListStore'),//runAccountListStore,
+			        store: AIR.AirStoreManager.getStoreByName('accountListStore'),//runAccountListStore,
 			        valueField: 'id',
 			        displayField: 'text',
 			        
@@ -267,7 +267,7 @@ AIR.CiLicenseView = Ext.extend(AIR.AirView, {//Ext.Panel
 			        fieldLabel: 'Cost change account',
 			        id: 'changeAccount',
 			        
-			        store: AIR.AirStoreManager.getStoreByName('changeAccountListStore'),//changeAccountListStore,
+			        store: AIR.AirStoreManager.getStoreByName('accountListStore'),//changeAccountListStore,
 			        valueField: 'id',
 			        displayField: 'text',
 			        

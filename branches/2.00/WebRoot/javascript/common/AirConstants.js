@@ -163,11 +163,52 @@ AIR.AirConstants = {
 	COMPANY_REGULATION_ITSEC: '1435',
 	COMPANY_REGULATION_ICS: '1920',
 	COMPANY_REGULATION_2059: '2059',
-	COMPANY_REGULATION_2008: '2008'
+	COMPANY_REGULATION_2008: '2008',
+	
+	USE_CASE_CI_ADV_SEARCH: 10,
+	USE_CASE_CI_CREATION: 11
 };
 AC = AIR.AirConstants;
 
 AC.SUPPORTED_COUNTRIES = [AC.IMG_COUNTRY_EN, AC.IMG_COUNTRY_DE];
+
+AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
+	AIRApplicationLayer: {
+		2: [ 5 ],
+		
+		13: [],
+		3: [],
+		88: [],
+		4: [],
+		30: [],
+		12: []
+	},
+	
+	AIRDefault: {
+		1: [],
+		2: [ 5, -10006, -10007, -10013 ],
+		
+		13: [],
+		3: [],
+		88: [],
+		4: [],
+		30: [],
+		12: []
+	},
+	
+	AIRInfrastructureLayer: {
+		1: [],
+		2: [ -10006, -10007, -10013 ],
+		
+		13: [],
+		3: [],
+		88: [],
+		4: [],
+		30: [],
+		12: []
+	}
+	
+},
 
 AC.CI_TYPE_CREATION_BY_ROLE = {
 //	AIRApplicationLayer: [{ ciTypeId: 2, ciSubType: [ 5 ] }],

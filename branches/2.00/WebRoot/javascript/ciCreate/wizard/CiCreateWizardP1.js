@@ -113,10 +113,11 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 //		this.objectAliasAllowedStore = AIR.AirStoreFactory.getObjectAliasAllowedStore();
 	},
 	
-	filterCiTypes: function(cbCiTypeW) {
-		var ciTypesByRole = AAM.getCreationCiTypesByUserRoles();
+	filterCiTypes: function(combo) {
+		var ciTypesByRole = AAM.getCreationCiTypes();
 
-		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+		AAM.filterCiTypes(combo, ciTypesByRole);
+		/*var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
 		var records = store.getRange();
 		
 		for(var j = 0; j < ciTypesByRole.length; j++) {
@@ -125,18 +126,18 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 				var ciType = ciTypesByRole[j][ciTypeId];
 				if(ciType) {
 					if(ciType.length === 0) {
-						cbCiTypeW.getStore().add(records[i]);
+						combo.getStore().add(records[i]);
 					} else {
 						for(var k = 0; k < ciType.length; k++)
 							if(records[i].get('ciSubTypeId') == ciType[k])
-								cbCiTypeW.getStore().add(records[i]);
+								combo.getStore().add(records[i]);
 					}
 				}
 			}
 		}
 		
-		cbCiTypeW.getStore().commitChanges();
-		cbCiTypeW.getStore().sort('sortId');//sort singleSort
+		combo.getStore().commitChanges();
+		combo.getStore().sort('sortId');//sort singleSort*/
 	},
 	
 	onCiTypeSelect: function(combo, record, index) {

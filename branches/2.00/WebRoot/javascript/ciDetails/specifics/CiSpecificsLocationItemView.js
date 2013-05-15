@@ -368,29 +368,29 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		var cbCountry = this.getComponent('cbCountry');
 		cbCountry.allQuery = 'CONSTANT';
 		cbCountry.on('select', this.onCountrySelect, this);
-		cbCountry.on('change', this.onComboChange, this);
+		cbCountry.on('change', this.onCountryChange, this);//onComboChange
 		cbCountry.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbSite = this.getComponent('cbSite');
 		cbSite.on('select', this.onSiteSelect, this);
-		cbSite.on('change', this.onComboChange, this);
+		cbSite.on('change', this.onSiteChange, this);//onComboChange
 		cbSite.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbTerrain = this.getComponent('cbTerrain');
 		cbTerrain.on('select', this.onTerrainSelect, this);
-		cbTerrain.on('change', this.onComboChange, this);
+		cbTerrain.on('change', this.onTerrainChange, this);//onComboChange
 		cbTerrain.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbBuilding = this.getComponent('cbBuilding');//.getComponent('pBuilding')
 		cbBuilding.on('select', this.onBuildingSelect, this);
-		cbBuilding.on('change', this.onComboChange, this);
+		cbBuilding.on('change', this.onBuildingChange, this);//onComboChange
 		cbBuilding.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbBuildingArea = this.getComponent('cbBuildingArea');
 		cbBuildingArea.on('select', this.onBuildingAreaSelect, this);
-		cbBuildingArea.on('change', this.onComboChange, this);
+		cbBuildingArea.on('change', this.onBuildingAreaChange, this);//onComboChange
 //		cbBuildingArea.getStore().on('load', this.onStoreLoad, this);
-		cbBuildingArea.on('expand', this.onStoreLoad, this);
+//		cbBuildingArea.on('expand', this.onStoreLoad, this);
 		cbBuildingArea.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbRoom = this.getComponent('cbRoom');
@@ -411,7 +411,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	
 	onBuildingAreaSelect: function(combo, record, index) {
-		var cbRoom = this.getComponent('cbRoom');
+		/*var cbRoom = this.getComponent('cbRoom');
 		
 		cbRoom.getStore().setBaseParam('id', record.get('id'));
 		cbRoom.allQuery = record.get('id');
@@ -422,13 +422,47 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 			}
 		});
 		
-		Util.enableCombo(cbRoom);
+		Util.enableCombo(cbRoom);*/
+		this.buildingAreaChanged(record.get('id'));
 		
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
+	onBuildingAreaChange: function(combo, newValue, oldValue) {
+		if(this.isComboValueValid(combo, newValue, oldValue)) {
+			this.buildingAreaChanged(newValue);
+			this.ownerCt.fireEvent('ciChange', this, combo);
+		}
+	},
+	buildingAreaChanged: function(value) {
+		var cbBuildingArea = this.getComponent('cbBuildingArea');
+		var cbRoom = this.getComponent('cbRoom');
+		
+		cbRoom.reset();
+		
+		cbRoom.getStore().removeAll();
+		
+		
+		if(typeof value === 'string' && value.length === 0) {
+			Util.disableCombo(cbRoom);
+		} else {
+			cbRoom.getStore().setBaseParam('id', value);
+			cbRoom.allQuery = value;
+			cbRoom.reset();
+			cbRoom.getStore().load({
+				params: {
+					id: value
+				}
+			});
+			
+			Util.enableCombo(cbRoom);
+		}
+	},
+	
+	
+	
 	
 	onBuildingSelect: function(combo, record, index) {
-		this.getComponent('cbRoom').reset();
+		/*this.getComponent('cbRoom').reset();
 		
 		var cbBuildingArea = this.getComponent('cbBuildingArea');
 		
@@ -441,13 +475,50 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 			}
 		});
 		
-		Util.enableCombo(cbBuildingArea);
+		Util.enableCombo(cbBuildingArea);*/
+		this.buildingChanged(record.get('id'));
 		
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
+	onBuildingChange: function(combo, newValue, oldValue) {
+		if(this.isComboValueValid(combo, newValue, oldValue)) {
+			this.buildingChanged(newValue);
+			this.ownerCt.fireEvent('ciChange', this, combo);
+		}
+	},
+	buildingChanged: function(value) {
+		var cbBuildingArea = this.getComponent('cbBuildingArea');
+		var cbRoom = this.getComponent('cbRoom');
+		
+		cbRoom.reset();
+		cbBuildingArea.reset();
+		
+		cbRoom.getStore().removeAll();
+		cbBuildingArea.getStore().removeAll();
+		
+		Util.disableCombo(cbRoom);
+		
+		if(typeof value === 'string' && value.length === 0) {
+			Util.disableCombo(cbBuildingArea);
+		} else {
+			cbBuildingArea.getStore().setBaseParam('id', value);
+			cbBuildingArea.allQuery = value;
+			cbBuildingArea.reset();
+			cbBuildingArea.getStore().load({
+				params: {
+					id: value
+				}
+			});
+			
+			Util.enableCombo(cbBuildingArea);
+		}
+	},
+	
+	
+	
 	
 	onTerrainSelect: function(combo, record, index) {
-		this.getComponent('cbRoom').reset();
+		/*this.getComponent('cbRoom').reset();
 		this.getComponent('cbBuildingArea').reset();
 
 		
@@ -462,16 +533,54 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 			}
 		});
 		
-		Util.enableCombo(cbBuilding);
+		Util.enableCombo(cbBuilding);*/
+		this.terrainChanged(record.get('id'));
 		
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
+	onTerrainChange: function(combo, newValue, oldValue) {
+		if(this.isComboValueValid(combo, newValue, oldValue)) {
+			this.terrainChanged(newValue);
+			this.ownerCt.fireEvent('ciChange', this, combo);
+		}
+	},
+	terrainChanged: function(value) {
+		var cbBuilding = this.getComponent('cbBuilding');
+		var cbBuildingArea = this.getComponent('cbBuildingArea');
+		var cbRoom = this.getComponent('cbRoom');
+		
+		cbRoom.reset();
+		cbBuildingArea.reset();
+		cbBuilding.reset();//.getComponent('pBuilding')
+		
+		cbRoom.getStore().removeAll();
+		cbBuildingArea.getStore().removeAll();
+		cbBuilding.getStore().removeAll();//.getComponent('pBuilding')
+		
+		Util.disableCombo(cbRoom);
+		Util.disableCombo(cbBuildingArea);
+		
+		if(typeof value === 'string' && value.length === 0) {
+			Util.disableCombo(cbBuilding);
+		} else {
+			cbBuilding.getStore().setBaseParam('id', value);
+			cbBuilding.allQuery = value;
+			cbBuilding.reset();
+			cbBuilding.getStore().load({
+				params: {
+					id: value
+				}
+			});
+			
+			Util.enableCombo(cbBuilding);
+		}
+	},
+	
 	
 	onSiteSelect: function(combo, record, index) {
-		this.getComponent('cbRoom').reset();
+		/*this.getComponent('cbRoom').reset();
 		this.getComponent('cbBuildingArea').reset();
 		this.getComponent('cbBuilding').reset();//.getComponent('pBuilding')
-
 		
 		var cbTerrain = this.getComponent('cbTerrain');
 		
@@ -484,13 +593,57 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 			}
 		});
 		
-		Util.enableCombo(cbTerrain);
+		Util.enableCombo(cbTerrain);*/
+		this.siteChanged(record.get('id'));
 		
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},
+	onSiteChange: function(combo, newValue, oldValue) {
+		if(this.isComboValueValid(combo, newValue, oldValue)) {
+			this.siteChanged(newValue);
+			this.ownerCt.fireEvent('ciChange', this, combo);
+		}
+	},
+	siteChanged: function(value) {
+		var cbTerrain = this.getComponent('cbTerrain');
+		var cbBuilding = this.getComponent('cbBuilding');
+		var cbBuildingArea = this.getComponent('cbBuildingArea');
+		var cbRoom = this.getComponent('cbRoom');
+		
+		cbRoom.reset();
+		cbBuildingArea.reset();
+		cbBuilding.reset();//.getComponent('pBuilding')
+		cbTerrain.reset();
+		
+		cbRoom.getStore().removeAll();
+		cbBuildingArea.getStore().removeAll();
+		cbBuilding.getStore().removeAll();//.getComponent('pBuilding')
+		cbTerrain.getStore().removeAll();
+		
+		Util.disableCombo(cbRoom);
+		Util.disableCombo(cbBuildingArea);
+		Util.disableCombo(cbBuilding);
+		
+		if(typeof value === 'string' && value.length === 0) {
+			Util.disableCombo(cbTerrain);
+		} else {
+			cbTerrain.getStore().setBaseParam('id', value);//landId ciId
+			cbTerrain.allQuery = value;
+			cbTerrain.reset();
+			cbTerrain.getStore().load({
+				params: {
+					id: value
+				}
+			});
+			
+			Util.enableCombo(cbTerrain);
+		}
+	},
+	
+	
 	
 	onCountrySelect: function(combo, record, index) {
-		this.getComponent('cbRoom').reset();
+		/*this.getComponent('cbRoom').reset();
 		this.getComponent('cbBuildingArea').reset();
 		this.getComponent('cbBuilding').reset();//.getComponent('pBuilding')
 		this.getComponent('cbTerrain').reset();
@@ -506,9 +659,56 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 			}
 		});
 		
-		Util.enableCombo(cbSite);
+		Util.enableCombo(cbSite);*/
+		this.countryChanged(record.get('id'));
 		
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
+	},
+	onCountryChange: function(combo, newValue, oldValue) {
+		if(this.isComboValueValid(combo, newValue, oldValue)) {
+			this.countryChanged(newValue);
+			this.ownerCt.fireEvent('ciChange', this, combo);
+		}
+	},
+	
+	countryChanged: function(value) {
+		var cbSite = this.getComponent('cbSite');
+		var cbTerrain = this.getComponent('cbTerrain');
+		var cbBuilding = this.getComponent('cbBuilding');
+		var cbBuildingArea = this.getComponent('cbBuildingArea');
+		var cbRoom = this.getComponent('cbRoom');
+		
+		cbRoom.reset();
+		cbBuildingArea.reset();
+		cbBuilding.reset();//.getComponent('pBuilding')
+		cbTerrain.reset();
+		cbSite.reset();
+		
+		cbRoom.getStore().removeAll();
+		cbBuildingArea.getStore().removeAll();
+		cbBuilding.getStore().removeAll();//.getComponent('pBuilding')
+		cbTerrain.getStore().removeAll();
+		cbSite.getStore().removeAll();
+		
+		Util.disableCombo(cbRoom);
+		Util.disableCombo(cbBuildingArea);
+		Util.disableCombo(cbBuilding);
+		Util.disableCombo(cbTerrain);
+		
+		if(typeof value === 'string' && value.length === 0) {
+			Util.disableCombo(cbSite);
+		} else {
+			cbSite.getStore().setBaseParam('id', value);//record.get('id') landId ciId
+			cbSite.allQuery = value;//record.get('id');
+			cbSite.reset();
+			cbSite.getStore().load({
+				params: {
+					id: value//record.get('id')
+				}
+			});
+			
+			Util.enableCombo(cbSite);
+		}
 	},
 
 	onComboSelect: function(combo, record, index) {
@@ -663,16 +863,6 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					Util.disableCombo(cbTerrain);
 					Util.disableCombo(cbSite);
 					Util.disableCombo(cbCountry);
-					
-					/*
-					if(data.name === AC.UNKNOWN) {
-						tfLocationCiName.disable();
-						tfLocationCiAlias.disable();
-						tfRoomFloor.disable();
-						tfStandortCode.disable();
-						tfStandortNameEn.disable();
-//						Util.disableCombo(cbRoom);
-					}*/
 				}
 
 				this.updateBuildingData(data);
@@ -756,14 +946,6 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					Util.disableCombo(cbTerrain);
 					Util.disableCombo(cbSite);
 					Util.disableCombo(cbCountry);
-
-					/*
-					if(data.name === AC.UNKNOWN) {
-						tfLocationCiName.disable();
-						tfLocationCiAlias.disable();
-						tfRoomFloor.disable();
-						Util.disableCombo(cbBuildingArea);
-					}*/
 				}
 				
 				this.updateBuildingData(data);
@@ -844,16 +1026,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					
 					Util.disableCombo(cbTerrain);
 					Util.disableCombo(cbSite);
-					
-					cbCountry.setVisible(false);
-					cbCountry.reset();
-					
-					/*
-					if(data.name === AC.UNKNOWN) {
-						tfLocationCiName.disable();
-						tfLocationCiAlias.disable();
-						Util.disableCombo(cbBuilding);
-					}*/
+					Util.disableCombo(cbCountry);
 				}
 				
 
@@ -931,12 +1104,6 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					Util.disableCombo(cbTerrain);
 					Util.disableCombo(cbSite);
 					Util.disableCombo(cbCountry);
-					
-					/*
-					if(data.name === AC.UNKNOWN) {
-						tfLocationCiName.disable();
-						tfLocationCiAlias.disable();
-					}*/
 				}
 				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, true);//true !data.isCiCreate
@@ -981,12 +1148,6 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				cbTerrain.setVisible(false);
 				cbTerrain.reset();
 				
-				/*
-				if(data.name === AC.UNKNOWN) {
-					tfLocationCiName.disable();
-					tfLocationCiAlias.disable();
-				}*/
-				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
 				break;
 			case AC.TABLE_ID_SITE:
@@ -1027,14 +1188,6 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					
 					Util.disableCombo(cbCountry);
 				}
-				
-				/*
-				if(data.name === AC.UNKNOWN) {
-					tfLocationCiName.disable();
-					tfLocationCiAlias.disable();
-					tfStandortCode.disable();
-					tfStandortNameEn.disable();
-				}*/
 				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
 				break;

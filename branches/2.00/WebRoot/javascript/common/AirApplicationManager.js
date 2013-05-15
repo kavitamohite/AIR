@@ -122,8 +122,9 @@ AIR.AirApplicationManager = function() {
 				aclStore: null,
 				currencyListStore: null,
 				licenseTypeListStore: null,
-				changeAccountListStore: null,
-				runAccountListStore: null,
+//				changeAccountListStore: null,
+//				runAccountListStore: null,
+				accountListStore: null,
 				itSetListStore: null,
 				itSecSBAvailabilityListStore: null,
 				classInformationListStore: null,
@@ -172,7 +173,6 @@ AIR.AirApplicationManager = function() {
 //				sisoogleActiveStateListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_ACTIVE_Y_N } } },
 //				sisoogleGpscOwnerListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_GPSC_OWNER } } }
 				
-				ciTypeListStore: null,
 				linkCiTypeListStore: null
 			};
 			
@@ -474,7 +474,8 @@ AIR.AirApplicationManager = function() {
 			for(var source in this.connectionProperties)
 				if(source == ciTypeSource)
 					for(var i = 0; i < this.connectionProperties[source].length; i++)
-						if(this.connectionProperties[source][i].Destination == ciTypeDest)
+						if(this.connectionProperties[source][i].Destination == ciTypeDest && 
+						   (this.connectionProperties[source][i].Upstream == 'Y' || this.connectionProperties[source][i].Downstream == 'Y'))
 							return true;
 			
 			return false;
@@ -781,7 +782,7 @@ AIR.AirApplicationManager = function() {
 			var isPair = tableIdCiId.indexOf('-') > -1;
 			if(isPair) {
 				tableIdCiId = tableIdCiId.split('-');
-				tableIdCiId[0] = 'APP';//solange noch nicht alle CI Typen unterstützt werden. Siehe RFC 9022
+				//tableIdCiId[0] = 'APP';//solange noch nicht alle CI Typen unterstützt werden. Siehe RFC 9022
 			}
 				
 			
@@ -812,20 +813,54 @@ AIR.AirApplicationManager = function() {
 			return is;
 		},
 		
-		getCreationCiTypesByUserRoles: function() {
+		getCreationCiTypes: function() {
+			return this.getCreationCiTypesByUserRoles(AC.USE_CASE_CI_CREATION);
+		},
+		
+		getAdvSearchCiTypes: function() {
+			return this.getCreationCiTypesByUserRoles(AC.USE_CASE_CI_ADV_SEARCH);
+		},
+		
+		getCreationCiTypesByUserRoles: function(useCase) {
 			var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
 			var records = rolePersonListStore.getRange();
 			
 			var creationCiTypes = [];
 			for(var i = 0; i < records.length; i++) {
 				var roleName = records[i].get('roleName').replace(/ /g, '');
-				var roleCiTypes = AC.CI_TYPE_CREATION_BY_ROLE[roleName];
+				var roleCiTypes = useCase === AC.USE_CASE_CI_CREATION ?
+												AC.CI_TYPE_CREATION_BY_ROLE[roleName] :
+												AC.CI_TYPE_ADV_SEARCH_BY_ROLE[roleName];
 				
 				if(roleCiTypes)
 					creationCiTypes.push(roleCiTypes);
 			}
 			
 			return creationCiTypes;
+		},
+		
+		filterCiTypes: function(combo, ciTypesByRole) {
+			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+			var records = store.getRange();
+			
+			for(var j = 0; j < ciTypesByRole.length; j++) {
+				for(var i = 0; i < records.length; i++) {
+					var ciTypeId = records[i].get('ciTypeId');
+					var ciType = ciTypesByRole[j][ciTypeId];
+					if(ciType) {
+						if(ciType.length === 0) {
+							combo.getStore().add(records[i]);
+						} else {
+							for(var k = 0; k < ciType.length; k++)
+								if(records[i].get('ciSubTypeId') == ciType[k])
+									combo.getStore().add(records[i]);
+						}
+					}
+				}
+			}
+			
+			combo.getStore().commitChanges();
+			combo.getStore().sort('sortId');//sort singleSort
 		}
 	};
 }();
