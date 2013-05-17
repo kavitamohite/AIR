@@ -1262,6 +1262,86 @@ public class AnwendungHbn extends BaseHbn {
 		return output;
 	}
 
+	/**
+	 * mark an application as deleted
+	 * 
+	 * @param cwid
+	 * @param dto
+	 * @return
+	 */
+	public static ApplicationEditParameterOutput cleanBARApplicationID(String cwid, ApplicationDTO dto) {
+		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
+
+		// TODO check validate token
+
+		if (null != cwid) {
+			cwid = cwid.toUpperCase();
+			if (null != dto.getId()	&& 0 < dto.getId().longValue()) {
+				Long id = new Long(dto.getId());
+
+				// TODO check der InputWerte
+				Session session = HibernateUtil.getSession();
+				Transaction tx = null;
+				tx = session.beginTransaction();
+				Application application = (Application) session.get(Application.class, id);
+				if (null == application) {
+					// application was not found in database
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the application id "	+ id + " was not found in database" });
+				}
+
+				// if it is not already marked as deleted, we can do it
+				else if (null != application.getBarApplicationId()) {
+					application.setBarApplicationId(null);
+					application.setUpdateUser(cwid);
+					application.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+					application.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+
+					boolean toCommit = false;
+					try {
+						session.saveOrUpdate(application);
+						session.flush();
+						toCommit = true;
+					} catch (Exception e) {
+						log.error(e.getMessage());
+						// handle exception
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { e.getMessage() });
+					} finally {
+						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+						if (toCommit) {
+							if (null == hbnMessage) {
+								output.setResult(AirKonstanten.RESULT_OK);
+								output.setMessages(new String[] { EMPTY });
+							} else {
+								output.setResult(AirKonstanten.RESULT_ERROR);
+								output.setMessages(new String[] { hbnMessage });
+							}
+						}
+					}
+
+				} else {
+					// application is already deleted
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the BAR application ID is already deleted" });
+				}
+
+			} else {
+				// application id is missing
+				output.setResult(AirKonstanten.RESULT_ERROR);
+				output.setMessages(new String[] { "the application id is missing or invalid" });
+			}
+
+		} else {
+			// cwid missing
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { "cwid missing" });
+		}
+
+		return output;
+	}
+
+	
 	public static ApplicationDTO getApplicationDetail(Long applicationId) {
 		ApplicationDTO applicationDTO = null;
 
