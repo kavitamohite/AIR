@@ -217,6 +217,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		} else {
 			cbServiceContract.reset();
 
+			newValue = typeof newValue === 'string' ? oldValue : newValue;
+			
 			var filterData = { slaId: newValue };
 			cbServiceContract.filterByData(filterData);
 			

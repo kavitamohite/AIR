@@ -46,7 +46,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    border: false,
 		    
 //		    height: 800,//650 550
-			height: 470,//480 550 500 450 350 
+			height: 485,//480 550 500 450 350 
 			autoScroll: true,
 		    			
 		    items: [{
@@ -55,7 +55,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    	layout: 'form',
 		    	border: false,
 		    	
-		    	height: 520,//500 580 480
+		    	height: 530,//520 500 580 480
 		    	margins: '10 0 0 10',
 		    	flex: 4,
 		    	
@@ -171,7 +171,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    	flex: 5,
 		    	
 		    	layout: 'form',//border form
-		    	height: 640,//650 520 450
+		    	height: 680,//640 650 520 450
 		    	margins: '10 0 0 15',
 		    	
 		    	items: [{

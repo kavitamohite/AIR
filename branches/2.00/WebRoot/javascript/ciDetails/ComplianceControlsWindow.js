@@ -476,7 +476,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //									flex: 7,
 //									margins: '5 0 0 0',
 									
-									width: 318,
+									width: 300,//318
 									style: {
 //								    	marginTop: 5,
 								    	marginLeft: 5
@@ -3501,9 +3501,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		Util.disableCombo(cbCompliantStatus);
 		
-		if(Ext.isIE)
-			taJustification.setReadOnly(true);
-		else
+//		if(Ext.isIE)
+//			taJustification.setReadOnly(true);
+//		else
 			taJustification.disable();
 		
 		taGapDescription.disable();
@@ -3595,9 +3595,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		Util.enableCombo(cbCompliantStatus);
 		
-		if(Ext.isIE)
-			taJustification.setReadOnly(false);
-		else
+//		if(Ext.isIE)
+//			taJustification.setReadOnly(false);
+//		else
 			taJustification.enable();
 		
 		taGapDescription.enable();

@@ -158,6 +158,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onLinkCiListChange: function(combo, newValue, oldValue) {
+		this.isComboValueValid(combo, newValue, oldValue);
 		/*if(this.isComboValueValid(combo, newValue, oldValue)) {
 			if(newValue.length === 0) {
 				this.clearLinkCISettings();
