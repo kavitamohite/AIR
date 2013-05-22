@@ -138,10 +138,14 @@ public class ApplicationWS {
 						input.getProcessOptions(), input.getSourceOptions(), input.getBusinessEssentialOptions()
 					);
 				} else {
-//					boolean showDeleted = true;
+					StringBuilder searchSqlBase = CiEntitiesHbn.getSearchSqlBase(input.getCwid(), input.getToken(), searchname, showDeleted, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir(), startwert, limit);
+
+					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchSqlBase, input.getSort(), input.getDir(), startwert, limit);
+					anzahlDatensaetze = CiEntitiesHbn.findCountCisByNameOrAlias(searchSqlBase);
+
 					
-					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchname, showDeleted, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir(), startwert, limit);
-					anzahlDatensaetze = CiEntitiesHbn.findCountCisByNameOrAlias(searchname, showDeleted, input.getQueryMode(), onlyApplications);
+//					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(input.getCwid(), input.getToken(), searchname, showDeleted, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir(), startwert, limit);
+//					anzahlDatensaetze = CiEntitiesHbn.findCountCisByNameOrAlias(searchname, showDeleted, input.getQueryMode(), onlyApplications);
 				}
 			}
 		}
@@ -782,7 +786,7 @@ public class ApplicationWS {
 				}
 
 				// RFC 7465
-				if (checker.isRelevanceOperational(detailInput.getCwid(), application)) {
+				if (checker.isRelevanceOperational(detailInput.getCwid(), detailInput.getToken(), application)) {
 					accessDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 				} else {
 					accessDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
@@ -792,7 +796,7 @@ public class ApplicationWS {
 				long applCat1Id = dto.getApplicationCat1Id().longValue();
 				if (AirKonstanten.APPLICATION_CAT1_APPLICATION.longValue() == applCat1Id) {
 					// nur für CI's Typ = Anwendung
-					if (checker.isRelevanceStrategic(detailInput.getCwid(), application)) {
+					if (checker.isRelevanceStrategic(detailInput.getCwid(), detailInput.getToken(), application)) {
 						accessDTO.setRelevanceStrategic(AirKonstanten.YES_SHORT);
 					} else {
 						accessDTO.setRelevanceStrategic(AirKonstanten.NO_SHORT);

@@ -261,6 +261,10 @@ AIR.AirAclManager = function() {
 //							}
 						}
 					}
+					
+					item.allowBlank = true;
+					item.clearInvalid();
+					
 					break;
 				case 'grid': 
 					fieldsetItem = item.findParentByType('fieldset');
@@ -533,8 +537,17 @@ AIR.AirAclManager = function() {
 										return true;
 									break;
 								case 'checkbox':
-									if(!draftItemCmp.getValue())
+									//solange nur checkboxen GR1435,GR1920 required sind: nur wenn keine Aussage vorhanden/Null in der DB --> Draft 
+									if((!data.relevanceGR1435 || !data.relevanceGR1920) ||
+									   data.relevanceGR1435 != 'Y' && data.relevanceGR1435 != 'N' && 
+									   data.relevanceGR1435 != '1' && data.relevanceGR1435 != '0' && data.relevanceGR1435 != '-1' &&
+									   data.relevanceGR1920 != 'Y' && data.relevanceGR1920 != 'N' && 
+									   data.relevanceGR1920 != '1' && data.relevanceGR1920 != '0' && data.relevanceGR1920 != '-1'   
+									)
 										return true;
+									
+//									if(!draftItemCmp.getValue())
+//										return true;
 									break;
 								default: break;
 							}

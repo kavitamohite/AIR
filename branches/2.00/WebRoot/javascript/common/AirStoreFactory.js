@@ -1596,7 +1596,7 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createApplicationContactsStore: function() {
-			var applicationContactsRecord = Ext.data.Record.create([ {
+			var applicationContactsRecord = Ext.data.Record.create([{
 				name: 'groupId',
 				mapping: 'applicationContactEntryDTO > groupId'
 			}, {
@@ -3662,7 +3662,8 @@ AIR.AirStoreFactory = function() {
   		      	{ name: 'osTypeId', type: 'int' },
   		      	{ name: 'osName' },
   		      	{ name: 'osGroup' },
-  		      	{ name: 'itSystemType', type: 'int' }
+  		      	{ name: 'itSystemType', type: 'int' },
+  		      	{ name: 'licenseScanning', type: 'int' }
   		    ]);
   		
   		    var osTypesListReader = new Ext.data.XmlReader({
@@ -3681,7 +3682,7 @@ AIR.AirStoreFactory = function() {
   		      		timeout: 120000,
   		      		reader: osTypesListReader
   		      	}),
-  		      	fields: [ 'osTypeId', 'osName', 'osGroup', 'itSystemType' ]
+  		      	fields: [ 'osTypeId', 'osName', 'osGroup', 'itSystemType', 'licenseScanning' ]
   		    });
   		    
   		    return osTypesListStore;

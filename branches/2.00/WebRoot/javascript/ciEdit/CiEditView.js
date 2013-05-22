@@ -195,6 +195,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		var ciContactsView = ciEditTabView.getComponent('clCiContacts');
 		ciContactsView.on('ciChange', this.onCiChange, this);
+		ciContactsView.on('afterCiUpdate', this.onAfterCiUpdate, this);
+		
 		
 		var ciAgreementsView = ciEditTabView.getComponent('clCiAgreements');
 		ciAgreementsView.on('ciChange', this.onCiChange, this);
@@ -219,6 +221,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 		var ciHistoryView = ciEditTabView.getComponent('clCiHistory');
 		ciHistoryView.on('ciChange', this.onCiChange, this);
+		
+		
 		
 		this.isLoaded = false;
 		this.isUserChange = false;
@@ -757,23 +761,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			this.disableButtons();
 		}
-		
-		
-		/*
-		//geht nicht mehr richtig seit neuem Wizard und neuen Wizard items in der AttributeProperties.xml. Siehe AIR.AirAclManager::isEditMaskValid: valid = valid && aclItemCmp.isValid();
-//		if(AIR.AirAclManager.isEditMaskValid()) {
-		if(panelMsg.length == 0) {
-			var bSave = this.getFooterToolbar().getComponent('savebutton');
-			var bCancel = this.getFooterToolbar().getComponent('cancelbutton');
-			
-			bSave.show();
-			bCancel.show();
-		
-//			showCiDetailDataChanged = true;
-//			showCiDetailDataChanged = false;//!! used by checkDataChanged function
-		} else {
-			this.disableButtons();
-		}*/
 	},
 	
 	disableButtons: function() {
@@ -878,11 +865,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				record = Util.getStoreRecord(store, 'ciTypeId', parseInt(data.tableId));
 				break;
 		}
-
-//		var name = data.name;
-//		if(data.deleteTimestamp && data.deleteTimestamp.length > 0)
-//			name += ' (' + AAM.getLabels().deleted + ')';
-			
 
 		this.getComponent('lCiName').setText(data.name);//name data.name applicationName
 		this.getComponent('lCiType').setText(record.get('text'));//ciData.applicationCat1Txt applicationName
@@ -997,6 +979,16 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	isCiModified: function() {
 		return this.ciModified;
+	},
+	
+	onAfterCiUpdate: function(view) {
+		var panelMsg = ACM.getRequiredFields(AAM.getAppDetail());
+		
+		if(panelMsg.length > 0) {
+			this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
+		} else {
+			this.setPanelMessage(panelMsg);
+		}
 	},
 	
 	onViewInitialized: function(childView) {//view,

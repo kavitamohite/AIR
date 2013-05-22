@@ -559,7 +559,7 @@ public class AnwendungHbn extends BaseHbn {
 						
 						
 						if (null != dto.getServiceModel()) {
-							if (" ".equals(dto.getServiceModel())) {
+							if (AirKonstanten.STRING_ONE_BLANK.equals(dto.getServiceModel())) {
 								application.setServiceModel(null);
 							}
 							else {
@@ -578,8 +578,8 @@ public class AnwendungHbn extends BaseHbn {
 						
 						if (null != dto.getBarRelevance()) {
 							dto.setBarRelevance(dto.getBarRelevance().toUpperCase());
-							if (!"Y".equals(application.getBarRelevance())) {
-								if ("Y".equals(dto.getBarRelevance()) || "N".equals(dto.getBarRelevance())) {
+							if (!AirKonstanten.YES_SHORT.equals(application.getBarRelevance())) {
+								if (AirKonstanten.YES_SHORT.equals(dto.getBarRelevance()) || AirKonstanten.NO_SHORT.equals(dto.getBarRelevance())) {
 									application.setBarRelevance(dto.getBarRelevance());
 								}
 							}
@@ -795,37 +795,37 @@ public class AnwendungHbn extends BaseHbn {
 
 						// TODO !!!
 						if (null == dto.getRelevanzItsec()) {
-							if ("Y".equals(dto.getRelevanceGR1435())) {
+							if (AirKonstanten.YES_SHORT.equals(dto.getRelevanceGR1435())) {
 								dto.setRelevanzItsec(new Long(-1));
 							}
-							else if ("N".equals(dto.getRelevanceGR1435())) {
+							else if (AirKonstanten.NO_SHORT.equals(dto.getRelevanceGR1435())) {
 								dto.setRelevanzItsec(new Long(0));
 							}
 						}
 						
 						if (null == dto.getRelevanceICS()) {
-							if ("Y".equals(dto.getRelevanceGR1920())) {
+							if (AirKonstanten.YES_SHORT.equals(dto.getRelevanceGR1920())) {
 								dto.setRelevanceICS(new Long(-1));
 							}
-							else if ("N".equals(dto.getRelevanceGR1920())) {
+							else if (AirKonstanten.NO.equals(dto.getRelevanceGR1920())) {
 								dto.setRelevanceICS(new Long(0));
 							}
 						}
 						
 						if (null == dto.getRelevance2059()) {
-							if ("Y".equals(dto.getRelevanceGR2059())) {
+							if (AirKonstanten.YES_SHORT.equals(dto.getRelevanceGR2059())) {
 								dto.setRelevance2059(new Long(-1));
 							}
-							else if ("N".equals(dto.getRelevanceGR2059())) {
+							else if (AirKonstanten.NO_SHORT.equals(dto.getRelevanceGR2059())) {
 								dto.setRelevance2059(new Long(0));
 							}
 						}
 
 						if (null == dto.getRelevance2008()) {
-							if ("Y".equals(dto.getRelevanceGR2008())) {
+							if (AirKonstanten.YES_SHORT.equals(dto.getRelevanceGR2008())) {
 								dto.setRelevance2008(new Long(-1));
 							}
-							else if ("N".equals(dto.getRelevanceGR2008())) {
+							else if (AirKonstanten.NO_SHORT.equals(dto.getRelevanceGR2008())) {
 								dto.setRelevance2008(new Long(0));
 							}
 						}
@@ -857,8 +857,8 @@ public class AnwendungHbn extends BaseHbn {
 
 						if (null != dto.getBarRelevance()) {
 							dto.setBarRelevance(dto.getBarRelevance().toUpperCase());
-							if (!"Y".equals(application.getBarRelevance())) {
-								if ("Y".equals(dto.getBarRelevance()) || "N".equals(dto.getBarRelevance())) {
+							if (!AirKonstanten.YES_SHORT.equals(application.getBarRelevance())) {
+								if (AirKonstanten.YES_SHORT.equals(dto.getBarRelevance()) || AirKonstanten.NO_SHORT.equals(dto.getBarRelevance())) {
 									application.setBarRelevance(dto.getBarRelevance());
 								}
 							}
@@ -1083,7 +1083,7 @@ public class AnwendungHbn extends BaseHbn {
 	}
 	
 	//ApplicationDTO CiItemDTO
-	private static List<String> validateApplication(ApplicationDTO dto) {
+	/*private static List<String> validateApplication(ApplicationDTO dto) {
 		List<String> messages = new ArrayList<String>();
 		
 		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
@@ -1182,7 +1182,7 @@ public class AnwendungHbn extends BaseHbn {
 		}
 		
 		return messages;
-	}
+	}*/
 
 	/**
 	 * mark an application as deleted
@@ -2043,9 +2043,9 @@ public class AnwendungHbn extends BaseHbn {
 					StringBuffer sb = new StringBuffer();
 					sb.append(rsMessage.getString("PROCESS_NAME"));
 					
-					if (null != rsMessage.getTimestamp("DEL_TIMESTAMP")) {
-						sb.append(" (DELETED)");
-					}					
+//					if (null != rsMessage.getTimestamp("DEL_TIMESTAMP")) {
+//						sb.append(" (DELETED)");
+//					}					
 					dto.setText(sb.toString());
 
 					listResult.add(dto);
@@ -2605,9 +2605,9 @@ public class AnwendungHbn extends BaseHbn {
 					
 					anw.setDeleteQuelle(deleteQuelle);
 					
-					if (null != anw.getDeleteQuelle()) {
-						anw.setName(anw.getName() + " (DELETED)");
-					}
+//					if (null != anw.getDeleteQuelle()) {
+//						anw.setName(anw.getName() + " (DELETED)");
+//					}
 					
 					listResult.add(anw);
 				}

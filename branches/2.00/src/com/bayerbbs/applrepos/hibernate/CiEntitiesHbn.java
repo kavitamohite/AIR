@@ -19,6 +19,7 @@ import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
+import com.bayerbbs.applrepos.service.AccessRightChecker;
 import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
 
@@ -99,12 +100,12 @@ public class CiEntitiesHbn {
 
 	
 	//ApplicationDTO
-	public static List<CiItemDTO> findCisByNameOrAlias(String searchName) {
-		
-		boolean showDeleted = false;
-		
-		return findCisByNameOrAlias(searchName, showDeleted, AirKonstanten.PARAMETER_QUERYMODE_EXACT, false, null, null, 0, 1000);
-	}	 
+//	public static List<CiItemDTO> findCisByNameOrAlias(String searchName) {
+//		
+//		boolean showDeleted = false;
+//		
+//		return findCisByNameOrAlias(searchName, showDeleted, AirKonstanten.PARAMETER_QUERYMODE_EXACT, false, null, null, 0, 1000);
+//	}	 
  
 	public static boolean isLikeStart(String queryMode) {
 		boolean isLikeStart = false;
@@ -127,7 +128,8 @@ public class CiEntitiesHbn {
 	
 
 	//ApplicationDTO
-	public static List<CiItemDTO> findCisByNameOrAlias(String searchName, boolean showDeleted, String queryMode, boolean onlyApplications, String sort, String dir, Integer startwert, Integer limit) {
+//	public static List<CiItemDTO> findCisByNameOrAlias(String cwid, String token, String searchName, boolean showDeleted, String queryMode, boolean onlyApplications, String sort, String dir, Integer startwert, Integer limit) {
+	public static List<CiItemDTO> findCisByNameOrAlias(StringBuilder baseSql, String sort, String dir, Integer startwert, Integer limit) {
 		ArrayList<CiItemDTO> listResult = new ArrayList<CiItemDTO>();
 
 		boolean commit = false;
@@ -135,61 +137,126 @@ public class CiEntitiesHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 		Connection conn = null;
+		
+		StringBuilder sql = new StringBuilder("select /*+ INDEX (DWH_ENTITY FIX_143_16) */ * from DWH_ENTITY  where");
+		sql.append(baseSql);
+		
 
-		searchName = searchName.toUpperCase();
+//		searchName = searchName.toUpperCase();
+//		
+//		
+//		
+//		StringBuffer sql = new StringBuffer();
+//
+//		sql.append("select /*+ INDEX (DWH_ENTITY FIX_143_16) */ * from DWH_ENTITY  where");
+//		sql.append(" 1=1");
+//		if (!showDeleted) {
+//			sql.append(" and upper(deleted) = 'NO'");
+//		}
+//		
+//		boolean hasAirAppLayer = false;//AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_APPLICATION_LAYER);
+//		boolean hasAirInfrastructureLayer = false;//AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_INFRASTRUCTURE_LAYER);
+//		boolean hasAirDefault = false;//AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_DEFAULT);
+//		boolean hasAirAppManager = true;//AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_APPLICATION_MANAGER);
+//		boolean hasAirInfrastructureManager = false;//AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_INFRASTRUCTURE_MANAGER);
+//		boolean hasLocationMaintenance = false;//AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_LOCATION_DATA_MAINTENANCE);
+//		
+//		
+//
+//		if (onlyApplications) {
+//			sql.append(" and (TABLE_ID in (");
+//			sql.append(AirKonstanten.TABLE_ID_APPLICATION);
+//			sql.append(") and UPPER(type) = UPPER('Application'))");
+//		} else {
+//			StringBuilder inConstraint = new StringBuilder();
+//			
+////			if(hasAirDefault || hasAirAppLayer || hasAirAppManager || hasAirInfrastructureLayer || hasAirInfrastructureManager) {
+////				inConstraint.append(AirKonstanten.TABLE_ID_APPLICATION);
+////			}
+//			
+//			if(hasAirDefault || hasAirInfrastructureLayer || hasAirInfrastructureManager) {
+//				if(inConstraint.length() > 0)
+//					inConstraint.append(AirKonstanten.KOMMA);
+//				else
+//					inConstraint.append(" and ((TABLE_ID in (");
+//				
+//				inConstraint.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
+//			}
+//			
+//			if(hasAirDefault || hasAirAppLayer || hasLocationMaintenance || hasAirInfrastructureManager) {
+//				if(inConstraint.length() > 0)
+//					inConstraint.append(AirKonstanten.KOMMA);
+//				else
+//					inConstraint.append(" and ((TABLE_ID in (");
+//				
+//				inConstraint.append(AirKonstanten.TABLE_ID_ROOM);
+//				inConstraint.append(AirKonstanten.KOMMA);
+//				inConstraint.append(AirKonstanten.TABLE_ID_BUILDING);
+//				inConstraint.append(AirKonstanten.KOMMA);
+//				inConstraint.append(AirKonstanten.TABLE_ID_BUILDING_AREA);
+//				inConstraint.append(AirKonstanten.KOMMA);
+//				inConstraint.append(AirKonstanten.TABLE_ID_TERRAIN);
+//				inConstraint.append(AirKonstanten.KOMMA);
+//				inConstraint.append(AirKonstanten.TABLE_ID_POSITION);
+//				inConstraint.append(AirKonstanten.KOMMA);
+//				inConstraint.append(AirKonstanten.TABLE_ID_SITE);
+//			}
+//			sql.append(inConstraint.toString());
+//			
+//			boolean isAnwendungTableOnly = inConstraint.indexOf("TABLE_ID") == -1;
+//			String conjunction = isAnwendungTableOnly ? " AND " : " OR ";
+//			if(!isAnwendungTableOnly)
+//				sql.append("))");
+//			
+//			inConstraint.delete(0, inConstraint.length());
+//
+//			
+//			if(hasAirDefault || hasAirAppLayer || hasAirAppManager || hasAirInfrastructureLayer || hasAirInfrastructureManager) {
+//				sql.append(conjunction);
+//				sql.append(" UPPER(type) IN (");//OR
+//				
+////				sql.append(" AND UPPER(type) IN (");//OR
+//				
+//				if(hasAirDefault || hasAirAppLayer || hasAirAppManager)
+//					inConstraint.append("UPPER('Application')");
+//				if(hasAirDefault || hasAirInfrastructureLayer || hasAirInfrastructureManager) {
+//					if(inConstraint.length() > 0)
+//						inConstraint.append(AirKonstanten.KOMMA);
+//					
+//					inConstraint.append("UPPER('Application Platform'),UPPER('Middleware'),UPPER('Common Service')");
+//				}
+//				
+//				sql.append(inConstraint.toString());
+//				
+//				sql.append(")");//))
+//				
+//				if(!isAnwendungTableOnly)
+//					sql.append(")");
+//			}
+//		}
+//		
+//		sql.append(" and (upper(name) like '");
+//		if (isLikeStart(queryMode)) {
+//			sql.append("%");
+//		}
+//		
+//		sql.append(searchName);
+//		if (isLikeEnd(queryMode)) {
+//			sql.append("%");
+//		}
+//
+//		sql.append("'  or upper(ASSET_ID_OR_ALIAS) like '");
+//		if (isLikeStart(queryMode)) {
+//			sql.append("%");
+//		}
+//		
+//		sql.append(searchName);
+//		if (isLikeEnd(queryMode)) {
+//			sql.append("%");
+//		}
+//		
+//		sql.append("')");
 		
-		StringBuffer sql = new StringBuffer();
-
-		sql.append("select /*+ INDEX (DWH_ENTITY FIX_143_16) */ * from DWH_ENTITY  where");
-		sql.append(" 1=1");
-		if (!showDeleted) {
-			sql.append(" and upper(deleted) = 'NO'");
-		}
-		
-		sql.append(" and TABLE_ID in (");
-		sql.append(AirKonstanten.TABLE_ID_APPLICATION);
-
-		if (onlyApplications) {
-			sql.append(") and UPPER(type) = UPPER('Application')");
-		} else {
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_ROOM);
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_BUILDING);//TABLE_ID_WAYS
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_BUILDING_AREA);
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_TERRAIN);
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_POSITION);
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_SITE);
-			sql.append(")");
-		}
-		
-		sql.append(" and (upper(name) like '");
-		if (isLikeStart(queryMode)) {
-			sql.append("%");
-		}
-		
-		sql.append(searchName);
-		if (isLikeEnd(queryMode)) {
-			sql.append("%");
-		}
-
-		sql.append("'  or upper(ASSET_ID_OR_ALIAS) like '");
-		if (isLikeStart(queryMode)) {
-			sql.append("%");
-		}
-		
-		sql.append(searchName);
-		if (isLikeEnd(queryMode)) {
-			sql.append("%");
-		}
-		
-		sql.append("')");
 		
 		
 		if (StringUtils.isNotNullOrEmpty(sort)) {
@@ -272,69 +339,73 @@ public class CiEntitiesHbn {
 		return listResult;
 	}
 
-	public static Long findCountCisByNameOrAlias(String searchName, boolean showDeleted, String queryMode, boolean onlyApplications) {
+//	public static Long findCountCisByNameOrAlias(String searchName, boolean showDeleted, String queryMode, boolean onlyApplications) {
+	public static Long findCountCisByNameOrAlias(StringBuilder baseSql) {
 		boolean commit = false;
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 		Connection conn = null;
 
-		searchName = searchName.toUpperCase();
+		StringBuilder sql = new StringBuilder("select count(*) from DWH_ENTITY  where");
+		sql.append(baseSql);
 		
-		StringBuffer sql = new StringBuffer();
-
-		sql.append("select count(*) from DWH_ENTITY  where");
-		
-		sql.append(" 1=1");
-		
-		if (!showDeleted) {
-			sql.append(" and upper(deleted) = 'NO'");
-		}
-		
-		sql.append(" and TABLE_ID in (");
-		sql.append(AirKonstanten.TABLE_ID_APPLICATION);
-
-		if (onlyApplications) {
-			sql.append(") and UPPER(type) = UPPER('Application')");
-		} else {
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_ROOM);
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_BUILDING);//TABLE_ID_WAYS
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_BUILDING_AREA);
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_TERRAIN);
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_POSITION);
-			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_SITE);
-			sql.append(")");
-		}
-		
-		sql.append(" and (upper(name) like '");
-		if (isLikeStart(queryMode)) {
-			sql.append("%");
-		}
-		
-		sql.append(searchName);
-		if (isLikeEnd(queryMode)) {
-			sql.append("%");
-		}
-
-		sql.append("'  or upper(ASSET_ID_OR_ALIAS) like '");
-		if (isLikeStart(queryMode)) {
-			sql.append("%");
-		}
-		
-		sql.append(searchName);
-		if (isLikeEnd(queryMode)) {
-			sql.append("%");
-		}
-		
-		sql.append("')");
+//		searchName = searchName.toUpperCase();
+//		
+//		StringBuffer sql = new StringBuffer();
+//
+//		sql.append("select count(*) from DWH_ENTITY  where");
+//		
+//		sql.append(" 1=1");
+//		
+//		if (!showDeleted) {
+//			sql.append(" and upper(deleted) = 'NO'");
+//		}
+//		
+//		sql.append(" and TABLE_ID in (");
+//		sql.append(AirKonstanten.TABLE_ID_APPLICATION);
+//
+//		if (onlyApplications) {
+//			sql.append(") and UPPER(type) = UPPER('Application')");
+//		} else {
+//			sql.append(AirKonstanten.KOMMA);
+//			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
+//			sql.append(AirKonstanten.KOMMA);
+//			sql.append(AirKonstanten.TABLE_ID_ROOM);
+//			sql.append(AirKonstanten.KOMMA);
+//			sql.append(AirKonstanten.TABLE_ID_BUILDING);//TABLE_ID_WAYS
+//			sql.append(AirKonstanten.KOMMA);
+//			sql.append(AirKonstanten.TABLE_ID_BUILDING_AREA);
+//			sql.append(AirKonstanten.KOMMA);
+//			sql.append(AirKonstanten.TABLE_ID_TERRAIN);
+//			sql.append(AirKonstanten.KOMMA);
+//			sql.append(AirKonstanten.TABLE_ID_POSITION);
+//			sql.append(AirKonstanten.KOMMA);
+//			sql.append(AirKonstanten.TABLE_ID_SITE);
+//			sql.append(")");
+//		}
+//		
+//		sql.append(" and (upper(name) like '");
+//		if (isLikeStart(queryMode)) {
+//			sql.append("%");
+//		}
+//		
+//		sql.append(searchName);
+//		if (isLikeEnd(queryMode)) {
+//			sql.append("%");
+//		}
+//
+//		sql.append("'  or upper(ASSET_ID_OR_ALIAS) like '");
+//		if (isLikeStart(queryMode)) {
+//			sql.append("%");
+//		}
+//		
+//		sql.append(searchName);
+//		if (isLikeEnd(queryMode)) {
+//			sql.append("%");
+//		}
+//		
+//		sql.append("')");
 		
 		Long anzahlDatensaetze = 0L;
 		
@@ -991,5 +1062,124 @@ public class CiEntitiesHbn {
 		}
 		
 		return ciTypes;
+	}
+
+
+	public static StringBuilder getSearchSqlBase(String cwid, String token, String searchName, boolean showDeleted, String queryMode, boolean onlyApplications, String sort, String dir, Integer startwert, Integer limit) {
+		searchName = searchName.toUpperCase();
+		StringBuilder sql = new StringBuilder();
+		
+		
+		boolean hasAirAppLayer = AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_APPLICATION_LAYER);//true;//
+		boolean hasAirInfrastructureLayer = AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_INFRASTRUCTURE_LAYER);//false;//
+		boolean hasAirDefault = AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_DEFAULT);//false;//
+		boolean hasAirAppManager = AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_APPLICATION_MANAGER);//false;//
+		boolean hasAirInfrastructureManager = AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_INFRASTRUCTURE_MANAGER);//false;//
+		boolean hasLocationMaintenance = AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_LOCATION_DATA_MAINTENANCE);//true;//
+		
+		
+
+
+//		sql.append("select /*+ INDEX (DWH_ENTITY FIX_143_16) */ * from DWH_ENTITY  where");
+		sql.append(" 1=1");
+		if (!showDeleted) {
+			sql.append(" AND UPPER(deleted) = 'NO'");
+		}
+
+		if (onlyApplications) {
+			sql.append(" AND (TABLE_ID IN (");
+			sql.append(AirKonstanten.TABLE_ID_APPLICATION);
+			sql.append(") AND UPPER(type) = UPPER('Application'))");
+		} else {
+			StringBuilder inConstraint = new StringBuilder();
+			
+//			if(hasAirDefault || hasAirAppLayer || hasAirAppManager || hasAirInfrastructureLayer || hasAirInfrastructureManager) {
+//				inConstraint.append(AirKonstanten.TABLE_ID_APPLICATION);
+//			}
+			
+			if(hasAirDefault || hasAirInfrastructureLayer || hasAirInfrastructureManager) {
+				if(inConstraint.length() > 0)
+					inConstraint.append(AirKonstanten.KOMMA);
+				else
+					inConstraint.append(" AND ((TABLE_ID in (");//((TABLE_ID (TABLE_ID
+				
+				inConstraint.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
+			}
+			
+			if(hasAirDefault || hasAirAppLayer || hasLocationMaintenance || hasAirInfrastructureLayer) {// || hasAirInfrastructureManager
+				if(inConstraint.length() > 0)
+					inConstraint.append(AirKonstanten.KOMMA);
+				else
+					inConstraint.append(" AND ((TABLE_ID in (");//((TABLE_ID 
+				
+				inConstraint.append(AirKonstanten.TABLE_ID_ROOM);
+				inConstraint.append(AirKonstanten.KOMMA);
+				inConstraint.append(AirKonstanten.TABLE_ID_BUILDING);
+				inConstraint.append(AirKonstanten.KOMMA);
+				inConstraint.append(AirKonstanten.TABLE_ID_BUILDING_AREA);
+				inConstraint.append(AirKonstanten.KOMMA);
+				inConstraint.append(AirKonstanten.TABLE_ID_TERRAIN);
+				inConstraint.append(AirKonstanten.KOMMA);
+				inConstraint.append(AirKonstanten.TABLE_ID_POSITION);
+				inConstraint.append(AirKonstanten.KOMMA);
+				inConstraint.append(AirKonstanten.TABLE_ID_SITE);
+			}
+			sql.append(inConstraint.toString());
+			
+			boolean isAnwendungTableOnly = inConstraint.indexOf("TABLE_ID") == -1;
+			String conjunction = isAnwendungTableOnly ? " AND " : " OR ";
+			if(!isAnwendungTableOnly)
+				sql.append("))");//))
+			
+			inConstraint.delete(0, inConstraint.length());
+
+			
+			if(hasAirDefault || hasAirAppLayer || hasAirAppManager || hasAirInfrastructureLayer || hasAirInfrastructureManager) {
+				sql.append(conjunction);
+				sql.append(" UPPER(type) IN (");//OR
+				
+//				sql.append(" AND UPPER(type) IN (");//OR
+				
+				if(hasAirDefault || hasAirAppLayer || hasAirAppManager)
+					inConstraint.append("UPPER('Application')");
+				if(hasAirDefault || hasAirInfrastructureLayer || hasAirInfrastructureManager) {
+					if(inConstraint.length() > 0)
+						inConstraint.append(AirKonstanten.KOMMA);
+					
+					inConstraint.append("UPPER('Application Platform'),UPPER('Middleware'),UPPER('Common Service')");
+				}
+				
+				sql.append(inConstraint.toString());
+				
+				sql.append("))");//))
+				
+//				if(!isAnwendungTableOnly)
+//					sql.append(")");
+			}
+		}
+		
+		sql.append(" AND (upper(name) like '");
+		if (isLikeStart(queryMode)) {
+			sql.append("%");
+		}
+		
+		sql.append(searchName);
+		if (isLikeEnd(queryMode)) {
+			sql.append("%");
+		}
+
+		sql.append("' OR upper(ASSET_ID_OR_ALIAS) like '");
+		if (isLikeStart(queryMode)) {
+			sql.append("%");
+		}
+		
+		sql.append(searchName);
+		if (isLikeEnd(queryMode)) {
+			sql.append("%");
+		}
+		
+		sql.append("')");
+		
+		return sql;
 	}
 }

@@ -90,7 +90,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		AIR.ComplianceLinkView.superclass.initComponent.call(this);
 		
-		this.addEvents('linkCiSelect');
+		this.addEvents('linkCiSelect', 'linkCiTypeSelect');
 		
 //		this.getComponent('cbLinkCiType').getStore().filter('language', AAM.getLanguage().toLowerCase());
 		
@@ -127,6 +127,10 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	loadLinkCiList: function(ciTypeId, callback) {
+		//hier schon zur Vermeidung von Fehlerfällen wenn Link CI-Typ ausgewählt, Massnahme auf unbearbeitet
+		//zurücksetzen 
+		this.fireEvent('linkCiTypeSelect');
+
 		var params = {
 			zielotypGSToolId: ciTypeId,
 			itSetId: this.ciData.itSet,
@@ -183,6 +187,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		cbLinkCiType.setValue('');
 		cbLinkCiList.setValue('');
+		cbLinkCiList.getStore().removeAll();
 		
 		this.fireEvent('linkCiSelect', '', '');
 	},

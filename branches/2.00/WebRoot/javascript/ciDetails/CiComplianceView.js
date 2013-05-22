@@ -543,6 +543,13 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
+		
+		var hasItSecGroup = cbItSecGroup.getStore().getCount() > 0;
+//		if(hasItSecGroup)
+//			bEditItSecGroup.enable();
+//		else
+//			bEditItSecGroup.disable();
+		
 		var text = AIR.AirApplicationManager.getLabels().relevanceViewButton;
 		
 		if(isTemplate) {
@@ -597,10 +604,10 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 		}
 		bEditItSecGroup.setText(text);
-		
+
 		
 		//is itsecGroupId a real BYTsec ItSecGroup?
-		if(data.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && data.itsecGroupId != 0 && data.itsecGroupId != -1) {//evtl. mit cbItSecGroup.setRawValue('Default_ItSecGroup'); setzen falls der Name dieser Default itsecGruppe angezeigt werden soll
+		if(data.itsecGroupId !== AC.CI_GROUP_ID_NON_BYTSEC && data.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && data.itsecGroupId != 0 && data.itsecGroupId != -1) {//evtl. mit cbItSecGroup.setRawValue('Default_ItSecGroup'); setzen falls der Name dieser Default itsecGruppe angezeigt werden soll
 			//cbItSecGroup.setValue(data.itsecGroupId);
 			
 			//weil store ein mapping bei id/itsecGroupId hat geht cbItSecGroup.getStore().getById() nicht. Andersrum, das mapping client+serverseitig rausnehmen hat nicht geklappt.
@@ -613,8 +620,13 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				//cbReferencedTemplate.setRawValue(data.refTxt);
 				cbItSecGroup.setRawValue(AC.LABEL_INVALID + data.itsecGroupTxt);
 			}
-		} else
+		} else {
 			cbItSecGroup.setValue('');//clearValue();
+//			hasItSecGroup = false;
+		}
+		
+		if(!hasItSecGroup)
+			bEditItSecGroup.disable();
 	},
 	
 	onEditNonBytSec: function(button, event) {
@@ -752,7 +764,10 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	onReferencedTemplateSelect: function(combo, record, index) {
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
-		cbItSecGroup.setValue(record.get('itsecGroupId'));
+		var itSecGroupId = record.get('itsecGroupId');
+		if(itSecGroupId != AC.CI_GROUP_ID_DEFAULT_ITSEC)
+			cbItSecGroup.setValue(itSecGroupId);
+		
 		Util.disableCombo(cbItSecGroup);
 		
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
@@ -885,7 +900,6 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			default: //Integrated/BYTsec default value oder anderer Wert als 0,-1,10136,11504
 				this.bytSecValue = value;
 				rgRelevanceBYTSEC.setValue(AC.CI_GROUP_ID_DEFAULT_ITSEC);
-//				rgRelevanceBYTSEC.fireEvent('change', rgRelevanceBYTSEC, rgRelevanceBYTSEC.getValue()??);//wenn fsComplianceMgmt unverständlicherweise nicht angezeigt wird. Das ausgewählte checkbox Element muss mitübergeben werden
 				rgRelevanceBYTSEC.disable();
 				
 				this.updateComplianceDetails(data);

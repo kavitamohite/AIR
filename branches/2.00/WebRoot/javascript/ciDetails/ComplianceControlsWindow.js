@@ -1260,6 +1260,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');
 		complianceLinkView.on('linkCiSelect', this.onLinkCiSelect, this);
+		complianceLinkView.on('linkCiTypeSelect', this.onLinkCiTypeSelect, this);
 		
 //		this.on('massnahmenWarning', this.onMassnahmenWarning, this);
 	},
@@ -2204,7 +2205,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var linkCiType;
 		var linkCi;
 		
-		if(cbLinkCiType.getValue().length > 0) {
+//		if(cbLinkCiType.getValue().length > 0) {//ORIG
+		if(cbLinkCiType.getValue().length > 0 && cbLinkCiList.getValue().length > 0) {
 			var r = cbLinkCiType.getStore().getAt(cbLinkCiType.getStore().findExact('id', cbLinkCiType.getValue()));
 			
 			var tableId = r.get('tableId');
@@ -3437,6 +3439,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			   massnahme.refPKID &&
 			   massnahme.refPKID.length > 0 &&
 			   massnahme.refPKID != 0 ? true : false;// && massnahme.refTableID.length > 0	 && massnahme.refPKID.length > 0
+	},
+	
+	onLinkCiTypeSelect: function() {
+		this.disableMassnahmeDetails(this.config.hasEditRights);
 	},
 	
 	disableMassnahmeDetails: function(hasEditRights) {

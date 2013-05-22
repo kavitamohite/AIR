@@ -167,11 +167,14 @@ public class AccessRightChecker {
 		return isEditable;//false
 	}
 	
-	public boolean isRelevanceOperational(String cwidInput, Application application) {
+	public boolean isRelevanceOperational(String cwid, String token, Application application) {
 		boolean isRelevanceOperational = false;
 		
-		if (null != cwidInput && null != application) {
-			String cwid = cwidInput.toUpperCase();
+		if(application.getDeleteQuelle() != null)
+			return false;
+		
+		if (null != cwid && null != application) {
+			cwid = cwid.toUpperCase();
 			
 			if (cwid.equals(application.getResponsible())) {
 				isRelevanceOperational = true;
@@ -203,19 +206,22 @@ public class AccessRightChecker {
 			   application.getDeleteTimestamp() == null)
 				isRelevanceOperational = true;*/
 			
-			if(isRelevanceOperational && application.getDeleteTimestamp() != null)
-				isRelevanceOperational = false;
+//			if(isRelevanceOperational && application.getDeleteTimestamp() != null)
+//				isRelevanceOperational = false;
 		}
 		
 		return isRelevanceOperational;
 	}
 	
 
-	public boolean isRelevanceStrategic(String cwidInput, Application application) {
+	public boolean isRelevanceStrategic(String cwid, String token, Application application) {
 		boolean isRelevanceStrategic = false;
 		
-		if (null != cwidInput && null != application) {
-			String cwid = cwidInput.toUpperCase();
+		if (null != cwid && null != application) {
+			cwid = cwid.toUpperCase();
+			
+			if(application.getDeleteQuelle() != null)
+				return false;
 			
 			if (cwid.equals(application.getApplicationOwner())) {
 				isRelevanceStrategic = true;
@@ -236,14 +242,6 @@ public class AccessRightChecker {
 				}
 			}
 			
-			if (!isRelevanceStrategic) {
-				if (isEditableRoleApplicationManager(cwid)) {
-					// allowed by role rights for admin
-					isRelevanceStrategic = true;
-				}
-			}
-			
-			
 			//wenn kein ciOwner, ciOwnerDelegate und kein Steward vorhanden, dürfen alle editieren, wenn die
 			//app nicht löschmarkiert ist!
 			if(!isRelevanceStrategic &&
@@ -252,8 +250,15 @@ public class AccessRightChecker {
 			   StringUtils.isNullOrEmpty(application.getApplicationSteward()))
 				isRelevanceStrategic = true;
 			
-			if(isRelevanceStrategic && application.getDeleteTimestamp() != null)
-				isRelevanceStrategic = false;
+			if (!isRelevanceStrategic) {
+//				if (isEditableRoleApplicationManager(cwid)) {
+				if(hasRole(cwid, token, AirKonstanten.ROLE_AIR_APPLICATION_MANAGER)) {
+					isRelevanceStrategic = true;
+				}
+			}
+			
+//			if(isRelevanceStrategic && application.getDeleteTimestamp() != null)
+//				isRelevanceStrategic = false;
 		}
 		
 		return isRelevanceStrategic;
@@ -277,18 +282,19 @@ public class AccessRightChecker {
 		return isEditableByRoleAdminType(AirKonstanten.ROLE_AIR_INFRASTRUCTURE_MANAGER, cwidInput);
 	}
 	
-	private String getCacheKey(String cwid, String token) {
+	private static String getCacheKey(String cwid, String token) {
 		return cwid + ":" + token;
 	}
 	
-	private boolean hasRole(String cwid, String token, String roleName) {
+	public static boolean hasRole(String cwid, String token, String... roleNames) {//String roleName
 		Cache cache = CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
 		Element element = cache.get(getCacheKey(cwid.toLowerCase(), token));
 		AppRepAuthData authData = (AppRepAuthData)element.getObjectValue();
 		
 		for(RolePersonDTO role : authData.getRoles())
-			if(role.getRoleName().equals(roleName))
-				return true;
+			for(String roleName : roleNames)
+				if(role.getRoleName().equals(roleName))
+					return true;
 			
 		return false;
 	}

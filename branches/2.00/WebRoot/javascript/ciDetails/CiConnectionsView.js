@@ -4,7 +4,6 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	toolbarMessageTpl: new Ext.XTemplate('<table><tr><td><img src="images/{icon}"/></td><td>{text}</td></tr><table>'),//images/{icon}
 	toolbarEmptyMessage: '<table><tr><td>&nbsp;</td></tr><table>',
 	
-	
 	initComponent: function() {
 		var raDeleteUpStreamConnection = new Ext.ux.grid.RowActions({
 			id: 'raDeleteUpStreamConnectionColumn',
@@ -24,7 +23,6 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
         });
 		
 		
-		
 		var raDeleteDownStreamConnection = new Ext.ux.grid.RowActions({
 			id: 'raDeleteDownStreamConnectionColumn',
 			
@@ -42,40 +40,22 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
             action: this.onDownStreamConnectionRemoved.createDelegate(this)
         });
 		
-		
-		
 		Ext.apply(this, {
 		    title: 'Connections',
 		    layout: 'hbox',//form hbox
 		    border: false,
 		    
 //		    height: 800,//650 550
-			height: 350,
+			height: 470,//480 550 500 450 350 
 			autoScroll: true,
 		    			
-		    items: [
-//		    {//connectionGrid
-//		    	xtype: 'AIR.CiConnectionGrid',
-//		    	id: 'connections',
-//			},
-//		 	listeners : {
-//		 		beforeshow : function (pa) {
-//					if (Ext.getCmp('personpickertip')!==undefined) {
-//						ppHandleToolClick(null, null, null, null);
-//					}
-//					if (Ext.getCmp('grouppickertip')!==undefined) {
-//						gpHandleToolClick(null, null, null, null);
-//					}
-//		 		}
-//		 	}
-
-	    	{
+		    items: [{
 		    	xtype: 'panel',
 		    	id: 'pConnectionsUpDownStreamV',
 		    	layout: 'form',
 		    	border: false,
 		    	
-		    	height: 580,//480 nur! damit die Toolbars der listview/grid toolbars nicht zu klein werden
+		    	height: 520,//500 580 480
 		    	margins: '10 0 0 10',
 		    	flex: 4,
 		    	
@@ -95,7 +75,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					border: true,
 					autoScroll: true,
 					
-					height: 230,//165
+					height: 180,//200 230 165
 //			        hideHeaders: true,
 			        					
 					columns: [{
@@ -148,7 +128,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					border: true,
 					autoScroll: true,
 					
-					height: 230,//165
+					height: 180,//200 230 165
 //			        hideHeaders: true,
 								        
 					columns: [{
@@ -191,7 +171,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    	flex: 5,
 		    	
 		    	layout: 'form',//border form
-		    	height: 650,//520 450
+		    	height: 640,//650 520 450
 		    	margins: '10 0 0 15',
 		    	
 		    	items: [{
@@ -579,8 +559,14 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	update: function(data) {
 		this.reset();
 		
+		var bEditConnections = this.getComponent('p1').getComponent('p11').getComponent('bEditConnections');
 		var isLocationCI = AAM.isLocationCi(data.tableId);
-		this.getComponent('p1').setVisible(!isLocationCI);
+//		this.getComponent('p1').setVisible(!isLocationCI);
+		if(isLocationCI)
+			bEditConnections.disable();
+		else
+			AIR.AirAclManager.setAccessMode(bEditConnections, data);
+
 		
 		var lvUpStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvUpStreamConnections');
 		var lvDownStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvDownStreamConnections');
@@ -624,8 +610,6 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var r = cbConnectionsObjectType.getStore().getAt(0);
 		var v = r ? r.get('text') : '';
 		cbConnectionsObjectType.setValue(v);
-		
-		AIR.AirAclManager.setAccessMode(this.getComponent('p1').getComponent('p11').getComponent('bEditConnections'), data);
 	},
 	
 	filterCiTypes: function(cbConnectionsObjectType, data) {
@@ -720,6 +704,8 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			bEditConnections.toggle();//kein Toogle Effekt: bEditConnections.fireEvent('click', bEditConnections);
 
 		this.resetToolbar();
+//		this.getEl().scroll('top', 1000);
+		//this.getEl().scrollTo('top', 0);//rowPosY rowElParent
 		
 //		this.isLoaded = false;
 	},
@@ -834,12 +820,13 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
     getDeleteConnectionRenderer: function(value, cell, record, row, col, store, raDeleteConnection, direction) {
     	var data = AIR.AirApplicationManager.getAppDetail();//applicationDetailStore.data.items[0].data;//AIR.AirApplicationManager.getAppDetail();
     	
-    	// TODO... bitte in eine globale Funktion auslagern.
     	var isAdmin = AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);//AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_MANAGER) || 
 		var isEditable = (data.relevanceStrategic == 'Y' || data.relevanceOperational == 'Y' || isAdmin);
 		
 		//location CI - upstream: nicht löschbar - downstream und name=unknown: nicht löschbar
-		isEditable = !record.get('isReferenced') && ((direction === AC.UPSTREAM && data.tableId == AC.TABLE_ID_IT_SYSTEM || data.tableId == AC.TABLE_ID_APPLICATION) || (direction === AC.DOWNSTREAM && record.get('ciName') !== AC.UNKNOWN));// AAM.isLocationCi(data.tableId) && 
+		isEditable = isEditable && !record.get('isReferenced') &&
+					 ((direction === AC.UPSTREAM && (data.tableId == AC.TABLE_ID_IT_SYSTEM || data.tableId == AC.TABLE_ID_APPLICATION)) || 
+					  (direction === AC.DOWNSTREAM && record.get('ciName') !== AC.UNKNOWN));// AAM.isLocationCi(data.tableId) && 
 		
         raDeleteConnection.tpl.html = '<div class="ux-row-action">';
         if(isEditable)

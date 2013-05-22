@@ -197,10 +197,11 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 			
 			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
 			var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
+			var ciSubTypeId = r ? r.get('ciSubTypeId') : AC.APP_CAT1_APPLICATION;
 			
 			AAM.setCiId(ciId);
 			AAM.setTableId(parseInt(record.data.tableId));//AC.TABLE_ID_APPLICATION
-			AAM.setCiSubTypeId(r.get('ciSubTypeId'));
+			AAM.setCiSubTypeId(ciSubTypeId);
 		} else {
 			AAM.setCiId(-1);
 			AAM.setTableId(-1);

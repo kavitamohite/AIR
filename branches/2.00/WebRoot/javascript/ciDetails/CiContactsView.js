@@ -46,7 +46,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        title: 'GPSC contacts',
 		        labelWidth: 200,
 		        //autoScroll: true,
-		        anchor: '80%',
+		        anchor: '90%',
 		        
 				items: [{
 					xtype: 'container',
@@ -588,7 +588,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		AIR.CiContactsView.superclass.initComponent.call(this);
 		
-		this.addEvents('ciBeforeChange', 'ciChange');
+		this.addEvents('ciBeforeChange', 'ciChange', 'afterCiUpdate');
 		
 		var pApplicationOwner = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner');
 		var clApplicationOwnerAdd = pApplicationOwner.getComponent('applicationOwnerAdd');
@@ -1127,6 +1127,8 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	applicationContactsLoaded: function(store, records, options) {
 		for(var i = 0; i < records.length; ++i)
 			this.setContactInformation(records[i]);
+		
+		this.fireEvent('afterCiUpdate', this);
 	},
 	
 	

@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,7 +26,21 @@ public class LDAPAuthWS {
 		
 		LDAPAuthParameterOutput output = new LDAPAuthParameterOutput();
 		
+		
 		List<RolePersonDTO> roles = ApplReposHbn.findRolePerson(cwid);
+		
+		/*
+		//ONLY TEST ONLY TEST ONLY TEST
+		List<RolePersonDTO> r = new ArrayList<RolePersonDTO>(roles);
+		for(RolePersonDTO role : r)
+			if(role.getRoleName().equals(AirKonstanten.ROLE_AIR_DEFAULT)
+//					 || role.getRoleName().equals(AirKonstanten.ROLE_AIR_LOCATION_DATA_MAINTENANCE)
+			) {
+				r.remove(role);
+			}
+		
+		//ONLY TEST ONLY TEST ONLY TEST
+		*/
 		
 		if (roles.isEmpty()) {
 			output.setResult(AirKonstanten.RESULT_ERROR);
@@ -60,7 +75,7 @@ public class LDAPAuthWS {
 					AppRepAuthData authData = new AppRepAuthData();
 					authData.setCwid(cwid);
 					authData.setToken(token);
-					authData.setRoles(roles);
+					authData.setRoles(roles);//roles r
 					
 					// PersonsDTO[] aPersonsDTO = personWS.findPersonsByCWID(cwid);
 					PersonsDTO[] aPersonsDTO = PersonsHbn.getArrayFromList(PersonsHbn.findPersonByCWID(cwid));
