@@ -265,8 +265,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //								selectOnFocus: true,
 								
 								triggerAction: 'all',
-								mode: 'local',
 								lazyInit: false,//damit cbCompliantStatus.view nicht erst bei fokussierung initialisiert wird
+								mode: 'local',
 								editable: false
 					    	}]
 						}, {
@@ -1784,6 +1784,17 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			this.saveMassnahme(this.previousSelection);
 		}
 		
+		var linkedCiType = this.editedMassnahmen[this.previousSelection].refTableID;
+		var linkedCi = this.editedMassnahmen[this.previousSelection].refPKID;
+		if(linkedCiType == -1 || linkedCi == -1) {
+			var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');//.setVisible(true);
+			var cbLinkCiType = complianceLinkView.getComponent('cbLinkCiType');
+			cbLinkCiType.reset();
+			this.enableMassnahmeDetails();
+		}
+			
+
+		
 		//nur das Array zum (Server) Speichern übergeben
 		var massnahmen = [];
 		for(var key in this.editedMassnahmen) {
@@ -2385,6 +2396,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		//			cbLinkCiList.reset();
 					cbLinkCiType.setValue('');
 					cbLinkCiList.setValue('');
+					cbLinkCiList.getStore().removeAll();
 					
 					if(this.config.hasEditRights)
 						this.enableMassnahmeDetails();//(*2) Release Defaultdeaktivierung

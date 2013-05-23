@@ -119,7 +119,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        
 		        triggerAction: 'all',//all query
 //		        lazyRender: true,
-//		        lazyInit: false,
+		        lazyInit: false,
 		        mode: 'local',//local
 		        queryParam: 'id'
         	},{
@@ -540,7 +540,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	onTerrainChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
-			this.terrainChanged(newValue);
+//			this.terrainChanged(newValue);
 			this.ownerCt.fireEvent('ciChange', this, combo);
 		}
 	},
@@ -560,20 +560,34 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		Util.disableCombo(cbRoom);
 		Util.disableCombo(cbBuildingArea);
 		
-		if(typeof value === 'string' && value.length === 0) {
+		
+		if(this.tableId == AC.TABLE_ID_BUILDING_AREA || this.tableId == AC.TABLE_ID_ROOM || this.tableId == AC.TABLE_ID_POSITION) {
 			Util.disableCombo(cbBuilding);
-		} else {
-			cbBuilding.getStore().setBaseParam('id', value);
-			cbBuilding.allQuery = value;
-			cbBuilding.reset();
-			cbBuilding.getStore().load({
-				params: {
-					id: value
-				}
-			});
-			
-			Util.enableCombo(cbBuilding);
+			if(typeof value === 'string' && value.length === 0) {
+				Util.disableCombo(cbBuilding);
+			} else {
+				//TEST
+//				cbBuilding.onBeforeLoad();
+//				cbBuilding.innerList.update(cbBuilding.loadingText ?
+//			               '<div class="loading-indicator">'+cbBuilding.loadingText+'</div>' : '');
+				//TEST
+				
+				cbBuilding.getStore().setBaseParam('id', value);
+				cbBuilding.allQuery = value;
+				cbBuilding.reset();
+				/* auskommentiert wenn cbBuilding mode: 'remote' ansonsten: */		
+				cbBuilding.getStore().load({
+					params: {
+						id: value
+					},
+					callback: function() { Util.enableCombo(cbBuilding); }
+				});
+//				Util.enableCombo(cbBuilding);
+			}
 		}
+		
+//		if(this.tableId == AC.TABLE_ID_BUILDING_AREA || this.tableId == AC.TABLE_ID_ROOM || this.tableId == AC.TABLE_ID_POSITION)
+//			Util.enableCombo(cbBuilding);
 	},
 	
 	
@@ -600,7 +614,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	onSiteChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
-			this.siteChanged(newValue);
+//			this.siteChanged(newValue);
 			this.ownerCt.fireEvent('ciChange', this, combo);
 		}
 	},
@@ -666,7 +680,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	onCountryChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
-			this.countryChanged(newValue);
+//			this.countryChanged(newValue);
 			this.ownerCt.fireEvent('ciChange', this, combo);
 		}
 	},
@@ -742,6 +756,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
     
 	update: function(data) {
+		this.tableId = parseInt(data.tableId);
 		this.ciId = data.id;
 		this.name = data.name;
 		

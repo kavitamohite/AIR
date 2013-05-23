@@ -731,14 +731,15 @@ AIR.AirApplicationManager = function() {
 					if(document.all && window.event && !event.preventDefault) {
 //						event.cancelBubble = true;
 //						event.returnValue = false;
-						event.keyCode = 0;//WHY IS THIS NECESSARY ??
+						event.keyCode = 0;//WHY NECESSARY?
 					} 
 					return false;
 				
 				case 8: //backspace
-					var tagName = Ext.isIE ? event.srcElement.tagName : event.target.tagName;
+					var uiElement = Ext.isIE ? event.srcElement : event.target;
+					var tagName = uiElement.tagName;
 					
-		            if(tagName == 'BODY' || tagName == 'HTML' || tagName == 'DIV') {//event.originalTarget.id.indexOf('tf') == -1
+		            if(tagName == 'BODY' || tagName == 'HTML' || tagName == 'DIV' || (tagName == 'INPUT' && uiElement.readOnly)) {//event.originalTarget.id.indexOf('tf') == -1
 						if(event.preventDefault)
 							event.preventDefault(); 
 		            

@@ -86,7 +86,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
 	    		cwid: responseData.cwid,
 	    		token: responseData.token
 	        };
-						
+			
 			Ext.Ajax.request({
 		        url: tokenCheckUrl,
 		        params: params,
