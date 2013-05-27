@@ -42,18 +42,20 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 				id: 'cbLinkCiType',
 				store: AIR.AirStoreManager.getStoreByName('linkCiTypeListStore'),//linkCiTypeListStore,//new Ext.data.Store(),//
 				
-				anchor: '100%',
+				width: 320,
+//				anchor: '100%',
 //				flex: 7,
 //				margins: '5 0 0 0',
 				
 				fieldLabel: labels.LinkCiType,
 		        valueField: 'id',//id tableId
 		        displayField: 'type',
+		        enableKeyEvents: true,
 		        
 		        mode: 'local',
-		        triggerAction: 'all',
-		        lazyRender: true,
-		        lazyInit: false
+		        triggerAction: 'all'
+//		        lazyRender: true,
+//		        lazyInit: false
 		        
 //		        editable: false
 		        
@@ -65,7 +67,8 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 				id: 'cbLinkCiList',
 				store: AIR.AirStoreFactory.createLinkCiListStore(),//new Ext.data.Store(),//
 				
-				anchor: '100%',
+				width: 320,
+//				anchor: '100%',
 //				flex: 7,
 //				margins: '5 0 0 0',
 				
@@ -98,6 +101,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbLinkCiType = this.getComponent('cbLinkCiType');
 		cbLinkCiType.on('select', this.onLinkCiTypeSelect, this);
 		cbLinkCiType.on('change', this.onLinkCiTypeChange, this);
+		cbLinkCiType.on('keyUp', this.onLinkCiTypeKeyUp, this);
 		
 		var filterData = {
 			language: AAM.getLanguage().toLowerCase()
@@ -124,6 +128,11 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 				this.loadLinkCiList(newValue);
 			}
 		}
+	},
+	
+	onLinkCiTypeKeyUp: function(combo, value) {
+		if(combo.getRawValue().length === 0)
+			this.clearLinkCISettings();
 	},
 	
 	loadLinkCiList: function(ciTypeId, callback) {

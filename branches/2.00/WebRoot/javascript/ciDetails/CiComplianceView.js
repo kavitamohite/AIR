@@ -544,11 +544,14 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
 		
+		var hasEditRights = AIR.AirAclManager.isRelevance(bEditItSecGroup, data);
 		var hasItSecGroup = cbItSecGroup.getStore().getCount() > 0;
-//		if(hasItSecGroup)
-//			bEditItSecGroup.enable();
-//		else
-//			bEditItSecGroup.disable();
+		if(hasEditRights && hasItSecGroup)
+			bEditItSecGroup.enable();
+		else
+			bEditItSecGroup.disable();
+
+
 		
 		var text = AIR.AirApplicationManager.getLabels().relevanceViewButton;
 		
@@ -559,7 +562,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if(AIR.AirAclManager.isRelevance(cbItSecGroup, data))
 				Util.enableCombo(cbItSecGroup);
 			
-			if(AIR.AirAclManager.isRelevance(bEditItSecGroup, data))
+			if(hasEditRights)
 				text = AIR.AirApplicationManager.getLabels().relevanceEditButton;
 		} else if(!data.isCiCreate) {
 			var hasTemplate = data.refId !== '0' && data.refId.length > 0;
@@ -624,9 +627,6 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			cbItSecGroup.setValue('');//clearValue();
 //			hasItSecGroup = false;
 		}
-		
-		if(!hasItSecGroup)
-			bEditItSecGroup.disable();
 	},
 	
 	onEditNonBytSec: function(button, event) {

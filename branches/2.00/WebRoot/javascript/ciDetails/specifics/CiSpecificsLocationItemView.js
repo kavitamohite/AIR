@@ -233,7 +233,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        
 		        store: AIR.AirStoreFactory.createLandListStore(),//new Ext.data.Store(),//AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
-		        displayField: 'name',
+		        displayField: AAM.getLanguage() == 'DE' ? 'name' : 'nameEn',//'name',
 				lastQuery: '',
 		        
 //		        typeAhead: true,
@@ -429,7 +429,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	onBuildingAreaChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
-			this.buildingAreaChanged(newValue);
+			if(typeof newValue === 'string' && newValue.length === 0)
+				this.buildingAreaChanged(newValue);
 			this.ownerCt.fireEvent('ciChange', this, combo);
 		}
 	},
@@ -482,7 +483,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	onBuildingChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
-			this.buildingChanged(newValue);
+			if(typeof newValue === 'string' && newValue.length === 0)
+				this.buildingChanged(newValue);
 			this.ownerCt.fireEvent('ciChange', this, combo);
 		}
 	},
@@ -540,7 +542,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	onTerrainChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
-//			this.terrainChanged(newValue);
+			if(typeof newValue === 'string' && newValue.length === 0)
+				this.terrainChanged(newValue);
 			this.ownerCt.fireEvent('ciChange', this, combo);
 		}
 	},
@@ -614,7 +617,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	onSiteChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
-//			this.siteChanged(newValue);
+			if(typeof newValue === 'string' && newValue.length === 0)
+				this.siteChanged(newValue);
 			this.ownerCt.fireEvent('ciChange', this, combo);
 		}
 	},
@@ -680,7 +684,8 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	},
 	onCountryChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
-//			this.countryChanged(newValue);
+			if(typeof newValue === 'string' && newValue.length === 0)
+				this.countryChanged(newValue);
 			this.ownerCt.fireEvent('ciChange', this, combo);
 		}
 	},
@@ -870,7 +875,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					cbBuilding.setValue(data.gebaeudeName);
 					cbTerrain.setValue(data.terrainName);
 					cbSite.setValue(data.standortName);
-					cbCountry.setValue(data.landNameEn);
+					cbCountry.setValue(AAM.getLanguage() == 'DE' ? data.landName : data.landNameEn);//data.landNameEn
 					
 					Util.disableCombo(cbRoom);
 					Util.disableCombo(cbBuildingArea);
@@ -955,7 +960,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					cbBuilding.setValue(data.gebaeudeName);
 					cbTerrain.setValue(data.terrainName);
 					cbSite.setValue(data.standortName);
-					cbCountry.setValue(data.landNameEn);
+					cbCountry.setValue(AAM.getLanguage() == 'DE' ? data.landName : data.landNameEn);//data.landNameEn
 					
 					Util.disableCombo(cbBuilding);
 					Util.disableCombo(cbTerrain);
@@ -1036,7 +1041,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					cbBuilding.setValue(data.gebaeudeName);
 					cbTerrain.setValue(data.terrainName);
 					cbSite.setValue(data.standortName);
-					cbCountry.setValue(data.landNameEn);
+					cbCountry.setValue(AAM.getLanguage() == 'DE' ? data.landName : data.landNameEn);//data.landNameEn
 					
 					
 					Util.disableCombo(cbTerrain);
@@ -1114,7 +1119,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					
 					cbTerrain.setValue(data.terrainName);
 					cbSite.setValue(data.standortName);
-					cbCountry.setValue(data.landNameEn);
+					cbCountry.setValue(AAM.getLanguage() == 'DE' ? data.landName : data.landNameEn);//data.landNameEn
 					
 					Util.disableCombo(cbTerrain);
 					Util.disableCombo(cbSite);
@@ -1154,7 +1159,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					Util.enableCombo(cbCountry);
 				} else {
 					cbSite.setValue(data.standortName);
-					cbCountry.setValue(data.landNameEn);
+					cbCountry.setValue(AAM.getLanguage() == 'DE' ? data.landName : data.landNameEn);//data.landNameEn
 					
 					Util.disableCombo(cbSite);
 					Util.disableCombo(cbCountry);
@@ -1197,7 +1202,7 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 					
 					Util.enableCombo(cbCountry);
 				} else {
-					cbCountry.setValue(data.landNameEn);
+					cbCountry.setValue(AAM.getLanguage() == 'DE' ? data.landName : data.landNameEn);//data.landNameEn
 					tfStandortCode.setValue(data.standortCode);
 					tfStandortNameEn.setValue(data.nameEn);
 					
@@ -1430,6 +1435,16 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		this.setFieldLabel(this.getComponent('cbTerrain'), labels.terrain);
 		this.setFieldLabel(this.getComponent('cbSite'), labels.site);
 		this.setFieldLabel(this.getComponent('cbCountry'), labels.country);
+		
+		var cbCountry = this.getComponent('cbCountry');
+		cbCountry.displayField = AAM.getLanguage() == 'DE' ? 'name' : 'nameEn';
+		delete cbCountry.list;
+		delete cbCountry.tpl;
+		cbCountry.initList();
+		
+		var c = (AAM.getLanguage() == 'DE' ? AAM.getAppDetail().landName : AAM.getAppDetail().landNameEn) || cbCountry.getValue();
+		cbCountry.setValue(c);//data.landNameEn
+		
 		
 		var pSpecificsLocationStreet = this.getComponent('pSpecificsLocationStreet');
 		var pSpecificsLocationAddress = this.getComponent('pSpecificsLocationAddress');

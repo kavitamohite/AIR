@@ -138,14 +138,10 @@ public class ApplicationWS {
 						input.getProcessOptions(), input.getSourceOptions(), input.getBusinessEssentialOptions()
 					);
 				} else {
-					StringBuilder searchSqlBase = CiEntitiesHbn.getSearchSqlBase(input.getCwid(), input.getToken(), searchname, showDeleted, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir(), startwert, limit);
-
-					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchSqlBase, input.getSort(), input.getDir(), startwert, limit);
-					anzahlDatensaetze = CiEntitiesHbn.findCountCisByNameOrAlias(searchSqlBase);
-
+//					boolean showDeleted = true;
 					
-//					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(input.getCwid(), input.getToken(), searchname, showDeleted, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir(), startwert, limit);
-//					anzahlDatensaetze = CiEntitiesHbn.findCountCisByNameOrAlias(searchname, showDeleted, input.getQueryMode(), onlyApplications);
+					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchname, showDeleted, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir(), startwert, limit);
+					anzahlDatensaetze = CiEntitiesHbn.findCountCisByNameOrAlias(searchname, showDeleted, input.getQueryMode(), onlyApplications);
 				}
 			}
 		}

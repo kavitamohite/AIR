@@ -34,17 +34,19 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		    }*/,{
 		    	xtype: 'textfield',
 		        id: 'applicationName',
-//		        width: 230,
+//		        anchor: '70%',
+		        width: 400,
+		        
 		        fieldLabel: 'Application Name',
-		        anchor: '70%',
 		        
 		        enableKeyEvents: true
 		    },{
 		    	xtype: 'textfield',
 		        id: 'applicationAlias',
-//		        width: 230,
+//		        anchor: '70%',
+		        width: 400,
+		        
 		        fieldLabel: 'Application Alias',
-		        anchor: '70%',
 		        		        
 		        enableKeyEvents: true //Stop IE to always set the cursor at the end when pushing left/right or setting the cursor with the mouse
 		    },{
@@ -64,15 +66,19 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		    	xtype: 'textfield',
 //		        width: 230,
 		        fieldLabel: 'BAR Application Id',
-		        anchor: '70%',
+		        
+//		        anchor: '70%',
+		        width: 400,
+		        
 		        disabled: true,
 //		        cls: 'required',
 		        
 		        id: 'barApplicationId'
 	        },{
 		    	xtype: 'textfield',
-//		    	width: 230,
-		    	anchor: '70%',
+//		        anchor: '70%',
+		        width: 400,
+		    	
 		        fieldLabel: 'Version',
 		        id: 'applicationVersion',
 		        enableKeyEvents: true,
@@ -202,8 +208,9 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		    	xtype: 'textarea',
 		        id: 'comments',
 
-		        anchor: '70%',
-//		        grow: true,
+//		        anchor: '70%',
+		        width: 400,
+
 		        height: 50,
 		        fieldLabel: 'Comments',
 		        

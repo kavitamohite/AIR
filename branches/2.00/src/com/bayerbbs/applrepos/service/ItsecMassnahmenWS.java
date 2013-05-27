@@ -72,8 +72,10 @@ public class ItsecMassnahmenWS {
 			
 			if(null != refTableId && 0 != refTableId.longValue() && null != refPkId && 0 != refPkId.longValue()) {
 				// Weiterverlinkt... deshalb Datensatz nachladen...
-				//detailDTO kann null sein, was tun wenn?
-				detailDTO = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(detailDTO.getRefTableID(), detailDTO.getRefPKID(), detailDTO.getMassnahmeGstoolId());
+//				ItsecMassnahmeDetailDTO detailDTO = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(detailDTO.getRefTableID(), detailDTO.getRefPKID(), detailDTO.getMassnahmeGstoolId());
+				ItsecMassnahmeDetailDTO linkedMassnahme = ItsecHbn.findItsecMassnahmeDetailWeiterverlinkt(detailDTO.getRefTableID(), detailDTO.getRefPKID(), detailDTO.getMassnahmeGstoolId());
+				if(linkedMassnahme != null)
+					detailDTO = linkedMassnahme;
 				
 				// für die erste getroffene Auswahl der Verlinkung..
 				detailDTO.setRefTableID(refTableId);

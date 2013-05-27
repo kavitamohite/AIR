@@ -877,6 +877,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 //		this.getComponent('editpanelmessage').setText(labels.header_applicationIsIncomplete.replace('##', ACM.getRequiredFields(AAM.getAppDetail())));
 //    	this.getComponent('editpaneldraft').setText(labels.header_applicationIsDraft.replace('##', ''));//draftFlag '' (#8)
     	
+
+		
     	var ciEditTabView = this.getComponent('ciEditTabView');
     	
 		var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
@@ -917,6 +919,11 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		ciEditTabView.getFooterToolbar().getComponent('cancelbutton').setText(labels.button_general_cancel);
 
 		this.getComponent('lCiIsDeleted').setText(labels.deleted);
+		
+		if(this.isUserChange) {
+			this.updatePanelMessage();
+			this.getComponent('editpaneldraft').setText(labels.header_applicationIsDraft.replace('##', ''));
+		}
 	},
 	
 	updateToolTips: function(toolTips) {
@@ -982,6 +989,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	onAfterCiUpdate: function(view) {
+		this.updatePanelMessage();
+	},
+	
+	updatePanelMessage: function() {
 		var panelMsg = ACM.getRequiredFields(AAM.getAppDetail());
 		
 		if(panelMsg.length > 0) {
