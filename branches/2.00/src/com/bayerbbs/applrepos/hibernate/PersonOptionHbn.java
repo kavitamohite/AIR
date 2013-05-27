@@ -50,14 +50,34 @@ public class PersonOptionHbn {
 			dto.setCWID(data.getCWID());
 			dto.setName(data.getName());
 			dto.setValue(data.getValue());
+			
+			dto.setInsertTimestamp(data.getInsertTimestamp());
+			dto.setInsertQuelle(data.getInsertQuelle());
+			dto.setInsertUser(data.getInsertUser());
+
+			dto.setUpdateTimestamp(data.getUpdateTimestamp());
+			dto.setUpdateQuelle(data.getUpdateQuelle());
+			dto.setUpdateUser(data.getUpdateUser());
+
+			dto.setDeleteTimestamp(data.getDeleteTimestamp());
+			dto.setDeleteQuelle(data.getDeleteQuelle());
+			dto.setDeleteUser(data.getDeleteUser());
 
 			listDTO.add(dto);
 		}
 		return listDTO;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static List<PersonOptionDTO> findPersonOptions(String cwid) {
+		return findPersonOptions(cwid, true);
+	}
+
+	public static List<PersonOptionDTO> findPersonOptionsWithDeleted(String cwid) {
+		return findPersonOptions(cwid, false);
+	}
+
+	@SuppressWarnings("unchecked")
+	private static List<PersonOptionDTO> findPersonOptions(String cwid, boolean withoutDeleted) {
 
 		List<PersonOptionDTO> listResult = new ArrayList<PersonOptionDTO>();
 
@@ -69,7 +89,9 @@ public class PersonOptionHbn {
 		sb.append("select h from PersonOption as h");
 		sb.append(" where h.interfaceId = ").append(interfaceAIRid);
 		sb.append(" and h.CWID = '").append(cwid.toUpperCase()).append("'");
-		sb.append(" and h.deleteTimestamp is null");
+		if (withoutDeleted) {
+			sb.append(" and h.deleteTimestamp is null");
+		}
 
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
@@ -104,8 +126,9 @@ public class PersonOptionHbn {
 			personOption.setUpdateUser(cwid);
 			personOption.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			personOption.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
-			if (null == personOption.getId()
-					|| null == personOption.getInsertQuelle()) {
+
+			// Insert Quelle
+			if (null == personOption.getId() || null == personOption.getInsertQuelle() || null != personOption.getDeleteTimestamp()) {
 				// Insert data
 				personOption.setInsertQuelle(personOption.getUpdateQuelle());
 				personOption.setInsertUser(personOption.getUpdateUser());
@@ -113,6 +136,13 @@ public class PersonOptionHbn {
 						.getUpdateTimestamp());
 			}
 
+			// Delete Data
+			if (null != personOption.getDeleteTimestamp()) {
+				personOption.setDeleteTimestamp(null);
+				personOption.setDeleteQuelle(null);
+				personOption.setDeleteUser(null);
+			}
+			
 			try {
 				session.saveOrUpdate(personOption);
 				session.flush();
@@ -166,6 +196,18 @@ public class PersonOptionHbn {
 					option.setCWID(personOptionDTO.getCWID());
 					option.setName(personOptionDTO.getName());
 					option.setValue(value);
+					
+					option.setInsertTimestamp(personOptionDTO.getInsertTimestamp());
+					option.setInsertQuelle(personOptionDTO.getInsertQuelle());
+					option.setInsertUser(personOptionDTO.getInsertUser());
+					
+					option.setUpdateTimestamp(personOptionDTO.getUpdateTimestamp());
+					option.setUpdateQuelle(personOptionDTO.getUpdateQuelle());
+					option.setUpdateUser(personOptionDTO.getUpdateUser());
+
+					option.setDeleteTimestamp(personOptionDTO.getDeleteTimestamp());
+					option.setDeleteQuelle(personOptionDTO.getDeleteQuelle());
+					option.setDeleteUser(personOptionDTO.getDeleteUser());
 
 					result = savePersonOption(cwid, option);
 					isUpdate = true;
@@ -190,13 +232,13 @@ public class PersonOptionHbn {
 	}
 
 	public static void saveLastLogon(String cwid) {
-		List<PersonOptionDTO> listOptions = findPersonOptions(cwid);
+		List<PersonOptionDTO> listOptions = findPersonOptionsWithDeleted(cwid);
 		savePersonOptions(cwid, listOptions, "LAST_LOGON", ApplReposTS
 				.getCurrentTimestamp().toString());
 	}
 
 	public static void saveLastLogoff(String cwid) {
-		List<PersonOptionDTO> listOptions = findPersonOptions(cwid);
+		List<PersonOptionDTO> listOptions = findPersonOptionsWithDeleted(cwid);
 		savePersonOptions(cwid, listOptions, "LAST_LOGOFF", ApplReposTS
 				.getCurrentTimestamp().toString());
 	}
