@@ -1023,7 +1023,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 										fontSize: 12
 									}
 								},{	
-									xtype: 'combo',
+									xtype: 'filterCombo',//combo
 									id: 'cbSignee',
 									store: signeeListStore,//signeeListStore,//AIR.AirStoreFactory.createSigneeListStore()
 									allowBlank: false,
@@ -1554,6 +1554,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.resetMassnahmeDates();
 		this.checkApprovable(this.editedMassnahmen[this.previousSelection]);//combo.cwid
 	},
+	
 //	onSigneeChange: function (combo, newValue, oldValue) {//change event
 	onSigneeChange: function (combo, event) {//keyup event
 		var newValue = combo.getRawValue();//getRawValue keyup event
@@ -1574,13 +1575,42 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			var index = combo.getStore().findExact('lastname', value);
 			var record = index > -1 ? combo.getStore().getAt(index) : combo.getStore().getById(combo.cwid);
 			
-			this.onSigneeSelect(combo, record, index);
+//			this.onSigneeSelect(combo, record, index);
+			
+			if(record)
+				this.onSigneeSelect(combo, record, index);
+			else
+				combo.reset();
 		}
 		
 //		this.checkApprovable(combo.cwid);
 		
-//		Util.checkComboValueValid(combo, newValue, oldValue);
+//		Util.isComboValueValid(combo, newValue, oldValue);
 	},
+	
+//	onSigneeChange: function (combo, newValue, oldValue) {
+//		if(Util.isComboValueValid(combo, newValue, oldValue)) {
+//			if(newValue.length === 0) {
+//				combo.reset();
+//				combo.markInvalid();
+////				this.editedMassnahmen[this.previousSelection].signee = newValue;
+//				
+//				this.onMassnahmeChange();
+//				
+//				this.checkApprovable(this.editedMassnahmen[this.previousSelection]);//combo.cwid
+//			} else {
+//				combo.getStore().clearFilter();
+//				
+//				var value = newValue.indexOf(',') > -1 ? newValue.substring(0, newValue.indexOf(',')) : oldValue.substring(0, oldValue.indexOf(','));
+//				var index = combo.getStore().findExact('lastname', value);
+//				var record = index > -1 ? combo.getStore().getAt(index) : combo.getStore().getById(combo.cwid);
+//				
+//				this.onSigneeSelect(combo, record, index);
+//			}
+//		}
+//	},
+	
+	
 	onSigneeApprove: function(button, event) {
 		var now = new Date();
 		
@@ -1836,6 +1866,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			};
 			
 			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_CHANGED', callbackMap);
+			
+			if(this.existsInvalidMassnahme) {
+				var tbFooter = dynamicWindow.getFooterToolbar();
+				var bSave = tbFooter.items.items[0];
+				bSave.disable();
+			}
+			
 			dynamicWindow.show();
 			return;
 		}
@@ -3420,6 +3457,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				params: params
 			});
 			
+			var options = {
+				skipLinkCiValidation: true
+			};
+			this.onMassnahmeChange(options);
+			
 	//		this.onMassnahmeChange();//ORIG
 			this.disableMassnahmeDetails(this.config.hasEditRights);//kann schon vor dem fertigen store load event gemacht werden
 		} else {
@@ -3433,12 +3475,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		//werden! Deshalb soll die Validierung durch Veränderung der Einzelverlinkung der Massnahme nicht durchgeführt
 		//werden, weil dies fachlich auch nicht notwendig ist. Die Massnahme auf die die ausgewählte Massnahme verweisen soll
 		//ist zwangsläufig valide, sonst hätte sie nicht irgendwann gesichert werden können.
-		var options = {
-			skipLinkCiValidation: true
-		};
-		this.onMassnahmeChange(options);
+//		var options = {
+//			skipLinkCiValidation: true
+//		};
+//		this.onMassnahmeChange(options);
 		
 //		this.onMassnahmeChange();
+		
+		
 		
 		//1. tableId 2. ciId des templates, 3. massnahmeGsToolId, 4. ciSubType (cat1Id des template CIs) --> modForms.getCIType/modAppType.getCITypeFromItem
 //		frm_S_Massnahmen, deReference und cboLink_AfterUpdate
@@ -3454,6 +3498,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	onLinkCiTypeSelect: function() {
+		this.deactivateButtons();
 		this.disableMassnahmeDetails(this.config.hasEditRights);
 	},
 	
@@ -3630,7 +3675,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		taPlanOfAction.enable();
 //		dfTargetDate.enable();
 //		dfTargetDate.setHideTrigger(false);
-		Util.enableCombo(dfTargetDate);
+		if(this.editedMassnahmen[this.previousSelection] && parseInt(this.editedMassnahmen[this.previousSelection].gapPriority) < 4)
+			Util.enableCombo(dfTargetDate);
 
 		taOccurenceOfDamagePerYear2.enable();
 		taMaxDamagePerEvent2.enable();

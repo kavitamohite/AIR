@@ -47,7 +47,7 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 			loadMask: false,
 			autoScroll: true,
 			stripeRows: true,
-			stateful: true,
+			stateful: false,
 //			plugins: expander,
 
 			

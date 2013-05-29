@@ -106,7 +106,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbAppCat2W.filterByData(filterData);
 		cbAppCat2W.getStore().sort('text', 'ASC');
 		
-		cbAppCat2W.setValue(AC.APP_CAT2_DEFAULT_UNKOWN);
+//		cbAppCat2W.setValue(AC.APP_CAT2_DEFAULT_UNKOWN);
 		this.switchNameFields(false);
 		
 //		this.objectNameAllowedStore = AIR.AirStoreFactory.getObjectNameAllowedStore();
@@ -210,19 +210,21 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbCiTypeW = this.getComponent('cbCiTypeW');
 		var r = Util.getComboRecord(cbCiTypeW, 'ciTypeId', AC.TABLE_ID_APPLICATION);
-		cbCiTypeW.setValue(r.get('id'));
 		
-		var data = {
-			applicationCat1Id: r.get('ciSubTypeId')
-		};
-		this.update(data);
-		
-		//falls durch CI Auswahl mit Kat1 != Application eine für Application unpassende Kat2 Liste gefiltert wurde,
-		//für den Wizard wieder zurücksetzen:
-		this.getComponent('cbAppCat2W').getStore().filter('applicationCat1Id', r.get('ciSubTypeId'));//cbCiTypeW.getValue()
-		this.getComponent('cbAppCat2W').setValue(AC.APP_CAT2_DEFAULT_UNKOWN);
-		this.switchNameFields();
-
+		if(r) {
+			cbCiTypeW.setValue(r.get('id'));
+			
+			var data = {
+				applicationCat1Id: r.get('ciSubTypeId')
+			};
+			this.update(data);
+			
+			//falls durch CI Auswahl mit Kat1 != Application eine für Application unpassende Kat2 Liste gefiltert wurde,
+			//für den Wizard wieder zurücksetzen:
+			this.getComponent('cbAppCat2W').getStore().filter('applicationCat1Id', r.get('ciSubTypeId'));//cbCiTypeW.getValue()
+			this.getComponent('cbAppCat2W').setValue(AC.APP_CAT2_DEFAULT_UNKOWN);
+			this.switchNameFields();
+		}
 	},
 	
 	updateLabels: function(labels) {

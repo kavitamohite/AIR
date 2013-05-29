@@ -380,6 +380,15 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 //		this.getLayout().setActiveItem(this.page);
 		var bBackW = this.getFooterToolbar().getComponent('bBackW');
 		this.onBack(bBackW);
+		
+		var cbCiTypeW = this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW');
+		if(cbCiTypeW.getStore().getCount() === 0) {
+			var bFinishW = this.getFooterToolbar().getComponent('bFinishW');
+			var bNextW = this.getFooterToolbar().getComponent('bNextW');
+			
+			bFinishW.disable();
+			bNextW.disable();
+		}
 	},
 	
 	isWizardStarted: function() {

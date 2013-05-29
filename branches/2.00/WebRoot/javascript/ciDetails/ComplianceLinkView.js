@@ -111,6 +111,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbLinkCiList = this.getComponent('cbLinkCiList');
 		cbLinkCiList.on('select', this.onLinkCiListSelect, this);
 		cbLinkCiList.on('change', this.onLinkCiListChange, this);
+		cbLinkCiList.on('keyUp', this.onLinkCiListKeyUp, this);
 	},
 	
 	
@@ -181,6 +182,13 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		Daher das change erstmal deaktiviert. Evtl. ein flag nutzen um beides zu unterstützen. Siehe if(this.isLinkCiSelect)
 		in updateComplianceDetails()
 		*/
+		
+//		this.fireEvent('linkCiSelect', '', '');
+	},
+	
+	onLinkCiListKeyUp: function(combo, value) {
+		if(combo.getRawValue().length === 0)
+			this.fireEvent('linkCiSelect', '', '');
 	},
 	
 	linkCiListSelected: function(linkCiId) {

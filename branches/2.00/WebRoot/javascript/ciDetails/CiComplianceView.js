@@ -305,10 +305,11 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'cbItSecGroup',
 				        
 //				        region: 'center',
-				        
-//				        flex: 8,//hbox
-				        width: 350,//layout: 'column'
 //				        columnWidth: 0.75,
+//				        flex: 8,//hbox
+				        
+				        enableKeyEvents: true,
+				        width: 350,//layout: 'column'
 
 				        fieldLabel: 'ItSecGroup',//labels.compliance1435WindowItSecGroup,//languagestore.getAt(0).data['compliance1435WindowItSecGroup'],//'ITSec Group',
 //				        labelWidth: 200,
@@ -446,6 +447,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		cbItSecGroup.on('select', this.onItSecGroupSelect, this);
 		cbItSecGroup.on('change', this.onItSecGroupChange, this);
+		cbItSecGroup.on('keyup', this.onItSecGroupKeyUp, this);
 		bEditItSecGroup.on('click', this.onEditItSecGroup, this);
 
 		cbgRegulations.on('change', this.onRegulationsChange, this);
@@ -546,7 +548,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var hasEditRights = AIR.AirAclManager.isRelevance(bEditItSecGroup, data);
 		var hasItSecGroup = cbItSecGroup.getStore().getCount() > 0;
-		if(hasEditRights && hasItSecGroup)
+		if(hasEditRights && hasItSecGroup && data.itsecGroupId.length > 0 && data.itsecGroupId !== AC.CI_GROUP_ID_NON_BYTSEC && data.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && data.itsecGroupId != 0 && data.itsecGroupId != -1)//&& data.itsecGroupId && data.itsecGroupId.length > 0
 			bEditItSecGroup.enable();
 		else
 			bEditItSecGroup.disable();
@@ -772,6 +774,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
 		bEditItSecGroup.setText(AIR.AirApplicationManager.getLabels().relevanceViewButton);
+		bEditItSecGroup.enable();
 		
 		//this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('lReferencedTemplateError').hide();
 		//combo.isInvalid = false;
@@ -800,6 +803,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		}
 		
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
+			var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
+			bEditItSecGroup.enable();
 			//this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('lReferencedTemplateError').hide();
 			this.fireEvent('ciChange', this, combo, newValue, oldValue);
 		}
@@ -822,6 +827,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	onItSecGroupSelect: function(combo, record, index) {
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
 		bEditItSecGroup.setVisible(true);
+		bEditItSecGroup.enable();
 		
 		this.getComponent('fsComplianceDetails').doLayout();
 		this.fireEvent('ciChange', this, combo, record);
@@ -831,8 +837,22 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		if(newValue.indexOf(AC.LABEL_INVALID) > -1)
 			return;
 		
-    	if(this.isComboValueValid(combo, newValue, oldValue))
+		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
+
+		if(this.isComboValueValid(combo, newValue, oldValue)) {
+    		bEditItSecGroup.enable();
     		this.fireEvent('ciChange', this, combo, newValue, oldValue);
+    	}
+    	
+    	if(typeof newValue === 'string' && newValue.length === 0)
+    		bEditItSecGroup.disable();
+	},
+	
+	onItSecGroupKeyUp: function(combo, event) {
+		if(combo.getRawValue().length === 0) {
+			var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
+			bEditItSecGroup.disable();
+		}
 	},
 	
 //	getStatusWertDisplayField: function() {

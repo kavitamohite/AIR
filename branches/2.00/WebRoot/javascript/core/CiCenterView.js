@@ -220,7 +220,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-						ciEditView.saveApplication({ skipLoading: true });
+//						ciEditView.saveApplication({ skipLoading: true });
+						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
@@ -254,7 +255,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-						ciEditView.saveApplication({ skipLoading: true });
+//						ciEditView.saveApplication({ skipLoading: true });
+						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
@@ -288,7 +290,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-						ciEditView.saveApplication({ skipLoading: true });
+//						ciEditView.saveApplication({ skipLoading: true });
+						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
@@ -315,7 +318,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-						ciEditView.saveApplication({ skipLoading: true });
+//						ciEditView.saveApplication({ skipLoading: true });
+						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
@@ -340,7 +344,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-						ciEditView.saveApplication({ skipLoading: true });
+//						ciEditView.saveApplication({ skipLoading: true });
+						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
@@ -366,7 +371,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			var saveCallback = function() {
 				verwerfenCallback();
 				if(ciEditView)
-					ciEditView.saveApplication({ skipLoading: true });
+//					ciEditView.saveApplication({ skipLoading: true });
+					ciEditView.onSaveApplication();
 			}.createDelegate(this);
 
 			this.handleNavigation(verwerfenCallback, saveCallback);
@@ -391,7 +397,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-						ciEditView.saveApplication({ skipLoading: true });
+//						ciEditView.saveApplication({ skipLoading: true });
+						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
@@ -436,7 +443,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-						ciEditView.saveApplication({ skipLoading: true });
+//						ciEditView.saveApplication({ skipLoading: true });
+						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
@@ -467,7 +475,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-						ciEditView.saveApplication({ skipLoading: true });
+//						ciEditView.saveApplication({ skipLoading: true });
+						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
@@ -498,7 +507,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-						ciEditView.saveApplication({ skipLoading: true });
+//						ciEditView.saveApplication({ skipLoading: true });
+						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);

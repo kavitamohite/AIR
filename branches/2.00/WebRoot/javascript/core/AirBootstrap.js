@@ -165,16 +165,16 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
 		var roleRecords = [
 
-//   		new Ext.data.Record({
+//		new Ext.data.Record({
 //			id: '4712',
 //			cwid: 'ERCVA',
 //			roleName: AC.USER_ROLE_AIR_APPLICATION_LAYER//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
 //		}),
-//		new Ext.data.Record({
-//   			id: '4710',
-//   			cwid: 'ERCVA',
-//   			roleName: AC.USER_ROLE_AIR_DEFAULT//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
-//   		}),
+		new Ext.data.Record({
+   			id: '4710',
+   			cwid: 'ERCVA',
+   			roleName: AC.USER_ROLE_AIR_DEFAULT//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
+   		}),
 //		new Ext.data.Record({
 //			id: '4713',
 //			cwid: 'ERCVA',
@@ -184,6 +184,18 @@ AIR.AirBootstrap = Ext.extend(Object, {
 //			id: '4711',
 //			cwid: 'ERCVA',
 //			roleName: AC.USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
+//		})
+
+//		new Ext.data.Record({
+//			id: '4714',
+//			cwid: 'ERCVA',
+//			roleName: AC.USER_ROLE_AIR_INFRASTRUCTURE_MANAGER//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
+//		})
+
+//		new Ext.data.Record({
+//			id: '4715',
+//			cwid: 'ERCVA',
+//			roleName: AC.USER_ROLE_AIR_APPLICATION_MANAGER//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
 //		})
 		];
 		

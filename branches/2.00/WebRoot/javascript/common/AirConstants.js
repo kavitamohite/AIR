@@ -43,6 +43,7 @@ AIR.AirConstants = {
 	USER_ROLE_AIR_APPLICATION_LAYER: 'AIR Application Layer',
 	USER_ROLE_AIR_INFRASTRUCTURE_LAYER: 'AIR Infrastructure Layer',
 	USER_ROLE_AIR_APPLICATION_MANAGER: 'AIR Application Manager',
+	USER_ROLE_AIR_INFRASTRUCTURE_MANAGER: 'AIR Infrastructure Manager',
 	USER_ROLE_AIR_ADMINISTRATOR: 'AIR Administrator',//AIR Administrator RFC 8231
 	USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE: 'AIR Location Data Maintenance',
 	USER_ROLE_DEVELOPER: 'AIR Developer',
@@ -206,6 +207,15 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 		4: [],
 		30: [],
 		12: []
+	},
+	
+	AIRApplicationManager: {
+		2: [ 5 ]
+	},
+	
+	AIRInfrastructureManager: {
+		1: [],
+		2: [ -10006, -10007, -10013 ]
 	}
 	
 },

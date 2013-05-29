@@ -40,6 +40,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 				enableTabScroll: true,
 				resizeTabs: true,
 				tabWidth: 145,
+				stateful: false,
 				
 	            plain: true,
 	            defaults: { autoScroll: true },
@@ -82,8 +83,12 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		    	ownerPrefix: ciResultGridId,
 		    	border: false,
 		    	closable: true
+		    	
+//		    	stateful: false,
+//		    	stateEvents: undefined
 	//	    	loadMask: new Ext.LoadMask(tpCiSearchResultTables.getEl(), { msg: 'Loading...' })
 			});
+			
 			
 			this.setVisible(true);//tpCiSearchResultTables
 			tpCiSearchResultTables.add(ciResultGrid);

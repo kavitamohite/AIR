@@ -691,7 +691,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	checkItsecGroup: function(newCiDetail, ciData, saveCallback) {
-		if(ciData.itsecGroupId.length > 0 &&
+		if(ciData.itsecGroupId && ciData.itsecGroupId.length > 0 &&
 			ciData.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && // wenn itsecGroupId = 10136 (Default ITsec Group), wird cbItSecGroup nicht gesetzt. Sie ist in diesem Fall leer. Die Überprüfung findet aber über ciData.itsecGroupId statt
 			ciData.itsecGroupId !== newCiDetail.itSecGroupId &&
 			newCiDetail.itSecGroupId &&

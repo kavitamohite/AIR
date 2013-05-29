@@ -893,7 +893,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		cbCiType.on('select', this.onCiTypeSelect, this);//select beforeselect
 		cbCiType.on('change', this.onCiTypeChange, this);
 		this.filterCiTypes(cbCiType);
-		cbCiType.setValue(cbCiType.getStore().getAt(0).get('id'));
+		var r = cbCiType.getStore().getAt(0);
+		if(r)
+			cbCiType.setValue(r.get('id'));
 		
 		
 		
