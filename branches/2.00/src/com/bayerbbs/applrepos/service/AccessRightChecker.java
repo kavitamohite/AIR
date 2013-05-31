@@ -244,6 +244,7 @@ public class AccessRightChecker {
 			
 			//wenn kein ciOwner, ciOwnerDelegate und kein Steward vorhanden, dürfen alle editieren, wenn die
 			//app nicht löschmarkiert ist!
+			// RFC 9472
 			if(!isRelevanceStrategic &&
 			   StringUtils.isNullOrEmpty(application.getApplicationOwner()) &&
 			   StringUtils.isNullOrEmpty(application.getApplicationOwnerDelegate()) &&

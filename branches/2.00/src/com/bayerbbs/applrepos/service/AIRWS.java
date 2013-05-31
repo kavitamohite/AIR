@@ -161,7 +161,7 @@ public class AIRWS {
 		if (null != editInput && StringUtils.isNotNullOrEmpty(editInput.getCwid())) {
 			
 			if (usePersonOptions) {
-				List<PersonOptionDTO> listOptions = PersonOptionHbn.findPersonOptions(editInput.getCwid());
+				List<PersonOptionDTO> listOptions = PersonOptionHbn.findPersonOptionsWithDeleted(editInput.getCwid());
 				
 				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_CURRENCY", editInput.getCurrency());
 				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_LANGUAGE", editInput.getLanguage());
