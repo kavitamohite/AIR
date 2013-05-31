@@ -248,7 +248,9 @@ public class AccessRightChecker {
 			if(!isRelevanceStrategic &&
 			   StringUtils.isNullOrEmpty(application.getApplicationOwner()) &&
 			   StringUtils.isNullOrEmpty(application.getApplicationOwnerDelegate()) &&
-			   StringUtils.isNullOrEmpty(application.getApplicationSteward()))
+			   StringUtils.isNullOrEmpty(application.getApplicationSteward()) &&
+			   StringUtils.isNullOrEmpty(application.getResponsible()) &&
+			   StringUtils.isNullOrEmpty(application.getSubResponsible()))
 				isRelevanceStrategic = true;
 			
 			if (!isRelevanceStrategic) {
