@@ -1,5 +1,7 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 
@@ -237,4 +239,36 @@ public class ItsecMassnahmeStatusHbn {
 		}		
 		return result;
 	}
+	
+	
+	public static void saveSaveguardAssignment(Integer tableId, Long ciId, Long itsecGroupId) {
+		String sql = "{call pck_Logical_Integrity.P_CI_Safeguard_Assignment (?,?,?)}";
+		
+		Transaction ta = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+		
+		try {
+			ta = session.beginTransaction();
+			Connection conn = session.connection();
+			
+			CallableStatement stmt = conn.prepareCall(sql);
+			stmt.setLong(1, tableId);
+			stmt.setLong(2, ciId);
+			stmt.setLong(3, itsecGroupId);
+			stmt.executeUpdate();
+			ta.commit();
+			
+			stmt.close();
+			conn.close();
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+	}
+
 }

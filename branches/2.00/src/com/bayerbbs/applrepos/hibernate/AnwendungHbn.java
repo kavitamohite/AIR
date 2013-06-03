@@ -412,6 +412,8 @@ public class AnwendungHbn extends BaseHbn {
 						if (null != dto.getRefId()) {
 							if (-1 == dto.getRefId()) {
 								application.setRefId(null);
+								// Anlegen der ITSec Massnahmen
+								ItsecMassnahmeStatusHbn.saveSaveguardAssignment(AirKonstanten.TABLE_ID_APPLICATION, application.getApplicationId(), application.getItsecGroupId());
 							}
 							else {
 								application.setRefId(dto.getRefId());
