@@ -2387,7 +2387,9 @@ AIR.AirStoreFactory = function() {
 					loadMethod: 'getLaender',
 					timeout: 120000,
 					reader: landReader
-				})
+				}),
+				
+				fields: [ 'id', 'itSetId', 'locale', 'name', 'nameEn' ]
 			});
 			
 			return landStore;

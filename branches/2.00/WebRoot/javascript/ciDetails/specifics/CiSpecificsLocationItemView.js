@@ -751,12 +751,13 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 	
 	init: function() {
 		var cbCountry = this.getComponent('cbCountry');
-		cbCountry.getStore().load();
-		
-        //!! sonst findet das Filtern bei manueller Eingabe unerwünschterweise immer per remote Load statt.
-        //Siehe minChars: 0 bei cbCountry Definition,
-//		cbCountry.mode = 'local';
-		
+		cbCountry.getStore().load({
+			callback: function() {
+				var field = AAM.getLanguage() == 'DE' ? 'name' : 'nameEn';
+				cbCountry.getStore().sort(field, 'ASC');//, 'ASC'
+			}
+		});
+
         this.update(AAM.getAppDetail());
 	},
     
@@ -1441,6 +1442,9 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		delete cbCountry.list;
 		delete cbCountry.tpl;
 		cbCountry.initList();
+		
+		var field = AAM.getLanguage() == 'DE' ? 'name' : 'nameEn';
+		cbCountry.getStore().sort(field);//, 'ASC'
 		
 		var c = (AAM.getLanguage() == 'DE' ? AAM.getAppDetail().landName : AAM.getAppDetail().landNameEn) || cbCountry.getValue();
 		cbCountry.setValue(c);//data.landNameEn

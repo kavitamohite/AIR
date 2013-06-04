@@ -27,7 +27,7 @@ AIR.AirGroupPicker = Ext.extend(Ext.Window, {//Ext.Tip
 			
 			width: 610,
 			resizable: false,
-			draggable: true,
+			draggable: false,
 			hidden: true,
 
 //			autoDestroy: true,

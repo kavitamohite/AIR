@@ -21,6 +21,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        valueField: 'id',
 		        displayField: 'text',
 		        
+		        enableKeyEvents: true,
+		        
 //		        typeAhead: true,
 //		        forceSelection: true,
 //		        autoSelect: false,
@@ -123,11 +125,11 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		cbSla.on('select', this.onSlaSelect, this);
 		cbSla.on('change', this.onSlaChange, this);
-//		cbSla.on('blur', this.onSlaBlur, this);
 		
 		cbServiceContract.on('select', this.onServiceContractSelect, this);
 		cbServiceContract.on('change', this.onServiceContractChange, this);
-		
+		cbServiceContract.on('keyup', this.onServiceContractKeyUp, this);
+
 		cbPriorityLevel.on('select', this.onPriorityLevelSelect, this);
 		cbPriorityLevel.on('change', this.onPriorityLevelChange, this);
 		
@@ -136,17 +138,6 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		cbBusinessEssential.on('select', this.onBusinessEssentialSelect, this);
 		cbBusinessEssential.on('change', this.onBusinessEssentialChange, this);
-		
-		//Deaktiviert, damit beim Laden des Stores von combo wizardsla load handler von Wizard Seite 2
-		//(durch ehemals an Stelle this.getComponent('wizardAgreements').getComponent('wizardserviceContract').store.load();)
-		//kein Fehler in Methode this.onServiceContractLoad kommt und diese Methode erst sinnvollerweise gar nicht
-		//automatisch aufgerufen wird wie es beim folgendem Statement der Fall wäre. Statt dessen wird jeweils ein callback
-		//listener in der this.getComponent('serviceContract').getStore().load() Funktion verwendet, wo der serviceContract oder
-		//wizardserviceContract combo store geladen werden muss. Dieser Store ist durch
-		//store: AIR.AirStoreManager.getStoreByName('serviceContractListStore') immer der SELBE! Evtl. muss hier eine stabilere
-		//Lösung als die callbacks gefunden werden, wenn diese SLA - SERVICECONTRACT combo Abhängigkeitskonstalltion häufiger
-		//oder bei anderen combos und deren stores auftritt/benötigt wird.
-//		this.getComponent('serviceContract').getStore().on('load', this.onServiceContractLoad, this);
 	},
 	
 	onBusinessEssentialSelect: function(combo, record, index) {
@@ -182,13 +173,27 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.fireEvent('ciChange', this, combo);
 	},
 	onServiceContractChange: function (combo, newValue, oldValue) {
+		var cbSla = this.getComponent('sla');
+		
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
 			this.fireEvent('ciChange', this, combo);
 			
-			var cbSla = this.getComponent('sla');
 			var r = Util.getComboRecord(combo, 'id', parseInt(newValue));//cbServiceContract.getStore().getById(parseInt(data.serviceContractId));
 			if(r)
 				cbSla.setValue(r.get('slaId'));
+		}/* else {
+			var v = cbSla.getValue();
+			if(!v) {
+				combo.reset();
+				delete combo.filterData;
+			}
+		}*/
+	},
+	
+	onServiceContractKeyUp: function(combo, event) {
+		if(combo.getRawValue().length === 0) {
+			combo.reset();
+			delete combo.filterData;
 		}
 	},
 	
@@ -226,6 +231,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				cbServiceContract.setValue(cbServiceContract.getStore().getAt(0).get('id'));
 		}
 	},
+
 	
 	clear: function(data) {
 		this.update(data);

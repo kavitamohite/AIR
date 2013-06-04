@@ -286,7 +286,7 @@ public class LokationItemHbn extends BaseHbn {
 	}
 	
 	private static String getLokationsKetteAsString(ResultSet rs, String locationFieldString) throws SQLException {//String... args
-		StringBuffer kette = new StringBuffer();
+		StringBuilder kette = new StringBuilder();
 		
 		String[] locationFields = locationFieldString.split(AirKonstanten.KOMMA);
 		
