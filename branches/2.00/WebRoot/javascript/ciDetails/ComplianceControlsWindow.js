@@ -134,7 +134,21 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //							items: [{
 //								icon: 'images/itSecMassnahmeLinkType.png'
 //							}]
-						},{
+						}/*,{
+							xtype: 'actioncolumn',
+							id: 'cMassnahmeInfo',
+							width: 30,
+							menuDisabled: true,
+							
+							getClass: function(v, meta, record) {
+								return 'choco-actioncolumn2';//Funktioniert nicht! Auch nicht was beschreiben ist in: http://www.sencha.com/forum/showthread.php?117409-ActionColumn-first-parameter-of-getClass-function-always-empty
+								//der renderer von ActionColumn benutzt zwar die icon-info Klasse, aber das hat keinen Effekt. (http://docs.sencha.com/ext-js/3-4/source/Column.html#Ext-grid-ActionColumn)
+							}
+//							
+//							items: [{
+//								icon: 'images/itSecMassnahmeLinkType.png'
+//							}]
+						}*/,{
 							header: 'Ident',
 							dataIndex: 'ident',
 							width: 60,
@@ -156,15 +170,24 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							width: 30,
 							menuDisabled: true,
 							
+
+							
+//							getClass: function(v, meta, record) {
+//								return 'icon-info';//Funktioniert nicht! Auch nicht was beschreiben ist in: http://www.sencha.com/forum/showthread.php?117409-ActionColumn-first-parameter-of-getClass-function-always-empty
+//								//der renderer von ActionColumn benutzt zwar die icon-info Klasse, aber das hat keinen Effekt. (http://docs.sencha.com/ext-js/3-4/source/Column.html#Ext-grid-ActionColumn)
+//							}
+							
 							items: [{
-								icon: 'images/Info_16x16.png'//images/Info_16x16.png
+//								icon: 'images/Info_16x16.png'//images/Info_16x16.png
+								iconCls: 'icon-info'
+								
 //								handler: function(grid, rowIndex, colIndex) {
 //									var x;
 //								}
 							}
 //							{
 //								getClass: function(v, meta, record) {
-//									return 'icon-info';//Funktioniert nicht! Auch nicht was beschreiben ist in: http://www.sencha.com/forum/showthread.php?117409-ActionColumn-first-parameter-of-getClass-function-always-empty
+//									return 'icon-info';//Funktioniert nicht. Auch nicht was beschreiben ist in: http://www.sencha.com/forum/showthread.php?117409-ActionColumn-first-parameter-of-getClass-function-always-empty
 									//der renderer von ActionColumn benutzt zwar die icon-info Klasse, aber das hat keinen Effekt. (http://docs.sencha.com/ext-js/3-4/source/Column.html#Ext-grid-ActionColumn)
 									//Lösung: es muss in der css Klasse das width und height Attribut angegeben werden
 //								}
@@ -380,7 +403,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //									enableKeyEvents: true,
 									allowBlank: false,
 									
-									width: 260,//280
+									width: 250,//280
 //									flex: 14,//14 15
 //									margins: '0 0 0 3',
 									
@@ -394,15 +417,27 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									xtype: 'hidden',//nur für/wegen personPicker
 							        id: 'tfGapResponsibleHidden'
 							    },{
-					                xtype: 'commandlink',
+					                xtype: 'button',//commandlink
 					                id: 'clGapResponsibleAddPicker',
-					                img: 'images/add_user_16x16.png'//images/add_user_16x16.png
-					                	
+//					                img: 'images/add_user_16x16.png'//images/add_user_16x16.png
+					                
+					                cls: 'x-btn-text-icon',
+					                iconCls: 'icon-add-user',
+					                style: {
+							    		marginLeft: 3
+							    	}
+					                
 //				                	flex: 1
 								},{
-					                xtype: 'commandlink',
+									xtype: 'button',//commandlink
 					                id: 'clGapResponsibleDeletePicker',
-					                img: 'images/failed_type1_16x16.png'//images/failed_type1_16x16.png
+//					                img: 'images/failed_type1_16x16.png'//images/failed_type1_16x16.png
+					                
+					                cls: 'x-btn-text-icon',
+				                	iconCls: 'icon-delete-user',
+					                style: {
+							    		marginLeft: 3
+							    	}
 					                
 //				                	flex: 1
 								}]
@@ -1053,7 +1088,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									hidden: true,
 									
 						        	cls: 'x-btn-text-icon',
-						        	icon: 'images/ok_type1_16x16.png',//images/ok_type1_16x16.png
+						        	iconCls: 'icon-ok',
+//						        	icon: 'images/ok_type1_16x16.png',//images/ok_type1_16x16.png
 						        	text: labels.signeeApproval,
 						        	
 									style: {
