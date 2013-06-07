@@ -295,6 +295,11 @@ public class SchrankHbn extends LokationItemHbn {
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
+						
+						if (schrank.getRefId() == null) {
+							// Anlegen der ITSec Massnahmen
+							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), schrank.getId(), schrank.getItsecGroupId());
+						}
 					}
 				} else {
 					// messages

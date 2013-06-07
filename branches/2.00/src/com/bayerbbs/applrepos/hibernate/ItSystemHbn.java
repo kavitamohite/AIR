@@ -478,6 +478,11 @@ public class ItSystemHbn extends BaseHbn {
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
+						
+						if (itSystem.getRefId() == null) {
+							// Anlegen der ITSec Massnahmen
+							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), itSystem.getId(), itSystem.getItsecGroupId());
+						}
 					}
 				} else {
 					// messages

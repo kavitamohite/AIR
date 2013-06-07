@@ -302,7 +302,7 @@ public class BaseHbn {
 			if (-1 == ciDTO.getRefId()) {
 				ci.setRefId(null);
 				// Anlegen der ITSec Massnahmen
-				ItsecMassnahmeStatusHbn.saveSaveguardAssignment(AirKonstanten.TABLE_ID_APPLICATION, ci.getId(), ci.getItsecGroupId());
+//				ItsecMassnahmeStatusHbn.saveSaveguardAssignment(ciDTO.getTableId(), ci.getId(), ci.getItsecGroupId());
 			}
 			else {
 				ci.setRefId(ciDTO.getRefId());

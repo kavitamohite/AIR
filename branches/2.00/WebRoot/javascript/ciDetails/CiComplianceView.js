@@ -654,6 +654,19 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			Util.disableCombo(cbReferencedTemplate);
 			Util.enableCombo(cbItSecGroup);
 		} else {
+//			cbReferencedTemplate.getStore().load({
+//				callback: function() {
+////					this.filterCombo(cbReferencedTemplate);
+//					Util.enableCombo(cbReferencedTemplate);
+//					Util.enableCombo(cbItSecGroup);
+//				}.createDelegate(this)
+//			});
+			
+			var r = cbReferencedTemplate.getStore().getById(AAM.getAppDetail().id);
+			cbReferencedTemplate.getStore().remove(r);
+			AAM.getAppDetail().templateChanged = true;
+
+			
 			Util.enableCombo(cbReferencedTemplate);
 			Util.enableCombo(cbItSecGroup);
 		}
@@ -666,7 +679,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 
 		var newTemplate = cbReferencedTemplate.getValue();
-		var template = AIR.AirApplicationManager.getAppDetail().refId;
+		var template = AAM.getAppDetail().refId;
 		
 		var newItSecGroup = cbItSecGroup.getValue();
 		var itSecGroup = AIR.AirApplicationManager.getAppDetail().itsecGroupId;

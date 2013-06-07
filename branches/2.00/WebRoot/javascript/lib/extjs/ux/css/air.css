@@ -1,15 +1,15 @@
 .icon-add-user {
-	background-image:url(../../../../../images/add_user_16x16.png) ! important;
+	background-image:url("../../../../../images/add_user_16x16.png");
 }
 .icon-delete-user {
-	background-image:url(../../../../../images/failed_type1_16x16.png) ! important;
+	background-image:url("../../../../../images/failed_type1_16x16.png");
 }
 
 .icon-ok {
-	background-image:url(../../../../../images/ok_type1_16x16.png) ! important;
+	background-image:url("../../../../../images/ok_type1_16x16.png");
 }
 .icon-delete {
-	background-image:url(../../../../../images/failed_type2_16x16.png) ! important;
+	background-image:url("../../../../../images/failed_type2_16x16.png");
 }
 .icon-info {
 	background-image:url("../../../../../images/Info_16x16.png");

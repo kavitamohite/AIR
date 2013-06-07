@@ -379,6 +379,11 @@ public class StandortHbn extends LokationItemHbn {
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
+						
+						if (standort.getRefId() == null) {
+							// Anlegen der ITSec Massnahmen
+							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), standort.getId(), standort.getItsecGroupId());
+						}
 					}
 				} else {
 					// messages

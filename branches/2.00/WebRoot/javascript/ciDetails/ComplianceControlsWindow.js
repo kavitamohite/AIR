@@ -127,28 +127,15 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							
 							getClass: function(v, meta, record) {
 								var isCItypeFunctionLinkable = parseInt(record.get('chocoMerkmal')) > 0;
-								return isCItypeFunctionLinkable ? 'choco-actioncolumn' : '';//Funktioniert nicht! Auch nicht was beschreiben ist in: http://www.sencha.com/forum/showthread.php?117409-ActionColumn-first-parameter-of-getClass-function-always-empty
-								//der renderer von ActionColumn benutzt zwar die icon-info Klasse, aber das hat keinen Effekt. (http://docs.sencha.com/ext-js/3-4/source/Column.html#Ext-grid-ActionColumn)
+								return isCItypeFunctionLinkable ? 'choco-actioncolumn' : '';
+								//http://www.sencha.com/forum/showthread.php?117409-ActionColumn-first-parameter-of-getClass-function-always-empty
+								//http://docs.sencha.com/ext-js/3-4/source/Column.html#Ext-grid-ActionColumn
 							}
 //							
 //							items: [{
 //								icon: 'images/itSecMassnahmeLinkType.png'
 //							}]
-						}/*,{
-							xtype: 'actioncolumn',
-							id: 'cMassnahmeInfo',
-							width: 30,
-							menuDisabled: true,
-							
-							getClass: function(v, meta, record) {
-								return 'choco-actioncolumn2';//Funktioniert nicht! Auch nicht was beschreiben ist in: http://www.sencha.com/forum/showthread.php?117409-ActionColumn-first-parameter-of-getClass-function-always-empty
-								//der renderer von ActionColumn benutzt zwar die icon-info Klasse, aber das hat keinen Effekt. (http://docs.sencha.com/ext-js/3-4/source/Column.html#Ext-grid-ActionColumn)
-							}
-//							
-//							items: [{
-//								icon: 'images/itSecMassnahmeLinkType.png'
-//							}]
-						}*/,{
+						},{
 							header: 'Ident',
 							dataIndex: 'ident',
 							width: 60,
@@ -170,29 +157,10 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							width: 30,
 							menuDisabled: true,
 							
-
-							
-//							getClass: function(v, meta, record) {
-//								return 'icon-info';//Funktioniert nicht! Auch nicht was beschreiben ist in: http://www.sencha.com/forum/showthread.php?117409-ActionColumn-first-parameter-of-getClass-function-always-empty
-//								//der renderer von ActionColumn benutzt zwar die icon-info Klasse, aber das hat keinen Effekt. (http://docs.sencha.com/ext-js/3-4/source/Column.html#Ext-grid-ActionColumn)
-//							}
-							
 							items: [{
 //								icon: 'images/Info_16x16.png'//images/Info_16x16.png
 								iconCls: 'icon-info'
-								
-//								handler: function(grid, rowIndex, colIndex) {
-//									var x;
-//								}
-							}
-//							{
-//								getClass: function(v, meta, record) {
-//									return 'icon-info';//Funktioniert nicht. Auch nicht was beschreiben ist in: http://www.sencha.com/forum/showthread.php?117409-ActionColumn-first-parameter-of-getClass-function-always-empty
-									//der renderer von ActionColumn benutzt zwar die icon-info Klasse, aber das hat keinen Effekt. (http://docs.sencha.com/ext-js/3-4/source/Column.html#Ext-grid-ActionColumn)
-									//Lösung: es muss in der css Klasse das width und height Attribut angegeben werden
-//								}
-//							}
-							]
+							}]
 						}],
 						
 			            view: new Ext.grid.GroupingView({
@@ -403,7 +371,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //									enableKeyEvents: true,
 									allowBlank: false,
 									
-									width: 250,//280
+									width: 240,//280
 //									flex: 14,//14 15
 //									margins: '0 0 0 3',
 									
@@ -1093,7 +1061,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						        	text: labels.signeeApproval,
 						        	
 									style: {
-										marginLeft: 5
+										marginLeft: 3
 									}
 								}]
 							},{
@@ -1132,8 +1100,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //									margins: '5 0 0 0',
 //									flex: 6
 									
-									disabled: true,
-									hideTrigger: true,
+//									disabled: true,
+//									hideTrigger: true,
 									
 									width: 120,
 									style: {
@@ -3627,6 +3595,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		taDamagePerYear2.disable();
 
 		Util.disableCombo(cbSignee);
+		Util.disableCombo(dfDateOfApproval);
+
 //		dfDateOfApproval.disable();
 //		dfDateOfApproval.setHideTrigger(true);
 //		Util.disableCombo(dfDateOfApproval);
@@ -3723,6 +3693,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		dfDateOfApproval.enable();
 //		dfDateOfApproval.setHideTrigger(false);
 //		Util.enableCombo(dfDateOfApproval);
+		Util.disableCombo(dfDateOfApproval);
 	},
 	
 	update: function() {

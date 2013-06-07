@@ -42,7 +42,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 				id: 'cbLinkCiType',
 				store: AIR.AirStoreManager.getStoreByName('linkCiTypeListStore'),//linkCiTypeListStore,//new Ext.data.Store(),//
 				
-				width: 320,
+				width: 300,
 //				anchor: '100%',
 //				flex: 7,
 //				margins: '5 0 0 0',
@@ -67,7 +67,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 				id: 'cbLinkCiList',
 				store: AIR.AirStoreFactory.createLinkCiListStore(),//new Ext.data.Store(),//
 				
-				width: 320,
+				width: 300,
 //				anchor: '100%',
 //				flex: 7,
 //				margins: '5 0 0 0',

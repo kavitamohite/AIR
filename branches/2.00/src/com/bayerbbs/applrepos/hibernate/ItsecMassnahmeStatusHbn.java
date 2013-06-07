@@ -249,6 +249,28 @@ public class ItsecMassnahmeStatusHbn {
 		
 		boolean commit = false;
 		
+		/*try {
+			ta = session.beginTransaction();
+			Connection conn = session.connection();
+			
+			CallableStatement stmt = conn.prepareCall(sql);
+			stmt.setLong(1, tableId);
+			stmt.setLong(2, ciId);
+			stmt.setLong(3, 10136);//muss bei location items verändert werden, damit PL/SQL Funktion reagiert
+			stmt.executeUpdate();
+			
+			ta.commit();
+			
+			stmt.close();
+			conn.close();
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+//			HibernateUtil.close(ta, session, commit);
+		}*/
+		
 		try {
 			ta = session.beginTransaction();
 			Connection conn = session.connection();
@@ -258,6 +280,7 @@ public class ItsecMassnahmeStatusHbn {
 			stmt.setLong(2, ciId);
 			stmt.setLong(3, itsecGroupId);
 			stmt.executeUpdate();
+			
 			ta.commit();
 			
 			stmt.close();

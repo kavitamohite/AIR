@@ -166,6 +166,11 @@ public class RoomHbn extends LokationItemHbn {
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
+						
+						if (room.getRefId() == null) {
+							// Anlegen der ITSec Massnahmen
+							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), room.getId(), room.getItsecGroupId());
+						}
 					}
 				} else {
 					// messages

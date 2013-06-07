@@ -366,6 +366,11 @@ public class TerrainHbn extends LokationItemHbn {
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
+						
+						if (terrain.getRefId() == null) {
+							// Anlegen der ITSec Massnahmen
+							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), terrain.getId(), terrain.getItsecGroupId());
+						}
 					}
 				} else {
 					// messages

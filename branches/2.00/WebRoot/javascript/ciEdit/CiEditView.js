@@ -96,9 +96,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				
 				style: {
 					textAlign: 'left',
-					borderStyle: 'solid',
-					borderWidth: '1pt',
-					borderColor: '#FF0000', //panelErrorMsgColor, (#8)
+//					borderStyle: 'solid',
+//					borderWidth: '1pt',
+//					borderColor: '#FF0000', //panelErrorMsgColor, (#8)
 					backgroundColor: AC.AIR_BG_COLOR,
 					
 					color: '#FF0000', //panelErrorMsgColor, (#8)

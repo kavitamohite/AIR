@@ -658,6 +658,11 @@ public class BuildingHbn extends LokationItemHbn {
 								output.setMessages(new String[] { hbnMessage });
 							}
 						}
+						
+						if (building.getRefId() == null) {
+							// Anlegen der ITSec Massnahmen
+							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), building.getId(), building.getItsecGroupId());
+						}
 					}
 				} else {
 					// messages
@@ -951,6 +956,11 @@ public class BuildingHbn extends LokationItemHbn {
 								output.setResult(AirKonstanten.RESULT_ERROR);
 								output.setMessages(new String[] { hbnMessage });
 							}
+						}
+						
+						if (buildingArea.getRefId() == null) {
+							// Anlegen der ITSec Massnahmen
+							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), buildingArea.getId(), buildingArea.getItsecGroupId());
 						}
 					}
 				} else {
