@@ -792,7 +792,7 @@ public class ApplicationWS {
 				long applCat1Id = dto.getApplicationCat1Id().longValue();
 				if (AirKonstanten.APPLICATION_CAT1_APPLICATION.longValue() == applCat1Id) {
 					// nur für CI's Typ = Anwendung
-					if (checker.isRelevanceStrategic(detailInput.getCwid(), detailInput.getToken(), application)) {
+					if (checker.isRelevanceStrategic(detailInput.getCwid(), detailInput.getToken(), dto.getApplicationCat1Id(), application)) {
 						accessDTO.setRelevanceStrategic(AirKonstanten.YES_SHORT);
 					} else {
 						accessDTO.setRelevanceStrategic(AirKonstanten.NO_SHORT);
@@ -1225,7 +1225,7 @@ public class ApplicationWS {
 
 		if (null != detailInput.getId() && 0 < detailInput.getId().longValue()) {
 		
-			List<HistoryViewDataDTO> listHistory = AnwendungHbn.findApplicationHistory(detailInput.getId());
+			List<HistoryViewDataDTO> listHistory = AnwendungHbn.findApplicationHistory(detailInput.getTableId() , detailInput.getId());
 			
 			if (!listHistory.isEmpty()) {
 				arrayHist = new HistoryViewDataDTO[listHistory.size()];

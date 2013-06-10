@@ -47,7 +47,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		    	xtype: 'label',
 		    	id: 'lCiIsDeleted',
 		    	text: 'DELETED',
-				
+				hidden: true,
+
 				style: {
 //					textAlign: 'left',
 					backgroundColor: AC.AIR_BG_COLOR,
@@ -56,14 +57,13 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 					fontWeight: 'bold',
 					fontSize: 18,
 					marginTop: 5
-//					hidden: true,
 					
 //					float: 'left'
 				}
 			},{ 
 				xtype: 'container',	  
 				html: '<hr>',
-//				id: 'editpanelhr',
+				id: 'editpanelhr',
 				cls: 'x-plain',
 				
 				style: {
@@ -90,25 +90,41 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 //					marginBottom: 20
 				}
 			},{
-				xtype: 'label',
+				xtype: 'textfield',//label
 				id: 'editpanelmessage',
 				hidden: true,
 				
+				/*
 				style: {
 					textAlign: 'left',
-//					borderStyle: 'solid',
-//					borderWidth: '1pt',
-//					borderColor: '#FF0000', //panelErrorMsgColor, (#8)
+					borderStyle: 'solid',
+					borderWidth: '1pt',
+					borderColor: '#FF0000', //panelErrorMsgColor, (#8)
 					backgroundColor: AC.AIR_BG_COLOR,
 					
 					color: '#FF0000', //panelErrorMsgColor, (#8)
-					padding: 3,//'2 5 2 5',
+					padding: 3,//'2 5 2 5',//
+//					height: 70,
 					
 					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: 12
 					
 //					marginTop: 40
+				}*/
+				
+				float: 'left',
+//				width: 300,
+				anchor: '90%',
+//				padding: 0
+//				disabled: true,
+				readOnly: true,
+				hideLabel: true,
+				style: {
+					color: '#FF0000',
+					borderColor: '#FF0000',
+//					marginLeft: 0,
+					fontWeight: 'bold'
 				}
 			},{
 				xtype: 'panel',
@@ -221,7 +237,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 		var ciHistoryView = ciEditTabView.getComponent('clCiHistory');
 		ciHistoryView.on('ciChange', this.onCiChange, this);
-		
 		
 		
 		this.isLoaded = false;
@@ -691,21 +706,31 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	checkItsecGroup: function(newCiDetail, ciData, saveCallback) {
-		if(ciData.itsecGroupId && ciData.itsecGroupId.length > 0 &&
-			ciData.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && // wenn itsecGroupId = 10136 (Default ITsec Group), wird cbItSecGroup nicht gesetzt. Sie ist in diesem Fall leer. Die Überprüfung findet aber über ciData.itsecGroupId statt
-			ciData.itsecGroupId !== newCiDetail.itSecGroupId &&
-			newCiDetail.itSecGroupId &&
-			newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_NON_BYTSEC &&
-			newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_DELETE_ID &&
-			newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_EMPTY) {
-			
+		var isNewItSecGroup =	ciData.itsecGroupId && ciData.itsecGroupId.length > 0 &&
+								ciData.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && // wenn itsecGroupId = 10136 (Default ITsec Group), wird cbItSecGroup nicht gesetzt. Sie ist in diesem Fall leer. Die Überprüfung findet aber über ciData.itsecGroupId statt
+								ciData.itsecGroupId !== newCiDetail.itSecGroupId &&
+								newCiDetail.itSecGroupId &&
+								newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_NON_BYTSEC &&
+								newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_DELETE_ID &&
+								newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_EMPTY;
+		
+		var isNewTemplate =		ciData.refId != undefined && newCiDetail.refId != undefined && 
+//								ciData.refId.length > 0 && newCiDetail.refId.length > 0 && 
+//								ciData.refId !== newCiDetail.refId;
+								(ciData.refId.length > 0 && newCiDetail.refId == -1 ||//newCiDetail.refId.length === 0
+								 ciData.refId.length === 0 && newCiDetail.refId > -1 ||
+								 ciData.refId != newCiDetail.refId);//newCiDetail.refId.length > 0
+		
+		if(isNewItSecGroup || isNewTemplate) {
 			var callbackMap = {
 				yes: saveCallback
 			};
 			
 			var labels = AIR.AirApplicationManager.getLabels();
+			var message = isNewItSecGroup ? labels.checkItsecGroupWindowMessage : labels.checkTemplateWindowMessage;
+			var title = isNewItSecGroup ? labels.checkItsecGroupWindowTitle : labels.checkTemplateWindowTitle;
 			
-			var confirmItsecGroupSaveWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CONFIRM_ITSEC_GROUP_SAVE', callbackMap, labels.checkItsecGroupWindowMessage, labels.checkItsecGroupWindowTitle);
+			var confirmItsecGroupSaveWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CONFIRM_ITSEC_GROUP_SAVE', callbackMap, message, title);
 			confirmItsecGroupSaveWindow.show();
 		} else {
 			saveCallback();
@@ -977,7 +1002,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 	setPanelMessage: function(message) {
 		if(message && message.length > 0) {
-			this.getComponent('editpanelmessage').setText(message);
+			this.getComponent('editpanelmessage').setValue(message);//setText
 			this.getComponent('editpanelmessage').show();
 		} else {
 			this.getComponent('editpanelmessage').hide();

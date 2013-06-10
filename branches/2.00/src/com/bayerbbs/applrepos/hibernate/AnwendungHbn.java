@@ -2640,7 +2640,7 @@ public class AnwendungHbn extends BaseHbn {
 	}
 
 	
-	public static List<HistoryViewDataDTO> findApplicationHistory(Long applicationId) {
+	public static List<HistoryViewDataDTO> findApplicationHistory(Integer tableId, Long applicationId) {
 		ArrayList<HistoryViewDataDTO> listResult = new ArrayList<HistoryViewDataDTO>();
 
 		boolean commit = false;

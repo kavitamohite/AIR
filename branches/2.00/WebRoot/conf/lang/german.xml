@@ -256,8 +256,10 @@
 				<templateBARrelevanceValidationBARrelevance2>Die BAR Relevanz ist wieder bearbeitbar, weil dieses CI kein Template mehr ist.</templateBARrelevanceValidationBARrelevance2>
 				
 				<checkItsecGroupWindowTitle>ITSec Gruppe</checkItsecGroupWindowTitle>
-				<checkItsecGroupWindowMessage>Sie haben die ITSec Gruppe dieses Application CIs geändert. Alle ITSec Massnahmen der vorherigen ITSec Gruppe werden gelöscht. Sind Sie sicher?</checkItsecGroupWindowMessage>
-				
+				<checkItsecGroupWindowMessage>Sie haben die ITSec Gruppe dieses CIs geändert. Alle ITSec Massnahmen der vorherigen ITSec Gruppe werden gelöscht. Sind Sie sicher?</checkItsecGroupWindowMessage>
+				<checkTemplateWindowTitle>Template</checkTemplateWindowTitle>
+				<checkTemplateWindowMessage>Sie haben das Template dieses CIs geändert. Alle ITSec Massnahmen der vorherigen ITSec Gruppe werden gelöscht. Sind Sie sicher?</checkTemplateWindowMessage>
+
 				
 				<invalidMassnameWindowTitleIncomplete>Unvollständige Massnahme</invalidMassnameWindowTitleIncomplete>
 				<invalidMassnameWindowTitleGapClass>Diskrepanz Target Date und Gap Klasse</invalidMassnameWindowTitleGapClass>

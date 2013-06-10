@@ -170,8 +170,6 @@ public class AccessRightChecker {
 	public boolean isRelevanceOperational(String cwid, String token, Application application) {
 		boolean isRelevanceOperational = false;
 		
-		if(application.getDeleteQuelle() != null)
-			return false;
 		
 		if (null != cwid && null != application) {
 			cwid = cwid.toUpperCase();
@@ -214,8 +212,11 @@ public class AccessRightChecker {
 	}
 	
 
-	public boolean isRelevanceStrategic(String cwid, String token, Application application) {
+	public boolean isRelevanceStrategic(String cwid, String token, Long ciSubTypeId, Application application) {
 		boolean isRelevanceStrategic = false;
+		
+//		if(!ciSubTypeId.equals(Long.(AirKonstanten.APPLICATION_CAT1_APPLICATION)))
+//			return false;
 		
 		if (null != cwid && null != application) {
 			cwid = cwid.toUpperCase();
@@ -277,9 +278,9 @@ public class AccessRightChecker {
 		return isEditableByRoleAdminType;
 	}
 
-	public boolean isEditableRoleApplicationManager(String cwidInput) {
-		return isEditableByRoleAdminType(AirKonstanten.ROLE_AIR_APPLICATION_MANAGER, cwidInput);
-	}
+//	public boolean isEditableRoleApplicationManager(String cwidInput) {
+//		return isEditableByRoleAdminType(AirKonstanten.ROLE_AIR_APPLICATION_MANAGER, cwidInput);
+//	}
 	
 	public boolean isEditableRoleInfrastructureManager(String cwidInput) {
 		return isEditableByRoleAdminType(AirKonstanten.ROLE_AIR_INFRASTRUCTURE_MANAGER, cwidInput);

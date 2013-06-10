@@ -256,7 +256,9 @@
 				<templateBARrelevanceValidationBARrelevance2>The BAR relevance is editable again, since this CI is no template anymore</templateBARrelevanceValidationBARrelevance2>
 				
 				<checkItsecGroupWindowTitle>ITSec Group</checkItsecGroupWindowTitle>
-				<checkItsecGroupWindowMessage>You changed the ITSec Group of this application CI. Are you sure to delete all ITSec Controls of the previously selected ITSec Group?</checkItsecGroupWindowMessage>
+				<checkItsecGroupWindowMessage>You changed the ITSec Group of this CI. Are you sure to delete all ITSec Controls of the previously selected ITSec Group?</checkItsecGroupWindowMessage>
+				<checkTemplateWindowTitle>Template</checkTemplateWindowTitle>
+				<checkTemplateWindowMessage>You changed the Template of this CI. Are you sure to delete all ITSec Controls of the previously selected ITSec Group?</checkTemplateWindowMessage>
 				
 				
 				<invalidMassnameWindowTitleIncomplete>Incomplete control</invalidMassnameWindowTitleIncomplete>

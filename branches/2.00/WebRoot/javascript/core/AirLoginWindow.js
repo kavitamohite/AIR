@@ -10,6 +10,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		    
 		    closable: false,
 		    resizable: false,
+		    draggable: false,
 //		    plain: true,
 //		    border: false,
 //		    frame: true,
@@ -127,7 +128,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		var cwid = this.getComponent('pAirLoginWindow').getComponent('tfCwid').getValue();
 		var password = this.getComponent('pAirLoginWindow').getComponent('tfPassword').getValue();
 
-	
+
 		
 		this.fireEvent('login', cwid, password);
 	},
@@ -140,7 +141,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
         	var recipient_admin = 'ITILcenter@bayer.com';
 
             //{"success":false,"errors":{"title":"failed","reason":"AIR roles are needed to access the application","cwid":"g"}} 
-            var alertText = responseData.errors.reason + '<br\> If you need support contact the <a href="mailto:' +
+            var alertText = responseData.errors.reason + '<br/> If you need support contact the <a href="mailto:' +
    							recipient_admin + '?subject=' + app_name + ' - User ' + responseData.errors.cwid + ' has problems!">' +
    							app_name + ' administrator</a>.';
             

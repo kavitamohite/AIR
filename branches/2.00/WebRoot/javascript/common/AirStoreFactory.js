@@ -1054,6 +1054,8 @@ AIR.AirStoreFactory = function() {
 					{name: 'signeeApproval'},
 					{name: 'checkItsecGroupWindowTitle'},
 					{name: 'checkItsecGroupWindowMessage'},
+					{name: 'checkTemplateWindowTitle'},
+					{name: 'checkTemplateWindowMessage'},
 					
 					{name: 'invalidMassnameWindowTitleIncomplete'},
 					{name: 'invalidMassnameWindowTitleGapClass'},

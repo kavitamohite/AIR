@@ -7,7 +7,9 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		    
 		    border: false,
 		    layout: 'form',
-		    autoScroll: true,
+
+			height: 360,
+			autoScroll: true,
 		    
 		    items: [{
 		        id: 'tfItSystemCiName',

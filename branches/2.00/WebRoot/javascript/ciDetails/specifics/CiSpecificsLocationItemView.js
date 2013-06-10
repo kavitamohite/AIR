@@ -8,6 +8,9 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		    border: false,
 		    layout: 'form',
 		    
+			height: 300,
+			autoScroll: true,
+		    
 		    items: [{
 		        id: 'tfLocationCiName',
 		    	xtype: 'textfield',
