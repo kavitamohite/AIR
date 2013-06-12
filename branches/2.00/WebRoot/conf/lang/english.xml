@@ -147,7 +147,7 @@
 		
 		<!-- Messages: applicationEditor -->
 		<header_applicationIsDraft>Draft ##</header_applicationIsDraft>
-		<header_applicationIsIncomplete>Please fill in information for: ##</header_applicationIsIncomplete>
+		<header_applicationIsIncomplete>Missed mandatory information: ##</header_applicationIsIncomplete>
 		
 		<!-- Label: Details items -->
 		<detailsPanelTitle>Details</detailsPanelTitle>

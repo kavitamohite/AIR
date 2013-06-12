@@ -602,13 +602,17 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				isCiInvalid: isCiInvalid
 			};
 			
-			var callbackMap = {
-				verwerfen: callback,
-				speichern: saveCallback//ciEditView.saveApplication.createDelegate(ciEditView)
-			};
-			
-			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_CHANGED', callbackMap, null, null, options);
-			dynamicWindow.show();
+//			 if(!ciEditView.itsecChanged) {
+				var callbackMap = {
+					verwerfen: callback,
+					speichern: saveCallback//ciEditView.saveApplication.createDelegate(ciEditView)
+				};
+				
+				var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_CHANGED', callbackMap, null, null, options);
+				dynamicWindow.show();
+//			 } else 
+//				 saveCallback();
+			 
 		} else if(ciCreateWizardView && ciCreateWizardView.isWizardStarted()) {
 			var callbackMap = {
 				yes: callback

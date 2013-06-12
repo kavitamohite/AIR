@@ -167,7 +167,7 @@ public class RoomHbn extends LokationItemHbn {
 							}
 						}
 						
-						if (room.getRefId() == null) {
+						if (room.getRefId() == null && room.getItsecGroupId() != null) {
 							// Anlegen der ITSec Massnahmen
 							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), room.getId(), room.getItsecGroupId());
 						}

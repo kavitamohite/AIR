@@ -782,7 +782,7 @@ public class ApplicationWS {
 				}
 
 				// RFC 7465
-				if (checker.isRelevanceOperational(detailInput.getCwid(), detailInput.getToken(), application)) {
+				if (checker.isRelevanceOperational(detailInput.getCwid(), detailInput.getToken(), dto.getApplicationCat1Id(), application)) {
 					accessDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 				} else {
 					accessDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
@@ -804,7 +804,10 @@ public class ApplicationWS {
 
 					if (AirKonstanten.NO_SHORT.equals(accessDTO.getRelevanceOperational())) {
 						// Abfrage Infrastructure Manager
-						if (checker.isEditableRoleInfrastructureManager(detailInput.getCwid())) {
+//						if (checker.isEditableRoleInfrastructureManager(detailInput.getCwid())) {
+//							accessDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
+//						}
+						if (checker.isRelevanceOperational(detailInput.getCwid(), detailInput.getToken(), dto.getApplicationCat1Id(), application)) {
 							accessDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 						}
 					}

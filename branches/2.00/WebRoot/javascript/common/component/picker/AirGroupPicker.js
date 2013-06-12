@@ -259,7 +259,7 @@ AIR.AirGroupPicker = Ext.extend(Ext.Window, {//Ext.Tip
 				hiddenElement.setValue(record.get('groupid'));
 			}
 			
-			this.fireEvent('groupAdd', record, element, hiddenElement);
+			this.fireEvent('groupAdd', this, element, hiddenElement, record);
 		}
 		
 		this.close();	

@@ -242,6 +242,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.isLoaded = false;
 		this.isUserChange = false;
 		this.ciModified = false;
+		this.itsecChanged = false;
 		
 		this.callContext = {};
 	},
@@ -321,6 +322,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		if(this.isUserChange) {
 			this.enableButtons();
 			this.ciModified = true;
+			if(viewElement.getId() == 'cbReferencedTemplate' || viewElement.getId() == 'cbItSecGroup')
+				this.itsecChanged = true;
 			this.validateCiChange(view, viewElement, changedViewItems);
 		}
 	},
@@ -441,6 +444,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	onCiLoad: function(store, records, options) {
 		this.ciModified = false;
+//		this.itsecChanged = false;
 		
 		var ciData = records[0].data;
 		ciData.tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;
@@ -581,6 +585,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			this.createCi(ciData);
 		} else {
 			//mySaveMask.show();
+			//keine itsec Änderungsprüfung, wenn schon vorher Warnung wegen Änderungen, wenn anderer Menupunkt
+			//vor Speichern gewählt
+			if(!button)
+				this.itsecChanged = false;
 			this.saveApplication();
 		}
 	},
@@ -659,7 +667,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	saveApplication: function(options) {//button, event
 		if(!options)//damit nach compl. status Wechsel von Undefined auf External nicht der save button deaktiviert bleibt
 			this.isUserChange = false;
-		this.ciModified = false;
+//		this.ciModified = false;
+//		this.itsecChanged = false;
 		
 //		var labels = AIR.AirApplicationManager.getLabels();
 		
@@ -717,18 +726,20 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var isNewTemplate =		ciData.refId != undefined && newCiDetail.refId != undefined && 
 //								ciData.refId.length > 0 && newCiDetail.refId.length > 0 && 
 //								ciData.refId !== newCiDetail.refId;
-								(ciData.refId.length > 0 && newCiDetail.refId == -1 ||//newCiDetail.refId.length === 0
-								 ciData.refId.length === 0 && newCiDetail.refId > -1 ||
-								 ciData.refId != newCiDetail.refId);//newCiDetail.refId.length > 0
+								(ciData.refId != '' && newCiDetail.refId == -1 ||//newCiDetail.refId.length === 0
+								 ciData.refId == '' && newCiDetail.refId != -1 || 
+								 (ciData.refId != newCiDetail.refId && newCiDetail.refId != -1));//newCiDetail.refId.length > 0
 		
-		if(isNewItSecGroup || isNewTemplate) {
+		
+		
+		if((isNewTemplate || isNewItSecGroup) && this.itsecChanged) {// && !this.itsecChanged  && this.ciModified
 			var callbackMap = {
 				yes: saveCallback
 			};
 			
 			var labels = AIR.AirApplicationManager.getLabels();
-			var message = isNewItSecGroup ? labels.checkItsecGroupWindowMessage : labels.checkTemplateWindowMessage;
-			var title = isNewItSecGroup ? labels.checkItsecGroupWindowTitle : labels.checkTemplateWindowTitle;
+			var message = isNewTemplate ? labels.checkTemplateWindowMessage : labels.checkItsecGroupWindowMessage;
+			var title = isNewTemplate ? labels.checkTemplateWindowTitle : labels.checkItsecGroupWindowTitle;
 			
 			var confirmItsecGroupSaveWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CONFIRM_ITSEC_GROUP_SAVE', callbackMap, message, title);
 			confirmItsecGroupSaveWindow.show();
@@ -756,11 +767,12 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 //			ciNavigationView.onApplicationCancel();
 			
 			this.ciModified = false;
+			this.itsecChanged = false;
 			this.fireEvent('externalNavigation', this, null, 'clSearch');
 		};
 		
 		var callbackMap = {
-			'yes': verwerfenCallback.createDelegate(this)
+			yes: verwerfenCallback.createDelegate(this)
 		};
 		
 		var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CANCEL_CONFIRMATION', callbackMap);
@@ -769,7 +781,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 	
 	enableButtons: function() {
-		var panelMsg = ACM.getRequiredFields(AIR.AirApplicationManager.getAppDetail());
+		var panelMsg = ACM.getRequiredFields(AAM.getAppDetail());
 		
 		if(panelMsg.length == 0) {
 			this.setPanelMessage(panelMsg);
@@ -801,6 +813,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	afterCiSave: function(store, records, options) {
+		this.ciModified = false;
 		AAM.getMask(AC.MASK_TYPE_SAVE).hide();
 		
 		if('OK' === records[0].data.result) {
@@ -1001,9 +1014,14 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 
 	setPanelMessage: function(message) {
+		var data = AAM.getAppDetail();
+		
 		if(message && message.length > 0) {
 			this.getComponent('editpanelmessage').setValue(message);//setText
-			this.getComponent('editpanelmessage').show();
+			
+			//nur wenn der Anwender Rechte hat
+			if(data.isCiCreate || (data.relevanceOperational && data.relevanceOperational == 'Y') || (data.relevanceStrategic && data.relevanceStrategic == 'Y'))
+				this.getComponent('editpanelmessage').show();
 		} else {
 			this.getComponent('editpanelmessage').hide();
 		}
@@ -1021,7 +1039,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var panelMsg = ACM.getRequiredFields(AAM.getAppDetail());
 		
 		if(panelMsg.length > 0) {
-			this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
+			this.setPanelMessage(AAM.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
 		} else {
 			this.setPanelMessage(panelMsg);
 		}
@@ -1041,6 +1059,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var task = new Ext.util.DelayedTask(function() {
 			this.isUserChange = true;
 			this.ciModified = false;
+			this.itsecChanged = false;
 			
 			this.disableButtons();
 		}.createDelegate(this));

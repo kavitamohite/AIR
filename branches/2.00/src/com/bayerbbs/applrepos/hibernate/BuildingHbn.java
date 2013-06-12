@@ -441,10 +441,15 @@ public class BuildingHbn extends LokationItemHbn {
 						
 						setUpCi(building, dto, cwid, false);
 						
+						if (null != dto.getAlias())
+							building.setAlias(dto.getAlias());
+						
 						building.setStreet(dto.getStreet());
 						building.setStreetNumber(dto.getStreetNumber());
 						building.setPostalCode(dto.getPostalCode());
 						building.setLocation(dto.getLocation());
+
+						
 						
 						/*
 						building.setUpdateUser(cwid);
@@ -659,7 +664,7 @@ public class BuildingHbn extends LokationItemHbn {
 							}
 						}
 						
-						if (building.getRefId() == null) {
+						if (building.getRefId() == null && building.getItsecGroupId() != null) {
 							// Anlegen der ITSec Massnahmen
 							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), building.getId(), building.getItsecGroupId());
 						}
@@ -958,7 +963,7 @@ public class BuildingHbn extends LokationItemHbn {
 							}
 						}
 						
-						if (buildingArea.getRefId() == null) {
+						if (buildingArea.getRefId() == null && buildingArea.getItsecGroupId() != null) {
 							// Anlegen der ITSec Massnahmen
 							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), buildingArea.getId(), buildingArea.getItsecGroupId());
 						}

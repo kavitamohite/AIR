@@ -479,7 +479,7 @@ public class ItSystemHbn extends BaseHbn {
 							}
 						}
 						
-						if (itSystem.getRefId() == null) {
+						if (itSystem.getRefId() == null && itSystem.getItsecGroupId() != null) {
 							// Anlegen der ITSec Massnahmen
 							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), itSystem.getId(), itSystem.getItsecGroupId());
 						}
@@ -572,14 +572,14 @@ public class ItSystemHbn extends BaseHbn {
 			else
 				itSystem.setEinsatzStatusId(null);
 		}
-			
+		
 		if(null != dto.getPrimaryFunctionId()) {
 			if(dto.getPrimaryFunctionId() > -1)
 				itSystem.setPrimaryFunctionId(dto.getPrimaryFunctionId());
 			else
 				itSystem.setPrimaryFunctionId(null);
 		}
-			
+		
 		if(null != dto.getLicenseScanningId()) {
 			if(dto.getLicenseScanningId() > -1)
 				itSystem.setLicenseScanningId(dto.getLicenseScanningId());
@@ -587,7 +587,15 @@ public class ItSystemHbn extends BaseHbn {
 				itSystem.setLicenseScanningId(null);
 		}
 		
-
+		if (null != dto.getPriorityLevelId()) {
+			if (-1 == dto.getPriorityLevelId()) {
+				itSystem.setPriorityLevelId(null);
+			}
+			else {
+				itSystem.setPriorityLevelId(dto.getPriorityLevelId());
+			}
+		}
+		
 		if (null != dto.getSeverityLevelId()) {
 			if (-1 == dto.getSeverityLevelId()) {
 				itSystem.setSeverityLevelId(null);
@@ -1291,8 +1299,8 @@ public class ItSystemHbn extends BaseHbn {
 		Session session = HibernateUtil.getSession();
 		
 		Query q = session.getNamedQuery("findItSystemsByNameOrAlias");
-		q.setParameter("name", name);
-		q.setParameter("alias", alias);
+		q.setParameter("name", name.toUpperCase());
+		q.setParameter("alias", alias.toUpperCase());
 
 		List<ItSystem> itSystems = q.list();
 		
@@ -1302,8 +1310,8 @@ public class ItSystemHbn extends BaseHbn {
 		Session session = HibernateUtil.getSession();
 		
 		Query q = session.getNamedQuery("findApplicationsByNameOrAlias");
-		q.setParameter("name", name);
-		q.setParameter("alias", alias);
+		q.setParameter("name", name.toUpperCase());
+		q.setParameter("alias", alias.toUpperCase());
 
 		List<Application> applications = q.list();
 		

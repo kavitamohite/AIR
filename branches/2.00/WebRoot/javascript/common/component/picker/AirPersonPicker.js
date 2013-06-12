@@ -170,7 +170,7 @@ AIR.AirPersonPicker = Ext.extend(Ext.Tip, {
 				hiddenElement.setValue(record.get('cwid'));
 			}
 			
-			this.fireEvent('personAdd', record, element, hiddenElement);
+			this.fireEvent('personAdd', this, element, hiddenElement, record);
 		}
 		
 		this.close();

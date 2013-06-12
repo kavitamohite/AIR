@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "ANWENDUNG")
 @NamedQueries({
-	@NamedQuery(name="findApplicationsByNameOrAlias", query="FROM Application a WHERE a.applicationName=:name OR a.applicationAlias=:alias OR a.applicationName=:alias OR a.applicationAlias=:name"),
+	@NamedQuery(name="findApplicationsByNameOrAlias", query="FROM Application a WHERE UPPER(a.applicationName)=:name OR UPPER(a.applicationAlias)=:alias OR UPPER(a.applicationName)=:alias OR UPPER(a.applicationAlias)=:name"),
 //	@NamedQuery(name="findApplicationsByNameOrAlias", query="FROM Application a WHERE a.applicationName=:name OR a.applicationAlias=:alias")
 //	@NamedQuery(name="findApplicationByName", query="FROM Application a WHERE a.applicationName=:name")
 })

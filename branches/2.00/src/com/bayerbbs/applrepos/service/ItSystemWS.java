@@ -41,6 +41,7 @@ public class ItSystemWS {
 		//Agreements
 		itSystemDTO.setSlaId(input.getSlaId());
 		itSystemDTO.setServiceContractId(input.getServiceContractId());
+		itSystemDTO.setPriorityLevelId(input.getPriorityLevelId());
 		itSystemDTO.setSeverityLevelId(input.getSeverityLevelId());
 		itSystemDTO.setBusinessEssentialId(input.getBusinessEssentialId());
 		
@@ -108,35 +109,8 @@ public class ItSystemWS {
 			output = ItSystemHbn.saveItSystem(input.getCwid(), dto);
 			
 			
-			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
-				try {
-					for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) {
-						if(grouptype[4].indexOf(dto.getTableId().toString()) > -1) {//IT System GPSC Kontakt?
-							char d[] = grouptype[1].toCharArray();
-							d[0] = String.valueOf(d[0]).toUpperCase().charAt(0);
-							String method = "get" + new String(d);
-							String methodHidden = "get" + new String(d) + AirKonstanten.GPSCGROUP_HIDDEN_DESCRIPTOR;
-
-							String gpscContact = (String) ItSystemDTO.class.getMethod(method).invoke(dto);
-							String gpscContactHidden = (String) ItSystemDTO.class.getMethod(methodHidden).invoke(dto);
-							if (!(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContact)) && !(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContactHidden))) {
-								if (AirKonstanten.YES_SHORT.equals(grouptype[2])) { // Individual Contact(s)
-									CiPersonsHbn.saveCiPerson(input.getCwid(), dto.getTableId(),
-											 dto.getId(), new Long(grouptype[0]), grouptype[3],
-											 gpscContactHidden);
-								} else { // Group(s)
-									CiGroupsHbn.saveCiGroup(input.getCwid(), dto.getTableId(),
-											 dto.getId(), new Long(grouptype[0]), grouptype[3],
-											 gpscContact);
-								}
-							}
-						}
-					}
-				} catch (Exception e) {
-					// TODO: handle exception
-					System.out.println(e.toString());
-				}
-			}
+			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
+				saveGpscContacts(dto, input);
 		}
 		
 		return output;
@@ -162,25 +136,19 @@ public class ItSystemWS {
 	public CiEntityEditParameterOutput createItSystem(ItSystemEditParameterInput input) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
-		if (null != input && (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) ) {
+		if (null != input && (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))) {
 			ItSystemDTO dto = getItSystemDTOFromEditInput(input);
-
-			// create Application - fill attributes
-//			if (null == dto.getCiOwner()) {
-//				dto.setCiOwner(input.getCwid().toUpperCase());
-//				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
-//			}
-//			if (null == dto.getBusinessEssentialId()) {
-//				dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-//			}
-
-			// save / create application
 			output = ItSystemHbn.createItSystem(input.getCwid(), dto, true);
+				
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
+				
 				ItSystem itSystem = ItSystemHbn.findItSystemByName(dto.getName());
 				output.setCiId(itSystem.getId());
 				output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
+				
+				dto.setId(itSystem.getId());
+				saveGpscContacts(dto, input);
 				
 				/*
 				// get detail
@@ -202,6 +170,36 @@ public class ItSystemWS {
 		}
 
 		return output;
+	}
+
+	private void saveGpscContacts(ItSystemDTO dto, ItSystemEditParameterInput input) {
+		try {
+			for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) {
+				if(grouptype[4].indexOf(dto.getTableId().toString()) > -1) {//IT System GPSC Kontakt?
+					char d[] = grouptype[1].toCharArray();
+					d[0] = String.valueOf(d[0]).toUpperCase().charAt(0);
+					String method = "get" + new String(d);
+					String methodHidden = "get" + new String(d) + AirKonstanten.GPSCGROUP_HIDDEN_DESCRIPTOR;
+
+					String gpscContact = (String) ItSystemDTO.class.getMethod(method).invoke(dto);
+					String gpscContactHidden = (String) ItSystemDTO.class.getMethod(methodHidden).invoke(dto);
+					if (!(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContact)) && !(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContactHidden))) {
+						if (AirKonstanten.YES_SHORT.equals(grouptype[2])) { // Individual Contact(s)
+							CiPersonsHbn.saveCiPerson(input.getCwid(), dto.getTableId(),
+									 dto.getId(), new Long(grouptype[0]), grouptype[3],
+									 gpscContactHidden);
+						} else { // Group(s)
+							CiGroupsHbn.saveCiGroup(input.getCwid(), dto.getTableId(),
+									 dto.getId(), new Long(grouptype[0]), grouptype[3],
+									 gpscContact);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.toString());
+		}		
 	}
 
 }

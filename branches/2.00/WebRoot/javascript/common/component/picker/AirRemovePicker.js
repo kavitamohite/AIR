@@ -109,7 +109,7 @@ AIR.AirRemovePicker = Ext.extend(Ext.Tip, {
 				pickerConfig.callback();
 		
 		
-		this.fireEvent('recordRemove', this, element, hiddenElement);
+		this.fireEvent('recordRemove', element, hiddenElement, record);//, this
 		
 		this.close();
 	},

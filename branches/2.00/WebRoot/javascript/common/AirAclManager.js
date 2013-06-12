@@ -589,7 +589,7 @@ AIR.AirAclManager = function() {
 
 								//nur wenn tableId == AC.TABLE_ID_APPLICATION wird bei, aufgrund von Benutzerrechten deaktivierten, Pflichtfeldern nicht auf ein auszufüllendes Feld hingewiesen
 								if((!uiElement.disabled || data.tableId != AC.TABLE_ID_APPLICATION) && (!uiElement.getValue() || uiElement.getValue().length === 0)) {
-									var label = labels[uiElement.id] || uiElement.label.dom.innerHTML;
+									var label = this.getLabel(uiElement, labels, data);//labels[uiElement.id] || uiElement.label.dom.innerHTML;
 									if(label)											
 										incompleteFieldList += label + ', ';
 								}
@@ -703,6 +703,16 @@ AIR.AirAclManager = function() {
 					labelEl.dom.style.fontWeight = 'normal';
 					labelEl.removeClass('x-form-text-required');
 					break;
+			}
+		},
+		
+		getLabel: function(uiElement, labels, data) {
+			if(uiElement.id == 'gpsccontactCiOwner') {
+				return data.tableId == AC.TABLE_ID_APPLICATION &&
+					   data.ciSubTypeId == AC.APP_CAT1_APPLICATION ?
+						labels.contactsCIOwnerApplication : labels.contactsCIOwner;
+			} else {
+				return labels[uiElement.id] || uiElement.label.dom.innerHTML;
 			}
 		}
 		//===================================================================================================================

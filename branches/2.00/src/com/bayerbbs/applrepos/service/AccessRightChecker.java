@@ -167,7 +167,7 @@ public class AccessRightChecker {
 		return isEditable;//false
 	}
 	
-	public boolean isRelevanceOperational(String cwid, String token, Application application) {
+	public boolean isRelevanceOperational(String cwid, String token, Long ciSubTypeId, Application application) {
 		boolean isRelevanceOperational = false;
 		
 		
@@ -193,6 +193,14 @@ public class AccessRightChecker {
 					isRelevanceOperational = true;
 				}
 			}
+			
+			if(!isRelevanceOperational) {
+				if(ciSubTypeId.intValue() != AirKonstanten.APPLICATION_CAT1_APPLICATION.intValue() &&
+				   hasRole(cwid, token, AirKonstanten.ROLE_AIR_APPLICATION_MANAGER))
+					isRelevanceOperational = true;
+				else if(hasRole(cwid, token, AirKonstanten.ROLE_AIR_INFRASTRUCTURE_MANAGER))
+					isRelevanceOperational = true;
+			}
 		
 			/*
 			//wenn kein ciOwner, ciOwnerDelegate und kein Steward vorhanden, dürfen alle editieren, wenn die
@@ -216,7 +224,8 @@ public class AccessRightChecker {
 		boolean isRelevanceStrategic = false;
 		
 //		if(!ciSubTypeId.equals(Long.(AirKonstanten.APPLICATION_CAT1_APPLICATION)))
-//			return false;
+		if(ciSubTypeId.intValue() != AirKonstanten.APPLICATION_CAT1_APPLICATION.intValue())
+			return false;
 		
 		if (null != cwid && null != application) {
 			cwid = cwid.toUpperCase();
@@ -282,9 +291,9 @@ public class AccessRightChecker {
 //		return isEditableByRoleAdminType(AirKonstanten.ROLE_AIR_APPLICATION_MANAGER, cwidInput);
 //	}
 	
-	public boolean isEditableRoleInfrastructureManager(String cwidInput) {
-		return isEditableByRoleAdminType(AirKonstanten.ROLE_AIR_INFRASTRUCTURE_MANAGER, cwidInput);
-	}
+//	public boolean isEditableRoleInfrastructureManager(String cwidInput) {
+//		return isEditableByRoleAdminType(AirKonstanten.ROLE_AIR_INFRASTRUCTURE_MANAGER, cwidInput);
+//	}
 	
 	private static String getCacheKey(String cwid, String token) {
 		return cwid + ":" + token;

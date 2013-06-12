@@ -380,7 +380,7 @@ public class StandortHbn extends LokationItemHbn {
 							}
 						}
 						
-						if (standort.getRefId() == null) {
+						if (standort.getRefId() == null && standort.getItsecGroupId() != null) {
 							// Anlegen der ITSec Massnahmen
 							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), standort.getId(), standort.getItsecGroupId());
 						}

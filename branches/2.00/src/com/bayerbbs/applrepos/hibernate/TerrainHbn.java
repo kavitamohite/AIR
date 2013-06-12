@@ -367,7 +367,7 @@ public class TerrainHbn extends LokationItemHbn {
 							}
 						}
 						
-						if (terrain.getRefId() == null) {
+						if (terrain.getRefId() == null && terrain.getItsecGroupId() != null) {
 							// Anlegen der ITSec Massnahmen
 							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), terrain.getId(), terrain.getItsecGroupId());
 						}

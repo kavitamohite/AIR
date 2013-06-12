@@ -147,7 +147,7 @@
 		
 		<!-- Messages: applicationEditor -->
 		<header_applicationIsDraft>Entwurf ##</header_applicationIsDraft>
-		<header_applicationIsIncomplete>Bitte ergänzen Sie die Informationen für: ##</header_applicationIsIncomplete>
+		<header_applicationIsIncomplete>Fehlende Pflicht-Information: ##</header_applicationIsIncomplete>
 		
 		<!-- Label: Details items -->
 		<detailsPanelTitle>Details</detailsPanelTitle>

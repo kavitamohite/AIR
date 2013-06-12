@@ -19,6 +19,7 @@ public class ItSystemDTO extends CiBaseDTO {
 	private Integer primaryFunctionId;
 	private Integer licenseScanningId;
 	
+	private Long priorityLevelId;
 	private Long severityLevelId;
 	private Long businessEssentialId;
 	
@@ -117,6 +118,12 @@ public class ItSystemDTO extends CiBaseDTO {
 		this.licenseScanningId = licenseScanningId;
 	}
 	
+	public Long getPriorityLevelId() {
+		return priorityLevelId;
+	}
+	public void setPriorityLevelId(Long priorityLevelId) {
+		this.priorityLevelId = priorityLevelId;
+	}
 	public Long getSeverityLevelId() {
 		return severityLevelId;
 	}

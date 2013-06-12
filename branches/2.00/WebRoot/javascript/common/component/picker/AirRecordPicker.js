@@ -203,7 +203,7 @@ AIR.AirRecordPicker = Ext.extend(Ext.Tip, {
 					hiddenElement.setValue(record.get('ciId'));
 				}
 				
-				this.fireEvent('recordAdd', this, element, hiddenElement);
+				this.fireEvent('recordAdd', this, element, hiddenElement, record);//, this
 			}
 		}
 		

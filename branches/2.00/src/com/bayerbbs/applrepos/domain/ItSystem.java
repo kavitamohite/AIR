@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @SequenceGenerator(name = "MySeqItSystem", sequenceName = "TBADM.SEQ_IT_SYSTEM")
 @NamedQueries({
 //	@NamedQuery(name="findItSystemsByNameOrAlias", query="FROM ItSystem i WHERE i.itSystemName=:name OR i.alias=:alias"),
-	@NamedQuery(name="findItSystemsByNameOrAlias", query="FROM ItSystem i WHERE i.itSystemName=:name OR i.alias=:alias OR i.itSystemName=:alias OR i.alias=:name"),
+	@NamedQuery(name="findItSystemsByNameOrAlias", query="FROM ItSystem i WHERE UPPER(i.itSystemName)=:name OR UPPER(i.alias)=:alias OR UPPER(i.itSystemName)=:alias OR UPPER(i.alias)=:name"),
 	@NamedQuery(name="findItSystemByName", query="FROM ItSystem i WHERE i.itSystemName=:name")
 })
 public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisionInfo
@@ -26,6 +26,7 @@ public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisi
 	private String alias;
 	private Integer ciSubTypeId;
 	
+	private Long priorityLevelId;
 	private Long severityLevelId;
 	private Long businessEssentialId;
 	
@@ -90,6 +91,14 @@ public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisi
 	public void setCiOwnerDelegate(String ciOwnerDelegate) {
 		this.ciOwnerDelegate = ciOwnerDelegate;
 	}*/
+	
+	@Column(name = "PRIORITY_LEVEL_ID")
+	public Long getPriorityLevelId() {
+		return priorityLevelId;
+	}
+	public void setPriorityLevelId(Long priorityLevelId) {
+		this.priorityLevelId = priorityLevelId;
+	}
 	
 	@Column(name = "SEVERITY_LEVEL_ID")
 	public Long getSeverityLevelId() {

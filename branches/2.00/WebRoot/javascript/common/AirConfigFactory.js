@@ -59,6 +59,10 @@ AIR.AirConfigFactory = function() {
 			itSystemCiFields.push('upStreamAdd');
 			itSystemCiFields.push('upStreamDelete');
 			
+			itSystemCiFields.push('severityLevelId');
+			itSystemCiFields.push('priorityLevelId');
+			itSystemCiFields.push('businessEssentialId');
+			
 			return itSystemCiFields;
 		},
 		

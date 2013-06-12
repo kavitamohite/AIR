@@ -102,6 +102,10 @@ public class CiEntityWS {
 			itSystemDTO.setPrimaryFunctionId(itSystem.getPrimaryFunctionId());
 			itSystemDTO.setLicenseScanningId(itSystem.getLicenseScanningId());
 			
+			itSystemDTO.setPriorityLevelId(itSystem.getPriorityLevelId());
+			itSystemDTO.setSeverityLevelId(itSystem.getSeverityLevelId());
+			itSystemDTO.setBusinessEssentialId(itSystem.getBusinessEssentialId());
+			
 			
 			AccessRightChecker checker = new AccessRightChecker();
 			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(), input.getToken(), itSystem)) {

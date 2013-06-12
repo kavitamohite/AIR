@@ -267,7 +267,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		
 		var cbPriorityLevel = this.getComponent('priorityLevel');
-		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION) {
+		if(data.tableId == AC.TABLE_ID_APPLICATION ||
+		   data.tableId == AC.TABLE_ID_IT_SYSTEM) {
 			cbPriorityLevel.setVisible(true);
 			
 			if (data.priorityLevelId && data.priorityLevelId != 0 && !data.isCiCreate) {
@@ -285,9 +286,10 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbSeverityLevel = this.getComponent('severityLevel');
 		var cbBusinessEssential = this.getComponent('businessEssential');
 		
-		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION ||
-		   parseInt(data.tableId) === AC.TABLE_ID_ROOM ||
-		   parseInt(data.tableId) === AC.TABLE_ID_POSITION) {
+		if(data.tableId == AC.TABLE_ID_APPLICATION ||
+		   data.tableId == AC.TABLE_ID_ROOM ||
+		   data.tableId == AC.TABLE_ID_POSITION ||
+		   data.tableId == AC.TABLE_ID_IT_SYSTEM) {
 			
 			cbSeverityLevel.setVisible(true);
 			cbBusinessEssential.setVisible(true);
@@ -318,12 +320,14 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirAclManager.setAccessMode(this.getComponent('sla'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('serviceContract'), data);
 		
-		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION)
+		if(data.tableId == AC.TABLE_ID_APPLICATION ||
+		   data.tableId == AC.TABLE_ID_IT_SYSTEM)
 			AIR.AirAclManager.setAccessMode(this.getComponent('priorityLevel'), data);
 		
-		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION ||
-		   parseInt(data.tableId) === AC.TABLE_ID_ROOM ||
-		   parseInt(data.tableId) === AC.TABLE_ID_POSITION) {
+		if(data.tableId == AC.TABLE_ID_APPLICATION ||
+		   data.tableId == AC.TABLE_ID_ROOM ||
+		   data.tableId == AC.TABLE_ID_POSITION ||
+		   data.tableId == AC.TABLE_ID_IT_SYSTEM) {
 			AIR.AirAclManager.setAccessMode(this.getComponent('severityLevel'), data);
 			
 			var cbBusinessEssential = this.getComponent('businessEssential');
@@ -389,7 +393,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 		}
 		
-		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION) {
+		if(data.tableId == AC.TABLE_ID_APPLICATION ||
+		   data.tableId == AC.TABLE_ID_IT_SYSTEM) {
 			field = this.getComponent('priorityLevel');
 			if (!field.disabled) {
 				if(field.getValue().length > 0) {
@@ -400,9 +405,10 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 		}
 		
-		if(parseInt(data.tableId) === AC.TABLE_ID_APPLICATION ||
-		   parseInt(data.tableId) === AC.TABLE_ID_ROOM ||
-		   parseInt(data.tableId) === AC.TABLE_ID_POSITION) {
+		if(data.tableId == AC.TABLE_ID_APPLICATION ||
+		   data.tableId == AC.TABLE_ID_ROOM ||
+		   data.tableId == AC.TABLE_ID_POSITION ||
+		   data.tableId == AC.TABLE_ID_IT_SYSTEM) {
 		
 			field = this.getComponent('severityLevel');
 			if (!field.disabled) {

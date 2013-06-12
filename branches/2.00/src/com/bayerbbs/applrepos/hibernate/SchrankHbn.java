@@ -296,7 +296,7 @@ public class SchrankHbn extends LokationItemHbn {
 							}
 						}
 						
-						if (schrank.getRefId() == null) {
+						if (schrank.getRefId() == null && schrank.getItsecGroupId() != null) {
 							// Anlegen der ITSec Massnahmen
 							ItsecMassnahmeStatusHbn.saveSaveguardAssignment(dto.getTableId(), schrank.getId(), schrank.getItsecGroupId());
 						}

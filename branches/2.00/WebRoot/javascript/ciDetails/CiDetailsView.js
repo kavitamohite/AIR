@@ -8,6 +8,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 		    border: false,
 		    layout: 'form',
+		    height: 250,
 		    
 		    items: [{
 		    	xtype: 'textfield',
@@ -224,9 +225,10 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		
-		if(parseInt(ciDetail.tableId) === AC.TABLE_ID_APPLICATION ||
-		   parseInt(ciDetail.tableId) === AC.TABLE_ID_ROOM ||
-		   parseInt(ciDetail.tableId) === AC.TABLE_ID_POSITION) {
+		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION ||
+		   ciDetail.tableId == AC.TABLE_ID_ROOM ||
+		   ciDetail.tableId == AC.TABLE_ID_POSITION ||
+		   ciDetail.tableId == AC.TABLE_ID_IT_SYSTEM) {
 			if(!ciDetail.isCiCreate) {
 				cbBusinessEssential.setValue(data.businessEssential);
 			} else {
@@ -239,9 +241,10 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			cbBusinessEssential.setVisible(false);
 		}
 		
-		if(parseInt(ciDetail.tableId) === AC.TABLE_ID_APPLICATION ||
-		   parseInt(ciDetail.tableId) === AC.TABLE_ID_ROOM ||
-		   parseInt(ciDetail.tableId) === AC.TABLE_ID_BUILDING) {
+		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION ||
+		   ciDetail.tableId == AC.TABLE_ID_ROOM ||
+		   ciDetail.tableId == AC.TABLE_ID_BUILDING ||
+		   ciDetail.tableId == AC.TABLE_ID_IT_SYSTEM) {
 			tfAlias.setVisible(true);
 		} else {
 			tfAlias.setVisible(false);
