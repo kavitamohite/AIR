@@ -499,7 +499,12 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	isSAPApplication: function(applicationCat2Txt) {
 		var store = AIR.AirStoreManager.getStoreByName('applicationCat2ListStore');
-		var isSapCat2 = store.getAt(store.findExact('text', applicationCat2Txt)).get('guiSAPNameWizard') === 'Y';//this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getStore().getById(cat2Id).get('guiSAPNameWizard') === 'Y';//AC.CI_CAT1_SAP_CAT2_ID.indexOf(cat2Id) > -1;
+
+//		var storeData = cbReferencedTemplate.getStore().data.length > 0 ? cbReferencedTemplate.getStore().data : cbReferencedTemplate.getStore().snapshot;
+		store.clearFilter();
+		
+		var index = store.findExact('text', applicationCat2Txt);
+		var isSapCat2 = index === -1 ? false : store.getAt(index).get('guiSAPNameWizard') === 'Y';//this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getStore().getById(cat2Id).get('guiSAPNameWizard') === 'Y';//AC.CI_CAT1_SAP_CAT2_ID.indexOf(cat2Id) > -1;
 		
 		return isSapCat2;
 	},

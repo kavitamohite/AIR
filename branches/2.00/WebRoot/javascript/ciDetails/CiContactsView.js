@@ -986,8 +986,8 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					pApplicationSteward.getComponent('applicationStewardHidden').reset();
 					pApplicationSteward.getComponent('applicationSteward').reset();
 				} else {
-					pApplicationSteward.getComponent('applicationStewardHidden').setValue(data.applicationOwnerHidden);
-					pApplicationSteward.getComponent('applicationSteward').setValue(data.applicationOwner);
+					pApplicationSteward.getComponent('applicationStewardHidden').setValue(data.applicationStewardHidden);//applicationOwnerHidden
+					pApplicationSteward.getComponent('applicationSteward').setValue(data.applicationSteward);//applicationOwner
 				}
 			} else {
 				pApplicationSteward.getComponent('applicationStewardHidden').setValue('');

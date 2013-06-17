@@ -196,11 +196,19 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		   record.data.tableId == AC.TABLE_ID_IT_SYSTEM) {
 			
 			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
-			var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
 			
+			var ciSubType;
+			var cat1Txt = record.get('applicationCat1Txt');
+			if(cat1Txt == AC.APP_WO_CAT || cat1Txt.length === 0) {
+				ciSubType = AC.APP_CAT1_APPLICATION;
+			} else {
+				var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
+				ciSubType = r.get('ciSubTypeId');
+			}
+						
 			AAM.setCiId(ciId);
 			AAM.setTableId(parseInt(record.data.tableId));//AC.TABLE_ID_APPLICATION
-			AAM.setCiSubTypeId(r.get('ciSubTypeId'));
+			AAM.setCiSubTypeId(ciSubType);
 		} else {
 			AAM.setCiId(-1);
 			AAM.setTableId(-1);

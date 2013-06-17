@@ -418,6 +418,40 @@ public class CiEntityWS {
 		}
 	}
 	
+	public CiEntityEditParameterOutput deleteCi(CiEntityParameterInput input) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		
+		if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+			switch(input.getTableId().intValue()) {
+				case AirKonstanten.TABLE_ID_APPLICATION:
+					output = new ApplicationWS().deleteApplication(input);
+					break;
+				case AirKonstanten.TABLE_ID_IT_SYSTEM:
+					output = ItSystemHbn.deleteCi(input.getCwid(), input.getCiId(), ItSystem.class);
+					break;
+				case AirKonstanten.TABLE_ID_POSITION:
+					output = SchrankHbn.deleteCi(input.getCwid(), input.getCiId(), Schrank.class);
+					break;
+				case AirKonstanten.TABLE_ID_ROOM:
+					output = RoomHbn.deleteCi(input.getCwid(), input.getCiId(), Room.class);
+					break;
+				case AirKonstanten.TABLE_ID_BUILDING_AREA:
+					output = BuildingHbn.deleteCi(input.getCwid(), input.getCiId(), BuildingArea.class);
+					break;
+				case AirKonstanten.TABLE_ID_BUILDING:
+					output = BuildingHbn.deleteCi(input.getCwid(), input.getCiId(), Building.class);
+					break;
+				case AirKonstanten.TABLE_ID_TERRAIN:
+					output = TerrainHbn.deleteCi(input.getCwid(), input.getCiId(), Terrain.class);
+					break;
+				case AirKonstanten.TABLE_ID_SITE:
+					output = StandortHbn.deleteCi(input.getCwid(), input.getCiId(), Standort.class);
+					break;
+			}
+		}
+		
+		return output;
+	}
 	
 	private void setCiBaseData(CiBaseDTO ciBaseDTO, CiBase1 ciBase) {
 		ciBaseDTO.setId(ciBase.getId());

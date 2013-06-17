@@ -58,7 +58,7 @@ public class RoomHbn extends LokationItemHbn {
 
 
 	public static CiEntityEditParameterOutput deleteRoom(String cwid, RoomDTO dto) {
-		return deleteCi(cwid, dto, Room.class);
+		return deleteCi(cwid, dto.getId(), Room.class);
 	}
 
 	

@@ -109,10 +109,10 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 	    
 	    
 	    //bei Klaus hat das erste Fokussieren im IE nicht funktioniert. Ein Fixversuch:
-//		var task = new Ext.util.DelayedTask(function() {
+		var task = new Ext.util.DelayedTask(function() {
 			tfCwid.focus(true, 0);
-//		}.createDelegate(this));
-//		task.delay(1000);//2000
+		}.createDelegate(this));
+		task.delay(1000);//2000
 	},
 	
 	onEnter: function (field, el) {
@@ -127,7 +127,6 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		
 		var cwid = this.getComponent('pAirLoginWindow').getComponent('tfCwid').getValue();
 		var password = this.getComponent('pAirLoginWindow').getComponent('tfPassword').getValue();
-
 
 		
 		this.fireEvent('login', cwid, password);

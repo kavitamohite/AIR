@@ -111,7 +111,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 				xtype: 'filterCombo',//combo
 		        id: 'cbClusterCode',
 				
-//				enableKeyEvents: true,
+				enableKeyEvents: true,
 		        
 		        width: 230,
 		        fieldLabel: 'Cluster Code',//labels.compliance1435WindowLink,//languagestore.getAt(0).data['compliance1435WindowLink'],//'Link',
@@ -350,7 +350,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
         cbOsGroup.on('select', this.onOsGroupSelect, this);
         cbOsType.on('select', this.onOsTypeSelect, this);
         cbOsName.on('select', this.onOsNameSelect, this);//onOsNameSelect onSelect
-        cbClusterCode.on('select', this.onSelect, this);
+        cbClusterCode.on('select', this.onClusterCodeSelect, this);
         cbClusterType.on('select', this.onSelect, this);
         cbVirtualSoftware.on('select', this.onSelect, this);
         cbPrimaryFunction.on('select', this.onSelect, this);
@@ -359,11 +359,15 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
         cbOsGroup.on('change', this.onOsGroupChange, this);
         cbOsType.on('change', this.onOsTypeChange, this);
         cbOsName.on('change', this.onOsNameChange, this);//onChange
-        cbClusterCode.on('change', this.onChange, this);
+        cbClusterCode.on('change', this.onClusterCodeChange, this);
         cbClusterType.on('change', this.onChange, this);
         cbVirtualSoftware.on('change', this.onChange, this);
         cbPrimaryFunction.on('change', this.onChange, this);
 //        cbLicenseScanning.on('change', this.onChange, this);
+        
+        cbClusterCode.on('keyup', this.onClusterCodeKeyUp, this);
+
+        
                 
         storeLoader.destroy();
 		var ciDetail = AAM.getAppDetail();
@@ -371,8 +375,8 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
         
 //        this.update(ciDetail);
 		var delayedTask = new Ext.util.DelayedTask(function() {
-			this.update(ciDetail);
 			this.updateAccessMode(ciDetail);
+			this.update(ciDetail);
 			this.ownerCt.fireEvent('viewInitialized', this);//ciChange .ownerCt
 		}.createDelegate(this));
 		delayedTask.delay(1000);//1000
@@ -546,6 +550,34 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			this.ownerCt.fireEvent('ciChange', this, combo, newValue, oldValue);
 	},
 	
+	onClusterCodeSelect: function(combo, record, index) {
+		var cbClusterType = this.getComponent('cbClusterType');
+		
+		if(record.get('type') == 'N')
+			Util.disableCombo(cbClusterType);
+		else
+			Util.enableCombo(cbClusterType);
+		
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
+	},
+	onClusterCodeChange: function(combo, newValue, oldValue) {
+		if(this.isComboValueValid(combo, newValue, oldValue)) {
+			if(typeof newValue === 'number') {
+				var cbClusterType = this.getComponent('cbClusterType');
+				if(combo.getStore().getById(newValue).get('type') == 'N')
+					Util.disableCombo(cbClusterType);
+				else
+					Util.enableCombo(cbClusterType);
+			}
+			this.ownerCt.fireEvent('ciChange', this, combo, newValue, oldValue);
+		}
+	},
+	onClusterCodeKeyUp: function(combo, event) {
+		if(combo.getRawValue().length === 0) {
+			Util.enableCombo(this.getComponent('cbClusterType'));
+			this.ownerCt.fireEvent('ciChange', this, combo);
+		}
+	},
 	
 	
 	update: function(data) {
@@ -592,8 +624,9 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			tfItSystemCiAlias.reset();
 			
 			
-			cbClusterCode.reset();
-			cbClusterType.reset();
+//			cbClusterCode.reset();
+
+			
 			cbVirtualSoftware.reset();
 			cbItSystemLifecycleStatus.reset();
 			cbItSystemOperationalStatus.reset();
@@ -610,7 +643,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			Util.enableCombo(cbOsName);
 			
 			Util.enableCombo(cbClusterCode);
-			Util.enableCombo(cbClusterType);
+//			Util.enableCombo(cbClusterType);
 			Util.enableCombo(cbVirtualSoftware);
 			Util.enableCombo(cbItSystemLifecycleStatus);
 			Util.enableCombo(cbItSystemOperationalStatus);
@@ -619,6 +652,10 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			
 			rgVirtualHWClient.enable();
 			rgVirtualHWHost.enable();
+			
+			cbClusterCode.setValue(4);// Default: N / no Cluster
+			cbClusterType.reset();
+			Util.disableCombo(cbClusterType);
 		} else {
 			this.updateAccessMode(data);
 

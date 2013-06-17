@@ -64,13 +64,16 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 		
 		var specificsView = this.getSpecificsViewByTableId(parseInt(data.tableId));
 		if(specificsView.rendered) {
-			specificsView.update(data);
+//			specificsView.update(data);
 			
 			//! Sonst springt er wieder zur Maske des vorherig ausgewählten CI Typs. Grund: setActiveItem löst
 			//intern nochmal ein afterlayout aus. Dadurch wird in this.onViewAdded() wieder setActiveItem aufgerufen
 			//und so wieder zur Maske des vorherig ausgewählten CI Typs zurückgeschaltet.
 			this.un('add', this.onViewAdded, this);//afterlayout
 			this.getLayout().setActiveItem(specificsView.getId());
+			
+			specificsView.update(data);
+
 			
 //			var h = specificsView.getHeight();
 			this.updateHeight(specificsView);

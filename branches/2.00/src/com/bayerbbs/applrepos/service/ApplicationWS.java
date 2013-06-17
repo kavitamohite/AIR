@@ -346,28 +346,46 @@ public class ApplicationWS {
 
 		return output;
 	}
-
-	public ApplicationEditParameterOutput deleteApplication(ApplicationEditParameterInput editInput) {
-
-		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
+	
+	
+	public CiEntityEditParameterOutput deleteApplication(CiEntityParameterInput editInput) {//ApplicationEditParameterInput
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
 		if (null != editInput) {
-
 			if (LDAPAuthWS.isLoginValid(editInput.getCwid(), editInput.getToken())) {
-				ApplicationDTO dto = getApplicationDTOFromEditInput(editInput);
 
-				AnwendungHbn.deleteApplicationApplication(editInput.getCwid(), dto.getId());
-				AnwendungHbn.deleteApplicationItSystem(editInput.getCwid(), dto.getId());
+				AnwendungHbn.deleteApplicationApplication(editInput.getCwid(), editInput.getCiId());
+				AnwendungHbn.deleteApplicationItSystem(editInput.getCwid(), editInput.getCiId());
 				
-				output = AnwendungHbn.deleteAnwendung(editInput.getCwid(), dto);
+				output = AnwendungHbn.deleteAnwendung(editInput.getCwid(), editInput.getCiId());
 			} else {
 				// TODO MESSAGE LOGGED OUT
 			}
 		}
 
 		return output;
-
 	}
+	
+
+//	public ApplicationEditParameterOutput deleteApplication(ApplicationEditParameterInput editInput) {
+//		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
+//
+//		if (null != editInput) {
+//
+//			if (LDAPAuthWS.isLoginValid(editInput.getCwid(), editInput.getToken())) {
+//				ApplicationDTO dto = getApplicationDTOFromEditInput(editInput);
+//
+//				AnwendungHbn.deleteApplicationApplication(editInput.getCwid(), dto.getId());
+//				AnwendungHbn.deleteApplicationItSystem(editInput.getCwid(), dto.getId());
+//				
+//				output = AnwendungHbn.deleteAnwendung(editInput.getCwid(), dto);
+//			} else {
+//				// TODO MESSAGE LOGGED OUT
+//			}
+//		}
+//
+//		return output;
+//	}
 
 	/**
 	 * converts the editInput to the dto

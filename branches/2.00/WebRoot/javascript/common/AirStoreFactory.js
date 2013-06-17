@@ -4167,37 +4167,69 @@ AIR.AirStoreFactory = function() {
 			return currencyStore;
 		},
 		
-		createApplicationDeleteStore: function() {
-			var applicationDeleteRecord = Ext.data.Record.create([
+		createCiDeleteStore: function() {
+			var record = Ext.data.Record.create([
 			    {name: 'result'},
 			    {name: 'displayMessage'},
 			    {name: 'messages'},
-			    {name: 'applicationId'}
+			    {name: 'ciId'}
 	        ]);
 	
-	        var applicationDeleteReader = new Ext.data.XmlReader({
+	        var reader = new Ext.data.XmlReader({
 	        	record: 'return'
-	        }, applicationDeleteRecord); 
+	        }, record); 
 	
-	        var applicationDeleteStore = new Ext.data.Store({
+	        var store = new Ext.data.Store({
 	            autoDestroy: true,
 	            autoLoad: false,
 	            
 	        	proxy: new Ext.ux.soap.SoapProxy({
-	        		url: webcontext + '/ApplicationWSPort',
-	        		loadMethod: 'deleteApplication',
+	        		url: webcontext + '/CiEntityWSPort',
+	        		loadMethod: 'deleteCi',
 	        		timeout: 120000,
-	        		reader: applicationDeleteReader
+	        		reader: reader
 	        	}),
 	        	
 	        	fields: [ 'result', 'displayMessage', 'messages' ],
 	        	
 	
-	        	reader: applicationDeleteReader
+	        	reader: reader
 	        });
 	        
-	        return applicationDeleteStore;
+	        return store;
 		},
+		
+//		createApplicationDeleteStore: function() {
+//			var applicationDeleteRecord = Ext.data.Record.create([
+//			    {name: 'result'},
+//			    {name: 'displayMessage'},
+//			    {name: 'messages'},
+//			    {name: 'applicationId'}
+//	        ]);
+//	
+//	        var applicationDeleteReader = new Ext.data.XmlReader({
+//	        	record: 'return'
+//	        }, applicationDeleteRecord); 
+//	
+//	        var applicationDeleteStore = new Ext.data.Store({
+//	            autoDestroy: true,
+//	            autoLoad: false,
+//	            
+//	        	proxy: new Ext.ux.soap.SoapProxy({
+//	        		url: webcontext + '/ApplicationWSPort',
+//	        		loadMethod: 'deleteApplication',
+//	        		timeout: 120000,
+//	        		reader: applicationDeleteReader
+//	        	}),
+//	        	
+//	        	fields: [ 'result', 'displayMessage', 'messages' ],
+//	        	
+//	
+//	        	reader: applicationDeleteReader
+//	        });
+//	        
+//	        return applicationDeleteStore;
+//		},
 		
 		createObjectAliasAllowedStore: function() {
 			var objectAliasAllowedRecord = Ext.data.Record.create([

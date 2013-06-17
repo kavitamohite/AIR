@@ -74,7 +74,7 @@ AIR.AirConstants = {
 	APP_CAT1_COMMON_SERVICE: '-10013',//'Common Service',
 	APP_CAT1_MIDDLEWARE: '-10007',//'Middleware'
 	APP_CAT1_ONLY_FIELDS: 'applicationOwner,applicationOwnerDelegate,applicationSteward,rgBARrelevance,organisationalScope',
-
+	APP_WO_CAT: 'App w/o Cat.',
 	
 	APP_CAT2_DEFAULT_UNKOWN: '468',
 	APP_CAT2_SHAREPOINT: 'Sharepoint',

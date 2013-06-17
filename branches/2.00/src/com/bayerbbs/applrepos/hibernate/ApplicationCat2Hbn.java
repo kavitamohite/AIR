@@ -66,7 +66,6 @@ public class ApplicationCat2Hbn {
 			List<ApplicationCat2> values = session.createQuery("select h from ApplicationCat2 as h").list();	//  where h.delTimestamp is null (wegen View)
 			
 			listResult = getDTOList(values);
-			
 			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {

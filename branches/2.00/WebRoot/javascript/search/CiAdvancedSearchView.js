@@ -483,9 +483,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						fieldLabel: 'IT Category',
 						valueField: 'id',
 						displayField: 'text',
-						
-						clearFilterOnReset: false,
-						
+											
 //				        typeAhead: true,
 //				        forceSelection: true,
 //				        autoSelect: false,

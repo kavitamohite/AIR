@@ -299,9 +299,14 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 					var grid = this.getComponent('pCopyFromSearchCard').getComponent('CiSearchWizzardResultGrid');
 					var record = grid.getSelectionModel().getSelected();//grid.getStore().getAt(rowIndex);
 					
+//					var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+//					var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
+//					var ciSubTypeId = r ? r.get('ciSubTypeId') : AC.APP_CAT1_APPLICATION;
+					
 					var options = {
 						tableId: record.get('tableId'),
-						ciSubTypeId: parseInt(record.get('applicationCat1Id'))
+//						ciSubTypeId: ciSubTypeId,//parseInt(record.get('applicationCat1Txt'))//applicationCat1Id
+						reset: true
 					};
 
 					this.fireEvent('externalNavigation', this, null, 'clCiDetails', options);
@@ -316,7 +321,6 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 				var redirectToSearchCallback = function() {
 					AAM.setCiId(-1);
 					AAM.setTableId(-1);
-
 					
 					this.fireEvent('externalNavigation', this, null, 'clSearch');
 				}.createDelegate(this);

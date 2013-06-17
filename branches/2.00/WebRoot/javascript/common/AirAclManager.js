@@ -709,7 +709,7 @@ AIR.AirAclManager = function() {
 		getLabel: function(uiElement, labels, data) {
 			if(uiElement.id == 'gpsccontactCiOwner') {
 				return data.tableId == AC.TABLE_ID_APPLICATION &&
-					   data.ciSubTypeId == AC.APP_CAT1_APPLICATION ?
+					   data.applicationCat1Id == AC.APP_CAT1_APPLICATION ?
 						labels.contactsCIOwnerApplication : labels.contactsCIOwner;
 			} else {
 				return labels[uiElement.id] || uiElement.label.dom.innerHTML;

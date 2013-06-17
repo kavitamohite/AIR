@@ -894,6 +894,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		switch(parseInt(data.tableId)) {
 			case AC.TABLE_ID_APPLICATION:
+				if(data.applicationCat1Id == 0)
+					data.applicationCat1Id = AC.APP_CAT1_APPLICATION;
 				record = Util.getStoreRecord(store, 'ciSubTypeId', parseInt(data.applicationCat1Id));
 				break;
 			case AC.TABLE_ID_IT_SYSTEM:
@@ -1001,8 +1003,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	onCiSelected: function(sourceView, ciId, target, record) {
-		this.tableId = record.get('tableId');//grid.getStore().getAt(rowIndex).get('tableId');
 		this.reset();
+		this.tableId = record.get('tableId');//grid.getStore().getAt(rowIndex).get('tableId');
 	},
 	
 	reset: function() {
@@ -1010,6 +1012,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.isUserChange = false;
 		
 //		this.disableButtons();
+		this.tableId = AAM.getTableId();//für reset nach applicationCopy ContinueEditing Button Klick
 	},
 
 

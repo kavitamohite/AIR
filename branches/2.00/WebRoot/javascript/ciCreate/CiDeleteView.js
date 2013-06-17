@@ -80,13 +80,14 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 	},
 	
 	deleteCallback: function() {
-		var store = AIR.AirStoreFactory.createApplicationDeleteStore();
-		store.on('load', this.onApplicationDeleted, this);
+		var store = AIR.AirStoreFactory.createCiDeleteStore();//createApplicationDeleteStore
+		store.on('load', this.onCiDeleted, this);
 		
 		var params = { 
 		 	cwid: AIR.AirApplicationManager.getCwid(),
 		 	token: AIR.AirApplicationManager.getToken(),
-			id: this.ciId//applicationId	Flag für Owner und Delegate Apps!
+		 	ciId: this.ciId,//id applicationId	Flag für Owner und Delegate Apps!
+			tableId: this.tableId
 		};
 
 		store.load({
@@ -94,19 +95,27 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 		});
 	},
 	
-	onApplicationDeleted: function(store, records, options) {
+	onCiDeleted: function(store, records, options) {
 		//delete row from grid
 		
-		var grid = this.getComponent('CiDeleteResultGrid');
-		
-		var record = grid.getStore().getAt(this.selectedCiIndex);
-		grid.getStore().remove(record);
-		
-		var data = {
-			applicationName: record.data.applicationName,
-			applicationCat1: record.data.applicationCat1Txt
-		};
-		this.fireEvent('airAction', this, 'appDeleteSuccess', data);
+		if(records[0].get('result') == 'OK') {
+			var grid = this.getComponent('CiDeleteResultGrid');
+			
+			var record = grid.getStore().getAt(this.selectedCiIndex);
+			grid.getStore().remove(record);
+			
+			var data = {
+				applicationName: record.data.name,//applicationName
+				applicationCat1: record.data.applicationCat1Txt
+			};
+			this.fireEvent('airAction', this, 'appDeleteSuccess', data);
+		} else {
+			var title = 'Error deleting CI';
+			var message = records[0].get('messages');
+			
+			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('GENERIC_ERROR', null, message, title);
+			dynamicWindow.show();	
+		}
 	},
 	
 	onRowClick: function(grid, rowIndex, e) {
@@ -115,6 +124,10 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 		this.ciId = record.data.id;
 		this.applicationName = record.data.name;
 		this.applicationCat1Txt = record.data.applicationCat1Txt;
+		
+		var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
+		var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
+		this.tableId = r.get('ciTypeId');
 		
 //		var bDelete = this.getComponent('bDelete');//this.getComponent('pDeleteCiSearch').getComponent('bDelete');
 //		if(bDelete.hidden) {

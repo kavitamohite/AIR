@@ -25,7 +25,7 @@ public class ApplicationWSDelegate {
 		return applicationWS.createApplication(editInput);
 	}
 
-	public ApplicationEditParameterOutput deleteApplication(ApplicationEditParameterInput editInput) {
+	public CiEntityEditParameterOutput deleteApplication(CiEntityParameterInput editInput) {//ApplicationEditParameterOutput ApplicationEditParameterInput
 		return applicationWS.deleteApplication(editInput);
 	}
 

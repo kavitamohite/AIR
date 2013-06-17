@@ -343,13 +343,14 @@ public class BaseHbn {
 		}
 	}
 	
-	static <T> CiEntityEditParameterOutput deleteCi(String cwid, CiBaseDTO dto, Class<T> clazz) {
+	public static <T> CiEntityEditParameterOutput deleteCi(String cwid, Long id, Class<T> clazz) {//, CiBaseDTO dto
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
-			if (null != dto.getId()	&& 0 < dto.getId().longValue()) {
-				Long id = new Long(dto.getId());
+//			if (null != dto.getId()	&& 0 < dto.getId().longValue()) {
+//				Long id = new Long(dto.getId());
+			if(id != null) {
 
 				// TODO check der InputWerte
 				Session session = HibernateUtil.getSession();
@@ -377,10 +378,14 @@ public class BaseHbn {
 						session.flush();
 						toCommit = true;
 					} catch (Exception e) {
+						String errorMessage = e.getCause().toString();
+						String errorId = "ORA-20000";
+						errorMessage = errorMessage.substring(errorMessage.indexOf(errorId) + errorId.length() + 2, errorMessage.indexOf('\n'));
+						
 						log.error(e.getMessage());
 						// handle exception
 						output.setResult(AirKonstanten.RESULT_ERROR);
-						output.setMessages(new String[] { e.getMessage() });
+						output.setMessages(new String[] { errorMessage });//e.getMessage()
 					} finally {
 						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
 						if (toCommit) {

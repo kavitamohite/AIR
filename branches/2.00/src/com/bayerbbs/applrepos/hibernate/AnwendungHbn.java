@@ -35,6 +35,7 @@ import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.service.ApplicationEditParameterOutput;
+import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemDTO;
 
 
@@ -1193,15 +1194,16 @@ public class AnwendungHbn extends BaseHbn {
 	 * @param dto
 	 * @return
 	 */
-	public static ApplicationEditParameterOutput deleteAnwendung(String cwid, ApplicationDTO dto) {
-		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
+	public static CiEntityEditParameterOutput deleteAnwendung(String cwid, Long id) {//ApplicationEditParameterOutput ApplicationDTO dto
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
 		// TODO check validate token
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
-			if (null != dto.getId()	&& 0 < dto.getId().longValue()) {
-				Long id = new Long(dto.getId());
+//			if (null != dto.getId()	&& 0 < dto.getId().longValue()) {
+//				Long id = new Long(dto.getId());
+			if(id != null) {
 
 				// TODO check der InputWerte
 				Session session = HibernateUtil.getSession();

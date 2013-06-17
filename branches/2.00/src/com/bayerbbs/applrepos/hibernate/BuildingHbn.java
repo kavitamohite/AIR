@@ -1162,7 +1162,7 @@ public class BuildingHbn extends LokationItemHbn {
 	}
 	
 	public static CiEntityEditParameterOutput deleteBuilding(String cwid, BuildingDTO dto) {
-		return deleteCi(cwid, dto, Building.class);
+		return deleteCi(cwid, dto.getId(), Building.class);
 		
 		/*CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
@@ -1231,7 +1231,7 @@ public class BuildingHbn extends LokationItemHbn {
 	}
 	
 	public static CiEntityEditParameterOutput deleteBuildingArea(String cwid, BuildingAreaDTO dto) {
-		return deleteCi(cwid, dto, BuildingArea.class);
+		return deleteCi(cwid, dto.getId(), BuildingArea.class);
 		
 		/*CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 

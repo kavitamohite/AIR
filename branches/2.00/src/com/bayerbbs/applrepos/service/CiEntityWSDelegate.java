@@ -57,4 +57,8 @@ public class CiEntityWSDelegate {
 	public ItSystemDTO getItSystem(CiDetailParameterInput input) {
 		return ciEntityWS.getItSystem(input);
 	}
+	
+	public CiEntityEditParameterOutput deleteCi(CiEntityParameterInput input) {
+		return ciEntityWS.deleteCi(input);
+	}
 }

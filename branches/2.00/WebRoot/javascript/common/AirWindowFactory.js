@@ -286,6 +286,19 @@ AIR.AirWindowFactory = function() {
 					}];
 					
 					break;
+				case 'GENERIC_ERROR':
+					var windowTitle = title;
+					var windowText = message;
+					var windowIcon = img_Failed;
+					
+					var buttonConfigs = [{
+						text: labels.dynamicWindowOKButtonText,
+						handler: function() {
+							dynamicWindow.close();
+						}
+					}];
+					
+					break;
 				case 'WARNING_OK':
 					var windowTitle = title;
 					var windowText = message;
