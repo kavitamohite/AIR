@@ -141,7 +141,14 @@ public class ApplicationWS {
 //					boolean showDeleted = true;
 					
 					listAnwendungen = CiEntitiesHbn.findCisByNameOrAlias(searchname, showDeleted, input.getQueryMode(), onlyApplications, input.getSort(), input.getDir(), startwert, limit);
-					anzahlDatensaetze = CiEntitiesHbn.findCountCisByNameOrAlias(searchname, showDeleted, input.getQueryMode(), onlyApplications);
+					anzahlDatensaetze = 0L;
+					// Zahl der Datensätze nur direkt in der Datenbank bestimmen, wenn wir (noch) nicht geblättert haben oder das Resultset > als "limit" ist.
+					if (null!=listAnwendungen) {
+						anzahlDatensaetze = (long) listAnwendungen.size();
+					}
+					if (startwert != 0L || (long) limit == anzahlDatensaetze) {
+						anzahlDatensaetze = CiEntitiesHbn.findCountCisByNameOrAlias(searchname, showDeleted, input.getQueryMode(), onlyApplications);
+					}
 				}
 			}
 		}

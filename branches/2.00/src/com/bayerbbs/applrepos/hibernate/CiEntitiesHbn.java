@@ -140,32 +140,32 @@ public class CiEntitiesHbn {
 		
 		StringBuffer sql = new StringBuffer();
 
-		sql.append("select /*+ INDEX (DWH_ENTITY FIX_143_16) */ * from DWH_ENTITY  where");
+		sql.append("select * from DWH_ENTITY  where");
 		sql.append(" 1=1");
 		if (!showDeleted) {
 			sql.append(" and upper(deleted) = 'NO'");
 		}
 		
-		sql.append(" and TABLE_ID in (");
-		sql.append(AirKonstanten.TABLE_ID_APPLICATION);
+		sql.append(" and UPPER(type) in (");
+		sql.append(AirKonstanten.CITypes_ANWENDUNG.toUpperCase()); // Suche auf UPPER(type) besser als auf table_id
 
 		if (onlyApplications) {
-			sql.append(") and UPPER(type) = UPPER('Application')");
+			sql.append(") and UPPER(type) = UPPER('Application')"); // sieht etwas merkwürdig aus, wird aber in diesem Fall vom Oracle-Optimizer richtig interpretiert.
 		} else {
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
+			sql.append(AirKonstanten.CITypes_IT_SYSTEM.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_ROOM);
+			sql.append(AirKonstanten.CITypes_SCHRANK.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_BUILDING);//TABLE_ID_WAYS
+			sql.append(AirKonstanten.CITypes_RAUM.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_BUILDING_AREA);
+			sql.append(AirKonstanten.CITypes_GEBAEUDE.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_TERRAIN);
+			sql.append(AirKonstanten.CITypes_BUILDING_AREA.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_POSITION);
+			sql.append(AirKonstanten.CITypes_TERRAIN.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_SITE);
+			sql.append(AirKonstanten.CITypes_STANDORT.toUpperCase());
 			sql.append(")");
 		}
 		
@@ -230,7 +230,7 @@ public class CiEntitiesHbn {
 			tx = session.beginTransaction();
 			conn = session.connection();
 			selectStmt = conn.createStatement();
-			
+			System.out.println(sql.toString());
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
 			
 			if (null != rset) {
@@ -291,26 +291,26 @@ public class CiEntitiesHbn {
 			sql.append(" and upper(deleted) = 'NO'");
 		}
 		
-		sql.append(" and TABLE_ID in (");
-		sql.append(AirKonstanten.TABLE_ID_APPLICATION);
+		sql.append(" and UPPER(type) in (");
+		sql.append(AirKonstanten.CITypes_ANWENDUNG.toUpperCase()); // Suche auf UPPER(type) besser als auf table_id
 
 		if (onlyApplications) {
-			sql.append(") and UPPER(type) = UPPER('Application')");
+			sql.append(") and UPPER(type) = UPPER('Application')"); // sieht etwas merkwürdig aus, wird aber in diesem Fall vom Oracle-Optimizer richtig interpretiert.
 		} else {
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
+			sql.append(AirKonstanten.CITypes_IT_SYSTEM.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_ROOM);
+			sql.append(AirKonstanten.CITypes_SCHRANK.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_BUILDING);//TABLE_ID_WAYS
+			sql.append(AirKonstanten.CITypes_RAUM.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_BUILDING_AREA);
+			sql.append(AirKonstanten.CITypes_GEBAEUDE.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_TERRAIN);
+			sql.append(AirKonstanten.CITypes_BUILDING_AREA.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_POSITION);
+			sql.append(AirKonstanten.CITypes_TERRAIN.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
-			sql.append(AirKonstanten.TABLE_ID_SITE);
+			sql.append(AirKonstanten.CITypes_STANDORT.toUpperCase());
 			sql.append(")");
 		}
 		
@@ -343,7 +343,7 @@ public class CiEntitiesHbn {
 			tx = session.beginTransaction();
 			conn = session.connection();
 			selectStmt = conn.createStatement();
-			
+			System.out.println(sql.toString());
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
 
 			if (null != rset) {
@@ -384,7 +384,7 @@ public class CiEntitiesHbn {
 
 		searchName = searchName.toUpperCase();
 		StringBuffer sql = new StringBuffer();
-		sql.append("select /*+ INDEX (DWH_ENTITY FIX_143_16) */ * from DWH_ENTITY  where");
+		sql.append("select * from DWH_ENTITY  where");
 
 		if (!withDeleted) {
 			sql.append(" upper(deleted) = 'NO' and ");

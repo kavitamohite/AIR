@@ -22,6 +22,15 @@ public final class AirKonstanten {
 	public static final int TABLE_ID_SITE			= 12;
 	public static final int TABLE_ID_WAYS			= 37;
 
+	public static final String CITypes_IT_SYSTEM	= "'Transient System Platform', 'Hardware System'";
+	public static final String CITypes_ANWENDUNG	= "'Application', 'Application Platform', 'Middleware', 'Common Service'";
+	public static final String CITypes_SCHRANK		= "'Position'";
+	public static final String CITypes_RAUM			= "'Room'";
+	public static final String CITypes_GEBAEUDE		= "'Building'";
+	public static final String CITypes_BUILDING_AREA= "'Building Area'";
+	public static final String CITypes_TERRAIN		= "'Terrain'";
+	public static final String CITypes_STANDORT		= "'Site'";
+	public static final String CITypes_WAYS			= "'Way'";
 	
 	public static final String APPLICATION_GUI_NAME = "AIR";
 	public static final String UNKNOWN = "unknown";

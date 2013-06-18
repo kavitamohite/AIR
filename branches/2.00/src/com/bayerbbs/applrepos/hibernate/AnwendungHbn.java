@@ -1473,8 +1473,8 @@ public class AnwendungHbn extends BaseHbn {
 		sql.append(" 		left join ITSEC_SB_WERTE itsecsbinteg on anw.ITSEC_SB_INTEG_ID = itsecsbinteg.ITSEC_SB_ID");
 		sql.append(" 		left join ITSEC_SB_WERTE itsecsbverfg on anw.ITSEC_SB_VERFG_ID = itsecsbverfg.ITSEC_SB_ID");
 		sql.append(" 		left join ITSEC_SB_WERTE itsecsbvertr on anw.ITSEC_SB_VERTR_ID = itsecsbvertr.ITSEC_SB_ID");
-		sql.append(" 		left join CLASS_DATA classdata on anw.CLASS_DATA_ID = classdata.CLASS_DATA_ID and classdata.DEL_TIMESTAMP is null");
-		sql.append(" 		left join CLASS_INFORMATION classinfo on anw.CLASS_INFORMATION_ID = classinfo.CLASS_INFORMATION_ID and classinfo.DEL_TIMESTAMP is null");
+		sql.append(" 		left join CLASS_DATA classdata on anw.CLASS_DATA_ID = classdata.CLASS_DATA_ID and classdata.DEL_QUELLE is null");
+		sql.append(" 		left join CLASS_INFORMATION classinfo on anw.CLASS_INFORMATION_ID = classinfo.CLASS_INFORMATION_ID and classinfo.DEL_QUELLE is null");
 		sql.append("		where anw.anwendung_id=").append(applicationId);
 
 		try {
@@ -1725,11 +1725,11 @@ public class AnwendungHbn extends BaseHbn {
 		sql.append(" from group_types gt");
 
 		sql.append(" left join ci_groups cigr on gt.GROUP_TYPE_ID = cigr.GROUP_TYPE_ID and cigr.table_id="+tableId+" and cigr.ci_id=").append(ciId);//cigr.table_id=2
-		sql.append(" and cigr.del_timestamp is null");
-		sql.append(" left join ci_persons cipers on gt.INDIVIDUAL_CONTACT_Y_N='Y' and gt.group_type_id = cipers.group_type_id and cipers.table_id="+tableId+" and cipers.del_timestamp is null and cipers.ci_id=").append(ciId);
+		sql.append(" and cigr.del_quelle is null");
+		sql.append(" left join ci_persons cipers on gt.INDIVIDUAL_CONTACT_Y_N='Y' and gt.group_type_id = cipers.group_type_id and cipers.table_id="+tableId+" and cipers.del_quelle is null and cipers.ci_id=").append(ciId);
 		sql.append(" left join persons pers on cipers.cwid = pers.cwid");
 		sql.append(" left join groups grp on gt.INDIVIDUAL_CONTACT_Y_N='N' and cigr.group_id= grp.group_id");
-		sql.append(" where gt.visible_application = 1 and gt.del_timestamp is null");
+		sql.append(" where gt.visible_application = 1 and gt.del_quelle is null");
 		sql.append(" order by gt.group_type_id, gt.INDIVIDUAL_CONTACT_Y_N, gt.GROUP_TYPE_NAME");
 		
 		try {
@@ -1819,7 +1819,7 @@ public class AnwendungHbn extends BaseHbn {
 //		sql.append(" join itverbund_itsecgrp i on i.itsec_gruppe_zobid = anw.itsec_gruppe_id");
 //		sql.append("WHERE AK2.Anwendung_Kat1_Id = 5 ");
 //		sql.append("AND ANW.Itset = 10002 ");
-		sql.append("WHERE ANW.Del_Timestamp is NULL ");//AND
+		sql.append("WHERE ANW.Del_Quelle is NULL ");//AND
 		sql.append("AND ANW.Template = -1 ");
 //		sql.append("AND ANW.Anwendung_Id <> 8675--11568 10346 um nicht template auf sich selbst auswählen zu können");
 //		sql.append("AND pck_SISec.ReferencedBy('ANWENDUNG', ANW.Anwendung_Id, 2) = 0");
@@ -1897,7 +1897,7 @@ public class AnwendungHbn extends BaseHbn {
 		sql.append(" join anwendung_kat1 anwkat1 on anwkat2.anwendung_kat1_id= anwkat1.anwendung_kat1_id");
 		sql.append(" where anwanw.app_lower_id = ");
 		sql.append(applicationId);
-		sql.append("  and anwanw.del_timestamp is null");
+		sql.append("  and anwanw.del_quelle is null");
 		
 		try {
 			tx = session.beginTransaction();
@@ -1964,7 +1964,7 @@ public class AnwendungHbn extends BaseHbn {
 		sql.append(" join anwendung_kat1 anwkat1 on anwkat2.anwendung_kat1_id= anwkat1.anwendung_kat1_id");
 		sql.append(" where anwanw.app_higher_id = ");
 		sql.append(applicationId);
-		sql.append("  and anwanw.del_timestamp is null");
+		sql.append("  and anwanw.del_quelle is null");
 		
 		try {
 			tx = session.beginTransaction();
@@ -2030,7 +2030,7 @@ public class AnwendungHbn extends BaseHbn {
 		sql.append(" join process proc on anwprocess.process_id = proc.process_id");
 		sql.append(" where anwprocess.application_id  = ");
 		sql.append(applicationId);
-		sql.append("  and anwprocess.del_timestamp is null");
+		sql.append("  and anwprocess.del_quelle is null");
 	
 		try {
 			tx = session.beginTransaction();
@@ -2228,7 +2228,7 @@ public class AnwendungHbn extends BaseHbn {
 		sql.append(" join it_system its on its.it_system_id = anwits.it_system_id");
 		sql.append(" where   anwits.anwendung_id = ");
 		sql.append(applicationId);
-		sql.append(" and anwits.del_timestamp is null");
+		sql.append(" and anwits.del_quelle is null");
 		
 		
 		try {
@@ -2484,7 +2484,7 @@ public class AnwendungHbn extends BaseHbn {
 		
 		if (null != advsearchprocessid) {
 			isNot = isNot(processOptions);
-			sql.append(" and appproc.del_timestamp is null");
+			sql.append(" and appproc.del_quelle is null");
 			sql.append(" and appproc.process_id "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchprocessid.longValue());
 		}
 		
@@ -2531,7 +2531,7 @@ public class AnwendungHbn extends BaseHbn {
 		}
 
 		if (!showDeleted) {
-			sql.append("  and anw.DEL_TIMESTAMP is null");
+			sql.append("  and anw.DEL_QUELLE is null");
 		}
 		
 		if (StringUtils.isNotNullOrEmpty(sort)) {
@@ -2573,7 +2573,7 @@ public class AnwendungHbn extends BaseHbn {
 			conn = session.connection();
 
 			selectStmt = conn.createStatement();
-			//System.out.println(sql.toString());
+			System.out.println(sql.toString());
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
 
 			if (null != rset) {
@@ -3046,7 +3046,7 @@ public class AnwendungHbn extends BaseHbn {
 		Transaction tx = null;
 		tx = session.beginTransaction();
 
-		String stampSQL = "update ANW_ANW set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE APP_HIGHER_ID = ? OR APP_LOWER_ID = ? AND del_timestamp IS NULL";
+		String stampSQL = "update ANW_ANW set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE APP_HIGHER_ID = ? OR APP_LOWER_ID = ? AND del_quelle IS NULL";
 		try {
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, cwid);
@@ -3078,7 +3078,7 @@ public class AnwendungHbn extends BaseHbn {
 		Transaction tx = null;
 		tx = session.beginTransaction();
 
-		String stampSQL = "update ANWEND_IT_SYSTEM set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE ANWENDUNG_ID = ? AND del_timestamp IS NULL";
+		String stampSQL = "update ANWEND_IT_SYSTEM set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE ANWENDUNG_ID = ? AND del_quelle IS NULL";
 		try {
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, cwid);
