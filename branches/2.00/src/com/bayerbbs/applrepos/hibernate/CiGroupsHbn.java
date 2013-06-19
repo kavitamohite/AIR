@@ -74,6 +74,7 @@ public class CiGroupsHbn {
 		try {
 			tx = session.beginTransaction();
 			
+			@SuppressWarnings("unchecked")
 			List<CiGroups> values = session
 					.createQuery(
 							"select h from CiGroups as h where h.deleteTimestamp is null and h.ciId = " + ciId + " and h.groupTypeId = " + groupTypeId)
@@ -106,6 +107,7 @@ public class CiGroupsHbn {
 		try {
 			tx = session.beginTransaction();
 			
+			@SuppressWarnings("unchecked")
 			List<CiGroups> values = session
 					.createQuery(sb.toString())
 							.list();
@@ -126,6 +128,7 @@ public class CiGroupsHbn {
 	private static void stampCiGroups(Integer tableId, Long ciId, Long groupTypeId, String cwid, Session session) {
 		String stampSQL = "UPDATE ci_groups SET last_sync_source = ?, syncing = ? WHERE table_id = ? AND ci_id = ? AND group_type_id = ? AND del_timestamp IS NULL";
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, AirKonstanten.APPLICATION_GUI_NAME);
 			stmt.setString(2, AirKonstanten.APPLICATION_GUI_NAME + '_' + cwid);
@@ -145,6 +148,7 @@ public class CiGroupsHbn {
 		String stampSQL = "UPDATE ci_groups SET del_timestamp=sysdate, del_quelle = ?, del_user=?, syncing = NULL "
 				+ "WHERE table_id = ? AND ci_id = ? AND group_type_id = ? AND del_timestamp IS NULL AND syncing=?";
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, AirKonstanten.APPLICATION_GUI_NAME);
 			stmt.setString(2, cwid);
