@@ -1793,9 +1793,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		} else {*/
 			var pAdvSearchSingleAttrs = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs');
 			
-		    var field = pAdvSearchSingleAttrs.getComponent('cbCiType');
-		    field.setValue('');
+//		    var field = pAdvSearchSingleAttrs.getComponent('cbCiType');
+//		    field.setValue('');
 //		    field.reset();
+			
 		    field = pAdvSearchSingleAttrs.getComponent('advsearchdescription');
 		    field.reset();
 		    field = pAdvSearchSingleAttrs.getComponent('cbAdvSearchITset');

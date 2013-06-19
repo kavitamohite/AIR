@@ -944,7 +944,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		if(data.isCiCreate) {
 			cbgRegulations.reset();
-//			cbgRegulations.setValue([false, false, false, false]);
+			cbgRegulations.setValue([true, false, false, false]);
 			cbRelevanceGxp.reset();
 			
 

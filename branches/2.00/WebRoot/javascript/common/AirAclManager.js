@@ -549,6 +549,11 @@ AIR.AirAclManager = function() {
 //									if(!draftItemCmp.getValue())
 //										return true;
 									break;
+								case 'listview':			
+									var scopeRecords = draftItemCmp.getSelectedRecords();
+									return scopeRecords.length === 0;
+									
+									break;
 								default: break;
 							}
 						}

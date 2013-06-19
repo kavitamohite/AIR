@@ -1,5 +1,7 @@
 package com.bayerbbs.applrepos.service;
 
+import com.bayerbbs.applrepos.domain.DwhEntity;
+
 
 public class CiItemDTO { //implements Serializable
 	private Long id;
@@ -41,7 +43,21 @@ public class CiItemDTO { //implements Serializable
 	public CiItemDTO() {
 	}
 
-	
+	public CiItemDTO(DwhEntity dwhEntity) {
+		setId(dwhEntity.getCiId());
+		setName(dwhEntity.getCiName());
+		setAlias(dwhEntity.getCiAlias());
+		setCiOwner(dwhEntity.getCiOwner());
+		setCiOwnerDelegate(dwhEntity.getCiOwnerDelegate());
+		setApplicationCat1Txt(dwhEntity.getCiType());
+		setApplicationCat2Txt(dwhEntity.getCategoryIt());
+		setLocation(dwhEntity.getLocation());
+		setApplicationOwner(dwhEntity.getAppOwner());
+		setApplicationOwnerDelegate(dwhEntity.getAppOwnerDelegate());
+		setApplicationSteward(dwhEntity.getAppSteward());
+		setDeleteQuelle(dwhEntity.getDeleted());
+		setTableId(dwhEntity.getTableId());
+	}
 
 	public Long getId() {
 		return id;

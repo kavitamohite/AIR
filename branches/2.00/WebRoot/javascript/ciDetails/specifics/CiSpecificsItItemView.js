@@ -553,10 +553,12 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 	onClusterCodeSelect: function(combo, record, index) {
 		var cbClusterType = this.getComponent('cbClusterType');
 		
-		if(record.get('type') == 'N')
+		if(record.get('type') == 'N') {
 			Util.disableCombo(cbClusterType);
-		else
+			cbClusterType.reset();
+		} else {
 			Util.enableCombo(cbClusterType);
+		}
 		
 		this.ownerCt.fireEvent('ciChange', this, combo, record);
 	},

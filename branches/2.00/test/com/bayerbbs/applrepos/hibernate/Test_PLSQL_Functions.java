@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -20,7 +21,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.bayerbbs.applrepos.domain.ApplicationCat2;
+import com.bayerbbs.applrepos.domain.DwhEntity;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
 import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
 
@@ -31,6 +32,33 @@ public class Test_PLSQL_Functions {
 	public void setUp() throws Exception {
 		SessionFactory sf = new AnnotationConfiguration().configure().buildSessionFactory();//new File("src/hibernate.cfg.xml") nicht nötig
 		session = sf.openSession();
+	}
+	
+	@Test
+	public void testFindDwhEntityByNameOrAliasLikeCount() throws HibernateException, SQLException {
+		String name = "test";
+		int limit = 20;
+		int startwert = 0;
+		
+		Query q = session.getNamedQuery("findDwhEntityByNameOrAliasLikeCount");
+		q.setParameter("name", name).
+		setParameter("alias", name);
+	//	setParameter("typeList", typeList.toString());
+	    Long count = (Long)q.uniqueResult();
+
+	    
+		q = session.getNamedQuery("findDwhEntityByNameOrAliasLike");
+		q.setParameter("name", name).
+		  setParameter("alias", name).
+	//	  setParameter("typeList", typeList.toString()).
+		  setMaxResults(limit).
+		  setFirstResult(startwert);
+		
+		List<DwhEntity> ciList = q.list();
+		System.out.println(ciList.size());
+		System.out.println(count);
+		
+		session.flush();
 	}
 	
 	@Test

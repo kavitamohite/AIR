@@ -456,7 +456,9 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		this.getComponent('fsContactsGPSCW').getComponent('pGPSCSupportGroup').getComponent('taGPSCSupportGroup').reset();
 		this.getComponent('fsContactsGPSCW').getComponent('pGPSCSupportGroup').getComponent('taGPSCSupportGroupHidden').reset();
 		
-		this.getComponent('cbgRegulationsW').reset();
+		var cbgRegulationsW = this.getComponent('cbgRegulationsW');
+//		cbgRegulationsW.reset();
+		cbgRegulationsW.setValue([true, false, false, false]);
 		
 		this.getComponent('cbSlaW').reset();
 		this.getComponent('cbSeverityLevelW').reset();

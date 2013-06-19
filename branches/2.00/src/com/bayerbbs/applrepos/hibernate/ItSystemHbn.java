@@ -871,7 +871,7 @@ public class ItSystemHbn extends BaseHbn {
 
 //		append(" hw_ident_or_trans = ").append(input.getCiSubTypeId()).
 		
-		append("del_timestamp IS NULL AND (UPPER(").append(metaData.getNameField()).append(") LIKE '");
+		append("(UPPER(").append(metaData.getNameField()).append(") LIKE '");
 		
 		if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
 			sql.append("%");
@@ -951,6 +951,9 @@ public class ItSystemHbn extends BaseHbn {
 			if(!isCwid)
 				sql.insert(sql.length() - 2, '%');
 		}
+		
+		if(input.getShowDeleted() == null || !input.getShowDeleted().equals(AirKonstanten.YES_SHORT))
+			sql.append(" AND del_timestamp IS NULL");
 		
 		return sql;
 	}
