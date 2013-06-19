@@ -670,7 +670,7 @@ public class AnwendungHbn extends BaseHbn {
 	}
 
 
-	public static ApplicationEditParameterOutput createAnwendung(String cwid, ApplicationDTO dto, Boolean forceOverride) {
+	public static ApplicationEditParameterOutput createAnwendung(String cwid, ApplicationDTO dto, Boolean forceOverride, boolean neuanlage) {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
 		// TODO check validate token
@@ -730,6 +730,11 @@ public class AnwendungHbn extends BaseHbn {
 								output.setMessages(new String[] {"Application Alias '" + listApplications.get(0).getAlias() + "' already exists."});
 							}
 						}						
+					}
+					
+					if (!neuanlage) {
+						output.setResult(AirKonstanten.RESULT_OK);
+						return output;
 					}
 					
 					
@@ -2776,7 +2781,7 @@ public class AnwendungHbn extends BaseHbn {
 	 * @param dto
 	 * @return
 	 */
-	public static ApplicationEditParameterOutput copyApplication(String cwid, Long applicationIdSource, Long applicationIdTarget) {
+	public static ApplicationEditParameterOutput copyApplication(String cwid, Long applicationIdSource, Long applicationIdTarget, String ciNameTarget, String ciAliasTarget) {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
 		String validationMessage = null;
@@ -2794,28 +2799,53 @@ public class AnwendungHbn extends BaseHbn {
 					tx = session.beginTransaction();
 					
 					Application applicationSource = (Application) session.get(Application.class, applicationIdSource);
-					Application applicationTarget = (Application) session.get(Application.class, applicationIdTarget);
+					Application applicationTarget = null;
+					if (null == applicationIdTarget) {
+						applicationTarget = new Application();
+						// application - insert values
+						applicationTarget.setInsertUser(cwid);
+						applicationTarget.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						applicationTarget.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
 
-					if (null == applicationSource) {
-						// application was not found in database
-						output.setResult(AirKonstanten.RESULT_ERROR);
-						output.setMessages(new String[] { "the application id "	+ applicationIdSource + " was not found in database" });
+						// application - update values
+						applicationTarget.setUpdateUser(applicationTarget.getInsertUser());
+						applicationTarget.setUpdateQuelle(applicationTarget.getInsertQuelle());
+						applicationTarget.setUpdateTimestamp(applicationTarget.getInsertTimestamp());
+						
+						applicationTarget.setApplicationName(ciNameTarget);
+						applicationTarget.setApplicationAlias(ciAliasTarget);
+						// 
+						applicationTarget.setResponsible(cwid.toUpperCase());
+						applicationTarget.setSubResponsible(applicationSource.getSubResponsible());
+						applicationTarget.setTemplate(applicationSource.getTemplate());
+						
+						applicationTarget.setRelevanzITSEC(applicationSource.getRelevanzITSEC());
+						applicationTarget.setRelevanceICS(applicationSource.getRelevanceICS());
+
+						applicationTarget.setRelevance2059(applicationSource.getRelevance2059());
+						applicationTarget.setRelevance2008(applicationSource.getRelevance2008());
+
+
 					}
-					else if (null == applicationTarget) {
-							// application was not found in database
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							output.setMessages(new String[] { "the application id "	+ applicationIdTarget + " was not found in database" });
-					} else if (null != applicationTarget.getDeleteTimestamp()) {
-						// application is deleted
-						output.setResult(AirKonstanten.RESULT_ERROR);
-						output.setMessages(new String[] { "the application id "	+ applicationIdTarget + " is deleted" });
-					} else {
+					else {
+						applicationTarget = (Application) session.get(Application.class, applicationIdTarget);
 						// application found - change values
 						output.setApplicationId(applicationIdTarget);
 						
 						applicationTarget.setUpdateUser(cwid);
 						applicationTarget.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						applicationTarget.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+					}
+
+					if (null == applicationSource) {
+						// application was not found in database
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { "the application id "	+ applicationIdSource + " was not found in database" });
+					} else if (null != applicationTarget.getDeleteTimestamp()) {
+						// application is deleted
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { "the application id "	+ applicationIdTarget + " is deleted" });
+					} else {
 
 						// ======
 						// Basics
@@ -2909,7 +2939,7 @@ public class AnwendungHbn extends BaseHbn {
 					boolean toCommit = false;
 					try {
 						if (null == validationMessage) {
-							if (null != applicationTarget && null != applicationTarget.getDeleteTimestamp()) {
+							if (null != applicationTarget && null == applicationTarget.getDeleteTimestamp()) {
 								session.saveOrUpdate(applicationTarget);
 								session.flush();
 							}

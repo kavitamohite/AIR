@@ -310,7 +310,7 @@ public class ApplicationWS {
 			}
 
 			// save / create application
-			output = AnwendungHbn.createAnwendung(editInput.getCwid(), dto, editInput.getForceOverride());
+			output = AnwendungHbn.createAnwendung(editInput.getCwid(), dto, editInput.getForceOverride(), true);
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
 				// get detail
@@ -677,18 +677,20 @@ public class ApplicationWS {
 				
 				
 				// save / create application
-				ApplicationEditParameterOutput createOutput = AnwendungHbn.createAnwendung(copyInput.getCwid(), dto, null);
+				boolean neuanlage = false;
+				ApplicationEditParameterOutput createOutput = AnwendungHbn.createAnwendung(copyInput.getCwid(), dto, null, neuanlage);
 
 				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
 					List<Application> listAnwendung = AnwendungHbn.findApplicationByName(copyInput.getCiNameTarget());
 					if (null != listAnwendung && 1 == listAnwendung.size()) {
+						// Neuanlage / durch reaktivierten Datensatz
 						dto.setId(listAnwendung.get(0).getApplicationId());
 						
 						Long ciId = listAnwendung.get(0).getApplicationId();
 						Application applicationTarget = AnwendungHbn.findApplicationById(ciId);
 						
 						if (null != applicationTarget) {
-							ApplicationEditParameterOutput temp = AnwendungHbn.copyApplication(copyInput.getCwid(), applicationSource.getId(), applicationTarget.getId());
+							ApplicationEditParameterOutput temp = AnwendungHbn.copyApplication(copyInput.getCwid(), applicationSource.getId(), applicationTarget.getId(), copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
 							
 							output.setApplicationId(temp.getApplicationId());
 							output.setResult(temp.getResult());
@@ -696,6 +698,17 @@ public class ApplicationWS {
 							output.setDisplayMessage(temp.getDisplayMessage());
 						}
 					}
+					else {
+						// Neuanlage durch komplett neuen Datensatz
+						ApplicationEditParameterOutput temp = AnwendungHbn.copyApplication(copyInput.getCwid(), applicationSource.getId(), null, copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
+						
+						output.setApplicationId(temp.getApplicationId());
+						output.setResult(temp.getResult());
+						output.setMessages(temp.getMessages());
+						output.setDisplayMessage(temp.getDisplayMessage());
+						
+					}
+					
 				}
 				else {
 					output.setApplicationId(createOutput.getApplicationId());
