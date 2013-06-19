@@ -868,11 +868,11 @@ public class ItSystemHbn extends BaseHbn {
 		
 		
 		//cwid_verantw_betr statt responsible
-		sql.append(", cwid_verantw_betr, sub_responsible, del_quelle FROM ").append(metaData.getTableName()).append(" WHERE ");
+		sql.append(", cwid_verantw_betr, sub_responsible, del_quelle FROM ").append(metaData.getTableName()).append(" WHERE 1=1 ");
 
 //		append(" hw_ident_or_trans = ").append(input.getCiSubTypeId()).
 		if(input.getShowDeleted() == null || !input.getShowDeleted().equals(AirKonstanten.YES_SHORT))
-			sql.append("del_quelle IS NULL");
+			sql.append(" AND del_quelle IS NULL");
 		
 		sql.append(" AND (UPPER(").append(metaData.getNameField()).append(") LIKE '");
 		
