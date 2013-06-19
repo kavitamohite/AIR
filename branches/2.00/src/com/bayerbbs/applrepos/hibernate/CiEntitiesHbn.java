@@ -230,7 +230,8 @@ public class CiEntitiesHbn {
 			tx = session.beginTransaction();
 			conn = session.connection();
 			selectStmt = conn.createStatement();
-			System.out.println(sql.toString());
+			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
+				System.out.println(sql.toString());
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
 			
 			if (null != rset) {
@@ -343,7 +344,8 @@ public class CiEntitiesHbn {
 			tx = session.beginTransaction();
 			conn = session.connection();
 			selectStmt = conn.createStatement();
-			System.out.println(sql.toString());
+			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
+				System.out.println(sql.toString());
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
 
 			if (null != rset) {
@@ -405,7 +407,8 @@ public class CiEntitiesHbn {
 			conn = session.connection();
 
 			selectStmt = conn.createStatement();
-			//System.out.println(sql.toString());
+			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
+				System.out.println(sql.toString());
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
 
 			if (null != rset) {

@@ -2441,23 +2441,23 @@ public class AnwendungHbn extends BaseHbn {
 		
 		if (null != advsearchapplicationcat2id) {
 			isNot = isNot(itCategoryOptions);
-			sql.append(" and anw.ANWENDUNG_KAT2_ID "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchapplicationcat2id.longValue());
+			sql.append(" and NVL(anw.ANWENDUNG_KAT2_ID, 0) "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchapplicationcat2id.longValue());
 		}
 		if (null != advsearchoperationalstatusid) {
 			isNot = isNot(generalUsageOptions);
-			sql.append(" and anw.EINSATZ_STATUS_ID "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchoperationalstatusid.longValue());
+			sql.append(" and NVL(anw.EINSATZ_STATUS_ID, 0) "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchoperationalstatusid.longValue());
 		}
 		if (null != advsearchlifecyclestatusid) {
 			isNot = isNot(lifecycleStatusOptions);
-			sql.append(" and anw.LC_STATUS_ID "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchlifecyclestatusid.longValue());
+			sql.append(" and NVL(anw.LC_STATUS_ID, 0) "+ getEqualNotEqualOperator(isNot) +" ").append(advsearchlifecyclestatusid.longValue());
 		}
 		if(StringUtils.isNotNullOrEmpty(itSetId)) {
 			isNot = isNot(itSetOptions);
-			sql.append(" and anw.ITSET "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(itSetId));
+			sql.append(" and NVL(anw.ITSET, 0) "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(itSetId));
 		}
 		if(StringUtils.isNotNullOrEmpty(itSecGroupId)) {
 			isNot = isNot(itSecGroupOptions);
-			sql.append(" and anw.ITSEC_GRUPPE_ID "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(itSecGroupId));
+			sql.append(" and NVL(anw.ITSEC_GRUPPE_ID, -1) "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(itSecGroupId));
 		}
 		if(StringUtils.isNotNullOrEmpty(source)) {
 			isNot = isNot(sourceOptions);
@@ -2478,7 +2478,7 @@ public class AnwendungHbn extends BaseHbn {
 			}
 			
 			if (null != searchTemplate) {
-				sql.append(" and anw.template = ").append(searchTemplate);
+				sql.append(" and NVL(anw.template, 0) = ").append(searchTemplate);
 			}
 		}
 		

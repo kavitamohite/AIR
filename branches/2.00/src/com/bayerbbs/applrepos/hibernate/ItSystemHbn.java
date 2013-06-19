@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -867,11 +868,13 @@ public class ItSystemHbn extends BaseHbn {
 		
 		
 		//cwid_verantw_betr statt responsible
-		sql.append(", cwid_verantw_betr, sub_responsible, del_quelle FROM ").append(metaData.getTableName()).append(" WHERE ").
+		sql.append(", cwid_verantw_betr, sub_responsible, del_quelle FROM ").append(metaData.getTableName()).append(" WHERE ");
 
 //		append(" hw_ident_or_trans = ").append(input.getCiSubTypeId()).
+		if(input.getShowDeleted() == null || !input.getShowDeleted().equals(AirKonstanten.YES_SHORT))
+			sql.append("del_quelle IS NULL");
 		
-		append("(UPPER(").append(metaData.getNameField()).append(") LIKE '");
+		sql.append(" AND (UPPER(").append(metaData.getNameField()).append(") LIKE '");
 		
 		if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
 			sql.append("%");
@@ -897,10 +900,7 @@ public class ItSystemHbn extends BaseHbn {
 			sql.append("') ");
 		}
 		
-		sql.append("AND (hw_ident_or_trans = ").append(input.getCiSubTypeId());
-		if(input.getCiSubTypeId().equals(AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM_TRANSIENT))
-			sql.append(" OR hw_ident_or_trans IS NULL");
-		
+		sql.append("AND (NVL(hw_ident_or_trans, " + AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM_TRANSIENT + ") = ").append(input.getCiSubTypeId());
 		sql.append(")");
 		
 		boolean isNot = false;
@@ -908,7 +908,7 @@ public class ItSystemHbn extends BaseHbn {
 		
 		if(StringUtils.isNotNullOrEmpty(input.getItSetId())) {
 			isNot = isNot(input.getItSetOptions());
-			sql.append(" AND itset "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getItSetId()));
+			sql.append(" AND NVL(itset, 0) "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getItSetId()));
 		}
 		
 		if(StringUtils.isNotNullOrEmpty(input.getBusinessEssentialId())) {
@@ -918,7 +918,7 @@ public class ItSystemHbn extends BaseHbn {
 		
 		if(StringUtils.isNotNullOrEmpty(input.getItSecGroupId())) {
 			isNot = isNot(input.getItSecGroupOptions());
-			sql.append(" AND itsec_gruppe_id "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getItSecGroupId()));
+			sql.append(" AND NVL(itsec_gruppe_id, -1) "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getItSecGroupId()));
 		}
 		
 		if(StringUtils.isNotNullOrEmpty(input.getSource())) {
@@ -952,9 +952,14 @@ public class ItSystemHbn extends BaseHbn {
 				sql.insert(sql.length() - 2, '%');
 		}
 		
-		if(input.getShowDeleted() == null || !input.getShowDeleted().equals(AirKonstanten.YES_SHORT))
-			sql.append(" AND del_timestamp IS NULL");
-		
+		try {
+			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
+				System.out.println(sql.toString());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return sql;
 	}
 

@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,7 +91,7 @@ public class LokationItemHbn extends BaseHbn {
 		
 		if(StringUtils.isNotNullOrEmpty(input.getItSetId())) {
 			isNot = isNot(input.getItSetOptions());
-			sql.append(" AND itset "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getItSetId()));
+			sql.append(" AND NVL(itset, 0) "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getItSetId()));
 		}
 		
 		if(StringUtils.isNotNullOrEmpty(input.getBusinessEssentialId())) {
@@ -100,7 +101,7 @@ public class LokationItemHbn extends BaseHbn {
 		
 		if(StringUtils.isNotNullOrEmpty(input.getItSecGroupId())) {
 			isNot = isNot(input.getItSecGroupOptions());
-			sql.append(" AND itsec_gruppe_id "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getItSecGroupId()));
+			sql.append(" AND NVL(itsec_gruppe_id, -1) "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getItSecGroupId()));
 		}
 		
 		if(StringUtils.isNotNullOrEmpty(input.getSource())) {
@@ -135,8 +136,15 @@ public class LokationItemHbn extends BaseHbn {
 		}
 		
 		if(input.getShowDeleted() == null || !input.getShowDeleted().equals(AirKonstanten.YES_SHORT))
-			sql.append(" AND del_timestamp IS NULL");
+			sql.append(" AND del_quelle IS NULL");
 		
+		try {
+			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
+				System.out.println(sql.toString());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return sql;
 	}
