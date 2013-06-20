@@ -174,7 +174,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 				ciNameAliasQuery: this.query,//query
 				queryMode: 'CONTAINS',
 				searchAction: 'search',
-				isOnlyApplications: 'true',//onlyapplications
+// alle Datentypen dürfen kopiert werden				isOnlyApplications: 'true',//onlyapplications
    			 	cwid: AIR.AirApplicationManager.getCwid(),
    			 	token: AIR.AirApplicationManager.getToken()
 			};
