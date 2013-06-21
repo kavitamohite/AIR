@@ -60,6 +60,7 @@ public class GroupHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Group> values = session.createQuery("select h from Group as h where order by h.groupName").list();
 
 			listResult = getDTOList(values);
@@ -85,6 +86,7 @@ public class GroupHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Group> values = session.createQuery("select h from Group as h where upper(h.groupName) = '" + groupname.toUpperCase() +"'").list();
 
 			listResult = getDTOList(values);
@@ -146,6 +148,7 @@ public class GroupHbn {
 		Session session = HibernateUtil.getSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Group> values = session.createQuery("select h from Group as h where " + searchParameter + " order by h.groupName").list();
 
 			listResult = getDTOList(values);
@@ -228,6 +231,7 @@ public class GroupHbn {
 			if(start > 0 || limit > 0)
 				query.setFirstResult(start).setMaxResults(limit);
 			
+			@SuppressWarnings("unchecked")
 			List<Group> values = query.list();
 
 			listResult = getDTOList(values);

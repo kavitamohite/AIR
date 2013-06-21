@@ -273,6 +273,7 @@ public class ItsecMassnahmeStatusHbn {
 		
 		try {
 			ta = session.beginTransaction();
+			@SuppressWarnings("deprecation")
 			Connection conn = session.connection();
 			
 			CallableStatement stmt = conn.prepareCall(sql);

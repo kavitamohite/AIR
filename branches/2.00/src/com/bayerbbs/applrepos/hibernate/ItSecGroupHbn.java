@@ -94,7 +94,7 @@ public class ItSecGroupHbn {
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
-		Connection conn = null;
+//		Connection conn = null;
 
 //		sql.append("select h.itsec_grp_gstoolid, h.itsec_gruppe, i.it_verbund_zob_id1 from ItSec_Gruppe h ");// --order by h.sort, h.name --ItSecGroup
 //		sql.append("join itverbund_itsecgrp i on i.itsec_gruppe_zobid = h.itsec_grp_gstoolid order by h.itsec_gruppe");
@@ -111,7 +111,8 @@ public class ItSecGroupHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());

@@ -28,7 +28,7 @@ public class ItSecUserHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("select * from ITSEC_USER");
@@ -38,7 +38,8 @@ public class ItSecUserHbn {
 		try {
 			tx = session.beginTransaction();
 
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
@@ -89,6 +90,7 @@ public class ItSecUserHbn {
 		tx = session.beginTransaction();
 		String stampSQL = "UPDATE ITSEC_USER SET AIR_LAST_LOGON = ? where upper(cwid) = ?";
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setTimestamp(1, ApplReposTS.getCurrentTimestamp());
 			stmt.setString(2, cwid.toUpperCase());
@@ -109,6 +111,7 @@ public class ItSecUserHbn {
 		tx = session.beginTransaction();
 		String stampSQL = "UPDATE ITSEC_USER SET AIR_LAST_LOGOFF = ? where upper(cwid) = ?";
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setTimestamp(1, ApplReposTS.getCurrentTimestamp());
 			stmt.setString(2, cwid.toUpperCase());

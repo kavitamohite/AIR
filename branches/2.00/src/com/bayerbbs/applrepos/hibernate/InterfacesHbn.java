@@ -20,6 +20,7 @@ public class InterfacesHbn {
 			
 			try {
 				tx = session.beginTransaction();
+				@SuppressWarnings("unchecked")
 				List<Interfaces> values = session.createQuery("select h from Interfaces as h where h.interfaceToken = '" + interfaceToken + "'").list();
 
 				if (null != values && 1 == values.size()) {

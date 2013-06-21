@@ -60,6 +60,7 @@ public class LicenseTypeHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<LicenseType> values = session
 					.createQuery(
 							"select h from LicenseType as h order by h.licenseTypeName")

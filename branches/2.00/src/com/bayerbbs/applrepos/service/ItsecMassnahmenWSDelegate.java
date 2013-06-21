@@ -9,22 +9,22 @@ public class ItsecMassnahmenWSDelegate {
 
 	public ItsecMassnahmenParameterOutput getItsecMassnahmen(
 			ItsecMassnahmenParameterInput input) {
-		return itsecMassnahmenWS.getItsecMassnahmen(input);
+		return ItsecMassnahmenWS.getItsecMassnahmen(input);
 	}
 
 	public ItsecMassnahmenParameterOutput getItsecMassnahmeDetail(
 			ItsecMassnahmenParameterInput input) {
-		return itsecMassnahmenWS.getItsecMassnahmeDetail(input);
+		return ItsecMassnahmenWS.getItsecMassnahmeDetail(input);
 	}
 
 	public ItsecMassnahmenParameterOutput saveItsecMassnahmenDetails(
 			ItsecMassnahmenParameterInput input) {
-		return itsecMassnahmenWS.saveItsecMassnahmenDetails(input);
+		return ItsecMassnahmenWS.saveItsecMassnahmenDetails(input);
 	}
 
 	public ItsecMassnahmenParameterOutput getItsecMassnahmenStatusWerte(
 			ItsecMassnahmenParameterInput input) {
-		return itsecMassnahmenWS.getItsecMassnahmenStatusWerte(input);
+		return ItsecMassnahmenWS.getItsecMassnahmenStatusWerte(input);
 	}
 
 	public GapClassDTO[] getGapClassList() {
@@ -37,6 +37,6 @@ public class ItsecMassnahmenWSDelegate {
 	}
 
 	public ItsecMassnahmenParameterOutput getLinkedMassnahmeDetail(ItsecMassnahmenParameterInput input) {
-		return itsecMassnahmenWS.getLinkedMassnahmeDetail(input);
+		return ItsecMassnahmenWS.getLinkedMassnahmeDetail(input);
 	}
 }

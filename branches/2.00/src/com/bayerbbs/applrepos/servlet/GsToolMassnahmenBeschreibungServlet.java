@@ -82,6 +82,7 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 		PrintWriter writer = res.getWriter();
 		
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement statement = session.connection().prepareStatement(STMT_SELECT_MASSN_BESCHREIBUNG);
 			statement.setString(1, massnahmeGstoolId);
 			statement.setInt(2, getLanguageId(lang));
@@ -131,6 +132,7 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 		PrintWriter writer = res.getWriter();
 		
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement statement = session.connection().prepareStatement(STMT_SELECT_BAUSTEIN_BESCHREIBUNG);
 			statement.setInt(1, getLanguageId(lang));
 			statement.setString(2, bausteinId);

@@ -116,7 +116,7 @@ public class ItsecMassnahmenWS {
 		
 		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 		
-			boolean result = true;
+//			boolean result = true;
 //			
 //			if (null != input.getItsecMassnahmeDetailsDTO()) {
 //				ItsecMassnahmeDetailDTO aItsecMassnahmen[] = input.getItsecMassnahmeDetailsDTO();
@@ -137,9 +137,10 @@ public class ItsecMassnahmenWS {
 				
 				ItsecMassnahmeDetailDTO itsecMassnahmeDTO = input.getItsecMassnahmeDetailsDTO();
 				if (null != itsecMassnahmeDTO.getItsecMassnahmenStatusId() && null != itsecMassnahmeDTO.getStatusId()) {
-					result = ItsecHbn.saveItsecMassnahmeDetail(itsecMassnahmeDTO);
-				} else {
-					result = false;
+//					result = ItsecHbn.saveItsecMassnahmeDetail(itsecMassnahmeDTO);
+					ItsecHbn.saveItsecMassnahmeDetail(itsecMassnahmeDTO);
+//				} else {
+//					result = false;
 				}
 //			}
 		}
@@ -159,13 +160,13 @@ public class ItsecMassnahmenWS {
 		
 		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 		
-			boolean result = true;
+//			boolean result = true;
 				
 			ItsecMassnahmeDetailDTO itsecMassnahmeDTO = input.getItsecMassnahmeDetailsDTO();
 			if (null != itsecMassnahmeDTO.getItsecMassnahmenStatusId() && null != itsecMassnahmeDTO.getStatusId()) {
 				ItsecMassnahmeStatusHbn.saveItsecMassnahmeFromDTO(itsecMassnahmeDTO.getItsecMassnahmenStatusId(), itsecMassnahmeDTO);
-			} else {
-				result = false;
+//			} else {
+//				result = false;
 			}
 			
 		}

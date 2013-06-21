@@ -92,7 +92,7 @@ public class LifecycleStatusHbn {
 		Transaction tx = null;
 		Statement stmt = null;
 		Session session = HibernateUtil.getSession();
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -115,7 +115,8 @@ public class LifecycleStatusHbn {
 
 		try {
 			tx = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql.toString());
 

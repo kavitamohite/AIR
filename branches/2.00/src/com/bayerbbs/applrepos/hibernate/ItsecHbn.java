@@ -40,7 +40,7 @@ public class ItsecHbn {
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
 
-			Connection conn = null;
+//			Connection conn = null;
 
 			StringBuffer sql = new StringBuffer();
 			
@@ -73,7 +73,8 @@ public class ItsecHbn {
 			try {
 				tx = session.beginTransaction();
 
-				conn = HibernateUtil.getSession().connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = HibernateUtil.getSession().connection();
 
 				selectStmt = conn.createStatement();
 				ResultSet rsSet = selectStmt
@@ -122,7 +123,7 @@ public class ItsecHbn {
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
 
-			Connection conn = null;
+//			Connection conn = null;
 
 			StringBuffer sql = new StringBuffer();
 			
@@ -173,7 +174,8 @@ public class ItsecHbn {
 			try {
 				tx = session.beginTransaction();
 
-				conn = HibernateUtil.getSession().connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = HibernateUtil.getSession().connection();
 
 				selectStmt = conn.createStatement();
 				ResultSet rsSet = selectStmt
@@ -278,7 +280,7 @@ public class ItsecHbn {
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
 
-			Connection conn = null;
+//			Connection conn = null;
 
 			StringBuffer sql = new StringBuffer();
 			
@@ -293,7 +295,8 @@ public class ItsecHbn {
 			try {
 				tx = session.beginTransaction();
 
-				conn = HibernateUtil.getSession().connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = HibernateUtil.getSession().connection();
 
 				selectStmt = conn.createStatement();
 				ResultSet rsSet = selectStmt
@@ -398,7 +401,7 @@ public class ItsecHbn {
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		
 		if (null != dto.getStatusId() && null != dto.getItsecMassnahmenStatusId()) {
@@ -406,7 +409,8 @@ public class ItsecHbn {
 			try {
 				tx = session.beginTransaction();
 
-				conn = session.connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = session.connection();
 
 			
 				String updateSQL = "UPDATE ITSEC_MASSN_STATUS SET STATUS_ID = ?, STATUS_KOMMENTAR = ? WHERE ITSEC_MASSN_ST_ID = ?";
@@ -446,7 +450,7 @@ public class ItsecHbn {
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
 
-			Connection conn = null;
+//			Connection conn = null;
 
 			StringBuffer sql = new StringBuffer();
 			
@@ -455,7 +459,8 @@ public class ItsecHbn {
 			try {
 				tx = session.beginTransaction();
 
-				conn = HibernateUtil.getSession().connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = session.connection();
 
 				selectStmt = conn.createStatement();
 				ResultSet rsSet = selectStmt

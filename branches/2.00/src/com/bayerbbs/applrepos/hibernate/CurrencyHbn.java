@@ -70,6 +70,7 @@ public class CurrencyHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Currency> values = session
 					.createQuery(
 							"select h from Currency as h order by h.currencyName")

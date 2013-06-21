@@ -71,6 +71,7 @@ public class GapClassHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<GapClass> values = session
 					.createQuery(
 							"select h from GapClass as h order by h.gapPriority")

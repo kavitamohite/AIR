@@ -138,7 +138,7 @@ public class ItsecUserOptionHbn {
 		Long interfaceAirId = Long.parseLong(strInterfaceAIRid);
 		
 		if (null != listOptions && !listOptions.isEmpty()) {
-			for (Iterator iterator = listOptions.iterator(); iterator.hasNext();) {
+			for (Iterator<ItsecUserOptionDTO> iterator = listOptions.iterator(); iterator.hasNext();) {
 				ItsecUserOptionDTO itsecUserOptionDTO = (ItsecUserOptionDTO) iterator
 						.next();
 				if (itsecUserOptionDTO.getItsecUserOptionName().equals(key)) {

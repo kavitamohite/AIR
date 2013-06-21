@@ -61,6 +61,7 @@ public class GroupTypesHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<GroupType> values = session.createQuery(
 					"select h from GroupType as h where h.delTimestamp is null order by h.groupTypeName")
 					.list();

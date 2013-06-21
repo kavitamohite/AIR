@@ -34,7 +34,7 @@ public class ComplianceHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		
 		StringBuffer sql = new StringBuffer();
@@ -47,7 +47,8 @@ public class ComplianceHbn {
 		try {
 			tx = session.beginTransaction();
 
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
@@ -107,7 +108,7 @@ public class ComplianceHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 		
 		StringBuffer sql = new StringBuffer();
 		//TODO: prüfen ob if richtig:
@@ -296,7 +297,8 @@ public class ComplianceHbn {
 		try {
 			tx = session.beginTransaction();
 
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
