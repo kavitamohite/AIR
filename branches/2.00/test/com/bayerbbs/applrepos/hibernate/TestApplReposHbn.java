@@ -31,6 +31,7 @@ public class TestApplReposHbn {
 //		Statement statement = session.connection().createStatement();
 //		ResultSet rs = statement.executeQuery(sql.toString());
 		
+		@SuppressWarnings("deprecation")
 		PreparedStatement statement = session.connection().prepareStatement(sql.toString());
 		ResultSet rs = statement.executeQuery();
 		

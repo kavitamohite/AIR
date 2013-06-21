@@ -54,6 +54,7 @@ public class Test_PLSQL_Functions {
 		  setMaxResults(limit).
 		  setFirstResult(startwert);
 		
+		@SuppressWarnings("unchecked")
 		List<DwhEntity> ciList = q.list();
 		System.out.println(ciList.size());
 		System.out.println(count);
@@ -88,6 +89,7 @@ public class Test_PLSQL_Functions {
 		
 		try {
 			ta = session.beginTransaction();
+			@SuppressWarnings("deprecation")
 			Connection conn = session.connection();
 			
 			CallableStatement stmt = conn.prepareCall(sql);
@@ -119,6 +121,7 @@ public class Test_PLSQL_Functions {
 		String ciId = "116219";
 		StringBuilder sql = new StringBuilder("select * from table(pck_air.ft_history("+ciId+"))");
 				
+		@SuppressWarnings("deprecation")
 		PreparedStatement statement = session.connection().prepareStatement(sql.toString());
 		ResultSet rs = statement.executeQuery();
 		
@@ -129,6 +132,7 @@ public class Test_PLSQL_Functions {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testFT_Findcis() throws HibernateException, SQLException {
 		String ciType = "Application";

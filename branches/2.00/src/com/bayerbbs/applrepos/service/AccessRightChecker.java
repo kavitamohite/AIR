@@ -277,15 +277,15 @@ public class AccessRightChecker {
 		return isRelevanceStrategic;
 	}
 
-	private boolean isEditableByRoleAdminType(String adminTypeRoleName, String cwidInput) {
-		boolean isEditableByRoleAdminType = false;
-		if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromRoleNameAndCwid(adminTypeRoleName, cwidInput))) {
-			// allowed by role rights for admin type
-			isEditableByRoleAdminType = true;
-		}
-		
-		return isEditableByRoleAdminType;
-	}
+//	private boolean isEditableByRoleAdminType(String adminTypeRoleName, String cwidInput) {
+//		boolean isEditableByRoleAdminType = false;
+//		if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromRoleNameAndCwid(adminTypeRoleName, cwidInput))) {
+//			// allowed by role rights for admin type
+//			isEditableByRoleAdminType = true;
+//		}
+//		
+//		return isEditableByRoleAdminType;
+//	}
 
 //	public boolean isEditableRoleApplicationManager(String cwidInput) {
 //		return isEditableByRoleAdminType(AirKonstanten.ROLE_AIR_APPLICATION_MANAGER, cwidInput);

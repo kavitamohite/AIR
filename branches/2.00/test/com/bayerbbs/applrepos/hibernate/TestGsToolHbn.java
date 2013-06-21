@@ -30,6 +30,7 @@ public class TestGsToolHbn {
 //		Statement statement = session.connection().createStatement();
 //		ResultSet rs = statement.executeQuery(sql.toString());
 		
+		@SuppressWarnings("deprecation")
 		PreparedStatement statement = session.connection().prepareStatement(sql.toString());
 		statement.setString(1, "-10041");
 		ResultSet rs = statement.executeQuery();
@@ -50,6 +51,7 @@ public class TestGsToolHbn {
 //		Statement statement = session.connection().createStatement();
 //		ResultSet rs = statement.executeQuery(sql.toString());
 		
+		@SuppressWarnings("deprecation")
 		PreparedStatement statement = session.connection().prepareStatement(sql.toString());
 		ResultSet rs = statement.executeQuery();
 		

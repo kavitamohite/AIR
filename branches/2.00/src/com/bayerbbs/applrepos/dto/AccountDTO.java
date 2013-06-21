@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class AccountDTO  implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -433581859702060204L;
 	private Long accountId;
 	private String accountName;
 	
