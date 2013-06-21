@@ -2813,6 +2813,8 @@ public class AnwendungHbn extends BaseHbn {
 					Application applicationSource = (Application) session.get(Application.class, applicationIdSource);
 					Application applicationTarget = null;
 					if (null == applicationIdTarget) {
+						// Komplette Neuanlage des Datensatzes mit Insert/Update-Feldern
+						
 						applicationTarget = new Application();
 						// application - insert values
 						applicationTarget.setInsertUser(cwid);
@@ -2840,6 +2842,7 @@ public class AnwendungHbn extends BaseHbn {
 
 					}
 					else {
+						// Rekativierung / Übernahme des bestehenden Datensatzes
 						applicationTarget = (Application) session.get(Application.class, applicationIdTarget);
 						// application found - change values
 						output.setApplicationId(applicationIdTarget);
