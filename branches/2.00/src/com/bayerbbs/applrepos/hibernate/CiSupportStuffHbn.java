@@ -23,6 +23,7 @@ public class CiSupportStuffHbn {
 			Session session = HibernateUtil.getSession();
 			try {
 				tx = session.beginTransaction();
+				@SuppressWarnings("unchecked")
 				List<CiSupportStuff> values = session.createQuery(
 						"select h from CiSupportStuff as h where h.tableId = "
 								+ tableId + " and h.ciId = " + ciId
@@ -60,6 +61,7 @@ public class CiSupportStuffHbn {
 			
 			try {
 				tx = session.beginTransaction();
+				@SuppressWarnings("unchecked")
 				List<CiSupportStuff> values = session.createQuery(
 						"select h from CiSupportStuff as h where h.tableId = "
 								+ tableId + " and h.ciId = " + ciId
@@ -117,7 +119,7 @@ public class CiSupportStuffHbn {
 
 	public static void saveSupportStuff(String cwid, int tableId, Long ciId, Long supportStuffTypeId, String value) {
 
-		boolean update = true;
+//		boolean update = true;
 		
 		cwid = cwid.toUpperCase();
 
@@ -156,7 +158,7 @@ public class CiSupportStuffHbn {
 			}
 		} else {
 			// application - insert values
-			update = false;
+//			update = false;
 			supportStuff = new CiSupportStuff();
 			supportStuff
 					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);

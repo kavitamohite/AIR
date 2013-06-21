@@ -7,7 +7,7 @@ import com.bayerbbs.applrepos.hibernate.ServiceContractHbn;
 
 public class ApplicationToolsWS {
 
-	private final static String CACHENAME = "airCache";
+//	private final static String CACHENAME = "airCache";
 	
 /*
 	public AccountDTO[] getAccountList() {

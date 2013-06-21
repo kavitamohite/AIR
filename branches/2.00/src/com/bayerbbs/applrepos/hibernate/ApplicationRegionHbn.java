@@ -128,7 +128,7 @@ public class ApplicationRegionHbn {
 	
 	
 	public static void saveApplicationRegion(String cwid, Long applicationId, Long regionId, String value) {
-		boolean update = true;
+//		boolean update = true;
 		cwid = cwid.toUpperCase();
 
 		ApplicationRegion applicationRegion = findApplicationRegion(applicationId, regionId);
@@ -158,7 +158,7 @@ public class ApplicationRegionHbn {
 			}
 		} else {
 			// application - insert values
-			update = false;
+//			update = false;
 			applicationRegion = new ApplicationRegion();
 			applicationRegion.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			applicationRegion.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());

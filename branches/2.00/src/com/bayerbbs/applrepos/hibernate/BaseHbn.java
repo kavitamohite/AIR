@@ -37,6 +37,7 @@ public class BaseHbn {
 	public static <T> T findById(Class<T> ci, Long id) {
 		Session session = HibernateUtil.getSession();
 
+		@SuppressWarnings("unchecked")
 		T t = (T)session.get(ci, id);
 
 		return t;

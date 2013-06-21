@@ -33,7 +33,7 @@ public class CiEntitiesHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		searchName = searchName.toUpperCase();
 		
@@ -64,7 +64,8 @@ public class CiEntitiesHbn {
 		try {
 			tx = session.beginTransaction();
 
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
@@ -134,7 +135,7 @@ public class CiEntitiesHbn {
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
-		Connection conn = null;
+//		Connection conn = null;
 
 		searchName = searchName.toUpperCase();
 		
@@ -228,7 +229,8 @@ public class CiEntitiesHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			selectStmt = conn.createStatement();
 			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
 				System.out.println(sql.toString());
@@ -278,7 +280,7 @@ public class CiEntitiesHbn {
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
-		Connection conn = null;
+//		Connection conn = null;
 
 		searchName = searchName.toUpperCase();
 		
@@ -342,7 +344,8 @@ public class CiEntitiesHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			selectStmt = conn.createStatement();
 			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
 				System.out.println(sql.toString());
@@ -382,7 +385,7 @@ public class CiEntitiesHbn {
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
-		Connection conn = null;
+//		Connection conn = null;
 
 		searchName = searchName.toUpperCase();
 		StringBuffer sql = new StringBuffer();
@@ -404,7 +407,8 @@ public class CiEntitiesHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
@@ -451,7 +455,7 @@ public class CiEntitiesHbn {
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
-		Connection conn = null;
+//		Connection conn = null;
 
 		searchName = searchName.toUpperCase();
 		StringBuffer sql = new StringBuffer();
@@ -465,7 +469,8 @@ public class CiEntitiesHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -678,11 +683,12 @@ public class CiEntitiesHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			
 			selectStmt = conn.createStatement();
 			ResultSet rset = selectStmt.executeQuery(sql);
@@ -712,7 +718,7 @@ public class CiEntitiesHbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -723,7 +729,8 @@ public class CiEntitiesHbn {
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = stmt.executeQuery(sql);
 			
@@ -800,6 +807,7 @@ public class CiEntitiesHbn {
 		
 		try {
 			ta = session.beginTransaction();
+			@SuppressWarnings("deprecation")
 			Connection conn = session.connection();
 			
 			CallableStatement stmt = conn.prepareCall(sql);
@@ -829,7 +837,7 @@ public class CiEntitiesHbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -839,7 +847,8 @@ public class CiEntitiesHbn {
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -878,7 +887,7 @@ public class CiEntitiesHbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -917,7 +926,8 @@ public class CiEntitiesHbn {
 
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery(sql.toString());
 
@@ -951,7 +961,7 @@ public class CiEntitiesHbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -973,7 +983,8 @@ public class CiEntitiesHbn {
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery(sql.toString());
 			

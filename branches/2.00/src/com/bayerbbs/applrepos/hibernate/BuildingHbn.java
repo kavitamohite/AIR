@@ -1352,6 +1352,7 @@ public class BuildingHbn extends LokationItemHbn {
 		q.setParameter("alias", alias);
 		q.setParameter("terrainId", terrainId);
 
+		@SuppressWarnings("unchecked")
 		List<Building> areas = q.list();
 		
 		return areas;

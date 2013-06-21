@@ -70,6 +70,7 @@ public class CiPersonsHbn {
 		Session session = HibernateUtil.getSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<CiPersons> values = session.createQuery(
 					"select h from CiPersons as h where h.deleteTimestamp is null and h.ciId = " + ciId
 							+ " and h.groupTypeId = " + groupTypeId).list();
@@ -100,6 +101,7 @@ public class CiPersonsHbn {
 		try {
 			tx = session.beginTransaction();
 
+			@SuppressWarnings("unchecked")
 			List<CiPersons> values = session.createQuery(sb.toString()).list();
 			result = values;
 
@@ -112,39 +114,40 @@ public class CiPersonsHbn {
 		return result;
 	}
 
-	private static List<CiPersons> findStampedCiPersons(Long tableId, Long ciId, Long groupTypeId, String cwid) {
-		// TODO Use Prepared Statement
-		List<CiPersons> result = null;
-
-		StringBuffer sb = new StringBuffer();
-		sb.append("select h from CiPersons as h where");
-		sb.append(" h.tableId = ").append(tableId);
-		sb.append(" and h.ciId = ").append(ciId);
-		sb.append(" and h.groupTypeId = ").append(groupTypeId);
-		sb.append(" and h.deleteTimestamp is null");
-		sb.append(" and h.syncing = '"+AirKonstanten.APPLICATION_GUI_NAME + '_' + cwid+"'");
-
-
-		Transaction tx = null;
-		Session session = HibernateUtil.getSession();
-		try {
-			tx = session.beginTransaction();
-
-			List<CiPersons> values = session.createQuery(sb.toString()).list();
-			result = values;
-
-			HibernateUtil.close(tx, session, true);
-		} catch (RuntimeException e) {
-			System.out.println(e.toString());
-			HibernateUtil.close(tx, session, false);
-		}
-
-		return result;
-	}
+//	private static List<CiPersons> findStampedCiPersons(Long tableId, Long ciId, Long groupTypeId, String cwid) {
+//		// TODO Use Prepared Statement
+//		List<CiPersons> result = null;
+//
+//		StringBuffer sb = new StringBuffer();
+//		sb.append("select h from CiPersons as h where");
+//		sb.append(" h.tableId = ").append(tableId);
+//		sb.append(" and h.ciId = ").append(ciId);
+//		sb.append(" and h.groupTypeId = ").append(groupTypeId);
+//		sb.append(" and h.deleteTimestamp is null");
+//		sb.append(" and h.syncing = '"+AirKonstanten.APPLICATION_GUI_NAME + '_' + cwid+"'");
+//
+//
+//		Transaction tx = null;
+//		Session session = HibernateUtil.getSession();
+//		try {
+//			tx = session.beginTransaction();
+//
+//			List<CiPersons> values = session.createQuery(sb.toString()).list();
+//			result = values;
+//
+//			HibernateUtil.close(tx, session, true);
+//		} catch (RuntimeException e) {
+//			System.out.println(e.toString());
+//			HibernateUtil.close(tx, session, false);
+//		}
+//
+//		return result;
+//	}
 
 	private static void stampCiPersons(Integer tableId, Long ciId, Long groupTypeId, String cwid, Session session) {
 		String stampSQL = "UPDATE ci_persons SET last_sync_source = ?, syncing = ? WHERE table_id = ? AND ci_id = ? AND group_type_id = ? AND del_timestamp IS NULL";
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, AirKonstanten.APPLICATION_GUI_NAME);
 			stmt.setString(2, AirKonstanten.APPLICATION_GUI_NAME + '_' + cwid);
@@ -161,9 +164,10 @@ public class CiPersonsHbn {
 	}
 	
 	private static void purgeCiPersons(Integer tableId, Long ciId, Long groupTypeId, String cwid, Session session) {
-		String stampSQL = "UPDATE ci_persons SET del_timestamp=sysdate, del_quelle = ?, del_user=?, syncing = NULL "
+		String stampSQL = "UPDATE ci_persons SET del_timestamp=DECODE(TO_CHAR(SYSDATE, 'mmdd'), '0229', (SYSTIMESTAMP-1), SYSTIMESTAMP) + INTERVAL '10' YEAR, del_quelle = ?, del_user=?, syncing = NULL "
 				+ "WHERE table_id = ? AND ci_id = ? AND group_type_id = ? AND del_timestamp IS NULL AND syncing=?";
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, AirKonstanten.APPLICATION_GUI_NAME);
 			stmt.setString(2, cwid);

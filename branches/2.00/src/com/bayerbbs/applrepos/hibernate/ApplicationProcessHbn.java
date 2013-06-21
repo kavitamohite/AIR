@@ -47,6 +47,7 @@ public class ApplicationProcessHbn {
 		tx = session.beginTransaction();
 		String stampSQL = "UPDATE application_process SET last_sync_source = ?, syncing = ? WHERE application_id = ? AND del_timestamp IS NULL";
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, AirKonstanten.APPLICATION_GUI_NAME);
 			stmt.setString(2, AirKonstanten.APPLICATION_GUI_NAME + '_' + cwid);
@@ -67,6 +68,7 @@ public class ApplicationProcessHbn {
 		String stampSQL = "UPDATE application_process SET del_timestamp=sysdate, del_quelle = ?, del_user=?, syncing = NULL "
 				+ "WHERE application_id = ? AND del_timestamp IS NULL AND syncing=?";
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, AirKonstanten.APPLICATION_GUI_NAME);
 			stmt.setString(2, cwid);

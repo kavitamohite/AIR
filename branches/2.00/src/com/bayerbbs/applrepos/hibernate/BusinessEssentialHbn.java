@@ -125,6 +125,7 @@ public class BusinessEssentialHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<BusinessEssential> values = session
 					.createQuery(
 							"select h from BusinessEssential as h where " + where + " and h.deleteTimestamp is null order by h.beCode, severityGPSC, h.severityLevel")
