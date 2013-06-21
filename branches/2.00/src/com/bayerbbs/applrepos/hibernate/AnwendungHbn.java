@@ -3089,7 +3089,7 @@ public class AnwendungHbn extends BaseHbn {
 		Transaction tx = null;
 		tx = session.beginTransaction();
 
-		String stampSQL = "update ANW_ANW set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE APP_HIGHER_ID = ? OR APP_LOWER_ID = ? AND del_quelle IS NULL";
+		String stampSQL = "update ANW_ANW set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = ADD_MONTHS(current_timestamp, 120), DEL_USER = ? WHERE APP_HIGHER_ID = ? OR APP_LOWER_ID = ? AND del_quelle IS NULL";
 		try {
 			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
@@ -3122,7 +3122,7 @@ public class AnwendungHbn extends BaseHbn {
 		Transaction tx = null;
 		tx = session.beginTransaction();
 
-		String stampSQL = "update ANWEND_IT_SYSTEM set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE ANWENDUNG_ID = ? AND del_quelle IS NULL";
+		String stampSQL = "update ANWEND_IT_SYSTEM set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = ADD_MONTHS(current_timestamp, 120), DEL_USER = ? WHERE ANWENDUNG_ID = ? AND del_quelle IS NULL";
 		try {
 			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
