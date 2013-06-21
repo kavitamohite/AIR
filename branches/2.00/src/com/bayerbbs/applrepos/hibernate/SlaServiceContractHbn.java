@@ -31,7 +31,7 @@ public class SlaServiceContractHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -43,7 +43,8 @@ public class SlaServiceContractHbn {
 		try {
 			tx = session.beginTransaction();
 
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());

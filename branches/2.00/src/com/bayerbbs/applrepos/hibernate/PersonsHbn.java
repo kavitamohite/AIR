@@ -68,6 +68,7 @@ public class PersonsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Person> values = session
 					.createQuery(
 							"select h from Person as h order by h.lastname, h.firstname")
@@ -106,6 +107,7 @@ public class PersonsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Person> values = session
 					.createQuery(
 							"select h from Person as h where h.deleteTimestamp is null and h.cwid like '" + cwid.toUpperCase() +"%' order by h.cwid")
@@ -187,6 +189,7 @@ public class PersonsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Person> values = session
 					.createQuery(
 							sb.toString())
@@ -244,14 +247,15 @@ public class PersonsHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 		
 		try {
 			StringBuffer sql = new StringBuffer();
 			
 			sql.append("SELECT * FROM TABLE (PCK_AIR.FT_PERSONPICK('").append(searchCWIDType).append("','").append(queryMethod).append("','").append(query).append("'))");
 			
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			
 			selectStmt = conn.createStatement();
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
@@ -302,6 +306,7 @@ public class PersonsHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Person> values = session
 					.createQuery(
 							"select h from Person as h where h.cwid = '" + cwid.toUpperCase() +"'")
@@ -339,7 +344,7 @@ public class PersonsHbn {
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
 	
-			Connection conn = null;
+//			Connection conn = null;
 			
 			try {
 				StringBuffer sql = new StringBuffer();
@@ -349,7 +354,8 @@ public class PersonsHbn {
 				sql.append(" where pers.del_timestamp is null");
 				sql.append(" order by pers.nachname, pers.vorname");
 				
-				conn = session.connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = session.connection();
 				
 				selectStmt = conn.createStatement();
 				ResultSet rset = selectStmt.executeQuery(sql.toString());

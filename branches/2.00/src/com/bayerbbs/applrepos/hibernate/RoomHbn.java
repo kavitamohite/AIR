@@ -471,6 +471,7 @@ public class RoomHbn extends LokationItemHbn {
 		q.setParameter("alias", alias);
 		q.setParameter("buildingAreaId", buildingAreaId);
 
+		@SuppressWarnings("unchecked")
 		List<Room> rooms = q.list();
 		
 		return rooms;

@@ -63,6 +63,7 @@ public class LifecycleStatusHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<LifecycleStatus> values = session.createQuery("select h from LifecycleStatus as h where h.tabelleId = " + AirKonstanten.TABLE_ID_APPLICATION + "  order by h.sort").list();
 
 			listResult = getDTOList(values);

@@ -159,7 +159,7 @@ public class LokationItemHbn extends BaseHbn {
 
 		Session session = null;
 		Transaction ta = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Statement stmt = null;//PreparedStatement
 		ResultSet rs = null;
 		
@@ -171,7 +171,8 @@ public class LokationItemHbn extends BaseHbn {
 		try {
 			session = HibernateUtil.getSession();
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql.toString());
 			
@@ -260,6 +261,7 @@ public class LokationItemHbn extends BaseHbn {
 		
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<CiLokationsKette> list = session.createQuery("select lk from CiLokationsKette lk where lk."+ciType+"=" + ciId).list();
 
 			if(null != list && 0 < list.size())
@@ -286,6 +288,7 @@ public class LokationItemHbn extends BaseHbn {
 		Session session = HibernateUtil.getSession();
 		
 		Query q = session.getNamedQuery("findAllLand");
+		@SuppressWarnings("unchecked")
 		List<Land> laender = q.list();
 		
 		Collections.sort(laender);

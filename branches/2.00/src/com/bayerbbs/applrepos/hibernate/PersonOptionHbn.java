@@ -184,7 +184,7 @@ public class PersonOptionHbn {
 		Long interfaceAirId = Long.parseLong(strInterfaceAIRid);
 
 		if (null != listOptions && !listOptions.isEmpty()) {
-			for (Iterator iterator = listOptions.iterator(); iterator.hasNext();) {
+			for (Iterator<PersonOptionDTO> iterator = listOptions.iterator(); iterator.hasNext();) {
 				PersonOptionDTO personOptionDTO = (PersonOptionDTO) iterator
 						.next();
 				if (personOptionDTO.getName().equals(key)) {

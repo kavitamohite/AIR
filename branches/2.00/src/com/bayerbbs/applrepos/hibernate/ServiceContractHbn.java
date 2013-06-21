@@ -78,14 +78,15 @@ public class ServiceContractHbn {
 		
 		Session session = HibernateUtil.getSession();
 		Transaction ta = null;
-		Connection conn = null;
+//		Connection conn = null;
 		PreparedStatement stmt = null;//PreparedStatement
 		ResultSet rs = null;
 		boolean commit = false;
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql.toString());// createStatement();
 			rs = stmt.executeQuery();//sql.toString()
 			

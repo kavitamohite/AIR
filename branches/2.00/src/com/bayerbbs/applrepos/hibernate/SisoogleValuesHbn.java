@@ -157,7 +157,7 @@ public class SisoogleValuesHbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -166,7 +166,8 @@ public class SisoogleValuesHbn {
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql.toString());
 			

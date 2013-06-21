@@ -62,6 +62,7 @@ public class ProcessHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Process> values = session
 					.createQuery(
 							"select h from Process as h where h.deleteTimestamp is null order by h.processName")
