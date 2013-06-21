@@ -58,11 +58,12 @@ public class ApplReposHbn {
 			Transaction tx = null;
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
-			Connection conn = null;
+//			Connection conn = null;
 
 			try {
 				tx = session.beginTransaction();
-				conn = session.connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = session.connection();
 
 				selectStmt = conn.createStatement();
 				ResultSet rsMessage = selectStmt
@@ -110,7 +111,7 @@ public class ApplReposHbn {
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
 
-			Connection conn = null;
+//			Connection conn = null;
 
 			StringBuffer sql = new StringBuffer();
 			sql.append("select count(*) from v_person_groups where (upper(group_name) = '");
@@ -119,7 +120,8 @@ public class ApplReposHbn {
 			
 			try {
 				tx = session.beginTransaction();
-				conn = session.connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = session.connection();
 
 				selectStmt = conn.createStatement();
 				ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -164,7 +166,7 @@ public class ApplReposHbn {
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
 
-			Connection conn = null;
+//			Connection conn = null;
 
 			StringBuffer sql = new StringBuffer();
 			sql.append("select count(*) from role_person rp join role rl on rp.role_id = rl.role_id and rl.role_name = '");
@@ -176,7 +178,8 @@ public class ApplReposHbn {
 			
 			try {
 				tx = session.beginTransaction();
-				conn = session.connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = session.connection();
 
 				selectStmt = conn.createStatement();
 				ResultSet rsMessage = selectStmt
@@ -225,7 +228,7 @@ public class ApplReposHbn {
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
 
-			Connection conn = null;
+//			Connection conn = null;
 
 //			select * from ci_groups cigrp
 //			left join group_types grptyp on cigrp.group_type_id = grptyp.group_type_id and grptyp.group_type_name = 'CI OWNER'
@@ -260,7 +263,8 @@ public class ApplReposHbn {
 			try {
 				tx = session.beginTransaction();
 
-				conn = session.connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = session.connection();
 
 				selectStmt = conn.createStatement();
 				ResultSet rsMessage = selectStmt
@@ -307,7 +311,7 @@ public class ApplReposHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 		
@@ -317,7 +321,8 @@ public class ApplReposHbn {
 		try {
 			tx = session.beginTransaction();
 
-			conn = HibernateUtil.getSession().connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsSet = selectStmt
@@ -456,12 +461,13 @@ public class ApplReposHbn {
 			Statement selectStmt = null;
 			Session session = HibernateUtil.getSession();
 
-			Connection conn = null;
+//			Connection conn = null;
 
 			try {
 				tx = session.beginTransaction();
 
-				conn = session.connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = session.connection();
 
 				selectStmt = conn.createStatement();
 				ResultSet rsMessage = selectStmt
@@ -583,13 +589,14 @@ public class ApplReposHbn {
 			Transaction tx = null;
 			Session session = HibernateUtil.getSession();
 	
-			Connection conn = null;
+//			Connection conn = null;
 			CallableStatement callableStmt = null;
 	
 			try {
 				tx = session.beginTransaction();
 	
-				conn = session.connection();
+				@SuppressWarnings("deprecation")
+				Connection conn = session.connection();
 	
 				callableStmt = conn.prepareCall(sb.toString());
 	

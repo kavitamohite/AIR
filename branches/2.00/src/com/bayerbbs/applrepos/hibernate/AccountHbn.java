@@ -60,6 +60,7 @@ public class AccountHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Account> values = session
 					.createQuery(
 							"select h from Account as h where (h.accountType='KST' or (h.accountType='PSP' and h.accountName like 'O%')) order by h.accountName")

@@ -49,6 +49,7 @@ public class ApplicationCat1Hbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<ApplicationCat1> values = session.createQuery(
 					"select h from ApplicationCat1 as h order by h.sort").list();
 			
@@ -77,7 +78,7 @@ public class ApplicationCat1Hbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -86,7 +87,8 @@ public class ApplicationCat1Hbn {
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			
@@ -112,7 +114,7 @@ public class ApplicationCat1Hbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;//PreparedStatement
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -120,7 +122,8 @@ public class ApplicationCat1Hbn {
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			
 //			stmt = conn.prepareStatement(sql);
 //			stmt.setLong(1, ciId);

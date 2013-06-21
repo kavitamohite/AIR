@@ -67,6 +67,7 @@ public class AnwendungHbn extends BaseHbn {
 		
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<Application> list = session.createQuery("select h from Application as h where h.applicationId= " + applicationId).list();
 
 			if (null != list && 0 < list.size()) {
@@ -1358,7 +1359,7 @@ public class AnwendungHbn extends BaseHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -1484,7 +1485,8 @@ public class AnwendungHbn extends BaseHbn {
 
 		try {
 			tx = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -1711,7 +1713,7 @@ public class AnwendungHbn extends BaseHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -1739,7 +1741,8 @@ public class AnwendungHbn extends BaseHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			//System.out.println(sql.toString());
@@ -1803,7 +1806,7 @@ public class AnwendungHbn extends BaseHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -1833,7 +1836,8 @@ public class AnwendungHbn extends BaseHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -1887,7 +1891,7 @@ public class AnwendungHbn extends BaseHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -1906,7 +1910,8 @@ public class AnwendungHbn extends BaseHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = HibernateUtil.getSession().connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -1954,7 +1959,7 @@ public class AnwendungHbn extends BaseHbn {
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -1973,7 +1978,8 @@ public class AnwendungHbn extends BaseHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = HibernateUtil.getSession().connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -2020,7 +2026,7 @@ public class AnwendungHbn extends BaseHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -2039,7 +2045,8 @@ public class AnwendungHbn extends BaseHbn {
 	
 		try {
 			tx = session.beginTransaction();
-			conn = HibernateUtil.getSession().connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -2090,7 +2097,7 @@ public class AnwendungHbn extends BaseHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -2103,7 +2110,8 @@ public class AnwendungHbn extends BaseHbn {
 	
 		try {
 			tx = session.beginTransaction();
-			conn = HibernateUtil.getSession().connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -2160,7 +2168,7 @@ public class AnwendungHbn extends BaseHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 		searchparam = searchparam.toUpperCase();
 		StringBuffer sql = new StringBuffer();
 
@@ -2170,7 +2178,8 @@ public class AnwendungHbn extends BaseHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = HibernateUtil.getSession().connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -2222,7 +2231,7 @@ public class AnwendungHbn extends BaseHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -2238,7 +2247,8 @@ public class AnwendungHbn extends BaseHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = HibernateUtil.getSession().connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -2321,7 +2331,7 @@ public class AnwendungHbn extends BaseHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -2575,7 +2585,8 @@ public class AnwendungHbn extends BaseHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			System.out.println(sql.toString());
@@ -2655,7 +2666,7 @@ public class AnwendungHbn extends BaseHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 //		StringBuffer sql = new StringBuffer();
 //
@@ -2675,7 +2686,8 @@ public class AnwendungHbn extends BaseHbn {
 		try {
 			tx = session.beginTransaction();
 
-			conn = HibernateUtil.getSession().connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -3006,7 +3018,7 @@ public class AnwendungHbn extends BaseHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		String searchparam = id.toUpperCase();
 		
@@ -3025,7 +3037,8 @@ public class AnwendungHbn extends BaseHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			conn = HibernateUtil.getSession().connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = HibernateUtil.getSession().connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
@@ -3078,6 +3091,7 @@ public class AnwendungHbn extends BaseHbn {
 
 		String stampSQL = "update ANW_ANW set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE APP_HIGHER_ID = ? OR APP_LOWER_ID = ? AND del_quelle IS NULL";
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, cwid);
 			stmt.setLong(2, ciId);
@@ -3110,6 +3124,7 @@ public class AnwendungHbn extends BaseHbn {
 
 		String stampSQL = "update ANWEND_IT_SYSTEM set DEL_QUELLE = '" + AirKonstanten.APPLICATION_GUI_NAME +"', DEL_TIMESTAMP = current_timestamp, DEL_USER = ? WHERE ANWENDUNG_ID = ? AND del_quelle IS NULL";
 		try {
+			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
 			stmt.setString(1, cwid);
 			stmt.setLong(2, ciId);

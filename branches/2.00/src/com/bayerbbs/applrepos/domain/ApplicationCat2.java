@@ -22,7 +22,7 @@ public class ApplicationCat2 implements Serializable {
 	private Long anwendungKat1Id;
 	private String guiSAPNameWizard;
 	
-	private Date delTimestamp;
+//	private Date delTimestamp;
 
 	public ApplicationCat2() {
 	}

@@ -15,14 +15,15 @@ public class ApplicationApplicationHbn {
 
 	public static ApplicationApplication findApplicationApplication(Long applicationHigherId, Long applicationLowerId) {
 		ApplicationApplication result = null;
-		List<ApplicationApplication> values = null;
+//		List<ApplicationApplication> values = null;
 		if (null != applicationHigherId && null != applicationLowerId) {
 
 			Transaction tx = null;
 			Session session = HibernateUtil.getSession();
 			try {
 				tx = session.beginTransaction();
-				values = session.createQuery(
+				@SuppressWarnings("unchecked")
+				List<ApplicationApplication> values = session.createQuery(
 						"select h from ApplicationApplication as h where h.applicationHigherId = "
 								+ applicationHigherId + 
 								" and h.applicationLowerId = " + applicationLowerId +
@@ -42,7 +43,7 @@ public class ApplicationApplicationHbn {
 
 
 	public static void saveApplicationApplication(String cwid, Long applicationHigherId, Long applicationLowerId, String value) {
-		boolean update = true;
+//		boolean update = true;
 		cwid = cwid.toUpperCase();
 
 		ApplicationApplication applicationApplication = findApplicationApplication(applicationHigherId, applicationLowerId);
@@ -75,7 +76,7 @@ public class ApplicationApplicationHbn {
 			
 		} else {
 			// application - insert values
-			update = false;
+//			update = false;
 			applicationApplication = new ApplicationApplication();
 			applicationApplication.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			applicationApplication.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());

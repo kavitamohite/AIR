@@ -63,6 +63,7 @@ public class ApplicationCat2Hbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<ApplicationCat2> values = session.createQuery("select h from ApplicationCat2 as h").list();	//  where h.delTimestamp is null (wegen View)
 			
 			listResult = getDTOList(values);
@@ -89,10 +90,10 @@ public class ApplicationCat2Hbn {
 		List<ApplicationCat2DTO> listResult = new ArrayList<ApplicationCat2DTO>();
 		
 		Transaction tx = null;
-		Statement selectStmt = null;
+//		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -101,6 +102,7 @@ public class ApplicationCat2Hbn {
 		
 		try {
 			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<ApplicationCat2> values = session.createQuery(
 					"select h from ApplicationCat2 as h where h.anwendungKat1Id=" + anwendungKat1Id + " order by upper(h.anwendungKat2Text)").list();
 			
@@ -132,7 +134,7 @@ public class ApplicationCat2Hbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 
-		Connection conn = null;
+//		Connection conn = null;
 
 		StringBuffer sql = new StringBuffer();
 
@@ -147,7 +149,8 @@ public class ApplicationCat2Hbn {
 		try {
 			tx = session.beginTransaction();
 
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
