@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -952,13 +953,7 @@ public class ItSystemHbn extends BaseHbn {
 				sql.insert(sql.length() - 2, '%');
 		}
 		
-		try {
-			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
-				System.out.println(sql.toString());
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 
 		return sql;
 	}
@@ -981,7 +976,6 @@ public class ItSystemHbn extends BaseHbn {
 
 		Session session = null;
 		Transaction ta = null;
-		Connection conn = null;
 		Statement stmt = null;//PreparedStatement
 		ResultSet rs = null;
 		
@@ -993,7 +987,8 @@ public class ItSystemHbn extends BaseHbn {
 		try {
 			session = HibernateUtil.getSession();
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql.toString());
 			
@@ -1064,7 +1059,7 @@ public class ItSystemHbn extends BaseHbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -1074,7 +1069,8 @@ public class ItSystemHbn extends BaseHbn {
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery(sql.toString());
 			
@@ -1098,7 +1094,7 @@ public class ItSystemHbn extends BaseHbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -1108,7 +1104,8 @@ public class ItSystemHbn extends BaseHbn {
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery(sql.toString());
 			
@@ -1131,7 +1128,7 @@ public class ItSystemHbn extends BaseHbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -1141,7 +1138,8 @@ public class ItSystemHbn extends BaseHbn {
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery(sql.toString());
 			
@@ -1178,7 +1176,7 @@ public class ItSystemHbn extends BaseHbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -1188,7 +1186,8 @@ public class ItSystemHbn extends BaseHbn {
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery(sql.toString());
 			
@@ -1211,7 +1210,7 @@ public class ItSystemHbn extends BaseHbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -1219,14 +1218,14 @@ public class ItSystemHbn extends BaseHbn {
 		StringBuilder sql = new StringBuilder();
 		sql.
 		append("SELECT DISTINCT ").
-		append("	CASE WHEN virtual_host_sw = 'VMWare' then 'VMware' ").
-		append("		 ELSE virtual_host_sw ").
-		append("	END AS virtual_host_sw ").
+		append("	DECODE(virtual_host_sw, 'VMWare', 'VMware', virtual_host_sw)").
+		append("	AS virtual_host_sw ").
 		append("FROM it_system WHERE virtual_host_sw IS NOT NULL ORDER BY virtual_host_sw");
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery(sql.toString());
 			
@@ -1249,7 +1248,7 @@ public class ItSystemHbn extends BaseHbn {
 		
 		Transaction ta = null;
 		Statement stmt = null;
-		Connection conn = null;
+//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
@@ -1259,7 +1258,8 @@ public class ItSystemHbn extends BaseHbn {
 		
 		try {
 			ta = session.beginTransaction();
-			conn = session.connection();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
 			stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery(sql.toString());
 			
@@ -1310,6 +1310,7 @@ public class ItSystemHbn extends BaseHbn {
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("alias", alias.toUpperCase());
 
+		@SuppressWarnings("unchecked")
 		List<ItSystem> itSystems = q.list();
 		
 		return itSystems;
@@ -1321,6 +1322,7 @@ public class ItSystemHbn extends BaseHbn {
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("alias", alias.toUpperCase());
 
+		@SuppressWarnings("unchecked")
 		List<Application> applications = q.list();
 		
 		return applications;
@@ -1389,4 +1391,109 @@ public class ItSystemHbn extends BaseHbn {
 
 		return messages;
 	}
+	
+	public static ItSystem findItSystemById(Long itSystemId) {
+		ItSystem itSystem = null;
+		Transaction tx = null;
+		Session session = HibernateUtil.getSession();
+		
+		try {
+			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
+			List<ItSystem> list = session.createQuery("select h from ITSystem as h where h.itSystemId= " + itSystemId).list();
+
+			if (null != list && 0 < list.size()) {
+				itSystem = (ItSystem) list.get(0);
+			}
+
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null && tx.isActive()) {
+				try {
+					// Second try catch as the rollback could fail as well
+					tx.rollback();
+				} catch (HibernateException e1) {
+					log.error(e1.getMessage());
+				}
+				// throw again the first exception
+				throw e;
+			}
+
+		}
+		return itSystem;
+	}
+
+	public static void getItSystem(ItSystemDTO dto, ItSystem itSystem) {	
+		if(null != itSystem.getOsNameId()) {
+			if(itSystem.getOsNameId() > -1)
+				dto.setOsNameId(itSystem.getOsNameId());
+			else
+				dto.setOsNameId(null);
+		}
+		
+  		if(null != itSystem.getIsVirtualHardwareClient())
+  			dto.setIsVirtualHardwareClient(itSystem.getIsVirtualHardwareClient());
+  		
+ 		if(null != itSystem.getIsVirtualHardwareHost())
+ 			dto.setIsVirtualHardwareHost(itSystem.getIsVirtualHardwareHost());
+		
+		
+		if(null != itSystem.getLifecycleStatusId()) {
+			if(itSystem.getLifecycleStatusId() > -1)
+				dto.setLifecycleStatusId(itSystem.getLifecycleStatusId());
+			else
+				dto.setLifecycleStatusId(null);
+		}
+			
+		if(null != itSystem.getEinsatzStatusId()) {
+			if(itSystem.getEinsatzStatusId() > -1)
+				dto.setEinsatzStatusId(itSystem.getEinsatzStatusId());
+			else
+				dto.setEinsatzStatusId(null);
+		}
+			
+		if(null != itSystem.getPrimaryFunctionId()) {
+			if(itSystem.getPrimaryFunctionId() > -1)
+				dto.setPrimaryFunctionId(itSystem.getPrimaryFunctionId());
+			else
+				dto.setPrimaryFunctionId(null);
+		}
+			
+		if(null != itSystem.getLicenseScanningId()) {
+			if(itSystem.getLicenseScanningId() > -1)
+				dto.setLicenseScanningId(itSystem.getLicenseScanningId());
+			else
+				dto.setLicenseScanningId(null);
+		}
+		
+
+		if (null != itSystem.getSeverityLevelId()) {
+			if (-1 == itSystem.getSeverityLevelId()) {
+				dto.setSeverityLevelId(null);
+			}
+			else {
+				dto.setSeverityLevelId(itSystem.getSeverityLevelId());
+			}
+		}
+		
+		
+		if (null == itSystem.getBusinessEssentialId()) {
+			// messages.add("business essential is empty");
+			// TODO 1 TESTCODE getBusinessEssentialId
+			itSystem.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+		}
+		
+		dto.setBusinessEssentialId(itSystem.getBusinessEssentialId());
+		dto.setCiSubTypeId(itSystem.getCiSubTypeId());
+	}
+
+
+	public static CiEntityEditParameterOutput copyItSystem(String cwid,
+			Long id, Long id2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	
 }

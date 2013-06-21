@@ -9,6 +9,123 @@ import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 
 public class ItSystemWS {
 	
+	public CiEntityEditParameterOutput createItSystem(ItSystemEditParameterInput input) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		if (null != input && (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))) {
+			ItSystemDTO dto = getItSystemDTOFromEditInput(input);
+			output = ItSystemHbn.createItSystem(input.getCwid(), dto, true);
+				
+
+			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
+				
+				ItSystem itSystem = ItSystemHbn.findItSystemByName(dto.getName());
+				output.setCiId(itSystem.getId());
+				output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
+				
+				dto.setId(itSystem.getId());
+				saveGpscContacts(dto, input);
+				
+				/*
+				// get detail
+				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_IT_SYSTEM, false);
+				if (null != listCi && 1 == listCi.size()) {
+					Long ciId = listCi.get(0).getId();
+					output.setCiId(ciId);
+					output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
+				} else {
+					// unknown?
+					output.setCiId(new Long(-1));
+				}*/
+			} else {
+				// TODO errorcodes / Texte
+				if (null != output.getMessages() && output.getMessages().length > 0) {
+					output.setDisplayMessage(output.getMessages()[0]);
+				}
+			}
+		}
+
+		return output;
+	}
+	
+	public CiEntityEditParameterOutput createItSystemByCopy(ItSystemCopyParameterInput copyInput) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		ItSystemDTO dto = new ItSystemDTO();
+		
+		output.setResult(AirKonstanten.RESULT_ERROR);
+		
+		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			ItSystem itSystemSource = ItSystemHbn.findItSystemById(copyInput.getCiIdSource());
+
+			if (null != itSystemSource) {
+				ItSystemHbn.getItSystem(dto, itSystemSource);
+				dto.setId(new Long(0));
+				dto.setName(copyInput.getCiNameTarget());
+				dto.setAlias(copyInput.getCiAliasTarget());
+				
+				// set the actual cwid as responsible
+				dto.setCiOwner(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerDelegate(itSystemSource.getCiOwnerDelegate());
+				dto.setCiOwnerDelegateHidden(itSystemSource.getCiOwnerDelegate());
+				dto.setTemplate(itSystemSource.getTemplate());
+				
+				dto.setRelevanzItsec(itSystemSource.getRelevanceITSEC());
+				dto.setRelevanceICS(itSystemSource.getRelevanceICS());
+				
+				// save / create itSystem
+				CiEntityEditParameterOutput createOutput = ItSystemHbn.createItSystem(copyInput.getCwid(), dto, null);
+
+				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
+					ItSystem itSystem = ItSystemHbn.findItSystemByName(copyInput.getCiNameTarget());
+					if (null != itSystem) {
+						dto.setId(itSystem.getItSystemId());
+						
+						Long ciId = itSystem.getItSystemId();
+						ItSystem itSystemTarget = ItSystemHbn.findItSystemById(ciId);
+						
+						if (null != itSystemTarget) {
+							CiEntityEditParameterOutput temp = ItSystemHbn.copyItSystem(copyInput.getCwid(), itSystemSource.getId(), itSystemTarget.getId());
+							
+							output.setCiId(temp.getCiId());
+							output.setResult(temp.getResult());
+							output.setMessages(temp.getMessages());
+							output.setDisplayMessage(temp.getDisplayMessage());
+						}
+					}
+				}
+				else {
+					output.setCiId(createOutput.getCiId());
+					output.setResult(createOutput.getResult());
+					output.setMessages(createOutput.getMessages());
+					output.setDisplayMessage(createOutput.getDisplayMessage());
+				}
+			}
+		}
+
+		if (null == output.getDisplayMessage() && null != output.getMessages()) {
+			output.setDisplayMessage(output.getMessages()[0]);
+		}
+		return output;
+	}
+	
+	public CiEntityEditParameterOutput deleteItSystem(ItSystemEditParameterInput input) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		if (null != input) {
+			if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+				ItSystemDTO dto = getItSystemDTOFromEditInput(input);
+
+				output = ItSystemHbn.deleteItSystem(input.getCwid(), dto);
+			} else {
+				// TODO MESSAGE LOGGED OUT
+			}
+		}
+
+		return output;
+	}
+
+	
 	protected ItSystemDTO getItSystemDTOFromEditInput(ItSystemEditParameterInput input) {
 		ItSystemDTO itSystemDTO = new ItSystemDTO();
 		itSystemDTO.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
@@ -100,77 +217,6 @@ public class ItSystemWS {
 		
 		return itSystemDTO;
 	}
-	
-	public CiEntityEditParameterOutput saveItSystem(ItSystemEditParameterInput input) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-
-		if (null != input) {
-			ItSystemDTO dto = getItSystemDTOFromEditInput(input);
-			output = ItSystemHbn.saveItSystem(input.getCwid(), dto);
-			
-			
-			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
-				saveGpscContacts(dto, input);
-		}
-		
-		return output;
-	}
-	
-	public CiEntityEditParameterOutput deleteItSystem(ItSystemEditParameterInput input) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-
-		if (null != input) {
-			if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
-				ItSystemDTO dto = getItSystemDTOFromEditInput(input);
-
-				output = ItSystemHbn.deleteItSystem(input.getCwid(), dto);
-			} else {
-				// TODO MESSAGE LOGGED OUT
-			}
-		}
-
-		return output;
-	}
-
-	
-	public CiEntityEditParameterOutput createItSystem(ItSystemEditParameterInput input) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-
-		if (null != input && (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))) {
-			ItSystemDTO dto = getItSystemDTOFromEditInput(input);
-			output = ItSystemHbn.createItSystem(input.getCwid(), dto, true);
-				
-
-			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
-				
-				ItSystem itSystem = ItSystemHbn.findItSystemByName(dto.getName());
-				output.setCiId(itSystem.getId());
-				output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
-				
-				dto.setId(itSystem.getId());
-				saveGpscContacts(dto, input);
-				
-				/*
-				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_IT_SYSTEM, false);
-				if (null != listCi && 1 == listCi.size()) {
-					Long ciId = listCi.get(0).getId();
-					output.setCiId(ciId);
-					output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
-				} else {
-					// unknown?
-					output.setCiId(new Long(-1));
-				}*/
-			} else {
-				// TODO errorcodes / Texte
-				if (null != output.getMessages() && output.getMessages().length > 0) {
-					output.setDisplayMessage(output.getMessages()[0]);
-				}
-			}
-		}
-
-		return output;
-	}
 
 	private void saveGpscContacts(ItSystemDTO dto, ItSystemEditParameterInput input) {
 		try {
@@ -200,6 +246,21 @@ public class ItSystemWS {
 			// TODO: handle exception
 			System.out.println(e.toString());
 		}		
+	}
+
+	public CiEntityEditParameterOutput saveItSystem(ItSystemEditParameterInput input) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		if (null != input) {
+			ItSystemDTO dto = getItSystemDTOFromEditInput(input);
+			output = ItSystemHbn.saveItSystem(input.getCwid(), dto);
+			
+			
+			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
+				saveGpscContacts(dto, input);
+		}
+		
+		return output;
 	}
 
 }
