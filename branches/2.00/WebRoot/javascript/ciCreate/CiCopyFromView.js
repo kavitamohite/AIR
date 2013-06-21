@@ -239,7 +239,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 //		ciCreatePagesView.getLayout().setActiveItem('CiCopyFromDetailView');
 		
 		var ciCopyFromDetailView = this.getComponent('CiCopyFromDetailView');
-		ciCopyFromDetailView.update(this.applicationName, this.applicationCat1, this.applicationCat2);
+		ciCopyFromDetailView.update(this.applicationName, this.applicationCat1, this.applicationCat2, this.tableId);
 		
 		this.getLayout().setActiveItem(1);
 	},
@@ -263,7 +263,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 		data.cwid = AIR.AirApplicationManager.getCwid();
 		data.token = AIR.AirApplicationManager.getToken();
 		data.ciIdSource = this.ciId;
-		data.tableIdSource = this.CI_TYPE_APPLICATION;
+		data.tableIdSource = this.tableId;// this.CI_TYPE_APPLICATION;
 		
 		var applicationByCopyStore = AIR.AirStoreFactory.createApplicationByCopyStore();
 		applicationByCopyStore.on('load', this.onApplicationCopy, this);

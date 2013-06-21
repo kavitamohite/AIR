@@ -1400,7 +1400,7 @@ public class ItSystemHbn extends BaseHbn {
 		try {
 			tx = session.beginTransaction();
 			@SuppressWarnings("unchecked")
-			List<ItSystem> list = session.createQuery("select h from ITSystem as h where h.itSystemId= " + itSystemId).list();
+			List<ItSystem> list = session.createQuery("select h from ItSystem as h where h.itSystemId= " + itSystemId).list();
 
 			if (null != list && 0 < list.size()) {
 				itSystem = (ItSystem) list.get(0);

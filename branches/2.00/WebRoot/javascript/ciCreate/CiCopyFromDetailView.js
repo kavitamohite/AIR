@@ -384,9 +384,11 @@ AIR.CiCopyFromDetailView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	
-	update: function(applicationName, applicationCat1, applicationCat2) {
+	update: function(applicationName, applicationCat1, applicationCat2, tableId) {
 		this.applicationCat2 = applicationCat2;
 		this.applicationCat1 = applicationCat1;
+		this.tableId = tableId;
+		
 		var pName = this.getComponent('p1CopyFrom').getComponent('p11CopyFrom').getComponent('p111CopyFrom');
 		
 //		var pCopyFromTemplate = this.getComponent('pCopyFromTemplate');

@@ -54,6 +54,13 @@ public class ItSystemWS {
 		
 		output.setResult(AirKonstanten.RESULT_ERROR);
 		
+		createByCopyInternal(copyInput, output, dto);
+		
+		return output;
+	}
+
+	public static void createByCopyInternal(ItSystemCopyParameterInput copyInput,
+			CiEntityEditParameterOutput output, ItSystemDTO dto) {
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
 			ItSystem itSystemSource = ItSystemHbn.findItSystemById(copyInput.getCiIdSource());
 
@@ -106,7 +113,6 @@ public class ItSystemWS {
 		if (null == output.getDisplayMessage() && null != output.getMessages()) {
 			output.setDisplayMessage(output.getMessages()[0]);
 		}
-		return output;
 	}
 	
 	public CiEntityEditParameterOutput deleteItSystem(ItSystemEditParameterInput input) {

@@ -18,6 +18,7 @@ import com.bayerbbs.applrepos.dto.CiSupportStuffDTO;
 import com.bayerbbs.applrepos.dto.ComplianceControlStatusDTO;
 import com.bayerbbs.applrepos.dto.HistoryViewDataDTO;
 import com.bayerbbs.applrepos.dto.InterfacesDTO;
+import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
@@ -651,70 +652,101 @@ public class ApplicationWS {
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
 			// TODO check tableId !!! (app only)
 			
-			Application applicationSource = AnwendungHbn.findApplicationById(copyInput.getCiIdSource());
-
-			if (null != applicationSource) {
-				dto.setId(new Long(0));
-				dto.setName(copyInput.getCiNameTarget());
-				dto.setAlias(copyInput.getCiAliasTarget());
+			if (AirKonstanten.TABLE_ID_IT_SYSTEM == copyInput.getTableIdSource().intValue()) {
+			
+				ItSystemCopyParameterInput copyInputITS = new ItSystemCopyParameterInput();
+				copyInputITS.setToken(copyInput.getToken());
+				copyInputITS.setCwid(copyInput.getCwid());
+				copyInputITS.setTableIdSource(copyInput.getTableIdSource());
+				copyInputITS.setCiIdSource(copyInput.getCiIdSource());
 				
-				if (null == dto.getBusinessEssentialId()) {
-					dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-				}
+				copyInputITS.setCiNameTarget(copyInput.getCiNameTarget());
+				copyInputITS.setCiAliasTarget(copyInput.getCiAliasTarget());
 
-				// set the actual cwid as responsible
-				dto.setCiOwner(copyInput.getCwid().toUpperCase());
-				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
-				dto.setCiOwnerDelegate(applicationSource.getSubResponsible());
-				dto.setCiOwnerDelegateHidden(applicationSource.getSubResponsible());
-				dto.setTemplate(applicationSource.getTemplate());
+				CiEntityEditParameterOutput outputITS = new CiEntityEditParameterOutput();
 				
-				dto.setRelevanzItsec(applicationSource.getRelevanzITSEC());
-				dto.setRelevanceICS(applicationSource.getRelevanceICS());
+				ItSystemDTO dtoITS = new ItSystemDTO();
+				
+				ItSystemWS.createByCopyInternal(copyInputITS, outputITS, dtoITS);
+				
+				output.setResult(outputITS.getResult());
+				
+				output.setDisplayMessage(outputITS.getDisplayMessage());	// one message, that should be displayed to the user
+				
+				output.setMessages(outputITS.getMessages());
+				
+				output.setApplicationId(outputITS.getCiId());
 
-				dto.setRelevance2059(applicationSource.getRelevance2059());
-				dto.setRelevance2008(applicationSource.getRelevance2008());
-				
-				
-				// save / create application
-				boolean neuanlage = false;
-				ApplicationEditParameterOutput createOutput = AnwendungHbn.createAnwendung(copyInput.getCwid(), dto, null, neuanlage);
-
-				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
-					List<Application> listAnwendung = AnwendungHbn.findApplicationByName(copyInput.getCiNameTarget());
-					if (null != listAnwendung && 1 == listAnwendung.size()) {
-						// Neuanlage / durch reaktivierten Datensatz
-						dto.setId(listAnwendung.get(0).getApplicationId());
-						
-						Long ciId = listAnwendung.get(0).getApplicationId();
-						Application applicationTarget = AnwendungHbn.findApplicationById(ciId);
-						
-						if (null != applicationTarget) {
-							ApplicationEditParameterOutput temp = AnwendungHbn.copyApplication(copyInput.getCwid(), applicationSource.getId(), applicationTarget.getId(), copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
+			}
+			
+			else {
+			
+			
+				Application applicationSource = AnwendungHbn.findApplicationById(copyInput.getCiIdSource());
+	
+				if (null != applicationSource) {
+					dto.setId(new Long(0));
+					dto.setName(copyInput.getCiNameTarget());
+					dto.setAlias(copyInput.getCiAliasTarget());
+					
+					if (null == dto.getBusinessEssentialId()) {
+						dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+					}
+	
+					// set the actual cwid as responsible
+					dto.setCiOwner(copyInput.getCwid().toUpperCase());
+					dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+					dto.setCiOwnerDelegate(applicationSource.getSubResponsible());
+					dto.setCiOwnerDelegateHidden(applicationSource.getSubResponsible());
+					dto.setTemplate(applicationSource.getTemplate());
+					
+					dto.setRelevanzItsec(applicationSource.getRelevanzITSEC());
+					dto.setRelevanceICS(applicationSource.getRelevanceICS());
+	
+					dto.setRelevance2059(applicationSource.getRelevance2059());
+					dto.setRelevance2008(applicationSource.getRelevance2008());
+					
+					
+					// save / create application
+					boolean neuanlage = false;
+					ApplicationEditParameterOutput createOutput = AnwendungHbn.createAnwendung(copyInput.getCwid(), dto, null, neuanlage);
+	
+					if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
+						List<Application> listAnwendung = AnwendungHbn.findApplicationByName(copyInput.getCiNameTarget());
+						if (null != listAnwendung && 1 == listAnwendung.size()) {
+							// Neuanlage / durch reaktivierten Datensatz
+							dto.setId(listAnwendung.get(0).getApplicationId());
+							
+							Long ciId = listAnwendung.get(0).getApplicationId();
+							Application applicationTarget = AnwendungHbn.findApplicationById(ciId);
+							
+							if (null != applicationTarget) {
+								ApplicationEditParameterOutput temp = AnwendungHbn.copyApplication(copyInput.getCwid(), applicationSource.getId(), applicationTarget.getId(), copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
+								
+								output.setApplicationId(temp.getApplicationId());
+								output.setResult(temp.getResult());
+								output.setMessages(temp.getMessages());
+								output.setDisplayMessage(temp.getDisplayMessage());
+							}
+						}
+						else {
+							// Neuanlage durch komplett neuen Datensatz
+							ApplicationEditParameterOutput temp = AnwendungHbn.copyApplication(copyInput.getCwid(), applicationSource.getId(), null, copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
 							
 							output.setApplicationId(temp.getApplicationId());
 							output.setResult(temp.getResult());
 							output.setMessages(temp.getMessages());
 							output.setDisplayMessage(temp.getDisplayMessage());
+							
 						}
+						
 					}
 					else {
-						// Neuanlage durch komplett neuen Datensatz
-						ApplicationEditParameterOutput temp = AnwendungHbn.copyApplication(copyInput.getCwid(), applicationSource.getId(), null, copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
-						
-						output.setApplicationId(temp.getApplicationId());
-						output.setResult(temp.getResult());
-						output.setMessages(temp.getMessages());
-						output.setDisplayMessage(temp.getDisplayMessage());
-						
+						output.setApplicationId(createOutput.getApplicationId());
+						output.setResult(createOutput.getResult());
+						output.setMessages(createOutput.getMessages());
+						output.setDisplayMessage(createOutput.getDisplayMessage());
 					}
-					
-				}
-				else {
-					output.setApplicationId(createOutput.getApplicationId());
-					output.setResult(createOutput.getResult());
-					output.setMessages(createOutput.getMessages());
-					output.setDisplayMessage(createOutput.getDisplayMessage());
 				}
 			}
 		}
