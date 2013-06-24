@@ -108,18 +108,18 @@ public final class AirKonstanten {
 	public static final String GPSCGROUP_DISABLED_MARKER = "DISABLED";
 	public static final String GPSCGROUP_HIDDEN_DESCRIPTOR = "Hidden";
 	public static final String[][] GPSCGROUP_MAPPING = new String [][] {
-		{"1", "gpsccontactSupportGroup", "N", "SUPPORT GROUP - IM RESOLVER", "1,2"},
-		{"2", "gpsccontactChangeTeam", "N", "CHANGE TEAM", "1,2"},
-		{"3", "gpsccontactServiceCoordinator", "N", "SERVICE COORDINATOR", "1,2"},
-		{"4", "gpsccontactEscalation", "N", "ESCALATION LIST", "1,2"},
-		{"5", "gpsccontactCiOwner", "N", "CI OWNER", "1,2"},
+		{"1", "gpsccontactSupportGroup", "N", "SUPPORT GROUP - IM RESOLVER", "1,2,3,4,12,13,30,88"},
+		{"2", "gpsccontactChangeTeam", "N", "CHANGE TEAM", "1,2,3,4,12,13,30,88"},
+		{"3", "gpsccontactServiceCoordinator", "N", "SERVICE COORDINATOR", "1,2,3,4,12,13,30,88"},
+		{"4", "gpsccontactEscalation", "N", "ESCALATION LIST", "1,2,3,4,12,13,30,88"},
+		{"5", "gpsccontactCiOwner", "N", "CI OWNER", "1,2,3,4,12,13,30,88"},
 		{"6", "gpsccontactOwningBusinessGroup", "N", "OWNING BUSINESS GROUP", "2"},
 		{"8", "gpsccontactImplementationTeam", "N", "IMPLEMENTATION TEAM", "2"},
-		{"9", "gpsccontactServiceCoordinatorIndiv", "Y", "(INDIV) SERVICE COORDINATOR", "1,2"},
-		{"10", "gpsccontactEscalationIndiv", "Y", "(INDIV) ESCALATION LIST", "1,2"},
-		{"11", "gpsccontactResponsibleAtCustomerSide", "Y", "RESPONSIBLE AT CUSTOMER SIDE", "1,2"},
-		{"13", "gpsccontactSystemResponsible", "Y", "SYSTEM RESPONSIBLE", "1,2"},
-		{"14", "gpsccontactImpactedBusiness", "N", "Impacted Business Group", "1,2"},
+		{"9", "gpsccontactServiceCoordinatorIndiv", "Y", "(INDIV) SERVICE COORDINATOR", "1,2,3,4,12,13,30,88"},
+		{"10", "gpsccontactEscalationIndiv", "Y", "(INDIV) ESCALATION LIST", "1,2,3,4,12,13,30,88"},
+		{"11", "gpsccontactResponsibleAtCustomerSide", "Y", "RESPONSIBLE AT CUSTOMER SIDE", "1,2,3,4,12,13,30,88"},
+		{"13", "gpsccontactSystemResponsible", "Y", "SYSTEM RESPONSIBLE", "1,2,3,4,12,13,30,88"},
+		{"14", "gpsccontactImpactedBusiness", "N", "Impacted Business Group", "1,2,3,4,12,13,30,88"},
 		{"15", "gpsccontactBusinessOwnerRepresentative", "Y", "Business Owner Representative", "2"}
 	};
 	

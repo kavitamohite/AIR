@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <AttributePropertyItems>
 
-	<!-- General -->
+	<!-- General
 	<Identifier>
 		<id>objectType</id>
 		<ciTypeId>2</ciTypeId>
@@ -14,7 +14,7 @@
 		<attributeType></attributeType>
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
-	</Identifier>
+	</Identifier> -->
 
 
 	<!-- Specific -->
@@ -669,7 +669,7 @@
 
 	<Identifier>
 		<id>gpsccontactCiOwner</id>
-		<ciTypeId>1,2</ciTypeId>
+		<ciTypeId>1,2,3,4,12,13,30,88</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
 <!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
@@ -707,7 +707,7 @@
 
 	<Identifier>
 		<id>gpsccontactSupportGroup</id>
-		<ciTypeId>1,2</ciTypeId>
+		<ciTypeId>1,2,3,4,12,13,30,88</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
 <!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>

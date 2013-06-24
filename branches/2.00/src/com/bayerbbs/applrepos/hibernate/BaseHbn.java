@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -17,7 +18,9 @@ import com.bayerbbs.applrepos.domain.CiBase1;
 import com.bayerbbs.applrepos.domain.CiBase2;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
+import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
+import com.bayerbbs.applrepos.service.BaseEditParameterInput;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 
 public class BaseHbn {
@@ -419,6 +422,40 @@ public class BaseHbn {
 		}
 
 		return output;
+	}
+	
+	public static void saveGpscContacts(CiBaseDTO dto, BaseEditParameterInput input) {
+		try {
+			for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) {
+				
+				List<String> groupTypes = Arrays.asList(grouptype[4].split(AirKonstanten.KOMMA)) ;
+				if(groupTypes.contains(dto.getTableId().toString())) {
+//				if(grouptype[4].indexOf(dto.getTableId().toString()) > -1) {//IT System GPSC Kontakt?
+					
+					char d[] = grouptype[1].toCharArray();
+					d[0] = String.valueOf(d[0]).toUpperCase().charAt(0);
+					String method = "get" + new String(d);
+					String methodHidden = "get" + new String(d) + AirKonstanten.GPSCGROUP_HIDDEN_DESCRIPTOR;
+
+					String gpscContact = (String) ItSystemDTO.class.getMethod(method).invoke(dto);
+					String gpscContactHidden = (String) ItSystemDTO.class.getMethod(methodHidden).invoke(dto);
+					if (!(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContact)) && !(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContactHidden))) {
+						if (AirKonstanten.YES_SHORT.equals(grouptype[2])) { // Individual Contact(s)
+							CiPersonsHbn.saveCiPerson(input.getCwid(), dto.getTableId(),
+									 dto.getId(), new Long(grouptype[0]), grouptype[3],
+									 gpscContactHidden);
+						} else { // Group(s)
+							CiGroupsHbn.saveCiGroup(input.getCwid(), dto.getTableId(),
+									 dto.getId(), new Long(grouptype[0]), grouptype[3],
+									 gpscContact);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.toString());
+		}		
 	}
 	
 	private static final Log log = LogFactory.getLog(BaseHbn.class);

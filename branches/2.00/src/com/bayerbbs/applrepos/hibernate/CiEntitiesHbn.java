@@ -852,7 +852,7 @@ public class CiEntitiesHbn {
 			stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
-			boolean irReferenced = false;
+			boolean isReferenced = false;
 			DwhEntityDTO dwhEntity = null;
 			
 			while (rs.next()) {
@@ -864,8 +864,8 @@ public class CiEntitiesHbn {
 //				dwhEntity.setCiAlias(rs.getString("ASSET_ID_OR_ALIAS"));
 				dwhEntity.setDwhEntityId(rs.getString("ID"));
 				dwhEntity.setSource(rs.getString("SOURCE"));
-				irReferenced = rs.getString("CONTAINS_HW") != null && rs.getString("CONTAINS_HW").equals(AirKonstanten.YES);
-				dwhEntity.setIsReferenced(irReferenced);
+				isReferenced = rs.getString("CONTAINS_HW") != null && rs.getString("CONTAINS_HW").equals(AirKonstanten.YES);
+				dwhEntity.setIsReferenced(isReferenced);
 				
 				dwhEntities.add(dwhEntity);
 			}

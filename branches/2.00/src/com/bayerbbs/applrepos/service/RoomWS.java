@@ -4,6 +4,7 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
+import com.bayerbbs.applrepos.hibernate.BaseHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
 
 public class RoomWS {
@@ -61,6 +62,28 @@ public class RoomWS {
 		roomDTO.setGxpFlag(input.getGxpFlag());
 		roomDTO.setGxpFlagId(input.getGxpFlag());
 		
+		roomDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
+		roomDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
+		roomDTO.setGpsccontactServiceCoordinatorHidden(input.getGpsccontactServiceCoordinatorHidden());
+		roomDTO.setGpsccontactEscalationHidden(input.getGpsccontactEscalationHidden());
+		roomDTO.setGpsccontactCiOwnerHidden(input.getGpsccontactCiOwnerHidden());
+		roomDTO.setGpsccontactServiceCoordinatorIndivHidden(input.getGpsccontactServiceCoordinatorIndivHidden());
+		roomDTO.setGpsccontactEscalationIndivHidden(input.getGpsccontactEscalationIndivHidden());
+		roomDTO.setGpsccontactResponsibleAtCustomerSideHidden(input.getGpsccontactResponsibleAtCustomerSideHidden());
+		roomDTO.setGpsccontactSystemResponsibleHidden(input.getGpsccontactSystemResponsibleHidden());
+		roomDTO.setGpsccontactImpactedBusinessHidden(input.getGpsccontactImpactedBusinessHidden()); 
+
+		roomDTO.setGpsccontactSupportGroup(input.getGpsccontactSupportGroup());
+		roomDTO.setGpsccontactChangeTeam(input.getGpsccontactChangeTeam());
+		roomDTO.setGpsccontactServiceCoordinator(input.getGpsccontactServiceCoordinator());
+		roomDTO.setGpsccontactEscalation(input.getGpsccontactEscalation());
+		roomDTO.setGpsccontactCiOwner(input.getGpsccontactCiOwner());
+		roomDTO.setGpsccontactServiceCoordinatorIndiv(input.getGpsccontactServiceCoordinatorIndiv());
+		roomDTO.setGpsccontactEscalationIndiv(input.getGpsccontactEscalationIndiv());
+		roomDTO.setGpsccontactResponsibleAtCustomerSide(input.getGpsccontactResponsibleAtCustomerSide());
+		roomDTO.setGpsccontactSystemResponsible(input.getGpsccontactSystemResponsible());
+		roomDTO.setGpsccontactImpactedBusiness(input.getGpsccontactImpactedBusiness());
+		
 		roomDTO.setDownStreamAdd(input.getDownStreamAdd());
 		roomDTO.setDownStreamDelete(input.getDownStreamDelete());
 		
@@ -73,6 +96,9 @@ public class RoomWS {
 		if (null != input) {
 			RoomDTO dto = getRoomDTOFromEditInput(input);
 			output = RoomHbn.saveRoom(input.getCwid(), dto);
+			
+			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
+				BaseHbn.saveGpscContacts(dto, input);
 		}
 		
 		return output;
@@ -100,23 +126,15 @@ public class RoomWS {
 
 		if (null != input && (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) ) {
 			RoomDTO dto = getRoomDTOFromEditInput(input);
-
-//			// create Application - fill attributes
-//			if (null == dto.getCiOwner()) {
-//				dto.setCiOwner(input.getCwid().toUpperCase());
-//				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
-//			}
-//			if (null == dto.getBusinessEssentialId()) {
-//				dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-//			}
-
-			// save / create application
 			output = RoomHbn.createRoom(input.getCwid(), dto, true);
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
 				Room room = RoomHbn.findByNameAndBuildingAreaId(dto.getName(), dto.getAreaId());
 				output.setCiId(room.getId());
 				output.setTableId(AirKonstanten.TABLE_ID_ROOM);
+				
+				dto.setId(room.getId());
+				BaseHbn.saveGpscContacts(dto, input);
 				
 				/*
 				// get detail

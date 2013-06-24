@@ -520,7 +520,7 @@ AIR.AirAclManager = function() {
 			var oppositeRetValue = false;
 			
 			for(var i = 0; i < records.length; i++) {
-				var item = records[i];
+				var item = records[i];				
 				
 				if(this.isCiTypeField(data, item)) {
 					if(item.data.Mandatory === 'required') {
@@ -557,6 +557,15 @@ AIR.AirAclManager = function() {
 								default: break;
 							}
 						}
+					} else {
+						var draftItemCmp = Ext.getCmp(item.data.id);
+						var isDraft = draftItemCmp &&
+									  data.tableId == AC.TABLE_ID_APPLICATION &&
+								      data.applicationCat1Id == AC.APP_CAT1_APPLICATION &&
+								     (draftItemCmp.id == 'gpsccontactCiOwner' || draftItemCmp.id == 'gpsccontactSupportGroup') &&
+								    (draftItemCmp.getValue().length === 0);//!draftItemCmp.getValue() || 
+						if(isDraft)
+							return isDraft;
 					}
 				}
 			}
@@ -631,6 +640,10 @@ AIR.AirAclManager = function() {
 							aclCiType === t || //data.tableId.toString()
 							Util.isValueInCommaString(aclCiType, t);//data.tableId.toString()
 			var isCiSubType = !data.applicationCat1Id || aclCiSubType.length === 0 || aclCiSubType === data.applicationCat1Id.toString() || aclCiSubType.indexOf(data.applicationCat1Id.toString()) > -1;
+			
+			//(noch) nicht konfigurierbare Sonderlocke
+			
+			//(noch) nicht konfigurierbare Sonderlocke
 			
 			return isCiType && isCiSubType;
 			
@@ -712,10 +725,13 @@ AIR.AirAclManager = function() {
 		},
 		
 		getLabel: function(uiElement, labels, data) {
-			if(uiElement.id == 'gpsccontactCiOwner') {
-				return data.tableId == AC.TABLE_ID_APPLICATION &&
-					   data.applicationCat1Id == AC.APP_CAT1_APPLICATION ?
-						labels.contactsCIOwnerApplication : labels.contactsCIOwner;
+			if(uiElement.id == 'gpsccontactCiOwner' || uiElement.id == 'gpsccontactSupportGroup') {
+//				return data.tableId == AC.TABLE_ID_APPLICATION &&
+//					   data.applicationCat1Id == AC.APP_CAT1_APPLICATION ?
+//						labels.contactsCIOwnerApplication : labels.contactsCIOwner;
+				if(data.tableId != AC.TABLE_ID_APPLICATION &&
+				   data.applicationCat1Id != AC.APP_CAT1_APPLICATION)
+					return labels[uiElement.id] || uiElement.label.dom.innerHTML;
 			} else {
 				return labels[uiElement.id] || uiElement.label.dom.innerHTML;
 			}

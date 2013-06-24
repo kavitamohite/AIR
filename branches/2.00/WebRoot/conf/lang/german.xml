@@ -193,7 +193,7 @@
 				<gpsccontactChangeTeam>Change Team</gpsccontactChangeTeam>
 				<gpsccontactServiceCoordinator>Service Coordinator</gpsccontactServiceCoordinator>
 				<gpsccontactEscalation>Escalation List</gpsccontactEscalation>
-				<gpsccontactCiOwner>CI Owner / Application Manager</gpsccontactCiOwner>
+				<gpsccontactCiOwner>CI Owner (GPSC)</gpsccontactCiOwner><!-- CI Owner / Application Manager -->
 				
 				<!-- 12.03.2012 - Mail von Andreas: AIR - Umbennenen eines Attributes -->
 				<!--<gpsccontactOwningBusinessGroup>Application Owner - Company</gpsccontactOwningBusinessGroup>-->

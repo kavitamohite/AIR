@@ -1646,20 +1646,6 @@ AIR.AirStoreFactory = function() {
 				fields: [ 'groupId', 'groupName', 'personName', 'groupTypeId', 'groupTypeName', 'individualContactYN',	'maxContacts', 'minContacts' ],
 
 				reader: applicationContactsReader
-				
-//				listeners: {
-//					beforeload: function(store, options) {
-//						applicationContactsStore.baseParams.cwid = cwid;
-//						applicationContactsStore.baseParams.token = token;
-//						applicationContactsStore.baseParams.applicationId = selectedCIId;
-//					},
-//					load: function(store, records, options) {
-//						for(var i = 0; i < records.length; ++i)
-//							setContactInformation(records[i]);
-//						
-//						fillDetailsInformation();
-//					}
-//				}
 			});
 			
 			return applicationContactsStore;

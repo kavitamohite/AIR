@@ -4,6 +4,7 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
+import com.bayerbbs.applrepos.hibernate.BaseHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
 
 public class StandortWS {
@@ -56,6 +57,28 @@ public class StandortWS {
 		standortDTO.setGxpFlag(input.getGxpFlag());
 		standortDTO.setGxpFlagId(input.getGxpFlag());
 		
+		standortDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
+		standortDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
+		standortDTO.setGpsccontactServiceCoordinatorHidden(input.getGpsccontactServiceCoordinatorHidden());
+		standortDTO.setGpsccontactEscalationHidden(input.getGpsccontactEscalationHidden());
+		standortDTO.setGpsccontactCiOwnerHidden(input.getGpsccontactCiOwnerHidden());
+		standortDTO.setGpsccontactServiceCoordinatorIndivHidden(input.getGpsccontactServiceCoordinatorIndivHidden());
+		standortDTO.setGpsccontactEscalationIndivHidden(input.getGpsccontactEscalationIndivHidden());
+		standortDTO.setGpsccontactResponsibleAtCustomerSideHidden(input.getGpsccontactResponsibleAtCustomerSideHidden());
+		standortDTO.setGpsccontactSystemResponsibleHidden(input.getGpsccontactSystemResponsibleHidden());
+		standortDTO.setGpsccontactImpactedBusinessHidden(input.getGpsccontactImpactedBusinessHidden()); 
+
+		standortDTO.setGpsccontactSupportGroup(input.getGpsccontactSupportGroup());
+		standortDTO.setGpsccontactChangeTeam(input.getGpsccontactChangeTeam());
+		standortDTO.setGpsccontactServiceCoordinator(input.getGpsccontactServiceCoordinator());
+		standortDTO.setGpsccontactEscalation(input.getGpsccontactEscalation());
+		standortDTO.setGpsccontactCiOwner(input.getGpsccontactCiOwner());
+		standortDTO.setGpsccontactServiceCoordinatorIndiv(input.getGpsccontactServiceCoordinatorIndiv());
+		standortDTO.setGpsccontactEscalationIndiv(input.getGpsccontactEscalationIndiv());
+		standortDTO.setGpsccontactResponsibleAtCustomerSide(input.getGpsccontactResponsibleAtCustomerSide());
+		standortDTO.setGpsccontactSystemResponsible(input.getGpsccontactSystemResponsible());
+		standortDTO.setGpsccontactImpactedBusiness(input.getGpsccontactImpactedBusiness());
+		
 		standortDTO.setDownStreamAdd(input.getDownStreamAdd());
 		standortDTO.setDownStreamDelete(input.getDownStreamDelete());
 		
@@ -68,6 +91,9 @@ public class StandortWS {
 		if (null != input) {
 			StandortDTO dto = getStandortDTOFromEditInput(input);
 			output = StandortHbn.saveStandort(input.getCwid(), dto);
+			
+			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
+				BaseHbn.saveGpscContacts(dto, input);
 		}
 		
 		return output;
@@ -110,6 +136,9 @@ public class StandortWS {
 				Standort standort = StandortHbn.findByNameAndCountryId(dto.getName(), dto.getLandId());
 				output.setCiId(standort.getId());
 				output.setTableId(AirKonstanten.TABLE_ID_SITE);
+				
+				dto.setId(standort.getId());
+				BaseHbn.saveGpscContacts(dto, input);
 				
 				/*
 				// get detail

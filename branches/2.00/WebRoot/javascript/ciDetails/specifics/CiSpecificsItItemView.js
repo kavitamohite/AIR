@@ -686,12 +686,16 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			}
 			
 			var clusterCodeRecord = Util.getComboRecord(cbClusterCode, 'type', data.clusterCode);
-			
 			cbClusterCode.setValue(clusterCodeRecord.get('id'));//data.clusterCode
-			cbClusterType.setValue(data.clusterType);
+
+			if(data.clusterCode == 'N') {
+				cbClusterType.reset();
+				Util.disableCombo(cbClusterType);
+			} else {
+				cbClusterType.setValue(data.clusterType);
+			}
+			
 			cbVirtualSoftware.setValue(data.virtualHardwareSoftware);
-			
-			
 			cbItSystemLifecycleStatus.setValue(data.lifecycleStatusId);
 			cbItSystemOperationalStatus.setValue(data.einsatzStatusId);
 			

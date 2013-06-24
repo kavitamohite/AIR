@@ -3,50 +3,11 @@ package com.bayerbbs.applrepos.service;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
-import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
-import com.bayerbbs.applrepos.hibernate.CiPersonsHbn;
+import com.bayerbbs.applrepos.hibernate.BaseHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 
 public class ItSystemWS {
 	
-	public CiEntityEditParameterOutput createItSystem(ItSystemEditParameterInput input) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-
-		if (null != input && (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))) {
-			ItSystemDTO dto = getItSystemDTOFromEditInput(input);
-			output = ItSystemHbn.createItSystem(input.getCwid(), dto, true);
-				
-
-			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
-				
-				ItSystem itSystem = ItSystemHbn.findItSystemByName(dto.getName());
-				output.setCiId(itSystem.getId());
-				output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
-				
-				dto.setId(itSystem.getId());
-				saveGpscContacts(dto, input);
-				
-				/*
-				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_IT_SYSTEM, false);
-				if (null != listCi && 1 == listCi.size()) {
-					Long ciId = listCi.get(0).getId();
-					output.setCiId(ciId);
-					output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
-				} else {
-					// unknown?
-					output.setCiId(new Long(-1));
-				}*/
-			} else {
-				// TODO errorcodes / Texte
-				if (null != output.getMessages() && output.getMessages().length > 0) {
-					output.setDisplayMessage(output.getMessages()[0]);
-				}
-			}
-		}
-
-		return output;
-	}
 	
 	public CiEntityEditParameterOutput createItSystemByCopy(ItSystemCopyParameterInput copyInput) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
@@ -113,22 +74,6 @@ public class ItSystemWS {
 		if (null == output.getDisplayMessage() && null != output.getMessages()) {
 			output.setDisplayMessage(output.getMessages()[0]);
 		}
-	}
-	
-	public CiEntityEditParameterOutput deleteItSystem(ItSystemEditParameterInput input) {
-		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-
-		if (null != input) {
-			if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
-				ItSystemDTO dto = getItSystemDTOFromEditInput(input);
-
-				output = ItSystemHbn.deleteItSystem(input.getCwid(), dto);
-			} else {
-				// TODO MESSAGE LOGGED OUT
-			}
-		}
-
-		return output;
 	}
 
 	
@@ -223,37 +168,7 @@ public class ItSystemWS {
 		
 		return itSystemDTO;
 	}
-
-	private void saveGpscContacts(ItSystemDTO dto, ItSystemEditParameterInput input) {
-		try {
-			for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) {
-				if(grouptype[4].indexOf(dto.getTableId().toString()) > -1) {//IT System GPSC Kontakt?
-					char d[] = grouptype[1].toCharArray();
-					d[0] = String.valueOf(d[0]).toUpperCase().charAt(0);
-					String method = "get" + new String(d);
-					String methodHidden = "get" + new String(d) + AirKonstanten.GPSCGROUP_HIDDEN_DESCRIPTOR;
-
-					String gpscContact = (String) ItSystemDTO.class.getMethod(method).invoke(dto);
-					String gpscContactHidden = (String) ItSystemDTO.class.getMethod(methodHidden).invoke(dto);
-					if (!(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContact)) && !(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContactHidden))) {
-						if (AirKonstanten.YES_SHORT.equals(grouptype[2])) { // Individual Contact(s)
-							CiPersonsHbn.saveCiPerson(input.getCwid(), dto.getTableId(),
-									 dto.getId(), new Long(grouptype[0]), grouptype[3],
-									 gpscContactHidden);
-						} else { // Group(s)
-							CiGroupsHbn.saveCiGroup(input.getCwid(), dto.getTableId(),
-									 dto.getId(), new Long(grouptype[0]), grouptype[3],
-									 gpscContact);
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.toString());
-		}		
-	}
-
+	
 	public CiEntityEditParameterOutput saveItSystem(ItSystemEditParameterInput input) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 
@@ -263,10 +178,95 @@ public class ItSystemWS {
 			
 			
 			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
-				saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input);
 		}
 		
 		return output;
 	}
+	
+	public CiEntityEditParameterOutput deleteItSystem(ItSystemEditParameterInput input) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		if (null != input) {
+			if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+				ItSystemDTO dto = getItSystemDTOFromEditInput(input);
+
+				output = ItSystemHbn.deleteItSystem(input.getCwid(), dto);
+			} else {
+				// TODO MESSAGE LOGGED OUT
+			}
+		}
+
+		return output;
+	}
+
+	
+	public CiEntityEditParameterOutput createItSystem(ItSystemEditParameterInput input) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		if (null != input && (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))) {
+			ItSystemDTO dto = getItSystemDTOFromEditInput(input);
+			output = ItSystemHbn.createItSystem(input.getCwid(), dto, true);
+
+			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
+				ItSystem itSystem = ItSystemHbn.findItSystemByName(dto.getName());
+				output.setCiId(itSystem.getId());
+				output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
+				
+				dto.setId(itSystem.getId());
+				BaseHbn.saveGpscContacts(dto, input);
+				
+				/*
+				// get detail
+				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_IT_SYSTEM, false);
+				if (null != listCi && 1 == listCi.size()) {
+					Long ciId = listCi.get(0).getId();
+					output.setCiId(ciId);
+					output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
+				} else {
+					// unknown?
+					output.setCiId(new Long(-1));
+				}*/
+			} else {
+				// TODO errorcodes / Texte
+				if (null != output.getMessages() && output.getMessages().length > 0) {
+					output.setDisplayMessage(output.getMessages()[0]);
+				}
+			}
+		}
+
+		return output;
+	}
+
+	
+//	private void saveGpscContacts(ItSystemDTO dto, ItSystemEditParameterInput input) {
+//		try {
+//			for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) {
+//				if(grouptype[4].indexOf(dto.getTableId().toString()) > -1) {//IT System GPSC Kontakt?
+//					char d[] = grouptype[1].toCharArray();
+//					d[0] = String.valueOf(d[0]).toUpperCase().charAt(0);
+//					String method = "get" + new String(d);
+//					String methodHidden = "get" + new String(d) + AirKonstanten.GPSCGROUP_HIDDEN_DESCRIPTOR;
+//
+//					String gpscContact = (String) ItSystemDTO.class.getMethod(method).invoke(dto);
+//					String gpscContactHidden = (String) ItSystemDTO.class.getMethod(methodHidden).invoke(dto);
+//					if (!(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContact)) && !(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContactHidden))) {
+//						if (AirKonstanten.YES_SHORT.equals(grouptype[2])) { // Individual Contact(s)
+//							CiPersonsHbn.saveCiPerson(input.getCwid(), dto.getTableId(),
+//									 dto.getId(), new Long(grouptype[0]), grouptype[3],
+//									 gpscContactHidden);
+//						} else { // Group(s)
+//							CiGroupsHbn.saveCiGroup(input.getCwid(), dto.getTableId(),
+//									 dto.getId(), new Long(grouptype[0]), grouptype[3],
+//									 gpscContact);
+//						}
+//					}
+//				}
+//			}
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			System.out.println(e.toString());
+//		}		
+//	}
 
 }

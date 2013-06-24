@@ -4,6 +4,7 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.TerrainDTO;
+import com.bayerbbs.applrepos.hibernate.BaseHbn;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.TerrainHbn;
 
@@ -54,6 +55,28 @@ public class TerrainWS {
 		terrainDTO.setGxpFlag(input.getGxpFlag());
 		terrainDTO.setGxpFlagId(input.getGxpFlag());
 		
+		terrainDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
+		terrainDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
+		terrainDTO.setGpsccontactServiceCoordinatorHidden(input.getGpsccontactServiceCoordinatorHidden());
+		terrainDTO.setGpsccontactEscalationHidden(input.getGpsccontactEscalationHidden());
+		terrainDTO.setGpsccontactCiOwnerHidden(input.getGpsccontactCiOwnerHidden());
+		terrainDTO.setGpsccontactServiceCoordinatorIndivHidden(input.getGpsccontactServiceCoordinatorIndivHidden());
+		terrainDTO.setGpsccontactEscalationIndivHidden(input.getGpsccontactEscalationIndivHidden());
+		terrainDTO.setGpsccontactResponsibleAtCustomerSideHidden(input.getGpsccontactResponsibleAtCustomerSideHidden());
+		terrainDTO.setGpsccontactSystemResponsibleHidden(input.getGpsccontactSystemResponsibleHidden());
+		terrainDTO.setGpsccontactImpactedBusinessHidden(input.getGpsccontactImpactedBusinessHidden()); 
+
+		terrainDTO.setGpsccontactSupportGroup(input.getGpsccontactSupportGroup());
+		terrainDTO.setGpsccontactChangeTeam(input.getGpsccontactChangeTeam());
+		terrainDTO.setGpsccontactServiceCoordinator(input.getGpsccontactServiceCoordinator());
+		terrainDTO.setGpsccontactEscalation(input.getGpsccontactEscalation());
+		terrainDTO.setGpsccontactCiOwner(input.getGpsccontactCiOwner());
+		terrainDTO.setGpsccontactServiceCoordinatorIndiv(input.getGpsccontactServiceCoordinatorIndiv());
+		terrainDTO.setGpsccontactEscalationIndiv(input.getGpsccontactEscalationIndiv());
+		terrainDTO.setGpsccontactResponsibleAtCustomerSide(input.getGpsccontactResponsibleAtCustomerSide());
+		terrainDTO.setGpsccontactSystemResponsible(input.getGpsccontactSystemResponsible());
+		terrainDTO.setGpsccontactImpactedBusiness(input.getGpsccontactImpactedBusiness());
+		
 		terrainDTO.setDownStreamAdd(input.getDownStreamAdd());
 		terrainDTO.setDownStreamDelete(input.getDownStreamDelete());
 		
@@ -66,6 +89,9 @@ public class TerrainWS {
 		if (null != input) {
 			TerrainDTO dto = getTerrainDTOFromEditInput(input);
 			output = TerrainHbn.saveTerrain(input.getCwid(), dto);
+			
+			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
+				BaseHbn.saveGpscContacts(dto, input);
 		}
 		
 		return output;
@@ -108,6 +134,9 @@ public class TerrainWS {
 				Terrain terrain = TerrainHbn.findByNameAndSiteId(dto.getName(), dto.getStandortId());
 				output.setCiId(terrain.getId());
 				output.setTableId(AirKonstanten.TABLE_ID_TERRAIN);
+				
+				dto.setId(terrain.getId());
+				BaseHbn.saveGpscContacts(dto, input);
 				
 				/*
 				// get detail

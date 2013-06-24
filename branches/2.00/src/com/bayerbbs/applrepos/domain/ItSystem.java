@@ -150,7 +150,7 @@ public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisi
 		this.clusterType = clusterType;
 	}
 	
-	@Column(name = "VIRTUAL_HOST_Y_N")
+	@Column(name = "VIRTUAL_HW_Y_N")//VIRTUAL_HOST_Y_N
 	public String getIsVirtualHardwareClient() {
 		return isVirtualHardwareClient;
 	}
@@ -158,7 +158,7 @@ public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisi
 		this.isVirtualHardwareClient = isVirtualHardwareClient;
 	}
 	
-	@Column(name = "VIRTUAL_HW_Y_N")
+	@Column(name = "VIRTUAL_HOST_Y_N")//VIRTUAL_HW_Y_N
 	public String getIsVirtualHardwareHost() {
 		return isVirtualHardwareHost;
 	}

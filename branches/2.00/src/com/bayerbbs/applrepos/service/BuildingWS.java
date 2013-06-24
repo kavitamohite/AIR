@@ -6,6 +6,7 @@ import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.hibernate.BaseHbn;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 
 public class BuildingWS {
@@ -62,6 +63,28 @@ public class BuildingWS {
 		buildingDTO.setGxpFlag(input.getGxpFlag());
 		buildingDTO.setGxpFlagId(input.getGxpFlag());
 		
+		buildingDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
+		buildingDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
+		buildingDTO.setGpsccontactServiceCoordinatorHidden(input.getGpsccontactServiceCoordinatorHidden());
+		buildingDTO.setGpsccontactEscalationHidden(input.getGpsccontactEscalationHidden());
+		buildingDTO.setGpsccontactCiOwnerHidden(input.getGpsccontactCiOwnerHidden());
+		buildingDTO.setGpsccontactServiceCoordinatorIndivHidden(input.getGpsccontactServiceCoordinatorIndivHidden());
+		buildingDTO.setGpsccontactEscalationIndivHidden(input.getGpsccontactEscalationIndivHidden());
+		buildingDTO.setGpsccontactResponsibleAtCustomerSideHidden(input.getGpsccontactResponsibleAtCustomerSideHidden());
+		buildingDTO.setGpsccontactSystemResponsibleHidden(input.getGpsccontactSystemResponsibleHidden());
+		buildingDTO.setGpsccontactImpactedBusinessHidden(input.getGpsccontactImpactedBusinessHidden()); 
+
+		buildingDTO.setGpsccontactSupportGroup(input.getGpsccontactSupportGroup());
+		buildingDTO.setGpsccontactChangeTeam(input.getGpsccontactChangeTeam());
+		buildingDTO.setGpsccontactServiceCoordinator(input.getGpsccontactServiceCoordinator());
+		buildingDTO.setGpsccontactEscalation(input.getGpsccontactEscalation());
+		buildingDTO.setGpsccontactCiOwner(input.getGpsccontactCiOwner());
+		buildingDTO.setGpsccontactServiceCoordinatorIndiv(input.getGpsccontactServiceCoordinatorIndiv());
+		buildingDTO.setGpsccontactEscalationIndiv(input.getGpsccontactEscalationIndiv());
+		buildingDTO.setGpsccontactResponsibleAtCustomerSide(input.getGpsccontactResponsibleAtCustomerSide());
+		buildingDTO.setGpsccontactSystemResponsible(input.getGpsccontactSystemResponsible());
+		buildingDTO.setGpsccontactImpactedBusiness(input.getGpsccontactImpactedBusiness());
+		
 		buildingDTO.setDownStreamAdd(input.getDownStreamAdd());
 		buildingDTO.setDownStreamDelete(input.getDownStreamDelete());
 		
@@ -115,6 +138,28 @@ public class BuildingWS {
 		buildingAreaDTO.setGxpFlag(input.getGxpFlag());
 		buildingAreaDTO.setGxpFlagId(input.getGxpFlag());
 		
+		buildingAreaDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
+		buildingAreaDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
+		buildingAreaDTO.setGpsccontactServiceCoordinatorHidden(input.getGpsccontactServiceCoordinatorHidden());
+		buildingAreaDTO.setGpsccontactEscalationHidden(input.getGpsccontactEscalationHidden());
+		buildingAreaDTO.setGpsccontactCiOwnerHidden(input.getGpsccontactCiOwnerHidden());
+		buildingAreaDTO.setGpsccontactServiceCoordinatorIndivHidden(input.getGpsccontactServiceCoordinatorIndivHidden());
+		buildingAreaDTO.setGpsccontactEscalationIndivHidden(input.getGpsccontactEscalationIndivHidden());
+		buildingAreaDTO.setGpsccontactResponsibleAtCustomerSideHidden(input.getGpsccontactResponsibleAtCustomerSideHidden());
+		buildingAreaDTO.setGpsccontactSystemResponsibleHidden(input.getGpsccontactSystemResponsibleHidden());
+		buildingAreaDTO.setGpsccontactImpactedBusinessHidden(input.getGpsccontactImpactedBusinessHidden()); 
+
+		buildingAreaDTO.setGpsccontactSupportGroup(input.getGpsccontactSupportGroup());
+		buildingAreaDTO.setGpsccontactChangeTeam(input.getGpsccontactChangeTeam());
+		buildingAreaDTO.setGpsccontactServiceCoordinator(input.getGpsccontactServiceCoordinator());
+		buildingAreaDTO.setGpsccontactEscalation(input.getGpsccontactEscalation());
+		buildingAreaDTO.setGpsccontactCiOwner(input.getGpsccontactCiOwner());
+		buildingAreaDTO.setGpsccontactServiceCoordinatorIndiv(input.getGpsccontactServiceCoordinatorIndiv());
+		buildingAreaDTO.setGpsccontactEscalationIndiv(input.getGpsccontactEscalationIndiv());
+		buildingAreaDTO.setGpsccontactResponsibleAtCustomerSide(input.getGpsccontactResponsibleAtCustomerSide());
+		buildingAreaDTO.setGpsccontactSystemResponsible(input.getGpsccontactSystemResponsible());
+		buildingAreaDTO.setGpsccontactImpactedBusiness(input.getGpsccontactImpactedBusiness());
+		
 		buildingAreaDTO.setDownStreamAdd(input.getDownStreamAdd());
 		buildingAreaDTO.setDownStreamDelete(input.getDownStreamDelete());
 		
@@ -127,6 +172,9 @@ public class BuildingWS {
 		if (null != input) {
 			BuildingDTO dto = getBuildingDTOFromEditInput(input);
 			output = BuildingHbn.saveBuilding(input.getCwid(), dto);
+			
+			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
+				BaseHbn.saveGpscContacts(dto, input);
 		}
 		
 		return output;
@@ -138,6 +186,9 @@ public class BuildingWS {
 		if (null != input) {
 			BuildingAreaDTO dto = getBuildingAreaDTOFromEditInput(input);
 			output = BuildingHbn.saveBuildingArea(input.getCwid(), dto);
+			
+			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
+				BaseHbn.saveGpscContacts(dto, input);
 		}
 		
 		return output;
@@ -194,6 +245,9 @@ public class BuildingWS {
 				output.setCiId(building.getId());
 				output.setTableId(AirKonstanten.TABLE_ID_BUILDING);
 				
+				dto.setId(building.getId());
+				BaseHbn.saveGpscContacts(dto, input);
+				
 				/*
 				// get detail
 				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING, false);
@@ -235,6 +289,9 @@ public class BuildingWS {
 				BuildingArea buildingArea = BuildingHbn.findByNameAndBuildingId(dto.getName(), dto.getBuildingId());
 				output.setCiId(buildingArea.getId());
 				output.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
+				
+				dto.setId(buildingArea.getId());
+				BaseHbn.saveGpscContacts(dto, input);
 				
 				/*
 				// get detail

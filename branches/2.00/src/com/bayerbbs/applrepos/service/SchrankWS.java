@@ -3,6 +3,7 @@ package com.bayerbbs.applrepos.service;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
+import com.bayerbbs.applrepos.hibernate.BaseHbn;
 import com.bayerbbs.applrepos.hibernate.SchrankHbn;
 
 public class SchrankWS {
@@ -46,6 +47,28 @@ public class SchrankWS {
 		schrankDTO.setGxpFlag(input.getGxpFlag());
 		schrankDTO.setGxpFlagId(input.getGxpFlag());
 		
+		schrankDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
+		schrankDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
+		schrankDTO.setGpsccontactServiceCoordinatorHidden(input.getGpsccontactServiceCoordinatorHidden());
+		schrankDTO.setGpsccontactEscalationHidden(input.getGpsccontactEscalationHidden());
+		schrankDTO.setGpsccontactCiOwnerHidden(input.getGpsccontactCiOwnerHidden());
+		schrankDTO.setGpsccontactServiceCoordinatorIndivHidden(input.getGpsccontactServiceCoordinatorIndivHidden());
+		schrankDTO.setGpsccontactEscalationIndivHidden(input.getGpsccontactEscalationIndivHidden());
+		schrankDTO.setGpsccontactResponsibleAtCustomerSideHidden(input.getGpsccontactResponsibleAtCustomerSideHidden());
+		schrankDTO.setGpsccontactSystemResponsibleHidden(input.getGpsccontactSystemResponsibleHidden());
+		schrankDTO.setGpsccontactImpactedBusinessHidden(input.getGpsccontactImpactedBusinessHidden()); 
+
+		schrankDTO.setGpsccontactSupportGroup(input.getGpsccontactSupportGroup());
+		schrankDTO.setGpsccontactChangeTeam(input.getGpsccontactChangeTeam());
+		schrankDTO.setGpsccontactServiceCoordinator(input.getGpsccontactServiceCoordinator());
+		schrankDTO.setGpsccontactEscalation(input.getGpsccontactEscalation());
+		schrankDTO.setGpsccontactCiOwner(input.getGpsccontactCiOwner());
+		schrankDTO.setGpsccontactServiceCoordinatorIndiv(input.getGpsccontactServiceCoordinatorIndiv());
+		schrankDTO.setGpsccontactEscalationIndiv(input.getGpsccontactEscalationIndiv());
+		schrankDTO.setGpsccontactResponsibleAtCustomerSide(input.getGpsccontactResponsibleAtCustomerSide());
+		schrankDTO.setGpsccontactSystemResponsible(input.getGpsccontactSystemResponsible());
+		schrankDTO.setGpsccontactImpactedBusiness(input.getGpsccontactImpactedBusiness());
+		
 		schrankDTO.setDownStreamAdd(input.getDownStreamAdd());
 		schrankDTO.setDownStreamDelete(input.getDownStreamDelete());
 
@@ -58,6 +81,9 @@ public class SchrankWS {
 		if (null != input) {
 			SchrankDTO dto = getSchrankDTOFromEditInput(input);
 			output = SchrankHbn.saveSchrank(input.getCwid(), dto);
+			
+			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
+				BaseHbn.saveGpscContacts(dto, input);
 		}
 		
 		return output;
@@ -103,6 +129,9 @@ public class SchrankWS {
 				Schrank schrank = SchrankHbn.findByNameAndRoomId(dto.getName(), dto.getRoomId());
 				output.setCiId(schrank.getId());
 				output.setTableId(AirKonstanten.TABLE_ID_POSITION);
+				
+				dto.setId(schrank.getId());
+				BaseHbn.saveGpscContacts(dto, input);
 				
 				/*
 				// get detail

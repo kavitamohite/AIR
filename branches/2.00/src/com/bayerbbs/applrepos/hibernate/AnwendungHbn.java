@@ -2957,6 +2957,8 @@ public class AnwendungHbn extends BaseHbn {
 							if (null != applicationTarget && null == applicationTarget.getDeleteTimestamp()) {
 								session.saveOrUpdate(applicationTarget);
 								session.flush();
+								
+								output.setApplicationId(applicationTarget.getApplicationId());
 							}
 							toCommit = true;
 						}

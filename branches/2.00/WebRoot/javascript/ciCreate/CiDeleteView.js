@@ -109,6 +109,9 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 				applicationCat1: record.data.applicationCat1Txt
 			};
 			this.fireEvent('airAction', this, 'appDeleteSuccess', data);
+			
+			var bDelete = this.getComponent('bDelete');
+			bDelete.hide();
 		} else {
 			var title = 'Error deleting CI';
 			var message = records[0].get('messages');
@@ -158,7 +161,7 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 			start: 0,
 			limit: 20,
 //			sort: 'applicationName',
-			onlyapplications: 'true',
+//			onlyapplications: 'true',
 			searchAction: 'myCisForDelete'// Parameter für Owner und Delegate Apps anstatt myCis!
 		};
 		

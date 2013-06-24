@@ -3,7 +3,9 @@ package com.bayerbbs.applrepos.hibernate;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -356,9 +358,22 @@ public class ApplReposHbn {
 		if (StringUtils.isNotNullOrEmpty(cwid)) {
 
 			Session session = HibernateUtil.getSession();
+			PreparedStatement stmt = null;
 
 			try {
+				stmt = session.connection().prepareStatement(SELECT_ROLES);
+				stmt.setString(1, cwid.toUpperCase());
 				
+				ResultSet rs = stmt.executeQuery();
+				while(rs.next()) {
+					RolePersonDTO dto = new RolePersonDTO();
+					dto.setRoleId(rs.getLong(1));
+					dto.setCwid(cwid.toUpperCase());
+					dto.setRoleName(rs.getString(2));
+					listDTO.add(dto);
+				}
+				
+				/*
 				@SuppressWarnings("unchecked")
 				List<Object[]> listTemp = session.createSQLQuery(SELECT_ROLES)
 					.setString("Cwid", cwid.toUpperCase())
@@ -380,7 +395,7 @@ public class ApplReposHbn {
 						System.out.println(e.toString());
 					}
 					
-				}			
+				}*/
 			} 
 			catch (Exception e) 
 			{
@@ -388,6 +403,10 @@ public class ApplReposHbn {
 			}
 			finally 
 			{
+				try {
+					stmt.close();
+				} catch (SQLException e) {}
+				
 				session.flush();
 			}
 		}
