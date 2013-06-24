@@ -286,7 +286,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 		switch(records[0].data.result) {
 			case 'OK':
 				AAM.setCiId(parseInt(records[0].data.applicationId));//applicationId!! id
-				AAM.setTableId(AC.TABLE_ID_APPLICATION);
+//				AAM.setTableId(AC.TABLE_ID_APPLICATION); // nach unten verschoben
 				
 				var data = {
 					applicationName: this.applicationName,
@@ -303,12 +303,14 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 //					var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
 //					var ciSubTypeId = r ? r.get('ciSubTypeId') : AC.APP_CAT1_APPLICATION;
 					
-					
 					var options = {
-//						tableId: record.get('tableId'),
+						tableId: record.get('tableId'),
 //						ciSubTypeId: ciSubTypeId,//parseInt(record.get('applicationCat1Txt'))//applicationCat1Id
 						reset: true
 					};
+
+					// Setze TableID aus dem Source-Object
+					AAM.setTableId(record.get('tableId'));
 
 					this.fireEvent('externalNavigation', this, null, 'clCiDetails', options);
 					
