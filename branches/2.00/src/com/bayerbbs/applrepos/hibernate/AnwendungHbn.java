@@ -151,6 +151,9 @@ public class AnwendungHbn extends BaseHbn {
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
 			
+			boolean hasBusinessEssentialChanged = false;
+			Long businessEssentialIdOld = null;
+			
 			if (null != dto.getId()	|| 0 < dto.getId().longValue()) {
 				Long id = new Long(dto.getId());
 
@@ -305,8 +308,8 @@ public class AnwendungHbn extends BaseHbn {
 							}
 						}
 
-						boolean hasBusinessEssentialChanged = false;
-						Long businessEssentialIdOld = application.getBusinessEssentialId();
+						hasBusinessEssentialChanged = false;
+						businessEssentialIdOld = application.getBusinessEssentialId();
 						if (null == dto.getBusinessEssentialId()) {
 							if (null == application.getBusinessEssentialId()) {
 								// set the default value
@@ -320,11 +323,6 @@ public class AnwendungHbn extends BaseHbn {
 							}
 							application.setBusinessEssentialId(dto.getBusinessEssentialId());
 						}
-						
-						if (hasBusinessEssentialChanged) {
-							sendBusinessEssentialChangedMail(application, dto, businessEssentialIdOld);
-						}
-						
 						
 						if (null != dto.getItSecSbAvailabilityId()) {
 							if (-1 == dto.getItSecSbAvailabilityId()) {
@@ -598,6 +596,11 @@ public class AnwendungHbn extends BaseHbn {
 								session.flush();
 								
 								toCommit = true;
+								
+								if (hasBusinessEssentialChanged) {
+									sendBusinessEssentialChangedMail(application, dto, businessEssentialIdOld);
+								}
+
 							}
 						}
 					} catch (Exception e) {
@@ -3198,13 +3201,24 @@ public class AnwendungHbn extends BaseHbn {
 			StringBuffer sbSubject = new StringBuffer();
 			sbSubject.append(cat2TXT);
 			sbSubject.append(" ");
+			sbSubject.append("\"");
 			sbSubject.append(application.getApplicationName());
-			sbSubject.append(" is ");
+			sbSubject.append(" (").append(application.getApplicationAlias()).append(")");
+			sbSubject.append("\"");
+			sbSubject.append(" is changed to ");
 			sbSubject.append(businessEssentialNew);
 
 			StringBuffer sb = new StringBuffer();
 			sb.append("Dear ").append(personDTO.getFirstname()).append(" ").append(personDTO.getLastname()).append(",\r\n\r\n");
-			sb.append("your CI was set from \"").append(businessEssentialOld).append("\" to \"").append(businessEssentialNew).append("\"\r\n\r\n");
+			sb.append("your CI ");
+			
+			sb.append("\"");
+			sb.append(application.getApplicationName());
+			sb.append(" (").append(application.getApplicationAlias()).append(")");
+			sb.append("\"");
+
+			
+			sb.append(" was set from \"").append(businessEssentialOld).append("\" to \"").append(businessEssentialNew).append("\"\r\n\r\n");
 			sb.append("If you have questions about this please contact ITILcenter@bayer.com.\r\n\r\n");
 			sb.append("Best Regards\r\n");
 			sb.append("ITILcenter Administration");
