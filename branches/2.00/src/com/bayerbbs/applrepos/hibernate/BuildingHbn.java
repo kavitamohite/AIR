@@ -1432,4 +1432,181 @@ public class BuildingHbn extends LokationItemHbn {
 		
 		return messages;
 	}
+	
+	
+	public static void getBuilding(BuildingDTO dto, Building building) {
+		
+		if (null != building.getTerrainId())
+			dto.setTerrainId(building.getTerrainId());
+		
+		if (null != building.getPostalCode())
+			dto.setBuildingCode(building.getPostalCode());
+		
+		if (null != building.getLocation())
+			dto.setLocation(building.getLocation());
+		
+		if (null != building.getStreet())
+			dto.setStreet(building.getStreet());
+		
+		if (null != building.getStreetNumber())
+			dto.setStreet(building.getStreetNumber());
+
+	}
+
+	
+	public static CiEntityEditParameterOutput copyBuilding(String cwid, Long buildingIdSource, Long buildingIdTarget, String ciNameTarget, String ciAliasTarget) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		String validationMessage = null;
+		
+		if (null != cwid) {
+			cwid = cwid.toUpperCase();
+			
+				// check der InputWerte
+				List<String> messages = new ArrayList<String>();
+
+				if (messages.isEmpty()) {
+
+					Session session = HibernateUtil.getSession();
+					Transaction tx = null;
+					tx = session.beginTransaction();
+					
+					Building buildingSource = (Building) session.get(Building.class, buildingIdSource);
+					Building buildingTarget = null;
+					if (null == buildingIdTarget) {
+						// Komplette Neuanlage des Datensatzes mit Insert/Update-Feldern
+						
+						buildingTarget = new Building();
+						// building - insert values
+						buildingTarget.setInsertUser(cwid);
+						buildingTarget.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						buildingTarget.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+
+						// building - update values
+						buildingTarget.setUpdateUser(buildingTarget.getInsertUser());
+						buildingTarget.setUpdateQuelle(buildingTarget.getInsertQuelle());
+						buildingTarget.setUpdateTimestamp(buildingTarget.getInsertTimestamp());
+						
+						buildingTarget.setBuildingName(ciNameTarget);
+						buildingTarget.setAlias(ciAliasTarget);
+						// 
+						buildingTarget.setCiOwner(cwid.toUpperCase());
+						buildingTarget.setCiOwnerDelegate(buildingSource.getCiOwnerDelegate());
+						buildingTarget.setTemplate(buildingSource.getTemplate());
+						
+						buildingTarget.setRelevanceITSEC(buildingSource.getRelevanceITSEC());
+						buildingTarget.setRelevanceICS(buildingSource.getRelevanceICS());
+
+					}
+					else {
+						// Reaktivierung / Übernahme des bestehenden Datensatzes
+						buildingTarget = (Building) session.get(Building.class, buildingIdTarget);
+						// building found - change values
+						output.setCiId(buildingIdTarget);
+						
+						buildingTarget.setUpdateUser(cwid);
+						buildingTarget.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						buildingTarget.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+					}
+
+					if (null == buildingSource) {
+						// application was not found in database
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { "the building id " + buildingIdSource + " was not found in database" });
+					} else if (null != buildingTarget.getDeleteTimestamp()) {
+						// application is deleted
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { "the building id " + buildingIdTarget + " is deleted" });
+					} else {
+
+						buildingTarget.setTerrainId(buildingSource.getTerrainId());
+						
+						// ==========
+						buildingTarget.setTerrainId(buildingSource.getTerrainId());
+						buildingTarget.setBuildingCode(buildingSource.getBuildingCode());
+						buildingTarget.setPostalCode(buildingSource.getPostalCode());
+						buildingTarget.setLocation(buildingSource.getLocation());
+						buildingTarget.setStreet(buildingSource.getStreet());
+						buildingTarget.setStreetNumber(buildingSource.getStreetNumber());
+						
+						// ==============================
+						buildingTarget.setItSecSbAvailability(buildingSource.getItSecSbAvailability());
+						buildingTarget.setItSecSbAvailabilityTxt(buildingSource.getItSecSbAvailabilityTxt());
+						
+						// der kopierende User wird Responsible
+						buildingTarget.setCiOwner(cwid);
+						buildingTarget.setCiOwnerDelegate(buildingSource.getCiOwnerDelegate());
+						
+						// ==========
+						// compliance
+						// ==========
+						
+						// IT SET only view!
+						buildingTarget.setItset(buildingSource.getItset());
+						buildingTarget.setTemplate(buildingSource.getTemplate());
+						buildingTarget.setItsecGroupId(null);
+						buildingTarget.setRefId(null);
+						
+					}
+
+					boolean toCommit = false;
+					try {
+						if (null == validationMessage) {
+							if (null != buildingTarget && null == buildingTarget.getDeleteTimestamp()) {
+								session.saveOrUpdate(buildingTarget);
+								session.flush();
+								
+								output.setCiId(buildingTarget.getId());
+							}
+							toCommit = true;
+						}
+					} catch (Exception e) {
+						String message = e.getMessage();
+						log.error(message);
+						// handle exception
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						
+						if (null != message && message.startsWith("ORA-20000: ")) {
+							message = message.substring("ORA-20000: ".length());
+						}
+						
+						output.setMessages(new String[] { message });
+					} finally {
+						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+						if (toCommit && null != buildingTarget) {
+							if (null == hbnMessage) {
+								output.setResult(AirKonstanten.RESULT_OK);
+								output.setMessages(new String[] { EMPTY });
+							} else {
+								output.setResult(AirKonstanten.RESULT_ERROR);
+								output.setMessages(new String[] { hbnMessage });
+							}
+						}
+					}
+				} else {
+					// messages
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					String astrMessages[] = new String[messages.size()];
+					for (int i = 0; i < messages.size(); i++) {
+						astrMessages[i] = messages.get(i);
+					}
+					output.setMessages(astrMessages);
+				}
+
+		} else {
+			// cwid missing
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { "cwid missing" });
+		}
+
+		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
+			// TODO errorcodes / Texte
+			if (null != output.getMessages() && output.getMessages().length > 0) {
+				output.setDisplayMessage(output.getMessages()[0]);
+			}
+		}
+		
+		return output;
+	}
+
 }

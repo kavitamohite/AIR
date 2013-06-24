@@ -526,4 +526,195 @@ public class RoomHbn extends LokationItemHbn {
 		
 		return messages;
 	}
+
+	public static void getRoom(RoomDTO dto, Room room) {
+		
+		if (null != room.getFloor())
+			dto.setFloor(room.getFloor());
+		
+		if (null != room.getRoomType())
+			dto.setRoomType(room.getRoomType());
+		
+		if (null != room.getBuildingArea())
+			dto.setBuildingAreaData(room.getBuildingArea().getBuildingAreaName());
+		
+//		if(null != room.getLicenseScanningId()) {
+//			if(room.getLicenseScanningId() > -1)
+//				dto.setLicenseScanningId(room.getLicenseScanningId());
+//			else
+//				dto.setLicenseScanningId(null);
+//		}
+		
+
+		if (null != room.getSeverityLevelId()) {
+			if (-1 == room.getSeverityLevelId()) {
+				dto.setSeverityLevelId(null);
+			}
+			else {
+				dto.setSeverityLevelId(room.getSeverityLevelId());
+			}
+		}
+		
+		
+		if (null == room.getBusinessEssentialId()) {
+			// messages.add("business essential is empty");
+			// TODO 1 TESTCODE getBusinessEssentialId
+			room.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+		}
+		
+		dto.setBusinessEssentialId(room.getBusinessEssentialId());
+	}
+
+	
+	public static CiEntityEditParameterOutput copyRoom(String cwid, Long roomIdSource, Long roomIdTarget, String ciNameTarget, String ciAliasTarget) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		String validationMessage = null;
+		
+		if (null != cwid) {
+			cwid = cwid.toUpperCase();
+			
+				// check der InputWerte
+				List<String> messages = new ArrayList<String>();
+
+				if (messages.isEmpty()) {
+
+					Session session = HibernateUtil.getSession();
+					Transaction tx = null;
+					tx = session.beginTransaction();
+					
+					Room roomSource = (Room) session.get(Room.class, roomIdSource);
+					Room roomTarget = null;
+					if (null == roomIdTarget) {
+						// Komplette Neuanlage des Datensatzes mit Insert/Update-Feldern
+						
+						roomTarget = new Room();
+						// room - insert values
+						roomTarget.setInsertUser(cwid);
+						roomTarget.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						roomTarget.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+
+						// room - update values
+						roomTarget.setUpdateUser(roomTarget.getInsertUser());
+						roomTarget.setUpdateQuelle(roomTarget.getInsertQuelle());
+						roomTarget.setUpdateTimestamp(roomTarget.getInsertTimestamp());
+						
+						roomTarget.setRoomName(ciNameTarget);
+						roomTarget.setAlias(ciAliasTarget);
+						// 
+						roomTarget.setCiOwner(cwid.toUpperCase());
+						roomTarget.setCiOwnerDelegate(roomSource.getCiOwnerDelegate());
+						roomTarget.setTemplate(roomSource.getTemplate());
+						
+						roomTarget.setRelevanceITSEC(roomSource.getRelevanceITSEC());
+						roomTarget.setRelevanceICS(roomSource.getRelevanceICS());
+
+					}
+					else {
+						// Reaktivierung / Übernahme des bestehenden Datensatzes
+						roomTarget = (Room) session.get(Room.class, roomIdTarget);
+						// room found - change values
+						output.setCiId(roomIdTarget);
+						
+						roomTarget.setUpdateUser(cwid);
+						roomTarget.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						roomTarget.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+					}
+
+					if (null == roomSource) {
+						// room was not found in database
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { "the room id "	+ roomIdSource + " was not found in database" });
+					} else if (null != roomTarget.getDeleteTimestamp()) {
+						// room is deleted
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { "the room id "	+ roomIdTarget + " is deleted" });
+					} else {
+
+						roomTarget.setBuildingAreaId(roomSource.getBuildingAreaId());
+						
+						// ==========
+						roomTarget.setSeverityLevelId(roomSource.getSeverityLevelId());
+						roomTarget.setBusinessEssentialId(roomSource.getBusinessEssentialId());
+
+						// ==============================
+						roomTarget.setItSecSbAvailability(roomSource.getItSecSbAvailability());
+						roomTarget.setItSecSbAvailabilityTxt(roomSource.getItSecSbAvailabilityTxt());
+						
+						// der kopierende User wird Responsible
+						roomTarget.setCiOwner(cwid);
+						roomTarget.setCiOwnerDelegate(roomSource.getCiOwnerDelegate());
+						
+						// ==========
+						// compliance
+						// ==========
+						
+						// IT SET only view!
+						roomTarget.setItset(roomSource.getItset());
+						roomTarget.setTemplate(roomSource.getTemplate());
+						roomTarget.setItsecGroupId(null);
+						roomTarget.setRefId(null);
+						
+					}
+
+					boolean toCommit = false;
+					try {
+						if (null == validationMessage) {
+							if (null != roomTarget && null == roomTarget.getDeleteTimestamp()) {
+								session.saveOrUpdate(roomTarget);
+								session.flush();
+								
+								output.setCiId(roomTarget.getId());
+							}
+							toCommit = true;
+						}
+					} catch (Exception e) {
+						String message = e.getMessage();
+						log.error(message);
+						// handle exception
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						
+						if (null != message && message.startsWith("ORA-20000: ")) {
+							message = message.substring("ORA-20000: ".length());
+						}
+						
+						output.setMessages(new String[] { message });
+					} finally {
+						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+						if (toCommit && null != roomTarget) {
+							if (null == hbnMessage) {
+								output.setResult(AirKonstanten.RESULT_OK);
+								output.setMessages(new String[] { EMPTY });
+							} else {
+								output.setResult(AirKonstanten.RESULT_ERROR);
+								output.setMessages(new String[] { hbnMessage });
+							}
+						}
+					}
+				} else {
+					// messages
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					String astrMessages[] = new String[messages.size()];
+					for (int i = 0; i < messages.size(); i++) {
+						astrMessages[i] = messages.get(i);
+					}
+					output.setMessages(astrMessages);
+				}
+
+		} else {
+			// cwid missing
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { "cwid missing" });
+		}
+
+		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
+			// TODO errorcodes / Texte
+			if (null != output.getMessages() && output.getMessages().length > 0) {
+				output.setDisplayMessage(output.getMessages()[0]);
+			}
+		}
+		
+		return output;
+	}
+
 }

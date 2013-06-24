@@ -162,4 +162,64 @@ public class RoomWS {
 		return RoomHbn.findRoomsByBuildingAreaId(id);//input
 	}
 
+	public static void createByCopyInternal(CiCopyParameterInput copyInput,
+			CiEntityEditParameterOutput output, RoomDTO dto) {
+		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			Room roomSource = RoomHbn.findById(copyInput.getCiIdSource());
+
+			if (null != roomSource) {
+				RoomHbn.getRoom(dto, roomSource);
+				dto.setId(new Long(0));
+				dto.setName(copyInput.getCiNameTarget());
+				dto.setAlias(copyInput.getCiAliasTarget());
+				
+				// set the actual cwid as responsible
+				dto.setCiOwner(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerDelegate(roomSource.getCiOwnerDelegate());
+				dto.setCiOwnerDelegateHidden(roomSource.getCiOwnerDelegate());
+				dto.setTemplate(roomSource.getTemplate());
+				
+				dto.setRelevanzItsec(roomSource.getRelevanceITSEC());
+				dto.setRelevanceICS(roomSource.getRelevanceICS());
+				
+				// save / create itSystem
+				dto.setAreaId(roomSource.getBuildingAreaId());
+				CiEntityEditParameterOutput createOutput = RoomHbn.createRoom(copyInput.getCwid(), dto, null);
+
+				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
+					Room room = RoomHbn.findByNameAndBuildingAreaId(copyInput.getCiNameTarget(), roomSource.getBuildingAreaId());
+					if (null != room) {
+						dto.setId(room.getId());
+						
+						Long ciId = room.getId();
+						Room roomTarget = RoomHbn.findById(ciId);
+						
+						if (null != roomTarget) {
+							CiEntityEditParameterOutput temp = RoomHbn.copyRoom(copyInput.getCwid(), roomSource.getId(), roomTarget.getId(), copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
+							
+							if (null != temp) {
+								output.setCiId(temp.getCiId());
+								output.setResult(temp.getResult());
+								output.setMessages(temp.getMessages());
+								output.setDisplayMessage(temp.getDisplayMessage());
+							}
+						}
+					}
+				}
+				else {
+					output.setCiId(createOutput.getCiId());
+					output.setResult(createOutput.getResult());
+					output.setMessages(createOutput.getMessages());
+					output.setDisplayMessage(createOutput.getDisplayMessage());
+				}
+			}
+		}
+
+		if (null == output.getDisplayMessage() && null != output.getMessages()) {
+			output.setDisplayMessage(output.getMessages()[0]);
+		}
+	}
+
+	
 }

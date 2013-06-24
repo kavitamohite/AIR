@@ -14,12 +14,14 @@ import com.bayerbbs.applrepos.dto.ApplicationContactEntryDTO;
 import com.bayerbbs.applrepos.dto.ApplicationContactGroupDTO;
 import com.bayerbbs.applrepos.dto.ApplicationContactsDTO;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
+import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiSupportStuffDTO;
 import com.bayerbbs.applrepos.dto.ComplianceControlStatusDTO;
 import com.bayerbbs.applrepos.dto.HistoryViewDataDTO;
 import com.bayerbbs.applrepos.dto.InterfacesDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
+import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
@@ -664,17 +666,26 @@ public class ApplicationWS {
 			
 			CiEntityEditParameterOutput outputCI = new CiEntityEditParameterOutput();
 			
+			int tableIdTarget = copyInput.getTableIdSource().intValue();
 			
-			if (AirKonstanten.TABLE_ID_IT_SYSTEM == copyInput.getTableIdSource().intValue()) {
+			if (AirKonstanten.TABLE_ID_IT_SYSTEM == tableIdTarget) {
 				
 				ItSystemDTO dtoITS = new ItSystemDTO();
 				
 				ItSystemWS.createByCopyInternal(ciCopyInput, outputCI, dtoITS);
 
 			}
-
+			else if (AirKonstanten.TABLE_ID_ROOM == tableIdTarget) {
+				RoomDTO dtoRoom = new RoomDTO();
+				RoomWS.createByCopyInternal(ciCopyInput, outputCI, dtoRoom);
+			}
+			else if (AirKonstanten.TABLE_ID_BUILDING == tableIdTarget) {
+				BuildingDTO dtoBuilding = new BuildingDTO();
+				BuildingWS.createByCopyInternal(ciCopyInput, outputCI, dtoBuilding);
+			}
+			
+			
 //			public static final int TABLE_ID_POSITION		= 13;
-//			public static final int TABLE_ID_ROOM			= 3;
 //			public static final int TABLE_ID_BUILDING		= 4;
 //			public static final int TABLE_ID_BUILDING_AREA	= 88;
 //			public static final int TABLE_ID_TERRAIN		= 30;

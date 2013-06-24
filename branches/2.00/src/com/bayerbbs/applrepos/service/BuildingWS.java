@@ -326,4 +326,63 @@ public class BuildingWS {
 	public KeyValueDTO[] findBuildingAreasByBuildingId(Long id) {
 		return BuildingHbn.findBuildingAreasByBuildingId(id);
 	}
+	
+	public static void createByCopyInternal(CiCopyParameterInput copyInput,
+			CiEntityEditParameterOutput output, BuildingDTO dto) {
+		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			Building buildingSource = BuildingHbn.findById(copyInput.getCiIdSource());
+
+			if (null != buildingSource) {
+				BuildingHbn.getBuilding(dto, buildingSource);
+				dto.setId(new Long(0));
+				dto.setName(copyInput.getCiNameTarget());
+				dto.setAlias(copyInput.getCiAliasTarget());
+				
+				// set the actual cwid as responsible
+				dto.setCiOwner(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerDelegate(buildingSource.getCiOwnerDelegate());
+				dto.setCiOwnerDelegateHidden(buildingSource.getCiOwnerDelegate());
+				dto.setTemplate(buildingSource.getTemplate());
+				
+				dto.setRelevanzItsec(buildingSource.getRelevanceITSEC());
+				dto.setRelevanceICS(buildingSource.getRelevanceICS());
+				
+				// save / create itSystem
+				CiEntityEditParameterOutput createOutput = BuildingHbn.createBuilding(copyInput.getCwid(), dto, null);
+
+				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
+					Building building = BuildingHbn.findByNameAndTerrainId(copyInput.getCiNameTarget(), buildingSource.getTerrainId());
+					if (null != building) {
+						dto.setId(building.getId());
+						
+						Long ciId = building.getId();
+						Building buildingTarget = BuildingHbn.findById(ciId);
+						
+						if (null != buildingTarget) {
+							CiEntityEditParameterOutput temp = BuildingHbn.copyBuilding(copyInput.getCwid(), buildingSource.getId(), buildingTarget.getId(), copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
+							
+							if (null != temp) {
+								output.setCiId(temp.getCiId());
+								output.setResult(temp.getResult());
+								output.setMessages(temp.getMessages());
+								output.setDisplayMessage(temp.getDisplayMessage());
+							}
+						}
+					}
+				}
+				else {
+					output.setCiId(createOutput.getCiId());
+					output.setResult(createOutput.getResult());
+					output.setMessages(createOutput.getMessages());
+					output.setDisplayMessage(createOutput.getDisplayMessage());
+				}
+			}
+		}
+
+		if (null == output.getDisplayMessage() && null != output.getMessages()) {
+			output.setDisplayMessage(output.getMessages()[0]);
+		}
+	}
+
 }
