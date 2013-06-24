@@ -1,6 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
-public class ItSystemCopyParameterInput {
+public class CiCopyParameterInput {
 
 	private String token;
 	private String cwid;
@@ -48,4 +48,5 @@ public class ItSystemCopyParameterInput {
 	public void setToken(String token) {
 		this.token = token;
 	}
+
 }

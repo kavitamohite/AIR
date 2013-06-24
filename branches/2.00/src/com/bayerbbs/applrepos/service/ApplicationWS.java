@@ -652,32 +652,35 @@ public class ApplicationWS {
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
 			// TODO check tableId !!! (app only)
 			
-			if (AirKonstanten.TABLE_ID_IT_SYSTEM == copyInput.getTableIdSource().intValue()) {
+			// Erstelle das temporäre Zwischenobjekt für alle CiTypen
+			CiCopyParameterInput ciCopyInput = new CiCopyParameterInput();
+			ciCopyInput.setToken(copyInput.getToken());
+			ciCopyInput.setCwid(copyInput.getCwid());
+			ciCopyInput.setTableIdSource(copyInput.getTableIdSource());
+			ciCopyInput.setCiIdSource(copyInput.getCiIdSource());
 			
-				ItSystemCopyParameterInput copyInputITS = new ItSystemCopyParameterInput();
-				copyInputITS.setToken(copyInput.getToken());
-				copyInputITS.setCwid(copyInput.getCwid());
-				copyInputITS.setTableIdSource(copyInput.getTableIdSource());
-				copyInputITS.setCiIdSource(copyInput.getCiIdSource());
-				
-				copyInputITS.setCiNameTarget(copyInput.getCiNameTarget());
-				copyInputITS.setCiAliasTarget(copyInput.getCiAliasTarget());
-
-				CiEntityEditParameterOutput outputITS = new CiEntityEditParameterOutput();
+			ciCopyInput.setCiNameTarget(copyInput.getCiNameTarget());
+			ciCopyInput.setCiAliasTarget(copyInput.getCiAliasTarget());
+			
+			CiEntityEditParameterOutput outputCI = new CiEntityEditParameterOutput();
+			
+			
+			if (AirKonstanten.TABLE_ID_IT_SYSTEM == copyInput.getTableIdSource().intValue()) {
 				
 				ItSystemDTO dtoITS = new ItSystemDTO();
 				
-				ItSystemWS.createByCopyInternal(copyInputITS, outputITS, dtoITS);
-				
-				output.setResult(outputITS.getResult());
-				
-				output.setDisplayMessage(outputITS.getDisplayMessage());	// one message, that should be displayed to the user
-				
-				output.setMessages(outputITS.getMessages());
-				
-				output.setApplicationId(outputITS.getCiId());
+				ItSystemWS.createByCopyInternal(ciCopyInput, outputCI, dtoITS);
 
 			}
+
+//			public static final int TABLE_ID_POSITION		= 13;
+//			public static final int TABLE_ID_ROOM			= 3;
+//			public static final int TABLE_ID_BUILDING		= 4;
+//			public static final int TABLE_ID_BUILDING_AREA	= 88;
+//			public static final int TABLE_ID_TERRAIN		= 30;
+//			public static final int TABLE_ID_SITE			= 12;
+//			public static final int TABLE_ID_WAYS			= 37;
+			
 			
 			else {
 			
@@ -749,6 +752,19 @@ public class ApplicationWS {
 					}
 				}
 			}
+			
+
+			if (AirKonstanten.TABLE_ID_APPLICATION != copyInput.getTableIdSource().intValue()) {
+				// setzen der Rückgabewerte von CI's in das applicationOutput
+				output.setResult(outputCI.getResult());
+				
+				output.setDisplayMessage(outputCI.getDisplayMessage());	// one message, that should be displayed to the user
+				
+				output.setMessages(outputCI.getMessages());
+				
+				output.setApplicationId(outputCI.getCiId());
+			}
+			
 		}
 
 		if (null == output.getDisplayMessage() && null != output.getMessages()) {

@@ -47,7 +47,7 @@ public class ItSystemWS {
 		return output;
 	}
 	
-	public CiEntityEditParameterOutput createItSystemByCopy(ItSystemCopyParameterInput copyInput) {
+	public CiEntityEditParameterOutput createItSystemByCopy(CiCopyParameterInput copyInput) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 		ItSystemDTO dto = new ItSystemDTO();
 		
@@ -58,7 +58,7 @@ public class ItSystemWS {
 		return output;
 	}
 
-	public static void createByCopyInternal(ItSystemCopyParameterInput copyInput,
+	public static void createByCopyInternal(CiCopyParameterInput copyInput,
 			CiEntityEditParameterOutput output, ItSystemDTO dto) {
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
 			ItSystem itSystemSource = ItSystemHbn.findItSystemById(copyInput.getCiIdSource());
