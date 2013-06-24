@@ -304,13 +304,13 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 //					var ciSubTypeId = r ? r.get('ciSubTypeId') : AC.APP_CAT1_APPLICATION;
 					
 					var options = {
-						tableId: record.get('tableId'),
+//						tableId: record.get('tableId'),
 //						ciSubTypeId: ciSubTypeId,//parseInt(record.get('applicationCat1Txt'))//applicationCat1Id
 						reset: true
 					};
 
 					// Setze TableID aus dem Source-Object
-					AAM.setTableId(record.get('tableId'));
+					AAM.setTableId(parseInt(record.get('tableId')));
 
 					this.fireEvent('externalNavigation', this, null, 'clCiDetails', options);
 					
