@@ -16,11 +16,12 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiBase1;
 import com.bayerbbs.applrepos.domain.CiBase2;
+import com.bayerbbs.applrepos.domain.CiGroups;
+import com.bayerbbs.applrepos.domain.CiPersons;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.GroupTypesDTO;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
-import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
-import com.bayerbbs.applrepos.service.BaseEditParameterInput;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 
 public class BaseHbn {
@@ -424,7 +425,7 @@ public class BaseHbn {
 		return output;
 	}
 	
-	public static void saveGpscContacts(CiBaseDTO dto, BaseEditParameterInput input) {
+	public static void saveGpscContacts(CiBaseDTO dto, String cwid) {
 		try {
 			for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) {
 				
@@ -437,15 +438,15 @@ public class BaseHbn {
 					String method = "get" + new String(d);
 					String methodHidden = "get" + new String(d) + AirKonstanten.GPSCGROUP_HIDDEN_DESCRIPTOR;
 
-					String gpscContact = (String) ItSystemDTO.class.getMethod(method).invoke(dto);
-					String gpscContactHidden = (String) ItSystemDTO.class.getMethod(methodHidden).invoke(dto);
+					String gpscContact = (String) CiBaseDTO.class.getMethod(method).invoke(dto);
+					String gpscContactHidden = (String) CiBaseDTO.class.getMethod(methodHidden).invoke(dto);
 					if (!(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContact)) && !(AirKonstanten.GPSCGROUP_DISABLED_MARKER.equals(gpscContactHidden))) {
 						if (AirKonstanten.YES_SHORT.equals(grouptype[2])) { // Individual Contact(s)
-							CiPersonsHbn.saveCiPerson(input.getCwid(), dto.getTableId(),
+							CiPersonsHbn.saveCiPerson(cwid, dto.getTableId(),
 									 dto.getId(), new Long(grouptype[0]), grouptype[3],
 									 gpscContactHidden);
 						} else { // Group(s)
-							CiGroupsHbn.saveCiGroup(input.getCwid(), dto.getTableId(),
+							CiGroupsHbn.saveCiGroup(cwid, dto.getTableId(),
 									 dto.getId(), new Long(grouptype[0]), grouptype[3],
 									 gpscContact);
 						}
@@ -460,4 +461,90 @@ public class BaseHbn {
 	
 	private static final Log log = LogFactory.getLog(BaseHbn.class);
 
+
+	public static void getCi(CiBaseDTO ciDTO, CiBase ci) {
+		ciDTO.setCiOwnerDelegate(ci.getCiOwnerDelegate());
+		ciDTO.setGxpFlag(ci.getGxpFlag());
+		ciDTO.setItsecGroupId(ci.getItsecGroupId());
+		ciDTO.setItSecSbAvailabilityId(ci.getItSecSbAvailability());
+		ciDTO.setItSecSbAvailabilityTxt(ci.getItSecSbAvailabilityTxt());
+		ciDTO.setItSecSbConfidentialityId(ci.getItSecSbConfidentialityId());
+		ciDTO.setItSecSbConfidentialityTxt(ci.getItSecSbConfidentialityTxt());
+		ciDTO.setItSecSbIntegrityId(ci.getItSecSbIntegrityId());
+		ciDTO.setItSecSbIntegrityTxt(ci.getItSecSbIntegrityTxt());
+		ciDTO.setItset(ci.getItset());
+		ciDTO.setRefId(ci.getRefId());
+		ciDTO.setRelevanceICS(ci.getRelevanceICS());
+		ciDTO.setRelevanzItsec(ci.getRelevanceITSEC());
+		ciDTO.setServiceContractId(ci.getServiceContractId());
+		ciDTO.setSlaId(ci.getSlaId());
+		ciDTO.setTemplate(ci.getTemplate());
+		
+		for (GroupTypesDTO gtDTO : GroupTypesHbn.listGroupTypesHbn())
+		{
+			if (AirKonstanten.NO_SHORT.equals(gtDTO.getIndividualContact()))
+			{
+				CiGroups cg = CiGroupsHbn.findCiGroup(ciDTO.getTableId().longValue(), ci.getId(), gtDTO.getGroupTypeId());
+				if (null != cg)
+				{
+					GroupsDTO g = GroupHbn.findGroupById(cg.getGroupId());
+					switch (gtDTO.getGroupTypeId().intValue())
+					{
+					case 1:	// SUPPORT GROUP - IM RESOLVER
+						ciDTO.setGpsccontactSupportGroup(g.getGroupName());
+						break;
+					case 2: // CHANGE TEAM
+						ciDTO.setGpsccontactChangeTeam(g.getGroupName());
+						break;
+					case 3: // SERVICE COORDINATOR
+						// TODO: multiple contacts!
+						ciDTO.setGpsccontactServiceCoordinator(g.getGroupName());
+						break;
+					case 4: // ESCALATION LIST
+						// TODO: multiple contacts!
+						ciDTO.setGpsccontactEscalation(g.getGroupName());
+						break;
+					case 5: // CI OWNER
+						ciDTO.setGpsccontactCiOwner(g.getGroupName());
+						break;
+					case 6: // OWNING BUSINESS GROUP
+						// TODO: multiple contacts!
+						// ???
+						break;
+					case 8: // IMPLEMENTATION TEAM
+						// ???
+						break;
+					}
+				}
+			}
+			else
+			{
+				for(CiPersons cp : CiPersonsHbn.findCiPersons(ciDTO.getTableId().longValue(), ci.getId(), gtDTO.getGroupTypeId()))
+				{
+					switch (gtDTO.getGroupTypeId().intValue())
+					{
+					case 9: // (INDIV) SERVICE COORDINATOR
+						// TODO: multiple contacts!
+						ciDTO.setGpsccontactServiceCoordinatorIndiv(cp.getCwid());
+						break;
+					case 10: // (INDIV) ESCALATION LIST
+						// TODO: multiple contacts!
+						ciDTO.setGpsccontactEscalationIndiv(cp.getCwid());
+						break;
+					case 11: // RESPONSIBLE AT CUSTOMER SIDE
+						// TODO: multiple contacts!
+						ciDTO.setGpsccontactResponsibleAtCustomerSide(cp.getCwid());
+						break;
+					case 13: // SYSTEM RESPONSIBLE
+						// TODO: multiple contacts!
+						ciDTO.setGpsccontactSystemResponsible(cp.getCwid());
+						break;
+					case 15: // Business Owner Representative
+						// ???
+						break;
+					}
+				}
+			}
+		}
+	}
 }
