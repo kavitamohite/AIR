@@ -61,7 +61,7 @@ public class GroupHbn {
 		try {
 			tx = session.beginTransaction();
 			@SuppressWarnings("unchecked")
-			List<Group> values = session.createQuery("select h from Group as h where order by h.groupName").list();
+			List<Group> values = session.createQuery("select h from Group as h order by h.groupName").list();
 
 			listResult = getDTOList(values);
 			commit = true;
@@ -244,5 +244,22 @@ public class GroupHbn {
 		}
 
 		return listResult;
+	}
+
+	public static GroupsDTO  findGroupById(Long groupId)
+	{
+		GroupsDTO result = new GroupsDTO();
+		Session session = HibernateUtil.getSession();
+		Group group = (Group) session.createQuery("SELECT h FROM groups as h WHERE h.groupId = :id").setLong("id", groupId).uniqueResult();
+		session.close();
+		if (null != group) 
+		{
+			result.setCwidResponsible(group.getCwidResponsible());
+			result.setGroupId(group.getGroupId());
+			result.setGroupName(group.getGroupName());
+			result.setManagerCwid(group.getManagerCwid());
+			result.setManagerSubstituteCwid(group.getManagerSubstituteCwid());
+		}
+		return result;
 	}
 }
