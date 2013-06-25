@@ -59,14 +59,15 @@ public class ApplicationRegionHbn {
 	
 	public static ApplicationRegion findApplicationRegion(Long applicationId, Long regionId) {
 		ApplicationRegion result = null;
-		List<ApplicationRegion> values = null;
+//		List<ApplicationRegion> values = null;
 		if (null != applicationId) {
 
 			Transaction tx = null;
 			Session session = HibernateUtil.getSession();
 			try {
 				tx = session.beginTransaction();
-				values = session.createQuery(
+				@SuppressWarnings("unchecked")
+				List<ApplicationRegion> values = session.createQuery(
 						"select h from ApplicationRegion as h where h.applicationId = "
 								+ applicationId + 
 								" and h.regionId = " + regionId +
