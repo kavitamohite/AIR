@@ -15,14 +15,15 @@ public class ApplicationProcessHbn {
 
 	public static ApplicationProcess findApplicationProcess(Long applicationId, Long processId) {
 		ApplicationProcess result = null;
-		List<ApplicationProcess> values = null;
+//		List<ApplicationProcess> values = null;
 		if (null != applicationId && null != processId) {
 
 			Transaction tx = null;
 			Session session = HibernateUtil.getSession();
 			try {
 				tx = session.beginTransaction();
-				values = session.createQuery(
+				@SuppressWarnings("unchecked")
+				List<ApplicationProcess> values = session.createQuery(
 						"select h from ApplicationProcess as h where h.applicationId = "
 								+ applicationId + 
 								" and h.processId = " + processId +
