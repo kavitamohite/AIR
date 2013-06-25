@@ -28,7 +28,7 @@ public class GroupTypesHbn {
 
 			dto.setGroupTypeId(data.getGroupTypeId());
 			dto.setGroupTypeName(data.getGroupTypeName());
-			
+			dto.setIndividualContact(data.getIndividualContact());
 			dto.setMinContacts(data.getMinContacts());
 			dto.setMaxContacts(data.getMaxContacts());
 			dto.setVisibleApplication(data.getVisibleApplication());
@@ -63,7 +63,7 @@ public class GroupTypesHbn {
 			tx = session.beginTransaction();
 			@SuppressWarnings("unchecked")
 			List<GroupType> values = session.createQuery(
-					"select h from GroupType as h where h.delTimestamp is null order by h.groupTypeName")
+					"select h from GroupType as h order by h.groupTypeName")
 					.list();
 
 			listResult = getDTOList(values);
