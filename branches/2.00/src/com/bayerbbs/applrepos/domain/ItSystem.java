@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @SequenceGenerator(name = "MySeqItSystem", sequenceName = "TBADM.SEQ_IT_SYSTEM")
 @NamedQueries({
 //	@NamedQuery(name="findItSystemsByNameOrAlias", query="FROM ItSystem i WHERE i.itSystemName=:name OR i.alias=:alias"),
-	@NamedQuery(name="findItSystemsByNameOrAlias", query="FROM ItSystem i WHERE UPPER(i.itSystemName)=:name OR UPPER(i.alias)=:alias OR UPPER(i.itSystemName)=:alias OR UPPER(i.alias)=:name"),
+	@NamedQuery(name="findItSystemsByNameOrAlias", query="FROM ItSystem i WHERE :name IN (UPPER(i.itSystemName), UPPER(i.alias)) OR :alias IN (UPPER(i.alias),  UPPER(i.itSystemName))"),
 	@NamedQuery(name="findItSystemByName", query="FROM ItSystem i WHERE i.itSystemName=:name")
 })
 public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisionInfo
