@@ -18,10 +18,12 @@ import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
+import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
+import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.service.CiDetailParameterInput;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
@@ -1435,22 +1437,14 @@ public class BuildingHbn extends LokationItemHbn {
 	
 	
 	public static void getBuilding(BuildingDTO dto, Building building) {
-		
-		if (null != building.getTerrainId())
-			dto.setTerrainId(building.getTerrainId());
-		
-		if (null != building.getPostalCode())
-			dto.setBuildingCode(building.getPostalCode());
-		
-		if (null != building.getLocation())
-			dto.setLocation(building.getLocation());
-		
-		if (null != building.getStreet())
-			dto.setStreet(building.getStreet());
-		
-		if (null != building.getStreetNumber())
-			dto.setStreet(building.getStreetNumber());
+		dto.setTableId(AirKonstanten.TABLE_ID_BUILDING);
+		BaseHbn.getCi((CiBaseDTO) dto, (CiBase) building);
 
+		dto.setTerrainId(building.getTerrainId());		
+		dto.setBuildingCode(building.getPostalCode());
+		dto.setLocation(building.getLocation());
+		dto.setStreet(building.getStreet());
+		dto.setStreetNumber(building.getStreetNumber());
 	}
 
 	
