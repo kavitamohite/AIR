@@ -94,7 +94,7 @@ public class GroupType implements Serializable {
 	 * 
 	 * @return Value of the {@link #individualContact} field.
 	 */
-	@Column(name = "INDIVUAL_CONTACT_Y_N")
+	@Column(name = "INDIVIDUAL_CONTACT_Y_N")
 	public String getIndividualContact() {
 		return individualContact;
 	}
