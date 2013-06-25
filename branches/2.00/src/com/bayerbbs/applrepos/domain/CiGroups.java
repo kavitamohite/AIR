@@ -13,7 +13,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "CI_GROUPS")
-@SequenceGenerator(name = "MySeqCiGroups", sequenceName = "TBADM.SEQ_CI_GROUPS")
+@SequenceGenerator(name = "MySeqCiGroups", sequenceName = "SEQ_CI_GROUPS")
 public class CiGroups extends DeletableRevisionInfo implements Serializable {
 
 	private static final long serialVersionUID = -2584056008889694445L;
