@@ -3,8 +3,6 @@ package com.bayerbbs.applrepos.hibernate;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -23,24 +21,24 @@ public class CiGroupsHbn {
 	 * @param input
 	 * @return
 	 */
-	private static List<CiGroupsDTO> getDTOList(
-			List<CiGroups> input) {
-		ArrayList<CiGroupsDTO> listDTO = new ArrayList<CiGroupsDTO>();
-
-		for (Iterator<CiGroups> iter = input.iterator(); iter.hasNext();) {
-			CiGroups data = iter.next();
-			CiGroupsDTO dto = new CiGroupsDTO();
-
-			dto.setCiGroupsId(data.getCiGroupsId());
-			dto.setCiId(data.getCiId());
-			dto.setGroupId(data.getGroupId());
-			dto.setGroupTypeId(data.getGroupTypeId());
-			dto.setTableId(data.getTableId());
-
-			listDTO.add(dto);
-		}
-		return listDTO;
-	}
+//	private static List<CiGroupsDTO> getDTOList(
+//			List<CiGroups> input) {
+//		ArrayList<CiGroupsDTO> listDTO = new ArrayList<CiGroupsDTO>();
+//
+//		for (Iterator<CiGroups> iter = input.iterator(); iter.hasNext();) {
+//			CiGroups data = iter.next();
+//			CiGroupsDTO dto = new CiGroupsDTO();
+//
+//			dto.setCiGroupsId(data.getCiGroupsId());
+//			dto.setCiId(data.getCiId());
+//			dto.setGroupId(data.getGroupId());
+//			dto.setGroupTypeId(data.getGroupTypeId());
+//			dto.setTableId(data.getTableId());
+//
+//			listDTO.add(dto);
+//		}
+//		return listDTO;
+//	}
 
 	/**
 	 * returns the array from list
@@ -60,36 +58,32 @@ public class CiGroupsHbn {
 	}
 
 
-	/**
-	 * @deprecated Eine Selektion von CI_GROUPS ohne Angabe der TABLE_ID ist sinnlos.
-	 * 
-	 */
-	@Deprecated
-	public static List<CiGroupsDTO> findCiGroupsBy(Long ciId, Long groupTypeId) {
-
-		List<CiGroupsDTO> listResult = new ArrayList<CiGroupsDTO>();
-
-		Transaction tx = null;
-		Session session = HibernateUtil.getSession();
-		try {
-			tx = session.beginTransaction();
-			
-			@SuppressWarnings("unchecked")
-			List<CiGroups> values = session
-					.createQuery(
-							"select h from CiGroups as h where h.deleteTimestamp is null and h.ciId = " + ciId + " and h.groupTypeId = " + groupTypeId)
-							.list();
-
-			listResult = getDTOList(values);
-
-			HibernateUtil.close(tx, session, true);
-		} catch (RuntimeException e) {
-			System.out.println(e.toString());
-			HibernateUtil.close(tx, session, false);
-		}
-
-		return listResult;
-	}
+///	@Deprecated
+//	public static List<CiGroupsDTO> findCiGroupsBy(Long ciId, Long groupTypeId) {
+//
+//		List<CiGroupsDTO> listResult = new ArrayList<CiGroupsDTO>();
+//
+//		Transaction tx = null;
+//		Session session = HibernateUtil.getSession();
+//		try {
+//			tx = session.beginTransaction();
+//			
+//			@SuppressWarnings("unchecked")
+//			List<CiGroups> values = session
+//					.createQuery(
+//							"select h from CiGroups as h where h.deleteTimestamp is null and h.ciId = " + ciId + " and h.groupTypeId = " + groupTypeId)
+//							.list();
+//
+//			listResult = getDTOList(values);
+//
+//			HibernateUtil.close(tx, session, true);
+//		} catch (RuntimeException e) {
+//			System.out.println(e.toString());
+//			HibernateUtil.close(tx, session, false);
+//		}
+//
+//		return listResult;
+//	}
 	
 	public static CiGroups findCiGroup(Long tableId, Long ciId, Long groupTypeId) {
 
