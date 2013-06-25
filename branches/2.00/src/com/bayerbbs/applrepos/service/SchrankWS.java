@@ -83,7 +83,7 @@ public class SchrankWS {
 			output = SchrankHbn.saveSchrank(input.getCwid(), dto);
 			
 			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 		}
 		
 		return output;
@@ -131,7 +131,7 @@ public class SchrankWS {
 				output.setTableId(AirKonstanten.TABLE_ID_POSITION);
 				
 				dto.setId(schrank.getId());
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 				
 				/*
 				// get detail

@@ -93,7 +93,7 @@ public class StandortWS {
 			output = StandortHbn.saveStandort(input.getCwid(), dto);
 			
 			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 		}
 		
 		return output;
@@ -138,7 +138,7 @@ public class StandortWS {
 				output.setTableId(AirKonstanten.TABLE_ID_SITE);
 				
 				dto.setId(standort.getId());
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 				
 				/*
 				// get detail

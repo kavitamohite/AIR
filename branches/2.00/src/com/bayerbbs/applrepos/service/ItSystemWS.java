@@ -23,7 +23,7 @@ public class ItSystemWS {
 				output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
 				
 				dto.setId(itSystem.getId());
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 				
 				/*
 				// get detail
@@ -49,70 +49,42 @@ public class ItSystemWS {
 	
 	public CiEntityEditParameterOutput createItSystemByCopy(CiCopyParameterInput copyInput) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-		ItSystemDTO dto = new ItSystemDTO();
 		
 		output.setResult(AirKonstanten.RESULT_ERROR);
 		
-		createByCopyInternal(copyInput, output, dto);
-		
+		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			createByCopyInternal(copyInput, output);
+		}
+		if (null == output.getDisplayMessage() && null != output.getMessages()) {
+			output.setDisplayMessage(output.getMessages()[0]);
+		}
 		return output;
 	}
 
 	public static void createByCopyInternal(CiCopyParameterInput copyInput,
-			CiEntityEditParameterOutput output, ItSystemDTO dto) {
-		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			CiEntityEditParameterOutput output) {
+			ItSystemDTO dto = new ItSystemDTO();
 			ItSystem itSystemSource = ItSystemHbn.findItSystemById(copyInput.getCiIdSource());
 
-			if (null != itSystemSource) {
-				ItSystemHbn.getItSystem(dto, itSystemSource);
-				dto.setId(new Long(0));
-				dto.setName(copyInput.getCiNameTarget());
-				dto.setAlias(copyInput.getCiAliasTarget());
-				
-				// set the actual cwid as responsible
-				dto.setCiOwner(copyInput.getCwid().toUpperCase());
-				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
-				dto.setCiOwnerDelegate(itSystemSource.getCiOwnerDelegate());
-				dto.setCiOwnerDelegateHidden(itSystemSource.getCiOwnerDelegate());
-				dto.setTemplate(itSystemSource.getTemplate());
-				
-				dto.setRelevanzItsec(itSystemSource.getRelevanceITSEC());
-				dto.setRelevanceICS(itSystemSource.getRelevanceICS());
-				
-				// save / create itSystem
-				CiEntityEditParameterOutput createOutput = ItSystemHbn.createItSystem(copyInput.getCwid(), dto, null);
-
-				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
-					ItSystem itSystem = ItSystemHbn.findItSystemByName(copyInput.getCiNameTarget());
-					if (null != itSystem) {
-						dto.setId(itSystem.getItSystemId());
-						
-						Long ciId = itSystem.getItSystemId();
-						ItSystem itSystemTarget = ItSystemHbn.findItSystemById(ciId);
-						
-						if (null != itSystemTarget) {
-							CiEntityEditParameterOutput temp = ItSystemHbn.copyItSystem(copyInput.getCwid(), itSystemSource.getId(), itSystemTarget.getId());
-							
-							if (null != temp) {
-								output.setCiId(temp.getCiId());
-								output.setResult(temp.getResult());
-								output.setMessages(temp.getMessages());
-								output.setDisplayMessage(temp.getDisplayMessage());
-							}
-						}
-					}
-				}
-				else {
-					output.setCiId(createOutput.getCiId());
-					output.setResult(createOutput.getResult());
-					output.setMessages(createOutput.getMessages());
-					output.setDisplayMessage(createOutput.getDisplayMessage());
-				}
-			}
-		}
-
-		if (null == output.getDisplayMessage() && null != output.getMessages()) {
-			output.setDisplayMessage(output.getMessages()[0]);
+		if (null != itSystemSource) 
+		{
+			ItSystemHbn.getItSystem(dto, itSystemSource);
+			dto.setId(new Long(0));
+			dto.setName(copyInput.getCiNameTarget());
+			dto.setAlias(copyInput.getCiAliasTarget());
+			
+			// set the actual cwid as responsible
+			dto.setCiOwner(copyInput.getCwid().toUpperCase());
+			dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+			dto.setCiOwnerDelegateHidden(dto.getCiOwnerDelegate());		
+			// save / create itSystem
+			CiEntityEditParameterOutput createOutput = null;
+			ItSystem itSystemTarget = ItSystemHbn.findItSystemByName(dto.getName());
+			createOutput = (null != itSystemTarget) ? ItSystemHbn.reactivateItSystem(copyInput.getCwid(), dto, itSystemTarget) : ItSystemHbn.createItSystem(copyInput.getCwid(), dto, null);
+			output.setCiId(createOutput.getCiId());
+			output.setResult(createOutput.getResult());
+			output.setMessages(createOutput.getMessages());
+			output.setDisplayMessage(createOutput.getDisplayMessage());
 		}
 	}
 	
@@ -153,9 +125,7 @@ public class ItSystemWS {
 		itSystemDTO.setEinsatzStatusId(input.getEinsatzStatusId());
 		itSystemDTO.setPrimaryFunctionId(input.getPrimaryFunctionId());
 		itSystemDTO.setLicenseScanningId(input.getLicenseScanningId());
-		
-		
-		
+				
 		//Contacts
 		itSystemDTO.setCiOwner(input.getCiOwner());
 		itSystemDTO.setCiOwnerHidden(input.getCiOwnerHidden());
@@ -234,7 +204,7 @@ public class ItSystemWS {
 			
 			
 			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 		}
 		
 		return output;

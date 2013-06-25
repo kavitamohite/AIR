@@ -98,7 +98,7 @@ public class RoomWS {
 			output = RoomHbn.saveRoom(input.getCwid(), dto);
 			
 			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 		}
 		
 		return output;
@@ -134,7 +134,7 @@ public class RoomWS {
 				output.setTableId(AirKonstanten.TABLE_ID_ROOM);
 				
 				dto.setId(room.getId());
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 				
 				/*
 				// get detail
@@ -163,8 +163,9 @@ public class RoomWS {
 	}
 
 	public static void createByCopyInternal(CiCopyParameterInput copyInput,
-			CiEntityEditParameterOutput output, RoomDTO dto) {
+			CiEntityEditParameterOutput output) {
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			RoomDTO dto = new RoomDTO();
 			Room roomSource = RoomHbn.findById(copyInput.getCiIdSource());
 
 			if (null != roomSource) {

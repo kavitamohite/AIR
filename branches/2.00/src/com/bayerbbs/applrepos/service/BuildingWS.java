@@ -174,7 +174,7 @@ public class BuildingWS {
 			output = BuildingHbn.saveBuilding(input.getCwid(), dto);
 			
 			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 		}
 		
 		return output;
@@ -188,7 +188,7 @@ public class BuildingWS {
 			output = BuildingHbn.saveBuildingArea(input.getCwid(), dto);
 			
 			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 		}
 		
 		return output;
@@ -246,7 +246,7 @@ public class BuildingWS {
 				output.setTableId(AirKonstanten.TABLE_ID_BUILDING);
 				
 				dto.setId(building.getId());
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 				
 				/*
 				// get detail
@@ -291,7 +291,7 @@ public class BuildingWS {
 				output.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
 				
 				dto.setId(buildingArea.getId());
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 				
 				/*
 				// get detail
@@ -328,8 +328,9 @@ public class BuildingWS {
 	}
 	
 	public static void createByCopyInternal(CiCopyParameterInput copyInput,
-			CiEntityEditParameterOutput output, BuildingDTO dto) {
+			CiEntityEditParameterOutput output) {
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			BuildingDTO dto = new BuildingDTO();
 			Building buildingSource = BuildingHbn.findById(copyInput.getCiIdSource());
 
 			if (null != buildingSource) {

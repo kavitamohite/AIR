@@ -5,7 +5,6 @@ import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.hibernate.BaseHbn;
-import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.TerrainHbn;
 
 public class TerrainWS {
@@ -91,7 +90,7 @@ public class TerrainWS {
 			output = TerrainHbn.saveTerrain(input.getCwid(), dto);
 			
 			if (!AirKonstanten.RESULT_ERROR.equals(output.getResult()))
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 		}
 		
 		return output;
@@ -136,7 +135,7 @@ public class TerrainWS {
 				output.setTableId(AirKonstanten.TABLE_ID_TERRAIN);
 				
 				dto.setId(terrain.getId());
-				BaseHbn.saveGpscContacts(dto, input);
+				BaseHbn.saveGpscContacts(dto, input.getCwid());
 				
 				/*
 				// get detail
