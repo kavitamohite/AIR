@@ -1,6 +1,5 @@
 package com.bayerbbs.applrepos.hibernate;
 
-import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +21,7 @@ import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
+import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
@@ -1399,13 +1399,7 @@ public class ItSystemHbn extends BaseHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			@SuppressWarnings("unchecked")
-			List<ItSystem> list = session.createQuery("select h from ItSystem as h where h.itSystemId= " + itSystemId).list();
-
-			if (null != list && 0 < list.size()) {
-				itSystem = (ItSystem) list.get(0);
-			}
-
+			itSystem = (ItSystem) session.createQuery("select h from ItSystem as h where h.itSystemId = :id").setLong("id", itSystemId).uniqueResult();
 			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
@@ -1424,76 +1418,18 @@ public class ItSystemHbn extends BaseHbn {
 	}
 
 	public static void getItSystem(ItSystemDTO dto, ItSystem itSystem) {	
-		if(null != itSystem.getOsNameId()) {
-			if(itSystem.getOsNameId() > -1)
-				dto.setOsNameId(itSystem.getOsNameId());
-			else
-				dto.setOsNameId(null);
-		}
+		dto.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
+		BaseHbn.getCi((CiBaseDTO) dto, (CiBase) itSystem);
 		
-  		if(null != itSystem.getIsVirtualHardwareClient())
-  			dto.setIsVirtualHardwareClient(itSystem.getIsVirtualHardwareClient());
-  		
- 		if(null != itSystem.getIsVirtualHardwareHost())
- 			dto.setIsVirtualHardwareHost(itSystem.getIsVirtualHardwareHost());
-		
-		
-		if(null != itSystem.getLifecycleStatusId()) {
-			if(itSystem.getLifecycleStatusId() > -1)
-				dto.setLifecycleStatusId(itSystem.getLifecycleStatusId());
-			else
-				dto.setLifecycleStatusId(null);
-		}
-			
-		if(null != itSystem.getEinsatzStatusId()) {
-			if(itSystem.getEinsatzStatusId() > -1)
-				dto.setEinsatzStatusId(itSystem.getEinsatzStatusId());
-			else
-				dto.setEinsatzStatusId(null);
-		}
-			
-		if(null != itSystem.getPrimaryFunctionId()) {
-			if(itSystem.getPrimaryFunctionId() > -1)
-				dto.setPrimaryFunctionId(itSystem.getPrimaryFunctionId());
-			else
-				dto.setPrimaryFunctionId(null);
-		}
-			
-		if(null != itSystem.getLicenseScanningId()) {
-			if(itSystem.getLicenseScanningId() > -1)
-				dto.setLicenseScanningId(itSystem.getLicenseScanningId());
-			else
-				dto.setLicenseScanningId(null);
-		}
-		
-
-		if (null != itSystem.getSeverityLevelId()) {
-			if (-1 == itSystem.getSeverityLevelId()) {
-				dto.setSeverityLevelId(null);
-			}
-			else {
-				dto.setSeverityLevelId(itSystem.getSeverityLevelId());
-			}
-		}
-		
-		
-		if (null == itSystem.getBusinessEssentialId()) {
-			// messages.add("business essential is empty");
-			// TODO 1 TESTCODE getBusinessEssentialId
-			itSystem.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-		}
-		
+		dto.setOsNameId(itSystem.getOsNameId());
+		dto.setIsVirtualHardwareClient(itSystem.getIsVirtualHardwareClient()); 		
+		dto.setIsVirtualHardwareHost(itSystem.getIsVirtualHardwareHost());
+		dto.setLifecycleStatusId(itSystem.getLifecycleStatusId());
+		dto.setEinsatzStatusId(itSystem.getEinsatzStatusId());
+		dto.setPrimaryFunctionId(itSystem.getPrimaryFunctionId());
+		dto.setLicenseScanningId(itSystem.getLicenseScanningId());
+		dto.setSeverityLevelId(itSystem.getSeverityLevelId());
 		dto.setBusinessEssentialId(itSystem.getBusinessEssentialId());
 		dto.setCiSubTypeId(itSystem.getCiSubTypeId());
-	}
-
-
-	public static CiEntityEditParameterOutput copyItSystem(String cwid,
-			Long id, Long id2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	
+	}	
 }

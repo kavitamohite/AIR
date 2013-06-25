@@ -17,9 +17,11 @@ import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.BuildingArea;
+import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.domain.Room;
+import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
@@ -528,40 +530,13 @@ public class RoomHbn extends LokationItemHbn {
 	}
 
 	public static void getRoom(RoomDTO dto, Room room) {
-		
-		if (null != room.getFloor())
-			dto.setFloor(room.getFloor());
-		
-		if (null != room.getRoomType())
-			dto.setRoomType(room.getRoomType());
-		
-		if (null != room.getBuildingArea())
-			dto.setBuildingAreaData(room.getBuildingArea().getBuildingAreaName());
-		
-//		if(null != room.getLicenseScanningId()) {
-//			if(room.getLicenseScanningId() > -1)
-//				dto.setLicenseScanningId(room.getLicenseScanningId());
-//			else
-//				dto.setLicenseScanningId(null);
-//		}
-		
+		dto.setTableId(AirKonstanten.TABLE_ID_ROOM);
+		BaseHbn.getCi((CiBaseDTO) dto, (CiBase) room);
 
-		if (null != room.getSeverityLevelId()) {
-			if (-1 == room.getSeverityLevelId()) {
-				dto.setSeverityLevelId(null);
-			}
-			else {
-				dto.setSeverityLevelId(room.getSeverityLevelId());
-			}
-		}
-		
-		
-		if (null == room.getBusinessEssentialId()) {
-			// messages.add("business essential is empty");
-			// TODO 1 TESTCODE getBusinessEssentialId
-			room.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-		}
-		
+		dto.setFloor(room.getFloor());
+		dto.setRoomType(room.getRoomType());	
+		dto.setBuildingAreaData(room.getBuildingArea().getBuildingAreaName());
+		dto.setSeverityLevelId(room.getSeverityLevelId());
 		dto.setBusinessEssentialId(room.getBusinessEssentialId());
 	}
 

@@ -672,6 +672,7 @@ public class StandortHbn extends LokationItemHbn {
 		Query q = session.getNamedQuery("findSitesByLandId");
 		q.setParameter("landId", id);//input.getId()
 
+		@SuppressWarnings("unchecked")
 		List<Standort> sites = q.list();
 		
 		
