@@ -155,4 +155,64 @@ public class SchrankWS {
 		return output;
 	}
 
+	public static void createByCopyInternal(CiCopyParameterInput copyInput,
+			CiEntityEditParameterOutput output) {
+		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			SchrankDTO dto = new SchrankDTO();
+			Schrank positionSource = SchrankHbn.findById(copyInput.getCiIdSource());
+
+			if (null != positionSource) {
+				SchrankHbn.getSchrank(dto, positionSource);
+				dto.setId(new Long(0));
+				dto.setName(copyInput.getCiNameTarget());
+				dto.setAlias(copyInput.getCiAliasTarget());
+				
+				// set the actual cwid as responsible
+				dto.setCiOwner(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerDelegate(positionSource.getCiOwnerDelegate());
+				dto.setCiOwnerDelegateHidden(positionSource.getCiOwnerDelegate());
+				dto.setTemplate(positionSource.getTemplate());
+				
+				dto.setRelevanzItsec(positionSource.getRelevanceITSEC());
+				dto.setRelevanceICS(positionSource.getRelevanceICS());
+				
+				// save / create itSystem
+				dto.setRoomId(positionSource.getRoomId());
+				CiEntityEditParameterOutput createOutput = SchrankHbn.createSchrank(copyInput.getCwid(), dto, null);
+
+				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
+					Schrank schrank = SchrankHbn.findByNameAndRoomId(copyInput.getCiNameTarget(), positionSource.getRoomId());
+					if (null != schrank) {
+						dto.setId(schrank.getId());
+						
+						Long ciId = schrank.getId();
+						Schrank schrankTarget = SchrankHbn.findById(ciId);
+						
+						if (null != schrankTarget) {
+							CiEntityEditParameterOutput temp = SchrankHbn.copyPosition(copyInput.getCwid(), positionSource.getId(), schrankTarget.getId(), copyInput.getCiNameTarget());
+							
+							if (null != temp) {
+								output.setCiId(temp.getCiId());
+								output.setResult(temp.getResult());
+								output.setMessages(temp.getMessages());
+								output.setDisplayMessage(temp.getDisplayMessage());
+							}
+						}
+					}
+				}
+				else {
+					output.setCiId(createOutput.getCiId());
+					output.setResult(createOutput.getResult());
+					output.setMessages(createOutput.getMessages());
+					output.setDisplayMessage(createOutput.getDisplayMessage());
+				}
+			}
+		}
+
+		if (null == output.getDisplayMessage() && null != output.getMessages()) {
+			output.setDisplayMessage(output.getMessages()[0]);
+		}
+	}
+
 }

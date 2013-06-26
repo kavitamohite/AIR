@@ -327,7 +327,7 @@ public class BuildingWS {
 		return BuildingHbn.findBuildingAreasByBuildingId(id);
 	}
 	
-	public static void createByCopyInternal(CiCopyParameterInput copyInput,
+	public static void createBuildingByCopyInternal(CiCopyParameterInput copyInput,
 			CiEntityEditParameterOutput output) {
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
 			BuildingDTO dto = new BuildingDTO();
@@ -362,6 +362,67 @@ public class BuildingWS {
 						
 						if (null != buildingTarget) {
 							CiEntityEditParameterOutput temp = BuildingHbn.copyBuilding(copyInput.getCwid(), buildingSource.getId(), buildingTarget.getId(), copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
+							
+							if (null != temp) {
+								output.setCiId(temp.getCiId());
+								output.setResult(temp.getResult());
+								output.setMessages(temp.getMessages());
+								output.setDisplayMessage(temp.getDisplayMessage());
+							}
+						}
+					}
+				}
+				else {
+					output.setCiId(createOutput.getCiId());
+					output.setResult(createOutput.getResult());
+					output.setMessages(createOutput.getMessages());
+					output.setDisplayMessage(createOutput.getDisplayMessage());
+				}
+			}
+		}
+
+		if (null == output.getDisplayMessage() && null != output.getMessages()) {
+			output.setDisplayMessage(output.getMessages()[0]);
+		}
+	}
+
+	public static void createBuildingAreaByCopyInternal(CiCopyParameterInput copyInput,
+			CiEntityEditParameterOutput output) {
+		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			BuildingAreaDTO dto = new BuildingAreaDTO();
+			BuildingArea buildingAreaSource = BuildingHbn.findBuildingAreaById(copyInput.getCiIdSource());
+
+			if (null != buildingAreaSource) {
+				BuildingHbn.getBuildingArea(dto, buildingAreaSource);
+				dto.setId(new Long(0));
+				dto.setName(copyInput.getCiNameTarget());
+				dto.setAlias(copyInput.getCiAliasTarget());
+				
+				// set the actual cwid as responsible
+				dto.setCiOwner(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerDelegate(buildingAreaSource.getCiOwnerDelegate());
+				dto.setCiOwnerDelegateHidden(buildingAreaSource.getCiOwnerDelegate());
+				dto.setTemplate(buildingAreaSource.getTemplate());
+				
+				dto.setRelevanzItsec(buildingAreaSource.getRelevanceITSEC());
+				dto.setRelevanceICS(buildingAreaSource.getRelevanceICS());
+				
+				// save / create itSystem
+				dto.setBuildingId(buildingAreaSource.getBuildingId());
+				CiEntityEditParameterOutput createOutput = BuildingHbn.createBuildingArea(copyInput.getCwid(), dto, null);
+
+				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
+					// Problem keine gefundene BuildingArea!!!
+					BuildingArea buildingArea = BuildingHbn.findByNameAndBuildingId(copyInput.getCiNameTarget(), buildingAreaSource.getBuildingAreaId());
+					if (null != buildingArea) {
+						dto.setId(buildingArea.getId());
+						
+						Long ciId = buildingArea.getId();
+						BuildingArea buildingAreaTarget = BuildingHbn.findBuildingAreaById(ciId);
+						
+						if (null != buildingAreaTarget) {
+							CiEntityEditParameterOutput temp = BuildingHbn.copyBuildingArea(copyInput.getCwid(), buildingAreaSource.getId(), buildingAreaTarget.getId(), copyInput.getCiNameTarget());
 							
 							if (null != temp) {
 								output.setCiId(temp.getCiId());

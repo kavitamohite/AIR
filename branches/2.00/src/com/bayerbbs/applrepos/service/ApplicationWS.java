@@ -731,20 +731,25 @@ public class ApplicationWS {
 					ItSystemWS.createByCopyInternal(ciCopyInput, outputCI);
 					break;
 				case AirKonstanten.TABLE_ID_POSITION:
+					SchrankWS.createByCopyInternal(ciCopyInput, outputCI);
 					break;
 				case AirKonstanten.TABLE_ID_ROOM:
 					RoomWS.createByCopyInternal(ciCopyInput, outputCI);
 					break;
 				case AirKonstanten.TABLE_ID_BUILDING_AREA:
+					BuildingWS.createBuildingAreaByCopyInternal(ciCopyInput, outputCI);
 					break;
 				case AirKonstanten.TABLE_ID_BUILDING:
-					BuildingWS.createByCopyInternal(ciCopyInput, outputCI);
+					BuildingWS.createBuildingByCopyInternal(ciCopyInput, outputCI);
 					break;
 				case AirKonstanten.TABLE_ID_TERRAIN:
+					TerrainWS.createByCopyInternal(ciCopyInput, outputCI);
 					break;
 				case AirKonstanten.TABLE_ID_SITE:
+					StandortWS.createByCopyInternal(ciCopyInput, outputCI);
 					break;
 				case AirKonstanten.TABLE_ID_WAYS:
+					// not yet supported in AIR
 					break;
 			}
 			

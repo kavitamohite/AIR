@@ -162,4 +162,65 @@ public class TerrainWS {
 	public KeyValueDTO[] findTerrainsBySiteId(Long id) {//DefaultDataInput input
 		return TerrainHbn.findTerrainsBySiteId(id);//input
 	}
+	
+	public static void createByCopyInternal(CiCopyParameterInput copyInput,
+			CiEntityEditParameterOutput output) {
+		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			TerrainDTO dto = new TerrainDTO();
+			Terrain terrainSource = TerrainHbn.findById(copyInput.getCiIdSource());
+
+			if (null != terrainSource) {
+				TerrainHbn.getTerrain(dto, terrainSource);
+				dto.setId(new Long(0));
+				dto.setName(copyInput.getCiNameTarget());
+				dto.setAlias(copyInput.getCiAliasTarget());
+				
+				// set the actual cwid as responsible
+				dto.setCiOwner(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerDelegate(terrainSource.getCiOwnerDelegate());
+				dto.setCiOwnerDelegateHidden(terrainSource.getCiOwnerDelegate());
+				dto.setTemplate(terrainSource.getTemplate());
+				
+				dto.setRelevanzItsec(terrainSource.getRelevanceITSEC());
+				dto.setRelevanceICS(terrainSource.getRelevanceICS());
+				
+				// save / create itSystem
+				dto.setStandortId(terrainSource.getStandortId());
+				CiEntityEditParameterOutput createOutput = TerrainHbn.createTerrain(copyInput.getCwid(), dto, null);
+
+				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
+					Terrain terrain = TerrainHbn.findByNameAndSiteId(copyInput.getCiNameTarget(), terrainSource.getStandortId());
+					if (null != terrain) {
+						dto.setId(terrain.getId());
+						
+						Long ciId = terrain.getId();
+						Terrain terrainTarget = TerrainHbn.findById(ciId);
+						
+						if (null != terrainTarget) {
+							CiEntityEditParameterOutput temp = TerrainHbn.copyTerrain(copyInput.getCwid(), terrainSource.getId(), terrainTarget.getId(), copyInput.getCiNameTarget());
+							
+							if (null != temp) {
+								output.setCiId(temp.getCiId());
+								output.setResult(temp.getResult());
+								output.setMessages(temp.getMessages());
+								output.setDisplayMessage(temp.getDisplayMessage());
+							}
+						}
+					}
+				}
+				else {
+					output.setCiId(createOutput.getCiId());
+					output.setResult(createOutput.getResult());
+					output.setMessages(createOutput.getMessages());
+					output.setDisplayMessage(createOutput.getDisplayMessage());
+				}
+			}
+		}
+
+		if (null == output.getDisplayMessage() && null != output.getMessages()) {
+			output.setDisplayMessage(output.getMessages()[0]);
+		}
+	}
+
 }

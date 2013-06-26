@@ -165,4 +165,65 @@ public class StandortWS {
 	public KeyValueDTO[] findSitesByLandId(Long id) {//DefaultDataInput input
 		return StandortHbn.findSitesByLandId(id);//input
 	}
+	
+	public static void createByCopyInternal(CiCopyParameterInput copyInput,
+			CiEntityEditParameterOutput output) {
+		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			StandortDTO dto = new StandortDTO();
+			Standort siteSource = StandortHbn.findById(copyInput.getCiIdSource());
+
+			if (null != siteSource) {
+				StandortHbn.getSite(dto, siteSource);
+				dto.setId(new Long(0));
+				dto.setName(copyInput.getCiNameTarget());
+				dto.setAlias(copyInput.getCiAliasTarget());
+				
+				// set the actual cwid as responsible
+				dto.setCiOwner(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerDelegate(siteSource.getCiOwnerDelegate());
+				dto.setCiOwnerDelegateHidden(siteSource.getCiOwnerDelegate());
+				dto.setTemplate(siteSource.getTemplate());
+				
+				dto.setRelevanzItsec(siteSource.getRelevanceITSEC());
+				dto.setRelevanceICS(siteSource.getRelevanceICS());
+				
+				// save / create itSystem
+				dto.setLandId(siteSource.getLandId());
+				CiEntityEditParameterOutput createOutput = StandortHbn.createStandort(copyInput.getCwid(), dto, null);
+
+				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
+					Standort site = StandortHbn.findByNameAndCountryId(copyInput.getCiNameTarget(), siteSource.getLandId());
+					if (null != site) {
+						dto.setId(site.getId());
+						
+						Long ciId = site.getId();
+						Standort siteTarget = StandortHbn.findById(ciId);
+						
+						if (null != siteTarget) {
+							CiEntityEditParameterOutput temp = StandortHbn.copySite(copyInput.getCwid(), siteSource.getId(), siteTarget.getId(), copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
+							
+							if (null != temp) {
+								output.setCiId(temp.getCiId());
+								output.setResult(temp.getResult());
+								output.setMessages(temp.getMessages());
+								output.setDisplayMessage(temp.getDisplayMessage());
+							}
+						}
+					}
+				}
+				else {
+					output.setCiId(createOutput.getCiId());
+					output.setResult(createOutput.getResult());
+					output.setMessages(createOutput.getMessages());
+					output.setDisplayMessage(createOutput.getDisplayMessage());
+				}
+			}
+		}
+
+		if (null == output.getDisplayMessage() && null != output.getMessages()) {
+			output.setDisplayMessage(output.getMessages()[0]);
+		}
+	}
+
 }

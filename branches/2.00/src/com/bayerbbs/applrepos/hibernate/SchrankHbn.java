@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -13,9 +14,11 @@ import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
+import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
@@ -643,5 +646,166 @@ public class SchrankHbn extends LokationItemHbn {
 		return messages;
 	}
 
+	public static void getSchrank(SchrankDTO dto, Schrank schrank) {
+		dto.setTableId(AirKonstanten.TABLE_ID_POSITION);
+		BaseHbn.getCi((CiBaseDTO) dto, (CiBase) schrank);
+
+		dto.setRaumId(schrank.getRoomId());
+		
+		dto.setSeverityLevelId(schrank.getSeverityLevelId());
+		dto.setBusinessEssentialId(schrank.getBusinessEssentialId());
+	}
+
+	// ein Schrank hat keinen Alias // String ciAliasTarget
+	public static CiEntityEditParameterOutput copyPosition(String cwid, Long positionIdSource, Long positionIdTarget, String ciNameTarget) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		String validationMessage = null;
+		
+		if (null != cwid) {
+			cwid = cwid.toUpperCase();
+			
+				// check der InputWerte
+				List<String> messages = new ArrayList<String>();
+
+				if (messages.isEmpty()) {
+
+					Session session = HibernateUtil.getSession();
+					Transaction tx = null;
+					tx = session.beginTransaction();
+					
+					Schrank positionSource = (Schrank) session.get(Schrank.class, positionIdSource);
+					Schrank positionTarget = null;
+					if (null == positionIdTarget) {
+						// Komplette Neuanlage des Datensatzes mit Insert/Update-Feldern
+						
+						positionTarget = new Schrank();
+						// schrank - insert values
+						positionTarget.setInsertUser(cwid);
+						positionTarget.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						positionTarget.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+
+						// schrank - update values
+						positionTarget.setUpdateUser(positionTarget.getInsertUser());
+						positionTarget.setUpdateQuelle(positionTarget.getInsertQuelle());
+						positionTarget.setUpdateTimestamp(positionTarget.getInsertTimestamp());
+						
+						positionTarget.setSchrankName(ciNameTarget);
+						// schrankTarget.setAlias(ciAliasTarget); - no alias
+						// 
+						positionTarget.setCiOwner(cwid.toUpperCase());
+						positionTarget.setCiOwnerDelegate(positionSource.getCiOwnerDelegate());
+						positionTarget.setTemplate(positionSource.getTemplate());
+						
+						positionTarget.setRelevanceITSEC(positionSource.getRelevanceITSEC());
+						positionTarget.setRelevanceICS(positionSource.getRelevanceICS());
+
+					}
+					else {
+						// Reaktivierung / Übernahme des bestehenden Datensatzes
+						positionTarget = (Schrank) session.get(Schrank.class, positionIdTarget);
+						// room found - change values
+						output.setCiId(positionIdTarget);
+						
+						positionTarget.setUpdateUser(cwid);
+						positionTarget.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						positionTarget.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+					}
+
+					if (null == positionSource) {
+						// schrank was not found in database
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { "the position id "	+ positionIdSource + " was not found in database" });
+					} else if (null != positionTarget.getDeleteTimestamp()) {
+						// room is deleted
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { "the position id "	+ positionIdTarget + " is deleted" });
+					} else {
+
+						positionTarget.setRoomId(positionSource.getRoomId());
+						
+						// ==========
+						positionTarget.setSeverityLevelId(positionSource.getSeverityLevelId());
+						positionTarget.setBusinessEssentialId(positionSource.getBusinessEssentialId());
+
+						// ==============================
+						positionTarget.setItSecSbAvailability(positionSource.getItSecSbAvailability());
+						positionTarget.setItSecSbAvailabilityTxt(positionSource.getItSecSbAvailabilityTxt());
+						
+						// der kopierende User wird Responsible
+						positionTarget.setCiOwner(cwid);
+						positionTarget.setCiOwnerDelegate(positionSource.getCiOwnerDelegate());
+						
+						// ==========
+						// compliance
+						// ==========
+						
+						// IT SET only view!
+						positionTarget.setItset(positionSource.getItset());
+						positionTarget.setTemplate(positionSource.getTemplate());
+						positionTarget.setItsecGroupId(null);
+						positionTarget.setRefId(null);
+						
+					}
+
+					boolean toCommit = false;
+					try {
+						if (null == validationMessage) {
+							if (null != positionTarget && null == positionTarget.getDeleteTimestamp()) {
+								session.saveOrUpdate(positionTarget);
+								session.flush();
+								
+								output.setCiId(positionTarget.getId());
+							}
+							toCommit = true;
+						}
+					} catch (Exception e) {
+						String message = e.getMessage();
+						log.error(message);
+						// handle exception
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						
+						if (null != message && message.startsWith("ORA-20000: ")) {
+							message = message.substring("ORA-20000: ".length());
+						}
+						
+						output.setMessages(new String[] { message });
+					} finally {
+						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+						if (toCommit && null != positionTarget) {
+							if (null == hbnMessage) {
+								output.setResult(AirKonstanten.RESULT_OK);
+								output.setMessages(new String[] { EMPTY });
+							} else {
+								output.setResult(AirKonstanten.RESULT_ERROR);
+								output.setMessages(new String[] { hbnMessage });
+							}
+						}
+					}
+				} else {
+					// messages
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					String astrMessages[] = new String[messages.size()];
+					for (int i = 0; i < messages.size(); i++) {
+						astrMessages[i] = messages.get(i);
+					}
+					output.setMessages(astrMessages);
+				}
+
+		} else {
+			// cwid missing
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { "cwid missing" });
+		}
+
+		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
+			// TODO errorcodes / Texte
+			if (null != output.getMessages() && output.getMessages().length > 0) {
+				output.setDisplayMessage(output.getMessages()[0]);
+			}
+		}
+		
+		return output;
+	}
 
 }

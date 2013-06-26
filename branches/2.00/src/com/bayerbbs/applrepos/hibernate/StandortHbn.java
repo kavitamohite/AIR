@@ -15,8 +15,10 @@ import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Standort;
+import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
@@ -717,5 +719,165 @@ public class StandortHbn extends LokationItemHbn {
 	}
 
 
+	public static void getSite(StandortDTO dto, Standort site) {
+		dto.setTableId(AirKonstanten.TABLE_ID_SITE);
+		BaseHbn.getCi((CiBaseDTO) dto, (CiBase) site);
+
+		dto.setLandId(site.getLandId());
+		// dto.setSeverityLevelId(site.getSeverityLevelId());
+		// dto.setBusinessEssentialId(site.getBusinessEssentialId());
+	}
+
+	
+	public static CiEntityEditParameterOutput copySite(String cwid, Long siteIdSource, Long siteIdTarget, String ciNameTarget, String ciAliasTarget) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		String validationMessage = null;
+		
+		if (null != cwid) {
+			cwid = cwid.toUpperCase();
+			
+				// check der InputWerte
+				List<String> messages = new ArrayList<String>();
+
+				if (messages.isEmpty()) {
+
+					Session session = HibernateUtil.getSession();
+					Transaction tx = null;
+					tx = session.beginTransaction();
+					
+					Standort siteSource = (Standort) session.get(Standort.class, siteIdSource);
+					Standort siteTarget = null;
+					if (null == siteIdTarget) {
+						// Komplette Neuanlage des Datensatzes mit Insert/Update-Feldern
+						
+						siteTarget = new Standort();
+						// room - insert values
+						siteTarget.setInsertUser(cwid);
+						siteTarget.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						siteTarget.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+
+						// room - update values
+						siteTarget.setUpdateUser(siteTarget.getInsertUser());
+						siteTarget.setUpdateQuelle(siteTarget.getInsertQuelle());
+						siteTarget.setUpdateTimestamp(siteTarget.getInsertTimestamp());
+						
+						siteTarget.setStandortName(ciNameTarget);
+						// siteTarget.setAlias(ciAliasTarget);
+						// 
+						siteTarget.setCiOwner(cwid.toUpperCase());
+						siteTarget.setCiOwnerDelegate(siteSource.getCiOwnerDelegate());
+						siteTarget.setTemplate(siteSource.getTemplate());
+						
+						siteTarget.setRelevanceITSEC(siteSource.getRelevanceITSEC());
+						siteTarget.setRelevanceICS(siteSource.getRelevanceICS());
+
+					}
+					else {
+						// Reaktivierung / Übernahme des bestehenden Datensatzes
+						siteTarget = (Standort) session.get(Standort.class, siteIdTarget);
+						// room found - change values
+						output.setCiId(siteIdTarget);
+						
+						siteTarget.setUpdateUser(cwid);
+						siteTarget.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						siteTarget.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+					}
+
+					if (null == siteSource) {
+						// site was not found in database
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { "the site id "	+ siteIdSource + " was not found in database" });
+					} else if (null != siteTarget.getDeleteTimestamp()) {
+						// site is deleted
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { "the site id "	+ siteIdTarget + " is deleted" });
+					} else {
+
+						siteTarget.setLandId(siteSource.getLandId());
+						
+						// ==========
+						// siteTarget.setSeverityLevelId(siteSource.getSeverityLevelId());
+						// siteTarget.setBusinessEssentialId(siteSource.getBusinessEssentialId());
+
+						// ==============================
+						siteTarget.setItSecSbAvailability(siteSource.getItSecSbAvailability());
+						siteTarget.setItSecSbAvailabilityTxt(siteSource.getItSecSbAvailabilityTxt());
+						
+						// der kopierende User wird Responsible
+						siteTarget.setCiOwner(cwid);
+						siteTarget.setCiOwnerDelegate(siteSource.getCiOwnerDelegate());
+						
+						// ==========
+						// compliance
+						// ==========
+						
+						// IT SET only view!
+						siteTarget.setItset(siteSource.getItset());
+						siteTarget.setTemplate(siteSource.getTemplate());
+						siteTarget.setItsecGroupId(null);
+						siteTarget.setRefId(null);
+						
+					}
+
+					boolean toCommit = false;
+					try {
+						if (null == validationMessage) {
+							if (null != siteTarget && null == siteTarget.getDeleteTimestamp()) {
+								session.saveOrUpdate(siteTarget);
+								session.flush();
+								
+								output.setCiId(siteTarget.getId());
+							}
+							toCommit = true;
+						}
+					} catch (Exception e) {
+						String message = e.getMessage();
+						log.error(message);
+						// handle exception
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						
+						if (null != message && message.startsWith("ORA-20000: ")) {
+							message = message.substring("ORA-20000: ".length());
+						}
+						
+						output.setMessages(new String[] { message });
+					} finally {
+						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+						if (toCommit && null != siteTarget) {
+							if (null == hbnMessage) {
+								output.setResult(AirKonstanten.RESULT_OK);
+								output.setMessages(new String[] { EMPTY });
+							} else {
+								output.setResult(AirKonstanten.RESULT_ERROR);
+								output.setMessages(new String[] { hbnMessage });
+							}
+						}
+					}
+				} else {
+					// messages
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					String astrMessages[] = new String[messages.size()];
+					for (int i = 0; i < messages.size(); i++) {
+						astrMessages[i] = messages.get(i);
+					}
+					output.setMessages(astrMessages);
+				}
+
+		} else {
+			// cwid missing
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { "cwid missing" });
+		}
+
+		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
+			// TODO errorcodes / Texte
+			if (null != output.getMessages() && output.getMessages().length > 0) {
+				output.setDisplayMessage(output.getMessages()[0]);
+			}
+		}
+		
+		return output;
+	}
 
 }

@@ -52,28 +52,28 @@ public class GroupHbn {
 		return output;
 	}
 
-	public static List<GroupsDTO> listGroupsHbn() {
-		List<GroupsDTO> listResult = new ArrayList<GroupsDTO>();
-
-		boolean commit = false;
-		Transaction tx = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		try {
-			tx = session.beginTransaction();
-			@SuppressWarnings("unchecked")
-			List<Group> values = session.createQuery("select h from Group as h order by h.groupName").list();
-
-			listResult = getDTOList(values);
-			commit = true;
-		} catch (RuntimeException e) {
-			System.out.println(e);
-		}
-		finally {
-			HibernateUtil.close(tx, session, commit);
-		}
-
-		return listResult;
-	}
+//	public static List<GroupsDTO> listGroupsHbn() {
+//		List<GroupsDTO> listResult = new ArrayList<GroupsDTO>();
+//
+//		boolean commit = false;
+//		Transaction tx = null;
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		try {
+//			tx = session.beginTransaction();
+//			@SuppressWarnings("unchecked")
+//			List<Group> values = session.createQuery("select h from Group as h order by h.groupName").list();
+//
+//			listResult = getDTOList(values);
+//			commit = true;
+//		} catch (RuntimeException e) {
+//			System.out.println(e);
+//		}
+//		finally {
+//			HibernateUtil.close(tx, session, commit);
+//		}
+//
+//		return listResult;
+//	}
 
 	
 	public static GroupsDTO findGroupByName(String groupname) {
@@ -250,7 +250,7 @@ public class GroupHbn {
 	{
 		GroupsDTO result = new GroupsDTO();
 		Session session = HibernateUtil.getSession();
-		Group group = (Group) session.createQuery("SELECT h FROM groups as h WHERE h.groupId = :id").setLong("id", groupId).uniqueResult();
+		Group group = (Group) session.createQuery("SELECT h FROM Group as h WHERE h.groupId = :id").setLong("id", groupId).uniqueResult();
 		session.close();
 		if (null != group) 
 		{
