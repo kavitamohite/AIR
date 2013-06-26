@@ -41,7 +41,7 @@ AIR.DwhEntityGrid = Ext.extend(Ext.grid.GridPanel, {
 
 			
 			viewConfig: {
-				emptyText: 'Nothing found'
+				emptyText: 'Nothing found or no filter set'
 			},
 			
 		    bbar: pagingBar
