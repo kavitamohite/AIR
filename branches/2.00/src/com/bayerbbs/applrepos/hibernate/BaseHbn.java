@@ -464,7 +464,7 @@ public class BaseHbn {
 
 	public static void getCi(CiBaseDTO ciDTO, CiBase ci) {
 		ciDTO.setCiOwnerDelegate(ci.getCiOwnerDelegate());
-		ciDTO.setGxpFlag(ci.getGxpFlag());
+		ciDTO.setGxpFlag(ci.getGxpFlag()); 
 		ciDTO.setItsecGroupId(ci.getItsecGroupId());
 		ciDTO.setItSecSbAvailabilityId(ci.getItSecSbAvailability());
 		ciDTO.setItSecSbAvailabilityTxt(ci.getItSecSbAvailabilityTxt());
@@ -480,71 +480,57 @@ public class BaseHbn {
 		ciDTO.setSlaId(ci.getSlaId());
 		ciDTO.setTemplate(ci.getTemplate());
 		
-		for (GroupTypesDTO gtDTO : GroupTypesHbn.listGroupTypesHbn())
+		String strSQL = "SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Group_Type_Name),4000,1) FROM GROUP_TYPES WHERE Del_Quelle IS NULL";
+		switch (ciDTO.getTableId())
 		{
-			if (AirKonstanten.NO_SHORT.equals(gtDTO.getIndividualContact()))
-			{
-				CiGroups cg = CiGroupsHbn.findCiGroup(ciDTO.getTableId().longValue(), ci.getId(), gtDTO.getGroupTypeId());
-				if (null != cg)
-				{
-					GroupsDTO g = GroupHbn.findGroupById(cg.getGroupId());
-					switch (gtDTO.getGroupTypeId().intValue())
-					{
-					case 1:	// SUPPORT GROUP - IM RESOLVER
-						ciDTO.setGpsccontactSupportGroup(g.getGroupName());
-						break;
-					case 2: // CHANGE TEAM
-						ciDTO.setGpsccontactChangeTeam(g.getGroupName());
-						break;
-					case 3: // SERVICE COORDINATOR
-						// TODO: multiple contacts!
-						ciDTO.setGpsccontactServiceCoordinator(g.getGroupName());
-						break;
-					case 4: // ESCALATION LIST
-						// TODO: multiple contacts!
-						ciDTO.setGpsccontactEscalation(g.getGroupName());
-						break;
-					case 5: // CI OWNER
-						ciDTO.setGpsccontactCiOwner(g.getGroupName());
-						break;
-					case 6: // OWNING BUSINESS GROUP
-						// TODO: multiple contacts!
-						// ???
-						break;
-					case 8: // IMPLEMENTATION TEAM
-						// ???
-						break;
-					}
-				}
-			}
-			else
-			{
-				for(CiPersons cp : CiPersonsHbn.findCiPersons(ciDTO.getTableId().longValue(), ci.getId(), gtDTO.getGroupTypeId()))
-				{
-					switch (gtDTO.getGroupTypeId().intValue())
-					{
-					case 9: // (INDIV) SERVICE COORDINATOR
-						// TODO: multiple contacts!
-						ciDTO.setGpsccontactServiceCoordinatorIndiv(cp.getCwid());
-						break;
-					case 10: // (INDIV) ESCALATION LIST
-						// TODO: multiple contacts!
-						ciDTO.setGpsccontactEscalationIndiv(cp.getCwid());
-						break;
-					case 11: // RESPONSIBLE AT CUSTOMER SIDE
-						// TODO: multiple contacts!
-						ciDTO.setGpsccontactResponsibleAtCustomerSide(cp.getCwid());
-						break;
-					case 13: // SYSTEM RESPONSIBLE
-						// TODO: multiple contacts!
-						ciDTO.setGpsccontactSystemResponsible(cp.getCwid());
-						break;
-					case 15: // Business Owner Representative
-						// ???
-						break;
-					}
-				}
-			}
+		case AirKonstanten.TABLE_ID_APPLICATION:
+			strSQL +=  " AND Visible_Application = 1";
+			break;
+		case AirKonstanten.TABLE_ID_IT_SYSTEM:
+			strSQL +=  " AND Visible_Itsystem = 1";
+			break;
+		case AirKonstanten.TABLE_ID_POSITION:
+		case AirKonstanten.TABLE_ID_ROOM:
+		case AirKonstanten.TABLE_ID_BUILDING_AREA: 
+		case AirKonstanten.TABLE_ID_BUILDING: 
+		case AirKonstanten.TABLE_ID_TERRAIN: 
+		case AirKonstanten.TABLE_ID_SITE:
+			strSQL +=  " AND Visible_Location = 1";
+			break;			
+		}
+		Session session = HibernateUtil.getSession();
+		String groupTypes = (String) session.createSQLQuery(strSQL).uniqueResult();
+		String contacts = (String) session.createSQLQuery("SELECT Tools.FV_GetContactList(:Table_Id, :Ci_Id, :Group_Types) FROM DUAL").setLong("Table_Id",ciDTO.getTableId().longValue()).setLong("Ci_Id", ci.getId()).setText("Group_Types",groupTypes).uniqueResult();
+		session.close();
+		for (String contact : contacts.split(","))
+		{
+			String contactType = contact.substring(1, contact.indexOf("]: "));
+			String thisContact = contact.substring(contact.indexOf("]: ")+1);
+			
+			if (contactType == "[SUPPORT GROUP - IM RESOLVER]")
+				ciDTO.setGpsccontactSupportGroup(thisContact);
+			else if (contactType == "[CHANGE TEAM]")
+				ciDTO.setGpsccontactChangeTeam(thisContact);
+			else if (contactType == "[SERVICE COORDINATOR]")
+				// TODO: multiple contacts!
+				ciDTO.setGpsccontactServiceCoordinator(thisContact);
+			else if (contactType == "[ESCALATION LIST]")
+				// TODO: multiple contacts!
+				ciDTO.setGpsccontactEscalation(thisContact);
+			else if (contactType == "[CI OWNER]")
+				ciDTO.setGpsccontactCiOwner(thisContact);
+			else if (contactType == "[(INDIV) SERVICE COORDINATOR]")
+				// TODO: multiple contacts!
+				ciDTO.setGpsccontactServiceCoordinatorIndiv(thisContact);
+			else if (contactType == "[(INDIV) ESCALATION LIST]")
+				// TODO: multiple contacts!
+				ciDTO.setGpsccontactEscalationIndiv(thisContact);
+			else if (contactType == "[RESPONSIBLE AT CUSTOMER SIDE]")
+				// TODO: multiple contacts!
+				ciDTO.setGpsccontactResponsibleAtCustomerSide(thisContact);
+			else if (contactType == "[SYSTEM RESPONSIBLE]")
+				// TODO: multiple contacts!
+				ciDTO.setGpsccontactSystemResponsible(thisContact);
 		}
 	}
 }

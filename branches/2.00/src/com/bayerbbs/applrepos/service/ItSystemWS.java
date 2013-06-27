@@ -81,6 +81,7 @@ public class ItSystemWS {
 			CiEntityEditParameterOutput createOutput = null;
 			ItSystem itSystemTarget = ItSystemHbn.findItSystemByName(dto.getName());
 			createOutput = (null != itSystemTarget) ? ItSystemHbn.reactivateItSystem(copyInput.getCwid(), dto, itSystemTarget) : ItSystemHbn.createItSystem(copyInput.getCwid(), dto, null);
+			BaseHbn.saveGpscContacts(dto, copyInput.getCwid());
 			output.setCiId(createOutput.getCiId());
 			output.setResult(createOutput.getResult());
 			output.setMessages(createOutput.getMessages());
