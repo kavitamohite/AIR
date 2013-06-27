@@ -494,6 +494,19 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
         	//aus up oder down stream listview gelöscht wurde. --> nicht zum Löschen übertragen!
         	store.removed.push(record);
         }
+        
+        //zu löschende Verknüpfung (record) aus den stores löschen, in denen record EVTL. zuvor lokal hinzugefügt wurde
+		var lvUpStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvUpStreamConnections');
+		var records = lvUpStreamConnections.getStore().getModifiedRecords();
+		for(var i = 0; i < records.length; i++)
+			if(records[i].get('id') == record.get('id'))
+				records.splice(i, 1);
+				
+		var lvDownStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvDownStreamConnections');
+		records = lvDownStreamConnections.getStore().getModifiedRecords();
+		for(var i = 0; i < records.length; i++)
+			if(records[i].get('id') == record.get('id'))
+				records.splice(i, 1);
 	},
 	
 	//getCiConnectionDataChanges: function() {

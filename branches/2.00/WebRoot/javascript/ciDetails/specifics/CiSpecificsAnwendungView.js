@@ -478,7 +478,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
     },
     
     checkSapName: function(record) {
-    	var applicationName = AIR.AirApplicationManager.getAppDetail().applicationName;
+    	var applicationName = AIR.AirApplicationManager.getAppDetail().name;
     	
 		var isSapCat2 = record.get('guiSAPNameWizard') === 'Y';//this.getComponent('applicationCat2').getStore().getById(cat2Id).get('guiSAPNameWizard') === 'Y';//AC.CI_CAT1_SAP_CAT2_ID.indexOf(cat2Id) > -1;
 		var isSapName = applicationName.match(AC.REGEX_SAP_NAME) != null;

@@ -302,7 +302,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 				
 				//ci type, ci sub type und name bei der response dazu?
 				var data = {
-					applicationName: this.getComponent('ciCreateWizardP1').getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView').getComponent('tfCiNameW').getValue(),
+					name: this.getComponent('ciCreateWizardP1').getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView').getComponent('tfCiNameW').getValue(),
 					applicationCat1: this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW').getRawValue()
 				};
 				this.fireEvent('airAction', this, 'appCreateSuccess', data);

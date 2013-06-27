@@ -1124,15 +1124,21 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactBusinessOwnerRepresentative').getComponent('gpsccontactBusinessOwnerRepresentative'), data);
 		
 		
-		if(data.tableId == AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION) {
+		var tfGpsccontactCiOwner = this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner');
+		var tfGpsccontactSupportGroup = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroup');
+		
+		if(data.tableId == AC.TABLE_ID_APPLICATION) {// && data.applicationCat1Id === AC.APP_CAT1_APPLICATION
 			var lGpsccontactCiOwner = this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('labelgpsccontactCiOwner');
 			AIR.AirAclManager.setNecessityInternal(lGpsccontactCiOwner.el, 'required');
 			
 			var lGpsccontactSupportGroup = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('labelgpsccontactSupportGroup');
 			AIR.AirAclManager.setNecessityInternal(lGpsccontactSupportGroup.el, 'required');
-		} else {
-			AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner'), data);
-			AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroup'), data);
+			
+			tfGpsccontactCiOwner.clearInvalid();
+			tfGpsccontactSupportGroup.clearInvalid();
+		} else {			
+			AIR.AirAclManager.setAccessMode(tfGpsccontactCiOwner, data);
+			AIR.AirAclManager.setAccessMode(tfGpsccontactSupportGroup, data);
 		}
 	},
 	

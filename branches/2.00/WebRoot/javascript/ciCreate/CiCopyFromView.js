@@ -289,9 +289,9 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 //				AAM.setTableId(AC.TABLE_ID_APPLICATION); // nach unten verschoben
 				
 				var data = {
-					applicationName: this.applicationName,
+					name: this.applicationName,
 					applicationCat1: this.applicationCat1,
-					applicationNameNew: this.applicationNameNew
+					nameNew: this.applicationNameNew
 				};
 				this.fireEvent('airAction', this, 'appCopySuccess', data);
 	

@@ -1514,6 +1514,7 @@
 		<id>applicationUsingRegions</id>
 		<Mandatory>required</Mandatory>
 		<ciTypeId>2</ciTypeId>
+		<ciSubTypeId>5</ciSubTypeId>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>

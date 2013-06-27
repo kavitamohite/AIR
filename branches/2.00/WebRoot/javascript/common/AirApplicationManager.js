@@ -361,7 +361,7 @@ AIR.AirApplicationManager = function() {
 					message = r.get('text') + ' ' + this.appDetail.name + ' saved';//this.appDetail.applicationCat1Txt
 					break;
 				case 'appCopySuccess':
-					var message = data.applicationCat1 + ' ' + data.applicationNameNew + ' as copy of ' + data.name + ' created';
+					var message = data.applicationCat1 + ' ' + data.nameNew + ' as copy of ' + data.name + ' created';
 					break;
 				case 'appCreateSuccess':
 					message = 'New ' + data.applicationCat1 + ' ' + data.name + ' created';

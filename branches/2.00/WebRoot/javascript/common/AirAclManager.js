@@ -561,7 +561,7 @@ AIR.AirAclManager = function() {
 						var draftItemCmp = Ext.getCmp(item.data.id);
 						var isDraft = draftItemCmp &&
 									  data.tableId == AC.TABLE_ID_APPLICATION &&
-								      data.applicationCat1Id == AC.APP_CAT1_APPLICATION &&
+								      //data.applicationCat1Id == AC.APP_CAT1_APPLICATION &&
 								     (draftItemCmp.id == 'gpsccontactCiOwner' || draftItemCmp.id == 'gpsccontactSupportGroup') &&
 								    (draftItemCmp.getValue().length === 0);//!draftItemCmp.getValue() || 
 						if(isDraft)
@@ -729,8 +729,7 @@ AIR.AirAclManager = function() {
 //				return data.tableId == AC.TABLE_ID_APPLICATION &&
 //					   data.applicationCat1Id == AC.APP_CAT1_APPLICATION ?
 //						labels.contactsCIOwnerApplication : labels.contactsCIOwner;
-				if(data.tableId != AC.TABLE_ID_APPLICATION &&
-				   data.applicationCat1Id != AC.APP_CAT1_APPLICATION)
+				if(data.tableId != AC.TABLE_ID_APPLICATION)// && data.applicationCat1Id != AC.APP_CAT1_APPLICATION
 					return labels[uiElement.id] || uiElement.label.dom.innerHTML;
 			} else {
 				return labels[uiElement.id] || uiElement.label.dom.innerHTML;

@@ -105,7 +105,7 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 			grid.getStore().remove(record);
 			
 			var data = {
-				applicationName: record.data.name,//applicationName
+				name: record.data.name,//applicationName
 				applicationCat1: record.data.applicationCat1Txt
 			};
 			this.fireEvent('airAction', this, 'appDeleteSuccess', data);

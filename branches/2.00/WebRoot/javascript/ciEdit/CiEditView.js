@@ -322,7 +322,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		if(this.isUserChange) {
 			this.enableButtons();
 			this.ciModified = true;
-			if(viewElement.getId() == 'cbReferencedTemplate' || viewElement.getId() == 'cbItSecGroup')
+			
+			if(viewElement && viewElement.getId && (viewElement.getId() == 'cbReferencedTemplate' || viewElement.getId() == 'cbItSecGroup'))
 				this.itsecChanged = true;
 			this.validateCiChange(view, viewElement, changedViewItems);
 		}
