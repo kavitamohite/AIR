@@ -532,9 +532,12 @@ AIR.AirAclManager = function() {
 								case 'textarea':
 								case 'combo':
 								case 'filterCombo':
-									var length = draftItemCmp.getValue().length;
-									if(length === 0)
-										return true;
+									if(draftItemCmp.getId() == 'cbItSecGroup' && data.itsecGroupId == AC.CI_GROUP_ID_NON_BYTSEC)
+										continue;
+										
+										var length = draftItemCmp.getValue().length;
+										if(length === 0)
+											return true;
 									break;
 								case 'checkbox':
 									//solange nur checkboxen GR1435,GR1920 required sind: nur wenn keine Aussage vorhanden/Null in der DB --> Draft 
@@ -549,9 +552,15 @@ AIR.AirAclManager = function() {
 //									if(!draftItemCmp.getValue())
 //										return true;
 									break;
-								case 'listview':			
+								case 'listview':
 									var scopeRecords = draftItemCmp.getSelectedRecords();
 									return scopeRecords.length === 0;
+									
+									break;
+								case 'radiogroup':
+									if(draftItemCmp.getId() == 'rgRelevanceBYTSEC')
+										if(draftItemCmp.inputValue == AC.CI_GROUP_ID_EMPTY || draftItemCmp.inputValue == AC.CI_GROUP_ID_DELETE_ID)
+											return true;
 									
 									break;
 								default: break;
@@ -562,7 +571,7 @@ AIR.AirAclManager = function() {
 						var isDraft = draftItemCmp &&
 									  data.tableId == AC.TABLE_ID_APPLICATION &&
 								      //data.applicationCat1Id == AC.APP_CAT1_APPLICATION &&
-								     (draftItemCmp.id == 'gpsccontactCiOwner' || draftItemCmp.id == 'gpsccontactSupportGroup') &&
+								     (draftItemCmp.id == 'gpsccontactCiOwner' || draftItemCmp.id == 'gpsccontactSupportGroup' || draftItemCmp.id == 'ciResponsible') &&
 								    (draftItemCmp.getValue().length === 0);//!draftItemCmp.getValue() || 
 						if(isDraft)
 							return isDraft;

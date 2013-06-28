@@ -323,8 +323,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			this.enableButtons();
 			this.ciModified = true;
 			
-			if(viewElement && viewElement.getId && (viewElement.getId() == 'cbReferencedTemplate' || viewElement.getId() == 'cbItSecGroup'))
+			if(viewElement && viewElement.getId && (viewElement.getId() == 'cbReferencedTemplate' || viewElement.getId() == 'cbItSecGroup') && 
+			   AAM.getAppDetail().refId.length > 0 && AAM.getAppDetail().itsecGroupId.length > 0 && AAM.getAppDetail().itsecGroupId != AC.CI_GROUP_ID_DEFAULT_ITSEC && AAM.getAppDetail().itsecGroupId != AC.CI_GROUP_ID_NON_BYTSEC)
 				this.itsecChanged = true;
+			
 			this.validateCiChange(view, viewElement, changedViewItems);
 		}
 	},
@@ -724,7 +726,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 								newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_DELETE_ID &&
 								newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_EMPTY;
 		
-		var isNewTemplate =		ciData.refId != undefined && newCiDetail.refId != undefined && 
+		var isNewTemplate =		ciData.refId != undefined && ciData.refId != 0 && newCiDetail.refId != undefined && 
 //								ciData.refId.length > 0 && newCiDetail.refId.length > 0 && 
 //								ciData.refId !== newCiDetail.refId;
 								(ciData.refId != '' && newCiDetail.refId == -1 ||//newCiDetail.refId.length === 0
