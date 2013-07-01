@@ -1324,8 +1324,12 @@ public class BuildingHbn extends LokationItemHbn {
 		Set<Building> buildings = terrain.getBuildings();
 		
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
-		for(Building building : buildings)
-			data.add(new KeyValueDTO(building.getId(), building.getName()));
+		for(Building building : buildings) {
+			if (null == building.getDeleteTimestamp()) {
+				data.add(new KeyValueDTO(building.getId(), building.getName()));	
+			}
+		}
+			
 		
 		Collections.sort(data);
 		
@@ -1337,8 +1341,12 @@ public class BuildingHbn extends LokationItemHbn {
 		Set<BuildingArea> buildingAreas = building.getBuildingAreas();
 		
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
-		for(BuildingArea buildingArea : buildingAreas)
-			data.add(new KeyValueDTO(buildingArea.getId(), buildingArea.getName()));
+		for(BuildingArea buildingArea : buildingAreas) {
+			if (null == buildingArea.getDeleteTimestamp()) {
+				data.add(new KeyValueDTO(buildingArea.getId(), buildingArea.getName()));	
+			}
+		}
+			
 		
 		Collections.sort(data);
 		

@@ -658,8 +658,11 @@ public class TerrainHbn extends LokationItemHbn {
 //		List<Terrain> terrains = q.list();
 		
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
-		for(Terrain terrain : terrains)
-			data.add(new KeyValueDTO(terrain.getId(), terrain.getName()));
+		for(Terrain terrain : terrains) {
+			if (null == terrain.getDeleteTimestamp()) {
+				data.add(new KeyValueDTO(terrain.getId(), terrain.getName()));
+			}
+		}
 		
 		Collections.sort(data);
 		

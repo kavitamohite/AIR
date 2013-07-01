@@ -457,8 +457,12 @@ public class RoomHbn extends LokationItemHbn {
 		Set<Room> rooms = buildingArea.getRooms();
 		
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
-		for(Room room : rooms)
-			data.add(new KeyValueDTO(room.getId(), room.getName()));
+		for(Room room : rooms) {
+			if (null == room.getDeleteTimestamp()) {
+				data.add(new KeyValueDTO(room.getId(), room.getName()));
+			}
+		}
+			
 		
 		Collections.sort(data);
 		

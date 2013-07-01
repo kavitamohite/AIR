@@ -679,8 +679,12 @@ public class StandortHbn extends LokationItemHbn {
 		
 		
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
-		for(Standort site : sites)
-			data.add(new KeyValueDTO(site.getId(), site.getName()));
+		for(Standort site : sites) {
+			if (null == site.getDeleteTimestamp()) {
+				data.add(new KeyValueDTO(site.getId(), site.getName()));
+			}
+		}
+			
 		
 		Collections.sort(data);
 		
