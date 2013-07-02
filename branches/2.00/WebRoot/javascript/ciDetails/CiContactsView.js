@@ -1106,13 +1106,16 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), data);
 		}
 		
-//		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsible'), data);
+//
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsible'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), data);
 		
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSide'), data);
-//		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner'), data);
+//
+		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactSystemResponsible').getComponent('gpsccontactSystemResponsible'), data);
-//		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroup'), data);
+//
+		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroup'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactChangeTeam').getComponent('gpsccontactChangeTeam'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinator').getComponent('gpsccontactServiceCoordinator'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactServiceCoordinatorIndiv').getComponent('gpsccontactServiceCoordinatorIndiv'), data);
@@ -1140,10 +1143,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			tfGpsccontactCiOwner.clearInvalid();
 			tfGpsccontactSupportGroup.clearInvalid();
-		} else {
-			AIR.AirAclManager.setAccessMode(tfCiOwner, data);
-			AIR.AirAclManager.setAccessMode(tfGpsccontactCiOwner, data);
-			AIR.AirAclManager.setAccessMode(tfGpsccontactSupportGroup, data);
+//		} else {
+//			// oben wieder einkommentiert
+//			AIR.AirAclManager.setAccessMode(tfCiOwner, data);
+//			AIR.AirAclManager.setAccessMode(tfGpsccontactCiOwner, data);
+//			AIR.AirAclManager.setAccessMode(tfGpsccontactSupportGroup, data);
 		}
 	},
 	
