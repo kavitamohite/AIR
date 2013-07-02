@@ -717,7 +717,7 @@ public class RoomHbn extends LokationItemHbn {
 
 	public static void sendBusinessEssentialChangedMail(Room room, RoomDTO dto, Long businessEssentialIdOld) {
 		
-		ApplReposHbn.sendBusinessEssentialChangedMail(room.getCiOwner(), "Room", room.getName(), null, dto.getBusinessEssentialId(), businessEssentialIdOld);
+		ApplReposHbn.sendBusinessEssentialChangedMail(room.getCiOwner(), "Room", room.getName(), room.getAlias(), dto.getBusinessEssentialId(), businessEssentialIdOld);
 	
 	}
 
