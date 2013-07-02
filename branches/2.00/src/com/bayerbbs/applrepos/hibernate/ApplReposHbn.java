@@ -19,7 +19,9 @@ import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.ComplianceControlStatusDTO;
+import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
 
 public class ApplReposHbn {
@@ -562,6 +564,87 @@ public class ApplReposHbn {
 		sendMail("udo.hoffmann@bayer.com", "udo.hoffmann@bayer.com", "subject", "body", "AIR");
 	}
 	
+	
+	/**
+	 * construct the email for be-changed notification and send it
+	 * @param cwid
+	 * @param ciType
+	 * @param name
+	 * @param alias
+	 * @param businessEssentialId
+	 * @param businessEssentialIdOld
+	 */
+	public static void sendBusinessEssentialChangedMail(String cwid, String ciType, String name, String alias, Long businessEssentialId, Long businessEssentialIdOld) {
+		String businessEssentialNew = null;
+		String businessEssentialOld = null;
+
+		String sendTo = null;
+		PersonsDTO personDTO = null;
+		
+		// Person for email and name
+		if (null != cwid) {
+			List<PersonsDTO> listPersonsDTO = PersonsHbn.findPersonByCWID(cwid);
+			if (1 == listPersonsDTO.size()) {
+				personDTO = listPersonsDTO.get(0);
+				sendTo = personDTO.getMail();
+			}
+		}
+		
+		// business essential for new/old values
+		List<BusinessEssentialDTO> listBE = BusinessEssentialHbn.listBusinessEssentialHbn();
+		Iterator<BusinessEssentialDTO> itBE = listBE.iterator();
+		while (itBE.hasNext()) {
+			BusinessEssentialDTO be = itBE.next();
+			if (be.getSeverityLevelId().longValue() == businessEssentialId.longValue()) {
+				businessEssentialNew = be.getSeverityLevel();
+			}
+			if (be.getSeverityLevelId().longValue() == businessEssentialIdOld.longValue()) {
+				businessEssentialOld = be.getSeverityLevel();
+			}
+		}
+		if (null == businessEssentialNew) {
+			businessEssentialNew = "---";
+		}
+		if (null == businessEssentialOld) {
+			businessEssentialOld = "---";
+		}
+		
+		if (null == alias || "".equals(alias)) {
+			alias = "no alias";
+		}
+		
+		if (null != sendTo) {
+			String copyTo = "itilcenter@bayer.com";
+			
+			StringBuffer sbSubject = new StringBuffer();
+			sbSubject.append(ciType);
+			sbSubject.append(": ");
+			sbSubject.append("\"");
+			sbSubject.append(name);
+			sbSubject.append("\"");
+			sbSubject.append(" (").append(alias).append(")");
+			sbSubject.append(" is changed to ");
+			sbSubject.append(businessEssentialNew);
+
+			StringBuffer sb = new StringBuffer();
+			sb.append("Dear ").append(personDTO.getFirstname()).append(" ").append(personDTO.getLastname()).append(",\r\n\r\n");
+			sb.append("your CI ");
+			
+			sb.append("\"");
+			sb.append(name);
+			sb.append(" (").append(alias).append(")");
+			sb.append("\"");
+
+			
+			sb.append(" was set from \"").append(businessEssentialOld).append("\" to \"").append(businessEssentialNew).append("\"\r\n\r\n");
+			sb.append("If you have questions about this please contact ITILcenter@bayer.com.\r\n\r\n");
+			sb.append("Best Regards\r\n");
+			sb.append("ITILcenter Administration");
+			ApplReposHbn.sendMail(sendTo, copyTo, sbSubject.toString(), sb.toString(), AirKonstanten.APPLICATION_GUI_NAME);
+		}
+		
+	}
+
 	
 	/**
 	 * sends the email by calling an oracle function. 

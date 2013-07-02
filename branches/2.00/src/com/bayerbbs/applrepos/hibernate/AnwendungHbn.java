@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -24,10 +23,8 @@ import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.ItSystem;
-import com.bayerbbs.applrepos.dto.ApplicationCat2DTO;
 import com.bayerbbs.applrepos.dto.ApplicationContact;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
-import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.ConnectionsViewDataDTO;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
 import com.bayerbbs.applrepos.dto.HistoryViewDataDTO;
@@ -3148,83 +3145,13 @@ public class AnwendungHbn extends BaseHbn {
 		return result;
 	}
 
+
 	public static void sendBusinessEssentialChangedMail(Application application, ApplicationDTO dto, Long businessEssentialIdOld) {
-		String sendTo = null;
-		PersonsDTO personDTO = null;
 		
-		if (null != application.getApplicationOwner()) {
-			List<PersonsDTO> listPersonsDTO = PersonsHbn.findPersonByCWID(application.getApplicationOwner());
-			if (1 == listPersonsDTO.size()) {
-				personDTO = listPersonsDTO.get(0);
-				sendTo = personDTO.getMail();
-			}
-		}
-		
-		String cat2TXT = null;
-		
-		List<ApplicationCat2DTO> listCat2 = ApplicationCat2Hbn.listApplicationCat2Hbn();
-		Iterator<ApplicationCat2DTO> itCat2 = listCat2.iterator();
-		while (null == cat2TXT && itCat2.hasNext()) {
-			ApplicationCat2DTO cat2 = itCat2.next();
-			if (cat2.getApplicationCat2Id() == application.getApplicationCat2Id().longValue()) {
-				cat2TXT = cat2.getApplicationCat2Text();
-			}
-		}
-		if (null == cat2TXT) {
-			cat2TXT = EMPTY + application.getApplicationCat2Id().longValue();
-		}
-		
-		
-		String businessEssentialNew = null;
-		String businessEssentialOld = null;
-		List<BusinessEssentialDTO> listBE = BusinessEssentialHbn.listBusinessEssentialHbn();
-		Iterator<BusinessEssentialDTO> itBE = listBE.iterator();
-		while (itBE.hasNext()) {
-			BusinessEssentialDTO be = itBE.next();
-			if (be.getSeverityLevelId().longValue() == application.getBusinessEssentialId().longValue()) {
-				businessEssentialNew = be.getSeverityLevel();
-			}
-			if (be.getSeverityLevelId().longValue() == businessEssentialIdOld.longValue()) {
-				businessEssentialOld = be.getSeverityLevel();
-			}
-		}
-		if (null == businessEssentialNew) {
-			businessEssentialNew = "---";
-		}
-		if (null == businessEssentialOld) {
-			businessEssentialOld = "---";
-		}
-		
-		if (null != sendTo) {
-			String copyTo = "itilcenter@bayer.com";
-			
-			StringBuffer sbSubject = new StringBuffer();
-			sbSubject.append(cat2TXT);
-			sbSubject.append(" ");
-			sbSubject.append("\"");
-			sbSubject.append(application.getApplicationName());
-			sbSubject.append(" (").append(application.getApplicationAlias()).append(")");
-			sbSubject.append("\"");
-			sbSubject.append(" is changed to ");
-			sbSubject.append(businessEssentialNew);
-
-			StringBuffer sb = new StringBuffer();
-			sb.append("Dear ").append(personDTO.getFirstname()).append(" ").append(personDTO.getLastname()).append(",\r\n\r\n");
-			sb.append("your CI ");
-			
-			sb.append("\"");
-			sb.append(application.getApplicationName());
-			sb.append(" (").append(application.getApplicationAlias()).append(")");
-			sb.append("\"");
-
-			
-			sb.append(" was set from \"").append(businessEssentialOld).append("\" to \"").append(businessEssentialNew).append("\"\r\n\r\n");
-			sb.append("If you have questions about this please contact ITILcenter@bayer.com.\r\n\r\n");
-			sb.append("Best Regards\r\n");
-			sb.append("ITILcenter Administration");
-			ApplReposHbn.sendMail(sendTo, copyTo, sbSubject.toString(), sb.toString(), AirKonstanten.APPLICATION_GUI_NAME);
-		}
+		ApplReposHbn.sendBusinessEssentialChangedMail(application.getApplicationOwner(), "Application", application.getApplicationName(), application.getApplicationAlias(), dto.getBusinessEssentialId(), businessEssentialIdOld);
+	
 	}
+	
 	
 	
 	static List<String> validateAnwendung(ApplicationDTO dto, boolean isUpdate) {

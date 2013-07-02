@@ -115,6 +115,9 @@ public class ItSystemHbn extends BaseHbn {
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
 			
+			boolean hasBusinessEssentialChanged = false;
+			Long businessEssentialIdOld = null;
+			
 			if (null != dto.getId() || 0 < dto.getId().longValue()) {
 				Long id = new Long(dto.getId());
 
@@ -138,6 +141,24 @@ public class ItSystemHbn extends BaseHbn {
 						output.setErrorMessage("1001", EMPTY+id);
 					} else {
 						// itSystem found - change values
+						
+						hasBusinessEssentialChanged = false;
+						businessEssentialIdOld = itSystem.getBusinessEssentialId();
+						if (null == dto.getBusinessEssentialId()) {
+							if (null == itSystem.getBusinessEssentialId()) {
+								// set the default value
+								itSystem.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+								hasBusinessEssentialChanged = true;
+							}
+						}
+						else {
+							if (null == itSystem.getBusinessEssentialId() || itSystem.getBusinessEssentialId().longValue() != dto.getBusinessEssentialId().longValue()) {
+								hasBusinessEssentialChanged = true;
+							}
+							itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
+						}
+
+						
 						
 						// validate template
 //						if (null != itSystem.getTemplate() && -1 == itSystem.getTemplate().longValue()) {
@@ -460,6 +481,11 @@ public class ItSystemHbn extends BaseHbn {
 								session.flush();
 								
 								toCommit = true;
+								
+								if (hasBusinessEssentialChanged) {
+									sendBusinessEssentialChangedMail(itSystem, dto, businessEssentialIdOld);
+								}
+
 							}
 						}
 					} catch (Exception e) {
@@ -1431,5 +1457,12 @@ public class ItSystemHbn extends BaseHbn {
 		dto.setSeverityLevelId(itSystem.getSeverityLevelId());
 		dto.setBusinessEssentialId(itSystem.getBusinessEssentialId());
 		dto.setCiSubTypeId(itSystem.getCiSubTypeId());
-	}	
+	}
+	
+	public static void sendBusinessEssentialChangedMail(ItSystem itsystem, ItSystemDTO dto, Long businessEssentialIdOld) {
+		
+		ApplReposHbn.sendBusinessEssentialChangedMail(itsystem.getCiOwner(), "ItSystem", itsystem.getName(), itsystem.getAlias(), dto.getBusinessEssentialId(), businessEssentialIdOld);
+	
+	}
+
 }

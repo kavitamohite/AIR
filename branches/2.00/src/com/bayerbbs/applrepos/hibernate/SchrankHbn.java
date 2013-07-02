@@ -49,6 +49,9 @@ public class SchrankHbn extends LokationItemHbn {
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
 			
+			boolean hasBusinessEssentialChanged = false;
+			Long businessEssentialIdOld = null;
+			
 			if (null != dto.getId() || 0 < dto.getId().longValue()) {
 				Long id = new Long(dto.getId());
 	
@@ -69,6 +72,23 @@ public class SchrankHbn extends LokationItemHbn {
 						output.setErrorMessage("1001", EMPTY+id);
 					} else {
 						// schrank found - change values
+
+						hasBusinessEssentialChanged = false;
+						businessEssentialIdOld = schrank.getBusinessEssentialId();
+						if (null == dto.getBusinessEssentialId()) {
+							if (null == schrank.getBusinessEssentialId()) {
+								// set the default value
+								schrank.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+								hasBusinessEssentialChanged = true;
+							}
+						}
+						else {
+							if (null == schrank.getBusinessEssentialId() || schrank.getBusinessEssentialId().longValue() != dto.getBusinessEssentialId().longValue()) {
+								hasBusinessEssentialChanged = true;
+							}
+							schrank.setBusinessEssentialId(dto.getBusinessEssentialId());
+						}
+
 						
 						setUpCi(schrank, dto, cwid, false);
 						
@@ -278,6 +298,11 @@ public class SchrankHbn extends LokationItemHbn {
 								session.flush();
 								
 								toCommit = true;
+								
+								if (hasBusinessEssentialChanged) {
+									sendBusinessEssentialChangedMail(schrank, dto, businessEssentialIdOld);
+								}
+
 							}
 						}
 					} catch (Exception e) {
@@ -806,6 +831,12 @@ public class SchrankHbn extends LokationItemHbn {
 		}
 		
 		return output;
+	}
+
+	public static void sendBusinessEssentialChangedMail(Schrank position, SchrankDTO dto, Long businessEssentialIdOld) {
+		
+		ApplReposHbn.sendBusinessEssentialChangedMail(position.getCiOwner(), "Position", position.getName(), null, dto.getBusinessEssentialId(), businessEssentialIdOld);
+	
 	}
 
 }

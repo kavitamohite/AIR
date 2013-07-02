@@ -71,6 +71,9 @@ public class RoomHbn extends LokationItemHbn {
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
 			
+			boolean hasBusinessEssentialChanged = false;
+			Long businessEssentialIdOld = null;
+			
 			if (null != dto.getId() || 0 < dto.getId().longValue()) {
 				Long id = new Long(dto.getId());
 
@@ -102,6 +105,23 @@ public class RoomHbn extends LokationItemHbn {
 //							}
 //						}
 						
+						hasBusinessEssentialChanged = false;
+						businessEssentialIdOld = room.getBusinessEssentialId();
+						if (null == dto.getBusinessEssentialId()) {
+							if (null == room.getBusinessEssentialId()) {
+								// set the default value
+								room.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
+								hasBusinessEssentialChanged = true;
+							}
+						}
+						else {
+							if (null == room.getBusinessEssentialId() || room.getBusinessEssentialId().longValue() != dto.getBusinessEssentialId().longValue()) {
+								hasBusinessEssentialChanged = true;
+							}
+							room.setBusinessEssentialId(dto.getBusinessEssentialId());
+						}
+
+						
 						setUpCi(room, dto, cwid, false);
 
 
@@ -131,12 +151,6 @@ public class RoomHbn extends LokationItemHbn {
 							}
 						}
 
-						if (null == dto.getBusinessEssentialId()) {
-							// messages.add("business essential is empty");
-							// TODO 1 TESTCODE getBusinessEssentialId
-							dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-						}
-						room.setBusinessEssentialId(dto.getBusinessEssentialId());
 					}
 					
 					boolean toCommit = false;
@@ -148,6 +162,11 @@ public class RoomHbn extends LokationItemHbn {
 								session.flush();
 								
 								toCommit = true;
+								
+								if (hasBusinessEssentialChanged) {
+									sendBusinessEssentialChangedMail(room, dto, businessEssentialIdOld);
+								}
+
 							}
 						}
 					} catch (Exception e) {
@@ -694,6 +713,12 @@ public class RoomHbn extends LokationItemHbn {
 		}
 		
 		return output;
+	}
+
+	public static void sendBusinessEssentialChangedMail(Room room, RoomDTO dto, Long businessEssentialIdOld) {
+		
+		ApplReposHbn.sendBusinessEssentialChangedMail(room.getCiOwner(), "Room", room.getName(), null, dto.getBusinessEssentialId(), businessEssentialIdOld);
+	
 	}
 
 }
