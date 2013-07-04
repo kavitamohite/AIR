@@ -99,7 +99,7 @@ public class ItSecGroupHbn {
 //		sql.append("select h.itsec_grp_gstoolid, h.itsec_gruppe, i.it_verbund_zob_id1 from ItSec_Gruppe h ");// --order by h.sort, h.name --ItSecGroup
 //		sql.append("join itverbund_itsecgrp i on i.itsec_gruppe_zobid = h.itsec_grp_gstoolid order by h.itsec_gruppe");
 		
-		sql.append("SELECT distinct 0 AS It_Verbund_Zob_Id1, GRP.Itsec_Grp_Gstoolid, ZOT.Zielotyp_Gstoolid, ZOT.tabelle_id, ");
+		sql.append("SELECT distinct VBD.It_Verbund_Zob_Id1, GRP.Itsec_Grp_Gstoolid, ZOT.Zielotyp_Gstoolid, ZOT.tabelle_id, ");
 		sql.append("CASE GRP.Itsec_Grp_Gstoolid WHEN 10136 THEN NULL ELSE GRP.Itsec_Gruppe END AS Itsec_Gruppe ");//--" & gclngDefault_ItsecGrp & " 
 		sql.append("FROM ITSEC_GRUPPE GRP ");
 		sql.append("INNER JOIN ITVERBUND_ITSECGRP VBD ON GRP.Itsec_Grp_Gstoolid=VBD.Itsec_Gruppe_Zobid AND vbd.del_quelle IS NULL ");
