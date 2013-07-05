@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.math.BigDecimal;
+import java.net.InetAddress;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,11 +12,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.security.auth.login.Configuration;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.AnnotationConfiguration;
 
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
@@ -574,7 +578,7 @@ public class ApplReposHbn {
 	 * @param businessEssentialId
 	 * @param businessEssentialIdOld
 	 */
-	public static void sendBusinessEssentialChangedMail(String cwid, String ciType, String name, String alias, Long businessEssentialId, Long businessEssentialIdOld) {
+	public static void sendBusinessEssentialChangedMail(String cwid, String ciType, String name, String alias, Long businessEssentialId, Long businessEssentialIdOld, Integer tableId, Long ciId) {
 		String businessEssentialNew = null;
 		String businessEssentialOld = null;
 
@@ -614,29 +618,56 @@ public class ApplReposHbn {
 		}
 		
 		if (null != sendTo) {
+			String linkTo = "";
+			try  {
+				if (InetAddress.getLocalHost().getHostName() == AirKonstanten.PRODUCTIONSERVER) {
+					linkTo = AirKonstanten.PRODUCTIONURL;
+				} else {
+					linkTo = AirKonstanten.QAURL;
+				}
+			}
+			catch (Exception e) {
+				log.error(e.toString());
+			}
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT c_eye_id_prefix FROM transbase_object WHERE transbase_object_id = ").append(tableId.toString());
+			String ciLinkId = getCountInternal(sql.toString()) + "-" + ciId.toString();
+			
 			String copyTo = "itilcenter@bayer.com";
 			
 			StringBuffer sbSubject = new StringBuffer();
 			sbSubject.append(ciType);
-			sbSubject.append(": ");
+			sbSubject.append(" ");
 			sbSubject.append("\"");
 			sbSubject.append(name);
 			sbSubject.append("\"");
 			sbSubject.append(" (").append(alias).append(")");
-			sbSubject.append(" is changed to ");
+			sbSubject.append(" now ");
+			sbSubject.append("\"");
 			sbSubject.append(businessEssentialNew);
+			sbSubject.append("\"");
 
 			StringBuffer sb = new StringBuffer();
 			sb.append("Dear ").append(personDTO.getFirstname()).append(" ").append(personDTO.getLastname()).append(",\r\n\r\n");
-			sb.append("your CI ");
+			sb.append("within Application Infrastructure Repository AIR your ");
+			sb.append(ciType);
 			
-			sb.append("\"");
+			sb.append(" \"");
 			sb.append(name);
-			sb.append(" (").append(alias).append(")");
 			sb.append("\"");
+			sb.append(" (").append(alias).append(")");
+			
 
 			
 			sb.append(" was set from \"").append(businessEssentialOld).append("\" to \"").append(businessEssentialNew).append("\"\r\n\r\n");
+			sb.append("Link to \"");
+			sb.append(name);
+			sb.append("\" ");
+			sb.append(linkTo);
+			sb.append("?id=");
+			sb.append(ciLinkId);
+			sb.append("\r\n\r\n");
 			sb.append("If you have questions about this please contact ITILcenter@bayer.com.\r\n\r\n");
 			sb.append("Best Regards\r\n");
 			sb.append("ITILcenter Administration");

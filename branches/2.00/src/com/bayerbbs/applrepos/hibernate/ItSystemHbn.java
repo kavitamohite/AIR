@@ -1461,7 +1461,7 @@ public class ItSystemHbn extends BaseHbn {
 	
 	public static void sendBusinessEssentialChangedMail(ItSystem itsystem, ItSystemDTO dto, Long businessEssentialIdOld) {
 		
-		ApplReposHbn.sendBusinessEssentialChangedMail(itsystem.getCiOwner(), "ItSystem", itsystem.getName(), itsystem.getAlias(), dto.getBusinessEssentialId(), businessEssentialIdOld);
+		ApplReposHbn.sendBusinessEssentialChangedMail(itsystem.getCiOwner(), (dto.getCiSubTypeId()==AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING?AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM:AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM), itsystem.getName(), itsystem.getAlias(), dto.getBusinessEssentialId(), businessEssentialIdOld, dto.getTableId(), dto.getId());
 	
 	}
 

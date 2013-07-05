@@ -150,4 +150,9 @@ public final class AirKonstanten {
 		CI_TYPE_ORDERING.put("Terrain", 11);
 		CI_TYPE_ORDERING.put("Site", 12);
 	}
+	
+	public static final String PRODUCTIONSERVER = "BYZREG";
+	public static final String PRODUCTIONURL = "https://air.de.bayer.cnb/AIR/P";
+	public static final String QASERVER = "BYZREH";
+	public static final String QAURL = "https://air-q.de.bayer.cnb/AIR/Q";
 }

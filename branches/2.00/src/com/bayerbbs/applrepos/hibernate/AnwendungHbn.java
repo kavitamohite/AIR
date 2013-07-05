@@ -3147,8 +3147,45 @@ public class AnwendungHbn extends BaseHbn {
 
 
 	public static void sendBusinessEssentialChangedMail(Application application, ApplicationDTO dto, Long businessEssentialIdOld) {
-		
-		ApplReposHbn.sendBusinessEssentialChangedMail(application.getApplicationOwner(), "Application", application.getApplicationName(), application.getApplicationAlias(), dto.getBusinessEssentialId(), businessEssentialIdOld);
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT application_cat1_en FROM v_md_application_cat WHERE application_cat2_id=").append(dto.getApplicationCat2Id().toString());
+		boolean commit = false;
+		Transaction tx = null;
+		Statement selectStmt = null;
+		Session session = HibernateUtil.getSession();
+		String ciType = "unknown";
+		try {
+			tx = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = HibernateUtil.getSession().connection();
+
+			selectStmt = conn.createStatement();
+			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
+
+			if (null != rsMessage) {
+				while (rsMessage.next()) {
+					ciType = rsMessage.getString("application_cat1_en");
+				}
+				commit = true;
+			}
+
+			if (null != rsMessage) {
+				rsMessage.close();
+			}
+			if (null != selectStmt) {
+				selectStmt.close();
+			}
+			if (null != conn) {
+				conn.close();
+			}
+		} catch (Exception e) {
+			//
+		}
+		finally {
+			HibernateUtil.close(tx, session, commit);
+		}
+
+		ApplReposHbn.sendBusinessEssentialChangedMail(application.getApplicationOwner(), ciType, application.getApplicationName(), application.getApplicationAlias(), dto.getBusinessEssentialId(), businessEssentialIdOld, dto.getTableId(), dto.getId());
 	
 	}
 	

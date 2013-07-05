@@ -835,7 +835,7 @@ public class SchrankHbn extends LokationItemHbn {
 
 	public static void sendBusinessEssentialChangedMail(Schrank position, SchrankDTO dto, Long businessEssentialIdOld) {
 		
-		ApplReposHbn.sendBusinessEssentialChangedMail(position.getCiOwner(), "Position", position.getName(), null, dto.getBusinessEssentialId(), businessEssentialIdOld);
+		ApplReposHbn.sendBusinessEssentialChangedMail(position.getCiOwner(), "Position", position.getName(), null, dto.getBusinessEssentialId(), businessEssentialIdOld, dto.getTableId(), dto.getId());
 	
 	}
 
