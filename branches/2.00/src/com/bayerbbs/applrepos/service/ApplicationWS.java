@@ -686,7 +686,7 @@ public class ApplicationWS {
 		
 						dto.setRelevance2059(applicationSource.getRelevance2059());
 						dto.setRelevance2008(applicationSource.getRelevance2008());
-						
+
 						// save / create application
 						boolean neuanlage = false;
 						ApplicationEditParameterOutput createOutput = AnwendungHbn.createAnwendung(copyInput.getCwid(), dto, null, neuanlage);
@@ -727,7 +727,7 @@ public class ApplicationWS {
 						}
 					}	
 					break;
-				case AirKonstanten.TABLE_ID_IT_SYSTEM: 
+				case AirKonstanten.TABLE_ID_IT_SYSTEM:
 					ItSystemWS.createByCopyInternal(ciCopyInput, outputCI);
 					break;
 				case AirKonstanten.TABLE_ID_POSITION:

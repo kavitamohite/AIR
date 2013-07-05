@@ -2,7 +2,10 @@ package com.bayerbbs.applrepos.hibernate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -459,7 +462,8 @@ public class BaseHbn {
 	private static final Log log = LogFactory.getLog(BaseHbn.class);
 
 
-	public static void getCi(CiBaseDTO ciDTO, CiBase ci) {
+	public static void getCi(CiBaseDTO ciDTO, CiBase ci)  
+	{
 		ciDTO.setCiOwnerDelegate(ci.getCiOwnerDelegate());
 		ciDTO.setGxpFlag(ci.getGxpFlag()); 
 		ciDTO.setItsecGroupId(ci.getItsecGroupId());
@@ -476,15 +480,15 @@ public class BaseHbn {
 		ciDTO.setServiceContractId(ci.getServiceContractId());
 		ciDTO.setSlaId(ci.getSlaId());
 		ciDTO.setTemplate(ci.getTemplate());
-		
-		String strSQL = "SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Group_Type_Name),4000,1) FROM GROUP_TYPES WHERE Del_Quelle IS NULL";
+
+		String strSQL = "SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Group_Type_Name),4000,1) FROM V_MD_GROUP_TYPE";
 		switch (ciDTO.getTableId())
 		{
 		case AirKonstanten.TABLE_ID_APPLICATION:
-			strSQL +=  " AND Visible_Application = 1";
+			strSQL +=  " WHERE Visible_Application = 1";
 			break;
 		case AirKonstanten.TABLE_ID_IT_SYSTEM:
-			strSQL +=  " AND Visible_Itsystem = 1";
+			strSQL +=  " WHERE Visible_Itsystem = 1";
 			break;
 		case AirKonstanten.TABLE_ID_POSITION:
 		case AirKonstanten.TABLE_ID_ROOM:
@@ -492,42 +496,54 @@ public class BaseHbn {
 		case AirKonstanten.TABLE_ID_BUILDING: 
 		case AirKonstanten.TABLE_ID_TERRAIN: 
 		case AirKonstanten.TABLE_ID_SITE:
-			strSQL +=  " AND Visible_Location = 1";
+			strSQL +=  " WHERE Visible_Location = 1";
 			break;			
 		}
+		Pattern pattern = Pattern.compile("\\([A-Z]{2,8}\\)$");						// look for CWID 
+    	Pattern replace = Pattern.compile("[\\(\\)]");								// replace parentheses
+		Hashtable<String,String> tableContacts = new Hashtable<String,String>();
 		Session session = HibernateUtil.getSession();
-		String groupTypes = (String) session.createSQLQuery(strSQL).uniqueResult();
-		String contacts = (String) session.createSQLQuery("SELECT Tools.FV_GetContactList(:Table_Id, :Ci_Id, :Group_Types) FROM DUAL").setLong("Table_Id",ciDTO.getTableId().longValue()).setLong("Ci_Id", ci.getId()).setText("Group_Types",groupTypes).uniqueResult();
-		session.close();
-		for (String contact : contacts.split(","))
+		ciDTO.setDownStreamAdd((String) session.createSQLQuery("SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Id), 4000, 1) FROM TABLE(Pck_Air.FT_RelatedCIs(:Table_Id, :Id, :Direction)) WHERE Table_Id IN (1, 2)").setLong("Table_Id", ciDTO.getTableId()).setLong("Id", ci.getId()).setString("Direction",AirKonstanten.DN).uniqueResult());
+		for (String contact : Arrays.asList(((String) session.createSQLQuery("SELECT Tools.FV_GetContactList(:Table_Id, :Ci_Id, :Group_Types) FROM DUAL").setLong("Table_Id",ciDTO.getTableId().longValue()).setLong("Ci_Id", ci.getId()).setText("Group_Types",(String) session.createSQLQuery(strSQL).uniqueResult()).uniqueResult()).split(", ")))
 		{
-			String contactType = contact.substring(1, contact.indexOf("]: "));
-			String thisContact = contact.substring(contact.indexOf("]: ")+1);
-			
-			if (contactType == "[SUPPORT GROUP - IM RESOLVER]")
-				ciDTO.setGpsccontactSupportGroup(thisContact);
-			else if (contactType == "[CHANGE TEAM]")
-				ciDTO.setGpsccontactChangeTeam(thisContact);
-			else if (contactType == "[SERVICE COORDINATOR]")
-				// TODO: multiple contacts!
-				ciDTO.setGpsccontactServiceCoordinator(thisContact);
-			else if (contactType == "[ESCALATION LIST]")
-				// TODO: multiple contacts!
-				ciDTO.setGpsccontactEscalation(thisContact);
-			else if (contactType == "[CI OWNER]")
-				ciDTO.setGpsccontactCiOwner(thisContact);
-			else if (contactType == "[(INDIV) SERVICE COORDINATOR]")
-				// TODO: multiple contacts!
-				ciDTO.setGpsccontactServiceCoordinatorIndiv(thisContact);
-			else if (contactType == "[(INDIV) ESCALATION LIST]")
-				// TODO: multiple contacts!
-				ciDTO.setGpsccontactEscalationIndiv(thisContact);
-			else if (contactType == "[RESPONSIBLE AT CUSTOMER SIDE]")
-				// TODO: multiple contacts!
-				ciDTO.setGpsccontactResponsibleAtCustomerSide(thisContact);
-			else if (contactType == "[SYSTEM RESPONSIBLE]")
-				// TODO: multiple contacts!
-				ciDTO.setGpsccontactSystemResponsible(thisContact);
+			String contactType = contact.substring(1, contact.indexOf("]:")).trim();
+			String contactEntry = contact.substring(contact.indexOf("]:")+3).trim();
+		    Matcher matcher = pattern.matcher(contactEntry);
+		    while (matcher.find())
+		    {
+		        contactEntry = replace.matcher(matcher.group()).replaceAll("");
+		    }	    	
+			if (tableContacts.containsKey(contactType))
+				contactEntry = tableContacts.get(contactType).concat(",").concat(contactEntry);
+			tableContacts.put(contactType, contactEntry);
+		}
+		session.close();
+		for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) 
+		{
+			if (tableContacts.containsKey(grouptype[3]))
+			{
+				String contact = tableContacts.get(grouptype[3]);
+				char d[] = grouptype[1].toCharArray();
+				d[0] = String.valueOf(d[0]).toUpperCase().charAt(0);
+				String method = "set" + new String(d);
+				String methodHidden = "set" + new String(d) + AirKonstanten.GPSCGROUP_HIDDEN_DESCRIPTOR;
+				try
+				{
+					CiBaseDTO.class.getMethod(method, new Class[]{ String.class }).invoke( ciDTO, new Object[]{ contact} );
+				}
+				catch (Exception e)
+				{
+					System.out.println(e.toString());					
+				}
+				try
+				{
+					CiBaseDTO.class.getMethod(methodHidden, new Class[]{ String.class }).invoke( ciDTO, new Object[]{ contact} );
+				}
+				catch (Exception e)
+				{
+					System.out.println(e.toString());					
+				}
+			}
 		}
 	}
 }

@@ -57,8 +57,6 @@ public abstract class CiBase extends DeletableRevisionInfo {
 		this.name = name;
 	}
 
-	
-	
 //	@Column(name = "RESPONSIBLE")
 //	public String getCiOwner() {
 //		return ciOwner;

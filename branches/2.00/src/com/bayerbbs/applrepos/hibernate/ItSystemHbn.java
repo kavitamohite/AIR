@@ -176,6 +176,12 @@ public class ItSystemHbn extends BaseHbn {
 						setUpCi(itSystem, dto, cwid, false);
 						setUpItSystem(itSystem, dto, cwid);
 						
+						if(dto.getUpStreamAdd() != null && dto.getUpStreamAdd().length() > 0 || dto.getUpStreamDelete() != null && dto.getUpStreamDelete().length() > 0)
+							CiEntitiesHbn.saveCiRelations(dto.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), AirKonstanten.UP, cwid);
+						
+						if(dto.getDownStreamAdd() != null && dto.getDownStreamAdd().length() > 0 || dto.getDownStreamDelete() != null && dto.getDownStreamDelete().length() > 0)
+							CiEntitiesHbn.saveCiRelations(dto.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), AirKonstanten.DN, cwid);
+
 						/*
 						itSystem.setUpdateUser(cwid);
 						itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
@@ -642,12 +648,6 @@ public class ItSystemHbn extends BaseHbn {
 		
 		itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
 		itSystem.setCiSubTypeId(dto.getCiSubTypeId());
-		
-		if(dto.getUpStreamAdd() != null && dto.getUpStreamAdd().length() > 0 || dto.getUpStreamDelete() != null && dto.getUpStreamDelete().length() > 0)
-			CiEntitiesHbn.saveCiRelations(dto.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", cwid);
-		
-		if(dto.getDownStreamAdd() != null && dto.getDownStreamAdd().length() > 0 || dto.getDownStreamDelete() != null && dto.getDownStreamDelete().length() > 0)
-			CiEntitiesHbn.saveCiRelations(dto.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", cwid);
 	}
 
 
@@ -665,7 +665,7 @@ public class ItSystemHbn extends BaseHbn {
 		} else {
 			Timestamp tsNow = ApplReposTS.getCurrentTimestamp();
 			
-			// application found - change values
+			// system platform found - change values
 			itSystem.setUpdateUser(cwid);
 			itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			itSystem.setUpdateTimestamp(tsNow);
@@ -837,7 +837,12 @@ public class ItSystemHbn extends BaseHbn {
 						boolean toCommit = false;
 						try {
 							session.save(itSystem);
+							dto.setId(itSystem.getId());							
 							session.flush();
+							if(dto.getUpStreamAdd() != null && dto.getUpStreamAdd().length() > 0 || dto.getUpStreamDelete() != null && dto.getUpStreamDelete().length() > 0)
+								CiEntitiesHbn.saveCiRelations(dto.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), AirKonstanten.UP, cwid);
+							if(dto.getDownStreamAdd() != null && dto.getDownStreamAdd().length() > 0 || dto.getDownStreamDelete() != null && dto.getDownStreamDelete().length() > 0)
+								CiEntitiesHbn.saveCiRelations(dto.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), AirKonstanten.DN, cwid);
 							toCommit = true;
 						} catch (Exception e) {
 							// handle exception
@@ -1446,7 +1451,9 @@ public class ItSystemHbn extends BaseHbn {
 	public static void getItSystem(ItSystemDTO dto, ItSystem itSystem) {	
 		dto.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
 		BaseHbn.getCi((CiBaseDTO) dto, (CiBase) itSystem);
-		
+		Session session = HibernateUtil.getSession();		
+		dto.setUpStreamAdd((String) session.createSQLQuery("SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Id), 4000, 1) FROM TABLE(Pck_Air.FT_RelatedCIs(:Table_Id, :Id, :Direction)) WHERE Table_Id = 1").setLong("Table_Id", dto.getTableId()).setLong("Id", itSystem.getId()).setString("Direction",AirKonstanten.UP).uniqueResult());
+		session.close();
 		dto.setOsNameId(itSystem.getOsNameId());
 		dto.setIsVirtualHardwareClient(itSystem.getIsVirtualHardwareClient()); 		
 		dto.setIsVirtualHardwareHost(itSystem.getIsVirtualHardwareHost());

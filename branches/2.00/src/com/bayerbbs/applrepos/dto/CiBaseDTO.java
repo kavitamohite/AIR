@@ -87,8 +87,7 @@ public class CiBaseDTO {// implements Serializable
 	
 	
 	private String downStreamAdd;
-	private String downStreamDelete;
-	
+	private String downStreamDelete;	
 	
 	private String gpsccontactSupportGroup;
 	private String gpsccontactChangeTeam;

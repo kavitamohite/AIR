@@ -155,4 +155,7 @@ public final class AirKonstanten {
 	public static final String PRODUCTIONURL = "https://air.de.bayer.cnb/AIR/P";
 	public static final String QASERVER = "BYZREH";
 	public static final String QAURL = "https://air-q.de.bayer.cnb/AIR/Q";
+	
+	public static final String UP = "UPSTREAM";
+	public static final String DN = "DOWNSTREAM";
 }

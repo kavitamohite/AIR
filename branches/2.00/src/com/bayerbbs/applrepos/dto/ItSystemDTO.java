@@ -23,8 +23,6 @@ public class ItSystemDTO extends CiBaseDTO {
 	private Long severityLevelId;
 	private Long businessEssentialId;
 	
-
-	
 	private String upStreamAdd;
 	private String upStreamDelete;
 	
