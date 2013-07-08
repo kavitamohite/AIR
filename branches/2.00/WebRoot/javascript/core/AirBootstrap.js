@@ -2,28 +2,43 @@ Ext.namespace('AIR');
 
 AIR.AirBootstrap = Ext.extend(Object, {
 	run: function() {
-//		if(Ext.isIE) {
-//			Ext.Msg.show({
-//				title: 'Microsoft Internet Explorer',
-//				msg: 'Microsoft Internet Explorer is not supported by AIR. Please use Mozilla Firefox.<br/>Microsoft Internet Explorer wird von AIR nicht unterst&uuml;zt. Bitte benutzen Sie Mozilla Firefox.',
-//				buttons: Ext.Msg.OK
-//			});
-//			return;
-//		}
+		if(Ext.isIE) {
+			var winW = 630, winH = 460;
+			if (document.body && document.body.offsetWidth) {
+			 winW = document.body.offsetWidth;
+			 winH = document.body.offsetHeight;
+			}
+			if (document.compatMode=='CSS1Compat' &&
+			    document.documentElement &&
+			    document.documentElement.offsetWidth ) {
+			 winW = document.documentElement.offsetWidth;
+			 winH = document.documentElement.offsetHeight;
+			}
+			if (window.innerWidth && window.innerHeight) {
+			 winW = window.innerWidth;
+			 winH = window.innerHeight;
+			}
+			if (winW<360) {
+				winW = 360;
+			}
+			var iewarning = new Ext.Window({
+				title: 'Microsoft Internet Explorer',
+				id : 'ieWarningWindow',
+				height: 150,
+				width : 350,
+				html: '<br><br><center><b style="color:red;">Please open AIR within Firefox!<br>AIR is not fit for Internet Explorer.</b><br><br><input type="button" onclick="Ext.getCmp(\'ieWarningWindow\').close();" value="I accept lower performance\nand will use IE for AIR nevertheless."></center>',
+				closable: false,
+				renderTo: Ext.getBody(),
+				hidden: false,
+				x : winW/2 - 175,
+				y : 100,
+				modal: true
+			});
+		}
 		
 		this.init();
 		AIR.AirApplicationManager.processLogin(this.initAir.createDelegate(this), this.initLogin.createDelegate(this));
-		
-//		var airCookie = Ext.state.Manager.get('airCookie');
-//		var isLoggedIn = airCookie ? true : false;
-//
-//		if(isLoggedIn) {
-//			this.initAir(airCookie);
-//		} else {
-//			this.airLoginWindow = new AIR.AirLoginWindow();
-//			this.airLoginWindow.on('login', this.onLogin, this);
-//			this.airLoginWindow.show();
-//		}
+	
 	},
 	
 	initLogin: function() {
@@ -313,7 +328,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
 //		}
 		
 		
-		new AIR.AirViewport(this.airMainPanel);
+		var viewPort = new AIR.AirViewport(this.airMainPanel);
 
 //		AIR.AirApplicationManager.afterInit(this.airMainPanel);//airViewport
 		

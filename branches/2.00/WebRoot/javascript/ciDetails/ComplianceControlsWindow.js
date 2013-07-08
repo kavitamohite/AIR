@@ -878,7 +878,6 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									border: false,
 									
 									layout: 'form',
-									border: false,
 									height: 240,//sonst wird letzte textarea nicht angezeigt
 									
 									items: [{

@@ -19,12 +19,12 @@ Ext.ux.CommandLink = Ext.extend(Ext.BoxComponent, {
     </a>',*/
 
 //    v2 OK <div>s statt table?
-    '<div><table><tr>\n\
-        <tpl if="img">\n\
-            <td align="center"><img src="{img}" align="middle"></td>\n\
-        </tpl>\n\
-    	<td align="center"><label class="{cls}">{text}</label></td></tr>\n\
-    </table></div>',//<a href="#" class="{cls}">{text}</a>
+    '<div><table><tr>\n\ ' +
+        '<tpl if="img">\n\ ' +
+            '<td align="center"><img src="{img}" align="middle"></td>\n\ ' +
+        '</tpl>\n\ ' +
+    	'<td align="center"><label class="{cls}">{text}</label></td></tr>\n\ ' +
+    '</table></div>',//<a href="#" class="{cls}">{text}</a>
     
 //    '<tpl for="."><div>'+
 //	    '<tpl if="img">'+

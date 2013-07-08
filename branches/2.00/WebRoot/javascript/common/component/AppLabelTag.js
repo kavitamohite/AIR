@@ -70,10 +70,10 @@ Ext.ux.AppLabelTag = Ext.extend(Ext.BoxComponent, {
 //    }
     
     setData: function(data) {
-    	this.shortName = data.shortName,
+    	this.shortName = data.shortName;
 		this.longName = data.longName;
 		this.version = data.version;
-		this.database = data.database,
+		this.database = data.database;
 		this.browserOptimization = data.browserOptimization;
     },
 

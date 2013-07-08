@@ -225,7 +225,7 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 		2: [ -10006, -10007, -10013 ]
 	}
 	
-},
+};
 
 AC.CI_TYPE_CREATION_BY_ROLE = {
 //	AIRApplicationLayer: [{ ciTypeId: 2, ciSubType: [ 5 ] }],

@@ -101,7 +101,6 @@ AIR.AirRecordPicker = Ext.extend(Ext.Tip, {
 				store: AIR.AirStoreFactory.createRecordPickerStore(),
 				
 				singleSelect: false,
-				emptyText: '',
 				autoScroll: true,
 				height: 200,
 				loadingText: '&nbsp;',

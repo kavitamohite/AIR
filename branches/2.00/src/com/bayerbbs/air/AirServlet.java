@@ -64,19 +64,7 @@ public class AirServlet extends HttpServlet {
 		
 		if(isIE) {
 //			html.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n");
-			html.append("<!DOCTYPE html>").append("<head>\n").
-				append("<meta name='description' content='BBS Application Infrastructure Repository'>\n").
-				append("<meta name='keywords' content='BBS, AIR, Application Infrastructure Repository'>\n").
-				append("<meta name='author' content='BBS-IAO-SBO-IPS'>\n").
-				append("<meta http-equiv='expires' content='0'>\n").//content='0' 86400
-				append("<meta http-equiv='pragma' content='no-cache'>\n").
-				append("<meta http-equiv='cache-control' content='no-cache'>\n").
-				append("<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\n").
-				append("<title>BBS Application Infrastructure Repository</title>\n").
-				append("</head>\n").				
-				append("<body style='background-color: #D3E1F1;'>\n").
-				append("<br><br><br><center style='font-size:18px;color:red;'><b>Please open AIR within Firefox!<br>Internet Explorer is not supported.</b></center>").
-				append("</body></html>");
+			html.append("<!DOCTYPE html>");
 				
 	//			===================================================================================================================
 				
@@ -84,7 +72,7 @@ public class AirServlet extends HttpServlet {
 		} else {
 			html.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");//<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">	<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">
 		
-		
+		}
 //		String einsprungHiddenFeld = "";
 //		if(ciId != null)
 //			einsprungHiddenFeld = "<hidden id='ciId' value='"+ciId+"'/>\n";
@@ -237,7 +225,7 @@ public class AirServlet extends HttpServlet {
 			html.
 			append("</body>\n").
 		append("</html>");
-		}
+		
 		configureResponse(req, res);
 		PrintWriter out = res.getWriter();
 		out.print(html.toString());

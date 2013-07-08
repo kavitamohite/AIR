@@ -154,8 +154,6 @@ AIR.CiOuSearchView = Ext.extend(AIR.AirView, {
 		        	cls: 'x-btn-text-icon',
 		        	icon: 'images/refresh_16x16.png',
 		        	
-		        	text: '',
-		        	
 					style: {
 						marginLeft: 5
 					}

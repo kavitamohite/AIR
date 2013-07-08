@@ -12,7 +12,6 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 			border: false,
 			layout: 'card',//anchor border anchor vbox
 			activeItem: 0,
-			border: false,
 			
 			items: [{
 				xtype: 'panel',

@@ -320,7 +320,6 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        valueField: 'id',//itSecGroupId
 				        displayField: 'name',//itSecGroupName
 	//			        value: this.viewData.itSecGroupText,
-						lastQuery: '',
 				        
 				        triggerAction: 'all',
 				        lazyRender: true,
