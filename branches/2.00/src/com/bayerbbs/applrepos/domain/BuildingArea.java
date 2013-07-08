@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "BUILDING_AREA")
 @SequenceGenerator(name = "MySeqBuildingArea", sequenceName = "TBADM.SEQ_BUILDING_AREA")
 @NamedQueries({
-	@NamedQuery(name="findByNameAndBuildingId", query="FROM BuildingArea ba WHERE ba.buildingAreaName=:name AND buildingId=:buildingId")
+	@NamedQuery(name="findByNameAndBuildingId", query="FROM BuildingArea ba WHERE upper(ba.buildingAreaName)=upper(:name) AND buildingId=:buildingId")
 })
 public class BuildingArea extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;

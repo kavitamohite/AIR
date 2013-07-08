@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SCHRANK")
 @NamedQueries({
-	@NamedQuery(name="findByNameAndRoomId", query="FROM Schrank s WHERE s.schrankName=:name AND s.roomId=:roomId")
+	@NamedQuery(name="findByNameAndRoomId", query="FROM Schrank s WHERE upper(s.schrankName)=upper(:name) AND s.roomId=:roomId")
 })
 @SequenceGenerator(name = "MySeqSchrank", sequenceName = "TBADM.SEQ_SCHRANK")
 public class Schrank extends CiBase1 implements Serializable {

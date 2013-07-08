@@ -19,8 +19,8 @@ import javax.persistence.Table;
 @SequenceGenerator(name = "MySeqRoom", sequenceName = "TBADM.SEQ_RAUM")
 @NamedQueries({
 //	@NamedQuery(name="findByNameOrAliasAndBuildingAreaId", query="FROM Room r WHERE (r.roomName=:name OR r.alias=:alias) AND buildingAreaId=:buildingAreaId"),
-	@NamedQuery(name="findByNameOrAliasAndBuildingAreaId", query="FROM Room r WHERE (r.roomName=:name OR r.alias=:alias OR r.roomName=:alias OR r.alias=:name) AND buildingAreaId=:buildingAreaId"),
-	@NamedQuery(name="findByNameAndBuildingAreaId", query="FROM Room r WHERE r.roomName=:name AND buildingAreaId=:buildingAreaId")
+	@NamedQuery(name="findByNameOrAliasAndBuildingAreaId", query="FROM Room r WHERE (upper(r.roomName)=upper(:name) OR upper(r.alias)=upper(:alias) OR upper(r.roomName)=upper(:alias) OR upper(r.alias)=upper(:name)) AND buildingAreaId=:buildingAreaId"),
+	@NamedQuery(name="findByNameAndBuildingAreaId", query="FROM Room r WHERE upper(r.roomName)=upper(:name) AND buildingAreaId=:buildingAreaId")
 })
 public class Room extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -1270064907617489118L;

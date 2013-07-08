@@ -22,8 +22,8 @@ import javax.persistence.Table;
 @SequenceGenerator(name = "MySeqGebaeude", sequenceName = "TBADM.SEQ_GEBAEUDE")
 @NamedQueries({
 //	@NamedQuery(name="findByNameOrAliasAndTerrainId", query="FROM Building b WHERE (b.buildingName=:name OR b.alias=:alias) AND terrainId=:terrainId"),
-	@NamedQuery(name="findByNameOrAliasAndTerrainId", query="FROM Building b WHERE (b.buildingName=:name OR b.alias=:alias OR b.buildingName=:alias OR b.alias=:name) AND terrainId=:terrainId"),
-	@NamedQuery(name="findByNameAndTerrainId", query="FROM Building b WHERE b.buildingName=:name AND terrainId=:terrainId")
+	@NamedQuery(name="findByNameOrAliasAndTerrainId", query="FROM Building b WHERE (upper(b.buildingName)=upper(:name) OR upper(b.alias)=upper(:alias) OR upper(b.buildingName)=upper(:alias) OR upper(b.alias)=upper(:name)) AND terrainId=:terrainId"),
+	@NamedQuery(name="findByNameAndTerrainId", query="FROM Building b WHERE upper(b.buildingName)=upper(:name) AND terrainId=:terrainId")
 })
 public class Building extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = 2431254723377623846L;
