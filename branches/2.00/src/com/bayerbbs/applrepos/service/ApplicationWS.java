@@ -1054,7 +1054,7 @@ public class ApplicationWS {
 			}
 
 			// DELETED Application
-			if (StringUtils.isNotNullOrEmpty(application.getDeleteQuelle())) {
+			if (null != application && StringUtils.isNotNullOrEmpty(application.getDeleteQuelle())) {
 				// der Datensatz ist löschmarkiert und darf nicht editiert werden!
 				// auch nicht vom Admin!
 				accessDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
