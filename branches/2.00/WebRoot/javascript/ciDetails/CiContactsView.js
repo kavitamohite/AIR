@@ -1065,21 +1065,27 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			var pGpsccontactBusinessOwnerRepresentative = fsContactsGPSC.getComponent('pGpsccontactBusinessOwnerRepresentative');
 			var pGpsccontactImpactedBusiness = fsContactsGPSC.getComponent('pGpsccontactImpactedBusiness');
 
+			// TODO Der folgende Logik-Bereich muss aus der Definition ermittelt werden.
+			// ImpactedBusiness wird jetzt fix auf true gesetzt.
+			pGpsccontactImpactedBusiness.setVisible(true);
+			
 			if(data.tableId == AC.TABLE_ID_APPLICATION) {
 				pGpsccontactOwningBusinessGroup.setVisible(true);
 				pGpsccontactImplementationTeam.setVisible(true);
 				pGpsccontactBusinessOwnerRepresentative.setVisible(true);
 				
-				if(data.applicationCat1Id && data.applicationCat1Id == AC.APP_CAT1_APPLICATION)
-					pGpsccontactImpactedBusiness.setVisible(true);
-				else
-					pGpsccontactImpactedBusiness.setVisible(false);
+//				if(data.applicationCat1Id && data.applicationCat1Id == AC.APP_CAT1_APPLICATION)
+//					pGpsccontactImpactedBusiness.setVisible(true);
+//				else
+//					pGpsccontactImpactedBusiness.setVisible(false);
 			} else {
 				pGpsccontactOwningBusinessGroup.setVisible(false);
 				pGpsccontactImplementationTeam.setVisible(false);
 				pGpsccontactBusinessOwnerRepresentative.setVisible(false);
-				pGpsccontactImpactedBusiness.setVisible(false);
+//				pGpsccontactImpactedBusiness.setVisible(false);
 			}
+			
+			
 			
 			var applicationContactsStore = AIR.AirStoreFactory.createApplicationContactsStore();
 			applicationContactsStore.on('load', this.applicationContactsLoaded, this);
