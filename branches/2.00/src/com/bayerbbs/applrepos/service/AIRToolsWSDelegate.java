@@ -82,6 +82,10 @@ public class AIRToolsWSDelegate {
 		return airToolsWS.getItSecGroupList();
 	}
 
+	public ItSecGroupDTO[] getItSecGroupSimpleList() {
+		return airToolsWS.getItSecGroupSimpleList();
+	}
+
 	public ItSecSBWerteDTO[] getItSecSBWerteList() {
 		return airToolsWS.getItSecSBWerteList();
 	}
