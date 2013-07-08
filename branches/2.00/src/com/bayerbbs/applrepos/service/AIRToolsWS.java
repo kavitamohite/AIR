@@ -164,6 +164,15 @@ public class AIRToolsWS {
 	public ItSecGroupDTO[] getItSecGroupList() {
 		return ItSecGroupHbn.getArrayFromList(ItSecGroupHbn.getListItSecGroupWerte());
 	}
+
+	/**
+	 * returns the list of itsec groups ONLY for the search
+	 * @return
+	 */
+	public ItSecGroupDTO[] getItSecGroupSimpleList() {
+		return ItSecGroupHbn.getArrayFromList(ItSecGroupHbn.getSimpleListItSecGroup());
+	}
+
 	
 	public ItSecSBWerteDTO[] getItSecSBWerteList() {
 		List<ItSecSBWerteDTO> listTemp = ItSecSBWerteHbn.getListItSecSBWerte();

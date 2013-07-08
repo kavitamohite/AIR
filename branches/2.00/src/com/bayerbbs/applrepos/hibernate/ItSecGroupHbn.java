@@ -2,6 +2,7 @@ package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -120,12 +121,76 @@ public class ItSecGroupHbn {
 
 			if (null != rsMessage) {
 				while (rsMessage.next()) {
-					ItSecGroupDTO dto = new ItSecGroupDTO();
-					dto.setItSecGroupId(rsMessage.getLong("ITSEC_GRP_GSTOOLID"));
-					dto.setItSecGroupName(rsMessage.getString("ITSEC_GRUPPE"));
-					dto.setItsetId(rsMessage.getLong("IT_VERBUND_ZOB_ID1"));
-					dto.setCiKat1(rsMessage.getLong("ZIELOTYP_GSTOOLID"));
-					dto.setTableId(rsMessage.getLong("TABELLE_ID"));
+					ItSecGroupDTO dto = getDtoFromResultSet(rsMessage);
+					
+					listResult.add(dto);
+				}
+			}
+
+			if (null != rsMessage) {
+				rsMessage.close();
+			}
+			if (null != selectStmt) {
+				selectStmt.close();
+			}
+			if (null != conn) {
+				conn.close();
+			}
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null && tx.isActive()) {
+				try {
+					// Second try catch as the rollback could fail as well
+					tx.rollback();
+				} catch (HibernateException e1) {
+					log.error(e1.getMessage());
+				}
+				// throw again the first exception
+				// throw e;
+			}
+		}
+		
+		return listResult;
+	}
+
+
+	private static ItSecGroupDTO getDtoFromResultSet(ResultSet rsMessage)
+			throws SQLException {
+		ItSecGroupDTO dto = new ItSecGroupDTO();
+		dto.setItSecGroupId(rsMessage.getLong("ITSEC_GRP_GSTOOLID"));
+		dto.setItSecGroupName(rsMessage.getString("ITSEC_GRUPPE"));
+		dto.setItsetId(rsMessage.getLong("IT_VERBUND_ZOB_ID1"));
+		dto.setCiKat1(rsMessage.getLong("ZIELOTYP_GSTOOLID"));
+		dto.setTableId(rsMessage.getLong("TABELLE_ID"));
+		return dto;
+	}
+	
+	public static List<ItSecGroupDTO> getSimpleListItSecGroup() {
+		ArrayList<ItSecGroupDTO> listResult = new ArrayList<ItSecGroupDTO>();
+		StringBuffer sql = new StringBuffer();
+
+		Transaction tx = null;
+		Statement selectStmt = null;
+		Session session = HibernateUtil.getSession();
+		
+		sql.append("SELECT GRP.Itsec_Grp_Gstoolid, ZOT.Zielotyp_Gstoolid, ZOT.tabelle_id, ");
+		sql.append("CASE GRP.Itsec_Grp_Gstoolid WHEN 10136 THEN NULL ELSE GRP.Itsec_Gruppe END AS Itsec_Gruppe ");//--" & gclngDefault_ItsecGrp & " 
+		sql.append("FROM ITSEC_GRUPPE GRP ");
+		sql.append("INNER JOIN ITSEC_ZIELOBJ_TYP ZOT ON GRP.Zielotyp_Gstoolid=ZOT.Zielotyp_Gstoolid AND zot.del_quelle IS NULL ");
+		sql.append("WHERE grp.del_quelle IS NULL ");
+		sql.append("ORDER BY Itsec_Gruppe");
+		
+		try {
+			tx = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+
+			selectStmt = conn.createStatement();
+			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
+
+			if (null != rsMessage) {
+				while (rsMessage.next()) {
+					ItSecGroupDTO dto = getDtoFromResultSet(rsMessage);
 					
 					listResult.add(dto);
 				}
