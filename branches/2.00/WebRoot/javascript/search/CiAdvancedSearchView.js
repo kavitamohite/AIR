@@ -645,9 +645,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					items: [{
 						xtype: 'filterCombo',
 						id: 'cbAdvSearchITSecGroupW',
-						store: AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),//new Ext.data.Store(),//
+						store: AIR.AirStoreManager.getStoreByName('itSecGroupSimpleListStore'),//new Ext.data.Store(),//
 						width: 300,
-
+						minListWidth: 525,
 						fieldLabel: 'ITSec Group',
 						valueField: 'id',
 						displayField: 'name',

@@ -173,7 +173,7 @@ public class ItSecGroupHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 		
-		sql.append("SELECT GRP.Itsec_Grp_Gstoolid, ZOT.Zielotyp_Gstoolid, ZOT.tabelle_id, ");
+		sql.append("SELECT NULL AS IT_VERBUND_ZOB_ID1, GRP.Itsec_Grp_Gstoolid, ZOT.Zielotyp_Gstoolid, ZOT.tabelle_id, ");
 		sql.append("CASE GRP.Itsec_Grp_Gstoolid WHEN 10136 THEN NULL ELSE GRP.Itsec_Gruppe END AS Itsec_Gruppe ");//--" & gclngDefault_ItsecGrp & " 
 		sql.append("FROM ITSEC_GRUPPE GRP ");
 		sql.append("INNER JOIN ITSEC_ZIELOBJ_TYP ZOT ON GRP.Zielotyp_Gstoolid=ZOT.Zielotyp_Gstoolid AND zot.del_quelle IS NULL ");

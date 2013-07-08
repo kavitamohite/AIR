@@ -140,6 +140,7 @@ AIR.AirApplicationManager = function() {
 				dataClassListStore: { params: { params: { categoryBusinessId: 1 } } },//null, selectedCategoryBusinessId
 
 				itSecGroupListStore: null,
+				itSecGroupSimpleListStore: null,
 				referencesListStore: null,
 				itsecMassnahmenGapClassListStore: null,
 //				signeeListStore: null,//vom itSet abhängig, daher hier nicht ODER lokal filtern mit itSet nach Öffnen des ComplianceControlsWindow

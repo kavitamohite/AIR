@@ -3376,6 +3376,37 @@ AIR.AirStoreFactory = function() {
 		    return itSecGroupListStore;
 		},
 		
+		createItSecGroupSimpleListStore: function() {
+			var itSecGroupSimpleListRecord = Ext.data.Record.create([
+		      	{ name: 'id', mapping: 'itSecGroupId' },
+		      	{ name: 'name', mapping: 'itSecGroupName' },
+				{ name: 'ciKat1' },
+				{ name: 'tableId', type: 'int' }
+		    ]);
+		
+		    var itSecGroupSimpleListReader = new Ext.data.XmlReader({
+				record: 'return',
+				idProperty: 'id'//nix id itSecGroupId
+		    }, itSecGroupSimpleListRecord); 
+		
+		    var itSecGroupSimpleListStore = new Ext.data.XmlStore({
+		    	autoDestroy: true,//true false
+		        storeId: 'itSecGroupSimpleListStore',
+		        autoLoad: false,
+		        
+		      	proxy: new Ext.ux.soap.SoapProxy({
+		      		url: webcontext +'/AIRToolsWSPort',
+		      		loadMethod: 'getItSecGroupSimpleList',
+		      		timeout: 120000,
+		      		reader: itSecGroupSimpleListReader
+		      	}),
+		      	
+		      	reader: itSecGroupSimpleListReader
+		    });
+		    
+		    return itSecGroupSimpleListStore;
+		},
+		
 		
 		createIdNameStore: function() {
 //			var idNameRecord = Ext.data.Record.create([
