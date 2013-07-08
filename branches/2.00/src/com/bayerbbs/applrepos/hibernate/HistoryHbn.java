@@ -47,7 +47,7 @@ public class HistoryHbn {
 		"         :newValue,                                         " +
 		"         :insUpdDel,                                        " +
 		"         :displayType)                                      ";
-	private static final String SQL_HISTORY_LIST = 
+	private static final String SQL_HISTORY_LIST_OLD_HIST = 
 		"SELECT   EVT.History_Event_Id, " +
 		"         TO_CHAR(EVT.Change_Timestamp,'DD-MON-YYYY HH24:MI:SS') AS Change_Timestamp, " +
 		"         EVT.User_Name, " +
@@ -62,6 +62,8 @@ public class HistoryHbn {
 		"WHERE    DTL.Chg_Tabelle_Id = :Table_ID " +
 		"AND      DTL.Chg_Tabelle_Pk_Id = :Table_PK_ID " +
 		"ORDER BY EVT.History_Event_Id, DTL.History_Detail_Id";
+	
+	private static final String SQL_HISTORY_LIST = "SELECT * FROM TABLE (pck_History.Read (:Table_ID, :Table_PK_ID, :LANG)) ORDER BY 1 desc";
 
 	public static List<HistorySISecViewDataDTO> findHistoryList(long tableId, long tablePkId) {
 
@@ -74,13 +76,30 @@ public class HistoryHbn {
 			selectQuery = session.createSQLQuery(SQL_HISTORY_LIST);
 			selectQuery.setLong("Table_ID", tableId);
 			selectQuery.setLong("Table_PK_ID", tablePkId);
+			selectQuery.setString("LANG", "D");
+			
+			
 			@SuppressWarnings("unchecked")
 			List<Object[]> listTemp = selectQuery.list();
 			
 			for (Iterator<Object[]> iterator = listTemp.iterator(); iterator.hasNext();) {
 				Object obj[] = iterator.next();
 				try {
-					listResult.add(new HistorySISecViewDataDTO((Long) (((BigDecimal)obj[0]).longValue()), (String) obj[1], (String)obj[2], ((Character)obj[3]).toString(), (((BigDecimal)obj[4]).longValue()), (String)obj[5], (String)obj[6], (String)obj[7], new Integer((Character)obj[8]).intValue()));					
+//					listResult.add(new HistorySISecViewDataDTO((Long) (((BigDecimal)obj[0]).longValue()), (String) obj[1], (String)obj[2], ((Character)obj[3]).toString(), (((BigDecimal)obj[4]).longValue()), (String)obj[5], (String)obj[6], (String)obj[7], new Integer((Character)obj[8]).intValue()));
+					
+					String changeTimestamp = (String) obj[1];
+					String userName = (String) obj[3];
+					String insUpdDel = (String) obj[4];
+					Long historyDetailId = 1L;
+					String chgAttributeLog = (String) obj[11];
+					String oldValue = (String) obj[15];
+					String newValue = (String) obj[16];
+					Integer displayType = 1;
+					
+					listResult.add(new HistorySISecViewDataDTO((Long) (1L), changeTimestamp, userName, insUpdDel, historyDetailId, chgAttributeLog, oldValue, newValue, displayType));
+
+					// public HistorySISecViewDataDTO(Long historyEventId, String changeTimestamp, String userName, String insUpdDel, Long historyDetailId, String chgAttributeLog, String oldValue, String newValue, Integer displayType) {
+					
 				} catch (Exception e) {
 					System.out.println(e.toString());
 				}
