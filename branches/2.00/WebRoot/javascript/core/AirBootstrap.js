@@ -26,7 +26,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
 				id : 'ieWarningWindow',
 				height: 150,
 				width : 350,
-				html: '<br><br><center><b style="color:red;">Please open AIR within Firefox!<br>AIR is not fit for Internet Explorer.</b><br><br><input type="button" onclick="Ext.getCmp(\'ieWarningWindow\').close();" value="I accept lower performance\nand will use IE for AIR nevertheless."></center>',
+				html: '<br><br><center><b style="color:red;">Please open AIR within Firefox!<br>Internet Explorer is slow for JavaScript.</b><br><br><input type="button" onclick="Ext.getCmp(\'ieWarningWindow\').close();" value="I accept lower performance\nand will use IE for AIR nevertheless."></center>',
 				closable: false,
 				renderTo: Ext.getBody(),
 				hidden: false,
