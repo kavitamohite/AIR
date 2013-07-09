@@ -2654,9 +2654,18 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	onMassnahmeInfoClick: function(column, grid, rowIndex, event) {
-		var massnahme = grid.getStore().getAt(rowIndex);
 		
-		window.open('/AIR/massnbeschreibung?massnahmeGstoolId='+massnahme.get('massnahmeGstoolId')+'&lang='+AAM.getLanguage());
+		if(this.existsInvalidMassnahme > 0 && !this.ignoreInvalidMassnahme && this.previousSelection!==rowIndex) {
+			var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
+			var massnahme = this.editedMassnahmen[this.previousSelection];
+			if(massnahme.invalidityId !== AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1)
+			this.openInvalidMassnahmeWindow(grid.getEl());
+			return false;
+		} else { 
+			var massnahme = grid.getStore().getAt(rowIndex);
+			window.open('/AIR/massnbeschreibung?massnahmeGstoolId='+massnahme.get('massnahmeGstoolId')+'&lang='+AAM.getLanguage());
+			return true;
+		}
 	},
 	
 	//-----------------------------------------------------------------------------------------------------------------------
