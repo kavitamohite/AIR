@@ -189,7 +189,7 @@
 				<ciSubResponsible>Delegate</ciSubResponsible>
 			<contactsGPSC>GPSC contacts</contactsGPSC>
 				<gpsccontactResponsibleAtCustomerSide>Responsible at Customer Side</gpsccontactResponsibleAtCustomerSide>
-				<gpsccontactSupportGroup>Support Group</gpsccontactSupportGroup>
+				<gpsccontactSupportGroup>Support Group - IM Resolver</gpsccontactSupportGroup>
 				<gpsccontactChangeTeam>Change Team</gpsccontactChangeTeam>
 				<gpsccontactServiceCoordinator>Service Coordinator</gpsccontactServiceCoordinator>
 				<gpsccontactEscalation>Escalation List</gpsccontactEscalation>
