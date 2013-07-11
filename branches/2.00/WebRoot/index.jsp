@@ -17,7 +17,7 @@
 
 	<meta name="description" content="BBS Application Infrastructure Repository"/>
 	<meta name="keywords" content="BBS, AIR, Application Infrastructure Repository"/>
-	<meta name="author" content="BBS-ITO-BDC-FSC-SCM">
+	<meta name="author" content="BBS-IAO-SBO-IPS">
 	
   	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
     <meta http-equiv="refresh" content="0;URL=<%=redirectPath%>"><!-- (*9) /AIR/ITIL /AIR/Q /AIR/run htdocs/index.html authenticate.html -->

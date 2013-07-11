@@ -9,7 +9,7 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 			
 			//irgendwo muss leider die initiale Groesse für die child container angegeben sein
 //			width: 600,
-			height: 1200,
+			autoHeight: true,
 //			autoScroll: true,
 			
 			border: false,
@@ -41,7 +41,8 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 				id: 'CiDeleteResultGrid',
 				anchor: '100%'
 //				height: 1150
-			}]
+			}
+			]
 		});
 
 		AIR.CiDeleteView.superclass.initComponent.call(this);
