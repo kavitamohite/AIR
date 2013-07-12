@@ -1215,10 +1215,13 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var cbMaxDamagePerEventCurrency = pRiskAnalysisAndMgmtNonFreeText.getComponent('pMaxDamagePerEvent').getComponent('cbMaxDamagePerEventCurrency');
 
 		tfOccurenceOfDamagePerYear.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onOccurenceOfDamagePerYearChange onMassnahmeChange
+		tfOccurenceOfDamagePerYear.on('change', this.onOccurenceOfDamagePerYearChange, this);
 		tfMaxDamagePerEvent.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onMaxDamagePerEventChange onMassnahmeChange
+		tfMaxDamagePerEvent.on('change', this.onMaxDamagePerEventChange, this);
 		tfMitigationPotential.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onMitigationPotentialChange onMassnahmeChange
+		tfMitigationPotential.on('change', this.onMitigationPotentialChange, this);
 		tfDamagePerYear.on('keyup', this.onRiskAnalysisAndMgmtChange, this);//onDamagePerYearChange onMassnahmeChange
-//		tfDamagePerYear.on('change', this.onDamagePerYearChange, this);//change blur
+		tfDamagePerYear.on('change', this.onDamagePerYearChange, this);//change blur
 		cbMaxDamagePerEventCurrency.on('select', this.onRiskAnalysisAndMgmtChange, this);//onMaxDamagePerEventCurrencySelect
 		
 		
@@ -1422,6 +1425,18 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		};
 		
 		return result;//isValid;
+	},
+	
+	checkEconomicallySolvable: function (massnahme) {
+		if (parseFloat(massnahme.damage) * parseFloat(massnahme.probOccurence) * parseFloat(massnahme.mitigationPotential) >= parseFloat(massnahme.expense)) {
+			var labels = AAM.getLabels();
+			Ext.Msg.show({
+				   title:'Information',
+				   msg: labels.invalidMassnameWindowDamagePerYear,
+				   buttons: Ext.Msg.OK,
+				   icon: Ext.Msg.INFO
+				});
+		}
 	},
 	
 	
@@ -2382,6 +2397,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //				this.editedMassnahmen[rowIndex].signee = tfSignee.getValue();
 				this.editedMassnahmen[rowIndex].signee = cbSignee.getValue().length == 0 ? cbSignee.getValue() : this.getSigneeCwid(cbSignee);//cbSignee.cwid;//cbSignee.getValue();
 				this.editedMassnahmen[rowIndex].gapClassApproved = dfDateOfApproval.getValue() ? dfDateOfApproval.getValue().getTime() : -1;//-1 für SoapProxy, bei null statt -1 kommt JS Fehler
+				
 			}
 		}
 	},
@@ -2779,39 +2795,25 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.checkApprovable(massnahme);
 	},
 	
-//	onDamagePerYearChange: function(field) {//blur event
-	onDamagePerYearChange: function(field, newValue, oldValue) {//change event
-		/*var massnahme = this.editedMassnahmen[this.previousSelection];
-		if(this.isDamagePerYearFalse(massnahme)) {
-			var labels = AAM.getLabels();
-			var title = labels.invalidMassnameWindowTitleDamagePerYear;
-			var message = labels.invalidMassnameWindowDamagePerYear;
-			
-			var invalidMassnahmeWindow = AIR.AirWindowFactory.createDynamicMessageWindow('INVALID_MASSNAHME', null, message, title);//callbackMap
-			invalidMassnahmeWindow.show(this.getEl());
-		}*/
+	onDamagePerYearChange: function() {//change event
 		
-		var massnahme = this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] : this.loadedMassnahme;//this.editedMassnahmen[this.previousSelection];//this.previousSelection this.getSelectedGridIndex()
-		massnahme.expense = newValue;//change event//field.getValue();//blur event
+		var massnahme = this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] : this.loadedMassnahme;
+		this.checkEconomicallySolvable (massnahme);
 		
-		if(this.isDamagePerYearFalse(massnahme)) {
-			this.onMassnahmenWarning(this.warningMassnahmen);
-			this.skipFocusLost = false;
-		}
 	},
 	
-//	onOccurenceOfDamagePerYearChange: function(field, event) {
-//		this.resetMassnahmeDates();
-//		this.onMassnahmeChange();
-//	},
-//	onMaxDamagePerEventChange: function(field, event) {
-//		this.resetMassnahmeDates();
-//		this.onMassnahmeChange();
-//	},
-//	onMitigationPotentialChange: function(field, event) {
-//		this.resetMassnahmeDates();
-//		this.onMassnahmeChange();
-//	},
+	onOccurenceOfDamagePerYearChange: function() {
+		var massnahme = this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] : this.loadedMassnahme;
+		this.checkEconomicallySolvable (massnahme);
+	},
+	onMaxDamagePerEventChange: function() {
+		var massnahme = this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] : this.loadedMassnahme;
+		this.checkEconomicallySolvable (massnahme);
+	},
+	onMitigationPotentialChange: function(field, event) {
+		var massnahme = this.editedMassnahmen[this.previousSelection] ? this.editedMassnahmen[this.previousSelection] : this.loadedMassnahme;
+		this.checkEconomicallySolvable (massnahme);
+	},
 //	onDamagePerYearChange: function(field, event) {//newValue, oldValue
 //		this.resetMassnahmeDates();
 //		this.onMassnahmeChange();
@@ -3733,4 +3735,6 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		Util.setFieldLabel(this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').getComponent('cbLinkCiType'), labels.LinkCiType);
 //		Util.setFieldLabel(this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('pComplianceLinkTypeConfig').getComponent('cbLinkCi'), labels.LinkCi);
 	}
+	
+
 });
