@@ -13,7 +13,6 @@ import com.bayerbbs.applrepos.domain.AppRepAuthData;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
-import com.bayerbbs.applrepos.hibernate.ItSecUserHbn;
 import com.bayerbbs.applrepos.hibernate.PersonOptionHbn;
 import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 
@@ -86,12 +85,7 @@ public class LDAPAuthWS {
 						
 						String lastLogon = null;
 						
-						if (AIRWS.usePersonOptions) {
-							lastLogon = PersonOptionHbn.findLastLogon(cwid);
-						}
-						else {
-							lastLogon = ItSecUserHbn.findItSecUserLastLogon(cwid);
-						}
+						lastLogon = PersonOptionHbn.findLastLogon(cwid);
 							
 						if (null == lastLogon) {
 							lastLogon = "";
@@ -99,12 +93,8 @@ public class LDAPAuthWS {
 						output.setLastLogon(lastLogon);
 						authData.setLastlogon(lastLogon);
 						
-						if (AIRWS.usePersonOptions) {
-							PersonOptionHbn.saveLastLogon(cwid);
-						}
-						else {
-							ItSecUserHbn.updateItSecUserLastLogon(cwid);
-						}
+						PersonOptionHbn.saveLastLogon(cwid);
+						
 					}
 					
 					Element element = new Element(getKeyname(cwid, token), authData);
@@ -225,12 +215,8 @@ public class LDAPAuthWS {
 
 		if (null != cwid && !"".equals(cwid)) {
 			
-			if (AIRWS.usePersonOptions) {
-				PersonOptionHbn.saveLastLogoff(cwid);
-			}
-			else {
-				ItSecUserHbn.updateItSecUserLastLogoff(cwid);
-			}
+			PersonOptionHbn.saveLastLogoff(cwid);
+
 		}
 	}
 

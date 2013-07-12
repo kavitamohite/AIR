@@ -138,7 +138,7 @@ public class ItsecMassnahmenWS {
 				ItsecMassnahmeDetailDTO itsecMassnahmeDTO = input.getItsecMassnahmeDetailsDTO();
 				if (null != itsecMassnahmeDTO.getItsecMassnahmenStatusId() && null != itsecMassnahmeDTO.getStatusId()) {
 //					result = ItsecHbn.saveItsecMassnahmeDetail(itsecMassnahmeDTO);
-					ItsecHbn.saveItsecMassnahmeDetail(itsecMassnahmeDTO);
+					ItsecHbn.saveItsecMassnahmeDetail(input.getCwid(), itsecMassnahmeDTO);
 //				} else {
 //					result = false;
 				}
@@ -164,7 +164,7 @@ public class ItsecMassnahmenWS {
 				
 			ItsecMassnahmeDetailDTO itsecMassnahmeDTO = input.getItsecMassnahmeDetailsDTO();
 			if (null != itsecMassnahmeDTO.getItsecMassnahmenStatusId() && null != itsecMassnahmeDTO.getStatusId()) {
-				ItsecMassnahmeStatusHbn.saveItsecMassnahmeFromDTO(itsecMassnahmeDTO.getItsecMassnahmenStatusId(), itsecMassnahmeDTO);
+				ItsecMassnahmeStatusHbn.saveItsecMassnahmeFromDTO(input.getCwid(), itsecMassnahmeDTO.getItsecMassnahmenStatusId(), itsecMassnahmeDTO);
 //			} else {
 //				result = false;
 			}

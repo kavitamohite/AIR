@@ -15,6 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.StringUtils;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmeDetailDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenStatusWertDTO;
@@ -71,6 +72,8 @@ public class ItsecHbn {
 			
 			
 			try {
+				if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
+					System.out.println(sql.toString());
 				tx = session.beginTransaction();
 
 				@SuppressWarnings("deprecation")
@@ -394,7 +397,7 @@ public class ItsecHbn {
 	 * @param dto
 	 * @return
 	 */
-	public static boolean saveItsecMassnahmeDetail(ItsecMassnahmeDetailDTO dto) {
+	public static boolean saveItsecMassnahmeDetail(String cwid, ItsecMassnahmeDetailDTO dto) {
 		boolean result = false;
 		
 		boolean commit = false;
@@ -413,11 +416,14 @@ public class ItsecHbn {
 				Connection conn = session.connection();
 
 			
-				String updateSQL = "UPDATE ITSEC_MASSN_STATUS SET STATUS_ID = ?, STATUS_KOMMENTAR = ? WHERE ITSEC_MASSN_ST_ID = ?";
+				String updateSQL = "UPDATE ITSEC_MASSN_STATUS SET STATUS_ID = ?, STATUS_KOMMENTAR = ?, UPDATE_QUELLE = ?, UPDATE_USER = ?, UPDATE_TIMESTAMP = sysdate WHERE ITSEC_MASSN_ST_ID = ?";
 				PreparedStatement stmt = conn.prepareStatement(updateSQL);
 				stmt.setLong(1, dto.getStatusId());
 				stmt.setString(2, dto.getStatusKommentar());
-				stmt.setLong(3, dto.getItsecMassnahmenStatusId());
+				stmt.setString(3, AirKonstanten.APPLICATION_GUI_NAME);
+				stmt.setString(4, cwid);
+				stmt.setLong(5, dto.getItsecMassnahmenStatusId());
+				
 				int rcCode = stmt.executeUpdate();
 				
 				if (1 == rcCode) {
@@ -457,6 +463,8 @@ public class ItsecHbn {
 			sql.append("SELECT * from ITSEC_MASSN_STWERT order by ITSEC_MASSN_WERTID");
 			
 			try {
+				if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
+					System.out.println(sql.toString());
 				tx = session.beginTransaction();
 
 				@SuppressWarnings("deprecation")

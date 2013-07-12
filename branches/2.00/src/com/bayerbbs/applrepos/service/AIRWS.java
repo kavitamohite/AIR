@@ -9,14 +9,10 @@ import com.bayerbbs.applrepos.dto.PersonOptionDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
-import com.bayerbbs.applrepos.hibernate.ItsecUserOptionHbn;
 import com.bayerbbs.applrepos.hibernate.PersonOptionHbn;
 
 public class AIRWS {
 
-	public final static boolean usePersonOptions = true;	// RFC 8303
-	
-	
 	/**
 	 * searches CIs or Applications by Organisation Unit and CI/APP
 	 * 
@@ -25,44 +21,44 @@ public class AIRWS {
 	 * @param anwParamInp
 	 * @return
 	 */
-	//ApplicationParamOutput
+	// ApplicationParamOutput
 	public CiItemsResultDTO findCIsByOrganisationUnit(ApplicationParameterInput anwParamInp) {
-		
+
 		Long startwert = anwParamInp.getStart();
 		Long limit = anwParamInp.getLimit();
-		
+
 		if (null == startwert) {
 			startwert = 0L;
 		}
 		if (null == limit) {
 			limit = 20L;
 		}
-		
-		
+
 		String ciType = anwParamInp.getCiType();
 		String ouUnit = anwParamInp.getOuUnit(); // "BBS-ITO-SOL-BPS-SEeB"
-		String ciOwnerType = anwParamInp.getCiOwnerType(); // "APP", "CI" oder "ALL"
-		String ouQueryMode = anwParamInp.getOuQueryMode(); //  "EXAKT" oder "START"
+		String ciOwnerType = anwParamInp.getCiOwnerType(); // "APP", "CI" oder
+															// "ALL"
+		String ouQueryMode = anwParamInp.getOuQueryMode(); // "EXAKT" oder
+															// "START"
 
-		//ApplicationDTO
+		// ApplicationDTO
 		List<CiItemDTO> listAnwendungen = null;
 
 		if (LDAPAuthWS.isLoginValid(anwParamInp.getCwid(), anwParamInp.getToken())) {
 			listAnwendungen = CiEntitiesHbn.findCisByOUunit(ciType, ouUnit, ciOwnerType, ouQueryMode);
 		}
-		
-		
+
 		if (null == listAnwendungen) {
-			listAnwendungen = new ArrayList<CiItemDTO>();//ApplicationDTO
+			listAnwendungen = new ArrayList<CiItemDTO>();// ApplicationDTO
 		}
 
-		CiItemDTO anwendungen[] = null;//ApplicationDTO
+		CiItemDTO anwendungen[] = null;// ApplicationDTO
 
 		if (listAnwendungen.size() > (startwert)) {
-			List<CiItemDTO> listAnwTemp = new ArrayList<CiItemDTO>();//ApplicationDTO
+			List<CiItemDTO> listAnwTemp = new ArrayList<CiItemDTO>();// ApplicationDTO
 			long tempCounter = startwert;
 			long anzCounter = 0;
-			
+
 			while (tempCounter < listAnwendungen.size() && anzCounter < limit) {
 				listAnwTemp.add(listAnwendungen.get((int) tempCounter));
 				tempCounter++;
@@ -70,30 +66,31 @@ public class AIRWS {
 			}
 
 			// weniger CI's / Anwendungen als erwartet
-			anwendungen = new CiItemDTO[listAnwTemp.size()];//ApplicationDTO
+			anwendungen = new CiItemDTO[listAnwTemp.size()];// ApplicationDTO
 
 			int i = 0;
-			for (CiItemDTO anw : listAnwTemp) {//ApplicationDTO
+			for (CiItemDTO anw : listAnwTemp) {// ApplicationDTO
 				anwendungen[i] = anw;
 				i++;
 			}
 
 		} else {
 			// weniger CI's / Anwendungen als erwartet
-			anwendungen = new CiItemDTO[listAnwendungen.size()];//ApplicationDTO
+			anwendungen = new CiItemDTO[listAnwendungen.size()];// ApplicationDTO
 
 			int i = 0;
-			for (CiItemDTO anw : listAnwendungen) {//ApplicationDTO
+			for (CiItemDTO anw : listAnwendungen) {// ApplicationDTO
 				anwendungen[i] = anw;
 				i++;
 			}
 		}
 
-//		ApplicationParamOutput anwendungParamOut = new ApplicationParamOutput();
-//		anwendungParamOut.setCountResultSet(listAnwendungen.size());
-//		anwendungParamOut.setApplicationDTO(anwendungen);
-//		return anwendungParamOut;
-		
+		// ApplicationParamOutput anwendungParamOut = new
+		// ApplicationParamOutput();
+		// anwendungParamOut.setCountResultSet(listAnwendungen.size());
+		// anwendungParamOut.setApplicationDTO(anwendungen);
+		// return anwendungParamOut;
+
 		CiItemsResultDTO result = new CiItemsResultDTO();
 		result.setCiItemDTO(anwendungen);
 		result.setCountResultSet(anwendungen.length);
@@ -102,25 +99,19 @@ public class AIRWS {
 
 	public ItsecUserOptionDTO[] getItsecUserOption(ItsecUserOptionParameter parameter) {
 		ItsecUserOptionDTO[] itsecUserOptions = null;
-		if (usePersonOptions) {
-			List<PersonOptionDTO> listPersonOptions= PersonOptionHbn.findPersonOptions(parameter.getCwid());
-			itsecUserOptions = new ItsecUserOptionDTO[listPersonOptions.size()];
-			for (int i = 0; i < itsecUserOptions.length; i++) {
-				ItsecUserOptionDTO temp = new ItsecUserOptionDTO();
-				PersonOptionDTO personTemp = listPersonOptions.get(i);
-				temp.setItsecUserOptionId(personTemp.getPersonOptionId());
-				temp.setItsecUserOptionCWID(personTemp.getCWID());
-				temp.setItsecUserOptionInterfaceId(personTemp.getInterfaceId());
-				temp.setItsecUserOptionName(personTemp.getName());
-				temp.setItsecUserOptionValue(personTemp.getValue());
-				itsecUserOptions[i] = temp;
-			}
-			
+		List<PersonOptionDTO> listPersonOptions = PersonOptionHbn.findPersonOptions(parameter.getCwid());
+		itsecUserOptions = new ItsecUserOptionDTO[listPersonOptions.size()];
+		for (int i = 0; i < itsecUserOptions.length; i++) {
+			ItsecUserOptionDTO temp = new ItsecUserOptionDTO();
+			PersonOptionDTO personTemp = listPersonOptions.get(i);
+			temp.setItsecUserOptionId(personTemp.getPersonOptionId());
+			temp.setItsecUserOptionCWID(personTemp.getCWID());
+			temp.setItsecUserOptionInterfaceId(personTemp.getInterfaceId());
+			temp.setItsecUserOptionName(personTemp.getName());
+			temp.setItsecUserOptionValue(personTemp.getValue());
+			itsecUserOptions[i] = temp;
 		}
-		else {
-			itsecUserOptions = ItsecUserOptionHbn.getArrayFromList(ItsecUserOptionHbn.findItSecUserOptions(parameter.getCwid()));
-		}
-		
+
 		return itsecUserOptions;
 	}
 
@@ -151,38 +142,31 @@ public class AIRWS {
 		}
 		return arrayRP;
 	}
-	
 
-	public ApplicationEditParameterOutput saveUserOption(
-			UserOptionParameterInput editInput) {
+	public ApplicationEditParameterOutput saveUserOption(UserOptionParameterInput editInput) {
 
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
 		if (null != editInput && StringUtils.isNotNullOrEmpty(editInput.getCwid())) {
-			
-			if (usePersonOptions) {
-				List<PersonOptionDTO> listOptions = PersonOptionHbn.findPersonOptionsWithDeleted(editInput.getCwid());
-				
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_CURRENCY", editInput.getCurrency());
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_LANGUAGE", editInput.getLanguage());
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_NUMBER_FORMAT", editInput.getNumberFormat());
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_HELP_ACTIVATE", editInput.getHelp());
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_SKIP_WIZARD", editInput.getSkipWizard());
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_TOOLTIP", editInput.getTooltip());
-				PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_SHOW_DELETED", editInput.getShowDeleted());
-			}
-			else {
-				List<ItsecUserOptionDTO> listOptions = ItsecUserOptionHbn.findItSecUserOptions(editInput.getCwid());
-				
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_CURRENCY", editInput.getCurrency());
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_LANGUAGE", editInput.getLanguage());
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_NUMBER_FORMAT", editInput.getNumberFormat());
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_HELP_ACTIVATE", editInput.getHelp());
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_SKIP_WIZARD", editInput.getSkipWizard());
-				ItsecUserOptionHbn.saveUserOptions(editInput.getCwid(), listOptions, "AIR_TOOLTIP", editInput.getTooltip());
-			}
+
+			List<PersonOptionDTO> listOptions = PersonOptionHbn.findPersonOptionsWithDeleted(editInput.getCwid());
+
+			PersonOptionHbn
+					.savePersonOptions(editInput.getCwid(), listOptions, "AIR_CURRENCY", editInput.getCurrency());
+			PersonOptionHbn
+					.savePersonOptions(editInput.getCwid(), listOptions, "AIR_LANGUAGE", editInput.getLanguage());
+			PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_NUMBER_FORMAT",
+					editInput.getNumberFormat());
+			PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_HELP_ACTIVATE",
+					editInput.getHelp());
+			PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_SKIP_WIZARD",
+					editInput.getSkipWizard());
+			PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_TOOLTIP", editInput.getTooltip());
+			PersonOptionHbn.savePersonOptions(editInput.getCwid(), listOptions, "AIR_SHOW_DELETED",
+					editInput.getShowDeleted());
+
 		}
-		
+
 		return output;
 	}
 

@@ -8,6 +8,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bayerbbs.applrepos.common.ApplReposTS;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.ItsecCompliance;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmeDetailDTO;
 
@@ -118,7 +120,7 @@ public class ItsecMassnahmeStatusHbn {
 		return isNotNullOrEmpty;
 	}
 	
-	public static boolean saveItsecMassnahmeFromDTO(Long itsecMassnStId, ItsecMassnahmeDetailDTO dto) {
+	public static boolean saveItsecMassnahmeFromDTO(String cwid, Long itsecMassnStId, ItsecMassnahmeDetailDTO dto) {
 		boolean result = false;
 		
 		if (null != itsecMassnStId) {
@@ -201,6 +203,17 @@ public class ItsecMassnahmeStatusHbn {
 				status.setGapEndDateIncreased(dto.getGapEndDateIncreased());
 				status.setCurrency(dto.getCurrency());
 				status.setTemplateException(dto.getTemplateException());
+				
+				status.setUpdateUser(cwid);
+				status.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+				status.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+				
+				// RFC 8344 change Insert-Quelle? // RFC 8532
+				if (AirKonstanten.INSERT_QUELLE_ANT.equals(status.getInsertQuelle()) ||
+					AirKonstanten.INSERT_QUELLE_RFC.equals(status.getInsertQuelle())  ||
+					AirKonstanten.INSERT_QUELLE_SISEC.equals(status.getInsertQuelle())) {
+					status.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+				}
 			}
 			
 
