@@ -286,12 +286,12 @@ public class BaseHbn {
 			ciDTO.setTemplate(new Long(0)); // no template
 		}
 		if (null != ciDTO.getTemplate()) {
-//			if (-1 == ciDTO.getTemplate()) {
-//				ci.setTemplate(null);
-//			}
-//			else {
+			if (-1 == ciDTO.getTemplate()) {
+				ci.setTemplate(null);
+			}
+			else {
 				ci.setTemplate(ciDTO.getTemplate());
-//			}
+			}
 		}
 		
 		if (null != ciDTO.getItsecGroupId() && 0 != ciDTO.getItsecGroupId()) {
@@ -304,10 +304,10 @@ public class BaseHbn {
 		}
 		
 		if (null != ciDTO.getRefId()) {
-			if (-1 == ciDTO.getRefId()) {
+			if (0 == ciDTO.getRefId()) {
 				ci.setRefId(null);
 				// Anlegen der ITSec Massnahmen
-//				ItsecMassnahmeStatusHbn.saveSaveguardAssignment(ciDTO.getTableId(), ci.getId(), ci.getItsecGroupId());
+				ItsecMassnahmeStatusHbn.saveSaveguardAssignment(ciDTO.getTableId(), ci.getId(), ci.getItsecGroupId());
 			}
 			else {
 				ci.setRefId(ciDTO.getRefId());

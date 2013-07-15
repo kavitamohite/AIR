@@ -5,10 +5,6 @@ package com.bayerbbs.applrepos.dto;
 public class ApplicationDTO extends CiBaseDTO {
 	private static final long serialVersionUID = 6615538451865795610L;
 
-//	private Long id;
-//	private String name;
-//	private String alias;
-
 	private String barApplicationId;
 	
 	private Long applicationCat2Id;
@@ -41,37 +37,18 @@ public class ApplicationDTO extends CiBaseDTO {
 	private String applicationSteward;
 	private String applicationStewardHidden;
 	
-//	private String responsible;
-//	private String responsibleHidden;
-//	private String subResponsible;
-//	private String subResponsibleHidden;
-	
-//	private String ciOwner;//responsible
-//	private String ciOwnerHidden;//responsibleHidden
-//
-//	private String ciOwnerDelegate;//subResponsible
-//	private String ciOwnerDelegateHidden;//subResponsibleHidden
-
-	private Long itset;
 	private String itsetName;
 	
 	// compliance request
-//	private String relevanceGR1435;
-//	private String relevanceGR1920;
 	private String relevanceGR2059;
 	private String relevanceGR2008;
 	
-//	private Long relevanzItsec;
-//	private Long relevanceICS;
 	private Long relevance2059;
 	private Long relevance2008;
 	
 	
-	private Long template;
 	private String templateReferencedByItem; 
 	
-	private Long itsecGroupId;
-	private Long refId;
 	private String refTxt;
 	private String itsecGroup;
 	
@@ -86,10 +63,8 @@ public class ApplicationDTO extends CiBaseDTO {
 	private Long businessEssentialId;
 	private String businessEssential;
 	
-	private String gxpFlagId;
-	private String gxpFlagTxt;
+	private String gxpFlagTxt;	// kann ausgelagert werden in gxpFlag - Methoden anpassen !!!
 
-	// private String riskAnalysisYN;
 	private Long licenseTypeId;
 	private String licenseTypeTxt;
 	private String dedicated;
@@ -106,19 +81,6 @@ public class ApplicationDTO extends CiBaseDTO {
 	private Long costChangeAccountId;
 	private String costChangeAccountTxt;
 	private String licenseUsingRegions;
-	
-
-	// insert, update, delete attributes
-//	private String insertQuelle;
-//	private String insertTimestamp;
-//	private String insertUser;
-//	private String updateQuelle;
-//	private String updateTimestamp;
-//	private String updateUser;
-//	private String deleteQuelle;
-//	private String deleteTimestamp;
-//	private String deleteUser;
-
 	
 	// access rights
 	private String isEditable = "N";
@@ -145,32 +107,13 @@ public class ApplicationDTO extends CiBaseDTO {
 	private String itSecSbConfidentialityTxt;
 	private String itSecSbConfidentialityDescription;
 
-	// gpsc
-	private String gpsccontactSupportGroup;
-	private String gpsccontactChangeTeam;
-	private String gpsccontactServiceCoordinator;
-	private String gpsccontactEscalation;
-	private String gpsccontactCiOwner;
+	// gpsc (baseCiDTO / local)
 	private String gpsccontactOwningBusinessGroup;
 	private String gpsccontactImplementationTeam;
-	private String gpsccontactServiceCoordinatorIndiv;
-	private String gpsccontactEscalationIndiv;
-	private String gpsccontactResponsibleAtCustomerSide;
-	private String gpsccontactSystemResponsible;
-	private String gpsccontactImpactedBusiness;
 	private String gpsccontactBusinessOwnerRepresentative;
-	private String gpsccontactSupportGroupHidden;
-	private String gpsccontactChangeTeamHidden;
-	private String gpsccontactServiceCoordinatorHidden;
-	private String gpsccontactEscalationHidden;
-	private String gpsccontactCiOwnerHidden;
+	
 	private String gpsccontactOwningBusinessGroupHidden;
 	private String gpsccontactImplementationTeamHidden;
-	private String gpsccontactServiceCoordinatorIndivHidden;
-	private String gpsccontactEscalationIndivHidden;
-	private String gpsccontactResponsibleAtCustomerSideHidden;
-	private String gpsccontactSystemResponsibleHidden;
-	private String gpsccontactImpactedBusinessHidden;
 	private String gpsccontactBusinessOwnerRepresentativeHidden;
 	
 	// connections
@@ -181,8 +124,6 @@ public class ApplicationDTO extends CiBaseDTO {
 	private Long categoryBusinessId;
 	private String categoryBusiness;
 
-//	private Long tableId;
-	
 	private Long classDataId;
 	private String classData;
 	private Long classInformationId;
@@ -191,11 +132,6 @@ public class ApplicationDTO extends CiBaseDTO {
 	private String serviceModel;
 
 
-//	private Long ciComplianceRequestId1435;
-//	private Long ciComplianceRequestId2059;
-//	private Long ciComplianceRequestId1920;
-//	private Long ciComplianceRequestId2008;
-	
 	// connections
 	private String upStreamAdd;
 	private String upStreamDelete;
@@ -205,22 +141,6 @@ public class ApplicationDTO extends CiBaseDTO {
 	public ApplicationDTO() {
 	}
 
-//	public Long getApplicationId() {
-//		return applicationId;
-//	}
-//
-//	public void setApplicationId(Long applicationId) {
-//		this.applicationId = applicationId;
-//	}
-	
-//	public String getAlias() {
-//		return alias;
-//	}
-//
-//	public void setAlias(String alias) {
-//		this.alias = alias;
-//	}
-
 	public String getBarApplicationId() {
 		return barApplicationId;
 	}
@@ -228,70 +148,6 @@ public class ApplicationDTO extends CiBaseDTO {
 	public void setBarApplicationId(String barApplicationId) {
 		this.barApplicationId = barApplicationId;
 	}
-
-//	public String getApplicationName() {
-//		return applicationName;
-//	}
-//
-//	public void setApplicationName(String applicationName) {
-//		this.applicationName = applicationName;
-//	}
-//
-//	public String getApplicationAlias() {
-//		return applicationAlias;
-//	}
-//
-//	public void setApplicationAlias(String applicationAlias) {
-//		this.applicationAlias = applicationAlias;
-//	}
-//
-//	public String getResponsible() {
-//		return responsible;
-//	}
-//
-//	public void setResponsible(String responsible) {
-//		this.responsible = responsible;
-//	}
-//
-//	public String getSubResponsible() {
-//		return subResponsible;
-//	}
-//
-//	public void setSubResponsible(String subResponsible) {
-//		this.subResponsible = subResponsible;
-//	}
-	
-//	public String getCiOwner() {
-//		return ciOwner;
-//	}
-//	public void setCiOwner(String ciOwner) {
-//		this.ciOwner = ciOwner;
-//	}
-//
-//
-//	public String getCiOwnerDelegate() {
-//		return ciOwnerDelegate;
-//	}
-//	public void setCiOwnerDelegate(String ciOwnerDelegate) {
-//		this.ciOwnerDelegate = ciOwnerDelegate;
-//	}
-//	
-//	public String getCiOwnerHidden() {
-//		return ciOwnerHidden;
-//	}
-//	public void setCiOwnerHidden(String ciOwnerHidden) {
-//		this.ciOwnerHidden = ciOwnerHidden;
-//	}
-//
-//
-//	public String getCiOwnerDelegateHidden() {
-//		return ciOwnerDelegateHidden;
-//	}
-//	public void setCiOwnerDelegateHidden(String ciOwnerDelegateHidden) {
-//		this.ciOwnerDelegateHidden = ciOwnerDelegateHidden;
-//	}
-	
-	
 
 	public Long getApplicationCat2Id() {
 		return applicationCat2Id;
@@ -341,14 +197,6 @@ public class ApplicationDTO extends CiBaseDTO {
 		this.operationalStatusId = operationalStatusId;
 	}
 
-	public Long getItset() {
-		return itset;
-	}
-
-	public void setItset(Long itset) {
-		this.itset = itset;
-	}
-
 	public Long getBusinessEssentialId() {
 		return businessEssentialId;
 	}
@@ -364,78 +212,6 @@ public class ApplicationDTO extends CiBaseDTO {
 	public void setIsEditable(String isEditable) {
 		this.isEditable = isEditable;
 	}
-
-//	public String getInsertQuelle() {
-//		return insertQuelle;
-//	}
-//
-//	public void setInsertQuelle(String insertQuelle) {
-//		this.insertQuelle = insertQuelle;
-//	}
-//
-//	public String getInsertTimestamp() {
-//		return insertTimestamp;
-//	}
-//
-//	public void setInsertTimestamp(String insertTimestamp) {
-//		this.insertTimestamp = insertTimestamp;
-//	}
-//
-//	public String getInsertUser() {
-//		return insertUser;
-//	}
-//
-//	public void setInsertUser(String insertUser) {
-//		this.insertUser = insertUser;
-//	}
-//
-//	public String getUpdateQuelle() {
-//		return updateQuelle;
-//	}
-//
-//	public void setUpdateQuelle(String updateQuelle) {
-//		this.updateQuelle = updateQuelle;
-//	}
-//
-//	public String getUpdateTimestamp() {
-//		return updateTimestamp;
-//	}
-//
-//	public void setUpdateTimestamp(String updateTimestamp) {
-//		this.updateTimestamp = updateTimestamp;
-//	}
-//
-//	public String getUpdateUser() {
-//		return updateUser;
-//	}
-//
-//	public void setUpdateUser(String updateUser) {
-//		this.updateUser = updateUser;
-//	}
-//
-//	public String getDeleteQuelle() {
-//		return deleteQuelle;
-//	}
-//
-//	public void setDeleteQuelle(String deleteQuelle) {
-//		this.deleteQuelle = deleteQuelle;
-//	}
-//
-//	public String getDeleteTimestamp() {
-//		return deleteTimestamp;
-//	}
-//
-//	public void setDeleteTimestamp(String deleteTimestamp) {
-//		this.deleteTimestamp = deleteTimestamp;
-//	}
-//
-//	public String getDeleteUser() {
-//		return deleteUser;
-//	}
-//
-//	public void setDeleteUser(String deleteUser) {
-//		this.deleteUser = deleteUser;
-//	}
 
 	public String getApplicationCat2Txt() {
 		return applicationCat2Txt;
@@ -477,36 +253,12 @@ public class ApplicationDTO extends CiBaseDTO {
 		this.applicationCat1Txt = applicationCat1Txt;
 	}
 
-//	public Long getRelevanzItsec() {
-//		return relevanzItsec;
-//	}
-//
-//	public void setRelevanzItsec(Long relevanzItsec) {
-//		this.relevanzItsec = relevanzItsec;
-//	}
-
-	public Long getItsecGroupId() {
-		return itsecGroupId;
-	}
-
-	public void setItsecGroupId(Long itsecGroupId) {
-		this.itsecGroupId = itsecGroupId;
-	}
-
 	public String getItsecGroup() {
 		return itsecGroup;
 	}
 
 	public void setItsecGroup(String itsecGroup) {
 		this.itsecGroup = itsecGroup;
-	}
-
-	public Long getRefId() {
-		return refId;
-	}
-
-	public void setRefId(Long refId) {
-		this.refId = refId;
 	}
 
 	public String getRefTxt() {
@@ -598,36 +350,12 @@ public class ApplicationDTO extends CiBaseDTO {
 		this.businessEssential = businessEssential;
 	}
 
-//	public Long getRelevanceICS() {
-//		return relevanceICS;
-//	}
-//
-//	public void setRelevanceICS(Long relevanceICS) {
-//		this.relevanceICS = relevanceICS;
-//	}
-	
-	public Long getTemplate() {
-		return template;
-	}
-
-	public void setTemplate(Long template) {
-		this.template = template;
-	}
-
 	public String getTemplateReferencedByItem() {
 		return templateReferencedByItem;
 	}
 
 	public void setTemplateReferencedByItem(String templateReferencedByItem) {
 		this.templateReferencedByItem = templateReferencedByItem;
-	}
-
-	public String getGxpFlagId() {
-		return gxpFlagId;
-	}
-
-	public void setGxpFlagId(String gxpFlagId) {
-		this.gxpFlagId = gxpFlagId;
 	}
 
 	public String getGxpFlagTxt() {
@@ -637,15 +365,6 @@ public class ApplicationDTO extends CiBaseDTO {
 	public void setGxpFlagTxt(String gxpFlagTxt) {
 		this.gxpFlagTxt = gxpFlagTxt;
 	}
-
-// task 142
-//	public String getRiskAnalysisYN() {
-//		return riskAnalysisYN;
-//	}
-//
-//	public void setRiskAnalysisYN(String riskAnalysisYN) {
-//		this.riskAnalysisYN = riskAnalysisYN;
-//	}
 
 	public Long getLicenseTypeId() {
 		return licenseTypeId;
@@ -940,61 +659,6 @@ public class ApplicationDTO extends CiBaseDTO {
 		this.primaryFunctionTxt = primaryFunctionTxt;
 	}
 
-//	public String getResponsibleHidden() {
-//		return responsibleHidden;
-//	}
-//
-//	public void setResponsibleHidden(String responsibleHidden) {
-//		this.responsibleHidden = responsibleHidden;
-//	}
-//
-//	public String getSubResponsibleHidden() {
-//		return subResponsibleHidden;
-//	}
-//
-//	public void setSubResponsibleHidden(String subResponsibleHidden) {
-//		this.subResponsibleHidden = subResponsibleHidden;
-//	}
-
-	public String getGpsccontactSupportGroup() {
-		return gpsccontactSupportGroup;
-	}
-
-	public void setGpsccontactSupportGroup(String gpsccontactSupportGroup) {
-		this.gpsccontactSupportGroup = gpsccontactSupportGroup;
-	}
-
-	public String getGpsccontactChangeTeam() {
-		return gpsccontactChangeTeam;
-	}
-
-	public void setGpsccontactChangeTeam(String gpsccontactChangeTeam) {
-		this.gpsccontactChangeTeam = gpsccontactChangeTeam;
-	}
-
-	public String getGpsccontactServiceCoordinator() {
-		return gpsccontactServiceCoordinator;
-	}
-
-	public void setGpsccontactServiceCoordinator(String gpsccontactServiceCoordinator) {
-		this.gpsccontactServiceCoordinator = gpsccontactServiceCoordinator;
-	}
-
-	public String getGpsccontactEscalation() {
-		return gpsccontactEscalation;
-	}
-
-	public void setGpsccontactEscalation(String gpsccontactEscalation) {
-		this.gpsccontactEscalation = gpsccontactEscalation;
-	}
-
-	public String getGpsccontactCiOwner() {
-		return gpsccontactCiOwner;
-	}
-
-	public void setGpsccontactCiOwner(String gpsccontactCiOwner) {
-		this.gpsccontactCiOwner = gpsccontactCiOwner;
-	}
 
 	public String getGpsccontactOwningBusinessGroup() {
 		return gpsccontactOwningBusinessGroup;
@@ -1012,46 +676,6 @@ public class ApplicationDTO extends CiBaseDTO {
 		this.gpsccontactImplementationTeam = gpsccontactImplementationTeam;
 	}
 
-	public String getGpsccontactServiceCoordinatorIndiv() {
-		return gpsccontactServiceCoordinatorIndiv;
-	}
-
-	public void setGpsccontactServiceCoordinatorIndiv(String gpsccontactServiceCoordinatorIndiv) {
-		this.gpsccontactServiceCoordinatorIndiv = gpsccontactServiceCoordinatorIndiv;
-	}
-
-	public String getGpsccontactEscalationIndiv() {
-		return gpsccontactEscalationIndiv;
-	}
-
-	public void setGpsccontactEscalationIndiv(String gpsccontactEscalationIndiv) {
-		this.gpsccontactEscalationIndiv = gpsccontactEscalationIndiv;
-	}
-
-	public String getGpsccontactResponsibleAtCustomerSide() {
-		return gpsccontactResponsibleAtCustomerSide;
-	}
-
-	public void setGpsccontactResponsibleAtCustomerSide(String gpsccontactResponsibleAtCustomerSide) {
-		this.gpsccontactResponsibleAtCustomerSide = gpsccontactResponsibleAtCustomerSide;
-	}
-
-	public String getGpsccontactSystemResponsible() {
-		return gpsccontactSystemResponsible;
-	}
-
-	public void setGpsccontactSystemResponsible(String gpsccontactSystemResponsible) {
-		this.gpsccontactSystemResponsible = gpsccontactSystemResponsible;
-	}
-
-	public String getGpsccontactImpactedBusiness() {
-		return gpsccontactImpactedBusiness;
-	}
-
-	public void setGpsccontactImpactedBusiness(String gpsccontactImpactedBusiness) {
-		this.gpsccontactImpactedBusiness = gpsccontactImpactedBusiness;
-	}
-
 	public String getGpsccontactBusinessOwnerRepresentative() {
 		return gpsccontactBusinessOwnerRepresentative;
 	}
@@ -1060,45 +684,6 @@ public class ApplicationDTO extends CiBaseDTO {
 		this.gpsccontactBusinessOwnerRepresentative = gpsccontactBusinessOwnerRepresentative;
 	}
 
-	public String getGpsccontactSupportGroupHidden() {
-		return gpsccontactSupportGroupHidden;
-	}
-
-	public void setGpsccontactSupportGroupHidden(String gpsccontactSupportGroupHidden) {
-		this.gpsccontactSupportGroupHidden = gpsccontactSupportGroupHidden;
-	}
-
-	public String getGpsccontactChangeTeamHidden() {
-		return gpsccontactChangeTeamHidden;
-	}
-
-	public void setGpsccontactChangeTeamHidden(String gpsccontactChangeTeamHidden) {
-		this.gpsccontactChangeTeamHidden = gpsccontactChangeTeamHidden;
-	}
-
-	public String getGpsccontactServiceCoordinatorHidden() {
-		return gpsccontactServiceCoordinatorHidden;
-	}
-
-	public void setGpsccontactServiceCoordinatorHidden(String gpsccontactServiceCoordinatorHidden) {
-		this.gpsccontactServiceCoordinatorHidden = gpsccontactServiceCoordinatorHidden;
-	}
-
-	public String getGpsccontactEscalationHidden() {
-		return gpsccontactEscalationHidden;
-	}
-
-	public void setGpsccontactEscalationHidden(String gpsccontactEscalationHidden) {
-		this.gpsccontactEscalationHidden = gpsccontactEscalationHidden;
-	}
-
-	public String getGpsccontactCiOwnerHidden() {
-		return gpsccontactCiOwnerHidden;
-	}
-
-	public void setGpsccontactCiOwnerHidden(String gpsccontactCiOwnerHidden) {
-		this.gpsccontactCiOwnerHidden = gpsccontactCiOwnerHidden;
-	}
 
 	public String getGpsccontactOwningBusinessGroupHidden() {
 		return gpsccontactOwningBusinessGroupHidden;
@@ -1114,46 +699,6 @@ public class ApplicationDTO extends CiBaseDTO {
 
 	public void setGpsccontactImplementationTeamHidden(String gpsccontactImplementationTeamHidden) {
 		this.gpsccontactImplementationTeamHidden = gpsccontactImplementationTeamHidden;
-	}
-
-	public String getGpsccontactServiceCoordinatorIndivHidden() {
-		return gpsccontactServiceCoordinatorIndivHidden;
-	}
-
-	public void setGpsccontactServiceCoordinatorIndivHidden(String gpsccontactServiceCoordinatorIndivHidden) {
-		this.gpsccontactServiceCoordinatorIndivHidden = gpsccontactServiceCoordinatorIndivHidden;
-	}
-
-	public String getGpsccontactEscalationIndivHidden() {
-		return gpsccontactEscalationIndivHidden;
-	}
-
-	public void setGpsccontactEscalationIndivHidden(String gpsccontactEscalationIndivHidden) {
-		this.gpsccontactEscalationIndivHidden = gpsccontactEscalationIndivHidden;
-	}
-
-	public String getGpsccontactResponsibleAtCustomerSideHidden() {
-		return gpsccontactResponsibleAtCustomerSideHidden;
-	}
-
-	public void setGpsccontactResponsibleAtCustomerSideHidden(String gpsccontactResponsibleAtCustomerSideHidden) {
-		this.gpsccontactResponsibleAtCustomerSideHidden = gpsccontactResponsibleAtCustomerSideHidden;
-	}
-
-	public String getGpsccontactSystemResponsibleHidden() {
-		return gpsccontactSystemResponsibleHidden;
-	}
-
-	public void setGpsccontactSystemResponsibleHidden(String gpsccontactSystemResponsibleHidden) {
-		this.gpsccontactSystemResponsibleHidden = gpsccontactSystemResponsibleHidden;
-	}
-
-	public String getGpsccontactImpactedBusinessHidden() {
-		return gpsccontactImpactedBusinessHidden;
-	}
-
-	public void setGpsccontactImpactedBusinessHidden(String gpsccontactImpactedBusinessHidden) {
-		this.gpsccontactImpactedBusinessHidden = gpsccontactImpactedBusinessHidden;
 	}
 
 	public String getGpsccontactBusinessOwnerRepresentativeHidden() {
@@ -1243,14 +788,6 @@ public class ApplicationDTO extends CiBaseDTO {
 		this.categoryBusiness = categoryBusiness;
 	}
 
-//	public Long getTableId() {
-//		return tableId;
-//	}
-//
-//	public void setTableId(Long tableId) {
-//		this.tableId = tableId;
-//	}
-
 	public Long getClassDataId() {
 		return classDataId;
 	}
@@ -1291,20 +828,6 @@ public class ApplicationDTO extends CiBaseDTO {
 		this.applicationProtection = applicationProtection;
 	}
 
-//	public String getRelevanceGR1435() {
-//		return relevanceGR1435;
-//	}
-//
-//	public void setRelevanceGR1435(String relevanceGR1435) {
-//		this.relevanceGR1435 = relevanceGR1435;
-//		if ("Y".equals(relevanceGR1435)) {
-//			setRelevanzItsec(new Long(-1));
-//		}
-//		else if ("N".equals(relevanceGR1435)) {
-//			setRelevanzItsec(new Long(0));
-//		}
-//	}
-
 	public String getRelevanceGR2059() {
 		return relevanceGR2059;
 	}
@@ -1319,19 +842,6 @@ public class ApplicationDTO extends CiBaseDTO {
 		}
 	}
 
-//	public String getRelevanceGR1920() {
-//		return relevanceGR1920;
-//	}
-//
-//	public void setRelevanceGR1920(String relevanceGR1920) {
-//		this.relevanceGR1920 = relevanceGR1920;
-//		if ("Y".equals(relevanceGR1920)) {
-//			setRelevanceICS(new Long(-1));
-//		}
-//		else if ("N".equals(relevanceGR1920)) {
-//			setRelevanceICS(new Long(0));
-//		}
-//	}
 
 	public String getRelevanceGR2008() {
 		return relevanceGR2008;
@@ -1347,37 +857,6 @@ public class ApplicationDTO extends CiBaseDTO {
 		}
 	}
 
-//	public Long getCiComplianceRequestId1435() {
-//		return ciComplianceRequestId1435;
-//	}
-//
-//	public void setCiComplianceRequestId1435(Long ciComplianceRequestId1435) {
-//		this.ciComplianceRequestId1435 = ciComplianceRequestId1435;
-//	}
-//
-//	public Long getCiComplianceRequestId2059() {
-//		return ciComplianceRequestId2059;
-//	}
-//
-//	public void setCiComplianceRequestId2059(Long ciComplianceRequestId2059) {
-//		this.ciComplianceRequestId2059 = ciComplianceRequestId2059;
-//	}
-//
-//	public Long getCiComplianceRequestId1920() {
-//		return ciComplianceRequestId1920;
-//	}
-//
-//	public void setCiComplianceRequestId1920(Long ciComplianceRequestId1920) {
-//		this.ciComplianceRequestId1920 = ciComplianceRequestId1920;
-//	}
-//
-//	public Long getCiComplianceRequestId2008() {
-//		return ciComplianceRequestId2008;
-//	}
-//
-//	public void setCiComplianceRequestId2008(Long ciComplianceRequestId2008) {
-//		this.ciComplianceRequestId2008 = ciComplianceRequestId2008;
-//	}
 
 	public String getUpStreamAdd() {
 		return upStreamAdd;

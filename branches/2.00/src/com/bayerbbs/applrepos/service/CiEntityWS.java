@@ -510,17 +510,20 @@ public class CiEntityWS {
 
 		
 		ciBaseDTO.setItset(ciBase.getItset());
-		ciBaseDTO.setTemplate(ciBase.getTemplate());
 		ciBaseDTO.setItsecGroupId(ciBase.getItsecGroupId());
 		
 		Long template = ciBase.getTemplate();
-		if (-1 == template.longValue()) {
-			// TODO -1 != 1 - Achtung beim Speichern
-			template = new Long(1);
-			//FEHLT NOCH siehe ApplicationWS!!
+		if (null == template) {
+			template = -1L;
 		}
+		ciBaseDTO.setTemplate(template);
+		
 
-		ciBaseDTO.setRefId(ciBase.getRefId());
+		Long refID = ciBase.getRefId();
+		if (null == refID) {
+			refID = 0L;
+		}
+		ciBaseDTO.setRefId(refID);
 		
 		
 		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerHidden())) {
