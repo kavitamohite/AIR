@@ -44,7 +44,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		            ]
 		        },{
 					id: 'complianceManagementText',		        	
-		    		html: 'Choosing "Integrated" AIR covers all issues of compliance management,<br> whereas "External" manages only the references to an compliance management outside of AIR.',
+		    		html: '<span style="color:red;">*</span>&nbsp;"Compliance Management" requires to be set to "Integrated" or "External".<br>Choosing "Integrated" AIR covers all issues of compliance management,<br> whereas "External" manages only the references to an compliance management outside of AIR.',
 		    		border: false,
 					style: {
 				    	fontSize: 12,

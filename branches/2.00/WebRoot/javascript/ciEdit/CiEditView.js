@@ -323,8 +323,12 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			this.enableButtons();
 			this.ciModified = true;
 			
-			if(viewElement && viewElement.getId && (viewElement.getId() == 'cbReferencedTemplate' || viewElement.getId() == 'cbItSecGroup') && 
-			   AAM.getAppDetail().refId.length > 0 && AAM.getAppDetail().itsecGroupId.length > 0 && AAM.getAppDetail().itsecGroupId != AC.CI_GROUP_ID_DEFAULT_ITSEC && AAM.getAppDetail().itsecGroupId != AC.CI_GROUP_ID_NON_BYTSEC)
+			if (viewElement && viewElement.getId && 
+			   (viewElement.getId() == 'cbReferencedTemplate' || viewElement.getId() == 'cbItSecGroup') && 
+			   AAM.getAppDetail().refId.length > 0 && 
+			   AAM.getAppDetail().itsecGroupId.length > 0 && 
+			   AAM.getAppDetail().itsecGroupId != AC.CI_GROUP_ID_DEFAULT_ITSEC && 
+			   AAM.getAppDetail().itsecGroupId != AC.CI_GROUP_ID_NON_BYTSEC)
 				this.itsecChanged = true;
 			
 			this.validateCiChange(view, viewElement, changedViewItems);
