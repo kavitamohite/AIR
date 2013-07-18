@@ -304,7 +304,7 @@ AIR.CiSupportStuffView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.activateTestLinkButton(tfSupportstuffAppDoc, clSupportstuffAppDoc);
 
 		//setzen der Felder erfolgt in CiEditTabView.onLoadApplication in for Schleife. Auch hier dezentralisieren?
-		if (data.pSupportstuffAppDoc && data.pSupportstuffAppDoc != 0) {
+		if (data.supportstuffAppDoc && data.supportstuffAppDoc != 0) {
 			this.getComponent('supportStuffApplication').getComponent('pSupportstuffAppDoc').getComponent('supportstuffAppDoc').setValue(data.supportstuffAppDoc);
 		} else {
 			this.getComponent('supportStuffApplication').getComponent('pSupportstuffAppDoc').getComponent('supportstuffAppDoc').setValue('');
