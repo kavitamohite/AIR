@@ -304,7 +304,7 @@ public class BaseHbn {
 		}
 		
 		if (null != ciDTO.getRefId()) {
-			if (0 == ciDTO.getRefId()) {
+			if (-1 == ciDTO.getRefId() || 0 == ciDTO.getRefId()) {
 				ci.setRefId(null);
 				// Anlegen der ITSec Massnahmen
 				ItsecMassnahmeStatusHbn.saveSaveguardAssignment(ciDTO.getTableId(), ci.getId(), ci.getItsecGroupId());
