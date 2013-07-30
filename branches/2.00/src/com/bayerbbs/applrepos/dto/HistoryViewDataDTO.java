@@ -10,12 +10,13 @@ public class HistoryViewDataDTO {
 	String changeDBUser;
 	String changeUserCWID;
 	String changeUserName;
+	String changeObjectName;
 	String changeAttributeName;
 	String changeAttributeOldValue;
 	String changeAttributeNewValue;
 	
 	String infoType;
-	
+
 	
 	public Long getId() {
 		return id;
@@ -64,6 +65,12 @@ public class HistoryViewDataDTO {
 	}
 	public void setChangeUserName(String changeUserName) {
 		this.changeUserName = changeUserName;
+	}
+	public String getChangeObjectName() {
+		return changeObjectName;
+	}
+	public void setChangeObjectName(String changeObjectName) {
+		this.changeObjectName = changeObjectName;
 	}
 	public String getChangeAttributeName() {
 		return changeAttributeName;
