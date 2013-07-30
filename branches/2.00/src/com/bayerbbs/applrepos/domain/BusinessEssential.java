@@ -1,7 +1,6 @@
 package com.bayerbbs.applrepos.domain;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,12 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang.StringUtils;
-
-import com.bayerbbs.applrepos.common.BbsDateFormat;
-
+import org.hibernate.annotations.Immutable;
+@Immutable
 @Entity
-@Table(name = "SEVERITY_LEVEL")
+@Table(name = "V_MD_SEVERITY_LEVEL")
 public class BusinessEssential implements Serializable {
 
 	private static final long serialVersionUID = 6850005829893569522L;
@@ -71,6 +68,18 @@ public class BusinessEssential implements Serializable {
 		this.severityLevelId = severityLevelId;
 	}
 
+	@Transient
+	public Boolean getInherited() 
+	{
+		switch (this.beCode.intValue())
+		{
+		case 2:			// BE_Code 2: inherited: Business Essential
+		case 4:			// BE_Code 4: inherited: Pandemic Business Essential
+			return true;
+		default:
+			return false;
+		}
+	}
 	/**
 	 * Returns the value of the field {@link #severityLevel}.
 	 * 
@@ -151,170 +160,25 @@ public class BusinessEssential implements Serializable {
 		this.beCode = beCode;
 	}
 
-	
-	private Timestamp deleteTimestamp;
-
-	private String deleteQuelle;
-
-	private String deleteUser;
-
-	/**
-	 * The revisioninfos as display string
-	 * 
-	 * @return deleteinfo as String
-	 */
-	@Transient
-	public String getRevisionDeleteDisp() {
-
-		return deleteTimestamp != null ? "D: " + deleteUser + "/"
-				+ BbsDateFormat.getInstance().format(deleteTimestamp)
-				: StringUtils.EMPTY;
-	}
-
-	/**
-	 * Returns the value of the field {@link #deleteQuelle}.
-	 * 
-	 * @return Value of the {@link #deleteQuelle} field.
-	 */
-	@Column(name = "DEL_QUELLE")
-	public String getDeleteQuelle() {
-		return deleteQuelle;
-	}
-
-	/**
-	 * Returns the value of the field {@link #deleteTimestamp}.
-	 * 
-	 * @return Value of the {@link #deleteTimestamp} field.
-	 */
-	@Column(name = "DEL_TIMESTAMP")
-	public Timestamp getDeleteTimestamp() {
-		return deleteTimestamp;
-	}
-
-	/**
-	 * Returns the value of the field {@link #deleteUser}.
-	 * 
-	 * @return Value of the {@link #deleteUser} field.
-	 */
-	@Column(name = "DEL_USER")
-	public String getDeleteUser() {
-		return deleteUser;
-	}
-
-	/**
-	 * Sets the value of the {@link #deleteQuelle} field.
-	 * 
-	 * @param deleteQuelle
-	 *            The value to set.
-	 */
-	public void setDeleteQuelle(String deleteQuelle) {
-		this.deleteQuelle = deleteQuelle;
-	}
-
-	/**
-	 * Sets the value of the {@link #deleteTimestamp} field.
-	 * 
-	 * @param deleteTimestamp
-	 *            The value to set.
-	 */
-	public void setDeleteTimestamp(Timestamp deleteTimestamp) {
-		this.deleteTimestamp = deleteTimestamp;
-	}
-
-	/**
-	 * Sets the value of the {@link #deleteUser} field.
-	 * 
-	 * @param deleteUser
-	 *            The value to set.
-	 */
-	public void setDeleteUser(String deleteUser) {
-		this.deleteUser = deleteUser;
-	}
-
-	private Timestamp insertTimestamp;
-
 	private String insertQuelle;
 
-	private String insertUser;
-
 	/**
-	 * The revisioninfos as display string
+	 * Returns the value of the field {@link #insertSource}.
 	 * 
-	 * @return insertinfo as String
+	 * @return Value of the {@link #insertSource} field.
 	 */
-	@Transient
-	public String getRevisionInsertDisp() {
-
-		if (insertUser == null)
-			return insertUser;
-
-		return "I: " + insertUser + "/"
-				+ BbsDateFormat.getInstance().format(insertTimestamp);
-	}
-
-	// --------------------------------------
-	// hibernate get / set
-	// --------------------------------------
-
-	/**
-	 * Returns the value of the field {@link #insertQuelle}.
-	 * 
-	 * @return Value of the {@link #insertQuelle} field.
-	 */
-	@Column(name = "INSERT_QUELLE")
+	@Column(name = "INSERT_SOURCE")
 	public String getInsertQuelle() {
 		return insertQuelle;
 	}
-
 	/**
-	 * Returns the value of the field {@link #insertTimestamp}.
+	 * Sets the value of the {@link #insertSource} field.
 	 * 
-	 * @return Value of the {@link #insertTimestamp} field.
-	 */
-	@Column(name = "INSERT_TIMESTAMP")
-	public Timestamp getInsertTimestamp() {
-		return insertTimestamp;
-	}
-
-	/**
-	 * Returns the value of the field {@link #insertUser}.
-	 * 
-	 * @return Value of the {@link #insertUser} field.
-	 */
-	@Column(name = "INSERT_USER")
-	public String getInsertUser() {
-		return insertUser;
-	}
-
-
-	/**
-	 * Sets the value of the {@link #insertQuelle} field.
-	 * 
-	 * @param insertQuelle
+	 * @param insertSource
 	 *            The value to set.
 	 */
-	public void setInsertQuelle(String insertQuelle) {
-		this.insertQuelle = insertQuelle;
-	}
-
-	/**
-	 * Sets the value of the {@link #insertTimestamp} field.
-	 * 
-	 * @param insertTimestamp
-	 *            The value to set.
-	 */
-	public void setInsertTimestamp(Timestamp insertTimestamp) {
-		this.insertTimestamp = insertTimestamp;
-	}
-
-	/**
-	 * Sets the value of the {@link #insertUser} field.
-	 * 
-	 * @param insertUser
-	 *            The value to set.
-	 */
-	public void setInsertUser(String insertUser) {
-		this.insertUser = insertUser;
+	public void setInsertQuelle(String insertSource) {
+		this.insertQuelle = insertSource;
 	}
 
 }
