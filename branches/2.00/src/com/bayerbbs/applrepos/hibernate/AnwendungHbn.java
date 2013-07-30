@@ -68,7 +68,7 @@ public class AnwendungHbn extends BaseHbn {
 			List<Application> list = session.createQuery("select h from Application as h where h.applicationId= " + applicationId).list();
 
 			if (null != list && 0 < list.size()) {
-				application = (Application) list.get(0);
+				application = list.get(0);
 			}
 
 			tx.commit();
@@ -89,6 +89,7 @@ public class AnwendungHbn extends BaseHbn {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public static List<Application> findDeletedApplicationByName(String applicationName) {
 		List<Application> listApplications = null;
 		Transaction tx = null;
@@ -115,6 +116,7 @@ public class AnwendungHbn extends BaseHbn {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public static List<Application> findApplicationByName(String applicationName) {
 		List<Application> listApplications = null;
 		Transaction tx = null;
@@ -2676,12 +2678,12 @@ public class AnwendungHbn extends BaseHbn {
 //		sql.append(applicationId);
 //		sql.append(" order by datetime desc");
 		
-		String lang = "'D'";
+		String lang = "'E'";
 		
 		
 //		String sql = "SELECT * FROM TABLE(PCK_AIR.ft_history("+applicationId+"))";
 		
-		String sql = "SELECT * FROM TABLE (pck_History.Read (" + tableId +", " + ciId + ", " + lang + ")) ORDER BY 1 desc";
+		String sql = "SELECT * FROM TABLE (pck_History.Read (" + tableId +", " + ciId + ", " + lang + ", 'N', 'Y')) ORDER BY 1 DESC";
 		
 		try {
 			tx = session.beginTransaction();
@@ -2738,7 +2740,7 @@ public class AnwendungHbn extends BaseHbn {
 						
 					}*/
 					
-//					dto.setCiId(rsMessage.getLong("CI_ID"));
+					dto.setCiId(rsMessage.getLong("CI_ID"));
 //					dto.setDatetime(rsMessage.getTimestamp("DATETIME").toString());	//toLocaleString TODO History Datumsformat
 //					dto.setChangeSource(rsMessage.getString("SOURCE"));
 //					dto.setChangeUserCWID(rsMessage.getString("USERNAME"));
@@ -2748,16 +2750,16 @@ public class AnwendungHbn extends BaseHbn {
 //					dto.setChangeAttributeNewValue(rsMessage.getString("NEW_VALUE"));
 //					dto.setInfoType(rsMessage.getString("TABLE_NAME"));
 					
-					dto.setCiId(ciId);
+//					dto.setCiId(ciId);
 					dto.setDatetime(rsMessage.getString("DATEVALUE"));	//toLocaleString TODO History Datumsformat
 					dto.setChangeSource(rsMessage.getString("CHANGESOURCE"));
 					dto.setChangeUserCWID(rsMessage.getString("CHANGEUSER"));
 					dto.setChangeDBUser(rsMessage.getString("CWID"));
-					dto.setChangeAttributeName(rsMessage.getString("TRANSBASE_ATTRIBUTE"));
+					dto.setChangeObjectName(rsMessage.getString("OBJECT_NAME"));
+					dto.setChangeAttributeName(rsMessage.getString("ATTRIBUTE_GLOSSARY"));
 					dto.setChangeAttributeOldValue(rsMessage.getString("OLD_VALUE"));
 					dto.setChangeAttributeNewValue(rsMessage.getString("NEW_VALUE"));
-					dto.setInfoType(rsMessage.getString("TABLE_ORIGINAL"));
-
+					dto.setInfoType(rsMessage.getString("TABLE_READABLE"));
 					
 					listResult.add(dto);
 				}

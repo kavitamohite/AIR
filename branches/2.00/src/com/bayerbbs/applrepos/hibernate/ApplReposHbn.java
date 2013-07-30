@@ -30,9 +30,9 @@ public class ApplReposHbn {
 	private static final String SELECT_ROLES = "SELECT DISTINCT ROL.Role_Id, " +
 					         "ROL.Role_Name " +
 					         "FROM     ROLE ROL  " +
-					         "INNER JOIN ROLE_PERSON R2P ON ROL.Role_Id=R2P.Role_Id AND Current_Date BETWEEN R2P.Date_Start AND R2P.Date_End AND R2P.Del_Timestamp IS NULL " + 
-					         "INNER JOIN ROLE_INTERFACE R2I ON R2P.Role_Id=R2I.Role_Id AND R2I.Del_Timestamp IS NULL  " +
-					         "INNER JOIN INTERFACES INT ON R2I.Interface_Id=INT.Interfaces_Id AND INT.Del_Timestamp IS NULL AND INT.Token = 'AIR' " +
+					         "INNER JOIN ROLE_PERSON R2P ON ROL.Role_Id=R2P.Role_Id AND SYSDATE BETWEEN R2P.Date_Start AND R2P.Date_End AND R2P.Del_Quelle IS NULL " + 
+					         "INNER JOIN ROLE_INTERFACE R2I ON R2P.Role_Id=R2I.Role_Id AND R2I.Del_Quelle IS NULL  " +
+					         "INNER JOIN INTERFACES INT ON R2I.Interface_Id=INT.Interfaces_Id AND INT.Del_Quelle IS NULL AND INT.Token = 'AIR' " +
 								"WHERE    R2P.Cwid = :Cwid " +
 								"AND      ROL.Del_Quelle IS NULL";
 	private static final String SELECT_ROLE_BUSINESS_ESSENTIAL = "SELECT DISTINCT ROL.Role_Id, " +
@@ -354,6 +354,7 @@ public class ApplReposHbn {
 		return listControl;
 	}
 
+	@SuppressWarnings("deprecation")
 	public static List<RolePersonDTO> findRolePerson(String cwid) {
 		
 		ArrayList<RolePersonDTO> listDTO = new ArrayList<RolePersonDTO>();

@@ -308,8 +308,8 @@ public class PersonsHbn {
 			tx = session.beginTransaction();
 			@SuppressWarnings("unchecked")
 			List<Person> values = session
-					.createQuery(
-							"select h from Person as h where h.cwid = '" + cwid.toUpperCase() +"'")
+					.createQuery("select h from Person as h where h.cwid = ?")
+					.setString(0, cwid.toUpperCase())
 					.list();
 
 			listResult = getDTOList(values);
@@ -347,18 +347,11 @@ public class PersonsHbn {
 //			Connection conn = null;
 			
 			try {
-				StringBuffer sql = new StringBuffer();
-				
-				sql.append("select pers.cwid, pers.nachname as lastname, pers.vorname as firstname from Person pers"); 
-				sql.append(" join function func on func.responsible = pers.cwid and func.del_timestamp is null and func.itset=").append(itSet);
-				sql.append(" where pers.del_timestamp is null");
-				sql.append(" order by pers.nachname, pers.vorname");
-				
 				@SuppressWarnings("deprecation")
 				Connection conn = session.connection();
 				
 				selectStmt = conn.createStatement();
-				ResultSet rset = selectStmt.executeQuery(sql.toString());
+				ResultSet rset = selectStmt.executeQuery("SELECT DISTINCT PER.Cwid, PER.Nachname AS LastName, PER.Vorname AS FirstName FROM PERSON PER INNER JOIN FUNCTION FUN ON FUN.Responsible=PER.Cwid WHERE FUN.Del_Quelle IS NULL AND PER.Inactive = 'N' AND FUN.Itset = " + itSet.toString() + " ORDER BY Lastname, Firstname");
 				while (rset.next()) {
 					PersonsDTO pers = getPersonsDTOFromResultSet(rset);
 					listResult.add(pers);

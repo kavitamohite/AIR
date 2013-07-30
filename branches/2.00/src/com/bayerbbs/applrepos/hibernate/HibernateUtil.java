@@ -89,6 +89,7 @@ public class HibernateUtil {
 	}
 	
 
+	@SuppressWarnings("deprecation")
 	public static String close(Transaction tx, Session session, boolean commit) {
 		String message = null;
 		try {

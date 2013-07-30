@@ -14,6 +14,7 @@ import com.bayerbbs.applrepos.dto.ItSetDTO;
 public class ApplicationRegionHbn {
 
 	
+	@SuppressWarnings("unchecked")
 	public static List<ApplicationRegion> findCurrentApplicationRegion(Long applicationId) {
 		List<ApplicationRegion> values = null;
 		if (null != applicationId) {
@@ -35,6 +36,7 @@ public class ApplicationRegionHbn {
 		return values;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static List<ApplicationRegion> findApplicationRegion(Long applicationId) {
 		List<ApplicationRegion> values = null;
 		if (null != applicationId) {

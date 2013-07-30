@@ -158,6 +158,7 @@ public class CiGroupsHbn {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private static void syncCiGroups(Integer tableId, Long ciId, String groupType, String[] ciGroupNamesArray,
 			String cwid, Session session) {
 

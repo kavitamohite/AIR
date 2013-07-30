@@ -200,6 +200,7 @@ public class CiPersonsHbn {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private static void syncCiPersons(Integer tableId, Long ciId, String groupType, String[] ciPersonCWIDArray,
 			String cwid, Session session) {
 

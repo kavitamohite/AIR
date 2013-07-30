@@ -128,7 +128,7 @@ public class BusinessEssentialHbn {
 			@SuppressWarnings("unchecked")
 			List<BusinessEssential> values = session
 					.createQuery(
-							"select h from BusinessEssential as h where " + where + " and h.deleteTimestamp is null order by h.beCode, severityGPSC, h.severityLevel")
+							"select h from BusinessEssential as h where " + where + " order by h.beCode, severityGPSC, h.severityLevel")
 					.list();
 
 			listResult = getDTOList(values);
