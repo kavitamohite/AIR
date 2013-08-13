@@ -220,6 +220,12 @@ public class AnwendungHbn extends BaseHbn {
 							AirKonstanten.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())) {
 							application.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 						}
+						else if (AirKonstanten.INSERT_QUELLE_GSDB.equals(application.getInsertQuelle())) {
+							if (!AirKonstanten.SERVICE_ENVIRONMENT_OWNER_SE_BCBS.equals(application.getServiceEnvironmentOwner())) {
+								// RFC 9176 - we must change the insert source
+								application.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+							}
+						}
 
 						// ======
 						// Basics
@@ -1459,6 +1465,7 @@ public class AnwendungHbn extends BaseHbn {
 		sql.append("          , classinfo.CLASS_INFORMATION_NAME");
 		sql.append("          , anw.CLASS_INFORMATION_EXPLANATION");
 		sql.append("          , classinfo.CLASS_PROTECTION_NAME");
+		sql.append("		  , anw.SE_OWNER");	
 		sql.append("		from anwendung anw");
 		sql.append("		left join category_business katbus on anw.category_business_id = katbus.category_business_id");
 		sql.append("		left join anwendung_kat2 kat2 on anw.anwendung_kat2_id = kat2.anwendung_kat2_id");
@@ -1674,6 +1681,8 @@ public class AnwendungHbn extends BaseHbn {
 				applicationDTO.setClassInformationId(rsMessage.getLong("CLASS_INFORMATION_ID"));
 				applicationDTO.setClassInformationExplanation(rsMessage.getString("CLASS_INFORMATION_EXPLANATION"));
 				applicationDTO.setApplicationProtection(rsMessage.getString("CLASS_PROTECTION_NAME"));
+				
+				applicationDTO.setServiceEnvironmentOwner(rsMessage.getString("SE_OWNER"));
 			}
 
 			if (null != rsMessage) {

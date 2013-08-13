@@ -138,6 +138,8 @@ public class ApplicationDTO extends CiBaseDTO {
 	private String downStreamAdd;
 	private String downStreamDelete;
 	
+	private String serviceEnvironmentOwner;
+	
 	public ApplicationDTO() {
 	}
 
@@ -928,6 +930,14 @@ public class ApplicationDTO extends CiBaseDTO {
 
 	public void setBarRelevance(String barRelevance) {
 		this.barRelevance = barRelevance;
+	}
+
+	public String getServiceEnvironmentOwner() {
+		return serviceEnvironmentOwner;
+	}
+
+	public void setServiceEnvironmentOwner(String serviceEnvironmentOwner) {
+		this.serviceEnvironmentOwner = serviceEnvironmentOwner;
 	}
 
 }

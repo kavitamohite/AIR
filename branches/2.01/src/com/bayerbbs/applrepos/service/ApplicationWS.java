@@ -917,6 +917,12 @@ public class ApplicationWS {
 								|| AirKonstanten.APPLICATION_GUI_NAME.equals(application.getInsertQuelle())) {
 							// for the application itself, all are editable
 							accessDTO.setAllEditable();
+						}
+						else if (AirKonstanten.INSERT_QUELLE_GSDB.equals(application.getInsertQuelle()) && AirKonstanten.SERVICE_ENVIRONMENT_OWNER_SE_BCBS.equals(application.getServiceEnvironmentOwner())) {
+							// GSDB and SE_BCBS is not editable RFC 9176
+							accessDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
+							accessDTO.setRelevanceStrategic(AirKonstanten.NO_SHORT);
+							dto.setIsEditable(AirKonstanten.NO_SHORT);
 						} else {
 							InterfacesDTO interfaceDto = InterfacesHbn.findInterfacesByInterfaceToken(application.getInsertQuelle());
 							

@@ -96,7 +96,8 @@ public class Application extends DeletableRevisionInfo {
 	private String organisationalScope;
 	private String barRelevance;
 	
-
+	private String serviceEnvironmentOwner;
+	
 	public Application() {
 	}
 
@@ -573,5 +574,14 @@ public class Application extends DeletableRevisionInfo {
 
 	public void setBarRelevance(String barRelevance) {
 		this.barRelevance = barRelevance;
+	}
+	
+	@Column(name = "SE_OWNER")
+	public String getServiceEnvironmentOwner() {
+		return serviceEnvironmentOwner;
+	}
+
+	public void setServiceEnvironmentOwner(String seOwner) {
+		this.serviceEnvironmentOwner = seOwner;
 	}
 }

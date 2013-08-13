@@ -36,8 +36,11 @@ public final class AirKonstanten {
 	public static final String UNKNOWN = "unknown";
 
 	public static final String INSERT_QUELLE_ANT 	= "ANT";
+	public static final String INSERT_QUELLE_GSDB 	= "GSDB";
 	public static final String INSERT_QUELLE_RFC 	= "RFC";
 	public static final String INSERT_QUELLE_SISEC 	= "SISecGUI";
+	
+	public static final String SERVICE_ENVIRONMENT_OWNER_SE_BCBS = "SE_BCBS";
 	
 	public static final String RESULT_OK = "OK";
 	
