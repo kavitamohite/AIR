@@ -112,6 +112,9 @@ public class CiBaseDTO {// implements Serializable
 	private String gpsccontactSystemResponsibleHidden;
 	private String gpsccontactImpactedBusinessHidden;
 	
+	
+	private String messageText;		// only to display information to the user
+	
 	//====================
 	
 	public CiBaseDTO() {}
@@ -664,4 +667,13 @@ public class CiBaseDTO {// implements Serializable
 	public void setGpsccontactImpactedBusinessHidden(String gpsccontactImpactedBusinessHidden) {
 		this.gpsccontactImpactedBusinessHidden = gpsccontactImpactedBusinessHidden;
 	}
+
+	public String getMessageText() {
+		return messageText;
+	}
+
+	public void setMessageText(String messageText) {
+		this.messageText = messageText;
+	}
+	
 }

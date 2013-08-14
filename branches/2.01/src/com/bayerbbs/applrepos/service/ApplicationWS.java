@@ -923,6 +923,7 @@ public class ApplicationWS {
 							accessDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
 							accessDTO.setRelevanceStrategic(AirKonstanten.NO_SHORT);
 							dto.setIsEditable(AirKonstanten.NO_SHORT);
+							dto.setMessageText("editInGPSC");
 						} else {
 							InterfacesDTO interfaceDto = InterfacesHbn.findInterfacesByInterfaceToken(application.getInsertQuelle());
 							
@@ -1067,6 +1068,7 @@ public class ApplicationWS {
 				accessDTO.setRelevanceStrategic(AirKonstanten.NO_SHORT);
 				accessDTO.setBusiness_Essential_Id(AirKonstanten.NO_SHORT);
 				dto.setIsEditable(AirKonstanten.NO_SHORT);
+				dto.setMessageText("deleted");
 			}
 
 		
