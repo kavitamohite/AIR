@@ -39,8 +39,10 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 		            items: [
 		                {id: 'rgitBYTSEC',		itemId: 'rgitBYTSEC', 		boxLabel: 'Integrated',	name: 'rgRelevanceBYTSEC', inputValue: AC.CI_GROUP_ID_DEFAULT_ITSEC, width: 80 },//, width: 100 wenn gedatscht
-		                {id: 'rgitNonBYTSEC',	itemId: 'rgitNonBYTSEC',	boxLabel: 'External',	name: 'rgRelevanceBYTSEC', inputValue: AC.CI_GROUP_ID_NON_BYTSEC, width: 80 },
-		                {id: 'rgitUndefined',	itemId: 'rgitUndefined', 	boxLabel: 'Undefined',	name: 'rgRelevanceBYTSEC', inputValue: AC.CI_GROUP_ID_DELETE_ID, width: 80 }//, checked: true
+		                {id: 'rgitNonBYTSEC',	itemId: 'rgitNonBYTSEC',	boxLabel: 'External',	name: 'rgRelevanceBYTSEC', inputValue: AC.CI_GROUP_ID_NON_BYTSEC, width: 80 }
+// RFC 9651
+//		                ,
+//		                {id: 'rgitUndefined',	itemId: 'rgitUndefined', 	boxLabel: 'Undefined',	name: 'rgRelevanceBYTSEC', inputValue: AC.CI_GROUP_ID_DELETE_ID, width: 80 }//, checked: true
 		            ]
 		        },{
 					id: 'complianceManagementText',		        	
@@ -999,13 +1001,20 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	setData: function(data) {
 		var rgRelevanceBYTSEC = this.getComponent('fsComplianceMgmt').getComponent('rgRelevanceBYTSEC');
-		var bytSecStatus = rgRelevanceBYTSEC.getValue().inputValue;
+
+// RFC 9651
+		if (null === rgRelevanceBYTSEC.getValue()) {
+			// alert('bytSecStatus = null');
+			;
+		}
+		else {
+			var bytSecStatus = rgRelevanceBYTSEC.getValue().inputValue;
 		
-					
-		data.itSecGroupId = 
-			bytSecStatus == AC.CI_GROUP_ID_DEFAULT_ITSEC ?
+			data.itSecGroupId = 
+				bytSecStatus == AC.CI_GROUP_ID_DEFAULT_ITSEC ?
 						   		this.bytSecValue ? this.bytSecValue : AC.CI_GROUP_ID_DEFAULT_ITSEC
 			   				: bytSecStatus;
+		}
 		
 		this.bytSecValue = null;
 
@@ -1164,7 +1173,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		this.setBoxLabel(rgRelevanceBYTSEC.items.items[0], labels.complianceBYTSEC);
 		this.setBoxLabel(rgRelevanceBYTSEC.items.items[1], labels.complianceNonBYTSEC);
-		this.setBoxLabel(rgRelevanceBYTSEC.items.items[2], labels.complianceUndefined);
+//		RFC 9651
+//		this.setBoxLabel(rgRelevanceBYTSEC.items.items[2], labels.complianceUndefined);
 
 		
 //		this.getComponent('fsComplianceMgmt').getComponent('complianceManagementText').dom.innerHTML = labels.complianceManagementText;
