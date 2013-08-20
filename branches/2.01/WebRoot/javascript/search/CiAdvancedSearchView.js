@@ -149,7 +149,24 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			                { id: 'rgAdvSearchBARrelevanceNo',		itemId: 'rgAdvSearchBARrelevanceNo',			boxLabel: 'No',			name: 'rgAdvSearchBARrelevance', inputValue: 'N', width: 80 },
 			                { id: 'rgAdvSearchBARrelevanceUndefined',itemId: 'rgAdvSearchBARrelevanceUndefined', 	boxLabel: 'Undefined',	name: 'rgAdvSearchBARrelevance', inputValue: 'U', width: 80 }//, checked: true
 			            ]
-			        }/*,{
+			        },{
+			            xtype: 'checkboxgroup',
+		    			id: 'cbgAdvSearchShowDeleted',
+		    			// width: 120,
+		    			fieldLabel: 'deleted',
+		    			
+		    			columns: 1,
+		    			
+		    			hideLabel: false,
+		    			style: {
+							marginTop: 10
+						},
+	        			
+	        			items: [
+							{ boxLabel: '', name: 'cbgAdvSearchShowDeleted', width: 30 }
+	                    ]
+					}
+			        /*,{
 //			        	xtype: 'textfield',
 //			        	width: 240,
 //			        	hidden: true
@@ -1335,6 +1352,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[0], labels.general_yes);
 		this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[1], labels.general_no);
 		this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[2], labels.complianceUndefined);
+		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbgAdvSearchShowDeleted'), labels.label_useroptions_showDeleted);
 		
 		this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent('label' + this.ownerId + 'applicationOwner').setText(labels.applicationOwner);
 		this.getComponent('pAdvSearchAppStewardFrame').getComponent('fs' + this.ownerId + 'ApplicationSteward').getComponent('p' + this.ownerId + 'ApplicationSteward').getComponent('label' + this.ownerId + 'applicationSteward').setText(labels.applicationSteward);
@@ -1631,6 +1649,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		params.itSetOptions = Util.getChbYesNoValues(cbgAdvSearchItSetOptions);
 		params.descriptionOptions = Util.getChbYesNoValues(cbgAdvSearchDescriptionOptions);
 	    
+		// RFC 9122 show deleted
+		var cbgAdvSearchShowDeleted = pAdvSearchSingleAttrs.getComponent('cbgAdvSearchShowDeleted');
+		params.showDeleted = Util.getChbYesNoValues(cbgAdvSearchShowDeleted);
+
 		
 ////	    var cbCiType = pAdvSearchSingleAttrs.getComponent('cbCiType');
 //	    var cat1 = params.ciSubTypeId;//params.advsearchObjectTypeId;//cbCiType.getValue();
@@ -1803,7 +1825,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    field.reset();
 		    field = pAdvSearchSingleAttrs.getComponent('rgAdvSearchBARrelevance');
 		    field.reset();
-		    
+
+		    // RFC 9122 show deleted
+		    field = pAdvSearchSingleAttrs.getComponent('cbgAdvSearchShowDeleted');
+		    field.reset();
+		    var useroptionShowDeleted = Ext.getCmp('useroptionShowDeleted').getValue();
+		    if (useroptionShowDeleted) {
+		    	field.setValue([true]);
+		    }
 		    
 	    	var pAdvSearchAppOwnerFrame = this.getComponent('pAdvSearchAppOwnerFrame');
 	    	var pAdvSearchAppStewardFrame = this.getComponent('pAdvSearchAppStewardFrame');

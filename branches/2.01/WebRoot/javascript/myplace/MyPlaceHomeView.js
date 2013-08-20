@@ -415,7 +415,9 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 			else if ('AIR_SHOW_DELETED' === key) {
 				if ('YES' == value) {
-					this.getComponent('fsUserOptions').getComponent('useroptionShowDeleted').setValue(true);					
+					this.getComponent('fsUserOptions').getComponent('useroptionShowDeleted').setValue(true);
+					// RFC 9122 - advanced search show deleted
+					Ext.getCmp('cbgAdvSearchShowDeleted').setValue([true]);
 				}
 				else {
 					this.getComponent('fsUserOptions').getComponent('useroptionShowDeleted').setValue(false);
