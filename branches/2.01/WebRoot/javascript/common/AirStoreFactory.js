@@ -1126,6 +1126,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'findFirst'},
 			        {name: 'findAll'},
 			        {name: 'browserOptimization'},
+			        {name: 'editInGPSC'},
 			        
 			        // general
 			        {name: 'gerneral_message_loading'},
@@ -2944,6 +2945,9 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'deleteUser',
 				mapping : 'applicationDTO > deleteUser'
+			}, {
+				name : 'messageText',
+				mapping : 'applicationDTO > messageText'
 			},
 
 			// access rights acl

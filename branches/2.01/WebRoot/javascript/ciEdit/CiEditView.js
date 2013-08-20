@@ -918,6 +918,13 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		var isDeleted = data.deleteTimestamp && data.deleteTimestamp.length > 0;
 		this.getComponent('lCiIsDeleted').setVisible(isDeleted);
+		if (!isDeleted) {
+			// RFC 9176 show message editInGPSC
+			if ('editInGPSC' === data.messageText) {
+				this.getComponent('lCiIsDeleted').setText(AIR.AirApplicationManager.getLabels().editInGPSC);
+				this.getComponent('lCiIsDeleted').setVisible(true);
+			}
+		}
 	},
 	
 	updateLabels: function(labels) {
