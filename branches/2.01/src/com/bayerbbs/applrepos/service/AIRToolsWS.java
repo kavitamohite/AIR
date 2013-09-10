@@ -62,6 +62,7 @@ import com.bayerbbs.applrepos.hibernate.LokationItemHbn;
 import com.bayerbbs.applrepos.hibernate.OperationalStatusHbn;
 import com.bayerbbs.applrepos.hibernate.PriorityLevelHbn;
 import com.bayerbbs.applrepos.hibernate.ProcessHbn;
+import com.bayerbbs.applrepos.hibernate.SeverityLevelHbn;
 import com.bayerbbs.applrepos.hibernate.SisoogleValuesHbn;
 import com.bayerbbs.applrepos.hibernate.SlaHbn;
 import com.bayerbbs.applrepos.hibernate.SlaServiceContractHbn;
@@ -224,7 +225,7 @@ public class AIRToolsWS {
 	}
 	
 	public SeverityLevelDTO[] getSeverityLevelList() {
-		return BusinessEssentialHbn.getSLArrayFromList(BusinessEssentialHbn.listSeverityLevelHbn());
+		return SeverityLevelHbn.getSLArrayFromList(SeverityLevelHbn.listSeverityLevelHbn());
 	}
 
 	public SlaDTO[] getSlaList() {

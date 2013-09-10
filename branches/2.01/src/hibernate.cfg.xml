@@ -55,7 +55,7 @@
 		<mapping class="com.bayerbbs.applrepos.domain.ServiceContract" />
 		<mapping class="com.bayerbbs.applrepos.domain.Sla" />
 <!--		<mapping class="com.bayerbbs.applrepos.domain.SystemPlatform" />-->
-<!--		<mapping class="com.bayerbbs.applrepos.domain.SeverityLevel" />??-->
+		<mapping class="com.bayerbbs.applrepos.domain.SeverityLevel" />
 		
 		<mapping class="com.bayerbbs.applrepos.domain.CiLokationsKette" />
 		<mapping class="com.bayerbbs.applrepos.domain.Room" />

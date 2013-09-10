@@ -10,7 +10,6 @@ import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.domain.BusinessEssential;
 import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
-import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
 
 public class BusinessEssentialHbn {
 
@@ -28,13 +27,10 @@ public class BusinessEssentialHbn {
 			BusinessEssential data = iter.next();
 			BusinessEssentialDTO dto = new BusinessEssentialDTO();
 
-			dto.setSeverityLevelId(data.getSeverityLevelId());
-			dto.setSeverityLevel(data.getSeverityLevel());
-			dto.setSeverityGPSC(data.getSeverityGPSC());
-			dto.setUsage(data.getUsage());
-			if (null != data.getBeCode()) {
-				dto.setBeCode(data.getBeCode());
-			}
+			dto.setSeverityLevelId(data.getBusinessEssentialId());
+			dto.setSeverityLevel(data.getBusinessEssentialName());
+			dto.setSeverityGPSC(data.getBusinessEssentialCode());
+			dto.setBeCode(data.getBusinessEssentialCode());
 			listDTO.add(dto);
 		}
 		return listDTO;
@@ -57,23 +53,6 @@ public class BusinessEssentialHbn {
 		return output;
 	}
 
-	/**
-	 * returns the array from list
-	 * 
-	 * @param input
-	 * @return
-	 */
-	
-	public static SeverityLevelDTO[] getSLArrayFromList(
-			List<SeverityLevelDTO> input) {
-		SeverityLevelDTO output[] = new SeverityLevelDTO[input.size()];
-		int i = 0;
-		for (final SeverityLevelDTO data : input) {
-			output[i] = data;
-			i++;
-		}
-		return output;
-	}
 
 	
 	/**
@@ -82,45 +61,15 @@ public class BusinessEssentialHbn {
 	 */
 	public static List<BusinessEssentialDTO> listBusinessEssentialHbn() {
 
-		return listBeOrSeverity("Business Essential");
-	}
-
-	/**
-	 * list all severity level (Severity_Level with usage = "non-ITSCM"
-	 * @return
-	 */
-	public static List<SeverityLevelDTO> listSeverityLevelHbn() {
-
-		List<BusinessEssentialDTO> listBusinessEssential =  listBeOrSeverity("Severity Level");
-		
-		ArrayList<SeverityLevelDTO> listSeverityLevel = new ArrayList<SeverityLevelDTO>();
-		for (final BusinessEssentialDTO data : listBusinessEssential) {
-			SeverityLevelDTO dto = new SeverityLevelDTO();
-			dto.setSeverityLevelId(data.getSeverityLevelId());
-			dto.setSeverityLevel(data.getSeverityLevel());
-			dto.setSeverityGPSC(data.getSeverityGPSC());
-			dto.setUsage(data.getUsage());
-			if (null != data.getBeCode()) {
-				dto.setBeCode(data.getBeCode());
-			}
-			listSeverityLevel.add(dto);
-		}
-		
-		return listSeverityLevel;
+		return listBusinessEssential();
 	}
 
 
-	private static List<BusinessEssentialDTO> listBeOrSeverity(String usage) {
+
+	private static List<BusinessEssentialDTO> listBusinessEssential() {
 
 		List<BusinessEssentialDTO> listResult = new ArrayList<BusinessEssentialDTO>();
-		String where = "";
-		if (usage=="Business Essential") {
-			where = "h.usage = 'ITSCM' and h.beCode in (0,1,2,3)";//neu wegen eins application CI loading bugs: 2 dazugenommen (22042013): Z.B. Application P69M000C000
-		} else if (usage=="Severity Level") {
-			where = "h.usage = 'non-ITSCM'";
-		} else {
-			where = "1=0";
-		}
+
 		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
@@ -128,7 +77,7 @@ public class BusinessEssentialHbn {
 			@SuppressWarnings("unchecked")
 			List<BusinessEssential> values = session
 					.createQuery(
-							"select h from BusinessEssential as h where " + where + " order by h.beCode, severityGPSC, h.severityLevel")
+							"select h from BusinessEssential as h order by h.businessEssentialCode, h.businessEssentialNameGPSC, h.businessEssentialId")
 					.list();
 
 			listResult = getDTOList(values);

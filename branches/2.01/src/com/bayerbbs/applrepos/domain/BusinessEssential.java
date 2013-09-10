@@ -11,18 +11,19 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Immutable;
 @Immutable
 @Entity
-@Table(name = "V_MD_SEVERITY_LEVEL")
+@Table(name = "V_MD_BUSINESS_ESSENTIAL")
 public class BusinessEssential implements Serializable {
 
 	private static final long serialVersionUID = 6850005829893569522L;
 
-	private Long severityLevelId;
-	private String severityLevel;
-	private Long severityGPSC;
-	private String usage;
-	private Long beCode;
+	private Long businessEssentialId;
+	private String businessEssentialName;
+	private String businessEssentialNameGPSC;
+	private Long businessEssentialCode;
+	private String inherited_Y_N;
 
-	
+	private String insertQuelle;
+
 	// ------------------------------------------------------
 	// -
 	// ------------------------------------------------------
@@ -44,123 +45,98 @@ public class BusinessEssential implements Serializable {
 	 */
 	@Transient
 	public Long getId() {
-		return getSeverityLevelId();
+		return getBusinessEssentialId();
 	}
 
 	/**
-	 * Returns the value of the field {@link #severityLevelId}.
+	 * Returns the value of the field {@link #businessEssentialId}.
 	 * 
-	 * @return Value of the {@link #severityLevelId} field.
+	 * @return Value of the {@link #businessEssentialId} field.
 	 */
 	@Id
-	@Column(name = "SEVERITY_LEVEL_ID")
-	public Long getSeverityLevelId() {
-		return severityLevelId;
+	@Column(name = "BUSINESS_ESSENTIAL_ID")
+	public Long getBusinessEssentialId() {
+		return businessEssentialId;
 	}
 
 	/**
-	 * Sets the value of the {@link #severityLevelId} field.
+	 * Sets the value of the {@link #businessEssentialId} field.
 	 * 
-	 * @param severityLevelId
+	 * @param businessEssentialId
 	 *            The value to set.
 	 */
-	public void setSeverityLevelId(Long severityLevelId) {
-		this.severityLevelId = severityLevelId;
+	public void setBusinessEssentialId(Long businessEssentialId) {
+		this.businessEssentialId = businessEssentialId;
 	}
 
 	@Transient
 	public Boolean getInherited() 
 	{
-		switch (this.beCode.intValue())
-		{
-		case 2:			// BE_Code 2: inherited: Business Essential
-		case 4:			// BE_Code 4: inherited: Pandemic Business Essential
+		if ("Y".equals(inherited_Y_N)) {
 			return true;
-		default:
-			return false;
 		}
+		return false;
 	}
 	/**
-	 * Returns the value of the field {@link #severityLevel}.
+	 * Returns the value of the field {@link #businessEssentialName}.
 	 * 
-	 * @return Value of the {@link #severityLevel} field.
+	 * @return Value of the {@link #businessEssentialName} field.
 	 */
-	@Column(name = "SEVERITY_LEVEL")
-	public String getSeverityLevel() {
-		return severityLevel;
+	@Column(name = "BUSINESS_ESSENTIAL_NAME")
+	public String getBusinessEssentialName() {
+		return businessEssentialName;
 	}
 
 	/**
-	 * Sets the value of the {@link #severityLevel} field.
+	 * Sets the value of the {@link #businessEssentialName} field.
 	 * 
-	 * @param severityLevel
+	 * @param businessEssentialName
 	 *            The value to set.
 	 */
-	public void setSeverityLevel(String severityLevel) {
-		this.severityLevel = severityLevel;
+	public void setBusinessEssentialName(String businessEssentialName) {
+		this.businessEssentialName = businessEssentialName;
 	}
 
 	/**
-	 * Returns the value of the field {@link #severityGPSC}.
+	 * Returns the value of the field {@link #businessEssentialNameGPSC}.
 	 * 
-	 * @return Value of the {@link #severityGPSC} field.
+	 * @return Value of the {@link #businessEssentialNameGPSC} field.
 	 */
-	@Column(name = "SEVERITY_GPSC")
-	public Long getSeverityGPSC() {
-		return severityGPSC;
+	@Column(name = "BUSINESS_ESSENTIAL_NAME_GPSC")
+	public String getBusinessEssentialNameGPSC() {
+		return businessEssentialNameGPSC;
 	}
 
 	/**
-	 * Sets the value of the {@link #severityGPSC} field.
+	 * Sets the value of the {@link #businessEssentialNameGPSC} field.
 	 * 
-	 * @param severityGPSC
+	 * @param businessEssentialNameGPSC
 	 *            The value to set.
 	 */
-	public void setSeverityGPSC(Long severityGPSC) {
-		this.severityGPSC = severityGPSC;
+	public void setBusinessEssentialNameGPSC(String businessEssentialNameGPSC) {
+		this.businessEssentialNameGPSC = businessEssentialNameGPSC;
 	}
 
 	/**
-	 * Returns the value of the field {@link #usage}.
+	 * Returns the value of the field {@link #businessEssentialCode}.
 	 * 
-	 * @return Value of the {@link #usage} field.
+	 * @return Value of the {@link #businessEssentialCode} field.
 	 */
-	@Column(name = "USAGE")
-	public String getUsage() {
-		return usage;
+	@Column(name = "BUSINESS_ESSENTIAL_CODE")
+	public Long getBusinessEssentialCode() {
+		return businessEssentialCode;
 	}
 
 	/**
-	 * Sets the value of the {@link #usage} field.
+	 * Sets the value of the {@link #businessEssentialCode} field.
 	 * 
-	 * @param usage
+	 * @param businessEssentialCode
 	 *            The value to set.
 	 */
-	public void setUsage(String usage) {
-		this.usage = usage;
-	}
-	
-	/**
-	 * Returns the value of the field {@link #beCode}.
-	 * 
-	 * @return Value of the {@link #beCode} field.
-	 */
-	@Column(name = "BE_CODE")
-	public Long getBeCode() {
-		return beCode;
+	public void setBusinessEssentialCode(Long businessEssentialCode) {
+		this.businessEssentialCode = businessEssentialCode;
 	}
 
-	/**
-	 * Sets the value of the {@link #beCode} field.
-	 * 
-	 * @param beCode
-	 *            The value to set.
-	 */
-	public void setBeCode(Long beCode) {
-		this.beCode = beCode;
-	}
-
-	private String insertQuelle;
 
 	/**
 	 * Returns the value of the field {@link #insertSource}.
