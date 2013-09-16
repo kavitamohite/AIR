@@ -425,7 +425,7 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		
 		
 		params.slaName = this.getComponent('cbSlaW').getValue();
-		params.severityLevel = this.getComponent('cbSeverityLevelW').getValue();
+		params.severityLevelId = this.getComponent('cbSeverityLevelW').getValue();
 		params.businessEssentialId = this.getComponent('cbBusinessEssentialW').getValue();
 		
 		
@@ -463,6 +463,22 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		this.getComponent('cbSlaW').reset();
 		this.getComponent('cbSeverityLevelW').reset();
 		this.getComponent('cbBusinessEssentialW').reset();
+		
+		var cbBusinessEssentialW = this.getComponent('cbBusinessEssentialW');
+		// Sonderbearbeitung Rechte Business Essential
+		if(AAM.hasRole(AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)) {
+
+			// nur für die Rolle BusinessEssential-Editor
+			// unter Prüfung der Insert-Source mittels isEditable
+			if (AIR.AirAclManager.isEditable(cbBusinessEssentialW)) {
+				Util.enableCombo(cbBusinessEssentialW);
+				AIR.AirAclManager.setNecessityInternal(cbBusinessEssentialW.label, 'mandatory');
+			}
+		} else {
+			Util.disableCombo(cbBusinessEssentialW);
+			AIR.AirAclManager.setNecessityInternal(cbBusinessEssentialW.label, 'optional');
+		}
+		
 		
 		this.getComponent('cbProtectionAvailabilityW').reset();
 		this.getComponent('taProtectionAvailabilityDescriptionW').reset();
