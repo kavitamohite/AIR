@@ -3212,28 +3212,22 @@ public class AnwendungHbn extends BaseHbn {
 
 		
 		if(isUpdate) {
-			List<Application> applications = ItSystemHbn.findApplicationsByNameOrAlias(dto.getName(), dto.getAlias());
-			List<ItSystem> itSystems = ItSystemHbn.findItSystemsByNameOrAlias(dto.getName(), dto.getAlias());
-			
-//			if(itSystems.size() > 0 && itSystems.get(0).getId().longValue() != dto.getId().longValue()) {
-			for(ItSystem itSystem : itSystems) {
-				if(itSystem.getId().longValue() != dto.getId().longValue()) {
-	//				Building building = buildings.get(0);
-	//				if(building.getDeleteTimestamp() == null)
+			if (StringUtils.isNotNullOrEmpty(dto.getName()) && StringUtils.isNotNullOrEmpty(dto.getAlias())) {
+				List<Application> applications = ItSystemHbn.findApplicationsByNameOrAlias(dto.getName(), dto.getAlias());
+				List<ItSystem> itSystems = ItSystemHbn.findItSystemsByNameOrAlias(dto.getName(), dto.getAlias());
+
+				// check allowed itsystem name
+				for(ItSystem itSystem : itSystems) {
+					if(itSystem.getId().longValue() != dto.getId().longValue()) {
 						messages.add(errorCodeManager.getErrorMessage("8000", null));
-	//				else
-	//					messages.add(errorCodeManager.getErrorMessage("8001", null));
+					}
 				}
-			}
-			
-//			if(applications.size() > 0 && applications.get(0).getId().longValue() != dto.getId().longValue()) {
-			for(Application application : applications) {
-				if(application.getId().longValue() != dto.getId().longValue()) {
-	//				Building building = buildings.get(0);
-	//				if(building.getDeleteTimestamp() == null)
+				
+				// check allowed application name
+				for(Application application : applications) {
+					if(application.getId().longValue() != dto.getId().longValue()) {
 						messages.add(errorCodeManager.getErrorMessage("9000", null));
-	//				else
-	//					messages.add(errorCodeManager.getErrorMessage("9001", null));
+					}
 				}
 			}
 		} else {
@@ -3241,19 +3235,11 @@ public class AnwendungHbn extends BaseHbn {
 			List<ItSystem> itSystems = ItSystemHbn.findItSystemsByNameOrAlias(dto.getName(), dto.getAlias());
 			
 			if(itSystems.size() > 0) {
-//				Building building = buildings.get(0);
-//				if(building.getDeleteTimestamp() == null)
 					messages.add(errorCodeManager.getErrorMessage("8000", null));
-//				else
-//					messages.add(errorCodeManager.getErrorMessage("8001", null));
 			}
 
 			if(applications.size() > 0) {
-//				Building building = buildings.get(0);
-//				if(building.getDeleteTimestamp() == null)
 					messages.add(errorCodeManager.getErrorMessage("9000", null));
-//				else
-//					messages.add(errorCodeManager.getErrorMessage("9001", null));
 			}
 		}
 		
