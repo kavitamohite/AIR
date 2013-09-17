@@ -14,6 +14,8 @@ public class GroupTypesDTO {
 	private Long minContacts;
 	private Long maxContacts;
 	private Long visibleApplication;
+	private Long visibleItsystem;
+	private Long visibleLocation;
 
 	public Long getGroupTypeId() {
 		return groupTypeId;
@@ -50,6 +52,18 @@ public class GroupTypesDTO {
 	}
 	public void setVisibleApplication(Long visibleApplication) {
 		this.visibleApplication = visibleApplication;
+	}
+	public Long getVisibleItsystem() {
+		return visibleItsystem;
+	}
+	public void setVisibleItsystem(Long visibleItsystem) {
+		this.visibleItsystem = visibleItsystem;
+	}
+	public Long getVisibleLocation() {
+		return visibleLocation;
+	}
+	public void setVisibleLocation(Long visibleLocation) {
+		this.visibleLocation = visibleLocation;
 	}
 	
 }

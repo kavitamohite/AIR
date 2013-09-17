@@ -32,6 +32,8 @@ public class GroupTypesHbn {
 			dto.setMinContacts(data.getMinContacts());
 			dto.setMaxContacts(data.getMaxContacts());
 			dto.setVisibleApplication(data.getVisibleApplication());
+			dto.setVisibleItsystem(data.getVisibleItsystem());
+			dto.setVisibleLocation(data.getVisibleLocation());
 			listDTO.add(dto);
 		}
 		return listDTO;

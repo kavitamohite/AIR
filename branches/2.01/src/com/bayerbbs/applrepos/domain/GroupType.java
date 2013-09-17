@@ -23,6 +23,8 @@ public class GroupType implements Serializable {
 	private Long minContacts;
 	private Long maxContacts;
 	private Long visibleApplication;
+	private Long visibleItsystem;
+	private Long visibleLocation;
 	
 	// ------------------------------------------------------
 	// -
@@ -169,6 +171,24 @@ public class GroupType implements Serializable {
 	 */
 	public void setVisibleApplication(Long visibleApplication) {
 		this.visibleApplication = visibleApplication;
+	}
+
+	@Column(name = "VISIBLE_ITSYSTEM")
+	public Long getVisibleItsystem() {
+		return visibleItsystem;
+	}
+
+	public void setVisibleItsystem(Long visibleItsystem) {
+		this.visibleItsystem = visibleItsystem;
+	}
+
+	@Column(name = "VISIBLE_LOCATION")
+	public Long getVisibleLocation() {
+		return visibleLocation;
+	}
+
+	public void setVisibleLocation(Long visibleLocation) {
+		this.visibleLocation = visibleLocation;
 	}
 	
 }
