@@ -8,7 +8,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 		    border: false,
 		    layout: 'form',
-		    height: 250,
+		    height: 300,
 		    
 		    items: [{
 		    	xtype: 'textfield',
@@ -264,11 +264,10 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			tfUpdateData.setValue(value);
 			value = ciDetail.deleteQuelle + ' ' + ciDetail.deleteUser + ' ' + ciDetail.deleteTimestamp;
 			
+			tfDeleteData.setVisible(false);
 			if(ciDetail.deleteTimestamp && ciDetail.deleteTimestamp.length > 0) {
 				tfDeleteData.setValue(value);
 				tfDeleteData.setVisible(true);
-			} else {
-				tfDeleteData.setVisible(false);
 			}
 		} else {
 			tfAlias.reset();
