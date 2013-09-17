@@ -77,7 +77,7 @@
 			<label_useroptions_currency>Währung</label_useroptions_currency>
 			<label_useroptions_numberformat>Zahlenformat DE</label_useroptions_numberformat>
 			<label_useroptions_disableTooltip>Keine Tooltipps</label_useroptions_disableTooltip>
-			<label_useroptions_showDeleted>Zeige Gelöschte Daten</label_useroptions_showDeleted>
+			<label_useroptions_showDeleted>Zeige gelöschte Daten</label_useroptions_showDeleted>
 		
 		
 		<label_menu_searchmenuitem>Suche</label_menu_searchmenuitem>
