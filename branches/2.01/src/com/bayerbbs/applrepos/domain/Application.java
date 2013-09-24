@@ -1,5 +1,7 @@
 package com.bayerbbs.applrepos.domain;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -97,6 +99,12 @@ public class Application extends DeletableRevisionInfo {
 	private String barRelevance;
 	
 	private String serviceEnvironmentOwner;
+	
+	// BOV
+	private String disasterRecoveryLevel;
+	private String bovApplicationNeeded;
+	private String bovAcceptedBy;
+	private Timestamp bovLastTimestamp;
 	
 	public Application() {
 	}
@@ -575,7 +583,16 @@ public class Application extends DeletableRevisionInfo {
 	public void setBarRelevance(String barRelevance) {
 		this.barRelevance = barRelevance;
 	}
-	
+
+	@Column(name = "DISASTER_RECOVERY_LEVEL")
+	public String getDisasterRecoveryLevel() {
+		return disasterRecoveryLevel;
+	}
+
+	public void setDisasterRecoveryLevel(String disasterRecoveryLevel) {
+		this.disasterRecoveryLevel = disasterRecoveryLevel;
+	}
+
 	@Column(name = "SE_OWNER")
 	public String getServiceEnvironmentOwner() {
 		return serviceEnvironmentOwner;
@@ -583,5 +600,32 @@ public class Application extends DeletableRevisionInfo {
 
 	public void setServiceEnvironmentOwner(String seOwner) {
 		this.serviceEnvironmentOwner = seOwner;
+	}
+
+	@Column(name = "BOV_APPLICATION_NEEDED")
+	public String getBovApplicationNeeded() {
+		return bovApplicationNeeded;
+	}
+
+	public void setBovApplicationNeeded(String bovApplicationNeeded) {
+		this.bovApplicationNeeded = bovApplicationNeeded;
+	}
+
+	@Column(name = "BOV_ACCEPTED_BY")
+	public String getBovAcceptedBy() {
+		return bovAcceptedBy;
+	}
+
+	public void setBovAcceptedBy(String bovAcceptedBy) {
+		this.bovAcceptedBy = bovAcceptedBy;
+	}
+
+	@Column(name = "BOV_LAST_TIMESTAMP")
+	public Timestamp getBovLastTimestamp() {
+		return bovLastTimestamp;
+	}
+
+	public void setBovLastTimestamp(Timestamp bovLastTimestamp) {
+		this.bovLastTimestamp = bovLastTimestamp;
 	}
 }

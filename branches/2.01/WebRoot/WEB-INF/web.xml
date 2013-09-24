@@ -190,6 +190,18 @@
   	<url-pattern>/Q</url-pattern>
   </servlet-mapping>
   
+	<servlet>
+	  	<description>BovApplicationServlet</description>
+	  	<servlet-name>BovApplicationServlet</servlet-name>
+	  	<servlet-class>
+	  		com.bayerbbs.bov.BovApplicationServlet
+	  	</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  	<servlet-name>BovApplicationServlet</servlet-name>
+	  	<url-pattern>/BovApplicationServlet</url-pattern>
+	</servlet-mapping>
+
   <!--
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
