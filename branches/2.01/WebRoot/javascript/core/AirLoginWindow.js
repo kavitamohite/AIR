@@ -125,7 +125,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 	onLogin: function(button, event) {
 		this.disableInputFields();
 		
-		var cwid = this.getComponent('pAirLoginWindow').getComponent('tfCwid').getValue();
+		var cwid = this.getComponent('pAirLoginWindow').getComponent('tfCwid').getValue().toUpperCase();
 		var password = this.getComponent('pAirLoginWindow').getComponent('tfPassword').getValue();
 
 		
