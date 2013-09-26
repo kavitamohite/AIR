@@ -3,9 +3,12 @@ package com.bayerbbs.applrepos.hibernate;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -21,24 +24,24 @@ public class CiGroupsHbn {
 	 * @param input
 	 * @return
 	 */
-//	private static List<CiGroupsDTO> getDTOList(
-//			List<CiGroups> input) {
-//		ArrayList<CiGroupsDTO> listDTO = new ArrayList<CiGroupsDTO>();
-//
-//		for (Iterator<CiGroups> iter = input.iterator(); iter.hasNext();) {
-//			CiGroups data = iter.next();
-//			CiGroupsDTO dto = new CiGroupsDTO();
-//
-//			dto.setCiGroupsId(data.getCiGroupsId());
-//			dto.setCiId(data.getCiId());
-//			dto.setGroupId(data.getGroupId());
-//			dto.setGroupTypeId(data.getGroupTypeId());
-//			dto.setTableId(data.getTableId());
-//
-//			listDTO.add(dto);
-//		}
-//		return listDTO;
-//	}
+	private static ArrayList<CiGroupsDTO> getDTOList(
+			List<CiGroups> input) {
+		ArrayList<CiGroupsDTO> listDTO = new ArrayList<CiGroupsDTO>();
+
+		for (Iterator<CiGroups> iter = input.iterator(); iter.hasNext();) {
+			CiGroups data = iter.next();
+			CiGroupsDTO dto = new CiGroupsDTO();
+
+			dto.setCiGroupsId(data.getCiGroupsId());
+			dto.setCiId(data.getCiId());
+			dto.setGroupId(data.getGroupId());
+			dto.setGroupTypeId(data.getGroupTypeId());
+			dto.setTableId(data.getTableId());
+
+			listDTO.add(dto);
+		}
+		return listDTO;
+	}
 
 	/**
 	 * returns the array from list
@@ -85,35 +88,24 @@ public class CiGroupsHbn {
 //		return listResult;
 //	}
 	
-	public static CiGroups findCiGroup(Long tableId, Long ciId, Long groupTypeId) {
+	public static ArrayList<CiGroupsDTO>  findCiGroups(int tableId, Long ciId, int contactTypeId) {
 
-		CiGroups result = null;
-
-		StringBuffer sb = new StringBuffer();
-		sb.append("select h from CiGroups as h where");
-		sb.append(" h.tableId = ").append(tableId);
-		sb.append(" and h.ciId = ").append(ciId);
-		sb.append(" and h.groupTypeId = ").append(groupTypeId);
-		// sb.append(" and h.groupId = ").append(groupId);
-		
-		Transaction tx = null;
+		final String SQL = "select h from CiGroups as h where h.tableId = :tableId and h.ciId = :ciId and h.groupTypeId = :contactTypeId";
+		ArrayList<CiGroupsDTO>  result = null;
 		Session session = HibernateUtil.getSession();
+		Query selectQuery = session.createQuery(SQL);
+		selectQuery.setInteger("tableId", tableId);
+		selectQuery.setLong("ciId", ciId);
+		selectQuery.setInteger("contactTypeId", contactTypeId);
+
 		try {
-			tx = session.beginTransaction();
 			
 			@SuppressWarnings("unchecked")
-			List<CiGroups> values = session
-					.createQuery(sb.toString())
-							.list();
+			List<CiGroups> values = selectQuery.list();
+			result = getDTOList(values);
 
-			if (1 == values.size()) {
-				result = values.get(0);
-			}
-
-			HibernateUtil.close(tx, session, true);
 		} catch (RuntimeException e) {
 			System.out.println(e.toString());
-			HibernateUtil.close(tx, session, false);
 		}
 
 		return result;

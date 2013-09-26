@@ -125,6 +125,7 @@ public final class AirKonstanten {
 		{"14", "gpsccontactImpactedBusiness", "N", "Impacted Business Group", "1,2,3,4,12,13,30,88"},
 		{"15", "gpsccontactBusinessOwnerRepresentative", "Y", "Business Owner Representative", "2"}
 	};
+	public static final Integer CONTACT_TYPE_OWNING_BUSINESS_GROUP = new Integer(6);
 	
 	public static final Integer APPLICATION_CAT1_APPLICATION = new Integer(5);
 	public static final Integer APPLICATION_CAT1_COMMON_SERVICE = new Integer(-10013);

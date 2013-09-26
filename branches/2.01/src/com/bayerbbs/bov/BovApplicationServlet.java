@@ -24,7 +24,7 @@ public class BovApplicationServlet extends HttpServlet {
 		String strSeveritylevel = (String) req.getParameter("severitylevel");
 		
 		String strGxpRelevant = (String) req.getParameter("gxprelevant");
-		String strGiscRelevant = (String) req.getParameter("giscrelevant");
+		String strGiscRelevant = (String) req.getParameter("icsrelevant");
 		
 		String strInformationClassification = (String) req.getParameter("informationclassification");
 		
