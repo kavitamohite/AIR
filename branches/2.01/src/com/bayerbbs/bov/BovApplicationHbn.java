@@ -30,11 +30,12 @@ public class BovApplicationHbn {
 	public static boolean saveBovApplication(String cwid, Long applicationId, BovApplicationInputDTO dto) {
 		Long drLevelId = null;
 		Long severityLevelId = null;
-		String gxpRelevant;
-		Long giscRelevant = null;
+		String gxpRelevant = null;
+		Long icsRelevant = null;
+		Boolean itsecRelevant = null;
 
 		Long classInformationId = null;
-
+		String applicationDescription = null;
 
 		// DR Level
 		drLevelId = dto.getDrLevel();
@@ -51,19 +52,32 @@ public class BovApplicationHbn {
 			}
 		}
 		
-		// TODO GXP Relevant
-
-		// GISC Relevant
-		if (null != dto.getGiscRelevant()) {
+		// GxP Relevant
+		if (null != dto.getGxpRelevant())			gxpRelevant = dto.getGxpRelevant();
+		
+		// ICS Relevant
+		if (null != dto.getIcsRelevant()) {
 			// relevance ICS
-			if (STR_YES.equals(dto.getGiscRelevant().toUpperCase())) {
-				giscRelevant = DB_VALUE_YES;
+			if (STR_YES.equals(dto.getIcsRelevant().toUpperCase())) {
+				icsRelevant = DB_VALUE_YES;
 			}
-			else if (STR_NO.equals(dto.getGiscRelevant().toUpperCase())) {
-				giscRelevant =DB_VALUE_NO;
+			else if (STR_NO.equals(dto.getIcsRelevant().toUpperCase())) {
+				icsRelevant =DB_VALUE_NO;
 			}
 		}
 
+		// GR1435 relevant
+		if (null != dto.getItsecRelevant()) 
+		{
+			if (STR_YES.equals(dto.getItsecRelevant().toUpperCase()))
+			{
+				itsecRelevant = Boolean.TRUE;
+			}
+			else if (STR_NO.equals(dto.getItsecRelevant().toUpperCase())) 
+			{
+				itsecRelevant = Boolean.FALSE;
+			}
+		}
 		// information classification
 		if (null != dto.getInformationClassification()) {
 			List<ClassInformationDTO> listClassInformation = ClassInformationHbn.listClassInformation();
@@ -75,14 +89,20 @@ public class BovApplicationHbn {
 				}
 			}
 		}
-
 		
-		return saveBovApplication(cwid, applicationId, drLevelId, severityLevelId, null, giscRelevant, classInformationId);
+		// application description
+		if (null != dto.getApplicationDescription())
+		{
+			applicationDescription = dto.getApplicationDescription();
+			if (applicationDescription.length() == 0) applicationDescription = null;
+		}
+		
+		return saveBovApplication(cwid, applicationId, drLevelId, severityLevelId, gxpRelevant, icsRelevant, itsecRelevant, classInformationId, applicationDescription);
 	}
 	
 
 	
-	public static boolean saveBovApplication(String cwid, Long applicationId, Long drLevelId, Long severityLevelId, String gxpRelevant, Long giscRelevant, Long classInformationId) {
+	public static boolean saveBovApplication(String cwid, Long applicationId, Long drLevelId, Long severityLevelId, String gxpRelevant, Long icsRelevant, Boolean itsecRelevant, Long classInformationId, String applicationDescription) {
 		boolean result = false;
 		
 		Session session = HibernateUtil.getSession();
@@ -103,22 +123,24 @@ public class BovApplicationHbn {
 				application.setSeverityLevelId(severityLevelId);
 			}
 				
-//			
-//			if (null != dto.getGxpRelevant()) {
-//				application.setGxpFlag(gxpFlag)
-//			}
-//			
-			// GISC relevant
-			if (null != giscRelevant) {
-				application.setRelevanceICS(giscRelevant);
+			// GxP relevant			
+			if (null != gxpRelevant) {
+				application.setGxpFlag(gxpRelevant);
 			}
-
 			
+			// ics relevant
+			if (null != icsRelevant) {
+				application.setRelevanceICS(icsRelevant);
+			}		
+			// GR1435 relevant
+			if (null != itsecRelevant) application.setRelevanzITSEC(itsecRelevant ? DB_VALUE_YES : DB_VALUE_NO);
 			
 			// class information
 			if (null != classInformationId) {
 				application.setClassInformationId(classInformationId);
 			}
+			// application description
+			if (null != applicationDescription) application.setApplicationAlias(applicationDescription);
 			
 			// BOV attributes
 			Timestamp ts = ApplReposTS.getCurrentTimestamp();

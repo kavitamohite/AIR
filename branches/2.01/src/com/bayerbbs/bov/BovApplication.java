@@ -28,12 +28,14 @@ public class BovApplication {
 	private String dispCIOwnerRepresentative;
 	private String dispApplicationStatus;
 	private String dispOwnerBusinessLine;
+	private String dispOwnerBusinessManager;
 	private String dispCIModifiedDate;
 	
 	private String dispDrLevel;
 	private String dispSeverityLevel;
 	private String dispGxpRelevant;
 	private String dispIcsRelevant;
+	private String dispItsecRelevant;
 	
 	private String dispInformationClassification;
 	private String dispDataPrivacy;
@@ -54,11 +56,13 @@ public class BovApplication {
 		dispCIOwnerRepresentative = "";
 		dispApplicationStatus = "";
 		dispOwnerBusinessLine = "";
+		dispOwnerBusinessManager = "";
 		dispCIModifiedDate = "";
 		dispDrLevel = "";
 		dispSeverityLevel = "";
 		dispGxpRelevant = "";
 		dispIcsRelevant = "";
+		dispItsecRelevant = "";
 		dispInformationClassification = "";
 		dispDataPrivacy = "";
 		dispApplicationName = "";
@@ -75,6 +79,7 @@ public class BovApplication {
 			dispCIOwnerRepresentative = getCwidName(application.getApplicationSteward());
 			dispApplicationStatus = getApplicationStatus(application.getLifecycleStatusId());
 			dispOwnerBusinessLine = getOwnerBusinessLine();
+			dispOwnerBusinessManager = getOwnerBusinessManager();
 			dispCIModifiedDate = formatTimestamp(application.getUpdateTimestamp());
 			if (null != application.getDisasterRecoveryLevel()) {
 				dispDrLevel = "Level " + application.getDisasterRecoveryLevel();
@@ -87,6 +92,7 @@ public class BovApplication {
 				dispGxpRelevant = "No";
 
 			dispIcsRelevant = getValueYesNo(application.getRelevanceICS());
+			dispItsecRelevant = getValueYesNo(application.getRelevanzITSEC());
 			dispInformationClassification = getInformationClassification(application.getClassInformationId());
 			dispDataPrivacy = "";
 			dispApplicationName = application.getApplicationName();
@@ -104,7 +110,7 @@ public class BovApplication {
 	private String formatTimestamp(Timestamp ts) {
 		String result = "";
 		
-		if (null != ts) result=  new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss.SSS Z").format(ts);
+		if (null != ts) result=  new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss.SSS z").format(ts);
 		return result;
 	}
 
@@ -131,6 +137,14 @@ public class BovApplication {
 		ArrayList<CiGroupsDTO> listCiGroup = CiGroupsHbn.findCiGroups(AirKonstanten.TABLE_ID_APPLICATION, application.getApplicationId(), AirKonstanten.CONTACT_TYPE_OWNING_BUSINESS_GROUP);
 		if (listCiGroup.size() == 1)
 			result = GroupHbn.findGroupById(listCiGroup.get(0).getGroupId()).getGroupName();
+		return result;
+	}
+	private String getOwnerBusinessManager() 
+	{
+		String result = "";
+		ArrayList<CiGroupsDTO> listCiGroup = CiGroupsHbn.findCiGroups(AirKonstanten.TABLE_ID_APPLICATION, application.getApplicationId(), AirKonstanten.CONTACT_TYPE_OWNING_BUSINESS_GROUP);
+		if (listCiGroup.size() == 1)
+			result = getCwidName(GroupHbn.findGroupById(listCiGroup.get(0).getGroupId()).getManagerCwid());
 		return result;
 	}
 	private String getSeverityLevel(Long severityLevelId) {
@@ -264,5 +278,13 @@ public class BovApplication {
 
 	public String getDispRequestVerifiedOn() {
 		return dispRequestVerifiedOn;
+	}
+
+	public String getDispItsecRelevant() {
+		return dispItsecRelevant;
+	}
+
+	public String getDispOwnerBusinessManager() {
+		return dispOwnerBusinessManager;
 	}
 }

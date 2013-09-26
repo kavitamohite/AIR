@@ -15,7 +15,11 @@ public class BovApplicationServlet extends HttpServlet {
 		doPost(req, res);
 	}
 	
+	@SuppressWarnings("unused")
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String denyOwnership = (String) req.getParameter("denial");
+		String retireApplication = (String) req.getParameter("retire");
+		String delegateVerification = (String) req.getParameter("delegate");
 		
 		String strApplicationId = (String) req.getParameter("applicationId");
 		String cwidSteward = (String) req.getParameter("cwidSteward");
@@ -24,9 +28,11 @@ public class BovApplicationServlet extends HttpServlet {
 		String strSeveritylevel = (String) req.getParameter("severitylevel");
 		
 		String strGxpRelevant = (String) req.getParameter("gxprelevant");
-		String strGiscRelevant = (String) req.getParameter("icsrelevant");
+		String strIcsRelevant = (String) req.getParameter("icsrelevant");
+		String strItsecRelevant = (String) req.getParameter("itsecrelevant");
 		
 		String strInformationClassification = (String) req.getParameter("informationclassification");
+		String strApplicationDescription = (String) req.getParameter("applicationdescription");
 		
 		long applicationId = Long.parseLong(strApplicationId);
 		
@@ -41,14 +47,17 @@ public class BovApplicationServlet extends HttpServlet {
 		if (null != strGxpRelevant) {
 			dto.setGxpRelevant(strGxpRelevant);
 		}
-		if (null != strGiscRelevant) {
-			dto.setGiscRelevant(strGiscRelevant);
+		if (null != strIcsRelevant) {
+			dto.setIcsRelevant(strIcsRelevant);
 		}
+		
+		if (null != strItsecRelevant) dto.setItsecRelevant(strItsecRelevant);
 		
 		if (null != strInformationClassification) {
 			dto.setInformationClassification(strInformationClassification);
 		}
 		
+		if (null != strApplicationDescription) dto.setApplicationDescription(strApplicationDescription);
 		
 		if (null != cwidSteward && !"null".equals(cwidSteward)) {
 			// was dann ??? 
@@ -60,7 +69,7 @@ public class BovApplicationServlet extends HttpServlet {
 		
 		boolean result = BovApplicationHbn.saveBovApplication(cwidSteward, applicationId, dto);
 		
-		if (true) {
+		if (result == true) {
 			res.getWriter().write("data saved");
 		}
 		else {
