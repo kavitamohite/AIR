@@ -18,11 +18,10 @@ if (null == applicationId) {
 	applicationId = new Long(143698); 
 }
 
-if (null == cwidSteward) 
-	{
-	cwidSteward = System.getProperty("user.name").toUpperCase();
-	}
-
+if (null == cwidSteward)
+{
+	cwidSteward = System.getenv("USERNAME");
+}
 Application app = AnwendungHbn.findApplicationById(applicationId);
 BovApplication bovApp = null;
 
@@ -55,17 +54,32 @@ String spalte2 = "400";
   <head>
     <title>BOV</title>
   <script>
-function denyOwnership()
+function clickButton(buttonName)
 {
-	alert("Ownership denied!");
-}
-function retireApplication()
-{
-	alert('Application retired!');
-}
-function delegateVerification()
-{
-	alert('Verification delegated!');
+	var question = "";
+	var confirmation = "";
+	switch(buttonName)
+	{
+		case "denial":
+			question = "Deny Ownership?";
+			confirmation ="Ownership denied!";
+			break;
+		case "retire":
+			question = 'Retire application?';
+			confirmation = "Application retired!";
+			break;
+		case "delegate":
+			question = "Delegate Verification?";
+			confirmation = "Verification delegated!";
+			break;
+	}
+	if (window.confirm(question))
+	{
+		document.FormApplication.bovAction.value = buttonName;
+		document.FormApplication.bovReason.value = window.prompt("Enter your reasons:","");
+		window.alert(confirmation);
+		document.FormApplication.submit();
+	}
 }
 </script>
   
@@ -127,10 +141,10 @@ The application Steward does not match
 <td colspan="2">Business Owner Request Information</td>
 </tr>
 <tr>
-<td class="tablename" width="<%=spalte1%>">Owner CWID:</td><td class="tablevalue" width="<%=spalte2%>"><%=bovApp.getDispOwnerCWID() %></td>
+<td class="tablename" width="<%=spalte1%>">Application Owner:</td><td class="tablevalue" width="<%=spalte2%>"><%=bovApp.getDispOwnerCWID() %></td>
 </tr>
 <tr>
-<td class="tablename">Manager CWID:</td><td class="tablevalue"><%=bovApp.getDispManagerCWID() %></td>
+<td class="tablename">Application Manager:</td><td class="tablevalue"><%=bovApp.getDispManagerCWID() %></td>
 </tr>
 <tr>
 <td class="tablename">Logical Name:</td><td class="tablevalue"><%=app.getApplicationName() %></td>
@@ -184,9 +198,9 @@ The application Steward does not match
 </table>
 
 <p>
-<button type="button" name="denial" value="Deny Ownership" onclick="denyOwnership()">Deny Ownership</button>
-<button type="button" name="retire" value="Retire Application" onclick="retireApplication()">Retire Application</button>
-<button type="button" name="delegate" value="Delegate Verification" onclick="delegateVerification()">Delegate Verification</button>
+<button type="button" name="denial" value="Deny Ownership" onclick="clickButton(document.FormApplication.denial.name)">Deny Ownership</button>
+<button type="button" name="retire" value="Retire Application" onclick="clickButton(document.FormApplication.retire.name)">Retire Application</button>
+<button type="button" name="delegate" value="Delegate Verification" onclick="clickButton(document.FormApplication.delegate.name)">Delegate Verification</button>
 </p>
 
 <table border="1">
@@ -276,8 +290,10 @@ end of provisionally removed -->
 </tr>
 </table>
 
-<input type='hidden' name='applicationId' value='<%=""+app.getApplicationId().longValue()%>'>
-<input type='hidden' name='cwidSteward' value='<%=cwidSteward%>'>
+<input type='hidden' name='applicationId' value='<%=""+app.getApplicationId().longValue()%>'/>
+<input type='hidden' name='cwidSteward' value='<%=cwidSteward%>'/>
+<input type='hidden' name='bovAction' value=''/>
+<input type='hidden' name='bovReason' value=''>
 <input type='submit' value=" Save " name=save/>
 <input type='reset' value= " Cancel " name=cancel/>
 </form>
