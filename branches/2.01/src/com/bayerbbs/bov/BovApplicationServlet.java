@@ -7,8 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
@@ -105,16 +103,16 @@ public class BovApplicationServlet extends HttpServlet {
 	private void doDelegateVerification(Long applicationId, String requestor, String reason) {
 		Application app = AnwendungHbn.findApplicationById(applicationId);
 		String appName = app.getApplicationName();
-		String subject = String.format("Verification of Application '%s' delegated!", app.getApplicationName());
-		String body = String.format("The business owner verification of '%s' was delegated to you by: %s!\n\nReason given:\n\t%s", appName, getCwidName(requestor), reason);
+		String subject = String.format("Verification of Application ''%s'' Delegated!", app.getApplicationName());
+  		String body = String.format("The business owner verification of ''%s'' was delegated to you by: %s!\n\nReason given:\n\t%s", appName, getCwidName(requestor), reason);
 		ApplReposHbn.sendMail(getMail(app.getResponsible()), getMail(requestor), subject, body, "BOV");
 		return;
 	}
 
 	private void doInitiateRetirement(Long applicationId, String requestor, String reason) {
 		Application app = AnwendungHbn.findApplicationById(applicationId);
-		String subject = String.format("Retirement of Application '%s' requested!", app.getApplicationName());
-		String body = String.format("Retirement requested by: %s\n\nReason given:\n%s", getCwidName(requestor), reason);
+		String subject = String.format("Retirement of Application ''%s'' requested!", app.getApplicationName());
+ 		String body = String.format("Retirement requested by: %s\n\nReason given:\n%s", getCwidName(requestor), reason);
 		ApplReposHbn.sendMail(getMail(app.getResponsible()), getMail(requestor), subject, body, "BOV");
 		return;
 	}

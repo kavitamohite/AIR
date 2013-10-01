@@ -1291,7 +1291,7 @@ AIR.AirStoreFactory = function() {
 			        
 			        {name: 'RelevanceICSSecurityManagement'},
 			        {name: 'RelevanceICSAccessManagement'},
-			        {name: 'RelevanceICSITManagement'},
+			        {name: 'RelevanceICSITOperations'},
 			        {name: 'LinkCiType'},
 			        {name: 'LinkCi'},
 			        
