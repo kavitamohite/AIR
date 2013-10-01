@@ -54,6 +54,8 @@ public class BovApplicationServlet extends HttpServlet {
 		String strItsecRelevant = (String) req.getParameter("itsecrelevant");
 		
 		String strInformationClassification = (String) req.getParameter("informationclassification");
+		String strDataPrivacyPersonalData = (String) req.getParameter("personaldata");
+		String strDataPrivacyBetweenCountries = (String) req.getParameter("betweencountries");
 		String strApplicationDescription = (String) req.getParameter("applicationdescription");
 		
 		long applicationId = Long.parseLong(strApplicationId);
@@ -78,6 +80,9 @@ public class BovApplicationServlet extends HttpServlet {
 		if (null != strInformationClassification) {
 			dto.setInformationClassification(strInformationClassification);
 		}
+		if (null != strDataPrivacyPersonalData) dto.setDataPrivacyPersonalData(strDataPrivacyPersonalData);
+		if (null != strDataPrivacyBetweenCountries) dto.setDataPrivacyBetweenCountries(strDataPrivacyBetweenCountries);
+		
 		
 		if (null != strApplicationDescription) dto.setApplicationDescription(strApplicationDescription);
 		

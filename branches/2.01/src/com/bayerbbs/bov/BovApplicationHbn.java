@@ -35,6 +35,8 @@ public class BovApplicationHbn {
 		Boolean itsecRelevant = null;
 
 		Long classInformationId = null;
+		String dataPrivacyPersonalData = null;
+		String dataPrivacyBetweenCountries = null;
 		String applicationDescription = null;
 
 		// DR Level
@@ -62,7 +64,7 @@ public class BovApplicationHbn {
 				icsRelevant = DB_VALUE_YES;
 			}
 			else if (STR_NO.equals(dto.getIcsRelevant().toUpperCase())) {
-				icsRelevant =DB_VALUE_NO;
+				icsRelevant = DB_VALUE_NO;
 			}
 		}
 
@@ -89,7 +91,14 @@ public class BovApplicationHbn {
 				}
 			}
 		}
-		
+		// data privacy - personal data
+		if (null != dto.getDataPrivacyPersonalData()) {
+			dataPrivacyPersonalData = dto.getDataPrivacyPersonalData();
+		}
+		// data privacy - personal data
+		if (null != dto.getDataPrivacyBetweenCountries()) {
+			dataPrivacyBetweenCountries = dto.getDataPrivacyBetweenCountries();
+		}
 		// application description
 		if (null != dto.getApplicationDescription())
 		{
@@ -97,12 +106,12 @@ public class BovApplicationHbn {
 			if (applicationDescription.length() == 0) applicationDescription = null;
 		}
 		
-		return saveBovApplication(cwid, applicationId, drLevelId, severityLevelId, gxpRelevant, icsRelevant, itsecRelevant, classInformationId, applicationDescription);
+		return saveBovApplication(cwid, applicationId, drLevelId, severityLevelId, gxpRelevant, icsRelevant, itsecRelevant, classInformationId, dataPrivacyPersonalData, dataPrivacyBetweenCountries, applicationDescription);
 	}
 	
 
 	
-	public static boolean saveBovApplication(String cwid, Long applicationId, Long drLevelId, Long severityLevelId, String gxpRelevant, Long icsRelevant, Boolean itsecRelevant, Long classInformationId, String applicationDescription) {
+	public static boolean saveBovApplication(String cwid, Long applicationId, Long drLevelId, Long severityLevelId, String gxpRelevant, Long icsRelevant, Boolean itsecRelevant, Long classInformationId, String dataPrivacyPersonalData, String dataPrivacyBetweenCountries, String applicationDescription) {
 		boolean result = false;
 		
 		Session session = HibernateUtil.getSession();
@@ -139,6 +148,14 @@ public class BovApplicationHbn {
 			if (null != classInformationId) {
 				application.setClassInformationId(classInformationId);
 			}
+			// data privacy - personal data
+			if (null != dataPrivacyPersonalData) {
+				application.setDataPrivacyPersonalData(dataPrivacyPersonalData);
+			}
+			// data privacy - between countries
+			if (null != dataPrivacyBetweenCountries) {
+				application.setDataPrivacyBetweenCountries(dataPrivacyBetweenCountries);
+			}			
 			// application description
 			if (null != applicationDescription) application.setApplicationAlias(applicationDescription);
 			

@@ -53,6 +53,8 @@ public class Application extends DeletableRevisionInfo {
 	private String itSecSbAvailabilityTxt;
 	private Long classInformationId;
 	private String classInformationExplanation;
+	private String dataPrivacyPersonalData;
+	private String dataPrivacyBetweenCountries;
 
 	// compliance
 	private Long itset;
@@ -627,5 +629,19 @@ public class Application extends DeletableRevisionInfo {
 
 	public void setBovLastTimestamp(Timestamp bovLastTimestamp) {
 		this.bovLastTimestamp = bovLastTimestamp;
+	}
+	@Column(name = "DATA_PRIVACY_PERSONAL_DATA_Y_N")
+	public String getDataPrivacyPersonalData() {
+		return dataPrivacyPersonalData;
+	}
+	public void setDataPrivacyPersonalData(String dataPrivacyPersonalData) {
+		this.dataPrivacyPersonalData = dataPrivacyPersonalData;
+	}
+	@Column(name = "DATA_PRIVACY_COUNTRIES_Y_N")
+	public String getDataPrivacyBetweenCountries() {
+		return dataPrivacyBetweenCountries;
+	}
+	public void setDataPrivacyBetweenCountries(String dataPrivacyBetweenCountries) {
+		this.dataPrivacyBetweenCountries = dataPrivacyBetweenCountries;
 	}
 }

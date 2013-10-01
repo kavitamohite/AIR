@@ -21,6 +21,9 @@ import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 import com.bayerbbs.applrepos.hibernate.SeverityLevelHbn;
 
 public class BovApplication {
+	public static String STR_YES = "Y";
+	public static String STR_NO  = "N";
+
 	private Application application;
 
 	private String dispOwnerCWID;
@@ -38,7 +41,8 @@ public class BovApplication {
 	private String dispItsecRelevant;
 	
 	private String dispInformationClassification;
-	private String dispDataPrivacy;
+	private String dispDataPrivacyPersonalData;
+	private String dispDataPrivacyBetweenCountries;
 	private String dispApplicationName;
 	private String dispApplicationDescription;
 	
@@ -64,7 +68,8 @@ public class BovApplication {
 		dispIcsRelevant = "";
 		dispItsecRelevant = "";
 		dispInformationClassification = "";
-		dispDataPrivacy = "";
+		dispDataPrivacyPersonalData = "";
+		dispDataPrivacyBetweenCountries = "";
 		dispApplicationName = "";
 		dispApplicationDescription = "";
 		dispRequestVerifiedOn = "";
@@ -94,7 +99,8 @@ public class BovApplication {
 			dispIcsRelevant = getValueYesNo(application.getRelevanceICS());
 			dispItsecRelevant = getValueYesNo(application.getRelevanzITSEC());
 			dispInformationClassification = getInformationClassification(application.getClassInformationId());
-			dispDataPrivacy = "";
+			dispDataPrivacyPersonalData = getValueYesNo(application.getDataPrivacyPersonalData());
+			dispDataPrivacyBetweenCountries = getValueYesNo(application.getDataPrivacyBetweenCountries());
 			dispApplicationName = application.getApplicationName();
 			dispApplicationDescription = application.getApplicationAlias();
 			
@@ -200,6 +206,23 @@ public class BovApplication {
 		return result;
 	}
 
+	private String getValueYesNo(String input) {
+		String result = null;
+		if (null != input) {
+			if (STR_YES.equals(input)) 
+			{
+				result = "Yes";
+			}
+			else if (STR_NO.equals(input)) {
+				result = "No";
+			}
+		}
+		if (null == result) {
+			result = "";
+		}
+		return result;
+	}
+
 	private String getCwidName(String cwid) {
 		String result = "";
 		if (null != cwid) {
@@ -247,8 +270,11 @@ public class BovApplication {
 	public String getDispInformationClassification() {
 		return dispInformationClassification;
 	}
-	public String getDispDataPrivacy() {
-		return dispDataPrivacy;
+	public String getDispDataPrivacyPersonalData() {
+		return dispDataPrivacyPersonalData;
+	}
+	public String getDispDataPrivacyBetweenCountries() {
+		return dispDataPrivacyBetweenCountries;
 	}
 	public String getDispApplicationName() {
 		return dispApplicationName;

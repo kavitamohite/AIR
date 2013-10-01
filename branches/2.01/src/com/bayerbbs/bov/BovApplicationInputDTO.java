@@ -9,7 +9,8 @@ public class BovApplicationInputDTO {
 	private String itsecRelevant;
 	
 	private String informationClassification;
-	private String dataPrivacy;
+	private String dataPrivacyPersonalData;
+	private String dataPrivacyBetweenCountries;
 	private String applicationDescription;
 	
 	public Long getDrLevel() {
@@ -36,11 +37,17 @@ public class BovApplicationInputDTO {
 	public void setInformationClassification(String informationClassification) {
 		this.informationClassification = informationClassification;
 	}
-	public String getDataPrivacy() {
-		return dataPrivacy;
+	public String getDataPrivacyPersonalData() {
+		return dataPrivacyPersonalData;
 	}
-	public void setDataPrivacy(String dataPrivacy) {
-		this.dataPrivacy = dataPrivacy;
+	public void setDataPrivacyPersonalData(String dataPrivacyPersonalData) {
+		this.dataPrivacyPersonalData = dataPrivacyPersonalData;
+	}
+	public String getDataPrivacyBetweenCountries() {
+		return dataPrivacyBetweenCountries;
+	}
+	public void setDataPrivacyBetweenCountries(String dataPrivacyBetweenCountries) {
+		this.dataPrivacyBetweenCountries = dataPrivacyBetweenCountries;
 	}
 	public String getItsecRelevant() {
 		return itsecRelevant;

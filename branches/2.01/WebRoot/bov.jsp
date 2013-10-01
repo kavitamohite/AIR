@@ -18,11 +18,10 @@ if (null == applicationId) {
 	applicationId = new Long(143698); 
 }
 
-if (null == cwidSteward)
-{
-	cwidSteward = System.getenv("USERNAME");
-}
 Application app = AnwendungHbn.findApplicationById(applicationId);
+if (null == cwidSteward)	cwidSteward = app.getApplicationSteward();
+if (null == cwidSteward)	cwidSteward = app.getApplicationOwner();
+
 BovApplication bovApp = null;
 
 boolean isStewardValid = false;
@@ -46,8 +45,8 @@ if (null != app) {
 // TODO check steward noch erlaubt ?!? und wenn nicht, was dann?
 isStewardValid = true;		
 		
-String spalte1 = "150";
-String spalte2 = "400";
+String spalte1 = "250";
+String spalte2 = "500";
 
 %>
 <html>
@@ -278,7 +277,22 @@ end of provisionally removed -->
 	</td>
 </tr>
 <tr>
-<td class="tablename">Data Privacy:</td><td class='tableQM'>Data Privacy???</td>
+<td class="tablename">Data Privacy - Personal Data:</td>
+<td class='tablevalue'>
+	<input type="radio" name="personaldata" value="Y"> Yes<br/>
+	<input type="radio" name="personaldata" value="N"> No<br/>
+	<br/>
+	<span class="tablered">Original Data Privacy - Personal Data: <%=bovApp.getDispDataPrivacyPersonalData()%></span>
+</td>
+</tr>
+<tr>
+<td class="tablename">Data Privacy - Data Exchange between Countries:</td>
+<td class='tablevalue'>
+	<input type="radio" name="betweencountries" value="Y"> Yes<br/>
+	<input type="radio" name="betweencountries" value="N"> No<br/>
+	<br/>
+	<span class="tablered">Original Data Privacy - Data Exchange between Countries: <%=bovApp.getDispDataPrivacyBetweenCountries()%></span>
+</td>
 </tr>
 
 <tr>
