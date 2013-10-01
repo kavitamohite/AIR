@@ -113,8 +113,7 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 
 	            items: [
                     { id: 'rgBARrelevanceYesW',		itemId: 'rgBARrelevanceYesW', 			boxLabel: 'Yes',		name: 'rgBARrelevanceW', inputValue: 'Y', width: 80, checked: true },
-	                { id: 'rgBARrelevanceNoW',		itemId: 'rgBARrelevanceNoW',			boxLabel: 'No',			name: 'rgBARrelevanceW', inputValue: 'N', width: 80 },
-	                { id: 'rgBARrelevanceUndefinedW',itemId: 'rgBARrelevanceUndefinedW', 	boxLabel: 'Undefined',	name: 'rgBARrelevanceW', inputValue: 'U', width: 80 }
+	                { id: 'rgBARrelevanceNoW',		itemId: 'rgBARrelevanceNoW',			boxLabel: 'No',			name: 'rgBARrelevanceW', inputValue: 'N', width: 80 }
 	            ]
 	        },{
 		    	xtype: 'textarea',
@@ -509,7 +508,6 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		this.setFieldLabel(this.getComponent('rgBARrelevanceW'), labels.rgBARrelevance);
 		this.setBoxLabel(this.getComponent('rgBARrelevanceW').items.items[0], labels.general_yes);
 		this.setBoxLabel(this.getComponent('rgBARrelevanceW').items.items[1], labels.general_no);
-		this.setBoxLabel(this.getComponent('rgBARrelevanceW').items.items[2], labels.complianceUndefined);
 		AIR.AirAclManager.setNecessity(this.getComponent('rgBARrelevanceW'));
 		AIR.AirAclManager.setNecessity(this.getComponent('taCiDescriptionW'));
 		
