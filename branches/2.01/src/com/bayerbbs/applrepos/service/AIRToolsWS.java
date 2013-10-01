@@ -16,6 +16,7 @@ import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.ClassInformationDTO;
 import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.DedicatedDTO;
+import com.bayerbbs.applrepos.dto.GroupTypesDTO;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
 import com.bayerbbs.applrepos.dto.GxpFlagDTO;
 import com.bayerbbs.applrepos.dto.ItSecGroupDTO;
@@ -52,6 +53,7 @@ import com.bayerbbs.applrepos.hibernate.ClassInformationHbn;
 import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
 import com.bayerbbs.applrepos.hibernate.CurrencyHbn;
 import com.bayerbbs.applrepos.hibernate.GroupHbn;
+import com.bayerbbs.applrepos.hibernate.GroupTypesHbn;
 import com.bayerbbs.applrepos.hibernate.ItSecGroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSecSBWerteHbn;
 import com.bayerbbs.applrepos.hibernate.ItSetHbn;
@@ -325,4 +327,9 @@ public class AIRToolsWS {
 	public List<Land> getLaender() {
 		return LokationItemHbn.findAllLand();
 	}
+	
+	public GroupTypesDTO[] getGroupTypesList() {
+		return GroupTypesHbn.getArrayFromList(GroupTypesHbn.listGroupTypesHbn());
+	}
+
 }

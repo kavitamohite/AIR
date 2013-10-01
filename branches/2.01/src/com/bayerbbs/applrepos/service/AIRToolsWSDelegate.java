@@ -10,6 +10,7 @@ import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.ClassInformationDTO;
 import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.DedicatedDTO;
+import com.bayerbbs.applrepos.dto.GroupTypesDTO;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
 import com.bayerbbs.applrepos.dto.GxpFlagDTO;
 import com.bayerbbs.applrepos.dto.ItSecGroupDTO;
@@ -36,6 +37,7 @@ import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
 import com.bayerbbs.applrepos.dto.SlaDTO;
 import com.bayerbbs.applrepos.dto.SlaServiceContractDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
+import com.bayerbbs.applrepos.hibernate.GroupTypesHbn;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "AIRToolsWSService", portName = "AIRToolsWSPort")
 public class AIRToolsWSDelegate {
@@ -192,4 +194,9 @@ public class AIRToolsWSDelegate {
 	public List<Land> getLaender() {
 		return airToolsWS.getLaender();
 	}
+	
+	public GroupTypesDTO[] getGroupTypesList() {
+		return airToolsWS.getGroupTypesList();
+	}
+
 }

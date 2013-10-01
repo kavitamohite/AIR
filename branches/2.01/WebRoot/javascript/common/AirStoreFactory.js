@@ -5,6 +5,53 @@ AIR.AirStoreFactory = function() {
 	return {
 	
 		//====================== initial stores ======================
+		createGroupTypesListStore: function() {
+			var groupTypesListRecord = Ext.data.Record.create([
+				{name: 'groupTypeId'},
+			    {name: 'groupTypeName'}, 
+			    {name: 'individualContact'}, 
+				{name: 'minContacts'},
+			    {name: 'maxContacts'}, 
+			    {name: 'visibleApplication'}, 
+				{name: 'visibleItsystem'},
+			    {name: 'visibleLocation'}
+	        ]);
+	
+			var groupTypesListReader = new Ext.data.XmlReader({
+				record: 'return',
+				idProperty: 'groupTypeId'
+			}, groupTypesListRecord); 
+	
+			var groupTypesListStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+	           	storeId: 'groupTypesListStore',
+	           	autoLoad: false,
+	           	
+	       		proxy: new Ext.ux.soap.SoapProxy({
+		       		url: webcontext + '/AIRToolsWSPort',
+		       		loadMethod: 'getGroupTypesList',
+		       		timeout: 120000,
+		       		reader: groupTypesListReader
+		       	}),
+		       	
+		       	fields: [ 
+		       	   'groupTypeId',
+		       	   'groupTypeName',
+		       	   'individualContact',
+		       		'minContacts',
+		       		'maxContacts',
+		       		'visibleApplication',
+		       		'visibleItsystem',
+		       		'visibleLocation'
+		       	],
+	
+		       	reader: groupTypesListReader
+	       });
+			
+			return groupTypesListStore;
+		},
+		
+		
 		createCurrencyListStore: function() {
 			var currencyListRecord = Ext.data.Record.create([
  	            {name: 'id', mapping: 'currencyId'},
