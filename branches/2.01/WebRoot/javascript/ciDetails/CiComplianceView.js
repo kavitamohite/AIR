@@ -461,7 +461,11 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		if(this.fireEvent('ciBeforeChange', this, rgb, checkedRadio) !== false)
 //			return;
 		
-		this.complianceType = checkedRadio.inputValue;
+		if (typeof checkedRedio!='undefined') {
+			this.complianceType = checkedRadio.inputValue;
+		} else {
+			this.complianceType = null;
+		}
 //		this.isChanged = true;
 		
 		switch(this.complianceType) {

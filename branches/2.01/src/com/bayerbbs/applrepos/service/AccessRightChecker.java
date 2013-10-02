@@ -302,13 +302,14 @@ public class AccessRightChecker {
 	public static boolean hasRole(String cwid, String token, String... roleNames) {//String roleName
 		Cache cache = CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
 		Element element = cache.get(getCacheKey(cwid.toLowerCase(), token));
-		AppRepAuthData authData = (AppRepAuthData)element.getObjectValue();
-		
-		for(RolePersonDTO role : authData.getRoles())
-			for(String roleName : roleNames)
-				if(role.getRoleName().equals(roleName))
-					return true;
+		if (element != null) {
+			AppRepAuthData authData = (AppRepAuthData)element.getObjectValue();
 			
+			for(RolePersonDTO role : authData.getRoles())
+				for(String roleName : roleNames)
+					if(role.getRoleName().equals(roleName))
+						return true;
+		}
 		return false;
 	}
 }
