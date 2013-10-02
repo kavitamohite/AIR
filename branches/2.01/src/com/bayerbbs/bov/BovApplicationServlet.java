@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.cfg.AnnotationConfiguration;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
@@ -17,6 +19,17 @@ public class BovApplicationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
+	private static final String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
+	private String redirectPath = new AnnotationConfiguration().configure().getProperty("hibernate.connection.url").contains(TRANSBASE_PROD_HOST) ? "/AIR/P" : "/AIR/Q";
+
+	/**
+	 * 
+	 */
+	public BovApplicationServlet() {
+		super();
+
+
+	}
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -25,24 +38,18 @@ public class BovApplicationServlet extends HttpServlet {
 		String bovAction = (String) req.getParameter("bovAction");
 		Boolean denyOwnership = (bovAction.equals("denial") ? Boolean.TRUE : Boolean.FALSE);
 		Boolean retireApplication = (bovAction.equals("retire") ? Boolean.TRUE : Boolean.FALSE);
-		Boolean delegateVerification = (bovAction.equals("delegate") ? Boolean.TRUE : Boolean.FALSE);
 		String strApplicationId = (String) req.getParameter("applicationId");
 		String cwidSteward = (String) req.getParameter("cwidSteward");
-		String redirect = req.getRequestURI().replace("BovApplicationServlet", "Q?id=APP-") + strApplicationId + "#";
+	
 		
 		if (denyOwnership) {
-			doDenialOfOwnership();
-			res.sendRedirect(redirect);
+			doDenialOfOwnership(Long.parseLong(strApplicationId), cwidSteward);
+			res.sendRedirect(redirectPath);
 			return;
 		}
 		if (retireApplication) {
 			doInitiateRetirement(Long.parseLong(strApplicationId), cwidSteward, req.getParameter("bovReason").toString());
-			res.sendRedirect(redirect);
-			return;
-		}
-		if (delegateVerification){
-			doDelegateVerification(Long.parseLong(strApplicationId), cwidSteward, req.getParameter("bovReason").toString());
-			res.sendRedirect(redirect);
+			res.sendRedirect(redirectPath);
 			return;
 		}
 		
@@ -105,15 +112,6 @@ public class BovApplicationServlet extends HttpServlet {
 		
 	}
 
-	private void doDelegateVerification(Long applicationId, String requestor, String reason) {
-		Application app = AnwendungHbn.findApplicationById(applicationId);
-		String appName = app.getApplicationName();
-		String subject = String.format("Verification of Application ''%s'' Delegated!", app.getApplicationName());
-  		String body = String.format("The business owner verification of ''%s'' was delegated to you by: %s!\n\nReason given:\n\t%s", appName, getCwidName(requestor), reason);
-		ApplReposHbn.sendMail(getMail(app.getResponsible()), getMail(requestor), subject, body, "BOV");
-		return;
-	}
-
 	private void doInitiateRetirement(Long applicationId, String requestor, String reason) {
 		Application app = AnwendungHbn.findApplicationById(applicationId);
 		String subject = String.format("Retirement of Application ''%s'' requested!", app.getApplicationName());
@@ -122,9 +120,12 @@ public class BovApplicationServlet extends HttpServlet {
 		return;
 	}
 
-	private void doDenialOfOwnership() {
-		// TODO Auto-generated method stub
-		
+	private void doDenialOfOwnership(Long applicationId, String requestor) {
+		Application app = AnwendungHbn.findApplicationById(applicationId);
+		String subject = String.format("Ownership of Application '%s' rejected!", app.getApplicationName());
+ 		String body = String.format("Ownership rejected by: %s", getCwidName(requestor));
+		ApplReposHbn.sendMail(getMail(app.getResponsible()), getMail(requestor), subject, body, "BOV");
+		return;
 	}
 	private String getCwidName(String cwid) {
 		String result = "";

@@ -695,27 +695,11 @@ public class ApplReposHbn {
 			
 			sb = new StringBuffer();
 	
-			sb.append("DECLARE S VARCHAR2(4000); ");
+			sb.append("DECLARE s VARCHAR2(4000); ");
 			
 			sb.append("BEGIN");
-			sb.append(" s:= pck_Mail.FV_CreateMail (");
-	
-			sb.append("'");
-			sb.append(sendTo);
-			sb.append("','");
-			sb.append(copyTo);
-			sb.append("','");
-			sb.append(subject);
-			sb.append("','");
-			sb.append(body);
-			sb.append("','");
-			sb.append(source);
-			sb.append("',");
-			sb.append("'Y',");	// Y = immediate, N = Not immediate
-			sb.append("'TEXT'");
-			sb.append(");");
-			sb.append(" END;");
-	
+			sb.append(" s := pck_Mail.FV_CreateMail(:sendTo, :copyTo, :subject, :body, :source, 'Y', 'TEXT'); ");	
+			sb.append("END;");	
 			
 			Transaction tx = null;
 			Session session = HibernateUtil.getSession();
@@ -730,7 +714,11 @@ public class ApplReposHbn {
 				Connection conn = session.connection();
 	
 				callableStmt = conn.prepareCall(sb.toString());
-	
+				callableStmt.setString(1, sendTo);
+				callableStmt.setString(2, copyTo);
+				callableStmt.setString(3, subject);
+				callableStmt.setString(4, body);
+				callableStmt.setString(5, source);
 				callableStmt.execute();
 	
 				if (null != callableStmt) {

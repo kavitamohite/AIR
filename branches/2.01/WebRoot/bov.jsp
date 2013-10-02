@@ -1,4 +1,4 @@
-<%@page import="com.bayerbbs.bov.BovApplication"%>
+<%@ page import="com.bayerbbs.bov.BovApplication"%>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
 <%@ page import="org.hibernate.cfg.*" %>
@@ -51,7 +51,7 @@ String spalte2 = "500";
 %>
 <html>
   <head>
-    <title>BOV</title>
+    <title>Business Owner Verification</title>
   <script>
 function clickButton(buttonName)
 {
@@ -59,25 +59,28 @@ function clickButton(buttonName)
 	var confirmation = "";
 	switch(buttonName)
 	{
-		case "denial":
-			question = "Deny Ownership?";
-			confirmation ="Ownership denied!";
+		case "accept":
+			question = "Do you want to retire the application?";
+			if (window.confirm(question))
+			{
+				confirmation = "Application retired!";
+				window.alert(confirmation);
+				document.FormApplication.bovAction.value = "retire";
+				document.FormApplication.submit();
+			}
+			else
+			{
+				confirmation = "Ownership accepted!";
+				window.alert(confirmation);
+				document.FormApplication.reset();
+			}	
 			break;
-		case "retire":
-			question = 'Retire application?';
-			confirmation = "Application retired!";
+		case "reject":
+			confirmation ="Ownership rejected!";
+			window.alert(confirmation);
+			document.FormApplication.bovAction.value = "denial";
+			document.FormApplication.submit();
 			break;
-		case "delegate":
-			question = "Delegate Verification?";
-			confirmation = "Verification delegated!";
-			break;
-	}
-	if (window.confirm(question))
-	{
-		document.FormApplication.bovAction.value = buttonName;
-		document.FormApplication.bovReason.value = window.prompt("Enter your reasons:","");
-		window.alert(confirmation);
-		document.FormApplication.submit();
 	}
 }
 </script>
@@ -93,7 +96,7 @@ function clickButton(buttonName)
   	.tablename
   	{
   		font-family: Arial,Helvetica,sans-serif;
-  		font-size: 11px;
+  		font-size: 12px;
   		background-color: #FFFFC2;
   		vertical-align: 'top';
   		text-align: 'right';
@@ -109,13 +112,6 @@ function clickButton(buttonName)
   		font-family: Arial,Helvetica,sans-serif;
   		font-size: 11px;
   		color: Red;
-  	}
-  	.tableQM
-  	{
-  		font-family: Arial,Helvetica,sans-serif;
-  		font-size: 11px;
-  		color: LemonChiffon;
-  		background-color: DeepPink;
   	}
   </style>
   
@@ -140,10 +136,10 @@ The application Steward does not match
 <td colspan="2">Business Owner Request Information</td>
 </tr>
 <tr>
-<td class="tablename" width="<%=spalte1%>">Application Owner:</td><td class="tablevalue" width="<%=spalte2%>"><%=bovApp.getDispOwnerCWID() %></td>
+<td class="tablename" width="<%=spalte1%>">Business Owner:</td><td class="tablevalue" width="<%=spalte2%>"><%=bovApp.getDispBusinessOwner() %></td>
 </tr>
 <tr>
-<td class="tablename">Application Manager:</td><td class="tablevalue"><%=bovApp.getDispManagerCWID() %></td>
+<td class="tablename">CI Owner Manager:</td><td class="tablevalue"><%=bovApp.getDispCiOwnerManager() %></td>
 </tr>
 <tr>
 <td class="tablename">Logical Name:</td><td class="tablevalue"><%=app.getApplicationName() %></td>
@@ -152,40 +148,22 @@ The application Steward does not match
 <td class="tablename">CI Description:</td><td class="tablevalue"><%=app.getApplicationAlias() %></td>
 </tr>
 <tr>
-<td class="tablename">CI Owner Representative:</td><td class="tablevalue"><%=bovApp.getDispCIOwnerRepresentative() %></td>
-</tr>
-<tr>
-<td class="tablename">Architecture:</td><td class='tableQM'><%="Architecture??" %></td>
-</tr>
-<tr>
-<td class="tablename">Application Source:</td><td class='tableQM'><%="Application Source??" %></td>
-</tr>
-<tr>
 <td class="tablename">Application (CI) Status:</td><td class="tablevalue"><%=bovApp.getDispApplicationStatus() %></td>
 </tr>
 <tr>
-<td class="tablename">Draft:</td><td class='tableQM'><%="Draft??" %></td>
-</tr>
-<tr>
-<td class="tablename">Owner Business Line:</td><td class="tablevalue"><%=bovApp.getDispOwnerBusinessLine() %></td>
-</tr>
-<tr>
-<td class="tablename">… managed by:</td><td class="tablevalue"><%=bovApp.getDispOwnerBusinessManager()%></td>
-</tr>
-<tr>
-<td class="tablename">Owner Country:</td><td class='tableQM'><%="Owner Country??" %></td>
+<td class="tablename">Owning Business:</td><td class="tablevalue"><%=bovApp.getDispOwningBusiness() %></td>
 </tr>
 <tr>
 <td class="tablename">CI Modified Date:</td><td class="tablevalue"><%=bovApp.getDispCIModifiedDate() %></td>
 </tr>
 <tr>
-<td class="tablename">Processed:</td><td class='tableQM'><%="Processed??" %></td>
+<td class="tablename">Processed:</td><td class='tablevalue'><%=bovApp.getDispProcessed()%></td>
 </tr>
 <tr>
-<td class="tablename">Notification Date:</td><td class='tableQM'><%="Notification Date??" %></td>
+<td class="tablename">Notification Date:</td><td class='tablevalue'><%=bovApp.getDispNotificationDate() %></td>
 </tr>
 <tr>
-<td class="tablename">Ownership Status:</td><td class='tableQM'><%="Ownership Status??" %></td>
+<td class="tablename">Ownership Status:</td><td class='tablevalue'><%=bovApp.getDispOwnershipStatus() %></td>
 </tr>
 <tr>
 <td class="tablename">Request Verified On:</td><td class="tablevalue"><%=bovApp.getDispRequestVerifiedOn() %></td>
@@ -197,9 +175,8 @@ The application Steward does not match
 </table>
 
 <p>
-<button type="button" name="denial" value="Deny Ownership" onclick="clickButton(document.FormApplication.denial.name)">Deny Ownership</button>
-<button type="button" name="retire" value="Retire Application" onclick="clickButton(document.FormApplication.retire.name)">Retire Application</button>
-<button type="button" name="delegate" value="Delegate Verification" onclick="clickButton(document.FormApplication.delegate.name)">Delegate Verification</button>
+<button type="button" name="accept" value="Acept" onclick="clickButton(document.FormApplication.accept.name)">Accept</button>
+<button type="button" name="reject" value="Reject" onclick="clickButton(document.FormApplication.reject.name)">Reject</button>
 </p>
 
 <table border="1">
@@ -255,16 +232,14 @@ The application Steward does not match
 	<span class="tablered">Original GR1435 Relevancy: <%=bovApp.getDispItsecRelevant()%></span>
 	</td>
 </tr>
-<!--  provisionally removed 
 </table>
 
 <br/>
 
 <table border="1">
 <tr class="tableheader">
-<td colspan="2">Health Care - CI Characteristics</td>
+<td colspan="2">Information Classification</td>
 </tr>
-end of provisionally removed -->
 <tr>
 <td class="tablename" width="<%=spalte1%>">Information Classification:</td>
 	<td class="tablevalue" width="<%=spalte2%>">
@@ -277,29 +252,12 @@ end of provisionally removed -->
 	</td>
 </tr>
 <tr>
-<td class="tablename">Data Privacy - Personal Data:</td>
+<td class="tablename">Data Privacy:</td>
 <td class='tablevalue'>
 	<input type="radio" name="personaldata" value="Y"> Yes<br/>
 	<input type="radio" name="personaldata" value="N"> No<br/>
 	<br/>
-	<span class="tablered">Original Data Privacy - Personal Data: <%=bovApp.getDispDataPrivacyPersonalData()%></span>
-</td>
-</tr>
-<tr>
-<td class="tablename">Data Privacy - Data Exchange between Countries:</td>
-<td class='tablevalue'>
-	<input type="radio" name="betweencountries" value="Y"> Yes<br/>
-	<input type="radio" name="betweencountries" value="N"> No<br/>
-	<br/>
-	<span class="tablered">Original Data Privacy - Data Exchange between Countries: <%=bovApp.getDispDataPrivacyBetweenCountries()%></span>
-</td>
-</tr>
-
-<tr>
-<td class="tablename">Application Description:</td>
-<td class="tablevalue">
-<input type="text" name="applicationdescription" maxlength="160"><br/>
-	<span class="tablered">Original Application Description: <%=bovApp.getDispApplicationDescription()%></span>
+	<span class="tablered">Original Data Privacy: <%=bovApp.getDispDataPrivacy()%></span>
 </td>
 </tr>
 </table>
