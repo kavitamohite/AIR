@@ -117,7 +117,7 @@ public class ApplicationWS {
 				}
 			} else if (AirKonstanten.MY_CIS_FOR_DELETE.equals(searchAction)) {
 				if (StringUtils.isNotNullOrEmpty(cwid)) {
-					listAnwendungen = CiEntitiesHbn.findMyCisForDelete(cwid, input.getSort(), input.getDir(), onlyApplications);
+					listAnwendungen = CiEntitiesHbn.findMyCisForDelete(cwid, input.getSort(), input.getDir(), onlyApplications, input.getCiNameAliasQuery());
 				}
 			} else {
 				if (AirKonstanten.STRING_TRUE.equals(input.getIsAdvSearch())) {

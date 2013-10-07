@@ -620,8 +620,8 @@ public class CiEntitiesHbn {
 	}
 	
 	//ApplicationDTO
-	public static List<CiItemDTO> findMyCisForDelete(String cwid, String sort, String dir, boolean onlyApplications) {
-		return findMyCisOwnerOrDelegate("pck_air.FT_My_CIs", cwid, sort, dir, onlyApplications);
+	public static List<CiItemDTO> findMyCisForDelete(String cwid, String sort, String dir, boolean onlyApplications, String query) {
+		return findMyCisToDelete("pck_air.FT_My_CIs", cwid, sort, dir, onlyApplications, query);
 	}
 	
 	//ApplicationDTO
@@ -631,7 +631,7 @@ public class CiEntitiesHbn {
 		sql.append("SELECT * FROM TABLE (").append(ownerDelegate).append("('").append(cwid.toUpperCase()).append("'))");
 
 		if (onlyApplications) {
-			sql.append(" where TYPE= 'Application'"); 
+			sql.append(" WHERE type = 'Application'"); 
 		}
 		
 		// Order
@@ -671,6 +671,63 @@ public class CiEntitiesHbn {
 			sql.append(" ").append(dir);
 		}
 			
+		return findCis(sql.toString());
+	}
+	
+	//ApplicationDTO
+	private static List<CiItemDTO> findMyCisToDelete(String functionName, String cwid, String sort, String dir, boolean onlyApplications, String query) {
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("SELECT * FROM TABLE (").append(functionName).append("('").append(cwid.toUpperCase()).append("'");
+
+		if (onlyApplications) {
+			sql.append(",'Application'"); 
+		} else {
+			sql.append(", NULL");
+		}
+		if (query!=null) {
+			sql.append(",'").append(query).append("'"); 
+		}
+		
+		sql.append("))");
+		
+		// Order
+		if (StringUtils.isNotNullOrEmpty(sort)) {
+			if ("applicationName".equals(sort)) {
+				sql.append(" order by NAME");
+			}
+			else if ("applicationAlias".equals(sort)) {
+				sql.append(" order by ASSET_ID_OR_ALIAS");
+			}
+			else if ("applicationCat1Txt".equals(sort)) {
+				sql.append(" order by TYPE");
+			}
+			else if ("applicationCat2Txt".equals(sort)) {
+				sql.append(" order by CATEGORY");
+			}
+			else if ("responsible".equals(sort)) {
+				sql.append(" order by RESPONSIBLE");
+			}
+			else if ("subResponsible".equals(sort)) {
+				sql.append(" order by SUB_RESPONSIBLE");
+			}
+			else if ("applicationOwner".equals(sort)) {
+				sql.append(" order by APP_OWNER");
+			}
+			else if ("applicationOwnerDelegate".equals(sort)) {
+				sql.append(" order by APP_OWNER_DELEGATE");
+			}
+			
+		}
+		else {
+			sql.append(" order by name");
+		}
+
+		// Order direction
+		if (StringUtils.isNotNullOrEmpty(dir)) {
+			sql.append(" ").append(dir);
+		}
+		System.out.println(sql.toString());	
 		return findCis(sql.toString());
 	}
 

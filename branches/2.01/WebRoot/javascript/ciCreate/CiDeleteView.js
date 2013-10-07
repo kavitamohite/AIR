@@ -5,42 +5,57 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 	
 	initComponent: function() {
 		Ext.apply(this, {
-			title: 'Select CI to delete',//languagestore.data.items[0].data['CiDeleteViewTitle'],//
+			title: 'Select CI to delete',
 			
-			//irgendwo muss leider die initiale Groesse für die child container angegeben sein
-//			width: 600,
 			autoHeight: true,
-//			autoScroll: true,
+
 			
 			border: false,
-			layout: 'form',//form anchor vbox
+			layout: 'form',
 			
 			items: [{
-//        		xtype: 'panel',
-//        		id: 'pTop',
-//				hidden: true,
-//				border: false,
-				
-        		
-//        		items: [{
 					xtype: 'button',
 					id: 'bDelete',
 					text: 'Delete',
 					hidden: true,
 					
-//					hidden: true,
 					width: 50,
 					style: {
 						marginTop: 10,
 						marginBottom: 10
 					}
 
-//				}]
+        	},{
+        		xtype: 'compositefield',
+        		items: [{
+		        	xtype: 'textfield',
+		        	id: 'tfDeleteSearch',
+		        	emptyText: 'Enter CI name or alias...',
+		        	width: 300,
+		        	hideLabel: true,
+		        	sytle: {
+		        		marginLeft: -50,
+		        		marginRight: 0,
+		        		marginTop: 5,
+		        		marginBottom: 5
+		        	},
+		        	hasSearch: false,
+		        	maxLength: 656
+		        },{
+					xtype: 'button',//commandlink
+					id: 'clDeleteSearch',
+		        	cls: 'x-btn-text-icon',
+		        	icon: imgcontext+'/search_16x16.png',//'images/search_16x16.png'
+		        	text: '',
+					style: {
+						marginLeft: 5
+					}
+				}]
+        		
         	}, {
 				xtype: 'AIR.CiResultGrid',//hier nur applications anzeigen
 				id: 'CiDeleteResultGrid',
 				anchor: '100%'
-//				height: 1150
 			}
 			]
 		});
@@ -48,10 +63,9 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 		AIR.CiDeleteView.superclass.initComponent.call(this);
 		
 		
-//		var bDeleteSearch = this.getComponent('pDeleteCiSearch').getComponent('bDeleteSearch');
-		var bDelete = this.getComponent('bDelete');//.getComponent('pTop') this.getComponent('pDeleteCiSearch').getComponent('bDelete');
-		
-//		bDeleteSearch.on('click', this.onSearch, this);
+		var bDelete = this.getComponent('bDelete');
+		var bDeleteSearchButton = Ext.getCmp('clDeleteSearch');
+		bDeleteSearchButton.on('click', this.onSearch, this);
 		bDelete.on('click', this.onDelete, this);
 		
 		
@@ -60,6 +74,32 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 		grid.on('rowdblclick', Ext.emptyFn);
 		grid.getStore().on('beforeload', this.onGridBeforeLoaded , this);
 		grid.getStore().on('load', this.onGridLoaded, this);
+	},
+	
+	onSearch: function() {
+		var params = this.getSearchParams();
+		
+	    this.processSearch(params);
+	},
+	
+	getSearchParams: function() {
+	    var params = { 
+    		start: 0,
+    		limit: 20,
+    		ciNameAliasQuery: Ext.getCmp('tfDeleteSearch').getValue(),
+		 	cwid: AIR.AirApplicationManager.getCwid(),
+		 	token: AIR.AirApplicationManager.getToken(),
+		 	searchAction: 'myCisForDelete'
+    	};
+	    
+	    return params;
+	},
+	
+	processSearch: function(params) {
+		var grid = this.getComponent('CiDeleteResultGrid');
+		grid.getStore().load({
+			params: params
+		});
 	},
 	
 	onDelete: function(button, event) {
@@ -81,7 +121,7 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 	},
 	
 	deleteCallback: function() {
-		var store = AIR.AirStoreFactory.createCiDeleteStore();//createApplicationDeleteStore
+		var store = AIR.AirStoreFactory.createCiDeleteStore();
 		store.on('load', this.onCiDeleted, this);
 		
 		var params = { 
@@ -133,21 +173,6 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 		var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
 		this.tableId = r.get('ciTypeId');
 		
-//		var bDelete = this.getComponent('bDelete');//this.getComponent('pDeleteCiSearch').getComponent('bDelete');
-//		if(bDelete.hidden) {
-//			var pSpace1 = this.getComponent('pSpace1');
-//			pSpace1.show();
-//			
-//			bDelete.show();
-//			this.doLayout();//this.getComponent('pDeleteCiSearch').doLayout();
-//		}
-		
-//		var pTop = this.getComponent('pTop');
-//		if(pTop.hidden) {
-//			pTop.show();
-//			this.doLayout();
-//		}
-		
 		var bDelete = this.getComponent('bDelete');
 		bDelete.show();
 	},
@@ -161,8 +186,6 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 		 	token: AIR.AirApplicationManager.getToken(),
 			start: 0,
 			limit: 20,
-//			sort: 'applicationName',
-//			onlyapplications: 'true',
 			searchAction: 'myCisForDelete'// Parameter für Owner und Delegate Apps anstatt myCis!
 		};
 		
