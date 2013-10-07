@@ -2,6 +2,24 @@ Ext.namespace('AIR');
 
 AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	initComponent: function() {
+		
+		// The Mapping between Transbase V_MD_GROUP_TYPE und local field names
+		this.groupTypeMapping = new Array(
+				new Array('SUPPORT GROUP - IM RESOLVER', 		'gpsccontactSupportGroup'),
+				new Array('CHANGE TEAM', 						'gpsccontactChangeTeam'),
+				new Array('SERVICE COORDINATOR', 				'gpsccontactServiceCoordinator'),
+				new Array('ESCALATION LIST', 					'gpsccontactEscalation'),
+				new Array('CI OWNER', 							'gpsccontactCiOwner'),
+				new Array('OWNING BUSINESS GROUP', 				'gpsccontactOwningBusinessGroup'),
+				new Array('IMPLEMENTATION TEAM', 				'gpsccontactImplementationTeam'),
+				new Array('(INDIV) SERVICE COORDINATOR', 		'gpsccontactServiceCoordinatorIndiv'),
+				new Array('(INDIV) ESCALATION LIST', 			'gpsccontactEscalationIndiv'),
+				new Array('RESPONSIBLE AT CUSTOMER SIDE', 		'gpsccontactResponsibleAtCustomerSide'),
+				new Array('SYSTEM RESPONSIBLE', 				'gpsccontactSystemResponsible'),
+				new Array('Impacted Business Group', 			'gpsccontactImpactedBusiness'),
+				new Array('Business Owner Representative', 		'gpsccontactBusinessOwnerRepresentative')
+		);
+		
 		this.gpscContactsMap = [
     	    '', // 0 not mapped
            	'gpsccontactSupportGroup', // 1
@@ -1057,52 +1075,22 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('labelgpsccontactCiOwner').setText(label);
 		
 		var fsContactsGPSC = this.getComponent('contactsGPSC');
-//		if(data.tableId == AC.TABLE_ID_APPLICATION || data.tableId == AC.TABLE_ID_IT_SYSTEM) {
-			fsContactsGPSC.setVisible(true);
-			
-			var pGpsccontactOwningBusinessGroup = fsContactsGPSC.getComponent('pGpsccontactOwningBusinessGroup');
-			var pGpsccontactImplementationTeam = fsContactsGPSC.getComponent('pGpsccontactImplementationTeam');
-			var pGpsccontactBusinessOwnerRepresentative = fsContactsGPSC.getComponent('pGpsccontactBusinessOwnerRepresentative');
-			var pGpsccontactImpactedBusiness = fsContactsGPSC.getComponent('pGpsccontactImpactedBusiness');
-
-			// TODO Der folgende Logik-Bereich muss aus der Definition ermittelt werden.
-			// ImpactedBusiness wird jetzt fix auf true gesetzt.
-			pGpsccontactImpactedBusiness.setVisible(true);
-			
-			if(data.tableId == AC.TABLE_ID_APPLICATION) {
-				pGpsccontactOwningBusinessGroup.setVisible(true);
-				pGpsccontactImplementationTeam.setVisible(true);
-				pGpsccontactBusinessOwnerRepresentative.setVisible(true);
-				
-//				if(data.applicationCat1Id && data.applicationCat1Id == AC.APP_CAT1_APPLICATION)
-//					pGpsccontactImpactedBusiness.setVisible(true);
-//				else
-//					pGpsccontactImpactedBusiness.setVisible(false);
-			} else {
-				pGpsccontactOwningBusinessGroup.setVisible(false);
-				pGpsccontactImplementationTeam.setVisible(false);
-				pGpsccontactBusinessOwnerRepresentative.setVisible(false);
-//				pGpsccontactImpactedBusiness.setVisible(false);
-			}
-			
-			
-			
-			var applicationContactsStore = AIR.AirStoreFactory.createApplicationContactsStore();
-			applicationContactsStore.on('load', this.applicationContactsLoaded, this);
-			
-			var params = {
-				cwid: AAM.getCwid(),
-				token: AAM.getToken(),
-				applicationId: AAM.getCiId(),
-				tableId: data.tableId//AAM.getTableId()
-			};
-			
-			applicationContactsStore.load({
-				params: params
-			});
-//		} else {
-//			fsContactsGPSC.setVisible(false);
-//		}
+		fsContactsGPSC.setVisible(true);
+		
+		
+		var applicationContactsStore = AIR.AirStoreFactory.createApplicationContactsStore();
+		applicationContactsStore.on('load', this.applicationContactsLoaded, this);
+		
+		var params = {
+			cwid: AAM.getCwid(),
+			token: AAM.getToken(),
+			applicationId: AAM.getCiId(),
+			tableId: data.tableId//AAM.getTableId()
+		};
+		
+		applicationContactsStore.load({
+			params: params
+		});
 	},
 	
 	updateAccessMode: function(data) {
@@ -1137,24 +1125,83 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var tfGpsccontactSupportGroup = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroup');
 		var tfCiOwner = this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsible');
 		
-		if(data.tableId == AC.TABLE_ID_APPLICATION) {// && data.applicationCat1Id === AC.APP_CAT1_APPLICATION
-			var lCiResponsible = this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('labelciResponsible');
-			AIR.AirAclManager.setNecessityInternal(lCiResponsible.el, 'required');
+		
+		// RFC 9459 set Mandatory/Necessity from the store /database not xml
+		var groupTypesStore = AIR.AirStoreManager.getStoreByName('groupTypesListStore');
+		// groupTypesStore.load();
+		var gtdata = groupTypesStore.data;
+		
+		for (var i = 0 ; i < gtdata.items.length ; i++){
 			
-			var lGpsccontactCiOwner = this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('labelgpsccontactCiOwner');
-			AIR.AirAclManager.setNecessityInternal(lGpsccontactCiOwner.el, 'required');
+			// check if the field is visible by tableId and group_type visibility
+			var isFieldVisible = false;
+			if (data.tableId == AC.TABLE_ID_APPLICATION && '1' == gtdata.items[i].data.visibleApplication) {
+				isFieldVisible = true;
+			}
+			else if (data.tableId == AC.TABLE_ID_IT_SYSTEM && '1' == gtdata.items[i].data.visibleItsystem) {
+				isFieldVisible = true;
+			}
+			else if (data.tableId == AC.TABLE_ID_POSITION || data.tableId == AC.TABLE_ID_ROOM
+					|| data.tableId == AC.TABLE_ID_BUILDING_AREA || data.tableId == AC.TABLE_ID_BUILDING
+					|| data.tableId == AC.TABLE_ID_TERRAIN || data.tableId == AC.TABLE_ID_SITE) {
+				if ('1' == gtdata.items[i].data.visibleLocation) {
+					isFieldVisible = true;
+				}
+			}
 			
-			var lGpsccontactSupportGroup = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('labelgpsccontactSupportGroup');
-			AIR.AirAclManager.setNecessityInternal(lGpsccontactSupportGroup.el, 'required');
+			// set the visibility and the necessity
+			for (var gt = 0; gt < this.groupTypeMapping.length ; gt++) {
+				if (this.groupTypeMapping[gt][0] === gtdata.items[i].data.groupTypeName) {
+					
+					if (isFieldVisible) {
+						// fieldname = groupTypeMapping[gt][1]
+						this.setGPSCVisible(this.groupTypeMapping[gt][1], true);
+						var modus = null;
+						if ('0' == gtdata.items[i].data.minContacts) {
+							// nothing
+						}
+						else {
+							modus = 'mandatory';
+							this.setGPSCNecessity(this.groupTypeMapping[gt][1], modus);
+						}
+					}
+					else {
+						this.setGPSCVisible(this.groupTypeMapping[gt][1], false);
+					}
+				}
+			}
+			
+		}
+
+		// RFC 9459 special case - applications are only "required"
+		if(data.tableId == AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION) { 
+			this.setGPSCNecessityInternal('fsCIOwner', 'pCIOwner', 'labelciResponsible', 'required');
+			
+			this.setGPSCNecessityInternal('contactsGPSC', 'pGpsccontactCiOwner', 'labelgpsccontactCiOwner', 'required');
+			this.setGPSCNecessityInternal('contactsGPSC', 'pGpsccontactSupportGroup', 'labelgpsccontactSupportGroup', 'required');
 			
 			tfGpsccontactCiOwner.clearInvalid();
 			tfGpsccontactSupportGroup.clearInvalid();
-//		} else {
-//			// oben wieder einkommentiert
-//			AIR.AirAclManager.setAccessMode(tfCiOwner, data);
-//			AIR.AirAclManager.setAccessMode(tfGpsccontactCiOwner, data);
-//			AIR.AirAclManager.setAccessMode(tfGpsccontactSupportGroup, data);
 		}
+		
+	},
+	setGPSCVisible: function (compname, visible) {
+		var fsContactsGPSC = this.getComponent('contactsGPSC');
+		var subcompname = 'p'+compname;
+		subcompname = subcompname.replace('pgpsccontact', 'pGpsccontact');
+
+		var pGpsccontact = fsContactsGPSC.getComponent(subcompname);
+		pGpsccontact.setVisible(visible);
+
+	},
+	setGPSCNecessity: function (compname, modus) {
+		var subcompname = 'p'+compname;
+		subcompname = subcompname.replace('pgpsccontact', 'pGpsccontact');
+		this.setGPSCNecessityInternal('contactsGPSC', subcompname, 'label'+compname, modus);
+	},
+	setGPSCNecessityInternal: function (mastercompname, subcompname, compname, modus) {
+		var lGpsccontact = this.getComponent(mastercompname).getComponent(subcompname).getComponent(compname);
+		AIR.AirAclManager.setNecessityInternal(lGpsccontact.el, modus);
 	},
 	
 	applicationContactsLoaded: function(store, records, options) {
