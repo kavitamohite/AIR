@@ -41,15 +41,15 @@ public class BovApplicationServlet extends HttpServlet {
 		String strApplicationId = (String) req.getParameter("applicationId");
 		String cwidSteward = (String) req.getParameter("cwidSteward");
 	
-		
+		String redirect = redirectPath.concat(String.format("?id=APP-%s#", strApplicationId));
 		if (denyOwnership) {
 			doDenialOfOwnership(Long.parseLong(strApplicationId), cwidSteward);
-			res.sendRedirect(redirectPath);
+			res.sendRedirect(redirect);
 			return;
 		}
 		if (retireApplication) {
 			doInitiateRetirement(Long.parseLong(strApplicationId), cwidSteward, req.getParameter("bovReason").toString());
-			res.sendRedirect(redirectPath);
+			res.sendRedirect(redirect);
 			return;
 		}
 		

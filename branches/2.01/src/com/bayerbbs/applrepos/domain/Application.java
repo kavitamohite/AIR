@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.domain;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -107,6 +108,9 @@ public class Application extends DeletableRevisionInfo {
 	private String bovApplicationNeeded;
 	private String bovAcceptedBy;
 	private Timestamp bovLastTimestamp;
+	private String bovProcessed;
+	private Date bovNotificationDate;
+	private String bovOwnershipStatus;
 	
 	public Application() {
 	}
@@ -643,5 +647,26 @@ public class Application extends DeletableRevisionInfo {
 	}
 	public void setDataPrivacyBetweenCountries(String dataPrivacyBetweenCountries) {
 		this.dataPrivacyBetweenCountries = dataPrivacyBetweenCountries;
+	}
+	@Column(name = "BOV_PROCESSED")
+	public String getBovProcessed() {
+		return bovProcessed;
+	}
+	public void setBovProcessed(String bovProcessed) {
+		this.bovProcessed = bovProcessed;
+	}
+	@Column(name = "BOV_NOTIFICATION_DATE")
+	public Date getBovNotificationDate() {
+		return bovNotificationDate;
+	}
+	public void setBovNotificationDate(Date bovNotificationDate) {
+		this.bovNotificationDate = bovNotificationDate;
+	}
+	@Column(name = "BOV_OWNERSHIP_STATUS")
+	public String getBovOwnershipStatus() {
+		return bovOwnershipStatus;
+	}
+	public void setBovOwnershipStatus(String bovOwnershipStatus) {
+		this.bovOwnershipStatus = bovOwnershipStatus;
 	}
 }

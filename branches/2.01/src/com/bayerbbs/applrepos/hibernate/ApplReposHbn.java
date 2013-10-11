@@ -693,8 +693,6 @@ public class ApplReposHbn {
 			
 			StringBuffer sb = new StringBuffer();
 			
-			sb = new StringBuffer();
-	
 			sb.append("DECLARE s VARCHAR2(4000); ");
 			
 			sb.append("BEGIN");

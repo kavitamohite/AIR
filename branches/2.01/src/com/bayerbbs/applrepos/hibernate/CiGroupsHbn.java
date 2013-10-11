@@ -90,7 +90,7 @@ public class CiGroupsHbn {
 	
 	public static ArrayList<CiGroupsDTO>  findCiGroups(int tableId, Long ciId, int contactTypeId) {
 
-		final String SQL = "select h from CiGroups as h where h.tableId = :tableId and h.ciId = :ciId and h.groupTypeId = :contactTypeId";
+		final String SQL = "select h from CiGroups as h where h.tableId = :tableId and h.ciId = :ciId and h.groupTypeId = :contactTypeId and h.deleteQuelle IS NULL";
 		ArrayList<CiGroupsDTO>  result = null;
 		Session session = HibernateUtil.getSession();
 		Query selectQuery = session.createQuery(SQL);
