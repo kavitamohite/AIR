@@ -35,7 +35,8 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
     			items: [
 			        { boxLabel: labels.RelevanceICSSecurityManagement, name: 'cbgComplianceLinkTypeRelevance'},//, width: 100 
 			        { boxLabel: labels.RelevanceICSAccessManagement, name: 'cbgComplianceLinkTypeRelevance'},//, width: 100 
-			        { boxLabel: labels.RelevanceICSITOperations, name: 'cbgComplianceLinkTypeRelevance'}//, width: 100 
+			        { boxLabel: labels.RelevanceICSITOperations, name: 'cbgComplianceLinkTypeRelevance'},//, width: 100 
+			        { boxLabel: labels.RelevanceICSChangeManagement, name: 'cbgComplianceLinkTypeRelevance'}
 		        ]
 			},{
 				xtype: 'filterCombo',//filterCombo combo

@@ -2411,7 +2411,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 		if(!this.hasNoGapAnalysis) {
 			var cbgIcsRelevances = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView').getComponent('cbgComplianceLinkTypeRelevance');
-			var icsRelevances = [ massnahme.secuRelevance == '-1', massnahme.accsRelevance == '-1', massnahme.itopRelevance == '-1' ];
+			var icsRelevances = [ massnahme.secuRelevance == '-1', massnahme.accsRelevance == '-1', massnahme.itopRelevance == '-1', massnahme.chmgRelevance == '-1' ];
 			cbgIcsRelevances.setValue(icsRelevances);
 			
 			var complianceLinkView = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('complianceLinkView');//.setVisible(true);

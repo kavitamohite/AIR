@@ -36,6 +36,15 @@ public class ItsecMassnahmeDetailDTO {
 	private Long secuRelevance;
 	private Long accsRelevance;
 	private Long itopRelevance;
+	private Long chmgRelevance;
+	public Long getChmgRelevance() {
+		return chmgRelevance;
+	}
+
+	public void setChmgRelevance(Long chmgRelevance) {
+		this.chmgRelevance = chmgRelevance;
+	}
+
 	private Long gapPriority;
 	// refTableId
 	// refPkId

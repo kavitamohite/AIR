@@ -1,5 +1,5 @@
 // Application Name, Version and Contacts
-var app_version 		= '2.01.004';
+var app_version 		= '2.01.005';
 var app_name 			= 'Application Infrastructure Repository';
 var app_shortname 		= 'AIR';
 var app_vendor			= 'BBS';
