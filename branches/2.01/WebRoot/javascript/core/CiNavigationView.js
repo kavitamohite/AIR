@@ -3,6 +3,72 @@ Ext.namespace('AIR');
 AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	
 	initComponent: function() {
+		
+		// The Mapping between function and allowed roles
+		this.functionRoleMapping = new Array(
+				// my place
+				new Array('clMyPlace',	 			
+						new Array(	
+								AC.USER_ROLE_AIR_DEFAULT,
+								AC.USER_ROLE_AIR_APPLICATION_LAYER,
+								AC.USER_ROLE_AIR_INFRASTRUCTURE_LAYER,
+								AC.USER_ROLE_AIR_APPLICATION_MANAGER,
+								AC.USER_ROLE_AIR_INFRASTRUCTURE_MANAGER,
+								AC.USER_ROLE_AIR_ADMINISTRATOR,
+								AC.USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE,
+								AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR,
+								AC.USER_ROLE_AIR_COMPLIANCE_EDITOR)),
+						
+				// search
+				new Array('clSearch',
+						new Array(	
+								AC.USER_ROLE_AIR_DEFAULT,
+								AC.USER_ROLE_AIR_APPLICATION_LAYER,
+								AC.USER_ROLE_AIR_INFRASTRUCTURE_LAYER,
+								AC.USER_ROLE_AIR_APPLICATION_MANAGER,
+								AC.USER_ROLE_AIR_INFRASTRUCTURE_MANAGER,
+								AC.USER_ROLE_AIR_ADMINISTRATOR,
+								AC.USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE,
+								AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)),
+
+				// advanced search
+				new Array('clAdvancedSearch',
+						new Array(	
+								AC.USER_ROLE_AIR_DEFAULT,
+								AC.USER_ROLE_AIR_APPLICATION_LAYER,
+								AC.USER_ROLE_AIR_INFRASTRUCTURE_LAYER,
+								AC.USER_ROLE_AIR_APPLICATION_MANAGER,
+								AC.USER_ROLE_AIR_INFRASTRUCTURE_MANAGER,
+								AC.USER_ROLE_AIR_ADMINISTRATOR,
+								AC.USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE,
+								AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)),
+
+				// ou search
+				new Array('clOuSearch',
+						new Array(	
+								AC.USER_ROLE_AIR_DEFAULT,
+								AC.USER_ROLE_AIR_APPLICATION_LAYER,
+								AC.USER_ROLE_AIR_INFRASTRUCTURE_LAYER,
+								AC.USER_ROLE_AIR_APPLICATION_MANAGER,
+								AC.USER_ROLE_AIR_INFRASTRUCTURE_MANAGER,
+								AC.USER_ROLE_AIR_ADMINISTRATOR,
+								AC.USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE,
+								AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)),
+
+				
+				// new and delete
+				new Array('clCiCreate',	 			
+						new Array(	
+								AC.USER_ROLE_AIR_DEFAULT,
+								AC.USER_ROLE_AIR_APPLICATION_LAYER,
+								AC.USER_ROLE_AIR_INFRASTRUCTURE_LAYER,
+								AC.USER_ROLE_AIR_APPLICATION_MANAGER,
+								AC.USER_ROLE_AIR_INFRASTRUCTURE_MANAGER,
+								AC.USER_ROLE_AIR_ADMINISTRATOR,
+								AC.USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE))
+
+		);
+		
 		Ext.apply(this, {
         	border: false,
 			layout: 'form',//vbox
@@ -409,7 +475,61 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		this.doLayout();
 	},
 
+	updateOneMenuRight: function(componentName) {
+		
+		var show = false;
+
+		var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
+		var allowedRoleNames = new Array(30);
+		
+		// set the visibility
+		for (var gt = 0; gt < this.functionRoleMapping.length ; gt++) {
+			if (this.functionRoleMapping[gt][0] === componentName) {
+				
+				allowedRoleNames = this.functionRoleMapping[gt][1];
+				
+				for (var i = 0; i < allowedRoleNames.length; i++) {
+					var rolename = allowedRoleNames[i];
+					// Rollen zugreifen					
+					rolePersonListStore.each(function(item) {
+						var value = item.data.roleName;
+							if (rolename == value) {
+								show = true;
+								return false; // Schleifenabbruch fuer speed
+							}
+					});
+					
+				}
+			}
+		}
+
+	    if (show == false) {
+	    	var comp = this.getComponent(componentName);
+	    	comp.setVisible(false);
+	    }
+	},
+	
+	updateMenuRights: function() {
+		this.updateOneMenuRight('clMyPlace');
+			// 'clMyPlaceMyCIs
+			// 'clMyPlaceMyCIsDelegate'
+		
+		this.updateOneMenuRight('clSearch');
+		this.updateOneMenuRight('clAdvancedSearch');
+		this.updateOneMenuRight('clOuSearch');
+			// clAdvancedSearch
+			// clOuSearch
+		
+		this.updateOneMenuRight('clCiCreate');
+			// 'clCiCreateCopyFrom'
+			// 'clCiDelete'
+			// 'clCiCreateWizard'
+		
+	},
+	
 	updateMenu: function(tableId, ciSubType) {
+		this.updateMenuRights();
+		
 		var pCiDetailsMenuItems = this.getComponent('pCiDetailsMenuItems');
 		var clCiLicense = pCiDetailsMenuItems.getComponent('clCiLicense');
 		var clCiSupportStuff = pCiDetailsMenuItems.getComponent('clCiSupportStuff');
@@ -449,6 +569,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
     	
     	var lastloginSpan = Ext.get('lastlogin');
     	lastloginSpan.dom.innerHTML = AIR.AirApplicationManager.getLastLogon();
+    	
+    	this.updateMenuRights();
 	},
 	
 	updateLabels: function(labels) {
