@@ -39,59 +39,62 @@ public class BovApplicationServlet extends HttpServlet {
 		Boolean denyOwnership = (bovAction.equals("denial") ? Boolean.TRUE : Boolean.FALSE);
 		Boolean retireApplication = (bovAction.equals("retire") ? Boolean.TRUE : Boolean.FALSE);
 		String strApplicationId = (String) req.getParameter("applicationId");
+		long applicationId = Long.parseLong(strApplicationId);
 		String cwidSteward = (String) req.getParameter("cwidSteward");
 	
 		String redirect = redirectPath.concat(String.format("?id=APP-%s#", strApplicationId));
-		if (denyOwnership) {
-			doDenialOfOwnership(Long.parseLong(strApplicationId), cwidSteward);
-			res.sendRedirect(redirect);
-			return;
-		}
-		if (retireApplication) {
-			doInitiateRetirement(Long.parseLong(strApplicationId), cwidSteward, req.getParameter("bovReason").toString());
-			res.sendRedirect(redirect);
-			return;
-		}
-		
-		String strDrlevel = (String) req.getParameter("drlevel");
-		String strSeveritylevel = (String) req.getParameter("severitylevel");
-		
-		String strGxpRelevant = (String) req.getParameter("gxprelevant");
-		String strIcsRelevant = (String) req.getParameter("icsrelevant");
-		String strItsecRelevant = (String) req.getParameter("itsecrelevant");
-		
-		String strInformationClassification = (String) req.getParameter("informationclassification");
-		String strDataPrivacyPersonalData = (String) req.getParameter("personaldata");
-		String strDataPrivacyBetweenCountries = (String) req.getParameter("betweencountries");
-		String strApplicationDescription = (String) req.getParameter("applicationdescription");
-		
-		long applicationId = Long.parseLong(strApplicationId);
-		
-		
 		BovApplicationInputDTO dto = new BovApplicationInputDTO();
-		if (null != strDrlevel) {
-			dto.setDrLevel(Long.parseLong(strDrlevel));	
+		dto.setProcessed(false);
+
+		if (denyOwnership) {
+			doDenialOfOwnership(applicationId, cwidSteward.toUpperCase(), req.getParameter("bovReason").toString());
+			dto.setOwnershipStatus("reject");
 		}
-		if (null != strSeveritylevel) {
-			dto.setSeverityLevel(Long.parseLong(strSeveritylevel));	
+		else { 
+			dto.setOwnershipStatus("accept");
+			if (retireApplication) { 
+				doInitiateRetirement(applicationId, cwidSteward.toUpperCase(), req.getParameter("bovReason").toString());
+			}
+			else {
+				dto.setProcessed(true);
+				String strDrlevel = (String) req.getParameter("drlevel");
+				String strSeveritylevel = (String) req.getParameter("severitylevel");
+				
+				String strGxpRelevant = (String) req.getParameter("gxprelevant");
+				String strIcsRelevant = (String) req.getParameter("icsrelevant");
+				String strItsecRelevant = (String) req.getParameter("itsecrelevant");
+				
+				String strInformationClassification = (String) req.getParameter("informationclassification");
+				String strDataPrivacyPersonalData = (String) req.getParameter("personaldata");
+				String strDataPrivacyBetweenCountries = (String) req.getParameter("betweencountries");
+				String strApplicationDescription = (String) req.getParameter("applicationdescription");		
+			
+			
+				if (null != strDrlevel) {
+					dto.setDrLevel(Long.parseLong(strDrlevel));	
+				}
+				if (null != strSeveritylevel) {
+					dto.setSeverityLevel(Long.parseLong(strSeveritylevel));	
+				}
+				if (null != strGxpRelevant) {
+					dto.setGxpRelevant(strGxpRelevant);
+				}
+				if (null != strIcsRelevant) {
+					dto.setIcsRelevant(strIcsRelevant);
+				}
+				
+				if (null != strItsecRelevant) dto.setItsecRelevant(strItsecRelevant);
+				
+				if (null != strInformationClassification) {
+					dto.setInformationClassification(strInformationClassification);
+				}
+				if (null != strDataPrivacyPersonalData) dto.setDataPrivacyPersonalData(strDataPrivacyPersonalData);
+				if (null != strDataPrivacyBetweenCountries) dto.setDataPrivacyBetweenCountries(strDataPrivacyBetweenCountries);
+				
+				
+				if (null != strApplicationDescription) dto.setApplicationDescription(strApplicationDescription);
+			}
 		}
-		if (null != strGxpRelevant) {
-			dto.setGxpRelevant(strGxpRelevant);
-		}
-		if (null != strIcsRelevant) {
-			dto.setIcsRelevant(strIcsRelevant);
-		}
-		
-		if (null != strItsecRelevant) dto.setItsecRelevant(strItsecRelevant);
-		
-		if (null != strInformationClassification) {
-			dto.setInformationClassification(strInformationClassification);
-		}
-		if (null != strDataPrivacyPersonalData) dto.setDataPrivacyPersonalData(strDataPrivacyPersonalData);
-		if (null != strDataPrivacyBetweenCountries) dto.setDataPrivacyBetweenCountries(strDataPrivacyBetweenCountries);
-		
-		
-		if (null != strApplicationDescription) dto.setApplicationDescription(strApplicationDescription);
 		
 		if (null != cwidSteward && !"null".equals(cwidSteward)) {
 			// was dann ??? 
@@ -101,7 +104,7 @@ public class BovApplicationServlet extends HttpServlet {
 		}
 
 		
-		boolean result = BovApplicationHbn.saveBovApplication(cwidSteward, applicationId, dto);
+		boolean result = BovApplicationHbn.saveBovApplication(cwidSteward.toUpperCase(), applicationId, dto);
 		
 		if (result == true) {
 			res.getWriter().write("data saved");
@@ -109,7 +112,7 @@ public class BovApplicationServlet extends HttpServlet {
 		else {
 			res.getWriter().write("!!! Could not save data - please check the data !!!");
 		}
-		
+		res.sendRedirect(redirect);		
 	}
 
 	private void doInitiateRetirement(Long applicationId, String requestor, String reason) {
@@ -120,10 +123,10 @@ public class BovApplicationServlet extends HttpServlet {
 		return;
 	}
 
-	private void doDenialOfOwnership(Long applicationId, String requestor) {
+	private void doDenialOfOwnership(Long applicationId, String requestor, String newOwner) {
 		Application app = AnwendungHbn.findApplicationById(applicationId);
 		String subject = String.format("Ownership of Application '%s' rejected!", app.getApplicationName());
- 		String body = String.format("Ownership rejected by: %s", getCwidName(requestor));
+ 		String body = String.format("Ownership rejected by: %s\nNew Onwer nominated: $s", getCwidName(requestor), newOwner);
 		ApplReposHbn.sendMail(getMail(app.getResponsible()), getMail(requestor), subject, body, "BOV");
 		return;
 	}

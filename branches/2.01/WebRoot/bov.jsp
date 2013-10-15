@@ -17,7 +17,9 @@ if (null != strInputApplID) {
 if (null == applicationId) {
 	applicationId = new Long(143698); 
 }
-
+if (null == cwidSteward) {
+	cwidSteward = System.getProperty("user.name");
+}
 Application app = AnwendungHbn.findApplicationById(applicationId);
 if (null != app)
 {
@@ -63,15 +65,20 @@ function clickButton(buttonName)
 {
 	var question = "";
 	var confirmation = "";
+	var reason = "";
+	var newOwner = "";
+	//document.getElementById("FormApplication").cwidSteward = WScript.CreateObject("WScript.Network").UserName;
 	switch(buttonName)
 	{
 		case "accept":
 			question = "Do you want to retire the application?";
 			if (window.confirm(question))
 			{
+				reason = window.prompt("Please give your reasons!", "obsolete");
 				confirmation = "Application retired!";
 				window.alert(confirmation);
 				document.getElementById("FormApplication").bovAction.value = "retire";
+				document.getElementById("FormApplication").bovReason.value = reason;		
 				document.getElementById("FormApplication").submit();
 			}
 			else
@@ -79,12 +86,15 @@ function clickButton(buttonName)
 				confirmation = "Ownership accepted!";
 				window.alert(confirmation);
 				document.getElementById("FormApplication").reset();
+				document.getElementById("FormApplication").submit();
 			}	
 			break;
 		case "reject":
+			newOwner = window.prompt("Please nominate the new/real owner!", newOwner);
 			confirmation ="Ownership rejected!";
 			window.alert(confirmation);
 			document.getElementById("FormApplication").bovAction.value = "denial";
+			document.getElementById("FormApplication").bovReason.value = newOwner;		
 			document.getElementById("FormApplication").submit();
 			break;
 	}
@@ -133,6 +143,134 @@ function clickButton(buttonName)
 	    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#D3DCF1, endColorstr=#D3F0F1) no-repeat;
 	    /* IE 8 */
 	    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#D3DCF1, endColorstr=#D3DCF1)" no-repeat;
+	}
+	.button {
+		-moz-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+		-webkit-box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+		box-shadow:inset 0px 1px 0px 0px #bbdaf7;
+	    /* For WebKit (Safari, Chrome, etc) */
+		background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) );
+	    /* Mozilla,Firefox/Gecko */
+		background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
+	    /* IE 5.5 - 7 */
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5');
+		background-color:#79bbff;
+		border:1px solid #84bbf3;
+		display:inline-block;
+		color:#ffffff;
+		font-family:Arial;
+		font-size:15px;
+		font-weight:bold;
+		font-style:normal;
+		height:40px;
+		line-height:40px;
+		width:100px;
+		text-decoration:none;
+		text-align:center;
+		text-shadow:1px 1px 0px #528ecc;
+	}
+	.button:hover {
+	    /* For WebKit (Safari, Chrome, etc) */
+		background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
+	    /* Mozilla,Firefox/Gecko */
+		background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
+	    /* IE 5.5 - 7 */
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
+		background-color:#378de5;
+	}
+	.button:active {
+		position:relative;
+		top:1px;
+	}
+	.btnGreen {
+		-moz-box-shadow:inset 0px 1px 0px 0px #c1ed9c;
+		-webkit-box-shadow:inset 0px 1px 0px 0px #c1ed9c;
+		box-shadow:inset 0px 1px 0px 0px #c1ed9c;
+		background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #9dce2c), color-stop(1, #8cb82b) );
+		background:-moz-linear-gradient( center top, #9dce2c 5%, #8cb82b 100% );
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#9dce2c', endColorstr='#8cb82b');
+		background-color:#9dce2c;
+		-webkit-border-top-left-radius:15px;
+		-moz-border-radius-topleft:15px;
+		border-top-left-radius:15px;
+		-webkit-border-top-right-radius:15px;
+		-moz-border-radius-topright:15px;
+		border-top-right-radius:15px;
+		-webkit-border-bottom-right-radius:15px;
+		-moz-border-radius-bottomright:15px;
+		border-bottom-right-radius:15px;
+		-webkit-border-bottom-left-radius:15px;
+		-moz-border-radius-bottomleft:15px;
+		border-bottom-left-radius:15px;
+		text-indent:0;
+		border:1px solid #83c41a;
+		display:inline-block;
+		color:#ffffff;
+		font-family:Arial;
+		font-size:15px;
+		font-weight:bold;
+		font-style:normal;
+		height:40px;
+		line-height:40px;
+		width:100px;
+		text-decoration:none;
+		text-align:center;
+		text-shadow:1px 1px 0px #689324;
+	}
+	.btnGreen:hover {
+		background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #8cb82b), color-stop(1, #9dce2c) );
+		background:-moz-linear-gradient( center top, #8cb82b 5%, #9dce2c 100% );
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#8cb82b', endColorstr='#9dce2c');
+		background-color:#8cb82b;
+	}
+	.btnGreen:active {
+		position:relative;
+		top:1px;
+	}
+	.btnRed {
+		-moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
+		-webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
+		box-shadow:inset 0px 1px 0px 0px #f29c93;
+		background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
+		background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100');
+		background-color:#fe1a00;
+		-webkit-border-top-left-radius:15px;
+		-moz-border-radius-topleft:15px;
+		border-top-left-radius:15px;
+		-webkit-border-top-right-radius:15px;
+		-moz-border-radius-topright:15px;
+		border-top-right-radius:15px;
+		-webkit-border-bottom-right-radius:15px;
+		-moz-border-radius-bottomright:15px;
+		border-bottom-right-radius:15px;
+		-webkit-border-bottom-left-radius:15px;
+		-moz-border-radius-bottomleft:15px;
+		border-bottom-left-radius:15px;
+		text-indent:0;
+		border:1px solid #d83526;
+		display:inline-block;
+		color:#ffffff;
+		font-family:Arial;
+		font-size:15px;
+		font-weight:bold;
+		font-style:normal;
+		height:40px;
+		line-height:40px;
+		width:100px;
+		text-decoration:none;
+		text-align:center;
+		text-shadow:1px 1px 0px #b23e35;
+	}
+	.btnRed:hover {
+		background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00) );
+		background:-moz-linear-gradient( center top, #ce0100 5%, #fe1a00 100% );
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce0100', endColorstr='#fe1a00');
+		background-color:#ce0100;
+	}
+	.btnRed:active {
+		position:relative;
+		top:1px;
 	}
 </style>
   
@@ -206,8 +344,8 @@ The application Steward does not match
 </table>
 
 <p>
-	<button type="button" name="accept" value="Accept" onclick="clickButton('accept')">Accept</button>
-	<button type="button" name="reject" value="Reject" onclick="clickButton('reject')">Reject</button>
+	<button class="btnGreen" type="button" name="accept" value="Accept" onclick="clickButton('accept')">Accept</button>
+	<button class="btnRed" type="button" name="reject" value="Reject" onclick="clickButton('reject')">Reject</button>
 </p>
 
 <table border="1">
@@ -295,15 +433,9 @@ The application Steward does not match
 	<input type='hidden' name='cwidSteward' value='<%=cwidSteward%>'/>
 	<input type='hidden' name='bovAction' value=''/>
 	<input type='hidden' name='bovReason' value=''/>
-	<input type='submit' value=' Save ' name='save'/>
-	<input type='reset' value= ' Cancel ' name='cancel'/>
+	<input class="btnGreen" type='submit' value='Save' name='save'/>
+	<input class="btnRed" type='reset' value= 'Cancel' name='cancel'/>
 </fieldset>
-<p>
-	<a href="http://users.skynet.be/mgueury/mozilla/">
-	  <img src="http://users.skynet.be/mgueury/mozilla/serial_16.gif"
-	  alt="Validated by HTML Validator" height="16" width="39"/>
-	</a>
-</p>
 </form>
 
 <% } %>

@@ -28,6 +28,8 @@ public class BovApplicationHbn {
 
 	
 	public static boolean saveBovApplication(String cwid, Long applicationId, BovApplicationInputDTO dto) {
+		String processed = null;
+		String ownershipStatus = null;
 		Long drLevelId = null;
 		Long severityLevelId = null;
 		String gxpRelevant = null;
@@ -39,6 +41,10 @@ public class BovApplicationHbn {
 		String dataPrivacyBetweenCountries = null;
 		String applicationDescription = null;
 
+		// Processed
+		processed = dto.getProcessed() ? STR_YES : STR_NO;
+		// Ownership Status
+		ownershipStatus = dto.getOwnershipStatus();
 		// DR Level
 		drLevelId = dto.getDrLevel();
 		
@@ -106,12 +112,12 @@ public class BovApplicationHbn {
 			if (applicationDescription.length() == 0) applicationDescription = null;
 		}
 		
-		return saveBovApplication(cwid, applicationId, drLevelId, severityLevelId, gxpRelevant, icsRelevant, itsecRelevant, classInformationId, dataPrivacyPersonalData, dataPrivacyBetweenCountries, applicationDescription);
+		return saveBovApplication(cwid, applicationId, processed, ownershipStatus, drLevelId, severityLevelId, gxpRelevant, icsRelevant, itsecRelevant, classInformationId, dataPrivacyPersonalData, dataPrivacyBetweenCountries, applicationDescription);
 	}
 	
 
 	
-	public static boolean saveBovApplication(String cwid, Long applicationId, Long drLevelId, Long severityLevelId, String gxpRelevant, Long icsRelevant, Boolean itsecRelevant, Long classInformationId, String dataPrivacyPersonalData, String dataPrivacyBetweenCountries, String applicationDescription) {
+	public static boolean saveBovApplication(String cwid, Long applicationId, String processed, String ownershipStatus, Long drLevelId, Long severityLevelId, String gxpRelevant, Long icsRelevant, Boolean itsecRelevant, Long classInformationId, String dataPrivacyPersonalData, String dataPrivacyBetweenCountries, String applicationDescription) {
 		boolean result = false;
 		
 		Session session = HibernateUtil.getSession();
@@ -120,8 +126,10 @@ public class BovApplicationHbn {
 		Application application = (Application) session.get(Application.class, applicationId);
 
 		if (null != application) {
-			
-			
+			// Processed
+			application.setBovProcessed(processed);
+			// Ownership Status
+			application.setBovOwnershipStatus(ownershipStatus);
 			// DR Level
 			if (null != drLevelId) {
 				application.setDisasterRecoveryLevel("" + drLevelId.longValue());

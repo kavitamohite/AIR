@@ -2,6 +2,8 @@ package com.bayerbbs.bov;
 
 public class BovApplicationInputDTO {
 
+	private Boolean processed;
+	private String ownershipStatus;
 	private Long drLevel;
 	private Long severityLevel;
 	private String gxpRelevant;
@@ -67,5 +69,16 @@ public class BovApplicationInputDTO {
 	public void setApplicationDescription(String applicationDescription) {
 		this.applicationDescription = applicationDescription;
 	}
-	
+	public Boolean getProcessed() {
+		return processed;
+	}
+	public void setProcessed(Boolean processed) {
+		this.processed = processed;
+	}
+	public String getOwnershipStatus() {
+		return ownershipStatus;
+	}
+	public void setOwnershipStatus(String ownershipStatus) {
+		this.ownershipStatus = ownershipStatus;
+	}
 }
