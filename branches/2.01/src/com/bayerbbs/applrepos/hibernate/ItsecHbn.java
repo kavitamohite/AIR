@@ -148,10 +148,10 @@ public class ItsecHbn {
 			sql.append(" STA.Gap_Responsible,");
 			sql.append(" STA.Gap_Measure,");
 			sql.append(" STA.Gap_End_Date,");
-			sql.append(" NVL(MAS.Secu03_Relevance, 0) + NVL(MAS.Secu04_Relevance, 0) + NVL(MAS.Secu05_Relevance, 0) + NVL(MAS.Secu06_Relevance, 0) + NVL(MAS.Secu07_Relevance, 0) + NVL(MAS.Secu08_Relevance, 0) AS Secu_Relevance,");
-			sql.append(" NVL(MAS.Accs01_Relevance, 0) + NVL(MAS.Accs02_Relevance, 0) + NVL(MAS.Accs03_Relevance, 0) + NVL(MAS.Accs04_Relevance, 0) + NVL(MAS.Accs05_Relevance, 0) + NVL(MAS.Accs06_Relevance, 0) + NVL(MAS.Accs07_Relevance, 0) AS Accs_Relevance,");
-			sql.append(" NVL(MAS.Itop01_Relevance, 0) + NVL(MAS.Itop02_Relevance, 0) + NVL(MAS.Itop03_Relevance, 0) + NVL(MAS.Itop04_Relevance, 0) + NVL(MAS.Itop05_Relevance, 0) AS Itop_Relevance,");
-			sql.append(" NVL(MAS.chmg01_Relevance, 0) + NVL(MAS.Itop02_Relevance, 0) + NVL(MAS.chmg03_Relevance, 0) + NVL(MAS.chmg04_Relevance, 0) + NVL(MAS.chmg06_Relevance, 0) + NVL(MAS.chmg07_Relevance, 0) + NVL(MAS.chmg09_Relevance, 0) + NVL(MAS.chmg10_Relevance, 0) AS Chmg_Relevance,");
+			sql.append(" DECODE(NVL(MAS.Secu03_Relevance, 0) + NVL(MAS.Secu04_Relevance, 0) + NVL(MAS.Secu05_Relevance, 0) + NVL(MAS.Secu06_Relevance, 0) + NVL(MAS.Secu07_Relevance, 0) + NVL(MAS.Secu08_Relevance, 0),0,0,-1) AS Secu_Relevance,");
+			sql.append(" DECODE(NVL(MAS.Accs01_Relevance, 0) + NVL(MAS.Accs02_Relevance, 0) + NVL(MAS.Accs03_Relevance, 0) + NVL(MAS.Accs04_Relevance, 0) + NVL(MAS.Accs05_Relevance, 0) + NVL(MAS.Accs06_Relevance, 0) + NVL(MAS.Accs07_Relevance, 0),0,0,-1) AS Accs_Relevance,");
+			sql.append(" DECODE(NVL(MAS.Itop01_Relevance, 0) + NVL(MAS.Itop02_Relevance, 0) + NVL(MAS.Itop03_Relevance, 0) + NVL(MAS.Itop04_Relevance, 0) + NVL(MAS.Itop05_Relevance, 0),0,0,-1) AS Itop_Relevance,");
+			sql.append(" DECODE(NVL(MAS.chmg01_Relevance, 0) + NVL(MAS.Itop02_Relevance, 0) + NVL(MAS.chmg03_Relevance, 0) + NVL(MAS.chmg04_Relevance, 0) + NVL(MAS.chmg06_Relevance, 0) + NVL(MAS.chmg07_Relevance, 0) + NVL(MAS.chmg09_Relevance, 0) + NVL(MAS.chmg10_Relevance, 0),0,0,-1) AS Chmg_Relevance,");
 			sql.append(" STA.Gap_Priority,");
 			sql.append(" STA.Ref_Table_Id,");
 			sql.append(" STA.Ref_Pk_Id,");
