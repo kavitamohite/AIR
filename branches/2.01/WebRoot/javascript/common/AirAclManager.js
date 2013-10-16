@@ -571,7 +571,8 @@ AIR.AirAclManager = function() {
 						var isDraft = draftItemCmp &&
 									  data.tableId == AC.TABLE_ID_APPLICATION &&
 								      //data.applicationCat1Id == AC.APP_CAT1_APPLICATION &&
-								     (draftItemCmp.id == 'gpsccontactCiOwner' || draftItemCmp.id == 'gpsccontactSupportGroup' || draftItemCmp.id == 'ciResponsible') &&
+								     //(draftItemCmp.id == 'gpsccontactCiOwner' || draftItemCmp.id == 'gpsccontactSupportGroup' || 
+								    		 (draftItemCmp.id == 'ciResponsible') &&
 								    (draftItemCmp.getValue().length === 0);//!draftItemCmp.getValue() || 
 						if(isDraft)
 							return isDraft;
@@ -734,15 +735,12 @@ AIR.AirAclManager = function() {
 		},
 		
 		getLabel: function(uiElement, labels, data) {
-			if(uiElement.id == 'gpsccontactCiOwner' || uiElement.id == 'gpsccontactSupportGroup') {
-//				return data.tableId == AC.TABLE_ID_APPLICATION &&
-//					   data.applicationCat1Id == AC.APP_CAT1_APPLICATION ?
-//						labels.contactsCIOwnerApplication : labels.contactsCIOwner;
+			/*if(uiElement.id == 'gpsccontactCiOwner' || uiElement.id == 'gpsccontactSupportGroup') {
 				if(data.tableId != AC.TABLE_ID_APPLICATION)// && data.applicationCat1Id != AC.APP_CAT1_APPLICATION
 					return labels[uiElement.id] || uiElement.label.dom.innerHTML;
-			} else {
+			} else {*/
 				return labels[uiElement.id] || uiElement.label.dom.innerHTML;
-			}
+			//}
 		}
 		//===================================================================================================================
     };
