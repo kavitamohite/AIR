@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
+
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 
 public class HibernateUtil {
 	private static SessionFactory sessionFactory;
@@ -42,7 +45,20 @@ public class HibernateUtil {
 					config = new AnnotationConfiguration().configure("hibernate.gstool.cfg.xml");
 					break;
 				case DATASOURCE_ID_TRANSBASE:
-					config = new AnnotationConfiguration().configure();
+					InetAddress iAddress;
+					String hostName = "";
+					try {
+						iAddress = InetAddress.getLocalHost();
+						hostName = iAddress.getHostName();
+					} catch (Exception ex) {
+						System.out.println(ex.getMessage());
+					} 
+					System.out.println("Running on Host: " + hostName);
+				    if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
+				    	config = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
+				    } else {
+				    	config = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+				    }
 //					transbaseConf = config;
 					break;
 				default: break;
@@ -68,8 +84,21 @@ public class HibernateUtil {
 				// Einlesen der Standard-Konfig (aus der hibernate.cfg.xml)
 // 				Configuration conf = new Configuration().configure();
 
-				AnnotationConfiguration conf = new AnnotationConfiguration().configure();
-				
+				AnnotationConfiguration conf;
+				InetAddress iAddress;
+				String hostName = "";
+				try {
+					iAddress = InetAddress.getLocalHost();
+					hostName = iAddress.getHostName();
+				} catch (Exception ex) {
+					System.out.println(ex.getMessage());
+				} 
+				System.out.println("Running on Host: " + hostName);
+			    if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
+			    	conf = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
+			    } else {
+			    	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+			    }
 				// Erzeugung der Session.
 				sessionFactory = conf.buildSessionFactory();
 

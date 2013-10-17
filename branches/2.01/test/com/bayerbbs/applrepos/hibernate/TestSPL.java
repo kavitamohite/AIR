@@ -12,7 +12,7 @@ public class TestSPL {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		session = new AnnotationConfiguration().configure().buildSessionFactory().openSession();
+		session = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml").buildSessionFactory().openSession();
 		
 		//SystemPlatformHbn.listSystemPlatform();
 		SystemPlatform spl =  SystemPlatformHbn.findSystemPlatformByName("BY7437");

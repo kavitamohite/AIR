@@ -20,7 +20,7 @@ public class TestApplReposHbn {
 	}
 	
 	private void init() throws HibernateException, SQLException {
-		SessionFactory sf = new AnnotationConfiguration().configure().buildSessionFactory();//new File("src/hibernate.cfg.xml") nicht nötig
+		SessionFactory sf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml").buildSessionFactory();//new File("src/hibernate.cfg.xml") nicht nötig
 		Session session = sf.openSession();
 		
 //		System.out.println(session.getClass().getName());

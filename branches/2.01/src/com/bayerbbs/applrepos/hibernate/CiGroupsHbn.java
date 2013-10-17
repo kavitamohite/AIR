@@ -159,6 +159,7 @@ public class CiGroupsHbn {
 			stmt = session.connection().prepareCall(
 					"{? = call  TOOLS.FV_SYNC_CONTACT(" + tableId + "," + ciId + ",'" + groupType + "', NULL, ?, '"
 							+ AirKonstanten.APPLICATION_GUI_NAME + "','" + cwid + "')}");
+			
 		} catch (HibernateException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -169,7 +170,8 @@ public class CiGroupsHbn {
 
 		for (String group : ciGroupNamesArray) {
 			group = group.trim();
-
+			System.out.println("{? = call  TOOLS.FV_SYNC_CONTACT(" + tableId + "," + ciId + ",'" + groupType + "', '" + group + "', '"
+					+ AirKonstanten.APPLICATION_GUI_NAME + "','" + cwid + "')}");
 			try {
 				stmt.setString(2, group);
 				stmt.registerOutParameter(1, java.sql.Types.VARCHAR);

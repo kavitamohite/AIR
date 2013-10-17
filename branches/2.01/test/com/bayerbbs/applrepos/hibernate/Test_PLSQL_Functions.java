@@ -30,7 +30,7 @@ public class Test_PLSQL_Functions {
 
 	@Before
 	public void setUp() throws Exception {
-		SessionFactory sf = new AnnotationConfiguration().configure().buildSessionFactory();//new File("src/hibernate.cfg.xml") nicht nötig
+		SessionFactory sf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml").buildSessionFactory();//new File("src/hibernate.cfg.xml") nicht nötig
 		session = sf.openSession();
 	}
 	

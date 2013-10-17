@@ -1,9 +1,24 @@
-<%@ page language="java" import="java.util.*, org.hibernate.cfg.*" pageEncoding="ISO-8859-1" %>
+<%@ page language="java" import="java.util.*, org.hibernate.cfg.*, java.net.InetAddress, com.bayerbbs.applrepos.constants.AirKonstanten" pageEncoding="ISO-8859-1" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+ "://" +request.getServerName()+ ":" +request.getServerPort() + path;
 	
-	Configuration conf = new AnnotationConfiguration().configure();
+	//Configuration conf = new AnnotationConfiguration().configure();
+	AnnotationConfiguration conf;
+	InetAddress iAddress;
+	String hostName = "";
+	try {
+		iAddress = InetAddress.getLocalHost();
+		hostName = iAddress.getHostName();
+	} catch (Exception ex) {
+		System.out.println(ex.getMessage());
+	} 
+	System.out.println("Running on Host: " + hostName);
+    if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
+    	conf = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
+    } else {
+    	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+    }
 	String dbConnectionUrl = conf.getProperty("hibernate.connection.url");
 	String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
 	

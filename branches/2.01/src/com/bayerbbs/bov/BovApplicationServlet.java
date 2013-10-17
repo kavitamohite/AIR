@@ -1,6 +1,7 @@
 package com.bayerbbs.bov;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.cfg.AnnotationConfiguration;
+
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
@@ -20,13 +23,30 @@ public class BovApplicationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
-	private String redirectPath = new AnnotationConfiguration().configure().getProperty("hibernate.connection.url").contains(TRANSBASE_PROD_HOST) ? "/AIR/P" : "/AIR/Q";
+	private AnnotationConfiguration config;
+	private InetAddress iAddress;
+	private String hostName = "";
+	
+	private String redirectPath = config.getProperty("hibernate.connection.url").contains(TRANSBASE_PROD_HOST) ? "/AIR/P" : "/AIR/Q";
 
 	/**
 	 * 
 	 */
 	public BovApplicationServlet() {
 		super();
+		try {
+			iAddress = InetAddress.getLocalHost();
+			hostName = iAddress.getHostName();
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		} 
+		System.out.println("Running on Host: " + hostName);
+	    if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
+	    	config = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
+	    } else {
+	    	config = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+	    }
+		
 
 
 	}
