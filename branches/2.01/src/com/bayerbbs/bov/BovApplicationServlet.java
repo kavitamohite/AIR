@@ -27,7 +27,7 @@ public class BovApplicationServlet extends HttpServlet {
 	private InetAddress iAddress;
 	private String hostName = "";
 	
-	private String redirectPath = config.getProperty("hibernate.connection.url").contains(TRANSBASE_PROD_HOST) ? "/AIR/P" : "/AIR/Q";
+	private String redirectPath = "";
 
 	/**
 	 * 
@@ -46,10 +46,9 @@ public class BovApplicationServlet extends HttpServlet {
 	    } else {
 	    	config = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
 	    }
-		
-
-
+	    redirectPath = config.getProperty("hibernate.connection.url").contains(TRANSBASE_PROD_HOST) ? "/AIR/P" : "/AIR/Q";
 	}
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -60,20 +59,20 @@ public class BovApplicationServlet extends HttpServlet {
 		Boolean retireApplication = (bovAction.equals("retire") ? Boolean.TRUE : Boolean.FALSE);
 		String strApplicationId = (String) req.getParameter("applicationId");
 		long applicationId = Long.parseLong(strApplicationId);
-		String cwidSteward = (String) req.getParameter("cwidSteward");
+		String cwidRequestor = (String) req.getParameter("cwidRequestor");
 	
 		String redirect = redirectPath.concat(String.format("?id=APP-%s#", strApplicationId));
 		BovApplicationInputDTO dto = new BovApplicationInputDTO();
 		dto.setProcessed(false);
 
 		if (denyOwnership) {
-			doDenialOfOwnership(applicationId, cwidSteward.toUpperCase(), req.getParameter("bovReason").toString());
+			doDenialOfOwnership(applicationId, cwidRequestor, req.getParameter("bovReason").toString());
 			dto.setOwnershipStatus("reject");
 		}
 		else { 
 			dto.setOwnershipStatus("accept");
 			if (retireApplication) { 
-				doInitiateRetirement(applicationId, cwidSteward.toUpperCase(), req.getParameter("bovReason").toString());
+				doInitiateRetirement(applicationId, cwidRequestor, req.getParameter("bovReason").toString());
 			}
 			else {
 				dto.setProcessed(true);
@@ -116,7 +115,7 @@ public class BovApplicationServlet extends HttpServlet {
 			}
 		}
 		
-		if (null != cwidSteward && !"null".equals(cwidSteward)) {
+		if (null != cwidRequestor && !"null".equals(cwidRequestor)) {
 			// was dann ??? 
 		}
 		else {
@@ -124,15 +123,14 @@ public class BovApplicationServlet extends HttpServlet {
 		}
 
 		
-		boolean result = BovApplicationHbn.saveBovApplication(cwidSteward.toUpperCase(), applicationId, dto);
+		boolean result = BovApplicationHbn.saveBovApplication(cwidRequestor, applicationId, dto);
 		
 		if (result == true) {
-			res.getWriter().write("data saved");
+			res.sendRedirect(redirect);		
 		}
 		else {
 			res.getWriter().write("!!! Could not save data - please check the data !!!");
 		}
-		res.sendRedirect(redirect);		
 	}
 
 	private void doInitiateRetirement(Long applicationId, String requestor, String reason) {
