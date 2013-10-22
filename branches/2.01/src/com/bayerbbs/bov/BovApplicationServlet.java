@@ -2,6 +2,7 @@ package com.bayerbbs.bov;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -60,6 +61,11 @@ public class BovApplicationServlet extends HttpServlet {
 		String strApplicationId = (String) req.getParameter("applicationId");
 		long applicationId = Long.parseLong(strApplicationId);
 		String cwidRequestor = (String) req.getParameter("cwidRequestor");
+		if ("".equals(cwidRequestor)) cwidRequestor = req.getRemoteUser();
+		if (null == cwidRequestor) {
+			Principal user = req.getUserPrincipal();
+			if (null != user) cwidRequestor = user.getName();
+		}
 	
 		String redirect = redirectPath.concat(String.format("?id=APP-%s#", strApplicationId));
 		BovApplicationInputDTO dto = new BovApplicationInputDTO();

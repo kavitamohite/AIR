@@ -79,10 +79,6 @@ function getUserName()
 		    var WinNetwork = new ActiveXObject("WScript.Network");
 		    userName = WinNetwork.UserName;
 		    break;
-		case "Netscape":
-			netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
-			userName = Components.classes["@mozilla.org/process/environment;1"].getService(Components.interfaces.nsIEnvironment).get('USERNAME');
-			break;
 	}
 	document.getElementById("FormApplication").cwidRequestor.value = userName.toUpperCase();
 }
