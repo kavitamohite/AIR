@@ -187,7 +187,7 @@ function getUserName()
 		text-indent:0;
 		border:1px solid #83c41a;
 		display:inline-block;
-		color:#ffffff;
+		color:Black;
 		font-family:Arial;
 		font-size:15px;
 		font-weight:bold;
@@ -232,7 +232,7 @@ function getUserName()
 		text-indent:0;
 		border:1px solid #d83526;
 		display:inline-block;
-		color:#ffffff;
+		color:White;
 		font-family:Arial;
 		font-size:15px;
 		font-weight:bold;
@@ -254,6 +254,14 @@ function getUserName()
 		position:relative;
 		top:1px;
 	}
+	.btnGreen:disabled {
+		color : darkGray;
+		font-style: italic;
+	}    
+	.btnRed:disabled {
+		color : darkGray;
+		font-style: italic;
+	}    
 </style>
   
   </head>
@@ -321,12 +329,10 @@ Could not find the application.
 </tr>
 
 </table>
-
-<p>
+<fieldset>
 	<button class="btnGreen" type="button" name="accept" value="Accept" onclick="clickButton('accept')">Accept</button>
 	<button class="btnRed" type="button" name="reject" value="Reject" onclick="clickButton('reject')">Reject</button>
-</p>
-
+</fieldset>
 <table border="1">
 <tr class="tableheader">
 <td colspan="2">CI Characteristics</td>
@@ -380,7 +386,6 @@ Could not find the application.
 	</td>
 </tr>
 </table>
-
 
 <table border="1">
 <tr class="tableheader">
