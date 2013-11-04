@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<LanguageItems>
+	<Items>
+		<applicationManager>Application Manager</applicationManager>
+	
+		<!-- General -->
+		<general_loggedinas>Angemeldet als</general_loggedinas>
+		<general_yes>Ja</general_yes>
+		<general_no>Nein</general_no>
+		<indefinite_article>eine</indefinite_article>
+		<indefinite_article_no>keine</indefinite_article_no>
+		<OR>ODER</OR>
+		
+		<general_button_save>Speichern</general_button_save>
+		<general_button_back>Zurück</general_button_back>
+
+		<gerneral_message_loading>Lade Daten...</gerneral_message_loading>
+		<gerneral_message_saving>Speichere Daten...</gerneral_message_saving>
+
+		<label_menu_loggedinas>Angemeldet als</label_menu_loggedinas>
+		<button_general_save>Speichern</button_general_save>
+		<button_general_cancel>Abbrechen</button_general_cancel>
+		<button_general_back>Zurück</button_general_back>
+		<button_general_search>Suchen</button_general_search>
+		<button_general_next>Weiter</button_general_next>
+		<button_general_copy>Kopieren</button_general_copy>
+		<newSearch>Neue Suche</newSearch>
+		<findFirst>Erste</findFirst><!-- Show all|All -->
+		<findAll>Zeige alle</findAll>
+		
+		<browserOptimization>Optimiert für den Firefox Browser</browserOptimization>
+		
+		<dynamicWindowOKButtonText>OK</dynamicWindowOKButtonText>
+		<notRelevant>nicht relevant</notRelevant>
+		
+		<objectType>Objekttyp</objectType>
+<!-- 		<applicationOwner>Application Owner</applicationOwner> -->
+<!-- 		<applicationManager>Application Manager</applicationManager> -->
+		<both>Beide</both>
+		
+		<!-- Adv. Search -->
+		<!-- <lifecycleStatus>Betriebsstatus</lifecycleStatus>  -->
+		<!-- <operationalStatus>Betriebsstatus</operationalStatus> -->
+		<!-- <applicationCat2>Kategory IT</applicationCat2> Category IT/Technology -->
+		<!-- <businessProcess>Business Prozess</businessProcess> -->
+		<osType>OS Typ</osType>
+		<osName>OS Name</osName>
+		<source>Quelle</source>
+		<gapResponsible>Gap Verantwortlicher</gapResponsible>
+		<itSet>IT Set</itSet>
+		<bUpdateCiSearchResult>Suche aktualisieren</bUpdateCiSearchResult>
+		<bExpandAdvSearchParams>Erweiterte Suche aufklappen</bExpandAdvSearchParams>
+		<bCollapseAdvSearchParams>Erweiterte Suche zuklappen</bCollapseAdvSearchParams>
+		<searchTypeSearch>Suche</searchTypeSearch>
+		<searchTypeAdvancedSearch>Erweiterte Suche</searchTypeAdvancedSearch>
+		<searchTypeOuSearch>OE Suche</searchTypeOuSearch>
+		
+		<!-- Label: Menu -->
+		<label_menu_myplacemenuitem>Arbeitsplatz</label_menu_myplacemenuitem>
+		<label_menu_myplacemycismenuitem>Ich bin Owner/Manager</label_menu_myplacemycismenuitem>
+		<label_menu_myplacemycissubsmenuitem>Ich bin Steward/Delegate</label_menu_myplacemycissubsmenuitem>
+		
+		<label_myplace_user>Anwender</label_myplace_user>
+		<label_myplace_cwid>CWID</label_myplace_cwid>
+		<label_myplace_lastlogon>Letzte Anmeldung</label_myplace_lastlogon>
+		<label_myplace_roleperson>Rolle</label_myplace_roleperson>
+		
+		<label_myplace_useroption>Anwender Einstellungen</label_myplace_useroption>
+			<label_useroptions_language>Sprache: Deutsch</label_useroptions_language>
+			<label_useroptions_help>Hilfeleiste ausgeblendet</label_useroptions_help>
+			<label_useroptions_createwizard>Wizard Startseite ausblenden</label_useroptions_createwizard>
+			<label_useroptions_currency>Währung</label_useroptions_currency>
+			<label_useroptions_numberformat>Zahlenformat DE</label_useroptions_numberformat>
+			<label_useroptions_disableTooltip>Keine Tooltipps</label_useroptions_disableTooltip>
+		
+		
+		<label_menu_searchmenuitem>Suche</label_menu_searchmenuitem>
+		<label_menu_advancedsearchmenuitem>Erweiterte Suche</label_menu_advancedsearchmenuitem>
+		<lMenuItemOuSearch>Org. Einh. Suche</lMenuItemOuSearch>
+		
+		<label_menu_createmenuitem>Neu &amp; Löschen</label_menu_createmenuitem><!-- Neu -->
+		<label_menu_wizardmenuitem>Neu mit Wizard</label_menu_wizardmenuitem><!-- Wizard -->
+		<label_menu_copyfrommenuitem>Neu mit Kopieren</label_menu_copyfrommenuitem><!-- Kopiere von -->
+		<label_menu_delete>Löschen</label_menu_delete>
+		
+		<label_menu_detailsdetails>View &amp; Edit</label_menu_detailsdetails><!--Details, Ansehen &amp; Bearbeiten -->
+		<label_menu_detailsspecific>CI Typ Spezifisches</label_menu_detailsspecific>
+		<label_menu_detailscontacts>Kontakte</label_menu_detailscontacts>
+		<label_menu_detailsagreements>Vereinbarungen</label_menu_detailsagreements>
+		<label_menu_detailsprotection>Schutzbedarf</label_menu_detailsprotection>
+		<label_menu_detailscompliance>Compliance</label_menu_detailscompliance>
+		<label_menu_detailslicense>Lizenzen &amp; Kosten</label_menu_detailslicense>
+		<label_menu_detailsconnections>Verknüpfungen</label_menu_detailsconnections>
+		<label_menu_detailssupportstuff>Dokumentation</label_menu_detailssupportstuff>
+		<label_menu_detailshistory>Historie</label_menu_detailshistory>
+		
+		
+		<!-- Label: Search items -->
+		<searchpanelheader>Suche</searchpanelheader>
+			<searchfield>Name oder Alias hier eingeben...</searchfield>
+		
+		<advancedsearchpanelheader>Erweiterte Suche</advancedsearchpanelheader>
+			<advancedsearchlink>Erweiterte Suche</advancedsearchlink>
+			<advancedsearchpluslink>mehr Optionen</advancedsearchpluslink>
+			<advancedsearchminuslink>weniger Optionen</advancedsearchminuslink>		
+
+		<advsearchPanelTitle>Erweiterte Suche</advsearchPanelTitle>
+		<advsearchObjectType>Typ</advsearchObjectType>
+		<advsearchdescription>Beschreibung</advsearchdescription>
+		
+		<advsearchowner>Eigentümer</advsearchowner>
+		<advsearchappowner>App Owner</advsearchappowner>
+		<advsearchappownerdelegate>App Delegate</advsearchappownerdelegate>
+		<advsearchciowner>CI Owner</advsearchciowner>
+		<advsearchcidelegate>CI Delegate</advsearchcidelegate>
+		<advsearchsteward>Steward</advsearchsteward>
+
+		<advsearchplusfieldset>Erweiterte Optionen</advsearchplusfieldset>
+		
+		<rbgQueryModeContains>Enthält</rbgQueryModeContains>
+		<rbgQueryModeBeginsWith>Beginnt mit</rbgQueryModeBeginsWith>
+		<rbgQueryModeExact>Genau</rbgQueryModeExact>
+
+		<searchResultPanelTitle>Ergebnisse</searchResultPanelTitle>
+		<searchResultName>Name</searchResultName>
+		<searchResultAlias>Alias</searchResultAlias>
+		<searchResultType>Typ</searchResultType>
+		<searchResultCategory>IT Kategorie / Technologie</searchResultCategory>
+		<searchResultResponsible>CI Owner / Application Manager</searchResultResponsible>
+		<searchResultSubResponsible>CI Owner / Application Manager Delegate</searchResultSubResponsible>
+		<searchResultAppOwner>Application Owner</searchResultAppOwner>
+		<searchResultAppSteward>Application Steward</searchResultAppSteward>
+		<searchResultAppOwnerDelegate>Application Owner Delegate</searchResultAppOwnerDelegate>
+		<applicationManager>Application Manager</applicationManager>
+		<applicationManagerDelegate>Application Manager Delegate</applicationManagerDelegate>
+
+		
+		<!-- Validation Messages -->
+		<editDataNotValid>Die Informationen für ## sind nicht valide. Bitte korrigieren Sie die markierten Felder.</editDataNotValid>
+		<requieredErrorText>Dieses ist ein Pflichtfeld.</requieredErrorText>
+		
+		<!-- Messages: applicationEditor -->
+		<header_applicationIsDraft>Entwurf ##</header_applicationIsDraft>
+		<header_applicationIsIncomplete>Bitte ergänzen Sie die Informationen für: ##</header_applicationIsIncomplete>
+		
+		<!-- Label: Details items -->
+		<detailsPanelTitle>Details</detailsPanelTitle>
+			<label_details_alias>Alias</label_details_alias>
+			<label_details_category_business>Kategorie Business</label_details_category_business>
+			<label_details_category>IT Kategorie / Technologie</label_details_category>
+			<label_details_ciOwner>CI Owner</label_details_ciOwner>
+			<label_details_applicationOwner>Application Owner</label_details_applicationOwner>
+			<label_details_sla>SLA/OLA</label_details_sla>
+			<label_details_businessessential>Business Essential</label_details_businessessential>
+			<label_details_insertdata>Erstellungsquelle, User, Datum</label_details_insertdata>
+			<label_details_updatedata>Änderungsquelle, User, Datum</label_details_updatedata>
+		
+		<specificsPanelTitle>Spezifisches</specificsPanelTitle>
+			<applicationName>Name</applicationName>
+			<applicationAlias>Alias</applicationAlias>
+			<barApplicationId>Bayer Application Registry ID</barApplicationId>
+			<rgBARrelevance>BAR Relevance</rgBARrelevance>
+			<applicationVersion>Version</applicationVersion>
+			<applicationCat2>IT-Kategorie / Technologie</applicationCat2>
+			<lifecycleStatus>Betriebsstatus</lifecycleStatus>
+			<organisationalScope>Organisational Scope</organisationalScope>
+			<operationalStatus>Allgemeine Verwendung</operationalStatus>
+			<comments>Beschreibung</comments>
+			<specificsCategory>Business</specificsCategory>
+				<applicationBusinessCat>Kategorie</applicationBusinessCat>
+				<dataClass>Daten Klasse</dataClass>
+				<businessProcess>Prozess</businessProcess>
+		
+		<contactsPanelTitle>Kontakte</contactsPanelTitle>
+			<fsApplicationOwner>Application Owner</fsApplicationOwner>
+			<applicationOwner>Primary Person</applicationOwner>
+			<applicationOwnerDelegate>Delegate</applicationOwnerDelegate>
+			<applicationSteward>Steward</applicationSteward>
+			<contactsCIOwner>CI Owner</contactsCIOwner>
+			<contactsCIOwnerApplication>Application Manager</contactsCIOwnerApplication>
+				<ciResponsible>Primary Person</ciResponsible>
+				<ciSubResponsible>Delegate</ciSubResponsible>
+			<contactsGPSC>GPSC Kontakte</contactsGPSC>
+				<gpsccontactResponsibleAtCustomerSide>Responsible at Customer Side</gpsccontactResponsibleAtCustomerSide>
+				<gpsccontactSupportGroup>Support Group</gpsccontactSupportGroup>
+				<gpsccontactChangeTeam>Change Team</gpsccontactChangeTeam>
+				<gpsccontactServiceCoordinator>Service Coordinator</gpsccontactServiceCoordinator>
+				<gpsccontactEscalation>Escalation List</gpsccontactEscalation>
+				<gpsccontactCiOwner>CI Owner / Application Manager</gpsccontactCiOwner>
+				
+				<!-- 12.03.2012 - Mail von Andreas: AIR - Umbennenen eines Attributes -->
+				<!--<gpsccontactOwningBusinessGroup>Application Owner - Company</gpsccontactOwningBusinessGroup>-->
+				<gpsccontactOwningBusinessGroup>Owning Business Group</gpsccontactOwningBusinessGroup>
+				
+				<gpsccontactImplementationTeam>Implementation Team</gpsccontactImplementationTeam>
+				<gpsccontactServiceCoordinatorIndiv>Service Coordinator (Persons)</gpsccontactServiceCoordinatorIndiv>
+				<gpsccontactEscalationIndiv>Escalation List (Persons)</gpsccontactEscalationIndiv>
+				<gpsccontactSystemResponsible>System Responsible</gpsccontactSystemResponsible>
+				<gpsccontactImpactedBusiness>Using Subgroups / Using Companies</gpsccontactImpactedBusiness>
+				<gpsccontactBusinessOwnerRepresentative>Business Owner Representative</gpsccontactBusinessOwnerRepresentative>
+		
+		<agreementsPanelTitle>Vereinbarungen</agreementsPanelTitle>
+			<sla>SLA/OLA</sla>
+			<priorityLevel>Priority Level</priorityLevel>
+			<serviceContract>Service Vertrag</serviceContract>
+			<severityLevel>Severity Level</severityLevel>
+			<businessEssential>Business Essential</businessEssential>
+			<applicationLoadClass>Lastklasse</applicationLoadClass>
+			<applicationDedicatedShared>Dediziert</applicationDedicatedShared>
+		  
+		<protectionPanelTitle>Schutzbedarf</protectionPanelTitle>
+			<applicationProtection>Anwendungsschutz</applicationProtection>
+			<itSecSbAvailabilityId>Verfügbarkeit</itSecSbAvailabilityId>
+			<itSecSbAvailabilityDescription>Erklärung</itSecSbAvailabilityDescription>
+			<protectionClassInformation>Informationsklasse</protectionClassInformation>
+			<protectionClassInformationExplanation>Erklärung</protectionClassInformationExplanation>
+			<protectionApplicationProtection>Schutzklasse</protectionApplicationProtection>
+			
+		<compliancePanelTitle>Compliance</compliancePanelTitle>
+			<complianceBYTSEC>Integriert</complianceBYTSEC>
+			<complianceNonBYTSEC>Extern</complianceNonBYTSEC>
+			<complianceUndefined>Undefiniert</complianceUndefined>
+			<complianceManagementText>Mit der Auswahl "Integriert" behandelt AIR alle Anforderungen des Compliance Managements in einem ISMS nach ISO 27001, wogegen "Extern" nur die Referenzen zu einem Compliance Management außerhalb von AIR behandelt.</complianceManagementText>
+			<complianceInfoText>Compliance Statements können je Control vergeben werden.</complianceInfoText>
+		
+		
+				<itsetName>IT Verbund</itsetName>
+				<isTemplate>BYTsec-Template?</isTemplate>
+			<compliancerelevance>Relevante Regelungen</compliancerelevance>	
+				<relevanceGR1435>KR1435</relevanceGR1435>
+				<relevanceGR2059>KR2059</relevanceGR2059><!-- RFC 9016 1775 zu 2059 -->
+				<relevanceGR1920>KR1920 (ICS)</relevanceGR1920>
+				<relevanceGR2008>KR2008</relevanceGR2008>
+				<relevanceEditButton>Bearbeiten</relevanceEditButton>
+				<relevanceViewButton>Anzeigen</relevanceViewButton>
+				<relevance1435EditButton>Anzeigen</relevance1435EditButton>
+				<relevanceEditMsg>Änderungen werden erst mit [Speichern] übernommen!</relevanceEditMsg>
+				<gxpFlag>GxP</gxpFlag>
+				<itsecGroup>ITSec Gruppe</itsecGroup>
+				<referencedTemplate>Referenzierung</referencedTemplate>
+				<referencedTemplateInvalid>Template ungültig</referencedTemplateInvalid><!-- für IT set und Objekttyp-->
+				<templateBARrelevanceValidationTitle>BAR Relevanz</templateBARrelevanceValidationTitle>
+				<templateBARrelevanceValidationBARrelevance1>Die BAR Relevanz wurde auf "Nein" festgesetzt, weil Templates nicht BAR relevant sein können.</templateBARrelevanceValidationBARrelevance1>
+				<templateBARrelevanceValidationBARrelevance2>Die BAR Relevanz ist wieder bearbeitbar, weil dieses CI kein Template mehr ist.</templateBARrelevanceValidationBARrelevance2>
+				
+				<checkItsecGroupWindowTitle>ITSec Gruppe</checkItsecGroupWindowTitle>
+				<checkItsecGroupWindowMessage>Sie haben die ITSec Gruppe dieses Application CIs geändert. Alle ITSec Massnahmen der vorherigen ITSec Gruppe werden gelöscht. Sind Sie sicher?</checkItsecGroupWindowMessage>
+				
+				
+				<invalidMassnameWindowTitleIncomplete>Unvollständige Massnahme</invalidMassnameWindowTitleIncomplete>
+				<invalidMassnameWindowTitleGapClass>Diskrepanz Target Date und Gap Klasse</invalidMassnameWindowTitleGapClass>
+				<invalidMassnameWindowTitleDamagePerYear>Ökonomisch lösbar?</invalidMassnameWindowTitleDamagePerYear>
+				<invalidMassnameWindowTitleGapClassTargetDateChange>Zieltermin wird automatisch angepasst</invalidMassnameWindowTitleGapClassTargetDateChange>
+				
+				<invalidMassnameWindowIncomplete>Alle Felder müssen bearbeitet werden, damit die Massnahme gültig ist.</invalidMassnameWindowIncomplete>
+				<invalidMassnameWindowDamagePerYear>Die Werte werden gespeichert, aber es ist nicht möglich zu genehmigen:&lt;br&gt;Der Schaden ist nicht grösser als die Kosten der Risikominderung. Der Gap ist nicht &quot;economically not solvable&quot;</invalidMassnameWindowDamagePerYear>
+				<invalidMassnameWindowTargetDatePast>Ein Datum in der Vergangenheit ist nicht erlaubt</invalidMassnameWindowTargetDatePast>
+				<invalidMassnameWindowGapClassReplace>Für den Zieltermin {0} wurde die Gap Klasse &quot;{1}&quot; gesetzt anstatt &quot;{2}&quot;</invalidMassnameWindowGapClassReplace>
+				<invalidMassnameWindowGapClassTargetDateChange>Zieltermin wird geändert von &quot;{0}&quot; zu &quot;{1}&quot;</invalidMassnameWindowGapClassTargetDateChange>
+				<invalidMassnameWindowTargetDate>Bitte setzen Sie gültige Werte für den Zieltermin und/oder Gap Klasse!&lt;br&gt;&lt;br&gt;short-term to solve		max: {0}&lt;br&gt;mid-term to solve		max: {1}&lt;br&gt;long-term to solve		max: {2}</invalidMassnameWindowTargetDate>
+				
+				
+				<!-- TODO: Benötigt? -->		
+				<riskAnalysisYN>Risikoanalyse vorhanden?</riskAnalysisYN>
+				<complianceprocedures>Prozeduren</complianceprocedures>
+				<supportStuffUserAuthorisation>Benutzer Authorisierung</supportStuffUserAuthorisation>
+				<supportstuffUASupportingDoc>Dokumentation</supportstuffUASupportingDoc>
+				<supportstuffUAProcess>Prozess</supportstuffUAProcess>
+				<supportStuffUserManagement>Benutzer Management</supportStuffUserManagement>
+				<supportstuffUMProcess>Prozess</supportstuffUMProcess>
+				<compliancecontrols>Maßnahmen</compliancecontrols>
+				<!-- ENDE TODO: Benötigt? -->
+		  
+		<licensePanelTitle>Lizenzen und Kosten</licensePanelTitle>
+			<licenselicense>Lizenzen</licenselicense>
+				<licenseType>Lizenzmodell</licenseType>
+				<dedicated>Dedicated / Shared</dedicated>
+				<applicationAccessingUserCount>Anzahl Nutzer</applicationAccessingUserCount>
+				<applicationAccessingUserCountMeasured>Anzahl gemessener Nutzer</applicationAccessingUserCountMeasured>
+				<loadClass>Load Class</loadClass>
+				<applicationServiceModel>Service Model</applicationServiceModel>
+			<licensecosts>Kosten</licensecosts>
+				<costRunPa>Run p.a.</costRunPa>
+				<costChangePa>Change p.a.</costChangePa>
+				<currency>Währung</currency>
+				<runAccount>Konto: Run</runAccount>
+				<changeAccount>Konto: Change</changeAccount>
+			<usingRegions>Verwendende Regionen</usingRegions>	
+		
+		<connectionsPanelTitle>Verknüpfungen</connectionsPanelTitle>
+		
+		<supportStuffPanelTitle>Dokumentation</supportStuffPanelTitle>
+			<supportStuffApplication>Anwendung</supportStuffApplication>
+				<supportstuffAppDoc>Dokumentation</supportstuffAppDoc>
+				<supportstuffAppRootDir>Root-Verzeichnis</supportstuffAppRootDir>
+				<supportstuffAppDataDir>Daten-Verzeichnis</supportstuffAppDataDir>
+				<supportstuffAppProvidedServices>Bereitgestellte Services</supportstuffAppProvidedServices>
+				<supportstuffAppProvidedMUser>Berechtigte Maschinenuser</supportstuffAppProvidedMUser>
+			<supportStuffChangeManagement>Change Management</supportStuffChangeManagement>
+				<supportstuffCMSupportingTool>Anwendung/Tool</supportstuffCMSupportingTool>
+			
+		<historyPanelTitle>Historie</historyPanelTitle>
+		<historyDatetime>Datum Zeit (UTC)</historyDatetime>
+		<historyChangeSource>Änd. Quelle</historyChangeSource>
+		<historyChangeDBUser>Änd. DB Nutzer</historyChangeDBUser>
+		<historyChangeUserCWID>Änd. Anwender</historyChangeUserCWID>
+		<historyChangeAttributeName>Attribut</historyChangeAttributeName>
+		<historyChangeAttributeNewValue>Neuer Wert</historyChangeAttributeNewValue>
+		<historyChangeAttributeOldValue>Alter Wert</historyChangeAttributeOldValue>
+		<infoType>Infotyp</infoType>
+		<ciId>Änd. CI</ciId>
+		
+		
+		<!-- Label: Create a New CI -->
+		<createpanelheader>Neu &amp; Löschen</createpanelheader><!-- Neu anlegen -->
+			<createstartbutton>Start</createstartbutton>
+			<createbackbutton>Zurück</createbackbutton>
+			<createcancelbutton>Abbruch</createcancelbutton>
+			<createnextbutton>Weiter</createnextbutton>
+			<createfinishbutton>Abschließen</createfinishbutton>
+		
+		<createstartpagewizardtext>&lt;b&gt;Wizard&lt;/b&gt;&lt;br&gt;Mit dem Assistenten kann ein neuer Datensatz mit allen Pflichtattributen angelegt werden.</createstartpagewizardtext>
+		<createstartpagewizardbutton>Start</createstartpagewizardbutton>
+		<createstartpagecopyfromtext>&lt;br&gt;&lt;b&gt;Copy From&lt;/b&gt;&lt;br&gt; Mit dieser Funktion kann ein neuer Datensatz auf Basis eines Bestehenden angelegt werden.&lt;br&gt;Es werden alle Standarddaten kopiert. Diese können anschließend überarbeitet werden.</createstartpagecopyfromtext>
+		<createstartpagecopyfrombutton>Start</createstartpagecopyfrombutton>
+		<createstartpagedeletetext>&lt;br&gt;&lt;b&gt;Löschen&lt;/b&gt;&lt;br&gt; Mit dieser Funktion kann ein Datensatz gelöscht werden, an dem Sie Owner/Delegate sind.&lt;br&gt; Der Datensatz wird nur löschmarkiert und kann reaktiviert werden.</createstartpagedeletetext>
+		<createstartpagedeletebutton>Löschen</createstartpagedeletebutton>
+		
+		<ciCreateWizardPage0>Wizard</ciCreateWizardPage0>
+			<wizardcbskip>Diese Seite beim nächsten Mal überspringen</wizardcbskip>
+			<createIntroText>Dieser Assistent führt sie durch die wichtigesten Schritte einen neuen Eintrag anzulegen.&lt;br&gt;&lt;br&gt;
+				Schritt 1: Essentielle Information wie Typ und Name&lt;br&gt;
+				Schritt 2: Erforderliche Details &lt;br&gt;
+				Schritt 3: Erforderliche Kontakte&lt;br&gt;&lt;br&gt;
+				Anschließend können Sie weitere Informationen eingeben. &lt;br&gt;
+				&lt;i&gt;Hinweis: Die Pflege von Verknüpfungen zu anderen Einträgen wird dringend empfohlen.&lt;/i&gt;
+			</createIntroText>
+		
+		<ciCreateWizardPage1>Wizard - Schritt 1: Mandatory</ciCreateWizardPage1><!-- Wizard - Schritt 1: Das Wesentliche -->
+			<wizardobjectType>Typ</wizardobjectType>
+			<wizardapplicationCat2>IT Kategorie / Technologie</wizardapplicationCat2>
+			<wizardapplicationName>Name</wizardapplicationName>
+			<wizardapplicationNameSAP>Name</wizardapplicationNameSAP>
+			<wizardapplicationNameSAP1>System</wizardapplicationNameSAP1>
+			<wizardapplicationNameSAP2>Mandant</wizardapplicationNameSAP2>
+			<wizardapplicationNameSAP3>Gesellschaft</wizardapplicationNameSAP3>
+			<wizardapplicationAlias>Alias</wizardapplicationAlias>
+			<wizardcomments>Description</wizardcomments>
+			<wizardRelevance>Relevanz</wizardRelevance>
+			<wizardisTemplate>Ist BYTsec-Template</wizardisTemplate>
+			<tfApplicationIdW>Bayer Application Registry ID</tfApplicationIdW>
+			<labeltfApplicationOwnerCompanyW>Application Owner Company</labeltfApplicationOwnerCompanyW>
+			<wizardapplicationNameSAPillegal>{0} mit Kategorie IT "{1}" darf keinen Namen mit SAP Nomenklatur haben</wizardapplicationNameSAPillegal>
+
+		
+		<ciCreateWizardPage2>Wizard - Schritt 2: Required</ciCreateWizardPage2><!-- Wizard - Schritt 2: Details -->
+			<wizardBasics>Basics</wizardBasics>
+				<wizardlifecycleStatus>Betriebsstatus</wizardlifecycleStatus>
+				<wizardoperationalStatus>Allgemeine Verwendung</wizardoperationalStatus>
+				<wizardapplicationBusinessCat>Kategorie Business</wizardapplicationBusinessCat>
+			<wizardAgreements>Vereinbarungen</wizardAgreements>
+				<wizardsla>SLA/OLA</wizardsla>
+				<wizardserviceContract>Service Vertrag</wizardserviceContract>
+				<wizardseverityLevel>Severity Level</wizardseverityLevel>
+				<wizardbusinessEssential>Business Essential</wizardbusinessEssential>
+				<lvApplicationUsingRegionsW>Nutzende Regionen</lvApplicationUsingRegionsW>
+		
+		<ciCreateWizardPage3>Wizard - Schritt 3: Kontakte</ciCreateWizardPage3>
+			<wizardAppowner>Application Owner</wizardAppowner>
+				<labelwizardapplicationOwner>Primary Person</labelwizardapplicationOwner>
+				<labelwizardapplicationOwnerDelegate>Steward/Delegate</labelwizardapplicationOwnerDelegate>
+			<wizardCiowner>CI Owner</wizardCiowner>
+			<wizardCiownerApplication>Application Manager</wizardCiownerApplication>
+				<labelwizardciResponsible>Primary Person</labelwizardciResponsible>
+				<labelwizardciSubResponsible>Delegate</labelwizardciSubResponsible>
+		
+		<!-- Messages: Create a New CI
+		<wizardallowedNameText>"Name" {0} exisitiert bereits als {1}. Bitte geben Sie einen anderen Namen ein, oder fragen Sie ITILcenter@bayer.com um Hilfe diesen Namen verwenden zu können.</wizardallowedNameText>
+		<wizardallowedAliasText>"Alias" {0} exisitiert bereits als {1}. Bitte geben Sie einen anderen Alias ein, oder fragen Sie ITILcenter@bayer.com um Hilfe diesen Alias verwenden zu können.</wizardallowedAliasText>
+		 -->
+ 		<wizardallowedNameText>Name &lt;b&gt;{0}&lt;/b&gt; exisitiert bereits als &lt;b&gt;{1}&lt;/b&gt;&lt;br&gt; Bitte geben Sie einen anderen Namen ein, oder fragen Sie ITILcenter@bayer.com um Hilfe diesen Namen verwenden zu können.&lt;br&gt;</wizardallowedNameText>
+		<wizardallowedAliasText>Alias &lt;b&gt;{0}&lt;/b&gt; exisitiert bereits als &lt;b&gt;{1}&lt;/b&gt;&lt;br&gt; Bitte geben Sie einen anderen Namen ein, oder fragen Sie ITILcenter@bayer.com um Hilfe diesen Alias verwenden zu können.&lt;br&gt;</wizardallowedAliasText>
+		
+		<wizardRequiredField>Dieses Feld ist ein Pflichtfeld.</wizardRequiredField>
+		<wizardDataNotValid>Daten in Schritt ## sind nicht vollständig. Bitte korrigieren Sie folgendes:</wizardDataNotValid>
+		<wizardCancelQuestion>Möchten Sie den Assistenten wirklich verlassen?</wizardCancelQuestion>
+		<wizardCancelTitle>Wizard abbrechen</wizardCancelTitle>
+		<wizardSaveSuccessTitle>Speichern erfolgreich</wizardSaveSuccessTitle>
+		<wizardSaveSuccess>Daten wurden gespeichert.<br/>Möchten Sie weitere Daten hinzufügen?</wizardSaveSuccess>
+		<wizardSaveFailTitle>Fehler!</wizardSaveFailTitle>
+		<wizardSaveFail>Daten wurden nicht gespeichert. Folgender Fehler trat auf<br/></wizardSaveFail>
+		
+		<dynamicWindowDataChangedTitle>Daten geändert</dynamicWindowDataChangedTitle>
+		<dynamicWindowDataChangedText>Die Daten wurden geändert, aber nicht gespeichert!</dynamicWindowDataChangedText>
+		<dynamicWindowDataChangedSaveButtonText>Speichern</dynamicWindowDataChangedSaveButtonText>
+		<dynamicWindowDataChangedSaveButtonDiscard>Verwerfen</dynamicWindowDataChangedSaveButtonDiscard>
+		<dynamicWindowDataChangedSaveButtonBack>Zurück</dynamicWindowDataChangedSaveButtonBack>
+		
+		<dynamicWindowDataSavedTitle>Daten gespeichert</dynamicWindowDataSavedTitle>
+		<dynamicWindowDataSavedText>Die geänderten Daten wurden erfolgreich gespeichert</dynamicWindowDataSavedText>
+		<dynamicWindowDataSavedOKButtonText>OK</dynamicWindowDataSavedOKButtonText>
+		<dynamicWindowDataSaveFailTitle>Der neue Datensatz konnte nicht gespeichert werden</dynamicWindowDataSaveFailTitle>
+		
+		<dynamicWindowDataSavedErrorTitle>Daten nicht gespeichert</dynamicWindowDataSavedErrorTitle>
+		<dynamicWindowDataSavedErrorOKButtonText>OK</dynamicWindowDataSavedErrorOKButtonText>
+
+		<dynamicWindowCiTypeNotSupportedWarningTitle>Typ wird nicht unterstüzt</dynamicWindowCiTypeNotSupportedWarningTitle>
+		<dynamicWindowCiTypeNotSupportedWarningText>Dieser Typ wird momentan noch nicht unterstüzt!</dynamicWindowCiTypeNotSupportedWarningText>
+		<dynamicWindowCiTypeNotSupportedWarningOKButtonText>OK</dynamicWindowCiTypeNotSupportedWarningOKButtonText>
+	
+		<dynamicWindowCancelConfirmationTitle>Bearbeitung abbrechen</dynamicWindowCancelConfirmationTitle>
+		<dynamicWindowCancelConfirmationText>Wollen Sie wirklich die Bearbeitung abbrechen?</dynamicWindowCancelConfirmationText>
+		<dynamicWindowCancelConfirmationButtonOKText>Ja</dynamicWindowCancelConfirmationButtonOKText>
+		<dynamicWindowCancelConfirmationButtonNOText>Nein</dynamicWindowCancelConfirmationButtonNOText>
+		
+		<dynamicWindowAfterAppSaveContinueEditingButtonText>Bearbeitung fortsetzen</dynamicWindowAfterAppSaveContinueEditingButtonText>
+		<dynamicWindowAfterAppSaveNewCiButtonText>Neuer Eintrag</dynamicWindowAfterAppSaveNewCiButtonText>
+		<dynamicWindowAfterAppSaveBackToSearchButtonText>Zurück zur Suche</dynamicWindowAfterAppSaveBackToSearchButtonText>
+		
+		<dynamicWindowNonBYTsecTitle>nonBYTsec</dynamicWindowNonBYTsecTitle>
+		<dynamicWindowNonBYTsecText>Do you really want to remove the BYTsec status?</dynamicWindowNonBYTsecText>
+		
+		<dynamicWindowConfirmDeleteTitle>Application löschen</dynamicWindowConfirmDeleteTitle>
+		<dynamicWindowConfirmDeleteText>Wollen Sie wirklich {0} {1} löschen?</dynamicWindowConfirmDeleteText>
+		
+		
+		<ciCopyFromViewTitle>Wählen Sie ein CI zum Kopieren aus</ciCopyFromViewTitle>
+		<ciCopyFromDetailViewHeaderLabel>Verwende als Vorlage</ciCopyFromDetailViewHeaderLabel>
+		<ciCopyFromDetailViewTitle>CI Details</ciCopyFromDetailViewTitle>
+
+		<compliance1435WindowTitle>Compliance Details </compliance1435WindowTitle>
+		<compliance1435WindowItSet>IT Verbund</compliance1435WindowItSet>
+		<compliance1435WindowUseAsTemplate>Ist Template</compliance1435WindowUseAsTemplate>
+		<compliance1435WindowLink>Link zum Template</compliance1435WindowLink>
+		<compliance1435WindowItSecGroup>ITSec-Gruppe</compliance1435WindowItSecGroup>
+		
+		<complianceWindowTitle>Compliance Details </complianceWindowTitle>
+		<complianceWindowControls>Kontrollen</complianceWindowControls>
+		
+		<RelevanceICSSecurityManagement>Relevanz ICS Security Management</RelevanceICSSecurityManagement>
+		<RelevanceICSAccessManagement>Relevanz ICS Access Management</RelevanceICSAccessManagement>
+		<RelevanceICSITManagement>Relevanz ICS IT Management</RelevanceICSITManagement>
+		<LinkCiType>Verknüpfung - CI Typ</LinkCiType>
+		<LinkCi>Verknüpfung - CI</LinkCi>
+		
+		<complianceWindowStatement>Aussage</complianceWindowStatement>
+		<complianceWindowStatementUntreated>Unbehandelt</complianceWindowStatementUntreated>
+		<complianceWindowStatementDispensable>Überflüssig</complianceWindowStatementDispensable>
+		<complianceWindowCompliant>Konform</complianceWindowCompliant>
+		<complianceWindowJustification>Begründung</complianceWindowJustification>
+		<complianceStatementInfo> </complianceStatementInfo>
+		
+		<complianceWindowGap>Gap</complianceWindowGap>
+		<complianceWindowGapDescription>Gap Beschreibung</complianceWindowGapDescription>
+		<complianceWindowGapElimination>Gap Beseitigung</complianceWindowGapElimination>
+		<complianceWindowGapResponsible>Gap Verantwortlicher</complianceWindowGapResponsible>
+		<complianceWindowPlanOfAction>Vorgehensweise</complianceWindowPlanOfAction>
+		<complianceWindowGapClass>Gap Klasse</complianceWindowGapClass>
+		<complianceWindowTargetDate>Zieltermin</complianceWindowTargetDate>
+		
+		<complianceWindowRiskAnalysisAndMgmt>Risiko Analyse und Management</complianceWindowRiskAnalysisAndMgmt>
+		<complianceWindowRiskAnalysisByFreeText>Risiko Analyse mit Freitext</complianceWindowRiskAnalysisByFreeText>
+		<complianceWindowOccurenceOfDamagePerYear>Schadenshäufigkeit pro Jahr</complianceWindowOccurenceOfDamagePerYear>
+		<complianceWindowMaximumDamagePerEvent>Maximaler Schaden pro Jahr</complianceWindowMaximumDamagePerEvent>
+		<complianceWindowMitigationPotential>Minderungspotential</complianceWindowMitigationPotential>
+		<complianceWindowRiskMitigation>Risikominderung</complianceWindowRiskMitigation>
+		<complianceWindowExpensePerYear>Kosten pro Jahr</complianceWindowExpensePerYear>
+		<complianceWindowSignee>Unterzeichner</complianceWindowSignee>
+		<complianceWindowDateOfApproval>Genehmigungsdatum</complianceWindowDateOfApproval>
+		<complianceRiskAnalysisAndMgmtTypeSelectTitle>Wechsel des Risk Analysis and Management Typs</complianceRiskAnalysisAndMgmtTypeSelectTitle>
+		<complianceRiskAnalysisAndMgmtTypeSelectMessage>Wechseln hat den Verlust der Risk Analysis and Management {0} Daten von {1} zur Folge. Sind Sie sicher?</complianceRiskAnalysisAndMgmtTypeSelectMessage>
+		<complianceRiskAnalysisAndMgmtTypeFreeText>Freitext</complianceRiskAnalysisAndMgmtTypeFreeText>
+		<complianceRiskAnalysisAndMgmtTypeNonFreeText>nicht Freitext</complianceRiskAnalysisAndMgmtTypeNonFreeText>
+		<signeeApproval>Genehmigen</signeeApproval>
+				
+		<CiConnectionsViewTitle>Verknüpfungen</CiConnectionsViewTitle>
+		<CiConnectionsViewUpStreamConnections>UpStream</CiConnectionsViewUpStreamConnections>
+		<CiConnectionsViewDownStreamConnections>DownStream</CiConnectionsViewDownStreamConnections>
+		<CiConnectionsViewEditConnections>Verknüpfungen bearbeiten</CiConnectionsViewEditConnections>
+		<CiConnectionsViewObjectType>Objekttyp</CiConnectionsViewObjectType>
+		<CiConnectionsViewQuickSearch>Name</CiConnectionsViewQuickSearch>
+		<CiConnectionsViewSearch>Suchen</CiConnectionsViewSearch>
+		<CiConnectionsViewConnectionName>Name</CiConnectionsViewConnectionName>
+		<CiConnectionsViewConnectionAlias>Alias</CiConnectionsViewConnectionAlias>
+		<CiConnectionsViewConnectionType>Typ</CiConnectionsViewConnectionType>
+		
+		<CiConnectionsViewMsgSuccessfullyAdded>Erfolgreich hinzugefügt</CiConnectionsViewMsgSuccessfullyAdded>
+		<CiConnectionsViewMsgSuccessfullyDeleted>Erfolgreich gelöscht</CiConnectionsViewMsgSuccessfullyDeleted>
+		<CiConnectionsViewMsgAlreadyExists>Besteht bereits</CiConnectionsViewMsgAlreadyExists>
+		<CiConnectionsViewMsgNotAllowed>Nicht erlaubt</CiConnectionsViewMsgNotAllowed>
+		
+		<dynamicWindowFForIETitle>Microsoft Internet Explorer</dynamicWindowFForIETitle>
+		<dynamicWindowFForIEText>Firefox wird für schnellere Bedienung empfohlen</dynamicWindowFForIEText>
+		<dynamicWindowFForIEContinueFFButtonText>Starte Firefox</dynamicWindowFForIEContinueFFButtonText>
+		<dynamicWindowFForIEKeepIEButtonText>Weiter mit IE</dynamicWindowFForIEKeepIEButtonText>
+		
+		<CiDeleteViewTitle>CI zum Löschen auswählen</CiDeleteViewTitle>
+		<CiDeleteViewButtonDelete>Löschen</CiDeleteViewButtonDelete>
+		
+		<CiOuSearchViewTitle>Org. Einh. Suche</CiOuSearchViewTitle>
+		<CiOuSearchViewOrgUnit>Org. Einh.</CiOuSearchViewOrgUnit>
+		<CiOuSearchViewOUSearchQueryMode>Einschl. Sub Org. Einh.</CiOuSearchViewOUSearchQueryMode>
+		<CiOuSearchViewOUSearchOwnerType>Suche Org. Einh. als</CiOuSearchViewOUSearchOwnerType>
+		
+		
+		<ToolbarInvalidCat2SAP>{0} {1}   &lt;b&gt;ist {2}&lt;/b&gt;   SAP Application. Daher ist IT Kategorie {3} nicht gültig.</ToolbarInvalidCat2SAP>
+		<SAPNameToStandardNameInvalid>Der Name "{0}" ist gemäß Nomenklatur an die IT-Kategorie "{1}" gebunden. Daher kann die IT-Kategorie nicht in "{2}" geändert werden</SAPNameToStandardNameInvalid>
+		<StandardNameToSAPNameInvalid>Der Name "{0}" erfüllt nicht die Nomenklatur für die gewünschte IT-Kategorie "{1}"</StandardNameToSAPNameInvalid>
+		<ToolbarInvalidTemplate>{0} {1} kann nicht sich selbst als Vorlage haben</ToolbarInvalidTemplate>
+		<dynamicWindowCIreactivationPrompt>Ihr neues CI kann nicht gespeichert werden, weil schon ein löschmarkiertes CI mit diesem Namen oder Alias existiert. Soll dieses CI reaktiviert werden und mit den Daten die Sie eingegeben haben überschrieben werden?</dynamicWindowCIreactivationPrompt>
+
+		<CiEinsprungInvalidTitle>Ungültige Einsprungdaten</CiEinsprungInvalidTitle>
+		<CiEinsprungCiIdInvalidMessage>Das CI id={0} ist ungültig</CiEinsprungCiIdInvalidMessage>
+		<CiEinsprungCiIdDoesNotExistMessage>Das CI id={0} existiert nicht</CiEinsprungCiIdDoesNotExistMessage>
+		<CiEinsprungInvalidCiTypeMessage>Der CI Typ={0} ist ungültig</CiEinsprungInvalidCiTypeMessage>
+		<CiEinsprungCiIdMarkedAsDeleted>Der CI id={0} ist löschmarkiert</CiEinsprungCiIdMarkedAsDeleted>
+	</Items>
+</LanguageItems>
