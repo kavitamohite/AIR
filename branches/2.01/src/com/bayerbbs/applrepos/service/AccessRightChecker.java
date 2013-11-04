@@ -296,12 +296,12 @@ public class AccessRightChecker {
 //	}
 	
 	private static String getCacheKey(String cwid, String token) {
-		return cwid + ":" + token;
+		return cwid.toUpperCase() + ":" + token;
 	}
 	
 	public static boolean hasRole(String cwid, String token, String... roleNames) {//String roleName
 		Cache cache = CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
-		Element element = cache.get(getCacheKey(cwid.toLowerCase(), token));
+		Element element = cache.get(getCacheKey(cwid, token));
 		if (element != null) {
 			AppRepAuthData authData = (AppRepAuthData)element.getObjectValue();
 			

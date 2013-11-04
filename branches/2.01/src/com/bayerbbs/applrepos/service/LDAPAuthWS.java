@@ -71,7 +71,7 @@ public class LDAPAuthWS {
 					String token = sb.toString();
 					
 					AppRepAuthData authData = new AppRepAuthData();
-					authData.setCwid(cwid);
+					authData.setCwid(cwid.toUpperCase());
 					authData.setToken(token);
 					authData.setRoles(roles);//roles r
 					
@@ -221,6 +221,6 @@ public class LDAPAuthWS {
 	}
 
 	private static String getKeyname(String cwid, String token) {
-		return cwid + ":" + token;
+		return cwid.toUpperCase() + ":" + token;
 	}
 }
