@@ -20,14 +20,6 @@ AIR.AirConstants = {
 	
 	LOGIN_WINDOW_INFO_TEXT: 
 		'<div style="color: darkblue; font-family: Arial, Helvetica, sans-serif !important; font-size: 7pt !important; font-weight: bold !important;">'+
-//			'AIR uses the Bayer LDAP password (intranet password)<br/>' +
-//			'for user authentication. You can set up, proof, change or<br/>' +
-//			'reset this password on<br/>' +
-//			'<a href="http://by-password.bayer-ag.com/domino/httppw.nsf/Start?OpenForm=English" target="_blank">Intranet-Password-Management</a>.<br/>' +
-//			'Additional information regarding the application login<br/>' +
-//			'can be found in our <a href="http://sp-coll-bbs.bayer-ag.com/sites/000127/ConfigMgmt/Forum/Benutzerhandbuch%20AIR.docx" target="_blank">manual</a>.<br/>' +
-//			'If you need access <a href="mailto:ITILcenter@bayer.com&amp;subject=AIR:%20Request%20for%20access">contact the administrator</a>.' +
-		
 			'AIR uses the Bayer AD password (Microsoft Active Directory)<br/>' +
 			'for user authentication.<br/> You can set up, proof, change or reset this password on<br/>' +
 			'<a href="http://by-password.bayer-ag.com/domino/httppw.nsf/Start?OpenForm=English" target="_blank">Intranet-Password-Management</a>.<br/>' +
@@ -60,6 +52,8 @@ AIR.AirConstants = {
 	USER_ROLE_BOV_ADMIN: 'BOV Admin',
 	USER_ROLE_BOV_EDITOR: 'BOV Editor',
 	
+	// TABLE_ID's
+	// ----------
 	TABLE_ID_APPLICATION: 2,
 	TABLE_ID_IT_SYSTEM: 1,
 	TABLE_ID_POSITION: 13,
@@ -72,6 +66,12 @@ AIR.AirConstants = {
 //	TABLE_ID_WAY: 37,
 //	TABLE_ID_SERVICE: 123,
 	
+	// CI-SUB-TYPES
+	// ------------
+	CI_SUB_TYPE_APPLICATION: 5,
+	CI_SUB_TYPE_APPLICATION_PLATFORM: -10006,
+	CI_SUB_TYPE_MIDDLEWARE: -10007,
+	CI_SUB_TYPE_COMMON_SERVICE: -10013,
 	
 	APP_CAT1_APPLICATION: '5',//'Application',
 	APP_CAT1_APPLICATION_PLATFORM: '-10006',//'Application Platform',
@@ -185,21 +185,12 @@ AC = AIR.AirConstants;
 AC.SUPPORTED_COUNTRIES = [AC.IMG_COUNTRY_EN, AC.IMG_COUNTRY_DE];
 
 AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
-	AIRApplicationLayer: {
-		2: [ 5 ],
-		
-		13: [],
-		3: [],
-		88: [],
-		4: [],
-		30: [],
-		12: []
-	},
-	
+	// The definiton which ci types can be selected in the advanced search by a defined role
+	// this changes for example the behavior of the select box "Type"
+
 	AIRDefault: {
 		1: [],
-		2: [ 5, -10006, -10007, -10013 ],
-		
+		2: [ AC.CI_SUB_TYPE_APPLICATION, AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ],
 		13: [],
 		3: [],
 		88: [],
@@ -207,11 +198,9 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 		30: [],
 		12: []
 	},
-	
-	AIRInfrastructureLayer: {
-		1: [],
-		2: [ -10006, -10007, -10013 ],
 		
+	AIRApplicationLayer: {
+		2: [ AC.CI_SUB_TYPE_APPLICATION ],
 		13: [],
 		3: [],
 		88: [],
@@ -221,36 +210,65 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 	},
 	
 	AIRApplicationManager: {
-		2: [ 5 ]
+		2: [ AC.CI_SUB_TYPE_APPLICATION ],
+		13: [],
+		3: [],
+		88: [],
+		4: [],
+		30: [],
+		12: []
+	},
+	
+	AIRInfrastructureLayer: {
+		1: [],
+		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ],
+		13: [],
+		3: [],
+		88: [],
+		4: [],
+		30: [],
+		12: []
 	},
 	
 	AIRInfrastructureManager: {
 		1: [],
-		2: [ -10006, -10007, -10013 ]
+		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ],
+		13: [],
+		3: [],
+		88: [],
+		4: [],
+		30: [],
+		12: []
 	}
 	
 };
 
 AC.CI_TYPE_CREATION_BY_ROLE = {
-//	AIRApplicationLayer: [{ ciTypeId: 2, ciSubType: [ 5 ] }],
-//	AIRDefault: [{ ciTypeId: 1 }, { ciTypeId: 2, ciSubType: [ 5, -10006, -10007, -10013 ] }],
-//	
-//	AIRInfrastructureLayer: [{ ciTypeId: 1 }, { ciTypeId: 2, ciSubType: [ -10006, -10007, -10013 ] }],
-//	AIRLocationDataMaintenance: [{ ciTypeId: 13 }, { ciTypeId: 3 }, { ciTypeId: 88 }, { ciTypeId: 4 }, { ciTypeId: 30 }, { ciTypeId: 21 }],
-	
-	
-	AIRApplicationLayer: {
-		2: [ 5 ]
-	},
-	
+	// The definiton which ci types can be created by a defined role
+	// this changes for example the behavior of the select box "Type"
+	// the tableId is not used, only the entries are urgent
+		
 	AIRDefault: {
 		1: [],
-		2: [ 5, -10006, -10007, -10013 ]
+		2: [ AC.CI_SUB_TYPE_APPLICATION, AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ]
 	},
 	
+	AIRApplicationLayer: {
+		2: [ AC.CI_SUB_TYPE_APPLICATION ]
+	},
+
+	AIRApplicationManager: {
+		2: [ AC.CI_SUB_TYPE_APPLICATION ]
+	},
+
 	AIRInfrastructureLayer: {
 		1: [],
-		2: [ -10006, -10007, -10013 ]
+		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ]
+	},
+	
+	AIRInfrastructureManager: {
+		1: [],
+		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ]
 	},
 	
 	AIRLocationDataMaintenance: {
@@ -261,4 +279,5 @@ AC.CI_TYPE_CREATION_BY_ROLE = {
 		30: [],
 		12: []
 	}
+	
 };
