@@ -591,6 +591,11 @@ public class AnwendungHbn extends BaseHbn {
 								}
 							}
 						}
+						
+						// for BOV
+						if (null == application.getBovApplicationNeeded()) {
+							application.setBovApplicationNeeded(AirKonstanten.YES_SHORT);
+						}
 					}
 
 					boolean toCommit = false;
@@ -765,6 +770,11 @@ public class AnwendungHbn extends BaseHbn {
 							dto.setBusinessEssentialId(new Long(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT));
 						}
 
+						if (null == application.getBovApplicationNeeded()) {
+							// for BOV
+							application.setBovApplicationNeeded(AirKonstanten.YES_SHORT);
+						}
+						
 						Session session = HibernateUtil.getSession();
 						Transaction tx = null;
 						tx = session.beginTransaction();
@@ -1068,6 +1078,9 @@ public class AnwendungHbn extends BaseHbn {
 			
 			application.setServiceModel(null);
 			application.setOrganisationalScope(null);
+
+			// for BOV
+			application.setBovApplicationNeeded(AirKonstanten.YES_SHORT);
 			// ==============================
 		}
 
@@ -2960,6 +2973,8 @@ public class AnwendungHbn extends BaseHbn {
 						applicationTarget.setServiceModel(applicationSource.getServiceModel());
 						applicationTarget.setOrganisationalScope(applicationSource.getOrganisationalScope());
 						
+						// for BOV
+						applicationTarget.setBovApplicationNeeded(AirKonstanten.YES_SHORT);
 					}
 
 					boolean toCommit = false;
