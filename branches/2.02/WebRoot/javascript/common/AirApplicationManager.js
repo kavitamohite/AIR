@@ -102,28 +102,11 @@ AIR.AirApplicationManager = function() {
 		
 		
 		loadStoreIds: function() {
-//			this.storeIds = [ 
-//                'currencyListStore', 'licenseTypeListStore', 'changeAccountListStore', 'runAccountListStore', 'itSetListStore',
-//                'itSecSBAvailabilityListStore', 'classInformationListStore', 'slaListStore', 'serviceContractListStore',
-//                'priorityLevelListStore', 'severityLevelListStore', 'businessEssentialListStore',
-//                'applicationCat2ListStore', 'lifecycleStatusListStore', 'operationalStatusListStore', 'categoryBusinessListStore', 'dataClassListStore'
-//            ];
-			
-//			this.storeIds = [ 
-//				{ storeId: 'currencyListStore' }, { storeId: 'licenseTypeListStore' }, { storeId: 'changeAccountListStore' }, { storeId: 'runAccountListStore' }, { storeId: 'itSetListStore' },
-//				{ storeId: 'itSecSBAvailabilityListStore' }, { storeId: 'classInformationListStore' }, { storeId: 'slaListStore' }, { storeId: 'serviceContractListStore' },
-//				{ storeId: 'priorityLevelListStore' }, { storeId: 'severityLevelListStore' }, { storeId: 'businessEssentialListStore' },
-//				{ storeId: 'applicationCat2ListStore' }, { storeId: 'lifecycleStatusListStore' }, { storeId: 'operationalStatusListStore' }, { storeId: 'categoryBusinessListStore' }, { storeId: 'dataClassListStore' }
-////				{ storeId: 'rolePersonListStore', params: { cwid: AIR.AirApplicationManager.getCwid() } }
-//            ];
-			
 			this.storeIds = {
 				ciTypeListStore: null,
 				aclStore: null,
 				currencyListStore: null,
 				licenseTypeListStore: null,
-//				changeAccountListStore: null,
-//				runAccountListStore: null,
 				accountListStore: null,
 				itSetListStore: null,
 				itSecSBAvailabilityListStore: null,
@@ -165,15 +148,9 @@ AIR.AirApplicationManager = function() {
 				dedicatedListStore: null,
 				organisationalScopeListStore: null,
 				
-//				sisoogleOsTypeListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_OS_TYP } } },
-//				sisoogleOsNameListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_OS_NAME } } },
-				sisoogleSourceListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_INSERT_QUELLE } } },
-//				sisoogleGapResponsibleListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_GAP_RESPONSIBLE } } },
+    			sisoogleSourceListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_INSERT_QUELLE } } },
 				
-//				sisoogleGapEndDateListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_GAP_END_DATE } } },
-//				sisoogleActiveStateListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_ACTIVE_Y_N } } },
-//				sisoogleGpscOwnerListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_GPSC_OWNER } } }
-				
+			
 				linkCiTypeListStore: null,
 				groupTypesListStore: null
 			};

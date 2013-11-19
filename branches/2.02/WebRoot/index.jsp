@@ -20,9 +20,8 @@
     	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
     }
 	String dbConnectionUrl = conf.getProperty("hibernate.connection.url");
-	String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
 	
-	String redirectPath = dbConnectionUrl.contains(TRANSBASE_PROD_HOST) ? "/AIR/P" : "/AIR/Q";
+	String redirectPath = dbConnectionUrl.contains(AirKonstanten.TRANSBASE_PROD_HOST) ? "/AIR/P" : "/AIR/Q";
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -35,7 +34,7 @@
 	<meta name="author" content="BBS-IAO-SBO-IPS">
 	
   	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <meta http-equiv="refresh" content="0;URL=<%=redirectPath%>"><!-- (*9) /AIR/ITIL /AIR/Q /AIR/run htdocs/index.html authenticate.html -->
+    <meta http-equiv="refresh" content="0;URL=<%=redirectPath%>">
 	<meta http-equiv="expires" content="86400"/>
 	<meta http-equiv="cache-control" content="no-cache"/>
 	<meta http-equiv="pragma" content="no-cache"/>
@@ -43,9 +42,7 @@
   </head>
   
   <body>
-  	<script type="text/javascript" src="conf/config.js"></script><!-- htdocs/ -->
-  	<script>
-  		document.writeln("<br>Starting <b>" + app_name + "</b> v"+ app_version + " ...<br>");
-  	</script>
+  		<br>Starting 
+  		<b>Application Infrastructure Repository</b>&nbsp;&nbsp;Version:&nbsp;<%=AirKonstanten.AIR_VERSION%>&nbsp;...<br>
   </body>
 </html>

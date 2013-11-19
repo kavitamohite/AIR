@@ -29,6 +29,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 			    
 			    labelWidth: 110,
 	        	bodyStyle: {//siehe ext-all.css :: .x-window-plain .x-window-body
+	        		height: 90,
 	        		backgroundColor: '#DFE8F6'
 	        	},
 			    
@@ -81,7 +82,8 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		        	width: 75,//50
 		        	
 		            style: {
-		            	float: 'right',
+		            	position: 'absolute',
+		            	right: '10px',
 		            	marginTop: 10
 		            }
 		        }]

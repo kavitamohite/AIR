@@ -173,7 +173,7 @@ Util = {
 		
 		getCiTypeRecord: function(ciData) {
 			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
-			var r = Util.getStoreRecord(store, this.getCiTypeField(ciData), parseInt(this.getCiTypeFieldId(ciData)));
+			var r = Util.getStoreRecord(store, this.getCiTypeField(ciData), this.getCiTypeFieldId(ciData));
 			return r;
 		},
 		getCiTypeField: function(ciData) {

@@ -368,18 +368,15 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						    	},{
 									xtype: 'textfield',
 									id: 'tfGapResponsible',
-//									enableKeyEvents: true,
 									allowBlank: false,
 									
-									width: 240,//280
-//									flex: 14,//14 15
-//									margins: '0 0 0 3',
+									width: 240,
 									
 									style: {
 						    			marginLeft: 5
 						    		},
 									
-//									fieldLabel: 'Responsible',
+
 									readOnly: true
 								},{
 									xtype: 'hidden',//nur für/wegen personPicker
@@ -387,7 +384,6 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							    },{
 					                xtype: 'button',//commandlink
 					                id: 'clGapResponsibleAddPicker',
-//					                img: 'images/add_user_16x16.png'//images/add_user_16x16.png
 					                
 					                cls: 'x-btn-text-icon',
 					                iconCls: 'icon-add-user',
@@ -395,11 +391,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							    		marginLeft: 3
 							    	}
 					                
-//				                	flex: 1
 								},{
 									xtype: 'button',//commandlink
 					                id: 'clGapResponsibleDeletePicker',
-//					                img: 'images/failed_type1_16x16.png'//images/failed_type1_16x16.png
 					                
 					                cls: 'x-btn-text-icon',
 				                	iconCls: 'icon-delete-user',
@@ -407,7 +401,6 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 							    		marginLeft: 3
 							    	}
 					                
-//				                	flex: 1
 								}]
 							},{
 								xtype: 'panel',
@@ -439,8 +432,6 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									flex: 7,
 									margins: '5 0 0 0'
 									
-//									anchor: '100%',
-//									fieldLabel: 'Plan of action'
 						    	}]
 							},{
 								xtype: 'panel',
@@ -459,10 +450,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						    		id: 'lGapClass',
 						    		text: labels.complianceWindowGapClass,
 						    		
-//						    		flex: 2,
-//						    		margins: '5 5 5 0',
-
-						    		width: 92,//100
+						    		width: 92,
 						    		
 									style: {
 										marginTop: 5,
@@ -471,17 +459,12 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						    	},{
 									xtype: 'combo',
 									id: 'cbGapClass',
-									store: AIR.AirStoreManager.getStoreByName('itsecMassnahmenGapClassListStore'),//AIR.AirStoreFactory.createItsecMassnahmenGapClassListStore(),
+									store: AIR.AirStoreManager.getStoreByName('itsecMassnahmenGapClassListStore'),
 									allowBlank: false,
 									msgTarget: 'under',
-									
-//									anchor: '100%',
-//									flex: 7,
-//									margins: '5 0 0 0',
-									
-									width: 300,//318
+						
+									width: 300,
 									style: {
-//								    	marginTop: 5,
 								    	marginLeft: 5
 									},
 									

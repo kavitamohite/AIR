@@ -3,10 +3,7 @@ Ext.namespace('AIR');
 AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 	initComponent: function() {
 		Ext.apply(this, {
-//			labelwidth: 150,
-//		    id: 'historyPanel',
 		    title: 'History',
-		    //autoScroll: true,
 		    border: false,
 		    
 		    items: [{
@@ -15,11 +12,8 @@ AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 		        layout: 'fit',
 		        
 		        height: 400,
-				//width: 800,
 		    	store: AIR.AirStoreFactory.createHistoryListStore(),
-//		        multiSelect: true,
 		        emptyText: 'No data',
-//		        reserveScrollOffset: true,
 		        border: false,
 		        autoScroll: true,
 		        
@@ -77,14 +71,7 @@ AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 		        	id: 'infoType',
 					hidden: true,
 					menuDisabled: true
-					//width: 150
 		        }],
-				
-				/*defaults: {
-					sortable: true,
-					menuDisabled: true,
-					width: 250
-				},*/
 				
 				view: new Ext.grid.GroupingView({})
 		    }]
@@ -92,10 +79,11 @@ AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 		
 		AIR.CiHistoryView.superclass.initComponent.call(this);
 		
-//		this.addEvents('ciBeforeChange', 'ciChange');
 	},
 	
 	update: function() {
+		var loadMask = Util.createMask('Loading', Ext.get('historyListView'));
+		loadMask.show();
 		var historyListStore = this.getComponent('historyListView').getStore();
 
 		var params = {
@@ -104,6 +92,8 @@ AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 			id: AAM.getCiId(),
 			tableId: AAM.getTableId()
 		};
+		
+		historyListStore.addListener('load', function() {loadMask.hide();});
 		
 		historyListStore.load({
 			params: params
@@ -121,7 +111,6 @@ AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 		this.getComponent('historyListView').getColumnModel().setColumnHeader(5, labels.ciId);
 		this.getComponent('historyListView').getColumnModel().setColumnHeader(6, labels.historyChangeAttributeOldValue);//5
 		this.getComponent('historyListView').getColumnModel().setColumnHeader(7, labels.historyChangeAttributeNewValue);//6
-		//this.getComponent('historyListView').getColumnModel().setColumnHeader(7, labels.infoType);
 	}
 });
 Ext.reg('AIR.CiHistoryView', AIR.CiHistoryView);

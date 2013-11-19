@@ -23,7 +23,6 @@ public class BovApplicationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static final String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
 	private AnnotationConfiguration config;
 	private InetAddress iAddress;
 	private String hostName = "";
@@ -47,7 +46,7 @@ public class BovApplicationServlet extends HttpServlet {
 	    } else {
 	    	config = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
 	    }
-	    redirectPath = config.getProperty("hibernate.connection.url").contains(TRANSBASE_PROD_HOST) ? "/AIR/P" : "/AIR/Q";
+	    redirectPath = config.getProperty("hibernate.connection.url").contains(AirKonstanten.TRANSBASE_PROD_HOST) ? "/AIR/P" : "/AIR/Q";
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

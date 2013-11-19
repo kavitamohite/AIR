@@ -13,7 +13,7 @@ AIR.AirStoreLoader = Ext.extend(Ext.util.Observable, {
     	this.storeMap = {};
     	this.storeIds = storeIds;
     	
-        this.storeCounter = storeCounter;// - 1;//storeIds.length - 1;
+        this.storeCounter = storeCounter;
         this.loadCount = 0;
     	
     	for(var storeId in this.storeIds) {
@@ -32,20 +32,33 @@ AIR.AirStoreLoader = Ext.extend(Ext.util.Observable, {
     },
     
     load: function() {
-        for(var key in this.storeMap) {
-        	if(this.storeIds[key] && this.storeIds[key].params) {// != null
-        		this.storeMap[key].load(this.storeIds[key].params);
-        	} else {
-        		this.storeMap[key].load();
-        	}
+    	var stores = ["currencyListStore", "licenseTypeListStore", "accountListStore", "itSetListStore", 
+    	              "itSecSBIntegrityListStore", "itSecSBAvailabilityListStore", "itSecSBConfidentialityListStore", 
+    	              "classInformationListStore", "slaListStore", "serviceContractListStore", "priorityLevelListStore",
+    	              "severityLevelListStore", "businessEssentialListStore", "applicationCat2ListStore", "lifecycleStatusListStore",
+    	              "operationalStatusListStore", "categoryBusinessListStore", "processListStore", "applicationCat1ListStore",
+    	              "databaseDisplayNameListStore", "ciTypeListStore", "dedicatedListStore", "organisationalScopeListStore",
+    	              "loadClassListStore", "serviceModelListStore", "gxpFlagListStore", "itSecGroupListStore",
+    	              "clusterTypesListStore", "clusterCodesListStore", "osGroupsListStore", "osTypesListStore",
+    	              "osNamesListStore", "itsecMassnahmenGapClassListStore"];
+    	var notInStores = true;
+    	for(var key in this.storeMap) {
+    		notInStores = true;
+    		Ext.each(stores, function(item) {if (item==key) notInStores=false;});
+    		if (notInStores) {
+	        	if (this.storeIds[key] && this.storeIds[key].params) {
+	        		this.storeMap[key].load(this.storeIds[key].params);
+	        	} else {
+	        		this.storeMap[key].load();
+	        	}
+    		} 
+    			this.loadCount++;
+    		
         }
     },
     
     onLoad: function(store, records, options) {
     	this.fireEvent('storeLoaded', store, records, options);
-//    	if(store.storeId === 'organisationalScopeListStore')
-//    		Util.log('organisationalScopeListStore loaded');
-//    	Util.log(store.storeId+' loaded');
         
         if(this.loadCount == this.storeCounter) {
             this.fireEvent('storesLoaded', this, this.storeMap);
@@ -56,11 +69,9 @@ AIR.AirStoreLoader = Ext.extend(Ext.util.Observable, {
     
     destroy: function() {
     	for(var key in this.storeMap) {
-//    		delete this.storeMap[key];
     		this.storeMap[key].removeListener('load', this.onLoad, this);
     	}
     	
     	delete this.storeMap;
-//    	delete this;
     }
 });

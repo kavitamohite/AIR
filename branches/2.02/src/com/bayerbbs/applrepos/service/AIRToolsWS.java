@@ -70,7 +70,7 @@ import com.bayerbbs.applrepos.hibernate.SlaHbn;
 import com.bayerbbs.applrepos.hibernate.SlaServiceContractHbn;
 
 public class AIRToolsWS {
-	private final static String CACHENAME = "airCache";
+	private final static String CACHENAME = "com.bayerbbs.applrepos.airCache";
 	
 	public AccountDTO[] getAccountList() {
 		AccountDTO[] aAccountsDTO = null;

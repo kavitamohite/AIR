@@ -78,46 +78,23 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				id: 'editpaneldraft',
 				
 				style: {
-//					textAlign: 'right',
 					backgroundColor: AC.AIR_BG_COLOR,
-					color: '#FF0000',//panelDraftMsgColor, (#8)
+					color: '#FF0000',
 					
 					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: '10pt',
-					
-					float: 'right'
-//					marginBottom: 20
+					position: 'absolute',
+					right: '20px'
 				}
 			},{
 				xtype: 'textfield',//label
 				id: 'editpanelmessage',
 				hidden: true,
 				
-				/*
-				style: {
-					textAlign: 'left',
-					borderStyle: 'solid',
-					borderWidth: '1pt',
-					borderColor: '#FF0000', //panelErrorMsgColor, (#8)
-					backgroundColor: AC.AIR_BG_COLOR,
-					
-					color: '#FF0000', //panelErrorMsgColor, (#8)
-					padding: 3,//'2 5 2 5',//
-//					height: 70,
-					
-					fontFamily: AC.AIR_FONT_TYPE,
-					fontWeight: 'bold',
-					fontSize: 12
-					
-//					marginTop: 40
-				}*/
-				
-				float: 'left',
-//				width: 300,
+				position: 'absolute',
+				left: '20px',
 				anchor: '90%',
-//				padding: 0
-//				disabled: true,
 				readOnly: true,
 				hideLabel: true,
 				style: {
@@ -903,13 +880,13 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			case AC.TABLE_ID_APPLICATION:
 				if(data.applicationCat1Id == 0)
 					data.applicationCat1Id = AC.APP_CAT1_APPLICATION;
-				record = Util.getStoreRecord(store, 'ciSubTypeId', parseInt(data.applicationCat1Id));
+				record = Util.getStoreRecord(store, 'ciSubTypeId', data.applicationCat1Id);
 				break;
 			case AC.TABLE_ID_IT_SYSTEM:
-				record = Util.getStoreRecord(store, 'ciSubTypeId', parseInt(data.ciSubTypeId));
+				record = Util.getStoreRecord(store, 'ciSubTypeId', data.ciSubTypeId);
 				break;
 			default:
-				record = Util.getStoreRecord(store, 'ciTypeId', parseInt(data.tableId));
+				record = Util.getStoreRecord(store, 'ciTypeId', data.tableId);
 				break;
 		}
 

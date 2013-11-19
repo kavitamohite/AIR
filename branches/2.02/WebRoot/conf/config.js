@@ -1,5 +1,4 @@
-// Application Name, Version and Contacts
-var app_version 		= '2.01.008';
+// Application Name and Contacts
 var app_name 			= 'Application Infrastructure Repository';
 var app_shortname 		= 'AIR';
 var app_vendor			= 'BBS';
@@ -8,8 +7,8 @@ var app_interfacename 	= 'AIR';
 	
 // Directories
 var webcontext = '/AIR';
-var imgcontext = 'images/';//images/ /AIR/htdocs/images/
-var lngcontext = 'conf/lang/';//lang/
+var imgcontext = 'images/';
+var lngcontext = 'conf/lang/';
 var doccontext = 'doc/';
 
 //Languages 

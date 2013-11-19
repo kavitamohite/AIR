@@ -206,26 +206,15 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 		        id: 'cbSite',
 		    	xtype: 'filterCombo',//combo textfield
 		        fieldLabel: 'Site',
-//		        disabled: true,
-//		        hideTrigger: true,
 		        width: 230,
-
-		        store: AIR.AirStoreFactory.createSiteListStore(),//new Ext.data.Store(),//AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
+		        store: AIR.AirStaticStoreFactory.createSiteListStore(),//new Ext.data.Store(),//AIR.AirStoreFactory.createBuildingsByBuildingAreaStore(),//createIdNameStore(),//new Ext.data.Store(),//AIR.AirStoreManager.getStoreByName('applicationCat2ListStore'),//applicationCat2ListStore,
 		        valueField: 'id',
-		        displayField: 'name',
+		        displayField: AAM.getLanguage() == 'DE' ? 'name' : 'nameEn',
 				lastQuery: '',
-		        
-//		        typeAhead: true,
-//		        forceSelection: true,
-//		        autoSelect: false,
-		        
-//				isFilterLocal: true,//custom combo field
 				minChars: 0,
-		        triggerAction: 'all',//all query
-//		        lazyRender: true,
-//		        lazyInit: false
-		        mode: 'local',//local remote
-		        queryParam: 'id'//id landId
+		        triggerAction: 'all',
+		        mode: 'local',
+		        queryParam: 'id'
 		    },{
 		        id: 'cbCountry',
 		        xtype: 'filterCombo',//'textfield',

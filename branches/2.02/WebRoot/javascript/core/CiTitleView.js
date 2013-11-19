@@ -235,10 +235,10 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 	},
 	
 	updateLabels: function(labels) {
-		if(Ext.isIE) {
-	        var tAppLabel = this.getComponent('pCiTitleCenter').getComponent('tAppLabel');
-	        tAppLabel.updateBrowserOptimization(labels.browserOptimization);
-		}
+//		if(Ext.isIE) {
+//	        var tAppLabel = this.getComponent('pCiTitleCenter').getComponent('tAppLabel');
+//	        tAppLabel.updateBrowserOptimization(labels.browserOptimization);
+//		}
 	},
 	
 	onHistoryChange: function(history, link, historyIndex) {

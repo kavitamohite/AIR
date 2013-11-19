@@ -53,574 +53,202 @@ AIR.AirStoreFactory = function() {
 		
 		
 		createCurrencyListStore: function() {
-			var currencyListRecord = Ext.data.Record.create([
- 	            {name: 'id', mapping: 'currencyId'},
-	            {name: 'text', mapping: 'currencyName'},
-	            {name: 'symbol', mapping: 'currencySymbol'}
-	        ]);
-	
-			var currencyListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'currencyId'//id currencyId
-			}, currencyListRecord); 
-	
-			var currencyListStore = new Ext.data.XmlStore({
-				autoDestroy: true,
-	           	storeId: 'currencyListStore',
-	           	autoLoad: false,
-	           	
-	       		proxy: new Ext.ux.soap.SoapProxy({
-		       		url: webcontext + '/AIRToolsWSPort',
-		       		loadMethod: 'getCurrencyList',
-		       		timeout: 120000,
-		       		reader: currencyListReader
-		       	}),
-		       	
-		       	fields: [ 'id', 'text', 'symbol' ],
-	
-		       	reader: currencyListReader
-	       });
+			var currencyListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'currencyListStore',
+				fields : ['id', 'text', 'symbol'],
+				idIndex: 0,
+				data : currencyData
+			});
 			
-			return currencyListStore;
+	        return currencyListStore;
 		},
 		
 		
 		createLicenseTypeListStore: function() {
-			var licenseTypeListRecord = Ext.data.Record.create([
-	            {name: 'id', mapping: 'licenseTypeId'},
-	            {name: 'text', mapping: 'licenseTypeName'}
-	        ]);
-		
-			var licenseTypeListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'id'
-			}, licenseTypeListRecord); 
-		
-			var licenseTypeListStore = new Ext.data.XmlStore({
-		      	autoDestroy: true,
-		      	storeId: 'licenseTypeStore',
-		      	autoLoad: false,
-		      
-		      	proxy: new Ext.ux.soap.SoapProxy({
-		      		url: webcontext +'/AIRToolsWSPort',
-		      		loadMethod: 'getLicenseTypeList',
-		      		timeout: 120000,
-		      		reader: licenseTypeListReader
-		      	}),
-		      	
-		      	fields: [ 'id', 'text' ],
-	
-		      	reader: licenseTypeListReader
+			var licenseTypeListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'licenseTypeListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : licenseTypeData
 			});
-		  
-			return licenseTypeListStore;
+			
+	        return licenseTypeListStore;
 		},
 		
-//		createChangeAccountListStore: function() {
 		createAccountListStore: function() {
-			var changeAccountListRecord = Ext.data.Record.create([
-	             {name: 'text', mapping: 'accountName'},
-	             {name: 'id', mapping: 'accountId'}
-	        ]);
-	
-	        var changeAccountListReader = new Ext.data.XmlReader({
-	            record: 'return',
-	            idProperty: 'id'
-	        }, changeAccountListRecord); 
-	
-	        var changeAccountListStore = new Ext.data.XmlStore({
-	            autoDestroy: true,
-	            storeId: 'accountListStore',//changeAccountListStore
-	            autoLoad: false,
-	            
-	        	proxy: new Ext.ux.soap.SoapProxy({
-	        		url: webcontext +'/AIRToolsWSPort',
-	        		loadMethod: 'getAccountList',
-	        		timeout: 120000,
-	        		reader: changeAccountListReader
-	        	}),
-	        	
-	        	fields: [ 'id', 'text' ],
-	
-	        	reader: changeAccountListReader
-	        });
-	        
-	        return changeAccountListStore;
-		},
-	        
-//		createRunAccountListStore: function() {
-//			var runAccountListRecord = Ext.data.Record.create([
-//	              {name: 'text', mapping: 'accountName'},
-//	              {name: 'id', mapping: 'accountId'}
-//	         ]);
-//	
-//	         var runAccountListReader = new Ext.data.XmlReader({
-//	             record: 'return',
-//	             idProperty: 'id'
-//	         }, runAccountListRecord); 
-//	
-//	        var runAccountListStore = new Ext.data.XmlStore({
-//	        	autoDestroy: true,
-//	        	storeId: 'runAccountListStore',
-//	        	autoLoad: false,
-//	             
-//	         	proxy: new Ext.ux.soap.SoapProxy({
-//	         		url: webcontext +'/AIRToolsWSPort',
-//	         		loadMethod: 'getAccountList',
-//	         		timeout: 120000,
-//	         		reader: runAccountListReader
-//	         	}),
-//	         	
-//	         	fields: [ 'id', 'text' ],
-//	
-//	         	reader: runAccountListReader
-//	         });
-//	         
-//	         return runAccountListStore;
-//		},
-		
-		createItSetListStore: function() {
-			var itSetListRecord = Ext.data.Record.create([
-	            {name: 'id', mapping: 'id'},
-	            {name: 'text', mapping: 'itSetName'}
-	        ]);
-	
-			var itSetListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'id'
-			}, itSetListRecord); 
-	
-			var itSetListStore = new Ext.data.XmlStore({
-				autoDestroy: true,
-				storeId: 'itSetListStore',
-				autoLoad: false,
-				
-	         	proxy: new Ext.ux.soap.SoapProxy({
-	         		url: webcontext +'/AIRToolsWSPort',
-	         		loadMethod: 'getItSetList',
-	         		timeout: 120000,
-	         		reader: itSetListReader
-	         	}),
-	         	
-	         	fields: [ 'id',	'text' ],
-	
-	         	reader: itSetListReader
+			var accountListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'accountListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : accountData
 			});
 			
-			return itSetListStore;
+	        return accountListStore;
 		},
-		
-		getItSecSBWerteListReader: function() {
-			var itSecSBWerteListRecord = Ext.data.Record.create([
-	            {name: 'text', mapping: 'sbTextEn'},
-		        {name: 'id', mapping: 'itsecSBId'}
-	        ]);
-		
-			var itSecSBWerteListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'id'
-			}, itSecSBWerteListRecord); 
+	        
+		createItSetListStore: function() {
+			var itSetListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'itSetListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : itsetData
+			});
 			
-			return itSecSBWerteListReader;
+	        return itSetListStore;
 		},
 		
 		createItSecSBWerteListStore: function() {
-			var itSecSBWerteListReader = AIR.AirStoreFactory.getItSecSBWerteListReader();
-			
-			var itSecSBIntegrityListStore = new Ext.data.XmlStore({
-				autoDestroy: true,
+			var itSecSBIntegrityListStore = new Ext.data.ArrayStore(
+			{
 				storeId: 'itSecSBIntegrityListStore',
-				autoLoad: false,
-		       
-			   	proxy: new Ext.ux.soap.SoapProxy({
-			   		url: webcontext + '/AIRToolsWSPort',
-			   		loadMethod: 'getItSecSBWerteList',
-			   		timeout: 120000,
-			   		reader: itSecSBWerteListReader
-			   	}),
-		   	
-			   	fields: [ 'id', 'text' ],
-	
-			   	reader: itSecSBWerteListReader
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : itsecSBWerteData
 			});
 			
-			return itSecSBIntegrityListStore;
+	        return itSecSBIntegrityListStore;
 		},
 		
 		createItSecSBAvailabilityListStore: function() {
-			var itSecSBWerteListReader = AIR.AirStoreFactory.getItSecSBWerteListReader();
-			
-			var itSecSBAvailabilityListStore = new Ext.data.XmlStore({
-			    autoDestroy: true,
-			    storeId: 'itSecSBAvailabilityListStore',
-			    autoLoad: false,
-			    
-				proxy: new Ext.ux.soap.SoapProxy({
-					url: webcontext +'/AIRToolsWSPort',
-					loadMethod: 'getItSecSBWerteList',
-					timeout: 120000,
-					reader: itSecSBWerteListReader
-				}),
-				
-				fields: [ 'id', 'text' ],
-	
-				reader : itSecSBWerteListReader
+			var itSecSBAvailabilityListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'itSecSBAvailabilityListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : itsecSBWerteData
 			});
-			
-			return itSecSBAvailabilityListStore;
+	        return itSecSBAvailabilityListStore;
 		},
 		
 		createItSecSBConfidentialityListStore: function() {
-			var itSecSBWerteListReader = AIR.AirStoreFactory.getItSecSBWerteListReader();
-			
-			var itSecSBConfidentialityListStore = new Ext.data.XmlStore({
-			    autoDestroy: true,
-			    storeId: 'itSecSBConfidentialityListStore',
-			    autoLoad: false,
-			    
-				proxy: new Ext.ux.soap.SoapProxy({
-					url: webcontext +'/AIRToolsWSPort',
-					loadMethod: 'getItSecSBWerteList',
-					timeout: 120000,
-					reader: itSecSBWerteListReader
-				}),
-				
-				fields: [ 'id', 'text' ],
-	
-				reader: itSecSBWerteListReader
+			var itSecSBConfidentialityListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'itSecSBConfidentialityListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : itsecSBWerteData
 			});
-			
-			return itSecSBConfidentialityListStore;
+	        return itSecSBConfidentialityListStore;
 		},
 		
 		createClassInformationListStore: function() {
-			var classInformationListRecord = Ext.data.Record.create([
-	        	{name: 'id', mapping: 'classInformationId'},
-	        	{name: 'text', mapping: 'classInformationName'},
-	        	{name: 'classProtectionName', mapping: 'classProtectionName'}
-	        ]);
-	
-	        var classInformationListReader = new Ext.data.XmlReader({
-	            record: 'return',
-	            idProperty: 'id'
-	        }, classInformationListRecord); 
-	
-	        var classInformationListStore = new Ext.data.XmlStore({
-	            autoDestroy: true,
-	            storeId: 'classInformationListStore',
-	            autoLoad: false,
-	            
-	        	proxy: new Ext.ux.soap.SoapProxy({
-	        		url: webcontext +'/AIRToolsWSPort',
-	        		loadMethod: 'getClassInformationList',
-	        		timeout: 120000,
-	        		reader: classInformationListReader
-	        	}),
-	        	
-	        	fields: [ 'id', 'text', 'classProtectionName' ],
-	
-	        	reader : classInformationListReader
-	        });
-	        
+			var classInformationListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'classInformationListStore',
+				fields : ['id', 'text', 'classProtectionName'],
+				idIndex: 0,
+				data : classinformationData
+			});
 	        return classInformationListStore;
 		},
 		
 		createSlaListStore: function() {
-			var slaListRecord = Ext.data.Record.create([
-	           {name: 'text', mapping: 'slaName'},
-	           {name: 'id', type: 'int', mapping: 'slaId'}
-	        ]);
-	
-			var slaListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'slaId'//'id'
-			}, slaListRecord); 
-	
-			var slaListStore = new Ext.data.XmlStore({
-				autoDestroy: true,
+			var slaListStore = new Ext.data.ArrayStore(
+			{
 				storeId: 'slaListStore',
-				autoLoad: false,
-	          
-		      	proxy: new Ext.ux.soap.SoapProxy({
-		      		url: webcontext +'/AIRToolsWSPort',
-		      		loadMethod: 'getSlaList',
-		      		timeout: 120000,
-		      		reader: slaListReader
-		      	}),
-		      	
-		      	fields: [ 'id', 'text' ],
-		
-		      	reader: slaListReader
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : slaData
 			});
-			
-			return slaListStore;
+	        return slaListStore;
 		},
 		
 		createServiceContractListStore: function() {
-			var serviceContractListRecord = Ext.data.Record.create([
-	            {name: 'text', mapping: 'serviceContractName'},
-	            {name: 'id', type: 'int', mapping: 'serviceContractId'},
-	            {name: 'slaId', type: 'int'}
-	        ]);
-	
-			var serviceContractListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'id'
-			}, serviceContractListRecord); 
-	
-			var serviceContractListStore = new Ext.data.XmlStore({
-				autoDestroy: true,
+			var serviceContractListStore = new Ext.data.ArrayStore(
+			{
 				storeId: 'serviceContractListStore',
-				autoLoad: false,
-				
-		      	proxy: new Ext.ux.soap.SoapProxy({
-		      		url: webcontext +'/ApplicationToolsWSPort',
-		      		loadMethod: 'getServiceContractList',
-		      		timeout: 120000,
-		      		reader: serviceContractListReader
-		      	}),
-		      	
-//		      	fields: [ 'id', 'text', 'slaId' ],
-	
-		      	reader: serviceContractListReader
+				fields : ['id', 'text', 'slaId'],
+				idIndex: 0,
+				data : serviceContractData
 			});
-			
-			return serviceContractListStore;
+	        return serviceContractListStore;
 		},
 		
 		createPriorityLevelListStore: function() {
-			var priorityLevelListRecord = Ext.data.Record.create([
-	            {name: 'text', mapping: 'priorityLevel'},
-	            {name: 'id', mapping: 'priorityLevelId'}
-	        ]);
-	
-	        var priorityLevelListReader = new Ext.data.XmlReader({
-	            record: 'return',
-	            idProperty: 'id'
-	        }, priorityLevelListRecord); 
-	
-	        var priorityLevelListStore = new Ext.data.XmlStore({
-	            autoDestroy: true,
-	            storeId: 'priorityLevelListStore',
-	            autoLoad: false,
-	            
-	        	proxy: new Ext.ux.soap.SoapProxy({
-	        		url: webcontext +'/AIRToolsWSPort',
-	        		loadMethod: 'getPriorityLevelList',
-	        		timeout: 120000,
-	        		reader: priorityLevelListReader
-	        	}),
-	        	
-	        	fields: [ 'id', 'text' ],
-	
-	        	reader : priorityLevelListReader
-	        });
-	        
+			var priorityLevelListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'priorityLevelListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : priorityLevelData
+			});
 	        return priorityLevelListStore;
 		},
 		
 		createSeverityLevelListStore: function() {
-			var severityLevelListRecord = Ext.data.Record.create([
-	            {name: 'text', mapping: 'severityLevel'},
-	            {name: 'id', mapping: 'severityLevelId'}
-		    ]);
-		
-		    var severityLevelListReader = new Ext.data.XmlReader({
-		        record: 'return',
-		        idProperty: 'id'
-		    }, severityLevelListRecord); 
-		
-		    var severityLevelListStore = new Ext.data.XmlStore({
-		        autoDestroy: true,
-		        storeId: 'severityLevelListStore',
-		        autoLoad: false,
-		        
-		    	proxy: new Ext.ux.soap.SoapProxy({
-		    		url: webcontext +'/AIRToolsWSPort',
-		    		loadMethod: 'getSeverityLevelList',
-		    		timeout: 120000,
-		    		reader: severityLevelListReader
-		    	}),
-		    	
-		    	fields: [ 'id', 'text' ],
-	
-		    	reader: severityLevelListReader
-		    });
-		    
-		    return severityLevelListStore;
+			var severityLevelListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'severityLevelListStore',
+				fields : ['text', 'id'],
+				idIndex: 1,
+				data : severityLevelData
+			});
+			
+			return severityLevelListStore;
 		},
 	
 		createBusinessEssentialListStore: function() {
-			var businessEssentialListRecord = Ext.data.Record.create([
-	            {name: 'text', mapping: 'severityLevel'},
-	            {name: 'id', mapping: 'severityLevelId'}
-	        ]);
-	
-	        var businessEssentialListReader = new Ext.data.XmlReader({
-	            record: 'return',
-	            idProperty: 'severityLevelId'//'id'
-	        }, businessEssentialListRecord); 
-	
-	        var businessEssentialListStore = new Ext.data.XmlStore({
-	            autoDestroy: true,
-	            storeId: 'businessEssentialListStore',
-	            autoLoad: false,
-	            
-	        	proxy: new Ext.ux.soap.SoapProxy({
-	        		url: webcontext +'/BusinessEssentialWSPort',
-	        		loadMethod: 'getBusinessEssentialList',
-	        		timeout: 120000,
-	        		reader: businessEssentialListReader
-	        	}),
-	        	
-	        	fields: [ 'id', 'text' ],
-	
-	        	reader : businessEssentialListReader
-	        });
-	        
+			var businessEssentialListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'businessEssentialListStore',
+				fields : ['text', 'id'],
+				idIndex: 1,
+				data : beData
+			});
+			
 	        return businessEssentialListStore;
 		},
 		
 		createApplicationCat2ListStore: function() {
-			var applicationCat2ListRecord = Ext.data.Record.create([{
-				name: 'applicationCat1Id'
-			}, {
-				name: 'id',
-				mapping: 'applicationCat2Id'
-			}, {
-				name: 'text',
-				mapping: 'applicationCat2Text'
-			}, {
-				name: 'guiSAPNameWizard',
-				mapping: 'guiSAPNameWizard'
-			}]);
-		
-			var applicationCat2ListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'applicationCat2Id'//'id'
-			}, applicationCat2ListRecord);
-		
-			var applicationCat2ListStore = new Ext.data.XmlStore({
-				autoDestroy: true,
+			var applicationCat2ListStore = new Ext.data.ArrayStore(
+			{
 				storeId: 'applicationCat2ListStore',
-				autoLoad: false,
-				
-				proxy: new Ext.ux.soap.SoapProxy({
-					url: webcontext + '/ApplicationCat2WSPort',
-					loadMethod: 'getApplicationCat2List',//'findApplicationCat2ByApplicationKat1Id',
-					timeout: 120000,
-					reader: applicationCat2ListReader
-				}),
-				
-//				baseParams: {
-//					anwendungKat1Id: 5//0 5
-//				},
-				
-				fields: [ 'applicationCat1Id', 'id', 'text', 'guiSAPNameWizard' ],
-	
-				reader: applicationCat2ListReader
-				
-				//A1
-//				listeners: {
-//					beforeload: function(store, options) {
-//						applicationCat2ListStore.baseParams.anwendungKat1Id = selectedCiCat1Id;
-//					}
-//				}
+				fields : ['id', 'applicationCat1Id', 'text', 'guiSAPNameWizard'],
+				idIndex: 0,
+				data : applicationCat2Data
 			});
+			
+	        return applicationCat2ListStore;
 	
-			return applicationCat2ListStore;
 		},
 		
 		createLifecycleStatusListStore: function() {
-			var lifecycleStatusListRecord = Ext.data.Record.create([
-   	            { name: 'id', mapping: 'lcStatusId' },
-	            { name: 'lcSubStatusId' },
-	            { name: 'tableId', type: 'int' },
-	            { name: 'text', mapping: 'lcStatus' }
-	        ]);
-	
-			var lifecycleStatusListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'lcSubStatusId'
-			}, lifecycleStatusListRecord); 
-	
-			var lifecycleStatusListStore = new Ext.data.XmlStore({
-				autoDestroy: true,
-				autoLoad: false,
+			var lifecycleStatusListStore = new Ext.data.ArrayStore(
+			{
 				storeId: 'lifecycleStatusListStore',
-				
-	          	proxy: new Ext.ux.soap.SoapProxy({
-	          		url: webcontext +'/AIRToolsWSPort',
-	          		loadMethod: 'getLifecycleStatusList',
-	          		timeout: 120000,
-	          		reader: lifecycleStatusListReader
-	          	}),
-	          	
-	          	fields: [ 'id', 'lcSubStatusId', 'text', 'tableId' ]
-	        });
+				fields : ['id', 'lcSubStatusId', 'tableId', 'text'],
+				idIndex: 0,
+				data : lifecycleStatusData
+			});
 			
-			return lifecycleStatusListStore;
+	        return lifecycleStatusListStore;
 		},
 		
 		createOperationalStatusListStore: function() {
-			var operationalStatusListRecord = Ext.data.Record.create([
-	            {name: 'text', mapping: 'operationalStatusEn'},
-	            {name: 'id', mapping: 'operationalStatusId'}
-	        ]);
-	
-	        var operationalStatusListReader = new Ext.data.XmlReader({
-	            record: 'return',
-	            idProperty: 'id'
-	        }, operationalStatusListRecord); 
-	
-	        var operationalStatusListStore = new Ext.data.XmlStore({
-	            autoDestroy: true,
-	            storeId: 'operationalStatusListStore',
-	            autoLoad: false,
-	            
-	        	proxy: new Ext.ux.soap.SoapProxy({
-	        		url: webcontext +'/AIRToolsWSPort',
-	        		loadMethod: 'getOperationalStatusList',
-	        		timeout: 120000,
-	        		reader: operationalStatusListReader
-	        	}),
-	        	
-	        	fields: [ 'id', 'text' ],
-	
-	        	reader: operationalStatusListReader
-	        });
-	        
+			var operationalStatusListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'operationalStatusListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : oprationalStatusData
+			});
+			
 	        return operationalStatusListStore;
 		},
 		
 		createCategoryBusinessListStore: function() {
-			var categoryBusinessListRecord = Ext.data.Record.create([
-	        	{name: 'id', mapping: 'categoryBusinessId'},
-	        	{name: 'text', mapping: 'categoryBusinessName'}
-	        ]);
-	
-	        var categoryBusinessListReader = new Ext.data.XmlReader({
-	            record: 'return',
-	            idProperty: 'categoryBusinessId'//'id'
-	        }, categoryBusinessListRecord); 
-	
-	        var categoryBusinessListStore = new Ext.data.XmlStore({
-	            autoDestroy: true,
-	            storeId: 'categoryBusinessListStore',
-	            autoLoad: false,
-	            
-	        	proxy: new Ext.ux.soap.SoapProxy({
-	        		url: webcontext +'/AIRToolsWSPort',
-	        		loadMethod: 'getCategoryBusinessList',
-	        		timeout: 120000,
-	        		reader: categoryBusinessListReader
-	        	}),
-	        	
-	        	fields: [ 'id', 'text' ],
-	
-	        	reader: categoryBusinessListReader
-	        });
-	        
+			var categoryBusinessListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'categoryBusinessListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : categoryBusinessData
+			});
+			
 	        return categoryBusinessListStore;
 		},
 		
@@ -679,19 +307,8 @@ AIR.AirStoreFactory = function() {
 		       		reader: itsecUserOptionListReader
 		       	}),
 		       
-//		       	fields: [ 'id', 'itsecUserOptionId', 'itsecUserOptionName',	'itsecUserOptionValue' ],
-		
 		       	reader: itsecUserOptionListReader
 		       	
-//		       	listeners: {
-//		       		beforeload: function(store, options) {
-//		       			itsecUserOptionListStore.baseParams.cwid = cwid;
-//		       		}
-	//	       		load: function(store, records, options) {
-	//	       		   	handleUserOptions();
-	//	       		   	inactivateButtonSaveUserOptions();
-	//	       		}
-//		       	}
 			});
 			
 			return itsecUserOptionListStore;
@@ -762,103 +379,41 @@ AIR.AirStoreFactory = function() {
 		
 		
 		createProcessListStore: function() {
-			var processListRecord = Ext.data.Record.create([
-                {name: 'text', mapping: 'processName'},
-                {name: 'id', mapping: 'processId'}
-            ]);
-
-			var processListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'id'
-			}, processListRecord); 
-
-			var processListStore = new Ext.data.XmlStore({
-				autoDestroy: true,
+			var processListStore = new Ext.data.ArrayStore(
+			{
 				storeId: 'processListStore',
-				autoLoad: false,
-				
-				proxy: new Ext.ux.soap.SoapProxy({
-	          		url: webcontext +'/AIRToolsWSPort',
-	          		loadMethod: 'getProcessList',
-	          		timeout: 120000,
-	          		reader: processListReader
-	          	}),
-	          	
-	          	fields: [ 'id', 'text' ],
-	
-	          	reader: processListReader
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : processData
 			});
 			
-			return processListStore;
+	        return processListStore;
+
 		},
 		
 		createApplicationCat1ListStore: function() {
-			var applicationCat1ListRecord = Ext.data.Record.create([ {
-				name: 'id',
-				mapping: 'applicationCat1Id'
-			}, {
-				name: 'text',
-				mapping: 'applicationCat1Text'
-			}, {
-				name: 'english',
-				mapping: 'applicationCat1En'
-			}]);
-	
-			var applicationCat1ListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'id'
-			}, applicationCat1ListRecord);
-	
-			var applicationCat1ListStore = new Ext.data.XmlStore({
-				autoDestroy : false,
+			
+			var applicationCat1ListStore = new Ext.data.ArrayStore(
+			{
 				storeId: 'applicationCat1ListStore',
-				autoLoad: true,
-				
-				proxy: new Ext.ux.soap.SoapProxy({
-					url: webcontext + '/ApplicationCat1WSPort',
-					loadMethod: 'getApplicationCat1List',
-					timeout: 120000,
-					reader: applicationCat1ListReader
-				}),
-				
-				fields: [ 'id', 'text', 'english' ],
-
-				reader: applicationCat1ListReader
+				fields : ['id', 'text', 'english'],
+				idIndex: 0,
+				data : appCat1Data
 			});
 			
-			return applicationCat1ListStore;
+	        return applicationCat1ListStore;
 		},
 		
 		createDatabaseDisplayNameListStore: function() {
-			var databaseDisplayNameListRecord = Ext.data.Record.create([ {
-				name: 'id'
-			}, {
-				name: 'text'
-			}]);
-	
-			var databaseDisplayNameListReader = new Ext.data.XmlReader({
-				record: 'return'
-				// record: 'viewdataDTO'
-			}, databaseDisplayNameListRecord); 
-	
-			var databaseDisplayNameListStore = new Ext.data.XmlStore({
-			    autoDestroy: true,
-			    storeId: 'databaseDisplayNameListStore',
-			    autoLoad: false,
-			    
-				proxy: new Ext.ux.soap.SoapProxy({
-					url : webcontext +'/AIRToolsWSPort',
-					loadMethod: 'getDatabaseDisplayName',
-					timeout : 120000,
-					reader : databaseDisplayNameListReader
-				}),
-				
-				fields: [ 'id', 'text', 'return' ],
-
-				reader: databaseDisplayNameListReader
+			var databaseDisplayNameListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'databaseDisplayNameListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : databaseData
 			});
 			
-			return databaseDisplayNameListStore;
+	        return databaseDisplayNameListStore;
 		},
 		
 		createLanguageHelpStore: function() {
@@ -922,8 +477,6 @@ AIR.AirStoreFactory = function() {
 			        {name: 'dynamicWindowOKButtonText'},
 			        {name: 'objectType'},
 					{name: 'notRelevant'},
-//			        {name: 'applicationOwner'},
-//			        {name: 'applicationManager'},
 			        {name: 'both'},
 			        {name: 'lifecycleStatus'},
 			        {name: 'organisationalScope'},
@@ -1454,7 +1007,7 @@ AIR.AirStoreFactory = function() {
 			return this.createLanguageToolTipStore('DE');
 		},
 		createLanguageToolTipStore: function(language) {
-			var url = language == 'de' || language == 'DE' ? 'conf/lang/german_tooltips.xml' : 'conf/lang/english_tooltips.xml';//(*9) lang/ /AIR/htdocs/lang/
+			var url = language == 'de' || language == 'DE' ? 'conf/lang/german_tooltips.xml' : 'conf/lang/english_tooltips.xml';
 			
 			var languageToolTipStore = new Ext.data.XmlStore({
 			    autoLoad: false,
@@ -1767,36 +1320,16 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createCiTypeListStore: function() {
-			var ciTypeListRecord = Ext.data.Record.create([
-                {name: 'id', type: 'int'},
-				{name: 'text', mapping: 'ciTypeName'},
-				{name: 'ciTypeId', type: 'int'},
-				{name: 'ciSubTypeId', type: 'int'},
-				{name: 'sortId', type: 'int'}
-		    ]);
-		
-		    var ciTypeListReader = new Ext.data.XmlReader({
-		    	record: 'return',//return ciTypeDTO
-		        idProperty: 'id'//'ciTypeName'
-		    }, ciTypeListRecord); 
+			var ciTypeListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'ciTypeListStore',
+				fields : ['id', 'text', 'ciTypeId', 'ciSubTypeId', 'sortId'],
+				idIndex: 0,
+				data : ciTypeData
+			});
 			
-		    var ciTypeListStore = new Ext.data.XmlStore({
-		    	autoDestroy: true,
-		    	storeId: 'ciTypeListStore',
-		    	autoLoad: false,
-		    	
-		      	proxy: new Ext.ux.soap.SoapProxy({
-		      		url: webcontext + '/AIRToolsWSPort',
-		      		loadMethod: 'getCiTypes',
-		      		timeout: 120000,
-		      		reader: ciTypeListReader
-		      	}),
-		    	
-		      	fields: [ 'id', 'text', 'ciTypeId', 'ciSubTypeId', 'sortId' ],//für store.sort
-		      	reader: ciTypeListReader
-		    });
-		    
-		    return ciTypeListStore;
+			return ciTypeListStore;
+			
 		},
 		
 		createDwhEntityListStore: function() {
@@ -1901,95 +1434,38 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createOrganisationalScopeListStore: function() {
-			var organisationalScopeListRecord = Ext.data.Record.create([
- 			     { name: 'id', mapping: 'organisationalScopeId' },
- 			     { name: 'name', mapping: 'organisationalScopeTxt' }
- 			]);
- 			
- 			var organisationalScopeListReader = new Ext.data.XmlReader({
- 			    record: 'return',
- 			    idProperty: 'id'
- 			}, organisationalScopeListRecord); 
- 			
- 			var organisationalScopeListStore = new Ext.data.XmlStore({
- 			    autoDestroy: true,
- 			    storeId: 'organisationalScopeListStore',
- 			    autoLoad: false,
- 			    
- 				proxy: new Ext.ux.soap.SoapProxy({
- 					url: webcontext +'/AIRToolsWSPort',
- 					loadMethod: 'getOrganisationalScopeList',
- 					timeout: 120000,
- 					reader: organisationalScopeListReader
- 				}),
- 				
- 				fields: [ 'id', 'name' ],
-
- 				reader: organisationalScopeListReader
- 			});
- 			
- 			return organisationalScopeListStore;
+			var organisationalScopeListStore = new Ext.data.ArrayStore(
+				{
+					storeId: 'organisationalScopeListStore',
+					fields : ['id', 'name'],
+					idIndex: 0,
+					data : oScopeData
+				});
+			
+			return organisationalScopeListStore;
  		},
 		
 		createLoadClassListStore: function() {
-			var loadClassListRecord = Ext.data.Record.create([
-			     {name: 'text', mapping: 'loadClassTxt'},
-			     {name: 'id', mapping: 'loadClassId'}
-			]);
-			
-			var loadClassListReader = new Ext.data.XmlReader({
-			    record: 'return',
-			    idProperty: 'id'
-			}, loadClassListRecord); 
-			
-			var loadClassListStore = new Ext.data.XmlStore({
-			    autoDestroy: true,
-			    storeId: 'loadClassListStore',
-			    autoLoad: false,
-			    
-				proxy: new Ext.ux.soap.SoapProxy({
-					url: webcontext +'/AIRToolsWSPort',
-					loadMethod: 'getLoadClassList',
-					timeout: 120000,
-					reader: loadClassListReader
-				}),
-				
-				fields: [ 'id', 'text' ],
-
-				reader: loadClassListReader
+			var loadClassListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'loadClassListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : loadClassData
 			});
-			
+		
 			return loadClassListStore;
 		},
 		
 		createServiceModelListStore: function() {
-			var serviceModelListRecord = Ext.data.Record.create([
-			     {name: 'text', mapping: 'serviceModelTxt'},
-			     {name: 'id', mapping: 'serviceModelId'}
-			]);
-			
-			var serviceModelListReader = new Ext.data.XmlReader({
-			    record: 'return',
-			    idProperty: 'id'
-			}, serviceModelListRecord); 
-			
-			var serviceModelListStore = new Ext.data.XmlStore({
-			    autoDestroy: true,
-			    storeId: 'serviceModelListStore',
-			    autoLoad: false,
-			    
-				proxy: new Ext.ux.soap.SoapProxy({
-					url: webcontext +'/AIRToolsWSPort',
-					loadMethod: 'getServiceModelList',
-					timeout: 120000,
-					reader: serviceModelListReader
-				}),
-				
-				fields: [ 'id', 'text' ],
-
-				reader: serviceModelListReader
+			var serviceModelListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'serviceModelListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : serviceModelData
 			});
-			
+		
 			return serviceModelListStore;
 		},
 
@@ -2024,111 +1500,20 @@ AIR.AirStoreFactory = function() {
 		
 		//====================== store refacs ======================
 		createGxpFlagListStore: function() {
-			var gxpFlagListRecord = Ext.data.Record.create([
-	            { name: 'id', mapping: 'gxpFlagId' },
-	            { name: 'text', mapping: 'gxpFlagTxt' }
-	       	]);
-	
-			var gxpFlagListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'id'
-			}, gxpFlagListRecord); 
-			
-			var gxpFlagListStore = new Ext.data.XmlStore({
-			    autoDestroy: true,
-			    storeId: 'gxpFlagListStore',
-			    autoLoad: false,
-			    
-				proxy: new Ext.ux.soap.SoapProxy({
-					url: webcontext +'/AIRToolsWSPort',
-					loadMethod: 'getGxpFlagList',
-					timeout: 120000,
-					reader: gxpFlagListReader
-				}),
-				
-				fields: [ 'id',	'text' ],
-	
-				reader : gxpFlagListReader
+			var gxpFlagListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'gxpFlagListStore',
+				fields : ['id', 'text'],
+				idIndex: 0,
+				data : gxpFlagData
 			});
-			
+		
 			return gxpFlagListStore;
 		},
 		//====================== store refacs ======================
 			
 		
-//		createCiConnectionListStore: function() {
-//			var ciConnectionRecordDef = Ext.data.Record.create([
-//	            {name: 'id'},
-//	            {name: 'type'}, 
-//	            {name: 'name'}, 
-//	            {name: 'alias'},
-//	            {name: 'responsible'},
-//	            {name: 'subResponsible'},
-//	            {name: 'category'}, 
-//	            {name: 'tableId'},
-//	            {name: 'ciId'},
-//	            {name: 'direction'},
-//	            {name: 'groupsort'},
-//	            {name: 'status'}
-//	        ]);
-//	
-//	        var ciConnectionListReader = new Ext.data.XmlReader({
-//	            totalProperty: 'countResultSet',
-//	            record: 'viewdataDTO',
-//	            idProperty: 'id'
-//	        }, ciConnectionRecordDef); 
-//	
-//	        var ciConnectionListStore = new Ext.data.GroupingStore({
-//	            autoDestroy: true,
-//	            storeId: 'ciConnectionStore',
-//	            autoLoad: false,
-////	            remoteSort: true,
-//	            pruneModifiedRecords: true,
-//	            
-//	        	proxy: new Ext.ux.soap.SoapProxy({
-//	        		url: webcontext + '/ApplicationWSPort',
-//	        		loadMethod: 'getAllConnections',
-//	        		timeout: 120000,
-//	        		reader: ciConnectionListReader
-//	        	}),
-//	        	
-//	            baseParams: {
-//	    		 	cwid: AIR.AirApplicationManager.getCwid(),
-//	    		 	token: AIR.AirApplicationManager.getToken(),
-//	        		id: -1,
-//	        		start: 0,	
-//	        		limit : 20
-//	        	},
-//	        	
-//	        	fields: [
-//	    	         'id',
-//	    	         'type',
-//	    	         'name',
-//	    	         'alias',
-//	    	         'responsible',
-//	    	         'subResponsible',
-//	    	         'category',
-//	    	         'tableId',
-//	    	         'ciId',
-//	    	         'direction',
-//	    	         'groupsort',
-//	    	         'status'
-//	         	],
-//	        	groupField: 'groupsort',
-//	
-//	            // reader configs
-//	        	reader: ciConnectionListReader,
-//	        	listeners: {
-//	        		beforeload: function(store, options) {
-//	        			ciConnectionListStore.baseParams.cwid = cwid;
-//	        			ciConnectionListStore.baseParams.token= token;
-//	        			ciConnectionListStore.baseParams.applicationId = selectedCIId;
-//	        		}
-//	        	}
-//	        });
-//	        
-//	        return ciConnectionListStore;
-//		},
+
 		
 		createCiItemListStore: function() {
 			var ciItemListRecord = Ext.data.Record.create([
@@ -3474,7 +2859,8 @@ AIR.AirStoreFactory = function() {
 //		    	autoDestroy: true,
 //				autoLoad: false,
 	
-		      	fields: ['id', 'name']
+		      	fields: ['id', 'name'],
+		      	idIndex: 0
 //				reader: idNameReader
 		    });
 		    
@@ -4145,33 +3531,13 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createItsecMassnahmenGapClassListStore: function() {
-			var itsecMassnahmenGapClassRecord = Ext.data.Record.create([
-	             'gapPriority', 'gapClassTextDE', 'gapClassTextEN'
-		    ]);
-		
-		    var itsecMassnahmenGapClassReader = new Ext.data.XmlReader({
-		    	record: 'return',//'gapClassDTO',
-		        idProperty: 'gapPriority'
-		    }, itsecMassnahmenGapClassRecord); 
-			
-		    var itsecMassnahmenGapClassStore = new Ext.data.XmlStore({
-//		    	autoDestroy: true,
-		    	autoLoad: false,
-		    	storeId: 'itsecMassnahmenGapClassStore',
-		    	
-		      	fields: [ 'gapPriority', 'gapClassTextDE', 'gapClassTextEN' ],
-		      	
-		      	proxy: new Ext.ux.soap.SoapProxy({
-		      		url: webcontext + '/ItsecMassnahmenWSPort',
-		      		loadMethod: 'getGapClassList',
-		      		timeout: 120000,
-		      		reader: itsecMassnahmenGapClassReader
-		      	}),
-		    	
-		      	reader: itsecMassnahmenGapClassReader
-		    });
-		    
-//		    itsecMassnahmenGapClassStore.load();
+			var itsecMassnahmenGapClassStore = new Ext.data.ArrayStore(
+					{
+						storeId: 'itsecMassnahmenGapClassStore',
+						fields : ['gapPriority', 'gapClassTextDE', 'gapClassTextEN'],
+						idIndex: 0,
+						data : gapClassData
+					});
 		    
 		    return itsecMassnahmenGapClassStore;
 		},

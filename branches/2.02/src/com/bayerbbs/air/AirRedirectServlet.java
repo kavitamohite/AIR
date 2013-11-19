@@ -10,18 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 
 public class AirRedirectServlet extends HttpServlet {
 	private static final long serialVersionUID = 3518333389804966101L;
 	
-	private static final String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
 	private String redirectPath;
 	
 	public void init(ServletConfig config) {
 		Configuration conf = new AnnotationConfiguration().configure();
 		String dbConnectionUrl = conf.getProperty("hibernate.connection.url");
 		
-		redirectPath = dbConnectionUrl.contains(TRANSBASE_PROD_HOST) ? "/P" : "/Q";//"/AIR-P" : "/AIR-Q"
+		redirectPath = dbConnectionUrl.contains(AirKonstanten.TRANSBASE_PROD_HOST) ? "/P" : "/Q";//"/AIR-P" : "/AIR-Q"
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

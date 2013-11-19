@@ -5,8 +5,13 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
+	public final static String AIR_VERSION = "2.02.003";
+	public final static String COMPRESSEDCODEDIR = "compressed";
+	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
 	public final static String SERVERNAME_PROD = "byzreg.bayer-ag.com";
+	public final static String SERVERNAME_QA = "byzreh.bayer-ag.com";
+	public final static String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
 
 	public final static Long IT_SET_DEFAULT = new Long(11397);
 	public final static Long IT_SET_GERMANY = new Long(10002);

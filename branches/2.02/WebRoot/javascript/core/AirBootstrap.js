@@ -21,19 +21,6 @@ AIR.AirBootstrap = Ext.extend(Object, {
 			if (winW<360) {
 				winW = 360;
 			}
-			var iewarning = new Ext.Window({
-				title: 'Microsoft Internet Explorer',
-				id : 'ieWarningWindow',
-				height: 150,
-				width : 350,
-				html: '<br><br><center><b style="color:red;">Please open AIR within Firefox!<br>Internet Explorer is slow for JavaScript.</b><br><br><input type="button" onclick="Ext.getCmp(\'ieWarningWindow\').close();" value="I accept lower performance\nand will use IE for AIR nevertheless."></center>',
-				closable: false,
-				renderTo: Ext.getBody(),
-				hidden: false,
-				x : winW/2 - 175,
-				y : 100,
-				modal: true
-			});
 		}
 		
 		this.init();
@@ -59,8 +46,8 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		});
 		
 		
-	    Ext.BLANK_IMAGE_URL = 'javascript/lib/extjs/resources/images/default/s.gif';//AIR/htdocs/lib/extjs/resources/images/default/s.gif lib/extjs/resources/images/default/s.gif
-	    Ext.SSL_SECURE_URL = 'javascript/lib/extjs/resources/images/default/s.gif';//AIR/htdocs/lib/extjs/resources/images/default/s.gif lib/extjs/resources/images/default/s.gif
+	    Ext.BLANK_IMAGE_URL = 'javascript/lib/extjs/resources/images/default/s.gif';
+	    Ext.SSL_SECURE_URL = 'javascript/lib/extjs/resources/images/default/s.gif';
 	    
 		Ext.form.Field.prototype.msgTarget = 'side';
 		Ext.isSecure = true;
@@ -95,7 +82,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
         var responseData = Ext.util.JSON.decode(response.responseText);
         
         if(responseData.success) {
-			var tokenCheckUrl = 'jsp/checkTokenAction.jsp';//(*9) /AIR/checkTokenAction.jsp ../checkTokenAction.jsp  ?cwid=' + cwid + '&token=' + token;
+			var tokenCheckUrl = 'jsp/checkTokenAction.jsp';
 			
 	        var params = {
 	    		cwid: responseData.cwid,
@@ -135,9 +122,6 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		if(AAM.isAnwendungsEinsprung()) {
 			var einsprungData = AAM.getEinsprungData();
 			
-//			for(var key in einsprungData)
-//				cookieData[key] = einsprungData[key];
-			
 			cookieData.tableId = einsprungData.tableId;
 			cookieData.ciId = einsprungData.ciId;
 			cookieData.navigation = einsprungData.navigation;
@@ -175,74 +159,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
         AIR.AirStoreManager.setStores(storeMap);
         storeLoader.destroy();
 		
-        /*
-		//TEST
-		var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
-		var roleRecords = [
-
-//		new Ext.data.Record({
-//			id: '4712',
-//			cwid: 'ERCVA',
-//			roleName: AC.USER_ROLE_AIR_APPLICATION_LAYER//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
-//		}),
-		new Ext.data.Record({
-   			id: '4710',
-   			cwid: 'ERCVA',
-   			roleName: AC.USER_ROLE_AIR_DEFAULT//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
-   		}),
-//		new Ext.data.Record({
-//			id: '4713',
-//			cwid: 'ERCVA',
-//			roleName: AC.USER_ROLE_AIR_INFRASTRUCTURE_LAYER//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
-//		}),
-//		new Ext.data.Record({
-//			id: '4711',
-//			cwid: 'ERCVA',
-//			roleName: AC.USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
-//		})
-
-//		new Ext.data.Record({
-//			id: '4714',
-//			cwid: 'ERCVA',
-//			roleName: AC.USER_ROLE_AIR_INFRASTRUCTURE_MANAGER//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
-//		})
-
-//		new Ext.data.Record({
-//			id: '4715',
-//			cwid: 'ERCVA',
-//			roleName: AC.USER_ROLE_AIR_APPLICATION_MANAGER//AC.USER_ROLE_AIR_APPLICATION_LAYER//USER_ROLE_AIR_INFRASTRUCTURE_LAYER USER_ROLE_AIR_ADMINISTRATOR USER_ROLE_DEFAULT
-//		})
-		];
-		
-		rolePersonListStore.removeAll();
-		rolePersonListStore.add(roleRecords);
-		rolePersonListStore.commitChanges();
-		//TEST
-		*/
-		
-        
-        //neu
         this.checkItsecUserOptions(this.launchAir.createDelegate(this));
-    	//neu
-        
-        //alt
-//    	AIR.AirApplicationManager.setLanguage();
-//        AIR.AirAclManager.init();
-//        
-//        var task = new Ext.util.DelayedTask(function() {
-//        	if(this.airLoginWindow)
-//        		this.airLoginWindow.close();
-//        	
-//	    		var startupMask = AIR.AirApplicationManager.getMask('startupMask');
-//	    		startupMask.show();
-////        		myStartupMask.show();
-//	    		
-////	        this.updateTheme();
-//        }.createDelegate(this));
-//        task.delay(500);
-//        
-//        task = new Ext.util.DelayedTask(this.openUi.createDelegate(this));
-//        task.delay(1000);
     },
     
     launchAir: function() {
@@ -255,9 +172,6 @@ AIR.AirBootstrap = Ext.extend(Object, {
         	
 	    		var startMask = AAM.getMask(AC.MASK_TYPE_START);
 	    		startMask.show();
-//        		myStartupMask.show();
-	    		
-//	        this.updateTheme();
         }.createDelegate(this));
         task.delay(500);
         
@@ -290,7 +204,6 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		var params = {
 			cwid: AIR.AirApplicationManager.getCwid(),
 			token: AIR.AirApplicationManager.getToken()
-//			language: 'DE'
 		};
 		
 		var userOptionSaveStore = AIR.AirStoreFactory.createUserOptionSaveStore();
@@ -302,48 +215,26 @@ AIR.AirBootstrap = Ext.extend(Object, {
     
 	
 	openUi: function() {
-//		this.airLoginWindow.close();
-        
-//    	var airMainPanel = new AIR.AirMainPanel();
-//    	airMainPanel.on('beforerender', this.onBeforeAirRendered , this);
-//    	airMainPanel.on('afterrender', this.onAirRendered , this);//render
-//		new AIR.AirViewport(airMainPanel);
 		
 		this.airMainPanel = new AIR.AirMainPanel();
-//		this.airMainPanel.on('render', this.onBeforeAirRendered , this);
-		
-		
 		AIR.AirApplicationManager.afterInit(this.airMainPanel);
-		
-		
+
 		//move to AirApplicationManager::afterInit ?	ciCreateWizardView
 		var lastRenderedView = this.airMainPanel.getCenterView().getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardView').getComponent('ciCreateWizardP2').getComponent('ciCreateAppRequiredView').getComponent('fsContactsGPSCW').getComponent('pGPSCOwningBusinessGroup').getComponent('labeltaGPSCOwningBusinessGroup');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('CiCopyFromView');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciDeleteView');////this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardPagesView').getComponent('ciCreateWizardPage3').getComponent('wizardCiowner').getComponent('tbWizardciResponsible');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('CiDeleteView');//this.airMainPanel.getComponent('ciCenterView').getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardPagesView').getComponent('ciCreateWizardPage3').getComponent('wizardCiowner').getComponent('tbWizardciResponsible');
 		lastRenderedView.on('afterrender', this.onAirRendered , this);//render
 		
-		//ODER das hier ?
-//		if(Ext.isIE) {
-//			document.attachEvent('onload', this.onAirRendered.createDelegate(this), true);
-//		} else {
-//			document.addEventListener('load', this.onAirRendered.createDelegate(this), true);
-//		}
-		
-		
 		var viewPort = new AIR.AirViewport(this.airMainPanel);
 
-//		AIR.AirApplicationManager.afterInit(this.airMainPanel);//airViewport
 		
 		
 		var delayedTask = new Ext.util.DelayedTask(function() {
 			var airTaskManager = new AIR.AirTaskManager();
-//			airTaskManager.createCheckAuthStore(AIR.AirApplicationManager.getCwid(), AIR.AirApplicationManager.getToken());//responseData.cwid, responseData.token
 			airTaskManager.startDbSessionCheckTask(AIR.AirApplicationManager.getCwid(), AIR.AirApplicationManager.getToken());//orig: keine params
 		});
-		delayedTask.delay(10000);
+		delayedTask.delay(5000);
 	},
 	
 	onTokenCheckFailure: function(response, options) {
-//		obj = Ext.util.JSON.decode(response.responseText);
-		
 		AAM.logout();
 	},
 	
@@ -351,38 +242,20 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		if(window.console)
 			window.console.log('onBeforeAirRendered');
 		
-//		this.airMainPanel.getEl().mask();
-//		var startupMask = AIR.AirApplicationManager.getMask('startupMask');
-//		startupMask.show();
 	},
 	
 	onAirRendered: function(lastRenderedView) {//airMainPanel
-//		var ciInfoView = this.airMainPanel.getComponent('ciCenterView');
-//		var ciTitleView = this.airMainPanel.getComponent('ciTitleView');
-//		var navigationV = this.airMainPanel.getComponent('ciNavigationView');
-//		var myPlaceHomeView = this.airMainPanel.getComponent('ciCenterView').getComponent('myplaceHomePanel');
-//		
-//		ciInfoView.update(AC.HELP_ID_INFOTEXT);
-//		ciTitleView.update(language);
-//		myPlaceHomeView.update();
-//		navigationV.update();
-//		this.airMainPanel.update();
-//		AIR.AirAclManager.init();//here instead of launchAir to be done only at stratup?
-		
 		AAM.restoreUiState(this.airMainPanel);//schon hier, da nötig für CiEditView.updateLabels() wegen tableId
 		
 		this.airMainPanel.update();
 		this.airMainPanel.updateLabels(AAM.getLabels());
 		//performance Verbesserung: erst rendern wenn user zum ersten Mal über einem Label anhält, anstatt alles nach App Start.
-		this.airMainPanel.updateToolTips(AAM.getToolTips());//AIR.AirApplicationManager.getLanguage()
+		this.airMainPanel.updateToolTips(AAM.getToolTips());
 		
 		var startMask = AAM.getMask(AC.MASK_TYPE_START);
 		startMask.hide();
 		
 		AAM.restoreUi(this.airMainPanel);
-				
-		//Angabe in einer StatusBar: wie lange das Rendern und das Store Laden gedauert hat. Und nach spätestens 5 Sekunden verschwindet Meldung
-//		this.fireEvent('airAction', this, 'airReady');//, data
 	}
 });
 Ext.reg('AIR.AirBootstrap', AIR.AirBootstrap);
