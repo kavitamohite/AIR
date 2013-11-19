@@ -1,6 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
-import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.dto.KeyValueEnDTO;
 
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "StandortWSService", portName = "StandortWSPort")
@@ -34,7 +34,7 @@ public class StandortWSDelegate {
 //	public KeyValueDTO[] findSitesByLandId(DefaultDataInput input) {//DefaultDataInput input
 //		return standortWS.findSitesByLandId(input);
 //	}
-	public KeyValueDTO[] findSitesByLandId(DefaultDataInput detailInput) {//KeyValueOutput/CiDetailParameterInput
+	public KeyValueEnDTO[] findSitesByLandId(DefaultDataInput detailInput) {//KeyValueOutput/CiDetailParameterInput
 //		KeyValueOutput out = new KeyValueOutput();
 //		out.setKeyValueDTO(standortWS.findSitesByLandId(detailInput.getCiId()));//input
 //		return out;

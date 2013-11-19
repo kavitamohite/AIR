@@ -2,7 +2,7 @@ package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Standort;
-import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.dto.KeyValueEnDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
 import com.bayerbbs.applrepos.hibernate.BaseHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
@@ -162,7 +162,7 @@ public class StandortWS {
 		return output;
 	}
 
-	public KeyValueDTO[] findSitesByLandId(Long id) {//DefaultDataInput input
+	public KeyValueEnDTO[] findSitesByLandId(Long id) {//DefaultDataInput input
 		return StandortHbn.findSitesByLandId(id);//input
 	}
 	

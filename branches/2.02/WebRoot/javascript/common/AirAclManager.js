@@ -3,7 +3,6 @@ Ext.namespace('AIR');
 AIR.AirAclManager = function() {
 	
 	return {
-//		needed: '<span class="x-form-text-required"> </span>',
 
 		aclOldValue: '',
 		specialKeyPressed: false,
@@ -17,7 +16,7 @@ AIR.AirAclManager = function() {
 			        return val && val.length > 0;
 			    },
 			    // vtype Text property: The error text to display when the validation function returns false
-			    requiredText: 'This field ist mandatory.' // requiredText:
+			    requiredText: 'This field ist mandatory.'
 			});
 		},
 		
@@ -46,37 +45,11 @@ AIR.AirAclManager = function() {
 					case 'combo':
 					case 'filterCombo':
 						item.setHideTrigger(false);
-						/*if(item.el.dom.className.indexOf('x-item-disabled')>-1) {
-							var cls = item.el.dom.className.split(' ');
-							item.el.dom.className = '';
-							for(var x=0;x<cls.length;++x)
-								if(cls[x]!=='x-item-disabled')
-									item.el.dom.className += ' '+ cls[x];
-								
-							
-						}*/
 					    break;
 					case 'listview'://listview grid
 						item.show();
 						Ext.getCmp(item.id + 'Hidden').hide();
-						
-						
-						
-//						Ext.getCmp(item.id + 'Hidden').setValue('');
-//						sValue = '';
-						
-//						item.getSelectionModel().unlock();
 						break;
-//					case 'grid':
-//						addbutton = Ext.getCmp(item.id + 'AddButton');
-//						if(addbutton!==undefined) {
-//							addbutton.enable();
-//						}
-//						removebutton = Ext.getCmp(item.id + 'RemoveButton');
-//						if(removebutton!==undefined) {
-//							removebutton.enable();
-//						}
-//						break;
 				}
 			} else {
 				switch (item.getXType()) {
@@ -103,40 +76,19 @@ AIR.AirAclManager = function() {
 					case 'combo':
 					case 'filterCombo':
 						item.setHideTrigger(true);
-						/*if(item.el.dom.className.indexOf('x-item-disabled') == -1)
-							item.el.dom.className += ' x-item-disabled';*/
-						
 						item.clearInvalid();
 						if(Ext.isIE)
 							item.el.dom.disabled = true;//combo NOT shot in IE
 						else
 							item.disable();//combo shot in IE
-							//item.setDisabled(true);//combo shot in IE
 
 						break;
 					case 'listview'://listview grid
-//						item.enable();
-//						sValue = '';
-//						Ext.each(item.getSelectedRecords(), function (recitem, index, allItems) {
-//							sValue += recitem.get('text') + '\n';
-//						});
-//						Ext.getCmp(item.id + 'Hidden').setValue(sValue);
 						item.hide();
 						Ext.getCmp(item.id + 'Hidden').show();
 						item.disable();
 						
-//						item.getSelectionModel().lock();
 						break;
-//					case 'grid':
-//						addbutton = Ext.getCmp(item.id + 'AddButton');
-//						if(addbutton!==undefined) {
-//							addbutton.disable();
-//						}
-//						removebutton = Ext.getCmp(item.id + 'RemoveButton');
-//						if(removebutton!==undefined) {
-//							removebutton.disable();
-//						}
-//						break;
 				}
 			}
 		},
@@ -180,7 +132,6 @@ AIR.AirAclManager = function() {
 		setLabelNeeded: function(item) {
 			switch (item.getXType()) {
 				case 'checkbox':
-//					item.el.dom.nextSibling.addClass('x-form-text-required');
 					Util.addClass(item.el.dom.nextSibling, 'x-form-text-required');
 					break;
 				case 'textfield':
@@ -190,24 +141,16 @@ AIR.AirAclManager = function() {
 				case 'radiogroup':
 					if(item.label) {
 						item.label.dom.style.fontWeight = 'normal';
-//						if(item.label.dom.className.indexOf('x-form-text-required') == -1) {
-//							item.label.dom.className += ' x-form-text-required';
-//						}
-						
 						item.label.addClass('x-form-text-required');
 					} else {
 						var labelItem = Ext.getCmp('label' + item.id);
 						if(labelItem) {
 							labelItem.el.dom.style.fontWeight = 'normal';
-//							if(labelItem.el.dom.className.indexOf('x-form-text-required')==-1) {
-//								labelItem.el.dom.className += ' x-form-text-required';
-//							}
-							
 							labelItem.el.addClass('x-form-text-required');
 						}
 					}
 					break;
-				case 'listview'://grid
+				case 'listview':
 					var fieldsetItem = item.findParentByType('fieldset');
 					if(fieldsetItem) {
 						fieldsetItem.el.dom.firstChild.firstChild.style.fontWeight = 'bold';
@@ -225,7 +168,6 @@ AIR.AirAclManager = function() {
 		setLabelDefault: function(item) {
 			switch (item.getXType()) {
 				case 'checkbox':
-//					item.el.dom.nextSibling.removeClass('x-form-text-required');
 					Util.removeClass(item.el.dom.nextSibling, 'x-form-text-required');
 					break;
 				case 'textfield':
@@ -236,29 +178,12 @@ AIR.AirAclManager = function() {
 						item.label.dom.style.fontWeight = 'normal';
 						
 						item.label.removeClass('x-form-text-required');
-//						if(item.label.dom.className.indexOf('x-form-text-required')>-1) {
-//							var cls = item.label.dom.className.split(' ');
-//							item.label.dom.className = '';
-//							
-//							for(var x=0;x<cls.length;++x)
-//								if(cls[x]!=='x-form-text-required')
-//									item.label.dom.className += ' '+ cls[x];
-//						}
 					} else {
 						var labelItem = Ext.getCmp('label' + item.id);
 						if(labelItem) {
 							labelItem.el.dom.style.fontWeight = 'normal';
 							
 							labelItem.el.removeClass('x-form-text-required');
-//							if(labelItem.el.dom.className.indexOf('x-form-text-required')>-1) {
-//								var cls = labelItem.el.dom.className.split(' ');
-//								labelItem.el.dom.className = '';
-//								
-//								for(var x=0;x<cls.length;++x)
-//									if(cls[x]!=='x-form-text-required')
-//										labelItem.el.dom.className += ' '+ cls[x];
-//								
-//							}
 						}
 					}
 					
@@ -281,8 +206,6 @@ AIR.AirAclManager = function() {
 					}
 					break;
 				case 'label':
-//					this.setNecessity(item);
-					
 					if(item.el) {
 						item.el.dom.style.fontWeight = 'normal';
 						item.el.removeClass('x-form-text-required');
@@ -340,36 +263,6 @@ AIR.AirAclManager = function() {
 						item.vtype = null;
 						item.allowBlank = true;
 						break;
-					/*case 'optional':
-	//					 * optional: Diese Attribute sind nicht hervorzuheben. 
-	//					 * Sie können leer gespeichert werden.
-						this.setLabelDefault(item);
-						item.vtype = null;
-						item.allowBlank = true;
-						break;
-					case 'by reference':
-	//					 * by reference: Felder sind nicht editierbar. 
-	//					 * Deren Inhalt ergibt sich in Abhängigkeit von einem anderen Attribut.
-	//					 * (z.B. Primary Function wird in Abhängigkeit der Category gesetzt)
-						this.setLabelDefault(item);
-						item.vtype = null;
-						item.allowBlank = true;
-						item.setDisabled(true);
-						break;
-					case 'dependent on other':
-	//					 * dependent on other: Pflichtfeld (needed), falls ein Attribut einen bestimmten Wert hat. 
-	//					 * Programmintern abzubilden. 
-	//					 * (z.B. ITSecGroup oder Link sind Pflichtfelder (needed), 
-	//					 * wenn relevanceGR1435 oder relevanceGR1920 gesetzt sind)
-						this.setLabelDefault(item);
-						item.vtype = null;
-						item.allowBlank = true;
-						break;
-					default: 
-						this.setLabelDefault(item);
-						item.vtype = null;
-						item.allowBlank = true;
-						break;*/
 				}
 			} else {
 				this.setLabelDefault(item);
@@ -377,15 +270,12 @@ AIR.AirAclManager = function() {
 		},
 		
 		isEditable: function(item) {
-//			aclRec = applicationDetailStore.getRange(0,0);
-//			insertSource = aclRec[0].get('insertQuelle');
-			
 			var isAdmin = AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
 			if(isAdmin)
 				return true;
 			
-			var appDetail = AAM.getAppDetail();//applicationDetailStore.data.items[0].data;//AIR.ApplicationManager.getAppDetail();(#3)
-			var insertSource = appDetail.insertQuelle;
+			var appDetail = AAM.getAppDetail();
+			var insertSource = (appDetail==undefined || appDetail.insertQuelle==undefined?'':appDetail.insertQuelle);
 			
 			var index = this.aclStore.findExact('id', item.id);
 			var editableIfSource = this.aclStore.getAt(index).get('EditableIfSource');
@@ -404,7 +294,6 @@ AIR.AirAclManager = function() {
 			if(isAdmin)
 				return true;
 			
-//			var appDetail = AIR.AirApplicationManager.getAppDetail();//applicationDetailStore.data.items[0].data;//AIR.ApplicationManager.getAppDetail();(#3)
 			var userOperational = appDetail.relevanceOperational;
 			var userStrategic = appDetail.relevanceStrategic;
 			
@@ -455,9 +344,6 @@ AIR.AirAclManager = function() {
 			// RFC 8225
 			
 			
-			//ORIG
-//			var appDetail = AIR.AirApplicationManager.getAppDetail();
-//			this.setFormElementEnable(item, this.isRelevance(item, appDetail));
 		},
 
 		specialKeyPress: function(e) {
@@ -500,9 +386,7 @@ AIR.AirAclManager = function() {
 						case 'combo':
 						case 'filterCombo':
 						case 'checkbox':
-							valid = aclItemCmp.isValid();//valid && aclItemCmp.isValid();
-	//						if(!valid)
-	//							var x;
+							valid = aclItemCmp.isValid();
 							break;
 						default:
 							break;
@@ -549,8 +433,6 @@ AIR.AirAclManager = function() {
 									)
 										return true;
 									
-//									if(!draftItemCmp.getValue())
-//										return true;
 									break;
 								case 'listview':
 									var scopeRecords = draftItemCmp.getSelectedRecords();
@@ -570,10 +452,8 @@ AIR.AirAclManager = function() {
 						var draftItemCmp = Ext.getCmp(item.data.id);
 						var isDraft = draftItemCmp &&
 									  data.tableId == AC.TABLE_ID_APPLICATION &&
-								      //data.applicationCat1Id == AC.APP_CAT1_APPLICATION &&
-								     //(draftItemCmp.id == 'gpsccontactCiOwner' || draftItemCmp.id == 'gpsccontactSupportGroup' || 
 								    		 (draftItemCmp.id == 'ciResponsible') &&
-								    (draftItemCmp.getValue().length === 0);//!draftItemCmp.getValue() || 
+								    (draftItemCmp.getValue().length === 0); 
 						if(isDraft)
 							return isDraft;
 					}
@@ -598,9 +478,7 @@ AIR.AirAclManager = function() {
 			var labels = AAM.getLabels();
 			
 			
-//			Ext.each(aclItems, function(item, index, allItems) {
 			for(var i = 0; i < aclItems.length; i++) {
-//				if(item.data.Mandatory === 'mandatory' && item.data.id.charAt(item.data.id.length - 1) !== 'W') { //'required'
 				if(aclItems[i].data.Mandatory === 'mandatory' && aclItems[i].data.id.charAt(aclItems[i].data.id.length - 1) !== 'W') { //'required'
 					var uiElement = Ext.getCmp(aclItems[i].data.id);
 					
@@ -613,7 +491,7 @@ AIR.AirAclManager = function() {
 
 								//nur wenn tableId == AC.TABLE_ID_APPLICATION wird bei, aufgrund von Benutzerrechten deaktivierten, Pflichtfeldern nicht auf ein auszufüllendes Feld hingewiesen
 								if((!uiElement.disabled || data.tableId != AC.TABLE_ID_APPLICATION) && (!uiElement.getValue() || uiElement.getValue().length === 0)) {
-									var label = this.getLabel(uiElement, labels, data);//labels[uiElement.id] || uiElement.label.dom.innerHTML;
+									var label = this.getLabel(uiElement, labels, data);
 									if(label)											
 										incompleteFieldList += label + ', ';
 								}
@@ -631,7 +509,6 @@ AIR.AirAclManager = function() {
 					}
 				}
 			}
-//			});
 			
 			if(incompleteFieldList.length > 2)
 				incompleteFieldList = incompleteFieldList.substring(0, incompleteFieldList.length - 2);
@@ -647,8 +524,8 @@ AIR.AirAclManager = function() {
 			var t = data.tableId.toString();
 			var isCiType = !aclCiType || 
 							aclCiType.length === 0 || 
-							aclCiType === t || //data.tableId.toString()
-							Util.isValueInCommaString(aclCiType, t);//data.tableId.toString()
+							aclCiType === t ||
+							Util.isValueInCommaString(aclCiType, t);
 			var isCiSubType = !data.applicationCat1Id || aclCiSubType.length === 0 || aclCiSubType === data.applicationCat1Id.toString() || aclCiSubType.indexOf(data.applicationCat1Id.toString()) > -1;
 			
 			//(noch) nicht konfigurierbare Sonderlocke
@@ -657,39 +534,26 @@ AIR.AirAclManager = function() {
 			
 			return isCiType && isCiSubType;
 			
-//			var index = this.aclStore.find('id', uiElement.id);
-//			var accessMode = this.aclStore.getAt(index);
-			
-//			return !(data.applicationCat1Id !== AC.APP_CAT1_APPLICATION && AC.APP_CAT1_ONLY_FIELDS.indexOf(reqItemCmp.getId()) > -1);
 		},
 		
 		
 		
 		
 		setAccessMode: function(uiElement, appDetail) {
-			//var accessMode = this.aclStore.getById(uiElement.getId());//.get('Mandatory');
 			var index = this.aclStore.findExact('id', uiElement.id);
 			var accessMode = this.aclStore.getAt(index);//.get('Mandatory');
 			
 			this.setEditable(uiElement);//editableIfSource and isAdmin check
 			
-//			if(!uiElement.disabled) {
-				this.setRelevance(uiElement, appDetail);
-				
-				
-				//var index = this.aclStore.find('id', uiElement.id);
-				//var necessity = this.aclStore.getAt(index).get('Mandatory');
-				
-				
-				this.setMandatory(uiElement, accessMode, appDetail);//accessMode.data.Mandatory ohne appDetail
-				this.setAttributeProperty(
+			this.setRelevance(uiElement, appDetail);
+			this.setMandatory(uiElement, accessMode, appDetail);//accessMode.data.Mandatory ohne appDetail
+			this.setAttributeProperty(
 					uiElement, 
 					accessMode.data.attributeType, 
 					accessMode.data.attributeLength, 
 					accessMode.data.attributeMask,
 					accessMode.data.Mandatory
 				);
-//			}
 		},
 		
 		
@@ -735,12 +599,7 @@ AIR.AirAclManager = function() {
 		},
 		
 		getLabel: function(uiElement, labels, data) {
-			/*if(uiElement.id == 'gpsccontactCiOwner' || uiElement.id == 'gpsccontactSupportGroup') {
-				if(data.tableId != AC.TABLE_ID_APPLICATION)// && data.applicationCat1Id != AC.APP_CAT1_APPLICATION
-					return labels[uiElement.id] || uiElement.label.dom.innerHTML;
-			} else {*/
-				return labels[uiElement.id] || uiElement.label.dom.innerHTML;
-			//}
+			return labels[uiElement.id] || uiElement.label.dom.innerHTML;
 		}
 		//===================================================================================================================
     };

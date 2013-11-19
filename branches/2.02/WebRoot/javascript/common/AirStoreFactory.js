@@ -1760,7 +1760,8 @@ AIR.AirStoreFactory = function() {
 		createSiteListStore: function() {
 			var siteRecord = Ext.data.Record.create([
  			    { name: 'id', type: 'int' },
- 			    'name'
+ 			    'name',
+ 			    'nameEn'
  			]);
 
  			var siteReader = new Ext.data.XmlReader({

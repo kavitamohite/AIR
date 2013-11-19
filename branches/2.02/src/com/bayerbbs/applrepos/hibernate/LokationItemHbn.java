@@ -159,7 +159,6 @@ public class LokationItemHbn extends BaseHbn {
 
 		Session session = null;
 		Transaction ta = null;
-//		Connection conn = null;
 		Statement stmt = null;//PreparedStatement
 		ResultSet rs = null;
 		
@@ -176,9 +175,6 @@ public class LokationItemHbn extends BaseHbn {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql.toString());
 			
-//			stmt = conn.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//			rs = stmt.executeQuery();
-//			if(0 != start)
 //				rs.absolute(start + 1);//relative
 			
 			if(null == start)
@@ -199,19 +195,8 @@ public class LokationItemHbn extends BaseHbn {
 					
 					
 					String lkString = getLokationsKetteAsString(rs, metaData.getLocationFields());
-					ci.setLocation(lkString);//setApplicationCat2Txt
+					ci.setLocation(lkString);
 
-//					StringBuffer kette = new StringBuffer();
-//					String[] locationFields = metaData.getLocationFields().split(AirKonstanten.KOMMA);
-//					for(String locationField : locationFields) {
-//						if(kette.length() > 0)
-//							kette.append(AirKonstanten.LOCATION_SEPARATOR);
-//						
-//						kette.append(rs.getString(locationField));
-//					}
-//					ci.setApplicationCat2Txt(kette.toString());
-					
-					
 					ci.setCiOwner(rs.getString("responsible"));
 					ci.setCiOwnerDelegate(rs.getString("sub_responsible"));
 					ci.setTableId(metaData.getTableId());
@@ -237,15 +222,6 @@ public class LokationItemHbn extends BaseHbn {
 			System.out.println(e);
 		} finally {
 			HibernateUtil.close(ta, session, commit);
-
-//			try {
-//				rs.close();
-//				stmt.close();
-//				conn.close();
-//				session.close();
-//			} catch (SQLException e) {
-//				System.out.println(e);
-//			}
 		}
 		
 		CiItemsResultDTO result = new CiItemsResultDTO();
