@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <AttributePropertyItems>
-
-	<!-- General
-	<Identifier>
-		<id>objectType</id>
-		<ciTypeId>2</ciTypeId>
-		<ciSubTypeId>5,-10006,-10007,-10013</ciSubTypeId>
-		<Mandatory>mandatory</Mandatory>
-		<Relevance>operational and strategic</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource></EditableIfSource>
-		<UseInWizard>Y</UseInWizard>
-		<attributeType></attributeType>
-		<attributeLength></attributeLength>
-		<attributeMask></attributeMask>
-	</Identifier> -->
-
-
-	<!-- Specific -->
 	<Identifier>
 		<id>applicationName</id>
 		<Mandatory>mandatory</Mandatory>
@@ -30,6 +12,7 @@
 		<attributeLength>656</attributeLength>
 		<attributeMask>/[0-9a-zA-Z#=\+\-\_\/\\. ]/g</attributeMask>
 	</Identifier>
+	
 	<Identifier>
 		<id>applicationAlias</id>
 		<Mandatory>required</Mandatory>
@@ -54,6 +37,7 @@
 		<attributeLength>656</attributeLength>
 		<attributeMask>/[0-9a-zA-Z#=\+\-\_\/\\. ]/g</attributeMask>
 	</Identifier>
+	
 	<Identifier>
 		<id>rgBARrelevance</id>
 		<ciTypeId>2</ciTypeId>
@@ -68,8 +52,6 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	
-	
-
 	<Identifier>
 		<id>applicationVersion</id>
 		<Mandatory>optional</Mandatory>
@@ -79,9 +61,8 @@
 		<UseInWizard>N</UseInWizard>
 		<attributeType>Text</attributeType>
 		<attributeLength>50</attributeLength>
-		<attributeMask></attributeMask><!-- /[abcrv0-9.]/g -->
+		<attributeMask></attributeMask>
 	</Identifier>
-
 	<Identifier>
 		<id>applicationCat2</id>
 		<Mandatory>required</Mandatory>
@@ -122,17 +103,6 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
-	<!--<Identifier>
-		<id>organisationalScopeHidden</id>
-		<Mandatory>mandatory</Mandatory>
-		<Relevance>operational and strategic</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
-		<UseInWizard>Y</UseInWizard>
-		<attributeType></attributeType>
-		<attributeLength></attributeLength>
-		<attributeMask></attributeMask>
-	</Identifier>-->
 
 	<Identifier>
 		<id>operationalStatus</id>
@@ -197,11 +167,8 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	
-	<!-- Specifics - Location Items -->
 	<Identifier>
 		<id>tfLocationCiAlias</id>
-<!--		<ciTypeId>3,4,12,13,30,88</ciTypeId>-->
-<!--		<Mandatory>mandatory</Mandatory>-->
 		<Mandatory>optional</Mandatory>
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
@@ -211,6 +178,7 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+	
 	<Identifier>
 		<id>tfRoomFloor</id>
 		<ciTypeId>3</ciTypeId>
@@ -223,6 +191,7 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+	
 	<Identifier>
 		<id>tfStandortCode</id>
 		<ciTypeId>12</ciTypeId>
@@ -235,6 +204,7 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+	
 	<Identifier>
 		<id>tfStandortNameEn</id>
 		<ciTypeId>12</ciTypeId>
@@ -252,7 +222,6 @@
 		<id>cbRoom</id>
 		<ciTypeId>13</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
 		<UseInWizard>N</UseInWizard>
@@ -260,76 +229,11 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+	
 	<Identifier>
 		<id>cbBuildingArea</id>
-		<ciTypeId>3,13</ciTypeId><!-- 3 -->
+		<ciTypeId>3,13</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
-		<Relevance>operational</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
-		<UseInWizard>N</UseInWizard>
-		<attributeType></attributeType>
-		<attributeLength></attributeLength>
-		<attributeMask></attributeMask>
-	</Identifier>
-	<Identifier>
-		<id>cbBuilding</id><!-- cbBuilding -->
-		<ciTypeId>3,13,88</ciTypeId><!-- 88 -->
-		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
-		<Relevance>operational</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
-		<UseInWizard>N</UseInWizard>
-		<attributeType></attributeType>
-		<attributeLength></attributeLength>
-		<attributeMask></attributeMask>
-	</Identifier>
-	<Identifier>
-		<id>lBuilding</id><!-- cbBuilding -->
-		<ciTypeId>3,13,88</ciTypeId><!-- 88 -->
-		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
-		<Relevance>operational</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
-		<UseInWizard>N</UseInWizard>
-		<attributeType></attributeType>
-		<attributeLength></attributeLength>
-		<attributeMask></attributeMask>
-	</Identifier>
-	<Identifier>
-		<id>cbTerrain</id>
-		<ciTypeId>4,3,13,88</ciTypeId><!-- 4 -->
-		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
-		<Relevance>operational</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
-		<UseInWizard>N</UseInWizard>
-		<attributeType></attributeType>
-		<attributeLength></attributeLength>
-		<attributeMask></attributeMask>
-	</Identifier>
-	<Identifier>
-		<id>cbSite</id>
-		<ciTypeId>30,4,3,13,88</ciTypeId><!-- 30 -->
-		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
-		<Relevance>operational</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
-		<UseInWizard>N</UseInWizard>
-		<attributeType></attributeType>
-		<attributeLength></attributeLength>
-		<attributeMask></attributeMask>
-	</Identifier>
-	<Identifier>
-		<id>cbCountry</id>
-		<ciTypeId>12,30,4,3,13,88</ciTypeId><!-- 12 -->
-		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -339,7 +243,71 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	
-	<!---->
+	<Identifier>
+		<id>cbBuilding</id>
+		<ciTypeId>3,13,88</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	
+	<Identifier>
+		<id>lBuilding</id>
+		<ciTypeId>3,13,88</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	
+	<Identifier>
+		<id>cbTerrain</id>
+		<ciTypeId>4,3,13,88</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	
+	<Identifier>
+		<id>cbSite</id>
+		<ciTypeId>30,4,3,13,88</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	
+	<Identifier>
+		<id>cbCountry</id>
+		<ciTypeId>12,30,4,3,13,88</ciTypeId>
+		<Mandatory>mandatory</Mandatory>
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	
 	<Identifier>
 		<id>tfStreet</id>
 		<Mandatory>mandatory</Mandatory>
@@ -352,6 +320,7 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+	
 	<Identifier>
 		<id>tfStreetNumber</id>
 		<Mandatory>mandatory</Mandatory>
@@ -364,6 +333,7 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+	
 	<Identifier>
 		<id>tfPostalCode</id>
 		<Mandatory>mandatory</Mandatory>
@@ -376,6 +346,7 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+	
 	<Identifier>
 		<id>tfLocation</id>
 		<Mandatory>mandatory</Mandatory>
@@ -418,7 +389,6 @@
 		<id>tfLocationCiName</id>
 		<ciTypeId>3,4,12,13,30,88</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -428,12 +398,10 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	
-	<!-- Specifics - IT Items -->
 	<Identifier>
 		<id>tfItSystemCiName</id>
 		<ciTypeId>1</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -445,7 +413,6 @@
 	<Identifier>
 		<id>tfItSystemCiAlias</id>
 		<ciTypeId>1</ciTypeId>
-<!--		<Mandatory>mandatory</Mandatory>-->
 		<Mandatory>optional</Mandatory>
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
@@ -481,7 +448,6 @@
 		<id>cbOsName</id>
 		<Mandatory>mandatory</Mandatory>
 		<ciTypeId>1</ciTypeId>
-<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -549,7 +515,6 @@
 		<id>cbItSystemLifecycleStatus</id>
 		<Mandatory>mandatory</Mandatory>
 		<ciTypeId>1</ciTypeId>
-<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -562,7 +527,6 @@
 		<id>cbItSystemOperationalStatus</id>
 		<Mandatory>mandatory</Mandatory>
 		<ciTypeId>1</ciTypeId>
-<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -596,7 +560,6 @@
 	</Identifier>
 	
 
-	<!-- Contacts -->
 	<Identifier>
 		<id>applicationOwner</id>
 		<ciTypeId>2</ciTypeId>
@@ -641,7 +604,6 @@
 
 	<Identifier>
 		<id>ciResponsible</id>
-<!--		<Mandatory>required</Mandatory>-->
 		<ciTypeId>1,3,13,88</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational and strategic</Relevance>
@@ -655,7 +617,6 @@
 
 	<Identifier>
 		<id>ciSubResponsible</id>
-<!--		<Mandatory>optional</Mandatory>-->
 		<ciTypeId>1,3,13</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
 		<Relevance>operational</Relevance>
@@ -671,7 +632,6 @@
 		<id>gpsccontactCiOwner</id>
 		<ciTypeId>1,2,3,4,12,13,30,88</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -709,7 +669,6 @@
 		<id>gpsccontactSupportGroup</id>
 		<ciTypeId>1,2,3,4,12,13,30,88</ciTypeId>
 		<Mandatory>mandatory</Mandatory>
-<!--		<Mandatory>optional</Mandatory>-->
 		<Relevance>operational</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -851,7 +810,6 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 
-	<!-- Agreements -->
 	<Identifier>
 		<id>sla</id>
 		<ciTypeId>1,2</ciTypeId>
@@ -868,7 +826,7 @@
 	<Identifier>
 		<id>serviceContract</id>
 		<ciTypeId>1</ciTypeId>
-		<Mandatory>required</Mandatory><!-- dependent -->
+		<Mandatory>required</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>APAC,HPED,VPCC,BSHARP,FW,SNS,VCenter,SHAREPOINT,SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -940,11 +898,9 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 
-
-	<!-- Protection -->
 	<Identifier>
 		<id>protectionAvailability</id>
-		<ciTypeId>1,2</ciTypeId><!-- ,3,13 -->
+		<ciTypeId>1,2</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -956,7 +912,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionAvailabilityDescription</id>
-		<ciTypeId>1,2</ciTypeId><!-- ,3,13 -->
+		<ciTypeId>1,2</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -969,7 +925,7 @@
 
 	<Identifier>
 		<id>protectionIntegrity</id>
-		<ciTypeId>1</ciTypeId><!-- ,3,13 -->
+		<ciTypeId>1</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -981,7 +937,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionIntegrityDescription</id>
-		<ciTypeId>1</ciTypeId><!-- ,3,13 -->
+		<ciTypeId>1</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -993,7 +949,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionConfidentiality</id>
-		<ciTypeId>1</ciTypeId><!-- ,3,13 -->
+		<ciTypeId>1</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -1005,7 +961,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionConfidentialityDescription</id>
-		<ciTypeId>1</ciTypeId><!-- ,3,13 -->
+		<ciTypeId>1</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -1054,8 +1010,7 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	
-	
-	<!-- Compliance-->
+
 	<Identifier>
 		<id>relevanzItsec</id>
 		<Mandatory>optional</Mandatory>
@@ -1129,9 +1084,6 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 
-
-<!-- TODO check the Compliance rights / permissions -->
-
 	<Identifier>
 		<id>rgRelevanceBYTSEC</id>
 		<Mandatory>optional</Mandatory>
@@ -1177,7 +1129,6 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	
-	<!-- referencedTemplate -->
 	<Identifier>
 		<id>cbIsTemplate</id>
 		<Mandatory>dependent on other</Mandatory>
@@ -1223,18 +1174,6 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	
-	<!--
-	<Identifier>
-		<id>relevanceGxp</id>
-		<Mandatory>optional</Mandatory>
-		<Relevance>strategic</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource>APAC,HPED,SHAREPOINT,VPCC,APERTURE,DBVS,MSSQL,SNS,ERA,FW,BVS,COMMAND,VCenter,NAAC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
-		<UseInWizard>Y</UseInWizard>
-		<attributeType>Text</attributeType>
-		<attributeLength>10</attributeLength>
-		<attributeMask></attributeMask>
-	</Identifier>-->
 	<Identifier>
 		<id>chbGR1435</id>
 		<ciTypeId>13,3,88,1</ciTypeId>
@@ -1283,7 +1222,6 @@
 	</Identifier>
 	
 
-	<!-- Compliance Details-->
 	<Identifier>
 		<id>itsetName</id>
 		<Mandatory>by reference</Mandatory>
@@ -1309,7 +1247,7 @@
 	</Identifier>
 
 	<Identifier>
-		<id>cbReferencedTemplate</id><!-- referencedTemplate -->
+		<id>cbReferencedTemplate</id>
 		<Mandatory>dependent on other</Mandatory>
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -1321,10 +1259,9 @@
 	</Identifier>
 
 	<Identifier>
-		<id>lItSecGroup</id><!-- cbItSecGroup itsecGroup -->
+		<id>lItSecGroup</id>
 		<ciTypeId>13,3</ciTypeId>
 		<Mandatory>required</Mandatory>
-<!--		<Mandatory>dependent on other</Mandatory>-->
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>AKZV,NAAC,SNS,BARDO,BBSam,BKV,BSHARP,BVS,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,OLA,QIP,SAP,SDB,SIEBEL,SOFTWARE,VCenter,SHAREPOINT,APAC,HPED,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -1337,7 +1274,6 @@
 		<id>cbItSecGroup</id>
 		<ciTypeId>13,3</ciTypeId>
 		<Mandatory>required</Mandatory>
-<!--		<Mandatory>dependent on other</Mandatory>-->
 		<Relevance>operational and strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>AKZV,NAAC,SNS,BARDO,BBSam,BKV,BSHARP,BVS,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,OLA,QIP,SAP,SDB,SIEBEL,SOFTWARE,VCenter,SHAREPOINT,APAC,HPED,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
@@ -1371,8 +1307,6 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 
-
-	<!-- License and Costs-->
 	<Identifier>
 		<id>licenseType</id>
 		<Mandatory>optional</Mandatory>
@@ -1468,8 +1402,6 @@
 		<attributeLength>9</attributeLength>
 		<attributeMask>/[0-9]/g</attributeMask>
 		<rolesAllowed>0</rolesAllowed>
-		<!-- <restrictionLevel>0</restrictionLevel>oder Feldname: rolesAllowed (to see the field) als kommaseparierte Liste von Rollennamen -->
-		<!-- strongest restrictionLevel=0: user needs edit rights to see the field. Evtl. other/weaker levels markable by role hierarchies -->
 	</Identifier>
 
 	<Identifier>
@@ -1495,7 +1427,6 @@
 		<attributeLength>9</attributeLength>
 		<attributeMask>/[0-9]/g</attributeMask>
 		<rolesAllowed>0</rolesAllowed>
-		<!--<restrictionLevel>0</restrictionLevel>-->
 	</Identifier>
 
 	<Identifier>
@@ -1525,7 +1456,6 @@
 	</Identifier>
 
 
-	<!-- Connections-->
 	<Identifier>
 		<id>bEditConnections</id>
 		<Mandatory>optional</Mandatory>
@@ -1537,34 +1467,7 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
-	
-	<!--
-	<Identifier>
-		<id>connections</id>
-		<Mandatory>required</Mandatory>
-		<Relevance>operational and strategic</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
-		<UseInWizard>N</UseInWizard>
-		<attributeType></attributeType>
-		<attributeLength></attributeLength>
-		<attributeMask></attributeMask>
-	</Identifier>
 
-	<Identifier>
-		<id>installedSoftware</id>
-		<Mandatory>required</Mandatory>
-		<Relevance>operational and strategic</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
-		<UseInWizard>N</UseInWizard>
-		<attributeType></attributeType>
-		<attributeLength></attributeLength>
-		<attributeMask></attributeMask>
-	</Identifier>-->
-
-
-	<!-- Documentation-->
 	<Identifier>
 		<id>supportstuffAppDoc</id>
 		<Mandatory>optional</Mandatory>
@@ -1626,56 +1529,6 @@
 	</Identifier>
 
 
-	<!-- CopyFrom Detail: kein Effekt
-	<Identifier>
-		<id>tfCopyFromApplicationName</id>
-		<Mandatory>mandatory</Mandatory>
-		<Relevance>operational and strategic</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
-		<UseInWizard>N</UseInWizard>
-		<attributeType>Text</attributeType>
-		<attributeLength>656</attributeLength>
-		<attributeMask>/[0-9a-zA-Z#=\+\-\_\/\\. ]/g</attributeMask>
-	</Identifier>
-	<Identifier>
-		<id>tfSapNameCopyFrom1</id>
-		<Mandatory>mandatory</Mandatory>
-		<Relevance>operational and strategic</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
-		<UseInWizard>N</UseInWizard>
-		<attributeType>Text</attributeType>
-		<attributeLength>656</attributeLength>
-		<attributeMask>/[0-9a-zA-Z#=\+\-\_\/\\. ]/g</attributeMask>
-	</Identifier>
-	<Identifier>
-		<id>tfSapNameCopyFrom2</id>
-		<Mandatory>mandatory</Mandatory>
-		<Relevance>operational and strategic</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource></EditableIfSource>
-		<UseInWizard>N</UseInWizard>
-		<attributeType>Text</attributeType>
-		<attributeLength>4</attributeLength>
-		<attributeMask>/[0-9]/g</attributeMask>
-	</Identifier>
-	<Identifier>
-		<id>tfSapNameCopyFrom3</id>
-		<Mandatory>mandatory</Mandatory>
-		<Relevance>operational and strategic</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource></EditableIfSource>
-		<UseInWizard>N</UseInWizard>
-		<attributeType>Text</attributeType>
-		<attributeLength>4</attributeLength>
-		<attributeMask>/[0-9]/g</attributeMask>
-	</Identifier> -->
-	
-	
-	
-	<!-- WIZARD -->
-	<!-- CiCreateAppMandatoryView -->
 	<Identifier>
 		<id>cbCiTypeW</id>
 		<Mandatory>mandatory</Mandatory>
@@ -1798,20 +1651,7 @@
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
-	<!--<Identifier>
-		<id>labeltfApplicationOwnerCompanyW</id>
-		<Mandatory>mandatory</Mandatory>
-		<Relevance>strategic</Relevance>
-		<DependencyID></DependencyID>
-		<EditableIfSource></EditableIfSource>
-		<UseInWizard>Y</UseInWizard>
-		<attributeType></attributeType>
-		<attributeLength></attributeLength>
-		<attributeMask></attributeMask>
-	</Identifier>-->
 	
-	
-	<!-- CiCreateAppRequiredView -->
 	<Identifier>
 		<id>tfApplicationAliasW</id>
 		<Mandatory>required</Mandatory>

@@ -11,11 +11,7 @@ AIR.AirApplicationManager = function() {
 
 		
 		processLogin: function(initAirCallback, loginCallback) {
-//			var hCiId = document.getElementById('ciId');
-//			var uri = hCiId.baseURI;
-//			var ciId = hCiId.attributes[0].value;
-
-			
+		
 			var airCookie = Ext.state.Manager.get('airCookie');
 			
 			if(airCookie) {
@@ -148,7 +144,7 @@ AIR.AirApplicationManager = function() {
 				dedicatedListStore: null,
 				organisationalScopeListStore: null,
 				
-    			sisoogleSourceListStore: { params: { params: { type: AC.SISOOGLE_ATTR_TYPE_INSERT_QUELLE } } },
+    			sisoogleSourceListStore: null,//{ params: { params: { type: AC.SISOOGLE_ATTR_TYPE_INSERT_QUELLE } } },
 				
 			
 				linkCiTypeListStore: null,
@@ -333,7 +329,7 @@ AIR.AirApplicationManager = function() {
 			var message = '';
 			
 			var tableId = this.appDetail ? this.appDetail.tableId : AAM.getTableId();
-			var r = Util.getCiTypeByTableId(tableId);
+			var r = (tableId==undefined?"":Util.getCiTypeByTableId(tableId));
 			
 			switch(airActionType) {
 				case 'appSaveSuccess':
@@ -396,12 +392,10 @@ AIR.AirApplicationManager = function() {
 				return;
 			
 			var connectionPropertiesStore = AIR.AirStoreFactory.createConnectionPropertiesStore();
-			connectionPropertiesStore.on('load', this.onConnectionPropertiesLoaded, this);
+			var records = connectionPropertiesStore.getRange();
+			//connectionPropertiesStore.on('load', this.onConnectionPropertiesLoaded, this);
 	
-			connectionPropertiesStore.load();
-		},
-	
-		onConnectionPropertiesLoaded: function(store, records, options) {
+			//connectionPropertiesStore.load();
 			var connectionProperties = {};
 			
 			for(var i = 0; i < records.length; i++)
@@ -413,6 +407,19 @@ AIR.AirApplicationManager = function() {
 			
 			this.connectionProperties = connectionProperties;
 		},
+	
+		/*onConnectionPropertiesLoaded: function(store, records, options) {
+			var connectionProperties = {};
+			
+			for(var i = 0; i < records.length; i++)
+				if(!connectionProperties[records[i].data.Source])
+					connectionProperties[records[i].data.Source] = [];
+			
+			for(var i = 0; i < records.length; i++)
+				connectionProperties[records[i].data.Source][connectionProperties[records[i].data.Source].length] = records[i].data;
+			
+			this.connectionProperties = connectionProperties;
+		},*/
 		
 		isNewConnectionAllowed: function(ciTypeSource, ciTypeDest, direction) {
 			for(var source in this.connectionProperties)

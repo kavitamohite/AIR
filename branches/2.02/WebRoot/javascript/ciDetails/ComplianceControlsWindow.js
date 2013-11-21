@@ -49,7 +49,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		//AIR.AirStoreFactory.createCurrencyListStore() weil wenn AIR.AirStoreManager.getStoreByName('currencyListStore') sind die store data=null
 		//wenn das Fenster ein weiteres Mal geöffnet wird. Grund?
-		currencyStore.load();
+		//currencyStore.load();
 		
 		
 		var signeeListStore = AIR.AirStoreFactory.createSigneeListStore();

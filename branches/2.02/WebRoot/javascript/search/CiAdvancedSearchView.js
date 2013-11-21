@@ -1063,7 +1063,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 
 		
 		var record;
-		if(typeof newValue == 'number') {
+		//if(typeof newValue == 'number') {
+		if(newValue != undefined && newValue != "") {
 			cbAdvSearchITCategoryW.setVisible(true);
 
 			record = cbCiType.getStore().getById(newValue);
@@ -1076,11 +1077,11 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			
 			var filterData = { tableId: record.get('ciTypeId') };
 			cbAdvSearchLifecycleStatusW.filterByData(filterData);
-		} else {
+		} /*else {
 			cbAdvSearchITCategoryW.setVisible(false);
 //			cbAdvSearchITCategoryW.reset();
 			cbAdvSearchLifecycleStatusW.reset();
-		}
+		}*/
 		
     	
     	var fsCIOwner = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('fs' + this.ownerId + 'CIOwner');
@@ -1128,8 +1129,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	//2: wenn kein CI-Typ oder wenn Anwendung CI-Typ mit appCat1 = 5 (Anwendung)
     	//1: wenn kein CI-Typ oder wenn Anwendung CI-Typ mit appCat1 != 5 (Anwendung) 
     	//0: alle anderen Lokation CI-Typen
-    	var searchMode = !record || record.get('ciSubTypeId') == AC.APP_CAT1_APPLICATION ? 2 : 
-						 record.get('ciTypeId') == AC.TABLE_ID_APPLICATION ? 1 : 0;
+    	var searchMode = (record==undefined ? -1 : (!record || record.get('ciSubTypeId') == AC.APP_CAT1_APPLICATION ? 2 : 
+						 (record.get('ciTypeId') == AC.TABLE_ID_APPLICATION ? 1 : 0)));
     	var isActive = false;
     	
     	switch(searchMode) {
@@ -1623,7 +1624,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //	    params.advsearchObjectTypeId = field.getValue();
 //	    params.advsearchObjectTypeText = field.getRawValue().trim();
 	    var value = field.getValue();//field.getEl().dom.value;
-	    if(typeof value == 'number') {
+	    //if(typeof value == 'number') {
+	    if (value != undefined && value != "") {
 		    var record = field.getStore().getById(value);//getAt(field.getStore().findExact('text', value));
 		    params.ciTypeId = record.get('ciTypeId');//params.tableId
 		    params.ciSubTypeId = record.get('ciSubTypeId');

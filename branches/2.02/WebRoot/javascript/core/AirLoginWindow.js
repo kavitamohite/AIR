@@ -3,7 +3,7 @@ Ext.namespace('AIR');
 AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 	
 	initComponent: function() {
-		this.index = 0;//1
+		this.index = 0;
 			    	
 	    Ext.apply(this, {
 		    width: 300,
@@ -11,9 +11,6 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		    closable: false,
 		    resizable: false,
 		    draggable: false,
-//		    plain: true,
-//		    border: false,
-//		    frame: true,
 		    
 		    items: [{
 		    	xtype: 'panel',
@@ -69,12 +66,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		        		xtype: 'container',
 		        		height: 0,
 		        		border: false
-		        	},{
-			        	xtype: 'progress',
-			        	id: 'pbLoadedStores',
-			        	
-		        		border: false
-			        }]
+		        	}]
 		        },{
 		        	xtype: 'button',
 		        	id: 'bLogin',
@@ -181,13 +173,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		
 		var pSpace1 = this.getComponent('pAirLoginWindow').getComponent('pSpace1');
 		pSpace1.setVisible(true);
-		
-		
-		var pbLoadedStores = this.getComponent('pAirLoginWindow').getComponent('pLoginStatus').getComponent('pbLoadedStores');//.getComponent('loginPanel') .getComponent('pLoadedStores')
-		
-		var text = 'Loading  '+store.storeId.substring(0, store.storeId.indexOf('ListStore'))+'  '+this.index+'/'+this.storeCount;
-		pbLoadedStores.updateProgress(this.index / this.storeCount, text);
-		
+	
 		this.index++;
 	},
 	

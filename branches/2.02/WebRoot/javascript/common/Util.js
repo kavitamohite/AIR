@@ -6,6 +6,18 @@ Util = {
 	            window.console.log(message);
 		},
 		
+		String2XML: function (text){
+		    if (window.ActiveXObject){
+		      var doc=new ActiveXObject('Microsoft.XMLDOM');
+		      doc.async='false';
+		      doc.loadXML(text);
+		    } else {
+		      var parser=new DOMParser();
+		      var doc=parser.parseFromString(text,'text/xml');
+		    }
+		    return doc;
+		},
+		
 		//work around if store.findExact does not get the correct id field value, no matter why
 		findStoreKeyValueByAttributeValue: function(store, attrName, attrValue, keyFieldName) {
 			if(attrValue.length === 0)
@@ -165,7 +177,7 @@ Util = {
 		},
 		
 		getStoreRecord: function(store, sourceAttr, sourceValue) {
-			var record = store.getAt(store.findExact(sourceAttr, sourceValue));
+			var record = store.getAt(store.findExact(sourceAttr, sourceValue.toString()));
 			
 			return record;
 		},
@@ -185,7 +197,7 @@ Util = {
 		
 		getCiTypeByTableId: function(tableId) {
 			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
-			var r = Util.getStoreRecord(store, 'ciTypeId', parseInt(tableId));
+			var r = Util.getStoreRecord(store, 'ciTypeId', tableId);
 			
 			return r;
 		},

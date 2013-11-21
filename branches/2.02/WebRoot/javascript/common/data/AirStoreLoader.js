@@ -38,9 +38,10 @@ AIR.AirStoreLoader = Ext.extend(Ext.util.Observable, {
     	              "severityLevelListStore", "businessEssentialListStore", "applicationCat2ListStore", "lifecycleStatusListStore",
     	              "operationalStatusListStore", "categoryBusinessListStore", "processListStore", "applicationCat1ListStore",
     	              "databaseDisplayNameListStore", "ciTypeListStore", "dedicatedListStore", "organisationalScopeListStore",
-    	              "loadClassListStore", "serviceModelListStore", "gxpFlagListStore", "itSecGroupListStore",
+    	              "loadClassListStore", "serviceModelListStore", "gxpFlagListStore", "itSecGroupListStore", "itSecGroupSimpleListStore",
     	              "clusterTypesListStore", "clusterCodesListStore", "osGroupsListStore", "osTypesListStore",
-    	              "osNamesListStore", "itsecMassnahmenGapClassListStore"];
+    	              "osNamesListStore", "itsecMassnahmenGapClassListStore", "referencesListStore", "sisoogleSourceListStore",
+    	              "languageStoreDE", "languageStoreEN", "languageHelpStore", "languageToolTipStoreDE", "languageToolTipStoreEN", "aclStore" ];
     	var notInStores = true;
     	for(var key in this.storeMap) {
     		notInStores = true;
