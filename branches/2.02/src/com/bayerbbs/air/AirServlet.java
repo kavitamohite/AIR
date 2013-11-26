@@ -555,10 +555,10 @@ public class AirServlet extends HttpServlet {
 		ts = System.currentTimeMillis();
 		output += gapClassLine + "\n"; 
 		
-		ReferenzDTO[] references = dataInput.getReferenzList();
+		ReferenzDTO[] references = dataInput.getTemplateCIs();
 		String referenceLine = "";
 		for (ReferenzDTO referenceItem : references) {
-			referenceLine += "['" + referenceItem.getId().toString() + "','" + referenceItem.getName() + "','" + referenceItem.getItsetId().toString() + "','" + referenceItem.getItsecGroupId().toString() + "','" + (referenceItem.getDelTimestamp()==null?"":referenceItem.getDelTimestamp().toString()) + "','" + referenceItem.getCiKat1().toString() + "'],";
+			referenceLine += "['" + referenceItem.getId().toString() + "','" + referenceItem.getName() +"','" + referenceItem.getTableId().toString() +  "','" + referenceItem.getItsetId().toString() + "','" + referenceItem.getItsecGroupId().toString() + "','" + (referenceItem.getDelTimestamp()==null?"":referenceItem.getDelTimestamp().toString()) + "','" + referenceItem.getCiKat1().toString() + "'],";
 		}
 		referenceLine = "var templateData = [" + referenceLine.substring(0, referenceLine.length()-1) + "];";
 		output += "/*" + (System.currentTimeMillis() - ts) + "*/";

@@ -45,17 +45,20 @@ AIR.AirStoreLoader = Ext.extend(Ext.util.Observable, {
     	var notInStores = true;
     	for(var key in this.storeMap) {
     		notInStores = true;
-    		Ext.each(stores, function(item) {if (item==key) notInStores=false;});
-    		if (notInStores) {
-	        	if (this.storeIds[key] && this.storeIds[key].params) {
-	        		this.storeMap[key].load(this.storeIds[key].params);
-	        	} else {
-	        		this.storeMap[key].load();
-	        	}
-    		} 
-    			this.loadCount++;
-    		
-        }
+    		Ext.each(stores, function(item) {
+    			if (item==key) notInStores=false;});
+    				if (notInStores) {
+    					if (this.storeIds[key] && this.storeIds[key].params) {
+    						this.storeMap[key].load(this.storeIds[key].params);
+    					} else {
+    						this.storeMap[key].load();
+    					}
+    				} 
+    				this.loadCount++;
+    				if(this.loadCount == this.storeCounter) {
+			            this.fireEvent('storesLoaded', this, this.storeMap);
+			        }
+        	}
     },
     
     onLoad: function(store, records, options) {
