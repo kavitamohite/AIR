@@ -1,14 +1,17 @@
 package com.bayerbbs.air;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.InetAddress;
 import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -111,11 +114,12 @@ public class AirServlet extends HttpServlet {
 			BufferedReader reader = new BufferedReader( new FileReader (target), 1048576);
 		    String line = null;
 		    StringWriter stringBuilder = new StringWriter();
+		     
 		    String ls = System.getProperty("line.separator");
 		    stringBuilder.append("var " + filename.replace("/", "_").replace(".", "_") + " = '");
 		    while( ( line = reader.readLine() ) != null ) {
-		        stringBuilder.append( line.trim().replace("'", "\\'") );
-		        //stringBuilder.append( ls );
+		    	byte[] ptext = line.trim().replace("'", "\\'").getBytes("ISO-8859-1");
+		        stringBuilder.append( new String(ptext));
 		    }
 		    stringBuilder.append("';\n");
 		    return stringBuilder;
@@ -656,13 +660,13 @@ public class AirServlet extends HttpServlet {
 	//			===================================================================================================================
 				append("<script>var app_version 		='" + AirKonstanten.AIR_VERSION + "'</script>").
 				append("<script>" + getDataStores() + "</script>\n").
-				append("<script>" + getXMLFile("conf/lang/german_tooltips.xml") + "</script>\n").
-				append("<script>" + getXMLFile("conf/lang/english_tooltips.xml") + "</script>\n").
-				append("<script>" + getXMLFile("conf/lang/german_help.xml") + "</script>\n").
-				append("<script>" + getXMLFile("conf/lang/german.xml") + "</script>\n").
-				append("<script>" + getXMLFile("conf/lang/english.xml") + "</script>\n").
-				append("<script>" + getXMLFile("conf/ConnectionProperties.xml") + "</script>\n").
-				append("<script>" + getXMLFile("conf/AttributeProperties.xml") + "</script>\n").
+				append("<script>" + getXMLFile("conf/lang/german_tooltips.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/lang/english_tooltips.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/lang/german_help.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/lang/german.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/lang/english.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/ConnectionProperties.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/AttributeProperties.xml").toString() + "</script>\n").
 				append(compressJSFile("javascript/common/AirConstants.js", version)).
 				append(compressJSFile("javascript/common/Util.js", version)).
 				append(compressJSFile("javascript/common/data/AirStoreLoader.js", version)).
