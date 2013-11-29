@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TERRAIN")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
 @NamedQueries({
 	@NamedQuery(name="findByNameAndSiteId", query="FROM Terrain t WHERE t.terrainName=:name AND standortId=:standortId")
 })

@@ -14,7 +14,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "IT_SYSTEM")
-@SequenceGenerator(name = "MySeqItSystem", sequenceName = "TBADM.SEQ_IT_SYSTEM")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
+@SequenceGenerator(name = "MySeqItSystem", sequenceName = "SEQ_IT_SYSTEM")
 @NamedQueries({
 //	@NamedQuery(name="findItSystemsByNameOrAlias", query="FROM ItSystem i WHERE i.itSystemName=:name OR i.alias=:alias"),
 	@NamedQuery(name="findItSystemsByNameOrAlias", query="FROM ItSystem i WHERE :name IN (UPPER(i.itSystemName), UPPER(i.alias)) OR :alias IN (UPPER(i.alias),  UPPER(i.itSystemName))"),

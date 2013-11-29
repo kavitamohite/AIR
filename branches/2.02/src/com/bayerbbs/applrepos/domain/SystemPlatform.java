@@ -22,7 +22,8 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "IT_SYSTEM")
-@SequenceGenerator(name = "MySeqITSystem", sequenceName = "TBADM.SEQ_IT_SYSTEM")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
+@SequenceGenerator(name = "MySeqITSystem", sequenceName = "SEQ_IT_SYSTEM")
 @AttributeOverrides({
 	@AttributeOverride(name = "id", column = @Column(name = "IT_SYSTEM_ID", insertable = false, updatable = false)),
 	@AttributeOverride(name = "name", column = @Column(name = "IT_SYSTEM_NAME")),

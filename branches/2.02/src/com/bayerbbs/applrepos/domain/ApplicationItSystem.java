@@ -10,6 +10,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ANWEND_IT_SYSTEM")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
 public class ApplicationItSystem extends DeletableRevisionInfo implements Serializable {
 
 	private static final long serialVersionUID = -6868013375508539998L;

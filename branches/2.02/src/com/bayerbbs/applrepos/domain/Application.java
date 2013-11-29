@@ -16,12 +16,13 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ANWENDUNG")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
 @NamedQueries({
 	@NamedQuery(name="findApplicationsByNameOrAlias", query="FROM Application a WHERE UPPER(a.applicationName)=:name OR UPPER(a.applicationAlias)=:alias OR UPPER(a.applicationName)=:alias OR UPPER(a.applicationAlias)=:name"),
 //	@NamedQuery(name="findApplicationsByNameOrAlias", query="FROM Application a WHERE a.applicationName=:name OR a.applicationAlias=:alias")
 //	@NamedQuery(name="findApplicationByName", query="FROM Application a WHERE a.applicationName=:name")
 })
-@SequenceGenerator(name = "MySeqAnwendung", sequenceName = "TBADM.SEQ_ANWENDUNG")
+@SequenceGenerator(name = "MySeqAnwendung", sequenceName = "SEQ_ANWENDUNG")
 public class Application extends DeletableRevisionInfo {
 	// basics
 	private Long applicationId;

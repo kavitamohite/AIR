@@ -17,11 +17,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "STANDORT")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
 @NamedQueries({
 	@NamedQuery(name="findSitesByLandId", query="FROM Standort s WHERE s.landId=:landId"),
 	@NamedQuery(name="findByNameAndCountryId", query="FROM Standort s WHERE s.standortName=:name AND s.landId=:landId")
 })
-@SequenceGenerator(name = "MySeqStandort", sequenceName = "TBADM.SEQ_STANDORT")
+@SequenceGenerator(name = "MySeqStandort", sequenceName = "SEQ_STANDORT")
 public class Standort extends CiBase1 implements Serializable {
 	private static final long serialVersionUID = -3547134682025456121L;
 	

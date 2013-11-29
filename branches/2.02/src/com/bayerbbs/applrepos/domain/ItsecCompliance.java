@@ -11,6 +11,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ITSEC_MASSN_STATUS")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
 public class ItsecCompliance extends RevisionInfo implements Serializable {
 
 	private static final long serialVersionUID = -2270858009018028854L;

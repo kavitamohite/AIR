@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "CI_GROUPS")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
 @SequenceGenerator(name = "MySeqCiGroups", sequenceName = "SEQ_CI_GROUPS")
 public class CiGroups extends DeletableRevisionInfo implements Serializable {
 
