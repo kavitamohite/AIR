@@ -118,8 +118,8 @@ public class AirServlet extends HttpServlet {
 		    String ls = System.getProperty("line.separator");
 		    stringBuilder.append("var " + filename.replace("/", "_").replace(".", "_") + " = '");
 		    while( ( line = reader.readLine() ) != null ) {
-		    	byte[] ptext = line.trim().replace("'", "\\'").getBytes("ISO-8859-1");
-		        stringBuilder.append( new String(ptext));
+		    	byte[] ptext = line.getBytes("ISO-8859-1");
+		        stringBuilder.append( new String(ptext).trim().replace("'", "\\'"));
 		    }
 		    stringBuilder.append("';\n");
 		    return stringBuilder;
@@ -481,8 +481,9 @@ public class AirServlet extends HttpServlet {
 		
 		ItSecGroupDTO[] itsecGroups = dataInput.getItSecGroupList();
 		String itsecGroupLine = "";
+		int count = 0;
 		for (ItSecGroupDTO itsecGroupItem : itsecGroups) {
-			itsecGroupLine += "['" + itsecGroupItem.getItSecGroupId() + "','" + itsecGroupItem.getItSecGroupName() + "','" + itsecGroupItem.getItsetId() + "','" + itsecGroupItem.getCiKat1() + "'," + itsecGroupItem.getTableId() +"],";
+			itsecGroupLine += "['" + String.valueOf(count++) + "','" + itsecGroupItem.getItSecGroupId() + "','" + itsecGroupItem.getItSecGroupName() + "','" + itsecGroupItem.getItsetId() + "','" + itsecGroupItem.getCiKat1() + "','" + itsecGroupItem.getTableId().toString() +"'],";
 		}
 		itsecGroupLine = "var itsecGroupData = [" + itsecGroupLine.substring(0, itsecGroupLine.length()-1) + "];";
 		output += "/*" + (System.currentTimeMillis() - ts) + "*/";

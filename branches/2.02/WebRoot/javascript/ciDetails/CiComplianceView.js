@@ -158,6 +158,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        id: 'cbReferencedTemplate',
 						enableKeyEvents: true,
 				        width: 350,
+				        listWidth: 600,
 				        fieldLabel: 'Link',
 						lastQuery: '',
 				        store: AIR.AirStoreManager.getStoreByName('referencesListStore'),
@@ -190,7 +191,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    	},{
 						xtype: 'filterCombo',//combo
 				        id: 'cbItSecGroup',
-				        
+				        listWidth: 600,
 				        enableKeyEvents: true,
 				        width: 350,//layout: 'column'
 

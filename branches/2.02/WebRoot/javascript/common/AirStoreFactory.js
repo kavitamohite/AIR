@@ -2655,7 +2655,7 @@ AIR.AirStoreFactory = function() {
 			var itSecGroupListStore = new Ext.data.ArrayStore(
 			{
 				storeId: 'itSecGroupListStore',
-				fields : ['id', 'name', 'itsetId', 'ciKat1', 'tableId'],
+				fields : ['isgid', 'id', 'name', 'itsetId', 'ciKat1', 'tableId'],
 				idIndex: 0,
 				data : itsecGroupData
 			});
