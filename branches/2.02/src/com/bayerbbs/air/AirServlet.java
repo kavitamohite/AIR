@@ -118,8 +118,9 @@ public class AirServlet extends HttpServlet {
 		    String ls = System.getProperty("line.separator");
 		    stringBuilder.append("var " + filename.replace("/", "_").replace(".", "_") + " = '");
 		    while( ( line = reader.readLine() ) != null ) {
-		    	byte[] ptext = line.getBytes("ISO-8859-1");
-		        stringBuilder.append( new String(ptext).trim().replace("'", "\\'"));
+		    	//byte[] ptext = line.getBytes("ISO-8859-1");
+		        //stringBuilder.append( new String(ptext).trim().replace("'", "\\'"));
+		        stringBuilder.append( line.trim().replace("'", "\\'"));
 		    }
 		    stringBuilder.append("';\n");
 		    return stringBuilder;
