@@ -30,6 +30,7 @@
 		<mapping class="com.bayerbbs.applrepos.domain.CiPersons" />
 		<mapping class="com.bayerbbs.applrepos.domain.CiSupportStuff" />
 		<mapping class="com.bayerbbs.applrepos.domain.CiSupportStuffType" />
+		<mapping class="com.bayerbbs.applrepos.domain.Confidentiality" />
 		<mapping class="com.bayerbbs.applrepos.domain.Currency" />
 		<mapping class="com.bayerbbs.applrepos.domain.GapClass" />
 		<mapping class="com.bayerbbs.applrepos.domain.Group" />

@@ -129,7 +129,7 @@ AIR.AirStoreFactory = function() {
 				storeId: 'itSecSBConfidentialityListStore',
 				fields : ['id', 'text'],
 				idIndex: 0,
-				data : itsecSBWerteData
+				data : confidentialityData
 			});
 	        return itSecSBConfidentialityListStore;
 		},
@@ -727,6 +727,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'findFirst'},
 			        {name: 'findAll'},
 			        {name: 'browserOptimization'},
+			        {name: 'secureSystem'},
 			        {name: 'editInGPSC'},
 			        
 			        // general
@@ -2248,6 +2249,12 @@ AIR.AirStoreFactory = function() {
 				name : 'itSecSbAvailabilityTxt',//itSecSbAvailabilityTxt itSecSbAvailabilityDescription
 				mapping : 'applicationDTO > itSecSbAvailabilityTxt'//itSecSbAvailabilityTxt itSecSbAvailabilityDescription
 			}, {
+				name : 'itSecSbConfidentialityId',
+				mapping : 'applicationDTO > itSecSbConfidentialityId'
+			}, {
+				name : 'itSecSbConfidentialityTxt',
+				mapping : 'applicationDTO > itSecSbConfidentialityTxt'
+			}, {
 				name : 'classInformationId',
 				mapping : 'applicationDTO > classInformationId'
 			}, {
@@ -2323,6 +2330,9 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'deleteUser',
 				mapping : 'applicationDTO > deleteUser'
+			}, {
+				name : 'messageTextSecureSystem',
+				mapping : 'applicationDTO > messageTextSecureSystem'
 			}, {
 				name : 'messageText',
 				mapping : 'applicationDTO > messageText'

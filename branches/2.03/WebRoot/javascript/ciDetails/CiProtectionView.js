@@ -1,6 +1,6 @@
 Ext.namespace('AIR');
 
-AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
+AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 	initComponent: function() {
 		Ext.apply(this, {
 			labelWidth: 200,
@@ -12,20 +12,16 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    height: 300,
 		    
 		    items: [{
-		        xtype: 'filterCombo',//combo
+		        xtype: 'filterCombo',
 		        width: 230,
 		        fieldLabel: 'Availability',
 		        id: 'protectionAvailability',
 		        
-		        store: AIR.AirStoreManager.getStoreByName('itSecSBAvailabilityListStore'),//itSecSBAvailabilityListStore,
+		        store: AIR.AirStoreManager.getStoreByName('itSecSBAvailabilityListStore'),
 		        valueField: 'id',
 		        displayField: 'text',
 		        
-//		        typeAhead: true,
-//		        forceSelection: true,
-//		        autoSelect: false,
-		        
-		        triggerAction: 'all',//all query
+		        triggerAction: 'all',
 		        lazyRender: true,
 		        lazyInit: false,
 		        mode: 'local'
@@ -38,20 +34,39 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        enableKeyEvents: true,
 		        allowBlank: true
 		    },{
-		        xtype: 'filterCombo',//combo
+		        xtype: 'filterCombo',
+		        width: 230,
+		        fieldLabel: 'Confidentiality',
+		        id: 'protectionConfidentiality',
+		        
+		        store: AIR.AirStoreManager.getStoreByName('itSecSBConfidentialityListStore'),  // itSecSBConfidentialityListStore
+		        
+		        valueField: 'id',
+		        displayField: 'text',
+		        
+		        triggerAction: 'all',
+		        lazyRender: true,
+		        lazyInit: false,
+		        mode: 'local'
+		    },{
+		    	xtype: 'textarea',
+		        id: 'protectionConfidentialityDescription',
+
+		        width: 230,
+		        fieldLabel: 'Explanation',
+		        enableKeyEvents: true,
+		        allowBlank: true
+		    },{
+		        xtype: 'filterCombo',
 		        width: 230,
 		        fieldLabel: 'Information Class',
 		        id: 'protectionClassInformation',
 		        
-		        store: AIR.AirStoreManager.getStoreByName('classInformationListStore'),//classInformationListStore,
+		        store: AIR.AirStoreManager.getStoreByName('classInformationListStore'),
 		        valueField: 'id',
 		        displayField: 'text',
 		        
-//		        typeAhead: true,
-//		        forceSelection: true,
-//		        autoSelect: false,
-		        
-		        triggerAction: 'all',//all query
+		        triggerAction: 'all',
 		        lazyRender: true,
 		        lazyInit: false,
 		        mode: 'local'
@@ -73,52 +88,22 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        allowBlank: true,
 		        disabled: true
 			},{
-		        xtype: 'filterCombo',//combo
+		        xtype: 'filterCombo',
 		        width: 230,
 		        fieldLabel: 'Integrity',
 		        id: 'protectionIntegrity',
 		        
-		        store: AIR.AirStoreManager.getStoreByName('itSecSBAvailabilityListStore'),//itSecSBAvailabilityListStore,
+		        store: AIR.AirStoreManager.getStoreByName('itSecSBAvailabilityListStore'),
 		        valueField: 'id',
 		        displayField: 'text',
 		        
-//		        typeAhead: true,
-//		        forceSelection: true,
-//		        autoSelect: false,
-		        
-		        triggerAction: 'all',//all query
+		        triggerAction: 'all',
 		        lazyRender: true,
 		        lazyInit: false,
 		        mode: 'local'
 		    },{
 		    	xtype: 'textarea',
 		        id: 'protectionIntegrityDescription',
-
-		        width: 230,
-		        fieldLabel: 'Explanation',
-		        enableKeyEvents: true,
-		        allowBlank: true
-		    },{
-		        xtype: 'filterCombo',//combo
-		        width: 230,
-		        fieldLabel: 'Confidentiality',
-		        id: 'protectionConfidentiality',
-		        
-		        store: AIR.AirStoreManager.getStoreByName('itSecSBAvailabilityListStore'),//itSecSBAvailabilityListStore,
-		        valueField: 'id',
-		        displayField: 'text',
-		        
-//		        typeAhead: true,
-//		        forceSelection: true,
-//		        autoSelect: false,
-		        
-		        triggerAction: 'all',//all query
-		        lazyRender: true,
-		        lazyInit: false,
-		        mode: 'local'
-		    },{
-		    	xtype: 'textarea',
-		        id: 'protectionConfidentialityDescription',
 
 		        width: 230,
 		        fieldLabel: 'Explanation',
@@ -184,7 +169,6 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.fireEvent('ciChange', this, combo, record);
     },
     onProtectionClassInformationChange: function (combo, newValue, oldValue) {
-//        activateButtonSaveApplication();
     	if(this.isComboValueValid(combo, newValue, oldValue))
     		this.fireEvent('ciChange', this, combo, newValue);
 		
@@ -193,7 +177,6 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
     },
     
     onProtectionClassInformationExplanationChange: function(textarea, newValue, oldValue) {
-//		activateButtonSaveApplication();
 		this.fireEvent('ciChange', this, textarea, newValue);
 	},
 	
@@ -214,8 +197,8 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 			this.getComponent('protectionAvailability').setValue('');
 		}
 		
-		if (data.itSecSbAvailabilityTxt && data.itSecSbAvailabilityTxt != 0 && !data.isCiCreate) {//protectionAvailabilityDescription
-			this.getComponent('protectionAvailabilityDescription').setValue(data.itSecSbAvailabilityTxt);//protectionAvailabilityDescription
+		if (data.itSecSbAvailabilityTxt && data.itSecSbAvailabilityTxt != 0 && !data.isCiCreate) {
+			this.getComponent('protectionAvailabilityDescription').setValue(data.itSecSbAvailabilityTxt);
 		} else {
 			this.getComponent('protectionAvailabilityDescription').setValue('');
 		}
@@ -261,10 +244,26 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 			taProtectionIntegrityDescription.setVisible(false);
 			taProtectionIntegrityDescription.reset();
 			
-			cbProtectionConfidentiality.setVisible(false);
-			cbProtectionConfidentiality.reset();
-			taProtectionConfidentialityDescription.setVisible(false);
-			taProtectionConfidentialityDescription.reset();
+			cbProtectionConfidentiality.setVisible(true);
+
+			taProtectionConfidentialityDescription.setVisible(true);
+			
+			if (data.itSecSbConfidentialityId && data.itSecSbConfidentialityId != 0 && !data.isCiCreate) {
+				cbProtectionConfidentiality.setValue(data.itSecSbConfidentialityId);
+			} else {
+				cbProtectionConfidentiality.setValue('');
+			}
+
+			if (data.itSecSbConfidentialityTxt && data.itSecSbConfidentialityTxt != 0 && !data.isCiCreate) {
+				taProtectionConfidentialityDescription.setValue(data.itSecSbConfidentialityTxt);
+			} else {
+				taProtectionConfidentialityDescription.setValue('');
+			}
+			
+//			cbProtectionConfidentiality.setVisible(false);
+//			cbProtectionConfidentiality.reset();
+//			taProtectionConfidentialityDescription.setVisible(false);
+//			taProtectionConfidentialityDescription.reset();
 		} else {
 			cbProtectionClassInformation.setVisible(false);
 			taProtectionClassInformationExplanation.setVisible(false);
@@ -293,13 +292,13 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 			
 			
-			if (data.itSecSbIntegrityTxt && data.itSecSbIntegrityTxt != 0 && !data.isCiCreate) {//protectionAvailabilityDescription
-				taProtectionIntegrityDescription.setValue(data.itSecSbIntegrityTxt);//protectionAvailabilityDescription
+			if (data.itSecSbIntegrityTxt && data.itSecSbIntegrityTxt != 0 && !data.isCiCreate) {
+				taProtectionIntegrityDescription.setValue(data.itSecSbIntegrityTxt);
 			} else {
 				taProtectionIntegrityDescription.setValue('');
 			}
-			if (data.itSecSbConfidentialityTxt && data.itSecSbConfidentialityTxt != 0 && !data.isCiCreate) {//protectionAvailabilityDescription
-				taProtectionConfidentialityDescription.setValue(data.itSecSbConfidentialityTxt);//protectionAvailabilityDescription
+			if (data.itSecSbConfidentialityTxt && data.itSecSbConfidentialityTxt != 0 && !data.isCiCreate) {
+				taProtectionConfidentialityDescription.setValue(data.itSecSbConfidentialityTxt);
 			} else {
 				taProtectionConfidentialityDescription.setValue('');
 			}
@@ -319,7 +318,6 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		AIR.AirAclManager.setAccessMode(this.getComponent('protectionClassInformation'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('protectionClassInformationExplanation'), data);
-		//AIR.AirAclManager.setAccessMode(this.getComponent('protectionApplicationProtection'), data);
 	},
 	
 	setData: function(data) {
@@ -349,6 +347,20 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if (!field.disabled) {
 				data.classInformationExplanation = field.getValue();
 			}
+
+			field = this.getComponent('protectionConfidentiality');
+			if (!field.disabled) {
+				if (field.getValue() && field.getValue().length > 0) {
+					data.itSecSbConfidentialityId = field.getValue();
+				} else {
+					data.itSecSbConfidentialityId = -1;
+				}
+			}
+			field = this.getComponent('protectionConfidentialityDescription');
+			if (!field.disabled) {
+				data.itSecSbConfidentialityTxt = field.getValue();
+			}
+		
 		} else {
 			field = this.getComponent('protectionIntegrity');
 			if (!field.disabled) {

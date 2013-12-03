@@ -902,6 +902,12 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				this.getComponent('lCiIsDeleted').setVisible(true);
 			}
 		}
+		
+		// RFC 10057 show secure System
+		if ('secureSystem' === data.messageTextSecureSystem) {
+			this.getComponent('lCiIsDeleted').setText(AIR.AirApplicationManager.getLabels().secureSystem);
+			this.getComponent('lCiIsDeleted').setVisible(true);
+		}
 	},
 	
 	updateLabels: function(labels) {

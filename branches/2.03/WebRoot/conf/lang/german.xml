@@ -33,6 +33,7 @@
 		<findAll>Zeige alle</findAll>
 		
 		<browserOptimization>Optimiert f&amp;uuml;r den Firefox Browser</browserOptimization>
+		<secureSystem>This CI is a secure system</secureSystem>
 		<editInGPSC>Dieses CI kann nur in GPSC editiert werden</editInGPSC>
 		
 		<dynamicWindowOKButtonText>OK</dynamicWindowOKButtonText>

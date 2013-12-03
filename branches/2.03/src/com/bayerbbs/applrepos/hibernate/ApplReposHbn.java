@@ -161,6 +161,10 @@ public class ApplReposHbn {
 				}
 			}
 		}
+		if (null == resultCount) {
+			resultCount = AirKonstanten.STRING_0;
+		}
+		
 		return resultCount;
 	}
 
@@ -220,6 +224,9 @@ public class ApplReposHbn {
 				}
 
 			}
+		}
+		if (null == resultCount) {
+			resultCount = AirKonstanten.STRING_0;
 		}
 		return resultCount;
 	}
@@ -305,6 +312,9 @@ public class ApplReposHbn {
 				}
 
 			}
+		}
+		if (null == resultCount) {
+			resultCount = AirKonstanten.STRING_0;
 		}
 		return resultCount;
 	}
@@ -529,7 +539,9 @@ public class ApplReposHbn {
 				}
 
 			}
-
+			if (null == resultCount) {
+				resultCount = AirKonstanten.STRING_0;
+			}
 			return resultCount;
 	}
 

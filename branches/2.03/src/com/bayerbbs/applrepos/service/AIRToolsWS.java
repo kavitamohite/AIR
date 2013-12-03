@@ -14,6 +14,7 @@ import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.CategoryBusinessDTO;
 import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.ClassInformationDTO;
+import com.bayerbbs.applrepos.dto.ConfidentialityDTO;
 import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.DedicatedDTO;
 import com.bayerbbs.applrepos.dto.GroupTypesDTO;
@@ -51,6 +52,7 @@ import com.bayerbbs.applrepos.hibernate.CategoryBusinessHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.ClassInformationHbn;
 import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
+import com.bayerbbs.applrepos.hibernate.ConfidentialityHbn;
 import com.bayerbbs.applrepos.hibernate.CurrencyHbn;
 import com.bayerbbs.applrepos.hibernate.GroupHbn;
 import com.bayerbbs.applrepos.hibernate.GroupTypesHbn;
@@ -262,6 +264,10 @@ public class AIRToolsWS {
 
 	public ClassInformationDTO[] getClassInformationList() {
 		return ClassInformationHbn.getArrayFromList(ClassInformationHbn.listClassInformation());
+	}
+	
+	public ConfidentialityDTO[] getConfidentialityList() {
+		return ConfidentialityHbn.getArrayFromList(ConfidentialityHbn.listConfidentiality());
 	}
 	
 	public ViewDataDTO getDatabaseDisplayName() {

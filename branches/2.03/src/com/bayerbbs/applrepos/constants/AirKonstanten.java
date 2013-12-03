@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
-	public final static String AIR_VERSION = "2.02.013";
+	public final static String AIR_VERSION = "2.03.000";
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
@@ -115,6 +115,8 @@ public final class AirKonstanten {
 	public static final Long COMPLIANCE_REQUEST_GR2059 = new Long(2);
 	public static final Long COMPLIANCE_REQUEST_GR1920 = new Long(3);
 	public static final Long COMPLIANCE_REQUEST_GR2008 = new Long(4);
+	
+	public static final Long CONFIDENTIALITY_SECRET = new Long(4);
 	
 	
 	public static final String GPSCGROUP_DISABLED_MARKER = "DISABLED";

@@ -949,7 +949,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionConfidentiality</id>
-		<ciTypeId>1</ciTypeId>
+		<ciTypeId>1,2</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -961,7 +961,7 @@
 	</Identifier>
 	<Identifier>
 		<id>protectionConfidentialityDescription</id>
-		<ciTypeId>1</ciTypeId>
+		<ciTypeId>1,2</ciTypeId>
 		<Mandatory>required</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>

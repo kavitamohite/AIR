@@ -341,6 +341,17 @@ public class AnwendungHbn extends BaseHbn {
 							application.setItSecSbAvailabilityTxt(dto.getItSecSbAvailabilityTxt());//getItSecSbAvailabilityDescription
 						}
 						
+						if (null != dto.getItSecSbConfidentialityId()) {
+							if (-1 == dto.getItSecSbConfidentialityId()) {
+								application.setItSecSbConfidentiality(null);
+							}
+							else if (0 != dto.getItSecSbConfidentialityId().longValue()) {
+								application.setItSecSbConfidentiality(dto.getItSecSbConfidentialityId());
+							}
+						}
+						if (null != dto.getItSecSbConfidentialityTxt()) {
+							application.setItSecSbConfidentialityTxt(dto.getItSecSbConfidentialityTxt());
+						}
 						
 						if (null != dto.getClassInformationId()) {
 							if (-1 == dto.getClassInformationId()) {
@@ -878,6 +889,12 @@ public class AnwendungHbn extends BaseHbn {
 						if (StringUtils.isNotNullOrEmpty(dto.getItSecSbAvailabilityTxt())) {//getItSecSbAvailabilityDescription
 							application.setItSecSbAvailabilityTxt(dto.getItSecSbAvailabilityTxt());//getItSecSbAvailabilityDescription
 						}
+						if (null != dto.getItSecSbConfidentialityId()) {
+							application.setItSecSbConfidentiality(dto.getItSecSbConfidentialityId());
+						}
+						if (StringUtils.isNotNullOrEmpty(dto.getItSecSbConfidentialityTxt())) {
+							application.setItSecSbConfidentialityTxt(dto.getItSecSbConfidentialityTxt());
+						}
 						if (StringUtils.isNotNullOrEmpty(dto.getOrganisationalScope())) {
 							application.setOrganisationalScope(dto.getOrganisationalScope());
 						}
@@ -1027,6 +1044,9 @@ public class AnwendungHbn extends BaseHbn {
 			// protection
 			application.setItSecSbAvailability(null);
 			application.setItSecSbAvailabilityTxt(null);
+			// confidentiality
+			application.setItSecSbConfidentiality(null);
+			application.setItSecSbConfidentialityTxt(null);
 
 			// compliance
 			
@@ -2918,6 +2938,9 @@ public class AnwendungHbn extends BaseHbn {
 
 						applicationTarget.setItSecSbAvailability(applicationSource.getItSecSbAvailability());
 						applicationTarget.setItSecSbAvailabilityTxt(applicationSource.getItSecSbAvailabilityTxt());//getItSecSbAvailabilityText
+						applicationTarget.setItSecSbConfidentiality(applicationSource.getItSecSbConfidentiality());
+						applicationTarget.setItSecSbConfidentialityTxt(applicationSource.getItSecSbConfidentialityTxt());
+
 						applicationTarget.setClusterCode(applicationSource.getClusterCode());
 						applicationTarget.setClusterType(applicationSource.getClusterType());
 						

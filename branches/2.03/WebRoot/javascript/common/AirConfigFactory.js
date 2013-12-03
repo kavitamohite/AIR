@@ -175,7 +175,7 @@ AIR.AirConfigFactory = function() {
 				name: 'id', type: 'int'
 			}, 'name', 'alias', 'relevanceOperational', 'ciOwner', 'ciOwnerHidden', 'ciOwnerDelegate', 'ciOwnerDelegateHidden', 'insertQuelle', 'insertTimestamp', 'insertUser', 
 			   'updateQuelle', 'updateTimestamp', 'updateUser', 'deleteQuelle', 'deleteTimestamp', 'deleteUser', 'itSecSbAvailabilityId', 'itSecSbAvailabilityTxt',
-			   'itSecSbIntegrityId', 'itSecSbIntegrityTxt', 'itSecSbConfidentialityId', 'itSecSbConfidentialityTxt',
+			   'itSecSbIntegrityId', 'itSecSbIntegrityTxt', 'itSecSbConfidentialityId', 'itSecSbConfidentialityTxt', 'messageTextSecureSystem',
 			   'slaId', 'serviceContractId', 'itset', 'template', 'itsecGroupId', 'refId', 'relevanceGR1435', 'relevanceGR1920',
 			   
 			   'ciOwnerAcl', 'ciOwnerDelegateAcl', 'relevanceGR1435Acl', 'relevanceGR1920Acl', 'gxpFlag', 'gxpFlagId', 'gxpFlagIdAcl',

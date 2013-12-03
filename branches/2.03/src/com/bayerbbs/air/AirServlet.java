@@ -1,17 +1,14 @@
 package com.bayerbbs.air;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.InetAddress;
 import java.nio.CharBuffer;
-import java.nio.charset.Charset;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -32,6 +29,7 @@ import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.CategoryBusinessDTO;
 import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.ClassInformationDTO;
+import com.bayerbbs.applrepos.dto.ConfidentialityDTO;
 import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.DedicatedDTO;
 import com.bayerbbs.applrepos.dto.GapClassDTO;
@@ -305,6 +303,18 @@ public class AirServlet extends HttpServlet {
 		ts = System.currentTimeMillis();
 		output += classinformationLine + "\n";
 		
+		// Confidentiality
+		ConfidentialityDTO[] confidentialitys = dataInput.getConfidentialityList();
+		String confidentialityLine = "";
+		for(ConfidentialityDTO confidentialityItem : confidentialitys) {
+			confidentialityLine += "['" + confidentialityItem.getConfidentialityId() + "','" + confidentialityItem.getConfidentialityName() + "'],"; 
+		}
+		confidentialityLine = "var confidentialityData = [" + confidentialityLine.substring(0, confidentialityLine.length()-1) + "];";
+		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
+		ts = System.currentTimeMillis();
+		output += confidentialityLine + "\n";
+
+		// SLA
 		SlaDTO[] slas = dataInput.getSlaList();
 		String slaLine = "";
 		for(SlaDTO slaItem : slas) {

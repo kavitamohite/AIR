@@ -512,6 +512,9 @@ public class ApplicationWS {
 		dto.setItSecSbAvailabilityTxt(editInput.getItSecSbAvailabilityTxt());//getItSecSbAvailabilityDescription
 		dto.setClassInformationId(editInput.getClassInformationId());
 		dto.setClassInformationExplanation(editInput.getClassInformationExplanation());
+
+		dto.setItSecSbConfidentialityId(editInput.getItSecSbConfidentialityId());
+		dto.setItSecSbConfidentialityTxt(editInput.getItSecSbConfidentialityTxt());
 		
 		dto.setCategoryBusinessId(editInput.getCategoryBusinessId());
 		dto.setClassDataId(editInput.getClassDataId());

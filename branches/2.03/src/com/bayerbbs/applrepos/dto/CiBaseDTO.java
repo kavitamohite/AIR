@@ -113,7 +113,8 @@ public class CiBaseDTO {// implements Serializable
 	private String gpsccontactImpactedBusinessHidden;
 	
 	
-	private String messageText;		// only to display information to the user
+	private String messageText;				// only to display information to the user about restricted edit rights
+	private String messageTextSecureSystem;	// only to display information to the user concerning secure systems
 	
 	//====================
 	
@@ -476,6 +477,11 @@ public class CiBaseDTO {// implements Serializable
 	}
 	public void setItSecSbConfidentialityId(Long itSecSbConfidentialityId) {
 		this.itSecSbConfidentialityId = itSecSbConfidentialityId;
+	
+		// RFC 10057 info message secure system
+		if (null != itSecSbConfidentialityId && AirKonstanten.CONFIDENTIALITY_SECRET.longValue() == itSecSbConfidentialityId.longValue()){
+			setMessageTextSecureSystem("secureSystem");
+		}
 	}
 	public String getItSecSbConfidentialityTxt() {
 		return itSecSbConfidentialityTxt;
@@ -674,6 +680,14 @@ public class CiBaseDTO {// implements Serializable
 
 	public void setMessageText(String messageText) {
 		this.messageText = messageText;
+	}
+
+	public String getMessageTextSecureSystem() {
+		return messageTextSecureSystem;
+	}
+
+	public void setMessageTextSecureSystem(String messageTextSecureSystem) {
+		this.messageTextSecureSystem = messageTextSecureSystem;
 	}
 	
 }

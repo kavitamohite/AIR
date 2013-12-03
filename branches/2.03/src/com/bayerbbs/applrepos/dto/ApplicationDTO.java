@@ -103,9 +103,10 @@ public class ApplicationDTO extends CiBaseDTO {
 	private Long itSecSbAvailabilityId;
 	private String itSecSbAvailabilityTxt;
 //	private String itSecSbAvailabilityDescription;
-	private Long itSecSbConfidentialityId;
-	private String itSecSbConfidentialityTxt;
-	private String itSecSbConfidentialityDescription;
+
+//	private Long itSecSbConfidentialityId;
+//	private String itSecSbConfidentialityTxt;
+//	private String itSecSbConfidentialityDescription;
 
 	// gpsc (baseCiDTO / local)
 	private String gpsccontactOwningBusinessGroup;
@@ -596,12 +597,12 @@ public class ApplicationDTO extends CiBaseDTO {
 //		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
 //	}
 
-	public Long getItSecSbConfidentialityId() {
-		return itSecSbConfidentialityId;
-	}
-	public void setItSecSbConfidentialityId(Long itSecSbConfidentialityId) {
-		this.itSecSbConfidentialityId = itSecSbConfidentialityId;
-	}
+//	public Long getItSecSbConfidentialityId() {
+//		return itSecSbConfidentialityId;
+//	}
+//	public void setItSecSbConfidentialityId(Long itSecSbConfidentialityId) {
+//		this.itSecSbConfidentialityId = itSecSbConfidentialityId;
+//	}
 
 	public String getItSecSbIntegrityTxt() {
 		return itSecSbIntegrityTxt;
@@ -631,18 +632,18 @@ public class ApplicationDTO extends CiBaseDTO {
 //		this.itSecSbAvailabilityDescription = itSecSbAvailabilityDescription;
 //	}
 
-	public String getItSecSbConfidentialityTxt() {
-		return itSecSbConfidentialityTxt;
-	}
-	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
-		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
-	}
-	public String getItSecSbConfidentialityDescription() {
-		return itSecSbConfidentialityDescription;
-	}
-	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
-		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
-	}
+//	public String getItSecSbConfidentialityTxt() {
+//		return itSecSbConfidentialityTxt;
+//	}
+//	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
+//		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
+//	}
+//	public String getItSecSbConfidentialityDescription() {
+//		return itSecSbConfidentialityDescription;
+//	}
+//	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
+//		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
+//	}
 
 	
 	public Long getPrimaryFunctionId() {

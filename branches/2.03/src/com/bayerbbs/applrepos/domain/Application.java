@@ -53,6 +53,8 @@ public class Application extends DeletableRevisionInfo {
 	// protection
 	private Long itSecSbAvailability;
 	private String itSecSbAvailabilityTxt;
+	private Long itSecSbConfidentiality;
+	private String itSecSbConfidentialityTxt;
 	private Long classInformationId;
 	private String classInformationExplanation;
 	private String dataPrivacyPersonalData;
@@ -459,6 +461,28 @@ public class Application extends DeletableRevisionInfo {
 	}
 	
 
+	//in Basisklasse
+	@Column(name = "ITSEC_SB_VERTR_ID")
+	public Long getItSecSbConfidentiality() {
+		return itSecSbConfidentiality;
+	}
+
+	public void setItSecSbConfidentiality(Long itSecSbConfidentiality) {
+		this.itSecSbConfidentiality = itSecSbConfidentiality;
+	}
+
+	//in Basisklasse
+	@Column(name = "ITSEC_SB_VERTR_TXT")
+	public String getItSecSbConfidentialityTxt() {
+		return itSecSbConfidentialityTxt;
+	}
+
+	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
+		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
+	}
+
+	
+	
 	@Column(name = "CLASS_INFORMATION_ID")
 	public Long getClassInformationId() {
 		return classInformationId;

@@ -106,6 +106,7 @@ AIR.AirApplicationManager = function() {
 				accountListStore: null,
 				itSetListStore: null,
 				itSecSBAvailabilityListStore: null,
+				itSecSBConfidentialityListStore: null,
 				classInformationListStore: null,
 				slaListStore: null,
 				serviceContractListStore: null,
