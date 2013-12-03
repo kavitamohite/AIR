@@ -390,21 +390,21 @@
 
 		<applicationAccessingUserCountMeasured>Anzahl gemessener Nutzer</applicationAccessingUserCountMeasured>
 		<applicationAccessingUserCountMeasuredText>
-			Meßwert zu “Accessing User Count”, d.h. tatsächlich verbrauchte Lizenzen
+			Me&amp;szlig;wert zu “Accessing User Count”, d.h. tats&amp;auml;chlich verbrauchte Lizenzen
 		</applicationAccessingUserCountMeasuredText>
 
 		<dedicated>Dedicated / Shared</dedicated>
 		<dedicatedText>
 			“Dedicated” bedeutet, dass mit dem Kunden vereinbart
-			ist, dass seine Anwendung alleine auf einer SPL läuft.&lt;br&gt;
+			ist, dass seine Anwendung alleine auf einer SPL l&amp;auml;uft.&lt;br&gt;
 			“Shared” bedeutet, dass mit dem Kunden vereinbart ist, dass seine
 			Anwendung zusammen mit mindestens einer weiteren Anwendung auf einer
-			SPL läuft.
+			SPL l&amp;auml;uft.
         </dedicatedText>
 
 		<loadClass>Lastklasse</loadClass>
 		<loadClassText>
-			Lastklasse in Bezug auf “gefühlten Verbrauch” von
+			Lastklasse in Bezug auf “gef&amp;uuml;hlten Verbrauch” von
 			CPU/RAM/Disk pro aufgerufener Instanz.
 			Die Definition der Lastklassen
 			befindet sich im GPC unter den Produkten

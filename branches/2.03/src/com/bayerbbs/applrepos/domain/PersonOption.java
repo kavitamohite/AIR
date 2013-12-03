@@ -13,7 +13,8 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "PERSON_OPTION")
-@SequenceGenerator(name = "MySeqPersonOption", sequenceName = "TBADM.SEQ_PERSON_OPTION")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
+@SequenceGenerator(name = "MySeqPersonOption", sequenceName = "SEQ_PERSON_OPTION")
 public class PersonOption extends DeletableRevisionInfo implements Serializable {
 
 	private static final long serialVersionUID = -61673704636446765L;

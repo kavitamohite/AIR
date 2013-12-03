@@ -20,6 +20,7 @@ public class Interfaces implements Serializable {
 	private String interfaceToken;
 	private String interfaceName;
 	private String sisecEditable;
+	private String importYN;
 
 	@Transient
 	public Long getId() {
@@ -57,5 +58,13 @@ public class Interfaces implements Serializable {
 	}
 	public void setSisecEditable(String sisecEditable) {
 		this.sisecEditable = sisecEditable;
+	}
+	
+	@Column(name = "IMPORT_Y_N")
+	public String getImportYN() {
+		return importYN;
+	}
+	public void setImportYN(String importYN) {
+		this.importYN = importYN;
 	}
 }

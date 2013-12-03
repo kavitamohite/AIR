@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "APPLICATION_REGION")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
 @SequenceGenerator(name = "MySeqApplicationRegion", sequenceName = "TBADM.SEQ_APPLICATION_REGION")
 public class ApplicationRegion  extends DeletableRevisionInfo implements Serializable {
 

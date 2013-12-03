@@ -1624,7 +1624,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //	    params.advsearchObjectTypeId = field.getValue();
 //	    params.advsearchObjectTypeText = field.getRawValue().trim();
 	    var value = field.getValue();//field.getEl().dom.value;
-	    if(typeof value == 'number') {
+	    //if(typeof value == 'number') {
+	    if (value != undefined && value != "") {
 		    var record = field.getStore().getById(value);//getAt(field.getStore().findExact('text', value));
 		    params.ciTypeId = record.get('ciTypeId');//params.tableId
 		    params.ciSubTypeId = record.get('ciSubTypeId');

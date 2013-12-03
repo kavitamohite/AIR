@@ -119,10 +119,12 @@ public class ApplReposHbn {
 //			Connection conn = null;
 
 			StringBuffer sql = new StringBuffer();
-			sql.append("select count(*) from v_person_groups where (upper(group_name) = '");
-			sql.append(groupname.toUpperCase()).append("'");
-			sql.append(" and upper(cwid)='").append(cwid.toUpperCase()).append("')");
-			
+			/* DO NOT use V_PERSON_GROUPS because of performance reasons */ 
+			sql.append(" select count(*) FROM person p");
+			sql.append(" JOIN person_groups pg ON p.cwid = pg.cwid AND pg.del_quelle IS NULL");
+			sql.append(" JOIN groups g ON pg.group_id = g.group_id AND g.del_quelle IS NULL AND upper(g.group_name) = '").append(cwid.toUpperCase()).append("'");
+			sql.append(" WHERE p.del_quelle IS NULL AND p.cwid = '").append(cwid.toUpperCase()).append("'");
+
 			try {
 				tx = session.beginTransaction();
 				@SuppressWarnings("deprecation")

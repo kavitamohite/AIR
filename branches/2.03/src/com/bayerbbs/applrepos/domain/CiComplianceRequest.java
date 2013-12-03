@@ -13,7 +13,8 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "CI_COMPLIANCE_REQUEST")
-@SequenceGenerator(name = "MySeqCiComplianceRequest", sequenceName = "TBADM.SEQ_CI_COMPLIANCE_REQUEST")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
+@SequenceGenerator(name = "MySeqCiComplianceRequest", sequenceName = "SEQ_CI_COMPLIANCE_REQUEST")
 public class CiComplianceRequest extends DeletableRevisionInfo implements Serializable {
 
 	private static final long serialVersionUID = 1999222508852960139L;

@@ -419,7 +419,8 @@ AIR.AirStoreFactory = function() {
 			var languageHelpStore = new Ext.data.XmlStore({
 			    autoLoad: false,
 			    storeId: 'languageHelpStore',
-			    url: 'conf/lang/german_help.xml',
+			    //url: 'conf/lang/german_help.xml',
+			    data: Util.String2XML(conf_lang_german_help_xml),
 
 			    record: 'Items',
 			    
@@ -452,12 +453,13 @@ AIR.AirStoreFactory = function() {
 			return this.createLanguageStore('DE');
 		},
 		createLanguageStore: function(language) {
-			var url = language == 'de' || language == 'DE' ? 'conf/lang/german.xml' : 'conf/lang/english.xml';
+			//var url = language == 'de' || language == 'DE' ? 'conf/lang/german.xml' : 'conf/lang/english.xml';
 			
 			var languageStore = new Ext.data.XmlStore({
 			    autoLoad: false,
 			    storeId: 'languageStore_' + language,
-			    url: url,
+			    //url: url,
+			    data: Util.String2XML((language == 'de' || language == 'DE' ? conf_lang_german_xml : conf_lang_english_xml)),
 	
 			    record: 'Items',
 			    
@@ -1006,13 +1008,14 @@ AIR.AirStoreFactory = function() {
 			return this.createLanguageToolTipStore('DE');
 		},
 		createLanguageToolTipStore: function(language) {
-			var url = language == 'de' || language == 'DE' ? 'conf/lang/german_tooltips.xml' : 'conf/lang/english_tooltips.xml';
+			//var url = language == 'de' || language == 'DE' ? 'conf/lang/german_tooltips.xml' : 'conf/lang/english_tooltips.xml';
 			
 			var languageToolTipStore = new Ext.data.XmlStore({
 			    autoLoad: false,
 			    storeId: 'languageToolTipStore_' + language,
-				url: url,
-		
+				//url: url,
+			    data: Util.String2XML((language == 'de' || language == 'DE' ? conf_lang_german_tooltips_xml : conf_lang_english_tooltips_xml)),
+			    
 			    record: 'Items',
 			    
 			    fields: [
@@ -1391,7 +1394,8 @@ AIR.AirStoreFactory = function() {
 			var aclStore = new Ext.data.XmlStore({
 			    autoLoad: false,//false true
 			    storeId: 'aclStore',
-			    url: 'conf/AttributeProperties.xml',
+			    //url: 'conf/AttributeProperties.xml',
+			    data: Util.String2XML(conf_AttributeProperties_xml),
 
 			    record: 'Identifier', // records will have an 'Identifier' tag
 			    
@@ -2651,7 +2655,7 @@ AIR.AirStoreFactory = function() {
 			var itSecGroupListStore = new Ext.data.ArrayStore(
 			{
 				storeId: 'itSecGroupListStore',
-				fields : ['id', 'name', 'itsetId', 'ciKat1', 'tableId'],
+				fields : ['isgid', 'id', 'name', 'itsetId', 'ciKat1', 'tableId'],
 				idIndex: 0,
 				data : itsecGroupData
 			});
@@ -2722,8 +2726,8 @@ AIR.AirStoreFactory = function() {
 			
 			var store = new Ext.data.XmlStore({
 			    autoLoad: false,
-			    url: 'conf/ConnectionProperties.xml',//(*9) config/ /AIR/htdocs/config/
-			    
+			    //url: 'conf/ConnectionProperties.xml',//(*9) config/ /AIR/htdocs/config/
+			    data: Util.String2XML(conf_ConnectionProperties_xml),
 			    // reader configs
 			    record: 'Identifier',
 			    fields: [ 'Source', 'Destination', 'Relevance', 'Upstream', 'Downstream' ]
@@ -2735,150 +2739,64 @@ AIR.AirStoreFactory = function() {
 		
 		//ItSystem Stores
 		createClusterTypesListStore: function() {
-			var clusterTypesListRecord = Ext.data.Record.create([
-  		      	{ name: 'id', type: 'int' },
-  		      	{ name: 'name' }
-  		    ]);
-  		
-  		    var clusterTypesListReader = new Ext.data.XmlReader({
-  				record: 'return',
-  				idProperty: 'id'
-  		    }, clusterTypesListRecord);
-  		
-  		    var clusterTypesListStore = new Ext.data.XmlStore({
-  		    	autoDestroy: true,
-  				autoLoad: false,
-  				storeId: 'clusterTypesListStore',
-  				
-  		      	proxy: new Ext.ux.soap.SoapProxy({
-  		      		url: webcontext +'/AIRToolsWSPort',
-  		      		loadMethod: 'getItSystemClusterTypes',
-  		      		timeout: 120000,
-  		      		reader: clusterTypesListReader
-  		      	}),
-  		      	fields: [ 'id', 'name' ]
-  		    });
-  		    
-  		    return clusterTypesListStore;
+			var clusterTypesListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'clusterTypesListStore',
+				fields : ['id', 'name'],
+				idIndex: 0,
+				data : clusterTypeData
+			});
+			
+	        return clusterTypesListStore;
 		},
 		
 		createClusterCodesListStore: function() {
-			var clusterCodesListRecord = Ext.data.Record.create([
-  		      	{ name: 'id', type: 'int' },
-  		      	{ name: 'name' },
-  		      	{ name: 'type' }
-  		    ]);
-  		
-  		    var clusterCodesListReader = new Ext.data.XmlReader({
-  				record: 'return',
-  				idProperty: 'id'
-  		    }, clusterCodesListRecord); 
-  		
-  		    var clusterCodesListStore = new Ext.data.XmlStore({
-  		    	autoDestroy: true,
-  				autoLoad: false,
-  				storeId: 'clusterCodesListStore',
-  				
-  		      	proxy: new Ext.ux.soap.SoapProxy({
-  		      		url: webcontext +'/AIRToolsWSPort',
-  		      		loadMethod: 'getItSystemClusterCodes',
-  		      		timeout: 120000,
-  		      		reader: clusterCodesListReader
-  		      	}),
-  		      	fields: [ 'id', 'name', 'type' ]
-  		    });
-  		    
-  		    return clusterCodesListStore;
+			var clusterCodesListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'clusterCodesListStore',
+				fields : ['id', 'name', 'type'],
+				idIndex: 0,
+				data : clusterCodeData
+			});
+			
+	        return clusterCodesListStore;
+			        
 		},
 		
 		createOsGroupsListStore: function() {
-			var osGroupsListRecord = Ext.data.Record.create([
-  		      	{ name: 'id', type: 'int' },
-  		      	{ name: 'name' },
-  		      	{ name: 'type', type: 'int' }
-  		    ]);
-  		
-  		    var osGroupsListReader = new Ext.data.XmlReader({
-  				record: 'return',
-  				idProperty: 'id'
-  		    }, osGroupsListRecord); 
-  		
-  		    var osGroupsListStore = new Ext.data.XmlStore({
-  		    	autoDestroy: true,
-  				autoLoad: false,
-  				storeId: 'osGroupsListStore',
-  				
-  		      	proxy: new Ext.ux.soap.SoapProxy({
-  		      		url: webcontext +'/AIRToolsWSPort',
-  		      		loadMethod: 'getItSystemOsGroups',
-  		      		timeout: 120000,
-  		      		reader: osGroupsListReader
-  		      	}),
-  		      	fields: [ 'id', 'name', 'type' ]
-  		    });
-  		    
-  		    return osGroupsListStore;
+			var osGroupsListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'osGroupsListStore',
+				fields : ['id', 'name', 'type'],
+				idIndex: 0,
+				data : osGroupData
+			});
+			
+	        return osGroupsListStore;
 		},
 		
 		createOsTypesListStore: function() {
-			var osTypesListRecord = Ext.data.Record.create([
-  		      	{ name: 'osTypeId', type: 'int' },
-  		      	{ name: 'osName' },
-  		      	{ name: 'osGroup' },
-  		      	{ name: 'itSystemType', type: 'int' },
-  		      	{ name: 'licenseScanning', type: 'int' }
-  		    ]);
-  		
-  		    var osTypesListReader = new Ext.data.XmlReader({
-  				record: 'return',
-  				idProperty: 'osTypeId'
-  		    }, osTypesListRecord); 
-  		
-  		    var osTypesListStore = new Ext.data.XmlStore({
-  		    	autoDestroy: true,
-  				autoLoad: false,
-  				storeId: 'osTypesListStore',
-  				
-  		      	proxy: new Ext.ux.soap.SoapProxy({
-  		      		url: webcontext +'/AIRToolsWSPort',
-  		      		loadMethod: 'getItSystemOsTypes',
-  		      		timeout: 120000,
-  		      		reader: osTypesListReader
-  		      	}),
-  		      	fields: [ 'osTypeId', 'osName', 'osGroup', 'itSystemType', 'licenseScanning' ]
-  		    });
-  		    
-  		    return osTypesListStore;
+			var osTypesListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'osTypesListStore',
+				fields : ['osTypeId', 'osName', 'osGroup', 'itSystemType', 'licenseScanning'],
+				idIndex: 0,
+				data : osTypeData
+			});
+			
+	        return osTypesListStore;
 		},
 		
 		createOsNamesListStore: function() {
-			var osNamesListRecord = Ext.data.Record.create([
-  		      	{ name: 'osNameId', type: 'int' },//id
-  		      	{ name: 'osName' },//name
-  		      	{ name: 'osTypeId', type: 'int' },//type
-  		      	{ name: 'itSystemType', type: 'int' }
-  		    ]);
-  		
-  		    var osNamesListReader = new Ext.data.XmlReader({
-  				record: 'return',
-  				idProperty: 'osNameId'//id
-  		    }, osNamesListRecord); 
-  		
-  		    var osNamesListStore = new Ext.data.XmlStore({
-  		    	autoDestroy: true,
-  				autoLoad: false,
-  				storeId: 'osNamesListStore',
-  				
-  		      	proxy: new Ext.ux.soap.SoapProxy({
-  		      		url: webcontext +'/AIRToolsWSPort',
-  		      		loadMethod: 'getItSystemOsNames',
-  		      		timeout: 120000,
-  		      		reader: osNamesListReader
-  		      	}),
-  		      	fields: [ 'id', 'name', 'type', 'itSystemType' ]
-  		    });
-  		    
-  		    return osNamesListStore;
+			var osNamesListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'osNamesListStore',
+				fields : ['osNameId', 'name', 'osTypeId', 'itSystemType'],
+				idIndex: 0,
+				data : osNameData
+			});
+					
+			return osNamesListStore;
 		},
 		
 		createVirtualSoftwareListStore: function() {
@@ -2965,16 +2883,24 @@ AIR.AirStoreFactory = function() {
   		    return itSystemLicenseScanningsStore;
 		},
 		
-		createSisoogleOsTypeListStore: function() {
+		/*createSisoogleOsTypeListStore: function() {
 			return this.createSisoogleAttributeListStore();
 		},
 		createSisoogleOsNameListStore: function() {
 			return this.createSisoogleAttributeListStore();
-		},
+		},*/
 		createSisoogleSourceListStore: function() {
-			return this.createSisoogleAttributeListStore();
+			var sisoogleSourceListStore = new Ext.data.ArrayStore(
+			{
+				storeId: 'sisoogleSourceListStore',
+				fields : ['id', 'name'],
+				idIndex: 0,
+				data : interfacesData
+			});
+			
+	        return sisoogleSourceListStore;
 		},
-		createSisoogleGapResponsibleListStore: function() {
+		/*createSisoogleGapResponsibleListStore: function() {
 			return this.createSisoogleAttributeListStore();
 		},
 		createSisoogleGapEndDateListStore: function() {
@@ -3015,7 +2941,7 @@ AIR.AirStoreFactory = function() {
 		    });
 		    
 		    return sisoogleAttributeListStore;
-		},
+		}, */
 		
 		createLinkCiTypeListStore: function() {
 			var linkCiTypeListRecord = Ext.data.Record.create([
@@ -3269,7 +3195,7 @@ AIR.AirStoreFactory = function() {
 		    return itsecMassnahmeDetailStore;
 		},
 		
-		createCurrencyStore: function() {
+		/*createCurrencyStore: function() {
 			var currencyRecord = Ext.data.Record.create([
 	 	        'currencyId', 'currencyName', 'currencySymbol'
 	        ]);
@@ -3298,7 +3224,7 @@ AIR.AirStoreFactory = function() {
 			currencyStore.load();
 			
 			return currencyStore;
-		},
+		},*/
 		
 		createCiDeleteStore: function() {
 			var record = Ext.data.Record.create([

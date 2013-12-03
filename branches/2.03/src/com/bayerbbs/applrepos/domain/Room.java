@@ -16,7 +16,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "RAUM")
-@SequenceGenerator(name = "MySeqRoom", sequenceName = "TBADM.SEQ_RAUM")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
+@SequenceGenerator(name = "MySeqRoom", sequenceName = "SEQ_RAUM")
 @NamedQueries({
 //	@NamedQuery(name="findByNameOrAliasAndBuildingAreaId", query="FROM Room r WHERE (r.roomName=:name OR r.alias=:alias) AND buildingAreaId=:buildingAreaId"),
 	@NamedQuery(name="findByNameOrAliasAndBuildingAreaId", query="FROM Room r WHERE (upper(r.roomName)=upper(:name) OR upper(r.alias)=upper(:alias) OR upper(r.roomName)=upper(:alias) OR upper(r.alias)=upper(:name)) AND buildingAreaId=:buildingAreaId"),

@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "BUILDING_AREA")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
 @SequenceGenerator(name = "MySeqBuildingArea", sequenceName = "TBADM.SEQ_BUILDING_AREA")
 @NamedQueries({
 	@NamedQuery(name="findByNameAndBuildingId", query="FROM BuildingArea ba WHERE upper(ba.buildingAreaName)=upper(:name) AND buildingId=:buildingId")

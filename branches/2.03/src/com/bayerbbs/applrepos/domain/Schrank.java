@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "SCHRANK")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
 @NamedQueries({
 	@NamedQuery(name="findByNameAndRoomId", query="FROM Schrank s WHERE upper(s.schrankName)=upper(:name) AND s.roomId=:roomId")
 })

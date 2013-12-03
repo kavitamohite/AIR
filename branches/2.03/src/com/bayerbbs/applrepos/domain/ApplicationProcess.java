@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "APPLICATION_PROCESS")
+@org.hibernate.annotations.Entity(dynamicInsert = true)
 @SequenceGenerator(name = "MySeqApplicationProcess", sequenceName = "TBADM.SEQ_APPLICATION_PROCESS")
 public class ApplicationProcess extends DeletableRevisionInfo implements Serializable {
 

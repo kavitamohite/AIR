@@ -136,7 +136,7 @@ public class AccessRightChecker {
 			return true;
 		
 		String groupCount = ci.getCiOwnerDelegate() != null ? ApplReposHbn.getCountFromGroupNameAndCwid(ci.getCiOwnerDelegate(), cwid) : AirKonstanten.STRING_0;
-		if (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(AirKonstanten.STRING_0))
+		if (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && groupCount!=null && !AirKonstanten.STRING_0.equals(groupCount))
 			return true;
 		
 		return false;

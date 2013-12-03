@@ -1509,7 +1509,7 @@ public class AnwendungHbn extends BaseHbn {
 			tx = session.beginTransaction();
 			@SuppressWarnings("deprecation")
 			Connection conn = session.connection();
-
+			System.out.println(sql.toString());
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
 

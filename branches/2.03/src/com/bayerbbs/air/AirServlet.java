@@ -1,14 +1,17 @@
 package com.bayerbbs.air;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.InetAddress;
 import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -33,6 +36,7 @@ import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.DedicatedDTO;
 import com.bayerbbs.applrepos.dto.GapClassDTO;
 import com.bayerbbs.applrepos.dto.GxpFlagDTO;
+import com.bayerbbs.applrepos.dto.InterfacesDTO;
 import com.bayerbbs.applrepos.dto.ItSecGroupDTO;
 import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
 import com.bayerbbs.applrepos.dto.ItSetDTO;
@@ -57,6 +61,7 @@ import com.bayerbbs.applrepos.service.AIRToolsWS;
 import com.bayerbbs.applrepos.service.ApplicationCat1WS;
 import com.bayerbbs.applrepos.service.ApplicationCat2WS;
 import com.bayerbbs.applrepos.service.ApplicationToolsWS;
+import com.bayerbbs.applrepos.service.InterfacesWS;
 import com.bayerbbs.applrepos.service.ItsecMassnahmenWS;
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
 
@@ -99,6 +104,31 @@ public class AirServlet extends HttpServlet {
 	}
 
 
+	private StringWriter getXMLFile(String filename) {
+		String fs = System.getProperty("file.separator");
+		CharBuffer sw = CharBuffer.allocate(1048576);
+		ServletContext servletContext = getServletContext();
+		String target = servletContext.getRealPath("/").concat(filename);
+		
+		try {
+			BufferedReader reader = new BufferedReader( new FileReader (target), 1048576);
+		    String line = null;
+		    StringWriter stringBuilder = new StringWriter();
+		     
+		    String ls = System.getProperty("line.separator");
+		    stringBuilder.append("var " + filename.replace("/", "_").replace(".", "_") + " = '");
+		    while( ( line = reader.readLine() ) != null ) {
+		    	//byte[] ptext = line.getBytes("ISO-8859-1");
+		        //stringBuilder.append( new String(ptext).trim().replace("'", "\\'"));
+		        stringBuilder.append( line.trim().replace("'", "\\'"));
+		    }
+		    stringBuilder.append("';\n");
+		    return stringBuilder;
+		} catch (Exception e) {
+			return new StringWriter().append("Error in file " + target + " -> " + e.toString());
+		}
+	}
+	
 	private boolean existsCompressedJSFile(String version, String filename, String compressedcodedir) {
 		String fs = System.getProperty("file.separator");
 		ServletContext servletContext = getServletContext();
@@ -130,24 +160,24 @@ public class AirServlet extends HttpServlet {
 		}
 	}
 	
-	private String readCompressedJSFile(String version, String filename, String compressedcodedir) {
+	private StringWriter readCompressedJSFile(String version, String filename, String compressedcodedir) {
 		String fs = System.getProperty("file.separator");
 		CharBuffer sw = CharBuffer.allocate(1048576);
 		ServletContext servletContext = getServletContext();
 		String current = servletContext.getRealPath("/").concat(filename.replace("/", "_").replace(".", "__"));
 		String target = current.replace("javascript_", compressedcodedir + fs).replace("__js", version);
 		try {
-			BufferedReader reader = new BufferedReader( new FileReader (target));
+			BufferedReader reader = new BufferedReader( new FileReader (target), 1048576);
 		    String line = null;
-		    StringBuilder stringBuilder = new StringBuilder();
+		    StringWriter stringBuilder = new StringWriter();
 		    String ls = System.getProperty("line.separator");
 		    while( ( line = reader.readLine() ) != null ) {
 		        stringBuilder.append( line );
 		        stringBuilder.append( ls );
 		    }
-		    return stringBuilder.toString();
+		    return stringBuilder;
 		} catch (Exception e) {
-			return "Error in file " + target + " -> " + e.toString();
+			return new StringWriter().append("Error in file " + target + " -> " + e.toString());
 		}
 	}
 	
@@ -167,7 +197,7 @@ public class AirServlet extends HttpServlet {
 					sw.append("</script>\n");
 					writeCompressedJSFile(cversion, fileName, AirKonstanten.COMPRESSEDCODEDIR, sw);
 				} else {
-					sw.append(readCompressedJSFile(cversion, fileName, AirKonstanten.COMPRESSEDCODEDIR));
+					sw = readCompressedJSFile(cversion, fileName, AirKonstanten.COMPRESSEDCODEDIR);
 				}
 			} else {
 				sw = new StringWriter();
@@ -211,6 +241,7 @@ public class AirServlet extends HttpServlet {
 		ApplicationCat1WS cat1DataInput = new ApplicationCat1WS();
 		ApplicationCat2WS cat2DataInput = new ApplicationCat2WS();
 		ItsecMassnahmenWS itsecMasnDataInput = new ItsecMassnahmenWS();
+		InterfacesWS interfacesDataInput = new InterfacesWS();
 		long ts = System.currentTimeMillis();
 		
 		String output = "\n";
@@ -451,8 +482,9 @@ public class AirServlet extends HttpServlet {
 		
 		ItSecGroupDTO[] itsecGroups = dataInput.getItSecGroupList();
 		String itsecGroupLine = "";
+		int count = 0;
 		for (ItSecGroupDTO itsecGroupItem : itsecGroups) {
-			itsecGroupLine += "['" + itsecGroupItem.getItSecGroupId() + "','" + itsecGroupItem.getItSecGroupName() + "','" + itsecGroupItem.getItsetId() + "','" + itsecGroupItem.getCiKat1() + "'," + itsecGroupItem.getTableId() +"],";
+			itsecGroupLine += "['" + String.valueOf(count++) + "','" + itsecGroupItem.getItSecGroupId() + "','" + itsecGroupItem.getItSecGroupName() + "','" + itsecGroupItem.getItsetId() + "','" + itsecGroupItem.getCiKat1() + "','" + itsecGroupItem.getTableId().toString() +"'],";
 		}
 		itsecGroupLine = "var itsecGroupData = [" + itsecGroupLine.substring(0, itsecGroupLine.length()-1) + "];";
 		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
@@ -529,15 +561,25 @@ public class AirServlet extends HttpServlet {
 		ts = System.currentTimeMillis();
 		output += gapClassLine + "\n"; 
 		
-		ReferenzDTO[] references = dataInput.getReferenzList();
+		ReferenzDTO[] references = dataInput.getTemplateCIs();
 		String referenceLine = "";
 		for (ReferenzDTO referenceItem : references) {
-			referenceLine += "['" + referenceItem.getId().toString() + "','" + referenceItem.getName() + "','" + referenceItem.getItsetId().toString() + "','" + referenceItem.getItsecGroupId().toString() + "','" + (referenceItem.getDelTimestamp()==null?"":referenceItem.getDelTimestamp().toString()) + "','" + referenceItem.getCiKat1().toString() + "'],";
+			referenceLine += "['" + referenceItem.getId().toString() + "','" + referenceItem.getName() +"','" + referenceItem.getTableId().toString() +  "','" + referenceItem.getItsetId().toString() + "','" + referenceItem.getItsecGroupId().toString() + "','" + (referenceItem.getDelTimestamp()==null?"":referenceItem.getDelTimestamp().toString()) + "','" + referenceItem.getCiKat1().toString() + "'],";
 		}
 		referenceLine = "var templateData = [" + referenceLine.substring(0, referenceLine.length()-1) + "];";
 		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
 		ts = System.currentTimeMillis();
 		output += referenceLine + "\n";
+		
+		InterfacesDTO[] interfaces = interfacesDataInput.findAllImportInterfaces();
+		String interfacesLine = "";
+		for (InterfacesDTO interfaceItem : interfaces) {
+			interfacesLine += "['" + interfaceItem.getInterfacesId().toString() + "','" + interfaceItem.getInterfaceToken() + "'],";
+		}
+		interfacesLine = "var interfacesData = [" + interfacesLine.substring(0, interfacesLine.length()-1) + "];";
+		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
+		ts = System.currentTimeMillis();
+		output += interfacesLine + "\n";
 		
 		return output;
 	}
@@ -619,7 +661,14 @@ public class AirServlet extends HttpServlet {
 					
 	//			===================================================================================================================
 				append("<script>var app_version 		='" + AirKonstanten.AIR_VERSION + "'</script>").
-				append("<script>" + getDataStores() + "</script>").
+				append("<script>" + getDataStores() + "</script>\n").
+				append("<script>" + getXMLFile("conf/lang/german_tooltips.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/lang/english_tooltips.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/lang/german_help.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/lang/german.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/lang/english.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/ConnectionProperties.xml").toString() + "</script>\n").
+				append("<script>" + getXMLFile("conf/AttributeProperties.xml").toString() + "</script>\n").
 				append(compressJSFile("javascript/common/AirConstants.js", version)).
 				append(compressJSFile("javascript/common/Util.js", version)).
 				append(compressJSFile("javascript/common/data/AirStoreLoader.js", version)).
