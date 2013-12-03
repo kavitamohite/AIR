@@ -122,25 +122,32 @@ public class AccessRightChecker {
 	}
 	
 	//Doppelt weil: siehe @Column(name = "CWID_VERANTW_BETR") ciOwner Feld in Hibernateklasse ItSystem
-	//anstatt @Column(name = "RESPONSIBLE") wie in allen anderen Transbase CI Tabellen
-	public boolean isRelevanceOperational(String cwid, String token, CiBase2 ci) {//ItSystem ci
-		if(cwid == null || ci == null)// || (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null)
-			return false;
-		
-		if(ci.getDeleteQuelle() != null)
-			return false;
-		
-		if(cwid.equals(ci.getCiOwner()) || 
-		   cwid.equals(ci.getCiOwnerDelegate()) || 
-		   (ci.getCiOwner() == null && ci.getCiOwnerDelegate() == null))//wenn kein owner oder delegate, dürfen alle editieren
-			return true;
-		
-		String groupCount = ci.getCiOwnerDelegate() != null ? ApplReposHbn.getCountFromGroupNameAndCwid(ci.getCiOwnerDelegate(), cwid) : AirKonstanten.STRING_0;
-		if (StringUtils.isNotNullOrEmpty(ci.getCiOwnerDelegate()) && !groupCount.equals(AirKonstanten.STRING_0))
-			return true;
-		
-		return false;
-	}
+    //anstatt @Column(name = "RESPONSIBLE") wie in allen anderen Transbase CI Tabellen
+    public boolean isRelevanceOperational(String cwid, String token, CiBase2 ci) {//ItSystem ci
+          
+          boolean isEditable = false;
+          if (null != cwid && null != ci && null == ci.getDeleteQuelle()) {
+
+                if (null == ci.getCiOwner() && null == ci.getCiOwnerDelegate()) {
+                      //wenn kein owner oder delegate, dürfen alle editieren
+                      isEditable = true;
+                }
+
+                if (!isEditable && (cwid.equals(ci.getCiOwner()) || 
+                               cwid.equals(ci.getCiOwnerDelegate()))) {
+                      isEditable = true;
+                }
+                
+                if (!isEditable && null != ci.getCiOwnerDelegate()) {
+                      if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(ci.getCiOwnerDelegate(), cwid))) {
+                            isEditable = true;
+                      }
+                }
+          }
+          
+          return isEditable;
+    }
+
 
 	//Location CIs mit dem Namen unknown dürfen nicht editiert werden !!
 	public boolean isRelevanceOperational(String cwid, String token, CiBase1 ci) {

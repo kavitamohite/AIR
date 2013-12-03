@@ -6,13 +6,17 @@ AIR.AirView = Ext.extend(Ext.Panel, {
 		if(Ext.isIE) {
 			field.el.up('.x-form-item', 10, true).child('.x-form-item-label').update(labelText);
 		} else {
-			field.label.dom.textContent = labelText;//innerHTML textContent
+			field.label.dom.innerHTML = labelText;//innerHTML textContent
 		}
 	},
 	
 	setBoxLabel: function(box, labelText) {
 //		box.label.dom.nextElementSibling.children[0].children[1].textContent = labelText;//textContent innerHTML
-		box.el.dom.nextSibling.childNodes[0].nodeValue = labelText;
+		//box.el.dom.nextSibling.childNodes[0].nodeValue = labelText;
+		if (box != undefined)
+			box.wrap.child('.x-form-cb-label').update(labelText);
+		//box.el.dom.nextSibling.firstChild.data = labelText;
+//		box.el.dom.nextSibling.childNodes[0].update(labelText);
 	},
 	
 	//see also common.Util.js

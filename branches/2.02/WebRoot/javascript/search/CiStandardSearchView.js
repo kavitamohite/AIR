@@ -1,6 +1,6 @@
 Ext.namespace('AIR');
 
-AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
+AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {
 	initComponent: function() {
 		Ext.apply(this, {
 			border: false,
@@ -12,38 +12,31 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 				
 				layout: 'table',
 			    layoutConfig: {
-			    	columns: 3//2
+			    	columns: 3
 			    },
-				
-	//			layout: 'column',
 			    
 			    items: [{
 		        	xtype: 'textfield',
 		        	id: 'tfSearch',
 		        	
 		        	emptyText: 'Enter CI name or alias...',
-		        	width: 300,
-//		        	height: 28,
+		        	width: 350,
 		        	
 		        	hideLabel: true,
 		        	padding: 5,
 		        	
 		        	hasSearch: false,
-//		        	maskRe: /[0-9a-zA-Z%#=\+\-\_\/\\.:*? ]/,
 		        	maxLength: 656
 		        },{
-					xtype: 'button',//commandlink
+					xtype: 'button',
 					id: 'clSearch',
 					
-//	                img: img_Search_offMouse,
-					
 		        	cls: 'x-btn-text-icon',
-		        	icon: imgcontext+'/search_16x16.png',//'images/search_16x16.png'
+		        	icon: imgcontext+'/search_16x16.png',
 		        	text: '',
 					
 					style: {
-						marginLeft: 5//2
-//						marginTop: 15
+						marginLeft: 5
 					}
 				},{
 		        	xtype: 'button',
@@ -51,7 +44,7 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        	hidden: true,
 		        	
 		        	cls: 'x-btn-text-icon',
-		        	icon: imgcontext+'/refresh_16x16.png',//'images/refresh_16x16.png',
+		        	icon: imgcontext+'/refresh_16x16.png',
 		        	
 		        	text: 'Update',
 		        	
@@ -62,26 +55,14 @@ AIR.CiStandardSearchView = Ext.extend(AIR.AirView, {//Ext.Panel
 		            xtype: 'radiogroup',
 					id: 'rbgQueryMode',
 					hidden: true,
-	
 		            items: [{
-		            	id: 'rbgQueryModeContains', boxLabel: 'Contains', name: 'queryMode', inputValue: 'CONTAINS', checked: true
+		            	id: 'rbgQueryModeContains', name: 'queryMode', boxLabel: 'Contains', inputValue: 'CONTAINS', checked: true
 		            }, {
-		            	id: 'rbgQueryModeBeginsWith', boxLabel: 'Begins with', name: 'queryMode', inputValue: 'BEGINS_WITH'
-		            }, { 
-		            	id: 'rbgQueryModeExact', boxLabel: 'Exact', name: 'queryMode', inputValue: 'EXACT'
+		            	id: 'rbgQueryModeBeginsWith', name: 'queryMode', boxLabel: 'Begins with', inputValue: 'BEGINS_WITH'
+		            },{ 
+		            	id: 'rbgQueryModeExact', name: 'queryMode', boxLabel: 'Exact', inputValue: 'EXACT'
 		            }]
-				}/*, {
-					xtype: 'commandlink',//
-					id: 'clAdvancedSearch',
-					
-					text: 'Advanced Search',
-	                img: 'lib/extjs/docs/resources/s.gif',
-	                cls: 'menuSubLink',
-	                
-	                style: {
-	                	float: 'right'
-	                }
-				}*/]
+				}]
 	        },{
 		    	xtype: 'AIR.CiAdvancedSearchView',
 		    	id: 'ciAdvancedSearchView',
