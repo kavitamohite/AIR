@@ -71,7 +71,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
         };
     	
         Ext.Ajax.request({
-            url: 'jsp/loginAction.jsp',//(*9) /AIR/loginAction.jsp ../loginAction.jsp
+            url: 'jsp/loginAction.jsp',
             params: params,
             success: this.onLoginSuccessful.createDelegate(this),
             failure: this.airLoginWindow.onLoginFailure.createDelegate(this)
@@ -184,35 +184,18 @@ AIR.AirBootstrap = Ext.extend(Object, {
     	var itsecUserOptionListStore = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
     	
     	if(itsecUserOptionListStore.getCount() == 0) {
-    		var loadCallback = function() {
-	    		var params = {
-	    			cwid: AIR.AirApplicationManager.getCwid()
-	    		};
-	    		
-	    		itsecUserOptionListStore.load({
-	    			params: params,
-	    			callback: callback
-	    		});
-    		}.createDelegate(this);
+    		var params = {
+    			cwid: AIR.AirApplicationManager.getCwid()
+    		};
     		
-    		this.createDefaultItsecUserOptions(loadCallback);
+    		itsecUserOptionListStore.load({
+    			params: params,
+    			callback: callback
+    		});
     	} else {
     		callback();
     	}
     },
-    createDefaultItsecUserOptions: function(loadCallback) {
-		var params = {
-			cwid: AIR.AirApplicationManager.getCwid(),
-			token: AIR.AirApplicationManager.getToken()
-		};
-		
-		var userOptionSaveStore = AIR.AirStoreFactory.createUserOptionSaveStore();
-		userOptionSaveStore.load({
-			params: params,
-			callback: loadCallback
-		});
-    },
-    
 	
 	openUi: function() {
 		
