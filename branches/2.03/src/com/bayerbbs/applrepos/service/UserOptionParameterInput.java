@@ -4,6 +4,7 @@ public class UserOptionParameterInput {
 
 	private String cwid;
 	private String token;
+	private boolean save = true;    // Defaults to true (Options will be saved)
 	
 	private String currency;		// EUR, US
 	private String language;		// DE, EN
@@ -25,6 +26,12 @@ public class UserOptionParameterInput {
 	}
 	public void setToken(String token) {
 		this.token = token;
+	}
+	public boolean isSave() {
+		return save;
+	}
+	public void setSave(boolean save) {
+		this.save = save;
 	}
 	public String getCurrency() {
 		return currency;

@@ -173,10 +173,10 @@ AIR.AirBootstrap = Ext.extend(Object, {
 	    		var startMask = AAM.getMask(AC.MASK_TYPE_START);
 	    		startMask.show();
         }.createDelegate(this));
-        task.delay(500);
-        
+        task.delay(100);
+	    
         task = new Ext.util.DelayedTask(this.openUi.createDelegate(this));
-        task.delay(1000);
+        task.delay(2000);
     },
     
     
@@ -184,17 +184,35 @@ AIR.AirBootstrap = Ext.extend(Object, {
     	var itsecUserOptionListStore = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
     	
     	if(itsecUserOptionListStore.getCount() == 0) {
-    		var params = {
-    			cwid: AIR.AirApplicationManager.getCwid()
-    		};
+    		var loadCallback = function() {
+	    		var params = {
+	    			cwid: AIR.AirApplicationManager.getCwid()
+	    		};
+	    		
+	    		itsecUserOptionListStore.load({
+	    			params: params,
+	    			callback: callback
+	    		});
+    		}.createDelegate(this);
     		
-    		itsecUserOptionListStore.load({
-    			params: params,
-    			callback: callback
-    		});
+    		this.createDefaultItsecUserOptions(loadCallback);
     	} else {
     		callback();
     	}
+    },
+    
+    createDefaultItsecUserOptions: function(loadCallback) {
+    	var params = {
+			cwid: AIR.AirApplicationManager.getCwid(),
+			token: AIR.AirApplicationManager.getToken(),
+			save: false 
+		};
+		
+		var userOptionSaveStore = AIR.AirStoreFactory.createUserOptionSaveStore();
+		userOptionSaveStore.load({
+			params: params,
+			callback: loadCallback
+		});
     },
 	
 	openUi: function() {
@@ -207,14 +225,12 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		lastRenderedView.on('afterrender', this.onAirRendered , this);//render
 		
 		var viewPort = new AIR.AirViewport(this.airMainPanel);
-
-		
-		
+	
 		var delayedTask = new Ext.util.DelayedTask(function() {
 			var airTaskManager = new AIR.AirTaskManager();
 			airTaskManager.startDbSessionCheckTask(AIR.AirApplicationManager.getCwid(), AIR.AirApplicationManager.getToken());//orig: keine params
 		});
-		delayedTask.delay(5000);
+		delayedTask.delay(2000);
 	},
 	
 	onTokenCheckFailure: function(response, options) {
@@ -235,9 +251,11 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		//performance Verbesserung: erst rendern wenn user zum ersten Mal über einem Label anhält, anstatt alles nach App Start.
 		this.airMainPanel.updateToolTips(AAM.getToolTips());
 		
-		var startMask = AAM.getMask(AC.MASK_TYPE_START);
-		startMask.hide();
-		
+		var delayedTask = new Ext.util.DelayedTask(function() {
+			var startMask = AAM.getMask(AC.MASK_TYPE_START);
+			startMask.hide();
+		});
+		delayedTask.delay(5000);
 		AAM.restoreUi(this.airMainPanel);
 	}
 });

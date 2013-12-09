@@ -147,7 +147,7 @@ public class AIRWS {
 
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
-		if (null != editInput && StringUtils.isNotNullOrEmpty(editInput.getCwid())) {
+		if (null != editInput && editInput.isSave() && StringUtils.isNotNullOrEmpty(editInput.getCwid())) {
 
 			List<PersonOptionDTO> listOptions = PersonOptionHbn.findPersonOptionsWithDeleted(editInput.getCwid());
 
