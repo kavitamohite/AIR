@@ -112,7 +112,7 @@ public class CiGroupsHbn {
 	}
 	
 	private static void stampCiGroups(Integer tableId, Long ciId, Long groupTypeId, String cwid, Session session) {
-		String stampSQL = "UPDATE ci_groups SET last_sync_source = ?, syncing = ? WHERE table_id = ? AND ci_id = ? AND group_type_id = ? AND del_timestamp IS NULL";
+		String stampSQL = "UPDATE ci_groups SET last_sync_source = ?, syncing = ? WHERE table_id = ? AND ci_id = ? AND group_type_id = ? AND insert_quelle = ? AND del_quelle IS NULL";
 		try {
 			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
@@ -121,6 +121,7 @@ public class CiGroupsHbn {
 			stmt.setLong(3, tableId);
 			stmt.setLong(4, ciId);
 			stmt.setLong(5, groupTypeId);
+			stmt.setString(6, AirKonstanten.APPLICATION_GUI_NAME);
 			stmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -131,8 +132,8 @@ public class CiGroupsHbn {
 	}
 	
 	private static void purgeCiGroups(Integer tableId, Long ciId, Long groupTypeId, String cwid, Session session) {
-		String stampSQL = "UPDATE ci_groups SET del_timestamp=sysdate, del_quelle = ?, del_user=?, syncing = NULL "
-				+ "WHERE table_id = ? AND ci_id = ? AND group_type_id = ? AND del_timestamp IS NULL AND syncing=?";
+		String stampSQL = "UPDATE ci_groups SET del_timestamp=ADD_MONTHS(sysdate, 120), del_quelle = ?, del_user=?, syncing = NULL "
+				+ "WHERE table_id = ? AND ci_id = ? AND group_type_id = ? AND insert_quelle = ? AND del_quelle IS NULL AND syncing=?";
 		try {
 			@SuppressWarnings("deprecation")
 			PreparedStatement stmt = session.connection().prepareStatement(stampSQL);
@@ -141,8 +142,11 @@ public class CiGroupsHbn {
 			stmt.setLong(3, tableId);
 			stmt.setLong(4, ciId);
 			stmt.setLong(5, groupTypeId);
-			stmt.setString(6, AirKonstanten.APPLICATION_GUI_NAME + "_" + cwid);
+			stmt.setString(6, AirKonstanten.APPLICATION_GUI_NAME);
+			stmt.setString(7, AirKonstanten.APPLICATION_GUI_NAME + "_" + cwid);
 			stmt.executeUpdate();
+			System.out.println("UPDATE ci_groups SET del_timestamp=sysdate, del_quelle = "+AirKonstanten.APPLICATION_GUI_NAME+", del_user="+cwid+", syncing = NULL "
+					+ "WHERE table_id = "+tableId+" AND ci_id = "+ciId+" AND group_type_id = "+groupTypeId+" AND insert_quelle = "+AirKonstanten.APPLICATION_GUI_NAME+" AND del_quelle IS NULL AND syncing="+AirKonstanten.APPLICATION_GUI_NAME + "_" + cwid);
 			
 		} catch (Exception e) {
 			// handle exception
@@ -170,7 +174,7 @@ public class CiGroupsHbn {
 
 		for (String group : ciGroupNamesArray) {
 			group = group.trim();
-			System.out.println("{? = call  TOOLS.FV_SYNC_CONTACT(" + tableId + "," + ciId + ",'" + groupType + "', '" + group + "', '"
+			System.out.println("{? = call  TOOLS.FV_SYNC_CONTACT(" + tableId + "," + ciId + ",'" + groupType + "', NULL, '" + group + "', '"
 					+ AirKonstanten.APPLICATION_GUI_NAME + "','" + cwid + "')}");
 			try {
 				stmt.setString(2, group);
@@ -187,7 +191,6 @@ public class CiGroupsHbn {
 			
 
 		}
-
 	}
 	
 	/**
@@ -211,7 +214,8 @@ public class CiGroupsHbn {
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
 		tx = session.beginTransaction();
-
+		
+		
 		stampCiGroups(tableId, ciId, groupTypeId, cwid, session);
 		if (null != ciGroupNames) {
 			//ciPersonCWID = ciPersonCWID.toUpperCase();
