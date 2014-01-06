@@ -1410,7 +1410,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	Util.setChbGroup(cbgAdvSearchDescriptionOptions, data.descriptionOptions);
     	
     	
-    	if(data.ciTypeId === AC.TABLE_ID_APPLICATION && data.ciSubTypeId == AC.APP_CAT1_APPLICATION) {
+    	if(data.ciTypeId == AC.TABLE_ID_APPLICATION && data.ciSubTypeId == AC.APP_CAT1_APPLICATION) {
 //	    if(data.advsearchObjectTypeId === AC.APP_CAT1_APPLICATION || data.advsearchObjectTypeId.length === 0) {
 	    	pAdvSearchSingleAttrs.getComponent('rgAdvSearchBARrelevance').setValue(data.barRelevance);
 
@@ -1658,7 +1658,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
 ////	    var cbCiType = pAdvSearchSingleAttrs.getComponent('cbCiType');
 //	    var cat1 = params.ciSubTypeId;//params.advsearchObjectTypeId;//cbCiType.getValue();
-	    if(params.ciTypeId === AC.TABLE_ID_APPLICATION && params.ciSubTypeId == AC.APP_CAT1_APPLICATION) {//params.tableId cat1 === AC.APP_CAT1_APPLICATION || cat1.length === 0
+	    if(params.ciTypeId == AC.TABLE_ID_APPLICATION && params.ciSubTypeId == AC.APP_CAT1_APPLICATION) {//params.tableId cat1 === AC.APP_CAT1_APPLICATION || cat1.length === 0
 	    	var barRelevance = pAdvSearchSingleAttrs.getComponent('rgAdvSearchBARrelevance').getValue();
 	    	if(barRelevance)
 	    		params.barRelevance = barRelevance.inputValue;
