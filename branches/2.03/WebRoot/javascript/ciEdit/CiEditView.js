@@ -4,45 +4,51 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	initComponent: function() {
 		Ext.apply(this, {
 			padding: 20,
-//			autoScroll: true,
-//			height: 600,
 		    
-			layout: 'form',//urspr. kein layout
+			layout: 'form',
 		    border: false,
-//		    cls: 'x-plain',
 		    
 		    items: [{
 		    	xtype: 'label',
 		    	id: 'lCiName',
 				
 				style: {
-//					textAlign: 'left',
 					backgroundColor: AC.AIR_BG_COLOR,
 					color: AC.AIR_FONT_COLOR,
 					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: '12pt'
-//					float: 'left'
 				}
 			},{
 				xtype: 'container'
-//				html: '<br/>'
 			},{
 		    	xtype: 'label',
 		    	id: 'lCiType',
 				
 				style: {
-//					textAlign: 'left',
 					backgroundColor: AC.AIR_BG_COLOR,
 					color: AC.AIR_FONT_COLOR,
 					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: '8pt'
-//					float: 'left'
 				}
 			},{
 				xtype: 'container'
-//				html: '<br/>'
+			},{
+		    	xtype: 'label',
+		    	id: 'lCiIsSecure',
+		    	html: '<center style="background-color: '+AC.AIR_BG_COLOR_SECURE+';">Secure&nbsp;System</center>',
+				hidden: true,
+
+				style: {
+					color: 'black',
+					fontFamily: AC.AIR_FONT_TYPE,
+					fontWeight: 'bold',
+					fontSize: 18,
+					marginTop: 5
+				}
+			},{
+				xtype: 'container'
 			},{
 		    	xtype: 'label',
 		    	id: 'lCiIsDeleted',
@@ -50,15 +56,12 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				hidden: true,
 
 				style: {
-//					textAlign: 'left',
 					backgroundColor: AC.AIR_BG_COLOR,
 					color: 'red',
 					fontFamily: AC.AIR_FONT_TYPE,
 					fontWeight: 'bold',
 					fontSize: 18,
 					marginTop: 5
-					
-//					float: 'left'
 				}
 			},{ 
 				xtype: 'container',	  
@@ -68,9 +71,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				
 				style: {
 					color: '#d0d0d0',
-//					backgroundColor: '#d0d0d0',
-//					height: '1px',
-					
 					marginBottom: 10
 				}
 			},{
@@ -88,7 +88,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 					right: '20px'
 				}
 			},{
-				xtype: 'textfield',//label
+				xtype: 'textfield',
 				id: 'editpanelmessage',
 				hidden: true,
 				
@@ -100,7 +100,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				style: {
 					color: '#FF0000',
 					borderColor: '#FF0000',
-//					marginLeft: 0,
 					fontWeight: 'bold'
 				}
 			},{
@@ -111,9 +110,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				activeItem: 0,
 				margins: '5 5 5 5',
 				border: false,
-				
-//				height: 430,
-//				autoScroll: true,
 				
 				style: {
 					marginTop: 30
@@ -224,11 +220,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.callContext = {};
 	},
 
-//	createCi: function(data) {
-//	createCi: function(viewId, link, options) {
 	prepareCiCreation: function(viewId, options) {
-		options.name = AAM.getLabels().New;//data		
-		this.update(options);//data
+		options.name = AAM.getLabels().New;
+		this.update(options);
 		
 		AAM.setAppDetail(options);
 		
@@ -236,7 +230,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciEditTabView = this.getComponent('ciEditTabView');
 		
 		var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
-		ciDetailsView.clear(options);//detailsData
+		ciDetailsView.clear(options);
 		
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.clear(options);
@@ -250,31 +244,17 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciProtectionView = ciEditTabView.getComponent('clCiProtection');
 		ciProtectionView.clear(options);
 
-//		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
-//		if(ciLicenseView)
-//			ciLicenseView.update(ciData);
-		
 		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.clear(options);
 		
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.clear(options);
 		
-		/*
-//		var ciSupportStuff = ciEditTabView.getComponent('clCiSupportStuff');
-//		ciSupportStuff.update(ciData);
-		
-		var ciHistory = ciEditTabView.getComponent('clCiHistory');
-		ciHistory.update();*/
-		
-		
-//		this.isUserChange = true;
 		var task = new Ext.util.DelayedTask(function() {
 			this.isUserChange = true;
-//			this.doLayout();
 
 		}.createDelegate(this));
-		task.delay(2000);//1000
+		task.delay(2000);
 		
 		
 		var panelMsg = ACM.getRequiredFields(options);
@@ -320,7 +300,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	onNavigation: function(viewId, link, options) {
 		if(options.isCiCreate) {
 			options.relevanceOperational = 'Y';
-//			options.relevanceStrategic = 'Y';
 			this.prepareCiCreation(viewId, options);//createCi
 			
 			this.isLoaded = true;
@@ -328,12 +307,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		}
 		
 		
-		//ORIG
 		this.getComponent('ciEditTabView').getLayout().setActiveItem(viewId);
 
 		this.handleNavigation(viewId, options);
 		if(this.isLoaded || (options && options.skipReload)) {
-			//this.handleNavigation(viewId);
 		} else {
 			this.isLoaded = true;
 			this.loadCiDetails();
@@ -341,23 +318,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	handleNavigation: function(viewId, options) {
-		//TEST dynamisches Laden der Detailseiten anhand clCiLicense
-//		var ciEditTabView = this.getComponent('ciEditTabView');
-//		var ciDetailView = ciEditTabView.getComponent(viewId);
-//		
-//		if(ciDetailView) {
-//			this.navigate(options);
-//			delete this.options;
-//		} else {
-//			//hier das view dem ciEditTabView hinzufügen und danach loadCiDetails().
-//			this.options = options;
-//			
-//			var ciLicenseView = new AIR.CiLicenseView({ id: 'clCiLicense', height: 600 });
-//			ciEditTabView.on('afterlayout', this.navigate, this);// this.onViewAdded ciEditView afterrender .getComponent('clCiCompliance')
-//			ciEditTabView.add(ciLicenseView);
-//		}
 		
-		//ORIG
 		switch(viewId) {
 			case 'clCiHistory':
 				var ciHistory = this.getComponent('ciEditTabView').getComponent('clCiHistory');
@@ -366,17 +327,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			default: break;
 		}
 	},
-	
-//	navigate: function(parentCt, layout, options) {
-//		var options = options ? options : this.options;
-//		
-//		if(this.isLoaded || (options && options.skipReload)) {
-//			//this.handleNavigation(viewId);
-//		} else {
-//			this.isLoaded = true;
-//			this.loadCiDetails();
-//		}
-//	},
 	
 	validateCiChange: function(view, viewElement, changedViewItems) {
 		switch(view.getId()) {
@@ -409,8 +359,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			ciDetailStore.load({
 				params: {
-					ciId: AAM.getCiId(),//applicationId
-					id: AAM.getCiId(),//applicationId	NUR übergangsweise
+					ciId: AAM.getCiId(),
+					id: AAM.getCiId(),
 	   			 	cwid: AAM.getCwid(),
 	   			 	token: AAM.getToken()
 				}
@@ -428,7 +378,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	onCiLoad: function(store, records, options) {
 		this.ciModified = false;
-//		this.itsecChanged = false;
 		
 		var ciData = records[0].data;
 		ciData.tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;
@@ -447,15 +396,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			var labels = AAM.getLabels();
 			var message = labels.CiEinsprungCiIdDoesNotExistMessage.replace('{0}', AAM.getCiId());
 			this.openEinsprungDataWarnungWindow(message);
-//		} else if(ciData.deleteTimestamp && ciData.deleteTimestamp.length > 0) {
-//			var labels = AAM.getLabels();
-//			var message = labels.CiEinsprungCiIdMarkedAsDeleted.replace('{0}', AAM.getCiId());
-//			this.openEinsprungDataWarnungWindow(message);
 		} else {
 			this.update(ciData);
 			
 			//---------------------------------------------------------------------------------------------------------
-			//AIR.AirAclManager.updateAcl(ciData);// RFC 8225: added ciData param
 			var ciEditTabView = this.getComponent('ciEditTabView');
 			
 			var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
@@ -477,15 +421,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			if(ciLicenseView)
 				ciLicenseView.update(ciData);
 			
-			//-------- TEST -------
-//			var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
-//			if(!ciLicenseView) {
-//				ciLicenseView = new AIR.CiLicenseView({ id: 'clCiLicense', height: 600 });
-////				AIR.CiDetailsCommon.initView(ciEditTabView, ciLicenseView);
-//				this.initView(ciEditTabView, ciLicenseView);
-//			}
-			//-------- TEST -------
-			
 			var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 			ciComplianceView.update(ciData);
 			
@@ -495,28 +430,18 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			var ciSupportStuff = ciEditTabView.getComponent('clCiSupportStuff');
 			ciSupportStuff.update(ciData);
 			
-			//var ciHistory = ciEditTabView.getComponent('clCiHistory');
-			//ciHistory.update();
-			
-			
 			var task = new Ext.util.DelayedTask(function() {
-				AIR.AirAclManager.setDraft(AIR.AirAclManager.isDraft(ciData));//ciData.tableId
-	//			AIR.AirAclManager.updateAcl();
+				AIR.AirAclManager.setDraft(AIR.AirAclManager.isDraft(ciData));
 			}.createDelegate(this));
 			task.delay(1500);
 			
-//			AAM.getMask(AC.MASK_TYPE_LOAD).hide();
-			
-			
 			//das Akzeptieren von User Bedienaktionen (textfeld Änderungen, combo Auswahlen, ...) erst jetzt wieder freischalten für
 			//den Empfang von ciChange Events
-	//		this.isUserChange = true;
 			var task = new Ext.util.DelayedTask(function() {
 				this.isUserChange = true;
-//				this.doLayout();
 	
 			}.createDelegate(this));
-			task.delay(1000);//1000 2000
+			task.delay(1000);
 			
 			this.disableButtons();
 			
@@ -538,7 +463,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				callback(params);
 				delete this.callContext.itsecGroupEdit;
 			}
-	//		this.fireEvent('airAction', this, 'appLoadSuccess');
 		}
 		
 		AAM.getMask(AC.MASK_TYPE_LOAD).hide();
@@ -560,15 +484,13 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	//move to CiCenterView CiEditView ?
 	onSaveApplication: function(button, event) {
-//		this.disableButtons();
 		
 		var ciData = AAM.getAppDetail();
 		
-		if(ciData.isCiCreate) {//ciData.tableId === AC.TABLE_ID_APPLICATION
+		if(ciData.isCiCreate) {
 			this.tableId = ciData.tableId;
 			this.createCi(ciData);
 		} else {
-			//mySaveMask.show();
 			//keine itsec Änderungsprüfung, wenn schon vorher Warnung wegen Änderungen, wenn anderer Menupunkt
 			//vor Speichern gewählt
 			if(!button)
@@ -600,13 +522,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	
-	setCiData: function(data) {//getCiData	ciData
+	setCiData: function(data) {
 		var ciEditTabView = this.getComponent('ciEditTabView');
-		
-//		var data = {
-//		 	cwid: AIR.AirApplicationManager.getCwid(),
-//		 	token: AIR.AirApplicationManager.getToken()
-//		};
+
 		data.cwid = AAM.getCwid();
 		data.token = AAM.getToken();
 		
@@ -630,7 +548,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.setData(data);
 
-		if(data.tableId == AC.TABLE_ID_APPLICATION) {//ciData && ciData.ciSubTypeId === AC.APP_CAT1_APPLICATION?
+		if(data.tableId == AC.TABLE_ID_APPLICATION) {
 			var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
 			if(ciLicenseView)
 				ciLicenseView.setData(data);
@@ -639,27 +557,21 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.setData(data);
 		
-		if(data.tableId == AC.TABLE_ID_APPLICATION) {//ciData && ciData.ciSubTypeId === AC.APP_CAT1_APPLICATION?
+		if(data.tableId == AC.TABLE_ID_APPLICATION) {
 			var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 			ciSupportStuffView.setData(data);
 		}
-		
-//		return data;
 	},
 	
 	//move to CiCenterView ?
 	saveApplication: function(options) {//button, event
 		if(!options)//damit nach compl. status Wechsel von Undefined auf External nicht der save button deaktiviert bleibt
 			this.isUserChange = false;
-//		this.ciModified = false;
-//		this.itsecChanged = false;
 		
-//		var labels = AIR.AirApplicationManager.getLabels();
-		
-		var ciData = AAM.getAppDetail();//ciData
+		var ciData = AAM.getAppDetail();
 		
 		if(!AIR.AirAclManager.isEditMaskValid()) {
-			var msgtext = AIR.AirApplicationManager.getLabels().editDataNotValid.replace(/##/, ciData.applicationName);//this.getComponent('applicationName').getValue()
+			var msgtext = AIR.AirApplicationManager.getLabels().editDataNotValid.replace(/##/, ciData.applicationName);
 			
 			Ext.MessageBox.show({
 				title: 'Error',
@@ -676,8 +588,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		ciSaveStore.on('load', callback, this);
 		this.skipLoading = options && options.skipLoading ? true : false;
 
-		
-//		var data = this.getCiData(ciData);
 		var data = {};
 		this.setCiData(data);
 		
@@ -687,8 +597,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			// wurde dieses CI zu einem Template gemacht oder war es ein Template und wurde der Template Status entfernt?
 			this.templateChanged = data.template != ciData.template;
-			
-//			this.mergeCiChanges(data);//(noch) nicht notwendig, da noch keine Fälle in denen Daten zusammengeführt werden müssen
 			
 			ciSaveStore.load({
 				params: data
@@ -708,15 +616,13 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 								newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_EMPTY;
 		
 		var isNewTemplate =		ciData.refId != undefined && ciData.refId != 0 && newCiDetail.refId != undefined && 
-//								ciData.refId.length > 0 && newCiDetail.refId.length > 0 && 
-//								ciData.refId !== newCiDetail.refId;
-								(ciData.refId != '' && newCiDetail.refId == -1 ||//newCiDetail.refId.length === 0
+								(ciData.refId != '' && newCiDetail.refId == -1 ||
 								 ciData.refId == '' && newCiDetail.refId != -1 || 
-								 (ciData.refId != newCiDetail.refId && newCiDetail.refId != -1));//newCiDetail.refId.length > 0
+								 (ciData.refId != newCiDetail.refId && newCiDetail.refId != -1));
 		
 		
 		
-		if((isNewTemplate || isNewItSecGroup) && this.itsecChanged) {// && !this.itsecChanged  && this.ciModified
+		if((isNewTemplate || isNewItSecGroup) && this.itsecChanged) {
 			var callbackMap = {
 				yes: saveCallback
 			};
@@ -739,16 +645,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	cancelApplication: function() {
 		var verwerfenCallback = function() {
-//			cancelApplicationDetail(button, event); //ORIG
-			
-//			actionButtonHandler(true, false);//first refactor measure
-			
-			//just open CiSearchView, refac: use event to notify ciCenterView and CiNavigationView
-//			var ciCenterView = this.getComponent('workpanel');
-//			ciCenterView.getLayout().setActiveItem('searchpanel');
-			
-//			var ciNavigationView = this.getComponent('ciNavigationCiew');
-//			ciNavigationView.onApplicationCancel();
 			
 			this.ciModified = false;
 			this.itsecChanged = false;
@@ -805,8 +701,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			var ciConnectionsView = this.getComponent('ciEditTabView').getComponent('clCiConnections');
 			ciConnectionsView.commitChanges();
-			
-//			this.checkTemplateChange();
 
 			if(!this.skipLoading)
 				this.loadCiDetails();//hier ein itsecGroupCallback übergeben (das ComplianceControlWindow), wenn er nach dem Neuladen aufgerufen werden soll
@@ -839,15 +733,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.saveApplication(options);
 	},
 	
-	//siehe CiComplianceView.updateComplianceDetails
-//	checkTemplateChange: function() {
-//		if(this.templateChanged) {//new template or removed template?
-//			var referencesListStore = AIR.AirStoreManager.getStoreByName('referencesListStore');
-//			referencesListStore.load();
-//		}
-//	},
-	
-	
+
 	onItsecGroupEdit: function(ciComplianceView, itsecGroupCallback, newItSecGroup) {
 		var callback = function(params) {
 			AAM.getMask(AC.MASK_TYPE_SAVE).hide();
@@ -890,8 +776,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				break;
 		}
 
-		this.getComponent('lCiName').setText(data.name);//name data.name applicationName
-		this.getComponent('lCiType').setText(record.get('text'));//ciData.applicationCat1Txt applicationName
+		this.getComponent('lCiName').setText(data.name);
+		this.getComponent('lCiType').setText(record.get('text'));
 		
 		var isDeleted = data.deleteTimestamp && data.deleteTimestamp.length > 0;
 		this.getComponent('lCiIsDeleted').setVisible(isDeleted);
@@ -905,14 +791,15 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		// RFC 10057 show secure System
 		if ('secureSystem' === data.messageTextSecureSystem) {
-			this.getComponent('lCiIsDeleted').setText(AIR.AirApplicationManager.getLabels().secureSystem);
-			this.getComponent('lCiIsDeleted').setVisible(true);
+			this.getComponent('lCiIsSecure').setVisible(true);
+			//var i = this.getComponent('lCiName').getSytle();
+		} else {
+			this.getComponent('lCiIsSecure').setVisible(false);
 		}
 	},
 	
 	updateLabels: function(labels) {
-//		this.getComponent('editpanelmessage').setText(labels.header_applicationIsIncomplete.replace('##', ACM.getRequiredFields(AAM.getAppDetail())));
-//    	this.getComponent('editpaneldraft').setText(labels.header_applicationIsDraft.replace('##', ''));//draftFlag '' (#8)
+
     	
 
 		
@@ -923,7 +810,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		//falls kein CI vor dem Start ausgewählt war, gibt es natürlich keine gesicherte tableId. Folge: kein specificsView Label kann gesetzt werden
 		//ODER die Lebels aller specificsView CI Typ Seiten müssen gesetzt werden ODER CiSpecificsAnwendungView Labels werden per Default gesetzt, wie hier:
-//		var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.updateLabels(labels);//, tableId
 		
@@ -969,7 +855,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
 		ciDetailsView.updateToolTips(toolTips);
 		
-		var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
+		var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.updateToolTips(toolTips, tableId);
 		
@@ -995,20 +881,17 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciSupportStuffView = ciEditTabView.getComponent('clCiSupportStuff');
 		ciSupportStuffView.updateToolTips(toolTips);
 		
-//		var ciHistoryView = ciEditTabView.getComponent('clCiHistory');
-//		ciHistoryView.updateToolTips(toolTips);
 	},
 	
 	onCiSelected: function(sourceView, ciId, target, record) {
 		this.reset();
-		this.tableId = record.get('tableId');//grid.getStore().getAt(rowIndex).get('tableId');
+		this.tableId = record.get('tableId');
 	},
 	
 	reset: function() {
 		this.isLoaded = false;
 		this.isUserChange = false;
-		
-//		this.disableButtons();
+
 		this.tableId = AAM.getTableId();//für reset nach applicationCopy ContinueEditing Button Klick
 	},
 
@@ -1045,7 +928,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		}
 	},
 	
-	onViewInitialized: function(childView) {//view,
+	onViewInitialized: function(childView) {
 		var options = AAM.getAppDetail();
 		
 		var panelMsg = ACM.getRequiredFields(options);
@@ -1055,7 +938,6 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			this.setPanelMessage(panelMsg);
 		}
 		
-//		this.disableButtons();
 		var task = new Ext.util.DelayedTask(function() {
 			this.isUserChange = true;
 			this.ciModified = false;
@@ -1063,22 +945,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			this.disableButtons();
 		}.createDelegate(this));
-		task.delay(2000);// 1000
+		task.delay(2000);
 	}
 	
-	//============================================================
-//	initView: function(parentView, childView, callback) {
-//		parentView.on('afterlayout', this.onViewAdded, this);//ciEditView afterrender .getComponent('clCiCompliance')
-//		parentView.add(childView);
-//	},
-//	
-//	onViewAdded: function(parentCt, layout) {
-//		Util.log('CiEditView::onViewAdded(): '+parentCt.getId());
-//		//ciLicenseView.on('ciChange', this.onCiChange, this);
-//		//ciLicenseView.update(ciData);
-//		//ciLicenseView.updateLabels(labels);
-////		parentCt.doLayout();
-//	}
-	//============================================================
 });
 Ext.reg('AIR.CiEditView', AIR.CiEditView);

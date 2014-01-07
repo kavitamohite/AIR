@@ -145,8 +145,9 @@ AIR.AirConstants = {
 //	ROLE_AIR_DEVELOPER: 'AIR Developer',
 //	ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR: 'AIR BusinessEssential-Editor',
 	
-	AIR_BG_COLOR: '#FFFFFF',//panelbgcolor
-	AIR_FONT_COLOR: '#085E8B',//fontColor
+	AIR_BG_COLOR: '#FFFFFF',
+	AIR_BG_COLOR_SECURE: 'Salmon',
+	AIR_FONT_COLOR: '#085E8B',
 	AIR_FONT_TYPE: 'Arial, Helvetica, sans-serif',//fontType
 	
 	MASK_TYPE_START: 'start',
