@@ -233,8 +233,8 @@ Util = {
 			var nValue = parseInt(newValue);
 			
 			//parseInt Bugfix: if newValue is i.e. '111Bayer Group' nValue would successfully converted to int, namely 111. This must must not happen
-			var nValueString = nValue.toString();
-			var isReallyNoInt = nValueString.length !== newValue.length || nValueString === 'NaN';
+			var nValueString = newValue.toString();
+			var isReallyNoInt = (nValueString.length !== newValue.length) || nValueString === 'NaN';
 			//parseInt Bugfix: if newValue is i.e. '111Bayer Group' nValue would successfully converted to int, namely 111. This must must not happen
 			
 	    	if(isReallyNoInt && isNaN(isReallyNoInt ? newValue : nValue) && newValue.length > 0) {//nValue nValueString
@@ -246,7 +246,8 @@ Util = {
 	    	} else {//if numbers or other nonsense is directly entered in the combo
 	    		var index = combo.getStore().findExact('name', newValue);
 	    		if(index === -1)
-	    			index = combo.getStore().findExact('id', newValue);
+	    			index = combo.getStore().indexOf(combo.getStore().getById(newValue));
+	    			//index = combo.getStore().findExact('id', newValue);
 	    			//if item is selected it must be searched for the id, otherwise valid values would be treated as invalid
 	    		
 	    		if(newValue.length > 0 && index === -1) {

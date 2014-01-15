@@ -1,42 +1,33 @@
 Ext.namespace('AIR');
 
-AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
+AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {
 	initComponent: function() {
 		Ext.apply(this, {
 			layout: 'form',
-//			border: false,
 			title: '-',
-			
-//			height: 350,
-			labelWidth: 250,//200
-			padding: 10,//bodyStyle: {}
+
+			labelWidth: 250,
+			padding: 10,
 			
 			items: [{
 				xtype: 'filterCombo',
-				id: 'cbCiTypeW',//wizardobjectType
+				id: 'cbCiTypeW',
 			    fieldLabel: 'Type',
 			    
 			    valueField: 'id',
-		        displayField: 'text',//english
+		        displayField: 'text',
 		        editable: false,
 		        lastQuery: '',
-		        
-//		        typeAhead: true,
-//		        forceSelection: true,
-//		        autoSelect: false,
 		        
 		        triggerAction: 'all',
 		        lazyRender: true,
 		        lazyInit: false,
 		        mode: 'local',
 		        
-		        //disabled: true,
-		        //hideTrigger: true,
-		        
 		        msgTarget: 'under',
 		        width: 250,
 		        
-			    store: AIR.AirStoreFactory.createCiTypeListStore()//AIR.AirStoreManager.getStoreByName('ciTypeListStore')//AIR.AirStoreManager.getStoreByName('applicationCat1ListStore')
+			    store: AIR.AirStoreFactory.createCiTypeListStore()
 		    },{
 				xtype: 'filterCombo',
 				id: 'cbAppCat2W',
@@ -46,16 +37,11 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		        displayField: 'text',
 				lastQuery: '',
 		        
-//		        typeAhead: true,
-//		        forceSelection: true,
-//		        autoSelect: false,
-		        
 		        triggerAction: 'all',
 		        lazyRender: true,
 		        lazyInit: false,
 		        
 		        mode: 'local',
-//		        allowBlank: false,
 		        width: 250,
 		        msgTarget: 'under',
 		        
@@ -75,16 +61,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 			    items: [{
 			    	xtype: 'AIR.CiCreateAppMandatoryView',
 			    	id: 'ciCreateAppMandatoryView'
-			    }/*,{
-			    	xtype: 'AIR.CiCreateApplicationPlatformView',
-			    	id: 'ciCreateAppPlatformView'
-			    },{
-			    	xtype: 'AIR.CiCreateCommonServiceView',
-			    	id: 'ciCreateCommonServiceView'
-			    },{
-			    	xtype: 'AIR.CiCreateMiddlewareView',
-			    	id: 'ciCreateMiddlewareView'
-			    }*/]
+			    }]
 		    }]
 		});
 		
@@ -92,65 +69,38 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbCiTypeW = this.getComponent('cbCiTypeW');
 		cbCiTypeW.on('select', this.onCiTypeSelect, this);
-//		cbCiTypeW.setValue(AC.APP_CAT1_APPLICATION);
 		
 		this.filterCiTypes(cbCiTypeW);
 		
 		var cbAppCat2W = this.getComponent('cbAppCat2W');
 		cbAppCat2W.on('select', this.onAppCat2Select, this);
 		cbAppCat2W.on('change', this.onAppCat2Change, this);
-//		cbAppCat2W.getStore().filter('applicationCat1Id', cbCiTypeW.getValue());//AC.APP_CAT1_APPLICATION
 		var filterData = {
 			applicationCat1Id: cbCiTypeW.getValue()
 		};
 		cbAppCat2W.filterByData(filterData);
 		cbAppCat2W.getStore().sort('text', 'ASC');
 		
-//		cbAppCat2W.setValue(AC.APP_CAT2_DEFAULT_UNKOWN);
 		this.switchNameFields(false);
 		
-//		this.objectNameAllowedStore = AIR.AirStoreFactory.getObjectNameAllowedStore();
-//		this.objectAliasAllowedStore = AIR.AirStoreFactory.getObjectAliasAllowedStore();
 	},
 	
 	filterCiTypes: function(combo) {
 		var ciTypesByRole = AAM.getCreationCiTypes();
 
 		AAM.filterCiTypes(combo, ciTypesByRole);
-		/*var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
-		var records = store.getRange();
 		
-		for(var j = 0; j < ciTypesByRole.length; j++) {
-			for(var i = 0; i < records.length; i++) {
-				var ciTypeId = records[i].get('ciTypeId');
-				var ciType = ciTypesByRole[j][ciTypeId];
-				if(ciType) {
-					if(ciType.length === 0) {
-						combo.getStore().add(records[i]);
-					} else {
-						for(var k = 0; k < ciType.length; k++)
-							if(records[i].get('ciSubTypeId') == ciType[k])
-								combo.getStore().add(records[i]);
-					}
-				}
-			}
-		}
-		
-		combo.getStore().commitChanges();
-		combo.getStore().sort('sortId');//sort singleSort*/
 	},
 	
 	onCiTypeSelect: function(combo, record, index) {
-		if(record.get('ciTypeId') === AC.TABLE_ID_APPLICATION) {
+		if(record.get('ciTypeId') == AC.TABLE_ID_APPLICATION) {
 			var data = {
 				applicationCat1Id: record.get('ciSubTypeId')
 			};
 			
 			this.update(data);
-		}
-//		else {
-//			this.fireEvent('externalNavigation', this, combo, 'clCiSpecifics');
-//		}
+		} 
+		
 	},
 	
 	
@@ -187,7 +137,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		var r = cbAppCat2W.getStore().getAt(0);
 		var v = data.applicationCat1Id == AC.APP_CAT1_APPLICATION ? AC.APP_CAT2_DEFAULT_UNKOWN : r.get('id');
 		
-		cbAppCat2W.setValue(v);//AC.APP_CAT2_DEFAULT_UNKOWN
+		cbAppCat2W.setValue(v);
 
 		//show/hide BAR relevance, Organisational Scope, Primary Person, Delegate, Steward
 		var ciCreateAppMandatoryView = this.getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView');
@@ -245,8 +195,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		
 		this.getComponent('wizardCat1MandatoryPages').getComponent('ciCreateAppMandatoryView').updateLabels(labels);
-		//...
-//		this.getComponent('wizardCat1MandatoryPages').getComponent('ciCreateMiddlewareView').updateLabels(labels);
+
 	}
 	
 });

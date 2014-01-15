@@ -7,8 +7,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		Ext.apply(this, {
 			layout: 'card',
 			activeItem: this.page,
-			
-//			height: 620,
+
 			border: false,
 		    
 		    items: [{
@@ -64,16 +63,15 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 	onCiTypeSelect: function(combo, record, index) {
 		AAM.setTableId(record.get('ciTypeId'));
 
-		if(record.get('ciTypeId') !== AC.TABLE_ID_APPLICATION) {
+		if(record.get('ciTypeId') != AC.TABLE_ID_APPLICATION) {
 			var options = {
 				isCiCreate: true,
 				tableId: record.get('ciTypeId')
-//				viewId: 'clCiSpecifics'
 				//ciOwner(Hidden),ciOwnerDelegate(Hidden) hinzufügen,
 				//um in CiContactsView.clear(data) vorbelegen zu können?
 			};
 			
-			if(options.tableId === AC.TABLE_ID_IT_SYSTEM)
+			if(options.tableId == AC.TABLE_ID_IT_SYSTEM)
 				options.ciSubTypeId = record.get('ciSubTypeId');
 			
 			this.fireEvent('externalNavigation', this, combo, 'clCiSpecifics', options);//options.viewId
@@ -94,7 +92,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		var bNextW = this.getFooterToolbar().getComponent('bNextW');
 		bNextW.setVisible(true);
 		
-		this.setHeight(640);//620 470 440 420 360 400
+		this.setHeight(640);
 	},
 	
 	onCancel: function(button, event) {
@@ -115,7 +113,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		this.page++;
 		
 		var labels = AIR.AirApplicationManager.getLabels();
-		var title = this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW').getValue() === AC.APP_CAT1_APPLICATION ? labels.contactsCIOwnerApplication : labels.contactsCIOwner;
+		var title = this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW').getValue() == AC.APP_CAT1_APPLICATION ? labels.contactsCIOwnerApplication : labels.contactsCIOwner;
 		
 		this.getComponent('ciCreateWizardP2').getComponent('ciCreateAppRequiredView').getComponent('fsCiOwnerW').setTitle(title);
 		this.getLayout().setActiveItem(this.page);
@@ -124,7 +122,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		var bBackW = this.getFooterToolbar().getComponent('bBackW');
 		bBackW.setVisible(true);
 		
-		this.setHeight(950);//620
+		this.setHeight(950);
 	},
 	
 	onFinish: function(button, event) {
@@ -148,7 +146,6 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 			if(params.name.match(AC.REGEX_SAP_NAME) == null) {
 				var sapNameLabel = labels.wizardapplicationNameSAP + ' (' + labels.wizardapplicationNameSAP1 + ', ' + labels.wizardapplicationNameSAP2 + ', ' + labels.wizardapplicationNameSAP3 + ')';
 				errorData.push(sapNameLabel);
-//				errorData.push(labels.wizardapplicationName);
 			}
 		} else {
 			if(params.name.length === 0)
@@ -190,23 +187,11 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 			this.objectNameAllowedStore.isLoaded = false;
 			this.objectNameAllowedStore.load({
 				params: { query: params.name }
-//				callback: function(store, records, options) {
-//					store.isLoaded = true;
-//					
-//					if(this.objectAliasAllowedStore.isLoaded)
-//						this.checkAlreadyExists(params);
-//				}.createDelegate(this)
 			});
 			
 			this.objectAliasAllowedStore.isLoaded = false;
 			this.objectAliasAllowedStore.load({
-				params: { query: params.alias }//applicationAlias
-//				callback: function(store, records, options) {
-//					store.isLoaded = true;
-//					
-//					if(this.objectNameAllowedStore.isLoaded)
-//						this.checkAlreadyExists(params);
-//				}.createDelegate(this)
+				params: { query: params.alias }
 			});
 
 		} else {
@@ -252,13 +237,13 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 				var text = AIR.AirApplicationManager.getLabels().wizardallowedNameText;
 				text = text.replace('{0}', this.objectNameAllowedStore.lastOptions.params.query);
 				text = text.replace('{1}', this.objectNameAllowedStore.data.items[0].data.informationText);
-				message = text;//'Name <b>' + this.objectNameAllowedStore.lastOptions.params.query + '</b> already exists as <b>' + this.objectNameAllowedStore.data.items[0].data.informationText + '</b><br>Please choose another name or ask ITILcenter@bayer.com for help to enable this name<br>';
+				message = text;
 			}
 			if(!aliasNotExists) {
 				var text = AIR.AirApplicationManager.getLabels().wizardallowedAliasText;
 				text = text.replace('{0}', this.objectAliasAllowedStore.lastOptions.params.query);
 				text = text.replace('{1}', this.objectAliasAllowedStore.data.items[0].data.informationText);
-				message += text;//+= AIR.AirApplicationManager.getLabels().wizardallowedAliasText.format();//'Alias <b>' + this.objectAliasAllowedStore.lastOptions.params.query + '</b> already exists as <b>' + this.objectAliasAllowedStore.data.items[0].data.informationText + '</b><br>Please choose another alias or ask ITILcenter@bayer.com for help to enable this alias<br>';
+				message += text;
 			}
 			
 			Ext.MessageBox.show({
@@ -309,11 +294,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 	
 				var continueEditingCallback = function() {
 					this.wizardStarted = false;
-					
-//					var options = {
-//						tableId: //aus wizard CI-Typ combo
-//						ciSubType: //aus wizard CI-Typ combo
-//					};
+
 
 					this.fireEvent('externalNavigation', this, null, 'clCiDetails');//, options
 				}.createDelegate(this);
@@ -368,16 +349,11 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 	
 	reset: function() {
 		this.wizardStarted = true;
-//		if(this.page > 0) {
-//			var bBackW = this.getFooterToolbar().getComponent('bBackW');
-//			bBackW.fireEvent('click');
-//		}
 		
 		this.getComponent('ciCreateWizardP1').reset();
 		this.getComponent('ciCreateWizardP2').reset();
 		
 		this.page = 0;
-//		this.getLayout().setActiveItem(this.page);
 		var bBackW = this.getFooterToolbar().getComponent('bBackW');
 		this.onBack(bBackW);
 		
@@ -397,7 +373,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 	
 	isSAPApplication: function() {
 		var cat2Id = this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getValue();
-		var isSapCat2 = this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getStore().getById(cat2Id).get('guiSAPNameWizard') === 'Y';//AC.CI_CAT1_SAP_CAT2_ID.indexOf(cat2Id) > -1;
+		var isSapCat2 = this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getStore().getById(cat2Id).get('guiSAPNameWizard') === 'Y';
 		
 		return isSapCat2;
 	},
