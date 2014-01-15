@@ -22,14 +22,18 @@ AIR.AirView = Ext.extend(Ext.Panel, {
 	//see also common.Util.js
 	isComboValueValid: function(combo, newValue, oldValue) {
 		//wenn blur listener auf combo kann newValue und oldValue undefined sein
-//		if(!newValue || !oldValue)
-//			return true;
+		
+		if (newValue != undefined && newValue != "") {
+			var index = combo.getStore().indexOf(combo.getStore().getById(newValue));
+			if (index !== -1)
+				return true;
+		}
 		
 		var nValue = parseInt(newValue);
 		
 		//parseInt Bugfix: if newValue is i.e. '111Bayer Group' nValue would successfully converted to int, namely 111. This must must not happen
-		var nValueString = nValue.toString();
-		var isReallyNoInt = nValueString.length !== newValue.length || nValueString === 'NaN';
+		var nValueString = newValue.toString();
+		var isReallyNoInt = (nValueString.length !== newValue.length) || nValueString === 'NaN';
 		//parseInt Bugfix: if newValue is i.e. '111Bayer Group' nValue would successfully converted to int, namely 111. This must must not happen
 		
 		
@@ -39,15 +43,16 @@ AIR.AirView = Ext.extend(Ext.Panel, {
 			combo.filterByData();
 		
     	if(isReallyNoInt && isNaN(isReallyNoInt ? newValue : nValue) && newValue.length > 0) {//nValue nValueString
-    		var index = combo.getStore().findExact('name', nValue);
+    		index = combo.getStore().findExact('name', nValue);
     		if(index === -1)
     			this.restorePreviousValue(combo, oldValue);
 	    	
 	    	return false;
     	} else {//if numbers or other nonsense is directly entered in the combo
     		var index = combo.getStore().findExact('name', newValue);
-    		if(index === -1)
-    			index = combo.getStore().findExact('id', newValue);
+    		//if(index === -1)
+    			//index = combo.getStore().findExact('id', newValue);
+    			//index = combo.getStore().indexOf(combo.getStore().getById(newValue));
     			//if item is selected it must be searched for the id, otherwise valid values would be treated as invalid
     		
     		if(newValue.length > 0 && index === -1) {
