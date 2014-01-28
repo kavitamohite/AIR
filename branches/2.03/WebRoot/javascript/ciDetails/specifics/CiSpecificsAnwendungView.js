@@ -695,11 +695,10 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 			
 			
 			tfBarApplicationId.setVisible(true);
-			if(data.barRelevance === 'Y') {
+			if(data.barRelevance == 'Y') {
 				tfBarApplicationId.setValue(data.barApplicationId);
-				rgBARrelevance.disable();
 			} else {
-				if(data.barRelevance === 'N' && data.template == '1')//-1
+				if(data.barRelevance == 'N' && data.template == '1')//-1
 					rgBARrelevance.disable();
 				
 				tfBarApplicationId.setValue('');

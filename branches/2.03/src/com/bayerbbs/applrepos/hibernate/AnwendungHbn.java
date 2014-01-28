@@ -596,11 +596,13 @@ public class AnwendungHbn extends BaseHbn {
 						
 						if (null != dto.getBarRelevance()) {
 							dto.setBarRelevance(dto.getBarRelevance().toUpperCase());
-							if (!AirKonstanten.YES_SHORT.equals(application.getBarRelevance())) {
 								if (AirKonstanten.YES_SHORT.equals(dto.getBarRelevance()) || AirKonstanten.NO_SHORT.equals(dto.getBarRelevance())) {
 									application.setBarRelevance(dto.getBarRelevance());
 								}
-							}
+								
+								if (AirKonstanten.NO_SHORT.equals(dto.getBarRelevance())) {
+									application.setBarApplicationId(null);
+								}
 						}
 						
 						// for BOV
