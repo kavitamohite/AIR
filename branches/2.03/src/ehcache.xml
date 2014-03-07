@@ -13,8 +13,8 @@
 			maxElementsInMemory="500"
 			eternal="false" 
 			overflowToDisk="true"
-	        timeToIdleSeconds="540"
-    	    timeToLiveSeconds="540"
+	        timeToIdleSeconds="5400"
+    	    timeToLiveSeconds="5400"
 	/>
 	
 	<cache	name="com.bayerbbs.applrepos.airCache"
