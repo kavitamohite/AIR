@@ -275,8 +275,8 @@ public class AIRToolsWS {
 		return SisoogleValuesHbn.getSISoogleAttributesByType(input.getType());//type
 	}
 	
-	public CiTypeDTO[] getCiTypes() {
-		return CiEntitiesHbn.getCiTypes().toArray(new CiTypeDTO[0]);//ApplicationCat1Hbn.getCiTypes();
+	public CiTypeDTO[] getCiTypes(boolean shortlist) {
+		return CiEntitiesHbn.getCiTypes(shortlist).toArray(new CiTypeDTO[0]);//ApplicationCat1Hbn.getCiTypes();
 	}
 	
 	public LinkCITypeDTO[] getLinkCITypeList() {

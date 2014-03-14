@@ -147,8 +147,8 @@ public class AIRToolsWSDelegate {
 		return airToolsWS.getSISoogleAttributesByType(input);//type
 	}
 	
-	public CiTypeDTO[] getCiTypes() {
-		return airToolsWS.getCiTypes();
+	public CiTypeDTO[] getCiTypes(boolean shortlist) {
+		return airToolsWS.getCiTypes(shortlist);
 	}
 	
 	public LinkCITypeDTO[] getLinkCITypeList() {
