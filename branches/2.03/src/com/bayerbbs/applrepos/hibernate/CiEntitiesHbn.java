@@ -232,8 +232,7 @@ public class CiEntitiesHbn {
 			@SuppressWarnings("deprecation")
 			Connection conn = session.connection();
 			selectStmt = conn.createStatement();
-			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
-				System.out.println(sql.toString());
+			System.out.println(sql.toString());
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
 			
 			if (null != rset) {
@@ -1013,17 +1012,16 @@ public class CiEntitiesHbn {
 		return templates;
 	}
 	
-	public static List<CiTypeDTO> getCiTypes() {
+	public static List<CiTypeDTO> getCiTypes(boolean shortlist) {
 		List<CiTypeDTO> ciTypes = new ArrayList<CiTypeDTO>();
 		
 		Transaction ta = null;
 		Statement stmt = null;
-//		Connection conn = null;
 		Session session = HibernateUtil.getSession();
-		
+			
 		boolean commit = false;
 
-		StringBuilder sql = new StringBuilder();//"SELECT ci_id, table_id, type, name, itset, FROM dwh_entity WHERE template = 'Yes'";
+		StringBuilder sql = new StringBuilder();
 		sql.
 		append("select t.tabelle_name, cit.config_item_type_name, tcit.table_id, ").
 		append("  case when tcit.table_id = 2 then ak1.anwendung_kat1_id ").
@@ -1032,10 +1030,11 @@ public class CiEntitiesHbn {
 		append("       else null end as ci_sub_type_id ").
 		append("from table_config_item_type tcit ").
 		append("join config_item_type cit on cit.config_item_type_id = tcit.config_item_type_id ").
-		append("join tabellen t on t.tabelle_id = tcit.table_id ").
-		append("left join anwendung_kat1 ak1 on ak1.anwendung_kat1_en = cit.config_item_type_name ").
-//		append("where t.type = 'CI TABLE (class 1)' ").
-		append("where (t.type = 'CI TABLE (class 1)' AND t.tabelle_id NOT IN (19,37,123)) OR (t.type = 'CI TABLE (class 2)' AND t.tabelle_id = 12)").
+		append("join tabellen t on t.tabelle_id = tcit.table_id ");
+		if (shortlist)
+			sql.append("AND t.tabelle_id NOT IN (88, 4, 3, 13, 12, 30) ");
+		sql.append("left join anwendung_kat1 ak1 on ak1.anwendung_kat1_en = cit.config_item_type_name ").
+		append("where (t.type = 'CI TABLE (class 1)' AND t.tabelle_id NOT IN (19,37,123)) OR (t.type = 'CI TABLE (class 2)' AND t.tabelle_id = 12) ").		
 		append("order by t.tabelle_id ");
 		
 		try {
@@ -1047,7 +1046,7 @@ public class CiEntitiesHbn {
 			
 			int i = 0;
 			while (rs.next()) {
-				//roles getRolePerson(cwid): evtl. nur zu Rollen passende CI-Typen liefern
+				//roles getRolePerson(cwid): just load roles that will fit to role of user
 				CiTypeDTO ciTypeDTO = new CiTypeDTO(i++, rs.getString("CONFIG_ITEM_TYPE_NAME"), rs.getInt("TABLE_ID"), rs.getInt("CI_SUB_TYPE_ID"));
 				
 				ciTypeDTO.setSortId(AirKonstanten.CI_TYPE_ORDERING.get(ciTypeDTO.getCiTypeName()));
@@ -1063,4 +1062,6 @@ public class CiEntitiesHbn {
 		
 		return ciTypes;
 	}
+	
+		
 }

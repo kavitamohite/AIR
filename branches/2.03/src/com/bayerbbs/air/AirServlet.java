@@ -430,7 +430,7 @@ public class AirServlet extends HttpServlet {
 		ts = System.currentTimeMillis();
 		output += databaseLine + "\n";
 		
-		CiTypeDTO[] ciTypes = dataInput.getCiTypes();
+		CiTypeDTO[] ciTypes = dataInput.getCiTypes(false);
 		String ciTypeLine = "";
 		for(CiTypeDTO ciTypeItem : ciTypes) {
 			ciTypeLine += "['" + ciTypeItem.getId() + "','" + ciTypeItem.getCiTypeName() + "','" + ciTypeItem.getCiTypeId() + "','" + ciTypeItem.getCiSubTypeId() + "','" + ciTypeItem.getSortId() + "'],"; 
@@ -439,6 +439,16 @@ public class AirServlet extends HttpServlet {
 		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
 		ts = System.currentTimeMillis();
 		output += ciTypeLine + "\n";
+		
+		CiTypeDTO[] ciTypesShort = dataInput.getCiTypes(true);
+		String ciTypeShortLine = "";
+		for(CiTypeDTO ciTypeItem : ciTypesShort) {
+			ciTypeShortLine += "['" + ciTypeItem.getId() + "','" + ciTypeItem.getCiTypeName() + "','" + ciTypeItem.getCiTypeId() + "','" + ciTypeItem.getCiSubTypeId() + "','" + ciTypeItem.getSortId() + "'],"; 
+		}
+		ciTypeShortLine = "var ciTypeShortData = [" + ciTypeShortLine.substring(0, ciTypeShortLine.length()-1) + "];";
+		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
+		ts = System.currentTimeMillis();
+		output += ciTypeShortLine + "\n";
 		
 		DedicatedDTO[] dedicatets = dataInput.getDedicatedList();
 		String dedicatedLine = "";

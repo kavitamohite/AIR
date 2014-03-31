@@ -488,12 +488,18 @@ AIR.AirAclManager = function() {
 							case 'textarea':
 							case 'combo':
 							case 'filterCombo':
-
 								//nur wenn tableId == AC.TABLE_ID_APPLICATION wird bei, aufgrund von Benutzerrechten deaktivierten, Pflichtfeldern nicht auf ein auszufüllendes Feld hingewiesen
 								if((!uiElement.disabled || data.tableId != AC.TABLE_ID_APPLICATION) && (!uiElement.getValue() || uiElement.getValue().length === 0)) {
-									var label = this.getLabel(uiElement, labels, data);
-									if(label)											
-										incompleteFieldList += label + ', ';
+									// RFC 9459: Ausnahmeregel für Application und CI-Owner (GPSC) und Support Group IM Resolver (GPSC)
+									if (data.applicationCat1Id != AC.CI_SUB_TYPE_APPLICATION) {
+										var label = this.getLabel(uiElement, labels, data);
+										if(label)											
+											incompleteFieldList += label + ', ';
+									} else if (data.applicationCat1Id == AC.CI_SUB_TYPE_APPLICATION && aclItems[i].data.id != "gpsccontactCiOwner" && aclItems[i].data.id != "gpsccontactSupportGroup") {
+										var label = this.getLabel(uiElement, labels, data);
+										if(label)											
+											incompleteFieldList += label + ', ';
+									}
 								}
 								break;
 							case 'listview':

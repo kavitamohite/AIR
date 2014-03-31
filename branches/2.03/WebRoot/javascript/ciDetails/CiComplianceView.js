@@ -386,15 +386,15 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 
 		
-		if(data.templateChanged) {
+		/*if(data.templateChanged) {
 			cbReferencedTemplate.getStore().load({
 				callback: function() {
 					this.filterCombo(cbReferencedTemplate);
 				}.createDelegate(this)
 			});
-		} else {
+		} else {*/
 			this.filterCombo(cbReferencedTemplate);
-		}
+		//}
 		this.filterCombo(cbItSecGroup);
 		
 		

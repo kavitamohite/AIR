@@ -2,6 +2,14 @@ Ext.namespace('AIR');
 
 AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {
 	initComponent: function() {
+		var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
+		shortlist = true;
+		rolePersonListStore.each(function(item, index, allItems) {
+			var value = item.data.roleName;
+			if (value == AC.USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE)
+				shortlist = false;
+		});
+			
 		Ext.apply(this, {
 			layout: 'form',
 			title: '-',
@@ -27,7 +35,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {
 		        msgTarget: 'under',
 		        width: 250,
 		        
-			    store: AIR.AirStoreFactory.createCiTypeListStore()
+			    store: AIR.AirStoreFactory.createCiTypeListStore(shortlist)
 		    },{
 				xtype: 'filterCombo',
 				id: 'cbAppCat2W',

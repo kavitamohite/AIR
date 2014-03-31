@@ -54,19 +54,13 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 				xtype: 'textfield',
 		        width: 230,
 		        fieldLabel: 'User',
-//		        name: 'myplaceuser',
 		        id: 'myplaceuser',
 		        maxLength: 32,
 		        disabled: true
-		        
-//		        style: {
-//		        	marginTop: 20
-//		        }
 			}, {
 				xtype: 'textfield',
 		        width: 230,
 		        fieldLabel: 'CWID',
-//		        name: 'myplacecwid',
 		        id: 'myplacecwid',
 		        maxLength: 32,
 		        disabled: true
@@ -74,35 +68,18 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 				xtype: 'textfield',
 		        width: 230,
 		        fieldLabel: 'lastlogon',
-//		        name: 'myplacelastlogon',
 		        id: 'myplacelastlogon',
 		        maxLength: 32,
 		        disabled: true
 			}, {
 				xtype: 'textarea',
 		        fieldLabel: 'Role',
-//		        name: 'myplaceroleperson',
 		        id: 'myplaceroleperson',
 		        
 		        width: 230,
 		        height: 50,
-		        
-//		        growMin: 20,
-//		        growMax: 60,
-//		        allowBlank: true,
 		        disabled: true
-			}/*, {
-				xtype: 'textfield',
-		        width: 230,
-		        fieldLabel: 'Business essential editor',
-		        name: 'myplacerolebusinessessentialeditor',
-		        id: 'myplacerolebusinessessentialeditor',
-		        maxLength: 32,
-		        allowBlank: true,
-		        disabled: true,
-		        hidden: true
-		        // TODO Feld entfernen
-			}*/, {
+			}, {
 		        xtype: 'fieldset',
 		        id: 'fsUserOptions',
 		        title: 'User options',
@@ -143,11 +120,6 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			        store: AIR.AirStoreManager.getStoreByName('currencyListStore'),//currencyListStore,
 			        valueField: 'id',
 			        displayField: 'text',
-			        
-//			        typeAhead: true,
-//			        forceSelection: true,
-//			        autoSelect: false,
-			        
 			        triggerAction: 'all',
 			        lazyRender: true,
 			        lazyInit: false,
@@ -160,7 +132,6 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			        listeners: {
 		                select: function(combo, record, index) {
 		                	this.activateButtonSaveUserOptions();
-//	                        combo.setValue(record.data['text']);
 		                }.createDelegate(this),
 		                change: function(combo, newValue, oldValue) {
 		                	if(this.isComboValueValid(combo, newValue, oldValue))
@@ -172,10 +143,6 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			        fieldLabel: 'Close help window',
 			        name: 'useroptionHelp',
 			        id: 'useroptionHelp',
-			        
-//			        style: {
-//			        	marginTop: 20
-//			        },
 			        
 		          	listeners: {
 			    		check: function() {
@@ -228,14 +195,6 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 	    	   		this.saveUserOptions();//button, event
 	    		}.createDelegate(this)
 			}]
-//			buttons: [{
-//				id: 'saveuseroptionbutton',
-//		    	text: 'Save',
-//		    	hidden: true,
-//		    	handler: function(button, event) {
-//	    	   		this.saveUserOptions(button, event);
-//	    		}.createDelegate(this)
-//	    	}]
 		});
 		
 		AIR.MyPlaceHomeView.superclass.initComponent.call(this);
@@ -262,7 +221,6 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 		params.help = field.getValue() ? 'YES' : 'NO';
 		
 		field = this.getComponent('fsUserOptions').getComponent('useroptionSkipWizardMessage');
-//		var field2 = Ext.getCmp('wizardcbskip');
 		params.skipWizard = field.getValue() || isSkipWizard ? 'YES' : 'NO';// || field2.getValue()
 		
 		field = this.getComponent('fsUserOptions').getComponent('useroptionDisableTooltip');
@@ -279,14 +237,6 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 		});
 		
 		
-//		var itsecUserOptionListStore = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
-//		params = {
-//			cwid: AIR.AirApplicationManager.getCwid()
-//		};
-//		
-//		itsecUserOptionListStore.load({
-//			params: params
-//		});
 	},
 	
 	onUserOptionBeforeSaved: function(store, options) {
@@ -307,18 +257,15 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 				this.update();//itsecUserOptionListStore
 			}.createDelegate(this)
 		});
-		
-		
-		
-//		this.update(AIR.AirStoreFactory.createItsecUserOptionListStore());
+
 	},
 	
 	activateButtonSaveUserOptions: function() {
-		this/*.getFooterToolbar()*/.getComponent('saveuseroptionbutton').show();
+		this.getComponent('saveuseroptionbutton').show();
 	},
 
 	inactivateButtonSaveUserOptions: function() {
-		this/*.getFooterToolbar()*/.getComponent('saveuseroptionbutton').hide();
+		this.getComponent('saveuseroptionbutton').hide();
 	},
 
 	
@@ -329,7 +276,7 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 		
 		if(store) {
-			var itsecUserOptionListStore = store;//AIR.AirStoreFactory.createItsecUserOptionListStore();
+			var itsecUserOptionListStore = store;
 			itsecUserOptionListStore.on('load', this.handleUserOptions, this);
 			//replace this new itsecUserOptionListStore with the old of the AirStoreManager?
 			
@@ -343,24 +290,14 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 		} else {
 			this.handleUserOptions(AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore'));
 		}
-//		this.handleUserOptions();
-		
-		
-		
-//		var rolePersonListStore = AIR.AirStoreFactory.createRolePersonListStore();
-//		rolePersonListStore.on('load', this.handleUserRoles, this);
-//		
-//		rolePersonListStore.load({
-//			params: params
-//		});
+
 		this.handleUserRoles();
 	},
 	
 	handleUserOptions: function(store, records, options) {
-		var itsecUserOptionListStore = store;//AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
+		var itsecUserOptionListStore = store;
 		
 		itsecUserOptionListStore.each(function(item, index, allItems) {
-//		Ext.each(records, function(item, index, allItems) {
 			var key = item.data.itsecUserOptionName;
 			var value = item.data.itsecUserOptionValue;
 			
@@ -435,7 +372,6 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var anzeigetext = '';
 
-//		Ext.each(records, function(item, index, allItems) {
 		rolePersonListStore.each(function(item, index, allItems) {
 			var key = item.data.id;
 			var value = item.data.roleName;
@@ -450,9 +386,6 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	updateLabels: function(labels) {
-//		var myplacepanelheader = this.getComponent('myplacepanelheader');
-//		myplacepanelheader.el.dom.innerHTML = labels.label_menu_myplacemenuitem;
-//		this.getComponent('myplaceuser').label.dom.textContent = labels.label_myplace_user;//innerHTML textContent
 		
 		var myplacepanelheader = this.getComponent('myplacepanelheader');
 		myplacepanelheader.setText(labels.label_menu_myplacemenuitem);
@@ -471,7 +404,7 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionDisableTooltip'), labels.label_useroptions_disableTooltip);
 		this.setFieldLabel(this.getComponent('fsUserOptions').getComponent('useroptionShowDeleted'), labels.label_useroptions_showDeleted);
 		
-		this.getComponent('saveuseroptionbutton').setText(labels['button_general_save']);//this.getFooterToolbar()
+		this.getComponent('saveuseroptionbutton').setText(labels['button_general_save']);
 	}
 });
 Ext.reg('AIR.MyPlaceHomeView', AIR.MyPlaceHomeView);

@@ -87,7 +87,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					items: [{
 						xtype: 'filterCombo',//combo
 						id: 'cbCiType',
-					    store: AIR.AirStoreFactory.createCiTypeListStore(),//AIR.AirStoreManager.getStoreByName('ciTypeListStore'),//applicationCat1ListStore
+					    store: AIR.AirStoreFactory.createCiTypeListStore(false), // always long CiTypeList, because you may search for all CI-types
 						
 					    fieldLabel: 'Type',
 					    valueField: 'id',//id ciTypeName

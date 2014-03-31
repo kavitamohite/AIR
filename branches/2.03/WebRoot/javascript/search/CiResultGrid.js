@@ -19,9 +19,14 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 		this.defaultColumnConfig = columns;
 	    
 		var colModel = new Ext.grid.ColumnModel(columns);
-		var selModel = new Ext.grid.RowSelectionModel({
-			singleSelect: true
-		});
+		var selModel = AC.resultGridSelModel;
+//		if (columns[0].id != 'name') {
+//			selModel = AC.resultGridSelModel;
+//		} else {
+//			selModel = new Ext.grid.RowSelectionModel({
+//				singleSelect: true
+//			});
+//		}
 
 		var applicationListStore = AIR.AirStoreFactory.createCiItemListStore();//createApplicationListStore
 		
@@ -30,9 +35,6 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 			store: applicationListStore,
 			complete: this.complete,
 			ownerPrefix: this.ownerPrefix
-			
-//			pagingParams: this.pagingParams
-//			pageSize: 25
 		});
 		
 		
@@ -40,18 +42,12 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 			colModel: colModel,
 			selModel: selModel,
 			store: applicationListStore,
-			
 			frame: false,
 			border: false,
-//			enableColumnHide: false,
 			loadMask: false,
 			autoScroll: true,
-			//autoHeight: true,
 			stripeRows: true,
 			stateful: false,
-//			plugins: expander,
-
-			
 			viewConfig: {
 				emptyText: 'Nothing found or no filter set'
 			},
@@ -62,7 +58,7 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 		AIR.CiResultGrid.superclass.initComponent.call(this);
 		
 		if(this.complete) {
-			var rbgPageSize = pagingBar.getComponent('rbg' + pagingBar.getId());//items.items[14];//14 12
+			var rbgPageSize = pagingBar.getComponent('rbg' + pagingBar.getId());
 			rbgPageSize.on('change', this.onPageSizeChange, this);
 		}
 		
@@ -84,8 +80,7 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 			if(this.pagingParams)
 				for(var key in this.pagingParams)
 					params[key] = this.pagingParams[key];
-			
-//			params.start = 0;
+
 			params.limit = this.pageSize;
 			
 			this.getStore().load({
@@ -99,18 +94,18 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 	
 	updateHeight: function() {
 		if(!this.pageSize)
-			this.pageSize = 20;//25
+			this.pageSize = 20;
 		
 		switch(this.pageSize) {
 			case 10:
-				this.setHeight(305);//280
+				this.setHeight(305);
 				break;
-			case 20://25
-				this.setHeight(520);//490
+			case 20:
+				this.setHeight(520);
 				break;
 			case 50:
 			case 100:
-				this.setHeight(1145);//1120
+				this.setHeight(1145);
 				break;
 			default: break;
 		}
@@ -130,7 +125,7 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 		var deleteQuelle = record.get('deleteQuelle') || '';
 		var isDeleted = deleteQuelle === 'No' || deleteQuelle.length === 0 ? false : true;
 		if(isDeleted)
-			metadata.css += ' gridCellMarkedAsDeleted';//'style="color:red;';
+			metadata.css += ' gridCellMarkedAsDeleted';
 		return value;
 	}
 });

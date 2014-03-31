@@ -13,12 +13,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	        	
 	        	items: [{
 		        	xtype: 'button',
-		        	id: 'bExpandAdvSearchParams',//bUpdateCiSearchResult
+		        	id: 'bExpandAdvSearchParams',
 		    		enableToggle: true,
-		    		
-	//	        	cls: 'x-btn-text-icon',
-	//	        	icon: 'images/refresh_16x16.png',
-		        	
 		        	text: 'Update'
 		        },{
 		        	xtype: 'button',
@@ -44,8 +40,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 				
 	            plain: true,
 	            defaults: { autoScroll: true },
-//	            hidden: true
-	        	
+        	
 	        	style: {
 	            	marginTop: 5
 	            }
@@ -56,8 +51,6 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		
 		this.ciResultGridParamSets = {};
 		this.tabCount = 0;
-		
-//		this.addEvents('tabclose');
 	},
 	
 	search: function(params, isUpdate, callback) {//ownerView
@@ -73,7 +66,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			ciResultGridId = ciResultGrid.getId();
 			this.ciResultGridParamSets[ciResultGridId] = params;
 		} else {
-			var tabCount = ++this.tabCount;//tpCiSearchResultTables.items.items.length;
+			var tabCount = ++this.tabCount;
 			ciResultGridId = params.searchAction + '_' + tabCount;//searchType
 			this.ciResultGridParamSets[ciResultGridId] = params;
 			
@@ -84,13 +77,10 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		    	border: false,
 		    	closable: true
 		    	
-//		    	stateful: false,
-//		    	stateEvents: undefined
-	//	    	loadMask: new Ext.LoadMask(tpCiSearchResultTables.getEl(), { msg: 'Loading...' })
 			});
 			
 			
-			this.setVisible(true);//tpCiSearchResultTables
+			this.setVisible(true);
 			tpCiSearchResultTables.add(ciResultGrid);
 			tpCiSearchResultTables.getItem(ciResultGridId).setTitle(this.getTabTitle(ciResultGridId) + '_' + tabCount);//ciResultGridId
 			tpCiSearchResultTables.setActiveTab(ciResultGridId);
@@ -103,25 +93,18 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			ciResultGrid.on('rowdblclick', this.onRowDoubleClick, this);
 			
 			var pagingBar = ciResultGrid.getBottomToolbar();
-			var clExcelExport = pagingBar.getComponent(ciResultGridId + '_clExcelExport');//ciSearchGrid_clExcelExport
-			clExcelExport.on('click', callback);//ownerView.onExcelExport, ownerView
+			var clExcelExport = pagingBar.getComponent(ciResultGridId + '_clExcelExport');
+			clExcelExport.on('click', callback);
 		}
-		
-//		this.ciResultGridParamSets[ciResultGridId] = params;
+
 		ciResultGrid.getStore().load({
 	    	params: params
 	    });
-	    
-//		delete params.start;
-//		delete params.limit;
 		ciResultGrid.setPagingParams(params);
 	},
 	
 	onGridLoaded: function(store, records, options) {
 		this.loadMask.hide();
-		
-//		AAM.getMask('loadMask').hide();
-//		myLoadMask.hide();
 		
 		
 		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
@@ -180,7 +163,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	},
 	
 	onRowClick: function(grid, rowIndex, e) {
-		this.fireEvent('beforeCiSelect');//if(this.fireEvent('beforeCiSelect') == false) return;
+		this.fireEvent('beforeCiSelect');
 		
 		var record = grid.getStore().getAt(rowIndex);
 		var ciId = record.id;
@@ -207,7 +190,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			}
 						
 			AAM.setCiId(ciId);
-			AAM.setTableId(parseInt(record.data.tableId));//AC.TABLE_ID_APPLICATION
+			AAM.setTableId(parseInt(record.data.tableId));
 			AAM.setCiSubTypeId(ciSubType);
 		} else {
 			AAM.setCiId(-1);
@@ -229,12 +212,9 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	},
 	
 	onGridBeforeLoaded: function(store, options) {
-//		if(!this.loadMask)
-			this.loadMask = Util.createMask('Loading data...', this.getComponent('tpCiSearchResultTables').getActiveTab().getEl());//this.getComponent('tpCiSearchResultTables').getEl()
+		this.loadMask = Util.createMask('Loading data...', this.getComponent('tpCiSearchResultTables').getActiveTab().getEl());//this.getComponent('tpCiSearchResultTables').getEl()
 		this.loadMask.show();
-		
-//		AAM.getMask('loadMask').show();
-//		myLoadMask.show();
+
 	},
 
 	
@@ -247,7 +227,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		var tabCount = tpCiSearchResultTables.items.items.length;
 		
 		if(tabCount === 1)//0, 1 weil tab erst nach dem event zerstört wird
-			this.setVisible(false);//tpCiSearchResultTables
+			this.setVisible(false);
 	},
 	
 	getSearchParams: function(tabId) {
@@ -269,7 +249,6 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	},
 	
 	updateLabels: function(labels) {
-//		this.getComponent('bUpdateCiSearchResult').setText(labels.bUpdateCiSearchResult);
 		
 		var bExpandAdvSearchParams = this.getComponent('pSearchResultOptions').getComponent('bExpandAdvSearchParams').setText(labels.bExpandAdvSearchParams);
 		if(bExpandAdvSearchParams.pressed) {
@@ -293,20 +272,25 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
 		
 		var ciSearchGrid;
+		
 		for(var i = 0; i < tpCiSearchResultTables.items.items.length; i++) {
 			ciSearchGrid = tpCiSearchResultTables.items.items[i];
-//			ciSearchGrid.setTitle(labels.searchResultPanelTitle);
 			
-			ciSearchGrid.getColumnModel().setColumnHeader(0, labels.searchResultName);
-			ciSearchGrid.getColumnModel().setColumnHeader(1, labels.searchResultAlias);
-			ciSearchGrid.getColumnModel().setColumnHeader(2, labels.searchResultType);
-			ciSearchGrid.getColumnModel().setColumnHeader(3, labels.searchResultCategory);
-			ciSearchGrid.getColumnModel().setColumnHeader(4, labels.searchResultLocation);
-			ciSearchGrid.getColumnModel().setColumnHeader(5, labels.searchResultAppOwner);
-			ciSearchGrid.getColumnModel().setColumnHeader(6, labels.searchResultAppOwnerDelegate);
-			ciSearchGrid.getColumnModel().setColumnHeader(7, labels.searchResultAppSteward);
-			ciSearchGrid.getColumnModel().setColumnHeader(8, labels.searchResultResponsible);
-			ciSearchGrid.getColumnModel().setColumnHeader(9, labels.searchResultSubResponsible);
+			//if (ciSearchGrid.getColumnModel().getColumnAt(0).id != 'name') {
+				
+				ciSearchGrid.getColumnModel().setColumnHeader(0, "&#160;");
+			//}
+				
+			ciSearchGrid.getColumnModel().setColumnHeader(1, labels.searchResultName);
+			ciSearchGrid.getColumnModel().setColumnHeader(2, labels.searchResultAlias);
+			ciSearchGrid.getColumnModel().setColumnHeader(3, labels.searchResultType);
+			ciSearchGrid.getColumnModel().setColumnHeader(4, labels.searchResultCategory);
+			ciSearchGrid.getColumnModel().setColumnHeader(5, labels.searchResultLocation);
+			ciSearchGrid.getColumnModel().setColumnHeader(6, labels.searchResultAppOwner);
+			ciSearchGrid.getColumnModel().setColumnHeader(7, labels.searchResultAppOwnerDelegate);
+			ciSearchGrid.getColumnModel().setColumnHeader(8, labels.searchResultAppSteward);
+			ciSearchGrid.getColumnModel().setColumnHeader(9, labels.searchResultResponsible);
+			ciSearchGrid.getColumnModel().setColumnHeader(10, labels.searchResultSubResponsible);
 		}
 	}
 });

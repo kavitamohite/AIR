@@ -220,7 +220,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    	}, {
 			    		xtype: 'filterCombo',//combo filterCombo
 			    		id: 'cbConnectionsObjectType',
-			            store: AIR.AirStoreFactory.createCiTypeListStore(),//AIR.AirStoreManager.getStoreByName('ciTypeListStore'),// applicationCat1ListStore,
+			            store: AIR.AirStoreFactory.createCiTypeListStore(false), // always long CiTypeList, because you may search for all CI-types
 			    	    
 			            fieldLabel: 'Object Type',
 			    	    valueField: 'id',//id ciTypeId

@@ -1322,13 +1322,13 @@ AIR.AirStoreFactory = function() {
 			return historyListStore;
 		},
 		
-		createCiTypeListStore: function() {
+		createCiTypeListStore: function(shortlist) {
 			var ciTypeListStore = new Ext.data.ArrayStore(
 			{
 				storeId: 'ciTypeListStore',
 				fields : ['id', 'text', 'ciTypeId', 'ciSubTypeId', 'sortId'],
 				idIndex: 0,
-				data : ciTypeData
+				data : (shortlist?ciTypeShortData:ciTypeData)
 			});
 			
 			return ciTypeListStore;
@@ -2666,7 +2666,7 @@ AIR.AirStoreFactory = function() {
 			{
 				storeId: 'itSecGroupListStore',
 				fields : ['isgid', 'id', 'name', 'itsetId', 'ciKat1', 'tableId'],
-				idIndex: 0,
+				idIndex: 1,
 				data : itsecGroupData
 			});
 			

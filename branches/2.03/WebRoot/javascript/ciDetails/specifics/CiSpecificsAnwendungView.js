@@ -687,7 +687,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		
 		if(this.isApplicationCI(data.applicationCat1Id)) {
 			rgBARrelevance.setVisible(true);
-			
+
 			if(data.barRelevance.length === 0)
 				data.barRelevance = 'U';
 	
