@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -251,8 +253,37 @@ public class PersonsHbn {
 		
 		try {
 			StringBuffer sql = new StringBuffer();
-			
-			sql.append("SELECT * FROM TABLE (PCK_AIR.FT_PERSONPICK('").append(searchCWIDType).append("','").append(queryMethod).append("','").append(query).append("'))");
+			String[] queryparts = new String[2];
+			if (query.contains(",")) {
+				queryparts = query.split(",");
+			} else {
+				queryparts[0] = query;
+			}
+			String where = "WHERE pstat = '" + searchCWIDType + "'";
+			if (queryMethod.equals("Name")) {
+				switch (StringUtils.countMatches(query, ",")) {
+					case 0:
+						where += " AND (UPPER(lastname) LIKE '" + queryparts[0].trim().toUpperCase() +"%' ";
+						where += " OR UPPER(lastname) LIKE '" + Normalizer.normalize(queryparts[0].trim().toUpperCase(), Normalizer.Form.NFD).replaceAll("[^a-zA-Zƒ÷‹‰ˆ¸ﬂ-]", "") +"%')";
+						break;
+					case 1:
+						where += " AND (UPPER(lastname) LIKE '" + queryparts[0].trim().toUpperCase() +"%' ";
+						where += " OR UPPER(lastname) LIKE '" + Normalizer.normalize(queryparts[0].trim().toUpperCase(), Normalizer.Form.NFD).replaceAll("[^a-zA-Zƒ÷‹‰ˆ¸ﬂ-]", "") +"%')";
+						where += " AND (UPPER(first_name) LIKE '" + queryparts[1].trim().toUpperCase() +"%' ";
+						where += " OR UPPER(first_name) LIKE '" + Normalizer.normalize(queryparts[1].trim().toUpperCase(), Normalizer.Form.NFD).replaceAll("[^a-zA-Zƒ÷‹‰ˆ¸ﬂ-]", "") +"%')";
+						break;
+					default:
+						where += " AND (UPPER(lastname) LIKE '" + queryparts[0].trim().toUpperCase() +"%' ";
+						where += " OR UPPER(lastname) LIKE '" + Normalizer.normalize(queryparts[0].trim().toUpperCase(), Normalizer.Form.NFD).replaceAll("[^a-zA-Zƒ÷‹‰ˆ¸ﬂ-]", "") +"%')";
+				}
+			} else {
+				where += " AND cwid LIKE UPPER('" + queryparts[0].trim() +"%')";
+			}
+		
+			sql.append("SELECT CWID, LASTNAME, FIRST_NAME as FIRSTNAME ");
+			sql.append("FROM v_md_person ");
+			sql.append(where);
+			sql.append(" ORDER BY NLSSORT(lastname,'nls_sort=''BINARY_AI'''), NLSSORT(first_name,'nls_sort=''BINARY_AI''')");
 			
 			@SuppressWarnings("deprecation")
 			Connection conn = session.connection();

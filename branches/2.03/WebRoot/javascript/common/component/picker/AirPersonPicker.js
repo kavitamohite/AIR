@@ -89,7 +89,8 @@ AIR.AirPersonPicker = Ext.extend(Ext.Tip, {
 					width: 0.10
 				}, {
 					header: 'CWID',
-					dataIndex: 'cwid'
+					dataIndex: 'cwid',
+					width: 0.15
 				}, {
 					header: 'Last name',
 					dataIndex: 'lastname'
@@ -213,7 +214,7 @@ AIR.AirPersonPicker = Ext.extend(Ext.Tip, {
 		
 		
 		var beginTitle = this.comp.getValue().length == 0 ? 'Add' : 'Replace';
-		var title = beginTitle + ' CWID to '+ Ext.get('label'+ this.comp.getId()).dom.innerHTML +'<br><hr>';
+		var title = beginTitle + ' CWID to '+ Ext.get('label'+ this.comp.getId()).dom.innerHTML +'<br>(Type "Lastname, Firstname" or "CWID")<br><hr>';
 		
 		this.setTitle(title);
 	},
