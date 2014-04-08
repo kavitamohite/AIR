@@ -530,9 +530,13 @@ public class CiEntitiesHbn {
 		String deleted = null;
 		
 		try {
+			
 			type = rset.getString("TYPE");
 //			id = rset.getString("ID");
-			name = rset.getString("NAME");
+			if ("secret".equals(rset.getString("CONFIDENTIALITY")))
+				name = "<img src='/AIR/images/secured_10x10.png' border='0' title='Secure System'>&nbsp;" + rset.getString("NAME");
+			else
+				name = rset.getString("NAME");
 			assetIdOrAlias = rset.getString("ASSET_ID_OR_ALIAS");
 			responsible = rset.getString("RESPONSIBLE");
 			subResponsible = rset.getString("SUB_RESPONSIBLE");

@@ -37,7 +37,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			},{
 		    	xtype: 'label',
 		    	id: 'lCiIsSecure',
-		    	html: '<center style="background-color: '+AC.AIR_BG_COLOR_SECURE+';">Secure&nbsp;System</center>',
+		    	html: '<center style="background-color: '+AC.AIR_BG_COLOR_SECURE+';"><img src="/AIR/images/secured_24x24.png" border=0>&nbsp;&nbsp;Secure&nbsp;System&nbsp;&nbsp;<img src="/AIR/images/secured_24x24.png" border=0></center>',
 				hidden: true,
 
 				style: {
@@ -776,7 +776,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				break;
 		}
 
-		this.getComponent('lCiName').setText(data.name);
+		this.getComponent('lCiName').setText(data.name + (data.alias!=undefined && data.alias!=""?" ( " + data.alias + " )":""));
 		this.getComponent('lCiType').setText(record.get('text'));
 		
 		var isDeleted = data.deleteTimestamp && data.deleteTimestamp.length > 0;
