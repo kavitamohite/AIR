@@ -421,6 +421,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if(hasEditRights)
 				text = AIR.AirApplicationManager.getLabels().relevanceEditButton;
 		} else if(!data.isCiCreate) {
+			cbReferencedTemplate.setValue('');//reset();
 			var hasTemplate = data.refId !== '0' && data.refId.length > 0;
 			if(hasTemplate) {
 				Util.disableCombo(cbItSecGroup);
