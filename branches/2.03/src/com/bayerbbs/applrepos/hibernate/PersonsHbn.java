@@ -289,6 +289,8 @@ public class PersonsHbn {
 			Connection conn = session.connection();
 			
 			selectStmt = conn.createStatement();
+			selectStmt.execute("ALTER SESSION SET NLS_COMP='LINGUISTIC'");
+			selectStmt.execute("ALTER SESSION SET NLS_SORT='GENERIC_M_AI'");
 			ResultSet rset = selectStmt.executeQuery(sql.toString());
 			while (rset.next()) {
 				PersonsDTO pers = getPersonsDTOFromResultSet(rset);
