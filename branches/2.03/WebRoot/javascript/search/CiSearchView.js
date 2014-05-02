@@ -145,8 +145,9 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	    	for(var key in params)
 	    		if(form[key])
 	    			form[key].value = params[key];
-	    	
+    	
 		    if(this.isAdvSearch) {
+		    	form.isAdvancedSearch.value = "true";
 		    	var params = this.getAdvancedSearchParams(params);
 		    	for(var key in params)
 		    		if(form['h'+key])
