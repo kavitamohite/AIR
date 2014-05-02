@@ -255,7 +255,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
 			var startMask = AAM.getMask(AC.MASK_TYPE_START);
 			startMask.hide();
 		});
-		delayedTask.delay(0);
+		delayedTask.delay(1500);
 		AAM.restoreUi(this.airMainPanel);
 	}
 });
