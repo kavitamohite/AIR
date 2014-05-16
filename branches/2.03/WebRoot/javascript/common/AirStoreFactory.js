@@ -1545,6 +1545,7 @@ AIR.AirStoreFactory = function() {
 			var ciItemListStore = new Ext.data.GroupingStore({//XmlStore
 			    autoDestroy: true,
 			    autoLoad: false,
+			    remoteSort: true,
 			    
 				proxy: new Ext.ux.soap.SoapProxy({
 					url: webcontext +'/CiEntityWSPort',
@@ -1584,6 +1585,7 @@ AIR.AirStoreFactory = function() {
 			var applicationListStore = new Ext.data.GroupingStore({//XmlStore
 			    autoDestroy: true,
 			    autoLoad: false,
+			    remoteSort: true,
 			    
 				proxy: new Ext.ux.soap.SoapProxy({
 					url: webcontext +'/ApplicationWSPort',

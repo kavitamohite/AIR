@@ -206,10 +206,10 @@ public class CiEntitiesHbn {
 			else if ("applicationCat2Txt".equals(sort)) {
 				sql.append(" order by CATEGORY");
 			}
-			else if ("responsible".equals(sort)) {
+			else if ("ciOwner".equals(sort)) {
 				sql.append(" order by RESPONSIBLE");
 			}
-			else if ("subResponsible".equals(sort)) {
+			else if ("ciOwnerDelegate".equals(sort)) {
 				sql.append(" order by SUB_RESPONSIBLE");
 			}
 			else if ("applicationOwner".equals(sort)) {
@@ -217,6 +217,10 @@ public class CiEntitiesHbn {
 			}
 			else if ("applicationOwnerDelegate".equals(sort)) {
 				sql.append(" order by APP_OWNER_DELEGATE");
+			}else if ("applicationSteward".equals(sort)) {
+				sql.append(" order by APP_STEWARD");
+			} else {
+				sql.append(" order by "+sort);
 			}
 		}
 		else {
@@ -642,7 +646,7 @@ public class CiEntitiesHbn {
 			if ("applicationName".equals(sort)) {
 				sql.append(" order by NAME");
 			}
-			else if ("applicationAlias".equals(sort)) {
+			else if ("alias".equals(sort)) {
 				sql.append(" order by ASSET_ID_OR_ALIAS");
 			}
 			else if ("applicationCat1Txt".equals(sort)) {
@@ -651,17 +655,23 @@ public class CiEntitiesHbn {
 			else if ("applicationCat2Txt".equals(sort)) {
 				sql.append(" order by CATEGORY");
 			}
-			else if ("responsible".equals(sort)) {
+			else if ("ciOwner".equals(sort)) {
 				sql.append(" order by RESPONSIBLE");
 			}
-			else if ("subResponsible".equals(sort)) {
+			else if ("ciOwnerDelegate".equals(sort)) {
 				sql.append(" order by SUB_RESPONSIBLE");
 			}
 			else if ("applicationOwner".equals(sort)) {
 				sql.append(" order by APP_OWNER");
 			}
+			else if ("applicationSteward".equals(sort)) {
+				sql.append(" order by APP_STEWARD");
+			}			
 			else if ("applicationOwnerDelegate".equals(sort)) {
 				sql.append(" order by APP_OWNER_DELEGATE");
+			}			
+			else {
+				sql.append(" order by "+sort);
 			}
 			
 		}
@@ -696,10 +706,10 @@ public class CiEntitiesHbn {
 		
 		// Order
 		if (StringUtils.isNotNullOrEmpty(sort)) {
-			if ("applicationName".equals(sort)) {
+			if ("applicationName".equals(sort)) {				
 				sql.append(" order by NAME");
-			}
-			else if ("applicationAlias".equals(sort)) {
+			}else 
+				if ("alias".equals(sort)) {
 				sql.append(" order by ASSET_ID_OR_ALIAS");
 			}
 			else if ("applicationCat1Txt".equals(sort)) {
@@ -708,10 +718,10 @@ public class CiEntitiesHbn {
 			else if ("applicationCat2Txt".equals(sort)) {
 				sql.append(" order by CATEGORY");
 			}
-			else if ("responsible".equals(sort)) {
+			else if ("ciOwner".equals(sort)) {
 				sql.append(" order by RESPONSIBLE");
 			}
-			else if ("subResponsible".equals(sort)) {
+			else if ("ciOwnerDelegate".equals(sort)) {
 				sql.append(" order by SUB_RESPONSIBLE");
 			}
 			else if ("applicationOwner".equals(sort)) {
@@ -719,6 +729,12 @@ public class CiEntitiesHbn {
 			}
 			else if ("applicationOwnerDelegate".equals(sort)) {
 				sql.append(" order by APP_OWNER_DELEGATE");
+			}			
+			else if ("applicationSteward".equals(sort)) {
+				sql.append(" order by APP_STEWARD");
+			}
+			else {
+				sql.append(" order by "+sort);
 			}
 			
 		}

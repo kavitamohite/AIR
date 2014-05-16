@@ -2599,6 +2599,12 @@ public class AnwendungHbn extends BaseHbn {
 			if ("applicationName".equals(sort)) {
 				sql.append(" order by anw.ANWENDUNG_NAME");
 			}
+			else if ("location".equals(sort)) {
+				sql.append(" order by anw.ANWENDUNG_NAME");
+			}			
+			else if ("name".equals(sort)) {
+				sql.append(" order by anw.ANWENDUNG_NAME");
+			}			
 			else if ("applicationAlias".equals(sort)) {
 				sql.append(" order by anw.ALIAS");
 			}
@@ -2608,10 +2614,10 @@ public class AnwendungHbn extends BaseHbn {
 			else if ("applicationCat2Txt".equals(sort)) {
 				sql.append(" order by kat2.anwendung_kat2_txt");
 			}
-			else if ("responsible".equals(sort)) {
+			else if ("ciOwner".equals(sort)) {
 				sql.append(" order by anw.CWID_VERANTW_BETR");
 			}
-			else if ("subResponsible".equals(sort)) {
+			else if ("ciOwnerDelegate".equals(sort)) {
 				sql.append(" order by anw.SUB_RESPONSIBLE");
 			}
 			else if ("applicationOwner".equals(sort)) {
@@ -2619,6 +2625,12 @@ public class AnwendungHbn extends BaseHbn {
 			}
 			else if ("applicationOwnerDelegate".equals(sort)) {
 				sql.append(" order by anw.APPLICATION_OWNER_DELEGATE");
+			}
+			else if ("applicationSteward".equals(sort)) {
+				sql.append(" order by anw.APPLICATION_STEWARD");
+			}			
+			else {
+				sql.append(" order by "+sort);
 			}
 			
 			if (StringUtils.isNotNullOrEmpty(dir)) {
