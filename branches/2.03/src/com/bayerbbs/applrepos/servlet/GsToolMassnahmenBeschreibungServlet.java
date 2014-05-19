@@ -21,8 +21,8 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 
 	private static final String STMT_SELECT_MASSN_BESCHREIBUNG = "select BESCHREIBUNG from [BBS_Prod].[dbo].mb_massn_txt where mas_id = ? and spr_id = ?"; //AND Spr_Id = ? and MAS_IMP_ID in (-1, 1)";//NAME,
 
-	private static final String STMT_SELECT_BAUSTEIN_BESCHREIBUNG = "SELECT BTX.Beschreibung FROM DBO.MB_BAUST BST" +
-		" INNER JOIN DBO.MB_BAUST_TXT BTX ON BST.Bau_Id=BTX.Bau_Id AND BST.Bau_Imp_Id=BTX.Bau_Imp_Id" +
+	private static final String STMT_SELECT_BAUSTEIN_BESCHREIBUNG = "SELECT BTX.Beschreibung FROM [BBS_Prod].[dbo].MB_BAUST BST" +
+		" INNER JOIN [BBS_Prod].[dbo].MB_BAUST_TXT BTX ON BST.Bau_Id=BTX.Bau_Id AND BST.Bau_Imp_Id=BTX.Bau_Imp_Id" +
 		" WHERE BST.Loesch_Datum IS NULL" +
 		" AND BST.Bau_Imp_Id IN (-1, 1)" +
 		" AND SUBSTRING(BTX.Beschreibung, 1, 6) = '<html>'" +
