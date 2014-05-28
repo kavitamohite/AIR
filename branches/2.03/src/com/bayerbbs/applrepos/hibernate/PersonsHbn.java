@@ -186,7 +186,7 @@ public class PersonsHbn {
 			}
 			sb.append(" order by h.lastname, h.firstname");
 		}
-		
+		System.out.println(sb.toString());
 		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
@@ -259,7 +259,7 @@ public class PersonsHbn {
 			} else {
 				queryparts[0] = query;
 			}
-			String where = "WHERE pstat = '" + searchCWIDType + "'";
+			String where = "WHERE pstat = '" + searchCWIDType + "' AND NVL(inactive, 'N') = 'N' " ;
 			if (queryMethod.equals("Name")) {
 				switch (StringUtils.countMatches(query, ",")) {
 					case 0:
@@ -284,7 +284,7 @@ public class PersonsHbn {
 			sql.append("FROM v_md_person ");
 			sql.append(where);
 			sql.append(" ORDER BY NLSSORT(lastname,'nls_sort=''BINARY_AI'''), NLSSORT(first_name,'nls_sort=''BINARY_AI''')");
-			
+			System.out.println(sql.toString());
 			@SuppressWarnings("deprecation")
 			Connection conn = session.connection();
 			
