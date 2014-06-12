@@ -45,7 +45,7 @@ public class AIRWS {
 		List<CiItemDTO> listAnwendungen = null;
 
 		if (LDAPAuthWS.isLoginValid(anwParamInp.getCwid(), anwParamInp.getToken())) {
-			listAnwendungen = CiEntitiesHbn.findCisByOUunit(ciType, ouUnit, ciOwnerType, ouQueryMode);
+			listAnwendungen = CiEntitiesHbn.findCisByOUunit(ciType, ouUnit, ciOwnerType, ouQueryMode,anwParamInp.getSort(),anwParamInp.getDir());
 		}
 
 		if (null == listAnwendungen) {

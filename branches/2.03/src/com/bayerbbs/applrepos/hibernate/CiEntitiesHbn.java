@@ -592,7 +592,7 @@ public class CiEntitiesHbn {
 	}
 
 	//ApplicationDTO
-	public static List<CiItemDTO> findCisByOUunit(String ouCiType, String ouUnit, String ciOwnerType, String ouQueryMode) {
+	public static List<CiItemDTO> findCisByOUunit(String ouCiType, String ouUnit, String ciOwnerType, String ouQueryMode, String sort, String dir) {
 		if (null == ouUnit || null == ciOwnerType) {
 			return new ArrayList<CiItemDTO>();//ApplicationDTO
 		}
@@ -610,12 +610,51 @@ public class CiEntitiesHbn {
 				sql.append(ouCiType);
 			}
 			
-			sql.append("')) order by name");
+			sql.append("')) ");
+			
+			if (StringUtils.isNotNullOrEmpty(sort)) {
+				if ("applicationName".equals(sort)) {
+					sql.append(" order by NAME");
+				}
+				else if ("alias".equals(sort)) {
+					sql.append(" order by ASSET_ID_OR_ALIAS");
+				}
+				else if ("applicationCat1Txt".equals(sort)) {
+					sql.append(" order by TYPE");
+				}
+				else if ("applicationCat2Txt".equals(sort)) {
+					sql.append(" order by CATEGORY");
+				}
+				else if ("ciOwner".equals(sort)) {
+					sql.append(" order by RESPONSIBLE");
+				}
+				else if ("ciOwnerDelegate".equals(sort)) {
+					sql.append(" order by SUB_RESPONSIBLE");
+				}
+				else if ("applicationOwner".equals(sort)) {
+					sql.append(" order by APP_OWNER");
+				}
+				else if ("applicationOwnerDelegate".equals(sort)) {
+					sql.append(" order by APP_OWNER_DELEGATE");
+				}else if ("applicationSteward".equals(sort)) {
+					sql.append(" order by APP_STEWARD");
+				} else {
+					sql.append(" order by "+sort);
+				}
+			}
+			else {
+				sql.append(" order by name");
+			}
+			
+			if (StringUtils.isNotNullOrEmpty(dir)) {
+				sql.append(" ").append(dir);
+			}
+		
 			
 			return findCis(sql.toString());
 		}
-	}
-	
+	}	
+
 	//ApplicationDTO
 	public static List<CiItemDTO> findMyCisOwner(String cwid, String sort, String dir, boolean onlyApplications) {
 		return findMyCisOwnerOrDelegate("pck_air.FT_App_Owner", cwid, sort, dir, onlyApplications);

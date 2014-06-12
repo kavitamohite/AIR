@@ -208,7 +208,7 @@ public class AirCiExcelExportServlet extends HttpServlet {
     			req.getParameter("houCiType"),
     			req.getParameter("houUnit"),
 				req.getParameter("hciOwnerType"),
-				req.getParameter("houQueryMode")
+				req.getParameter("houQueryMode"),null,null
         	);
         }
         

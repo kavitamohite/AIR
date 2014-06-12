@@ -2668,7 +2668,7 @@ AIR.AirStoreFactory = function() {
 			{
 				storeId: 'itSecGroupListStore',
 				fields : ['isgid', 'id', 'name', 'itsetId', 'ciKat1', 'tableId'],
-				idIndex: 1,
+				idIndex: 0,
 				data : itsecGroupData
 			});
 			

@@ -106,7 +106,7 @@ public class ApplicationWS {
 				}
 				
 				String ouCiType = input.getOuCiType();
-				listAnwendungen = CiEntitiesHbn.findCisByOUunit(ouCiType, ouUnit, ciOwnerType, ouQueryMode);//ciType
+				listAnwendungen = CiEntitiesHbn.findCisByOUunit(ouCiType, ouUnit, ciOwnerType, ouQueryMode,input.getSort(), input.getDir());//ciType
 			} else if (AirKonstanten.MY_CIS.equals(searchAction)) {
 				if (StringUtils.isNotNullOrEmpty(cwid)) {
 					listAnwendungen = CiEntitiesHbn.findMyCisOwner(cwid, input.getSort(), input.getDir(), onlyApplications);

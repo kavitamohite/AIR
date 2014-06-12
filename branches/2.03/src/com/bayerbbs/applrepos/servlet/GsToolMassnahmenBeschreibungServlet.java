@@ -19,7 +19,14 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6275379151948444485L;
 
-	private static final String STMT_SELECT_MASSN_BESCHREIBUNG = "select BESCHREIBUNG from [BBS_Prod].[dbo].mb_massn_txt where mas_id = ? and spr_id = ?"; //AND Spr_Id = ? and MAS_IMP_ID in (-1, 1)";//NAME,
+	private static final String STMT_SELECT_MASSN_BESCHREIBUNG = "SELECT   TXT.Beschreibung FROM BBS_Prod.DBO.MB_MASSN_TXT TXT"
+		+ " INNER JOIN BBS_Prod.DBO.MB_MASSN MAS ON TXT.Mas_Id=MAS.Mas_Id AND TXT.Mas_Imp_Id=MAS.Mas_Imp_Id"
+		+ " WHERE    MAS.Mas_Imp_Id IN (-1, 1)"
+		+ " AND      MAS.Loesch_Datum IS NULL"
+		+ " AND      MAS.Cm_Sta_Id IN (1, 5)"
+		+ " AND      MAS.Mas_Id = ?"
+		+ " AND      TXT.Spr_Id = ?";
+
 
 	private static final String STMT_SELECT_BAUSTEIN_BESCHREIBUNG = "SELECT BTX.Beschreibung FROM [BBS_Prod].[dbo].MB_BAUST BST" +
 		" INNER JOIN [BBS_Prod].[dbo].MB_BAUST_TXT BTX ON BST.Bau_Id=BTX.Bau_Id AND BST.Bau_Imp_Id=BTX.Bau_Imp_Id" +
