@@ -1,0 +1,106 @@
+<?xml version = "1.0"?>
+<endpoints version="2.0"
+	xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
+	<endpoint name="ApplicationWSPort"
+		implementation="com.bayerbbs.applrepos.service.ApplicationWSDelegate"
+		url-pattern="/ApplicationWSPort">
+	</endpoint>
+	<endpoint name="ApplicationCat1WSPort"
+		implementation="com.bayerbbs.applrepos.service.ApplicationCat1WSDelegate"
+		url-pattern="/ApplicationCat1WSPort">
+	</endpoint>
+	<endpoint name="ApplicationCat2WSPort"
+		implementation="com.bayerbbs.applrepos.service.ApplicationCat2WSDelegate"
+		url-pattern="/ApplicationCat2WSPort">
+	</endpoint>
+	<endpoint name="LifecycleStatusWSPort"
+		implementation="com.bayerbbs.applrepos.service.LifecycleStatusWSDelegate"
+		url-pattern="/LifecycleStatusWSPort">
+	</endpoint>
+	<endpoint name="OperationalStatusWSPort"
+		implementation="com.bayerbbs.applrepos.service.OperationalStatusWSDelegate"
+		url-pattern="/OperationalStatusWSPort">
+	</endpoint>
+	<endpoint name="GroupTypesWSPort"
+		implementation="com.bayerbbs.applrepos.service.GroupTypesWSDelegate"
+		url-pattern="/GroupTypesWSPort">
+	</endpoint>
+	<endpoint name="GroupsWSPort"
+		implementation="com.bayerbbs.applrepos.service.GroupsWSDelegate"
+		url-pattern="/GroupsWSPort">
+	</endpoint>
+	<endpoint name="PersonsWSPort"
+		implementation="com.bayerbbs.applrepos.service.PersonsWSDelegate"
+		url-pattern="/PersonsWSPort">
+	</endpoint>
+	<endpoint name="LDAPAuthWSPort"
+		implementation="com.bayerbbs.applrepos.service.LDAPAuthWSDelegate"
+		url-pattern="/LDAPAuthWSPort">
+	</endpoint>
+	<endpoint name="CiPersonsWSPort"
+		implementation="com.bayerbbs.applrepos.service.CiPersonsWSDelegate"
+		url-pattern="/CiPersonsWSPort">
+	</endpoint>
+	<endpoint name="CiGroupsWSPort"
+		implementation="com.bayerbbs.applrepos.service.CiGroupsWSDelegate"
+		url-pattern="/CiGroupsWSPort">
+	</endpoint>
+	<endpoint name="BusinessEssentialWSPort"
+		implementation="com.bayerbbs.applrepos.service.BusinessEssentialWSDelegate"
+		url-pattern="/BusinessEssentialWSPort">
+	</endpoint>
+	<endpoint name="ItSecSBWerteWSPort"
+		implementation="com.bayerbbs.applrepos.service.ItSecSBWerteWSDelegate"
+		url-pattern="/ItSecSBWerteWSPort">
+	</endpoint>
+	<endpoint name="ApplicationToolsWSPort"
+		implementation="com.bayerbbs.applrepos.service.ApplicationToolsWSDelegate"
+		url-pattern="/ApplicationToolsWSPort">
+	</endpoint>
+	<endpoint name="CiEntityWSPort"
+		implementation="com.bayerbbs.applrepos.service.CiEntityWSDelegate"
+		url-pattern="/CiEntityWSPort">
+	</endpoint>
+	<endpoint name="HistoryComplianceWSPort"
+		implementation="com.bayerbbs.applrepos.service.HistoryComplianceWSDelegate"
+		url-pattern="/HistoryComplianceWSPort">
+	</endpoint>
+	<endpoint name="ItsecMassnahmenWSPort"
+		implementation="com.bayerbbs.applrepos.service.ItsecMassnahmenWSDelegate"
+		url-pattern="/ItsecMassnahmenWSPort">
+	</endpoint>
+	<endpoint name="AIRWSPort" implementation="com.bayerbbs.applrepos.service.AIRWSDelegate"
+		url-pattern="/AIRWSPort">
+	</endpoint>
+	<endpoint name="AIRToolsWSPort"
+		implementation="com.bayerbbs.applrepos.service.AIRToolsWSDelegate"
+		url-pattern="/AIRToolsWSPort">
+	</endpoint>
+	
+	
+	<endpoint name="SchrankWSPort"
+		implementation="com.bayerbbs.applrepos.service.SchrankWSDelegate"
+		url-pattern="/SchrankWSPort">
+	</endpoint>	
+	<endpoint name="RoomWSPort"
+		implementation="com.bayerbbs.applrepos.service.RoomWSDelegate"
+		url-pattern="/RoomWSPort">
+	</endpoint>
+	<endpoint name="BuildingWSPort"
+		implementation="com.bayerbbs.applrepos.service.BuildingWSDelegate"
+		url-pattern="/BuildingWSPort">
+	</endpoint>
+	<endpoint name="TerrainWSPort"
+		implementation="com.bayerbbs.applrepos.service.TerrainWSDelegate"
+		url-pattern="/TerrainWSPort">
+	</endpoint>
+	<endpoint name="StandortWSPort"
+		implementation="com.bayerbbs.applrepos.service.StandortWSDelegate"
+		url-pattern="/StandortWSPort">
+	</endpoint>
+	
+	<endpoint name="ItSystemWSPort"
+		implementation="com.bayerbbs.applrepos.service.ItSystemWSDelegate"
+		url-pattern="/ItSystemWSPort">
+	</endpoint>
+</endpoints>
