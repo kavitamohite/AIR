@@ -286,12 +286,9 @@ public class BaseHbn {
 			ciDTO.setTemplate(new Long(0)); // no template
 		}
 		if (null != ciDTO.getTemplate()) {
-			if (-1 == ciDTO.getTemplate()) {
-				ci.setTemplate(null);
-			}
-			else {
-				ci.setTemplate(ciDTO.getTemplate());
-			}
+
+			ci.setTemplate(ciDTO.getTemplate());
+
 		}
 		
 		if (null != ciDTO.getItsecGroupId() && 0 != ciDTO.getItsecGroupId()) {
