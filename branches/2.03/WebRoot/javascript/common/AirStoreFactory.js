@@ -2964,7 +2964,8 @@ AIR.AirStoreFactory = function() {
 		    ]);
 		
 		    var linkCiTypeListReader = new Ext.data.XmlReader({
-				record: 'return'
+				record: 'return',
+				idProperty: 'id'
 		    }, linkCiTypeListRecord);
 		
 		    var linkCiTypeListStore = new Ext.data.XmlStore({
@@ -2977,8 +2978,7 @@ AIR.AirStoreFactory = function() {
 		      		timeout: 120000,
 		      		reader: linkCiTypeListReader
 		      	}),
-		      	fields: [ 'id', 'type', 'language', 'tableId' ],
-	
+		      	fields: [ 'id', 'type', 'language', 'tableId' ],	
 		      	reader: linkCiTypeListReader
 		    });
 		    

@@ -654,7 +654,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
 
-		if(this.isComboValueValid(combo, newValue, oldValue)) {
+		if(this.isItsetGroupComboValueValid(combo, newValue, oldValue)) {
     		bEditItSecGroup.enable();
     		this.fireEvent('ciChange', this, combo, newValue, oldValue);
     	}
@@ -941,6 +941,44 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceGR2059);
 		this.setBoxLabel(cbgRegulations.items.items[2], labels.relevanceGR1920);
 		this.setBoxLabel(cbgRegulations.items.items[3], labels.relevanceGR2008);
+	},
+	
+	isItsetGroupComboValueValid: function(combo, newValue, oldValue){
+		
+		 //wenn blur listener auf combo kann newValue und oldValue undefined sein
+		if (newValue != undefined && newValue != "") {
+		var index = combo.getStore().indexOf(combo.getStore().getByIsgid(newValue));
+		if (index !== -1)
+		return true;
+		}
+		var nValue = parseInt(newValue);
+		//parseInt Bugfix: if newValue is i.e. '111Bayer Group' nValue would successfully converted to int, namely 111. This must must not happen
+		var nValueString = newValue.toString();
+		var isReallyNoInt = (nValueString.length !== newValue.length) || nValueString === 'NaN';
+		//parseInt Bugfix: if newValue is i.e. '111Bayer Group' nValue would successfully converted to int, namely 111. This must must not happen
+		//wenn die combo einen Filter hat, muss immer gefiltert werden, bevor der letzte gültige Wert zurückgesetzt wird,
+		//sonst verschwindet der Filter, bzw. combo.data array ist leer (wodurch?).
+		if(combo.lastQuery)
+		combo.filterByData();
+		if(isReallyNoInt && isNaN(isReallyNoInt ? newValue : nValue) && newValue.length > 0) {//nValue nValueString
+		index = combo.getStore().findExact('name', nValue);
+		if(index === -1)
+		this.restorePreviousValue(combo, oldValue);
+		return false;
+		} else {//if numbers or other nonsense is directly entered in the combo
+		var index = combo.getStore().findExact('name', newValue);
+		//if(index === -1)
+		//index = combo.getStore().findExact('id', newValue);
+		//index = combo.getStore().indexOf(combo.getStore().getById(newValue));
+		//if item is selected it must be searched for the id, otherwise valid values would be treated as invalid
+		if(newValue.length > 0 && index === -1) {
+		this.restorePreviousValue(combo, oldValue);
+		return false;
+		}
+		return true;
+		}
+
+		
 	},
 	
 	updateToolTips: function(toolTips) {
