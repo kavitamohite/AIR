@@ -242,16 +242,14 @@
 
 		<severityLevel>Severity Level</severityLevel>
 		<severityLevelText>
-			Value assigned to an incident, problem or change in order to indicate the
-			importance and time frame. Severities are derived from the impact and
-			urgency.
+			Value assigned to an incident, problem or change in order to indicate the importance and time frame. Severities are derived from the impact and  urgency.
         </severityLevelText>
 
 		<businessEssential>Business Essential</businessEssential>
 		<businessEssentialText>
-			Generally, IT services with service level
+			Generally, IT services with service level 
 			peculiarity of ‘business critical’ can be defined as being essential
-			to customer’s business. All Configuration Items (CIs) whose failure
+			to customer’s business. All Configuration Items (CIs) whose failure 
 			could cause a failure of an business process inherit the ‘essential’
 			characteristic if the supported business process is named by the
 			customer as ‘essential’.&lt;br&gt;
