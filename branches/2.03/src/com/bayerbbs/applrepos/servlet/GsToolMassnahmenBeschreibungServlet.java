@@ -5,12 +5,15 @@ import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
 
 import com.bayerbbs.applrepos.hibernate.HibernateUtil;
@@ -35,6 +38,10 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 		" AND SUBSTRING(BTX.Beschreibung, 1, 6) = '<html>'" +
 		" AND BTX.Spr_Id = ?" +
 		" AND REPLACE(BST.Nr, '.', '') = ?";
+	
+	private static String STMT_SELECT_MAS_ID = "SELECT Mas_Id FROM [BBS_Prod].[dbo].V_TRANSBASE_SAFEGUARD "
+			+ "WHERE  Msk_Id = ? " + "AND Mas_Nr = ?";
+
 
 	
 	private static final int LANG_GSTOOL_DE = 1;
@@ -99,6 +106,22 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 //				massnTitel = rs.getString("NAME");
 				massnBeschreibung = rs.getString(SQL_RESULT_BESCHREIBUNG);
 				massnBeschreibung = massnBeschreibung.replaceAll("/baust/", "/AIR/massnbeschreibung?lang=" + lang + "&bausteinId=");
+				String pattern = "/[m|s]/[m|s]\\d\\d\\d\\d\\d";
+				Pattern r = Pattern.compile(pattern);
+				Matcher m = r.matcher(massnBeschreibung);
+				while(m.find()){
+					String value=m.group(0);
+					System.out.println("Found value: " + value );
+					PreparedStatement statement1 = session.connection().prepareStatement(STMT_SELECT_MAS_ID);
+					statement1.setString(1, value.substring(4, 6));
+					statement1.setString(2, value.substring(6, 9));					
+					rs = statement1.executeQuery();
+					if(rs.next()){
+					String masId=rs.getString("Mas_Id");
+					massnBeschreibung=StringUtils.replace(massnBeschreibung, value+".html", "/AIR/massnbeschreibung?massnahmeGstoolId="+masId+"&lang="+lang);
+					}
+				}
+
 				
 				writer.write("<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>\n");
 				writer.write(massnBeschreibung);
