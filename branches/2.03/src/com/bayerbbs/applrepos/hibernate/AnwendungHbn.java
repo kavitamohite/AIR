@@ -2594,51 +2594,53 @@ public class AnwendungHbn extends BaseHbn {
 		if (!showDeleted) {
 			sql.append("  and anw.DEL_QUELLE is null");
 		}
-		
+		sql.append(" order by nlssort(");
 		if (StringUtils.isNotNullOrEmpty(sort)) {
 			if ("applicationName".equals(sort)) {
-				sql.append(" order by anw.ANWENDUNG_NAME");
+				sql.append("anw.ANWENDUNG_NAME");
 			}
 			else if ("location".equals(sort)) {
-				sql.append(" order by anw.ANWENDUNG_NAME");
+				sql.append("anw.ANWENDUNG_NAME");
 			}			
 			else if ("name".equals(sort)) {
-				sql.append(" order by anw.ANWENDUNG_NAME");
+				sql.append("anw.ANWENDUNG_NAME");
 			}			
 			else if ("applicationAlias".equals(sort)) {
-				sql.append(" order by anw.ALIAS");
+				sql.append("anw.ALIAS");
 			}
 			else if ("applicationCat1Txt".equals(sort)) {
-				sql.append(" order by kat1.anwendung_kat1_en");
+				sql.append("kat1.anwendung_kat1_en");
 			}
 			else if ("applicationCat2Txt".equals(sort)) {
-				sql.append(" order by kat2.anwendung_kat2_txt");
+				sql.append("kat2.anwendung_kat2_txt");
 			}
 			else if ("ciOwner".equals(sort)) {
-				sql.append(" order by anw.CWID_VERANTW_BETR");
+				sql.append("anw.CWID_VERANTW_BETR");
 			}
 			else if ("ciOwnerDelegate".equals(sort)) {
-				sql.append(" order by anw.SUB_RESPONSIBLE");
+				sql.append("anw.SUB_RESPONSIBLE");
 			}
 			else if ("applicationOwner".equals(sort)) {
-				sql.append(" order by anw.APPLICATION_OWNER");
+				sql.append("anw.APPLICATION_OWNER");
 			}
 			else if ("applicationOwnerDelegate".equals(sort)) {
-				sql.append(" order by anw.APPLICATION_OWNER_DELEGATE");
+				sql.append("anw.APPLICATION_OWNER_DELEGATE");
 			}
 			else if ("applicationSteward".equals(sort)) {
-				sql.append(" order by anw.APPLICATION_STEWARD");
+				sql.append("anw.APPLICATION_STEWARD");
 			}			
 			else {
-				sql.append(" order by "+sort);
+				sql.append(sort);
 			}
+			sql.append(", 'NLS_SORT = GENERIC_M')");
 			
 			if (StringUtils.isNotNullOrEmpty(dir)) {
 				sql.append(" ").append(dir);
 			}
 		}
 		else {
-			sql.append(" order by anw.ANWENDUNG_NAME");
+			sql.append("anw.ANWENDUNG_NAME");			
+			sql.append(", 'NLS_SORT = GENERIC_M')");
 		}
 		
 		try {

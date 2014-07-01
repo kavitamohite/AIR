@@ -2103,6 +2103,9 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'isTemplateReferencedByItem',
 				mapping : 'applicationDTO > templateReferencedByItem'
+			},{
+				name : 'templateLinkWithCIs',
+				mapping : 'applicationDTO > templateLinkWithCIs'
 			}, {
 				name : 'relevanceGR1435',
 				mapping : 'applicationDTO > relevanceGR1435'

@@ -191,41 +191,45 @@ public class CiEntitiesHbn {
 		}
 		
 		sql.append("')");
-		
-		
+		sql.append(" order by nlssort(");
+				
 		if (StringUtils.isNotNullOrEmpty(sort)) {
 			if ("applicationName".equals(sort)) {
-				sql.append(" order by NAME");
+				sql.append("NAME");
 			}
 			else if ("applicationAlias".equals(sort)) {
-				sql.append(" order by ASSET_ID_OR_ALIAS");
+				sql.append("ASSET_ID_OR_ALIAS");
 			}
+			else if ("alias".equals(sort)) {
+				sql.append("ASSET_ID_OR_ALIAS");
+			}			
 			else if ("applicationCat1Txt".equals(sort)) {
-				sql.append(" order by TYPE");
+				sql.append("TYPE");
 			}
 			else if ("applicationCat2Txt".equals(sort)) {
-				sql.append(" order by CATEGORY");
+				sql.append("CATEGORY");
 			}
 			else if ("ciOwner".equals(sort)) {
-				sql.append(" order by RESPONSIBLE");
+				sql.append("RESPONSIBLE");
 			}
 			else if ("ciOwnerDelegate".equals(sort)) {
-				sql.append(" order by SUB_RESPONSIBLE");
+				sql.append("SUB_RESPONSIBLE");
 			}
 			else if ("applicationOwner".equals(sort)) {
-				sql.append(" order by APP_OWNER");
+				sql.append("APP_OWNER");
 			}
 			else if ("applicationOwnerDelegate".equals(sort)) {
-				sql.append(" order by APP_OWNER_DELEGATE");
+				sql.append("APP_OWNER_DELEGATE");
 			}else if ("applicationSteward".equals(sort)) {
-				sql.append(" order by APP_STEWARD");
+				sql.append("APP_STEWARD");
 			} else {
-				sql.append(" order by "+sort);
+				sql.append(sort);
 			}
 		}
 		else {
-			sql.append(" order by name");
+			sql.append("name");
 		}
+		sql.append(", 'NLS_SORT = GENERIC_M')");
 		
 		if (StringUtils.isNotNullOrEmpty(dir)) {
 			sql.append(" ").append(dir);
@@ -611,41 +615,41 @@ public class CiEntitiesHbn {
 			}
 			
 			sql.append("')) ");
-			
+			sql.append(" order by nlssort(");
 			if (StringUtils.isNotNullOrEmpty(sort)) {
 				if ("applicationName".equals(sort)) {
-					sql.append(" order by NAME");
+					sql.append("NAME");
 				}
 				else if ("alias".equals(sort)) {
-					sql.append(" order by ASSET_ID_OR_ALIAS");
+					sql.append("ASSET_ID_OR_ALIAS");
 				}
 				else if ("applicationCat1Txt".equals(sort)) {
-					sql.append(" order by TYPE");
+					sql.append("TYPE");
 				}
 				else if ("applicationCat2Txt".equals(sort)) {
-					sql.append(" order by CATEGORY");
+					sql.append("CATEGORY");
 				}
 				else if ("ciOwner".equals(sort)) {
-					sql.append(" order by RESPONSIBLE");
+					sql.append("RESPONSIBLE");
 				}
 				else if ("ciOwnerDelegate".equals(sort)) {
-					sql.append(" order by SUB_RESPONSIBLE");
+					sql.append("SUB_RESPONSIBLE");
 				}
 				else if ("applicationOwner".equals(sort)) {
-					sql.append(" order by APP_OWNER");
+					sql.append("APP_OWNER");
 				}
 				else if ("applicationOwnerDelegate".equals(sort)) {
-					sql.append(" order by APP_OWNER_DELEGATE");
+					sql.append("APP_OWNER_DELEGATE");
 				}else if ("applicationSteward".equals(sort)) {
-					sql.append(" order by APP_STEWARD");
+					sql.append("APP_STEWARD");
 				} else {
-					sql.append(" order by "+sort);
+					sql.append(sort);
 				}
 			}
 			else {
-				sql.append(" order by name");
+				sql.append("name");
 			}
-			
+			sql.append(", 'NLS_SORT = GENERIC_M')");			
 			if (StringUtils.isNotNullOrEmpty(dir)) {
 				sql.append(" ").append(dir);
 			}
@@ -681,43 +685,44 @@ public class CiEntitiesHbn {
 		}
 		
 		// Order
+		sql.append(" order by nlssort(");
 		if (StringUtils.isNotNullOrEmpty(sort)) {
 			if ("applicationName".equals(sort)) {
-				sql.append(" order by NAME");
+				sql.append("NAME");
 			}
 			else if ("alias".equals(sort)) {
-				sql.append(" order by ASSET_ID_OR_ALIAS");
+				sql.append("ASSET_ID_OR_ALIAS");
 			}
 			else if ("applicationCat1Txt".equals(sort)) {
-				sql.append(" order by TYPE");
+				sql.append("TYPE");
 			}
 			else if ("applicationCat2Txt".equals(sort)) {
-				sql.append(" order by CATEGORY");
+				sql.append("CATEGORY");
 			}
 			else if ("ciOwner".equals(sort)) {
-				sql.append(" order by RESPONSIBLE");
+				sql.append("RESPONSIBLE");
 			}
 			else if ("ciOwnerDelegate".equals(sort)) {
-				sql.append(" order by SUB_RESPONSIBLE");
+				sql.append("SUB_RESPONSIBLE");
 			}
 			else if ("applicationOwner".equals(sort)) {
-				sql.append(" order by APP_OWNER");
+				sql.append("APP_OWNER");
 			}
 			else if ("applicationSteward".equals(sort)) {
-				sql.append(" order by APP_STEWARD");
+				sql.append("APP_STEWARD");
 			}			
 			else if ("applicationOwnerDelegate".equals(sort)) {
-				sql.append(" order by APP_OWNER_DELEGATE");
+				sql.append("APP_OWNER_DELEGATE");
 			}			
 			else {
-				sql.append(" order by "+sort);
+				sql.append(sort);
 			}
 			
 		}
 		else {
-			sql.append(" order by name");
+			sql.append("name");
 		}
-
+		sql.append(", 'NLS_SORT = GENERIC_M')");
 		// Order direction
 		if (StringUtils.isNotNullOrEmpty(dir)) {
 			sql.append(" ").append(dir);
@@ -742,45 +747,45 @@ public class CiEntitiesHbn {
 		}
 		
 		sql.append("))");
-		
+		sql.append(" order by nlssort(");
 		// Order
 		if (StringUtils.isNotNullOrEmpty(sort)) {
 			if ("applicationName".equals(sort)) {				
-				sql.append(" order by NAME");
+				sql.append("NAME");
 			}else 
 				if ("alias".equals(sort)) {
-				sql.append(" order by ASSET_ID_OR_ALIAS");
+				sql.append("ASSET_ID_OR_ALIAS");
 			}
 			else if ("applicationCat1Txt".equals(sort)) {
-				sql.append(" order by TYPE");
+				sql.append("TYPE");
 			}
 			else if ("applicationCat2Txt".equals(sort)) {
-				sql.append(" order by CATEGORY");
+				sql.append("CATEGORY");
 			}
 			else if ("ciOwner".equals(sort)) {
-				sql.append(" order by RESPONSIBLE");
+				sql.append("RESPONSIBLE");
 			}
 			else if ("ciOwnerDelegate".equals(sort)) {
-				sql.append(" order by SUB_RESPONSIBLE");
+				sql.append("SUB_RESPONSIBLE");
 			}
 			else if ("applicationOwner".equals(sort)) {
-				sql.append(" order by APP_OWNER");
+				sql.append("APP_OWNER");
 			}
 			else if ("applicationOwnerDelegate".equals(sort)) {
-				sql.append(" order by APP_OWNER_DELEGATE");
+				sql.append("APP_OWNER_DELEGATE");
 			}			
 			else if ("applicationSteward".equals(sort)) {
-				sql.append(" order by APP_STEWARD");
+				sql.append("APP_STEWARD");
 			}
 			else {
-				sql.append(" order by "+sort);
+				sql.append(sort);
 			}
 			
 		}
 		else {
-			sql.append(" order by name");
+			sql.append("name");
 		}
-
+		sql.append(", 'NLS_SORT = GENERIC_M')");
 		// Order direction
 		if (StringUtils.isNotNullOrEmpty(dir)) {
 			sql.append(" ").append(dir);
@@ -1120,6 +1125,56 @@ public class CiEntitiesHbn {
 		}
 		
 		return ciTypes;
+	}
+	
+	public static String findCIisLinkWithTemplate(Long ciId,Integer tableID){
+		String isLink="N";
+		boolean commit = false;
+		Transaction tx = null;
+		Statement selectStmt = null;
+		Session session = HibernateUtil.getSession();
+//		Connection conn = null;
+		String sql="SELECT COUNT(*) AS Link# FROM ITSEC_MASSN_STATUS WHERE Ref_Table_Id ="+tableID +" AND Ref_Pk_Id ="+ciId+
+		           " AND pck_SISec.Is_Deleted(Tabelle_Id, Tabelle_PK_ID) = 0";
+		try {
+			tx = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+			selectStmt = conn.createStatement();
+			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
+				System.out.println(sql.toString());
+			ResultSet rset = selectStmt.executeQuery(sql.toString());
+
+			if (null != rset) {
+				rset.next();
+				Long count = rset.getLong(1);
+				if(count >0)
+					 isLink="Y";
+				
+			}
+			commit = true;
+			
+			if (null != rset) {
+				rset.close();
+			}
+			if (null != selectStmt) {
+				selectStmt.close();
+			}
+			if (null != conn) {
+				conn.close();
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		finally {
+			HibernateUtil.close(tx, session, commit);
+		}		
+		
+		 
+
+		
+		return isLink;
+		
 	}
 	
 		

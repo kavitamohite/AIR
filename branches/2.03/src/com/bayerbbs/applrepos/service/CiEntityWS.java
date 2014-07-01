@@ -188,14 +188,13 @@ public class CiEntityWS {
 //			Set<Room> rooms = buildingArea.getRooms();
 			schrankDTO.setSeverityLevelId(schrank.getSeverityLevelId());
 			schrankDTO.setBusinessEssentialId(schrank.getBusinessEssentialId());
-			
+			schrankDTO.setTableId(AirKonstanten.TABLE_ID_POSITION);			
 			setCiBaseData(schrankDTO, schrank);
 			schrankDTO.setCiLokationsKette(lokationsKette);
 			schrankDTO.setStreet(building.getStreet());
 			schrankDTO.setStreetNumber(building.getStreetNumber());
 			schrankDTO.setPostalCode(building.getPostalCode());
 			schrankDTO.setLocation(building.getLocation());
-			schrankDTO.setTableId(AirKonstanten.TABLE_ID_POSITION);
 			
 			//Standard Zugriffsrechte setzen.
 			AccessRightChecker checker = new AccessRightChecker();
@@ -250,7 +249,8 @@ public class CiEntityWS {
 			
 			//wenn noch alle Räume irgendwie auf die GUI sollen
 //			Set<Room> rooms = buildingArea.getRooms();
-			
+
+			buildingAreaDTO.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);			
 			setCiBaseData(buildingAreaDTO, buildingArea);
 			buildingAreaDTO.setCiLokationsKette(lokationsKette);
 			
@@ -258,8 +258,6 @@ public class CiEntityWS {
 			buildingAreaDTO.setStreetNumber(building.getStreetNumber());
 			buildingAreaDTO.setPostalCode(building.getPostalCode());
 			buildingAreaDTO.setLocation(building.getLocation());
-			buildingAreaDTO.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
-
 			/*
 			Terrain terrain = buildingArea.getBuilding().getTerrain();
 			Set<Building> buildings = terrain.getBuildings();
@@ -305,7 +303,7 @@ public class CiEntityWS {
 			CiLokationsKette lokationsKette = RoomHbn.findLokationsKetteById(input.getCiId());
 			Building building = room.getBuildingArea().getBuilding();
 //			Set<BuildingArea> buildingAreas = building.getBuildingAreas();
-
+			roomDTO.setTableId(AirKonstanten.TABLE_ID_ROOM);
 			setCiBaseData(roomDTO, room);
 			roomDTO.setAlias(room.getAlias());
 			roomDTO.setSeverityLevelId(room.getSeverityLevelId());
@@ -320,7 +318,6 @@ public class CiEntityWS {
 			roomDTO.setStreetNumber(building.getStreetNumber());
 			roomDTO.setPostalCode(building.getPostalCode());
 			roomDTO.setLocation(building.getLocation());
-			roomDTO.setTableId(AirKonstanten.TABLE_ID_ROOM);
 			
 			
 			//Standard Zugriffsrechte setzen.
@@ -339,6 +336,8 @@ public class CiEntityWS {
 			if(!source.equals(AirKonstanten.INSERT_QUELLE_SISEC) && !source.equals(AirKonstanten.APPLICATION_GUI_NAME)) {
 				roomDTO.setSeverityLevelIdAcl(AirKonstanten.NO_SHORT);
 			}
+			
+
 			//...
 			//--------------------------
 			
@@ -513,9 +512,17 @@ public class CiEntityWS {
 		ciBaseDTO.setItsecGroupId(ciBase.getItsecGroupId());
 		
 		Long template = ciBase.getTemplate();
-		if (null == template) {
-			template = -1L;
+		if (-1 == template.longValue()) {
+			//RFC 9478 
+			//check this room is if template then go for is related with other CI or not
+		     String IsCIsLinkwithTemplate=CiEntitiesHbn.findCIisLinkWithTemplate(ciBase.getId(),ciBaseDTO.getTableId());
+		     ciBaseDTO.setTemplateLinkWithCIs(IsCIsLinkwithTemplate);
+			
 		}
+/*		if (null == template) {
+			template = -1L;
+
+		}*/
 		ciBaseDTO.setTemplate(template);
 		
 
@@ -647,11 +654,18 @@ public class CiEntityWS {
 		ciBaseDTO.setTemplate(ciBase.getTemplate());
 		ciBaseDTO.setItsecGroupId(ciBase.getItsecGroupId());
 		
+		
 		Long template = ciBase.getTemplate();
 		if (-1 == template.longValue()) {
 			// TODO -1 != 1 - Achtung beim Speichern
 			template = new Long(1);
 			//FEHLT NOCH siehe ApplicationWS!!
+			//RFC 9478 
+			//check this room is if template then go for is related with other CI or not
+		     String IsCIsLinkwithTemplate=CiEntitiesHbn.findCIisLinkWithTemplate(ciBase.getId(),ciBaseDTO.getTableId());
+		     ciBaseDTO.setTemplateLinkWithCIs(IsCIsLinkwithTemplate);
+
+			
 		}
 
 		ciBaseDTO.setRefId(ciBase.getRefId());

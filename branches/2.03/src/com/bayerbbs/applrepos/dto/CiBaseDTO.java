@@ -34,6 +34,7 @@ public class CiBaseDTO {// implements Serializable
 	private Long template;
 	private Long itsecGroupId;
 	private Long refId;
+	private String templateLinkWithCIs;
 	
 	private String relevanceGR1435;//ITSEC
 	private String relevanceGR1920;//ICS
@@ -688,6 +689,20 @@ public class CiBaseDTO {// implements Serializable
 
 	public void setMessageTextSecureSystem(String messageTextSecureSystem) {
 		this.messageTextSecureSystem = messageTextSecureSystem;
+	}
+
+	/**
+	 * @return the templateLinkWithCIs
+	 */
+	public String getTemplateLinkWithCIs() {
+		return templateLinkWithCIs;
+	}
+
+	/**
+	 * @param templateLinkWithCIs the templateLinkWithCIs to set
+	 */
+	public void setTemplateLinkWithCIs(String templateLinkWithCIs) {
+		this.templateLinkWithCIs = templateLinkWithCIs;
 	}
 	
 }

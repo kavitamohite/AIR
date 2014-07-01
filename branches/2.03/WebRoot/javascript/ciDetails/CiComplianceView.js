@@ -380,7 +380,9 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbIsTemplate.setValue(isTemplate);
 		if(data.barRelevance === 'Y')
 			cbIsTemplate.disable();//BAR relevante CIs dürfen keine templates sein
-		
+		if(data.templateLinkWithCIs === 'Y')
+			cbIsTemplate.disable();
+		 
 		
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');

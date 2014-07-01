@@ -821,6 +821,10 @@ public class ApplicationWS {
 					if (!"0".equals(ApplReposHbn.getCountReferencingTemplates(detailInput.getId()))) {
 						dto.setTemplateReferencedByItem(AirKonstanten.YES_SHORT);
 					}
+					if ("Y".equals(CiEntitiesHbn.findCIisLinkWithTemplate(detailInput.getId(), AirKonstanten.TABLE_ID_APPLICATION))) {
+						dto.setTemplateLinkWithCIs("Y");
+					}
+					
 				}
 
 				if (StringUtils.isNotNullOrEmpty(dto.getCiOwner())) {
