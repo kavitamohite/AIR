@@ -890,6 +890,7 @@ AIR.AirStoreFactory = function() {
 			        
 			        {name: 'complianceWindowTitle'},
 			        {name: 'complianceWindowControls'},
+			        {name: 'directLinkCIPanelTitle'},
 			        
 			        {name: 'RelevanceICSSecurityManagement'},
 			        {name: 'RelevanceICSAccessManagement'},
@@ -3617,6 +3618,33 @@ AIR.AirStoreFactory = function() {
 	       });
 			
 			return signeeStore;
+		},
+		createDirectLinkCIStore :function(){
+			var directLinkCIRecord = Ext.data.Record.create([
+			    { name: 'id' },
+			    { name: 'name' }
+			     ]
+			);
+			var directLinkCIReader = new Ext.data.XmlReader({
+				record: 'directLinkCIDTO',
+				idProperty: 'id'
+			},directLinkCIRecord);
+			
+			var directLinkCIStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'directLinkCIList',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext +'/CiEntityWSPort',
+					loadMethod: 'findAllDirectLinkCIWithTemplate',
+					timeout: 120000,
+					reader: directLinkCIReader
+				}), 
+				fields: [ 'id','name'],
+				reader: directLinkCIReader
+			});
+			return directLinkCIStore;
 		}
 	};
 }();

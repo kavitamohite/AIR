@@ -16,6 +16,7 @@ import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.DirectLinkCIDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
@@ -514,7 +515,7 @@ public class CiEntityWS {
 		Long template = ciBase.getTemplate();
 		if (-1 == template.longValue()) {
 			//RFC 9478 
-			//check this room is if template then go for is related with other CI or not
+			//check this CI is if template then go for is related with other CI or not
 		     String IsCIsLinkwithTemplate=CiEntitiesHbn.findCIisLinkWithTemplate(ciBase.getId(),ciBaseDTO.getTableId());
 		     ciBaseDTO.setTemplateLinkWithCIs(IsCIsLinkwithTemplate);
 			
@@ -661,7 +662,7 @@ public class CiEntityWS {
 			template = new Long(1);
 			//FEHLT NOCH siehe ApplicationWS!!
 			//RFC 9478 
-			//check this room is if template then go for is related with other CI or not
+			//check this CI is if template then go for is related with other CI or not
 		     String IsCIsLinkwithTemplate=CiEntitiesHbn.findCIisLinkWithTemplate(ciBase.getId(),ciBaseDTO.getTableId());
 		     ciBaseDTO.setTemplateLinkWithCIs(IsCIsLinkwithTemplate);
 
@@ -726,5 +727,21 @@ public class CiEntityWS {
 //			License_Scanning,Sample_Test_Date,Sample_Test_Result,Itsec_SB_Integ_ID,Itsec_SB_Integ_Txt,
 //			Itsec_SB_Verfg_ID,Itsec_SB_Verfg_Txt,Itsec_SB_Vertr_ID,Itsec_SB_Vertr_Txt
 		}
+	}
+	public ComplianceTemplateParameterOutput findAllDirectLinkCIWithTemplate(CiDetailParameterInput input){
+		ComplianceTemplateParameterOutput output = new ComplianceTemplateParameterOutput();
+		List<DirectLinkCIDTO> list = CiEntitiesHbn.findAllDirectLinkCIWithTemplate(input.getCiTypeId(),input.getCiId());
+		if(!list.isEmpty()){
+			output.setDirectLinkCIDTO(getAllDirectLinkCIArray(list));
+		}
+		return output;
+	}
+	private static DirectLinkCIDTO[] getAllDirectLinkCIArray(List<DirectLinkCIDTO> listDTO) {
+		DirectLinkCIDTO directLinkCIDTO[] = null;
+		directLinkCIDTO = new DirectLinkCIDTO[listDTO.size()];
+			for (int i = 0; i < directLinkCIDTO.length; i++) {
+				directLinkCIDTO[i] = listDTO.get(i);
+			}
+		return directLinkCIDTO;
 	}
 }

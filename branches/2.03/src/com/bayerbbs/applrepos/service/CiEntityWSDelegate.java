@@ -61,4 +61,7 @@ public class CiEntityWSDelegate {
 	public CiEntityEditParameterOutput deleteCi(CiEntityParameterInput input) {
 		return ciEntityWS.deleteCi(input);
 	}
+	public ComplianceTemplateParameterOutput findAllDirectLinkCIWithTemplate(CiDetailParameterInput input){
+		return ciEntityWS.findAllDirectLinkCIWithTemplate(input);
+	}
 }

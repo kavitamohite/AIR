@@ -821,6 +821,7 @@ public class ApplicationWS {
 					if (!"0".equals(ApplReposHbn.getCountReferencingTemplates(detailInput.getId()))) {
 						dto.setTemplateReferencedByItem(AirKonstanten.YES_SHORT);
 					}
+					//check this CI is if template then go for is related with other CI or not					
 					if ("Y".equals(CiEntitiesHbn.findCIisLinkWithTemplate(detailInput.getId(), AirKonstanten.TABLE_ID_APPLICATION))) {
 						dto.setTemplateLinkWithCIs("Y");
 					}

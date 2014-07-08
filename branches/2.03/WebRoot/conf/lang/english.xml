@@ -561,6 +561,7 @@
 <!--		<operationalStatus></operationalStatus>-->
 		<primaryFunction>Primary Function</primaryFunction>
 		<licenseScanning>License Scanning</licenseScanning>
+		<directLinkCIPanelTitle>Direct Link CIS</directLinkCIPanelTitle>
 		
 	</Items>
 </LanguageItems>

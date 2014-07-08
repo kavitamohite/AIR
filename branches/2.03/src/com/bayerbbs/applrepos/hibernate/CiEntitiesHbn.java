@@ -16,7 +16,9 @@ import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.CiTypeDTO;
+import com.bayerbbs.applrepos.dto.DirectLinkCIDTO;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
+import com.bayerbbs.applrepos.dto.LinkCIDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.service.CiItemDTO;
@@ -1176,6 +1178,45 @@ public class CiEntitiesHbn {
 		return isLink;
 		
 	}
-	
+	public static List<DirectLinkCIDTO> findAllDirectLinkCIWithTemplate(Long tableId,Long refId){
+		List<DirectLinkCIDTO> linkCIDTOs = new ArrayList<DirectLinkCIDTO>();
+		Transaction tx = null;
+		Statement selectStmt = null;
+		Session session = HibernateUtil.getSession();
+		String sql="SELECT   pck_SISec.Get_Ident(Table_Id, Id) AS Name " + 
+		" FROM ALL_CI WHERE Del_Quelle is NULL AND Table_Id ="+ tableId+" AND Ref_Id ="+refId+" ORDER BY Name";
+		try{
+			tx=session.beginTransaction();
+			Connection con=session.connection();
+			 selectStmt=con.createStatement();
+			ResultSet resultSet=selectStmt.executeQuery(sql);
+			if(resultSet != null){
+				Long index=0L;
+				while(resultSet.next()){
+					DirectLinkCIDTO  directLinkCIDTO = new DirectLinkCIDTO();
+					directLinkCIDTO.setId(++index);
+					directLinkCIDTO.setName(resultSet.getString(1));
+					linkCIDTOs.add(directLinkCIDTO);
+				}
+			}
+			
+			if (null != resultSet) {
+				resultSet.close();
+			}
+			if (null != selectStmt) {
+				selectStmt.close();
+			}
+			if (null != con) {
+				con.close();
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		finally {
+			HibernateUtil.close(tx, session, false);
+		}	
+		return linkCIDTOs;
+	}
 		
 }

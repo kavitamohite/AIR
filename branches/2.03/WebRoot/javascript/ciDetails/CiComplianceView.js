@@ -115,23 +115,24 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    		xtype: 'label',
 			    		id: 'lAsTemplate',
 			    		text: 'As template',
-			    		flex: 1,
+			    		width: 110,
 			    		
 						style: {
 					    	fontSize: '12px'
 						},
-						margins: '8 0 10 0'
+						margins: '0 5 0 0'
 			    	},{
 				    	xtype: 'checkbox',
 				        id: 'cbIsTemplate',
-				    	flex: 4,
-				    	margins: '5 0 10 0'
+			    	    margins: '5 0 10 0'
 			    	},
 			    	{
-						xtype: 'spacer',
-						id: 'spIsTemplate',
-						flex: 4,
-						margins: '5 0 10 0'
+						xtype: 'button',
+						id: 'cisDirecLinkWithTemplate',
+						text: 'Link CIS',
+						width: 70,
+						margins: '5 0 10 50',
+						hidden: true
 					}
 			    	]
 				},{
@@ -283,7 +284,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var bEditNonBytSec = this.getComponent('fsComplianceInfo').getComponent('bEditNonBytSec');
 		
 		var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
-		
+		var cisDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cisDirecLinkWithTemplate');
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
@@ -300,6 +301,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbReferencedTemplate.on('select', this.onReferencedTemplateSelect, this);
 		cbReferencedTemplate.on('change', this.onReferencedTemplateChange, this);
 		cbReferencedTemplate.on('keyup', this.onReferencedTemplateKeyUp, this);
+		cisDirecLinkWithTemplate.on('click',this.onDisplayDirectLinkCI,this);
 		
 		cbItSecGroup.on('select', this.onItSecGroupSelect, this);
 		cbItSecGroup.on('change', this.onItSecGroupChange, this);
@@ -377,12 +379,23 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var isTemplate = data.template == '1' || data.template == '-1';
 		var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
+		var cisDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cisDirecLinkWithTemplate');
+
 		cbIsTemplate.setValue(isTemplate);
 		if(data.barRelevance === 'Y')
 			cbIsTemplate.disable();//BAR relevante CIs dürfen keine templates sein
-		if(data.templateLinkWithCIs === 'Y')
+		if(data.templateLinkWithCIs === 'Y'){
 			cbIsTemplate.disable();
-		 
+		}else{
+			cbIsTemplate.enable();
+		}
+		 if(isTemplate){
+			 cisDirecLinkWithTemplate.setVisible(true);
+		 }	 
+		 else{
+			 cisDirecLinkWithTemplate.setVisible(false);
+		 }
+			 
 		
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
@@ -500,6 +513,22 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		this.fireEvent('ciChange', this, checkbox, isChecked);
+	},
+	
+	onDisplayDirectLinkCI: function(button, event){
+		var directLinkCIStore = AIR.AirStoreFactory.createDirectLinkCIStore();
+		
+		var params = {
+				cwid: AIR.AirApplicationManager.getCwid(),
+				token: AIR.AirApplicationManager.getToken(),
+			 	ciId: AAM.getAppDetail().ciId || AAM.getCiId(),
+			 	ciTypeId: AAM.getTableId()
+		};
+		directLinkCIStore.load({
+			params: params
+		});
+		var directLinkCITemplateWindow = new AIR.DirectLinkCITemplateWindow(directLinkCIStore);
+		directLinkCITemplateWindow.show();
 	},
 	
 	onEditItSecGroup: function(button, event) {
