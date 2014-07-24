@@ -562,6 +562,7 @@
 		<primaryFunction>Primary Function</primaryFunction>
 		<licenseScanning>License Scanning</licenseScanning>
 		<directLinkCIPanelTitle>Direct Link CIS</directLinkCIPanelTitle>
+		<directLinkagesCIPanelTitle>Linkages</directLinkagesCIPanelTitle>
 		
 	</Items>
 </LanguageItems>

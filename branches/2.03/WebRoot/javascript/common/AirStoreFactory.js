@@ -891,6 +891,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'complianceWindowTitle'},
 			        {name: 'complianceWindowControls'},
 			        {name: 'directLinkCIPanelTitle'},
+			        {name: 'directLinkagesCIPanelTitle'},
 			        
 			        {name: 'RelevanceICSSecurityManagement'},
 			        {name: 'RelevanceICSAccessManagement'},
@@ -3645,6 +3646,35 @@ AIR.AirStoreFactory = function() {
 				reader: directLinkCIReader
 			});
 			return directLinkCIStore;
+		},
+		createDirectLinkageCIsAnswerStore :function(){
+			var directLinkageCIAnswerRecord = new Ext.data.Record.create([
+			          {name: 'id'},
+			          {name: 'identAndControl'},
+			          {name: 'answerCIInfo'}
+			          ]);
+			var directLinkageCIAnswerReader = new Ext.data.XmlReader({
+				record: 'directLinkageCIsAnswerDTO',
+				idProperty: 'id'
+			},directLinkageCIAnswerRecord);
+			var directLinkageCIAnswersStore = new Ext.data.GroupingStore({
+				autoDestroy: true,
+				storeId: 'directLinkageCIAnswers',
+				autoLoad: false,
+			proxy: new Ext.ux.soap.SoapProxy({
+				url: webcontext + '/ItsecMassnahmenWSPort',
+				loadMethod: 'getDirectLinkageFromOtherCIsAnswer',
+				timeout: 120000,
+				reader: directLinkageCIAnswerReader
+			}),	
+			fields: [ 'id','identAndControl','answerCIInfo'],
+	      	reader: directLinkageCIAnswerReader,
+	      	
+	      	groupField: 'identAndControl'
+				
+			});
+			
+			return directLinkageCIAnswersStore;
 		}
 	};
 }();

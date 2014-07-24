@@ -128,11 +128,13 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    	},
 			    	{
 						xtype: 'button',
-						id: 'cisDirecLinkWithTemplate',
+						id: 'bIsDirecLinkWithTemplate',
 						text: 'Link CIS',
 						width: 70,
-						margins: '5 0 10 50',
-						hidden: true
+						hidden: true,
+						style: {
+							marginLeft: 5
+						}
 					}
 			    	]
 				},{
@@ -213,7 +215,16 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 						style: {
 							marginLeft: 5
 						}
-					}]
+					}, {
+						xtype: 'button',
+						id: 'bDirectCIAnswerlinkages',
+						text: 'linkages',
+						width: 80,
+						style: {
+							marginLeft: 10
+						}
+					}
+					]
 				}]
 		    },{
 		        xtype: 'fieldset',
@@ -284,10 +295,11 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var bEditNonBytSec = this.getComponent('fsComplianceInfo').getComponent('bEditNonBytSec');
 		
 		var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
-		var cisDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cisDirecLinkWithTemplate');
+		var bIsDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('bIsDirecLinkWithTemplate');
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 		var bEditItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bEditItSecGroup');
+		var bDirectCIAnswerlinkages = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bDirectCIAnswerlinkages');
 
 		var cbgRegulations = this.getComponent('fsRelevantRegulations').getComponent('cbgRegulations');
 		var cbRelevanceGxp = this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('CBrelevanceGxp');
@@ -301,12 +313,13 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbReferencedTemplate.on('select', this.onReferencedTemplateSelect, this);
 		cbReferencedTemplate.on('change', this.onReferencedTemplateChange, this);
 		cbReferencedTemplate.on('keyup', this.onReferencedTemplateKeyUp, this);
-		cisDirecLinkWithTemplate.on('click',this.onDisplayDirectLinkCI,this);
+		bIsDirecLinkWithTemplate.on('click',this.onDisplayDirectLinkCI,this);
 		
 		cbItSecGroup.on('select', this.onItSecGroupSelect, this);
 		cbItSecGroup.on('change', this.onItSecGroupChange, this);
 		cbItSecGroup.on('keyup', this.onItSecGroupKeyUp, this);
 		bEditItSecGroup.on('click', this.onEditItSecGroup, this);
+		bDirectCIAnswerlinkages.on('click',this.onDisplayDirectCIAnswerLinkages,this);
 
 		cbgRegulations.on('change', this.onRegulationsChange, this);
 		cbRelevanceGxp.on('select', this.onRelevanceGxpSelect, this);
@@ -379,7 +392,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var isTemplate = data.template == '1' || data.template == '-1';
 		var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
-		var cisDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cisDirecLinkWithTemplate');
+		var bIsDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('bIsDirecLinkWithTemplate');
 
 		cbIsTemplate.setValue(isTemplate);
 		if(data.barRelevance === 'Y')
@@ -390,10 +403,10 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			cbIsTemplate.enable();
 		}
 		 if(isTemplate){
-			 cisDirecLinkWithTemplate.setVisible(true);
+			 bIsDirecLinkWithTemplate.setVisible(true);
 		 }	 
 		 else{
-			 cisDirecLinkWithTemplate.setVisible(false);
+			 bIsDirecLinkWithTemplate.setVisible(false);
 		 }
 			 
 		
@@ -601,6 +614,23 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var complianceControlsWindow = new AIR.ComplianceControlsWindow(massnahmenStore, massnahmeDetailStore, config);
 		complianceControlsWindow.on('massnahmeSaved', this.onMassnahmeSaved, this);
 		complianceControlsWindow.show();
+	},
+	
+	onDisplayDirectCIAnswerLinkages: function(button, event){
+		var directLinkageCIAnswersStore = AIR.AirStoreFactory.createDirectLinkageCIsAnswerStore();
+		var params = {
+			 	cwid: AIR.AirApplicationManager.getCwid(),
+			 	token: AIR.AirApplicationManager.getToken(),
+			 	ciId: AAM.getAppDetail().ciId || AAM.getCiId(),
+				language: AAM.getLanguage(),
+				tableId: AAM.getAppDetail().tableId
+			};
+		directLinkageCIAnswersStore.load({
+			params: params
+		});
+		var directLinkageCIsAnswerWindow = new AIR.DirectLinkageCIsAnswerWindow(directLinkageCIAnswersStore);
+		directLinkageCIsAnswerWindow.show();		
+		
 	},
 	
 	onRegulationsChange: function(checkboxGroup, checkedBoxes) {
