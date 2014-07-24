@@ -2,6 +2,7 @@ package com.bayerbbs.applrepos.service;
 
 import java.util.List;
 
+import com.bayerbbs.applrepos.dto.DirectLinkageCIsAnswerDTO;
 import com.bayerbbs.applrepos.dto.GapClassDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmeDetailDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenDTO;
@@ -264,6 +265,26 @@ public class ItsecMassnahmenWS {
 		return output;
 		
 		
+	}
+
+	public static DirectLinkageCIsAnswerParameterOutput getDirectLinkageFromOtherCIsAnswer(
+			ItsecMassnahmenParameterInput input) {
+		DirectLinkageCIsAnswerParameterOutput dLinkageCIsAnswerParameterOutput = new DirectLinkageCIsAnswerParameterOutput();
+		DirectLinkageCIsAnswerDTO[] diLinkageCIsAnswerDTOs = null;
+		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+			List<DirectLinkageCIsAnswerDTO> linkageCIsAnswerDTOs = ItsecHbn
+					.findDirectLinkageAnswerCIs(input.getTableId(),
+							input.getCiId(), input.getLanguage());
+			diLinkageCIsAnswerDTOs = new DirectLinkageCIsAnswerDTO[linkageCIsAnswerDTOs
+					.size()];
+			int i = 0;
+			for (DirectLinkageCIsAnswerDTO dLinkageCIsAnswerDTO : linkageCIsAnswerDTOs) {
+				diLinkageCIsAnswerDTOs[i++] = dLinkageCIsAnswerDTO;
+			}
+		}
+		dLinkageCIsAnswerParameterOutput
+				.setDirectLinkageCIsAnswerDTO(diLinkageCIsAnswerDTOs);
+		return dLinkageCIsAnswerParameterOutput;
 	}
 
 }

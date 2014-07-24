@@ -16,6 +16,7 @@ import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.dto.DirectLinkageCIsAnswerDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmeDetailDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenStatusWertDTO;
@@ -496,6 +497,65 @@ public class ItsecHbn {
 
 		return listDTO;
 	}
+	
+	public static List<DirectLinkageCIsAnswerDTO> findDirectLinkageAnswerCIs(Long tableId, Long ciId, String language) {
+		
+		ArrayList<DirectLinkageCIsAnswerDTO> listDTO = new ArrayList<DirectLinkageCIsAnswerDTO>();
+		
+
+		boolean commit = false;
+		Transaction tx = null;
+		Statement selectStmt = null;
+		Session session = HibernateUtil.getSession();
+
+//		Connection conn = null;
+
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("SELECT TO_CHAR(MAS.Katalog_Id, 'fm00') || '.' || TO_CHAR(MAS.Massnahme_Nr, 'fm000') AS Ident,");
+		sql.append("MTX.Massnahme_Titel AS Title,");
+		sql.append("pck_SISec.Get_CI_Type(CPL.Tabelle_Id, CPL.Tabelle_PK_ID, MTX.Langu) AS CIType,");
+		sql.append("pck_SISec.Get_Ident(CPL.Tabelle_Id, CPL.Tabelle_Pk_Id) AS CIName,");
+		sql.append("GRP.Itsec_Gruppe AS ITSecGroup,");
+		sql.append("MAS.Massnahme_Id || '#' || CPL.Tabelle_Id || '#' || CPL.Tabelle_Pk_Id AS ID FROM ITSEC_MASSN_STATUS CPL ");
+		sql.append("INNER JOIN ITSEC_GRUPPE GRP ON CPL.Zob_Id=GRP.Itsec_Grp_Gstoolid ");
+		sql.append("INNER JOIN ITSEC_MASSN MAS ON CPL.Massnahme_Gstoolid=MAS.Massnahme_Id ");
+		sql.append("INNER JOIN ITSEC_MASSNT MTX ON MAS.Massnahme_Id=MTX.Massnahme_Id ");
+		sql.append("WHERE CPL.Ref_Table_Id =").append(tableId);
+		sql.append(" AND CPL.Ref_Pk_Id =").append(ciId);
+		sql.append(" AND MTX.Langu ='").append(language.toLowerCase());
+		sql.append("' AND pck_SISec.Is_Deleted(CPL.Tabelle_Id, CPL.Tabelle_PK_ID) = 0");
+		sql.append(" ORDER BY Ident, pck_SISec.Get_Sort(CPL.Tabelle_Id, CPL.Tabelle_PK_ID),GRP.Itsec_Gruppe");
+
+		try {
+			tx = session.beginTransaction();
+
+			@SuppressWarnings("deprecation")
+			Connection conn = HibernateUtil.getSession().connection();
+
+			selectStmt = conn.createStatement();
+			ResultSet rsSet = selectStmt.executeQuery(sql.toString());
+            Long i=0L;
+			if (null != rsSet) {
+				while (rsSet.next()) {
+					DirectLinkageCIsAnswerDTO dLinkageCIsAnswerDTO = new DirectLinkageCIsAnswerDTO();
+					dLinkageCIsAnswerDTO.setId(++i);
+					dLinkageCIsAnswerDTO.setIdentAndControl(rsSet.getString("Ident")+" "+rsSet.getString("Title"));
+					dLinkageCIsAnswerDTO.setAnswerCIInfo(rsSet.getString("CIType")+": "+rsSet.getString("CIName")+" ("+rsSet.getString("ITSecGroup")+")");
+					listDTO.add(dLinkageCIsAnswerDTO);
+				}
+				commit = true;
+
+			}
+
+		} catch (Exception e) {
+			log.error(e);
+		} finally {
+			HibernateUtil.close(tx, session, commit);
+		}
+        return listDTO;
+	}
+	
 
 	
 }

@@ -39,4 +39,8 @@ public class ItsecMassnahmenWSDelegate {
 	public ItsecMassnahmenParameterOutput getLinkedMassnahmeDetail(ItsecMassnahmenParameterInput input) {
 		return ItsecMassnahmenWS.getLinkedMassnahmeDetail(input);
 	}
+	
+	public DirectLinkageCIsAnswerParameterOutput getDirectLinkageFromOtherCIsAnswer(ItsecMassnahmenParameterInput input){
+		return ItsecMassnahmenWS.getDirectLinkageFromOtherCIsAnswer(input);		
+	}
 }
