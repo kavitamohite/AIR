@@ -1126,6 +1126,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				id: 'bComplianceControlsCancel',
 				text: 'Cancel'
 			},{
+				id: 'bCiDetailReport',
+				text: 'Report'
+			},{
 				id: 'bOpenInvalidMassnahmeWindow',
 //				text: ''
 				hidden: true
@@ -1146,10 +1149,12 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var bComplianceControlsApply = this.getFooterToolbar().getComponent('bComplianceControlsApply');
 		var bComplianceControlsCancel = this.getFooterToolbar().getComponent('bComplianceControlsCancel');
 		var bOpenInvalidMassnahmeWindow = this.getFooterToolbar().getComponent('bOpenInvalidMassnahmeWindow');
+		var bCiDetailReport = this.getFooterToolbar().getComponent('bCiDetailReport');
 		
 		bComplianceControlsSave.on('click', this.onSave, this);
 		bComplianceControlsApply.on('click', this.onApply, this);
 		bComplianceControlsCancel.on('click', this.onCancel, this);
+		bCiDetailReport.on('click', this.onReport, this);
 //		bOpenInvalidMassnahmeWindow.on('click', this.openInvalidMassnahmeWindow, this);//onOpenInvalidMassnahmeWindow
 		
 		
@@ -1881,6 +1886,11 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		this.editedMassnahmen.splice(0, this.editedMassnahmen.length);
 		verwerfenCallback();
 	},
+	
+	onReport: function(button, event){
+		window.open('/AIR/ciDetailReport?ciId='+AAM.getCiId()+'&tableId='+AAM.getAppDetail().tableId+'&lang='+AAM.getLanguage());
+		return true;
+	},	
 	
 	hasEditedMassnahmen: function(o) {
 	    for(var key in o)

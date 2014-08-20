@@ -1,5 +1,7 @@
 package com.bayerbbs.applrepos.domain;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
@@ -39,6 +41,9 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	private Long itSecSbConfidentialityId;
 	private String itSecSbConfidentialityTxt;
 //	private String itSecSbConfidentialityDescription;
+	
+	private Timestamp sampleTestDate;
+	private String sampleTestResult;
 	
 	
 	@Transient
@@ -255,4 +260,19 @@ public abstract class CiBase extends DeletableRevisionInfo {
 //	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
 //		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
 //	}
+	@Column(name = "SAMPLE_TEST_DATE")
+	public Timestamp getSampleTestDate() {
+		return sampleTestDate;
+	}
+	public void setSampleTestDate(Timestamp sampleTestDate) {
+		this.sampleTestDate = sampleTestDate;
+	}
+	@Column(name = "SAMPLE_TEST_RESULT")
+	public String getSampleTestResult() {
+		return sampleTestResult;
+	}
+	public void setSampleTestResult(String sampleTestResult) {
+		this.sampleTestResult = sampleTestResult;
+	}
+			
 }

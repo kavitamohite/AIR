@@ -143,5 +143,25 @@ public class ServiceContractHbn {
 
 		return listResult;
 	}
+	@SuppressWarnings("unchecked")
+	public static String getServiceContract(Long serviceContractId){
+		String serviceContract = "";
+		if(serviceContractId == null)
+			return serviceContract;
+		Transaction tx = null;
+		Session session = HibernateUtil.getSession();
+		try {
+			tx = session.beginTransaction();
+			List<ServiceContract> values = session.createQuery("select h from ServiceContract as h where h.deleteTimestamp is null and h.serviceContractId ="+serviceContractId).list();
+            if(values != null && values.size() > 0)
+            	serviceContract = values.get(0).getServiceContract();
+
+			HibernateUtil.close(tx, session, true);
+		} catch (RuntimeException e) {
+			HibernateUtil.close(tx, session, false);
+		}
+
+		return serviceContract;
+	}
 
 }

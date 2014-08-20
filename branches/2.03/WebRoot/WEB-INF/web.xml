@@ -157,6 +157,18 @@
   	<url-pattern>/massnbeschreibung</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+  	<description>ciDetailReport</description>
+  	<servlet-name>ciDetailReport</servlet-name>
+  	<servlet-class>
+  		com.bayerbbs.applrepos.servlet.CiDetailReportServlet
+  	</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ciDetailReport</servlet-name>
+  	<url-pattern>/ciDetailReport</url-pattern>
+  </servlet-mapping>  
+  
   
   <!--
   <servlet>

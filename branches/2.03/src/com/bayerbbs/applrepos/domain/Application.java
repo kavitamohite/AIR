@@ -114,6 +114,8 @@ public class Application extends DeletableRevisionInfo {
 	private String bovProcessed;
 	private Date bovNotificationDate;
 	private String bovOwnershipStatus;
+	private Timestamp sampleTestDate;
+	private String sampleTestResult;
 	
 	public Application() {
 	}
@@ -694,4 +696,19 @@ public class Application extends DeletableRevisionInfo {
 	public void setBovOwnershipStatus(String bovOwnershipStatus) {
 		this.bovOwnershipStatus = bovOwnershipStatus;
 	}
+	@Column(name = "SAMPLE_TEST_DATE")
+	public Timestamp getSampleTestDate() {
+		return sampleTestDate;
+	}
+	public void setSampleTestDate(Timestamp sampleTestDate) {
+		this.sampleTestDate = sampleTestDate;
+	}
+	@Column(name = "SAMPLE_TEST_RESULT")
+	public String getSampleTestResult() {
+		return sampleTestResult;
+	}
+	public void setSampleTestResult(String sampleTestResult) {
+		this.sampleTestResult = sampleTestResult;
+	}
+		
 }

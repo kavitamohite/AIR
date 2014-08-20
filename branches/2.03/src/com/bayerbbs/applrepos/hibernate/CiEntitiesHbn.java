@@ -1218,5 +1218,39 @@ public class CiEntitiesHbn {
 		}	
 		return linkCIDTOs;
 	}
-		
+	public static String getCIName(Integer tableId ,Long ID){
+		String ciName="";
+		String sql = "SELECT NAME FROM ALL_CI WHERE DEL_QUELLE is NULL AND TABLE_ID ="+ tableId+" AND Id ="+ID;
+		Transaction tx = null;
+		Statement selectStmt = null;
+		Session session = HibernateUtil.getSession();
+		try{
+			tx=session.beginTransaction();
+			Connection con=session.connection();
+			 selectStmt=con.createStatement();
+			ResultSet resultSet=selectStmt.executeQuery(sql);
+			if(resultSet != null){
+				resultSet.next();
+               ciName = resultSet.getString("NAME");
+			}
+			
+			if (null != resultSet) {
+				resultSet.close();
+			}
+			if (null != selectStmt) {
+				selectStmt.close();
+			}
+			if (null != con) {
+				con.close();
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		finally {
+			HibernateUtil.close(tx, session, false);
+		}
+		return ciName;
+	}
+			
 }

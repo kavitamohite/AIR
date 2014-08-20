@@ -83,5 +83,5 @@ public class Schrank extends CiBase1 implements Serializable {
 	}
 	public void setRoomId(Long roomId) {
 		this.roomId = roomId;
-	}
+	}	
 }

@@ -221,4 +221,28 @@ public class ItSecGroupHbn {
 		
 		return listResult;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static String getItSecGroup(Long itsec_gruppe_id) {
+	        String itSecGroup = ""; 
+		    if(itsec_gruppe_id == null)
+		    	return itSecGroup;
+			Transaction tx = null;
+			Session session = HibernateUtil.getSession();
+			try {
+				tx = session.beginTransaction();
+				List<ItSecGroup> values = session.createQuery(
+						"select h from ItSecGroup as h where h.id ="+itsec_gruppe_id).list();
+				if(values != null && values.size() > 0)
+					itSecGroup = values.get(0).getName();
+				
+				
+				HibernateUtil.close(tx, session, true);
+			} catch (RuntimeException e) {
+				HibernateUtil.close(tx, session, false);
+			}
+			return itSecGroup;
+
+	}
+	
 }

@@ -86,5 +86,38 @@ public class SlaHbn {
 
 		return listResult;
 	}
+	public static String getSlaName(Long slaId){
+		String slaName="";	
+		if(slaId==null)
+			return slaName;
+		Transaction tx = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			tx = session.beginTransaction();
+			List<Sla> values = session
+					.createQuery(
+							"select h from Sla as h where h.slaId="+slaId)	// where h.deleteTimestamp is null 
+					.list();
+			if(values != null && values.size() > 0)
+				slaName = values.get(0).getSlaName();
+
+       
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null && tx.isActive()) {
+				try {
+					// Second try catch as the rollback could fail as well
+					tx.rollback();
+				} catch (HibernateException e1) {
+					System.out.println("Error rolling back transaction");
+				}
+				// throw again the first exception
+				throw e;
+			}
+
+		
+	}
+		return slaName;
+	}
 
 }
