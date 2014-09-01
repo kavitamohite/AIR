@@ -18,15 +18,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.pdfwriter.ContentStreamWriter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.util.TextPosition;
-import org.apache.pdfbox.util.operator.Concatenate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -369,6 +366,7 @@ public class CiDetailReportServlet extends HttpServlet {
 							"ICS:", "ISO2700x:");
 					contentStream.drawString("ICS: "
 							+ ICS.replaceAll(pattern, ""));
+					contentStream.moveTextPositionByAmount(0, -20);
 					String ISO2700x = StringUtils.substringBetween(description,
 							"ISO2700x:", "</font></p>");
 					contentStream.drawString("ISO2700x: "
