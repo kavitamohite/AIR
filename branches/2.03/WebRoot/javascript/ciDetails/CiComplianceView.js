@@ -211,7 +211,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    	}, {
 						xtype: 'button',
 						id: 'bEditItSecGroup',
-						width: 50,
+						width: 60,
 						style: {
 							marginLeft: 5
 						}
@@ -221,7 +221,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 						text: 'linkages',
 						width: 80,
 						style: {
-							marginLeft: 10
+							marginLeft: 25
 						}
 					}
 					]
