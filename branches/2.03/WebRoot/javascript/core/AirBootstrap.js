@@ -173,10 +173,10 @@ AIR.AirBootstrap = Ext.extend(Object, {
 	    		var startMask = AAM.getMask(AC.MASK_TYPE_START);
 	    		startMask.show();
         }.createDelegate(this));
-        task.delay(0);
+        task.delay(100);
 	    
         task = new Ext.util.DelayedTask(this.openUi.createDelegate(this));
-        task.delay(0);
+        task.delay(500);
     },
     
     
@@ -230,7 +230,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
 			var airTaskManager = new AIR.AirTaskManager();
 			airTaskManager.startDbSessionCheckTask(AIR.AirApplicationManager.getCwid(), AIR.AirApplicationManager.getToken());//orig: keine params
 		});
-		delayedTask.delay(0);
+		delayedTask.delay(500);
 	},
 	
 	onTokenCheckFailure: function(response, options) {
@@ -255,7 +255,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
 			var startMask = AAM.getMask(AC.MASK_TYPE_START);
 			startMask.hide();
 		});
-		delayedTask.delay(0);
+		delayedTask.delay(1000);
 		AAM.restoreUi(this.airMainPanel);
 	}
 });
