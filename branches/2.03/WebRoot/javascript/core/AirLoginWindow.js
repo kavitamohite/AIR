@@ -106,7 +106,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		var task = new Ext.util.DelayedTask(function() {
 			tfCwid.focus(true, 0);
 		}.createDelegate(this));
-		task.delay(1000);//2000
+		task.delay(100);//2000
 	},
 	
 	onEnter: function (field, el) {
@@ -148,7 +148,7 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		var task = new Ext.util.DelayedTask(function() {
 			tfCwid.focus(true, 0);
 		}.createDelegate(this));
-		task.delay(1500);//2000 1000
+		task.delay(100);//2000 1000
 		
 		this.getComponent('pAirLoginWindow').getComponent('tfCwid').reset();
 		this.getComponent('pAirLoginWindow').getComponent('tfPassword').reset();

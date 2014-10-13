@@ -254,7 +254,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			this.isUserChange = true;
 
 		}.createDelegate(this));
-		task.delay(2000);
+		task.delay(100);
 		
 		
 		var panelMsg = ACM.getRequiredFields(options);
@@ -433,7 +433,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			var task = new Ext.util.DelayedTask(function() {
 				AIR.AirAclManager.setDraft(AIR.AirAclManager.isDraft(ciData));
 			}.createDelegate(this));
-			task.delay(1500);
+			task.delay(100);
 			
 			//das Akzeptieren von User Bedienaktionen (textfeld Änderungen, combo Auswahlen, ...) erst jetzt wieder freischalten für
 			//den Empfang von ciChange Events
@@ -441,7 +441,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				this.isUserChange = true;
 	
 			}.createDelegate(this));
-			task.delay(1000);
+			task.delay(100);
 			
 			this.disableButtons();
 			
@@ -945,7 +945,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			this.disableButtons();
 		}.createDelegate(this));
-		task.delay(2000);
+		task.delay(100);
 	}
 	
 });
