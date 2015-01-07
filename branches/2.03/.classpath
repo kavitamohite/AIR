@@ -5,7 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/pdfbox-1.8.5.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
@@ -13,6 +12,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="M:/apache-tomcat-5.5.23/common/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="M:/apache-tomcat-5.5.23/common/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="M:/workspace28April/AIR_2.03(new)/WebRoot/WEB-INF/lib/fontbox-1.8.5.jar"/>
+	<classpathentry kind="lib" path="M:/workspace28April/AIR2.3(10082014)/WebRoot/WEB-INF/lib/itext-2.1.7.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

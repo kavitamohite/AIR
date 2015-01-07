@@ -661,23 +661,28 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 	
 	enableButtons: function() {
-		var panelMsg = ACM.getRequiredFields(AAM.getAppDetail());
-		
-		if(panelMsg.length == 0) {
-			this.setPanelMessage(panelMsg);
-			
-			var bSave = this.getComponent('ciEditTabView').getFooterToolbar().getComponent('savebutton');
-			var bCancel = this.getComponent('ciEditTabView').getFooterToolbar().getComponent('cancelbutton');
-			
-			bSave.show();
-			bCancel.show();
-			
-			this.fireEvent('airAction', this, 'clear');
-		} else {
-			this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
-			
-			this.disableButtons();
-		}
+		// RFC 11052
+        var bSave = this.getComponent('ciEditTabView').getFooterToolbar().getComponent('savebutton');
+        var bCancel = this.getComponent('ciEditTabView').getFooterToolbar().getComponent('cancelbutton');   		
+		if((AAM.getTableId() == AC.TABLE_ID_APPLICATION || AAM.getTableId() == AC.TABLE_ID_IT_SYSTEM) &&  
+                AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR))//USER_ROLE_AIR_ADMINISTRATOR
+          {     bSave.show();
+                bCancel.show();                       
+                this.fireEvent('airAction', this, 'clear');
+           }else{       	   
+       		var panelMsg = ACM.getRequiredFields(AAM.getAppDetail());    		
+    		if(panelMsg.length == 0) {
+    			this.setPanelMessage(panelMsg);			
+    			bSave.show();
+    			bCancel.show();
+    			
+    			this.fireEvent('airAction', this, 'clear');
+    		} else {
+    			this.setPanelMessage(AIR.AirApplicationManager.getLabels().header_applicationIsIncomplete.replace('##', panelMsg));
+    			this.disableButtons();
+    		}
+           }
+
 	},
 	
 	disableButtons: function() {

@@ -3,11 +3,15 @@ package com.bayerbbs.applrepos.servlet;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringReader;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,13 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -49,9 +46,17 @@ import com.bayerbbs.applrepos.hibernate.ServiceContractHbn;
 import com.bayerbbs.applrepos.hibernate.SlaHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
 import com.bayerbbs.applrepos.hibernate.TerrainHbn;
-import com.bayerbbs.pdf.pdfCell;
-import com.bayerbbs.pdf.pdfRow;
-import com.bayerbbs.pdf.pdfTable;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.HeaderFooter;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.html.simpleparser.HTMLWorker;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 
 public class CiDetailReportServlet extends HttpServlet {
 
@@ -99,6 +104,17 @@ public class CiDetailReportServlet extends HttpServlet {
 	private static final int LANG_GSTOOL_EN = 2;
 	private static final String SQL_RESULT_BESCHREIBUNG = "BESCHREIBUNG";
 	private String ciName = "";
+	private String HeaderCIName = "";
+	private Integer headerpageNo = 0;
+	private Integer totalPageNo = 2;
+	private String footerPreparedBy = "";
+	private String footerCreatedDate = "";
+
+	// FOr production and QA /app/sisnet/catalina/temp/Compliance_Statements_
+
+	private String fileName = "Compliance_Statements_";
+    private String filePath="/app/sisnet/catalina/temp/";
+	//private String filePath = "m:\\temp\\";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -111,86 +127,67 @@ public class CiDetailReportServlet extends HttpServlet {
 		String ciId = req.getParameter("ciId");
 		String tableId = req.getParameter("tableId");
 		String language = req.getParameter("lang");
-		String CIName = "";
-
-		// Create a document and add a page to it
-		PDDocument document = new PDDocument();
-		PDPage page = new PDPage();
-		document.addPage(page);
-
-		// Start a new content stream which will "hold" the to be created
-		// content
-		PDPageContentStream contentStream = new PDPageContentStream(document,
-				page);
-		// Create a new font object selecting one of the PDF base fonts
-		PDFont font = PDType1Font.HELVETICA;
-
-		float pageHeight = page.findMediaBox().getHeight();
-		float pageWeidth = page.findMediaBox().getWidth();
-		float Margin = 50;
-
-		contentStream.beginText();
-		contentStream.setFont(font, 10);
-		contentStream.moveTextPositionByAmount(Margin, (pageHeight - 50));
-		contentStream.setNonStrokingColor(java.awt.Color.GRAY);
-		List<String[]> CIData = printNameAndGetCiData(ciId, tableId,
-				contentStream);
-		contentStream.moveTextPositionByAmount(0, -25);
-		PDFont font1 = PDType1Font.HELVETICA_BOLD;
-		contentStream.setFont(font1, 20);
-		contentStream.setNonStrokingColor(java.awt.Color.BLACK);
-		contentStream.drawString("Compliance Statements");
-		contentStream.moveTextPositionByAmount(0, -25);
-		contentStream.drawString("relevant for GR 1435 / ISO 27001 / ICS");
-
-		contentStream.endText();
-
-		float tableWidth = pageWeidth - (2 * Margin);
-		float top = pageHeight - (2.5f * Margin);
-		pdfTable table = new pdfTable(top, Margin, page, contentStream);
-
-		// Add multiple rows with random facts about Belgium
-		for (String[] data : CIData) {
-			pdfRow row = new pdfRow(20f);
-			pdfCell cell = new pdfCell(((tableWidth / 3)), data[0]);
-			cell.setFont(PDType1Font.HELVETICA);
-			cell.setFontSize(13);
-			row.addCell(cell);
-			for (int i = 1; i < data.length; i++) {
-				cell = new pdfCell((tableWidth / 3) * 2, data[i]);
-				cell.setFont(PDType1Font.HELVETICA);
-				cell.setFontSize(13);
-				row.addCell(cell);
-			}
-			table.drawRow(row);
-			// Start a new page if needed
-			if (table.isEndOfPage()) {
-				contentStream.close();
-				// Start new table on new page
-				page = addNewPage(document);
-				contentStream = new PDPageContentStream(document, page);
-				top = page.findMediaBox().getHeight() - Margin;
-				table = new pdfTable((top - (1 * 20f)), Margin, page,
-						contentStream);
-			}
-
-		}
-		table.endTable(tableWidth);
-		contentStream.close();
+		String cwid = req.getParameter("cwid");
+		String lastName = req.getParameter("lastName");
+		String firstName = req.getParameter("firstName");
+		footerPreparedBy = "Prepared By " + lastName + ", " + firstName + " ("
+				+ cwid + ")" + ")";
+		Date date1 = new Date();
+		SimpleDateFormat ft = new SimpleDateFormat("dd-MMM-yyyy");
+		footerCreatedDate = ft.format(date1);
 
 		List<ComplianceDetail> complianceDetails = getComplianceDeatils(
 				Long.valueOf(tableId), Long.valueOf(ciId), language);
-		writeComplianceDetail(complianceDetails, document, language);
-		this.ciName=ciName.replaceAll(" {1,10}", "");
+		List<String[]> CIData = getCiData(ciId, tableId);
+		this.ciName = ciName.replaceAll(" {1,10}", "");
+		this.fileName = fileName + ciName + ".pdf";
 
-		// Save the results and ensure that the document is properly closed:
+		totalPageNo = 2 + complianceDetails.size();
+
+		Document document = new Document(PageSize.LETTER);
 		try {
-			File pdf = new File("/app/sisnet/catalina/temp/Compliance_Statements_"+ciName+".pdf");
-			document.save(pdf);
-		} catch (COSVisitorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			PdfWriter.getInstance(document, new FileOutputStream(filePath
+					+ fileName));
+			document.open();
+			HeaderFooter footer = new HeaderFooter(
+					new Phrase(
+							footerPreparedBy
+									+ "                                                                      "
+									+ footerCreatedDate), false);
+			footer.setBorder(0);
+			document.setFooter(footer);
+			HeaderFooter header = new HeaderFooter(new Phrase(HeaderCIName),false);
+			header.setBorder(0);
+			document.setHeader(header);
+			document.add(new Phrase(HeaderCIName));
+			document.add(new Phrase(100, "\n Compliance Statements", new Font(
+					BaseFont.createFont(FontFactory.HELVETICA_BOLD, "", true),
+					25)));
+			document.add(new Phrase(60,
+					"\n relevant for GR 1435 / ISO 27001 / ICS", new Font(
+							BaseFont.createFont(FontFactory.HELVETICA_BOLD, "",
+									true), 25)));
+
+			document.newPage();
+			PdfPTable pdftable = new PdfPTable(2);
+			pdftable.setTotalWidth(500);
+			pdftable.setWidths(new float[] { 1, 1 });
+
+			// Add multiple rows with random facts about Belgium
+			for (String[] data : CIData) {
+				pdftable.addCell(data[0]);
+				pdftable.addCell(data[1]);
+
+			}
+			document.add(pdftable);
+			document.newPage();
+
+			writeComplianceDetail(complianceDetails, document, language);
+
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+
 		document.close();
 
 		printPdfOutputstream(res);
@@ -201,13 +198,12 @@ public class CiDetailReportServlet extends HttpServlet {
 			throws ServletException, IOException {
 		ServletOutputStream stream = null;
 		BufferedInputStream buf = null;
+		File pdf = new File(filePath + fileName);
 		try {
-			stream = res.getOutputStream();
-			File pdf = new File("/app/sisnet/catalina/temp/Compliance_Statements_"+ciName+".pdf");
-			res.setContentType("application/pdf");
-
+			stream = res.getOutputStream();			
+			res.setContentType("application/pdf");			
 			res.addHeader("Content-Disposition", "attachment; filename="
-					+ "Compliance_Statements_"+ciName+".pdf");
+					+ fileName);
 			res.setContentLength((int) pdf.length());
 			FileInputStream input = new FileInputStream(pdf);
 			buf = new BufferedInputStream(input);
@@ -222,15 +218,9 @@ public class CiDetailReportServlet extends HttpServlet {
 				stream.close();
 			if (buf != null)
 				buf.close();
+			  pdf.delete();
 		}
 	}
-
-	private static PDPage addNewPage(PDDocument doc) {
-		PDPage page = new PDPage();
-		doc.addPage(page);
-		return page;
-	}
-
 	private static String getValue(Long id) {
 		if (id == null)
 			return " ";
@@ -314,147 +304,39 @@ public class CiDetailReportServlet extends HttpServlet {
 		return langId;
 	}
 
-	private static void writeComplianceDetail(
-			List<ComplianceDetail> complianceDetails, PDDocument pagDocument,
-			String Language) {
+	private void writeComplianceDetail(
+			List<ComplianceDetail> complianceDetails, Document document,
+			String Language) throws SQLException, IOException,
+			DocumentException {
 		Session session = HibernateUtil
 				.getSession(HibernateUtil.DATASOURCE_ID_GSTOOL);
 		ResultSet rs = null;
-		try {
-			@SuppressWarnings("deprecation")
-			PreparedStatement statement = session.connection()
-					.prepareStatement(STMT_SELECT_MASSN_BESCHREIBUNG);
-			statement.setInt(2, getLanguageId(Language));
-			for (ComplianceDetail detail : complianceDetails) {
-				PDPage page = addNewPage(pagDocument);
-				PDPageContentStream contentStream = null;
-				try {
-					contentStream = new PDPageContentStream(pagDocument, page);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 
-				String description = getDescription(statement,
-						detail.getGStoolId(), rs);
-				PDFont font = PDType1Font.HELVETICA;
-				try {
-					PDRectangle mediabox = page.findMediaBox();
-					float margin = 50;
-					float startX = mediabox.getLowerLeftX() + margin;
-					float startY = mediabox.getUpperRightY() - margin;
-					contentStream.beginText();
-					contentStream.moveTextPositionByAmount(startX, startY);
-					PDFont fontHeader = PDType1Font.HELVETICA_BOLD;
-					contentStream.setFont(fontHeader, 13);
-					contentStream.setNonStrokingColor(java.awt.Color.BLACK);
-					contentStream.drawString(StringUtils
-							.substringBetween(description, "<h1>", "</h1>")
-							.trim().replaceAll("\\W{2,10}", " "));
-					contentStream.moveTextPositionByAmount(0, -20);
-					contentStream.setFont(font, 9);
-					contentStream.setNonStrokingColor(java.awt.Color.BLUE);
-					contentStream.drawString("Refers to regulations:");
-					contentStream.moveTextPositionByAmount(0, -20);
-					String pattern = "(<.*?>)";
-					String GR1435 = StringUtils.substringBetween(description,
-							"GR1435:", "ICS:");
-					contentStream.drawString("GR1435: "
-							+ GR1435.replaceAll(pattern, ""));
-					contentStream.moveTextPositionByAmount(0, -20);
-					String ICS = StringUtils.substringBetween(description,
-							"ICS:", "ISO2700x:");
-					contentStream.drawString("ICS: "
-							+ ICS.replaceAll(pattern, ""));
-					contentStream.moveTextPositionByAmount(0, -20);
-					String ISO2700x = StringUtils.substringBetween(description,
-							"ISO2700x:", "</font></p>");
-					contentStream.drawString("ISO2700x: "
-							+ ISO2700x.replaceAll(pattern, ""));
-					contentStream.moveTextPositionByAmount(0, -20);
-					List<String> lines = new ArrayList<String>();
-					String paragarph = StringUtils.substringBetween(
-							description, "</font></p>", "</body>");
-					if (StringUtils.isNotEmpty(paragarph)) {
-						paragarph = paragarph.replaceAll(pattern, ";");
-						paragarph = paragarph.replaceAll(";{1,10}", ";");
-						String[] print = paragarph.split(";");
-						for (int i = 0; i < print.length; i++) {
-							List<String> result = getLines(print[i].trim(),
-									(page.findMediaBox().getWidth()), font);
-							if (result != null) {
-								lines.addAll(result);
-							}
-						}
-						contentStream.setNonStrokingColor(java.awt.Color.RED);
-						for (String line : lines) {
-							contentStream.drawString(line.trim());
-							contentStream.moveTextPositionByAmount(0, -20);
-						}
-						contentStream.endText();
-						float pageHeight = startY - (20 * (lines.size() + 5));
-						float pageWeidth = page.findMediaBox().getWidth();
-						float tableWidth = pageWeidth - (2 * 50);
-						pdfTable table = new pdfTable(pageHeight, 50, page,
-								contentStream);
-						List<String[]> complianceData = createComplianceDataTable(detail);
-						for (String[] data : complianceData) {
-							if (table.isEndOfPage()) {
-								contentStream.close();
-								// Start new table on new page
-								page = addNewPage(pagDocument);
-								contentStream = new PDPageContentStream(
-										pagDocument, page);
-								float top = page.findMediaBox().getHeight() - 50;
-								table = new pdfTable((top - (1 * 20f)), 50,
-										page, contentStream);
-							}
-							pdfRow row = new pdfRow(25f);
-							pdfCell cell = new pdfCell(((tableWidth / 3)),
-									data[0]);
-							cell.setFont(PDType1Font.HELVETICA);
-							cell.setFontSize(15);
-							row.addCell(cell);
-							for (int i = 1; i < data.length; i++) {
-								cell = new pdfCell((tableWidth / 3) * 2,
-										data[i]);
-								cell.setFont(PDType1Font.HELVETICA);
-								cell.setFontSize(13);
-								row.addCell(cell);
-							}
-							table.drawRow(row);
-							// Start a new page if needed
-							if (table.isEndOfPage()) {
-								contentStream.close();
-								// Start new table on new page
-								page = addNewPage(pagDocument);
-								contentStream = new PDPageContentStream(
-										pagDocument, page);
-								float top = page.findMediaBox().getHeight() - 50;
-								table = new pdfTable((top - (1 * 20f)), 50,
-										page, contentStream);
-							}
+		@SuppressWarnings("deprecation")
+		PreparedStatement statement = session.connection().prepareStatement(
+				STMT_SELECT_MASSN_BESCHREIBUNG);
+		statement.setInt(2, getLanguageId(Language));
+		for (ComplianceDetail detail : complianceDetails) {
+			// document.newPage();
+			String description = getDescription(statement,
+					detail.getGStoolId(), rs);
+			description =description.replaceAll( "<br>", "<br></br>");
+			description=description.replaceAll( "<hr>", "<hr></hr>");
+			HTMLWorker htmlWorker = new HTMLWorker(document);
+			htmlWorker.parse(new StringReader(description));
+			PdfPTable pdftable = new PdfPTable(2);
+			pdftable.setTotalWidth(500);
+			pdftable.setWidths(new float[] { 1, 1 });
+			pdftable.setSpacingBefore(30f);
 
-						}
-						table.endTable(tableWidth);
-						contentStream.close();
-
-					}
-
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			List<String[]> complianceData = createComplianceDataTable(detail);
+			for (String[] data : complianceData) {
+				pdftable.addCell(new Phrase(data[0]));
+				pdftable.addCell(new Phrase(data[1]));
 			}
+			document.add(pdftable);
+			document.newPage();
 
-		} catch (SQLException e) {
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-			} catch (SQLException e) {
-			}
-
-			session.close();
 		}
 
 	}
@@ -476,52 +358,29 @@ public class CiDetailReportServlet extends HttpServlet {
 
 	}
 
-	private static List<String> getLines(String text, float width, PDFont font)
-			throws IOException {
-		List<String> result = new ArrayList<String>();
-		if (text == null || text.isEmpty()) {
-			return null;
-		}
-		String test = text.replaceAll("\\W{2,10}", " ");
-		String[] split = test.split("(?<=\\W)");
-		int[] possibleWrapPoints = new int[split.length];
-		possibleWrapPoints[0] = split[0].length();
-		for (int i = 1; i < split.length; i++) {
-			possibleWrapPoints[i] = possibleWrapPoints[i - 1]
-					+ split[i].length();
-		}
-
-		int start = 0;
-		int end = 0;
-		for (int i : possibleWrapPoints) {
-			float width1 = font.getStringWidth(test.substring(start, i)) / 1000 * 11;
-			if (start < end && width1 > width) {
-				result.add(test.substring(start, end));
-				start = end;
-			}
-			end = i;
-		}
-		// Last piece of text
-		result.add(test.substring(start));
-		return result;
-	}
 
 	private static List<String[]> createComplianceDataTable(
 			ComplianceDetail complianceDetail) {
 		List<String[]> complianceDatas = new ArrayList<String[]>();
-		complianceDatas.add(new String[] { "Indent",
+		complianceDatas.add(new String[] { "Ident",
 				complianceDetail.getIndent() });
 		complianceDatas.add(new String[] { "Control",
 				complianceDetail.getControl() });
-		complianceDatas.add(new String[] { "Relevance ICS Security Management",
-				complianceDetail.getReICSSecurity() });
+		if(complianceDetail.getReICSSecurity().equals("-1")){
+			complianceDatas.add(new String[] { "Relevance ICS Security Management",
+					"Yes" });
+		}
+		else{
+			complianceDatas.add(new String[] { "Relevance ICS Security Management",
+			"No" });			
+		}
+
 		complianceDatas.add(new String[] { "Justification/Evidence",
 				complianceDetail.getJustification() });
 		return complianceDatas;
 	}
 
-	private List<String[]> printNameAndGetCiData(String ciId, String tableId,
-			PDPageContentStream contentStream) {
+	private List<String[]> getCiData(String ciId, String tableId) {
 		List<String[]> CIData = null;
 		try {
 			if (Integer.parseInt(tableId) == AirKonstanten.TABLE_ID_APPLICATION) {
@@ -532,7 +391,7 @@ public class CiDetailReportServlet extends HttpServlet {
 					dto = AnwendungHbn.getApplicationDetail(Long.valueOf(ciId));
 				}
 				this.ciName = application.getApplicationName();
-				contentStream.drawString("Compliance Statements " + ciName);
+				this.HeaderCIName = "Compliance Statements " + ciName;
 				CIData = createApplicationData(application, dto);
 				return CIData;
 			} else if (Integer.parseInt(tableId) == AirKonstanten.TABLE_ID_POSITION) {
@@ -557,8 +416,7 @@ public class CiDetailReportServlet extends HttpServlet {
 					name.append("(").append(building.getAlias()).append(")");
 				}
 				name.append(")");
-				contentStream.drawString("Compliance Statements "
-						+ name.toString());
+				this.HeaderCIName = "Compliance Statements " + name.toString();
 				CIData = createPositionData(schrank);
 				this.ciName = schrank.getSchrankName();
 				return CIData;
@@ -579,8 +437,7 @@ public class CiDetailReportServlet extends HttpServlet {
 				}
 				name.append(":").append(buildingArea.getBuildingAreaName())
 						.append(")");
-				contentStream.drawString("Compliance Statements "
-						+ name.toString());
+				this.HeaderCIName = "Compliance Statements " + name.toString();
 				this.ciName = room.getRoomName();
 				CIData = createRoomData(room);
 				return CIData;
@@ -600,8 +457,7 @@ public class CiDetailReportServlet extends HttpServlet {
 					name.append("(").append(building.getAlias()).append(")");
 				}
 				name.append(")");
-				contentStream.drawString("Compliance Statements "
-						+ name.toString());
+				this.HeaderCIName = "Compliance Statements " + name.toString();
 				CIData = createBuildingAreaData(buildingArea);
 				this.ciName = buildingArea.getBuildingAreaName();
 				return CIData;
@@ -614,9 +470,7 @@ public class CiDetailReportServlet extends HttpServlet {
 				name.append(building.getBuildingName()).append(" (")
 						.append(standort.getStandortName()).append(":")
 						.append(terrian.getTerrainName()).append(")");
-
-				contentStream.drawString("Compliance Statements "
-						+ name.toString());
+				this.HeaderCIName = "Compliance Statements " + name.toString();
 				CIData = createBuildingData(building);
 				this.ciName = building.getBuildingName();
 				return CIData;
@@ -626,30 +480,32 @@ public class CiDetailReportServlet extends HttpServlet {
 				Standort standort = terrain.getStandort();
 				name.append(terrain.getTerrainName()).append(" (")
 						.append(standort.getStandortName()).append(")");
-
-				contentStream.drawString("Compliance Statements "
-						+ name.toString());
+				this.HeaderCIName = "Compliance Statements " + name.toString();
+				/*
+				 * contentStream.drawString("Compliance Statements " +
+				 * name.toString());
+				 */
 				CIData = createTerrainData(terrain);
 				this.ciName = terrain.getTerrainName();
 				return CIData;
 			} else if (Integer.parseInt(tableId) == AirKonstanten.TABLE_ID_SITE) {
 				Standort standort = StandortHbn.findById(Long.valueOf(ciId));
-				contentStream.drawString("Compliance Statements "
-						+ standort.getStandortName());
+				this.HeaderCIName = "Compliance Statements "
+						+ standort.getStandortName();
 				CIData = createStandortData(standort);
 				this.ciName = standort.getStandortName();
 				return CIData;
 			} else if (Integer.parseInt(tableId) == AirKonstanten.TABLE_ID_IT_SYSTEM) {
 				ItSystem itSystem = ItSystemHbn.findById(ItSystem.class,
 						Long.valueOf(ciId));
-				contentStream.drawString("Compliance Statements "
-						+ itSystem.getName());
+				this.HeaderCIName = "Compliance Statements "
+						+ itSystem.getName();
 				CIData = createitSystemData(itSystem);
 				this.ciName = itSystem.getItSystemName();
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+
 		}
 		return CIData;
 
@@ -1229,5 +1085,8 @@ public class CiDetailReportServlet extends HttpServlet {
 			return "";
 
 	}
+
+
+
 
 }
