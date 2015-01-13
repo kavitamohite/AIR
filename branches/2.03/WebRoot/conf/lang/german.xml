@@ -34,7 +34,7 @@
 		
 		<browserOptimization>Optimiert f&amp;uuml;r den Firefox Browser</browserOptimization>
 		<secureSystem>This CI is a secure system</secureSystem>
-		<editInGPSC>Dieses CI kann nur in GPSC editiert werden</editInGPSC>
+		<editInGPSC>Dieses CI kann nur in HPSM editiert werden</editInGPSC>
 		
 		<dynamicWindowOKButtonText>OK</dynamicWindowOKButtonText>
 		<notRelevant>nicht relevant</notRelevant>

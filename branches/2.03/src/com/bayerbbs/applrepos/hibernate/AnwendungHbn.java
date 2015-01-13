@@ -240,6 +240,9 @@ public class AnwendungHbn extends BaseHbn {
 						if (null != dto.getVersion()) {
 							application.setVersion(dto.getVersion());
 						}
+						if(null != dto.getBarApplicationId()){
+							application.setBarApplicationId(dto.getBarApplicationId());
+						}
 						if (null != dto.getApplicationCat2Id()) {
 							if (-1 == dto.getApplicationCat2Id()) {
 								application.setApplicationCat2Id(null);

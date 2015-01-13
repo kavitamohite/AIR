@@ -409,6 +409,7 @@ public class ApplicationWS {
 		dto.setName(editInput.getName());
 		dto.setAlias(editInput.getAlias());
 		dto.setVersion(editInput.getVersion());
+		dto.setBarApplicationId(editInput.getBarApplicationId());
 		dto.setApplicationCat2Id(editInput.getApplicationCat2Id());
 		// view - primary function
 		dto.setLifecycleStatusId(editInput.getLifecycleStatusId());

@@ -146,6 +146,8 @@ public class ApplicationEditParameterInput {
 	private Boolean forceOverride;
 	private Integer tableId;
 	
+	private String barApplicationId;
+	
 	public ApplicationEditParameterInput() {
 	}
 
@@ -913,4 +915,21 @@ public class ApplicationEditParameterInput {
 	public Integer getTableId() {
 		return tableId;
 	}
+
+
+	/**
+	 * @return the barApplicationId
+	 */
+	public String getBarApplicationId() {
+		return barApplicationId;
+	}
+
+
+	/**
+	 * @param barApplicationId the barApplicationId to set
+	 */
+	public void setBarApplicationId(String barApplicationId) {
+		this.barApplicationId = barApplicationId;
+	}
+	
 }

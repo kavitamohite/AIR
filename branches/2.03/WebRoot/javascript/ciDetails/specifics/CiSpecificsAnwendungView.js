@@ -73,7 +73,8 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		        disabled: true,
 //		        cls: 'required',
 		        
-		        id: 'barApplicationId'
+		        id: 'barApplicationId',
+		        enableKeyEvents: true
 	        },{
 		    	xtype: 'textfield',
 //		        anchor: '70%',
@@ -317,6 +318,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		var tfApplicationAlias = this.getComponent('applicationAlias');
 		var tfApplicationVersion = this.getComponent('applicationVersion');
 		var rgBARrelevance = this.getComponent('rgBARrelevance');
+		var tfBarApplicationId = this.getComponent('barApplicationId');
 		
 		var cbApplicationCat2 = this.getComponent('applicationCat2');
 		var cbLifecycleStatus = this.getComponent('lifecycleStatus');
@@ -334,11 +336,13 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		tfApplicationName.on('change', this.onApplicationAliasChange, this);//onApplicationNameChange
 		tfApplicationAlias.on('change', this.onApplicationAliasChange, this);
 		tfApplicationVersion.on('change', this.onApplicationVersionChange, this);
+		tfBarApplicationId.on('change', this.onBarApplicationChange, this);
 		tfComments.on('change', this.onCommentsChange, this);
 		
 		tfApplicationName.on('keyup', this.onFieldKeyUp, this);//onApplicationNameChange
 		tfApplicationAlias.on('keyup', this.onFieldKeyUp, this);
 		tfApplicationVersion.on('keyup', this.onFieldKeyUp, this);
+		tfBarApplicationId.on('keyup', this.onFieldKeyUp, this);
 		tfComments.on('keyup', this.onFieldKeyUp, this);
 
 		
@@ -433,6 +437,9 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	
 	
 	onApplicationVersionChange: function(textfield, newValue, oldValue) {
+		this.ownerCt.fireEvent('ciChange', this, textfield, newValue);//this
+	},
+	onBarApplicationChange: function(textfield, newValue, oldValue) {
 		this.ownerCt.fireEvent('ciChange', this, textfield, newValue);//this
 	},
 	onFieldKeyUp: function(textfield, event) {
@@ -818,6 +825,10 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		field = this.getComponent('applicationAlias');
 		if(!field.disabled)
 			data.alias = field.getValue();//applicationAlias
+		
+		field = this.getComponent('barApplicationId');
+		if(!field.disabled)
+			data.barApplicationId = field.getValue();//applicationAlias
 		
 
 		field = this.getComponent('applicationVersion');

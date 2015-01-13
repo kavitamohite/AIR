@@ -152,9 +152,11 @@ public class CiEntitiesHbn {
 		sql.append(" and UPPER(type) in (");
 		sql.append(AirKonstanten.CITypes_ANWENDUNG.toUpperCase()); // Suche auf UPPER(type) besser als auf table_id
 
-		if (onlyApplications) {
+		// Start RFC 11131 (EOKEG)
+/*		if (onlyApplications) {
 			sql.append(") and UPPER(type) = UPPER('Application')"); // sieht etwas merkwürdig aus, wird aber in diesem Fall vom Oracle-Optimizer richtig interpretiert.
-		} else {
+		} else {*/
+		// End RFC 11131 (EOKEG)
 			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.CITypes_IT_SYSTEM.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
@@ -170,7 +172,8 @@ public class CiEntitiesHbn {
 			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.CITypes_STANDORT.toUpperCase());
 			sql.append(")");
-		}
+		// Start RFC 11131 (EOKEG)
+		//} // End RFC 11131 (EOKEG)
 		
 		sql.append(" and (upper(name) like '");
 		if (isLikeStart(queryMode)) {
