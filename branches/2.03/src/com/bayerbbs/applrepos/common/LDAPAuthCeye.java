@@ -135,7 +135,8 @@ public class LDAPAuthCeye {
 
 		if (null == userDN) {
 			System.out.println("Authentication cwid unknown");
-			returncode = -9;
+			//returncode = -9;//commented by vandana
+			returncode = 1; //Vandana
 		} else {
 
 			authEnv.put(Context.INITIAL_CONTEXT_FACTORY,
