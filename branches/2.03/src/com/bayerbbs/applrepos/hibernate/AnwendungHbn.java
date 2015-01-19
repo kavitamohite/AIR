@@ -240,9 +240,6 @@ public class AnwendungHbn extends BaseHbn {
 						if (null != dto.getVersion()) {
 							application.setVersion(dto.getVersion());
 						}
-						if(null != dto.getBarApplicationId()){
-							application.setBarApplicationId(dto.getBarApplicationId());
-						}
 						if (null != dto.getApplicationCat2Id()) {
 							if (-1 == dto.getApplicationCat2Id()) {
 								application.setApplicationCat2Id(null);
@@ -2669,6 +2666,7 @@ public class AnwendungHbn extends BaseHbn {
 					String applicationOwner = rset.getString("APPLICATION_OWNER");
 					String applicationOwnerDelegate = rset.getString("APPLICATION_OWNER_DELEGATE");
 					String applicationSteward = rset.getString("APPLICATION_STEWARD");
+					String isTemplate = rset.getString("TEMPLATE");
 					
 					String deleteQuelle = rset.getString("DEL_QUELLE");
 					
@@ -2685,7 +2683,7 @@ public class AnwendungHbn extends BaseHbn {
 					anw.setApplicationOwnerDelegate(applicationOwnerDelegate);
 					anw.setApplicationSteward(applicationSteward);
 					anw.setTableId(AirKonstanten.TABLE_ID_APPLICATION);
-					
+					anw.setIsTemplate(isTemplate);
 					anw.setDeleteQuelle(deleteQuelle);
 					
 //					if (null != anw.getDeleteQuelle()) {

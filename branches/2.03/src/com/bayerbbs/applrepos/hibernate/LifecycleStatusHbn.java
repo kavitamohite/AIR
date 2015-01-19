@@ -20,6 +20,11 @@ import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
 public class LifecycleStatusHbn {
 	private static final Log log = LogFactory.getLog(LifecycleStatusHbn.class);
 	
+	public static LifecycleStatus findById(Long id){
+		Session session = HibernateUtil.getSession();
+		return (LifecycleStatus)session.get(LifecycleStatus.class, id);
+	}
+	
 
 	private static List<LifecycleStatusDTO> getDTOList(
 			List<LifecycleStatus> input) {

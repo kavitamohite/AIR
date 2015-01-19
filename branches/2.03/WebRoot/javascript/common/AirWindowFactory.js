@@ -317,6 +317,7 @@ AIR.AirWindowFactory = function() {
 				case 'CONFIRM_ITSEC_GROUP_SAVE':
 				case 'RISK_ANALYSIS_AND_MGMT_TYPE_SELECT':
 				case 'GENERIC_YES_NO':
+				case 'MASSUPDATE_CONFIRMATION':	
 					var windowTitle = title;
 					var windowText = message;
 					var windowIcon = img_Warning;

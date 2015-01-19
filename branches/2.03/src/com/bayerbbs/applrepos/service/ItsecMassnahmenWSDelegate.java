@@ -43,4 +43,8 @@ public class ItsecMassnahmenWSDelegate {
 	public DirectLinkageCIsAnswerParameterOutput getDirectLinkageFromOtherCIsAnswer(ItsecMassnahmenParameterInput input){
 		return ItsecMassnahmenWS.getDirectLinkageFromOtherCIsAnswer(input);		
 	}
+	
+	public MassUpdateComplianceControlParameterOutput saveMassUpdateComplianceControl(MassUpdateComplianceControlParameterInput  input){		
+		return ItsecMassnahmenWS.saveMassUpdateComplianceControl(input);
+	}
 }

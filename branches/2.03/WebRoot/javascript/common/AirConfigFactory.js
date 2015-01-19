@@ -2,39 +2,9 @@ Ext.namespace('AIR');
 
 AIR.AirConfigFactory = function() {
 	return {
-		createCiResultGridConfig: function(isComplete) {
+		createCiResultGridConfig: function(isComplete,selModel) {
 		    var columnConfig = [];
-		    	columnConfig.push(AC.resultGridSelModel
-//		    	{xtype: 'actioncolumn',
-//		            width: 50,
-//		            header: '&#160;',
-//		            id : 'cbMu',
-//		            dataIndex: 'x',
-////		            items: [
-////		                {
-//		                	icon   : 'images/cb-uncheck.gif',                // Use a URL in the icon config
-//		                    tooltip: 'Check for mass update',
-//		                    //style : 'backgroundPosition: 2px 1px;',
-//		                    handler: function(grid, rowIndex, colIndex, item, ev) {
-//		                        this.getClass();
-//		                    	//var rec = grid.getStore().getAt(rowIndex);
-//		                        //this.icon="images/cb-check.gif";
-//		                        //grid.doLayout();//alert("Clicked " + rowIndex + " " + colIndex);
-//		                    },
-//		                    getClass: function(v, meta, rec) {
-//		                    	if (this.icon === "images/cb-check.gif") {
-//		                            return 'mUcbunchecked';
-//		                        }
-//		                        else if (this.icon === "images/cb-uncheck.gif") {
-//		                            return 'mUcbchecked';
-//		                        }
-//		                        else {
-//		                        	return 'mUcbunchecked';
-//		                        }
-//		                    }
-//		                }
-////		            ]}
-	);
+		    columnConfig.push(selModel);
 			columnConfig.push({ id: 'name', header: 'Name', dataIndex: 'name', width: 150, sortable: true});// applicationName
 			columnConfig.push({ id: 'alias', header: 'Alias', dataIndex: 'alias', width: 150, sortable: true});// applicationAlias
 			columnConfig.push({ id: 'applicationCat1Txt', header: 'Type', dataIndex: 'applicationCat1Txt', width: 150, sortable: true});
@@ -47,6 +17,7 @@ AIR.AirConfigFactory = function() {
 				columnConfig.push({ id: 'applicationSteward', header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});// ,
 				columnConfig.push({ id: 'ciOwner', header: 'Responsible', dataIndex: 'ciOwner', width: 150, sortable: true});// responsible
 				columnConfig.push({ id: 'ciOwnerDelegate', header: 'Sub responsible', dataIndex: 'ciOwnerDelegate', width: 150, sortable: true});// subResponsible
+				columnConfig.push({ id: 'isTemplate', header: 'template', dataIndex: 'isTemplate', hidden:true});
 			}
 			
 			return columnConfig;

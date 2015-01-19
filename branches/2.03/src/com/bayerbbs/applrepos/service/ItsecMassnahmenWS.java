@@ -286,5 +286,14 @@ public class ItsecMassnahmenWS {
 				.setDirectLinkageCIsAnswerDTO(diLinkageCIsAnswerDTOs);
 		return dLinkageCIsAnswerParameterOutput;
 	}
+	
+	public static MassUpdateComplianceControlParameterOutput saveMassUpdateComplianceControl(MassUpdateComplianceControlParameterInput  input){		
+		MassUpdateComplianceControlParameterOutput output = new MassUpdateComplianceControlParameterOutput();
+		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+			output = ItsecMassnahmeStatusHbn.saveMassUpdateComplianceControl(input);
+		}
+		
+		return output;
+	}
 
 }

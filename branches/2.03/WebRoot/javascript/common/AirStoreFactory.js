@@ -1529,6 +1529,7 @@ AIR.AirStoreFactory = function() {
 			    {name: 'applicationCat1Txt'},
 			    {name: 'applicationCat2Txt'},
 			    {name: 'location'},
+			    {name: 'isTemplate'},
 			    {name: 'ciOwner'},
 			    {name: 'ciOwnerDelegate'},
 			    {name: 'applicationOwner'},
@@ -3620,6 +3621,39 @@ AIR.AirStoreFactory = function() {
 			
 			return signeeStore;
 		},
+		createMassUpdateAttributesStore :function(){
+			
+			var massUpdateAttributeRecord = new Ext.data.Record.create([
+                  {name: 'id' },                                                     
+			      {name: 'attributeName'},
+			      {name: 'attributeValue'}]);
+			
+			var massUpdateAttributeReader = new Ext.data.XmlReader({
+				record: 'massUpdateAttributeDTO',
+				idProperty: 'id'
+				
+			},massUpdateAttributeRecord);
+			
+			var massUpdateAttributesStore = new Ext.data.XmlStore({
+				
+				autoDestroy: true,
+				storeId: 'massUpdateAttributesStoreId',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+				url: webcontext + '/CiEntityWSPort',
+				loadMethod: 'getCIAttributesForMassUpdate',
+				timeout: 120000,
+				reader: massUpdateAttributeReader
+				}),
+				fields: [ 'id','attributeName','attributeValue'],
+				reader: massUpdateAttributeReader
+				
+			});
+			
+			return massUpdateAttributesStore;
+			
+		},
 		createDirectLinkCIStore :function(){
 			var directLinkCIRecord = Ext.data.Record.create([
 			    { name: 'id' },
@@ -3675,6 +3709,98 @@ AIR.AirStoreFactory = function() {
 			});
 			
 			return directLinkageCIAnswersStore;
+		},
+		createMassUpdateSaveStore: function() {
+			var massUpdateSaveRecord = Ext.data.Record.create([
+			         {name: 'result'}, 
+			         {name: 'displayMessage'}, 
+			         {name: 'messages'}
+			         ]);
+	
+			var massUpdateSaveReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, massUpdateSaveRecord);
+	
+			var massUpdateSaveStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'massUpdateSaveStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'massUpdate',
+					timeout: 120000,
+					reader: massUpdateSaveReader
+				}),
+				
+				fields: [ 'result', 'displayMessage', 'messages' ],
+	
+				reader: massUpdateSaveReader
+			});
+			
+			return massUpdateSaveStore;
+		},
+		createMassUpdateComplianceControlsStore: function(){
+			
+			var complianceControlRecord = Ext.data.Record.create(
+					[
+					 {name: 'ident'},
+					 {name: 'itsec_Massn_St_Id'},
+					 {name: 'control'},
+					 {name: 'compliance_status'},
+					 ]);
+			var complianceControlReader = new Ext.data.XmlReader({
+				record: 'copmlianceControlDTOs',
+				idProperty: 'itsec_Massn_St_Id'
+			},complianceControlRecord);
+			
+			var massUpdateComplianceControlStore = new Ext.data.XmlStore(
+					{
+						autoDestroy: true,
+						storeId: 'massUpdateComplianceControlsStore',
+						autoLoad: false,
+						
+						proxy: new Ext.ux.soap.SoapProxy({
+							url: webcontext + '/CiEntityWSPort',
+							loadMethod: 'findAllCIComplianceControlForMassUpdate',
+							timeout: 120000,
+							reader: complianceControlReader
+						}),
+						fields: [ 'ident','itsec_Massn_St_Id', 'control', 'compliance_status' ],
+						reader: complianceControlReader
+					});
+			return massUpdateComplianceControlStore;
+		},
+		createMassUpdateComplianceControlSaveStore : function() {
+			var massUpdateComplianceControlSaveRecord = Ext.data.Record.create([ {
+				name : 'result'
+			}, {
+				name : 'displayMessage'
+			}, {
+				name : 'messages'
+			} ]);
+			var massUpdateComplianceControlSaveReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, massUpdateComplianceControlSaveRecord);
+			
+			var massUpdateComplianceControlSaveStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'massUpdateComplianceControlSaveStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/ItsecMassnahmenWSPort',
+					loadMethod: 'saveMassUpdateComplianceControl',
+					timeout: 120000,
+					reader: massUpdateComplianceControlSaveReader
+				}),
+				
+				fields: [ 'result', 'displayMessage', 'messages' ],
+	
+				reader: massUpdateComplianceControlSaveReader
+			});
+			
+			return massUpdateComplianceControlSaveStore;
 		}
 	};
 }();

@@ -21,14 +21,57 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		        	id: 'bSearchReset',
 		    		
 		        	cls: 'x-btn-text-icon',
-		        	icon: 'images/reset_16x16.png',
+		        	icon: 'images/reset_16x16.png',		        	
 		        	
 		        	style: {
 		        		marginLeft: 5
 		        	},
 		        	
 		        	text: 'Reset'
-		        }]
+		        },{
+		        	xtype: 'button',
+		        	id: 'bMassUpdate',
+		        	disabled: true,
+		        	hidden: true,
+		    				        	
+		        	style: {
+		        		marginLeft: 5
+		        	},
+		        	
+		        	text: 'Strat mass update'
+		        },{
+		        	xtype: 'button',
+		        	id: 'bSelectDeselectAll',
+		        	disabled: true,
+		        	hidden: true,
+		    				        	
+		        	style: {
+		        		marginLeft: 5
+		        	},
+		        	
+		        	text: 'Select/Deselect All'
+		        },
+		        {
+			    	xtype: 'checkbox',
+			        id: 'cbIsMultipleSelect',
+			        hidden: true,
+		    	    
+		        	style: {
+		        		marginLeft: 10
+		        	}
+			        
+		    	},
+		    	{
+		    		xtype: 'label',
+		    		id: 'lIsMultipleSelect',
+		    		text: 'Multiple selection',
+		    		hidden: true,
+		    		
+		    		style: {
+		    			margingLeft: 5
+		    		}
+		    	}
+		        ]
 	        },{
 	        	xtype: 'tabpanel',
 	        	id: 'tpCiSearchResultTables',
@@ -48,16 +91,46 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		});
 		
 		AIR.CiResultView.superclass.initComponent.call(this);
+		this.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect').on('check', this.enableButtonAndMultipleSelect, this);
+
 		
 		this.ciResultGridParamSets = {};
 		this.tabCount = 0;
 	},
 	
-	search: function(params, isUpdate, callback) {//ownerView
-		this.ciTypeId = params.ciTypeId;
+	
+	enableButtonAndMultipleSelect: function(checkbox, isChecked){
 		
+		var bMassUpdate = this.getComponent('pSearchResultOptions').getComponent('bMassUpdate');
+		var bSelectDeselectAll = this.getComponent('pSearchResultOptions').getComponent('bSelectDeselectAll');
 		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
 		
+		if(isChecked){
+			bMassUpdate.setDisabled(false);
+			bSelectDeselectAll.setDisabled(false);
+			tpCiSearchResultTables.getActiveTab().getSelectionModel().singleSelect=false;
+			tpCiSearchResultTables.getActiveTab().getSelectionModel().clearSelections();
+		}
+		else{
+			bMassUpdate.setDisabled(true);
+			bSelectDeselectAll.setDisabled(true);
+			tpCiSearchResultTables.getActiveTab().getSelectionModel().singleSelect=true;
+			tpCiSearchResultTables.getActiveTab().getSelectionModel().clearSelections();
+		}
+		
+		
+	},
+	
+	search: function(params, isUpdate, callback) {//ownerView
+		this.ciTypeId = params.ciTypeId;
+		this.ciSubTypeId = params.ciSubTypeId;
+		
+		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
+		var bMassUpdate = this.getComponent('pSearchResultOptions').getComponent('bMassUpdate');
+		var bSelectDeselectAll = this.getComponent('pSearchResultOptions').getComponent('bSelectDeselectAll');
+		var cbIsMultipleSelect = this.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect');
+		var lIsMultipleSelect = this.getComponent('pSearchResultOptions').getComponent('lIsMultipleSelect');
+
 		var ciResultGrid;
 		var ciResultGridId;
 		
@@ -84,23 +157,58 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			tpCiSearchResultTables.add(ciResultGrid);
 			tpCiSearchResultTables.getItem(ciResultGridId).setTitle(this.getTabTitle(ciResultGridId) + '_' + tabCount);//ciResultGridId
 			tpCiSearchResultTables.setActiveTab(ciResultGridId);
+			
 			this.updateColumnLabels(AAM.getLabels());
+			
 
 			ciResultGrid.on('close', this.onTabClose, this);
+			ciResultGrid.on('activate', this.onTabActivate, this);
 			ciResultGrid.getStore().on('beforeload', this.onGridBeforeLoaded , this);
 			ciResultGrid.getStore().on('load', this.onGridLoaded, this);
 			ciResultGrid.on('rowclick', this.onRowClick, this);
-			ciResultGrid.on('rowdblclick', this.onRowDoubleClick, this);
+			ciResultGrid.on('rowdblclick', this.onRowDoubleClick, this);			
 			
 			var pagingBar = ciResultGrid.getBottomToolbar();
 			var clExcelExport = pagingBar.getComponent(ciResultGridId + '_clExcelExport');
 			clExcelExport.on('click', callback);
+		}
+		if(this.getTabTitle(ciResultGridId) === AC.SEARCH_TYPE_ADV_SEARCH) {
+			bMassUpdate.setVisible(true);
+			bSelectDeselectAll.setVisible(true);
+			cbIsMultipleSelect.setVisible(true);
+			lIsMultipleSelect.setVisible(true);
+		}else{
+			bMassUpdate.setVisible(false);
+			bSelectDeselectAll.setVisible(false);
+			cbIsMultipleSelect.setVisible(false);
+			lIsMultipleSelect.setVisible(false);			
 		}
 
 		ciResultGrid.getStore().load({
 	    	params: params
 	    });
 		ciResultGrid.setPagingParams(params);
+	},
+	onTabActivate: function(tab){		
+		var ciResultGridId = tab.getId();		
+		var searchAction = ciResultGridId.substring(0, ciResultGridId.indexOf('_'));
+		var bMassUpdate = this.getComponent('pSearchResultOptions').getComponent('bMassUpdate');
+		var bSelectDeselectAll = this.getComponent('pSearchResultOptions').getComponent('bSelectDeselectAll');
+		var cbIsMultipleSelect = this.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect');
+		var lIsMultipleSelect = this.getComponent('pSearchResultOptions').getComponent('lIsMultipleSelect');
+
+		
+		if(searchAction === AC.SEARCH_TYPE_ADV_SEARCH) {
+			bMassUpdate.setVisible(true);
+			bSelectDeselectAll.setVisible(true);
+			cbIsMultipleSelect.setVisible(true);
+			lIsMultipleSelect.setVisible(true);
+		}else{
+			bMassUpdate.setVisible(false);
+			bSelectDeselectAll.setVisible(false);
+			cbIsMultipleSelect.setVisible(false);
+			lIsMultipleSelect.setVisible(false);
+		}
 	},
 	
 	onGridLoaded: function(store, records, options) {
@@ -229,6 +337,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		if(tabCount === 1)//0, 1 weil tab erst nach dem event zerstört wird
 			this.setVisible(false);
 	},
+
 	
 	getSearchParams: function(tabId) {
 		if(!tabId) {

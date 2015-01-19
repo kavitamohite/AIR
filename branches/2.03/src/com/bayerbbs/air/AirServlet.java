@@ -729,6 +729,8 @@ public class AirServlet extends HttpServlet {
 				append(compressJSFile("javascript/search/CiStandardSearchView.js", version)).
 				append(compressJSFile("javascript/search/CiOuSearchView.js", version)).
 				append(compressJSFile("javascript/search/DwhEntityGrid.js", version)).
+				append(compressJSFile("javascript/massUpdate/MassUpdateSerachCITemplateWindow.js", version)).
+
 				
 				append(compressJSFile("javascript/myplace/MyPlaceTabView.js", version)).
 				append(compressJSFile("javascript/myplace/MyPlaceView.js", version)).
@@ -775,6 +777,9 @@ public class AirServlet extends HttpServlet {
 				append(compressJSFile("javascript/core/AirLoginWindow.js", version)).
 				append(compressJSFile("javascript/core/AirBootstrap.js", version)).
 				append(compressJSFile("javascript/core/Main.js", version)).
+				
+				append(compressJSFile("javascript/massUpdate/MassUpdateAttributeValueTransferWindow.js", version)).
+				append(compressJSFile("javascript/massUpdate/MassUpdateComplianceCotrolSelectionWindow.js",version)).
 				
 	//			===================================================================================================================
 				

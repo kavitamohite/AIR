@@ -21,6 +21,13 @@ public class ApplicationCat2Hbn {
 	/** The logger. */
 	private static final Log log = LogFactory.getLog(ApplicationCat2Hbn.class);
 	
+	
+	public static ApplicationCat2 findById(Long id){
+		Session session = HibernateUtil.getSession();
+		return (ApplicationCat2)session.get(ApplicationCat2.class, id);
+		
+	}
+	
 	/**
 	 * converts the list entry database table to dto
 	 * @param input

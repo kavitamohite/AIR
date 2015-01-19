@@ -22,6 +22,7 @@ import com.bayerbbs.applrepos.dto.LinkCIDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.service.CiItemDTO;
+import com.bayerbbs.applrepos.service.ComplianceControlDTO;
 import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
 
 public class CiEntitiesHbn {
@@ -1254,6 +1255,61 @@ public class CiEntitiesHbn {
 			HibernateUtil.close(tx, session, false);
 		}
 		return ciName;
+	}
+	public static List<ComplianceControlDTO> findAllCIComplianceControl(Long tableId ,Long ciID){
+		List<ComplianceControlDTO> compControlDTOs = new ArrayList<ComplianceControlDTO>();
+		Transaction tx = null;
+		Statement selectStmt = null;
+		Session session = HibernateUtil.getSession();
+		String sql="SELECT   STA.Itsec_Massn_St_Id,"+
+         "TO_CHAR(MAS.Katalog_Id, 'fm00') || '.' || TO_CHAR(MAS.Massnahme_Nr, 'fm000') AS Ident,"+
+         "MTX.Massnahme_Titel AS Control,"+
+         "STW.Status_Wert_En AS Compliance_Status,"+
+         "STA.Status_Kommentar AS Justification "+
+         "FROM ITSEC_MASSN_STATUS STA "+
+         "INNER JOIN ITSEC_MASSN_STWERT STW ON pck_SISec.EffStatusId(STA.Itsec_Massn_St_Id)=STW.Itsec_Massn_Wertid "+ 
+         "INNER JOIN ITSEC_MASSN MAS ON STA.Massnahme_Gstoolid=MAS.Massnahme_Id " + 
+         "LEFT OUTER JOIN ITSEC_MASSNT MTX ON MAS.Massnahme_Id=MTX.Massnahme_Id AND MTX.Langu = 'en' "+
+         "WHERE STA.Itsec_Massn_St_Id IN (SELECT   STA.Itsec_Massn_St_Id "+
+         "FROM  TABLE(pck_SISec.FT_Compliance("+tableId+","+ciID+")) STA "+     
+         "WHERE (pck_SISec.EffStatusId(STA.Itsec_Massn_St_Id) <> 5 "+
+         "OR  STA.Ref_Table_Id IS NOT NULL)"+
+         "AND (NVL(STA.Ref_Table_ID, 0) <> STA.Tabelle_ID "+
+         "OR  NVL(STA.Ref_PK_ID, 0) <> "+ciID+"))ORDER BY MAS.Katalog_Id, MAS.Massnahme_Nr";
+		
+		try{
+			tx=session.beginTransaction();
+			Connection con=session.connection();
+			selectStmt=con.createStatement();
+			ResultSet resultSet = selectStmt.executeQuery(sql);
+			if(resultSet != null){
+				while(resultSet.next()) {
+					ComplianceControlDTO controlDTO = new ComplianceControlDTO();
+					controlDTO.setItsec_Massn_St_Id(resultSet.getLong("Itsec_Massn_St_Id"));
+					controlDTO.setControl(resultSet.getString("Control"));
+					controlDTO.setCompliance_status(resultSet.getString("Compliance_Status"));
+					controlDTO.setJustification(resultSet.getString("Justification"));
+					controlDTO.setIdent(resultSet.getString("Ident"));
+					compControlDTOs.add(controlDTO);
+				}
+			}
+			if (null != resultSet) {
+				resultSet.close();
+			}
+			if (null != selectStmt) {
+				selectStmt.close();
+			}
+			if (null != con) {
+				con.close();
+			}
+			 
+		}catch (Exception e) {
+			System.out.println(e.toString());
+		}finally{
+			HibernateUtil.close(tx, session, false);
+		}
+     
+		return compControlDTOs;
 	}
 			
 }

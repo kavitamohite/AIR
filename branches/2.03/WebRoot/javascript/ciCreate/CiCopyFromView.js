@@ -245,6 +245,11 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 	},
 	
 	onGridBeforeLoaded: function(store, options) {
+		var grid = this.getComponent('pCopyFromSearchCard').getComponent('CiSearchWizzardResultGrid');
+		grid.selModel = undefined;
+		var col = grid.colModel.config[0];
+		if(col.dataIndex=='')
+		grid.colModel.config.remove(col);
 		AAM.getMask(AC.MASK_TYPE_LOAD).show();
 	},
 	

@@ -371,5 +371,6 @@ public class ApplicationSearchParamsDTO extends CiSearchParamsDTO {
 		this.businessEssentialOptions = businessEssentialOptions;
 	}
 
+
 	
 }

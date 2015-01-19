@@ -5,6 +5,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.CacheMode;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -12,6 +16,8 @@ import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.ItsecCompliance;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmeDetailDTO;
+import com.bayerbbs.applrepos.service.MassUpdateComplianceControlParameterInput;
+import com.bayerbbs.applrepos.service.MassUpdateComplianceControlParameterOutput;
 
 public class ItsecMassnahmeStatusHbn {
 
@@ -306,6 +312,82 @@ public class ItsecMassnahmeStatusHbn {
 		} finally {
 			HibernateUtil.close(ta, session, commit);
 		}
+	}
+	public static MassUpdateComplianceControlParameterOutput saveMassUpdateComplianceControl(MassUpdateComplianceControlParameterInput  input){
+		MassUpdateComplianceControlParameterOutput output = new MassUpdateComplianceControlParameterOutput();
+		if(StringUtils.isNotEmpty(input.getSelectedItsecMassnStIds())){
+			String[] selectedMassnahStatusIDsArray = input.getSelectedItsecMassnStIds().split(",");
+			int size = selectedMassnahStatusIDsArray.length;
+			for(int i = 0 ;i< size ; i++){
+				String itsecMassnStId = selectedMassnahStatusIDsArray[i];
+				ItsecCompliance status = findById(Long.valueOf(itsecMassnStId));
+				Session session = HibernateUtil.getSession();;
+				Transaction tx = session.beginTransaction();
+				boolean toCommit = false;
+				try {
+					ScrollableResults compliances = session.createQuery("select h from ItsecCompliance as h where h.zobId = "+status.getZobId()+" and h.tabelleId = "+status.getTabelleId()+" and h.massnahmeGSTOOLID = "+status.getMassnahmeGSTOOLID() +" and h.tabellePkId in("+input.getSelectedCIs()+")")
+				    .setCacheMode(CacheMode.IGNORE)
+				    .scroll(ScrollMode.FORWARD_ONLY);
+					int count=0;
+					while(compliances.next()){
+						ItsecCompliance itsecCompliance = (ItsecCompliance) compliances.get(0);
+						
+						itsecCompliance.setStatusId(status.getStatusId());
+						itsecCompliance.setStatusKommentar(status.getStatusKommentar());
+						itsecCompliance.setNoUpdateYN(status.getNoUpdateYN());
+						itsecCompliance.setGap(status.getGap());
+						itsecCompliance.setGapResponsible(status.getGapResponsible());
+						itsecCompliance.setGapMeasure(status.getGapMeasure());
+						itsecCompliance.setGapEndDate(status.getGapEndDate());
+						itsecCompliance.setRefTableID(status.getRefTableID());
+						itsecCompliance.setRefPKID(status.getRefPKID());
+						itsecCompliance.setExpense(status.getExpense());
+						itsecCompliance.setProbOccurence(status.getProbOccurence());
+						itsecCompliance.setDamage(status.getDamage());
+						itsecCompliance.setMitigationPotential(status.getMitigationPotential());// / 100
+						itsecCompliance.setSignee(status.getSignee());
+						itsecCompliance.setGapClassApproved(status.getGapClassApproved());
+						
+						itsecCompliance.setExpenseT(status.getExpenseT());
+						itsecCompliance.setProbOccucrenceT(status.getProbOccucrenceT());
+						itsecCompliance.setDamageT(status.getDamageT());
+						itsecCompliance.setMitigationPotentialT(status.getMitigationPotentialT());
+						itsecCompliance.setRiskAnalysisAsFreetext(status.getRiskAnalysisAsFreetext());
+						itsecCompliance.setGapEndDateIncreased(status.getGapEndDateIncreased());
+						itsecCompliance.setCurrency(status.getCurrency());
+						itsecCompliance.setTemplateException(status.getTemplateException());
+						
+						itsecCompliance.setUpdateUser(input.getCwid());
+						itsecCompliance.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+						itsecCompliance.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+					    if ( ++count % 20 == 0 ) {
+					        session.flush();
+					        session.clear();
+					    }
+					}
+					session.flush();
+					session.clear();				   
+					toCommit = true;
+				}catch (Exception e) {
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { e.getMessage() });
+				}finally{
+					if (toCommit) {
+						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+						if (null == hbnMessage) {
+							output.setResult(AirKonstanten.RESULT_OK);
+							output.setMessages(new String[] { "" });
+						} else {
+							output.setResult(AirKonstanten.RESULT_ERROR);
+							output.setMessages(new String[] { hbnMessage });
+						}
+					}
+				}
+			}
+			
+			
+		}
+		return output;
 	}
 
 }

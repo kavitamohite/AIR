@@ -20,6 +20,7 @@ import com.bayerbbs.applrepos.dto.DirectLinkageCIsAnswerDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmeDetailDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenDTO;
 import com.bayerbbs.applrepos.dto.ItsecMassnahmenStatusWertDTO;
+import com.bayerbbs.applrepos.service.MassUpdateComplianceControlParameterOutput;
 
 public class ItsecHbn {
 
@@ -555,7 +556,5 @@ public class ItsecHbn {
 		}
         return listDTO;
 	}
-	
 
-	
 }

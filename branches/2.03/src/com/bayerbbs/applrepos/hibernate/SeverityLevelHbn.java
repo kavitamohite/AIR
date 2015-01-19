@@ -13,6 +13,13 @@ import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
 
 public class SeverityLevelHbn {
+	
+	
+	
+	public static SeverityLevel findById(Long id){		
+		Session session = HibernateUtil.getSession();
+		return (SeverityLevel)session.get(SeverityLevel.class, id);
+	}
 
 	/**
 	 * returns the array from list

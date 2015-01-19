@@ -11,6 +11,14 @@ import com.bayerbbs.applrepos.domain.PriorityLevel;
 import com.bayerbbs.applrepos.dto.PriorityLevelDTO;
 
 public class PriorityLevelHbn {
+	
+	
+	public static PriorityLevel findById(Long id){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		return (PriorityLevel)session.get(PriorityLevel.class, id);
+		
+		
+	}
 
 	/**
 	 * returns the array from list

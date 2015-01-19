@@ -63,7 +63,7 @@ AIR.DirectLinkageCIsAnswerWindow = Ext.extend(Ext.Window,{
   
     		
     	});
-    	AIR.DirectLinkCITemplateWindow.superclass.initComponent.call(this);
+    	AIR.DirectLinkageCIsAnswerWindow.superclass.initComponent.call(this);
 
     }
 

@@ -64,4 +64,17 @@ public class CiEntityWSDelegate {
 	public ComplianceTemplateParameterOutput findAllDirectLinkCIWithTemplate(CiDetailParameterInput input){
 		return ciEntityWS.findAllDirectLinkCIWithTemplate(input);
 	}
+	
+	public MassUpdateParameterOutput  getCIAttributesForMassUpdate(CiDetailParameterInput input){		
+		return ciEntityWS.getCIAttributesForMassUpdate(input);		
+	}
+	
+	public MassUpdateValueTransferParameterOutPut massUpdate(MassUpdateParameterInput  massUpdateParameterInput){
+		return ciEntityWS.massUpdate(massUpdateParameterInput);
+	}
+	
+	public ComplianceControlParameterOutput findAllCIComplianceControlForMassUpdate(CiDetailParameterInput input){
+		return ciEntityWS.findAllCIComplianceControlForMassUpdate(input);
+	}
+
 }

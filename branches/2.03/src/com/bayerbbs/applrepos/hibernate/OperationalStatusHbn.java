@@ -12,6 +12,12 @@ import com.bayerbbs.applrepos.domain.OperationalStatus;
 import com.bayerbbs.applrepos.dto.OperationalStatusDTO;
 
 public class OperationalStatusHbn {
+	
+	
+	public static OperationalStatus findById(Long id){
+		Session session = HibernateUtil.getSession();
+		return (OperationalStatus) session.get(OperationalStatus.class, id);
+	}
 
 	
 	/**

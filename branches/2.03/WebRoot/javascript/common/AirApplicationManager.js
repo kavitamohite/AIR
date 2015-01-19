@@ -615,6 +615,12 @@ AIR.AirApplicationManager = function() {
 		setCiSubTypeId: function(ciSubTypeId) {
 			this.ciSubTypeId = ciSubTypeId;
 		},
+		getSelectedCiIds: function() {
+			return this.selectedCiIds;
+		},
+		setSelectedCiIds: function(selectedCiIds) {
+			this.selectedCiIds = selectedCiIds;
+		},
 		
 		
 //		getCiData: function() {
@@ -849,7 +855,20 @@ AIR.AirApplicationManager = function() {
 			
 			combo.getStore().commitChanges();
 			combo.getStore().sort('sortId');//sort singleSort
+		},
+		
+		setMassUpdateData: function(massUpdateData) {
+			//nötig/besser?
+			this.massUpdateData = null;
+			delete this.massUpdateData;
+			
+			this.massUpdateData = massUpdateData;
+		},
+		
+		getMassUpdateData: function() {
+			return this.massUpdateData;
 		}
+		
 	};
 }();
 

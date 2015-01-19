@@ -176,4 +176,28 @@ public final class AirKonstanten {
 	
 	public static final String UP = "UPSTREAM";
 	public static final String DN = "DOWNSTREAM";
+	public static final String APPLICATION_CATEGORY_2 = "Application Category 2";
+	public static final String LIFE_CYCLE_STATUS = "Life Cycle";
+	public static final String OPERATIONAL_STATUS = "Operational Status";
+	public static final String PRIORITY_LEVEL = "Priority Level";
+	public static final String SEVERITY_LEVEL = "Severity Level";
+	public static final String CLUSTER_CODE = "Cluster Code";
+	public static final String CLUSTER_TYPE = "Cluster Type";
+	public static final String PRIMARY_PERSON = "Primary Person";
+	public static final String DELEGATE_PERSON_GROUP = "Delegate Person/Group";
+	public static final String LINK = "Link";
+	public static final String GR1435 = "GR1435";
+	public static final String GXP = "GxP";
+	public static final String ITSEC_GROUP = "ITSec Group";
+	public static final String SLA = "SLA";
+	public static final String SERVICE_CONTRACT = "Service Contract";
+	public static final String PROTECTION_LEVEL_INTEGRITY = "Protection Level Integrity";
+	public static final String EXPLANATION_FOR_PROTECTION_LEVEL = "Explanation for Protection Level";
+	public static final String PROTECTION_LEVEL_CONFIDENTIALITY = "Protection Level Confidentiality";
+	public static final String EXPLANATION_FOR_PROTECTION_LEVEL_CONFIDENTIALITY = "Explanation for Protection Level Confidentiality";
+	public static final String PROTECTION_LEVEL_AVAILABILITY = "Protection Level Availability";
+	public static final String EXPLANATION_FOR_PROTECTION_LEVEL_AVAILABILITY = "Explanation for Protection Level Availability";
+	
+	
+	
 }

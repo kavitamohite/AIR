@@ -10,16 +10,44 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 	            '<p><b>Lifecycle status:</b> {applicationCat2Txt}</p>'
 	        )
 	    });
-	    		
-	    var columns = AIR.AirConfigFactory.createCiResultGridConfig(this.complete);
+	    var selModel = new Ext.grid.CheckboxSelectionModel({
+	    	   checkOnly : true,
+	    	   sortable: true,
+	    	   singleSelect: true,
+//	    	   singleSelect: this.getId().substring(0, this.getId().indexOf('_')) === AC.SEARCH_TYPE_ADV_SEARCH ? false : true 
+	    		listeners: {
+	    			beforerowselect : function(selModel, rowIndex, keepExisting, record ){
+	    				if(selModel.grid.ownerCt.ownerCt.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect').getValue()){
+		    				if(record.data.isTemplate=='-1')
+			    				return false;
+			    				else {
+			    					var isAdmin = AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
+			    					if(isAdmin)
+			    						return true;
+			    					else{
+			    						var cwid=AAM.getCwid();
+			    					    if(record.data.ciOwner==cwid || record.data.ciOwnerDelegate==cwid || record.data.applicationOwner==cwid  || record.data.applicationSteward==cwid || record.data.applicationOwnerDelegate==cwid )    						
+			    							return true;
+			    						else
+			    							false;	    					
+			    					}
+			    				}	    					
+	    				}else
+	    					true;
+
+	    			}	    			
+	    		}});
 	    
-	    for(var i = 0; i <  columns.length; i++)
+	    
+	    var columns = AIR.AirConfigFactory.createCiResultGridConfig(this.complete,selModel);
+	    
+	    for(var i = 1; i <  columns.length; i++)
 	    	columns[i].renderer = this.columnRenderer;
 	    
 		this.defaultColumnConfig = columns;
 	    
 		var colModel = new Ext.grid.ColumnModel(columns);
-		var selModel = AC.resultGridSelModel;
+		
 //		if (columns[0].id != 'name') {
 //			selModel = AC.resultGridSelModel;
 //		} else {

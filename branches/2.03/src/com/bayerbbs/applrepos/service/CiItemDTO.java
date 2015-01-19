@@ -12,7 +12,7 @@ public class CiItemDTO { //implements Serializable
     private String location;
 	private Integer tableId;
 	
-//	isTemplate Y = 0, N = -1, else = all
+//	isTemplate Y = -1, N = 0, else = all
 	private String isTemplate;
 
 //	private Integer ciTypeId;//tableId

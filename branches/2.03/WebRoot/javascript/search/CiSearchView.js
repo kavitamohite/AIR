@@ -97,7 +97,66 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 		ciSearchResultView.getComponent('pSearchResultOptions').getComponent('bExpandAdvSearchParams').on('click', this.onExpandAdvSearchParams, this);
 		ciSearchResultView.getComponent('pSearchResultOptions').getComponent('bSearchReset').on('click', this.onReset, this);
+		ciSearchResultView.getComponent('pSearchResultOptions').getComponent('bSelectDeselectAll').on('click', this.selectDeselectAll, this);
+		ciSearchResultView.getComponent('pSearchResultOptions').getComponent('bMassUpdate').on('click', this.startMassUpdate, this);
+		
 		this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('pSearch').getComponent('bUpdateCiSearchResult').on('click', this.onUpdateCiSearchResult, this);
+	},
+	
+	selectDeselectAll: function(button, event){
+		var ciResultGrid = this.getComponent('ciSearchResultView').getComponent('tpCiSearchResultTables').getActiveTab();
+		var selModel = ciResultGrid.getSelectionModel();
+		if(selModel.getCount() > 0){
+			selModel.clearSelections();			
+		}else{
+			selModel.selectAll();
+		}
+	},
+	
+	startMassUpdate: function(button, event){
+		var ciResultGrid = this.getComponent('ciSearchResultView').getComponent('tpCiSearchResultTables').getActiveTab();
+		var selModel = ciResultGrid.getSelectionModel();
+		var callback = function() {
+			this.fireEvent('externalNavigation', this, null, 'clSearch');
+		};
+		
+		var callbackMap = {
+			ok: callback.createDelegate(this)
+		};
+		var selectedElements = selModel.getCount();
+		if(selectedElements === 0){
+			var message='Select at least on element for mass update.';
+/*			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('WARNING_OK', callbackMap, message, 'Mass update');
+			dynamicWindow.show()*/;
+	        Ext.Msg.show({
+	            title: 'mass update',
+	            msg: 'Select at least on element for mass update.',
+	            modal: false,
+	            icon: Ext.Msg.INFO,
+	            buttons: Ext.Msg.OK
+	        });
+		}else{
+			var message='Are you sure you want to perform the mass update with the marked elements ('+selectedElements+')?';
+			var windowToitle= 'Start mass update ('+selectedElements+' elements)';
+			var verwerfenCallback = function() {
+				var selectedRows = selModel.getSelections();
+				var ids = selectedRows[0].id;
+				var size= selectedRows.length;
+				if(size > 1){
+					for( var i = 1; i < selectedRows.length; i++) {
+						ids=ids+','+selectedRows[i].id; // Do whatever you want to do
+					}
+				}
+				var massUpdateSerachCITemplateWindow = new AIR.MassUpdateSerachCITemplateWindow(this.getComponent('ciSearchResultView').ciTypeId,this.getComponent('ciSearchResultView').ciSubTypeId,ids);
+				massUpdateSerachCITemplateWindow.show();
+			}.createDelegate(this);			
+			
+			var callbackMap = {
+				'yes': verwerfenCallback
+			};			
+			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('MASSUPDATE_CONFIRMATION', callbackMap,message,windowToitle);
+			dynamicWindow.show();
+		}
 	},
 	
 	onCat1Select: function(store, record, options) {

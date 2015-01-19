@@ -283,4 +283,4 @@ AC.CI_TYPE_CREATION_BY_ROLE = {
 
 };
 
-AC.resultGridSelModel = new Ext.grid.CheckboxSelectionModel({width: 37, id: 'mucbcolumn'});
+AC.resultGridSelModel = new Ext.grid.CheckboxSelectionModel();

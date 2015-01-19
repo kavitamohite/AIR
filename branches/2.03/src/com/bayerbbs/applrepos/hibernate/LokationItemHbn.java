@@ -54,7 +54,7 @@ public class LokationItemHbn extends BaseHbn {
 		if(metaData.getAliasField() != null)
 			sql.append(", ").append(CI).append(metaData.getAliasField());
 		
-		sql.append(", responsible, sub_responsible, del_quelle, ").append(locationFields).append(" FROM ").append(metaData.getTableName()).append(" ci").
+		sql.append(", responsible, sub_responsible, template, del_quelle, ").append(locationFields).append(" FROM ").append(metaData.getTableName()).append(" ci").
 		append(" JOIN search_loc lk on ").append(LK).append(metaData.getIdField()).append(" = ").append(CI).append(metaData.getIdField()).
 		append(" WHERE (").//del_timestamp IS NULL AND 
 		append("UPPER(").append(CI).append(metaData.getNameField()).append(") LIKE '");
@@ -135,11 +135,26 @@ public class LokationItemHbn extends BaseHbn {
 				sql.insert(sql.length() - 2, '%');
 		}
 		
-		if(input.getShowDeleted() == null || !input.getShowDeleted().equals(AirKonstanten.YES_SHORT))
+		if(input.getShowDeleted() == null || !input.getShowDeleted().equals(AirKonstanten.YES_SHORT)){
 			sql.append(" AND del_quelle IS NULL");
+		}
+		String template = input.getIsTemplate();
+		if (null != input) {
+			String searchTemplate = null;
+			if ("Y".equals(template)) {
+				searchTemplate = "-1";
+			}
+			else if ("N".equals(template)) {
+				searchTemplate = "0";
+			}
+			
+			if (null != searchTemplate) {
+				sql.append(" and NVL(template, 0) = ").append(searchTemplate);
+			}
+		}
 		
 		try {
-			if ("BY03DF".equals(java.net.InetAddress.getLocalHost().getHostName())) 
+			if ("VDI-CAP-S-2390".equals(java.net.InetAddress.getLocalHost().getHostName())) 
 				System.out.println(sql.toString());
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -201,6 +216,7 @@ public class LokationItemHbn extends BaseHbn {
 					ci.setCiOwnerDelegate(rs.getString("sub_responsible"));
 					ci.setTableId(metaData.getTableId());
 					ci.setDeleteQuelle(rs.getString("del_quelle"));
+					ci.setIsTemplate(rs.getString("template"));
 					
 					cis.add(ci);
 					//i++;

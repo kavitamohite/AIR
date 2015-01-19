@@ -9,7 +9,7 @@ package com.bayerbbs.applrepos.dto;
  */
 public class DirectLinkCIDTO {
 	
-	private Long id;
+	private long id;
 	private String name;
 
 	/**
@@ -29,14 +29,14 @@ public class DirectLinkCIDTO {
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	

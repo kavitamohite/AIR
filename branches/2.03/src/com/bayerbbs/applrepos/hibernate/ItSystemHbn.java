@@ -900,7 +900,7 @@ public class ItSystemHbn extends BaseHbn {
 		
 		
 		//cwid_verantw_betr statt responsible
-		sql.append(", cwid_verantw_betr, sub_responsible, del_quelle FROM ").append(metaData.getTableName()).append(" WHERE 1=1 ");
+		sql.append(", cwid_verantw_betr, sub_responsible, template, del_quelle FROM ").append(metaData.getTableName()).append(" WHERE 1=1 ");
 
 //		append(" hw_ident_or_trans = ").append(input.getCiSubTypeId()).
 		if(input.getShowDeleted() == null || !input.getShowDeleted().equals(AirKonstanten.YES_SHORT))
@@ -983,7 +983,20 @@ public class ItSystemHbn extends BaseHbn {
 			if(!isCwid)
 				sql.insert(sql.length() - 2, '%');
 		}
-		
+		String template = input.getIsTemplate();
+		if (null != input) {
+			String searchTemplate = null;
+			if ("Y".equals(template)) {
+				searchTemplate = "-1";
+			}
+			else if ("N".equals(template)) {
+				searchTemplate = "0";
+			}
+			
+			if (null != searchTemplate) {
+				sql.append(" and NVL(template, 0) = ").append(searchTemplate);
+			}
+		}
 
 
 		return sql;
@@ -1047,6 +1060,7 @@ public class ItSystemHbn extends BaseHbn {
 					ci.setCiOwnerDelegate(rs.getString("sub_responsible"));
 					ci.setTableId(metaData.getTableId());
 					ci.setDeleteQuelle(rs.getString("del_quelle"));
+					ci.setIsTemplate(rs.getString("template"));
 					
 					cis.add(ci);
 					//i++;

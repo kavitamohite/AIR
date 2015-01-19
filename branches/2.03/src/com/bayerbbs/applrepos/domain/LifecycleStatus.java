@@ -134,7 +134,7 @@ public class LifecycleStatus implements Serializable {
 	 * 
 	 * @return Value of the {@link #tabelleId} field.
 	 */
-	@Column(name = "TABELLE_ID")
+	@Column(name = "TABLE_ID")
 	public Long getTabelleId() {
 		return tabelleId;
 	}
