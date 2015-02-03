@@ -443,11 +443,13 @@ public class CiEntityWS {
 					result = new CiItemsResultDTO();
 					break;
 			}
-			
+			 Runtime.getRuntime().gc();
 			return result;
 		} else {
+			 Runtime.getRuntime().gc();
 			return new ApplicationWS().findApplications(input);
 		}
+		
 	}
 	
 	public CiEntityEditParameterOutput deleteCi(CiEntityParameterInput input) {
@@ -783,42 +785,52 @@ public class CiEntityWS {
 		MassUpdateParameterOutput massUpdateParameterOutput = new MassUpdateParameterOutput();
 		List<MassUpdateAttributeDTO> massUpdateAttriubteDTOs = null;
 		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
-			if(input.getCiTypeId() == AirKonstanten.TABLE_ID_APPLICATION){
-				Application application = AnwendungHbn.findApplicationById(input.getCiId());
-				ApplicationCat2 applicationCat2 = ApplicationCat2Hbn.findById(application.getApplicationCat2Id());
-				massUpdateAttriubteDTOs = getApplicationAttributeDTOList(application,applicationCat2);				
+			if (input.getCiTypeId() == AirKonstanten.TABLE_ID_APPLICATION) {
+				Application application = AnwendungHbn
+						.findApplicationById(input.getCiId());
+				ApplicationCat2 applicationCat2 = ApplicationCat2Hbn
+						.findById(application.getApplicationCat2Id());
+				massUpdateAttriubteDTOs = getApplicationAttributeDTOList(
+						application, applicationCat2);
+			} else {
+				if (input.getCiTypeId() == AirKonstanten.TABLE_ID_IT_SYSTEM) {
+					ItSystem itSystem = ItSystemHbn.findById(ItSystem.class,
+							input.getCiId());
+					massUpdateAttriubteDTOs = getItSystemAttributeDTOList(itSystem);
+				} else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_IT_SYSTEM) {
+					ItSystem itSystem = ItSystemHbn.findById(ItSystem.class,
+							input.getCiId());
+					massUpdateAttriubteDTOs = getItSystemAttributeDTOList(itSystem);
+				} else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_ROOM) {
+					Room room = RoomHbn.findById(input.getCiId());
+					massUpdateAttriubteDTOs = getAttributeDTOList(room,
+							AirKonstanten.TABLE_ID_ROOM);
+				} else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_BUILDING_AREA) {
+					BuildingArea buildingArea = BuildingHbn
+							.findBuildingAreaById(input.getCiId());
+					massUpdateAttriubteDTOs = getAttributeDTOList(buildingArea,
+							AirKonstanten.TABLE_ID_BUILDING_AREA);
+				} else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_BUILDING) {
+					Building building = BuildingHbn.findById(input.getCiId());
+					massUpdateAttriubteDTOs = getAttributeDTOList(building,
+							AirKonstanten.TABLE_ID_BUILDING);
+				} else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_TERRAIN) {
+					Terrain terrain = TerrainHbn.findById(Terrain.class,
+							input.getCiId());
+					massUpdateAttriubteDTOs = getAttributeDTOList(terrain,
+							AirKonstanten.TABLE_ID_TERRAIN);
+				} else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_POSITION) {
+					Schrank schrank = SchrankHbn.findById(input.getCiId());
+					massUpdateAttriubteDTOs = getAttributeDTOList(schrank,
+							AirKonstanten.TABLE_ID_POSITION);
+				} else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_IT_SYSTEM) {
+					ItSystem itSystem = ItSystemHbn.findById(ItSystem.class,
+							input.getCiId());
+					massUpdateAttriubteDTOs = getItSystemAttributeDTOList(itSystem);
+				}
+
 			}
-			if (input.getCiTypeId() == AirKonstanten.TABLE_ID_ROOM) {
-				Room room = RoomHbn.findById(input.getCiId()); 
-				massUpdateAttriubteDTOs = getAttributeDTOList(room,
-						AirKonstanten.TABLE_ID_ROOM);
-			}
-			if (input.getCiTypeId() == AirKonstanten.TABLE_ID_BUILDING_AREA) {
-				BuildingArea buildingArea = BuildingHbn
-						.findBuildingAreaById(input.getCiId());
-				massUpdateAttriubteDTOs = getAttributeDTOList(buildingArea,
-						AirKonstanten.TABLE_ID_BUILDING_AREA);
-			}
-			if (input.getCiTypeId() == AirKonstanten.TABLE_ID_BUILDING) {
-				Building building = BuildingHbn.findById(input.getCiId());
-				massUpdateAttriubteDTOs = getAttributeDTOList(building,
-						AirKonstanten.TABLE_ID_BUILDING);
-			}
-			if (input.getCiTypeId() == AirKonstanten.TABLE_ID_TERRAIN) {
-				Terrain terrain = TerrainHbn.findById(Terrain.class,
-						input.getCiId());
-				massUpdateAttriubteDTOs = getAttributeDTOList(terrain,
-						AirKonstanten.TABLE_ID_TERRAIN);
-			}
-			if (input.getCiTypeId() == AirKonstanten.TABLE_ID_POSITION) {
-				Schrank schrank = SchrankHbn.findById(input.getCiId());
-				massUpdateAttriubteDTOs = getAttributeDTOList(schrank,
-						AirKonstanten.TABLE_ID_POSITION);
-			}
-			if (input.getCiTypeId() == AirKonstanten.TABLE_ID_IT_SYSTEM) {
-				ItSystem itSystem = ItSystemHbn.findById(ItSystem.class,
-						input.getCiId());				
-			}
+
 		}
 		massUpdateParameterOutput
 				.setMassUpdateAttributeDTO(getMassUpdateAttriuteDTOs(massUpdateAttriubteDTOs));
@@ -834,6 +846,137 @@ public class CiEntityWS {
 		}
 		return massUpdateAttriuteDTOArray;
 	}
+
+	private List<MassUpdateAttributeDTO> getItSystemAttributeDTOList(
+			ItSystem itSystem) {
+		List<MassUpdateAttributeDTO> massUpdateAttriuteDTOs = new ArrayList<MassUpdateAttributeDTO>();
+
+		MassUpdateAttributeDTO maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.PRIMARY_PERSON);
+		maDto.setAttributeValue(itSystem.getCiOwner());
+		maDto.setId("responsible");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.DELEGATE_PERSON_GROUP);
+		maDto.setAttributeValue(itSystem.getCiOwnerDelegate());
+		maDto.setId("subResponsible");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.LIFE_CYCLE_STATUS);
+		if (itSystem.getLifecycleStatusId() != null)
+			maDto.setAttributeValue(LifecycleStatusHbn.findById(
+					Long.valueOf(itSystem.getLifecycleStatusId()))
+					.getlcStatusEn());
+		maDto.setId("lifecycleStatusId");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.OPERATIONAL_STATUS);
+		if (itSystem.getEinsatzStatusId() != null)
+			maDto.setAttributeValue(OperationalStatusHbn.findById(
+					Long.valueOf(itSystem.getEinsatzStatusId())).getOperationalStatusEn());
+		maDto.setId("operationalStatusId");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.PRIORITY_LEVEL);
+		if (itSystem.getPriorityLevelId() != null)
+			maDto.setAttributeValue(PriorityLevelHbn.findById(
+					itSystem.getPriorityLevelId()).getPriorityLevel());
+		maDto.setId("priorityLevelId");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.SEVERITY_LEVEL);
+		if (itSystem.getSeverityLevelId() != null)
+			maDto.setAttributeValue(SeverityLevelHbn.findById(
+					itSystem.getSeverityLevelId()).getSeverityLevelName());
+		maDto.setId("severityLevelId");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.CLUSTER_CODE);
+		maDto.setAttributeValue(itSystem.getClusterCode());
+		maDto.setId("clusterCode");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.CLUSTER_TYPE);
+		maDto.setAttributeValue(itSystem.getClusterType());
+		maDto.setId("clusterType");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.GR1435);
+		if (-1 == itSystem.getRelevanceITSEC()) {
+			maDto.setAttributeValue("Yes");
+		} else {
+			maDto.setAttributeValue("No");
+		}
+		maDto.setId("relevanzITSEC");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.ITSEC_GROUP);
+		maDto.setAttributeValue(ItSecGroupHbn.getItSecGroup(itSystem
+				.getItsecGroupId()));
+		maDto.setId("itsecGroupId");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.SLA);
+		maDto.setAttributeValue(SlaHbn.getSlaName(itSystem.getSlaId()));
+		maDto.setId("slaId");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.SERVICE_CONTRACT);
+		maDto.setAttributeValue(ServiceContractHbn.getServiceContract(itSystem
+				.getServiceContractId()));
+		maDto.setId("serviceContractId");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_INTEGRITY);
+		maDto.setAttributeValue(getValue(itSystem.getItSecSbIntegrityId()));
+		maDto.setId("itSecSbIntegrityId");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.EXPLANATION_FOR_PROTECTION_LEVEL);
+		maDto.setAttributeValue(itSystem.getItSecSbIntegrityTxt());
+		maDto.setId("itSecSbIntegrityTxt");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
+		maDto.setAttributeValue(getValue(itSystem.getItSecSbConfidentialityId()));
+		maDto.setId("itSecSbConfidentiality");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.EXPLANATION_FOR_PROTECTION_LEVEL_CONFIDENTIALITY);
+		maDto.setAttributeValue(itSystem.getItSecSbConfidentialityTxt());
+		maDto.setId("itSecSbConfidentialityTxt");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_AVAILABILITY);
+		maDto.setAttributeValue(getValue(itSystem.getItSecSbAvailability()));
+		maDto.setId("itSecSbAvailability");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.EXPLANATION_FOR_PROTECTION_LEVEL_AVAILABILITY);
+		maDto.setAttributeValue(itSystem.getItSecSbAvailabilityTxt());
+		maDto.setId("itSecSbAvailabilityTxt");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		return massUpdateAttriuteDTOs;
+
+	}
 	
 	private List<MassUpdateAttributeDTO> getAttributeDTOList(CiBase1 ciBase1, int tableId){
 		List<MassUpdateAttributeDTO> massUpdateAttriuteDTOs = new ArrayList<MassUpdateAttributeDTO>();
@@ -847,11 +990,11 @@ public class CiEntityWS {
 		maDto.setAttributeValue(ciBase1.getCiOwnerDelegate());
 		maDto.setId("subResponsible");
 		massUpdateAttriuteDTOs.add(maDto);
-		maDto = new MassUpdateAttributeDTO();
+/*		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.LINK);
 		maDto.setAttributeValue(CiEntitiesHbn.getCIName(tableId,ciBase1.getRefId()));
 		maDto.setId("refId");
-		massUpdateAttriuteDTOs.add(maDto);
+		massUpdateAttriuteDTOs.add(maDto);*/
    		maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.GR1435);
         if (-1 == ciBase1.getRelevanceITSEC()) {
@@ -978,12 +1121,12 @@ public class CiEntityWS {
         maDto.setId("subResponsible");
         massUpdateAttriuteDTOs.add(maDto);
         
-        maDto = new MassUpdateAttributeDTO();
+/*        maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.LINK);
         if(application.getRefId() != null)
         maDto.setAttributeValue(CiEntitiesHbn.getCIName(AirKonstanten.TABLE_ID_APPLICATION,application.getRefId()));
         maDto.setId("refId");
-        massUpdateAttriuteDTOs.add(maDto);
+        massUpdateAttriuteDTOs.add(maDto);*/
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.GR1435);
@@ -1067,51 +1210,81 @@ public class CiEntityWS {
 		MassUpdateValueTransferParameterOutPut maParameterOutPut = new MassUpdateValueTransferParameterOutPut();
 		
 		try {
-			
-			if(LDAPAuthWS.isLoginValid(massUpdateParameterInput.getCwid(), massUpdateParameterInput.getToken())){
-				if(massUpdateParameterInput.getCiTypeId() == AirKonstanten.TABLE_ID_APPLICATION){
-					maParameterOutPut =applicationMassUpdate(massUpdateParameterInput);
-				}else{
+
+			if (LDAPAuthWS.isLoginValid(massUpdateParameterInput.getCwid(),
+					massUpdateParameterInput.getToken())) {
+				if (massUpdateParameterInput.getCiTypeId() == AirKonstanten.TABLE_ID_APPLICATION) {
+					maParameterOutPut = applicationMassUpdate(massUpdateParameterInput);
+				} else if (massUpdateParameterInput.getCiTypeId() == AirKonstanten.TABLE_ID_IT_SYSTEM)
+					maParameterOutPut = itSystemMassUpdate(massUpdateParameterInput);
+
+				else {
 					Long ciTypeId = massUpdateParameterInput.getCiTypeId();
-					String sql="";
-					CiBase1 templaeLocationCI=null;
-					if(ciTypeId == AirKonstanten.TABLE_ID_POSITION){
-						templaeLocationCI= SchrankHbn.findById(massUpdateParameterInput.getTemplateCiId());
-						 sql = "select h from Schrank as h where h.id in(" + massUpdateParameterInput.getSelectedCIs()+ ")";				
-					}else{
-						if(ciTypeId == AirKonstanten.TABLE_ID_ROOM){
-							templaeLocationCI = RoomHbn.findById(massUpdateParameterInput.getTemplateCiId());
-							sql = "select h from Room as h where h.id in(" + massUpdateParameterInput.getSelectedCIs()+ ")";
-						}else{
-							if(ciTypeId == AirKonstanten.TABLE_ID_BUILDING){
-								templaeLocationCI = BuildingHbn.findById(massUpdateParameterInput.getTemplateCiId());
-								sql = "select h from Building as h where h.id in(" + massUpdateParameterInput.getSelectedCIs()+ ")";							
-							}else{
-								if(ciTypeId == AirKonstanten.TABLE_ID_BUILDING_AREA){
-									templaeLocationCI = BuildingHbn.findBuildingAreaById(massUpdateParameterInput.getTemplateCiId());
-									sql = "select h from BuildingArea as h where h.id in(" + massUpdateParameterInput.getSelectedCIs()+ ")";							
-								}else{
-									if(ciTypeId == AirKonstanten.TABLE_ID_TERRAIN){
-										templaeLocationCI = TerrainHbn.findById(massUpdateParameterInput.getTemplateCiId());
-										sql = "select h from Terrain as h where h.id in(" + massUpdateParameterInput.getSelectedCIs()+ ")";							
-									}else{
-										if(ciTypeId == AirKonstanten.TABLE_ID_SITE){
-											templaeLocationCI = StandortHbn.findById(Standort.class, massUpdateParameterInput.getTemplateCiId());
-											sql = "select h from Standort as h where h.id in(" + massUpdateParameterInput.getSelectedCIs()+ ")";							
+					String sql = "";
+					CiBase1 templaeLocationCI = null;
+					if (ciTypeId == AirKonstanten.TABLE_ID_POSITION) {
+						templaeLocationCI = SchrankHbn
+								.findById(massUpdateParameterInput
+										.getTemplateCiId());
+						sql = "select h from Schrank as h where h.id in("
+								+ massUpdateParameterInput.getSelectedCIs()
+								+ ")";
+					} else {
+						if (ciTypeId == AirKonstanten.TABLE_ID_ROOM) {
+							templaeLocationCI = RoomHbn
+									.findById(massUpdateParameterInput
+											.getTemplateCiId());
+							sql = "select h from Room as h where h.id in("
+									+ massUpdateParameterInput.getSelectedCIs()
+									+ ")";
+						} else {
+							if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING) {
+								templaeLocationCI = BuildingHbn
+										.findById(massUpdateParameterInput
+												.getTemplateCiId());
+								sql = "select h from Building as h where h.id in("
+										+ massUpdateParameterInput
+												.getSelectedCIs() + ")";
+							} else {
+								if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING_AREA) {
+									templaeLocationCI = BuildingHbn
+											.findBuildingAreaById(massUpdateParameterInput
+													.getTemplateCiId());
+									sql = "select h from BuildingArea as h where h.id in("
+											+ massUpdateParameterInput
+													.getSelectedCIs() + ")";
+								} else {
+									if (ciTypeId == AirKonstanten.TABLE_ID_TERRAIN) {
+										templaeLocationCI = TerrainHbn
+												.findById(massUpdateParameterInput
+														.getTemplateCiId());
+										sql = "select h from Terrain as h where h.id in("
+												+ massUpdateParameterInput
+														.getSelectedCIs() + ")";
+									} else {
+										if (ciTypeId == AirKonstanten.TABLE_ID_SITE) {
+											templaeLocationCI = StandortHbn
+													.findById(
+															Standort.class,
+															massUpdateParameterInput
+																	.getTemplateCiId());
+											sql = "select h from Standort as h where h.id in("
+													+ massUpdateParameterInput
+															.getSelectedCIs()
+													+ ")";
 										}
 									}
 								}
-								
+
 							}
 						}
-						maParameterOutPut =locationCIMassUpdate(massUpdateParameterInput, sql,
+						maParameterOutPut = locationCIMassUpdate(
+								massUpdateParameterInput, sql,
 								templaeLocationCI);
 					}
 				}
-				
-				//update GPSC Contacts
+				// update GPSC Contacts
 				updateGPSCContacts(massUpdateParameterInput);
-				
 			}
 
 			
@@ -1183,9 +1356,6 @@ public class CiEntityWS {
 			}
 			if(massUpdateParameterInput.getSubResponsible()){
 				locationCi.setCiOwnerDelegate(templaeLocationCI.getCiOwnerDelegate());
-			}
-			if(massUpdateParameterInput.getRefId()){
-				locationCi.setRefId(templaeLocationCI.getRefId());
 			}
 			if(massUpdateParameterInput.getRelevanzITSEC()){
 				locationCi.setRelevanceITSEC(templaeLocationCI.getRelevanceITSEC());
@@ -1389,6 +1559,118 @@ public class CiEntityWS {
 		}
 		return maParameterOutPut ;		   
 	}
+	private MassUpdateValueTransferParameterOutPut itSystemMassUpdate(
+			MassUpdateParameterInput massUpdateParameterInput) {
+		MassUpdateValueTransferParameterOutPut maParameterOutPut = new MassUpdateValueTransferParameterOutPut();		
+		ItSystem templateItSystem = ItSystemHbn.findById(ItSystem.class, massUpdateParameterInput.getTemplateCiId());		
+		Session session = HibernateUtil.getSession();;
+		Transaction tx = session.beginTransaction();
+		boolean toCommit = false;
+		try {
+			ScrollableResults itSystems = session.createQuery("select h from ItSystem as h where h.id in(" + massUpdateParameterInput.getSelectedCIs()+ ")")
+		    .setCacheMode(CacheMode.IGNORE)
+		    .scroll(ScrollMode.FORWARD_ONLY);
+		int count=0;
+		while (itSystems.next()) {
+			
+			ItSystem itSystem = (ItSystem) itSystems.get(0);
+			if(massUpdateParameterInput.getLifecycleStatusId()){
+				itSystem.setLifecycleStatusId(templateItSystem.getLifecycleStatusId());
+			}
+			if(massUpdateParameterInput.getOperationalStatusId()){
+				itSystem.setEinsatzStatusId(templateItSystem.getEinsatzStatusId());
+			}
+			if(massUpdateParameterInput.getPriorityLevelId()){
+				itSystem.setPriorityLevelId(templateItSystem.getPriorityLevelId());
+			}
+			if(massUpdateParameterInput.getSeverityLevelId()){
+				itSystem.setSeverityLevelId(templateItSystem.getSeverityLevelId());
+			}
+			if(massUpdateParameterInput.getClusterCode()){
+				itSystem.setClusterCode(templateItSystem.getClusterCode());
+			}
+			if(massUpdateParameterInput.getClusterType()){
+				itSystem.setClusterType(templateItSystem.getClusterType());
+			}
+			if(massUpdateParameterInput.getResponsible()){
+				itSystem.setCiOwner(templateItSystem.getCiOwner());
+			}
+			if(massUpdateParameterInput.getSubResponsible()){
+				itSystem.setCiOwnerDelegate(templateItSystem.getCiOwnerDelegate());
+			}
+			if(massUpdateParameterInput.getRelevanzITSEC()){
+				itSystem.setRelevanceITSEC(templateItSystem.getRelevanceITSEC());
+			}
+			if(massUpdateParameterInput.getGxpFlag()){
+				itSystem.setGxpFlag(templateItSystem.getGxpFlag());
+			}
+			if(massUpdateParameterInput.getItsecGroupId()){
+				itSystem.setItsecGroupId(templateItSystem.getItsecGroupId());
+			}
+			if(massUpdateParameterInput.getSlaId()){
+				itSystem.setSlaId(templateItSystem.getSlaId());
+			}
+			if(massUpdateParameterInput.getServiceContractId()){
+				itSystem.setServiceContractId(templateItSystem.getServiceContractId());
+			}
+			if(massUpdateParameterInput.getItSecSbAvailability()){
+				itSystem.setItSecSbAvailability(templateItSystem.getItSecSbAvailability());
+			}
+			if(massUpdateParameterInput.getItSecSbAvailabilityTxt()){
+				itSystem.setItSecSbAvailabilityTxt(templateItSystem.getItSecSbAvailabilityTxt());
+			}
+			if(massUpdateParameterInput.getItSecSbConfidentiality()){
+				itSystem.setItSecSbConfidentialityId(templateItSystem.getItSecSbConfidentialityId());
+			}
+			if(massUpdateParameterInput.getItSecSbConfidentialityTxt()){
+				itSystem.setItSecSbConfidentialityTxt(templateItSystem.getItSecSbConfidentialityTxt());
+			}
+		    if ( ++count % 20 == 0 ) {
+		        session.flush();
+		        session.clear();
+		    }
+		}
+		session.flush();
+		session.clear();
+		tx.commit();
+		if(massUpdateParameterInput.getItsecGroupId()){
+			tx = session.beginTransaction();
+			String sql = "{call pck_Logical_Integrity.P_CI_Safeguard_Assignment (?,?,?)}";
+			
+			Connection conn = session.connection();
+			
+			CallableStatement stmt = conn.prepareCall(sql);
+			String selectedCIsarray[] = massUpdateParameterInput.getSelectedCIs().split(",");
+			int size = selectedCIsarray.length;
+			for(int i=0;i<size; i++ ){
+				stmt.setLong(1, massUpdateParameterInput.getCiTypeId());
+				stmt.setLong(2, Long.valueOf(selectedCIsarray[i]));
+				stmt.setLong(3, Long.valueOf(templateItSystem.getItsecGroupId()));
+				stmt.addBatch();
+			}
+			int [] updateCounts = stmt.executeBatch();
+			tx.commit();
+			System.out.println(updateCounts);
+		}		
+		toCommit = true;
+			
+		} catch (Exception e) {
+			maParameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+			maParameterOutPut.setMessages(new String[] { e.getMessage() });
+		}finally{
+			if (toCommit) {
+				String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+				if (null == hbnMessage) {
+					maParameterOutPut.setResult(AirKonstanten.RESULT_OK);
+					maParameterOutPut.setMessages(new String[] { "" });
+				} else {
+					maParameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+					maParameterOutPut.setMessages(new String[] { hbnMessage });
+				}
+			}
+		}
+		return maParameterOutPut ;		   
+	}	
 	
 	public List<ApplicationContactGroupDTO>  getGPSCContacts(Long ciId, Integer tableId){
 

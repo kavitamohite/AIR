@@ -241,26 +241,33 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	update: function(data) {
 		var cbSla = this.getComponent('sla');
 		var cbServiceContract = this.getComponent('serviceContract');
+		var filterData = { slaId: data.slaId };
 
 		if (data.slaId != 0 && !data.isCiCreate) {//selectedSlaId !== undefined && selectedSlaId != 0
-			this.getComponent('sla').setValue(data.slaId);
-
-			var filterData = { slaId: data.slaId };
-			cbServiceContract.filterByData(filterData);
+			if(!AIR.AirApplicationManager.isSlaInvalid()){
+				this.getComponent('sla').setValue(data.slaId);
+				cbServiceContract.filterByData(filterData);
+			}else{
+				cbSla.reset();//setValue('');
+				cbServiceContract.reset();//.setValue('');
+			}
 		} else {
 			cbSla.reset();//setValue('');
 			cbServiceContract.reset();//.setValue('');
 		}
 		
 		if (data.serviceContractId && data.serviceContractId != 0 && !data.isCiCreate) {
-			cbServiceContract.setValue(data.serviceContractId);
-			
-			var sla = cbSla.getValue();
-			if(!sla || sla.length === 0) {
-				var r = Util.getComboRecord(cbServiceContract, 'id', parseInt(data.serviceContractId));//cbServiceContract.getStore().getById(parseInt(data.serviceContractId));
-				if(r)
-					cbSla.setValue(r.get('slaId'));
+			if(!AIR.AirApplicationManager.isSlaInvalid()){
+				cbServiceContract.setValue(data.serviceContractId);
+				
+				var sla = cbSla.getValue();
+				if(!sla || sla.length === 0) {
+					var r = Util.getComboRecord(cbServiceContract, 'id', parseInt(data.serviceContractId));//cbServiceContract.getStore().getById(parseInt(data.serviceContractId));
+					if(r)
+						cbSla.setValue(r.get('slaId'));
+				}
 			}
+
 		} else {
 			cbServiceContract.setValue('');
 		}

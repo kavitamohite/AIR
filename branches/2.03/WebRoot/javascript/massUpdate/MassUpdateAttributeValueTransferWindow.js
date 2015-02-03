@@ -349,7 +349,6 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
     		
     	}else{
     		if(button == 'no'){
-    			alert('NO');
     		}else{
 	    		Ext.Msg.show({
 	    			title: 'Compliance Status',

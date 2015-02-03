@@ -136,8 +136,25 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	update: function(ciDetail) {//data
 		var store = AIR.AirStoreManager.getStoreByName('slaListStore');
-		var slaName = ciDetail.slaId && ciDetail.slaId != 0 ? store.getById(ciDetail.slaId).data.text : '';
-
+		var slaId= ciDetail.slaId;
+		var slaName = '';
+		if(slaId != 0){
+			var slaStoreData = store.getById(slaId);
+			if(slaStoreData==undefined){
+				AIR.AirApplicationManager.setSlaInValid(true);
+		        Ext.Msg.show({
+		            title: 'Data Validation',
+		            msg: 'The SLA is invalid [id='+slaId+']',
+		            modal: false,
+		            icon: Ext.Msg.INFO,
+		            buttons: Ext.Msg.OK
+		        });
+			}else{
+				AIR.AirApplicationManager.setSlaInValid(false);
+				slaName = slaStoreData.data.text;
+			}
+		}
+		
 		store = AIR.AirStoreManager.getStoreByName('businessEssentialListStore');
 		var businessEssential = ciDetail.businessEssentialId && ciDetail.businessEssentialId != 0 && store.getById(ciDetail.businessEssentialId) ? store.getById(ciDetail.businessEssentialId).data.text : '';
 		

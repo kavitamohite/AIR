@@ -17,7 +17,7 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
     		plain: true,
 			modal: true,
     		flex: 1,
-    		closeAction:'hide',
+    		closeAction:'close',
     		border: false,
     		title: 'Selection of Template Parameters',
     		
@@ -99,6 +99,17 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
     							marginTop: 5,
     							marginLeft: 5
     						}
+    					},
+    					{
+    						xtype: 'button',
+    						text: 'cancel',
+    						id: 'bCloseWindow',
+    						width: 50,
+    						
+    						style: {
+    							marginTop: 5,
+    							marginLeft: 5
+    						}
     					}]
     				},{
     					xtype: 'AIR.CiResultGrid',//soll hier nur applications anzeigen
@@ -131,7 +142,9 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
     	
 		var bCopyFromNext = this.getComponent('pMassUpdateFromSearchCard').getComponent('pMassUpdateTemplateCISearchCard').getComponent('pTemplateCISearch').getComponent('bCopyFromNext');
 		bCopyFromNext.on('click', this.onNext,this);
-		//bCopyFromNext.on('click', this.onNext, this);
+		
+		var bCloseWindow = this.getComponent('pMassUpdateFromSearchCard').getComponent('pMassUpdateTemplateCISearchCard').getComponent('pTemplateCISearch').getComponent('bCloseWindow');
+		bCloseWindow.on('click', this.onCancel,this);
     	
     	
     },
@@ -179,6 +192,10 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
 			   icon: Ext.MessageBox.INFO
 			});
 			
+	},
+	
+	onCancel: function(button,event){
+		this.close();
 	},
 	
 	openMassUpdateValueTransferWindow: function(button,object){

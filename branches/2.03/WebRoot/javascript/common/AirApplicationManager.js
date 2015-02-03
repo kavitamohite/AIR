@@ -867,6 +867,18 @@ AIR.AirApplicationManager = function() {
 		
 		getMassUpdateData: function() {
 			return this.massUpdateData;
+		},
+		
+		setSlaInValid: function(salInValid){
+			this.salInValid = salInValid;
+		},
+		
+		isSlaInvalid: function(){
+			if(this.salInValid == undefined){
+				return false;
+			}else{
+				return this.salInValid;
+			}
 		}
 		
 	};

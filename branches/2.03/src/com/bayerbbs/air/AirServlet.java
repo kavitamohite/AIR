@@ -607,6 +607,10 @@ public class AirServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
+		 System.out.println("total JVM Memory-------"+Runtime.getRuntime().totalMemory());
+		 System.out.println("total JVM Free memory-------"+Runtime.getRuntime().freeMemory());
+		 Runtime.getRuntime().gc();
+		 System.out.println("total JVM Free memory after GC-------"+Runtime.getRuntime().freeMemory());
 	}
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
