@@ -139,6 +139,13 @@ AIR.AirConfigFactory = function() {
 			return Ext.data.Record.create(roomCiFields);
 		},
 		
+		createFunctionCiRecord: function(){
+			
+			var functionCiFields = this.getBaseCiFields();
+			return Ext.data.Record.create(functionCiFields);
+						
+		},
+		
 
 		getLocationCiFields: function() {
 			var locationCiFields = this.getBaseCiFields();

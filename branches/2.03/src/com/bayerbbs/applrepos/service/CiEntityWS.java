@@ -21,6 +21,8 @@ import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.CiBase1;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
+import com.bayerbbs.applrepos.domain.Function;
+import com.bayerbbs.applrepos.domain.FunctionDTO;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
@@ -64,6 +66,7 @@ import com.bayerbbs.applrepos.hibernate.SlaHbn;
 import com.bayerbbs.applrepos.hibernate.SlaServiceContractHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
 import com.bayerbbs.applrepos.hibernate.TerrainHbn;
+import com.bayerbbs.applrepos.hibernate.functionHbn;
 
 public class CiEntityWS {
 	static final String YES = "Y";
@@ -406,6 +409,17 @@ public class CiEntityWS {
 //		return null;
 //	}
 	
+	public FunctionDTO getFunction(CiDetailParameterInput input){
+		 FunctionDTO functionDTO = new FunctionDTO();
+			if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+				
+				Function function = functionHbn.findById(input.getCiId());
+				functionDTO.setTableId(AirKonstanten.TABLE_ID_FUNCTION);
+				setFunctionDTO(function, functionDTO);
+				
+			}
+         return functionDTO;
+	}
 	
 	
 	public CiItemsResultDTO findCis(ApplicationSearchParamsDTO input) {//CiSearchParamsDTO <T extends CiSearchParamsDTO>
@@ -437,6 +451,9 @@ public class CiEntityWS {
 					break;
 				case AirKonstanten.TABLE_ID_SITE:
 					result = StandortHbn.findSitesBy(input);//ciItemDTOs
+					break;
+				case AirKonstanten.TABLE_ID_FUNCTION:
+					result = functionHbn.findFunctionBy(input);
 					break;
 				default:
 					//ciItemDTOs = new CiItemDTO[0];
@@ -485,6 +502,109 @@ public class CiEntityWS {
 		}
 		
 		return output;
+	}
+	
+	private void setFunctionDTO(Function function, FunctionDTO functionDTO){
+		functionDTO.setId(function.getId());
+		functionDTO.setName(function.getName());
+		
+		functionDTO.setInsertQuelle(function.getInsertQuelle());
+		functionDTO.setInsertUser(function.getName());
+		
+		if (null != function.getInsertTimestamp())
+			functionDTO.setInsertTimestamp(function.getInsertTimestamp().toString());
+		
+		functionDTO.setUpdateQuelle(function.getUpdateQuelle());
+		functionDTO.setUpdateUser(function.getUpdateUser());
+		
+		if (null != function.getUpdateTimestamp())
+			functionDTO.setUpdateTimestamp(function.getUpdateTimestamp().toString());
+		
+		functionDTO.setDeleteQuelle(function.getDeleteQuelle());
+		functionDTO.setDeleteUser(function.getDeleteUser());
+		
+		if (null != function.getDeleteTimestamp())
+			functionDTO.setDeleteTimestamp(function.getDeleteTimestamp().toString());
+
+		
+		functionDTO.setCiOwnerHidden(function.getCiOwner());
+		functionDTO.setCiOwnerDelegateHidden(function.getCiOwnerDelegate());
+		if (StringUtils.isNotNullOrEmpty(functionDTO.getCiOwnerHidden())) {//getCiOwner
+			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(functionDTO.getCiOwnerHidden());//getCiOwner
+			if (null != listPers && 1 == listPers.size()) {
+				PersonsDTO tempPers = listPers.get(0);
+				functionDTO.setCiOwner(tempPers.getDisplayNameFull());
+			}
+		}
+
+		if (StringUtils.isNotNullOrEmpty(functionDTO.getCiOwnerDelegateHidden())) {//getCiOwnerDelegate
+			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(functionDTO.getCiOwnerDelegateHidden());//getCiOwnerDelegate
+			if (null != listPersons && 1 == listPersons.size()) {
+				PersonsDTO tempPers = listPersons.get(0);
+				functionDTO.setCiOwnerDelegate(tempPers.getDisplayNameFull());
+			}
+			else functionDTO.setCiOwnerDelegate(functionDTO.getCiOwnerDelegateHidden());//Delegate is Group
+		}
+		
+		
+		functionDTO.setItset(function.getItset());
+		functionDTO.setItsecGroupId(function.getItsecGroupId());
+		
+		Long template = function.getTemplate();
+		if (-1 == template.longValue()) {
+			//check this CI is if template then go for is related with other CI or not
+		     String IsCIsLinkwithTemplate=CiEntitiesHbn.findCIisLinkWithTemplate(function.getId(),functionDTO.getTableId());
+		     functionDTO.setTemplateLinkWithCIs(IsCIsLinkwithTemplate);
+			
+		}
+		functionDTO.setTemplate(template);
+		
+
+		Long refID = function.getRefId();
+		if (null == refID) {
+			refID = 0L;
+		}
+		functionDTO.setRefId(refID);
+		
+		Long relevanceItsec = function.getRelevanceITSEC();
+		Long relevanceICS = function.getRelevanceICS();
+		
+		if (-1 == relevanceItsec) {
+			functionDTO.setRelevanceGR1435(YES);
+		}
+		else {// if (0 == relevanceItsec) {
+			functionDTO.setRelevanceGR1435(NO);
+		}
+		if (-1 == relevanceICS) {
+			functionDTO.setRelevanceGR1920(YES);
+		}
+		else {//(0 == relevanceICS) {
+			functionDTO.setRelevanceGR1920(NO);
+		}
+		
+		functionDTO.setGxpFlagId(function.getGxpFlag());
+		functionDTO.setGxpFlag(function.getGxpFlag());
+
+		
+		String source = functionDTO.getInsertQuelle();
+		if(!source.equals(AirKonstanten.INSERT_QUELLE_SISEC) &&
+		   !source.equals(AirKonstanten.APPLICATION_GUI_NAME)) {
+			
+			functionDTO.setCiOwnerAcl(AirKonstanten.NO_SHORT);
+			functionDTO.setCiOwnerDelegateAcl(AirKonstanten.NO_SHORT);
+			functionDTO.setRelevanceGR1435Acl(AirKonstanten.NO_SHORT);
+			functionDTO.setRelevanceGR1920Acl(AirKonstanten.NO_SHORT);
+			functionDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
+			functionDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
+			functionDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
+			functionDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
+			functionDTO.setServiceContractIdAcl(AirKonstanten.NO_SHORT);
+			
+		}
+
+		
+		
+		
 	}
 	
 	private void setCiBaseData(CiBaseDTO ciBaseDTO, CiBase1 ciBase) {
@@ -568,7 +688,7 @@ public class CiEntityWS {
 		ciBaseDTO.setRefId(refID);
 		
 		
-		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerHidden())) {
+/*		if (StringUtils.isNotNullOrEmpty(ciBaseDTO.getCiOwnerHidden())) {
 			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(ciBaseDTO.getCiOwnerHidden());
 			if (null != persons && 1 == persons.size()) {
 				PersonsDTO person = persons.get(0);
@@ -583,7 +703,7 @@ public class CiEntityWS {
 				ciBaseDTO.setCiOwnerDelegate(person.getDisplayNameFull());
 			}
 		}
-		
+		*/
 		
 		Long relevanceItsec = ciBase.getRelevanceITSEC();
 		Long relevanceICS = ciBase.getRelevanceICS();

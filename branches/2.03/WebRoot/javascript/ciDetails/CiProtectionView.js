@@ -303,7 +303,17 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 				taProtectionConfidentialityDescription.setValue('');
 			}
 		}
-		
+		if(data.tableId == AC.TABLE_ID_FUNCTION){
+			this.getComponent('protectionAvailability').setVisible(false);
+			this.getComponent('protectionAvailabilityDescription').setVisible(false);
+			this.getComponent('protectionClassInformation').setVisible(false);
+			this.getComponent('protectionClassInformationExplanation').setVisible(false);
+			this.getComponent('protectionApplicationProtection').setVisible(false);
+			this.getComponent('protectionIntegrity').setVisible(false);
+			this.getComponent('protectionIntegrityDescription').setVisible(false);
+			this.getComponent('protectionConfidentiality').setVisible(false);
+			this.getComponent('protectionConfidentialityDescription').setVisible(false);
+		}		
 		this.doLayout();
 	},
 	

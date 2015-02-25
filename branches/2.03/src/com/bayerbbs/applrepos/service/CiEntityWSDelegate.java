@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
+import com.bayerbbs.applrepos.domain.FunctionDTO;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
@@ -56,6 +57,11 @@ public class CiEntityWSDelegate {
 	
 	public ItSystemDTO getItSystem(CiDetailParameterInput input) {
 		return ciEntityWS.getItSystem(input);
+	}
+	
+	public FunctionDTO getFunction(CiDetailParameterInput input){
+		return ciEntityWS.getFunction(input);
+		
 	}
 	
 	public CiEntityEditParameterOutput deleteCi(CiEntityParameterInput input) {

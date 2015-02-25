@@ -319,6 +319,13 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		this.updateAccessMode(data);
+		if(data.tableId == AC.TABLE_ID_FUNCTION){
+			cbSla.setVisible(false);
+			cbServiceContract.setVisible(false);
+			cbPriorityLevel.setVisible(false);
+			cbSeverityLevel.setVisible(false);
+			cbBusinessEssential.setVisible(false);
+		}		
 		
 		this.doLayout();
 	},

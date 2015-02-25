@@ -66,5 +66,6 @@
 		<mapping class="com.bayerbbs.applrepos.domain.Terrain" />
 		<mapping class="com.bayerbbs.applrepos.domain.Standort" />
 		<mapping class="com.bayerbbs.applrepos.domain.Land" />
+		<mapping class="com.bayerbbs.applrepos.domain.Function" />
 	</session-factory>
 </hibernate-configuration>

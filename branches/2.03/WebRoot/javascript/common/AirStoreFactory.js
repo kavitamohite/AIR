@@ -1841,6 +1841,8 @@ AIR.AirStoreFactory = function() {
 				case AC.TABLE_ID_IT_SYSTEM:
 					ciDetailStore = this.createItSystemDetailStore();
 					break;
+				case AC.TABLE_ID_FUNCTION:
+					ciDetailStore = this.createFunctionDetailStore();
 				default: break;
 			}
 			
@@ -2007,6 +2009,31 @@ AIR.AirStoreFactory = function() {
 			});
 			
 			return ciDetailStore;
+		},
+		
+		createFunctionDetailStore: function(){
+			
+			var ciDetailRecord = AIR.AirConfigFactory.createFunctionCiRecord();
+			
+			var ciDetailReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, ciDetailRecord);
+			
+			var ciDetailStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'ciFunctonStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getFunction',
+					timeout: 120000,
+					reader: ciDetailReader					
+				})
+			});
+			
+			return ciDetailStore;
+			
 		},
 		
 		createApplicationDetailStore: function() {
@@ -2498,6 +2525,7 @@ AIR.AirStoreFactory = function() {
 				case AC.TABLE_ID_SITE:				wsName = 'Standort'; break;
 				case AC.TABLE_ID_POSITION:			wsName = 'Schrank'; break;
 				case AC.TABLE_ID_TERRAIN:			wsName = 'Terrain'; break;
+				case AC.TABLE_ID_FUNCTION:          wsName = 'Function'; break;
 				default: wsName = 'Application'; break;
 			}
 	

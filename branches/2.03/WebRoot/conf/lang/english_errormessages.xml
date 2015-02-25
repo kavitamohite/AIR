@@ -133,5 +133,10 @@
 		<code>9001</code>
 		<message>An application marked as deleted with this name or alias already exists. Reactivate?</message>
 	</Error>
+	
+	<Error>
+	  <code>10000</code>
+	  <message>An function with this name already exists</message>
+	</Error>
 </ErrorCodeItems>
 		
