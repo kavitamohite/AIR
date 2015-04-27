@@ -582,6 +582,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'contactsCIOwnerApplication'}, // for applications only
 			        {name: 'ciResponsible'},
 			        {name: 'ciSubResponsible'},
+			        	        
 			        {name: 'fsApplicationOwner'},
 			        {name: 'applicationOwner'},        
 			        {name: 'applicationOwnerDelegate'},
@@ -1841,10 +1842,13 @@ AIR.AirStoreFactory = function() {
 				case AC.TABLE_ID_IT_SYSTEM:
 					ciDetailStore = this.createItSystemDetailStore();
 					break;
+				case AC.TABLE_ID_PATHWAY://Added by vandana
+					ciDetailStore = this.createPathwayDetailStore();////Added by vandana
+				 break;
 				case AC.TABLE_ID_FUNCTION:
 					ciDetailStore = this.createFunctionDetailStore();
 				default: break;
-			}
+				}
 			
 			return ciDetailStore;
 		},
@@ -2035,6 +2039,30 @@ AIR.AirStoreFactory = function() {
 			return ciDetailStore;
 			
 		},
+		//Added by vandana
+		createPathwayDetailStore: function() {
+			var ciDetailRecord = AIR.AirConfigFactory.createPathwayCiRecord();
+
+			var ciDetailReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, ciDetailRecord);
+
+			var ciDetailStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'ciPathwayStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getWays',
+					timeout: 120000,
+					reader: ciDetailReader
+				})
+			});
+			
+			return ciDetailStore;
+		},
+		//Added by vandana
 		
 		createApplicationDetailStore: function() {
 			var applicationDetailRecord = Ext.data.Record.create([{
@@ -2526,6 +2554,7 @@ AIR.AirStoreFactory = function() {
 				case AC.TABLE_ID_POSITION:			wsName = 'Schrank'; break;
 				case AC.TABLE_ID_TERRAIN:			wsName = 'Terrain'; break;
 				case AC.TABLE_ID_FUNCTION:          wsName = 'Function'; break;
+				case AC.TABLE_ID_PATHWAY:          wsName = 'Ways'; break;//Added by vandana
 				default: wsName = 'Application'; break;
 			}
 	
