@@ -28,6 +28,7 @@ import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.domain.Terrain;
+import com.bayerbbs.applrepos.domain.Ways;
 import com.bayerbbs.applrepos.dto.ApplicationContact;
 import com.bayerbbs.applrepos.dto.ApplicationContactEntryDTO;
 import com.bayerbbs.applrepos.dto.ApplicationContactGroupDTO;
@@ -38,6 +39,7 @@ import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.DirectLinkCIDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.MassUpdateAttributeDTO;
+import com.bayerbbs.applrepos.dto.PathwayDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
@@ -56,6 +58,7 @@ import com.bayerbbs.applrepos.hibernate.ItSecGroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 import com.bayerbbs.applrepos.hibernate.LifecycleStatusHbn;
 import com.bayerbbs.applrepos.hibernate.OperationalStatusHbn;
+import com.bayerbbs.applrepos.hibernate.PathwayHbn;
 import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 import com.bayerbbs.applrepos.hibernate.PriorityLevelHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
@@ -420,7 +423,20 @@ public class CiEntityWS {
 			}
          return functionDTO;
 	}
+	//Added by vandana
+	public PathwayDTO getWays(CiDetailParameterInput input){
+		PathwayDTO pathwayDTO = new PathwayDTO();
+			if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+				
+				Ways pathway = PathwayHbn.findById(input.getCiId());
+				pathwayDTO.setTableId(AirKonstanten.TABLE_ID_WAYS);
+				setWaysDTO(pathway, pathwayDTO);
+				
+			}
+        return pathwayDTO;
+	}
 	
+	//Added by vandana
 	
 	public CiItemsResultDTO findCis(ApplicationSearchParamsDTO input) {//CiSearchParamsDTO <T extends CiSearchParamsDTO>
 //		CiItemDTO[] ciItemDTOs = null;
@@ -455,6 +471,11 @@ public class CiEntityWS {
 				case AirKonstanten.TABLE_ID_FUNCTION:
 					result = functionHbn.findFunctionBy(input);
 					break;
+					//Added by vandana
+				case AirKonstanten.TABLE_ID_WAYS:
+					result = PathwayHbn.findPathwayBy(input);//ciItemDTOs
+					break;
+					//Ended by vandana
 				default:
 					//ciItemDTOs = new CiItemDTO[0];
 					result = new CiItemsResultDTO();
@@ -606,7 +627,110 @@ public class CiEntityWS {
 		
 		
 	}
-	
+	//Added by vandana
+	private void setWaysDTO(Ways pathway, PathwayDTO pathwayDTO){
+		pathwayDTO.setId(pathway.getId());
+		pathwayDTO.setName(pathway.getName());
+		
+		pathwayDTO.setInsertQuelle(pathway.getInsertQuelle());
+		pathwayDTO.setInsertUser(pathway.getName());
+		
+		if (null != pathway.getInsertTimestamp())
+			pathwayDTO.setInsertTimestamp(pathway.getInsertTimestamp().toString());
+		
+		pathwayDTO.setUpdateQuelle(pathway.getUpdateQuelle());
+		pathwayDTO.setUpdateUser(pathway.getUpdateUser());
+		
+		if (null != pathway.getUpdateTimestamp())
+			pathwayDTO.setUpdateTimestamp(pathway.getUpdateTimestamp().toString());
+		
+		pathwayDTO.setDeleteQuelle(pathway.getDeleteQuelle());
+		pathwayDTO.setDeleteUser(pathway.getDeleteUser());
+		
+		if (null != pathway.getDeleteTimestamp())
+			pathwayDTO.setDeleteTimestamp(pathway.getDeleteTimestamp().toString());
+
+		
+		pathwayDTO.setCiOwnerHidden(pathway.getCiOwner());
+		pathwayDTO.setCiOwnerDelegateHidden(pathway.getCiOwnerDelegate());
+		if (StringUtils.isNotNullOrEmpty(pathwayDTO.getCiOwnerHidden())) {//getCiOwner
+			List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(pathwayDTO.getCiOwnerHidden());//getCiOwner
+			if (StringUtils.isNotNullOrEmpty(pathwayDTO.getCiOwnerHidden())) {//getCiOwner
+				List<PersonsDTO> listPers1 = PersonsHbn.findPersonByCWID(pathwayDTO.getCiOwnerHidden());//getCiOwner
+				if (null != listPers1 && 1 == listPers1.size()) {
+					PersonsDTO tempPers = listPers1.get(0);
+					pathwayDTO.setCiOwner(tempPers.getDisplayNameFull());
+				}
+			}
+
+			if (StringUtils.isNotNullOrEmpty(pathwayDTO.getCiOwnerDelegateHidden())) {//getCiOwnerDelegate
+				List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(pathwayDTO.getCiOwnerDelegateHidden());//getCiOwnerDelegate
+				if (null != listPersons && 1 == listPersons.size()) {
+					PersonsDTO tempPers = listPersons.get(0);
+					pathwayDTO.setCiOwnerDelegate(tempPers.getDisplayNameFull());
+				}
+				else pathwayDTO.setCiOwnerDelegate(pathwayDTO.getCiOwnerDelegateHidden());//Delegate is Group
+			}
+			
+			
+			pathwayDTO.setItset(pathway.getItset());
+			pathwayDTO.setItsecGroupId(pathway.getItsecGroupId());
+			
+			Long template = pathway.getTemplate();
+			if (-1 == template.longValue()) {
+				//check this CI is if template then go for is related with other CI or not
+			     String IsCIsLinkwithTemplate=CiEntitiesHbn.findCIisLinkWithTemplate(pathway.getId(),pathwayDTO.getTableId());
+			     pathwayDTO.setTemplateLinkWithCIs(IsCIsLinkwithTemplate);
+				
+			}
+			pathwayDTO.setTemplate(template);
+			
+
+			Long refID = pathway.getRefId();
+			if (null == refID) {
+				refID = 0L;
+			}
+			pathwayDTO.setRefId(refID);
+			
+			Long relevanceItsec = pathway.getRelevanceITSEC();
+			Long relevanceICS = pathway.getRelevanceICS();
+			
+			if (-1 == relevanceItsec) {
+				pathwayDTO.setRelevanceGR1435(YES);
+			}
+			else {// if (0 == relevanceItsec) {
+				pathwayDTO.setRelevanceGR1435(NO);
+			}
+			if (-1 == relevanceICS) {
+				pathwayDTO.setRelevanceGR1920(YES);
+			}
+			else {//(0 == relevanceICS) {
+				pathwayDTO.setRelevanceGR1920(NO);
+			}
+			
+			pathwayDTO.setGxpFlagId(pathway.getGxpFlag());
+			pathwayDTO.setGxpFlag(pathway.getGxpFlag());
+
+			
+			String source = pathwayDTO.getInsertQuelle();
+			if(!source.equals(AirKonstanten.INSERT_QUELLE_SISEC) &&
+			   !source.equals(AirKonstanten.APPLICATION_GUI_NAME)) {
+				
+				pathwayDTO.setCiOwnerAcl(AirKonstanten.NO_SHORT);
+				pathwayDTO.setCiOwnerDelegateAcl(AirKonstanten.NO_SHORT);
+				pathwayDTO.setRelevanceGR1435Acl(AirKonstanten.NO_SHORT);
+				pathwayDTO.setRelevanceGR1920Acl(AirKonstanten.NO_SHORT);
+				pathwayDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
+				pathwayDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
+				pathwayDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
+				pathwayDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
+				pathwayDTO.setServiceContractIdAcl(AirKonstanten.NO_SHORT);
+			}	
+			
+		}
+		
+	}//Ended by vandana
+
 	private void setCiBaseData(CiBaseDTO ciBaseDTO, CiBase1 ciBase) {
 		ciBaseDTO.setId(ciBase.getId());
 		ciBaseDTO.setName(ciBase.getName());
