@@ -285,7 +285,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		   record.data.tableId == AC.TABLE_ID_TERRAIN ||
 		   record.data.tableId == AC.TABLE_ID_SITE ||
 		   record.data.tableId == AC.TABLE_ID_IT_SYSTEM ||
-		   record.data.tableId == AC.TABLE_ID_FUNCTION) {
+		   record.data.tableId == AC.TABLE_ID_FUNCTION||
+		   record.data.tableId == AC.TABLE_ID_PATHWAY) {//Added by vandana
 			
 			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
 			
