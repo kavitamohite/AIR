@@ -146,6 +146,14 @@ AIR.AirConfigFactory = function() {
 						
 		},
 		
+		  //Added by vandana		
+			createPathwayCiRecord: function(){
+					
+					var pathwayCiFields = this.getBaseCiFields();
+					return Ext.data.Record.create(pathwayCiFields);
+								
+				},
+				//Ended by vandana
 
 		getLocationCiFields: function() {
 			var locationCiFields = this.getBaseCiFields();
