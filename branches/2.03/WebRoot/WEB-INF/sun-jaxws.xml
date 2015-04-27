@@ -108,4 +108,9 @@
 		implementation="com.bayerbbs.applrepos.service.FunctionWSDelegate"
 		url-pattern="/FunctionWSPort">
 	</endpoint>
+	<!-- Added by vandana -->
+	<endpoint name="WaysWSPort"
+		implementation="com.bayerbbs.applrepos.service.WaysWSDelegate"
+		url-pattern="/WaysWSPort">
+	</endpoint>
 </endpoints>
