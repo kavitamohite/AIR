@@ -335,7 +335,7 @@ AIR.AirWindowFactory = function() {
 							var callback = callbackMap.no;
 							if(callback) {
 								callback();
-//								dynamicWindow.close();
+								dynamicWindow.close();
 							} else {
 								dynamicWindow.close();
 							}

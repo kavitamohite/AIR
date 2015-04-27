@@ -20,16 +20,19 @@ AIR.AirPagingToolbar = Ext.extend(Ext.PagingToolbar, {
 	        xtype: 'radiogroup',
 	        id: 'rbg' + id,
 	        
-	        width: 160,
+	        width: 350,
 	        height: 20,
 	        
-	        columns: 4,
+	        columns: 7,
 	
 	        items: [
 	            { boxLabel: '10', name: id, inputValue: 10 },//'pageSize'
 	            { boxLabel: '20', name: id, inputValue: 20, checked: true },
 	            { boxLabel: '50', name: id, inputValue: 50 },
-	            { boxLabel: '100', name: id, inputValue: 100 }
+	            { boxLabel: '100', name: id, inputValue: 100 },
+	            { boxLabel: '500', name: id, inputValue: 500 },
+	            { boxLabel: '1000', name: id, inputValue: 1000 },
+	            { boxLabel: '10000', name: id, inputValue: 10000 }
 	        ]
 	    }];
 		

@@ -38,7 +38,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		        		marginLeft: 5
 		        	},
 		        	
-		        	text: 'Strat mass update'
+		        	text: 'Start mass update'
 		        },{
 		        	xtype: 'button',
 		        	id: 'bSelectDeselectAll',
@@ -70,9 +70,37 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		    		style: {
 		    			margingLeft: 5
 		    		}
-		    	}
+		    	}		    	
 		        ]
-	        },{
+	        },	        
+	    	{
+	        	xtype: 'panel',
+	        	id: 'pcbmassUpdateType',
+	        	layout: 'form',
+	        	border: false,
+	        	style: {
+	        		marginTop: 10
+	        	},
+	        	labelWidth: 130,	        	
+	        	items: [		        
+	        	 {
+					xtype: 'filterCombo',
+			        id: 'cbmassUpdateType',
+			        width: 230,
+			        hideLabel: false,
+			        fieldLabel: 'Mass Update Mode',
+					lastQuery: '',
+			        store: AIR.AirStoreFactory.createMassUpdateTypeStore(),
+			        valueField: 'id',
+			        displayField: 'text',
+			        triggerAction: 'all',
+			        lazyRender: true,
+			        lazyInit: false,
+			        mode: 'local',
+		        	disabled: true,
+		        	hidden: true
+				}]
+	        	},{
 	        	xtype: 'tabpanel',
 	        	id: 'tpCiSearchResultTables',
 
@@ -93,27 +121,28 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		AIR.CiResultView.superclass.initComponent.call(this);
 		this.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect').on('check', this.enableButtonAndMultipleSelect, this);
 
-		
 		this.ciResultGridParamSets = {};
 		this.tabCount = 0;
 	},
-	
 	
 	enableButtonAndMultipleSelect: function(checkbox, isChecked){
 		
 		var bMassUpdate = this.getComponent('pSearchResultOptions').getComponent('bMassUpdate');
 		var bSelectDeselectAll = this.getComponent('pSearchResultOptions').getComponent('bSelectDeselectAll');
 		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
+		var  cbmassUpdateType = this.getComponent('pcbmassUpdateType').getComponent('cbmassUpdateType');
 		
 		if(isChecked){
 			bMassUpdate.setDisabled(false);
 			bSelectDeselectAll.setDisabled(false);
+			cbmassUpdateType.setDisabled(false);
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().singleSelect=false;
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().clearSelections();
 		}
 		else{
 			bMassUpdate.setDisabled(true);
 			bSelectDeselectAll.setDisabled(true);
+			cbmassUpdateType.setDisabled(true);
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().singleSelect=true;
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().clearSelections();
 		}
@@ -130,6 +159,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		var bSelectDeselectAll = this.getComponent('pSearchResultOptions').getComponent('bSelectDeselectAll');
 		var cbIsMultipleSelect = this.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect');
 		var lIsMultipleSelect = this.getComponent('pSearchResultOptions').getComponent('lIsMultipleSelect');
+		var  cbmassUpdateType = this.getComponent('pcbmassUpdateType').getComponent('cbmassUpdateType');	 
 
 		var ciResultGrid;
 		var ciResultGridId;
@@ -177,11 +207,19 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			bSelectDeselectAll.setVisible(true);
 			cbIsMultipleSelect.setVisible(true);
 			lIsMultipleSelect.setVisible(true);
+			cbmassUpdateType.setVisible(true);
+			bMassUpdate.setDisabled(true);
+			bSelectDeselectAll.setDisabled(true);
+			cbmassUpdateType.setDisabled(true);
+			tpCiSearchResultTables.getActiveTab().getSelectionModel().singleSelect=true;
+			tpCiSearchResultTables.getActiveTab().getSelectionModel().clearSelections();
+			cbIsMultipleSelect.setValue(false);
 		}else{
 			bMassUpdate.setVisible(false);
 			bSelectDeselectAll.setVisible(false);
 			cbIsMultipleSelect.setVisible(false);
-			lIsMultipleSelect.setVisible(false);			
+			lIsMultipleSelect.setVisible(false);
+			cbmassUpdateType.setVisible(false);
 		}
 
 		ciResultGrid.getStore().load({
@@ -196,6 +234,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		var bSelectDeselectAll = this.getComponent('pSearchResultOptions').getComponent('bSelectDeselectAll');
 		var cbIsMultipleSelect = this.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect');
 		var lIsMultipleSelect = this.getComponent('pSearchResultOptions').getComponent('lIsMultipleSelect');
+		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
+		var  cbmassUpdateType = this.getComponent('pcbmassUpdateType').getComponent('cbmassUpdateType');
 
 		
 		if(searchAction === AC.SEARCH_TYPE_ADV_SEARCH) {
@@ -203,11 +243,18 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			bSelectDeselectAll.setVisible(true);
 			cbIsMultipleSelect.setVisible(true);
 			lIsMultipleSelect.setVisible(true);
+			bMassUpdate.setDisabled(true);
+			bSelectDeselectAll.setDisabled(true);
+			cbmassUpdateType.setDisabled(true);
+			tpCiSearchResultTables.getActiveTab().getSelectionModel().singleSelect=true;
+			tpCiSearchResultTables.getActiveTab().getSelectionModel().clearSelections();
+			cbIsMultipleSelect.setValue(false);
 		}else{
 			bMassUpdate.setVisible(false);
 			bSelectDeselectAll.setVisible(false);
 			cbIsMultipleSelect.setVisible(false);
 			lIsMultipleSelect.setVisible(false);
+			cbmassUpdateType.setVisible(false);
 		}
 	},
 	

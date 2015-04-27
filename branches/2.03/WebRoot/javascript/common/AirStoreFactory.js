@@ -87,6 +87,18 @@ AIR.AirStoreFactory = function() {
 			
 	        return accountListStore;
 		},
+		
+		createMassUpdateTypeStore: function(){
+			var massupdateTypeData = [['1','Link a template'],['2','Copy attriubutes from a template'],['3','Change Attributes']];
+			var massupdateTypeStore = new Ext.data.ArrayStore(
+					{
+						storeId: 'massupdateTypeStore',
+						fields : ['id', 'text'],
+						idIndex: 0,
+						data : massupdateTypeData
+					});
+			return massupdateTypeStore;
+		},
 	        
 		createItSetListStore: function() {
 			var itSetListStore = new Ext.data.ArrayStore(
@@ -3828,6 +3840,62 @@ AIR.AirStoreFactory = function() {
 					});
 			return massUpdateComplianceControlStore;
 		},
+		createMassUpdateTemplateLinkSaveStore: function(){
+			var massUpdateLinkTemplateSaveRecord = new Ext.data.Record.create([
+			                 {name: 'result'},
+			                 {name: 'displayMessage'},
+			                 {name: 'messages'}
+			        ]);
+			var massUpdateLinkTemplateSaveReader = new Ext.data.XmlReader(
+			{
+				record: 'return'
+			}, massUpdateLinkTemplateSaveRecord);
+			var massUpdateLinkTemplateSaveStore = new Ext.data.XmlStore(
+					{
+						autoDestroy: true,
+						storeId: 'massUpdateLinkTemplateSaveStore',
+						autoLoad: false,
+						
+						proxy: new Ext.ux.soap.SoapProxy({
+							url: webcontext + '/CiEntityWSPort',
+							loadMethod: 'linkTemplateWithCIs',
+							timeout: 12000,
+							reader: massUpdateLinkTemplateSaveReader
+							
+						})
+					});
+			
+			return massUpdateLinkTemplateSaveStore;		     	
+			
+		},
+		createMassUpdateChangeAttrSaveStore: function(){
+			var massUpdateChangeAttrSaveRecord = new Ext.data.Record.create([
+			                 {name: 'result'},
+			                 {name: 'displayMessage'},
+			                 {name: 'messages'}
+			        ]);
+			var massUpdateChangeAttrSaveReader = new Ext.data.XmlReader(
+			{
+				record: 'return'
+			}, massUpdateChangeAttrSaveRecord);
+			var massUpdateChangeAttrSaveStore = new Ext.data.XmlStore(
+					{
+						autoDestroy: true,
+						storeId: 'massUpdateChangeAttrSaveStore',
+						autoLoad: false,
+						
+						proxy: new Ext.ux.soap.SoapProxy({
+							url: webcontext + '/CiEntityWSPort',
+							loadMethod: 'changeAttrMassUpdateSave',
+							timeout: 12000,
+							reader: massUpdateChangeAttrSaveReader
+							
+						})
+					});
+			
+			return massUpdateChangeAttrSaveStore;		     	
+			
+		},
 		createMassUpdateComplianceControlSaveStore : function() {
 			var massUpdateComplianceControlSaveRecord = Ext.data.Record.create([ {
 				name : 'result'
@@ -3859,5 +3927,6 @@ AIR.AirStoreFactory = function() {
 			
 			return massUpdateComplianceControlSaveStore;
 		}
+		
 	};
 }();

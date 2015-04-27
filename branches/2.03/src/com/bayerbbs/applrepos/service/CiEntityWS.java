@@ -3,7 +3,6 @@ package com.bayerbbs.applrepos.service;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,6 +12,7 @@ import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
@@ -32,7 +32,6 @@ import com.bayerbbs.applrepos.domain.Ways;
 import com.bayerbbs.applrepos.dto.ApplicationContact;
 import com.bayerbbs.applrepos.dto.ApplicationContactEntryDTO;
 import com.bayerbbs.applrepos.dto.ApplicationContactGroupDTO;
-import com.bayerbbs.applrepos.dto.ApplicationContactsDTO;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
@@ -48,7 +47,6 @@ import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationCat2Hbn;
-import com.bayerbbs.applrepos.hibernate.BaseHbn;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
@@ -66,7 +64,6 @@ import com.bayerbbs.applrepos.hibernate.SchrankHbn;
 import com.bayerbbs.applrepos.hibernate.ServiceContractHbn;
 import com.bayerbbs.applrepos.hibernate.SeverityLevelHbn;
 import com.bayerbbs.applrepos.hibernate.SlaHbn;
-import com.bayerbbs.applrepos.hibernate.SlaServiceContractHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
 import com.bayerbbs.applrepos.hibernate.TerrainHbn;
 import com.bayerbbs.applrepos.hibernate.functionHbn;
@@ -1634,6 +1631,9 @@ public class CiEntityWS {
 			if(massUpdateParameterInput.isItSecSbIntegrityTxt()){
 				locationCi.setItSecSbIntegrityTxt(templaeLocationCI.getItSecSbIntegrityTxt());
 			}
+			locationCi.setUpdateUser(massUpdateParameterInput.getCwid());
+			locationCi.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			locationCi.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 			
 		    if ( ++count % 20 == 0 ) {
 		        session.flush();
@@ -1757,6 +1757,9 @@ public class CiEntityWS {
 			if(massUpdateParameterInput.getItSecSbConfidentialityTxt()){
 				application.setItSecSbConfidentialityTxt(templateApplication.getItSecSbConfidentialityTxt());
 			}
+			application.setUpdateUser(massUpdateParameterInput.getCwid());
+			application.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			application.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 		    if ( ++count % 20 == 0 ) {
 		        session.flush();
 		        session.clear();
@@ -1869,6 +1872,9 @@ public class CiEntityWS {
 			if(massUpdateParameterInput.getItSecSbConfidentialityTxt()){
 				itSystem.setItSecSbConfidentialityTxt(templateItSystem.getItSecSbConfidentialityTxt());
 			}
+			itSystem.setUpdateUser(massUpdateParameterInput.getCwid());
+			itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 		    if ( ++count % 20 == 0 ) {
 		        session.flush();
 		        session.clear();
@@ -1998,4 +2004,699 @@ public class CiEntityWS {
 		}
 		return output;
 	}
+	public MassUpdateValueTransferParameterOutPut linkTemplateWithCIs(MassUpdateLinkTemplateParameterInput input){
+		MassUpdateValueTransferParameterOutPut outPut = new MassUpdateValueTransferParameterOutPut();
+		try {
+			if(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())){
+				if(input.getCiTypeId()== AirKonstanten.TABLE_ID_APPLICATION){
+					outPut = linkApplicationsWithTemplate(input);
+				}else{
+					if(input.getCiTypeId() == AirKonstanten.TABLE_ID_IT_SYSTEM){
+						outPut = linkItSystemWithTemplate(input);
+					}else{
+						outPut = linkLocationCIsWithTemplate(input);
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			
+		}
+			
+		return outPut;
+		
+	}
+	
+	private MassUpdateValueTransferParameterOutPut linkLocationCIsWithTemplate(
+			MassUpdateLinkTemplateParameterInput input) {
+		MassUpdateValueTransferParameterOutPut output = new MassUpdateValueTransferParameterOutPut();
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		boolean toCommit = false;
+
+		Long ciTypeId = input.getCiTypeId();
+		String sql = "";
+		if (ciTypeId == AirKonstanten.TABLE_ID_POSITION) {
+
+			sql = "select h from Schrank as h where h.id in("
+					+ input.getSelectedCIs() + ")";
+		} else {
+			if (ciTypeId == AirKonstanten.TABLE_ID_ROOM) {
+				sql = "select h from Room as h where h.id in("
+						+ input.getSelectedCIs() + ")";
+			} else {
+				if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING) {
+
+					sql = "select h from Building as h where h.id in("
+							+ input.getSelectedCIs() + ")";
+				} else {
+					if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING_AREA) {
+						sql = "select h from BuildingArea as h where h.id in("
+								+ input.getSelectedCIs() + ")";
+					} else {
+						if (ciTypeId == AirKonstanten.TABLE_ID_TERRAIN) {
+							sql = "select h from Terrain as h where h.id in("
+									+ input.getSelectedCIs() + ")";
+						} else {
+							if (ciTypeId == AirKonstanten.TABLE_ID_SITE) {
+								sql = "select h from Standort as h where h.id in("
+										+ input.getSelectedCIs() + ")";
+							}
+						}
+					}
+
+				}
+			}
+		}
+		try {
+			if (!sql.isEmpty()) {
+				ScrollableResults locationCIs = session.createQuery(sql)
+						.setCacheMode(CacheMode.IGNORE)
+						.scroll(ScrollMode.FORWARD_ONLY);
+				int count = 0;
+				while (locationCIs.next()) {
+					CiBase1 locationCi = (CiBase1) locationCIs.get(0);
+					locationCi.setRefId(input.getTemplateCiId());
+
+					if (++count % 20 == 0) {
+						session.flush();
+						session.clear();
+					}
+				}
+				session.flush();
+				session.clear();
+				tx.commit();
+				toCommit = true;
+			}else{
+				output.setResult(AirKonstanten.RESULT_ERROR);
+				output.setMessages(new String[] { "invalid CI Type" });
+			}
+
+		} catch (Exception e) {
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { e.getMessage() });
+		} finally {
+			if (toCommit) {
+				String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+				if (null == hbnMessage) {
+					output.setResult(AirKonstanten.RESULT_OK);
+					output.setMessages(new String[] { "" });
+				} else {
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { hbnMessage });
+				}
+			}
+		}
+
+		return output;
+	}
+	
+	private MassUpdateValueTransferParameterOutPut linkItSystemWithTemplate(MassUpdateLinkTemplateParameterInput input){
+		MassUpdateValueTransferParameterOutPut output = new MassUpdateValueTransferParameterOutPut();
+		Session session = HibernateUtil.getSession();;
+		Transaction tx = session.beginTransaction();
+		boolean toCommit = false;
+		try {
+			ScrollableResults itSystems = session.createQuery("select h from ItSystem as h where h.id in(" + input.getSelectedCIs()+ ")")
+		    .setCacheMode(CacheMode.IGNORE)
+		    .scroll(ScrollMode.FORWARD_ONLY);
+		int count=0;
+		while (itSystems.next()) {
+			
+			ItSystem itSystem = (ItSystem) itSystems.get(0);
+			itSystem.setRefId(input.getTemplateCiId());
+
+			if (++count % 20 == 0) {
+				session.flush();
+				session.clear();
+			}
+		}
+		session.flush();
+		session.clear();
+		tx.commit();
+		toCommit = true;
+
+	} catch (Exception e) {
+		output.setResult(AirKonstanten.RESULT_ERROR);
+		output.setMessages(new String[] { e.getMessage() });
+	} finally {
+		if (toCommit) {
+			String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+			if (null == hbnMessage) {
+				output.setResult(AirKonstanten.RESULT_OK);
+				output.setMessages(new String[] { "" });
+			} else {
+				output.setResult(AirKonstanten.RESULT_ERROR);
+				output.setMessages(new String[] { hbnMessage });
+			}
+		}
+	}
+	return output;
+		
+	}
+
+	private MassUpdateValueTransferParameterOutPut linkApplicationsWithTemplate(
+			MassUpdateLinkTemplateParameterInput input) {
+		MassUpdateValueTransferParameterOutPut output = new MassUpdateValueTransferParameterOutPut();
+		Session session = HibernateUtil.getSession();
+		;
+		Transaction tx = session.beginTransaction();
+		boolean toCommit = false;
+		try {
+			ScrollableResults applications = session
+					.createQuery(
+							"select h from Application as h where h.applicationId in("
+									+ input.getSelectedCIs() + ")")
+					.setCacheMode(CacheMode.IGNORE)
+					.scroll(ScrollMode.FORWARD_ONLY);
+			int count = 0;
+			while (applications.next()) {
+
+				Application application = (Application) applications.get(0);
+				application.setRefId(input.getTemplateCiId());
+
+				if (++count % 20 == 0) {
+					session.flush();
+					session.clear();
+				}
+			}
+			session.flush();
+			session.clear();
+			tx.commit();
+			toCommit = true;
+
+		} catch (Exception e) {
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { e.getMessage() });
+		} finally {
+			if (toCommit) {
+				String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+				if (null == hbnMessage) {
+					output.setResult(AirKonstanten.RESULT_OK);
+					output.setMessages(new String[] { "" });
+				} else {
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { hbnMessage });
+				}
+			}
+		}
+		return output;
+
+	}
+	public MassUpdateValueTransferParameterOutPut changeAttrMassUpdateSave(MassUpdateChangeAttrParameterInput mAttrParameterInput){
+		MassUpdateValueTransferParameterOutPut parameterOutPut = new MassUpdateValueTransferParameterOutPut();
+		try {
+			if (LDAPAuthWS.isLoginValid(mAttrParameterInput.getCwid(),
+					mAttrParameterInput.getToken())) {
+				// application owner delegate
+				if (!StringUtils.isNullOrEmpty(mAttrParameterInput.getApplicationDelegate())) {
+					List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(mAttrParameterInput.getApplicationDelegate());
+					if (!listPersons.isEmpty()) {
+						mAttrParameterInput.setApplicationDelegate(listPersons.get(0).getCwid());
+					}
+				}
+				if (!StringUtils.isNullOrEmpty(mAttrParameterInput.getCiOwnerDelegate())) {
+					List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(mAttrParameterInput.getApplicationDelegate());
+					if (!listPersons.isEmpty()) {
+						mAttrParameterInput.setCiOwnerDelegate(listPersons.get(0).getCwid());
+					}
+				}
+				if (mAttrParameterInput.getCiTypeId() == AirKonstanten.TABLE_ID_APPLICATION) {
+					parameterOutPut = applicationSelectAttrMassUpdate(mAttrParameterInput);
+				} else if (mAttrParameterInput.getCiTypeId() == AirKonstanten.TABLE_ID_IT_SYSTEM)
+					parameterOutPut = itSystemSelectAttMassUpdate(mAttrParameterInput);
+
+				else {
+
+					Long ciTypeId = mAttrParameterInput.getCiTypeId();
+					String sql = "";
+					if (ciTypeId == AirKonstanten.TABLE_ID_POSITION) {
+						sql = "select h from Schrank as h where h.id in("
+								+ mAttrParameterInput.getSelectedCIs()
+								+ ")";
+					} else {
+						if (ciTypeId == AirKonstanten.TABLE_ID_ROOM) {
+							sql = "select h from Room as h where h.id in("
+									+ mAttrParameterInput.getSelectedCIs()
+									+ ")";
+						} else {
+							if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING) {
+								sql = "select h from Building as h where h.id in("
+										+ mAttrParameterInput
+												.getSelectedCIs() + ")";
+							} else {
+								if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING_AREA) {
+									sql = "select h from BuildingArea as h where h.id in("
+											+ mAttrParameterInput
+													.getSelectedCIs() + ")";
+								} else {
+									if (ciTypeId == AirKonstanten.TABLE_ID_TERRAIN) {
+										sql = "select h from Terrain as h where h.id in("
+												+ mAttrParameterInput
+														.getSelectedCIs() + ")";
+									} else {
+										if (ciTypeId == AirKonstanten.TABLE_ID_SITE) {
+											sql = "select h from Standort as h where h.id in("
+													+ mAttrParameterInput
+															.getSelectedCIs()
+													+ ")";
+										}
+									}
+								}
+
+							}
+						}
+						parameterOutPut = locationCISelectAttrMassUpdate(
+								mAttrParameterInput, sql);
+					}
+				
+					
+				}
+				
+			}
+		} catch (Exception e) {
+			// handle exception
+			parameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+			parameterOutPut.setMessages(new String[] { e.getMessage() });
+		}
+		return parameterOutPut;
+		
+	}
+	private MassUpdateValueTransferParameterOutPut locationCISelectAttrMassUpdate(MassUpdateChangeAttrParameterInput mAttrParameterInput, String sql){
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		MassUpdateValueTransferParameterOutPut maParameterOutPut = new MassUpdateValueTransferParameterOutPut();
+		boolean toCommit = false;
+		try {
+			ScrollableResults locationCIS = session.createQuery(sql)
+		    .setCacheMode(CacheMode.IGNORE)
+		    .scroll(ScrollMode.FORWARD_ONLY);
+		int count=0;
+		while (locationCIS.next()) {
+			CiBase1 locationCi = (CiBase1) locationCIS.get(0);
+			if(mAttrParameterInput.getSlaId()!=null){
+				locationCi.setSlaId(mAttrParameterInput.getSlaId());
+			}
+			if(mAttrParameterInput.getServiceContractId()!=null){
+				locationCi.setServiceContractId(mAttrParameterInput.getServiceContractId());
+			}
+			if(mAttrParameterInput.getItSecSbAvailability()!=null){
+				locationCi.setItSecSbAvailability(mAttrParameterInput.getItSecSbAvailability());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbAvailabilityTxt())){
+				locationCi.setItSecSbAvailabilityTxt(mAttrParameterInput.getItSecSbAvailabilityTxt());
+			}
+			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null){
+				locationCi.setItSecSbConfidentialityId(mAttrParameterInput.getItSecSbConfidentialityId());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbConfidentialityTx())){
+				locationCi.setItSecSbConfidentialityTxt(mAttrParameterInput.getItSecSbConfidentialityTx());
+			}
+			if(mAttrParameterInput.getItSecSbIntegrityId()!=null){
+				locationCi.setItSecSbIntegrityId(mAttrParameterInput.getItSecSbIntegrityId());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbIntegrityTxt())){
+				locationCi.setItSecSbIntegrityTxt(mAttrParameterInput.getItSecSbIntegrityTxt());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getCiOwnerPrimaryPerson())){
+				locationCi.setCiOwner(mAttrParameterInput.getCiOwnerPrimaryPerson());
+				
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getCiOwnerDelegate())){
+				locationCi.setCiOwnerDelegate(mAttrParameterInput.getCiOwnerDelegate());				
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getRelevanceGR1435())){
+				if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput.getRelevanceGR1435())){
+					locationCi.setRelevanceITSEC(-1l);
+				}
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getRelevanceGR1920())){
+				if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput.getRelevanceGR1920())){
+					locationCi.setRelevanceICS(-1l);
+				}
+			}
+			locationCi.setUpdateUser(mAttrParameterInput.getCwid());
+			locationCi.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			locationCi.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+		    if ( ++count % 20 == 0 ) {
+		        session.flush();
+		        session.clear();
+		    }
+		}
+		session.flush();
+		session.clear();
+		tx.commit();
+		if(mAttrParameterInput.getItsecGroupId()!=null){
+			tx = session.beginTransaction();
+			String sqlItsec = "{call pck_Logical_Integrity.P_CI_Safeguard_Assignment (?,?,?)}";
+			
+			Connection conn = session.connection();
+			
+			CallableStatement stmt = conn.prepareCall(sqlItsec);
+			String selectedCIsArray[] = mAttrParameterInput.getSelectedCIs().split(",");
+			int size = selectedCIsArray.length;
+			for(int i=0;i<size; i++ ){
+				stmt.setLong(1, mAttrParameterInput.getCiTypeId());
+				stmt.setLong(2, Long.valueOf(selectedCIsArray[i]));
+				stmt.setLong(3, Long.valueOf(mAttrParameterInput.getItsecGroupId()));
+				stmt.addBatch();
+			}
+			int [] updateCounts = stmt.executeBatch();
+			tx.commit();
+			System.out.println(updateCounts);
+		}		
+
+		toCommit = true;
+		} catch (Exception e) {
+			maParameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+			maParameterOutPut.setMessages(new String[] { e.getMessage() });
+		}finally {
+			String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+			if (toCommit) {
+				if (null == hbnMessage) {
+					maParameterOutPut.setResult(AirKonstanten.RESULT_OK);
+					maParameterOutPut.setMessages(new String[] { "" });
+				} else {
+					maParameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+					maParameterOutPut.setMessages(new String[] { hbnMessage });
+				}
+			}
+		}
+		
+		return maParameterOutPut;   
+	}
+	private MassUpdateValueTransferParameterOutPut applicationSelectAttrMassUpdate(MassUpdateChangeAttrParameterInput mAttrParameterInput){
+		MassUpdateValueTransferParameterOutPut parameterOutPut = new MassUpdateValueTransferParameterOutPut();
+		Session session = HibernateUtil.getSession();;
+		Transaction tx = session.beginTransaction();
+		boolean toCommit = false;
+		try {
+			ScrollableResults applications = session.createQuery("select h from Application as h where h.applicationId in(" + mAttrParameterInput.getSelectedCIs()+ ")")
+		    .setCacheMode(CacheMode.IGNORE)
+		    .scroll(ScrollMode.FORWARD_ONLY);
+		int count=0;
+		while (applications.next()) {
+			
+			Application application = (Application) applications.get(0);
+			if(mAttrParameterInput.getApplicationCat2Id()!=null){
+				application.setApplicationCat2Id(mAttrParameterInput.getApplicationCat2Id());
+			}
+			if(mAttrParameterInput.getLifecycleStatusId()!=null){
+				application.setLifecycleStatusId(mAttrParameterInput.getLifecycleStatusId());
+			}
+			if(mAttrParameterInput.getOperationalStatusId()!=null){
+				application.setOperationalStatusId(mAttrParameterInput.getOperationalStatusId());
+			}
+			if(mAttrParameterInput.getPriorityLevelId()!=null){
+				application.setPriorityLevelId(mAttrParameterInput.getPriorityLevelId());
+			}
+			if(mAttrParameterInput.getSeverityLevelId()!=null){
+				application.setSeverityLevelId(mAttrParameterInput.getSeverityLevelId());
+			}
+			if(mAttrParameterInput.getItsecGroupId()!=null){
+				application.setItsecGroupId(mAttrParameterInput.getItsecGroupId());
+			}
+			if(mAttrParameterInput.getSlaId()!=null){
+				application.setSlaId(mAttrParameterInput.getSlaId());
+			}
+			if(mAttrParameterInput.getServiceContractId()!=null){
+				application.setServiceContractId(mAttrParameterInput.getServiceContractId());
+			}
+			if(mAttrParameterInput.getItSecSbAvailability()!=null){
+				application.setItSecSbAvailability(mAttrParameterInput.getItSecSbAvailability());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbAvailabilityTxt())){
+				application.setItSecSbAvailabilityTxt(mAttrParameterInput.getItSecSbAvailabilityTxt());
+			}
+			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null){
+				application.setItSecSbConfidentiality(mAttrParameterInput.getItSecSbConfidentialityId());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbConfidentialityTx())){
+				application.setItSecSbConfidentialityTxt(mAttrParameterInput.getItSecSbConfidentialityTx());
+			}
+			if(mAttrParameterInput.getClassInformationId()!=null){
+				application.setClassInformationId(mAttrParameterInput.getClassInformationId());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getClassInformationExplanation())){
+				application.setClassInformationExplanation(mAttrParameterInput.getClassInformationExplanation());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getApplicationOwner())){
+				application.setApplicationOwner(mAttrParameterInput.getApplicationOwner());
+				
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getApplicationDelegate())){
+				application.setApplicationOwnerDelegate(mAttrParameterInput.getApplicationDelegate());				
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getApplicationSteward())){
+				application.setApplicationSteward(mAttrParameterInput.getApplicationSteward());				
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getCiOwnerPrimaryPerson())){
+				application.setResponsible(mAttrParameterInput.getCiOwnerPrimaryPerson());				
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getCiOwnerDelegate())){
+				application.setSubResponsible(mAttrParameterInput.getCiOwnerDelegate());				
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getVersion())){
+				application.setVersion(mAttrParameterInput.getVersion());
+			}
+			if(mAttrParameterInput.getOperationalStatusId()!=null){
+				application.setOperationalStatusId(mAttrParameterInput.getOperationalStatusId());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getComments())){
+				application.setComments(mAttrParameterInput.getComments());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getGxpFlag())){
+				application.setGxpFlag(mAttrParameterInput.getGxpFlag());
+			}
+			if(mAttrParameterInput.getCategoryBusinessId()!=null){
+				application.setCategoryBusiness(mAttrParameterInput.getCategoryBusinessId());
+			}
+			if(mAttrParameterInput.getClassDataId()!= null){
+				application.setClassDataId(mAttrParameterInput.getClassDataId());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getOrganisationalScope())){
+				application.setOrganisationalScope(mAttrParameterInput.getOrganisationalScope());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getBarRelevance())){
+				if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput.getBarRelevance()) || AirKonstanten.NO_SHORT.equals(mAttrParameterInput.getBarRelevance())) {
+					application.setBarRelevance(mAttrParameterInput.getBarRelevance());
+				}
+				
+				if (AirKonstanten.NO_SHORT.equals(mAttrParameterInput.getBarRelevance())) {
+					application.setBarApplicationId(null);
+				}
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getRelevanceGR1435())){
+				if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput.getRelevanceGR1435())){
+					application.setRelevanzITSEC(-1l);
+				}
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getRelevanceGR1920())){
+				if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput.getRelevanceGR1920())){
+					application.setRelevanceICS(-1l);
+				}
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getRelevanceGR2008())){
+				if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput.getRelevanceGR2008())){
+					application.setRelevance2008(-1l);
+				}
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getRelevanceGR2059())){
+				if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput.getRelevanceGR2059())){
+					application.setRelevance2059(-1l);
+				}
+			}
+						
+			application.setUpdateUser(mAttrParameterInput.getCwid());
+			application.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			application.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+			
+		    if ( ++count % 20 == 0 ) {
+		        session.flush();
+		        session.clear();
+		    }
+		}
+		session.flush();
+		session.clear();
+		tx.commit();
+		if(mAttrParameterInput.getItsecGroupId()!=null){
+			tx = session.beginTransaction();
+			String sql = "{call pck_Logical_Integrity.P_CI_Safeguard_Assignment (?,?,?)}";
+			
+			Connection conn = session.connection();
+			
+			CallableStatement stmt = conn.prepareCall(sql);
+			String selectedCIsarray[] = mAttrParameterInput.getSelectedCIs().split(",");
+			int size = selectedCIsarray.length;
+			for(int i=0;i<size; i++ ){
+				stmt.setLong(1, mAttrParameterInput.getCiTypeId());
+				stmt.setLong(2, Long.valueOf(selectedCIsarray[i]));
+				stmt.setLong(3, Long.valueOf(mAttrParameterInput.getItsecGroupId()));
+				stmt.addBatch();
+			}
+			int [] updateCounts = stmt.executeBatch();
+			tx.commit();
+			System.out.println(updateCounts);
+		}		
+		toCommit = true;
+			
+		} catch (Exception e) {
+			parameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+			parameterOutPut.setMessages(new String[] { e.getMessage() });
+		}finally{
+			if (toCommit) {
+				String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+				if (null == hbnMessage) {
+					parameterOutPut.setResult(AirKonstanten.RESULT_OK);
+					parameterOutPut.setMessages(new String[] { "" });
+				} else {
+					parameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+					parameterOutPut.setMessages(new String[] { hbnMessage });
+				}
+			}
+		}
+		return parameterOutPut ;
+	}
+	private MassUpdateValueTransferParameterOutPut itSystemSelectAttMassUpdate(MassUpdateChangeAttrParameterInput mAttrParameterInput){
+		MassUpdateValueTransferParameterOutPut parameterOutPut = new MassUpdateValueTransferParameterOutPut();
+		Session session = HibernateUtil.getSession();;
+		Transaction tx = session.beginTransaction();
+		boolean toCommit = false;
+		try {
+			ScrollableResults itSystems = session.createQuery("select h from ItSystem as h where h.id in(" + mAttrParameterInput.getSelectedCIs()+ ")")
+		    .setCacheMode(CacheMode.IGNORE)
+		    .scroll(ScrollMode.FORWARD_ONLY);
+		int count=0;
+		while (itSystems.next()) {
+			
+			ItSystem itSystem = (ItSystem) itSystems.get(0);
+			if(mAttrParameterInput.getLifecycleStatusId()!=null){
+				itSystem.setLifecycleStatusId(mAttrParameterInput.getLifecycleStatusId().intValue());
+			}
+			if(mAttrParameterInput.getOperationalStatusId()!=null){
+				itSystem.setEinsatzStatusId(mAttrParameterInput.getOperationalStatusId().intValue());
+			}
+			if(mAttrParameterInput.getPriorityLevelId()!=null){
+				itSystem.setPriorityLevelId(mAttrParameterInput.getPriorityLevelId());
+			}
+			if(mAttrParameterInput.getSeverityLevelId()!=null){
+				itSystem.setSeverityLevelId(mAttrParameterInput.getSeverityLevelId());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getClusterCode())){
+				itSystem.setClusterCode(mAttrParameterInput.getClusterCode());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getClusterType())){
+				itSystem.setClusterType(mAttrParameterInput.getClusterType());
+			}
+			if(mAttrParameterInput.getItsecGroupId()!=null){
+				itSystem.setItsecGroupId(mAttrParameterInput.getItsecGroupId());
+			}
+			if(mAttrParameterInput.getSlaId()!=null){
+				itSystem.setSlaId(mAttrParameterInput.getSlaId());
+			}
+			if(mAttrParameterInput.getServiceContractId()!=null){
+				itSystem.setServiceContractId(mAttrParameterInput.getServiceContractId());
+			}
+			if(mAttrParameterInput.getItSecSbAvailability()!=null){
+				itSystem.setItSecSbAvailability(mAttrParameterInput.getItSecSbAvailability());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbAvailabilityTxt())){
+				itSystem.setItSecSbAvailabilityTxt(mAttrParameterInput.getItSecSbAvailabilityTxt());
+			}
+			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null){
+				itSystem.setItSecSbConfidentialityId(mAttrParameterInput.getItSecSbConfidentialityId());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbConfidentialityTx())){
+				itSystem.setItSecSbConfidentialityTxt(mAttrParameterInput.getItSecSbConfidentialityTx());
+			}
+			if(mAttrParameterInput.getItSecSbIntegrityId()!=null){
+				itSystem.setItSecSbIntegrityId(mAttrParameterInput.getItSecSbIntegrityId());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbIntegrityTxt())){
+				itSystem.setItSecSbIntegrityTxt(mAttrParameterInput.getItSecSbIntegrityTxt());
+			}	
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getCiOwnerPrimaryPerson())){
+				itSystem.setCiOwner(mAttrParameterInput.getCiOwnerPrimaryPerson());
+				
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getCiOwnerDelegate())){
+				itSystem.setCiOwnerDelegate(mAttrParameterInput.getCiOwnerDelegate());				
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getClusterCode())){
+				itSystem.setClusterCode(mAttrParameterInput.getClusterCode());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getClusterType())){
+				itSystem.setClusterType(mAttrParameterInput.getClusterType());
+			}
+			if(mAttrParameterInput.getPrimaryFunctionId()!=null){
+				itSystem.setPrimaryFunctionId(mAttrParameterInput.getPrimaryFunctionId());
+			}
+			if(mAttrParameterInput.getOsNameId()!=null || mAttrParameterInput.getOsNameId()!=0 ){
+				itSystem.setOsNameId(mAttrParameterInput.getOsNameId());
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getVirtualHardwareSoftware())){
+				itSystem.setVirtualHardwareSoftware(mAttrParameterInput.getVirtualHardwareSoftware());
+			}
+
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getRelevanceGR1435())){
+				if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput.getRelevanceGR1435())){
+					itSystem.setRelevanceITSEC(-1l);
+				}
+			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getRelevanceGR1920())){
+				if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput.getRelevanceGR1920())){
+					itSystem.setRelevanceICS(-1l);
+				}
+			}
+
+			itSystem.setUpdateUser(mAttrParameterInput.getCwid());
+			itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+		    if ( ++count % 20 == 0 ) {
+		        session.flush();
+		        session.clear();
+		    }
+		}
+		session.flush();
+		session.clear();
+		tx.commit();
+		if(mAttrParameterInput.getItsecGroupId()!=null){
+			tx = session.beginTransaction();
+			String sql = "{call pck_Logical_Integrity.P_CI_Safeguard_Assignment (?,?,?)}";
+			
+			Connection conn = session.connection();
+			
+			CallableStatement stmt = conn.prepareCall(sql);
+			String selectedCIsarray[] = mAttrParameterInput.getSelectedCIs().split(",");
+			int size = selectedCIsarray.length;
+			for(int i=0;i<size; i++ ){
+				stmt.setLong(1, mAttrParameterInput.getCiTypeId());
+				stmt.setLong(2, Long.valueOf(selectedCIsarray[i]));
+				stmt.setLong(3, Long.valueOf(mAttrParameterInput.getItsecGroupId()));
+				stmt.addBatch();
+			}
+			int [] updateCounts = stmt.executeBatch();
+			tx.commit();
+			System.out.println(updateCounts);
+		}		
+		toCommit = true;
+			
+		} catch (Exception e) {
+			parameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+			parameterOutPut.setMessages(new String[] { e.getMessage() });
+		}finally{
+			if (toCommit) {
+				String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+				if (null == hbnMessage) {
+					parameterOutPut.setResult(AirKonstanten.RESULT_OK);
+					parameterOutPut.setMessages(new String[] { "" });
+				} else {
+					parameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+					parameterOutPut.setMessages(new String[] { hbnMessage });
+				}
+			}
+		}
+		return parameterOutPut ;	
+	}
+	
 }

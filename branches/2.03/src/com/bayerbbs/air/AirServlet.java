@@ -784,6 +784,7 @@ public class AirServlet extends HttpServlet {
 				
 				append(compressJSFile("javascript/massUpdate/MassUpdateAttributeValueTransferWindow.js", version)).
 				append(compressJSFile("javascript/massUpdate/MassUpdateComplianceCotrolSelectionWindow.js",version)).
+				append(compressJSFile("javascript/massUpdate/MassUpdateSelectAttributeValueWindow.js",version)).				
 				
 	//			===================================================================================================================
 				

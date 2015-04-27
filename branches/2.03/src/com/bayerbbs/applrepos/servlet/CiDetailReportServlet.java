@@ -320,8 +320,8 @@ public class CiDetailReportServlet extends HttpServlet {
 			// document.newPage();
 			String description = getDescription(statement,
 					detail.getGStoolId(), rs);
-			description =description.replaceAll( "<br>", "<br></br>");
-			description=description.replaceAll( "<hr>", "<hr></hr>");
+			description=description.replaceAll( "<hr>", "<p>******************************************************************************************************************</p>");
+			description=description.replaceAll( "<hr />", "<p>******************************************************************************************************************</p>");
 			HTMLWorker htmlWorker = new HTMLWorker(document);
 			htmlWorker.parse(new StringReader(description));
 			PdfPTable pdftable = new PdfPTable(2);

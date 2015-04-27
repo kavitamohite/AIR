@@ -63,7 +63,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		});
 		
 		AIR.CiSearchView.superclass.initComponent.call(this);
-		
+		var callback =null;
 		this.addEvents('ciSelect', 'beforeCiSelect', 'externalNavigation');
 
 		var clSearch = this.getComponent('ciSearchViewPages').getComponent('ciStandardSearchView').getComponent('pSearch').getComponent('clSearch');
@@ -115,30 +115,61 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	
 	startMassUpdate: function(button, event){
 		var ciResultGrid = this.getComponent('ciSearchResultView').getComponent('tpCiSearchResultTables').getActiveTab();
+		var cbmassUpdateType = this.getComponent('ciSearchResultView').getComponent('pcbmassUpdateType').getComponent('cbmassUpdateType');
+		var massUpdateMode = cbmassUpdateType.getValue();
 		var selModel = ciResultGrid.getSelectionModel();
-		var callback = function() {
-			this.fireEvent('externalNavigation', this, null, 'clSearch');
-		};
-		
+		this.callback = function() {
+			var bMassUpdate = this.getComponent('ciSearchResultView').getComponent('pSearchResultOptions').getComponent('bMassUpdate');
+			var bSelectDeselectAll = this.getComponent('ciSearchResultView').getComponent('pSearchResultOptions').getComponent('bSelectDeselectAll');
+			var tpCiSearchResultTables = this.getComponent('ciSearchResultView').getComponent('tpCiSearchResultTables');
+			bMassUpdate.setDisabled(true);
+			bSelectDeselectAll.setDisabled(true);
+			tpCiSearchResultTables.getActiveTab().getSelectionModel().singleSelect=true;
+			tpCiSearchResultTables.getActiveTab().getSelectionModel().clearSelections();
+			this.getComponent('ciSearchResultView').getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect').setValue(false);
+			//this.fireEvent('externalNavigation', this, null, 'clSearch');
+		}.createDelegate(this);
 		var callbackMap = {
-			ok: callback.createDelegate(this)
+			ok: this.callback
 		};
 		var selectedElements = selModel.getCount();
 		if(selectedElements === 0){
-			var message='Select at least on element for mass update.';
+			var message='Select at least one element for mass update.';
 /*			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('WARNING_OK', callbackMap, message, 'Mass update');
 			dynamicWindow.show()*/;
 	        Ext.Msg.show({
 	            title: 'mass update',
-	            msg: 'Select at least on element for mass update.',
+	            msg: 'Select at least one element for mass update.',
 	            modal: false,
 	            icon: Ext.Msg.INFO,
 	            buttons: Ext.Msg.OK
 	        });
-		}else{
-			var message='Are you sure you want to perform the mass update with the marked elements ('+selectedElements+')?';
-			var windowToitle= 'Start mass update ('+selectedElements+' elements)';
-			var verwerfenCallback = function() {
+		}else{		
+			if(massUpdateMode===''){
+					        Ext.Msg.show({
+					            title: 'mass update',
+					            msg: 'Select Mass Update Mode.',
+					            modal: false,
+					            icon: Ext.Msg.INFO,
+					            buttons: Ext.Msg.OK
+					        });
+			}else{
+				
+				var message='Are you sure you want to perform the mass update with the marked elements ('+selectedElements+')?';
+				var windowToitle= 'Start mass update ('+selectedElements+' elements)';
+				Ext.Msg.show({
+					   title: windowToitle,
+					   msg: message,
+					   buttons: Ext.Msg.YESNO,
+					   fn: this.massUpdateMethodSelection,
+					   scope: this,
+					   icon: Ext.MessageBox.INFO
+					});
+			}
+
+			
+			
+/*			var verwerfenCallback = function() {
 				var selectedRows = selModel.getSelections();
 				var ids = selectedRows[0].id;
 				var size= selectedRows.length;
@@ -147,18 +178,47 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 						ids=ids+','+selectedRows[i].id; // Do whatever you want to do
 					}
 				}
-				var massUpdateSerachCITemplateWindow = new AIR.MassUpdateSerachCITemplateWindow(this.getComponent('ciSearchResultView').ciTypeId,this.getComponent('ciSearchResultView').ciSubTypeId,ids);
+				var massUpdateSerachCITemplateWindow = new AIR.MassUpdateSerachCITemplateWindow(this.getComponent('ciSearchResultView').ciTypeId,this.getComponent('ciSearchResultView').ciSubTypeId,ids,this.callback);
 				massUpdateSerachCITemplateWindow.show();
 			}.createDelegate(this);			
 			
 			var callbackMap = {
-				'yes': verwerfenCallback
+				'yes': verwerfenCallback,
+				'no': this.callback
+				
 			};			
 			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('MASSUPDATE_CONFIRMATION', callbackMap,message,windowToitle);
-			dynamicWindow.show();
+			dynamicWindow.show();*/
 		}
 	},
-	
+	massUpdateMethodSelection :function(button,object){
+		if(button=='yes'){
+			var ciSearchResultView = this.getComponent('ciSearchResultView');
+			var ciTypeId = ciSearchResultView.ciTypeId;
+			var ciSubTypeId = ciSearchResultView.ciSubTypeId;
+			var cbmassUpdateType = this.getComponent('ciSearchResultView').getComponent('pcbmassUpdateType').getComponent('cbmassUpdateType');
+			var massUpdateMode = cbmassUpdateType.getValue();
+			var ciResultGrid = ciSearchResultView.getComponent('tpCiSearchResultTables').getActiveTab();
+			var selModel = ciResultGrid.getSelectionModel();			
+			var selectedRows = selModel.getSelections();
+			var ids = selectedRows[0].id;
+			var size= selectedRows.length;
+			if(size > 1){
+				for( var i = 1; i < selectedRows.length; i++) {
+					ids=ids+','+selectedRows[i].id; // Do whatever you want to do
+				}
+			}
+			if(massUpdateMode==='3'){
+				var selectAttributeValueWindow = new AIR.MassUpdateSelectAttributeValueWindow(ciTypeId,ciSubTypeId,ids,this.callback);
+				selectAttributeValueWindow.show();
+			}else{
+				var massUpdateSerachCITemplateWindow = new AIR.MassUpdateSerachCITemplateWindow(ciTypeId,ciSubTypeId,ids,this.callback,massUpdateMode);
+				massUpdateSerachCITemplateWindow.show();
+			}
+		}else{
+			this.callback();
+		}
+	},	
 	onCat1Select: function(store, record, options) {
 		this.updateAdvSearchHeight(this.isAdvSearchExt, true);
 	},

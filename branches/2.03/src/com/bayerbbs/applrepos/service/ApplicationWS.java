@@ -1280,8 +1280,10 @@ public class ApplicationWS {
 
 		}
 
-
+        
 		// create the result (array)
+		group.setApplicationContactEntryDTO(new ApplicationContactEntryDTO[]{entry});
+		listGroups.add(group);
 		ApplicationContactGroupDTO temp[] = new ApplicationContactGroupDTO[listGroups.size()];
 		for (int i = 0; i < temp.length; i++) {
 			temp[i] = listGroups.get(i);

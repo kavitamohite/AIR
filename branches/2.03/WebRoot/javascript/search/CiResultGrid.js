@@ -133,6 +133,9 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 				break;
 			case 50:
 			case 100:
+			case 500:
+			case 1000:
+			case 10000:	
 				this.setHeight(1145);
 				break;
 			default: break;

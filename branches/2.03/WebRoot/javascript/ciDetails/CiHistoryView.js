@@ -105,8 +105,8 @@ AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 		
 		this.getComponent('historyListView').getColumnModel().setColumnHeader(0, labels.historyDatetime);
 		this.getComponent('historyListView').getColumnModel().setColumnHeader(1, labels.historyChangeSource);
-		this.getComponent('historyListView').getColumnModel().setColumnHeader(2, labels.historyChangeDBUser);
-		this.getComponent('historyListView').getColumnModel().setColumnHeader(3, labels.historyChangeUserCWID);
+		this.getComponent('historyListView').getColumnModel().setColumnHeader(2, labels.historyChangeUserCWID);
+		this.getComponent('historyListView').getColumnModel().setColumnHeader(3, labels.historyChangeDBUser);
 		this.getComponent('historyListView').getColumnModel().setColumnHeader(4, labels.historyChangeAttributeName);
 		this.getComponent('historyListView').getColumnModel().setColumnHeader(5, labels.ciId);
 		this.getComponent('historyListView').getColumnModel().setColumnHeader(6, labels.historyChangeAttributeOldValue);//5
