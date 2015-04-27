@@ -138,6 +138,8 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 			case AC.TABLE_ID_TERRAIN:
 			case AC.TABLE_ID_SITE:
 			case AC.TABLE_ID_PATHWAY:
+			
+				
 			case AC.TABLE_ID_FUNCTION:
 				specificsView = this.getComponent('clCiSpecificsLocationItem');
 				
@@ -154,7 +156,8 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 					specificsView = new AIR.CiSpecificsItItemView({ id: 'clCiSpecificsItItem', height: 460 });//400
 				//NEW TEST
 				
-				break;
+				break;             
+			
 		}
 		
 		return specificsView;
