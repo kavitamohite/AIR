@@ -4,6 +4,7 @@ import com.bayerbbs.applrepos.domain.FunctionDTO;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
+import com.bayerbbs.applrepos.dto.PathwayDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
@@ -82,5 +83,12 @@ public class CiEntityWSDelegate {
 	public ComplianceControlParameterOutput findAllCIComplianceControlForMassUpdate(CiDetailParameterInput input){
 		return ciEntityWS.findAllCIComplianceControlForMassUpdate(input);
 	}
+	//added by vandana
+	public PathwayDTO getWays(CiDetailParameterInput input){
+		return ciEntityWS.getWays(input);
+		
+	}
+	//added by vandana
+
 
 }
