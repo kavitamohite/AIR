@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.FunctionDTO;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
@@ -88,7 +89,13 @@ public class CiEntityWSDelegate {
 		return ciEntityWS.getWays(input);
 		
 	}
-	//added by vandana
-
+	
+	public MassUpdateValueTransferParameterOutPut linkTemplateWithCIs(MassUpdateLinkTemplateParameterInput input){
+		return ciEntityWS.linkTemplateWithCIs(input);
+	}
+	
+	public MassUpdateValueTransferParameterOutPut changeAttrMassUpdateSave(MassUpdateChangeAttrParameterInput mAttrParameterInput){
+		return ciEntityWS.changeAttrMassUpdateSave(mAttrParameterInput);
+	}
 
 }
