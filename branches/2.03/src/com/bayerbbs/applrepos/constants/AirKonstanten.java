@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
-	public final static String AIR_VERSION = "2.03.004";
+	public final static String AIR_VERSION = "2.03.005";
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
@@ -167,6 +167,7 @@ public final class AirKonstanten {
 		CI_TYPE_ORDERING.put("Terrain", 11);
 		CI_TYPE_ORDERING.put("Site", 12);
 		CI_TYPE_ORDERING.put("Function", 13);
+		CI_TYPE_ORDERING.put("Way", 14);
 	}
 	
 	public static final String PRODUCTIONSERVER = "BYZREG";
