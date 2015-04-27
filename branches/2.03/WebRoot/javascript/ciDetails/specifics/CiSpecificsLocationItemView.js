@@ -954,9 +954,38 @@ AIR.CiSpecificsLocationItemView = Ext.extend(AIR.AirView, {
 				
 				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
 				break;
+				//Added by vandana
+			case AC.TABLE_ID_PATHWAY:
+				tfLocationCiAlias.setVisible(false);
+				tfLocationCiAlias.reset();
+				cbRoom.setVisible(false);
+				cbRoom.reset();
+				tfRoomFloor.setVisible(false);
+				tfRoomFloor.reset();
+				tfStandortCode.setVisible(false);
+				tfStandortCode.reset();
+				tfStandortNameEn.setVisible(false);
+				tfStandortNameEn.reset();
+				cbBuildingArea.setVisible(false);
+				cbBuildingArea.reset();
+				cbBuilding.setVisible(false);
+				pBuilding.setVisible(false);
+				cbBuilding.reset();
 				
-		}
-		
+				cbTerrain.setVisible(false);
+				cbTerrain.reset();
+				cbSite.setVisible(false);
+				cbSite.reset();
+				
+				cbCountry.setVisible(false);
+				
+				
+				this.updateLocation(pSpecificsLocationStreet, pSpecificsLocationAddress, data, false);
+				break;
+				//Ended by vandana
+				
+		}		
+				
 		this.getComponent('pBuilding').doLayout();
 	},
 	
