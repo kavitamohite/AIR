@@ -89,7 +89,7 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createMassUpdateTypeStore: function(){
-			var massupdateTypeData = [['1','Link a template'],['2','Copy attriubutes from a template'],['3','Change Attributes']];
+			var massupdateTypeData = [['1','Link a Template'],['2','Copy Attributes from a Template'],['3','Change Attributes']];
 			var massupdateTypeStore = new Ext.data.ArrayStore(
 					{
 						storeId: 'massupdateTypeStore',
@@ -593,8 +593,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'contactsCIOwner'},
 			        {name: 'contactsCIOwnerApplication'}, // for applications only
 			        {name: 'ciResponsible'},
-			        {name: 'ciSubResponsible'},
-			        	        
+			        {name: 'ciSubResponsible'},	     
 			        {name: 'fsApplicationOwner'},
 			        {name: 'applicationOwner'},        
 			        {name: 'applicationOwnerDelegate'},
@@ -1083,6 +1082,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'ciResponsibleText'},
 			        {name: 'ciSubResponsible'},
 			        {name: 'ciSubResponsibleText'},
+			       
 			        
 			        {name: 'gpsccontactCiOwner'},
 			        {name: 'gpsccontactCiOwnerText'},
