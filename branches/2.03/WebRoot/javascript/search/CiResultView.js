@@ -38,7 +38,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		        		marginLeft: 5
 		        	},
 		        	
-		        	text: 'Start mass update'
+		        	text: 'Start Mass Update'
 		        },{
 		        	xtype: 'button',
 		        	id: 'bSelectDeselectAll',
@@ -46,7 +46,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		        	hidden: true,
 		    				        	
 		        	style: {
-		        		marginLeft: 5
+		        		marginLeft: 5		        		
+		        		
 		        	},
 		        	
 		        	text: 'Select/Deselect All'
@@ -64,11 +65,13 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		    	{
 		    		xtype: 'label',
 		    		id: 'lIsMultipleSelect',
-		    		text: 'Multiple selection',
+		    		text: 'Multiple Selection',
 		    		hidden: true,
 		    		
 		    		style: {
-		    			margingLeft: 5
+		    			margingLeft: 5,
+		    	        'font': '12px arial,tahoma,verdana,helvetica',
+		    	        'padding-top':'3px'
 		    		}
 		    	}		    	
 		        ]
@@ -80,6 +83,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	        	border: false,
 	        	style: {
 	        		marginTop: 10
+	        	 
 	        	},
 	        	labelWidth: 130,	        	
 	        	items: [		        
@@ -99,6 +103,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			        mode: 'local',
 		        	disabled: true,
 		        	hidden: true
+		        	
 				}]
 	        	},{
 	        	xtype: 'tabpanel',
@@ -113,7 +118,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	            defaults: { autoScroll: true },
         	
 	        	style: {
-	            	marginTop: 5
+	            	marginTop: 5,
+	            	'font': '11px arial,tahoma,verdana,helvetica'
 	            }
 	        }]
 		});
