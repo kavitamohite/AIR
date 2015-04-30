@@ -5051,11 +5051,13 @@ body.ext-ie6.x-body-masked .x-window select {
 }
 
 .x-box-inner {
+	background: none repeat scroll 0 0 #ccd9e8;/*vandana*/
     overflow:hidden;
     zoom:1;
     position:relative;
     left:0;
     top:0;
+    
 }
 
 .x-box-item {
