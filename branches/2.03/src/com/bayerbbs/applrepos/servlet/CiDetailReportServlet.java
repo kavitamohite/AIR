@@ -861,6 +861,10 @@ public class CiDetailReportServlet extends HttpServlet {
 				getValue(building.getItSecSbConfidentialityId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
 				building.getItSecSbConfidentialityTxt() });
+		//vandana
+		CIData.add(new String[] { "Provider Name", building.getProvider_Name() });
+		CIData.add(new String[] { "Provider Address", building.getProvider_Address() });
+		//vandana
 		return CIData;
 	}
 
