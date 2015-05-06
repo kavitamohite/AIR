@@ -207,6 +207,10 @@
 				<gpsccontactSystemResponsible>System Responsible</gpsccontactSystemResponsible>
 				<gpsccontactImpactedBusiness>Using Subgroups / Using Companies</gpsccontactImpactedBusiness>
 				<gpsccontactBusinessOwnerRepresentative>Business Owner Representative</gpsccontactBusinessOwnerRepresentative>
+		    <idProviderName>Provider Name</idProviderName><!-- vandana -->
+		    <idProviderAddress>Provider Address</idProviderAddress><!-- vandana -->
+		    
+		    
 		
 		<agreementsPanelTitle>Agreements</agreementsPanelTitle>
 			<sla>SLA/OLA</sla>
