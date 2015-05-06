@@ -18,6 +18,8 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				new Array('SYSTEM RESPONSIBLE', 				'gpsccontactSystemResponsible'),
 				new Array('Impacted Business Group', 			'gpsccontactImpactedBusiness'),
 				new Array('Business Owner Representative', 		'gpsccontactBusinessOwnerRepresentative')
+							
+				
 		);
 		
 		this.gpscContactsMap = [
@@ -36,7 +38,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
            	'', // 12 not mapped
            	'gpsccontactSystemResponsible', //13
            	'gpsccontactImpactedBusiness', //14
-           	'gpsccontactBusinessOwnerRepresentative' //15
+           	'gpsccontactBusinessOwnerRepresentative', //15
        	];
 		
 		var taWidth = Ext.isIE ? 224 : 230;//230 224 wegen IE und index.html DOCTYPE! Dies hat Auswirkungen auf die Breite der textarea
@@ -58,6 +60,81 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        appOwnerStewardFieldsets.fsApplicationOwner,
 		        appOwnerStewardFieldsets.fsApplicationSteward,
 		        appOwnerStewardFieldsets.fsCIOwner,
+		        
+		       //new vandana
+		        {
+					xtype: 'fieldset',
+				    id: 'provider',
+				    title:'PROVIDER',
+				   layout: 'column',//toolbar
+				   labelWidth: 200,
+				   anchor: '90%',
+				    
+					items: [
+					{
+	xtype: 'container',
+	id: 'pProviderName',
+	layout: 'column',
+	
+	
+	items: [
+{
+	xtype: 'label',
+	id: 'labelProviderName',
+	width: 200,
+						style: {
+							fontSize: 12
+						}
+		    			},	
+						{
+					xtype: 'textfield',
+					id:'idProviderName',
+					allowBlank: true ,
+					 width: 230,
+					style: {
+						fontSize: 12
+					
+	    		}} , {
+					xtype: 'hidden',
+			        id: 'idProviderNameHidden'
+			    
+				}      
+	
+]
+	},{
+	
+		xtype: 'container',
+		id: 'pProviderAddress',
+	layout: 'column',
+	width: 500,
+		
+		items: [
+	{
+		xtype: 'label',
+		id: 'labelProviderAddress',
+						
+						width: 200,
+						style: {
+							fontSize: 12
+						}
+
+	},	        
+		       {
+					xtype: 'textfield',
+					id:'idProviderAddress',
+					allowBlank: true ,
+					 width: 230,
+					style: {
+						fontSize: 12,
+					    'margin-top': '5px'
+					
+	    		}},{
+		xtype: 'hidden',
+	    id: 'PidroviderAddressHidden' 
+	}
+	]}]
+		},
+		        //end vandana
 	        {
 		        xtype: 'fieldset',
 		        id: 'contactsGPSC',
@@ -644,7 +721,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		clCiSubResponsibleAddgroup.on('click', this.onCiSubResponsibleAddgroup, this);
 		clCiSubResponsibleRemove.on('click', this.onCiSubResponsibleRemove, this);
 		
+		//added vandana
+		var pProviderName = this.getComponent('provider').getComponent('pProviderName');
+		var pProviderAddress = this.getComponent('provider').getComponent('pProviderAddress');
 		
+		//ended vandana
 		var pGpsccontactResponsibleAtCustomerSide = this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide');
 		var clGpsccontactResponsibleAtCustomerSideAdd = pGpsccontactResponsibleAtCustomerSide.getComponent('gpsccontactResponsibleAtCustomerSideAdd');
 		var clGpsccontactResponsibleAtCustomerSideRemove = pGpsccontactResponsibleAtCustomerSide.getComponent('gpsccontactResponsibleAtCustomerSideRemove');
@@ -977,6 +1058,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	update: function(data) {
+
 		var fsApplicationOwner = this.getComponent('fsApplicationOwner');
 		var fsApplicationSteward = this.getComponent('fsApplicationSteward');
 		
@@ -1052,6 +1134,28 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			pCIOwner.getComponent('ciResponsibleHidden').setValue('');
 		}
 		
+	/*	//added conditionset vandana
+		var pProviderName = this.getComponent('provider').getComponent('pProviderName');
+		if(data.Provider_Name) {
+			pProviderName.getComponent('idProviderName').setValue(data.Provider_Name);
+			//pProviderName.getComponent('ProviderNameHidden').setValue(data.ProviderNameHidden);
+		} else {
+			pProviderName.getComponent('idProviderName').setValue('');
+			//pProviderName.getComponent('ProviderNameHidden').setValue('');
+		}
+		//ended conditionset vandana
+		//added conditionsProvider_Addresset vandana
+		var pProviderAddress = this.getComponent('provider').getComponent('pProviderAddress');
+		if(data.Provider_Address) {
+			pProviderAddress.getComponent('idProviderAddress').setValue(data.Provider_Address);
+			//pProviderAddress.getComponent('ProviderAddressHidden').setValue(data.ProviderAddressHidden);
+		} else {
+			pProviderAddress.getComponent('idProviderAddress').setValue('');
+			//pProviderAddress.getComponent('ProviderAddressHidden').setValue('');
+		}
+		//ended conditionset vandana
+*/
+		
 		var pCiSubResponsible = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible');
 		if(data.ciOwnerDelegate) {//ciSubResponsible && data.ciSubResponsible != 0
 			pCiSubResponsible.getComponent('ciSubResponsible').setValue(data.ciOwnerDelegate);//ciSubResponsible
@@ -1103,7 +1207,11 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsible'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), data);
+		//added by vandana
+		AIR.AirAclManager.setAccessMode(this.getComponent('provider').getComponent('pProviderName').getComponent('idProviderName'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddress'), data);
 		
+		//Ended by vandana
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSide'), data);
 //
 		if(data.applicationCat1Id !== AC.APP_CAT1_APPLICATION) {
@@ -1176,6 +1284,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 			
 		}
+		
 
 		// RFC 9459 special case - applications are only "required"
 		if(data.tableId == AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION) { 
@@ -1263,8 +1372,41 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			field = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible');
 			data.ciOwnerDelegate = field.getValue();
 		}
+		//added by vandana
 		
-		
+		field = this.getComponent('provider').getComponent('pProviderName').getComponent('idProviderName');
+		if (!field.disabled) {
+			data.Provider_Name = field.getValue();
+			alert("provider name  ----"+field.getValue());
+			/*field = this.getComponent('provider').getComponent('pProviderName').getComponent('ProviderNameHidden');			
+			if (field.getValue()) {
+				
+				data.ProviderNameHidden = field.getValue();
+				alert("data.ProviderNameHidden   ----"+data.ProviderNameHidden);
+				alert("ProviderNameHidden   ----"+field.getValue());
+			}*/
+		} /*else {
+			data.ProviderName = 'DISABLED';
+		}*/
+		//ended by vandana
+		//added by vandana
+		field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddress');
+		if (!field.disabled) {
+			data.Provider_Address = field.getValue();
+			alert("ProviderAddress  ----"+field.getValue());
+			alert("ProviderAddress  ----"+data.Provider_Address);
+			/*field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('ProviderAddressHidden');			
+			if (field.getValue()) {
+				
+				data.ProviderAddressHidden = field.getValue();
+				alert("data.ProviderAddressHidden   ----"+data.ProviderAddressHidden);
+				alert("ProviderAddressHidden   ----"+field.getValue());
+			}*/
+		} /*else {
+			data.ProviderAddress = 'DISABLED';
+		}*/
+		//ended by vandana
+	
 //		if(AAM.getTableId() == AC.TABLE_ID_APPLICATION || AAM.getTableId() == AC.TABLE_ID_IT_SYSTEM) {
 			field = this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSide');
 			if (!field.disabled) {
@@ -1435,7 +1577,10 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 		this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('labelciResponsible').setText(labels.ciResponsible);
 		this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('labelciSubResponsible').setText(labels.ciSubResponsible);
-
+//added by vandana
+		this.getComponent('provider').getComponent('pProviderName').getComponent('labelProviderName').setText(labels.idProviderName);
+		this.getComponent('provider').getComponent('pProviderAddress').getComponent('labelProviderAddress').setText(labels.idProviderAddress);
+		//ended by vandana
 		this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('labelgpsccontactResponsibleAtCustomerSide').setText(labels.gpsccontactResponsibleAtCustomerSide);
 //		var ciTypeId = AAM.getAppDetail() ? AAM.getAppDetail().tableId : AAM.getTableId();
 //		var ciSubTypeId = AAM.getAppDetail() ? AAM.getAppDetail().applicationCat1Id ? AAM.getAppDetail().applicationCat1Id : AAM.getAppDetail().ciSubTypeId : AAM.getCiSubTypeId();
@@ -1462,9 +1607,12 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setTooltipData(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('labelapplicationOwner'), toolTips.applicationOwner, toolTips.applicationOwnerText);
 		this.setTooltipData(this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('labelapplicationSteward'), toolTips.applicationSteward, toolTips.applicationStewardText);//fsApplicationOwner
 		this.setTooltipData(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('labelapplicationOwnerDelegate'), toolTips.applicationOwnerDelegate, toolTips.applicationOwnerDelegateText);
-				
-		
 		this.setTooltipData(this.getComponent('contactsGPSC').getComponent('pGpsccontactImpactedBusiness').getComponent('labelgpsccontactImpactedBusiness'), toolTips.gpsccontactImpactedBusiness, toolTips.gpsccontactImpactedBusinessText);
+		//Added by vandana
+		this.setTooltipData(this.getComponent('provider').getComponent('pProviderName').getComponent('labelProviderName'), toolTips.idProviderName, toolTips.idProviderNameText);
+		this.setTooltipData(this.getComponent('provider').getComponent('pProviderAddress').getComponent('labelProviderAddress'), toolTips.idProviderAddress, toolTips.idProviderAddressText);
+		
+		//Ended by vandana		
 		this.setTooltipData(this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('labelgpsccontactResponsibleAtCustomerSide'), toolTips.gpsccontactResponsibleAtCustomerSide, toolTips.gpsccontactResponsibleAtCustomerSideText);
 		this.setTooltipData(this.getComponent('contactsGPSC').getComponent('pGpsccontactOwningBusinessGroup').getComponent('labelgpsccontactOwningBusinessGroup'), toolTips.gpsccontactOwningBusinessGroup, toolTips.gpsccontactOwningBusinessGroupText);
 
