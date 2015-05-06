@@ -259,6 +259,10 @@ public class CiEntityWS {
 			buildingDTO.setStreetNumber(building.getStreetNumber());
 			buildingDTO.setPostalCode(building.getPostalCode());
 			buildingDTO.setLocation(building.getLocation());
+			//vandana
+			buildingDTO.setProvider_Name(building.getProvider_Name());
+			buildingDTO.setProvider_Address(building.getProvider_Address());
+			//vandana
 			buildingDTO.setTableId(AirKonstanten.TABLE_ID_BUILDING);
 			
 			setCiBaseData(buildingDTO, building);
