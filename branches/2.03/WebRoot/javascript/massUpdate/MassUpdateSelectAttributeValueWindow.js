@@ -11,8 +11,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		
 		
 		AIR.MassUpdateSelectAttributeValueWindow.superclass.constructor.call(this);
-    	this.initSelectAttr();
-
+        this.initSelectAttr();
 	},
     
     initComponent :function(){
@@ -103,14 +102,13 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 
     						        width: 230,
     						        fieldLabel: 'Explanation',
-    						        enableKeyEvents: true,
     						        allowBlank: true
     						    },{
     						        xtype: 'filterCombo',
     						        width: 230,
     						        fieldLabel: 'Information Class',
     						        id: 'selectAttrprotectionClassInformation',
-    						        
+    						        hidden: true,
     						        store: AIR.AirStoreManager.getStoreByName('classInformationListStore'),
     						        valueField: 'id',
     						        displayField: 'text',
@@ -124,15 +122,14 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     						        width: 230,
     						        fieldLabel: 'Info Class',
     						        id: 'selectAttrprotectionClassInformationExplanation',
-    						        
-    						        enableKeyEvents: true,
+    						        hidden: true,
     						        allowBlank: true
     						    },{
     						        xtype: 'filterCombo',
     						        width: 230,
     						        fieldLabel: 'Integrity',
     						        id: 'selectAttrprotectionIntegrity',
-    						        
+    						        hidden: true,
     						        store: AIR.AirStoreManager.getStoreByName('itSecSBAvailabilityListStore'),
     						        valueField: 'id',
     						        displayField: 'text',
@@ -144,10 +141,9 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     						    },{
     						    	xtype: 'textarea',
     						        id: 'selectAttrprotectionIntegrityDescription',
-
+    						        hidden: true,
     						        width: 230,
     						        fieldLabel: 'Explanation',
-    						        enableKeyEvents: true,
     						        allowBlank: true
     						    }					        
     					        ]
@@ -174,9 +170,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		        store: AIR.AirStoreManager.getStoreByName('slaListStore'),//slaListStore,
 		        valueField: 'id',
 		        displayField: 'text',
-		        
-		        enableKeyEvents: true,
-	        
+		        	        
 		        triggerAction: 'all',
 		        mode: 'local'
 		    }, {
@@ -257,8 +251,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				        
 				        fieldLabel: 'Description',
 				        id: 'selectAttrtaCiDescriptionW',//wizardcomments
-				        allowBlank: true,
-				        msgTarget: 'under'
+				        allowBlank: true
 				    },
 				    {
 									  		 
@@ -280,6 +273,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 								xtype: 'filterCombo',
 						        id: 'cbOsGroup',
 						        width: 230,
+						        hidden: true,
 						        fieldLabel: 'OS Group',
 								lastQuery: '',
 						        store: AIR.AirStoreFactory.createOsGroupsListStore(),
@@ -292,6 +286,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 							},{
 								xtype: 'filterCombo',
 						        id: 'cbOsType',
+						        hidden: true,
 						        width: 230,
 						        fieldLabel: 'OS Type',
 								lastQuery: '',
@@ -305,6 +300,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 							},{
 								xtype: 'filterCombo',
 						        id: 'cbOsName',
+						        hidden: true,
 						        width: 230,
 						        fieldLabel: 'OS Name',
 								lastQuery: '',
@@ -319,7 +315,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 					    	{
 								xtype: 'filterCombo',
 						        id: 'selectAttrcbClusterCode',
-								enableKeyEvents: true,
+						        hidden: true,
 						        width: 230,
 						        fieldLabel: 'Cluster Code',
 								lastQuery: '',
@@ -333,6 +329,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 							},{
 								xtype: 'filterCombo',
 						        id: 'selectAttrcbClusterType',
+						        hidden: true,
 						        width: 230,
 						        fieldLabel: 'Cluster Type',
 								lastQuery: '',
@@ -348,6 +345,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 							{
 					            xtype: 'radiogroup',
 				    			id: 'rgVirtualHWClient',
+				    			hidden: true,
 				    			width: 200,
 				    			
 				    			columns: 2,
@@ -360,6 +358,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 							},{
 					            xtype: 'radiogroup',
 				    			id: 'rgVirtualHWHost',
+				    			hidden: true,
 				    			width: 200,
 				    			
 				    			columns: 2,
@@ -372,7 +371,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 							},{
 								xtype: 'filterCombo',//combo
 						        id: 'selectAttrcbVirtualSoftware',
-								
+								hidden: true,
 						        width: 230,
 						        fieldLabel: 'Virtual Software',
 								
@@ -384,7 +383,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        
 						        triggerAction: 'all',
 						        lazyRender: true,
-						        lazyInit: false,
+						        lazyInit: true,
 						        mode: 'local'
 							},
 					    	{
@@ -425,7 +424,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 //						        frame: true,
 						        border: false,
 						        fieldLabel: 'Organisational scope',
-						        
+						        hidden: true,
 						        id: 'selectAttrlvOrganisationalScopeW',
 						        store: AIR.AirStoreManager.getStoreByName('organisationalScopeListStore'),
 						        
@@ -482,7 +481,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			    			{
 			    				xtype: 'filterCombo',//combo
 			    		        id: 'selectAttrcbPrimaryFunction',
-
+                                hidden: true,
 			    		        width: 230,
 			    		        fieldLabel: 'Primary Function',
 			    		        lastQuery: '',
@@ -516,6 +515,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 	xtype: 'panel',
 	id: 'pSelectAttrCiOwner',
 	layout: 'hbox',
+	hidden: true,
 	border: false,
 	style: {
 		backgroundColor: '#ccd9e8',
@@ -555,6 +555,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 	{
 		xtype: 'panel',
 		id: 'pSelectAttrDelegate',
+		hidden: true,
 		layout: 'hbox',
 		border: false,
 		style: {
@@ -568,13 +569,11 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		width: 180	
 
 	},	        
-		       {
-
+	{
 		xtype: 'textfield',
 	    width: 230,
-	    //fieldLabel: 'Primary Owner',
 	    hideLabel: true,
-	    id: 'tfSelectDelegateW',//value: 'Pepping, Simon (ERCVA)',
+	    id: 'tfSelectDelegateW',
 	    readOnly: true
 	},{
 		xtype: 'hidden',
@@ -598,6 +597,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		{
 			xtype: 'panel',
 			id: 'pSelectAttrSteward',
+			hidden: true,
 			layout: 'hbox',
 			border: false,
 			style: {
@@ -611,17 +611,15 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			width: 180	
 
 		},	        
-			       {
-
+		{
 			xtype: 'textfield',
 		    width: 230,
-		    //fieldLabel: 'Primary Owner',
 		    hideLabel: true,
-		    id: 'tfselectAttrStewardW',//value: 'Pepping, Simon (ERCVA)',
+		    id: 'tfselectAttrStewardW',
 		    readOnly: true
 		},{
 			xtype: 'hidden',
-		    id: 'tfselectAttrStewardWHidden' //value: 'ERCVA'
+		    id: 'tfselectAttrStewardWHidden'
 		},{
 			xtype: 'commandlink',
 			id: 'clSelectAttrStewardAdd',
@@ -632,8 +630,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			img: img_RemovePerson
 		}
 		]
-			},	{
-
+		},	
+			{
 				xtype: 'panel',
 				id: 'pSelectciOwnerPrimaryPerson',
 				layout: 'hbox',
@@ -649,11 +647,9 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				width: 180	
 
 			},	        
-				       {
-
+	       {
 				xtype: 'textfield',
 			    width: 230,
-			    //fieldLabel: 'Primary Owner',
 			    hideLabel: true,
 			    id: 'tfselectCiOwnerPrimaryPersonW',
 			    readOnly: true
@@ -672,8 +668,6 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			]
 				
 			},{
-
-
 				xtype: 'panel',
 				id: 'pSelectCiOwnerDelegate',
 				layout: 'hbox',
@@ -689,11 +683,9 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				width: 180	
 
 			},	        
-				       {
-
+		   {
 				xtype: 'textfield',
 			    width: 230,
-			    //fieldLabel: 'Primary Owner',
 			    hideLabel: true,
 			    id: 'tfselectCiOwnerDelegateW',
 			    readOnly: true
@@ -718,17 +710,15 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			
 			},	
 		                    {
-								xtype: 'filterCombo',//combo
+								xtype: 'filterCombo',
 						        id: 'cbselectAttrItSecGroup',
 						        listWidth: 600,
-						        enableKeyEvents: true,
-						        width: 230,//layout: 'column'
+						        width: 230,
 						        fieldLabel: 'ITSec Group',
 								lastQuery: '',
 						        store: AIR.AirStoreManager.getStoreByName('itSecGroupListStore'),
-						        valueField: 'id',//itSecGroupId
-						        displayField: 'name',//itSecGroupName
-						        
+						        valueField: 'id',
+						        displayField: 'name',
 						        triggerAction: 'all',
 						        lazyRender: true,
 						        lazyInit: false,
@@ -738,9 +728,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 					        	xtype: 'checkboxgroup',
 					        	id: 'selectAttrcbgRegulationsW',
 					        	fieldLabel: 'Relevant Regulation',
-					        	columns: 2,//4
-				    			width: 230,//400 300 200
-//				    			hideLabel: true,
+					        	columns: 2,
+				    			width: 230,
 								style: {
 									marginBottom: 10
 								},
@@ -770,7 +759,6 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        lazyRender: true,
 						        lazyInit: false,
 						        mode: 'local',
-						        	
 						        editable: false
 				        	}
                             ]
@@ -797,6 +785,11 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     	var clSelectCiOwnerDelegateAdd = this.getComponent('selectAttrCompliance').getComponent('pSelectCiOwnerDelegate').getComponent('clSelectCiOwnerDelegateAdd');
     	var clSelectCiOwnerDelegateAddGroup = this.getComponent('selectAttrCompliance').getComponent('pSelectCiOwnerDelegate').getComponent('clSelectCiOwnerDelegateAddGroup');
     	var clSelectCiOwnerDelegateRemove = this.getComponent('selectAttrCompliance').getComponent('pSelectCiOwnerDelegate').getComponent('clSelectCiOwnerDelegateRemove');
+    	var cbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
+    	var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
+		var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+
+    	
 
     	selectAttrSave.on('click', this.onSave, this);
     	selectAttrCancel.on('click', this.onCancle, this);
@@ -812,9 +805,175 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     	clSelectCiOwnerDelegateAdd.on('click',this.onSelectCiOwnerDelegateAdd,this);
     	clSelectCiOwnerDelegateAddGroup.on('click',this.onSelectCiOwnerDelegateAddGroup,this);
     	clSelectCiOwnerDelegateRemove.on('click',this.onSelectCiOwnerDelegateRemove,this);
+        cbOsGroup.on('select', this.onOsGroupSelect, this);
+        cbOsType.on('select', this.onOsTypeSelect, this);
+        cbOsName.on('select', this.onOsNameSelect, this);//onOsNameSelect onSelect
+        
+        cbOsGroup.on('change', this.onOsGroupChange, this);
+        cbOsType.on('change', this.onOsTypeChange, this);
+        cbOsName.on('change', this.onOsNameChange, this);//onChange
+
+
+
     	    	
     },
+	onOsGroupSelect: function(combo, record, index) {
+		this.setOsGroup(combo, record);
+		
+	},
+	onOsTypeSelect: function(combo, record, index) {
+		this.setOsType(combo, record);
+		
+	},
+	onOsNameSelect: function(combo, record, index) {
+		this.setOsName(combo, record);
+		
+	},
+	setOsGroup: function(combo, record) {
+		var filterData = {
+			osGroup: record.get('name'),
+			itSystemType: record.get('type')
+		};
+		
+		var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
+		cbOsType.filterByData(filterData);
+		cbOsType.setValue('');
+		
+		var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+		
+		var fd1 = { itSystemType: this.ciSubTypeId };
+		cbOsName.filterByData(fd1);
+		cbOsName.setValue('');
+		
+	},	
+	setOsType: function(combo, record) {
+		var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+		cbOsName.reset();
+		
+		var filterData = {
+			osTypeId: record.get('osTypeId')//type
+		};
+		cbOsName.filterByData(filterData);
+		cbOsName.setValue('');
+		
+		var cbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
+		var osGroupRecord = Util.getComboRecord(cbOsGroup, 'name', record.get('osGroup'));
+		cbOsGroup.setValue(osGroupRecord.get('id'));
+		
+	},
+	setOsName: function(combo, record) {
+		var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
+		cbOsType.reset();
+		var osTypeRecord = Util.getComboRecord(cbOsType, 'osTypeId', record.get('osTypeId'));//type
+		cbOsType.setValue(osTypeRecord.get('osTypeId'));
+		
+		var cbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
+		cbOsGroup.reset();
+		var osGroupRecord = Util.getComboRecord(cbOsGroup, 'name', osTypeRecord.get('osGroup'));
+		cbOsGroup.setValue(osGroupRecord.get('id'));
+		
+		
+		var fd1 = { type: this.ciSubTypeId  };
+		cbOsGroup.filterByData(fd1);
+		
+		var fd2 = { osGroup: osGroupRecord.get('name') };
+		cbOsType.filterByData(fd2);
+
+	},
+	onOsGroupChange: function(combo, newValue, oldValue) {
+    	if(Util.isComboValueValid(combo, newValue, oldValue)) {
+	    	
+	    	var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
+	    	var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+	    	
+	    	if(typeof newValue === 'string' && newValue.length === 0) {
+	    		cbOsType.reset();
+	    		cbOsName.reset();
+	    		
+	    		var fd1 = { itSystemType: this.ciSubTypeId };
+	    		cbOsType.filterByData(fd1);
+	    		cbOsName.filterByData(fd1);
+
+	    	} else {
+	    		this.setOsGroup(combo, combo.getStore().getById(newValue));
+	    	}
+		}
+	},
+	onOsTypeChange: function(combo, newValue, oldValue) {
+		var cbOsGroup = this.getComponent('fsOs').getComponent('cbOsGroup');
+		
+    	if(Util.isComboValueValid(combo, newValue, oldValue)) {
+    	
+	    	
+	    	var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
+	    	
+	    	if(typeof newValue === 'string' && newValue.length === 0) {
+	    		cbOsName.reset();
+	    		
+	    		var fd1 = { itSystemType: this.ciSubTypeId };
+	    		cbOsName.filterByData(fd1);
+
+	    	} else {
+	    		this.setOsType(combo, combo.getStore().getById(newValue));
+	    	}
+    	} else {
+    		if(cbOsGroup.getValue()) {
+    			var r = cbOsGroup.getStore().getById(cbOsGroup.getValue());
+    			
+    			var fd1 = { osGroup: r.get('name') };
+    			combo.filterByData(fd1);
+    		} else {
+    			var fd1 = { itSystemType: this.ciSubTypeId };
+    			combo.filterByData(fd1);
+    		}
+    	}
+	},
+	onOsNameChange: function(combo, newValue, oldValue) {
+    	if(Util.isComboValueValid(combo, newValue, oldValue)) {
+    		
+	    	if(typeof newValue === 'string' && newValue.length === 0) {
+	    	} else {
+	    		this.setOsName(combo, combo.getStore().getById(newValue));
+	    	}
+    	}
+	},
 	initSelectAttr: function() {
+		var pSelectAttrCiOwner = this.getComponent('selectAttrCompliance').getComponent('pSelectAttrCiOwner');
+        var pSelectAttrDelegate = this.getComponent('selectAttrCompliance').getComponent('pSelectAttrDelegate');
+        var pSelectAttrSteward = this.getComponent('selectAttrCompliance').getComponent('pSelectAttrSteward');
+        var cbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
+        var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
+        var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+        var selectAttrcbClusterCode = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterCode');
+        var selectAttrcbClusterType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterType');
+        var rgVirtualHWClient = this.getComponent('selectAttrfsSpecifics').getComponent('rgVirtualHWClient');
+        var rgVirtualHWHost = this.getComponent('selectAttrfsSpecifics').getComponent('rgVirtualHWHost');
+        var selectAttrcbVirtualSoftware = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbVirtualSoftware');
+        var selectAttrlvOrganisationalScopeW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrlvOrganisationalScopeW');
+        var selectAttrrgBARrelevanceW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrrgBARrelevanceW');
+        var selectAttrcbPrimaryFunction = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbPrimaryFunction');
+		if(this.ciTypeId==AC.TABLE_ID_APPLICATION ){
+			if(this.ciSubTypeId==AC.CI_SUB_TYPE_APPLICATION){
+				pSelectAttrCiOwner.setVisible(true);
+				pSelectAttrDelegate.setVisible(true);
+				pSelectAttrSteward.setVisible(true);
+				selectAttrlvOrganisationalScopeW.setVisible(true);
+				selectAttrrgBARrelevanceW.setVisible(true);
+			}
+			
+		}
+		if(this.ciTypeId==AC.TABLE_ID_IT_SYSTEM ){
+			cbOsGroup.setVisible(true);
+			cbOsType.setVisible(true);
+			cbOsName.setVisible(true);
+			selectAttrcbClusterCode.setVisible(true);
+			selectAttrcbClusterType.setVisible(true);
+			rgVirtualHWClient.setVisible(true);
+			rgVirtualHWHost.setVisible(true);
+			selectAttrcbVirtualSoftware.setVisible(true);
+			selectAttrcbPrimaryFunction.setVisible(true);
+		}
+		
 		var storeIds = {
 			virtualSoftwareListStore: null,
 			itSystemPrimaryFunctionsListStore: null
@@ -835,8 +994,14 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			AIR.AirStoreManager.addStore(key, storeMap[key]);
 		var selectAttrcbVirtualSoftware = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbVirtualSoftware');
 		var selectAttrcbPrimaryFunction = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbPrimaryFunction');
-		selectAttrcbVirtualSoftware.bindStore(AIR.AirStoreManager.getStoreByName('virtualSoftwareListStore'));
-		selectAttrcbPrimaryFunction.bindStore(AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore'));
+		var virtualSoftwareListStore = AIR.AirStoreManager.getStoreByName('virtualSoftwareListStore');
+		var itSystemPrimaryFunctionsListStore = AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore');
+/*		if(virtualSoftwareListStore.data!=null){
+			selectAttrcbVirtualSoftware.bindStore(virtualSoftwareListStore);
+		}
+		if(itSystemPrimaryFunctionsListStore.data!= null){
+			selectAttrcbPrimaryFunction.bindStore(itSystemPrimaryFunctionsListStore);
+		}*/
 		storeLoader.destroy();
     },
     onSave: function(button, event){
