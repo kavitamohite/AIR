@@ -589,6 +589,9 @@ AIR.AirStoreFactory = function() {
 			        {name: 'businessProcess'},
 	
 			        // contacts
+			        {name: 'provider'},
+			        {name: 'idProviderName'},//vandana
+			        {name: 'idProviderAddress'},//vandana
 			        {name: 'contactsPanelTitle'},
 			        {name: 'contactsCIOwner'},
 			        {name: 'contactsCIOwnerApplication'}, // for applications only
@@ -1071,6 +1074,10 @@ AIR.AirStoreFactory = function() {
 			        {name: 'businessProcessText'},
 	
 			        // contacts
+        	        {name: 'idProviderName'},//vandana
+			        {name: 'idProviderNameText'},//vandana
+			        {name: 'idProviderAddress'},//vandana
+			        {name: 'idProviderAddressText'},//vandana
 			        {name: 'applicationOwner'},
 			        {name: 'applicationOwnerText'},
 			        {name: 'applicationSteward'},
@@ -1714,6 +1721,7 @@ AIR.AirStoreFactory = function() {
 			var record = Ext.data.Record.create([
  			    { name: 'id', type: 'int' },
  			    'name'
+ 			    
  			]);
 
  			var reader = new Ext.data.XmlReader({
