@@ -184,8 +184,8 @@ public class BuildingHbn extends LokationItemHbn {
 						building.setPostalCode(dto.getPostalCode());
 						building.setLocation(dto.getLocation());
 						//vandana
-						building.setProvider_Name(dto.getProvider_Name());
-						building.setProvider_Address(dto.getProvider_Address());
+						building.setProvider_Name(dto.getProviderName());
+						building.setProvider_Address(dto.getProviderAddress());
 						//vandana
 
 						
@@ -455,8 +455,8 @@ public class BuildingHbn extends LokationItemHbn {
 						building.setPostalCode(dto.getPostalCode());
 						building.setLocation(dto.getLocation());
                         //vandana
-						building.setProvider_Name(dto.getProvider_Name());
-						building.setProvider_Address(dto.getProvider_Address());
+						building.setProvider_Name(dto.getProviderName());
+						building.setProvider_Address(dto.getProviderAddress());
 						//vandana
 						
 						
@@ -1467,8 +1467,8 @@ public class BuildingHbn extends LokationItemHbn {
 		dto.setStreet(building.getStreet());
 		dto.setStreetNumber(building.getStreetNumber());
 		//vandana
-		dto.setProvider_Name(building.getProvider_Name());
-		dto.setProvider_Address(building.getProvider_Address());
+		dto.setProviderName(building.getProvider_Name());
+		dto.setProviderAddress(building.getProvider_Address());
 		//vandana
 	}
 

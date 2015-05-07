@@ -33,10 +33,10 @@ public class BuildingWS {
 		buildingDTO.setCiOwnerDelegate(input.getCiOwnerDelegate());
 		buildingDTO.setCiOwnerDelegateHidden(input.getCiOwnerDelegateHidden());
 		//vandana
-		buildingDTO.setProvider_Name(input.getProvider_Name());
-		buildingDTO.setProvider_NameHidden(input.getProvider_NameHidden());
-		buildingDTO.setProvider_Address(input.getProvider_Address());
-		buildingDTO.setProvider_AddressHidden(input.getProvider_AddressHidden());
+		buildingDTO.setProviderName(input.getProviderName());
+		buildingDTO.setProviderNameHidden(input.getProviderNameHidden());
+		buildingDTO.setProviderAddress(input.getProviderAddress());
+		buildingDTO.setProviderAddressHidden(input.getProviderAddressHidden());
 		//vandana
 
 		//Agreements
@@ -91,11 +91,11 @@ public class BuildingWS {
 		buildingDTO.setGpsccontactSystemResponsible(input.getGpsccontactSystemResponsible());
 		buildingDTO.setGpsccontactImpactedBusiness(input.getGpsccontactImpactedBusiness());
 		//Added by vandana
-		buildingDTO.setProvider_Name(input.getProvider_Name());
-		buildingDTO.setProvider_NameHidden(input.getProvider_NameHidden());
+		buildingDTO.setProviderName(input.getProviderName());
+		buildingDTO.setProviderNameHidden(input.getProviderNameHidden());
 		
-		buildingDTO.setProvider_Address(input.getProvider_Address());
-		buildingDTO.setProvider_AddressHidden(input.getProvider_AddressHidden());
+		buildingDTO.setProviderAddress(input.getProviderAddress());
+		buildingDTO.setProviderAddressHidden(input.getProviderAddressHidden());
 		//Ended by vandana
 		buildingDTO.setDownStreamAdd(input.getDownStreamAdd());
 		buildingDTO.setDownStreamDelete(input.getDownStreamDelete());

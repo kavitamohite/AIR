@@ -1376,7 +1376,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		field = this.getComponent('provider').getComponent('pProviderName').getComponent('idProviderName');
 		if (!field.disabled) {
-			data.Provider_Name = field.getValue();
+			data.providerName = field.getValue();
 			alert("provider name  ----"+field.getValue());
 			/*field = this.getComponent('provider').getComponent('pProviderName').getComponent('ProviderNameHidden');			
 			if (field.getValue()) {
@@ -1392,9 +1392,9 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		//added by vandana
 		field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddress');
 		if (!field.disabled) {
-			data.Provider_Address = field.getValue();
+			data.providerAddress = field.getValue();
 			alert("ProviderAddress  ----"+field.getValue());
-			alert("ProviderAddress  ----"+data.Provider_Address);
+			alert("ProviderAddress  ----"+data.providerAddress);
 			/*field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('ProviderAddressHidden');			
 			if (field.getValue()) {
 				

@@ -15,46 +15,62 @@ public class BuildingDTO extends LocationDTO implements Serializable {
 	
 	
 	//Added by vandana
-	private String Provider_Name;
-	private String Provider_NameHidden;
-	private String Provider_Address;
-	private String Provider_AddressHidden;
+	private String providerName;
+	private String providerNameHidden;
+	private String providerAddress;
+	private String providerAddressHidden;
 	
-	public String getProvider_Name() {
-		return Provider_Name;
-	}
-
-	public void setProvider_Name(String Provider_Name) {
-		this.Provider_Name = Provider_Name;
-	}
-
-	public String getProvider_NameHidden() {
-		return Provider_NameHidden;
-	}
-
-	public void setProvider_NameHidden(String Provider_NameHidden) {
-		this.Provider_NameHidden = Provider_NameHidden;
-	}
-	
-	public String getProvider_Address() {
-		return Provider_Address;
-	}
-
-	public void setProvider_Address(String Provider_Address) {
-		this.Provider_Address = Provider_Address;
-	}
-
-	public String getProvider_AddressHidden() {
-		return Provider_AddressHidden;
-	}
-
-	public void setProvider_AddressHidden(String Provider_AddressHidden) {
-		this.Provider_AddressHidden = Provider_AddressHidden;
-	}
-	//ended by vandana
 
 	
 
+	/**
+	 * @return the providerName
+	 */
+	public String getProviderName() {
+		return providerName;
+	}
+	/**
+	 * @param providerName the providerName to set
+	 */
+	public void setProviderName(String providerName) {
+		this.providerName = providerName;
+	}
+	/**
+	 * @return the providerNameHidden
+	 */
+	public String getProviderNameHidden() {
+		return providerNameHidden;
+	}
+	/**
+	 * @param providerNameHidden the providerNameHidden to set
+	 */
+	public void setProviderNameHidden(String providerNameHidden) {
+		this.providerNameHidden = providerNameHidden;
+	}
+	/**
+	 * @return the providerAddress
+	 */
+	public String getProviderAddress() {
+		return providerAddress;
+	}
+	/**
+	 * @param providerAddress the providerAddress to set
+	 */
+	public void setProviderAddress(String providerAddress) {
+		this.providerAddress = providerAddress;
+	}
+	/**
+	 * @return the providerAddressHidden
+	 */
+	public String getProviderAddressHidden() {
+		return providerAddressHidden;
+	}
+	/**
+	 * @param providerAddressHidden the providerAddressHidden to set
+	 */
+	public void setProviderAddressHidden(String providerAddressHidden) {
+		this.providerAddressHidden = providerAddressHidden;
+	}
 	public String getAlias() {
 		return alias;
 	}
