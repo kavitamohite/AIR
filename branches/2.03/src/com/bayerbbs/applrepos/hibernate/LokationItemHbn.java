@@ -54,7 +54,7 @@ public class LokationItemHbn extends BaseHbn {
 		if(metaData.getAliasField() != null)
 			sql.append(", ").append(CI).append(metaData.getAliasField());
 		
-		sql.append(", responsible, sub_responsible, template, del_quelle, ").append(locationFields).append(" FROM ").append(metaData.getTableName()).append(" ci").
+		sql.append(", responsible, sub_responsible, template, del_quelle,provider_name,provider_address,  ").append(locationFields).append(" FROM ").append(metaData.getTableName()).append(" ci").
 		append(" JOIN search_loc lk on ").append(LK).append(metaData.getIdField()).append(" = ").append(CI).append(metaData.getIdField()).
 		append(" WHERE (").//del_timestamp IS NULL AND 
 		append("UPPER(").append(CI).append(metaData.getNameField()).append(") LIKE '");
@@ -217,6 +217,10 @@ public class LokationItemHbn extends BaseHbn {
 					ci.setTableId(metaData.getTableId());
 					ci.setDeleteQuelle(rs.getString("del_quelle"));
 					ci.setIsTemplate(rs.getString("template"));
+					//Added by vandana
+					ci.setProviderName(rs.getString("provider_name"));
+					ci.setProviderAddress(rs.getString("provider_address"));
+					
 					
 					cis.add(ci);
 					//i++;
