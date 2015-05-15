@@ -69,19 +69,20 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				   layout: 'column',//toolbar
 				   labelWidth: 200,
 				   anchor: '90%',
+				   hidden: true,
 				    
 					items: [
 					{
-	xtype: 'container',
-	id: 'pProviderName',
-	layout: 'column',
+	                  xtype: 'container',
+	                  id: 'pProviderName',
+	                  layout: 'column',
 	
 	
-	items: [
-{
-	xtype: 'label',
-	id: 'labelProviderName',
-	width: 200,
+	                  items: [
+                        {
+	                     xtype: 'label',
+	                     id: 'labelProviderName',
+	                     width: 200,
 						style: {
 							fontSize: 12
 						}
@@ -91,6 +92,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					id:'idProviderName',
 					allowBlank: true ,
 					 width: 230,
+					 enableKeyEvents: true,
 					style: {
 						fontSize: 12
 					
@@ -123,14 +125,15 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					xtype: 'textfield',
 					id:'idProviderAddress',
 					allowBlank: true ,
+					 enableKeyEvents: true,
 					 width: 230,
 					style: {
 						fontSize: 12,
-					    'margin-top': '5px'
+					    'margin-top': '6px'
 					
 	    		}},{
 		xtype: 'hidden',
-	    id: 'PidroviderAddressHidden' 
+	    id: 'idProviderAddressHidden' 
 	}
 	]}]
 		},
@@ -685,6 +688,17 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		this.addEvents('ciBeforeChange', 'ciChange', 'afterCiUpdate');
 		
+		//added vandana
+		var tfProviderName = this.getComponent('provider').getComponent('pProviderName').getComponent('idProviderName');
+		var tfProviderAddress = this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddress');
+		tfProviderName.on('change', this.onProviderNameChange, this);
+		tfProviderAddress.on('change', this.onProviderAddressChange, this);
+		
+		tfProviderName.on('keyup', this.onFieldKeyUp, this);
+		tfProviderAddress.on('keyup', this.onFieldKeyUp, this);
+		
+		//ended vandana
+		
 		var pApplicationOwner = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner');
 		var clApplicationOwnerAdd = pApplicationOwner.getComponent('applicationOwnerAdd');
 		var clApplicationOwnerRemove = pApplicationOwner.getComponent('applicationOwnerRemove');
@@ -724,7 +738,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		//added vandana
 		var pProviderName = this.getComponent('provider').getComponent('pProviderName');
 		var pProviderAddress = this.getComponent('provider').getComponent('pProviderAddress');
-		
+				
 		//ended vandana
 		var pGpsccontactResponsibleAtCustomerSide = this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide');
 		var clGpsccontactResponsibleAtCustomerSideAdd = pGpsccontactResponsibleAtCustomerSide.getComponent('gpsccontactResponsibleAtCustomerSideAdd');
@@ -804,6 +818,23 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		clGpsccontactBusinessOwnerRepresentativeAdd.on('click', this.onGpsccontactBusinessOwnerRepresentativeAdd, this);
 		clGpsccontactBusinessOwnerRepresentativeRemove.on('click', this.onGpsccontactBusinessOwnerRepresentativeRemove, this);
 	},
+	
+	//Added by vandana
+	onProviderNameChange: function(textfield, newValue, oldValue) {
+		 
+	    	this.fireEvent('ciChange', this, textfield, newValue);
+            
+		},
+		onProviderAddressChange: function(textfield, newValue, oldValue) {
+		    	this.fireEvent('ciChange', this, textfield, newValue);//this
+		    	
+		},
+		onFieldKeyUp: function(textfield, event) {
+			this.ownerCt.fireEvent('ciChange', this, textfield);
+		},
+		
+
+	//Ended by vandana
 	
 	onGpsccontactBusinessOwnerRepresentativeAdd: function(link, event) {
 //		createPersonPickerTip(event, 'gpsccontactBusinessOwnerRepresentative');
@@ -1134,27 +1165,38 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			pCIOwner.getComponent('ciResponsibleHidden').setValue('');
 		}
 		
-	/*	//added conditionset vandana
+		//added conditionset vandana
+
 		var pProviderName = this.getComponent('provider').getComponent('pProviderName');
-		if(data.Provider_Name) {
-			pProviderName.getComponent('idProviderName').setValue(data.Provider_Name);
-			//pProviderName.getComponent('ProviderNameHidden').setValue(data.ProviderNameHidden);
-		} else {
-			pProviderName.getComponent('idProviderName').setValue('');
-			//pProviderName.getComponent('ProviderNameHidden').setValue('');
+		if(data.providerName) {
+			if(data.isCiCreate) {
+				pProviderName.getComponent('idProviderName').reset();						
+			}else{
+			pProviderName.getComponent('idProviderName').setValue(data.providerName);
+		} }else {
+			pProviderName.getComponent('idProviderName').setValue('');	
 		}
-		//ended conditionset vandana
-		//added conditionsProvider_Addresset vandana
+		
 		var pProviderAddress = this.getComponent('provider').getComponent('pProviderAddress');
-		if(data.Provider_Address) {
-			pProviderAddress.getComponent('idProviderAddress').setValue(data.Provider_Address);
-			//pProviderAddress.getComponent('ProviderAddressHidden').setValue(data.ProviderAddressHidden);
-		} else {
-			pProviderAddress.getComponent('idProviderAddress').setValue('');
-			//pProviderAddress.getComponent('ProviderAddressHidden').setValue('');
+		if(data.providerAddress) {
+			if(data.isCiCreate) {
+				pProviderAddress.getComponent('idProviderAddress').reset();						
+			}else{
+			pProviderAddress.getComponent('idProviderAddress').setValue(data.providerAddress);//ciResponsible
+		}} else {
+			pProviderAddress.getComponent('idProviderAddress').setValue('');	
 		}
-		//ended conditionset vandana
-*/
+		
+		ndana
+		if(data.tableId == AC.TABLE_ID_BUILDING || data.tableId == AC.TABLE_ID_BUILDING_AREA|| data.tableId == AC.TABLE_ID_ROOM) {
+			this.getComponent('provider').setVisible(true);
+			//tfProviderAddress.setVisible(true);
+		}
+		else{
+			this.getComponent('provider').setVisible(false);
+		}
+		//ended  vandana
+		
 		
 		var pCiSubResponsible = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible');
 		if(data.ciOwnerDelegate) {//ciSubResponsible && data.ciSubResponsible != 0
@@ -1197,6 +1239,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		});
 	},
 	
+	
 	updateAccessMode: function(data) {
 		if(data.tableId == AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION) {
 			AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwner'), data);
@@ -1209,8 +1252,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), data);
 		//added by vandana
 		AIR.AirAclManager.setAccessMode(this.getComponent('provider').getComponent('pProviderName').getComponent('idProviderName'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddress'), data);
-		
+		AIR.AirAclManager.setAccessMode(this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddress'), data);	
 		//Ended by vandana
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSide'), data);
 //
@@ -1377,34 +1419,26 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		field = this.getComponent('provider').getComponent('pProviderName').getComponent('idProviderName');
 		if (!field.disabled) {
 			data.providerName = field.getValue();
-			alert("provider name  ----"+field.getValue());
-			/*field = this.getComponent('provider').getComponent('pProviderName').getComponent('ProviderNameHidden');			
+			field = this.getComponent('provider').getComponent('pProviderName').getComponent('idProviderNameHidden');			
 			if (field.getValue()) {
-				
-				data.ProviderNameHidden = field.getValue();
-				alert("data.ProviderNameHidden   ----"+data.ProviderNameHidden);
-				alert("ProviderNameHidden   ----"+field.getValue());
-			}*/
-		} /*else {
-			data.ProviderName = 'DISABLED';
-		}*/
+				data.providerNameHidden = field.getValue();	
+			}
+		} else {
+			providerName = 'DISABLED';
+		}
 		//ended by vandana
 		//added by vandana
 		field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddress');
 		if (!field.disabled) {
 			data.providerAddress = field.getValue();
-			alert("ProviderAddress  ----"+field.getValue());
-			alert("ProviderAddress  ----"+data.providerAddress);
-			/*field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('ProviderAddressHidden');			
+			field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddressHidden');			
 			if (field.getValue()) {
-				
-				data.ProviderAddressHidden = field.getValue();
-				alert("data.ProviderAddressHidden   ----"+data.ProviderAddressHidden);
-				alert("ProviderAddressHidden   ----"+field.getValue());
-			}*/
-		} /*else {
-			data.ProviderAddress = 'DISABLED';
-		}*/
+				data.providerAddressHidden = field.getValue();
+			
+			}
+		} else {
+			data.providerAddress = 'DISABLED';
+		}
 		//ended by vandana
 	
 //		if(AAM.getTableId() == AC.TABLE_ID_APPLICATION || AAM.getTableId() == AC.TABLE_ID_IT_SYSTEM) {
