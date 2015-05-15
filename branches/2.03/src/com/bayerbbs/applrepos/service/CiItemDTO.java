@@ -40,6 +40,10 @@ public class CiItemDTO { //implements Serializable
 //	private String businessEssentialId;
 	
 	
+	//Added by vandana
+	private String providerName;
+	private String providerAddress;
+	
 	public CiItemDTO() {
 	}
 
@@ -179,5 +183,27 @@ public class CiItemDTO { //implements Serializable
 	public void setIsTemplate(String isTemplate) {
 		this.isTemplate = isTemplate;
 	}
+
+//Added by vandnaa
+	public String getProviderName() {
+		return providerName;
+	}
+
+	public void setProviderName(String providerName) {
+		this.providerName = providerName;
+	}
+
+	public String getProviderAddress() {
+		return providerAddress;
+	}
+
+
+	public void setProviderAddress(String providerAddress) {
+		this.providerAddress = providerAddress;
+	}
+	
+	//added by vandana
+	
+	
 
 }
