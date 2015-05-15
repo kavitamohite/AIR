@@ -141,6 +141,8 @@
 		<searchResultAppOwnerDelegate>Application Owner Delegate</searchResultAppOwnerDelegate>
 		<applicationManager>Application Manager</applicationManager>
 		<applicationManagerDelegate>Application Manager Delegate</applicationManagerDelegate>
+		<searchProviderName>Provider Name</searchProviderName>
+		<searchProviderAddress>Provider Address</searchProviderAddress>
 
 
 		<!-- Validation Messages -->
