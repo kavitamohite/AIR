@@ -789,6 +789,8 @@ AIR.AirStoreFactory = function() {
 			        {name: 'searchResultAppOwnerDelegate'},
 			        {name: 'applicationManager'},
 			        {name: 'applicationManagerDelegate'},
+			       // {name: 'searchProviderName'},//vandana for adv search
+			        //{name: 'searchProviderAddress'},//vandana for adv search
 			        
 			        // wizard
 			        {name: 'createpanelheader'},
@@ -1556,7 +1558,9 @@ AIR.AirStoreFactory = function() {
 			    {name: 'applicationSteward'},
 			    {name: 'applicationOwnerDelegate'},
 			    {name: 'tableId'},
-			    {name: 'deleteQuelle'}
+			    {name: 'deleteQuelle'},
+			    {name: 'providerName'},//vandana
+			    {name: 'providerAddress'}//vandana
 			]);
 	
 			var ciItemListReader = new Ext.data.XmlReader({
