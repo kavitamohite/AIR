@@ -1187,7 +1187,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			pProviderAddress.getComponent('idProviderAddress').setValue('');	
 		}
 		
-		ndana
+		//vandana
 		if(data.tableId == AC.TABLE_ID_BUILDING || data.tableId == AC.TABLE_ID_BUILDING_AREA|| data.tableId == AC.TABLE_ID_ROOM) {
 			this.getComponent('provider').setVisible(true);
 			//tfProviderAddress.setVisible(true);
