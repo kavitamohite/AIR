@@ -38,6 +38,28 @@ public class Room extends CiBase1 implements Serializable {
 	
 	private Long buildingAreaId;
 	private BuildingArea buildingArea;
+	 //vandana
+    private String Provider_Name;
+    private String Provider_Address; 
+    
+    @Column(name = "PROVIDER_NAME")
+	public String getProvider_Name() {
+		return Provider_Name;
+	}
+	public void setProvider_Name(String Provider_Name) {
+		this.Provider_Name = Provider_Name;
+	}
+	
+	@Column(name = "PROVIDER_ADDRESS")
+	public String getProvider_Address() {
+		return Provider_Address;
+	}
+	public void setProvider_Address(String Provider_Address) {
+		this.Provider_Address = Provider_Address;
+	}
+	
+    //ended vandana
+
 	
 
 	@Id
