@@ -666,6 +666,10 @@ public class CiDetailReportServlet extends HttpServlet {
 		List<String[]> CIData = new ArrayList<String[]>();
 		CIData.add(new String[] { "IT Set", getItsetName(room.getItset()) });
 		CIData.add(new String[] { "Room", room.getRoomName() });
+		//vandana
+		CIData.add(new String[] { "Provider Name", room.getProvider_Name() });
+		CIData.add(new String[] { "Provider Address", room.getProvider_Address() });
+		//vandana
 		BuildingArea buildingArea = room.getBuildingArea();
 		Building building = buildingArea.getBuilding();
 		Terrain terrian = building.getTerrain();
@@ -739,6 +743,10 @@ public class CiDetailReportServlet extends HttpServlet {
 				getItsetName(buildingArea.getItset()) });
 		CIData.add(new String[] { "Building Area",
 				buildingArea.getBuildingAreaName() });
+				//vandana
+		CIData.add(new String[] { "Provider Name", buildingArea.getProvider_Name() });
+		CIData.add(new String[] { "Provider Address", buildingArea.getProvider_Address() });
+		//vandana
 		Building building = buildingArea.getBuilding();
 		Terrain terrian = building.getTerrain();
 		Standort standort = terrian.getStandort();
