@@ -33,7 +33,7 @@ public class CiItemDTO { //implements Serializable
 	private String deleteQuelle;
 	//------- Zusatzfelder für CI Anwendung für die CiResultGrid Suchergebnistabelle und reactivation check (deleteQuelle) --------
 
-	// for the new advanced search
+	// for the new advanced search;
 //	private String itSetId;
 //	private String itSecGroupId;
 //	private String source;
@@ -184,7 +184,7 @@ public class CiItemDTO { //implements Serializable
 		this.isTemplate = isTemplate;
 	}
 
-//Added by vandnaa
+//Added by vandna
 	public String getProviderName() {
 		return providerName;
 	}
