@@ -123,6 +123,10 @@ public class RoomHbn extends LokationItemHbn {
 
 						
 						setUpCi(room, dto, cwid, false);
+						//vandana
+						room.setProvider_Name(dto.getProviderName());
+						room.setProvider_Address(dto.getProviderAddress());
+						//vandana
 
 
 						if (null != dto.getAlias()) {
@@ -412,6 +416,11 @@ public class RoomHbn extends LokationItemHbn {
 						room.setBuildingAreaId(dto.getAreaId());
 						BuildingArea buildingArea = BuildingHbn.findBuildingAreaById(dto.getAreaId());
 						room.setBuildingArea(buildingArea);
+	                      //vandana
+						
+						room.setProvider_Name(dto.getProviderName());
+						room.setProvider_Address(dto.getProviderAddress());
+						//vandana
 						
 
 						if (null == dto.getBusinessEssentialId()) {
@@ -561,6 +570,9 @@ public class RoomHbn extends LokationItemHbn {
 		dto.setBuildingAreaData(room.getBuildingArea().getBuildingAreaName());
 		dto.setSeverityLevelId(room.getSeverityLevelId());
 		dto.setBusinessEssentialId(room.getBusinessEssentialId());
+		//vandana
+		dto.setProviderName(room.getProvider_Name());
+		dto.setProviderAddress(room.getProvider_Address());
 	}
 
 	
