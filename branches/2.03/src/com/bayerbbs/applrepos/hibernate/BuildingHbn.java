@@ -353,6 +353,10 @@ public class BuildingHbn extends LokationItemHbn {
 						buildingArea.setBuildingId(dto.getBuildingId());
 						Building building = BuildingHbn.findById(dto.getBuildingId());
 						buildingArea.setBuilding(building);
+						//vandana
+						dto.setProviderName(building.getProvider_Name());
+						dto.setProviderAddress(building.getProvider_Address());
+						//vandana
 						
 						
 						boolean toCommit = false;
@@ -1050,12 +1054,12 @@ public class BuildingHbn extends LokationItemHbn {
 			building.setCiOwner(null);
 			building.setCiOwnerDelegate(null);
 			
-			//Added vandana
+		/*	//Added vandana
 
 			building.setProvider_Name(null);
 			building.setProvider_Address(null);
 			//Ended vandana
-			
+			*/
 			
 			building.setItset(null);
 			building.setTemplate(null);
@@ -1146,6 +1150,11 @@ public class BuildingHbn extends LokationItemHbn {
 			buildingArea.setRelevanceICS(null);
 			buildingArea.setRelevanceITSEC(null);
 			buildingArea.setGxpFlag(null);
+			//Added vandana
+
+			//buildingArea.setProvider_Name(null);
+			//buildingArea.setProvider_Address(null);
+			//Ended vandana
 		}
 
 		boolean toCommit = false;
@@ -1634,6 +1643,11 @@ public class BuildingHbn extends LokationItemHbn {
 
 		dto.setAreaName(buildingArea.getName());
 		dto.setBuildingId(buildingArea.getBuildingId());
+		//vandana
+		dto.setProviderName(buildingArea.getProvider_Name());
+		dto.setProviderAddress(buildingArea.getProvider_Address());
+		
+		
 		// dto.setSeverityLevelId(buildingArea.getSeverityLevelId());
 		// dto.setBusinessEssentialId(buildingArea.getBusinessEssentialId());
 	}
