@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
-	public final static String AIR_VERSION = "2.03.011";
+	public final static String AIR_VERSION = "2.03.012";
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
@@ -16,6 +16,7 @@ public final class AirKonstanten {
 	public final static Long IT_SET_DEFAULT = new Long(11397);
 	public final static Long IT_SET_GERMANY = new Long(10002);
 	public final static Long BUSINESS_ESSENTIAL_DEFAULT = new Long(16);
+	
 	
 	public static final int TABLE_ID_IT_SYSTEM		= 1;
 	public static final int TABLE_ID_APPLICATION	= 2;
@@ -37,6 +38,7 @@ public final class AirKonstanten {
 	public static final String CITypes_TERRAIN		= "'Terrain'";
 	public static final String CITypes_STANDORT		= "'Site'";
 	public static final String CITypes_WAYS			= "'Way'";
+	public static final String NOT_BUSINESS_ESSENTIAL = "Not Business Essential";
 	
 	public static final String APPLICATION_GUI_NAME = "AIR";
 	public static final String UNKNOWN = "unknown";
@@ -179,15 +181,34 @@ public final class AirKonstanten {
 	public static final String DN = "DOWNSTREAM";
 	public static final String APPLICATION_CATEGORY_2 = "Application Category 2";
 	public static final String LIFE_CYCLE_STATUS = "Life Cycle";
-	public static final String OPERATIONAL_STATUS = "Operational Status";
+	public static final String OPERATIONAL_STATUS = "General Usage";
 	public static final String PRIORITY_LEVEL = "Priority Level";
 	public static final String SEVERITY_LEVEL = "Severity Level";
 	public static final String CLUSTER_CODE = "Cluster Code";
 	public static final String CLUSTER_TYPE = "Cluster Type";
-	public static final String PRIMARY_PERSON = "Primary Person";
-	public static final String DELEGATE_PERSON_GROUP = "Delegate Person/Group";
+	public static final String PRIMARY_PERSON = "CI Owner - Primary Person";
+	public static final String DELEGATE_PERSON_GROUP = "CI Owner - Delegate";
+	public static final String APPLICATION_OWNER = "Application Owner";
+	public static final String APPLICATION_OWNER_DELEGATE = "Application Owner Delegate";
+	public static final String APPLICATION_STEWARD = "Application Steward";
+	public static final String BUSINESS_CATEGORY = "Business Category";
+	public static final String DESCRIPTION = "Description";
+	public static final String VERSION = "Version";
+	public static final String ORGANISATIONAL_SCOPE = "Organisational Scope";
+	public static final String BAR_RELEVANCE = "BAR Relevance";
+	public static final String DATA_CLASS = "Data Class";
+	public static final String BUSINESS_ESSENTIAL = "Business Essential";
+	public static final String OS_NAME = "OS Name";
+	public static final String VIRTUAL_HARDWARE_CLIENT = "Virtual Hardware Client";
+	public static final String VIRTUAL_HARDWARE_HOST = "Virtual Hardware Host";
+	public static final String VIRTUAL_SOFTWARE = "Virtual Software";
+	public static final String PRIMARY_FUNCTION = "Primary Function";
+	
 	public static final String LINK = "Link";
 	public static final String GR1435 = "GR1435";
+	public static final String GR1920 = "GR1920";
+	public static final String GR2059 = "GR2059";
+	public static final String GR2008 = "GR2008";
 	public static final String GXP = "GxP";
 	public static final String ITSEC_GROUP = "ITSec Group";
 	public static final String SLA = "SLA";
@@ -198,6 +219,8 @@ public final class AirKonstanten {
 	public static final String EXPLANATION_FOR_PROTECTION_LEVEL_CONFIDENTIALITY = "Explanation for Protection Level Confidentiality";
 	public static final String PROTECTION_LEVEL_AVAILABILITY = "Protection Level Availability";
 	public static final String EXPLANATION_FOR_PROTECTION_LEVEL_AVAILABILITY = "Explanation for Protection Level Availability";
+	public static final String INFORMATION_CLASS = "Information Class";
+	public static final String EXPLANATION_FOR_INFORMATION_CLASS = "Explanation for Information Class";
 	
 	
 	

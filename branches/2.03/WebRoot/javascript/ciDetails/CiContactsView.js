@@ -830,7 +830,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    	
 		},
 		onFieldKeyUp: function(textfield, event) {
-			this.ownerCt.fireEvent('ciChange', this, textfield);
+			this.fireEvent('ciChange', this, textfield);
 		},
 		
 

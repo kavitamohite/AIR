@@ -211,7 +211,7 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
     closeAttributeValueTransferWindow :function(button, event){
     	this.close();
         Ext.Msg.show({
-            title: 'mass update',
+            title: 'Mass Update',
             msg: 'Transfer cancelled!',
             modal: false,
             icon: Ext.Msg.INFO,

@@ -36,8 +36,27 @@ public class MassUpdateParameterInput {
 	private boolean itSecSbConfidentialityTxt;
 	private boolean itSecSbIntegrityId;
 	private boolean itSecSbIntegrityTxt;
+	private boolean classInformationId;
+	private boolean classInformationExplanation;
 	private boolean allGPSCContacts;
 	private boolean nonEmptyGPSCContacts;
+	private boolean applicationOwner;
+	private boolean applicationOwnerDelegate;
+	private boolean applicationSteward;
+	private boolean version;
+	private boolean comments;
+	private boolean organisationalScope;
+	private boolean barRelevance;
+	private boolean categoryBusiness;
+	private boolean classDataId;
+	private boolean relevanceICS;
+	private boolean relevance2059;
+	private boolean relevance2008;
+	private boolean osNameId;
+	private boolean primaryFunctionId;
+	private boolean virtualHardwareSoftware;
+	private boolean isVirtualHardwareClient;
+	private boolean isVirtualHardwareHost;
 	/**
 	 * @return the token
 	 */
@@ -386,8 +405,234 @@ public class MassUpdateParameterInput {
 	public void setItSecSbIntegrityTxt(boolean itSecSbIntegrityTxt) {
 		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
 	}
-	
-	
-	
+	/**
+	 * @return the applicationOwner
+	 */
+	public boolean isApplicationOwner() {
+		return applicationOwner;
+	}
+	/**
+	 * @param applicationOwner the applicationOwner to set
+	 */
+	public void setApplicationOwner(boolean applicationOwner) {
+		this.applicationOwner = applicationOwner;
+	}
+	/**
+	 * @return the applicationOwnerDelegate
+	 */
+	public boolean isApplicationOwnerDelegate() {
+		return applicationOwnerDelegate;
+	}
+	/**
+	 * @param applicationOwnerDelegate the applicationOwnerDelegate to set
+	 */
+	public void setApplicationOwnerDelegate(boolean applicationOwnerDelegate) {
+		this.applicationOwnerDelegate = applicationOwnerDelegate;
+	}
+	/**
+	 * @return the applicationSteward
+	 */
+	public boolean isApplicationSteward() {
+		return applicationSteward;
+	}
+	/**
+	 * @param applicationSteward the applicationSteward to set
+	 */
+	public void setApplicationSteward(boolean applicationSteward) {
+		this.applicationSteward = applicationSteward;
+	}
+	/**
+	 * @return the version
+	 */
+	public boolean isVersion() {
+		return version;
+	}
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(boolean version) {
+		this.version = version;
+	}
+	/**
+	 * @return the comments
+	 */
+	public boolean isComments() {
+		return comments;
+	}
+	/**
+	 * @param comments the comments to set
+	 */
+	public void setComments(boolean comments) {
+		this.comments = comments;
+	}
+	/**
+	 * @return the organisationalScope
+	 */
+	public boolean isOrganisationalScope() {
+		return organisationalScope;
+	}
+	/**
+	 * @param organisationalScope the organisationalScope to set
+	 */
+	public void setOrganisationalScope(boolean organisationalScope) {
+		this.organisationalScope = organisationalScope;
+	}
+	/**
+	 * @return the barRelevance
+	 */
+	public boolean isBarRelevance() {
+		return barRelevance;
+	}
+	/**
+	 * @param barRelevance the barRelevance to set
+	 */
+	public void setBarRelevance(boolean barRelevance) {
+		this.barRelevance = barRelevance;
+	}
+	/**
+	 * @return the categoryBusiness
+	 */
+	public boolean isCategoryBusiness() {
+		return categoryBusiness;
+	}
+	/**
+	 * @param categoryBusiness the categoryBusiness to set
+	 */
+	public void setCategoryBusiness(boolean categoryBusiness) {
+		this.categoryBusiness = categoryBusiness;
+	}
+	/**
+	 * @return the classDataId
+	 */
+	public boolean isClassDataId() {
+		return classDataId;
+	}
+	/**
+	 * @param classDataId the classDataId to set
+	 */
+	public void setClassDataId(boolean classDataId) {
+		this.classDataId = classDataId;
+	}
+	/**
+	 * @return the relevanceICS
+	 */
+	public boolean isRelevanceICS() {
+		return relevanceICS;
+	}
+	/**
+	 * @param relevanceICS the relevanceICS to set
+	 */
+	public void setRelevanceICS(boolean relevanceICS) {
+		this.relevanceICS = relevanceICS;
+	}
+	/**
+	 * @return the relevance2059
+	 */
+	public boolean isRelevance2059() {
+		return relevance2059;
+	}
+	/**
+	 * @param relevance2059 the relevance2059 to set
+	 */
+	public void setRelevance2059(boolean relevance2059) {
+		this.relevance2059 = relevance2059;
+	}
+	/**
+	 * @return the relevance2008
+	 */
+	public boolean isRelevance2008() {
+		return relevance2008;
+	}
+	/**
+	 * @param relevance2008 the relevance2008 to set
+	 */
+	public void setRelevance2008(boolean relevance2008) {
+		this.relevance2008 = relevance2008;
+	}
+	/**
+	 * @return the classInformationId
+	 */
+	public boolean isClassInformationId() {
+		return classInformationId;
+	}
+	/**
+	 * @param classInformationId the classInformationId to set
+	 */
+	public void setClassInformationId(boolean classInformationId) {
+		this.classInformationId = classInformationId;
+	}
+	/**
+	 * @return the classInformationExplanation
+	 */
+	public boolean isClassInformationExplanation() {
+		return classInformationExplanation;
+	}
+	/**
+	 * @param classInformationExplanation the classInformationExplanation to set
+	 */
+	public void setClassInformationExplanation(boolean classInformationExplanation) {
+		this.classInformationExplanation = classInformationExplanation;
+	}
+	/**
+	 * @return the osNameId
+	 */
+	public boolean isOsNameId() {
+		return osNameId;
+	}
+	/**
+	 * @param osNameId the osNameId to set
+	 */
+	public void setOsNameId(boolean osNameId) {
+		this.osNameId = osNameId;
+	}
+	/**
+	 * @return the primaryFunctionId
+	 */
+	public boolean isPrimaryFunctionId() {
+		return primaryFunctionId;
+	}
+	/**
+	 * @param primaryFunctionId the primaryFunctionId to set
+	 */
+	public void setPrimaryFunctionId(boolean primaryFunctionId) {
+		this.primaryFunctionId = primaryFunctionId;
+	}
+	/**
+	 * @return the virtualHardwareSoftware
+	 */
+	public boolean isVirtualHardwareSoftware() {
+		return virtualHardwareSoftware;
+	}
+	/**
+	 * @param virtualHardwareSoftware the virtualHardwareSoftware to set
+	 */
+	public void setVirtualHardwareSoftware(boolean virtualHardwareSoftware) {
+		this.virtualHardwareSoftware = virtualHardwareSoftware;
+	}
+	/**
+	 * @return the isVirtualHardwareClient
+	 */
+	public boolean isVirtualHardwareClient() {
+		return isVirtualHardwareClient;
+	}
+	/**
+	 * @param isVirtualHardwareClient the isVirtualHardwareClient to set
+	 */
+	public void setVirtualHardwareClient(boolean isVirtualHardwareClient) {
+		this.isVirtualHardwareClient = isVirtualHardwareClient;
+	}
+	/**
+	 * @return the isVirtualHardwareHost
+	 */
+	public boolean isVirtualHardwareHost() {
+		return isVirtualHardwareHost;
+	}
+	/**
+	 * @param isVirtualHardwareHost the isVirtualHardwareHost to set
+	 */
+	public void setVirtualHardwareHost(boolean isVirtualHardwareHost) {
+		this.isVirtualHardwareHost = isVirtualHardwareHost;
+	}
+		
 
 }

@@ -138,7 +138,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 /*			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('WARNING_OK', callbackMap, message, 'Mass update');
 			dynamicWindow.show()*/;
 	        Ext.Msg.show({
-	            title: 'mass update',
+	            title: 'Mass Update',
 	            msg: 'Select at least one element for mass update.',
 	            modal: false,
 	            icon: Ext.Msg.INFO,
@@ -147,7 +147,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		}else{		
 			if(massUpdateMode===''){
 					        Ext.Msg.show({
-					            title: 'mass update',
+					            title: 'Mass Update',
 					            msg: 'Select Mass Update Mode.',
 					            modal: false,
 					            icon: Ext.Msg.INFO,

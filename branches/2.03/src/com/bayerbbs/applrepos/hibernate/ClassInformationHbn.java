@@ -74,5 +74,23 @@ public class ClassInformationHbn {
 
 		return listResult;
 	}
+	
+	
+	public static ClassInformation getClassInformationById(long id) {
+
+		ClassInformation classInformation = null;
+			Transaction tx = null;
+			Session session = HibernateUtil.getSession();
+			try {
+				tx = session.beginTransaction();
+				classInformation = (ClassInformation) session.get(ClassInformation.class, id);
+				
+				HibernateUtil.close(tx, session, true);
+			} catch (RuntimeException e) {
+				HibernateUtil.close(tx, session, false);
+			}
+
+		return classInformation;
+	}
 
 }

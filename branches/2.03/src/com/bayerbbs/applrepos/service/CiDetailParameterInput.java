@@ -5,6 +5,7 @@ public class CiDetailParameterInput {
 	private String cwid;
 	private Long ciId;
 	private Long ciTypeId;
+	private Long ciSubTypeId;
 	
 	public Long getCiId() {
 		return ciId;
@@ -33,4 +34,17 @@ public class CiDetailParameterInput {
 	public void setCwid(String cwid) {
 		this.cwid = cwid;
 	}
+	/**
+	 * @return the ciSubTypeId
+	 */
+	public Long getCiSubTypeId() {
+		return ciSubTypeId;
+	}
+	/**
+	 * @param ciSubTypeId the ciSubTypeId to set
+	 */
+	public void setCiSubTypeId(Long ciSubTypeId) {
+		this.ciSubTypeId = ciSubTypeId;
+	}
+	
 }

@@ -1202,6 +1202,36 @@ public class ItSystemHbn extends BaseHbn {
 		return osNames;
 	}
 	
+	public static String findItSystemOsNameById(Integer id){
+		String osName="";
+		Transaction ta = null;
+		Statement stmt = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT os_name FROM v_md_os where os_name_id = "+id);
+		
+		try {
+			ta = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+			
+			while (rs.next())
+				osName = rs.getString("os_name");
+							
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		return osName;
+	}
+	
 	public static List<KeyValueType2DTO> getItSystemClusterCodes() {
 		List<KeyValueType2DTO> clusterCodes = new ArrayList<KeyValueType2DTO>();
 		
@@ -1319,6 +1349,39 @@ public class ItSystemHbn extends BaseHbn {
 		}
 		
 		return clusterTypes;
+	}
+	
+	public static String getItSystemPrimaryFunctionById(Integer id) {
+		String primaryFunctionName = "";
+		
+		Transaction ta = null;
+		Statement stmt = null;
+//		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT primary_function_name FROM v_md_primary_function WHERE table_id = 1 and primary_function_id = "+id);
+		
+		try {
+			ta = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+			
+			while (rs.next())
+				primaryFunctionName = rs.getString("primary_function_name");
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		return primaryFunctionName;
 	}
 	
 	public static List<KeyValueDTO> getItSystemLicenseScannings() {

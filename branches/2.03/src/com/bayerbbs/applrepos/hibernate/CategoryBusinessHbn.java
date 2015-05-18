@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.domain.CategoryBusiness;
+import com.bayerbbs.applrepos.domain.PriorityLevel;
 import com.bayerbbs.applrepos.dto.CategoryBusinessDTO;
 
 public class CategoryBusinessHbn {
@@ -73,5 +74,10 @@ public class CategoryBusinessHbn {
 
 		return listResult;
 	}
-	
+	public static CategoryBusiness findById(Long id){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		return (CategoryBusiness)session.get(CategoryBusiness.class, id);
+		
+		
+	}
 }

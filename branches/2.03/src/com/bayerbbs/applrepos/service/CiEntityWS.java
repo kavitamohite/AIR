@@ -48,9 +48,12 @@ import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationCat2Hbn;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
+import com.bayerbbs.applrepos.hibernate.CategoryBusinessHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
 import com.bayerbbs.applrepos.hibernate.CiPersonsHbn;
+import com.bayerbbs.applrepos.hibernate.ClassInformationHbn;
+import com.bayerbbs.applrepos.hibernate.ConfidentialityHbn;
 import com.bayerbbs.applrepos.hibernate.HibernateUtil;
 import com.bayerbbs.applrepos.hibernate.ItSecGroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
@@ -1040,13 +1043,9 @@ public class CiEntityWS {
 				ApplicationCat2 applicationCat2 = ApplicationCat2Hbn
 						.findById(application.getApplicationCat2Id());
 				massUpdateAttriubteDTOs = getApplicationAttributeDTOList(
-						application, applicationCat2);
+						application, applicationCat2,input.getCiSubTypeId());
 			} else {
 				if (input.getCiTypeId() == AirKonstanten.TABLE_ID_IT_SYSTEM) {
-					ItSystem itSystem = ItSystemHbn.findById(ItSystem.class,
-							input.getCiId());
-					massUpdateAttriubteDTOs = getItSystemAttributeDTOList(itSystem);
-				} else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_IT_SYSTEM) {
 					ItSystem itSystem = ItSystemHbn.findById(ItSystem.class,
 							input.getCiId());
 					massUpdateAttriubteDTOs = getItSystemAttributeDTOList(itSystem);
@@ -1072,12 +1071,7 @@ public class CiEntityWS {
 					Schrank schrank = SchrankHbn.findById(input.getCiId());
 					massUpdateAttriubteDTOs = getAttributeDTOList(schrank,
 							AirKonstanten.TABLE_ID_POSITION);
-				} else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_IT_SYSTEM) {
-					ItSystem itSystem = ItSystemHbn.findById(ItSystem.class,
-							input.getCiId());
-					massUpdateAttriubteDTOs = getItSystemAttributeDTOList(itSystem);
 				}
-
 			}
 
 		}
@@ -1144,7 +1138,40 @@ public class CiEntityWS {
 					itSystem.getSeverityLevelId()).getSeverityLevelName());
 		maDto.setId("severityLevelId");
 		massUpdateAttriuteDTOs.add(maDto);
-
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.OS_NAME);
+		if (itSystem.getOsNameId() != null)
+			maDto.setAttributeValue(ItSystemHbn.findItSystemOsNameById(itSystem.getOsNameId()));
+		maDto.setId("osNameId");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.VIRTUAL_HARDWARE_CLIENT);
+		maDto.setAttributeValue(itSystem.getIsVirtualHardwareClient());
+		maDto.setId("isVirtualHardwareClient");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.VIRTUAL_HARDWARE_HOST);
+		maDto.setAttributeValue(itSystem.getIsVirtualHardwareHost());
+		maDto.setId("isVirtualHardwareHost");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.VIRTUAL_SOFTWARE);
+		maDto.setAttributeValue(itSystem.getVirtualHardwareSoftware());
+		maDto.setId("virtualHardwareSoftware");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.PRIMARY_FUNCTION);
+		if(itSystem.getPrimaryFunctionId() != null)
+		maDto.setAttributeValue(ItSystemHbn.getItSystemPrimaryFunctionById(itSystem.getPrimaryFunctionId()));
+		maDto.setId("virtualHardwareSoftware");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+						
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.CLUSTER_CODE);
 		maDto.setAttributeValue(itSystem.getClusterCode());
@@ -1165,6 +1192,16 @@ public class CiEntityWS {
 			maDto.setAttributeValue("No");
 		}
 		maDto.setId("relevanzITSEC");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.GR1920);
+		if (-1 == itSystem.getRelevanceICS()) {
+			maDto.setAttributeValue("Yes");
+		} else {
+			maDto.setAttributeValue("No");
+		}
+		maDto.setId("relevanceICS");
 		massUpdateAttriuteDTOs.add(maDto);
 
 		maDto = new MassUpdateAttributeDTO();
@@ -1201,7 +1238,7 @@ public class CiEntityWS {
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
-		maDto.setAttributeValue(getValue(itSystem.getItSecSbConfidentialityId()));
+		maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(itSystem.getItSecSbConfidentialityId()).getConfidentialityNameEn());
 		maDto.setId("itSecSbConfidentiality");
 		massUpdateAttriuteDTOs.add(maDto);
 
@@ -1285,7 +1322,7 @@ public class CiEntityWS {
         massUpdateAttriuteDTOs.add(maDto);
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
-        maDto.setAttributeValue(getValue(ciBase1.getItSecSbConfidentialityId()));
+        maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(ciBase1.getItSecSbConfidentialityId()).getConfidentialityNameEn());
 		maDto.setId("itSecSbConfidentiality");
         massUpdateAttriuteDTOs.add(maDto);
         maDto = new MassUpdateAttributeDTO();
@@ -1308,7 +1345,7 @@ public class CiEntityWS {
 		return massUpdateAttriuteDTOs;
 	}
 	
-	private List<MassUpdateAttributeDTO> getApplicationAttributeDTOList(Application application, ApplicationCat2 cat2){
+	private List<MassUpdateAttributeDTO> getApplicationAttributeDTOList(Application application, ApplicationCat2 cat2, long ciSubTypeId){
 		List<MassUpdateAttributeDTO> massUpdateAttriuteDTOs = new ArrayList<MassUpdateAttributeDTO>();
 		
 		MassUpdateAttributeDTO maDto = new MassUpdateAttributeDTO();
@@ -1316,6 +1353,41 @@ public class CiEntityWS {
         maDto.setAttributeValue(cat2.getAnwendungKat2Text());
         maDto.setId("applicationCat2Id");
         massUpdateAttriuteDTOs.add(maDto);
+        
+
+        
+		maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.DESCRIPTION);
+        maDto.setAttributeValue(application.getComments());
+        maDto.setId("comments");
+        massUpdateAttriuteDTOs.add(maDto);
+        
+		maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.VERSION);
+        maDto.setAttributeValue(application.getVersion());
+        maDto.setId("version");
+        if(ciSubTypeId==AirKonstanten.APPLICATION_CAT1_APPLICATION){
+            massUpdateAttriuteDTOs.add(maDto);
+    		maDto = new MassUpdateAttributeDTO();
+            maDto.setAttributeName(AirKonstanten.BAR_RELEVANCE);
+            maDto.setAttributeValue(application.getBarRelevance());
+            maDto.setId("barRelevance");
+            massUpdateAttriuteDTOs.add(maDto);
+            
+    		maDto = new MassUpdateAttributeDTO();
+            maDto.setAttributeName(AirKonstanten.ORGANISATIONAL_SCOPE);
+            maDto.setAttributeValue(application.getOrganisationalScope());
+            maDto.setId("organisationalScope");
+            massUpdateAttriuteDTOs.add(maDto);
+        	
+        }
+        
+/*		maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.DATA_CLASS);
+        maDto.setAttributeValue("Data Classes will be defined later");
+        maDto.setId("classDataId");
+        massUpdateAttriuteDTOs.add(maDto);*/
+
         
         maDto = new  MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.LIFE_CYCLE_STATUS);
@@ -1346,17 +1418,13 @@ public class CiEntityWS {
         maDto.setId("severityLevelId");
         massUpdateAttriuteDTOs.add(maDto);
         
-        maDto = new MassUpdateAttributeDTO();
-        maDto.setAttributeName(AirKonstanten.CLUSTER_CODE);
-        maDto.setAttributeValue(application.getClusterCode());
-        maDto.setId("clusterCode");
-        massUpdateAttriuteDTOs.add(maDto);
         
-        maDto = new MassUpdateAttributeDTO();
-        maDto.setAttributeName(AirKonstanten.CLUSTER_TYPE);
-        maDto.setAttributeValue(application.getClusterType());
-        maDto.setId("clusterType");
+		maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.BUSINESS_ESSENTIAL);
+        maDto.setAttributeValue(getBusinessEssential(application.getBusinessEssentialId()));
+        maDto.setId("businessEssentialId");
         massUpdateAttriuteDTOs.add(maDto);
+
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.PRIMARY_PERSON);
@@ -1368,6 +1436,30 @@ public class CiEntityWS {
         maDto.setAttributeName(AirKonstanten.DELEGATE_PERSON_GROUP);
         maDto.setAttributeValue(application.getSubResponsible());
         maDto.setId("subResponsible");
+        massUpdateAttriuteDTOs.add(maDto);
+        
+        maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.APPLICATION_OWNER);
+        maDto.setAttributeValue(application.getApplicationOwner());
+        maDto.setId("applicationOwner");
+        massUpdateAttriuteDTOs.add(maDto);
+        
+        maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.APPLICATION_OWNER_DELEGATE);
+        maDto.setAttributeValue(application.getApplicationOwnerDelegate());
+        maDto.setId("applicationOwnerDelegate");
+        massUpdateAttriuteDTOs.add(maDto);
+        
+        maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.APPLICATION_STEWARD);
+        maDto.setAttributeValue(application.getApplicationSteward());
+        maDto.setId("applicationSteward");
+        massUpdateAttriuteDTOs.add(maDto);
+        
+        maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.BUSINESS_CATEGORY);
+        maDto.setAttributeValue(CategoryBusinessHbn.findById(application.getCategoryBusiness()).getCategoryBusinessName());
+        maDto.setId("categoryBusiness");
         massUpdateAttriuteDTOs.add(maDto);
         
 /*        maDto = new MassUpdateAttributeDTO();
@@ -1387,6 +1479,38 @@ public class CiEntityWS {
         maDto.setId("relevanzITSEC");
         massUpdateAttriuteDTOs.add(maDto);
         
+        
+        maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.GR1920);
+        if (-1 == application.getRelevanceICS()) {
+        	maDto.setAttributeValue("Yes");
+        }else{
+        	maDto.setAttributeValue("No");
+        }
+        maDto.setId("relevanceICS");
+        massUpdateAttriuteDTOs.add(maDto);
+        
+        maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.GR2059);
+        if (-1 == application.getRelevance2059()) {
+        	maDto.setAttributeValue("Yes");
+        }else{
+        	maDto.setAttributeValue("No");
+        }
+        maDto.setId("relevance2059");
+        massUpdateAttriuteDTOs.add(maDto);
+        
+        maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.GR2008);
+        if (-1 == application.getRelevance2008()) {
+        	maDto.setAttributeValue("Yes");
+        }else{
+        	maDto.setAttributeValue("No");
+        }
+        maDto.setId("relevance2008");
+        massUpdateAttriuteDTOs.add(maDto);
+                
+          
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.GXP);
         maDto.setAttributeValue(application.getGxpFlag());
@@ -1427,7 +1551,7 @@ public class CiEntityWS {
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
-        maDto.setAttributeValue(getValue(application.getItSecSbConfidentiality()));
+        maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(application.getItSecSbConfidentiality()).getConfidentialityNameEn());
         maDto.setId("itSecSbConfidentiality");
         massUpdateAttriuteDTOs.add(maDto);
         
@@ -1436,9 +1560,30 @@ public class CiEntityWS {
         maDto.setAttributeValue(application.getItSecSbConfidentialityTxt());
         maDto.setId("itSecSbConfidentialityTxt");
         massUpdateAttriuteDTOs.add(maDto);
+        
+        maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.INFORMATION_CLASS);
+        maDto.setAttributeValue(ClassInformationHbn.getClassInformationById(application.getClassInformationId()).getClassInformationName());
+        maDto.setId("classInformationId");
+        massUpdateAttriuteDTOs.add(maDto);
+        
+        maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.EXPLANATION_FOR_INFORMATION_CLASS);
+        maDto.setAttributeValue(application.getClassInformationExplanation());
+        maDto.setId("classInformationExplanation");
+        massUpdateAttriuteDTOs.add(maDto);
+                
                 
 		return massUpdateAttriuteDTOs;
 
+	}
+	
+	private static String getBusinessEssential(Long id){
+		if(id==AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT){
+			return AirKonstanten.NOT_BUSINESS_ESSENTIAL;
+		}else{
+			return "Bussiness Essential";
+		}
 	}
 	
 	private static String getValue(Long id) {
@@ -1609,6 +1754,9 @@ public class CiEntityWS {
 			if(massUpdateParameterInput.getRelevanzITSEC()){
 				locationCi.setRelevanceITSEC(templaeLocationCI.getRelevanceITSEC());
 			}
+			if(massUpdateParameterInput.isRelevanceICS()){
+				locationCi.setRelevanceICS(templaeLocationCI.getRelevanceICS());
+			}
 			if(massUpdateParameterInput.getGxpFlag()){
 				locationCi.setGxpFlag(templaeLocationCI.getGxpFlag());
 			}
@@ -1723,12 +1871,6 @@ public class CiEntityWS {
 			if(massUpdateParameterInput.getSeverityLevelId()){
 				application.setSeverityLevelId(templateApplication.getSeverityLevelId());
 			}
-			if(massUpdateParameterInput.getClusterCode()){
-				application.setClusterCode(templateApplication.getClusterCode());
-			}
-			if(massUpdateParameterInput.getClusterType()){
-				application.setClusterType(templateApplication.getClusterType());
-			}
 			if(massUpdateParameterInput.getResponsible()){
 				application.setResponsible(templateApplication.getResponsible());
 			}
@@ -1740,6 +1882,15 @@ public class CiEntityWS {
 			}
 			if(massUpdateParameterInput.getRelevanzITSEC()){
 				application.setRelevanzITSEC(templateApplication.getRelevanzITSEC());
+			}
+			if(massUpdateParameterInput.isRelevanceICS()){
+				application.setRelevanceICS(templateApplication.getRelevanceICS());
+			}
+			if(massUpdateParameterInput.isRelevance2059()){
+				application.setRelevance2059(templateApplication.getRelevance2059());
+			}
+			if(massUpdateParameterInput.isRelevance2008()){
+				application.setRelevance2008(templateApplication.getRelevance2008());
 			}
 			if(massUpdateParameterInput.getGxpFlag()){
 				application.setGxpFlag(templateApplication.getGxpFlag());
@@ -1764,6 +1915,39 @@ public class CiEntityWS {
 			}
 			if(massUpdateParameterInput.getItSecSbConfidentialityTxt()){
 				application.setItSecSbConfidentialityTxt(templateApplication.getItSecSbConfidentialityTxt());
+			}
+			if(massUpdateParameterInput.isClassInformationId()){
+				application.setClassInformationId(templateApplication.getClassInformationId());
+			}
+			if(massUpdateParameterInput.isClassInformationExplanation()){
+				application.setClassInformationExplanation(templateApplication.getClassInformationExplanation());
+			}
+			if(massUpdateParameterInput.isApplicationOwner()){
+				application.setApplicationOwner(templateApplication.getApplicationOwner());
+			}
+			if(massUpdateParameterInput.isApplicationOwnerDelegate()){
+				application.setApplicationOwnerDelegate(templateApplication.getApplicationOwnerDelegate());
+			}
+			if(massUpdateParameterInput.isApplicationSteward()){
+				application.setApplicationSteward(templateApplication.getApplicationSteward());
+			}
+			if(massUpdateParameterInput.isComments()){
+				application.setComments(templateApplication.getComments());
+			}
+			if(massUpdateParameterInput.isOrganisationalScope()){
+				application.setOrganisationalScope(templateApplication.getOrganisationalScope());
+			}
+			if(massUpdateParameterInput.isVersion()){
+				application.setVersion(templateApplication.getVersion());
+			}
+			if(massUpdateParameterInput.isBarRelevance()){
+				application.setBarRelevance(templateApplication.getBarRelevance());
+			}
+			if(massUpdateParameterInput.isCategoryBusiness()){
+				application.setCategoryBusiness(templateApplication.getCategoryBusiness());
+			}
+			if(massUpdateParameterInput.isClassDataId()){
+				application.setClassDataId(templateApplication.getClassDataId());
 			}
 			application.setUpdateUser(massUpdateParameterInput.getCwid());
 			application.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
@@ -1847,6 +2031,18 @@ public class CiEntityWS {
 			if(massUpdateParameterInput.getClusterType()){
 				itSystem.setClusterType(templateItSystem.getClusterType());
 			}
+			if(massUpdateParameterInput.isPrimaryFunctionId()){
+				itSystem.setPrimaryFunctionId(templateItSystem.getPrimaryFunctionId());
+			}
+			if(massUpdateParameterInput.isVirtualHardwareSoftware()){
+				itSystem.setVirtualHardwareSoftware(templateItSystem.getVirtualHardwareSoftware());
+			}
+			if(massUpdateParameterInput.isVirtualHardwareHost()){
+				itSystem.setIsVirtualHardwareHost(templateItSystem.getIsVirtualHardwareHost());
+			}
+			if(massUpdateParameterInput.isVirtualHardwareClient()){
+				itSystem.setIsVirtualHardwareClient(templateItSystem.getIsVirtualHardwareClient());
+			}
 			if(massUpdateParameterInput.getResponsible()){
 				itSystem.setCiOwner(templateItSystem.getCiOwner());
 			}
@@ -1855,6 +2051,9 @@ public class CiEntityWS {
 			}
 			if(massUpdateParameterInput.getRelevanzITSEC()){
 				itSystem.setRelevanceITSEC(templateItSystem.getRelevanceITSEC());
+			}
+			if(massUpdateParameterInput.isRelevanceICS()){
+				itSystem.setRelevanceICS(templateItSystem.getRelevanceICS());
 			}
 			if(massUpdateParameterInput.getGxpFlag()){
 				itSystem.setGxpFlag(templateItSystem.getGxpFlag());

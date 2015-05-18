@@ -74,5 +74,21 @@ public class ConfidentialityHbn {
 
 		return listResult;
 	}
+	
+	public static Confidentiality getConfidentialityById(long id) {
+
+		Confidentiality confidentiality = null;		
+			Transaction tx = null;
+			Session session = HibernateUtil.getSession();
+			try {
+				tx = session.beginTransaction();
+				confidentiality = (Confidentiality)session.get(Confidentiality.class, id);
+				HibernateUtil.close(tx, session, true);
+			} catch (RuntimeException e) {
+				HibernateUtil.close(tx, session, false);
+			}
+
+		return confidentiality;
+	}
 
 }

@@ -127,7 +127,7 @@ AIR.MassUpdateComplianceCotrolSelectionWindow = Ext.extend(Ext.Window,{
     			    				              
     			    				              {
     			    				            	  xtype: 'button',
-    			    				            	  text: 'Start mass update',
+    			    				            	  text: 'Start Mass Update',
     			    				            	  id: 'bComplianceStartMassUpdate',
     			    				            	  width: 100,
     			    				            	  
@@ -160,7 +160,7 @@ AIR.MassUpdateComplianceCotrolSelectionWindow = Ext.extend(Ext.Window,{
     cancelComplianceControlWindow: function(){
     	this.close();
         Ext.Msg.show({
-            title: 'mass update',
+            title: 'Mass Update',
             msg: 'Compliance Status Transfer cancelled!',
             modal: false,
             icon: Ext.Msg.INFO,
@@ -175,7 +175,7 @@ AIR.MassUpdateComplianceCotrolSelectionWindow = Ext.extend(Ext.Window,{
     	var selectedElements = selModel.getCount();
     	if(selectedElements === 0){
 	        Ext.Msg.show({
-	            title: 'mass update',
+	            title: 'Mass Update',
 	            msg: 'Select at least on element for mass update.',
 	            modal: false,
 	            icon: Ext.Msg.INFO,

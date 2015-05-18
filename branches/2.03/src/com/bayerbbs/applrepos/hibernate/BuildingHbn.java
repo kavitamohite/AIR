@@ -354,8 +354,9 @@ public class BuildingHbn extends LokationItemHbn {
 						Building building = BuildingHbn.findById(dto.getBuildingId());
 						buildingArea.setBuilding(building);
 						//vandana
-						dto.setProviderName(building.getProvider_Name());
-						dto.setProviderAddress(building.getProvider_Address());
+						
+						buildingArea.setProvider_Name(dto.getProviderName());
+						buildingArea.setProvider_Address(dto.getProviderAddress());
 						//vandana
 						
 						
@@ -757,6 +758,10 @@ public class BuildingHbn extends LokationItemHbn {
 //						}
 						
 						setUpCi(buildingArea, dto, cwid, false);
+						//vandana
+						
+						buildingArea.setProvider_Name(dto.getProviderName());
+						buildingArea.setProvider_Address(dto.getProviderAddress());
 						
 						/*
 						buildingArea.setUpdateUser(cwid);

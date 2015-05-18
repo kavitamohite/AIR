@@ -206,9 +206,9 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
 		AIR.AirApplicationManager.setTableId(this.tableId);
 		AIR.AirApplicationManager.setCiSubTypeId(this.ciSubTypeId);
 		AIR.AirApplicationManager.setSelectedCiIds(this.selectedCIs);
-		var msgText = 'You are in mass update mode. Are you sure that you want to update all elements marked in the list with the Template ('+this.applicationName+') you have just entered?';
+		var msgText = 'You are in mass update mode. Are you sure that you want to update all elements marked in the list with the CI ('+this.applicationName+') you have just entered?';
 		Ext.Msg.show({
-			   title:'Start mass update (' +this.applicationName +')',
+			   title:'Start Mass Update (' +this.applicationName +')',
 			   msg: msgText,
 			   buttons: Ext.Msg.YESNO,
 			   fn: this.openMassUpdateValueTransferWindow,
@@ -222,7 +222,7 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
 	onLinkTemplate: function(button,event) {
 		var msgText = 'You are in mass update mode. Are you sure that you Link all elements marked in the list with the Template  ('+this.applicationName +') ?';
 		Ext.Msg.show({
-			title: 'Start mass update (' +this.applicationName +')',
+			title: 'Start Mass Update (' +this.applicationName +')',
 			msg: msgText,
 			buttons: Ext.Msg.YESNO,
 			fn: this.linkTemplateWithCIs,
@@ -302,7 +302,8 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
 					cwid: AIR.AirApplicationManager.getCwid(),
 					token: AIR.AirApplicationManager.getToken(),
 				 	ciId: AIR.AirApplicationManager.getCiId(),
-				 	ciTypeId: AIR.AirApplicationManager.getTableId()
+				 	ciTypeId: AIR.AirApplicationManager.getTableId(),
+				 	ciSubTypeId: this.ciSubTypeId
 			};
 			massUpdateAttributesStore.load({
 				params: params
@@ -336,12 +337,15 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
 				searchAction: 'search',
 				ciTypeId: this.ciTypeId,
 				ciSubTypeId: this.ciSubTypeId,
-				isTemplate: 'Y',
 				isAdvSearch: 'true',
    			 	cwid: AIR.AirApplicationManager.getCwid(),
    			 	token: AIR.AirApplicationManager.getToken()
 			};
-			
+			if(this.massUpdateMode==='1'){
+				params.isTemplate = 'Y';
+			}else{
+				params.isTemplate = '';
+			}
 			var grid = this.getComponent('pMassUpdateFromSearchCard').getComponent('pMassUpdateTemplateCISearchCard').getComponent('templateCISearchGrid');
 			
 			grid.getStore().load({

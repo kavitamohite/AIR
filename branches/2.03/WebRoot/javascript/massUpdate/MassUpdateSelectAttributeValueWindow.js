@@ -276,7 +276,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        hidden: true,
 						        fieldLabel: 'OS Group',
 								lastQuery: '',
-						        store: AIR.AirStoreFactory.createOsGroupsListStore(),
+						        store: new Ext.data.Store(),
 						        valueField: 'id',
 						        displayField: 'name',
 						        triggerAction: 'all',
@@ -290,7 +290,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        width: 230,
 						        fieldLabel: 'OS Type',
 								lastQuery: '',
-						        store: AIR.AirStoreFactory.createOsTypesListStore(),
+						        store: new Ext.data.Store(),
 						        valueField: 'osTypeId',
 						        displayField: 'osName',
 						        triggerAction: 'all',
@@ -304,7 +304,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        width: 230,
 						        fieldLabel: 'OS Name',
 								lastQuery: '',
-						        store: AIR.AirStoreFactory.createOsNamesListStore(),
+						        store: new Ext.data.Store(),
 						        valueField: 'osNameId',
 						        displayField: 'name',
 						        triggerAction: 'all',
@@ -319,7 +319,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        width: 230,
 						        fieldLabel: 'Cluster Code',
 								lastQuery: '',
-						        store: AIR.AirStoreFactory.createClusterTypesListStore(),
+						        store: new Ext.data.Store(),
 						        valueField: 'id',
 						        displayField: 'name',
 						        triggerAction: 'all',
@@ -333,7 +333,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        width: 230,
 						        fieldLabel: 'Cluster Type',
 								lastQuery: '',
-						        store: AIR.AirStoreFactory.createClusterCodesListStore(),
+						        store: new Ext.data.Store(),
 						        valueField: 'id',
 						        displayField: 'name',
 						        
@@ -467,11 +467,6 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    	        displayField: 'text',
 				    	        fieldLabel: 'Data Class',	        
 				    	        
-				    	        width: 230,
-						        
-//						        typeAhead: true,
-//						        forceSelection: true,
-//						        autoSelect: false,
 						        
 						        triggerAction: 'all',//all query
 				    	        lazyRender: true,
@@ -975,8 +970,13 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		}
 		
 		var storeIds = {
-			virtualSoftwareListStore: null,
-			itSystemPrimaryFunctionsListStore: null
+				osGroupsListStore: null,
+				osTypesListStore: null,
+				osNamesListStore: null,
+				clusterCodesListStore: null,
+				clusterTypesListStore: null,
+				virtualSoftwareListStore: null,
+				itSystemPrimaryFunctionsListStore: null
 		};
 		
 		var storeCount = 0;
@@ -994,20 +994,25 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			AIR.AirStoreManager.addStore(key, storeMap[key]);
 		var selectAttrcbVirtualSoftware = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbVirtualSoftware');
 		var selectAttrcbPrimaryFunction = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbPrimaryFunction');
-		var virtualSoftwareListStore = AIR.AirStoreManager.getStoreByName('virtualSoftwareListStore');
-		var itSystemPrimaryFunctionsListStore = AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore');
-/*		if(virtualSoftwareListStore.data!=null){
-			selectAttrcbVirtualSoftware.bindStore(virtualSoftwareListStore);
-		}
-		if(itSystemPrimaryFunctionsListStore.data!= null){
-			selectAttrcbPrimaryFunction.bindStore(itSystemPrimaryFunctionsListStore);
-		}*/
+        var cbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
+        var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
+        var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+        var selectAttrcbClusterCode = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterCode');
+        var selectAttrcbClusterType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterType');
+        cbOsGroup.bindStore(AIR.AirStoreManager.getStoreByName('osGroupsListStore'));
+        cbOsType.bindStore(AIR.AirStoreManager.getStoreByName('osTypesListStore'));
+        cbOsName.bindStore(AIR.AirStoreManager.getStoreByName('osNamesListStore'));
+        selectAttrcbClusterCode.bindStore(AIR.AirStoreManager.getStoreByName('clusterCodesListStore'));
+        selectAttrcbClusterType.bindStore(AIR.AirStoreManager.getStoreByName('clusterTypesListStore'));
+        selectAttrcbVirtualSoftware.bindStore(AIR.AirStoreManager.getStoreByName('virtualSoftwareListStore'));
+        selectAttrcbPrimaryFunction.bindStore(AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore'));
+        
 		storeLoader.destroy();
     },
     onSave: function(button, event){
 		var msgText = 'You are in mass update mode. Are you sure that you update all elements marked in the list with the selected attributes ?';
 		Ext.Msg.show({
-			title: 'Start mass update',
+			title: 'Start Mass Update',
 			msg: msgText,
 			buttons: Ext.Msg.YESNO,
 			fn: this.attributesMassUpdate,
@@ -1176,7 +1181,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		}
 		else{
    		Ext.Msg.show({
-   			title: ' Canceled mass update', 
+   			title: ' Canceled Mass Update', 
    			msg: 'mass update Canceled.',
    			buttons: Ext.MessageBox.OK,
    			icon: Ext.MessageBox.INFO			
@@ -1195,7 +1200,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		switch(records[0].data.result) {
 		case 'OK':
 	    		Ext.Msg.show({
-	    			title: 'Mass update completed',
+	    			title: 'Mass Update Completed',
 	    			msg: 'Mass Update completed.',
 	    			buttons: Ext.MessageBox.OK,
 	    			icon: Ext.MessageBox.INFO			
