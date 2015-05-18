@@ -15,6 +15,12 @@ public class BuildingAreaDTO extends LocationDTO {
 	private String postalCode;
 	private String location;
 	
+	//Added by vandana
+	private String providerName;
+	private String providerNameHidden;
+	private String providerAddress;
+	private String providerAddressHidden;
+	
 	
 //	public Set<BuildingDTO> getBuildings() {
 //		return buildings;
@@ -67,4 +73,54 @@ public class BuildingAreaDTO extends LocationDTO {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	/**
+	 * @return the providerName
+	 */
+	public String getProviderName() {
+		return providerName;
+	}
+	/**
+	 * @param providerName the providerName to set
+	 */
+	public void setProviderName(String providerName) {
+		this.providerName = providerName;
+	}
+	/**
+	 * @return the providerNameHidden
+	 */
+	public String getProviderNameHidden() {
+		return providerNameHidden;
+	}
+	/**
+	 * @param providerNameHidden the providerNameHidden to set
+	 */
+	public void setProviderNameHidden(String providerNameHidden) {
+		this.providerNameHidden = providerNameHidden;
+	}
+	/**
+	 * @return the providerAddress
+	 */
+	public String getProviderAddress() {
+		return providerAddress;
+	}
+	/**
+	 * @param providerAddress the providerAddress to set
+	 */
+	public void setProviderAddress(String providerAddress) {
+		this.providerAddress = providerAddress;
+	}
+	/**
+	 * @return the providerAddressHidden
+	 */
+	public String getProviderAddressHidden() {
+		return providerAddressHidden;
+	}
+	/**
+	 * @param providerAddressHidden the providerAddressHidden to set
+	 */
+	public void setProviderAddressHidden(String providerAddressHidden) {
+		this.providerAddressHidden = providerAddressHidden;
+	}
+	
+	
 }
