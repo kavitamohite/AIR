@@ -30,6 +30,12 @@ public class RoomWS {
 		roomDTO.setCiOwnerHidden(input.getCiOwnerHidden());
 		roomDTO.setCiOwnerDelegate(input.getCiOwnerDelegate());
 		roomDTO.setCiOwnerDelegateHidden(input.getCiOwnerDelegateHidden());
+		//vandana
+		roomDTO.setProviderName(input.getProviderName());
+		roomDTO.setProviderNameHidden(input.getProviderNameHidden());
+		roomDTO.setProviderAddress(input.getProviderAddress());
+		roomDTO.setProviderAddressHidden(input.getProviderAddressHidden());
+		//vandana
 
 		//Agreements
 		roomDTO.setSlaId(input.getSlaId());
