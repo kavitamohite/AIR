@@ -78,8 +78,8 @@ AIR.AirConfigFactory = function() {
 			buildingCiFields.push('streetNumber');
 			buildingCiFields.push('postalCode');
 			buildingCiFields.push('location');
-			buildingCiFields.push('providerName');
-			buildingCiFields.push('providerAddress');
+			buildingCiFields.push('providerName');//vandana
+			buildingCiFields.push('providerAddress');//vandana
 			
 			return Ext.data.Record.create(buildingCiFields);
 		},
@@ -92,6 +92,8 @@ AIR.AirConfigFactory = function() {
 			buildingAreaCiFields.push('streetNumber');
 			buildingAreaCiFields.push('location');
 			buildingAreaCiFields.push('postalCode');
+			buildingAreaCiFields.push('providerName');//vandana
+			buildingAreaCiFields.push('providerAddress');//vandana
 			
 			return Ext.data.Record.create(buildingAreaCiFields);
 		},
@@ -140,6 +142,8 @@ AIR.AirConfigFactory = function() {
 			roomCiFields.push('severityLevelIdAcl');
 			roomCiFields.push('businessEssentialIdAcl');
 			roomCiFields.push('buildingAreaData');
+			roomCiFields.push('providerName');//vandana
+			roomCiFields.push('providerAddress');//vandana
 			
 			return Ext.data.Record.create(roomCiFields);
 		},
