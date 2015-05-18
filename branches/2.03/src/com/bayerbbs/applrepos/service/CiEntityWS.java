@@ -298,6 +298,10 @@ public class CiEntityWS {
 			buildingAreaDTO.setStreetNumber(building.getStreetNumber());
 			buildingAreaDTO.setPostalCode(building.getPostalCode());
 			buildingAreaDTO.setLocation(building.getLocation());
+			//vandana
+			buildingAreaDTO.setProviderName(buildingArea.getProvider_Name());
+			buildingAreaDTO.setProviderAddress(buildingArea.getProvider_Address());
+			//vandana
 			/*
 			Terrain terrain = buildingArea.getBuilding().getTerrain();
 			Set<Building> buildings = terrain.getBuildings();
