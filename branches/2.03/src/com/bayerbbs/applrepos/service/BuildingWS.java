@@ -118,6 +118,13 @@ public class BuildingWS {
 		buildingAreaDTO.setCiOwnerHidden(input.getCiOwnerHidden());
 		buildingAreaDTO.setCiOwnerDelegate(input.getCiOwnerDelegate());
 		buildingAreaDTO.setCiOwnerDelegateHidden(input.getCiOwnerDelegateHidden());
+		//vandana
+		buildingAreaDTO.setProviderName(input.getProviderName());
+		buildingAreaDTO.setProviderNameHidden(input.getProviderNameHidden());
+		buildingAreaDTO.setProviderAddress(input.getProviderAddress());
+		buildingAreaDTO.setProviderAddressHidden(input.getProviderAddressHidden());
+		//vandana
+
 
 		//Agreements
 		buildingAreaDTO.setSlaId(input.getSlaId());
