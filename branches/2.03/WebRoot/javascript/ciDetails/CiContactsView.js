@@ -129,7 +129,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					 width: 230,
 					style: {
 						fontSize: 12,
-					    'margin-top': '6px'
+					    'margin-top': '8px'
 					
 	    		}},{
 		xtype: 'hidden',
@@ -1431,7 +1431,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddress');
 		if (!field.disabled) {
 			data.providerAddress = field.getValue();
-			field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddressHidden');			
+           field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddressHidden');			
 			if (field.getValue()) {
 				data.providerAddressHidden = field.getValue();
 			
