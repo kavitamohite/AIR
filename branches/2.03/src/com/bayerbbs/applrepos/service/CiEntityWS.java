@@ -365,6 +365,10 @@ public class CiEntityWS {
 			roomDTO.setStreetNumber(building.getStreetNumber());
 			roomDTO.setPostalCode(building.getPostalCode());
 			roomDTO.setLocation(building.getLocation());
+			//vandana
+			roomDTO.setProviderName(room.getProvider_Name());
+			roomDTO.setProviderAddress(room.getProvider_Address());
+			//vandana
 			
 			
 			//Standard Zugriffsrechte setzen.
