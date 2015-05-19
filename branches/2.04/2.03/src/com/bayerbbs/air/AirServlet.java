@@ -22,7 +22,6 @@ import org.mozilla.javascript.EvaluatorException;
 
 import com.bayerbbs.air.error.ErrorCodeReader;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
-import com.bayerbbs.applrepos.dto.AccountDTO;
 import com.bayerbbs.applrepos.dto.ApplicationCat1DTO;
 import com.bayerbbs.applrepos.dto.ApplicationCat2DTO;
 import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
@@ -51,7 +50,6 @@ import com.bayerbbs.applrepos.dto.OsTypeDTO;
 import com.bayerbbs.applrepos.dto.PriorityLevelDTO;
 import com.bayerbbs.applrepos.dto.ProcessDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
-import com.bayerbbs.applrepos.dto.ServiceContractDTO;
 import com.bayerbbs.applrepos.dto.ServiceModelDTO;
 import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
 import com.bayerbbs.applrepos.dto.SlaDTO;
@@ -772,6 +770,12 @@ public class AirServlet extends HttpServlet {
 				append(compressJSFile("javascript/ciCreate/wizard/CiCreateWizardP2.js", version)).
 				append(compressJSFile("javascript/ciCreate/wizard/CiCreateAppRequiredView.js", version)).
 	
+				//asset management
+				append(compressJSFile("javascript/assetManagement/CiAssetManagementView.js", version)).
+				append(compressJSFile("javascript/assetManagement/search/CiAssetManageSearchView.js", version)).
+				append(compressJSFile("javascript/assetManagement/search/CiAssetResultGrid.js", version)).				
+				append(compressJSFile("javascript/assetManagement/search/CiAssetResultView.js", version)).
+				
 				append(compressJSFile("javascript/core/CiTitleView.js", version)).
 				append(compressJSFile("javascript/core/CiInfoView.js", version)).
 				append(compressJSFile("javascript/core/CiCenterView.js", version)).
