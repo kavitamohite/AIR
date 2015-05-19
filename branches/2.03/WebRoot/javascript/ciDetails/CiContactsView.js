@@ -109,6 +109,12 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		id: 'pProviderAddress',
 	layout: 'column',
 	width: 500,
+	style: {
+		fontSize: 12,
+	    'margin-top': '5px',
+	    clear:'both'
+	
+},
 		
 		items: [
 	{
@@ -126,12 +132,8 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					id:'idProviderAddress',
 					allowBlank: true ,
 					 enableKeyEvents: true,
-					 width: 230,
-					style: {
-						fontSize: 12,
-					    'margin-top': '8px'
-					
-	    		}},{
+					 width: 230
+					},{
 		xtype: 'hidden',
 	    id: 'idProviderAddressHidden' 
 	}
