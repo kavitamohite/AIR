@@ -1011,7 +1011,35 @@ AIR.AirStoreFactory = function() {
 					{name: 'virtualHardwareHost'},
 					{name: 'virtualHardwareSoftware'},
 					{name: 'primaryFunction'},
-					{name: 'licenseScanning'}
+					{name: 'licenseScanning'},
+
+					//AssetManagement
+					{name : 'assetManufacturer'},
+					{name : 'assetSAPDesc'},
+					{name : 'assetSerialNo'},
+					{name : 'assetCostCenterManager'},
+					{name : 'assetOrganizationalUnit'},
+					{name : 'assetCostCenter'},
+					{name : 'assetInventoryNumber'},
+					{name : 'assetPSPElement'},
+					{name : 'assetRequester'},
+					{ name : 'assetTechnicalMaster'}, 
+					{ name : 'assetTechnicalNumber'}, 
+					{ name : 'assetAcquisitionValue'}, 
+					{ name : 'assetSite'}, 
+					{ name : 'assetOrderNumber'}, 
+					{ name : 'assetChecked'}, 
+					{ name : 'sapAssetClass'}, 
+					{ name : 'assetSubCategory'}, 
+					{ name : 'assetType'}, 
+					{ name : 'assetModel'}, 
+					{ name : 'assetSystemPlatformName'}, 
+					{ name : 'assetHardwareSystem'}, 
+					{ name : 'assetHardwareTransientSystem'}, 
+					{ name : 'assetAlias'}, 
+					{ name : 'assetOsName'}
+					
+					
 			    ]
 			});
 		
@@ -3934,7 +3962,60 @@ AIR.AirStoreFactory = function() {
 			});
 			
 			return massUpdateComplianceControlSaveStore;
-		}
+		},
+		
+		createAssetListStore: function() {
+			var ciItemListRecord = Ext.data.Record.create([
+			    { name : 'id'},
+				{ name : 'manufacturer'},
+				{ name : 'sapDescription'},
+				{ name : 'serialNumber'},
+				{ name : 'costCenterManager'},
+				{ name : 'organizationalunit'},
+				{ name : 'costCenter'},
+				{ name : 'inventoryNumber'},
+				{ name : 'pspElement'},
+				{ name : 'requester'},
+				{ name : 'technicalMaster'},
+				{ name : 'technicalNumber'},
+				{ name : 'acquisitionValue'},
+				{ name : 'site'},
+				{ name : 'orderNumber'},
+				{ name : 'assetChecked'},
+				{ name : 'sapAssetClass'},
+				{ name : 'subCategory'},
+				{ name : 'type'},
+				{ name : 'model'},
+				{ name : 'systemPlatformName'},
+				{ name : 'hardwareSystem'},
+				{ name : 'hardwareTransientSystem'},
+				{ name : 'alias'},
+				{ name : 'osName'}
+			]);
+	
+			var ciItemListReader = new Ext.data.XmlReader({
+			    totalProperty: 'countResultSet',
+			    record: 'assetViewDataDTO',
+			    idProperty: 'id'
+			}, ciItemListRecord); 
+	
+			var ciItemListStore = new Ext.data.GroupingStore({//XmlStore
+			    autoDestroy: true,
+			    autoLoad: false,
+			    remoteSort: true,
+			    
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext +'/AssetManagementWSPort',
+					loadMethod: 'searchAsset',
+					timeout: 120000,
+					reader: ciItemListReader
+				}),
+				
+				reader: ciItemListReader//zum Sortieren !!
+			});
+			
+			return ciItemListStore;
+		},
 		
 	};
 }();

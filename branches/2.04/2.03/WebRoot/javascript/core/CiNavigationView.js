@@ -286,6 +286,87 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	                img: 'images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				}]
+			},{ 
+				xtype: 'container',
+				html: '<hr>',
+				width: 160
+			},{
+                xtype: 'commandlink',
+                id: 'clAssetManagement',
+                text: 'Asset Management',
+                img: 'images/Transparent.png',//images/Transparent.png
+                cls: 'menuMainLink',
+                style: {
+                	marginTop: 5
+                }
+			},
+			
+			{
+                xtype: 'commandlink',
+                id: 'clAssetSearch',
+                text: 'Search',
+                img: 'images/Transparent.png',//images/Transparent.png
+                cls: 'menuSubLink',
+                style: {
+                	marginTop: 5
+                }
+			}, {
+                xtype: 'commandlink',
+                id: 'clNewAsset',
+                text: 'New Asset',
+                img: 'images/Transparent.png',//images/Transparent.png
+                cls: 'menuSubLink',
+                style: {
+                	marginTop: 5
+                },
+				items:[{
+		                xtype: 'commandlink',
+		                id: 'clIntaginbleAsset',
+		                text: 'Intaginble Asset',
+		                img: 'images/Transparent.png',//images/Transparent.png
+		                cls: 'menuSubLink',
+		                style: {
+		                	marginTop: 5
+		                }
+					},
+					
+					{
+		                xtype: 'commandlink',
+		                id: 'clTangibleAsset',
+		                text: 'TangibleAsset',
+		                img: 'images/Transparent.png',//images/Transparent.png
+		                cls: 'menuSubLink',
+		                style: {
+		                	marginTop: 5
+		                }
+					}]
+			}, {
+			    text: 'Main Menu',                      
+			    menu: {
+			        xtype: 'menu',                          
+			        items: [{
+			                text: 'Menu One',
+			                iconCls: 'edit'
+			            }, {
+			                text: 'Menu Two',
+			                menu: {
+			                    xtype: 'menu',
+			                    items: [{
+			                        text: 'Next Level'
+			                    },{
+			                        text: 'Next Level'                      
+			                    },{
+			                        text: 'Next Level'
+			                    }]
+			                }
+			            }, {
+			                text: 'Menu Three',
+			                scale: 'small'
+			            }, {
+			                text: 'Menu Four',
+			                scale: 'small'
+			        }]                          
+			    }
 			}]
 		});
 		

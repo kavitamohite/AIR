@@ -44,8 +44,10 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			},{
 	        	xtype: 'AIR.CiCreateView',
 	        	id: 'ciCreateView'
-			},
-			{
+			},{
+	        	xtype: 'AIR.CiAssetManagementView',
+	        	id: 'ciAssetManagementView'
+			},{
 				xtype: 'form',
 				id: 'exportForm',
 				//hidden: true,
@@ -556,6 +558,19 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					}
 				}*/
 				break;
+			case 'clAssetManagement':
+				this.getLayout().setActiveItem('ciAssetManagementView');
+				var verwerfenCallback = function() {
+					
+					if(options && options.callback)
+						options.callback();
+				}.createDelegate(this);
+				var saveCallback = function() {
+					verwerfenCallback();
+				}.createDelegate(this);
+
+				this.handleNavigation(verwerfenCallback, saveCallback);
+					break;
 			
 			default: break;
 		}
@@ -661,6 +676,9 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		
 		var ciCreateView = this.getComponent('ciCreateView');
 		ciCreateView.updateLabels(labels);
+		
+		var ciAssetManagementView = this.getComponent('ciAssetManagementView');
+		ciAssetManagementView.updateLabels(labels);
 	},
 	
 	updateToolTips: function(toolTips) {
