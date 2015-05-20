@@ -156,7 +156,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 			}else{
 				
 				var message='Are you sure you want to perform the mass update with the marked elements ('+selectedElements+')?';
-				var windowToitle= 'Start mass update ('+selectedElements+' elements)';
+				var windowToitle= 'Start Mass Update ('+selectedElements+' elements)';
 				Ext.Msg.show({
 					   title: windowToitle,
 					   msg: message,

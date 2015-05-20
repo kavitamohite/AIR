@@ -118,7 +118,7 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
     					},
     					{
     						xtype: 'button',
-    						text: 'cancel',
+    						text: 'Cancel',
     						id: 'bCloseWindow',
     						width: 50,
     						
@@ -215,8 +215,7 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
 			   scope: this,
 			   //animEl: 'elId',
 			   icon: Ext.MessageBox.INFO
-			});
-			
+			});			
 	},
 	
 	onLinkTemplate: function(button,event) {
@@ -274,7 +273,7 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
 		switch(records[0].data.result) {
 		case 'OK':
 	    		Ext.Msg.show({
-	    			title: 'Mass update completed',
+	    			title: 'Mass Update Completed',
 	    			msg: 'Templtae linking completed.',
 	    			buttons: Ext.MessageBox.OK,
 	    			icon: Ext.MessageBox.INFO			

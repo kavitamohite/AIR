@@ -35,6 +35,7 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
     		plain: true,
 			modal: true,
     		flex: 1,
+    		closable: false,    		
     		closeAction:'close',
     		border: false,
     		title: 'Definition of relevent fields for transfer of values',
@@ -116,7 +117,7 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
     			    				        {
     			    				        	xtype: 'fieldset',
     			    				        	id: 'fgpscContact',
-    			    				        	title: 'GPSC Contacts',
+    			    				        	title: 'HPSM Contacts',
     			    				        	anchor: '50%',
     			    				        	layout: 'hbox',
     			    				        	width: 300,
@@ -247,7 +248,7 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
 		
 		Ext.Msg.show({
 			title: 'Start mass update',
-			msg: 'You are  in mass update mode. Are you sure that you want to update all elements marked in the listwith the data that you have just entered.',
+			msg: 'You are  in mass update mode. Are you sure that you want to update all elements marked in the list with the data that you have just entered.',
 			buttons: Ext.Msg.YESNO,
 			fn: this.massUpdateValueTransfer,
 			scope: this,

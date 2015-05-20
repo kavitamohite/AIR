@@ -1112,7 +1112,7 @@ public class CiEntityWS {
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.LIFE_CYCLE_STATUS);
-		if (itSystem.getLifecycleStatusId() != null)
+		if (itSystem.getLifecycleStatusId() != null && itSystem.getLifecycleStatusId() != 0)
 			maDto.setAttributeValue(LifecycleStatusHbn.findById(
 					Long.valueOf(itSystem.getLifecycleStatusId()))
 					.getlcStatusEn());
@@ -1121,7 +1121,7 @@ public class CiEntityWS {
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.OPERATIONAL_STATUS);
-		if (itSystem.getEinsatzStatusId() != null)
+		if (itSystem.getEinsatzStatusId() != null && itSystem.getEinsatzStatusId() != 0)
 			maDto.setAttributeValue(OperationalStatusHbn.findById(
 					Long.valueOf(itSystem.getEinsatzStatusId())).getOperationalStatusEn());
 		maDto.setId("operationalStatusId");
@@ -1129,7 +1129,7 @@ public class CiEntityWS {
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.PRIORITY_LEVEL);
-		if (itSystem.getPriorityLevelId() != null)
+		if (itSystem.getPriorityLevelId() != null && itSystem.getPriorityLevelId() !=0)
 			maDto.setAttributeValue(PriorityLevelHbn.findById(
 					itSystem.getPriorityLevelId()).getPriorityLevel());
 		maDto.setId("priorityLevelId");
@@ -1137,7 +1137,7 @@ public class CiEntityWS {
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.SEVERITY_LEVEL);
-		if (itSystem.getSeverityLevelId() != null)
+		if (itSystem.getSeverityLevelId() != null && itSystem.getSeverityLevelId() !=0)
 			maDto.setAttributeValue(SeverityLevelHbn.findById(
 					itSystem.getSeverityLevelId()).getSeverityLevelName());
 		maDto.setId("severityLevelId");
@@ -1145,7 +1145,7 @@ public class CiEntityWS {
 		
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.OS_NAME);
-		if (itSystem.getOsNameId() != null)
+		if (itSystem.getOsNameId() != null && itSystem.getOsNameId() !=0)
 			maDto.setAttributeValue(ItSystemHbn.findItSystemOsNameById(itSystem.getOsNameId()));
 		maDto.setId("osNameId");
 		massUpdateAttriuteDTOs.add(maDto);
@@ -1170,7 +1170,7 @@ public class CiEntityWS {
 		
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.PRIMARY_FUNCTION);
-		if(itSystem.getPrimaryFunctionId() != null)
+		if(itSystem.getPrimaryFunctionId() != null && itSystem.getPrimaryFunctionId() != 0)
 		maDto.setAttributeValue(ItSystemHbn.getItSystemPrimaryFunctionById(itSystem.getPrimaryFunctionId()));
 		maDto.setId("virtualHardwareSoftware");
 		massUpdateAttriuteDTOs.add(maDto);
@@ -1210,6 +1210,7 @@ public class CiEntityWS {
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.ITSEC_GROUP);
+		if(itSystem.getItsecGroupId() !=null && itSystem.getItsecGroupId() !=0)
 		maDto.setAttributeValue(ItSecGroupHbn.getItSecGroup(itSystem
 				.getItsecGroupId()));
 		maDto.setId("itsecGroupId");
@@ -1217,12 +1218,14 @@ public class CiEntityWS {
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.SLA);
+		if(itSystem.getSlaId()!=null &&itSystem.getSlaId()!=0)
 		maDto.setAttributeValue(SlaHbn.getSlaName(itSystem.getSlaId()));
 		maDto.setId("slaId");
 		massUpdateAttriuteDTOs.add(maDto);
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.SERVICE_CONTRACT);
+		if(itSystem.getServiceContractId()!=null && itSystem.getServiceContractId() !=0) 
 		maDto.setAttributeValue(ServiceContractHbn.getServiceContract(itSystem
 				.getServiceContractId()));
 		maDto.setId("serviceContractId");
@@ -1242,6 +1245,7 @@ public class CiEntityWS {
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
+		if(itSystem.getItSecSbConfidentialityId()!= null && itSystem.getItSecSbConfidentialityId()!= 0)
 		maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(itSystem.getItSecSbConfidentialityId()).getConfidentialityNameEn());
 		maDto.setId("itSecSbConfidentiality");
 		massUpdateAttriuteDTOs.add(maDto);
@@ -1287,12 +1291,26 @@ public class CiEntityWS {
 		massUpdateAttriuteDTOs.add(maDto);*/
    		maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.GR1435);
-        if (-1 == ciBase1.getRelevanceITSEC()) {
-        	maDto.setAttributeValue("Yes");
-        }else{
-        	maDto.setAttributeValue("No");
+        if(null != ciBase1.getRelevanceITSEC()){
+            if (-1 == ciBase1.getRelevanceITSEC()) {
+            	maDto.setAttributeValue("Yes");
+            }else{
+            	maDto.setAttributeValue("No");
+            }
         }
 		maDto.setId("relevanzITSEC");
+        massUpdateAttriuteDTOs.add(maDto);
+        
+        maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.GR1920);
+        if(null != ciBase1.getRelevanceICS()){
+            if (-1 == ciBase1.getRelevanceICS()) {
+            	maDto.setAttributeValue("Yes");
+            }else{
+            	maDto.setAttributeValue("No");
+            }        	
+          }
+        maDto.setId("relevanceICS");
         massUpdateAttriuteDTOs.add(maDto);
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.GXP);
@@ -1301,16 +1319,19 @@ public class CiEntityWS {
         massUpdateAttriuteDTOs.add(maDto);
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.ITSEC_GROUP);
+        if(ciBase1.getItsecGroupId() != null && ciBase1.getItsecGroupId() !=0)
         maDto.setAttributeValue(ItSecGroupHbn.getItSecGroup(ciBase1.getItsecGroupId()));
 		maDto.setId("itsecGroupId");
         massUpdateAttriuteDTOs.add(maDto);
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.SLA);
+        if(ciBase1.getSlaId() != null  && ciBase1.getSlaId() != 0)
         maDto.setAttributeValue(SlaHbn.getSlaName(ciBase1.getSlaId()));
         maDto.setId("slaId");
         massUpdateAttriuteDTOs.add(maDto);        
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.SERVICE_CONTRACT);
+        if(ciBase1.getServiceContractId() != null && ciBase1.getServiceContractId() !=0)
         maDto.setAttributeValue(ServiceContractHbn.getServiceContract(ciBase1.getServiceContractId()));
         maDto.setId("serviceContractId");
         massUpdateAttriuteDTOs.add(maDto);                
@@ -1326,6 +1347,7 @@ public class CiEntityWS {
         massUpdateAttriuteDTOs.add(maDto);
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
+        if(ciBase1.getItSecSbConfidentialityId() != null && ciBase1.getItSecSbConfidentialityId() !=0)
         maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(ciBase1.getItSecSbConfidentialityId()).getConfidentialityNameEn());
 		maDto.setId("itSecSbConfidentiality");
         massUpdateAttriuteDTOs.add(maDto);
@@ -1349,7 +1371,7 @@ public class CiEntityWS {
 		return massUpdateAttriuteDTOs;
 	}
 	
-	private List<MassUpdateAttributeDTO> getApplicationAttributeDTOList(Application application, ApplicationCat2 cat2, long ciSubTypeId){
+	private List<MassUpdateAttributeDTO> getApplicationAttributeDTOList(Application application, ApplicationCat2 cat2, String ciSubTypeId){
 		List<MassUpdateAttributeDTO> massUpdateAttriuteDTOs = new ArrayList<MassUpdateAttributeDTO>();
 		
 		MassUpdateAttributeDTO maDto = new MassUpdateAttributeDTO();
@@ -1370,7 +1392,7 @@ public class CiEntityWS {
         maDto.setAttributeName(AirKonstanten.VERSION);
         maDto.setAttributeValue(application.getVersion());
         maDto.setId("version");
-        if(ciSubTypeId==AirKonstanten.APPLICATION_CAT1_APPLICATION){
+        if(ciSubTypeId=="5"){
             massUpdateAttriuteDTOs.add(maDto);
     		maDto = new MassUpdateAttributeDTO();
             maDto.setAttributeName(AirKonstanten.BAR_RELEVANCE);
@@ -1395,7 +1417,7 @@ public class CiEntityWS {
         
         maDto = new  MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.LIFE_CYCLE_STATUS);
-        if(application.getLifecycleStatusId()!= null)
+        if(application.getLifecycleStatusId()!= null && application.getLifecycleStatusId()!= 0)
         maDto.setAttributeValue(LifecycleStatusHbn.findById(application.getLifecycleStatusId()).getlcStatusEn());
         maDto.setId("lifecycleStatusId");
         massUpdateAttriuteDTOs.add(maDto);
@@ -1403,21 +1425,21 @@ public class CiEntityWS {
                 
         maDto = new  MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.OPERATIONAL_STATUS);
-        if(application.getOperationalStatusId() != null)
+        if(application.getOperationalStatusId() != null && application.getOperationalStatusId()!= 0)
         maDto.setAttributeValue(OperationalStatusHbn.findById(application.getOperationalStatusId()).getOperationalStatusEn());
         maDto.setId("operationalStatusId");
         massUpdateAttriuteDTOs.add(maDto);
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.PRIORITY_LEVEL);
-        if(application.getPriorityLevelId() != null)
+        if(application.getPriorityLevelId() != null && application.getPriorityLevelId() != 0)
         maDto.setAttributeValue(PriorityLevelHbn.findById(application.getPriorityLevelId()).getPriorityLevel());
         maDto.setId("priorityLevelId");
         massUpdateAttriuteDTOs.add(maDto);
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.SEVERITY_LEVEL);
-        if(application.getSeverityLevelId() != null)
+        if(application.getSeverityLevelId() != null && application.getSeverityLevelId()!= 0)
         maDto.setAttributeValue(SeverityLevelHbn.findById(application.getSeverityLevelId()).getSeverityLevelName());
         maDto.setId("severityLevelId");
         massUpdateAttriuteDTOs.add(maDto);
@@ -1442,26 +1464,31 @@ public class CiEntityWS {
         maDto.setId("subResponsible");
         massUpdateAttriuteDTOs.add(maDto);
         
-        maDto = new MassUpdateAttributeDTO();
-        maDto.setAttributeName(AirKonstanten.APPLICATION_OWNER);
-        maDto.setAttributeValue(application.getApplicationOwner());
-        maDto.setId("applicationOwner");
-        massUpdateAttriuteDTOs.add(maDto);
-        
-        maDto = new MassUpdateAttributeDTO();
-        maDto.setAttributeName(AirKonstanten.APPLICATION_OWNER_DELEGATE);
-        maDto.setAttributeValue(application.getApplicationOwnerDelegate());
-        maDto.setId("applicationOwnerDelegate");
-        massUpdateAttriuteDTOs.add(maDto);
-        
-        maDto = new MassUpdateAttributeDTO();
-        maDto.setAttributeName(AirKonstanten.APPLICATION_STEWARD);
-        maDto.setAttributeValue(application.getApplicationSteward());
-        maDto.setId("applicationSteward");
-        massUpdateAttriuteDTOs.add(maDto);
+        if(ciSubTypeId=="5"){
+        	
+            maDto = new MassUpdateAttributeDTO();
+            maDto.setAttributeName(AirKonstanten.APPLICATION_OWNER);
+            maDto.setAttributeValue(application.getApplicationOwner());
+            maDto.setId("applicationOwner");
+            massUpdateAttriuteDTOs.add(maDto);
+            
+            maDto = new MassUpdateAttributeDTO();
+            maDto.setAttributeName(AirKonstanten.APPLICATION_OWNER_DELEGATE);
+            maDto.setAttributeValue(application.getApplicationOwnerDelegate());
+            maDto.setId("applicationOwnerDelegate");
+            massUpdateAttriuteDTOs.add(maDto);
+            
+            maDto = new MassUpdateAttributeDTO();
+            maDto.setAttributeName(AirKonstanten.APPLICATION_STEWARD);
+            maDto.setAttributeValue(application.getApplicationSteward());
+            maDto.setId("applicationSteward");
+            massUpdateAttriuteDTOs.add(maDto);
+        	
+        }
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.BUSINESS_CATEGORY);
+        if(application.getCategoryBusiness()!=null && application.getCategoryBusiness()!= 0 )
         maDto.setAttributeValue(CategoryBusinessHbn.findById(application.getCategoryBusiness()).getCategoryBusinessName());
         maDto.setId("categoryBusiness");
         massUpdateAttriuteDTOs.add(maDto);
@@ -1486,30 +1513,36 @@ public class CiEntityWS {
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.GR1920);
-        if (-1 == application.getRelevanceICS()) {
-        	maDto.setAttributeValue("Yes");
-        }else{
-        	maDto.setAttributeValue("No");
-        }
+        if(null != application.getRelevanceICS()){
+            if (-1 == application.getRelevanceICS()) {
+            	maDto.setAttributeValue("Yes");
+            }else{
+            	maDto.setAttributeValue("No");
+            }        	
+          }
         maDto.setId("relevanceICS");
         massUpdateAttriuteDTOs.add(maDto);
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.GR2059);
-        if (-1 == application.getRelevance2059()) {
-        	maDto.setAttributeValue("Yes");
-        }else{
-        	maDto.setAttributeValue("No");
+        if(null != application.getRelevance2059()){
+            if (-1 == application.getRelevance2059()) {
+            	maDto.setAttributeValue("Yes");
+            }else{
+            	maDto.setAttributeValue("No");
+            }
         }
         maDto.setId("relevance2059");
         massUpdateAttriuteDTOs.add(maDto);
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.GR2008);
-        if (-1 == application.getRelevance2008()) {
-        	maDto.setAttributeValue("Yes");
-        }else{
-        	maDto.setAttributeValue("No");
+        if(null != application.getRelevance2008() ){
+            if (-1 == application.getRelevance2008()) {
+            	maDto.setAttributeValue("Yes");
+            }else{
+            	maDto.setAttributeValue("No");
+            }
         }
         maDto.setId("relevance2008");
         massUpdateAttriuteDTOs.add(maDto);
@@ -1524,12 +1557,14 @@ public class CiEntityWS {
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.ITSEC_GROUP);
         if(application.getItsecGroupId() != null)
+        if(application.getItsecGroupId()!=null && application.getItsecGroupId() != 0 )
         maDto.setAttributeValue(ItSecGroupHbn.getItSecGroup(application.getItsecGroupId()));
         maDto.setId("itsecGroupId");
         massUpdateAttriuteDTOs.add(maDto);
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.SLA);
+        if(application.getSlaId()!= null && application.getSlaId()!= 0)
         maDto.setAttributeValue(SlaHbn.getSlaName(application.getSlaId()));
         maDto.setId("slaId");
         massUpdateAttriuteDTOs.add(maDto);
@@ -1537,6 +1572,7 @@ public class CiEntityWS {
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.SERVICE_CONTRACT);
+        if(application.getServiceContractId()!= null && application.getServiceContractId() != 0)
         maDto.setAttributeValue(ServiceContractHbn.getServiceContract(application.getServiceContractId()));
         maDto.setId("serviceContractId");
         massUpdateAttriuteDTOs.add(maDto);
@@ -1555,6 +1591,7 @@ public class CiEntityWS {
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
+        if(application.getItSecSbConfidentiality() != null && application.getItSecSbConfidentiality() != 0)
         maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(application.getItSecSbConfidentiality()).getConfidentialityNameEn());
         maDto.setId("itSecSbConfidentiality");
         massUpdateAttriuteDTOs.add(maDto);
@@ -1567,6 +1604,7 @@ public class CiEntityWS {
         
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.INFORMATION_CLASS);
+        if(application.getClassInformationId()!=null && application.getClassInformationId()!=0)
         maDto.setAttributeValue(ClassInformationHbn.getClassInformationById(application.getClassInformationId()).getClassInformationName());
         maDto.setId("classInformationId");
         massUpdateAttriuteDTOs.add(maDto);

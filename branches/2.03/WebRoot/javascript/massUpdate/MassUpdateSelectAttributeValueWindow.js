@@ -223,10 +223,9 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 							    xtype: 'radiogroup',
 								id: 'selectAttrrgBARrelevanceW',
 								width: 200,
-								
+								hidden: true,								
 								columns: 2,
 								fieldLabel: 'BAR Relevant',
-
 							    items: [
 							        { id: 'rgBARrelevanceYesWsa',		itemId: 'rgBARrelevanceYesWsa', 			boxLabel: 'Yes',		name: 'rgBARrelevanceW', inputValue: 'Y', width: 50},
 							        { id: 'rgBARrelevanceNoWsa',		itemId: 'rgBARrelevanceNoWsa',			boxLabel: 'No',			name: 'rgBARrelevanceW', inputValue: 'N', width: 50 }
@@ -235,11 +234,10 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 							{
 						    	xtype: 'textfield',
 						        width: 230,
-						    	
-						        fieldLabel: 'Version',
+						        hidden: true,
+						    	fieldLabel: 'Version',
 						        id: 'selectAttrapplicationVersion',
-						        allowBlank: true,
-						        
+						        allowBlank: true,						        
 						        style: {
 						        	marginBottom: 10
 						        }
@@ -248,7 +246,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    	xtype: 'textarea',
 				        width: 230,
 				        height: 75,
-				        
+				        hidden: true,				        
 				        fieldLabel: 'Description',
 				        id: 'selectAttrtaCiDescriptionW',//wizardcomments
 				        allowBlank: true
@@ -263,8 +261,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 					    	    valueField: 'id',
 					    	    displayField: 'text',
 					    		lastQuery: '',
-
-					    	    
+					    		hidden: true,
 					    	    triggerAction: 'all',//all query
 					    	    lazyInit: false,
 					    	    mode: 'local'
@@ -458,7 +455,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    	        lazyInit: false,
 				    	        mode: 'local'
 							},
-							{
+/*							{
 				    			xtype: 'filterCombo',//combo
 				    	        id: 'selectAttrcbDataClass',
 				    	        
@@ -472,7 +469,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    	        lazyRender: true,
 				    	        lazyInit: false,
 				    	        mode: 'local'
-			    			},
+			    			},*/
 			    			{
 			    				xtype: 'filterCombo',//combo
 			    		        id: 'selectAttrcbPrimaryFunction',
@@ -730,10 +727,10 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 								},
 				    			
 				    			items: [
-										{ id: 'selectAttrchbGR15435', boxLabel: 'GR1435', name: 'cbgRegulations', width: 100 },
-				    			        { id: 'selectAttrchbGR1920', boxLabel: 'GR1920', name: 'cbgRegulations', width: 100 },
-				    			        { id: 'selectattrchbGR2059', boxLabel: 'GR2059', name: 'cbgRegulations', width: 100 },
-				    			        { id: 'selectAttrchbGR2008', boxLabel: 'GR2008', name: 'cbgRegulations', width: 100 }
+										{ id: 'selectAttrchbGR15435', boxLabel: 'GR1435', name: 'selectAttrcbgRegulationsW', width: 100 },
+				    			        { id: 'selectAttrchbGR1920', boxLabel: 'GR1920', name: 'selectAttrcbgRegulationsW', width: 100 },
+				    			        { id: 'selectattrchbGR2059', boxLabel: 'GR2059', name: 'selectAttrcbgRegulationsW', width: 100 },
+				    			        { id: 'selectAttrchbGR2008', boxLabel: 'GR2008', name: 'selectAttrcbgRegulationsW', width: 100 }
 						        ]
 					        },
 					        {
@@ -945,8 +942,18 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         var rgVirtualHWHost = this.getComponent('selectAttrfsSpecifics').getComponent('rgVirtualHWHost');
         var selectAttrcbVirtualSoftware = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbVirtualSoftware');
         var selectAttrlvOrganisationalScopeW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrlvOrganisationalScopeW');
-        var selectAttrrgBARrelevanceW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrrgBARrelevanceW');
         var selectAttrcbPrimaryFunction = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbPrimaryFunction');
+        var selectAttrrgBARrelevanceW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrrgBARrelevanceW');
+        var selectAttrapplicationVersion = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrapplicationVersion');
+        var selectAttrtaCiDescriptionW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrtaCiDescriptionW');
+        var selectAttrapplicationCat = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrapplicationCat');
+        var selectAttrprotectionClassInformation = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionClassInformation');
+        var selectAttrprotectionClassInformationExplanation = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionClassInformationExplanation');
+        var selectAttrprotectionIntegrity = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrity');
+        var selectAttrprotectionIntegrityDescription = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrityDescription');
+        var selectAttrcbgRegulationsW = this.getComponent('selectAttrCompliance').getComponent('selectAttrcbgRegulationsW');
+        
+        
 		if(this.ciTypeId==AC.TABLE_ID_APPLICATION ){
 			if(this.ciSubTypeId==AC.CI_SUB_TYPE_APPLICATION){
 				pSelectAttrCiOwner.setVisible(true);
@@ -955,8 +962,16 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				selectAttrlvOrganisationalScopeW.setVisible(true);
 				selectAttrrgBARrelevanceW.setVisible(true);
 			}
+			selectAttrapplicationVersion.setVisible(true);
+			selectAttrtaCiDescriptionW.setVisible(true);
+			selectAttrapplicationCat.setVisible(true);
+			selectAttrprotectionClassInformation.setVisible(true);
+			selectAttrprotectionClassInformationExplanation.setVisible(true);
 			
-		}
+		}else{
+			selectAttrprotectionIntegrity.setVisible(true);
+			selectAttrprotectionIntegrityDescription.setVisible(true);
+		}		
 		if(this.ciTypeId==AC.TABLE_ID_IT_SYSTEM ){
 			cbOsGroup.setVisible(true);
 			cbOsType.setVisible(true);
@@ -1100,7 +1115,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
 			var selectAttrtaCiDescriptionW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrtaCiDescriptionW');
 			var selectAttrlvOrganisationalScopeW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrlvOrganisationalScopeW');
-			var selectAttrcbDataClass = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbDataClass');
+			//var selectAttrcbDataClass = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbDataClass');
 			var selectAttroperationalStatus = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttroperationalStatus');
             var selectAttrapplicationVersion = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrapplicationVersion');
             var selectAttrrgBARrelevanceW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrrgBARrelevanceW');
@@ -1158,7 +1173,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				 	gxpFlag: selectAttrCBrelevanceGxp.getValue(),
 				 	osNameId: cbOsName.getValue(),
 			        categoryBusinessId: selectAttrcbApplicationBusinessCat.getValue(),
-			        classDataId: selectAttrcbDataClass.getValue(),
+			        //classDataId: selectAttrcbDataClass.getValue(),
 			        comments: selectAttrtaCiDescriptionW.getValue(),
 			        operationalStatusId: selectAttroperationalStatus.getValue(),
 			        version: selectAttrapplicationVersion.getValue(),
