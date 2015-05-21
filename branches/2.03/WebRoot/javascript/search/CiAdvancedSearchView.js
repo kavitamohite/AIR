@@ -187,7 +187,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					items: [{
 						xtype: 'label',
 						id: 'lCiTypeOptions',
-						text: 'not',
+						text: '',
 						
 		    			style: {
 							fontSize: 10
@@ -279,7 +279,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					items: [{
 						xtype: 'label',
 						id: 'lAdvSearchAppOwnerOptions',
-						text: 'not',
+						text: '',
 						
 		    			style: {
 							fontSize: 10,
@@ -393,7 +393,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					items: [{
 						xtype: 'label',
 						id: 'lAdvSearchCIOwnerOptions',
-						text: 'not',
+						text: '',
 						
 						hidden: true,
 						
@@ -574,7 +574,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					items: [{
 						xtype: 'label',
 						id: 'lAdvSearchCategoriesAndStatusOptions',
-						text: 'not',
+						text: '',
 						
 		    			style: {
 							fontSize: 10,
@@ -835,7 +835,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					items: [{
 						xtype: 'label',
 						id: 'lAdvSearchSpecialSearchAttributesOptions',
-						text: 'not',
+						text: '',
 						
 		    			style: {
 							fontSize: 10,

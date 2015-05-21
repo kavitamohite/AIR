@@ -22,7 +22,7 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
     			listeners: {
     				rowselect: function(selection, rowIndex,record ){
     					if(record.get('attributeValue')==undefined ||record.get('attributeValue')==''){
-        					record.set('attributeValue','[Delecte contents]');
+        					record.set('attributeValue','[Delete contents]');
    					}
     				},
     				rowdeselect: function(selection, rowIndex,record){
@@ -247,7 +247,7 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
 		AAM.setMassUpdateData(massUpdateData);
 		
 		Ext.Msg.show({
-			title: 'Start mass update',
+			title: 'Start Mass Update',
 			msg: 'You are  in mass update mode. Are you sure that you want to update all elements marked in the list with the data that you have just entered.',
 			buttons: Ext.Msg.YESNO,
 			fn: this.massUpdateValueTransfer,
@@ -290,7 +290,7 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
 			var massUpdateData=AAM.getMassUpdateData();
 			if(massUpdateData.itsecGroupId){
 	    		Ext.Msg.show({
-	    			title: 'Mass update completed',
+	    			title: 'Mass Update Completed',
 	    			msg: 'Mass update completed.',
 	    			buttons: Ext.MessageBox.OK,
 	    			fn: this.massUpdateConfirmation,
@@ -299,7 +299,7 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
 	    		});
 			}else{
 	    		Ext.Msg.show({
-	    			title: 'Mass update completed',
+	    			title: 'Mass Update Completed',
 	    			msg: 'Mass update completed.',
 	    			buttons: Ext.MessageBox.OK,
 	    			icon: Ext.MessageBox.INFO			
