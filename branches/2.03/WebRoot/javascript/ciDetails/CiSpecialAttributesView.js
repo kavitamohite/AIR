@@ -150,6 +150,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
     updateBasedOnRole : function(grid){
 		var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
 		var btn = this.buttons[0];
+		var ci = Ext.getCmp('tpCiSearchResultTables').getActiveTab().store.data.items[ciResultGrid.store.find('id',AAM.getCiId())];
 		
 		rolePersonListStore.each(function(item) {
 			var value = item.data.roleName;
@@ -160,7 +161,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 				return;
 			}
 		});
-		var ci = ciResultGrid.store.data.items[ciResultGrid.store.find('id',AAM.getCiId())];
+		
 		if(ci.get('ciOwner') === AAM.getCwid() || ci.get('ciOwnerDelegate') === AAM.getCwid() ||
 			ci.get('applicationSteward') === AAM.getCwid() ){
 			grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
