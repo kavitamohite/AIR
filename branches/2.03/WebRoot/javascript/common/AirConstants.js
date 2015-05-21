@@ -14,6 +14,7 @@ AIR.AirConstants = {
 	HELP_ID_DETAILS_PROTECTION: 'help_details_protection',
 	HELP_ID_DETAILS_COMPLIANCE: 'help_details_compliance',
 	HELP_ID_DETAILS_LICENSECOSTS: 'help_details_licensecosts',
+	HELP_ID_DETAILS_SPECIALATTIRUBTES: 'help_details_specialattributes',
 	HELP_ID_DETAILS_CONNECTIONS: 'help_details_connections',
 	HELP_ID_DETAILS_SUPPORTSTUFF: 'help_details_supportstuff',
 	HELP_ID_DETAILS_HISTORY: 'help_details_history',

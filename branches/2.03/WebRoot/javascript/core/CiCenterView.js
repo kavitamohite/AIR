@@ -44,8 +44,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			},{
 	        	xtype: 'AIR.CiCreateView',
 	        	id: 'ciCreateView'
-			},
-			{
+			},{
 				xtype: 'form',
 				id: 'exportForm',
 				//hidden: true,
@@ -521,6 +520,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			case 'clCiProtection':
 			case 'clCiCompliance':
 			case 'clCiLicense':
+			case 'clCiSpecialAttributes':
 			case 'clCiConnections':
 			case 'clCiSupportStuff':
 			case 'clCiHistory':

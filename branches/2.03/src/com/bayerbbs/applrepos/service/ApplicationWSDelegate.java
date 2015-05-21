@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
+import com.bayerbbs.applrepos.dto.AttributeValueDTO;
 import com.bayerbbs.applrepos.dto.ComplianceControlStatusDTO;
 import com.bayerbbs.applrepos.dto.HistoryViewDataDTO;
 
@@ -72,6 +73,10 @@ public class ApplicationWSDelegate {
 
 	public HistoryViewDataDTO[] getApplicationHistory(ApplicationDetailParameterInput detailInput) {
 		return applicationWS.getApplicationHistory(detailInput);
+	}
+
+	public AttributeValueDTO[] getAttributeValue(ApplicationParameterInput input){
+		return applicationWS.getAttributeValue(input);
 	}
 
 }

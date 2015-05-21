@@ -51,7 +51,6 @@ import com.bayerbbs.applrepos.dto.OsTypeDTO;
 import com.bayerbbs.applrepos.dto.PriorityLevelDTO;
 import com.bayerbbs.applrepos.dto.ProcessDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
-import com.bayerbbs.applrepos.dto.ServiceContractDTO;
 import com.bayerbbs.applrepos.dto.ServiceModelDTO;
 import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
 import com.bayerbbs.applrepos.dto.SlaDTO;
@@ -754,6 +753,7 @@ public class AirServlet extends HttpServlet {
 				append(compressJSFile("javascript/ciDetails/CiProtectionView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiComplianceView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiLicenseView.js", version)).
+				append(compressJSFile("javascript/ciDetails/CiSpecialAttributesView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiConnectionsView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiSupportStuffView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiHistoryView.js", version)).

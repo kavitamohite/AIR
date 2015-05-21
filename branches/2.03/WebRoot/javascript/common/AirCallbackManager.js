@@ -32,6 +32,7 @@ AIR.AirCallbackManager = Ext.extend(Ext.util.Observable, {
 			case 'clCiProtection':
 			case 'clCiCompliance':
 			case 'clCiLicense':
+			case 'clCiSpecialAttributes':
 			case 'clCiConnections':
 			case 'clCiSupportStuff':
 			case 'clCiHistory':

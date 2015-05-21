@@ -14,6 +14,7 @@ import com.bayerbbs.applrepos.dto.ApplicationContactEntryDTO;
 import com.bayerbbs.applrepos.dto.ApplicationContactGroupDTO;
 import com.bayerbbs.applrepos.dto.ApplicationContactsDTO;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
+import com.bayerbbs.applrepos.dto.AttributeValueDTO;
 import com.bayerbbs.applrepos.dto.CiSupportStuffDTO;
 import com.bayerbbs.applrepos.dto.ComplianceControlStatusDTO;
 import com.bayerbbs.applrepos.dto.HistoryViewDataDTO;
@@ -24,6 +25,7 @@ import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationProcessHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationRegionHbn;
+import com.bayerbbs.applrepos.hibernate.AttributeValueHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
 import com.bayerbbs.applrepos.hibernate.CiPersonsHbn;
@@ -1345,4 +1347,13 @@ public class ApplicationWS {
 		return arrayHist;
 	}
 
+	public AttributeValueDTO[] getAttributeValue(ApplicationParameterInput input){
+		List<AttributeValueDTO> values = AttributeValueHbn.listAttributeValue();
+		AttributeValueDTO blank = new AttributeValueDTO();
+		blank.setAttributeId(null);
+		blank.setId(null);
+		blank.setName("");
+		values.add(0, blank);
+		return values.toArray(new AttributeValueDTO[values.size()]);
+	}
 }

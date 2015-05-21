@@ -265,6 +265,12 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
+	                id: 'clCiSpecialAttributes',
+	                text: 'Special Attributes',
+	                img: 'images/Transparent.png',//images/Transparent.png
+	                cls: 'menuSubLink'
+				},{
+	                xtype: 'commandlink',
 	                id: 'clCiConnections',
 	                text: 'Connections',
 	                img: 'images/Transparent.png',//images/Transparent.png
@@ -408,6 +414,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			case 'clCiProtection':
 			case 'clCiCompliance':
 			case 'clCiLicense':
+			case 'clCiSpecialAttributes':
 			case 'clCiConnections':
 			case 'clCiSupportStuff':
 			case 'clCiHistory':
@@ -608,8 +615,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		link = this.getComponent('pCreateDeleteMenuItems').getComponent('clCiDelete');
 		link.updateText(labels.label_menu_delete);
 		
-		
-
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiDetails');
 		link.updateText(labels.label_menu_detailsdetails);
 		
@@ -630,6 +635,9 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiLicense');
 		link.updateText(labels.label_menu_detailslicense);
+		
+		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiSpecialAttributes');
+		link.updateText(labels.label_menu_specialAttribute);
 		
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiConnections');
 		link.updateText(labels.label_menu_detailsconnections);

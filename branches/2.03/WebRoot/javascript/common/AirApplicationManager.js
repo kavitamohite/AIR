@@ -123,7 +123,7 @@ AIR.AirApplicationManager = function() {
 				itSecGroupSimpleListStore: null,
 				referencesListStore: null,
 				itsecMassnahmenGapClassListStore: null,
-//				signeeListStore: null,//vom itSet abhängig, daher hier nicht ODER lokal filtern mit itSet nach Öffnen des ComplianceControlsWindow
+//				signeeListStore: null,//vom itSet abhï¿½ngig, daher hier nicht ODER lokal filtern mit itSet nach ï¿½ffnen des ComplianceControlsWindow
 				
 				rolePersonListStore: { params: { params: { cwid: this.getCwid() } } },
 				itsecUserOptionListStore: { params: { params: { cwid: this.getCwid() } } },
@@ -133,10 +133,10 @@ AIR.AirApplicationManager = function() {
 				applicationCat1ListStore: null,
 				databaseDisplayNameListStore: null,
 				
-//				languageToolTipStore: null,//muss später auch zu languageHelpStoreEN, languageHelpStoreDE werden
+//				languageToolTipStore: null,//muss spï¿½ter auch zu languageHelpStoreEN, languageHelpStoreDE werden
 				languageToolTipStoreEN: null,
 				languageToolTipStoreDE: null,
-				languageHelpStore: null,//muss später auch zu languageHelpStoreEN, languageHelpStoreDE werden
+				languageHelpStore: null,//muss spï¿½ter auch zu languageHelpStoreEN, languageHelpStoreDE werden
 				languageStoreEN: null,
 				languageStoreDE: null,
 				gxpFlagListStore: null,
@@ -167,7 +167,7 @@ AIR.AirApplicationManager = function() {
 		
 		afterInit: function(airViewport) {
 //	    	var language = this.getUserOptions(AC.USER_OPTION_LANGUAGE);
-//	    	this.setLanguage(language);//zu spät...
+//	    	this.setLanguage(language);//zu spï¿½t...
 	    	
 			this.lSouthToolbar = airViewport.getBottomToolbar().getComponent('lSouthToolbar');
 			this.registerComponents(airViewport);
@@ -488,7 +488,7 @@ AIR.AirApplicationManager = function() {
 		},
 		
 		getExportFormAsExtElement: function() {
-			//evtl. alle hidden Felder Werte löschen vor dem zurückgeben
+			//evtl. alle hidden Felder Werte lï¿½schen vor dem zurï¿½ckgeben
 			
 			return this.exportForm;
 		},
@@ -524,7 +524,7 @@ AIR.AirApplicationManager = function() {
 		},
 		
 		setAppDetail: function(appDetail) {
-			//nötig/besser?
+			//nï¿½tig/besser?
 			this.appDetail = null;
 			delete this.appDetail;
 			
@@ -621,7 +621,12 @@ AIR.AirApplicationManager = function() {
 		setSelectedCiIds: function(selectedCiIds) {
 			this.selectedCiIds = selectedCiIds;
 		},
-		
+		setCiTypeId: function(ciTypeId){
+			this.ciTypeId = ciTypeId;
+		},
+		getCiTypeId: function () {
+			return this.ciTypeId;
+		},		
 		
 //		getCiData: function() {
 //			return this.ciData;
@@ -776,7 +781,7 @@ AIR.AirApplicationManager = function() {
 			var isPair = tableIdCiId.indexOf('-') > -1;
 			if(isPair) {
 				tableIdCiId = tableIdCiId.split('-');
-				//tableIdCiId[0] = 'APP';//solange noch nicht alle CI Typen unterstützt werden. Siehe RFC 9022
+				//tableIdCiId[0] = 'APP';//solange noch nicht alle CI Typen unterstï¿½tzt werden. Siehe RFC 9022
 			}
 				
 			
@@ -858,7 +863,7 @@ AIR.AirApplicationManager = function() {
 		},
 		
 		setMassUpdateData: function(massUpdateData) {
-			//nötig/besser?
+			//nï¿½tig/besser?
 			this.massUpdateData = null;
 			delete this.massUpdateData;
 			
