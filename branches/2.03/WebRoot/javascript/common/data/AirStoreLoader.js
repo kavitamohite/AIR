@@ -34,7 +34,7 @@ AIR.AirStoreLoader = Ext.extend(Ext.util.Observable, {
     load: function() {
     	var stores = ["currencyListStore", "licenseTypeListStore", "accountListStore", "itSetListStore", 
     	              "itSecSBIntegrityListStore", "itSecSBAvailabilityListStore", "itSecSBConfidentialityListStore", 
-    	              "classInformationListStore", "slaListStore", "serviceContractListStore", "priorityLevelListStore",
+    	              "classInformationListStore", "slaListStore", "priorityLevelListStore",
     	              "severityLevelListStore", "businessEssentialListStore", "applicationCat2ListStore", "lifecycleStatusListStore",
     	              "operationalStatusListStore", "categoryBusinessListStore", "processListStore", "applicationCat1ListStore",
     	              "databaseDisplayNameListStore", "ciTypeListStore", "dedicatedListStore", "organisationalScopeListStore",

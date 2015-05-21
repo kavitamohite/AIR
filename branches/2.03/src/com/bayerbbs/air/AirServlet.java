@@ -325,15 +325,17 @@ public class AirServlet extends HttpServlet {
 		ts = System.currentTimeMillis();
 		output += slaLine + "\n";
 		
-		ServiceContractDTO[] serviceContracts = applicationDataInput.getServiceContractList();
+		
+		
+/*		ServiceContractDTO[] serviceContracts = applicationDataInput.getServiceContractList();
 		String serviceContractLine = "";
 		for(ServiceContractDTO serviceContractItem : serviceContracts) {
 			serviceContractLine += "['" + serviceContractItem.getServiceContractId().toString() + "','" + serviceContractItem.getServiceContractName() + "','" + serviceContractItem.getSlaId().toString() + "'],"; 
-		}
-		serviceContractLine = "var serviceContractData = [" + serviceContractLine.substring(0, serviceContractLine.length()-1) + "];";
-		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
-		ts = System.currentTimeMillis();
-		output += serviceContractLine + "\n";
+		}*/
+//		serviceContractLine = "var serviceContractData = [" + serviceContractLine.substring(0, serviceContractLine.length()-1) + "];";
+//		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
+//		ts = System.currentTimeMillis();
+//		output += serviceContractLine + "\n";
 		
 		PriorityLevelDTO[] priorityLevels = dataInput.getPriorityLevelList();
 		String priorityLevelLine = "";

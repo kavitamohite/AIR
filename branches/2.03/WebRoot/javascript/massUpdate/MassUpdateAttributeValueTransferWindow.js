@@ -26,7 +26,7 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
    					}
     				},
     				rowdeselect: function(selection, rowIndex,record){
-    					if(record.get('attributeValue')=='[Delecte contents]'){
+    					if(record.get('attributeValue')=='[Delete contents]'){
         					record.set('attributeValue','');
     					}
     				}

@@ -178,7 +178,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		        width: 230,
 		        fieldLabel: 'Service Contract',
 		        id: 'selectAttrserviceContract',
-		        store: AIR.AirStoreManager.getStoreByName('serviceContractListStore'),//serviceContractListStore,
+		        store: new Ext.data.Store(),//serviceContractListStore,
 		        valueField: 'id',
 		        displayField: 'text',
 		        triggerAction: 'all',
@@ -780,6 +780,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     	var cbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
     	var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
 		var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+		var selectAttrsla = this.getComponent('selectAttrAgreement').getComponent('selectAttrsla');
+		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
 
     	
 
@@ -804,6 +806,14 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         cbOsGroup.on('change', this.onOsGroupChange, this);
         cbOsType.on('change', this.onOsTypeChange, this);
         cbOsName.on('change', this.onOsNameChange, this);//onChange
+        
+        selectAttrsla.on('select', this.onSlaSelect, this);
+        selectAttrsla.on('change', this.onSlaChange, this);
+		
+        selectAttrserviceContract.on('select', this.onServiceContractSelect, this);
+        selectAttrserviceContract.on('change', this.onServiceContractChange, this);
+        selectAttrserviceContract.on('keyup', this.onServiceContractKeyUp, this);
+
 
 
 
@@ -952,6 +962,9 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         var selectAttrprotectionIntegrity = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrity');
         var selectAttrprotectionIntegrityDescription = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrityDescription');
         var selectAttrcbgRegulationsW = this.getComponent('selectAttrCompliance').getComponent('selectAttrcbgRegulationsW');
+        var cbselectAttrItSecGroup = this.getComponent('selectAttrCompliance').getComponent('cbselectAttrItSecGroup');
+        
+        this.filterCombo(cbselectAttrItSecGroup);
         
         
 		if(this.ciTypeId==AC.TABLE_ID_APPLICATION ){
@@ -991,7 +1004,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				clusterCodesListStore: null,
 				clusterTypesListStore: null,
 				virtualSoftwareListStore: null,
-				itSystemPrimaryFunctionsListStore: null
+				itSystemPrimaryFunctionsListStore: null,
+				serviceContractListStore: null
 		};
 		
 		var storeCount = 0;
@@ -1014,6 +1028,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
         var selectAttrcbClusterCode = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterCode');
         var selectAttrcbClusterType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterType');
+		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
         cbOsGroup.bindStore(AIR.AirStoreManager.getStoreByName('osGroupsListStore'));
         cbOsType.bindStore(AIR.AirStoreManager.getStoreByName('osTypesListStore'));
         cbOsName.bindStore(AIR.AirStoreManager.getStoreByName('osNamesListStore'));
@@ -1021,6 +1036,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         selectAttrcbClusterType.bindStore(AIR.AirStoreManager.getStoreByName('clusterTypesListStore'));
         selectAttrcbVirtualSoftware.bindStore(AIR.AirStoreManager.getStoreByName('virtualSoftwareListStore'));
         selectAttrcbPrimaryFunction.bindStore(AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore'));
+        selectAttrserviceContract.bindStore(AIR.AirStoreManager.getStoreByName('serviceContractListStore'));
         
 		storeLoader.destroy();
     },
@@ -1240,7 +1256,72 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 	   this.callbackFunction();
  	   this.close();
 
-    }
-    
+    },
+	filterCombo: function(combo) {
+		
+		var filterData = {
+				itsetId: '10002'
+		};
+	
+		if(this.ciTypeId == AC.TABLE_ID_APPLICATION) {
+			filterData.ciKat1 = this.ciSubTypeId;
+			filterData.tableId = this.ciTypeId;
+		} else {
+			filterData.tableId = this.ciTypeId;
+		}
+		
+		combo.filterByData(filterData);
+	},
+	onSlaSelect: function(combo, record, index) {
+		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
+
+		selectAttrserviceContract.reset();
+
+		var filterData = { slaId: record.data.id };
+		selectAttrserviceContract.filterByData(filterData);
+		
+		if(selectAttrserviceContract.getStore().getCount() === 1)
+			selectAttrserviceContract.setValue(selectAttrserviceContract.getStore().getAt(0).get('id'));
+    	
+	},
+	
+	onSlaChange: function(combo, newValue, oldValue) {
+		
+		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
+
+		if(typeof newValue === 'string' && newValue.length === 0) {
+			combo.reset();
+			selectAttrserviceContract.reset();
+		} else {
+			selectAttrserviceContract.reset();
+
+			newValue = typeof newValue === 'string' ? oldValue : newValue;
+			
+			var filterData = { slaId: newValue };
+			selectAttrserviceContract.filterByData(filterData);
+			
+			if(selectAttrserviceContract.getStore().getCount() === 1)
+				selectAttrserviceContract.setValue(selectAttrserviceContract.getStore().getAt(0).get('id'));
+		}
+	},
+	onServiceContractSelect: function(combo, record, index) {
+		
+		var selectAttrsla = this.getComponent('selectAttrAgreement').getComponent('selectAttrsla');
+		selectAttrsla.setValue(record.get('slaId'));
+		
+	},
+	onServiceContractChange: function (combo, newValue, oldValue) {
+		var selectAttrsla = this.getComponent('selectAttrAgreement').getComponent('selectAttrsla');			
+			var r = Util.getComboRecord(combo, 'id', parseInt(newValue));//cbServiceContract.getStore().getById(parseInt(data.serviceContractId));
+			if(r)
+				selectAttrsla.setValue(r.get('slaId'));
+	},
+	
+	onServiceContractKeyUp: function(combo, event) {
+		if(combo.getRawValue().length === 0) {
+			combo.reset();
+			delete combo.filterData;
+		}
+	}
 
 });

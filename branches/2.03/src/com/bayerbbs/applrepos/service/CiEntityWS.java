@@ -2546,22 +2546,22 @@ public class CiEntityWS {
 			if(mAttrParameterInput.getSlaId()!=null){
 				locationCi.setSlaId(mAttrParameterInput.getSlaId());
 			}
-			if(mAttrParameterInput.getServiceContractId()!=null){
+			if(mAttrParameterInput.getServiceContractId()!=null && mAttrParameterInput.getServiceContractId()!=0){
 				locationCi.setServiceContractId(mAttrParameterInput.getServiceContractId());
 			}
-			if(mAttrParameterInput.getItSecSbAvailability()!=null){
+			if(mAttrParameterInput.getItSecSbAvailability()!=null && mAttrParameterInput.getItSecSbAvailability()!=0 ){
 				locationCi.setItSecSbAvailability(mAttrParameterInput.getItSecSbAvailability());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbAvailabilityTxt())){
 				locationCi.setItSecSbAvailabilityTxt(mAttrParameterInput.getItSecSbAvailabilityTxt());
 			}
-			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null){
+			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null && mAttrParameterInput.getItSecSbConfidentialityId()!=0){
 				locationCi.setItSecSbConfidentialityId(mAttrParameterInput.getItSecSbConfidentialityId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbConfidentialityTx())){
 				locationCi.setItSecSbConfidentialityTxt(mAttrParameterInput.getItSecSbConfidentialityTx());
 			}
-			if(mAttrParameterInput.getItSecSbIntegrityId()!=null){
+			if(mAttrParameterInput.getItSecSbIntegrityId()!=null && mAttrParameterInput.getItSecSbIntegrityId() !=0){
 				locationCi.setItSecSbIntegrityId(mAttrParameterInput.getItSecSbIntegrityId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbIntegrityTxt())){
@@ -2647,43 +2647,43 @@ public class CiEntityWS {
 		while (applications.next()) {
 			
 			Application application = (Application) applications.get(0);
-			if(mAttrParameterInput.getApplicationCat2Id()!=null){
+			if(mAttrParameterInput.getApplicationCat2Id()!=null && mAttrParameterInput.getApplicationCat2Id()!=0){
 				application.setApplicationCat2Id(mAttrParameterInput.getApplicationCat2Id());
 			}
-			if(mAttrParameterInput.getLifecycleStatusId()!=null){
+			if(mAttrParameterInput.getLifecycleStatusId()!=null && mAttrParameterInput.getLifecycleStatusId()!=0){
 				application.setLifecycleStatusId(mAttrParameterInput.getLifecycleStatusId());
 			}
-			if(mAttrParameterInput.getOperationalStatusId()!=null){
+			if(mAttrParameterInput.getOperationalStatusId()!=null && mAttrParameterInput.getOperationalStatusId()!=0){
 				application.setOperationalStatusId(mAttrParameterInput.getOperationalStatusId());
 			}
-			if(mAttrParameterInput.getPriorityLevelId()!=null){
+			if(mAttrParameterInput.getPriorityLevelId()!=null && mAttrParameterInput.getPriorityLevelId()!=0){
 				application.setPriorityLevelId(mAttrParameterInput.getPriorityLevelId());
 			}
-			if(mAttrParameterInput.getSeverityLevelId()!=null){
+			if(mAttrParameterInput.getSeverityLevelId()!=null && mAttrParameterInput.getSeverityLevelId()!=0){
 				application.setSeverityLevelId(mAttrParameterInput.getSeverityLevelId());
 			}
-			if(mAttrParameterInput.getItsecGroupId()!=null){
+			if(mAttrParameterInput.getItsecGroupId()!=null && mAttrParameterInput.getItsecGroupId()!=0){
 				application.setItsecGroupId(mAttrParameterInput.getItsecGroupId());
 			}
 			if(mAttrParameterInput.getSlaId()!=null){
 				application.setSlaId(mAttrParameterInput.getSlaId());
 			}
-			if(mAttrParameterInput.getServiceContractId()!=null){
+			if(mAttrParameterInput.getServiceContractId()!=null && mAttrParameterInput.getServiceContractId()!=0){
 				application.setServiceContractId(mAttrParameterInput.getServiceContractId());
 			}
-			if(mAttrParameterInput.getItSecSbAvailability()!=null){
+			if(mAttrParameterInput.getItSecSbAvailability()!=null && mAttrParameterInput.getItSecSbAvailability()!=0){
 				application.setItSecSbAvailability(mAttrParameterInput.getItSecSbAvailability());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbAvailabilityTxt())){
 				application.setItSecSbAvailabilityTxt(mAttrParameterInput.getItSecSbAvailabilityTxt());
 			}
-			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null){
+			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null && mAttrParameterInput.getItSecSbConfidentialityId()!=0){
 				application.setItSecSbConfidentiality(mAttrParameterInput.getItSecSbConfidentialityId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbConfidentialityTx())){
 				application.setItSecSbConfidentialityTxt(mAttrParameterInput.getItSecSbConfidentialityTx());
 			}
-			if(mAttrParameterInput.getClassInformationId()!=null){
+			if(mAttrParameterInput.getClassInformationId()!=null && mAttrParameterInput.getClassInformationId()!=0){
 				application.setClassInformationId(mAttrParameterInput.getClassInformationId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getClassInformationExplanation())){
@@ -2708,7 +2708,7 @@ public class CiEntityWS {
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getVersion())){
 				application.setVersion(mAttrParameterInput.getVersion());
 			}
-			if(mAttrParameterInput.getOperationalStatusId()!=null){
+			if(mAttrParameterInput.getOperationalStatusId()!=null && mAttrParameterInput.getOperationalStatusId()!=0){
 				application.setOperationalStatusId(mAttrParameterInput.getOperationalStatusId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getComments())){
@@ -2717,10 +2717,10 @@ public class CiEntityWS {
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getGxpFlag())){
 				application.setGxpFlag(mAttrParameterInput.getGxpFlag());
 			}
-			if(mAttrParameterInput.getCategoryBusinessId()!=null){
+			if(mAttrParameterInput.getCategoryBusinessId()!=null && mAttrParameterInput.getCategoryBusinessId()!=0){
 				application.setCategoryBusiness(mAttrParameterInput.getCategoryBusinessId());
 			}
-			if(mAttrParameterInput.getClassDataId()!= null){
+			if(mAttrParameterInput.getClassDataId()!= null && mAttrParameterInput.getClassDataId()!= 0){
 				application.setClassDataId(mAttrParameterInput.getClassDataId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getOrganisationalScope())){
@@ -2819,16 +2819,16 @@ public class CiEntityWS {
 		while (itSystems.next()) {
 			
 			ItSystem itSystem = (ItSystem) itSystems.get(0);
-			if(mAttrParameterInput.getLifecycleStatusId()!=null){
+			if(mAttrParameterInput.getLifecycleStatusId()!=null && mAttrParameterInput.getLifecycleStatusId()!=0){
 				itSystem.setLifecycleStatusId(mAttrParameterInput.getLifecycleStatusId().intValue());
 			}
-			if(mAttrParameterInput.getOperationalStatusId()!=null){
+			if(mAttrParameterInput.getOperationalStatusId()!=null && mAttrParameterInput.getOperationalStatusId()!=0){
 				itSystem.setEinsatzStatusId(mAttrParameterInput.getOperationalStatusId().intValue());
 			}
-			if(mAttrParameterInput.getPriorityLevelId()!=null){
+			if(mAttrParameterInput.getPriorityLevelId()!=null && mAttrParameterInput.getPriorityLevelId()!=0){
 				itSystem.setPriorityLevelId(mAttrParameterInput.getPriorityLevelId());
 			}
-			if(mAttrParameterInput.getSeverityLevelId()!=null){
+			if(mAttrParameterInput.getSeverityLevelId()!=null && mAttrParameterInput.getSeverityLevelId()!=0){
 				itSystem.setSeverityLevelId(mAttrParameterInput.getSeverityLevelId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getClusterCode())){
@@ -2843,22 +2843,22 @@ public class CiEntityWS {
 			if(mAttrParameterInput.getSlaId()!=null){
 				itSystem.setSlaId(mAttrParameterInput.getSlaId());
 			}
-			if(mAttrParameterInput.getServiceContractId()!=null){
+			if(mAttrParameterInput.getServiceContractId()!=null && mAttrParameterInput.getServiceContractId()!=0){
 				itSystem.setServiceContractId(mAttrParameterInput.getServiceContractId());
 			}
-			if(mAttrParameterInput.getItSecSbAvailability()!=null){
+			if(mAttrParameterInput.getItSecSbAvailability()!=null && mAttrParameterInput.getItSecSbAvailability()!= 0 ){
 				itSystem.setItSecSbAvailability(mAttrParameterInput.getItSecSbAvailability());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbAvailabilityTxt())){
 				itSystem.setItSecSbAvailabilityTxt(mAttrParameterInput.getItSecSbAvailabilityTxt());
 			}
-			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null){
+			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null && mAttrParameterInput.getPrimaryFunctionId() !=0){
 				itSystem.setItSecSbConfidentialityId(mAttrParameterInput.getItSecSbConfidentialityId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbConfidentialityTx())){
 				itSystem.setItSecSbConfidentialityTxt(mAttrParameterInput.getItSecSbConfidentialityTx());
 			}
-			if(mAttrParameterInput.getItSecSbIntegrityId()!=null){
+			if(mAttrParameterInput.getItSecSbIntegrityId()!=null && mAttrParameterInput.getItSecSbIntegrityId()!=0 ){
 				itSystem.setItSecSbIntegrityId(mAttrParameterInput.getItSecSbIntegrityId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbIntegrityTxt())){
@@ -2877,10 +2877,10 @@ public class CiEntityWS {
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getClusterType())){
 				itSystem.setClusterType(mAttrParameterInput.getClusterType());
 			}
-			if(mAttrParameterInput.getPrimaryFunctionId()!=null){
+			if(mAttrParameterInput.getPrimaryFunctionId()!=null &&  mAttrParameterInput.getPrimaryFunctionId() != 0){
 				itSystem.setPrimaryFunctionId(mAttrParameterInput.getPrimaryFunctionId());
 			}
-			if(mAttrParameterInput.getOsNameId()!=null || mAttrParameterInput.getOsNameId()!=0 ){
+			if(mAttrParameterInput.getOsNameId()!=null && mAttrParameterInput.getOsNameId()!=0 ){
 				itSystem.setOsNameId(mAttrParameterInput.getOsNameId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getVirtualHardwareSoftware())){

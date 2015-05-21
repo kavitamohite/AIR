@@ -169,12 +169,36 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createServiceContractListStore: function() {
-			var serviceContractListStore = new Ext.data.ArrayStore(
+			var serviceContractListRecord = Ext.data.Record.create([ {
+				name : 'id',
+				mapping : 'serviceContractId'
+			},{
+				name : 'text',
+				mapping : 'serviceContractName'
+			},{
+				name : 'slaId'
+			} ]);
+			var serviceContractListReader = new Ext.data.XmlReader({
+	            record: 'return',
+	            idProperty: 'id'
+			}, serviceContractListRecord); 
+			var serviceContractListStore = new Ext.data.XmlStore(
 			{
+				autoDestroy: true,
 				storeId: 'serviceContractListStore',
-				fields : ['id', 'text', 'slaId'],
-				idIndex: 0,
-				data : serviceContractData
+				autoLoad: false,
+				
+	     		proxy: new Ext.ux.soap.SoapProxy({
+	         		url: webcontext +'/ApplicationToolsWSPort',
+	         		loadMethod: 'getServiceContractList',
+	         		timeout: 120000,
+	         		reader: serviceContractListReader
+	         	}),
+	         	
+	         	fields: [ 'id', 'text', 'slaId' ],
+	
+	         	reader: serviceContractListReader
+				
 			});
 	        return serviceContractListStore;
 		},

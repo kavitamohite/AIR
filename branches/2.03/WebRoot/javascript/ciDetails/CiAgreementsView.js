@@ -36,7 +36,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        width: 230,
 		        fieldLabel: 'Service Contract',
 		        id: 'serviceContract',
-		        store: AIR.AirStoreManager.getStoreByName('serviceContractListStore'),//serviceContractListStore,
+		        store: new Ext.data.Store(),//serviceContractListStore,
 		        valueField: 'id',
 		        displayField: 'text',
 		        
@@ -234,8 +234,29 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 	
 	clear: function(data) {
+		var storeIds = {
+				serviceContractListStore: null
+
+		};		
+		var storeCount = 0;
+		for(var key in storeIds)
+			storeCount++;
+		
+		var storeLoader = new AIR.AirStoreLoader();
+        storeLoader.init(storeIds, storeCount);
+        storeLoader.on('storesLoaded', this.onStoresLoaded, this);
+        storeLoader.load();
+
 		this.update(data);
-	},    
+	},
+    onStoresLoaded: function(storeLoader, storeMap) {
+		for(var key in storeMap)
+			AIR.AirStoreManager.addStore(key, storeMap[key]);
+		var cbServiceContract = this.getComponent('serviceContract');
+		cbServiceContract.bindStore(AIR.AirStoreManager.getStoreByName('serviceContractListStore'));
+        
+		storeLoader.destroy();
+    },
 	
 	
 	update: function(data) {
