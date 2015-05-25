@@ -139,7 +139,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 		    params.showDeleted = 'Y';
 		}
 	    
-	    params.ciNameAliasQuery = searchString;
+	    params.query = searchString;
 	    params.queryMode = queryMode;
 	    params.isAdvSearch = 'false';
 		

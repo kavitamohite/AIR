@@ -568,5 +568,32 @@
 		<directLinkCIPanelTitle>Direct Link CIS</directLinkCIPanelTitle>
 		<directLinkagesCIPanelTitle>Linkages</directLinkagesCIPanelTitle>
 		
+		<!-- asset management -->
+		<assetManufacturer>Manufacturer</assetManufacturer>
+		<assetSAPDesc>SAP Description</assetSAPDesc>
+		<assetSerialNo>Serial Number</assetSerialNo>
+		<assetCostCenterManager>Cost Center Manager</assetCostCenterManager>
+		<assetOrganizationalUnit>Organizational Unit</assetOrganizationalUnit>
+		<assetCostCenter>Cost Center</assetCostCenter>
+		<assetInventoryNumber>Inventory Number</assetInventoryNumber>
+		<assetPSPElement>PSP Element</assetPSPElement>
+		<assetRequester>Requester</assetRequester>
+
+		<assetTechnicalMaster>Technical Master</assetTechnicalMaster>
+		<assetTechnicalNumber>Technical Number</assetTechnicalNumber>
+		<assetAcquisitionValue>Acquisition Value</assetAcquisitionValue>
+		<assetSite>Site</assetSite>
+		<assetOrderNumber>Order number</assetOrderNumber>
+		<assetChecked>Asset checked</assetChecked>
+		<sapAssetClass>Asset Class</sapAssetClass>
+		<assetSubCategory>Sub category</assetSubCategory>
+		<assetType>Type</assetType>
+		<assetModel>Model</assetModel>
+		<assetSystemPlatformName>System Platform Name</assetSystemPlatformName>
+		<assetHardwareSystem>Hardware System</assetHardwareSystem>
+		<assetHardwareTransientSystem>Hardware Transient System</assetHardwareTransientSystem>
+		<assetAlias>Alias</assetAlias>
+		<assetOsName>OS Name</assetOsName>
+
 	</Items>
 </LanguageItems>

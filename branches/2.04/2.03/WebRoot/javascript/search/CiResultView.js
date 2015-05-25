@@ -389,7 +389,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
 		var tabCount = tpCiSearchResultTables.items.items.length;
 		
-		if(tabCount === 1)//0, 1 weil tab erst nach dem event zerstört wird
+		if(tabCount === 1)//0, 1 weil tab erst nach dem event zerstï¿½rt wird
 			this.setVisible(false);
 	},
 

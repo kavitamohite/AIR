@@ -14,11 +14,12 @@ AIR.AirCallbackManager = Ext.extend(Ext.util.Observable, {
 			case 'clSearch':
 			case 'clAdvancedSearch':
 			case 'clOuSearch':
-				var callbackOwner = this.rootView.getComponent('ciCenterView').getComponent('ciSearchView');//getComponent('ciSearchViewPages').getComponent('ciStandardSearchView')
+				var callbackOwner = this.rootView.getComponent('ciCenterView').getComponent('ciSearchView');
 				externalNavigationCallback = callbackOwner.onTabChange;
 				break;
 			case 'clAssetManagement':
-				var callbackOwner = this.rootView.getComponent('ciCenterView').getComponent('ciAssetManagementView');//getComponent('ciSearchViewPages').getComponent('ciStandardSearchView')
+			case 'clCiAssetSearch':
+				var callbackOwner = this.rootView.getComponent('ciCenterView').getComponent('ciAssetManagementView');
 				externalNavigationCallback = callbackOwner.onTabChange;
 				break;
 			default: break;

@@ -412,29 +412,11 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					
 					if(ciEditView)
 						ciEditView.ciModified = false;
-//					if(ciCreateWizardPagesView) {
-//						ciCreateWizardPagesView.wizardStarted = false;
-//					
-//						var ciCreatePagesView = this.getComponent('ciCreateView').getComponent('ciCreatePagesView');//Ext.getCmp('ciCreatePagesView');//CiCreationCardPanel
-//						ciCreatePagesView.getLayout().setActiveItem('ciCreateWizardPagesView');
-//						
-//						//notwendig, wenn Wizard info/start Seite durch skipWizard user option ausgeschaltet wurde. Alternative: skipWizard auswerten und evtl. wizard hier nicht starten 
-//						ciCreatePagesView.getComponent('ciCreateWizardPagesView').wizardStart(false);
-//						
-//						if(options && options.callback)
-//							options.callback();
-//					}
 					
 					//RFC 8271 - Wizard for Mandatory and/or Required Fields
 					if(ciCreateWizardView) {
 						ciCreatePagesView.getLayout().setActiveItem('ciCreateWizardView');
 						ciCreateWizardView.reset();
-						
-						//if(options && options.wizardStarted !== undefined)
-							//ciCreateWizardView.wizardStarted = options.wizardStarted;
-						
-						//ciCreateWizardView.wizardStarted = false;
-//						ciCreatePagesView.wizardStarted = false;
 						
 						if(options && options.callback)
 							options.callback();
@@ -531,39 +513,29 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					ciCreateWizardView.wizardStarted = false;
 				
 				this.forwardNavigation(options);
-				
-				/*if(options.isCiCreate) {
-					this.getLayout().setActiveItem('ciEditView');
-					ciEditView.createCi(viewId, link, options);
-				} else {
-					AAM.updateCookie({
-						navigation: viewId,
-						ciId: AAM.getCiId(),
-						tableId: AAM.getTableId()
-					});
-	
-					if(ciEditView) {
-						this.forwardNavigation(options);
-					} else {
-						ciEditView = new AIR.CiEditView({ id: 'ciEditView' });
-	//					var v = ciEditView.getComponent('clCiHistory');
-						ciEditView.getComponent('clCiHistory').on('afterlayout', this.onCiEditTabViewAdded, this);//ciEditView afterrender .getComponent('clCiCompliance')
-	//					ciEditView.on('afterlayout', this.onCiEditTabViewAdded, this);//ciEditView afterrender .getComponent('clCiCompliance')
-	//					
-	//					for(var i = 0; i < ciEditView.items.items.length; i++)
-	//						ciEditView.items.items[i].on('afterlayout', this.onCiEditTabViewAdded, this);
-						
-						//ciEditView.add(ciEditTabView);
-						ciEditView.doLayout(true, true);
-					}
-				}*/
 				break;
+			
 			case 'clAssetManagement':
+			case 'clCiAssetSearch':
 				this.getLayout().setActiveItem('ciAssetManagementView');
 				var verwerfenCallback = function() {
 					
-					if(options && options.callback)
-						options.callback();
+				if(options && options.callback)
+					options.callback();
+				}.createDelegate(this);
+				var saveCallback = function() {
+					verwerfenCallback();
+				}.createDelegate(this);
+
+				this.handleNavigation(verwerfenCallback, saveCallback);
+					break;
+					
+			case 'clCiNewAsset' :
+				this.getLayout().setActiveItem('ciAssetManagementView');
+				var verwerfenCallback = function() {
+					
+				if(options && options.callback)
+					options.callback();
 				}.createDelegate(this);
 				var saveCallback = function() {
 					verwerfenCallback();

@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.domain;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,16 @@ public class Sla implements Serializable {
 	private Long slaId;
 	private String slaName;
 	private Long slaClassId;
+
+	private String remarks;// REMARKS VARCHAR2(4000)
+	private Long itset;// ITSET NUMBER
+	private String subResponsible;// SUB_RESPONSIBLE VARCHAR2(160)
+	private String responsible; // RESPONSIBLE VARCHAR2(32)
+	private String timezone;// TIMEZONE VARCHAR2(160)
+	private String slaNameGsdb;// SLA_NAME_GSDB VARCHAR2(960)
+	private Timestamp lastSync;// LAST_SYNC_TIMESTAMP TIMESTAMP(6)
+	private String lastSyncSource;// LAST_SYNC_SOURCE VARCHAR2(40)
+	private String syncing;// SYNCING VARCHAR2(40)
 
 	// ------------------------------------------------------
 	// -

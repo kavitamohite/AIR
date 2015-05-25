@@ -101,14 +101,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					fontSize: '7pt',
 					fontFamily: AC.AIR_FONT_TYPE,
 					textAlign: 'center',
-					
 					backgroundColor: '#12638e'
-					
-					//entweder a)
-//					color: AC.AIR_FONT_COLOR
-					//oder b)
-//					backgroundImage: 'url("' + img_HeaderBottom + '")',
-//					backgroundRepeat: 'repeat-x'
 				}
 		    }, {
                 xtype: 'commandlink',
@@ -299,74 +292,52 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
                 style: {
                 	marginTop: 5
                 }
-			},
+			},{
+				xtype: 'panel',
+				id: 'pAssetManagementMenuItems',
+				border: false,
+				hidden: true,
+				bodyStyle: {
+					background: 'transparent'
+				},
+                
+                items: [{
+	                xtype: 'commandlink',
+	                id: 'clCiAssetSearch',
+	                text: 'Search',
+	                img: 'images/Transparent.png',//images/Transparent.png
+	                cls: 'menuSubLink'
+				},{
+	                xtype: 'commandlink',
+	                id: 'clCiNewAsset',
+	                text: 'New Asset',
+	                img: 'images/Transparent.png',//images/Transparent.png
+	                cls: 'menuSubLink'
+				}]
+			},{
+
+				xtype: 'panel',
+				id: 'pCreateNewAsset',
+				border: false,
+				hidden: true,
+				bodyStyle: {
+					background: 'transparent'
+				},
+                
+                items: [{
+	                xtype: 'commandlink',
+	                id: 'clCiTangibleAsset',
+	                text: 'Tangible Asset',
+	                img: 'images/Transparent.png',//images/Transparent.png
+	                cls: 'menuSubLink'
+				},{
+	                xtype: 'commandlink',
+	                id: 'clCiIntangibleAsset',
+	                text: 'Intangible Asset',
+	                img: 'images/Transparent.png',//images/Transparent.png
+	                cls: 'menuSubLink'
+				}]
 			
-			{
-                xtype: 'commandlink',
-                id: 'clAssetSearch',
-                text: 'Search',
-                img: 'images/Transparent.png',//images/Transparent.png
-                cls: 'menuSubLink',
-                style: {
-                	marginTop: 5
-                }
-			}, {
-                xtype: 'commandlink',
-                id: 'clNewAsset',
-                text: 'New Asset',
-                img: 'images/Transparent.png',//images/Transparent.png
-                cls: 'menuSubLink',
-                style: {
-                	marginTop: 5
-                },
-				items:[{
-		                xtype: 'commandlink',
-		                id: 'clIntaginbleAsset',
-		                text: 'Intaginble Asset',
-		                img: 'images/Transparent.png',//images/Transparent.png
-		                cls: 'menuSubLink',
-		                style: {
-		                	marginTop: 5
-		                }
-					},
-					
-					{
-		                xtype: 'commandlink',
-		                id: 'clTangibleAsset',
-		                text: 'TangibleAsset',
-		                img: 'images/Transparent.png',//images/Transparent.png
-		                cls: 'menuSubLink',
-		                style: {
-		                	marginTop: 5
-		                }
-					}]
-			}, {
-			    text: 'Main Menu',                      
-			    menu: {
-			        xtype: 'menu',                          
-			        items: [{
-			                text: 'Menu One',
-			                iconCls: 'edit'
-			            }, {
-			                text: 'Menu Two',
-			                menu: {
-			                    xtype: 'menu',
-			                    items: [{
-			                        text: 'Next Level'
-			                    },{
-			                        text: 'Next Level'                      
-			                    },{
-			                        text: 'Next Level'
-			                    }]
-			                }
-			            }, {
-			                text: 'Menu Three',
-			                scale: 'small'
-			            }, {
-			                text: 'Menu Four',
-			                scale: 'small'
-			        }]                          
-			    }
 			}]
 		});
 		
@@ -392,6 +363,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		var pMyPlaceMenuItems = this.getComponent('pMyPlaceMenuItems');
 		var pCiDetailsMenuItems = this.getComponent('pCiDetailsMenuItems');
 		var pCreateDeleteMenuItems = this.getComponent('pCreateDeleteMenuItems');
+		var pAssetManagementMenuItems = this.getComponent('pAssetManagementMenuItems');
+		var pCreateNewAsset = this.getComponent('pCreateNewAsset');
 		
 		var navigationCallback = function() {
 			switch(link.getId()) {//ORIG: no surrounding callback
@@ -401,6 +374,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					pMyPlaceMenuItems.setVisible(true);
 					pCiDetailsMenuItems.setVisible(false);
 					pCreateDeleteMenuItems.setVisible(false);
+					pAssetManagementMenuItems.setVisible(false);
+					pCreateNewAsset.setVisible(false);
 					break;
 				case 'clSearch':
 				case 'clAdvancedSearch':
@@ -408,6 +383,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					pCreateDeleteMenuItems.setVisible(false);
 					pMyPlaceMenuItems.setVisible(false);
 					pCiDetailsMenuItems.setVisible(false);
+					pAssetManagementMenuItems.setVisible(false);
+					pCreateNewAsset.setVisible(false);
 					break;
 				case 'clCiCreate':
 				case 'clCiCreateWizard':
@@ -416,8 +393,24 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					pCreateDeleteMenuItems.setVisible(true);
 					pMyPlaceMenuItems.setVisible(false);
 					pCiDetailsMenuItems.setVisible(false);
+					pAssetManagementMenuItems.setVisible(false);
+					pCreateNewAsset.setVisible(false);
 					break;
-
+				case 'clAssetManagement' :
+				case 'clCiAssetSearch' :
+					pAssetManagementMenuItems.setVisible(true);
+					pCreateDeleteMenuItems.setVisible(false);
+					pMyPlaceMenuItems.setVisible(false);
+					pCiDetailsMenuItems.setVisible(false);
+					pCreateNewAsset.setVisible(false);
+					break;
+				case 'clCiNewAsset' :
+					pAssetManagementMenuItems.setVisible(true);
+					pCreateNewAsset.setVisible(true);
+					pCreateDeleteMenuItems.setVisible(false);
+					pMyPlaceMenuItems.setVisible(false);
+					pCiDetailsMenuItems.setVisible(false);
+					break;
 				default:
 					break;
 			}
@@ -515,6 +508,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			case 'clOuSearch':
 			case 'clMyPlace':
 			case 'clCiCreate':
+			case 'clAssetManagement':
 				var link = this.getComponent(target);
 				link.fireEvent('click', link, null, options);
 				break;
@@ -527,6 +521,10 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			case 'clCiDelete':
 			case 'clCiCreateWizard':
 				var link = this.getComponent('pCreateDeleteMenuItems').getComponent(target);
+				link.fireEvent('click', link, null, options);
+				break;
+			case 'clCiAssetSearch':
+				var link = this.getComponent('pAssetManagementMenuItems').getComponent(target);
 				link.fireEvent('click', link, null, options);
 				break;
 			default: break;
@@ -605,7 +603,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			// 'clCiCreateCopyFrom'
 			// 'clCiDelete'
 			// 'clCiCreateWizard'
-		
 	},
 	
 	updateMenu: function(tableId, ciSubType) {
