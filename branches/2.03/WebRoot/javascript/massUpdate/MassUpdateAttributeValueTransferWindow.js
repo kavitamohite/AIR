@@ -307,7 +307,7 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
 			}
     		break;
 		case 'ERROR':
-			var msg = records[0].data.messages[0];
+			var msg = records[0].data.messages;
     		Ext.Msg.show({
     			title: 'Error',
     			msg: msg,

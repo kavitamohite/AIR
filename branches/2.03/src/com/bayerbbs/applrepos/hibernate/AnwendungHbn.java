@@ -2666,11 +2666,14 @@ public class AnwendungHbn extends BaseHbn {
 					String applicationOwner = rset.getString("APPLICATION_OWNER");
 					String applicationOwnerDelegate = rset.getString("APPLICATION_OWNER_DELEGATE");
 					String applicationSteward = rset.getString("APPLICATION_STEWARD");
-					String isTemplate = rset.getString("TEMPLATE");
-					
 					String deleteQuelle = rset.getString("DEL_QUELLE");
-					
 					CiItemDTO anw = new CiItemDTO();//ApplicationDTO
+
+					if(AirKonstanten.IS_TEMPLATE==rset.getInt("TEMPLATE")){
+						anw.setIsTemplate(AirKonstanten.YES);
+					}else{
+						anw.setIsTemplate(AirKonstanten.NO);
+					}
 					anw.setId(anwendungId);
 //					anw.setBarApplicationId(barApplicationId);
 					anw.setName(anwendungName);
@@ -2683,7 +2686,6 @@ public class AnwendungHbn extends BaseHbn {
 					anw.setApplicationOwnerDelegate(applicationOwnerDelegate);
 					anw.setApplicationSteward(applicationSteward);
 					anw.setTableId(AirKonstanten.TABLE_ID_APPLICATION);
-					anw.setIsTemplate(isTemplate);
 					anw.setDeleteQuelle(deleteQuelle);
 					
 //					if (null != anw.getDeleteQuelle()) {

@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
-	public final static String AIR_VERSION = "2.03.013";
+	public final static String AIR_VERSION = "2.03.015";
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
@@ -16,6 +16,8 @@ public final class AirKonstanten {
 	public final static Long IT_SET_DEFAULT = new Long(11397);
 	public final static Long IT_SET_GERMANY = new Long(10002);
 	public final static Long BUSINESS_ESSENTIAL_DEFAULT = new Long(16);
+	public final static Integer  IS_TEMPLATE = new Integer(-1);
+	
 	
 	
 	public static final int TABLE_ID_IT_SYSTEM		= 1;

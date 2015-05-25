@@ -268,7 +268,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 					    	},
 					    	{
 								xtype: 'filterCombo',
-						        id: 'cbOsGroup',
+						        id: 'selectcAttCbOsGroup',
 						        width: 230,
 						        hidden: true,
 						        fieldLabel: 'OS Group',
@@ -282,7 +282,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        mode: 'local'
 							},{
 								xtype: 'filterCombo',
-						        id: 'cbOsType',
+						        id: 'selectAttrCbOsType',
 						        hidden: true,
 						        width: 230,
 						        fieldLabel: 'OS Type',
@@ -296,7 +296,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        mode: 'local'
 							},{
 								xtype: 'filterCombo',
-						        id: 'cbOsName',
+						        id: 'selectAttrCbOsName',
 						        hidden: true,
 						        width: 230,
 						        fieldLabel: 'OS Name',
@@ -341,7 +341,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 							},							
 							{
 					            xtype: 'radiogroup',
-				    			id: 'rgVirtualHWClient',
+				    			id: 'selectAttrRgVirtualHWClient',
 				    			hidden: true,
 				    			width: 200,
 				    			
@@ -354,7 +354,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 					            ]
 							},{
 					            xtype: 'radiogroup',
-				    			id: 'rgVirtualHWHost',
+				    			id: 'selectAttrgVirtualHWHost',
 				    			hidden: true,
 				    			width: 200,
 				    			
@@ -362,8 +362,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    			fieldLabel: 'Virtual Hardware Host',
 
 					            items: [
-					                { id: 'rgVirtualHWHostYes',	itemId: 'rgVirtualHWHostYes', 	boxLabel: 'Yes',	name: 'rgVirtualHWHost', inputValue: 'Y', width: 50 },
-					                { id: 'rgVirtualHWHostNo',	itemId: 'rgVirtualHWHostNo',	boxLabel: 'No',		name: 'rgVirtualHWHost', inputValue: 'N', width: 50 }
+					                { id: 'rgVirtualHWHostYes',	itemId: 'rgVirtualHWHostYes', 	boxLabel: 'Yes',	name: 'selectAttrgVirtualHWHost', inputValue: 'Y', width: 50 },
+					                { id: 'rgVirtualHWHostNo',	itemId: 'rgVirtualHWHostNo',	boxLabel: 'No',		name: 'selectAttrgVirtualHWHost', inputValue: 'N', width: 50 }
 					            ]
 							},{
 								xtype: 'filterCombo',//combo
@@ -777,9 +777,9 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     	var clSelectCiOwnerDelegateAdd = this.getComponent('selectAttrCompliance').getComponent('pSelectCiOwnerDelegate').getComponent('clSelectCiOwnerDelegateAdd');
     	var clSelectCiOwnerDelegateAddGroup = this.getComponent('selectAttrCompliance').getComponent('pSelectCiOwnerDelegate').getComponent('clSelectCiOwnerDelegateAddGroup');
     	var clSelectCiOwnerDelegateRemove = this.getComponent('selectAttrCompliance').getComponent('pSelectCiOwnerDelegate').getComponent('clSelectCiOwnerDelegateRemove');
-    	var cbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
-    	var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
-		var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+    	var selectcAttCbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('selectcAttCbOsGroup');
+    	var selectAttrCbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsType');
+		var selectAttrCbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsName');
 		var selectAttrsla = this.getComponent('selectAttrAgreement').getComponent('selectAttrsla');
 		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
 
@@ -799,13 +799,13 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     	clSelectCiOwnerDelegateAdd.on('click',this.onSelectCiOwnerDelegateAdd,this);
     	clSelectCiOwnerDelegateAddGroup.on('click',this.onSelectCiOwnerDelegateAddGroup,this);
     	clSelectCiOwnerDelegateRemove.on('click',this.onSelectCiOwnerDelegateRemove,this);
-        cbOsGroup.on('select', this.onOsGroupSelect, this);
-        cbOsType.on('select', this.onOsTypeSelect, this);
-        cbOsName.on('select', this.onOsNameSelect, this);//onOsNameSelect onSelect
+    	selectcAttCbOsGroup.on('select', this.onOsGroupSelect, this);
+    	selectAttrCbOsType.on('select', this.onOsTypeSelect, this);
+    	selectAttrCbOsName.on('select', this.onOsNameSelect, this);//onOsNameSelect onSelect
         
-        cbOsGroup.on('change', this.onOsGroupChange, this);
-        cbOsType.on('change', this.onOsTypeChange, this);
-        cbOsName.on('change', this.onOsNameChange, this);//onChange
+        selectcAttCbOsGroup.on('change', this.onOsGroupChange, this);
+        selectAttrCbOsType.on('change', this.onOsTypeChange, this);
+        selectAttrCbOsName.on('change', this.onOsNameChange, this);//onChange
         
         selectAttrsla.on('select', this.onSlaSelect, this);
         selectAttrsla.on('change', this.onSlaChange, this);
@@ -837,64 +837,64 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			itSystemType: record.get('type')
 		};
 		
-		var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
-		cbOsType.filterByData(filterData);
-		cbOsType.setValue('');
+		var selectAttrCbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsType');
+		selectAttrCbOsType.filterByData(filterData);
+		selectAttrCbOsType.setValue('');
 		
-		var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+		var selectAttrCbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsName');
 		
 		var fd1 = { itSystemType: this.ciSubTypeId };
-		cbOsName.filterByData(fd1);
-		cbOsName.setValue('');
+		selectAttrCbOsName.filterByData(fd1);
+		selectAttrCbOsName.setValue('');
 		
 	},	
 	setOsType: function(combo, record) {
-		var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
-		cbOsName.reset();
+		var selectAttrCbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsName');
+		selectAttrCbOsName.reset();
 		
 		var filterData = {
 			osTypeId: record.get('osTypeId')//type
 		};
-		cbOsName.filterByData(filterData);
-		cbOsName.setValue('');
+		selectAttrCbOsName.filterByData(filterData);
+		selectAttrCbOsName.setValue('');
 		
-		var cbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
+		var selectcAttCbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
 		var osGroupRecord = Util.getComboRecord(cbOsGroup, 'name', record.get('osGroup'));
-		cbOsGroup.setValue(osGroupRecord.get('id'));
+		selectcAttCbOsGroup.setValue(osGroupRecord.get('id'));
 		
 	},
 	setOsName: function(combo, record) {
-		var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
+		var selectAttrCbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsType');
 		cbOsType.reset();
-		var osTypeRecord = Util.getComboRecord(cbOsType, 'osTypeId', record.get('osTypeId'));//type
-		cbOsType.setValue(osTypeRecord.get('osTypeId'));
+		var osTypeRecord = Util.getComboRecord(selectAttrCbOsType, 'osTypeId', record.get('osTypeId'));//type
+		selectAttrCbOsType.setValue(osTypeRecord.get('osTypeId'));
 		
-		var cbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
-		cbOsGroup.reset();
+		var selectcAttCbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
+		selectcAttCbOsGroup.reset();
 		var osGroupRecord = Util.getComboRecord(cbOsGroup, 'name', osTypeRecord.get('osGroup'));
-		cbOsGroup.setValue(osGroupRecord.get('id'));
+		selectcAttCbOsGroup.setValue(osGroupRecord.get('id'));
 		
 		
 		var fd1 = { type: this.ciSubTypeId  };
-		cbOsGroup.filterByData(fd1);
+		selectcAttCbOsGroup.filterByData(fd1);
 		
 		var fd2 = { osGroup: osGroupRecord.get('name') };
-		cbOsType.filterByData(fd2);
+		selectAttrCbOsType.filterByData(fd2);
 
 	},
 	onOsGroupChange: function(combo, newValue, oldValue) {
     	if(Util.isComboValueValid(combo, newValue, oldValue)) {
 	    	
-	    	var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
-	    	var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+	    	var selectAttrCbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsType');
+	    	var selectAttrCbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsName');
 	    	
 	    	if(typeof newValue === 'string' && newValue.length === 0) {
-	    		cbOsType.reset();
-	    		cbOsName.reset();
+	    		selectAttrCbOsType.reset();
+	    		selectAttrCbOsName.reset();
 	    		
 	    		var fd1 = { itSystemType: this.ciSubTypeId };
-	    		cbOsType.filterByData(fd1);
-	    		cbOsName.filterByData(fd1);
+	    		selectAttrCbOsType.filterByData(fd1);
+	    		selectAttrCbOsName.filterByData(fd1);
 
 	    	} else {
 	    		this.setOsGroup(combo, combo.getStore().getById(newValue));
@@ -902,25 +902,25 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		}
 	},
 	onOsTypeChange: function(combo, newValue, oldValue) {
-		var cbOsGroup = this.getComponent('fsOs').getComponent('cbOsGroup');
+		var selectcAttCbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('selectcAttCbOsGroup');
 		
     	if(Util.isComboValueValid(combo, newValue, oldValue)) {
     	
 	    	
-	    	var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
+	    	var selectAttrCbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsName');
 	    	
 	    	if(typeof newValue === 'string' && newValue.length === 0) {
-	    		cbOsName.reset();
+	    		selectAttrCbOsName.reset();
 	    		
 	    		var fd1 = { itSystemType: this.ciSubTypeId };
-	    		cbOsName.filterByData(fd1);
+	    		selectAttrCbOsName.filterByData(fd1);
 
 	    	} else {
 	    		this.setOsType(combo, combo.getStore().getById(newValue));
 	    	}
     	} else {
-    		if(cbOsGroup.getValue()) {
-    			var r = cbOsGroup.getStore().getById(cbOsGroup.getValue());
+    		if(selectcAttCbOsGroup.getValue()) {
+    			var r = selectcAttCbOsGroup.getStore().getById(selectcAttCbOsGroup.getValue());
     			
     			var fd1 = { osGroup: r.get('name') };
     			combo.filterByData(fd1);
@@ -943,13 +943,13 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		var pSelectAttrCiOwner = this.getComponent('selectAttrCompliance').getComponent('pSelectAttrCiOwner');
         var pSelectAttrDelegate = this.getComponent('selectAttrCompliance').getComponent('pSelectAttrDelegate');
         var pSelectAttrSteward = this.getComponent('selectAttrCompliance').getComponent('pSelectAttrSteward');
-        var cbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
-        var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
-        var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+        var selectcAttCbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('selectcAttCbOsGroup');
+        var selectAttrCbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsType');
+        var selectAttrCbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsName');
         var selectAttrcbClusterCode = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterCode');
         var selectAttrcbClusterType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterType');
-        var rgVirtualHWClient = this.getComponent('selectAttrfsSpecifics').getComponent('rgVirtualHWClient');
-        var rgVirtualHWHost = this.getComponent('selectAttrfsSpecifics').getComponent('rgVirtualHWHost');
+        var selectAttrRgVirtualHWClient = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrRgVirtualHWClient');
+        var selectAttrgVirtualHWHost = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrgVirtualHWHost');
         var selectAttrcbVirtualSoftware = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbVirtualSoftware');
         var selectAttrlvOrganisationalScopeW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrlvOrganisationalScopeW');
         var selectAttrcbPrimaryFunction = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbPrimaryFunction');
@@ -986,13 +986,13 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			selectAttrprotectionIntegrityDescription.setVisible(true);
 		}		
 		if(this.ciTypeId==AC.TABLE_ID_IT_SYSTEM ){
-			cbOsGroup.setVisible(true);
-			cbOsType.setVisible(true);
-			cbOsName.setVisible(true);
+			selectcAttCbOsGroup.setVisible(true);
+			selectAttrCbOsType.setVisible(true);
+			selectAttrCbOsName.setVisible(true);
 			selectAttrcbClusterCode.setVisible(true);
 			selectAttrcbClusterType.setVisible(true);
-			rgVirtualHWClient.setVisible(true);
-			rgVirtualHWHost.setVisible(true);
+			selectAttrRgVirtualHWClient.setVisible(true);
+			selectAttrgVirtualHWHost.setVisible(true);
 			selectAttrcbVirtualSoftware.setVisible(true);
 			selectAttrcbPrimaryFunction.setVisible(true);
 		}
@@ -1023,15 +1023,15 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			AIR.AirStoreManager.addStore(key, storeMap[key]);
 		var selectAttrcbVirtualSoftware = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbVirtualSoftware');
 		var selectAttrcbPrimaryFunction = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbPrimaryFunction');
-        var cbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
-        var cbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsType');
-        var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+        var selectcAttCbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('selectcAttCbOsGroup');
+        var selectAttrCbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsType');
+        var selectAttrCbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsName');
         var selectAttrcbClusterCode = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterCode');
         var selectAttrcbClusterType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterType');
 		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
-        cbOsGroup.bindStore(AIR.AirStoreManager.getStoreByName('osGroupsListStore'));
-        cbOsType.bindStore(AIR.AirStoreManager.getStoreByName('osTypesListStore'));
-        cbOsName.bindStore(AIR.AirStoreManager.getStoreByName('osNamesListStore'));
+		selectcAttCbOsGroup.bindStore(AIR.AirStoreManager.getStoreByName('osGroupsListStore'));
+		selectAttrCbOsType.bindStore(AIR.AirStoreManager.getStoreByName('osTypesListStore'));
+		selectAttrCbOsName.bindStore(AIR.AirStoreManager.getStoreByName('osNamesListStore'));
         selectAttrcbClusterCode.bindStore(AIR.AirStoreManager.getStoreByName('clusterCodesListStore'));
         selectAttrcbClusterType.bindStore(AIR.AirStoreManager.getStoreByName('clusterTypesListStore'));
         selectAttrcbVirtualSoftware.bindStore(AIR.AirStoreManager.getStoreByName('virtualSoftwareListStore'));
@@ -1126,9 +1126,9 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			var selectAttrCBrelevanceGxp = this.getComponent('selectAttrCompliance').getComponent('selectAttrCBrelevanceGxp');
 			var selectAttrcbApplicationBusinessCat = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbApplicationBusinessCat');
 			var selectAttrcbVirtualSoftware = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbVirtualSoftware');
-			var rgVirtualHWHost = this.getComponent('selectAttrfsSpecifics').getComponent('rgVirtualHWHost');
-			var rgVirtualHWClient = this.getComponent('selectAttrfsSpecifics').getComponent('rgVirtualHWClient');
-			var cbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsName');
+			var selectAttrgVirtualHWHost = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrgVirtualHWHost');
+			var selectAttrRgVirtualHWClient = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrRgVirtualHWClient');
+			var selectAttrCbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsName');
 			var selectAttrtaCiDescriptionW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrtaCiDescriptionW');
 			var selectAttrlvOrganisationalScopeW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrlvOrganisationalScopeW');
 			//var selectAttrcbDataClass = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbDataClass');
@@ -1187,15 +1187,15 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				 	ciOwnerDelegateHidden: tfselectCiOwnerDelegateWHidden.getValue(),
 				 	ciOwnerDelegate: tfselectCiOwnerDelegateW.getValue(),
 				 	gxpFlag: selectAttrCBrelevanceGxp.getValue(),
-				 	osNameId: cbOsName.getValue(),
+				 	osNameId: selectAttrCbOsName.getValue(),
 			        categoryBusinessId: selectAttrcbApplicationBusinessCat.getValue(),
 			        //classDataId: selectAttrcbDataClass.getValue(),
 			        comments: selectAttrtaCiDescriptionW.getValue(),
 			        operationalStatusId: selectAttroperationalStatus.getValue(),
 			        version: selectAttrapplicationVersion.getValue(),
 			        barRelevance: selectAttrrgBARrelevanceW.getValue()!= null ? selectAttrrgBARrelevanceW.getValue().inputValue : '',
-			        isVirtualHardwareClient: rgVirtualHWClient.getValue()!= null ? rgVirtualHWClient.getValue().inputValue : '',
-			        isVirtualHardwareHost:	rgVirtualHWHost.getValue()!= null ? rgVirtualHWHost.getValue().inputValue : '',
+			        isVirtualHardwareClient: selectAttrRgVirtualHWClient.getValue()!= null ? selectAttrRgVirtualHWClient.getValue().inputValue : '',
+			        isVirtualHardwareHost:	selectAttrgVirtualHWHost.getValue()!= null ? selectAttrgVirtualHWHost.getValue().inputValue : '',
 			        virtualHardwareSoftware: selectAttrcbVirtualSoftware.getValue(),
 			        relevanceGR1435: selectAttrcbgRegulationsW.items.items[0].getValue() ? 'Y' : 'N',
 			        relevanceGR1920: selectAttrcbgRegulationsW.items.items[1].getValue() ? 'Y' : 'N',
@@ -1238,7 +1238,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 	    		});			
     		break;
 		case 'ERROR':
-			var msg = records[0].data.messages[0];
+			var msg = records[0].data.messages;
     		Ext.Msg.show({
     			title: 'Error',
     			msg: msg,

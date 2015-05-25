@@ -46,6 +46,7 @@ import com.bayerbbs.applrepos.dto.StandortDTO;
 import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
+import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationCat2Hbn;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.CategoryBusinessHbn;
@@ -453,6 +454,15 @@ public class CiEntityWS {
 	public CiItemsResultDTO findCis(ApplicationSearchParamsDTO input) {//CiSearchParamsDTO <T extends CiSearchParamsDTO>
 //		CiItemDTO[] ciItemDTOs = null;
 		CiItemsResultDTO result = null;
+		if (input.getIsTemplate()!=null &&input.getIsTemplate().equals(AirKonstanten.YES_SHORT)) {
+			String strItSet = ApplReposHbn.getItSetFromCwid(input.getCwid());
+			if (null != strItSet) {
+				input.setItSetId(strItSet);
+			}else{
+				input.setItSetId(AirKonstanten.IT_SET_DEFAULT.toString());
+			}
+
+		}
 		
 		if(input.getCiTypeId() != null) {
 			switch(input.getCiTypeId()) {
@@ -2025,7 +2035,7 @@ public class CiEntityWS {
 			
 		} catch (Exception e) {
 			maParameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
-			maParameterOutPut.setMessages(new String[] { e.getMessage() });
+			maParameterOutPut.setMessages(new String[] { e.getCause().getMessage() });
 		}finally{
 			if (toCommit) {
 				String hbnMessage = HibernateUtil.close(tx, session, toCommit);
@@ -2155,7 +2165,7 @@ public class CiEntityWS {
 			
 		} catch (Exception e) {
 			maParameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
-			maParameterOutPut.setMessages(new String[] { e.getMessage() });
+			maParameterOutPut.setMessages(new String[] {e.getCause().getMessage() });
 		}finally{
 			if (toCommit) {
 				String hbnMessage = HibernateUtil.close(tx, session, toCommit);
@@ -2343,7 +2353,7 @@ public class CiEntityWS {
 
 		} catch (Exception e) {
 			output.setResult(AirKonstanten.RESULT_ERROR);
-			output.setMessages(new String[] { e.getMessage() });
+			output.setMessages(new String[] { e.getCause().getMessage() });
 		} finally {
 			if (toCommit) {
 				String hbnMessage = HibernateUtil.close(tx, session, toCommit);
@@ -2387,7 +2397,7 @@ public class CiEntityWS {
 
 	} catch (Exception e) {
 		output.setResult(AirKonstanten.RESULT_ERROR);
-		output.setMessages(new String[] { e.getMessage() });
+		output.setMessages(new String[] { e.getCause().getMessage() });
 	} finally {
 		if (toCommit) {
 			String hbnMessage = HibernateUtil.close(tx, session, toCommit);
@@ -2436,7 +2446,7 @@ public class CiEntityWS {
 
 		} catch (Exception e) {
 			output.setResult(AirKonstanten.RESULT_ERROR);
-			output.setMessages(new String[] { e.getMessage() });
+			output.setMessages(new String[] { e.getCause().getMessage()});
 		} finally {
 			if (toCommit) {
 				String hbnMessage = HibernateUtil.close(tx, session, toCommit);
@@ -2526,7 +2536,7 @@ public class CiEntityWS {
 		} catch (Exception e) {
 			// handle exception
 			parameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
-			parameterOutPut.setMessages(new String[] { e.getMessage() });
+			parameterOutPut.setMessages(new String[] { e.getCause().getMessage() });
 		}
 		return parameterOutPut;
 		
@@ -2618,7 +2628,7 @@ public class CiEntityWS {
 		toCommit = true;
 		} catch (Exception e) {
 			maParameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
-			maParameterOutPut.setMessages(new String[] { e.getMessage() });
+			maParameterOutPut.setMessages(new String[] { e.getCause().getMessage() });
 		}finally {
 			String hbnMessage = HibernateUtil.close(tx, session, toCommit);
 			if (toCommit) {
@@ -2665,7 +2675,7 @@ public class CiEntityWS {
 			if(mAttrParameterInput.getItsecGroupId()!=null && mAttrParameterInput.getItsecGroupId()!=0){
 				application.setItsecGroupId(mAttrParameterInput.getItsecGroupId());
 			}
-			if(mAttrParameterInput.getSlaId()!=null){
+			if(mAttrParameterInput.getSlaId()!=null && mAttrParameterInput.getSlaId()!=0){
 				application.setSlaId(mAttrParameterInput.getSlaId());
 			}
 			if(mAttrParameterInput.getServiceContractId()!=null && mAttrParameterInput.getServiceContractId()!=0){
@@ -2791,7 +2801,7 @@ public class CiEntityWS {
 			
 		} catch (Exception e) {
 			parameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
-			parameterOutPut.setMessages(new String[] { e.getMessage() });
+			parameterOutPut.setMessages(new String[] {e.getCause().getMessage()});
 		}finally{
 			if (toCommit) {
 				String hbnMessage = HibernateUtil.close(tx, session, toCommit);
@@ -2837,10 +2847,10 @@ public class CiEntityWS {
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getClusterType())){
 				itSystem.setClusterType(mAttrParameterInput.getClusterType());
 			}
-			if(mAttrParameterInput.getItsecGroupId()!=null){
+			if(mAttrParameterInput.getItsecGroupId()!=null && mAttrParameterInput.getItsecGroupId()!=0){
 				itSystem.setItsecGroupId(mAttrParameterInput.getItsecGroupId());
 			}
-			if(mAttrParameterInput.getSlaId()!=null){
+			if(mAttrParameterInput.getSlaId()!=null && mAttrParameterInput.getSlaId()!=0){
 				itSystem.setSlaId(mAttrParameterInput.getSlaId());
 			}
 			if(mAttrParameterInput.getServiceContractId()!=null && mAttrParameterInput.getServiceContractId()!=0){
@@ -2852,7 +2862,7 @@ public class CiEntityWS {
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbAvailabilityTxt())){
 				itSystem.setItSecSbAvailabilityTxt(mAttrParameterInput.getItSecSbAvailabilityTxt());
 			}
-			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null && mAttrParameterInput.getPrimaryFunctionId() !=0){
+			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null && mAttrParameterInput.getItSecSbConfidentialityId() !=0){
 				itSystem.setItSecSbConfidentialityId(mAttrParameterInput.getItSecSbConfidentialityId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbConfidentialityTx())){
@@ -2932,7 +2942,7 @@ public class CiEntityWS {
 			
 		} catch (Exception e) {
 			parameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
-			parameterOutPut.setMessages(new String[] { e.getMessage() });
+			parameterOutPut.setMessages(new String[] { e.getCause().getMessage() });
 		}finally{
 			if (toCommit) {
 				String hbnMessage = HibernateUtil.close(tx, session, toCommit);

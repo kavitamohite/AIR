@@ -997,6 +997,7 @@ public class ItSystemHbn extends BaseHbn {
 				sql.append(" and NVL(template, 0) = ").append(searchTemplate);
 			}
 		}
+		
 
 
 		return sql;
@@ -1015,6 +1016,35 @@ public class ItSystemHbn extends BaseHbn {
 			return new CiItemsResultDTO();//new CiItemDTO[0];
 		
 		StringBuilder sql = getAdvSearchCiBaseSql(input, metaData);
+		String sort=input.getSort();
+		String dir =input.getDir();
+		sql.append( " order by nlssort(");
+		if(sort == null){
+			sql.append(metaData.getNameField());
+		}else{
+			  if(sort.equals("name")){
+				  sql.append(metaData.getNameField());
+			  }else{
+				  if(sort.equals("alias")){
+					  sql.append(metaData.getAliasField());
+				  }else{
+					  if(sort.equals("ciOwner")){
+						  sql.append("cwid_verantw_betr");
+					  }else{
+						  if(sort.equals("ciOwnerDelegate"))
+							  sql.append("sub_responsible");
+						  else
+							  sql.append(metaData.getNameField());
+					  }
+				  }
+			  }
+		}
+		 sql.append(", 'NLS_SORT = GENERIC_M')");		
+			if (StringUtils.isNotNullOrEmpty(dir)) {
+				sql.append(" ").append(dir);
+			}
+			
+			
 		
 		List<CiItemDTO> cis = new ArrayList<CiItemDTO>();
 
@@ -1060,8 +1090,11 @@ public class ItSystemHbn extends BaseHbn {
 					ci.setCiOwnerDelegate(rs.getString("sub_responsible"));
 					ci.setTableId(metaData.getTableId());
 					ci.setDeleteQuelle(rs.getString("del_quelle"));
-					ci.setIsTemplate(rs.getString("template"));
-					
+					if(AirKonstanten.IS_TEMPLATE==rs.getInt("template")){
+						ci.setIsTemplate(AirKonstanten.YES);
+					}else{
+						ci.setIsTemplate(AirKonstanten.NO);
+					}
 					cis.add(ci);
 					//i++;
 				}// else break;
