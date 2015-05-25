@@ -530,19 +530,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				this.handleNavigation(verwerfenCallback, saveCallback);
 					break;
 					
-			case 'clCiNewAsset' :
-				this.getLayout().setActiveItem('ciAssetManagementView');
-				var verwerfenCallback = function() {
-					
-				if(options && options.callback)
-					options.callback();
-				}.createDelegate(this);
-				var saveCallback = function() {
-					verwerfenCallback();
-				}.createDelegate(this);
-
-				this.handleNavigation(verwerfenCallback, saveCallback);
-					break;
 			
 			default: break;
 		}
