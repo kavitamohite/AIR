@@ -22,6 +22,11 @@ AIR.AirCallbackManager = Ext.extend(Ext.util.Observable, {
 				var callbackOwner = this.rootView.getComponent('ciCenterView').getComponent('ciAssetManagementView');
 				externalNavigationCallback = callbackOwner.onTabChange;
 				break;
+				//vandana
+			case 'clCiNewAsset':
+				var callbackOwner = this.rootView.getComponent('ciCenterView').getComponent('ciNewAssetView');//getComponent('ciSearchViewPages').getComponent('ciStandardSearchView')
+				externalNavigationCallback = callbackOwner.onTabChange;
+				break;
 			default: break;
 		}
 		

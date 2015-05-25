@@ -776,6 +776,7 @@ public class AirServlet extends HttpServlet {
 				append(compressJSFile("javascript/assetManagement/search/CiAssetManageSearchView.js", version)).
 				append(compressJSFile("javascript/assetManagement/search/CiAssetResultGrid.js", version)).				
 				append(compressJSFile("javascript/assetManagement/search/CiAssetResultView.js", version)).
+				append(compressJSFile("javascript/assetManagement/CiNewAssetView.js", version)).
 				
 				append(compressJSFile("javascript/core/CiTitleView.js", version)).
 				append(compressJSFile("javascript/core/CiInfoView.js", version)).

@@ -48,6 +48,9 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 	        	xtype: 'AIR.CiAssetManagementView',
 	        	id: 'ciAssetManagementView'
 			},{
+	        	xtype: 'AIR.CiNewAssetView',
+	        	id: 'ciNewAssetView'
+			},{
 				xtype: 'form',
 				id: 'exportForm',
 				//hidden: true,
@@ -529,7 +532,20 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
 					break;
+				
+			case 'clCiNewAsset':
+				this.getLayout().setActiveItem('ciNewAssetView');
+				var verwerfenCallback = function() {
 					
+					if(options && options.callback)
+						options.callback();
+				}.createDelegate(this);
+				var saveCallback = function() {
+					verwerfenCallback();
+				}.createDelegate(this);
+
+				this.handleNavigation(verwerfenCallback, saveCallback);
+					break;
 			
 			default: break;
 		}

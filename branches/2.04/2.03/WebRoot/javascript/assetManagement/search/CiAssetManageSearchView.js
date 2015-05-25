@@ -89,7 +89,7 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
 		this.getComponent('pAssetSearch').getComponent('clAssetSearch').setText(labels.newSearch);
 		this.getComponent('pAssetSearch').getComponent('bUpdateCiAssetSearchResult').setText(labels.bUpdateCiSearchResult);
 		
-	},
+	}
 	
 });
 Ext.reg('AIR.CiAssetManageSearchView', AIR.CiAssetManageSearchView);
