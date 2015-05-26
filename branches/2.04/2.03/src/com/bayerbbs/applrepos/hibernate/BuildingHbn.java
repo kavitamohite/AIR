@@ -20,6 +20,7 @@ import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
+import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
@@ -1788,6 +1789,25 @@ public class BuildingHbn extends LokationItemHbn {
 		}
 		
 		return output;
+	}
+	public static KeyValueDTO[] findBuildingsBySiteId(Long id) {
+
+		Standort site = StandortHbn.findById(id);
+		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		
+		for(Terrain terrain : site.getTerrains()){
+			Set<Building> buildings = terrain.getBuildings();
+			
+			for(Building building : buildings) {
+				if (null == building.getDeleteTimestamp()) {
+					data.add(new KeyValueDTO(building.getId(), building.getName()));	
+				}
+			}	
+		}
+		
+		Collections.sort(data);
+		
+		return data.toArray(new KeyValueDTO[0]);
 	}
 
 }
