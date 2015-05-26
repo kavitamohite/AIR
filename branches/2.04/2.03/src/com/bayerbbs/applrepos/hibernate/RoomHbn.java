@@ -16,6 +16,7 @@ import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
@@ -719,6 +720,26 @@ public class RoomHbn extends LokationItemHbn {
 		
 		ApplReposHbn.sendBusinessEssentialChangedMail(room.getCiOwner(), "Room", room.getName(), room.getAlias(), dto.getBusinessEssentialId(), businessEssentialIdOld, dto.getTableId(), dto.getId());
 	
+	}
+
+	public static KeyValueDTO[] findRoomsByBuildingId(Long id) {
+
+		Building building = BuildingHbn.findById(id);
+		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		
+		for(BuildingArea buildingArea : building.getBuildingAreas()){
+			Set<Room> rooms = buildingArea.getRooms();
+			
+			for(Room room : rooms) {
+				if (null == room.getDeleteTimestamp()) {
+					data.add(new KeyValueDTO(room.getId(), room.getName()+", Alias : "+room.getAlias()));
+				}
+			}
+		}
+		
+		Collections.sort(data);
+		
+		return data.toArray(new KeyValueDTO[0]);
 	}
 
 }
