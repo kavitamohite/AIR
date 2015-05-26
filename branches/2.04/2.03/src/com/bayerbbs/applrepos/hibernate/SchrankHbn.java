@@ -2,7 +2,9 @@ package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,6 +21,7 @@ import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
@@ -839,4 +842,18 @@ public class SchrankHbn extends LokationItemHbn {
 	
 	}
 
+	public static KeyValueDTO[] findSchrankByRoomId(Long id) {
+		Room room = RoomHbn.findById(id);
+		Set<Schrank> schranks = room.getSchranks();
+		
+		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		for(Schrank schrank: schranks) {
+			if (null == schrank.getDeleteTimestamp()) {
+				data.add(new KeyValueDTO(schrank.getId(), schrank.getName()));
+			}
+		}
+		Collections.sort(data);
+		
+		return data.toArray(new KeyValueDTO[0]);
+	}
 }
