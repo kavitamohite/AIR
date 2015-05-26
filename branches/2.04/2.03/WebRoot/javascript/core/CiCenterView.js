@@ -654,6 +654,9 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		
 		var ciAssetManagementView = this.getComponent('ciAssetManagementView');
 		ciAssetManagementView.updateLabels(labels);
+		
+		var ciNewAssetView = this.getComponent('ciNewAssetView');
+		ciNewAssetView.updateLabels(labels);
 	},
 	
 	updateToolTips: function(toolTips) {
