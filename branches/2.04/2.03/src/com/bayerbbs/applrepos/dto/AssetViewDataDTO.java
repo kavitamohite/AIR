@@ -3,33 +3,64 @@ package com.bayerbbs.applrepos.dto;
 public class AssetViewDataDTO {
 
 	private Long id;
+
 	private String manufacturer;
+
 	private String sapDescription;
+
 	private String serialNumber;
+
 	private String costCenterManager;
+
 	private String organizationalunit;
+
 	private String costCenter;
+
 	private String inventoryNumber;
+
 	private String pspElement;
 
 	private String requester;
+
 	private String technicalMaster;
+
 	private String technicalNumber;
+
 	private Long acquisitionValue;
+
 	private String site;
+
 	private String orderNumber;
+
 	private String assetChecked;
+
 	private String sapAssetClass;
 
 	private Long subCategory;
+
 	private String type;
+
 	private String model;
+
 	private String systemPlatformName;
+
 	private String hardwareSystem;
 
-	private String hardwareTransientSystem;// Hardware transient system
-	private String alias;// Alias
-	private String osName;// OS name
+	private String hardwareTransientSystem;
+
+	private String alias;
+
+	private String osName;
+
+	private Long countryId;
+
+	private Long siteId;
+
+	private Long buildingId;
+
+	private Long roomId;
+
+	private Long rackId;
 
 	public Long getId() {
 		return id;
@@ -229,6 +260,46 @@ public class AssetViewDataDTO {
 
 	public void setOsName(String osName) {
 		this.osName = osName;
+	}
+
+	public Long getCountryId() {
+		return countryId;
+	}
+
+	public void setCountryId(Long countryId) {
+		this.countryId = countryId;
+	}
+
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	public Long getBuildingId() {
+		return buildingId;
+	}
+
+	public void setBuildingId(Long buildingId) {
+		this.buildingId = buildingId;
+	}
+
+	public Long getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(Long roomId) {
+		this.roomId = roomId;
+	}
+
+	public Long getRackId() {
+		return rackId;
+	}
+
+	public void setRackId(Long rackId) {
+		this.rackId = rackId;
 	}
 
 }
