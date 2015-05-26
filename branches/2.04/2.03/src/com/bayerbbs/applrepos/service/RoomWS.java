@@ -222,5 +222,9 @@ public class RoomWS {
 		}
 	}
 
+	public KeyValueDTO[] findRoomsByBuildingId(Long id) {
+		return RoomHbn.findRoomsByBuildingId(id);
+	}
+
 	
 }

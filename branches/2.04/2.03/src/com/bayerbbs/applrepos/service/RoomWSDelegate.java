@@ -22,4 +22,8 @@ public class RoomWSDelegate {
 	public KeyValueDTO[] findRoomsByBuildingAreaId(DefaultDataInput detailInput) {
 		return roomWSPort.findRoomsByBuildingAreaId(detailInput.getId());
 	}
+	
+	public KeyValueDTO[] findRoomsByBuildingId(DefaultDataInput detailInput) {
+		return roomWSPort.findRoomsByBuildingId(detailInput.getId());
+	}
 }
