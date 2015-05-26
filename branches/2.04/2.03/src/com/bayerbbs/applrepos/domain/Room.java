@@ -1,9 +1,11 @@
 package com.bayerbbs.applrepos.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -33,6 +36,7 @@ public class Room extends CiBase1 implements Serializable {
 	private Long severityLevelId;
 	private Long businessEssentialId;
 	
+	private Set<Schrank> schranks;
 //	ITSEC_SB_VERTR_ID,ITSEC_SB_VERTR_TXT: confidentiality
 //	ITSEC_SB_INTEG_ID,ITSEC_SB_INTEG_TXT: integrity
 	
@@ -115,4 +119,13 @@ public class Room extends CiBase1 implements Serializable {
 	public void setBuildingAreaId(Long areaId) {
 		this.buildingAreaId = areaId;
 	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "room")//EAGER
+	public Set<Schrank> getSchranks() {
+		return schranks;
+	}
+	public void setSchranks(Set<Schrank> schranks) {
+		this.schranks = schranks;
+	}
+	
 }
