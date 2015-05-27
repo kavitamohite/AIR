@@ -1782,7 +1782,6 @@ public class BuildingHbn extends LokationItemHbn {
 		}
 
 		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
-			// TODO errorcodes / Texte
 			if (null != output.getMessages() && output.getMessages().length > 0) {
 				output.setDisplayMessage(output.getMessages()[0]);
 			}
@@ -1806,7 +1805,6 @@ public class BuildingHbn extends LokationItemHbn {
 		}
 		
 		Collections.sort(data);
-		
 		return data.toArray(new KeyValueDTO[0]);
 	}
 

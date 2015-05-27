@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -17,6 +19,9 @@ import org.hibernate.annotations.Type;
 @Table(name = "HW_KATEGORIE4")
 @org.hibernate.annotations.Entity(dynamicInsert = true)
 @SequenceGenerator(name = "HwCategorySeq4", sequenceName = "TBADM.SEQ_HW_KATEGORIE4")
+@NamedQueries({
+	@NamedQuery(name="findCategory4byKategory3Id", query="FROM HardwareCategory4 WHERE  kategory3Id=:kategory3Id")
+})
 public class HardwareCategory4 {
 	private Long id;// HW_KATEGORIE1_ID NOT NULL NUMBER
 	private String hwKategory1;// HW_KATEGORIE1 NOT NULL VARCHAR2(160)
@@ -36,6 +41,7 @@ public class HardwareCategory4 {
 	private String tShirtSize;// T_SHIRT_SIZE VARCHAR2(3)
 	private Long cpuCoreCount;// CPU_CORE_COUNT NUMBER
 	private LifecycleSubStat lifecycleSubStat;// LC_SUB_STATUS_ID NUMBER
+	private Long kategory3Id;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "HwCategorySeq4")
@@ -74,6 +80,13 @@ public class HardwareCategory4 {
 
 	public void setHwCategory3(HardwareCategory3 hwCategory3) {
 		this.hwCategory3 = hwCategory3;
+	}
+	@Column(name = "HW_KATEGORIE3_ID", insertable=false, updatable=false)
+	public Long getKategory3Id() {
+		return kategory3Id;
+	}
+	public void setKategory3Id(Long kategory3Id) {
+		this.kategory3Id = kategory3Id;
 	}
 
 	@Column(name = "HEIGHT_RACKUNITS ")

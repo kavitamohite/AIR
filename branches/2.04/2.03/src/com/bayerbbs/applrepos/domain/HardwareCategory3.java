@@ -2,12 +2,13 @@ package com.bayerbbs.applrepos.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -17,6 +18,9 @@ import org.hibernate.annotations.Type;
 @Table(name = "HW_KATEGORIE3")
 @org.hibernate.annotations.Entity(dynamicInsert = true)
 @SequenceGenerator(name = "HwCategorySeq3", sequenceName = "TBADM.SEQ_HW_KATEGORIE3")
+@NamedQueries({
+	@NamedQuery(name="findCategorybyPartnerIdandkategoryId", query="FROM HardwareCategory3 WHERE  partnerId=:partnerId and kategory2Id =:kategory2Id")
+})
 public class HardwareCategory3 {
 	private Long id;// HW_KATEGORIE1_ID NOT NULL NUMBER
 	private String hwKategory3;// HW_KATEGORIE1 NOT NULL VARCHAR2(160)
@@ -26,6 +30,8 @@ public class HardwareCategory3 {
 	private HardwareCategory2 hwCategory2;
 
 	private Character hwsFlag;
+	private Long partnerId;
+	private Long kategory2Id;
 
 	// PARTNER_ID NUMBER
 	// HW_KATEGORIE2_ID NOT NULL NUMBER
@@ -60,7 +66,8 @@ public class HardwareCategory3 {
 		this.text = text;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
+	//@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "PARTNER_ID")
 	public Partner getPartner() {
 		return partner;
@@ -69,8 +76,16 @@ public class HardwareCategory3 {
 	public void setPartner(Partner partner) {
 		this.partner = partner;
 	}
+	@Column(name = "PARTNER_ID", insertable=false, updatable=false)
+	public Long getPartnerId() {
+		return partnerId;
+	}
+	public void setPartnerId(Long partnerId) {
+		this.partnerId = partnerId;
+	}
 
-	@OneToOne(fetch = FetchType.LAZY)
+	//@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "HW_KATEGORIE2_ID")
 	public HardwareCategory2 getHwCategory2() {
 		return hwCategory2;
@@ -78,6 +93,13 @@ public class HardwareCategory3 {
 
 	public void setHwCategory2(HardwareCategory2 hwCategory2) {
 		this.hwCategory2 = hwCategory2;
+	}
+	@Column(name = "HW_KATEGORIE2_ID", insertable=false, updatable=false)
+	public Long getKategory2Id() {
+		return kategory2Id;
+	}
+	public void setKategory2Id(Long kategory2Id) {
+		this.kategory2Id = kategory2Id;
 	}
 
 	@Type(type = "yes_no")

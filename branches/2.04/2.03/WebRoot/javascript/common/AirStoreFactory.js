@@ -1691,6 +1691,33 @@ AIR.AirStoreFactory = function() {
 			return applicationStore;
 		},
 		
+		createSchrankListStore: function() {
+			var record = Ext.data.Record.create([
+ 			    { name: 'id', type: 'int' },
+ 			    'name'
+ 			]);
+
+ 			var reader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'
+ 			}, record);
+
+ 			var store = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'schrankListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/SchrankWSPort',
+ 					loadMethod: 'findSchrankByRoomId',
+ 					timeout: 120000,
+ 					reader: reader
+ 				})
+ 			});
+ 			
+ 			return store;
+ 		},
+		
 		createRoomListStore: function() {
 			var record = Ext.data.Record.create([
  			    { name: 'id', type: 'int' },
@@ -1718,6 +1745,33 @@ AIR.AirStoreFactory = function() {
  			return store;
  		},
 		
+ 		createRoomListStoreFromBuildingId: function() {
+			var record = Ext.data.Record.create([
+ 			    { name: 'id', type: 'int' },
+ 			    'name'
+ 			]);
+
+ 			var reader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'//return keyValueDTO
+ 			}, record);
+
+ 			var store = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'roomListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/RoomWSPort',
+ 					loadMethod: 'findRoomsByBuildingId',
+ 					timeout: 120000,
+ 					reader: reader
+ 				})
+ 			});
+ 			
+ 			return store;
+ 		},
+ 		
  		createBuildingAreaListStore: function() {
 			var record = Ext.data.Record.create([
  			    { name: 'id', type: 'int' },
@@ -1765,6 +1819,34 @@ AIR.AirStoreFactory = function() {
  				proxy: new Ext.ux.soap.SoapProxy({
  					url: webcontext + '/BuildingWSPort',
  					loadMethod: 'findBuildingsByTerrainId',
+ 					timeout: 120000,
+ 					reader: reader
+ 				})
+ 			});
+ 			
+ 			return store;
+ 		},
+ 		
+ 		createBuildingListStoreFromSiteId: function() {
+			var record = Ext.data.Record.create([
+ 			    { name: 'id', type: 'int' },
+ 			    'name'
+ 			    
+ 			]);
+
+ 			var reader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'//return keyValueDTO
+ 			}, record);
+
+ 			var store = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'buildingListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/BuildingWSPort',
+ 					loadMethod: 'findBuildingsBySiteId',
  					timeout: 120000,
  					reader: reader
  				})
@@ -3006,12 +3088,12 @@ AIR.AirStoreFactory = function() {
   		    return itSystemLicenseScanningsStore;
 		},
 		
-		/*createSisoogleOsTypeListStore: function() {
-			return this.createSisoogleAttributeListStore();
-		},
-		createSisoogleOsNameListStore: function() {
-			return this.createSisoogleAttributeListStore();
-		},*/
+
+
+
+
+
+
 		createSisoogleSourceListStore: function() {
 			var sisoogleSourceListStore = new Ext.data.ArrayStore(
 			{
@@ -3023,49 +3105,49 @@ AIR.AirStoreFactory = function() {
 			
 	        return sisoogleSourceListStore;
 		},
-		/*createSisoogleGapResponsibleListStore: function() {
-			return this.createSisoogleAttributeListStore();
-		},
-		createSisoogleGapEndDateListStore: function() {
-			return this.createSisoogleAttributeListStore();
-		},
-		createSisoogleActiveStateListStore: function() {
-			return this.createSisoogleAttributeListStore();
-		},
-		createSisoogleGpscOwnerListStore: function() {
-			return this.createSisoogleAttributeListStore();
-		},
+
+
+
+
+
+
+
+
+
+
+
+
 		
-		createSisoogleAttributeListStore: function() {
-			var sisoogleAttributeListRecord = Ext.data.Record.create([
-		      	{ name: 'id' },
-		      	{ name: 'name' }
-		    ]);
-		
-		    var sisoogleAttributeListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'id'
-		    }, sisoogleAttributeListRecord); 
-		
-		    var sisoogleAttributeListStore = new Ext.data.XmlStore({
-		    	autoDestroy: true,
-				autoLoad: false,
-				storeId: 'sisoogleAttributeListStore',
-				
-		      	proxy: new Ext.ux.soap.SoapProxy({
-		      		url: webcontext +'/AIRToolsWSPort',
-		      		loadMethod: 'getSISoogleAttributesByType',
-		      		timeout: 120000,
-		      		reader: sisoogleAttributeListReader
-		      	}),
-		      	fields: [ 'id', 'name' ],
-	
-		      	reader: sisoogleAttributeListReader
-		    });
-		    
-		    return sisoogleAttributeListStore;
-		}, */
-		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		createLinkCiTypeListStore: function() {
 			var linkCiTypeListRecord = Ext.data.Record.create([
 		      	{ name: 'id' },
@@ -4017,5 +4099,137 @@ AIR.AirStoreFactory = function() {
 			return ciItemListStore;
 		},
 		
+
+		createManufactureListStore: function() {
+			var ciManufactureRecord = Ext.data.Record.create([
+				{ name: 'id', type: 'int' },
+ 			    'name'				
+ 			]);
+
+ 			var ciManufactureReader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'
+ 			}, ciManufactureRecord);
+ 			
+ 			var ciManufacturestore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'manufactureListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/ProductWSPort',
+ 					loadMethod: 'findManufacturerList',
+ 					timeout: 120000,
+ 					reader: ciManufactureReader
+ 				})
+ 			});
+ 			
+ 			return ciManufacturestore;
+ 		},
+
+		
+		createSubCategoryListStore: function() {
+			var ciSubCategoryRecord = Ext.data.Record.create([
+
+
+
+				{ name: 'id', type: 'int' },
+ 			    'name'					
+ 			]);
+
+ 			var ciSubCategoryReader = new Ext.data.XmlReader({
+  				idProperty: 'id',
+
+ 				record: 'return'
+ 			}, ciSubCategoryRecord);
+ 			
+ 			var ciSubCategorystore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'subCategoryListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/ProductWSPort',
+ 					loadMethod: 'findSubCategoryList',
+ 					timeout: 120000,
+ 					reader: ciSubCategoryReader
+ 				})
+ 			});
+ 			
+ 			return ciSubCategorystore;
+ 		},
+
+
+
+
+
+
+
+
+		
+		createModelListStore: function() {
+			var ciModelListRecord = Ext.data.Record.create([
+				{ name: 'id', type: 'int' },
+ 			    'name'					
+ 			]);
+
+ 			var ciModelListReader = new Ext.data.XmlReader({
+				idProperty: 'id',
+ 				record: 'return'
+
+ 			}, ciModelListRecord);
+ 			
+ 			var ciModelListstore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/ProductWSPort',
+
+ 					loadMethod: 'findModelList',
+ 					timeout: 120000,
+
+ 					reader: ciModelListReader
+ 				})
+ 			});
+ 			
+
+ 			return ciModelListstore;
+ 		},
+
+		createTypeListStore: function() {
+			var ciTypeListRecord = Ext.data.Record.create([
+				{ name: 'id', type: 'int' },
+ 			    'name'					
+ 			]);
+
+
+ 			var ciTypeListReader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'
+
+ 			}, ciTypeListRecord);
+ 			
+
+ 			var ciTypeListstore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				//storeId: 'typeListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/ProductWSPort',
+
+ 					loadMethod: 'findTypeList',
+ 					timeout: 120000,
+
+ 					reader: ciTypeListReader
+ 				})
+ 			});
+ 			
+
+ 			return ciTypeListstore;
+ 		}
+
 	};
 }();

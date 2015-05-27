@@ -117,4 +117,8 @@
 		implementation="com.bayerbbs.applrepos.service.AssetManagementWSDelegate"
 		url-pattern="/AssetManagementWSPort">
 	</endpoint>
+	<endpoint name="ProductWSPort"
+		implementation="com.bayerbbs.applrepos.service.ProductWSDelegate"
+		url-pattern="/ProductWSPort">
+	</endpoint>
 </endpoints>
