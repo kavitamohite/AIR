@@ -51,7 +51,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					fieldLabel : 'Indent number',
 					lazyRender : true,
 					lazyInit : false,
-					width : 300,
+					width : 450,
 					style : {
 						marginBottom : 10,
 						fontSize : 12
@@ -60,7 +60,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					xtype : 'textfield',
 					id : 'tinventory',
 					fieldLabel : 'Inventory',
-					width : 400,
+					width : 450,
 					style : {
 						marginBottom : 10,
 						fontSize : 12
@@ -69,7 +69,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					xtype : 'textfield',
 					id : 'tDescription',
 					fieldLabel : 'Description',
-					width : 400,
+					width : 450,
 					style : {
 						marginBottom : 10,
 						fontSize : 12
@@ -80,7 +80,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					fieldLabel : 'Reason for asset',
 					lazyRender : true,
 					lazyInit : false,
-					width : 300,
+					width : 450,
 					style : {
 						marginBottom : 10,
 						fontSize : 12
@@ -91,31 +91,26 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				id: 'bottomPanel',
 				layout: {
 			        type: 'table',
-			        columns: 2,
-			        tableAttrs: {
-			            style: {
-			                width: '100%' // To make the cell width 100% 
-			            }
-			        }
+			        columns: 2
 			    },
 				items : [{
 					xtype : 'panel',
 					id: 'leftPanel',
 					border: false,
-					width: '100%',
+					width: 590,
 					items : [{
 						xtype : 'fieldset',
 						title : 'Product',
 						id : 'product',
 						autoHeight : true,
 						style : {
-							margin : '0 0 0 10'
+							margin : '5 5 0 5'
 						},
 						items : [{
 							id: 'cbManufacturer',
 					        xtype: 'filterCombo',
 					        fieldLabel: 'Manufacturer',
-					        width: 230,
+					        width: 370,
 					        enableKeyEvents: true,
 					        store: AIR.AirStoreFactory.createManufactureListStore(),
 					        valueField: 'id',
@@ -131,7 +126,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							id: 'cbSubCategory',
 					        xtype: 'filterCombo',
 					        fieldLabel: 'Sub Category',
-					        width: 230,
+					        width: 370,
 					        enableKeyEvents: true,
 					        store: AIR.AirStoreFactory.createSubCategoryListStore(),
 					        valueField: 'id',
@@ -147,7 +142,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							id: 'cbType',
 					        xtype: 'filterCombo',
 					        fieldLabel: 'Type',
-					        width: 230,
+					        width: 370,
 					        enableKeyEvents: true,
 					        store: AIR.AirStoreFactory.createTypeListStore(),
 					        valueField: 'id',
@@ -163,7 +158,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							id: 'cbModel',
 					        xtype: 'filterCombo',
 					        fieldLabel: 'Model',
-					        width: 230,
+					        width: 370,
 					        enableKeyEvents: true,
 					        store: AIR.AirStoreFactory.createModelListStore(),
 					        valueField: 'id',
@@ -179,7 +174,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype: 'textfield',
 							id: 'tsapDescription',
 							fieldLabel: 'SAP Description of the asset',
-						    width: 230,
+						    width: 370,
 						    style: {
 						    	marginBottom: 10,
 						    	fontSize: 12
@@ -194,15 +189,11 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							}
 						} ]
 					}, {
-
 						xtype : 'fieldset',
-						title : 'Technics',// title, header, or checkboxToggle
-						// creates fieldset header
+						title : 'Technics',
 						autoHeight : true,
-//						width : 400,
-						collapsible : true,
 						style : {
-							margin : '0 0 0 10'
+							margin : '5 5 0 5'
 						},
 						items : [ {
 							xtype : 'textfield',
@@ -210,9 +201,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Technical Number / Asset-ID',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width : 370,
 							style : {
 								marginBottom : 10
 							}
@@ -222,9 +211,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Technical Master',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width : 370,
 							style : {
 								marginBottom : 10
 							}
@@ -232,11 +219,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tsystem',
 							fieldLabel : 'System platform name',
-							lazyRender : true,
-							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width : 370,
 							style : {
 								marginBottom : 10
 							}
@@ -246,9 +229,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Hardwaresystem (HWS)',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width : 370,
 							style : {
 								marginBottom : 10
 							}
@@ -258,7 +239,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'OS-Name',
 							lazyRender : true,
 							lazyInit : false,
-//							width : 230,
+							width : 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -269,7 +250,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Worflowstatus technical HWS',
 							lazyRender : true,
 							lazyInit : false,
-//							width : 230,
+							width : 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -280,7 +261,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'HW-transient systems',
 							lazyRender : true,
 							lazyInit : false,
-//							width : 230,
+							width : 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -291,19 +272,18 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Worflowstatus technical',
 							lazyRender : true,
 							lazyInit : false,
-//							width : 230,
+							width : 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
 							}
-
 						}, {
 							xtype : 'combo',
 							id : 'cbworkflowtechnical',
 							fieldLabel : 'Worflowstatus technical',
 							lazyRender : true,
 							lazyInit : false,
-//							width : 230,
+							width : 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -314,41 +294,39 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'General Usage',
 							lazyRender : true,
 							lazyInit : false,
-//							width : 230,
+							width : 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
 							}
-
 						}, {
 							xtype : 'radiogroup',
 							id : 'rbitsecurity',
 							fieldLabel : 'IT-Security-Relevance',
-//							width : 230,
+							width : 370,
 							columns : 2,
-							items : [ {
-								id : 'yitsecurity',
+							items : [{
+								name : 'itsecurity',
 								boxLabel : 'Yes',
 								inputValue : 'START',
-//								width : 50
+								width : 50
 							}, {
-								id : 'nitsecurity',
+								id : 'itsecurity',
 								boxLabel : 'No',
 								inputValue : 'EXACT',
-//								width : 50
-							} ],
+								width : 50
+							}],
 							style : {
 								marginBottom : 10,
 								fontSize : 12
 							}
-
 						}, {
 							xtype : 'textfield',
 							id : 'tcomment',
 							fieldLabel : 'Comment',
 							lazyRender : true,
 							lazyInit : false,
-//							width : 230,
+							width : 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -359,15 +337,14 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						title : 'Location',
 						id : 'location',
 						autoHeight : true,
-//						width : 400,
 						style : {
-							margin : '0 0 0 10'
+							margin : '5 5 0 5'
 						},
 						items : [{
 							id: 'cbCountry',
 					        xtype: 'filterCombo',
 					        fieldLabel: 'Country',
-					        width: 230,
+					        width: 370,
 					        enableKeyEvents: true,
 					        store: AIR.AirStoreFactory.createLandListStore(),
 					        valueField: 'id',
@@ -383,7 +360,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					        id: 'cbSite',
 					    	xtype: 'filterCombo',
 					        fieldLabel: 'Site',
-					        width: 230,
+					        width: 370,
 					        store: AIR.AirStoreFactory.createSiteListStore(),
 					        valueField: 'id',
 					        displayField: AAM.getLanguage() == 'DE' ? 'name' : 'nameEn',
@@ -398,7 +375,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					    },{
 					        xtype: 'filterCombo',
 					        id: 'cbBuilding',
-					        width: 230,
+					        width: 370,
 					        fieldLabel: 'Building',
 					        enableKeyEvents: true,
 					        store: AIR.AirStoreFactory.createBuildingListStoreFromSiteId(), //needs to be changed for building
@@ -415,7 +392,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			        	}, {
 					        xtype: 'filterCombo',//combo
 					        id: 'cbRoom',
-					        width: 230,
+					        width: 370,
 					        fieldLabel: 'Room',
 					        enableKeyEvents: true,
 					        store: AIR.AirStoreFactory.createRoomListStoreFromBuildingId(), //AIR.AirStoreFactory.createRoomListStore(),
@@ -431,7 +408,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				        }, {
 					        xtype: 'filterCombo',//combo
 					        id: 'cbRack',
-					        width: 230,
+					        width: 370,
 					        fieldLabel: 'Rack - Position',
 					        enableKeyEvents: true,
 					        store: AIR.AirStoreFactory.createSchrankListStore(), //AIR.AirStoreFactory.createRoomListStore(),
@@ -450,52 +427,42 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					xtype : 'panel',
 					id: 'rightPanel',
 					border: false,
-					width: '100%',
+					width: 590,
 					items : [{
 
 						xtype : 'fieldset',
 						title : 'Business Information',
 						autoHeight : true,
 						style : {
-							margin : '0 0 0 10'
+							margin : '5 5 0 5'
 						},
-
 						items : [ {
 							xtype : 'combo',
 							id : 'cbOrder',
 							fieldLabel : 'Order Number',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width: 370,
 							style : {
 								marginBottom : 10
 							}
 						}, {
 							xtype : 'textfield',
 							id : 'tInventorynumber',
-
 							fieldLabel : 'Inventory Number',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width: 370,
 							style : {
 								marginBottom : 10
 							}
-						},
-
-						{
+						}, {
 							xtype : 'combo',
 							id : 'cbPsp',
 							fieldLabel : 'PSP-Element',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width: 370,
 							style : {
 								marginBottom : 10
 							}
@@ -503,11 +470,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tPsptext',
 							fieldLabel : 'PSP-Text',
-							lazyRender : true,
-							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width: 370,
 							style : {
 								marginBottom : 10
 							}
@@ -515,11 +478,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'combo',
 							id : 'cbCostcenter',
 							fieldLabel : 'Cost center',
-							lazyRender : true,
-							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width: 370,
 							style : {
 								marginBottom : 10
 							}
@@ -527,12 +486,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'combo',
 							id : 'cbRequester',
 							fieldLabel : 'Requester',
-							lazyRender : true,
-							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
-							height : 50,
+							width: 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -543,10 +497,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Cost Center Manager',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
-							height : 50,
+							width: 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -555,30 +506,16 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tOrganisation',
 							fieldLabel : 'Organizational Unit',
-							lazyRender : true,
-							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
-							height : 50,
+							width: 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
 							}
-						},
-
-						{
+						}, {
 							xtype : 'textfield',
 							id : 'tOwner',
 							fieldLabel : 'Owner(legal)',
-							lazyRender : true,
-							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
-							height : 50,
-
-
+							width: 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -587,12 +524,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'combo',
 							id : 'cbSapAsset',
 							fieldLabel : 'SAP Asset Class',
-							lazyRender : true,
-							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
-							height : 50,
+							width: 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -601,12 +533,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tAquisition',
 							fieldLabel : 'Aquisition Value(Euro)',
-							lazyRender : true,
-							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
-							height : 50,
+							width: 370,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -617,9 +544,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Book Value(Euro)',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width: 370,
 							height : 50,
 							style : {
 								marginBottom : 10,
@@ -631,9 +556,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Date of book value',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width: 370,
 							height : 50,
 							style : {
 								marginBottom : 10,
@@ -645,9 +568,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Start date depreciation',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width: 370,
 							height : 50,
 							style : {
 								marginBottom : 10,
@@ -659,9 +580,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Useful economic life (months)',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width: 370,
 							height : 50,
 							style : {
 								marginBottom : 10,
@@ -673,9 +592,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Retirement date',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-//							width : 230,
+							width: 370,
 							height : 50,
 							style : {
 								marginBottom : 10,
@@ -687,9 +604,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						xtype : 'fieldset',
 						title : 'Contacts',
 						autoHeight : true,
-//						width : 400,
 						style : {
-							margin : '0 0 0 10'
+							margin : '5 5 0 5'
 						},
 						items : [ {
 							xtype : 'textfield',
@@ -697,7 +613,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Cost center manager',
 							lazyRender : true,
 							lazyInit : false,
-//							width : 230,
+							width: 370,
 							style : {
 								marginBottom : 10
 							}
@@ -707,10 +623,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Organizational unit',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-
-//							width : 230,
+							width: 370,
 							style : {
 								marginBottom : 10
 							}
@@ -720,7 +633,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Editors group',
 							lazyRender : true,
 							lazyInit : false,
-//							width : 230,
+							width: 370,
 							style : {
 								marginBottom : 10
 							}
