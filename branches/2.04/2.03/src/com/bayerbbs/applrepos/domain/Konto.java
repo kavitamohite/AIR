@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -16,8 +17,9 @@ import javax.persistence.Table;
 @Table(name = "KONTO")
 @org.hibernate.annotations.Entity(dynamicInsert = true)
 @SequenceGenerator(name = "KontoSeq", sequenceName = "TBADM.SEQ_KONTO")
-public class Konto {
+public class Konto extends DeletableRevisionInfo implements Serializable{
 
+	private static final long serialVersionUID = -4649584367492656471L;
 	private Long id;
 	// KONTO_ID NOT NULL NUMBER
 

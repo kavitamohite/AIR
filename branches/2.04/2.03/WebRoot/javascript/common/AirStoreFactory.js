@@ -4159,13 +4159,6 @@ AIR.AirStoreFactory = function() {
  			return ciSubCategorystore;
  		},
 
-
-
-
-
-
-
-
 		
 		createModelListStore: function() {
 			var ciModelListRecord = Ext.data.Record.create([
@@ -4229,6 +4222,39 @@ AIR.AirStoreFactory = function() {
  			
 
  			return ciTypeListstore;
+ 		},
+ 		
+ 		createCostcenterListStore: function() {
+			var ciCostcenterListRecord = Ext.data.Record.create([
+				{ name: 'id', type: 'int' },
+ 			    'name'					
+ 			]);
+
+
+ 			var ciCostcenterListReader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'
+
+ 			}, ciCostcenterListRecord);
+ 			
+
+ 			var ciCostcenterListstore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				//storeId: 'typeListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/BusinessAdministrationWSPort',
+
+ 					loadMethod: 'findCostcenterList',
+ 					timeout: 120000,
+
+ 					reader: ciCostcenterListReader
+ 				})
+ 			});
+ 			
+
+ 			return ciCostcenterListstore;
  		}
 
 	};

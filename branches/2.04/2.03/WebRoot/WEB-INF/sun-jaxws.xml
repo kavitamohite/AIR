@@ -121,4 +121,8 @@
 		implementation="com.bayerbbs.applrepos.service.ProductWSDelegate"
 		url-pattern="/ProductWSPort">
 	</endpoint>
+	<endpoint name="BusinessAdministrationWSPort"
+		implementation="com.bayerbbs.applrepos.service.BusinessAdministrationWSDelegate"
+		url-pattern="/BusinessAdministrationWSPort">
+	</endpoint>
 </endpoints>
