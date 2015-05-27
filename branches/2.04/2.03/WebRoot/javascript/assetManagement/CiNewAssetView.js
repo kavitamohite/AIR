@@ -2,7 +2,6 @@ Ext.namespace('AIR');
 
 AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
-
 	initComponent : function() {
 		Ext.apply(this, {
 			border: false,
@@ -187,7 +186,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						    }
 						}, {
 							xtype : 'button',
-							id : 'breset',
+							id : 'bReset',
 							text : 'Reset all Entries',
 							style : {
 								'margin-left' : 250,
@@ -259,13 +258,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'OS-Name',
 							lazyRender : true,
 							lazyInit : false,
-
 //							width : 230,
-
-
-
 							style : {
-
 								marginBottom : 10,
 								fontSize : 12
 							}
@@ -280,11 +274,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								marginBottom : 10,
 								fontSize : 12
 							}
-
 						}, {
-
-
-
 							xtype : 'textfield',
 							id : 'ttransient',
 							fieldLabel : 'HW-transient systems',
@@ -295,7 +285,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								marginBottom : 10,
 								fontSize : 12
 							}
-
 						}, {
 							xtype : 'combo',
 							id : 'cbworkflowtechnical',
@@ -319,10 +308,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								marginBottom : 10,
 								fontSize : 12
 							}
-
-						},
-
-						{
+						}, {
 							xtype : 'combo',
 							id : 'cbgeneralusage',
 							fieldLabel : 'General Usage',
@@ -338,18 +324,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'radiogroup',
 							id : 'rbitsecurity',
 							fieldLabel : 'IT-Security-Relevance',
-							/*
-							 * lazyRender: true, lazyInit: false,
-							 */
 //							width : 230,
 							columns : 2,
-
 							items : [ {
 								id : 'yitsecurity',
 								boxLabel : 'Yes',
 								inputValue : 'START',
 //								width : 50
-							// BEGINS_WITH
 							}, {
 								id : 'nitsecurity',
 								boxLabel : 'No',
@@ -372,12 +353,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								marginBottom : 10,
 								fontSize : 12
 							}
-
-						},
-
-						]
+						}]
 					},{
-
 						xtype : 'fieldset',
 						title : 'Location',
 						id : 'location',
@@ -386,10 +363,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						style : {
 							margin : '0 0 0 10'
 						},
-
-						items : [
-
-						{
+						items : [{
 							id: 'cbCountry',
 					        xtype: 'filterCombo',
 					        fieldLabel: 'Country',
@@ -624,9 +598,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								fontSize : 12
 							}
 						}, {
-
-
-
 							xtype : 'textfield',
 							id : 'tAquisition',
 							fieldLabel : 'Aquisition Value(Euro)',
@@ -663,11 +634,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							// /mode: 'local',
 
 //							width : 230,
-
-
-
-
-
 							height : 50,
 							style : {
 								marginBottom : 10,
@@ -705,12 +671,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tRetirment',
 							fieldLabel : 'Retirement date',
-
-
-
-
-
-
 							lazyRender : true,
 							lazyInit : false,
 							// /mode: 'local',
@@ -724,11 +684,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						} ]
 					
 					},{
-
 						xtype : 'fieldset',
 						title : 'Contacts',
-
-
 						autoHeight : true,
 //						width : 400,
 						style : {
@@ -740,24 +697,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							fieldLabel : 'Cost center manager',
 							lazyRender : true,
 							lazyInit : false,
-							// /mode: 'local',
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //							width : 230,
 							style : {
 								marginBottom : 10
@@ -776,692 +715,19 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								marginBottom : 10
 							}
 						}, {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 							xtype : 'combo',
 							id : 'cbeditor',
 							fieldLabel : 'Editors group',
 							lazyRender : true,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 							lazyInit : false,
 //							width : 230,
 							style : {
 								marginBottom : 10
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 							}
-						} ]
+						}]
 					}]
-				}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			} ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+				}]
+			}]
 		});
 		
 		AIR.CiNewAssetView.superclass.initComponent.call(this);
@@ -1489,35 +755,45 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		
 		var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
 		cbManufacturer.on('select', this.onManufacturerSelect, this);
-
 		cbManufacturer.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
 		cbSubCategory.on('select', this.onSubCategorySelect, this);
-
 		cbSubCategory.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
 		cbType.on('select', this.onTypeSelect, this);
-
 		cbType.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
 		cbModel.on('select', this.onModelSelect, this);
-
 		cbModel.on('keyup', this.onFieldKeyUp, this);
 
+		var bReset = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('bReset');
+		bReset.on('click',this.resetProduct, this);
 	},
 	
-//	init: function() {
-//		var cbCountry = this.getComponent('cbCountry');
-//		cbCountry.getStore().load({
-//			callback: function() {
-//				var field = AAM.getLanguage() == 'DE' ? 'name' : 'nameEn';
-//				cbCountry.getStore().sort(field, 'ASC');//, 'ASC'
-//			}
-//		});
-//	},
+	init: function() {
+		this.loadCountryData();
+		this.loadManufacturerData();
+		this.loadCategoryData();
+	},
+	
+	resetProduct: function(){
+		var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
+		var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
+		var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
+		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
+		var tsapDescription = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription');
+		var tDescription = this.getComponent('topPanel').getComponent('tDescription');
+		
+		cbManufacturer.reset();
+		cbSubCategory.reset();
+		cbType.reset();
+		cbModel.reset();
+		tsapDescription.setValue("");
+		tDescription.setValue("");
+	},
 	
 	loadComboboxData : function(){
 		this.loadCountryData();
@@ -1527,9 +803,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
 	updateLabels: function(labels){
 		this.loadComboboxData();
-
-
-
 	},
 	
 	onManufacturerSelect: function(combo, record, index) {
@@ -1685,12 +958,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					id: value
 				}
 			});
-			
 			Util.enableCombo(cbRoom);
 		}
-
-
-
 	},
 	
 	onBuildingSelect: function(combo, record, index) {
@@ -1743,20 +1012,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				this.roomChanged(newValue);
 			this.ownerCt.fireEvent('ciChange', this, combo);
 		}
-
-
-
 	},
 	
 	roomChanged: function(value){
 
 		var cbRack = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRack');
-		
 		cbRack.reset();
-		
 		cbRack.getStore().removeAll();
-		
-
 		
 		if(typeof value === 'string' && value.length === 0) {
 			Util.disableCombo(cbRack);
@@ -1769,25 +1031,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					id: value
 				}
 			});
-			
 			Util.enableCombo(cbRack);
 		}
 	},
-
-
-
-
-
 	
 	onFieldKeyUp: function(textfield, event) {
 		this.ownerCt.fireEvent('ciChange', this, textfield);
-
-
-
-
 	}
-
-
 
 });
 Ext.reg('AIR.CiNewAssetView', AIR.CiNewAssetView);
