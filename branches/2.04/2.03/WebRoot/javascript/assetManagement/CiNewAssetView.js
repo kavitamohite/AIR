@@ -190,6 +190,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						} ]
 					}, {
 						xtype : 'fieldset',
+						id: 'technics',
 						title : 'Technics',
 						autoHeight : true,
 						style : {
@@ -289,15 +290,20 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								fontSize : 12
 							}
 						}, {
-							xtype : 'combo',
-							id : 'cbgeneralusage',
-							fieldLabel : 'General Usage',
-							lazyRender : true,
-							lazyInit : false,
-							width : 370,
+							id: 'cbGeneralUsage',
+					        xtype: 'filterCombo',
+					        fieldLabel: 'General Usage',
+					        width: 370,
+					        enableKeyEvents: true,
+					        store: AIR.AirStoreFactory.createOperationalStatusListStore(),
+					        valueField: 'operationalStatusId',
+					        displayField: 'operationalStatus',
+							lastQuery: '',
+					        minChars: 0,
+					        triggerAction: 'all',
+					        mode: 'local',
 							style : {
-								marginBottom : 10,
-								fontSize : 12
+								marginBottom : 10
 							}
 						}, {
 							xtype : 'radiogroup',
@@ -429,7 +435,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					border: false,
 					width: 590,
 					items : [{
-
+						id: 'businessInformation',
 						xtype : 'fieldset',
 						title : 'Business Information',
 						autoHeight : true,
@@ -475,14 +481,22 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								marginBottom : 10
 							}
 						}, {
-							xtype : 'combo',
-							id : 'cbCostcenter',
-							fieldLabel : 'Cost center',
-							width: 370,
-							style : {
+					        xtype: 'filterCombo',//combo
+					        id: 'cbCostcenter',
+					        width: 370,
+					        fieldLabel: 'Cost center',
+					        enableKeyEvents: true,
+					        store: AIR.AirStoreFactory.createCostcenterListStore(),
+					        valueField: 'id',
+					        displayField: 'name',
+							lastQuery: '',
+					        triggerAction: 'all',//all query
+					        mode: 'local',
+					        queryParam: 'id',
+					        style : {
 								marginBottom : 10
 							}
-						}, {
+				        }, {
 							xtype : 'combo',
 							id : 'cbRequester',
 							fieldLabel : 'Requester',
@@ -602,6 +616,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					
 					},{
 						xtype : 'fieldset',
+						id : 'contacts',
 						title : 'Contacts',
 						autoHeight : true,
 						style : {
@@ -681,16 +696,20 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
 		cbModel.on('select', this.onModelSelect, this);
 		cbModel.on('keyup', this.onFieldKeyUp, this);
+		
+		var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter');
+		cbCostcenter.on('select', this.onCostCenterSelect, this);
+		cbCostcenter.on('keyup', this.onFieldKeyUp, this);
 
 		var bReset = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('bReset');
 		bReset.on('click',this.resetProduct, this);
 	},
 	
-	init: function() {
-		this.loadCountryData();
-		this.loadManufacturerData();
-		this.loadCategoryData();
-	},
+//	init: function() {
+//		this.loadCountryData();
+//		this.loadManufacturerData();
+//		this.loadCategoryData();
+//	},
 	
 	resetProduct: function(){
 		var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
@@ -712,6 +731,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		this.loadCountryData();
 		this.loadManufacturerData();
 		this.loadCategoryData();
+		this.loadCostcenterData();
+		this.loadOperationalStatusData();
 	},
 
 	updateLabels: function(labels){
@@ -771,6 +792,21 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		});
 	},
 	
+	onCostCenterSelect: function(combo, record, index) {
+		personStore = AIR.AirStoreFactory.createPersonStore();
+		personStore.load({
+			params:{
+				query: record.get('cwid')
+			},
+			callback: function (records, options, success) {
+				var value = this.getAt(0).data.firstname+" "+this.getAt(0).data.lastname+"/"+this.getAt(0).data.cwid;
+				var costCenterManager = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel')	.getComponent('contacts').getComponent('tCostcentermanager')
+				costCenterManager.setValue(value);
+			}
+		});
+	},
+	
+	
 	onModelSelect: function(combo, record, index) {
 		this.modelChanged(record.get('id'));
 		this.fireEvent('ciChange', this, combo, record);
@@ -807,6 +843,16 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				cbCountry.getStore().sort(field, 'ASC');
 			}
 		});
+	},
+	
+	loadCostcenterData: function(){	
+		var cbSubCategory = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter');
+		cbSubCategory.getStore().load();
+	},
+	
+	loadOperationalStatusData: function(){
+		var cbGeneralUsage = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbGeneralUsage');
+		cbGeneralUsage.getStore().load();
 	},
 	
 	countryChanged: function(value) {

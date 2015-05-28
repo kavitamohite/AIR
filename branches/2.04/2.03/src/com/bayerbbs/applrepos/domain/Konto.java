@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,22 +22,20 @@ public class Konto extends DeletableRevisionInfo implements Serializable{
 
 	private static final long serialVersionUID = -4649584367492656471L;
 	private Long id;
-	// KONTO_ID NOT NULL NUMBER
-
-	private String name;// KONTO_NAME VARCHAR2(80)
-	private String art; // KONTO_ART VARCHAR2(12)
-	private String cwidVerantw; // CWID_VERANTW VARCHAR2(32)
-	private String beschreibung; // BESCHREIBUNG VARCHAR2(400)
-	private Long itset;// ITSET NUMBER
-	private String subResponsible; // SUB_RESPONSIBLE VARCHAR2(160)
-	private Long sisnetConfig;// SISNET_CONFIG NUMBER
-	private Timestamp lastSync;// LAST_SYNC_TIMESTAMP TIMESTAMP(6)
-	private String lastSyncSource; // LAST_SYNC_SOURCE VARCHAR2(40)
-	private String syncing;// SYNCING VARCHAR2(40)
-	private String khinr; // KHINR VARCHAR2(100)
-	private Long sisnetConfigSwitch; // SISNET_CONFIG_SWITCH NUMBER
-	private Long costCenterProtected; // COSTCENTERPROTECTED NUMBER(1)
-	private Konto deliveryBlock; // DELIVERYBLOCK_ID NUMBER
+	private String name;
+	private String art; 
+	private String cwidVerantw; 
+	private String beschreibung; 
+	private Long itset;
+	private String subResponsible; 
+	private Long sisnetConfig;
+	private Timestamp lastSync;
+	private String lastSyncSource;
+	private String syncing;
+	private String khinr; 
+	private Long sisnetConfigSwitch; 
+	private Long costCenterProtected;
+	private Konto deliveryBlock;
 
 	
 	@Id
@@ -167,7 +166,7 @@ public class Konto extends DeletableRevisionInfo implements Serializable{
 		this.costCenterProtected = costCenterProtected;
 	}
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "DELIVERYBLOCK_ID")
 	public Konto getDeliveryBlock() {
 		return deliveryBlock;

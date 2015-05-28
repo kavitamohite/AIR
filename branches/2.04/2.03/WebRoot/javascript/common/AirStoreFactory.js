@@ -4227,7 +4227,8 @@ AIR.AirStoreFactory = function() {
  		createCostcenterListStore: function() {
 			var ciCostcenterListRecord = Ext.data.Record.create([
 				{ name: 'id', type: 'int' },
- 			    'name'					
+ 			    'name',
+ 			    'cwid'		
  			]);
 
 
@@ -4255,7 +4256,82 @@ AIR.AirStoreFactory = function() {
  			
 
  			return ciCostcenterListstore;
- 		}
+ 		},
+ 		
+ 		createPersonStore: function() {
+			var personPickerRecord = Ext.data.Record.create([{
+				name: 'cwid',
+				mapping: 'cwid'
+			}, {
+				name: 'lastname',
+				mapping: 'lastname'
+			}, {
+				name: 'firstname',
+				mapping: 'firstname'
+			}]);
+	
+			var personPickerRecordReader = new Ext.data.XmlReader({
+				record: 'return',
+				idProperty: 'cwid'
+			}, personPickerRecord);
+	
+			var personPickerStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'personPickerStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/PersonsWSPort',
+					loadMethod: 'findPersonByCWID',
+					timeout: 120000,
+					reader: personPickerRecordReader
+				}),
+				
+				fields: [ 'cwid', 'firstname', 'lastname' ],
+
+				reader: personPickerRecordReader,
+				
+				baseParams: {
+					cwid: '',
+					primaryCWID: 'Y'
+				}
+			});
+			
+			return personPickerStore;
+		},
+		
+		createOperationalStatusListStore: function() {
+			var operationalStatusListRecord = Ext.data.Record.create([
+				{ name: 'operationalStatusId', type: 'int' },
+ 			    'operationalStatus',
+ 			    'operationalStatusEn'		
+ 			]);
+
+
+ 			var operationalStatusListReader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'
+
+ 			}, operationalStatusListRecord);
+ 			
+
+ 			var operationalStatusListstore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/OperationalStatusWSPort',
+
+ 					loadMethod: 'getOperationalStatusList',
+ 					timeout: 120000,
+
+ 					reader: operationalStatusListReader
+ 				})
+ 			});
+ 			
+
+ 			return operationalStatusListstore;
+ 		},
 
 	};
 }();
