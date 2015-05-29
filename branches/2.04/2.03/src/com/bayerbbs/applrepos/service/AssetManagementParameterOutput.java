@@ -4,6 +4,8 @@ import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
 
 public class AssetManagementParameterOutput {
 
+	private long countResultSet;
+
 	private AssetViewDataDTO[] assetViewDataDTO = null;
 
 	public AssetViewDataDTO[] getAssetViewDataDTO() {
@@ -13,5 +15,13 @@ public class AssetManagementParameterOutput {
 	public void setAssetViewDataDTO(AssetViewDataDTO[] assetViewDataDTO) {
 		this.assetViewDataDTO = assetViewDataDTO;
 	}
-	
+
+	public long getCountResultSet() {
+		return countResultSet;
+	}
+
+	public void setCountResultSet(long countResultSet) {
+		this.countResultSet = countResultSet;
+	}
+
 }
