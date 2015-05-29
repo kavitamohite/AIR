@@ -4332,6 +4332,59 @@ AIR.AirStoreFactory = function() {
 
  			return operationalStatusListstore;
  		},
+ 		
+ 		creatPspElementListStore: function() {
+			var ciPspElementListRecord = Ext.data.Record.create([
+				{ name: 'id', type: 'int' },
+ 			    'name'					
+ 			]);
+ 			var ciPspElementListReader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'
+
+ 			}, ciPspElementListRecord);
+ 			var ciPspElementListstore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/BusinessAdministrationWSPort',
+
+ 					loadMethod: 'findPspElementList',
+ 					timeout: 120000,
+
+ 					reader: ciPspElementListReader
+ 				})
+ 			});
+ 			return ciPspElementListstore;
+ 		},
+ 		
+ 		creatSapAssetListStore: function() {
+			var ciSapAssetListRecord = Ext.data.Record.create([
+				{ name: 'id', type: 'int' },
+ 			    'name',
+ 			    'nameEn'
+ 			]);
+ 			var ciSapAssetListReader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'
+
+ 			}, ciSapAssetListRecord);
+ 			var ciSapAssetListstore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/BusinessAdministrationWSPort',
+
+ 					loadMethod: 'findSapAssetList',
+ 					timeout: 120000,
+
+ 					reader: ciSapAssetListReader
+ 				})
+ 			});
+ 			return ciSapAssetListstore;
+ 		}
 
 	};
 }();

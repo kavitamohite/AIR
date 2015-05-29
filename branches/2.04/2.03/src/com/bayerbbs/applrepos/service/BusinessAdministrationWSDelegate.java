@@ -1,17 +1,24 @@
 package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.applrepos.dto.CostCenterDTO;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.dto.KeyValueEnDTO;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "BusinessAdministrationWSService", portName = "BusinessAdministrationWSPort")
-
 public class BusinessAdministrationWSDelegate {
-	
-	BusinessAdministrationWS businessAdministrationWSWS=new BusinessAdministrationWS();
-	
-	public CostCenterDTO[] findCostcenterList(
-			DefaultDataInput input) {
-		return businessAdministrationWSWS.findCostcenterList(input.getId());
+
+	BusinessAdministrationWS businessAdministrationWS = new BusinessAdministrationWS();
+
+	public CostCenterDTO[] findCostcenterList(DefaultDataInput input) {
+		return businessAdministrationWS.findCostcenterList(input.getId());
 	}
 
+	public KeyValueDTO[] findPspElementList(DefaultDataInput input) {
+		return businessAdministrationWS.findPspElementList(input.getId());
+	}
+
+	public KeyValueEnDTO[] findSapAssetList(DefaultDataInput input) {
+		return businessAdministrationWS.findSapAssetList(input.getId());
+	}
 
 }

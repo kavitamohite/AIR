@@ -463,13 +463,19 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								marginBottom : 10
 							}
 						}, {
-							xtype : 'combo',
-							id : 'cbPsp',
-							fieldLabel : 'PSP-Element',
-							lazyRender : true,
-							lazyInit : false,
-							width: 370,
-							style : {
+					        xtype: 'filterCombo',//combo
+					        id: 'cbPsp',
+					        width: 370,
+					        fieldLabel: 'PSP-Element',
+					        enableKeyEvents: true,
+					        store: AIR.AirStoreFactory.creatPspElementListStore(),
+					        valueField: 'id',
+					        displayField: 'name',
+							lastQuery: '',
+					        triggerAction: 'all',//all query
+					        mode: 'local',
+					        queryParam: 'id',
+					        style : {
 								marginBottom : 10
 							}
 						}, {
@@ -497,14 +503,39 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								marginBottom : 10
 							}
 				        }, {
-							xtype : 'combo',
-							id : 'cbRequester',
-							fieldLabel : 'Requester',
-							width: 370,
+
+					    	xtype: 'panel',
+							id: 'pRequester',
+							border: false,
+							layout: 'column',
 							style : {
 								marginBottom : 10,
 								fontSize : 12
-							}
+							},
+							items: [{
+								xtype: 'label',
+								fieldLabel : 'Requester',
+								text:'Requester:',
+								width: 105,
+								style: {
+									fontSize: 12
+								}
+				    		},{
+								xtype: 'textfield',
+						        id: 'tfRequester',
+						        width: 325,
+						        lazyRender : true,
+								lazyInit : false,
+						    },{
+						    	xtype: 'commandlink',
+						    	id: 'clRequesterAdd',
+						    	img: img_AddPerson
+						    },{
+						    	xtype: 'commandlink',
+						    	id: 'clRequesterRemove',
+						    	img: img_RemovePerson
+						    }]
+						
 						}, {
 							xtype : 'textfield',
 							id : 'tcost',
@@ -534,14 +565,21 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								marginBottom : 10,
 								fontSize : 12
 							}
-						}, {
-							xtype : 'combo',
-							id : 'cbSapAsset',
-							fieldLabel : 'SAP Asset Class',
-							width: 370,
-							style : {
-								marginBottom : 10,
-								fontSize : 12
+						},  {
+					        xtype: 'filterCombo',//combo
+					        id: 'cbSapAsset',
+					        width: 370,
+					        fieldLabel: 'SAP Asset Class',
+					        enableKeyEvents: true,
+					        store: AIR.AirStoreFactory.creatSapAssetListStore(),
+					        valueField: 'id',
+					        displayField: 'name',
+							lastQuery: '',
+					        triggerAction: 'all',//all query
+					        mode: 'local',
+					        queryParam: 'id',
+					        style : {
+								marginBottom : 10
 							}
 						}, {
 							xtype : 'textfield',
@@ -595,7 +633,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							lazyRender : true,
 							lazyInit : false,
 							width: 370,
-							height : 50,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -655,11 +692,60 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						}]
 					}]
 				}]
+			},{
+				xtype : 'panel',
+				id: 'buttonPanel',
+				layout : 'column',
+				autoScroll : true,
+				autoHeight : true,
+				bodyStyle : 'padding:10px 5px 0px 10px',
+				items : [{
+					xtype : 'button',
+					id : 'saveBtn',
+					text : 'Save',
+					style : {
+						marginBottom : 10,
+						fontSize : 12
+					}
+				},{
+					xtype : 'button',
+					id : 'cancelBtn',
+					text : 'Cancel',
+					style : {
+						marginBottom : 10,
+						fontSize : 12
+					}
+				},{
+					xtype : 'button',
+					id : 'inventoryBtn',
+					text : 'Apply for inventory',
+					style : {
+						marginBottom : 10,
+						fontSize : 12
+					}
+				},{
+					xtype : 'button',
+					id : 'saveBtn',
+					text : 'Save',
+					style : {
+						marginBottom : 10,
+						fontSize : 12
+					}
+				}]
 			}]
 		});
 		
 		AIR.CiNewAssetView.superclass.initComponent.call(this);
 		this.addEvents('ciBeforeChange', 'ciChange'); //required : needs to check
+		
+		var clRequesterAdd = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('clRequesterAdd');
+		var clRequesterRemove = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('clRequesterRemove');
+		clRequesterAdd.on('click', this.onRequesterAdd, this);
+		clRequesterRemove.on('click', this.onRequesterRemove, this);
+		
+		var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
+		cbSapAsset.on('select', this.onSapAssetSelect, this);
+		cbSapAsset.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
 		cbCountry.on('select', this.onCountrySelect, this);
@@ -711,6 +797,20 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 //		this.loadCategoryData();
 //	},
 	
+	onRequesterAdd: function(link, event) {
+		AIR.AirPickerManager.openPersonPicker(null, this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester'), event);
+	},
+	
+	onRequesterRemove: function(link, event) {
+		AIR.AirPickerManager.openRemovePicker(null, this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester'), event);
+	},
+	
+	onSapAssetSelect: function(combo, record, index) {
+		var value = record.get('nameEn');
+		var tEconomic = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic')
+        tEconomic.setValue(value);
+	},
+	
 	resetProduct: function(){
 		var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
 		var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
@@ -733,6 +833,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		this.loadCategoryData();
 		this.loadCostcenterData();
 		this.loadOperationalStatusData();
+		this.loadPspElementData();
+		this.loadSapAssetData();
 	},
 
 	updateLabels: function(labels){
@@ -853,6 +955,17 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	loadOperationalStatusData: function(){
 		var cbGeneralUsage = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbGeneralUsage');
 		cbGeneralUsage.getStore().load();
+	},
+	
+	loadPspElementData: function(){	
+		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
+		cbPsp.getStore().load();
+	},
+	
+	loadSapAssetData: function(){	
+		var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
+		cbSapAsset.getStore().load();
+		
 	},
 	
 	countryChanged: function(value) {

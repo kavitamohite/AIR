@@ -14,13 +14,18 @@ import javax.persistence.Table;
 @Table(name = "HW_KATEGORIE1")
 @org.hibernate.annotations.Entity(dynamicInsert = true)
 @SequenceGenerator(name = "HwCategorySeq", sequenceName = "TBADM.SEQ_HW_KATEGORIE1")
-public class HardwareCategory1 extends DeletableRevisionInfo implements
-		Serializable {
+public class HardwareCategory1 extends DeletableRevisionInfo implements Serializable {
 	private static final long serialVersionUID = -9160754796793917441L;
+
 	private Long id;
+
 	private String hwKategory1;
+
 	private String text;
+
 	private String en;
+
+	private Long month;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "HwCategorySeq")
@@ -60,4 +65,12 @@ public class HardwareCategory1 extends DeletableRevisionInfo implements
 		this.en = en;
 	}
 
+	@Column(name = "DEPRECIATION_MONTHS")
+	public Long getMonth() {
+		return month;
+	}
+
+	public void setMonth(Long month) {
+		this.month = month;
+	}
 }
