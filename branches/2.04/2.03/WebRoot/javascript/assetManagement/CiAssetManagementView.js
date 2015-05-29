@@ -126,9 +126,6 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 	    		searchString = searchString.replace('\'', '\'\'');
 	    }
 	    
-	    var rbgQueryMode = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('rbgQueryMode');
-		var rbQueryMode = rbgQueryMode.getValue();
-		var queryMode = rbQueryMode.inputValue;
 	
 	    var params = this.getBaseSearchParams();
 				       
@@ -140,7 +137,6 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 		}
 	    
 	    params.query = searchString;
-	    params.queryMode = queryMode;
 	    params.isAdvSearch = 'false';
 		
 		return params;
