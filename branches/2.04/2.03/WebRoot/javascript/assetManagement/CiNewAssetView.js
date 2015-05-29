@@ -89,6 +89,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			}, {
 				xtype : 'panel',
 				id: 'bottomPanel',
+				border: false,
 				layout: {
 			        type: 'table',
 			        columns: 2
@@ -104,7 +105,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						id : 'product',
 						autoHeight : true,
 						style : {
-							margin : '5 5 0 5'
+							margin : '5 5 0 0'
 						},
 						items : [{
 							id: 'cbManufacturer',
@@ -194,7 +195,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						title : 'Technics',
 						autoHeight : true,
 						style : {
-							margin : '5 5 0 5'
+							margin : '5 5 0 0'
 						},
 						items : [ {
 							xtype : 'textfield',
@@ -344,7 +345,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						id : 'location',
 						autoHeight : true,
 						style : {
-							margin : '5 5 0 5'
+							margin : '5 5 0 0'
 						},
 						items : [{
 							id: 'cbCountry',
@@ -440,7 +441,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						title : 'Business Information',
 						autoHeight : true,
 						style : {
-							margin : '5 5 0 5'
+							margin : '5 0 0 0'
 						},
 						items : [ {
 							xtype : 'combo',
@@ -526,6 +527,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						        width: 325,
 						        lazyRender : true,
 								lazyInit : false,
+						    },{
+								xtype: 'hidden',
+						        id: 'tfRequesterHidden'
 						    },{
 						    	xtype: 'commandlink',
 						    	id: 'clRequesterAdd',
@@ -657,7 +661,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						title : 'Contacts',
 						autoHeight : true,
 						style : {
-							margin : '5 5 0 5'
+							margin : '5 0 0 0'
 						},
 						items : [ {
 							xtype : 'textfield',
@@ -696,6 +700,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				xtype : 'panel',
 				id: 'buttonPanel',
 				layout : 'column',
+				border: false,
 				autoScroll : true,
 				autoHeight : true,
 				bodyStyle : 'padding:10px 5px 0px 10px',
