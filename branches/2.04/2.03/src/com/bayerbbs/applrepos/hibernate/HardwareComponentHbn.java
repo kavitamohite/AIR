@@ -15,15 +15,15 @@ import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
 public class HardwareComponentHbn {
 
 	@SuppressWarnings("unchecked")
-	public static List<AssetViewDataDTO> searchAsset(String sapDescription){
+	public static List<AssetViewDataDTO> searchAsset(String sapDescription) {
 		List<AssetViewDataDTO> list = new ArrayList<AssetViewDataDTO>();
-		
+
 		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
-			criteria.add(Restrictions.like("sapDescription", sapDescription));
+			criteria.add(Restrictions.like("sapDescription", "%" + sapDescription + "%"));
 			List<HardwareComponent> values = (List<HardwareComponent>) criteria.list();
 
 			list = getDTOList(values);
@@ -43,14 +43,13 @@ public class HardwareComponentHbn {
 		}
 
 		return list;
-		
+
 	}
 
-	private static List<AssetViewDataDTO> getDTOList(
-			List<HardwareComponent> values) {
+	private static List<AssetViewDataDTO> getDTOList(List<HardwareComponent> values) {
 
 		List<AssetViewDataDTO> list = new ArrayList<AssetViewDataDTO>();
-		for(HardwareComponent hwComp : values){
+		for (HardwareComponent hwComp : values) {
 			AssetViewDataDTO dto = getDTO(hwComp);
 			list.add(dto);
 		}
@@ -61,12 +60,18 @@ public class HardwareComponentHbn {
 
 		AssetViewDataDTO dto = new AssetViewDataDTO();
 		dto.setId(hwComp.getId());
-		dto.setManufacturer(hwComp.getPartner().getName());
+		if (hwComp.getPartner() != null) {
+			dto.setManufacturer(hwComp.getPartner().getName());
+		}
+
 		dto.setSapDescription(hwComp.getSapDescription());
 		dto.setSerialNumber(hwComp.getSerialNumber());
-		dto.setCostCenterManager(hwComp.getKonto().getName()); // Needs to be checked
+
+		if (hwComp.getKonto() != null) {
+			dto.setCostCenterManager(hwComp.getKonto().getName());
+			dto.setCostCenterManager(hwComp.getKonto().getCwidVerantw());
+		}
 		dto.setOrganizationalunit(hwComp.getSubResponsible());
-		dto.setCostCenterManager(hwComp.getKonto().getName());
 		dto.setInventoryNumber(hwComp.getInventoryNumber());
 		dto.setPspElement("PSP ELEMENT");
 		dto.setRequester(hwComp.getRequester());
@@ -77,7 +82,9 @@ public class HardwareComponentHbn {
 		dto.setOrderNumber(hwComp.getOrderNumber());
 		dto.setAssetChecked("ASSET CHECKED");
 		dto.setSapAssetClass("SAP ASSET CLASS");
-		dto.setSubCategory(hwComp.getHardwareCategory2().getId());
+		if (hwComp.getHardwareCategory2() != null) {
+			dto.setSubCategory(hwComp.getHardwareCategory2().getId());
+		}
 		dto.setType("TYPE");
 		dto.setModel(hwComp.getCpuModel());
 		dto.setSystemPlatformName("SYSTEM PLATOFORM");
