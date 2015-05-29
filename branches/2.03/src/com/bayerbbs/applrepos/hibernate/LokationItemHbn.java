@@ -54,7 +54,14 @@ public class LokationItemHbn extends BaseHbn {
 		if(metaData.getAliasField() != null)
 			sql.append(", ").append(CI).append(metaData.getAliasField());
 		
-		sql.append(", responsible, sub_responsible, template, del_quelle,provider_name,provider_address,  ").append(locationFields).append(" FROM ").append(metaData.getTableName()).append(" ci").
+		sql.append(", responsible, sub_responsible, template, del_quelle, ");
+		if(metaData.getProviderName()!=null && metaData.getProviderAddress()!=null ){
+			sql.append(AirKonstanten.PROVIDER_NAME);
+			sql.append(",");
+			sql.append(AirKonstanten.PROVIDER_ADDRESS);
+			sql.append(",  ");
+		}
+		sql.append(locationFields).append(" FROM ").append(metaData.getTableName()).append(" ci").
 		append(" JOIN search_loc lk on ").append(LK).append(metaData.getIdField()).append(" = ").append(CI).append(metaData.getIdField()).
 		append(" WHERE (").//del_timestamp IS NULL AND 
 		append("UPPER(").append(CI).append(metaData.getNameField()).append(") LIKE '");
@@ -250,10 +257,11 @@ public class LokationItemHbn extends BaseHbn {
 						ci.setIsTemplate(AirKonstanten.NO);
 					}
 					//Added by vandana
-					ci.setProviderName(rs.getString("provider_name"));
-					ci.setProviderAddress(rs.getString("provider_address"));
-					
-					
+					if(metaData.getProviderName()!=null && metaData.getProviderAddress() !=null){
+						ci.setProviderName(rs.getString("provider_name"));
+						ci.setProviderAddress(rs.getString("provider_address"));
+					}
+										
 					cis.add(ci);
 					//i++;
 				}// else break;

@@ -24,6 +24,8 @@ import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Function;
 import com.bayerbbs.applrepos.domain.FunctionDTO;
 import com.bayerbbs.applrepos.domain.ItSystem;
+import com.bayerbbs.applrepos.domain.LifecycleStatus;
+import com.bayerbbs.applrepos.domain.OperationalStatus;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.domain.Standort;
@@ -1123,17 +1125,25 @@ public class CiEntityWS {
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.LIFE_CYCLE_STATUS);
 		if (itSystem.getLifecycleStatusId() != null && itSystem.getLifecycleStatusId() != 0)
-			maDto.setAttributeValue(LifecycleStatusHbn.findById(
-					Long.valueOf(itSystem.getLifecycleStatusId()))
-					.getlcStatusEn());
+		{
+			LifecycleStatus lifecycleStatus = LifecycleStatusHbn.findById(
+					Long.valueOf(itSystem.getLifecycleStatusId()));
+			if(lifecycleStatus != null)
+				maDto.setAttributeValue(lifecycleStatus.getlcStatusEn());
+		}
+
 		maDto.setId("lifecycleStatusId");
 		massUpdateAttriuteDTOs.add(maDto);
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.OPERATIONAL_STATUS);
-		if (itSystem.getEinsatzStatusId() != null && itSystem.getEinsatzStatusId() != 0)
-			maDto.setAttributeValue(OperationalStatusHbn.findById(
-					Long.valueOf(itSystem.getEinsatzStatusId())).getOperationalStatusEn());
+		if (itSystem.getEinsatzStatusId() != null && itSystem.getEinsatzStatusId() != 0){
+			OperationalStatus operationalStatus = OperationalStatusHbn.findById(
+					Long.valueOf(itSystem.getEinsatzStatusId()));
+			if(operationalStatus!= null){
+				maDto.setAttributeValue(operationalStatus.getOperationalStatusEn());
+			}
+		}
 		maDto.setId("operationalStatusId");
 		massUpdateAttriuteDTOs.add(maDto);
 
@@ -1813,6 +1823,7 @@ public class CiEntityWS {
 				locationCi.setGxpFlag(templaeLocationCI.getGxpFlag());
 			}
 			if(massUpdateParameterInput.getItsecGroupId()){
+				locationCi.setRefId(null);
 				locationCi.setItsecGroupId(templaeLocationCI.getItsecGroupId());
 			}
 			if(massUpdateParameterInput.getSlaId()){
@@ -1948,6 +1959,7 @@ public class CiEntityWS {
 				application.setGxpFlag(templateApplication.getGxpFlag());
 			}
 			if(massUpdateParameterInput.getItsecGroupId()){
+				application.setRefId(null);
 				application.setItsecGroupId(templateApplication.getItsecGroupId());
 			}
 			if(massUpdateParameterInput.getSlaId()){
@@ -2111,6 +2123,7 @@ public class CiEntityWS {
 				itSystem.setGxpFlag(templateItSystem.getGxpFlag());
 			}
 			if(massUpdateParameterInput.getItsecGroupId()){
+				itSystem.setRefId(null);
 				itSystem.setItsecGroupId(templateItSystem.getItsecGroupId());
 			}
 			if(massUpdateParameterInput.getSlaId()){
@@ -2562,6 +2575,10 @@ public class CiEntityWS {
 			if(mAttrParameterInput.getItSecSbAvailability()!=null && mAttrParameterInput.getItSecSbAvailability()!=0 ){
 				locationCi.setItSecSbAvailability(mAttrParameterInput.getItSecSbAvailability());
 			}
+			if(mAttrParameterInput.getItsecGroupId() != null && mAttrParameterInput.getItsecGroupId() !=0){
+				locationCi.setRefId(null);
+				locationCi.setItsecGroupId(mAttrParameterInput.getItsecGroupId());
+			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbAvailabilityTxt())){
 				locationCi.setItSecSbAvailabilityTxt(mAttrParameterInput.getItSecSbAvailabilityTxt());
 			}
@@ -2673,6 +2690,7 @@ public class CiEntityWS {
 				application.setSeverityLevelId(mAttrParameterInput.getSeverityLevelId());
 			}
 			if(mAttrParameterInput.getItsecGroupId()!=null && mAttrParameterInput.getItsecGroupId()!=0){
+				application.setRefId(null);
 				application.setItsecGroupId(mAttrParameterInput.getItsecGroupId());
 			}
 			if(mAttrParameterInput.getSlaId()!=null && mAttrParameterInput.getSlaId()!=0){
@@ -2848,6 +2866,7 @@ public class CiEntityWS {
 				itSystem.setClusterType(mAttrParameterInput.getClusterType());
 			}
 			if(mAttrParameterInput.getItsecGroupId()!=null && mAttrParameterInput.getItsecGroupId()!=0){
+				itSystem.setRefId(null);
 				itSystem.setItsecGroupId(mAttrParameterInput.getItsecGroupId());
 			}
 			if(mAttrParameterInput.getSlaId()!=null && mAttrParameterInput.getSlaId()!=0){
@@ -2937,7 +2956,7 @@ public class CiEntityWS {
 			int [] updateCounts = stmt.executeBatch();
 			tx.commit();
 			System.out.println(updateCounts);
-		}		
+		}	
 		toCommit = true;
 			
 		} catch (Exception e) {

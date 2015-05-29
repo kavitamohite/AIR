@@ -54,7 +54,7 @@ public class RoomHbn extends LokationItemHbn {
 	
 	//CiItemDTO[]
 	public static CiItemsResultDTO findRoomsBy(CiSearchParamsDTO input) {
-		CiMetaData metaData = new CiMetaData("raum_id", "raum_name", "raumalias", "land_kennzeichen,standort_code,terrain_name,gebaeude_name,area_name", "Room", "raum", AirKonstanten.TABLE_ID_ROOM);//land_name_en,standort_name
+		CiMetaData metaData = new CiMetaData("raum_id", "raum_name", "raumalias", "land_kennzeichen,standort_code,terrain_name,gebaeude_name,area_name", "Room", "raum", AirKonstanten.TABLE_ID_ROOM,AirKonstanten.PROVIDER_NAME, AirKonstanten.PROVIDER_ADDRESS);//land_name_en,standort_name
 		return findLocationCisBy(input, metaData);
 	}
 

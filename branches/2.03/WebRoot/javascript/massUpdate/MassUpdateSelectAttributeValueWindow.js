@@ -349,8 +349,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    			fieldLabel: 'Virtual Hardware Client',
 
 					            items: [
-					                { id: 'rgVirtualHWClientYes',	itemId: 'rgVirtualHWClientYes', 	boxLabel: 'Yes',	name: 'rgVirtualHWClient', inputValue: 'Y', width: 50 },
-					                { id: 'rgVirtualHWClientNo',	itemId: 'rgVirtualHWClientNo',		boxLabel: 'No',		name: 'rgVirtualHWClient', inputValue: 'N', width: 50 }
+					                { id: 'selectAttrRgVirtualHWClientYes',	itemId: 'selectAttrRgVirtualHWClientYes', 	boxLabel: 'Yes',	name: 'selectAttrRgVirtualHWClient', inputValue: 'Y', width: 50 },
+					                { id: 'selectAttrRgVirtualHWClientNo',	itemId: 'selectAttrRgVirtualHWClientNo',		boxLabel: 'No',		name: 'selectAttrRgVirtualHWClient', inputValue: 'N', width: 50 }
 					            ]
 							},{
 					            xtype: 'radiogroup',
@@ -362,8 +362,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    			fieldLabel: 'Virtual Hardware Host',
 
 					            items: [
-					                { id: 'rgVirtualHWHostYes',	itemId: 'rgVirtualHWHostYes', 	boxLabel: 'Yes',	name: 'selectAttrgVirtualHWHost', inputValue: 'Y', width: 50 },
-					                { id: 'rgVirtualHWHostNo',	itemId: 'rgVirtualHWHostNo',	boxLabel: 'No',		name: 'selectAttrgVirtualHWHost', inputValue: 'N', width: 50 }
+					                { id: 'selectAttrgVirtualHWHostYes',	itemId: 'selectAttrgVirtualHWHostYes', 	boxLabel: 'Yes',	name: 'selectAttrgVirtualHWHost', inputValue: 'Y', width: 50 },
+					                { id: 'selectAttrgVirtualHWHostNo',	itemId: 'selectAttrgVirtualHWHostNo',	boxLabel: 'No',		name: 'selectAttrgVirtualHWHost', inputValue: 'N', width: 50 }
 					            ]
 							},{
 								xtype: 'filterCombo',//combo

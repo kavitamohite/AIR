@@ -1006,7 +1006,7 @@ public class ItSystemHbn extends BaseHbn {
 
 	public static CiItemsResultDTO findItSystemsBy(ApplicationSearchParamsDTO input) {
 		String typeName = input.getCiSubTypeId().equals(AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING) ? AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM : AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM;
-		CiMetaData metaData = new CiMetaData("it_system_id", "it_system_name", "alias", null, typeName, "it_system", AirKonstanten.TABLE_ID_IT_SYSTEM);
+		CiMetaData metaData = new CiMetaData("it_system_id", "it_system_name", "alias", null, typeName, "it_system", AirKonstanten.TABLE_ID_IT_SYSTEM,null,null);
 		return findItSystemCisBy(input, metaData);
 	}
 	

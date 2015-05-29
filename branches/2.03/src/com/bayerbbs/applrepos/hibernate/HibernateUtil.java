@@ -57,7 +57,15 @@ public class HibernateUtil {
 				    if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
 				    	config = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
 				    } else {
-				    	config = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+				    	if(hostName.equals(AirKonstanten.SERVERNAME_BMS_PROD))
+					    	config = new AnnotationConfiguration().configure("hibernate.prod.bms.cfg.xml");
+				    	else{
+				    		if(hostName.equals(AirKonstanten.SERVERNAME_BMS_QA)){
+						    	config = new AnnotationConfiguration().configure("hibernate.qa.bms.cfg.xml");
+				    		}else
+						    	config = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+
+				    	}				    		
 				    }
 //					transbaseConf = config;
 					break;
@@ -94,10 +102,19 @@ public class HibernateUtil {
 					System.out.println(ex.getMessage());
 				} 
 				System.out.println("Running on Host: " + hostName);
+				System.out.println("Running on Host: " + hostName);
 			    if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
 			    	conf = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
 			    } else {
-			    	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+			    	if(hostName.equals(AirKonstanten.SERVERNAME_BMS_PROD))
+				    	conf = new AnnotationConfiguration().configure("hibernate.prod.bms.cfg.xml");
+			    	else{
+			    		if(hostName.equals(AirKonstanten.SERVERNAME_BMS_QA)){
+					    	conf = new AnnotationConfiguration().configure("hibernate.qa.bms.cfg.xml");
+			    		}else
+					    	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+
+			    	}				    		
 			    }
 				// Erzeugung der Session.
 				sessionFactory = conf.buildSessionFactory();

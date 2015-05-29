@@ -24,9 +24,9 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
     		closeAction:'close',
     		border: false,
     		title: 'Selection of Template Parameters',
-    		
+    		autoScroll: true,
     		width: 1000,
-    		height: 650,
+    		height: 700,
     		
 			layout: 'card',//anchor border anchor vbox
 			activeItem: 0,
@@ -35,6 +35,9 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
     			region: 'center',
 				xtype: 'panel',
 				id: 'pMassUpdateFromSearchCard',
+				height: 650,
+	    		autoScroll: true,
+
 				
 				layout: 'form',//fit: dadurch fehlte die pagingBar der Tabelle (?!)
 				border: false,

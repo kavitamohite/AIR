@@ -182,19 +182,30 @@ public class AirServlet extends HttpServlet {
 		StringWriter sw = new StringWriter();
 		String cversion = version.replace(".", "").replace("?", ".");
 		try {
-			if (AirKonstanten.SERVERNAME_PROD.equals(InetAddress.getLocalHost().getHostName()) || AirKonstanten.SERVERNAME_QA.equals(InetAddress.getLocalHost().getHostName()) ) {
+			if (AirKonstanten.SERVERNAME_PROD.equals(InetAddress.getLocalHost()
+					.getHostName())
+					|| AirKonstanten.SERVERNAME_QA.equals(InetAddress
+							.getLocalHost().getHostName())
+					|| AirKonstanten.SERVERNAME_BMS_PROD.equals(InetAddress
+							.getLocalHost().getHostName())
+					|| AirKonstanten.SERVERNAME_BMS_QA.equals(InetAddress
+							.getLocalHost().getHostName())) {
 				ServletContext servletContext = getServletContext();
 				String current = servletContext.getRealPath("/");
-				if (!existsCompressedJSFile(cversion, fileName, AirKonstanten.COMPRESSEDCODEDIR)) {
+				if (!existsCompressedJSFile(cversion, fileName,
+						AirKonstanten.COMPRESSEDCODEDIR)) {
 					FileReader f = new FileReader(current + fileName);
 					sw.append("<script>/* ").append(fileName).append(" */ ");
 					System.out.println(fileName);
-					JavaScriptCompressor compressor = new JavaScriptCompressor(f, new YuiCompressorErrorReporter());
+					JavaScriptCompressor compressor = new JavaScriptCompressor(
+							f, new YuiCompressorErrorReporter());
 					compressor.compress(sw, -1, false, false, false, false);
 					sw.append("</script>\n");
-					writeCompressedJSFile(cversion, fileName, AirKonstanten.COMPRESSEDCODEDIR, sw);
+					writeCompressedJSFile(cversion, fileName,
+							AirKonstanten.COMPRESSEDCODEDIR, sw);
 				} else {
-					sw = readCompressedJSFile(cversion, fileName, AirKonstanten.COMPRESSEDCODEDIR);
+					sw = readCompressedJSFile(cversion, fileName,
+							AirKonstanten.COMPRESSEDCODEDIR);
 				}
 			} else {
 				sw = new StringWriter();
@@ -662,10 +673,18 @@ public class AirServlet extends HttpServlet {
 			}
 				System.out.println("-----> AIR running on " + InetAddress.getLocalHost().getHostName() + ".");
 				html.append("<!--" + InetAddress.getLocalHost().getHostName() + "-->");
-				if (AirKonstanten.SERVERNAME_PROD.equals(InetAddress.getLocalHost().getHostName()) || AirKonstanten.SERVERNAME_QA.equals(InetAddress.getLocalHost().getHostName()) ){
-					html.append("<script type='text/javascript' src='javascript/lib/extjs/adapter/ext/ext-base.js'></script>\n").
-					     append("<script type='text/javascript' src='javascript/lib/extjs/ext-all.js'></script>\n");
-				} else {
+		if (AirKonstanten.SERVERNAME_PROD.equals(InetAddress.getLocalHost()
+				.getHostName())
+				|| AirKonstanten.SERVERNAME_QA.equals(InetAddress
+						.getLocalHost().getHostName())
+				|| AirKonstanten.SERVERNAME_BMS_QA.equals(InetAddress
+						.getLocalHost().getHostName())
+				|| AirKonstanten.TRANSBASE_PROD_HOST.equals(InetAddress
+						.getLocalHost().getHostName())) {
+			html.append(
+					"<script type='text/javascript' src='javascript/lib/extjs/adapter/ext/ext-base.js'></script>\n")
+					.append("<script type='text/javascript' src='javascript/lib/extjs/ext-all.js'></script>\n");
+		} else {
 					html.append("<script type='text/javascript' src='javascript/lib/extjs/adapter/ext/ext-base-debug.js'></script>\n").
 				    append("<script type='text/javascript' src='javascript/lib/extjs/ext-all-debug.js'></script>\n");
 				}

@@ -129,8 +129,10 @@ public class LDAPAuthCeye {
 		try {
 			userDN = findDnByUID(username);
 		} catch (Exception e1) {
-			System.out.println("Unknown error during username search: "
+						System.out.println("Unknown error during username search: "
 					+ e1.getMessage());
+						System.out.println(e1.getCause().getMessage());
+						System.out.println(e1.getCause().getStackTrace());
 		}
 
 		if (null == userDN) {

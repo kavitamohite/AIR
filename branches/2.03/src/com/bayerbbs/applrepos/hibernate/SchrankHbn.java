@@ -38,7 +38,7 @@ public class SchrankHbn extends LokationItemHbn {
 
 
 	public static CiItemsResultDTO findSchraenkeBy(CiSearchParamsDTO input) {
-		CiMetaData metaData = new CiMetaData("schrank_id", "schrank_name", null, "land_kennzeichen,standort_code,terrain_name,gebaeude_name,area_name,raum_name", "Position", "schrank", AirKonstanten.TABLE_ID_POSITION);
+		CiMetaData metaData = new CiMetaData("schrank_id", "schrank_name", null, "land_kennzeichen,standort_code,terrain_name,gebaeude_name,area_name,raum_name", "Position", "schrank", AirKonstanten.TABLE_ID_POSITION,null,null);
 		return findLocationCisBy(input, metaData);
 	}
 

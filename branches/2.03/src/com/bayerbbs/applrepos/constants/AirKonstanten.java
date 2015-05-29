@@ -5,13 +5,17 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
-	public final static String AIR_VERSION = "2.03.015";
+	public final static String AIR_VERSION = "2.03.016";
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
 	public final static String SERVERNAME_PROD = "byzreg.bayer-ag.com";
 	public final static String SERVERNAME_QA = "byzreh.bayer-ag.com";
+	public final static String SERVERNAME_BMS_PROD = "mdelevs0300.ad.glpoly.net";
+	public final static String SERVERNAME_BMS_QA = "mdelevs0475.ad.glpoly.net";
 	public final static String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
+	public final static String TRANSBASE_BMS_PROD_HOST_SERVICENAME = "MTRANSBP";
+	public final static String TRANSBASE_BMS_QA_HOST_SERVICENAME = "MTRANSBQ";
 
 	public final static Long IT_SET_DEFAULT = new Long(11397);
 	public final static Long IT_SET_GERMANY = new Long(10002);
@@ -205,6 +209,8 @@ public final class AirKonstanten {
 	public static final String VIRTUAL_HARDWARE_HOST = "Virtual Hardware Host";
 	public static final String VIRTUAL_SOFTWARE = "Virtual Software";
 	public static final String PRIMARY_FUNCTION = "Primary Function";
+	public static final String PROVIDER_NAME = "PROVIDER_NAME";
+	public static final String PROVIDER_ADDRESS = "PROVIDER_ADDRESS";
 	
 	public static final String LINK = "Link";
 	public static final String GR1435 = "GR1435";

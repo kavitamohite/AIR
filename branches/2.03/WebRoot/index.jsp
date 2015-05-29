@@ -13,15 +13,32 @@
 	} catch (Exception ex) {
 		System.out.println(ex.getMessage());
 	} 
-	System.out.println("Running on Host: " + hostName);
     if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
     	conf = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
     } else {
-    	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+    	if(hostName.equals(AirKonstanten.SERVERNAME_BMS_PROD))
+	    	conf = new AnnotationConfiguration().configure("hibernate.prod.bms.cfg.xml");
+    	else{
+    		if(hostName.equals(AirKonstanten.SERVERNAME_BMS_QA)){
+		    	conf = new AnnotationConfiguration().configure("hibernate.qa.bms.cfg.xml");
+    		}else
+		    	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+
+    	}				    		
     }
 	String dbConnectionUrl = conf.getProperty("hibernate.connection.url");
-	
-	String redirectPath = dbConnectionUrl.contains(AirKonstanten.TRANSBASE_PROD_HOST) ? "/AIR/P" : "/AIR/Q";
+	String redirectPath="";
+	if(dbConnectionUrl.contains(AirKonstanten.TRANSBASE_PROD_HOST)){
+		redirectPath = "/AIR/P" ;
+	}else{
+		if(dbConnectionUrl.contains(AirKonstanten.TRANSBASE_BMS_PROD_HOST_SERVICENAME)){
+			redirectPath = "/Air_P_MS/P" ;
+		}else
+			if(dbConnectionUrl.contains(AirKonstanten.TRANSBASE_BMS_QA_HOST_SERVICENAME)){
+				redirectPath = "/AIR_Q_MS/Q" ;
+			}else
+				redirectPath = "/AIR/Q" ;		
+	}	
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>

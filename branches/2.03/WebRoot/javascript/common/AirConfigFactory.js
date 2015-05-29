@@ -17,7 +17,7 @@ AIR.AirConfigFactory = function() {
 				columnConfig.push({ id: 'applicationSteward', header: 'App steward', dataIndex: 'applicationSteward', width: 150, sortable: true});// ,
 				columnConfig.push({ id: 'ciOwner', header: 'Responsible', dataIndex: 'ciOwner', width: 150, sortable: true});// responsible
 				columnConfig.push({ id: 'ciOwnerDelegate', header: 'Sub responsible', dataIndex: 'ciOwnerDelegate', width: 150, sortable: true});// subResponsible
-				columnConfig.push({ id: 'isTemplate', header: 'template', dataIndex: 'isTemplate', hidden:true});
+				columnConfig.push({ id: 'isTemplate', header: 'Template', dataIndex: 'isTemplate', hidden:true});
 				columnConfig.push({ id: 'providerName', header: 'Provider Name', dataIndex: 'providerName', width: 150, sortable: true});// vandana
 				columnConfig.push({ id: 'providerAddress', header: 'Provider Address', dataIndex: 'providerAddress', width: 150, sortable: true});// vandana
 				
