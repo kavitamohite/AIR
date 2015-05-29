@@ -63,18 +63,7 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
 		        	},
 		        	
 		        	text: 'Reset'
-		        },{
-		            xtype: 'radiogroup',
-					id: 'rbgQueryMode',
-					hidden: true,
-		            items: [{
-		            	id: 'rbgQueryModeContains', name: 'queryMode', boxLabel: 'Contains', inputValue: 'CONTAINS', checked: true
-		            }, {
-		            	id: 'rbgQueryModeBeginsWith', name: 'queryMode', boxLabel: 'Begins with', inputValue: 'BEGINS_WITH'
-		            },{ 
-		            	id: 'rbgQueryModeExact', name: 'queryMode', boxLabel: 'Exact', inputValue: 'EXACT'
-		            }]
-				}]
+		        }]
 	        }]
 		});
 		
