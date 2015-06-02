@@ -79,8 +79,8 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 
 	onSearchEnter: function(field, e) {
         if(e.getKey() == e.ENTER) {
-	    	var clSearch = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('clAssetSearch');
-	    	clAssetSearch.fireEvent('click', clSearch);
+	    	var clAssetSearch = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('clAssetSearch');
+	    	clAssetSearch.fireEvent('click', clAssetSearch);
 	    }
 	},
 	
@@ -110,6 +110,12 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 		this.getComponent('ciAssetSearchViewPages').doLayout();
 		var field = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('tfAssetSearch');
 		var searchString = field.getRawValue().trim();
+		
+		var searchMode = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('searchMode');
+		var rbQueryMode = searchMode.getValue();
+		var queryMode = rbQueryMode.inputValue;
+		
+		console.log(queryMode);
 	    if (searchString != field.getRawValue())
 	    	field.setValue(searchString);
 
@@ -137,6 +143,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 		}
 	    
 	    params.query = searchString;
+	    params.queryMode = queryMode;
 	    params.isAdvSearch = 'false';
 		
 		return params;
@@ -157,11 +164,6 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 		ciStandardSearchView.setHeight(100);//60
 		ciSearchViewPages.setHeight(100);//60
 		ciSearchViewPages.doLayout();
-		
-		
-		var rbgQueryMode = ciAssetSearchView.getComponent('pAssetSearch').getComponent('rbgQueryMode');
-		rbgQueryMode.setValue(AC.SEARCH_MODE_CONTAINS);//searchQueryModeContains (#8)
-		rbgQueryMode.setVisible(false);
 		
 	},
 	setUpdateSearchAvailable: function(link, button) {
@@ -271,9 +273,9 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 	},
 	onReset: function(button, event) {
 		var ciStandardSearchView = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView');
-		
 		ciStandardSearchView.reset();
 	},
+	
 	updateLabels: function(labels) {
 		this.getComponent('assetsearchpanelheader').setText(labels.searchpanelheader);
 		
@@ -284,9 +286,11 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 		var ciSearchResultView = this.getComponent('ciAssetSearchResultView');
 		ciSearchResultView.updateLabels(labels);
 	},
+	
 	updateToolTips: function(toolTips) {
 		this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').updateToolTips(toolTips);
 	},
+	
 	isShowDeleted: function() {
 		var isShowDeleted = false;
 		var store = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
