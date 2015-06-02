@@ -2126,6 +2126,9 @@ public class CiEntityWS {
 				itSystem.setRefId(null);
 				itSystem.setItsecGroupId(templateItSystem.getItsecGroupId());
 			}
+			if(massUpdateParameterInput.getGxpFlag()){
+				itSystem.setGxpFlag(templateItSystem.getGxpFlag());
+			}
 			if(massUpdateParameterInput.getSlaId()){
 				itSystem.setSlaId(templateItSystem.getSlaId());
 			}
@@ -2598,6 +2601,9 @@ public class CiEntityWS {
 				locationCi.setCiOwner(mAttrParameterInput.getCiOwnerPrimaryPerson());
 				
 			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getGxpFlag())){
+				locationCi.setGxpFlag(mAttrParameterInput.getGxpFlag());
+			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getCiOwnerDelegate())){
 				locationCi.setCiOwnerDelegate(mAttrParameterInput.getCiOwnerDelegate());				
 			}
@@ -2611,6 +2617,14 @@ public class CiEntityWS {
 					locationCi.setRelevanceICS(-1l);
 				}
 			}
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getRelevanceGR2059())){
+				if ("null".equals(mAttrParameterInput.getGxpFlag())) {
+					locationCi.setGxpFlag(null);
+				}
+				else {
+					locationCi.setGxpFlag(mAttrParameterInput.getGxpFlag());
+				}	
+			}		
 			locationCi.setUpdateUser(mAttrParameterInput.getCwid());
 			locationCi.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			locationCi.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
@@ -2742,14 +2756,14 @@ public class CiEntityWS {
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getComments())){
 				application.setComments(mAttrParameterInput.getComments());
 			}
-			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getGxpFlag())){
-				application.setGxpFlag(mAttrParameterInput.getGxpFlag());
-			}
 			if(mAttrParameterInput.getCategoryBusinessId()!=null && mAttrParameterInput.getCategoryBusinessId()!=0){
 				application.setCategoryBusiness(mAttrParameterInput.getCategoryBusinessId());
 			}
 			if(mAttrParameterInput.getClassDataId()!= null && mAttrParameterInput.getClassDataId()!= 0){
 				application.setClassDataId(mAttrParameterInput.getClassDataId());
+			}
+			if(mAttrParameterInput.getBusinessEssentialId() != null && mAttrParameterInput.getBusinessEssentialId() != 0 ){
+				application.setBusinessEssentialId(mAttrParameterInput.getBusinessEssentialId());
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getOrganisationalScope())){
 				application.setOrganisationalScope(mAttrParameterInput.getOrganisationalScope());
@@ -2783,7 +2797,14 @@ public class CiEntityWS {
 					application.setRelevance2059(-1l);
 				}
 			}
-						
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getGxpFlag())){
+				if ("null".equals(mAttrParameterInput.getGxpFlag())) {
+					application.setGxpFlag(null);
+				}
+				else {
+					application.setGxpFlag(mAttrParameterInput.getGxpFlag());
+				}
+			}						
 			application.setUpdateUser(mAttrParameterInput.getCwid());
 			application.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			application.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
@@ -2878,6 +2899,9 @@ public class CiEntityWS {
 			if(mAttrParameterInput.getItSecSbAvailability()!=null && mAttrParameterInput.getItSecSbAvailability()!= 0 ){
 				itSystem.setItSecSbAvailability(mAttrParameterInput.getItSecSbAvailability());
 			}
+			if(mAttrParameterInput.getBusinessEssentialId() != null && mAttrParameterInput.getBusinessEssentialId() != 0 ){
+				itSystem.setBusinessEssentialId(mAttrParameterInput.getBusinessEssentialId());
+			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbAvailabilityTxt())){
 				itSystem.setItSecSbAvailabilityTxt(mAttrParameterInput.getItSecSbAvailabilityTxt());
 			}
@@ -2926,7 +2950,14 @@ public class CiEntityWS {
 					itSystem.setRelevanceICS(-1l);
 				}
 			}
-
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getGxpFlag())){
+				if ("null".equals(mAttrParameterInput.getGxpFlag())) {
+					itSystem.setGxpFlag(null);
+				}
+				else {
+					itSystem.setGxpFlag(mAttrParameterInput.getGxpFlag());
+				}				
+			}
 			itSystem.setUpdateUser(mAttrParameterInput.getCwid());
 			itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());

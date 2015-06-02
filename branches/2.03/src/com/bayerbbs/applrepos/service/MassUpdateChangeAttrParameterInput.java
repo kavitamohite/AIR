@@ -68,6 +68,7 @@ public class MassUpdateChangeAttrParameterInput {
 	private Integer primaryFunctionId;
 	private String barRelevance;
 	private String version;
+	private Long businessEssentialId;
 	/**
 	 * @return the token
 	 */
@@ -644,6 +645,18 @@ public class MassUpdateChangeAttrParameterInput {
 	 */
 	public void setVersion(String version) {
 		this.version = version;
+	}
+	/**
+	 * @return the businessEssentialId
+	 */
+	public Long getBusinessEssentialId() {
+		return businessEssentialId;
+	}
+	/**
+	 * @param businessEssentialId the businessEssentialId to set
+	 */
+	public void setBusinessEssentialId(Long businessEssentialId) {
+		this.businessEssentialId = businessEssentialId;
 	}
 
 	

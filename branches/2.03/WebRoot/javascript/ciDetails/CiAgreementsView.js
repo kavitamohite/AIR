@@ -39,6 +39,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        store: new Ext.data.Store(),//serviceContractListStore,
 		        valueField: 'id',
 		        displayField: 'text',
+		        disabled: true,
+
 		        
 //		        typeAhead: true,
 //		        forceSelection: true,
@@ -138,6 +140,18 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		cbBusinessEssential.on('select', this.onBusinessEssentialSelect, this);
 		cbBusinessEssential.on('change', this.onBusinessEssentialChange, this);
+		var storeIds = {
+				serviceContractListStore: null
+
+		};		
+		var storeCount = 0;
+		for(var key in storeIds)
+			storeCount++;
+		
+		var storeLoader = new AIR.AirStoreLoader();
+        storeLoader.init(storeIds, storeCount);
+        storeLoader.on('storesLoaded', this.onStoresLoaded, this);
+        storeLoader.load();
 	},
 	
 	onBusinessEssentialSelect: function(combo, record, index) {
@@ -199,6 +213,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	onSlaSelect: function(combo, record, index) {
 		var cbServiceContract = this.getComponent('serviceContract');
+		cbServiceContract.enable();
 		cbServiceContract.reset();
 
 		var filterData = { slaId: record.data.id };
@@ -215,6 +230,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			this.fireEvent('ciChange', this, combo);
 		
 		var cbServiceContract = this.getComponent('serviceContract');
+		cbServiceContract.enable();
 
 		if(typeof newValue === 'string' && newValue.length === 0) {
 			combo.reset();
@@ -222,7 +238,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		} else {
 			cbServiceContract.reset();
 
-			newValue = typeof newValue === 'string' ? oldValue : newValue;
+			newValue = typeof newValue === 'string' ? newValue : oldValue;
 			
 			var filterData = { slaId: newValue };
 			cbServiceContract.filterByData(filterData);
@@ -234,19 +250,6 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 	
 	clear: function(data) {
-		var storeIds = {
-				serviceContractListStore: null
-
-		};		
-		var storeCount = 0;
-		for(var key in storeIds)
-			storeCount++;
-		
-		var storeLoader = new AIR.AirStoreLoader();
-        storeLoader.init(storeIds, storeCount);
-        storeLoader.on('storesLoaded', this.onStoresLoaded, this);
-        storeLoader.load();
-
 		this.update(data);
 	},
     onStoresLoaded: function(storeLoader, storeMap) {

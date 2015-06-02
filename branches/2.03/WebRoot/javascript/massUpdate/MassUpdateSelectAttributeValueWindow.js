@@ -182,6 +182,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		        valueField: 'id',
 		        displayField: 'text',
 		        triggerAction: 'all',
+		        disabled: true,
 
 		        mode: 'local',
 		        
@@ -192,6 +193,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		        fieldLabel: 'Priority Level',		        
 		        id: 'selectAttrselectAttrpriorityLevel',
 		        store: AIR.AirStoreManager.getStoreByName('priorityLevelListStore'),//priorityLevelListStore,
+		        hidden: true,
 		        valueField: 'id',
 		        displayField: 'text',		        
 		        triggerAction: 'all',
@@ -204,10 +206,25 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		        id: 'selectAttrselectAttrseverityLevel',
 		        store: AIR.AirStoreManager.getStoreByName('severityLevelListStore'),//severityLevelListStore,
 		        valueField: 'id',
+		        hidden: true,
 		        displayField: 'text',		        
 		        triggerAction: 'all',
 		        mode: 'local'
 		    },
+		    {
+		        xtype: 'filterCombo',//combo
+		        width: 230,
+		        fieldLabel: 'Business Essential',
+		        
+		        id: 'selectAttrBusinessEssential',
+		        store: AIR.AirStoreManager.getStoreByName('businessEssentialListStore'),//businessEssentialListStore,
+		        hidden: true,
+		        valueField: 'id',
+		        displayField: 'text',		        
+		        triggerAction: 'all',
+		        mode: 'local'
+		        
+		    }
 		    ]
 				},
 				{
@@ -391,6 +408,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        id: 'selectAttrlifecycleStatus',
 						        store: AIR.AirStoreManager.getStoreByName('lifecycleStatusListStore'),//lifecycleStatusListStore,
 						        valueField: 'id',
+						        hidden: true,
 						        displayField: 'text',
 						        triggerAction: 'all',//all query
 						        lazyRender: true,
@@ -408,6 +426,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        id: 'selectAttroperationalStatus',
 						        store: AIR.AirStoreManager.getStoreByName('operationalStatusListStore'),//operationalStatusListStore,
 						        valueField: 'id',
+						        hidden: true,
 						        displayField: 'text',		        
 						        triggerAction: 'all',//all query
 						        lazyRender: true,
@@ -443,12 +462,9 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    	        valueField: 'id',
 				    	        displayField: 'text',
 				    	        fieldLabel: 'Business category',
-				    	        
+				    	        hidden: true,
 				    	        width: 230,
 						        
-//						        typeAhead: true,
-//						        forceSelection: true,
-//						        autoSelect: false,
 						        
 						        triggerAction: 'all',//all query
 				    	        lazyRender: true,
@@ -729,8 +745,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    			items: [
 										{ id: 'selectAttrchbGR15435', boxLabel: 'GR1435', name: 'selectAttrcbgRegulationsW', width: 100 },
 				    			        { id: 'selectAttrchbGR1920', boxLabel: 'GR1920', name: 'selectAttrcbgRegulationsW', width: 100 },
-				    			        { id: 'selectattrchbGR2059', boxLabel: 'GR2059', name: 'selectAttrcbgRegulationsW', width: 100 },
-				    			        { id: 'selectAttrchbGR2008', boxLabel: 'GR2008', name: 'selectAttrcbgRegulationsW', width: 100 }
+				    			        { id: 'selectattrchbGR2059', boxLabel: 'GR2059', name: 'selectAttrcbgRegulationsW', width: 100,hidden: this.ciTypeId==AC.TABLE_ID_APPLICATION || this.ciTypeId==AC.TABLE_ID_IT_SYSTEM ? false : true },
+				    			        { id: 'selectAttrchbGR2008', boxLabel: 'GR2008', name: 'selectAttrcbgRegulationsW', width: 100,hidden: this.ciTypeId==AC.TABLE_ID_APPLICATION || this.ciTypeId==AC.TABLE_ID_IT_SYSTEM ? false : true  }
 						        ]
 					        },
 					        {
@@ -743,8 +759,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        valueField: 'id',
 						        displayField: 'text',
 						        
-						        typeAhead: true,
-						        forceSelection: true,
+//						        typeAhead: true,
+//						        forceSelection: true,
 						        autoSelect: false,
 						        
 						        triggerAction: 'all',
@@ -963,6 +979,13 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         var selectAttrprotectionIntegrityDescription = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrityDescription');
         var selectAttrcbgRegulationsW = this.getComponent('selectAttrCompliance').getComponent('selectAttrcbgRegulationsW');
         var cbselectAttrItSecGroup = this.getComponent('selectAttrCompliance').getComponent('cbselectAttrItSecGroup');
+        var selectAttrselectAttrpriorityLevel = this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrpriorityLevel');
+        var selectAttrselectAttrseverityLevel = this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrseverityLevel');
+        var selectAttrlifecycleStatus = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrlifecycleStatus');
+        var selectAttroperationalStatus = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttroperationalStatus');
+        var selectAttrcbApplicationBusinessCat = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbApplicationBusinessCat');
+        var selectAttrBusinessEssential = this.getComponent('selectAttrAgreement').getComponent('selectAttrBusinessEssential');
+        
         
         this.filterCombo(cbselectAttrItSecGroup);
         
@@ -980,6 +1003,11 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			selectAttrapplicationCat.setVisible(true);
 			selectAttrprotectionClassInformation.setVisible(true);
 			selectAttrprotectionClassInformationExplanation.setVisible(true);
+			selectAttrselectAttrseverityLevel.setVisible(true);
+			selectAttrselectAttrpriorityLevel.setVisible(true);
+			selectAttrlifecycleStatus.setVisible(true);
+			selectAttroperationalStatus.setVisible(true);
+			selectAttrcbApplicationBusinessCat.setVisible(true);
 			
 		}else{
 			selectAttrprotectionIntegrity.setVisible(true);
@@ -995,7 +1023,16 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			selectAttrgVirtualHWHost.setVisible(true);
 			selectAttrcbVirtualSoftware.setVisible(true);
 			selectAttrcbPrimaryFunction.setVisible(true);
+			selectAttrselectAttrseverityLevel.setVisible(true);
+			selectAttrselectAttrpriorityLevel.setVisible(true);
+			selectAttrlifecycleStatus.setVisible(true);
+			selectAttroperationalStatus.setVisible(true);			
 		}
+		
+		if((this.ciTypeId==AC.TABLE_ID_APPLICATION  || this.ciTypeId==AC.TABLE_ID_IT_SYSTEM) && AAM.hasRole(AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)){
+			selectAttrBusinessEssential.setVisible(true);
+		}
+		
 		
 		var storeIds = {
 				osGroupsListStore: null,
@@ -1137,6 +1174,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
             var selectAttrrgBARrelevanceW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrrgBARrelevanceW');
             var selectAttrcbgRegulationsW = this.getComponent('selectAttrCompliance').getComponent('selectAttrcbgRegulationsW');
             var selectAttrcbPrimaryFunction = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbPrimaryFunction');
+            var selectAttrBusinessEssential = this.getComponent('selectAttrAgreement').getComponent('selectAttrBusinessEssential');
+
             
 			var clusterCode = '';
 			var clusterType = '';
@@ -1201,7 +1240,9 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			        relevanceGR1920: selectAttrcbgRegulationsW.items.items[1].getValue() ? 'Y' : 'N',
 			        relevanceGR2059: selectAttrcbgRegulationsW.items.items[2].getValue() ? 'Y' : 'N',
 			        relevanceGR2008: selectAttrcbgRegulationsW.items.items[3].getValue() ? 'Y' : 'N',
-			        primaryFunctionId: selectAttrcbPrimaryFunction.getValue()		
+			        primaryFunctionId: selectAttrcbPrimaryFunction.getValue(),
+			        businessEssentialId: selectAttrBusinessEssential.getValue()
+			        
 			};
 			if(scopes.length > 0)
 				params.organisationalScope = scopes;			
@@ -1274,6 +1315,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 	},
 	onSlaSelect: function(combo, record, index) {
 		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
+		selectAttrserviceContract.enable();
 
 		selectAttrserviceContract.reset();
 
@@ -1288,6 +1330,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 	onSlaChange: function(combo, newValue, oldValue) {
 		
 		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
+		selectAttrserviceContract.enable();
 
 		if(typeof newValue === 'string' && newValue.length === 0) {
 			combo.reset();
@@ -1295,7 +1338,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		} else {
 			selectAttrserviceContract.reset();
 
-			newValue = typeof newValue === 'string' ? oldValue : newValue;
+			newValue = typeof newValue === 'string' ? newValue : oldValue;
 			
 			var filterData = { slaId: newValue };
 			selectAttrserviceContract.filterByData(filterData);

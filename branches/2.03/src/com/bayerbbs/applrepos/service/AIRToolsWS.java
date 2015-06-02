@@ -116,7 +116,7 @@ public class AIRToolsWS {
 		//&nbsp; <br/> als Leertextoption --> Problem: keines der beiden Textwerte wird als HTML gerendert NACHDEM es ausgewählt wurde.
 		//Gelöst durch ExtJS Combobox Override Anpassung
 		GxpFlagDTO[] gxpFlags = {
-			new GxpFlagDTO(""),
+			new GxpFlagDTO("null", ""),
 			new GxpFlagDTO("GXP"),
 			new GxpFlagDTO("GCP"),
 			new GxpFlagDTO("GLP"),

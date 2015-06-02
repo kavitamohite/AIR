@@ -331,18 +331,14 @@ public class BaseHbn {
 		ci.setRelevanceITSEC(ciDTO.getRelevanzItsec());
 		ci.setRelevanceICS(ciDTO.getRelevanceICS());
 		
-		
-		if (null == ciDTO.getGxpFlag()) {
-			//	we don't know, let the current value 
-		}
-		else {
-			if (EMPTY.equals(ciDTO.getGxpFlag())) {
+		if(StringUtils.isNotNullOrEmpty(ciDTO.getGxpFlag())){
+			if ("null".equals(ciDTO.getGxpFlag())) {
 				ci.setGxpFlag(null);
 			}
 			else {
 				ci.setGxpFlag(ciDTO.getGxpFlag());
 			}
-		}
+		}		
 	}
 	
 	public static <T> CiEntityEditParameterOutput deleteCi(String cwid, Long id, Class<T> clazz) {//, CiBaseDTO dto
