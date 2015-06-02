@@ -11,12 +11,12 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import com.bayerbbs.applrepos.domain.HardwareComponent;
+import com.bayerbbs.applrepos.domain.SoftwareComponent;
 import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
 import com.bayerbbs.applrepos.service.AssetManagementParameterInput;
 import com.bayerbbs.applrepos.service.AssetManagementParameterOutput;
 
-public class HardwareComponentHbn {
+public class SoftwareComponentHbn {
 
 	@SuppressWarnings("unchecked")
 	public static AssetManagementParameterOutput searchAsset(AssetManagementParameterInput input) {
@@ -29,19 +29,19 @@ public class HardwareComponentHbn {
 		try {
 			tx = session.beginTransaction();
 			BigDecimal total = (BigDecimal) session.createSQLQuery(
-					"select count(*) from HARDWAREKOMPONENTE where lower(SAP_DESCRIPTION) like '%"
+					"select count(*) from SOFTWAREKOMPONENTE where lower(PRODUKTBEZ) like '%"
 							+ input.getQuery().toLowerCase() + "%'").uniqueResult();
 			out.setCountResultSet(total.longValue());
 
-			Criteria criteria = session.createCriteria(HardwareComponent.class);
-			criteria.add(Restrictions.like("sapDescription", "%" + input.getQuery() + "%").ignoreCase());
+			Criteria criteria = session.createCriteria(SoftwareComponent.class);
+			criteria.add(Restrictions.like("prouctDescription", "%" + input.getQuery() + "%").ignoreCase());
 
-			if (input.getSort() != null) {
-				addSortingCriteria(criteria, input.getSort());
-			}
+			// if (input.getSort() != null) {
+			// addSortingCriteria(criteria, input.getSort());
+			// }
 			criteria.setFirstResult(input.getStart());
 			criteria.setMaxResults(input.getLimit());
-			List<HardwareComponent> values = (List<HardwareComponent>) criteria.list();
+			List<SoftwareComponent> values = (List<SoftwareComponent>) criteria.list();
 			list = getDTOList(values);
 			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list.size()]));
 			tx.commit();
@@ -112,20 +112,19 @@ public class HardwareComponentHbn {
 		} else if (sort.equals("alias")) {
 			// criteria.addOrder(Order.asc("amAnschaffwert"));
 		}
-
 	}
 
-	private static List<AssetViewDataDTO> getDTOList(List<HardwareComponent> values) {
+	private static List<AssetViewDataDTO> getDTOList(List<SoftwareComponent> values) {
 
 		List<AssetViewDataDTO> list = new ArrayList<AssetViewDataDTO>();
-		for (HardwareComponent hwComp : values) {
+		for (SoftwareComponent hwComp : values) {
 			AssetViewDataDTO dto = getDTO(hwComp);
 			list.add(dto);
 		}
 		return list;
 	}
 
-	private static AssetViewDataDTO getDTO(HardwareComponent hwComp) {
+	private static AssetViewDataDTO getDTO(SoftwareComponent hwComp) {
 
 		AssetViewDataDTO dto = new AssetViewDataDTO();
 		dto.setId(hwComp.getId());
@@ -133,7 +132,7 @@ public class HardwareComponentHbn {
 			dto.setManufacturer(hwComp.getPartner().getName());
 		}
 
-		dto.setSapDescription(hwComp.getSapDescription());
+		dto.setSapDescription(hwComp.getProuctDescription());
 		dto.setSerialNumber(hwComp.getSerialNumber());
 
 		if (hwComp.getKonto() != null) {
@@ -147,19 +146,17 @@ public class HardwareComponentHbn {
 		dto.setRequester(hwComp.getRequester());
 		dto.setTechnicalMaster(hwComp.getTechnicalMaster());
 		dto.setTechnicalNumber(hwComp.getTechnicalNumer());
-		dto.setAcquisitionValue(hwComp.getAmAnschaffwert());
 		dto.setSite("SITE");
-		dto.setOrderNumber(hwComp.getOrderNumber());
+		dto.setOrderNumber(hwComp.getBestellNumber());
 		dto.setAssetChecked("ASSET CHECKED");
-		if (hwComp.getHardwareCategory1() != null) {
-			dto.setSapAssetClass(hwComp.getHardwareCategory1().getHwKategory1());
+		if (hwComp.getSoftwareCategory1() != null) {
+			dto.setSapAssetClass(hwComp.getSoftwareCategory1().getSwKategory1());
 		}
 		dto.setSapAssetClass("SAP ASSET CLASS");
-		if (hwComp.getHardwareCategory2() != null) {
-			dto.setSubCategory(hwComp.getHardwareCategory2().getId());
+		if (hwComp.getSoftwareCategory2() != null) {
+			dto.setSubCategory(hwComp.getSoftwareCategory2().getId());
 		}
 		dto.setType("TYPE");
-		dto.setModel(hwComp.getCpuModel());
 		dto.setSystemPlatformName("SYSTEM PLATOFORM");
 		dto.setHardwareSystem("HARDWARE SYSTEM");
 		dto.setHardwareTransientSystem("TRANSIENT SYSTEM");
