@@ -12,7 +12,7 @@ public class BusinessAdministrationWS {
 		return CostcenterHbn.getCostcenterList(id);
 	}
 
-	public KeyValueDTO[] findPspElementList(Long id) {
+	public KeyValueEnDTO[] findPspElementList(Long id) {
 		return PspElementHbn.getPspElementById(id);
 	}
 
