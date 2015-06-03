@@ -196,6 +196,15 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 
 		var ciEditView = this.getComponent('ciEditView');
 		
+		//vandana
+		var ciNewAssetView=this.getComponent('ciNewAssetView');
+		var clCiProduct = ciNewAssetView.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
+		var clCiLocation = ciNewAssetView.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location');
+		var clCiTechnics = ciNewAssetView.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
+		var clCiBusinessInformation = ciNewAssetView.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
+		var clCiContacts = ciNewAssetView.getComponent('bottomPanel').getComponent('rightPanel').getComponent('contacts');
+		
+		
 		this.lastNavigation = {
 			viewId: viewId,
 			link: link,
@@ -534,7 +543,14 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					break;
 				
 			case 'clCiNewAsset':
+			case 'clCiTangibleAsset':
 				this.getLayout().setActiveItem('ciNewAssetView');
+				clCiProduct.setVisible(true);
+				clCiLocation.setVisible(true);
+				clCiBusinessInformation.setVisible(true);
+				clCiTechnics.setVisible(true);
+				clCiContacts.setVisible(true);
+				
 				var verwerfenCallback = function() {
 					
 					if(options && options.callback)
@@ -546,6 +562,27 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
 					break;
+					
+			case 'clCiIntangibleAsset':
+				this.getLayout().setActiveItem('ciNewAssetView');
+				clCiProduct.setVisible(true);
+				clCiLocation.setVisible(false);
+				clCiBusinessInformation.setVisible(true);
+				clCiTechnics.setVisible(false);
+				clCiContacts.setVisible(false);
+				
+				var verwerfenCallback = function() {
+					
+					if(options && options.callback)
+						options.callback();
+				}.createDelegate(this);
+				var saveCallback = function() {
+					verwerfenCallback();
+				}.createDelegate(this);
+
+				this.handleNavigation(verwerfenCallback, saveCallback);
+					break;
+						
 			
 			default: break;
 		}
