@@ -4336,7 +4336,8 @@ AIR.AirStoreFactory = function() {
  		creatPspElementListStore: function() {
 			var ciPspElementListRecord = Ext.data.Record.create([
 				{ name: 'id', type: 'int' },
- 			    'name'					
+ 			    'name',
+ 			   'nameEn'
  			]);
  			var ciPspElementListReader = new Ext.data.XmlReader({
  				idProperty: 'id',
