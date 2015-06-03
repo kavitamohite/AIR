@@ -13,7 +13,7 @@ public class BusinessAdministrationWSDelegate {
 		return businessAdministrationWS.findCostcenterList(input.getId());
 	}
 
-	public KeyValueDTO[] findPspElementList(DefaultDataInput input) {
+	public KeyValueEnDTO[] findPspElementList(DefaultDataInput input) {
 		return businessAdministrationWS.findPspElementList(input.getId());
 	}
 
