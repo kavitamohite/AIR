@@ -103,11 +103,30 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						xtype : 'fieldset',
 						title : 'Product',
 						id : 'product',
+						hidden:true,
 						autoHeight : true,
 						style : {
 							margin : '5 5 0 0'
 						},
-						items : [{
+						items : [
+						         {
+							xtype : 'container',
+							html: '<a id="mailtoproduct" href="mailto:&subject=' + mail_Subject_product + '"><img src="' + img_Email + '"></a>',
+							id: 'mailproduct',
+							cls: 'x-plain',
+							isHideable: true,
+							
+							style: {
+								//textAlign: 'left',
+								color: AC.AIR_FONT_COLOR,
+								fontFamily: AC.AIR_FONT_TYPE,
+								fontWeight: 'normal',
+								fontSize: '8pt',
+								cursor:'pointer',
+								//'margin-left' : 300,
+								 'padding-left':'500',
+							}
+						},{
 							id: 'cbManufacturer',
 					        xtype: 'filterCombo',
 					        fieldLabel: 'Manufacturer',
@@ -185,14 +204,16 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							id : 'bReset',
 							text : 'Reset all Entries',
 							style : {
-								'margin-left' : 250,
+								'margin-left' : 350,
 								fontSize : 12
 							}
-						} ]
+						},
+						]
 					}, {
 						xtype : 'fieldset',
 						id: 'technics',
 						title : 'Technics',
+						hidden:true,
 						autoHeight : true,
 						style : {
 							margin : '5 5 0 0'
@@ -344,10 +365,28 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						title : 'Location',
 						id : 'location',
 						autoHeight : true,
+						hidden:true,
 						style : {
 							margin : '5 5 0 0'
 						},
 						items : [{
+							xtype : 'container',
+							html: '<a id="mailtolocation" href="mailto:&subject=' + mail_Text_location + '"><img src="' + img_Email + '"></a>',
+							id: 'maillocation',
+							cls: 'x-plain',
+							isHideable: true,
+							
+							style: {
+								//textAlign: 'left',
+								color: AC.AIR_FONT_COLOR,
+								fontFamily: AC.AIR_FONT_TYPE,
+								fontWeight: 'normal',
+								fontSize: '8pt',
+								cursor:'pointer',
+								//'margin-left' : 300,
+								 'padding-left':'500',
+							}
+						},{
 							id: 'cbCountry',
 					        xtype: 'filterCombo',
 					        fieldLabel: 'Country',
@@ -439,6 +478,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						id: 'businessInformation',
 						xtype : 'fieldset',
 						title : 'Business Information',
+						hidden:true,
 						autoHeight : true,
 						style : {
 							margin : '5 0 0 0'
@@ -659,6 +699,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						xtype : 'fieldset',
 						id : 'contacts',
 						title : 'Contacts',
+						hidden:true,
 						autoHeight : true,
 						style : {
 							margin : '5 0 0 0'
@@ -709,34 +750,75 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					id : 'saveBtn',
 					text : 'Save',
 					style : {
-						marginBottom : 10,
-						fontSize : 12
+						fontSize : 12,
+						margin : '8 10 0 0',
+						width:80
+						
 					}
 				},{
 					xtype : 'button',
 					id : 'cancelBtn',
 					text : 'Cancel',
 					style : {
-						marginBottom : 10,
-						fontSize : 12
+						//marginBottom : 10,
+						fontSize : 12,
+						margin : '8 10 0 0',
+						width:80
 					}
 				},{
 					xtype : 'button',
 					id : 'inventoryBtn',
-					text : 'Apply for inventory',
+					text : 'Apply for inventory number',
 					style : {
-						marginBottom : 10,
-						fontSize : 12
+						//marginBottom : 10,
+						fontSize : 12,
+						margin : '8 10 0 0',
+						width:80
 					}
 				},{
 					xtype : 'button',
-					id : 'saveBtn',
-					text : 'Save',
+					id : 'savecloseBtn',
+					text : 'Save & Close',
 					style : {
-						marginBottom : 10,
-						fontSize : 12
+						//marginBottom : 10,
+						fontSize : 12,
+						margin : '8 10 0 0',
+						width:80
 					}
-				}]
+				},
+				{
+					xtype : 'button',
+					id : 'masterBtn',
+					text : 'Request for new master data',
+					style : {
+						//marginBottom : 10,
+						fontSize : 14,
+						margin : '8 10 0 0',
+						width:80
+					}
+				},
+				{
+					xtype : 'button',
+					id : 'changemasterBtn',
+					text : 'Change master data',
+					style : {
+						//marginBottom : 10,
+						fontSize : 12,
+						margin : '8 10 0 0',
+						width:80
+					}
+				},
+				{
+					xtype : 'button',
+					id : 'assetCheck',
+					text : 'Asset Checked',
+					style : {
+						fontSize : 12,
+						margin : '8 10 0 0',
+						width:80
+						
+					}
+				},]
 			}]
 		});
 		
@@ -751,6 +833,10 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
 		cbSapAsset.on('select', this.onSapAssetSelect, this);
 		cbSapAsset.on('keyup', this.onFieldKeyUp, this);
+		
+		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
+		cbPsp.on('select', this.onPSPSelect, this);
+		cbPsp.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
 		cbCountry.on('select', this.onCountrySelect, this);
@@ -794,13 +880,46 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
 		var bReset = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('bReset');
 		bReset.on('click',this.resetProduct, this);
+		
+	
 	},
+	
+	
+	
+	updateMailTemplateProduct: function() {
+		var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
+		
+		var mailtemplate = 'mailto:vandana.hemnani@bayer.com';
+		//var tempSubj = mail_Subject_product.replace('<Manufacturer>', );//applicationName
+		var tempText = mail_Text_product.replace('<CIName>', 'other test');//applicationName
+		tempText = tempText.replace('<Username>', 'Vandana Hemnani');//username
+		mailtemplate += '&subject=' + mail_Subject_product + '';
+		mailtemplate += ('&body=' + tempText);
+		html = html.replace('{href}',mailtemplate);
+		Ext.getCmp('mailproduct').html = html;//replace with CommandLink
+	},
+	
+	updateMailTemplateLocation: function() {
+		var html = '<a id="mailtolocation" href="{href}"><img src="' + img_Email + '"></a>';
+		
+		var mailtemplate = 'mailto:vandana.hemnani@bayer.com';
+		//var tempSubj = mail_Subject_product.replace('<Manufacturer>', this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue());//applicationName
+		var tempText = mail_Text_location.replace('<CIName>', 'other test');//applicationName
+		tempText = tempText.replace('<Username>', 'Vandana Hemnani');//username
+		mailtemplate += '&subject=' + mail_Subject_location + '';
+		mailtemplate += ('&body=' + tempText);
+		html = html.replace('{href}',mailtemplate);
+		Ext.getCmp('maillocation').html = html;//replace with CommandLink
+	},
+	
+	
 	
 //	init: function() {
 //		this.loadCountryData();
 //		this.loadManufacturerData();
 //		this.loadCategoryData();
 //	},
+	
 	
 	onRequesterAdd: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(null, this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester'), event);
@@ -814,6 +933,12 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var value = record.get('nameEn');
 		var tEconomic = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic')
         tEconomic.setValue(value);
+	},
+	
+	onPSPSelect: function(combo, record, index) {
+		var value = record.get('nameEn');
+		var tPsptext = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tPsptext')
+        tPsptext.setValue(value);
 	},
 	
 	resetProduct: function(){
@@ -832,6 +957,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		tDescription.setValue("");
 	},
 	
+	
 	loadComboboxData : function(){
 		this.loadCountryData();
 		this.loadManufacturerData();
@@ -840,10 +966,16 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		this.loadOperationalStatusData();
 		this.loadPspElementData();
 		this.loadSapAssetData();
+		this.updateMailTemplateProduct();
+		this.updateMailTemplateLocation();
 	},
-
+	
+	
+	
 	updateLabels: function(labels){
 		this.loadComboboxData();
+		//this.updateMailTemplate();
+		
 	},
 	
 	onManufacturerSelect: function(combo, record, index) {
@@ -854,6 +986,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	manufacturerChanged: function(value) {
 		var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
 		var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
+	
 		cbSubCategory.reset();
 		cbType.reset();
 	},
