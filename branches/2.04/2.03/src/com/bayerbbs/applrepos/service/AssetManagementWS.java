@@ -1,20 +1,21 @@
 package com.bayerbbs.applrepos.service;
 
-import java.util.List;
-
-import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.HardwareComponentHbn;
-
-
+import com.bayerbbs.applrepos.hibernate.SoftwareComponentHbn;
 
 public class AssetManagementWS {
 
-	public AssetManagementParameterOutput searchAsset(AssetManagementParameterInput input){
+	public AssetManagementParameterOutput searchAsset(AssetManagementParameterInput input) {
+
+		AssetManagementParameterOutput out = null;
 		
-		AssetManagementParameterOutput out = new AssetManagementParameterOutput();
-		List<AssetViewDataDTO> dtoList =  HardwareComponentHbn.searchAsset(input.getQuery());
-		AssetViewDataDTO[] ary = dtoList.toArray(new AssetViewDataDTO[dtoList.size()]);
-		out.setAssetViewDataDTO(ary);
+		if (input.getQueryMode().equalsIgnoreCase("hardware")) {
+			out = HardwareComponentHbn.searchAsset(input);
+		} else if (input.getQueryMode().equalsIgnoreCase("software")) {
+			out = SoftwareComponentHbn.searchAsset(input);
+		}
+
+		
 		return out;
 	}
 }
