@@ -18,23 +18,18 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
 			    items: [{
 		        	xtype: 'textfield',
 		        	id: 'tfAssetSearch',
-		        	
 		        	emptyText: 'Enter Asset name...',
 		        	width: 350,
-		        	
 		        	hideLabel: true,
 		        	padding: 5,
-		        	
 		        	hasSearch: false,
 		        	maxLength: 656
 		        },{
 					xtype: 'button',
 					id: 'clAssetSearch',
-					
 		        	cls: 'x-btn-text-icon',
 		        	icon: imgcontext+'/search_16x16.png',
 		        	text: '',
-					
 					style: {
 						marginLeft: 5
 					}
@@ -42,28 +37,34 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
 		        	xtype: 'button',
 		        	id: 'bUpdateCiAssetSearchResult',
 		        	hidden: true,
-		        	
 		        	cls: 'x-btn-text-icon',
 		        	icon: imgcontext+'/refresh_16x16.png',
-		        	
 		        	text: 'Update',
-		        	
 					style: {
 						marginLeft: 5
 					}
 		        },{
 		        	xtype: 'button',
 		        	id: 'bAssetSearchReset',
-		    		
 		        	cls: 'x-btn-text-icon',
 		        	icon: 'images/reset_16x16.png',		        	
-		        	
 		        	style: {
 		        		marginLeft: 5
 		        	},
 		        	
 		        	text: 'Reset'
-		        }]
+		        },{
+		            xtype: 'radiogroup',
+					id: 'searchMode',
+					style: {
+						marginLeft: 5
+					},
+		            items: [{
+		            	id: 'hardwareSearchMode', name: 'queryMode', boxLabel: 'Hardware Component', inputValue: 'hardware', checked: true
+		            }, {
+		            	id: 'softwareSearchMode', name: 'queryMode', boxLabel: 'Software Component', inputValue: 'software'
+		            }]
+				}]
 	        }]
 		});
 		
