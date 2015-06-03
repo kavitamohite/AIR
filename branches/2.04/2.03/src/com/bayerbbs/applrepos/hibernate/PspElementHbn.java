@@ -8,29 +8,30 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.Pspelement;
-import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.domain.Konto;
+
+import com.bayerbbs.applrepos.dto.KeyValueEnDTO;
 
 public class PspElementHbn {
 	
-	private static List<KeyValueDTO> getDTOPspElementList(List<Pspelement> input) {
-		List<KeyValueDTO> listDTO = new ArrayList<KeyValueDTO>();
+	private static List<KeyValueEnDTO> getDTOPspElementList(List<Konto> input) {
+		List<KeyValueEnDTO> listDTO = new ArrayList<KeyValueEnDTO>();
 
-		for (Pspelement pspelement : input) {
-			listDTO.add(new KeyValueDTO(pspelement.getId(), pspelement.getName()));
+		for (Konto konto : input) {
+			listDTO.add(new KeyValueEnDTO(konto.getId(), konto.getName(),konto.getBeschreibung()));
 		}
 		return listDTO;
 	}
 
-	public static KeyValueDTO[] getPspElementById(Long kontoId) {
+	public static KeyValueEnDTO[] getPspElementById(Long kontoId) {
 
-		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		List<KeyValueEnDTO> data = new ArrayList<KeyValueEnDTO>();
 		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
 			@SuppressWarnings("unchecked")
-			List<Pspelement> values = session.createQuery("from Pspelement").list();
+			List<Konto> values = session.createQuery("select k from Konto as k where (k.art='PSP') ").list();
 
 			data = getDTOPspElementList(values);
 
@@ -49,7 +50,7 @@ public class PspElementHbn {
 
 		}
 		Collections.sort(data);
-		return data.toArray(new KeyValueDTO[0]);
+		return data.toArray(new KeyValueEnDTO[0]);
 	}
 
 
