@@ -33,6 +33,7 @@ public class CostcenterHbn {
 			tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(Konto.class);
 			criteria.add(Restrictions.isNotNull("cwidVerantw"));
+			criteria.add(Restrictions.eq("art", "KST"));
 			List<Konto> values = criteria.list();
 
 			data = getDTOCostcenterList(values);
