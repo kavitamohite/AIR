@@ -39,6 +39,21 @@ public class BusinessEssential implements Serializable {
 	// ------------------------------------------------------
 
 	/**
+	 * @return the inherited_Y_N
+	 */
+	@Column(name = "INHERITED_Y_N")
+	public String getInherited_Y_N() {
+		return inherited_Y_N;
+	}
+
+	/**
+	 * @param inherited_Y_N the inherited_Y_N to set
+	 */
+	public void setInherited_Y_N(String inherited_Y_N) {
+		this.inherited_Y_N = inherited_Y_N;
+	}
+
+	/**
 	 * Returns the value of the field {@link #id}.
 	 * 
 	 * @return Value of the {@link #id} field.
@@ -72,7 +87,7 @@ public class BusinessEssential implements Serializable {
 	@Transient
 	public Boolean getInherited() 
 	{
-		if ("Y".equals(inherited_Y_N)) {
+		if ("Y".equals(getInherited_Y_N())) {
 			return true;
 		}
 		return false;

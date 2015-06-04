@@ -2541,10 +2541,9 @@ public class CiEntityWS {
 
 							}
 						}
-						parameterOutPut = locationCISelectAttrMassUpdate(
-								mAttrParameterInput, sql);
 					}
-				
+					parameterOutPut = locationCISelectAttrMassUpdate(
+							mAttrParameterInput, sql);
 					
 				}
 				
@@ -2568,7 +2567,30 @@ public class CiEntityWS {
 		    .scroll(ScrollMode.FORWARD_ONLY);
 		int count=0;
 		while (locationCIS.next()) {
-			CiBase1 locationCi = (CiBase1) locationCIS.get(0);
+			CiBase1 locationCi = null;
+			if(mAttrParameterInput.getCiTypeId()==AirKonstanten.TABLE_ID_ROOM){
+				Room room = (Room) locationCIS.get(0);
+				if(mAttrParameterInput.getSeverityLevelId()!=null && mAttrParameterInput.getSeverityLevelId()!=0){
+					room.setSeverityLevelId(mAttrParameterInput.getSeverityLevelId());
+				}
+				if(mAttrParameterInput.getBusinessEssentialId() != null && mAttrParameterInput.getBusinessEssentialId() != 0 ){
+					room.setBusinessEssentialId(mAttrParameterInput.getBusinessEssentialId());
+				}
+				locationCi = room;
+			}else{
+				if(mAttrParameterInput.getCiTypeId()==AirKonstanten.TABLE_ID_POSITION){
+					Schrank schrank = (Schrank) locationCIS.get(0);
+					if(mAttrParameterInput.getSeverityLevelId()!=null && mAttrParameterInput.getSeverityLevelId()!=0){
+						schrank.setSeverityLevelId(mAttrParameterInput.getSeverityLevelId());
+					}
+					if(mAttrParameterInput.getBusinessEssentialId() != null && mAttrParameterInput.getBusinessEssentialId() != 0 ){
+						schrank.setBusinessEssentialId(mAttrParameterInput.getBusinessEssentialId());
+					}
+					locationCi = schrank;
+				}else
+				locationCi = (CiBase1) locationCIS.get(0);
+			}
+			
 			if(mAttrParameterInput.getSlaId()!=null){
 				locationCi.setSlaId(mAttrParameterInput.getSlaId());
 			}
@@ -2601,9 +2623,6 @@ public class CiEntityWS {
 				locationCi.setCiOwner(mAttrParameterInput.getCiOwnerPrimaryPerson());
 				
 			}
-			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getGxpFlag())){
-				locationCi.setGxpFlag(mAttrParameterInput.getGxpFlag());
-			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getCiOwnerDelegate())){
 				locationCi.setCiOwnerDelegate(mAttrParameterInput.getCiOwnerDelegate());				
 			}
@@ -2617,14 +2636,14 @@ public class CiEntityWS {
 					locationCi.setRelevanceICS(-1l);
 				}
 			}
-			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getRelevanceGR2059())){
+			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getGxpFlag())){
 				if ("null".equals(mAttrParameterInput.getGxpFlag())) {
 					locationCi.setGxpFlag(null);
 				}
 				else {
 					locationCi.setGxpFlag(mAttrParameterInput.getGxpFlag());
 				}	
-			}		
+			}
 			locationCi.setUpdateUser(mAttrParameterInput.getCwid());
 			locationCi.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			locationCi.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());

@@ -183,6 +183,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		        displayField: 'text',
 		        triggerAction: 'all',
 		        disabled: true,
+		        editable: false,
 
 		        mode: 'local',
 		        
@@ -1028,12 +1029,12 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			selectAttrlifecycleStatus.setVisible(true);
 			selectAttroperationalStatus.setVisible(true);			
 		}
-		
-		if((this.ciTypeId==AC.TABLE_ID_APPLICATION  || this.ciTypeId==AC.TABLE_ID_IT_SYSTEM) && AAM.hasRole(AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)){
+		if(this.ciTypeId==AC.TABLE_ID_ROOM || this.ciTypeId==AC.TABLE_ID_POSITION ){
+			selectAttrselectAttrseverityLevel.setVisible(true);
+		}
+		if((this.ciTypeId==AC.TABLE_ID_APPLICATION  || this.ciTypeId==AC.TABLE_ID_IT_SYSTEM || this.ciTypeId==AC.TABLE_ID_ROOM || this.ciTypeId==AC.TABLE_ID_POSITION) && AAM.hasRole(AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)){
 			selectAttrBusinessEssential.setVisible(true);
 		}
-		
-		
 		var storeIds = {
 				osGroupsListStore: null,
 				osTypesListStore: null,
@@ -1237,8 +1238,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			        isVirtualHardwareHost:	selectAttrgVirtualHWHost.getValue()!= null ? selectAttrgVirtualHWHost.getValue().inputValue : '',
 			        virtualHardwareSoftware: selectAttrcbVirtualSoftware.getValue(),
 			        relevanceGR1435: selectAttrcbgRegulationsW.items.items[0].getValue() ? 'Y' : 'N',
-			        relevanceGR1920: selectAttrcbgRegulationsW.items.items[1].getValue() ? 'Y' : 'N',
-			        relevanceGR2059: selectAttrcbgRegulationsW.items.items[2].getValue() ? 'Y' : 'N',
+			        relevanceGR1920: selectAttrcbgRegulationsW.items.items[2].getValue() ? 'Y' : 'N',
+			        relevanceGR2059: selectAttrcbgRegulationsW.items.items[1].getValue() ? 'Y' : 'N',
 			        relevanceGR2008: selectAttrcbgRegulationsW.items.items[3].getValue() ? 'Y' : 'N',
 			        primaryFunctionId: selectAttrcbPrimaryFunction.getValue(),
 			        businessEssentialId: selectAttrBusinessEssential.getValue()

@@ -40,6 +40,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        valueField: 'id',
 		        displayField: 'text',
 		        disabled: true,
+		        editable: false,
 
 		        
 //		        typeAhead: true,
@@ -98,8 +99,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        id: 'businessEssential',
 		        store: AIR.AirStoreManager.getStoreByName('businessEssentialListStore'),//businessEssentialListStore,
 		        valueField: 'id',
-		        displayField: 'text',
-		        
+		        displayField: 'text',		        
 //		        typeAhead: true,
 //		        forceSelection: true,
 //		        autoSelect: false,
@@ -330,19 +330,32 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			} else {
 				cbSeverityLevel.setValue('');
 			}
-			
+			this.updateAccessMode(data);
 			if(data.isCiCreate)
 				cbBusinessEssential.setValue('');
-			else
-				cbBusinessEssential.setValue(data.businessEssentialId);
+			else{
+				if(data.businessEssentialId==='3'){
+					cbBusinessEssential.setValue('inherited: Business Essential');
+					Util.disableCombo(cbBusinessEssential);
+				}else{
+					if(data.businessEssentialId==='4'){
+						cbBusinessEssential.setValue('inherited: Pandemic Business Essential');
+						Util.disableCombo(cbBusinessEssential);
+					}else
+						cbBusinessEssential.setValue(data.businessEssentialId);
+
+				}
+
+			}
+			
 		} else {
 			cbSeverityLevel.reset();
 			cbBusinessEssential.reset();
 			cbSeverityLevel.setVisible(false);
 			cbBusinessEssential.setVisible(false);
+			this.updateAccessMode(data);
 		}
 		
-		this.updateAccessMode(data);
 		if(data.tableId == AC.TABLE_ID_FUNCTION){
 			cbSla.setVisible(false);
 			cbServiceContract.setVisible(false);

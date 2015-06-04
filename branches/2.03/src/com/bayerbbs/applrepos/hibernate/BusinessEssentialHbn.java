@@ -25,13 +25,16 @@ public class BusinessEssentialHbn {
 
 		for (Iterator<BusinessEssential> iter = input.iterator(); iter.hasNext();) {
 			BusinessEssential data = iter.next();
-			BusinessEssentialDTO dto = new BusinessEssentialDTO();
+			   if(!data.getInherited()){
+					BusinessEssentialDTO dto = new BusinessEssentialDTO();
+					dto.setSeverityLevelId(data.getBusinessEssentialId());
+					dto.setSeverityLevel(data.getBusinessEssentialName());
+					dto.setSeverityGPSC(data.getBusinessEssentialCode());
+					dto.setBeCode(data.getBusinessEssentialCode());
+					dto.setUsage(data.getInherited_Y_N());
+					listDTO.add(dto);
+			   }
 
-			dto.setSeverityLevelId(data.getBusinessEssentialId());
-			dto.setSeverityLevel(data.getBusinessEssentialName());
-			dto.setSeverityGPSC(data.getBusinessEssentialCode());
-			dto.setBeCode(data.getBusinessEssentialCode());
-			listDTO.add(dto);
 		}
 		return listDTO;
 	}

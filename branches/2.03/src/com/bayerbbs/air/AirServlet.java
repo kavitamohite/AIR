@@ -370,7 +370,7 @@ public class AirServlet extends HttpServlet {
 		BusinessEssentialDTO[] businessEssentials = dataInput.getBusinessEssentialList();
 		String beLine = "";
 		for(BusinessEssentialDTO beItem : businessEssentials) {
-			beLine += "['" + beItem.getSeverityLevel() + "','" + beItem.getSeverityLevelId().toString() + "'],"; 
+			beLine += "['" + beItem.getSeverityLevel() + "','" + beItem.getSeverityLevelId().toString()  + "','" + beItem.getUsage()+ "'],"; 
 		}
 		beLine = "var beData = [" + beLine.substring(0, beLine.length()-1) + "];";
 		output += "/*" + (System.currentTimeMillis() - ts) + "*/";

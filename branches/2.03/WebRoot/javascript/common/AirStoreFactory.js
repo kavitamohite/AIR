@@ -230,7 +230,7 @@ AIR.AirStoreFactory = function() {
 			var businessEssentialListStore = new Ext.data.ArrayStore(
 			{
 				storeId: 'businessEssentialListStore',
-				fields : ['text', 'id'],
+				fields : ['text', 'id','inherited'],
 				idIndex: 1,
 				data : beData
 			});
