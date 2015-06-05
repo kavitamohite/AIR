@@ -11,7 +11,11 @@ import org.hibernate.Transaction;
 import com.bayerbbs.applrepos.domain.HardwareCategory1;
 import com.bayerbbs.applrepos.dto.KeyValueEnDTO;
 
-public class SapAssetHbn {
+public class SapAssetHbn extends BaseHbn{
+	
+	public static HardwareCategory1 findById(Long id) {
+		return findById(HardwareCategory1.class, id);
+	}
 
 	
 	private static List<KeyValueEnDTO> getDTOSapAssetList(List<HardwareCategory1> input) {

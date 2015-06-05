@@ -12,7 +12,11 @@ import org.hibernate.Transaction;
 import com.bayerbbs.applrepos.domain.HardwareCategory4;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 
-public class ModelHbn {
+public class ModelHbn extends BaseHbn {
+
+	public static HardwareCategory4 findById(Long id) {
+		return findById(HardwareCategory4.class, id);
+	}
 
 	private static List<KeyValueDTO> getDTOModelList(List<HardwareCategory4> input) {
 		List<KeyValueDTO> listDTO = new ArrayList<KeyValueDTO>();

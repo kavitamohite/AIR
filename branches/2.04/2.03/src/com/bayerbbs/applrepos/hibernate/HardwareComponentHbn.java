@@ -11,7 +11,13 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import com.bayerbbs.applrepos.domain.HardwareCategory1;
+import com.bayerbbs.applrepos.domain.HardwareCategory2;
+import com.bayerbbs.applrepos.domain.HardwareCategory3;
+import com.bayerbbs.applrepos.domain.HardwareCategory4;
 import com.bayerbbs.applrepos.domain.HardwareComponent;
+import com.bayerbbs.applrepos.domain.Konto;
+import com.bayerbbs.applrepos.domain.Partner;
 import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
 import com.bayerbbs.applrepos.service.AssetManagementParameterInput;
 import com.bayerbbs.applrepos.service.AssetManagementParameterOutput;
@@ -228,4 +234,50 @@ public class HardwareComponentHbn {
 		}
 		return out;
 	}
+
+	public static AssetManagementParameterOutput saveHardwareAsset(AssetViewDataDTO dto) {
+		AssetManagementParameterOutput output = new AssetManagementParameterOutput();
+//		HardwareComponent hardwareComponent=new HardwareComponent();
+//		Session session = HibernateUtil.getSession();
+//		Transaction tx = null;
+//		tx = session.beginTransaction();
+//		Partner partner = ManufacturerHbn.findById(dto.getId());
+//		hardwareComponent.setHersteller(partner);
+//		System.out.println("Manufacturer values "+dto.getId());
+//	    
+//		HardwareCategory2 hardwareCategory2 = SubCategoryHbn.findById(dto.getHardwareCategory2_id());
+//		hardwareComponent.setHardwareCategory2(hardwareCategory2);
+//		System.out.println("hardwareCategory2 values "+dto.getHardwareCategory2_id());
+//		
+//		HardwareCategory3 hardwareCategory3 = TypeHbn.findById(dto.getHardwareCategory3_id());
+//		hardwareComponent.setHardwareCategory3(hardwareCategory3);
+//		System.out.println("hardwareCategory3 values "+dto.getHardwareCategory3_id());
+//		
+//		HardwareCategory4 hardwareCategory4 = ModelHbn.findById(dto.getHardwareCategory4_id());
+//		hardwareComponent.setHardwareCategory4(hardwareCategory4);
+//		System.out.println("hardwareCategory4 values "+dto.getHardwareCategory4_id());
+//		
+//		hardwareComponent.setAmKommision(dto.getPspElement());
+//		System.out.println("PSP values "+dto.getPspElement());
+//		
+//		Konto konto = CostcenterHbn.findById(dto.getKontoid());
+//		hardwareComponent.setKonto(konto);
+//		System.out.println("costcenter values "+dto.getKontoid());
+//		
+//
+//		HardwareCategory1 hardwareCategory1 = SapAssetHbn.findById(dto.getHardwareCategory1_id());
+//		hardwareComponent.setHardwareCategory1(hardwareCategory1);
+//		System.out.println("hardwareCategory1 values "+dto.getHardwareCategory1_id());
+//		
+//		hardwareComponent.setRequester(dto.getRequester());
+//		System.out.println("requester values "+dto.getRequester());
+//		
+//		hardwareComponent.setServiceNumber(dto.getMonth());
+//		System.out.println("month values "+dto.getMonth());
+		
+		
+//		tx.commit();
+		return output;
+	}
+
 }
