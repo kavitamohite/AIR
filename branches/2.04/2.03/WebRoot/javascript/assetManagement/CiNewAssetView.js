@@ -47,7 +47,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				bodyStyle : 'padding:10px 5px 0px 10px',
 				items : [ {
 					xtype : 'textfield',
-					id : 'identnumber',
+					id : 'identNumber',
 					fieldLabel : 'Indent number',
 					lazyRender : true,
 					lazyInit : false,
@@ -59,7 +59,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				}, {
 					xtype : 'textfield',
 					id : 'tinventory',
-					fieldLabel : 'Inventory',
+					fieldLabel : 'Inventory Number',
 					width : 450,
 					style : {
 						marginBottom : 10,
@@ -76,7 +76,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					}
 				}, {
 					xtype : 'combo',
-					id : 'resson',
+					id : 'tReason',
 					fieldLabel : 'Reason for asset',
 					lazyRender : true,
 					lazyInit : false,
@@ -220,7 +220,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						},
 						items : [ {
 							xtype : 'textfield',
-							id : 'tassetid',
+							id : 'tTechnicalNumber',
 							fieldLabel : 'Technical Number / Asset-ID',
 							lazyRender : true,
 							lazyInit : false,
@@ -230,7 +230,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							}
 						}, {
 							xtype : 'textfield',
-							id : 'tTechncalmaster',
+							id : 'tTechnicalMaster',
 							fieldLabel : 'Technical Master',
 							lazyRender : true,
 							lazyInit : false,
@@ -240,7 +240,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							}
 						}, {
 							xtype : 'textfield',
-							id : 'tsystem',
+							id : 'tSystemPlatform',
 							fieldLabel : 'System platform name',
 							width : 370,
 							style : {
@@ -248,7 +248,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							}
 						}, {
 							xtype : 'textfield',
-							id : 'thardware',
+							id : 'tHardware',
 							fieldLabel : 'Hardwaresystem (HWS)',
 							lazyRender : true,
 							lazyInit : false,
@@ -258,7 +258,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							}
 						}, {
 							xtype : 'textfield',
-							id : 'tOsname',
+							id : 'tOsName',
 							fieldLabel : 'OS-Name',
 							lazyRender : true,
 							lazyInit : false,
@@ -269,7 +269,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							}
 						}, {
 							xtype : 'textfield',
-							id : 'tbworkflow',
+							id : 'tWorkflowHWS',
 							fieldLabel : 'Worflowstatus technical HWS',
 							lazyRender : true,
 							lazyInit : false,
@@ -280,7 +280,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							}
 						}, {
 							xtype : 'textfield',
-							id : 'ttransient',
+							id : 'tTransient',
 							fieldLabel : 'HW-transient systems',
 							lazyRender : true,
 							lazyInit : false,
@@ -291,18 +291,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							}
 						}, {
 							xtype : 'combo',
-							id : 'cbworkflowtechnical',
-							fieldLabel : 'Worflowstatus technical',
-							lazyRender : true,
-							lazyInit : false,
-							width : 370,
-							style : {
-								marginBottom : 10,
-								fontSize : 12
-							}
-						}, {
-							xtype : 'combo',
-							id : 'cbworkflowtechnical',
+							id : 'cbWorkflowTechnical',
 							fieldLabel : 'Worflowstatus technical',
 							lazyRender : true,
 							lazyInit : false,
@@ -329,7 +318,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							}
 						}, {
 							xtype : 'radiogroup',
-							id : 'rbitsecurity',
+							id : 'rbItSecurity',
 							fieldLabel : 'IT-Security-Relevance',
 							width : 370,
 							columns : 2,
@@ -350,7 +339,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							}
 						}, {
 							xtype : 'textfield',
-							id : 'tcomment',
+							id : 'tComment',
 							fieldLabel : 'Comment',
 							lazyRender : true,
 							lazyInit : false,
@@ -485,7 +474,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						},
 						items : [ {
 							xtype : 'combo',
-							id : 'cbOrder',
+							id : 'cbOrderNumber',
 							fieldLabel : 'Order Number',
 							lazyRender : true,
 							lazyInit : false,
@@ -544,7 +533,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								marginBottom : 10
 							}
 				        }, {
-
 					    	xtype: 'panel',
 							id: 'pRequester',
 							border: false,
@@ -582,7 +570,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						
 						}, {
 							xtype : 'textfield',
-							id : 'tcost',
+							id : 'tCostCenterMgr',
 							fieldLabel : 'Cost Center Manager',
 							lazyRender : true,
 							lazyInit : false,
@@ -694,7 +682,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								fontSize : 12
 							}
 						} ]
-					
 					},{
 						xtype : 'fieldset',
 						id : 'contacts',
@@ -838,24 +825,24 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		cbPsp.on('select', this.onPSPSelect, this);
 		cbPsp.on('keyup', this.onFieldKeyUp, this);
 		
+		var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter');
+		cbCostcenter.on('select', this.onCostCenterSelect, this);
+		cbCostcenter.on('keyup', this.onFieldKeyUp, this);
+		
 		var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
 		cbCountry.on('select', this.onCountrySelect, this);
-		cbCountry.on('change', this.onCountryChange, this);//onComboChange
 		cbCountry.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbSite = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite');
 		cbSite.on('select', this.onSiteSelect, this);
-		cbSite.on('change', this.onSiteChange, this);//onComboChange
 		cbSite.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbBuilding = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');//.getComponent('pBuilding')
 		cbBuilding.on('select', this.onBuildingSelect, this);
-		cbBuilding.on('change', this.onBuildingChange, this);//onComboChange
 		cbBuilding.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
 		cbRoom.on('select', this.onRoomSelect, this);
-		cbRoom.on('change', this.onComboChange, this);
 		cbRoom.on('keyup', this.onFieldKeyUp, this);
 		
 		var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
@@ -874,53 +861,12 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		cbModel.on('select', this.onModelSelect, this);
 		cbModel.on('keyup', this.onFieldKeyUp, this);
 		
-		var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter');
-		cbCostcenter.on('select', this.onCostCenterSelect, this);
-		cbCostcenter.on('keyup', this.onFieldKeyUp, this);
-
 		var bReset = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('bReset');
 		bReset.on('click',this.resetProduct, this);
 		
 	
 	},
-	
-	
-	
-	updateMailTemplateProduct: function() {
-		var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
 		
-		var mailtemplate = 'mailto:vandana.hemnani@bayer.com';
-		//var tempSubj = mail_Subject_product.replace('<Manufacturer>', );//applicationName
-		var tempText = mail_Text_product.replace('<CIName>', 'other test');//applicationName
-		tempText = tempText.replace('<Username>', 'Vandana Hemnani');//username
-		mailtemplate += '&subject=' + mail_Subject_product + '';
-		mailtemplate += ('&body=' + tempText);
-		html = html.replace('{href}',mailtemplate);
-		Ext.getCmp('mailproduct').html = html;//replace with CommandLink
-	},
-	
-	updateMailTemplateLocation: function() {
-		var html = '<a id="mailtolocation" href="{href}"><img src="' + img_Email + '"></a>';
-		
-		var mailtemplate = 'mailto:vandana.hemnani@bayer.com';
-		//var tempSubj = mail_Subject_product.replace('<Manufacturer>', this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue());//applicationName
-		var tempText = mail_Text_location.replace('<CIName>', 'other test');//applicationName
-		tempText = tempText.replace('<Username>', 'Vandana Hemnani');//username
-		mailtemplate += '&subject=' + mail_Subject_location + '';
-		mailtemplate += ('&body=' + tempText);
-		html = html.replace('{href}',mailtemplate);
-		Ext.getCmp('maillocation').html = html;//replace with CommandLink
-	},
-	
-	
-	
-//	init: function() {
-//		this.loadCountryData();
-//		this.loadManufacturerData();
-//		this.loadCategoryData();
-//	},
-	
-	
 	onRequesterAdd: function(link, event) {
 		AIR.AirPickerManager.openPersonPicker(null, this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester'), event);
 	},
@@ -966,16 +912,10 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		this.loadOperationalStatusData();
 		this.loadPspElementData();
 		this.loadSapAssetData();
-		this.updateMailTemplateProduct();
-		this.updateMailTemplateLocation();
 	},
-	
-	
 	
 	updateLabels: function(labels){
 		this.loadComboboxData();
-		//this.updateMailTemplate();
-		
 	},
 	
 	onManufacturerSelect: function(combo, record, index) {
@@ -986,9 +926,11 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	manufacturerChanged: function(value) {
 		var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
 		var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-	
+		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
+		cbModel.reset();
 		cbSubCategory.reset();
 		cbType.reset();
+		this.updateMailTemplateProduct();
 	},
 	
 	onSubCategorySelect: function(combo, record, index) {
@@ -1008,6 +950,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				kategory2Id: kategoryIdValue
 			}
 		});
+		this.updateMailTemplateProduct();
 	},
 	
 	onTypeSelect: function(combo, record, index) {
@@ -1015,37 +958,17 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		this.fireEvent('ciChange', this, combo, record);
 	},
 	
-	onCountrySelect: function(combo, record, index) {
-		this.countryChanged(record.get('id'));
-		this.ownerCt.fireEvent('ciChange', this, combo, record);
-	},
-	
 	typeChanged: function(value) {
 		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
 		cbModel.reset();
 		cbModel.allQuery = value;
-		cbModel.reset();
 		cbModel.getStore().load({
 			params: {
 				id: value
 			}
 		});
+		this.updateMailTemplateProduct();
 	},
-	
-	onCostCenterSelect: function(combo, record, index) {
-		personStore = AIR.AirStoreFactory.createPersonStore();
-		personStore.load({
-			params:{
-				query: record.get('cwid')
-			},
-			callback: function (records, options, success) {
-				var value = this.getAt(0).data.firstname+" "+this.getAt(0).data.lastname+"/"+this.getAt(0).data.cwid;
-				var costCenterManager = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel')	.getComponent('contacts').getComponent('tCostcentermanager')
-				costCenterManager.setValue(value);
-			}
-		});
-	},
-	
 	
 	onModelSelect: function(combo, record, index) {
 		this.modelChanged(record.get('id'));
@@ -1061,7 +984,125 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var description = cbManufacturer+" "+cbType+" "+cbModel;
 		tsapDescription.setValue(description);
 		tDescription.setValue(description);
+		this.updateMailTemplateProduct();
+	},
+	
+	onCountrySelect: function(combo, record, index) {
+		this.countryChanged(record.get('id'));
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
+	},
+	
+	countryChanged: function(value) {
+		var cbSite = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite');
+		var cbBuilding = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');
+		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
 		
+		cbRoom.reset();
+		cbBuilding.reset();
+		cbSite.reset();
+		
+		cbRoom.getStore().removeAll();
+		cbBuilding.getStore().removeAll();
+		cbSite.getStore().removeAll();
+		
+		cbSite.getStore().setBaseParam('id', value);
+		cbSite.allQuery = value;
+		cbSite.reset();
+		cbSite.getStore().load({
+			params: {
+				id: value
+			}
+		});
+		this.updateMailTemplateLocation();
+	},
+	
+	onSiteSelect: function(combo, record, index) {
+		this.siteChanged(record.get('id'));
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
+	},
+	
+	siteChanged: function(value) {
+		var cbBuilding = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');
+		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
+		
+		cbRoom.reset();
+		cbBuilding.reset();
+		
+		cbRoom.getStore().removeAll();
+		cbBuilding.getStore().removeAll();
+		
+		cbBuilding.getStore().setBaseParam('id', value);
+		cbBuilding.allQuery = value;
+		cbBuilding.reset();
+		cbBuilding.getStore().load({
+			params: {
+				id: value
+			}
+		});
+		Util.enableCombo(cbRoom);
+		this.updateMailTemplateLocation();
+	},
+	
+	onBuildingSelect: function(combo, record, index) {
+		this.buildingChanged(record.get('id'));
+		this.ownerCt.fireEvent('ciChange', this, combo, record);
+	},
+	
+	buildingChanged: function(value) {
+		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
+		cbRoom.reset();
+		cbRoom.getStore().removeAll();
+		
+		cbRoom.getStore().setBaseParam('id', value);
+		cbRoom.allQuery = value;
+		cbRoom.reset();
+		cbRoom.getStore().load({
+			params: {
+				id: value
+			}
+		});
+		Util.enableCombo(cbRoom);
+		this.updateMailTemplateLocation();
+	},
+	
+	onRoomSelect: function(combo, record, index) {
+		this.roomChanged(record.get('id'));
+		this.ownerCt.fireEvent('ciChange', this, combo, record);	
+	},
+	
+	roomChanged: function(value){
+		var cbRack = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRack');
+		cbRack.reset();
+		cbRack.getStore().removeAll();
+		
+		cbRack.getStore().setBaseParam('id', value);
+		cbRack.allQuery = value;
+		cbRack.reset();
+		cbRack.getStore().load({
+			params: {
+				id: value
+			}
+		});
+		Util.enableCombo(cbRack);
+		this.updateMailTemplateLocation();
+	},
+	
+	onFieldKeyUp: function(textfield, event) {
+		this.ownerCt.fireEvent('ciChange', this, textfield);
+	},
+	
+	onCostCenterSelect: function(combo, record, index) {
+		personStore = AIR.AirStoreFactory.createPersonStore();
+		personStore.load({
+			params:{
+				query: record.get('cwid')
+			},
+			callback: function (records, options, success) {
+				var value = this.getAt(0).data.firstname+" "+this.getAt(0).data.lastname+"/"+this.getAt(0).data.cwid;
+				var costCenterManager = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel')	.getComponent('contacts').getComponent('tCostcentermanager')
+				costCenterManager.setValue(value);
+			}
+		});
 	},
 	
 	loadManufacturerData: function(){	
@@ -1086,8 +1127,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	},
 	
 	loadCostcenterData: function(){	
-		var cbSubCategory = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter');
-		cbSubCategory.getStore().load();
+		var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter');
+		cbCostcenter.getStore().load();
 	},
 	
 	loadOperationalStatusData: function(){
@@ -1106,147 +1147,187 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		
 	},
 	
-	countryChanged: function(value) {
+	updateMailTemplateProduct: function() {
+		var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
+		
+		var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
+		var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
+		var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
+		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
+		
+		var mailText = mail_Text_product.replace('<manufacturer>', cbManufacturer.getRawValue());
+		mailText = mailText.replace('<subcategory>', cbSubCategory.getRawValue());
+		mailText = mailText.replace('<model>', cbModel.getRawValue());
+		mailText = mailText.replace('<type>', cbType.getRawValue());
+		mailText = mailText.replace('<Username>', 'Vandana Hemnani');//username
+		
+		var mailtemplate = 'mailto:vandana.hemnani@bayer.com';
+		mailtemplate += '&subject=' + mail_Subject_product + '';
+		mailtemplate += ('&body=' + mailText);
+		html = html.replace('{href}',mailtemplate);
+		Ext.getCmp('mailproduct').update(html);
+	},
+	
+	updateMailTemplateLocation: function() {
+		var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
+		
+		var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
 		var cbSite = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite');
 		var cbBuilding = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');
 		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
+		var cbRack = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRack');
 		
-		cbRoom.reset();
-		cbBuilding.reset();
-
-		cbSite.reset();
+		var mailText = mail_Text_location.replace('<country>', cbCountry.getRawValue());
+		mailText = mailText.replace('<site>', cbSite.getRawValue());
+		mailText = mailText.replace('<building>', cbBuilding.getRawValue());
+		mailText = mailText.replace('<room>', cbRoom.getRawValue());
+		mailText = mailText.replace('<rack>', cbRack.getRawValue());
+		mailText = mailText.replace('<Username>', 'Vandana Hemnani');//username
 		
-		cbRoom.getStore().removeAll();
-		cbBuilding.getStore().removeAll();
-		cbSite.getStore().removeAll();
-		
-		if(typeof value === 'string' && value.length === 0) {
-			Util.disableCombo(cbSite);
-		} else {
-			cbSite.getStore().setBaseParam('id', value);
-			cbSite.allQuery = value;
-			cbSite.reset();
-			cbSite.getStore().load({
-				params: {
-					id: value
-				}
-			});
-		}
+		var mailtemplate = 'mailto:vandana.hemnani@bayer.com';
+		mailtemplate += '&subject=' + mail_Subject_location + '';
+		mailtemplate += ('&body=' + mailText);
+		html = html.replace('{href}',mailtemplate);
+		Ext.getCmp('maillocation').update(html);
 	},
 	
-	onSiteSelect: function(combo, record, index) {
-		this.siteChanged(record.get('id'));
-		this.ownerCt.fireEvent('ciChange', this, combo, record);
-	},
-	
-	onSiteChange: function(combo, newValue, oldValue) {
-		if(this.isComboValueValid(combo, newValue, oldValue)) {
-			if(typeof newValue === 'string' && newValue.length === 0)
-				this.siteChanged(newValue);
-			this.ownerCt.fireEvent('ciChange', this, combo);
-		}
-	},
-	
-	siteChanged: function(value) {
+	update: function(assetData){
+		console.log(assetData);
+		//Asset Description
+		var tDescription = this.getComponent('topPanel').getComponent('tDescription');
+		tDescription.setValue(assetData.sapDescription);
+		
+		var identNumber = this.getComponent('topPanel').getComponent('identNumber');
+		identNumber.setValue(assetData.identNumber);
+		
+		var tinventory = this.getComponent('topPanel').getComponent('tinventory');
+		tinventory.setValue(assetData.inventoryNumber);
+		
+		var tReason = this.getComponent('topPanel').getComponent('tReason');
+		
+		//Product
+		var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
+		cbManufacturer.setValue(assetData.manufacturerId);
+		
+		var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
+		cbSubCategory.setValue(assetData.subcategoryId);
+		this.subCategoryChanged(assetData.subcategoryId);
+		
+		var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
+		cbType.setValue(assetData.typeId);
+		cbType.setRawValue(assetData.type);
+		this.typeChanged(assetData.typeId);
+		
+		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
+		cbModel.setValue(assetData.modelId);
+		cbModel.setRawValue(assetData.model);
+		
+		var tsapDescription = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription');
+		tsapDescription.setValue(assetData.sapDescription);
+		
+		//Technics
+		var tTechnicalNumber = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalNumber');
+		tTechnicalNumber.setValue(assetData.technicalNumber);
+		
+		var tTechnicalMaster = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalMaster');
+		tTechnicalMaster.setValue(assetData.technicalMaster);
+		
+		var tSystemPlatform = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tSystemPlatform');
+		tSystemPlatform.setValue(assetData.systemPlatformName);
+		
+		var tHardware = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tHardware');
+		tHardware.setValue(assetData.hardwareSystem);
+		
+		var tOsName = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tOsName');
+		tOsName.setValue(assetData.osName);
+		
+		var tWorkflowHWS = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tWorkflowHWS');
+		tWorkflowHWS.setValue(assetData.workflowTechnicalStatus);
+		
+		var tTransient = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTransient');
+		tTransient.setValue(assetData.hardwareTransientSystem);
+		
+		var cbWorkflowTechnical = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbWorkflowTechnical');
+		cbWorkflowTechnical.setValue(assetData.workflowStatusId);
+		
+		var cbGeneralUsage = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbGeneralUsage');
+		cbGeneralUsage.setValue(assetData.generalUsageId);
+		
+		var rbItSecurity = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('rbItSecurity');
+		rbItSecurity.setValue("START");
+		
+		var tComment = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tComment');
+		tComment.setValue(assetData.generalUsageId);
+		
+		// Location
+		var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
+		var cbSite = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite');
 		var cbBuilding = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');
 		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
-		
-		cbRoom.reset();
-		cbBuilding.reset();
-		
-		cbRoom.getStore().removeAll();
-		cbBuilding.getStore().removeAll();
-		
-		if(typeof value === 'string' && value.length === 0) {
-			Util.disableCombo(cbBuilding);
-		} else {
-			cbBuilding.getStore().setBaseParam('id', value);
-			cbBuilding.allQuery = value;
-			cbBuilding.reset();
-			cbBuilding.getStore().load({
-				params: {
-					id: value
-				}
-			});
-			Util.enableCombo(cbRoom);
-		}
-	},
-	
-	onBuildingSelect: function(combo, record, index) {
-		this.buildingChanged(record.get('id'));
-		
-		this.ownerCt.fireEvent('ciChange', this, combo, record);
-	},
-	onBuildingChange: function(combo, newValue, oldValue) {
-		if(this.isComboValueValid(combo, newValue, oldValue)) {
-			if(typeof newValue === 'string' && newValue.length === 0)
-				this.buildingChanged(newValue);
-			this.ownerCt.fireEvent('ciChange', this, combo);
-		}
-	},
-	buildingChanged: function(value) {
-		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
-		
-		cbRoom.reset();
-		
-		cbRoom.getStore().removeAll();
-		
-		
-		if(typeof value === 'string' && value.length === 0) {
-			Util.disableCombo(cbRoom);
-		} else {
-			cbRoom.getStore().setBaseParam('id', value);
-			cbRoom.allQuery = value;
-			cbRoom.reset();
-			cbRoom.getStore().load({
-				params: {
-					id: value
-				}
-			});
-			
-			Util.enableCombo(cbRoom);
-		}
-	},
-	
-	onRoomSelect: function(combo, record, index) {
-		this.roomChanged(record.get('id'));
-		this.ownerCt.fireEvent('ciChange', this, combo, record);	
-
-
-
-	},
-	
-	onRoomChange: function(combo, newValue, oldValue) {
-		if(this.isComboValueValid(combo, newValue, oldValue)) {
-			if(typeof newValue === 'string' && newValue.length === 0)
-				this.roomChanged(newValue);
-			this.ownerCt.fireEvent('ciChange', this, combo);
-		}
-	},
-	
-	roomChanged: function(value){
-
 		var cbRack = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRack');
-		cbRack.reset();
-		cbRack.getStore().removeAll();
 		
-		if(typeof value === 'string' && value.length === 0) {
-			Util.disableCombo(cbRack);
-		} else {
-			cbRack.getStore().setBaseParam('id', value);
-			cbRack.allQuery = value;
-			cbRack.reset();
-			cbRack.getStore().load({
-				params: {
-					id: value
-				}
-			});
-			Util.enableCombo(cbRack);
-		}
-	},
-	
-	onFieldKeyUp: function(textfield, event) {
-		this.ownerCt.fireEvent('ciChange', this, textfield);
+		//Business Information
+		var cbOrderNumbr = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumbr');
+		
+		var tInventorynumber= this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
+		tInventorynumber.setValue(assetData.inventoryNumber);
+		
+		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
+		cbPsp.setValue(assetData.pspElementId);
+		cbPsp.setRawValue(assetData.pspElement);
+		
+		var tPsptext = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tPsptext');
+		tPsptext.setValue(assetData.pspText);
+		
+		var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter');					
+		cbCostcenter.setValue(assetData.costCenterId);
+		
+		var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
+		tfRequester.setValue(assetData.requester);
+		
+		var tfRequesterHidden = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequesterHidden'); 
+		tfRequesterHidden.setValue(assetData.requesterId);
+		
+		var tCostCenterMgr = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tCostCenterMgr');			  
+		tCostCenterMgr.setValue(assetData.costCenterManager);
+
+		var tOrganisation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrganisation');
+		tOrganisation.setValue(assetData.organizationalunit);
+		
+		var tOwner = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOwner');	       
+		tOwner.setValue(assetData.owner);
+		
+		var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
+		cbSapAsset.setValue(assetData.sapAssetClassId);
+		
+		var tAquisition = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tAquisition');
+		tAquisition.setValue(assetData.acquisitionValue);
+		
+		var tBook = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tBook');
+		tBook.setValue(assetData.bookValue);
+		
+		var tDate = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tDate');
+		tDate.setValue(assetData.bookValueDate);
+		
+		var tDepreciation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tDepreciation');
+		tDepreciation.setValue(assetData.depreciationStartDate);
+		
+		var tEconomic = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic');
+		tEconomic.setValue(assetData.usefulEconomicLife);
+		
+		var tRetirement = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tRetirment');
+		tRetirement.setValue(assetData.retirementDate);
+		
+		var tCostcentermanager = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('contacts').getComponent('tCostcentermanager');
+		tCostcentermanager.setValue(assetData.costCenterManager);
+		
+		var tOrganizationalunit = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('contacts').getComponent('tOrganizationalunit');
+		tOrganizationalunit.setValue(assetData.organizationalunit);
+		
+		var cbeditor = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('contacts').getComponent('cbeditor');
+		cbeditor.setValue(assetData.editorsGroupId);
+		
+		AAM.getMask(AC.MASK_TYPE_LOAD).hide();
 	}
 
 });
