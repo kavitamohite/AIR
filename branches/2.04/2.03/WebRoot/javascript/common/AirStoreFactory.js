@@ -4048,31 +4048,84 @@ AIR.AirStoreFactory = function() {
 		
 		createAssetListStore: function() {
 			var ciItemListRecord = Ext.data.Record.create([
-			    { name : 'id'},
-				{ name : 'manufacturer'},
-				{ name : 'sapDescription'},
-				{ name : 'serialNumber'},
-				{ name : 'costCenterManager'},
-				{ name : 'organizationalunit'},
-				{ name : 'costCenter'},
-				{ name : 'inventoryNumber'},
-				{ name : 'pspElement'},
-				{ name : 'requester'},
-				{ name : 'technicalMaster'},
-				{ name : 'technicalNumber'},
-				{ name : 'acquisitionValue'},
-				{ name : 'site'},
-				{ name : 'orderNumber'},
-				{ name : 'assetChecked'},
-				{ name : 'sapAssetClass'},
-				{ name : 'subCategory'},
-				{ name : 'type'},
-				{ name : 'model'},
-				{ name : 'systemPlatformName'},
-				{ name : 'hardwareSystem'},
-				{ name : 'hardwareTransientSystem'},
-				{ name : 'alias'},
-				{ name : 'osName'}
+					//Asset Information
+					{ name : 'id'},
+					{ name : 'identNumber'},
+					{ name : 'inventoryNumber'},
+					{ name : 'sapDescription'},
+					{ name : 'reasonId'},
+					
+					//Product
+					{ name : 'manufacturer'},
+					{ name : 'manufacturerId'},
+					
+					{ name : 'subCategory'},
+					{ name : 'subcategoryId'},
+					
+					{ name : 'type'},
+					{ name : 'typeId'},
+					
+					{ name : 'model'},
+					{ name : 'modelId'},
+					
+					//Technicas
+					{ name : 'technicalNumber'},
+					{ name : 'technicalMaster'},
+					{ name : 'systemPlatformName'},
+					{ name : 'hardwareSystem'},
+					{ name : 'osName'},
+					{ name : 'workflowTechnicalStatus'},
+					{ name : 'hardwareTransientSystem'},
+					{ name : 'workflowStatusId'},
+					{ name : 'generalUsageId'},
+					{ name : 'itSecurityRelevance'},
+					{ name : 'comment'},
+					
+					//Location
+					{ name : 'country'},
+					{ name : 'countryId'},
+					
+					{ name : 'site'},
+					{ name : 'siteId'},
+					
+					{ name : 'building'},
+					{ name : 'buildingId'},
+					
+					{ name : 'room'},
+					{ name : 'roomId'},
+					
+					{ name : 'rack'},
+					{ name : 'rackId'},
+					
+					// Business Information
+					{ name : 'orderNumber'},
+					{ name : 'costCenter'},
+					{ name : 'costCenterId'},
+					{ name : 'pspElement'},
+					{ name : 'pspElementId'},
+					{ name : 'pspText'},
+					{ name : 'requester'},
+					{ name : 'requesterId'},
+					{ name : 'costCenterManager'},
+					{ name : 'organizationalunit'},
+					{ name : 'owner'},
+					{ name : 'sapAssetClass'},
+					{ name : 'sapAssetClassId'},
+					{ name : 'acquisitionValue'},
+					{ name : 'bookValue'},
+					{ name : 'bookValueDate'},
+					{ name : 'depreciationStartDate'},
+					{ name : 'usefulEconomicLife'},
+					{ name : 'retirementDate'},
+					
+					// Contacts
+					{ name : 'editorsGroupId'},
+					{ name : 'editorsGroup'},
+					
+					//Others
+					{ name : 'serialNumber'},
+					{ name : 'assetChecked'},
+					{ name : 'alias'}
 			]);
 	
 			var ciItemListReader = new Ext.data.XmlReader({
