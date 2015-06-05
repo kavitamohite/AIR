@@ -9,10 +9,17 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bayerbbs.applrepos.domain.HardwareCategory2;
 import com.bayerbbs.applrepos.domain.HardwareCategory3;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 
-public class TypeHbn {
+public class TypeHbn  extends BaseHbn{
+	
+
+	public static HardwareCategory3 findById(Long id) {
+		return findById(HardwareCategory3.class, id);
+	}
+	
 
 	private static List<KeyValueDTO> getDTOTypeList(List<HardwareCategory3> input) {
 		List<KeyValueDTO> listDTO = new ArrayList<KeyValueDTO>();
