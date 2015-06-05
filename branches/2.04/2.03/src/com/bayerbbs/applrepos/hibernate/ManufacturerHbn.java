@@ -9,10 +9,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.domain.Partner;
+import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
-
-public class ManufacturerHbn {
-
+public class ManufacturerHbn  extends BaseHbn{
+	public static Partner findById(Long id) {
+		return findById(Partner.class, id);
+	}
+	
 	private static List<KeyValueDTO> getDTOManufacturerList(List<Partner> input) {
 		List<KeyValueDTO> listDTO = new ArrayList<KeyValueDTO>();
 
@@ -51,5 +54,7 @@ public class ManufacturerHbn {
 		Collections.sort(data);
 		return data.toArray(new KeyValueDTO[0]);
 	}
+	
+	
 
 }
