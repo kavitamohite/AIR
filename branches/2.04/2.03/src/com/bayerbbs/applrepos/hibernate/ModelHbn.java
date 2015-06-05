@@ -18,7 +18,7 @@ public class ModelHbn {
 		List<KeyValueDTO> listDTO = new ArrayList<KeyValueDTO>();
 
 		for (HardwareCategory4 data : input) {
-			listDTO.add(new KeyValueDTO(data.getId(), data.getHwKategory1()));
+			listDTO.add(new KeyValueDTO(data.getId(), data.getHwKategory4()));
 		}
 		return listDTO;
 	}

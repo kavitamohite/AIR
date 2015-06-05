@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import com.bayerbbs.applrepos.domain.HardwareComponent;
 import com.bayerbbs.applrepos.domain.SoftwareComponent;
 import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
 import com.bayerbbs.applrepos.service.AssetManagementParameterInput;
@@ -154,7 +155,7 @@ public class SoftwareComponentHbn {
 		}
 		dto.setSapAssetClass("SAP ASSET CLASS");
 		if (hwComp.getSoftwareCategory2() != null) {
-			dto.setSubCategory(hwComp.getSoftwareCategory2().getId());
+			dto.setSubCategory(hwComp.getSoftwareCategory2().getHwKategory2());
 		}
 		dto.setType("TYPE");
 		dto.setSystemPlatformName("SYSTEM PLATOFORM");
@@ -163,6 +164,32 @@ public class SoftwareComponentHbn {
 		dto.setAlias("ALIAS");
 		dto.setOsName("OS Name");
 		return dto;
+	}
+
+	public static AssetManagementParameterOutput findAssetById(Long assetId) {
+		AssetManagementParameterOutput out = new AssetManagementParameterOutput();
+		List<AssetViewDataDTO> list = new ArrayList<AssetViewDataDTO>();
+		Transaction tx = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			tx = session.beginTransaction();
+			Criteria criteria = session.createCriteria(SoftwareComponent.class);
+			criteria.add(Restrictions.eq("id", assetId));
+			List<SoftwareComponent> values = (List<SoftwareComponent>) criteria.list();
+			list = getDTOList(values);
+			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list.size()]));
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null && tx.isActive()) {
+				try {
+					tx.rollback();
+				} catch (HibernateException e1) {
+					System.out.println("Error rolling back transaction");
+				}
+				throw e;
+			}
+		}
+		return out;
 	}
 
 }

@@ -9,9 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.domain.HardwareCategory1;
-import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.KeyValueEnDTO;
-import com.bayerbbs.applrepos.dto.KeyValueType2DTO;
 
 public class SapAssetHbn {
 

@@ -128,44 +128,104 @@ public class HardwareComponentHbn {
 	private static AssetViewDataDTO getDTO(HardwareComponent hwComp) {
 
 		AssetViewDataDTO dto = new AssetViewDataDTO();
+
 		dto.setId(hwComp.getId());
-		if (hwComp.getPartner() != null) {
-			dto.setManufacturer(hwComp.getPartner().getName());
-		}
-
+		
+		//Asset Information
+		dto.setIdentNumber(hwComp.getName());
+		dto.setInventoryNumber(hwComp.getInventoryP69());
 		dto.setSapDescription(hwComp.getSapDescription());
-		dto.setSerialNumber(hwComp.getSerialNumber());
+		
 
-		if (hwComp.getKonto() != null) {
-			dto.setCostCenter(hwComp.getKonto().getName());
-			dto.setCostCenterManager(hwComp.getKonto().getCwidVerantw());
-			dto.setPspElement(hwComp.getKonto().getName());
+		//Product
+		if (hwComp.getHersteller() != null) {
+			dto.setManufacturer(hwComp.getHersteller().getName());
+			dto.setManufacturerId(hwComp.getHersteller().getId());
 		}
-		dto.setOrganizationalunit(hwComp.getSubResponsible());
-		dto.setInventoryNumber(hwComp.getInventoryNumber());
-
-		dto.setRequester(hwComp.getRequester());
-		dto.setTechnicalMaster(hwComp.getTechnicalMaster());
-		dto.setTechnicalNumber(hwComp.getTechnicalNumer());
-		dto.setAcquisitionValue(hwComp.getAmAnschaffwert());
-		dto.setSite("SITE");
-		dto.setOrderNumber(hwComp.getOrderNumber());
-		dto.setAssetChecked("ASSET CHECKED");
-		if (hwComp.getHardwareCategory1() != null) {
-			dto.setSapAssetClass(hwComp.getHardwareCategory1().getHwKategory1());
-		}
-		dto.setSapAssetClass("SAP ASSET CLASS");
 		if (hwComp.getHardwareCategory2() != null) {
-			dto.setSubCategory(hwComp.getHardwareCategory2().getId());
+			dto.setSubCategory(hwComp.getHardwareCategory2().getHwKategory2());
+			dto.setSubcategoryId(hwComp.getHardwareCategory2().getId());
 		}
-		dto.setType("TYPE");
-		dto.setModel(hwComp.getCpuModel());
+		if (hwComp.getHardwareCategory3() != null) {
+			dto.setTypeId(hwComp.getHardwareCategory3().getId());
+			dto.setType(hwComp.getHardwareCategory3().getHwKategory3());
+		}
+		if (hwComp.getHardwareCategory4() != null) {
+			dto.setModelId(hwComp.getHardwareCategory4().getId());
+			dto.setModel(hwComp.getHardwareCategory4().getHwKategory4());
+		}
+
+		//Technics
+		dto.setTechnicalNumber(hwComp.getTechnicalNumer());
+		dto.setTechnicalMaster(hwComp.getTechnicalMaster());
 		dto.setSystemPlatformName("SYSTEM PLATOFORM");
 		dto.setHardwareSystem("HARDWARE SYSTEM");
 		dto.setHardwareTransientSystem("TRANSIENT SYSTEM");
+		if(hwComp.getLifecycleSubStat()!=null){
+			dto.setWorkflowStatusId(hwComp.getLifecycleSubStat().getId());
+			dto.setWorkflowStatus(hwComp.getLifecycleSubStat().getStatus());
+		}
+		dto.setGeneralUsageId(hwComp.getOperationalStatus().getId());
+		
+		//Location
+//		dto.setCountryId(countryId);
+//		dto.setSiteId(siteId);
+		dto.setSite("SITE");
+//		dto.setBuildingId(buildingId);
+//		dto.setRoomId(roomId);
+//		dto.setRackId(rackId);
+		
+		//Business Administration
+		dto.setOrderNumber(hwComp.getOrderNumber());
+		if (hwComp.getKonto() != null) {
+			dto.setCostCenter(hwComp.getKonto().getName());
+			dto.setCostCenterId(hwComp.getKonto().getId());
+			dto.setCostCenterManager(hwComp.getKonto().getCwidVerantw());
+			dto.setPspElement(hwComp.getAmKommision());
+		}
+		dto.setRequester(hwComp.getRequester());
+		dto.setOrganizationalunit(hwComp.getSubResponsible());
+		dto.setOwner("OWNER");
+		if (hwComp.getHardwareCategory1() != null) {
+			dto.setSapAssetClass(hwComp.getHardwareCategory1().getHwKategory1());
+			dto.setSapAssetClassId(hwComp.getHardwareCategory1().getId());
+			dto.setUsefulEconomicLife(hwComp.getHardwareCategory1().getMonth());
+		}
+		dto.setAcquisitionValue(hwComp.getAcquitionValue());
+//		dto.setBookValue();
+//		dto.setDateOfBookValue();
+		
+		dto.setSerialNumber(hwComp.getSerialNumber());
+		dto.setAssetChecked("ASSET CHECKED");
 		dto.setAlias("ALIAS");
 		dto.setOsName("OS Name");
 		return dto;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static AssetManagementParameterOutput findAssetById(Long assetId) {
+		AssetManagementParameterOutput out = new AssetManagementParameterOutput();
+		List<AssetViewDataDTO> list = new ArrayList<AssetViewDataDTO>();
+		Transaction tx = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			tx = session.beginTransaction();
+			Criteria criteria = session.createCriteria(HardwareComponent.class);
+			criteria.add(Restrictions.eq("id", assetId));
+			List<HardwareComponent> values = (List<HardwareComponent>) criteria.list();
+			list = getDTOList(values);
+			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list.size()]));
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null && tx.isActive()) {
+				try {
+					tx.rollback();
+				} catch (HibernateException e1) {
+					System.out.println("Error rolling back transaction");
+				}
+				throw e;
+			}
+		}
+		return out;
+	}
 }
