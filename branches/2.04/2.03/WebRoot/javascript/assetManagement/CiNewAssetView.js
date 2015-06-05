@@ -75,17 +75,33 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						fontSize : 12
 					}
 				}, {
-					xtype : 'combo',
-					id : 'tReason',
-					fieldLabel : 'Reason for asset',
-					lazyRender : true,
-					lazyInit : false,
-					width : 450,
-					style : {
-						marginBottom : 10,
-						fontSize : 12
-					}
-				} ]
+			    	xtype: 'panel',
+					id: 'pReason',
+					border: false,
+					layout: 'table',
+					width: 770,
+					items: [{
+							xtype: 'label',
+							fieldLabel : 'lReason',
+							text:'Reason for Asset without Inventory:',
+							width: 200,
+							style: {
+								fontSize: 12,
+								'padding-right': '20px'
+							}
+			    		}, {
+							xtype : 'combo',
+							id : 'cbReason',
+							//fieldLabel : 'Reason for Asset without Inventory',
+							lazyRender : true,
+							lazyInit : false,
+							width : 530,
+							style : {
+								marginBottom : 10,
+								fontSize : 12
+							}
+						}]
+				}]
 			}, {
 				xtype : 'panel',
 				id: 'bottomPanel',
@@ -124,7 +140,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								fontSize: '8pt',
 								cursor:'pointer',
 								//'margin-left' : 300,
-								 'padding-left':'500',
+								 'padding-left':'500'
 							}
 						},{
 							id: 'cbManufacturer',
@@ -740,8 +756,10 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						fontSize : 12,
 						margin : '8 10 0 0',
 						width:80
-						
-					}
+					},
+					handler: function(button, event) {
+		    	   		this.saveAsset();//button, event
+		    		}.createDelegate(this)
 				},{
 					xtype : 'button',
 					id : 'cancelBtn',
@@ -1328,6 +1346,33 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		cbeditor.setValue(assetData.editorsGroupId);
 		
 		AAM.getMask(AC.MASK_TYPE_LOAD).hide();
+	},
+	
+	saveAsset:function(){
+		newAssetstore= AIR.AirStoreFactory.createSaveAssetStore();
+		var manufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
+		var subCategoryValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getValue();
+		var typeValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getValue();
+		var modelValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel').getValue();
+		var pspValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp').getValue();
+		var costcentervalue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter').getValue();
+		var  sapAssetvalue=this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset').getValue();
+		var requesterValue=this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getValue();
+		var economicValue=this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic').getValue();
+		
+		newAssetstore.load({
+			params:{
+			id: manufacturerValue,
+			hardwareCategory2_id:subCategoryValue,
+			hardwareCategory3_id:typeValue,
+			hardwareCategory4_id:modelValue,
+			kontoid:costcentervalue,
+			pspElement:pspValue,
+			hardwareCategory1_id:sapAssetvalue,
+			requester:requesterValue,
+			month:economicValue
+		}
+		});
 	}
 
 });
