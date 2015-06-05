@@ -12,7 +12,11 @@ import org.hibernate.criterion.Restrictions;
 import com.bayerbbs.applrepos.domain.Konto;
 import com.bayerbbs.applrepos.dto.CostCenterDTO;
 
-public class CostcenterHbn {
+public class CostcenterHbn extends BaseHbn{
+
+	public static Konto findById(Long id) {
+		return findById(Konto.class, id);
+	}
 
 	private static List<CostCenterDTO> getDTOCostcenterList(List<Konto> input) {
 		List<CostCenterDTO> listDTO = new ArrayList<CostCenterDTO>();
