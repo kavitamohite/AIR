@@ -901,7 +901,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	
 	onPSPSelect: function(combo, record, index) {
 		var value = record.get('nameEn');
-		var tPsptext = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tPsptext')
+		var tPsptext = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tPsptext');
         tPsptext.setValue(value);
 	},
 	
@@ -1117,7 +1117,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			},
 			callback: function (records, options, success) {
 				var value = this.getAt(0).data.firstname+" "+this.getAt(0).data.lastname+"/"+this.getAt(0).data.cwid;
-				var costCenterManager = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel')	.getComponent('contacts').getComponent('tCostcentermanager')
+				var costCenterManager = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel')	.getComponent('contacts').getComponent('tCostcentermanager');
 				costCenterManager.setValue(value);
 			}
 		});
