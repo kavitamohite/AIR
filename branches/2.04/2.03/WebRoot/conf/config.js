@@ -87,8 +87,8 @@ var dbLoginCheckInterval = 1000 * 60; //1000 milliSecs = 1 sec. * 60 = 1 min. (c
 
 //Mailtemplate
 var mail_Subject_product	= "Master%20data%20for%20the%20Manufacturer,%20Subcategory,%20Type,%20Model%20must%20be%20created.";
-var mail_Text_product		= "Dear%20Sir%20or%20Madam,%0A%0Aplease%20create%20new%20object%20as%20follows:%20(https://air-q.de.bayer.cnb)%20to%20the%20following:%0A%20-%20add%20text%20here%0A%0ABest%20regards,%0A<Username>";
+var mail_Text_product		= "Dear%20Sir%20or%20Madam,%0A%0Aplease%20create%20new%20object%20as%20follows:%0A%0AManufacturer:%20%20<manufacturer>%0A%0ASubcategory:%20%20<subcategory>%0A%0AType:%20%20<type>%0A%0AModel:%20%20<model>%0A%0ABest%20regards,%0A<Username>";
 
 
 var mail_Subject_location	= "Master%20data%20for%20the%20Country,%20 Site,%20Building,%20Room%20Rack - Position %20must%20be%20created.";
-var mail_Text_location		= "Dear%20Sir%20or%20Madam,%0A%0Aplease%20create%20new%20object%20as%20follows:%20(https://air-q.de.bayer.cnb)%20to%20the%20following:%0A%20-%20add%20text%20here%0A%0ABest%20regards,%0A<Username>";
+var mail_Text_location		= "Dear%20Sir%20or%20Madam,%0A%0Aplease%20create%20new%20object%20as%20follows:%0A%0ACountry:%20%20<country>%0A%0ASite:%20%20<site>%0A%0ABuilding:%20%20<building>%0A%0ARoom:%20%20<room>%0A%0ARack:%20%20<rack>%0A%0ABest%20regards,%0A<Username>";
