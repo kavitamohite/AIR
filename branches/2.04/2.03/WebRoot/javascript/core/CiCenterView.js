@@ -543,6 +543,28 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					break;
 				
 			case 'clCiNewAsset':
+				this.getLayout().setActiveItem('ciNewAssetView');
+				clCiProduct.setVisible(true);
+				clCiLocation.setVisible(true);
+				clCiBusinessInformation.setVisible(true);
+				clCiTechnics.setVisible(true);
+				clCiContacts.setVisible(true);
+				
+				var verwerfenCallback = function() {
+					
+					if(options && options.callback)
+						options.callback();
+				}.createDelegate(this);
+				var saveCallback = function() {
+					verwerfenCallback();
+				}.createDelegate(this);
+
+				this.handleNavigation(verwerfenCallback, saveCallback);
+				if(AAM.getAssetId()){
+					this.forwardToEdit(options);
+				}
+				break;
+					
 			case 'clCiTangibleAsset':
 				this.getLayout().setActiveItem('ciNewAssetView');
 				clCiProduct.setVisible(true);
@@ -582,18 +604,37 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
 					break;
-						
-			
 			default: break;
 		}
 	},
 	
 	onCiEditTabViewAdded: function(ct) {
-//		Util.log(ct.getId());
-//		alert(ct.getId());
-		
 		AIR.AirApplicationManager.registerCiEditView(this);
 		this.forwardNavigation();
+	},
+	
+	forwardToEdit: function(options){
+		var ciDetailStore = AIR.AirStoreFactory.createAssetListStore();//createApplicationDetailStore
+		ciDetailStore.on('beforeload', this.onBeforeAssetLoad, this);
+		ciDetailStore.on('load', this.onAssetLoad, this);
+		
+		ciDetailStore.load({
+			params: {
+				assetId: AAM.getAssetId(),
+				queryMode: AAM.getComponentType()
+			}
+		});
+		
+	},
+	
+	onBeforeAssetLoad: function(store, options) {
+		AAM.getMask(AC.MASK_TYPE_LOAD).show();
+	},
+	
+	onAssetLoad: function(store, records, options) {
+		var assetData = records[0].data;
+		var ciNewAssetView = this.getComponent('ciNewAssetView');
+		ciNewAssetView.update(assetData);
 	},
 	
 	forwardNavigation: function(options) {
