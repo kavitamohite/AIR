@@ -8,14 +8,22 @@ public class AssetManagementWS {
 	public AssetManagementParameterOutput searchAsset(AssetManagementParameterInput input) {
 
 		AssetManagementParameterOutput out = null;
-		
+
 		if (input.getQueryMode().equalsIgnoreCase("hardware")) {
-			out = HardwareComponentHbn.searchAsset(input);
+			if (input.getAssetId() != null) {
+				out = HardwareComponentHbn.findAssetById(input.getAssetId());
+			} else {
+				out = HardwareComponentHbn.searchAsset(input);
+			}
 		} else if (input.getQueryMode().equalsIgnoreCase("software")) {
-			out = SoftwareComponentHbn.searchAsset(input);
+			if (input.getAssetId() != null) {
+				out = SoftwareComponentHbn.findAssetById(input.getAssetId());
+			} else {
+				out = SoftwareComponentHbn.searchAsset(input);
+			}
+
 		}
 
-		
 		return out;
 	}
 }

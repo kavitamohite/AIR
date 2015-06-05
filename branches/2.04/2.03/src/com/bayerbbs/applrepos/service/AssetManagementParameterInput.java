@@ -1,6 +1,8 @@
 package com.bayerbbs.applrepos.service;
 
 public class AssetManagementParameterInput {
+	
+	private Long assetId;
 
 	private String cwid;
 
@@ -17,6 +19,14 @@ public class AssetManagementParameterInput {
 	private String sort;
 	
 	private String queryMode;
+	
+	public Long getAssetId() {
+		return assetId;
+	}
+
+	public void setAssetId(Long assetId) {
+		this.assetId = assetId;
+	}
 
 	public String getCwid() {
 		return cwid;
