@@ -562,6 +562,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 				link.fireEvent('click', link, null, options);
 				break;
 			case 'clCiAssetSearch':
+			case 'clCiNewAsset':
 				var link = this.getComponent('pAssetManagementMenuItems').getComponent(target);
 				link.fireEvent('click', link, null, options);
 				break;

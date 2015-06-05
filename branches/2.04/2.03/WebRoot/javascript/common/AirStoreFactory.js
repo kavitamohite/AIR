@@ -4438,7 +4438,32 @@ AIR.AirStoreFactory = function() {
  				})
  			});
  			return ciSapAssetListstore;
- 		}
+ 		},
+ 		
+ 		createSaveAssetStore: function() {
+			var ciSaveAssetRecord = Ext.data.Record.create([
+				'result',				
+ 			]);
+
+ 			var ciSaveAssetReader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'
+ 			}, ciSaveAssetRecord);
+ 			
+ 			var ciSaveAssetstore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				//storeId: 'manufactureListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/AssetManagementWSPort',
+ 					loadMethod: 'saveAsset',
+ 					timeout: 120000,
+ 					reader: ciSaveAssetReader
+ 				})
+ 			});
+ 			return ciSaveAssetstore;
+		}
 
 	};
 }();

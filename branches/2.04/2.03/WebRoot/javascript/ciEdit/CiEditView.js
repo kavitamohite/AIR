@@ -390,7 +390,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		AAM.setAppDetail(ciData);
 		
 		if(ciData.id.length === 0 && !ciData.isCiCreate) {//applicationId
-			//wenn die ciId für den gegebenen ciType/tableId nicht existiert (z.B. aufgrund schlechter URL CI Einsprungdaten),
+			//wenn die ciId fï¿½r den gegebenen ciType/tableId nicht existiert (z.B. aufgrund schlechter URL CI Einsprungdaten),
 			//OK Hinweisfenster mit navigation callback zur Search
 			
 			var labels = AAM.getLabels();
@@ -435,7 +435,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			}.createDelegate(this));
 			task.delay(100);
 			
-			//das Akzeptieren von User Bedienaktionen (textfeld Änderungen, combo Auswahlen, ...) erst jetzt wieder freischalten für
+			//das Akzeptieren von User Bedienaktionen (textfeld ï¿½nderungen, combo Auswahlen, ...) erst jetzt wieder freischalten fï¿½r
 			//den Empfang von ciChange Events
 			var task = new Ext.util.DelayedTask(function() {
 				this.isUserChange = true;
@@ -491,8 +491,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			this.tableId = ciData.tableId;
 			this.createCi(ciData);
 		} else {
-			//keine itsec Änderungsprüfung, wenn schon vorher Warnung wegen Änderungen, wenn anderer Menupunkt
-			//vor Speichern gewählt
+			//keine itsec ï¿½nderungsprï¿½fung, wenn schon vorher Warnung wegen ï¿½nderungen, wenn anderer Menupunkt
+			//vor Speichern gewï¿½hlt
 			if(!button)
 				this.itsecChanged = false;
 			this.saveApplication();
@@ -608,7 +608,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	checkItsecGroup: function(newCiDetail, ciData, saveCallback) {
 		var isNewItSecGroup =	ciData.itsecGroupId && ciData.itsecGroupId.length > 0 &&
-								ciData.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && // wenn itsecGroupId = 10136 (Default ITsec Group), wird cbItSecGroup nicht gesetzt. Sie ist in diesem Fall leer. Die Überprüfung findet aber über ciData.itsecGroupId statt
+								ciData.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && // wenn itsecGroupId = 10136 (Default ITsec Group), wird cbItSecGroup nicht gesetzt. Sie ist in diesem Fall leer. Die ï¿½berprï¿½fung findet aber ï¿½ber ciData.itsecGroupId statt
 								ciData.itsecGroupId !== newCiDetail.itSecGroupId &&
 								newCiDetail.itSecGroupId &&
 								newCiDetail.itSecGroupId !== AC.CI_GROUP_ID_NON_BYTSEC &&
@@ -708,7 +708,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			ciConnectionsView.commitChanges();
 
 			if(!this.skipLoading)
-				this.loadCiDetails();//hier ein itsecGroupCallback übergeben (das ComplianceControlWindow), wenn er nach dem Neuladen aufgerufen werden soll
+				this.loadCiDetails();//hier ein itsecGroupCallback ï¿½bergeben (das ComplianceControlWindow), wenn er nach dem Neuladen aufgerufen werden soll
 			
 			this.fireEvent('airAction', this, 'appSaveSuccess');//(bestimmte) ciData Daten mitgeben?
 		} else {
@@ -813,8 +813,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciDetailsView = ciEditTabView.getComponent('clCiDetails');
 		ciDetailsView.updateLabels(labels);
 		
-		//falls kein CI vor dem Start ausgewählt war, gibt es natürlich keine gesicherte tableId. Folge: kein specificsView Label kann gesetzt werden
-		//ODER die Lebels aller specificsView CI Typ Seiten müssen gesetzt werden ODER CiSpecificsAnwendungView Labels werden per Default gesetzt, wie hier:
+		//falls kein CI vor dem Start ausgewï¿½hlt war, gibt es natï¿½rlich keine gesicherte tableId. Folge: kein specificsView Label kann gesetzt werden
+		//ODER die Lebels aller specificsView CI Typ Seiten mï¿½ssen gesetzt werden ODER CiSpecificsAnwendungView Labels werden per Default gesetzt, wie hier:
 		var ciSpecificsView = ciEditTabView.getComponent('clCiSpecifics');
 		ciSpecificsView.updateLabels(labels);//, tableId
 		
@@ -897,7 +897,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.isLoaded = false;
 		this.isUserChange = false;
 
-		this.tableId = AAM.getTableId();//für reset nach applicationCopy ContinueEditing Button Klick
+		this.tableId = AAM.getTableId();//fï¿½r reset nach applicationCopy ContinueEditing Button Klick
 	},
 
 
