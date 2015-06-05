@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
+import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.HardwareComponentHbn;
 import com.bayerbbs.applrepos.hibernate.SoftwareComponentHbn;
 
@@ -25,5 +26,11 @@ public class AssetManagementWS {
 		}
 
 		return out;
+	}
+	
+	public AssetManagementParameterOutput saveAsset(AssetViewDataDTO dto) {
+		AssetManagementParameterOutput output = new AssetManagementParameterOutput();
+		output = HardwareComponentHbn.saveHardwareAsset(dto);
+		return output;
 	}
 }
