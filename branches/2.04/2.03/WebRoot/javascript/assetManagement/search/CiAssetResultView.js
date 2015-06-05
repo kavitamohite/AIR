@@ -88,8 +88,6 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().singleSelect=true;
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().clearSelections();
 		}
-		
-		
 	},
 	
 	search: function(params, isUpdate, callback) {//ownerView
@@ -119,9 +117,7 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 		    	ownerPrefix: ciResultGridId,
 		    	border: false,
 		    	closable: true
-		    	
 			});
-			
 			
 			this.setVisible(true);
 			tpCiSearchResultTables.add(ciResultGrid);
@@ -160,6 +156,7 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 	    });
 		ciResultGrid.setPagingParams(params);
 	},
+	
 	onTabActivate: function(tab){		
 		var ciResultGridId = tab.getId();		
 		var searchAction = ciResultGridId.substring(0, ciResultGridId.indexOf('_'));
@@ -185,42 +182,6 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 	
 	onGridLoaded: function(store, records, options) {
 		this.loadMask.hide();
-		
-		
-		var tpCiSearchResultTables = this.getComponent('tpCiAssetSearchResultTables');
-		ciResultGrid = tpCiSearchResultTables.getActiveTab();
-		var cm = ciResultGrid.getColumnModel();
-		
-		switch(this.ciTypeId) {
-			case AC.TABLE_ID_APPLICATION:
-				cm.setHidden(cm.getIndexById('applicationCat2Txt'), false);
-				cm.setHidden(cm.getIndexById('location'), true);
-				cm.setHidden(cm.getIndexById('applicationOwner'), false);
-				cm.setHidden(cm.getIndexById('applicationOwnerDelegate'), false);
-				cm.setHidden(cm.getIndexById('applicationSteward'), false);
-				break;
-			case AC.TABLE_ID_IT_SYSTEM:
-				cm.setHidden(cm.getIndexById('applicationCat2Txt'), true);
-				cm.setHidden(cm.getIndexById('location'), true);
-				cm.setHidden(cm.getIndexById('applicationOwner'), true);
-				cm.setHidden(cm.getIndexById('applicationOwnerDelegate'), true);
-				cm.setHidden(cm.getIndexById('applicationSteward'), true);
-				break;
-			case AC.TABLE_ID_POSITION:
-			case AC.TABLE_ID_ROOM:
-			case AC.TABLE_ID_BUILDING_AREA:
-			case AC.TABLE_ID_BUILDING:
-			case AC.TABLE_ID_TERRAIN:
-			case AC.TABLE_ID_SITE:
-				cm.setHidden(cm.getIndexById('applicationCat2Txt'), true);
-				cm.setHidden(cm.getIndexById('location'), false);
-				cm.setHidden(cm.getIndexById('applicationOwner'), true);
-				cm.setHidden(cm.getIndexById('applicationOwnerDelegate'), true);
-				cm.setHidden(cm.getIndexById('applicationSteward'), true);
-				break;
-			case AC.TABLE_ID_HARDWARE_COMPONENT: break;
-			default: break;
-		}
 	},
 	
 	getTabTitle: function(ciResultGridId) {
@@ -244,53 +205,13 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 	
 	onRowClick: function(grid, rowIndex, e) {
 		this.fireEvent('beforeCiSelect');
-		
 		var record = grid.getStore().getAt(rowIndex);
-		var ciId = record.id;
-		
-		
-		if(record.data.tableId == AC.TABLE_ID_APPLICATION ||
-		   record.data.tableId == AC.TABLE_ID_ROOM ||
-		   record.data.tableId == AC.TABLE_ID_BUILDING ||
-		   record.data.tableId == AC.TABLE_ID_BUILDING_AREA ||
-		   record.data.tableId == AC.TABLE_ID_POSITION ||
-		   record.data.tableId == AC.TABLE_ID_TERRAIN ||
-		   record.data.tableId == AC.TABLE_ID_SITE ||
-		   record.data.tableId == AC.TABLE_ID_IT_SYSTEM ||
-		   record.data.tableId == AC.TABLE_ID_FUNCTION||
-		   record.data.tableId == AC.TABLE_ID_PATHWAY) {//Added by vandana
-			
-			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
-			
-			var ciSubType;
-			var cat1Txt = record.get('applicationCat1Txt');
-			if(cat1Txt == AC.APP_WO_CAT || cat1Txt.length === 0) {
-				ciSubType = AC.APP_CAT1_APPLICATION;
-			} else {
-				var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
-				ciSubType = r.get('ciSubTypeId');
-			}
-			AAM.setCiTypeId(this.ciTypeId);
-			AAM.setCiId(ciId);
-			AAM.setTableId(parseInt(record.data.tableId));
-			AAM.setCiSubTypeId(ciSubType);
-		} else {
-			AAM.setCiId(-1);
-			AAM.setTableId(-1);
-			AAM.setCiSubTypeId(-1);
-			
-			ciId = -1;//damit Ci Detail-Menu ausgeblendet wird
-			
-			var ciTypeWarningWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CI_TYPE_NOT_SUPPORTED_WARNING');
-			ciTypeWarningWindow.show();
-		}
-		
-		this.fireEvent('ciSelect', this, ciId, null, record);//grid this
+		AAM.setAssetId(record.id);
 	},
 	
 	onRowDoubleClick: function (grid, rowIndex, e) {
 		this.onRowClick(grid, rowIndex, e);
-		this.fireEvent('externalNavigation', this, grid, 'clCiDetails');
+		this.fireEvent('externalNavigation', this, grid, 'clCiNewAsset');
 	},
 	
 	onGridBeforeLoaded: function(store, options) {
@@ -298,7 +219,6 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 		this.loadMask.show();
 
 	},
-
 	
 	onTabClose: function(tab) {
 		var grid = tab;
@@ -351,8 +271,8 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 		
 		for(var i = 0; i < tpCiSearchResultTables.items.items.length; i++) {
 			ciSearchGrid = tpCiSearchResultTables.items.items[i];		
-				ciSearchGrid.getColumnModel().setColumnHeader(0, "&#160;");
-				
+			
+			ciSearchGrid.getColumnModel().setColumnHeader(0, "&#160;");
 			ciSearchGrid.getColumnModel().setColumnHeader(1, labels.assetManufacturer);
 			ciSearchGrid.getColumnModel().setColumnHeader(2, labels.assetSAPDesc);
 			ciSearchGrid.getColumnModel().setColumnHeader(3, labels.assetSerialNo);
@@ -363,19 +283,20 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 			ciSearchGrid.getColumnModel().setColumnHeader(8, labels.assetPSPElement);
 			ciSearchGrid.getColumnModel().setColumnHeader(9, labels.assetRequester);
 			ciSearchGrid.getColumnModel().setColumnHeader(10, labels.assetTechnicalMaster);
-			ciSearchGrid.getColumnModel().setColumnHeader(11, labels.assetAcquisitionValue);
-			ciSearchGrid.getColumnModel().setColumnHeader(12, labels.assetSite);
-			ciSearchGrid.getColumnModel().setColumnHeader(13, labels.assetOrderNumber);
-			ciSearchGrid.getColumnModel().setColumnHeader(14, labels.assetChecked);
-			ciSearchGrid.getColumnModel().setColumnHeader(15, labels.sapAssetClass);
-			ciSearchGrid.getColumnModel().setColumnHeader(16, labels.assetSubCategory);
-			ciSearchGrid.getColumnModel().setColumnHeader(17, labels.assetType);
-			ciSearchGrid.getColumnModel().setColumnHeader(18, labels.assetModel);
-			ciSearchGrid.getColumnModel().setColumnHeader(19, labels.assetSystemPlatformName);
-			ciSearchGrid.getColumnModel().setColumnHeader(20, labels.assetHardwareSystem);
-			ciSearchGrid.getColumnModel().setColumnHeader(21, labels.assetHardwareTransientSystem);
-			ciSearchGrid.getColumnModel().setColumnHeader(22, labels.assetAlias);
-			ciSearchGrid.getColumnModel().setColumnHeader(23, labels.assetOsName);
+			ciSearchGrid.getColumnModel().setColumnHeader(11, labels.assetTechnicalNumber);
+			ciSearchGrid.getColumnModel().setColumnHeader(12, labels.assetAcquisitionValue);
+			ciSearchGrid.getColumnModel().setColumnHeader(13, labels.assetSite);
+			ciSearchGrid.getColumnModel().setColumnHeader(14, labels.assetOrderNumber);
+			ciSearchGrid.getColumnModel().setColumnHeader(15, labels.assetChecked);
+			ciSearchGrid.getColumnModel().setColumnHeader(16, labels.sapAssetClass);
+			ciSearchGrid.getColumnModel().setColumnHeader(17, labels.assetSubCategory);
+			ciSearchGrid.getColumnModel().setColumnHeader(18, labels.assetType);
+			ciSearchGrid.getColumnModel().setColumnHeader(19, labels.assetModel);
+			ciSearchGrid.getColumnModel().setColumnHeader(20, labels.assetSystemPlatformName);
+			ciSearchGrid.getColumnModel().setColumnHeader(21, labels.assetHardwareSystem);
+			ciSearchGrid.getColumnModel().setColumnHeader(22, labels.assetHardwareTransientSystem);
+			ciSearchGrid.getColumnModel().setColumnHeader(23, labels.assetAlias);
+			ciSearchGrid.getColumnModel().setColumnHeader(24, labels.assetOsName);
 		}
 	}
 });
