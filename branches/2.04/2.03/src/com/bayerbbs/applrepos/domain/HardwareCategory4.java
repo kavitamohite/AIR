@@ -23,24 +23,24 @@ import org.hibernate.annotations.Type;
 	@NamedQuery(name="findCategory4byKategory3Id", query="FROM HardwareCategory4 WHERE  kategory3Id=:kategory3Id")
 })
 public class HardwareCategory4 {
-	private Long id;// HW_KATEGORIE1_ID NOT NULL NUMBER
-	private String hwKategory1;// HW_KATEGORIE1 NOT NULL VARCHAR2(160)
-	private String text;// HW_KATEGORIE1_TXT VARCHAR2(1020)
-	private HardwareCategory3 hwCategory3; // HW_KATEGORIE3_ID NOT NULL NUMBER
-	private Long heightRackunits; // HEIGHT_RACKUNITS NUMBER
-	private String cpuModel;// CPU_MODEL VARCHAR2(90)
-	private Long cpuCount;// CPU_COUNT NUMBER
-	private Long ramMemory;// RAM_MEMORY NUMBER
-	private Long intDiskSpace;// INT_DISK_SPACE NUMBER
-	private Long extDiscSpace;// EXT_DISK_SPACE NUMBER
-	private Long cpuSpeed;// CPU_SPEED NUMBER
-	private Long powerSupplyCount;// POWERSUPPLY_COUNT NUMBER
-	private Long powerConsumption;// POWER_CONSUMPTION NUMBER
-	private Long expectedLifetimeMonths;// EXPECTED_LIFETIME_MONTHS NUMBER
-	private Character masterAsset;// MASTER_ASSET VARCHAR2(1)
-	private String tShirtSize;// T_SHIRT_SIZE VARCHAR2(3)
-	private Long cpuCoreCount;// CPU_CORE_COUNT NUMBER
-	private LifecycleSubStat lifecycleSubStat;// LC_SUB_STATUS_ID NUMBER
+	private Long id;
+	private String hwKategory4;
+	private String text;
+	private HardwareCategory3 hwCategory3; 
+	private Long heightRackunits; 
+	private String cpuModel;
+	private Long cpuCount;
+	private Long ramMemory;
+	private Long intDiskSpace;
+	private Long extDiscSpace;
+	private Long cpuSpeed;
+	private Long powerSupplyCount;
+	private Long powerConsumption;
+	private Long expectedLifetimeMonths;
+	private Character masterAsset;
+	private String tShirtSize;
+	private Long cpuCoreCount;
+	private LifecycleSubStat lifecycleSubStat;
 	private Long kategory3Id;
 
 	@Id
@@ -55,12 +55,12 @@ public class HardwareCategory4 {
 	}
 
 	@Column(name = "HW_KATEGORIE4")
-	public String getHwKategory1() {
-		return hwKategory1;
+	public String getHwKategory4() {
+		return hwKategory4;
 	}
 
-	public void setHwKategory1(String hwKategory1) {
-		this.hwKategory1 = hwKategory1;
+	public void setHwKategory4(String hwKategory4) {
+		this.hwKategory4 = hwKategory4;
 	}
 
 	@Column(name = "HW_KATEGORIE4_TXT")
