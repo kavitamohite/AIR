@@ -312,7 +312,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	                id: 'clCiNewAsset',
 	                text: 'New Asset',
 	                img: 'images/Transparent.png',//images/Transparent.png
-	                cls: 'menuSubLink'
+	                cls: 'menuMainLink'
 				}]
 			},{
 
@@ -324,21 +324,52 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					background: 'transparent'
 				},
                 
-                items: [{
-	                xtype: 'commandlink',
-	                id: 'clCiTangibleAsset',
-	                text: 'Tangible Asset',
-	                img: 'images/Transparent.png',//images/Transparent.png
-	                cls: 'menuSubLink'
-				},{
+                items: [
+                        {
 	                xtype: 'commandlink',
 	                id: 'clCiIntangibleAsset',
 	                text: 'Intangible Asset',
 	                img: 'images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
+				},{
+	                xtype: 'commandlink',
+	                id: 'clCiTangibleAsset',
+	                text: 'Tangible Asset',
+	                img: 'images/Transparent.png',//images/Transparent.png
+	                cls: 'menuSubLink'
 				}]
 			
-			}]
+			},{
+
+      			xtype: 'panel',
+				id: 'pTangibleAsset',
+				border: false,
+				hidden: true,
+				bodyStyle: {
+					background: 'transparent'
+				},
+                
+                items: [
+                        {
+	                xtype: 'commandlink',
+	                id: 'clCiAssetwithInventory',
+	                text: 'Asset with Inventory',
+	                img: 'images/Transparent.png',//images/Transparent.png
+	                cls: 'menuSubLink'
+				},{
+	                xtype: 'commandlink',
+	                id: 'clCiAssetwithoutInventory',
+	                text: 'Asset without Inventory',
+	                img: 'images/Transparent.png',//images/Transparent.png
+	                cls: 'menuSubLink'
+				}]
+			
+			
+				
+			}
+			
+			
+			]
 		});
 		
 		AIR.CiNavigationView.superclass.initComponent.call(this);
@@ -365,6 +396,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		var pCreateDeleteMenuItems = this.getComponent('pCreateDeleteMenuItems');
 		var pAssetManagementMenuItems = this.getComponent('pAssetManagementMenuItems');
 		var pCreateNewAsset = this.getComponent('pCreateNewAsset');
+		var pTangibleAsset=this.getComponent('pTangibleAsset');
 		
 		var navigationCallback = function() {
 			switch(link.getId()) {//ORIG: no surrounding callback
@@ -403,6 +435,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					pMyPlaceMenuItems.setVisible(false);
 					pCiDetailsMenuItems.setVisible(false);
 					pCreateNewAsset.setVisible(false);
+					pCiDetailsMenuItems.setVisible(false);
+					pTangibleAsset.setVisible(false);
 					break;
 				case 'clCiNewAsset' :
 					pAssetManagementMenuItems.setVisible(true);
@@ -410,6 +444,10 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					pCreateDeleteMenuItems.setVisible(false);
 					pMyPlaceMenuItems.setVisible(false);
 					pCiDetailsMenuItems.setVisible(false);
+					pTangibleAsset.setVisible(false);
+					break;
+				case 'clCiTangibleAsset' :
+					pTangibleAsset.setVisible(true);
 					break;
 				default:
 					break;
