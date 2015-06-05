@@ -21,156 +21,171 @@ import org.hibernate.annotations.Type;
 @Table(name = "HARDWAREKOMPONENTE")
 @org.hibernate.annotations.Entity(dynamicInsert = true)
 @SequenceGenerator(name = "HardwareComponentSeq", sequenceName = "TBADM.SEQ_HARDWAREKOMPONENTE")
-public class HardwareComponent extends RevisionInfo implements
-		Serializable {
+public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private static final long serialVersionUID = 2374268074399112605L;
+
 	private Long id;
+
 	private String name;
+
 	private String assetId;
+
 	private Long relevantItsec;
+
 	private String technicalMaster;
+
 	private String technicalNumer;
+
 	private Schrank schrank;
+
 	private String serialNumber;
+
 	private String inventoryNumber;
 
-	private LifecycleSubStat lifecycleSubStat;// LC_SUB_STAT_ID NUMBER
-												// LIFECYCLE_SUB_STAT
-												// LC_SUB_STAT_ID
-	private HardwareCategory1 hardwareCategory1;// HW_KATEGORIE1_ID NUMBER
-												// HW_KATEGORIE1
-												// HW_KATEGORIE1_ID
-	private HardwareCategory2 hardwareCategory2;// HW_KATEGORIE2_ID NUMBER
-												// HW_KATEGORIE2
-												// HW_KATEGORIE2_ID
-	private HardwareCategory3 hardwareCategory3;// HW_KATEGORIE3_ID NUMBER
-												// HW_KATEGORIE3
-												// HW_KATEGORIE3_ID
-	private HardwareCategory4 hardwareCategory4;// HW_KATEGORIE4_ID NUMBER
-												// HW_KATEGORIE4
-												// HW_KATEGORIE4_ID
+	private LifecycleSubStat lifecycleSubStat;
+
+	private HardwareCategory1 hardwareCategory1;
+
+	private HardwareCategory2 hardwareCategory2;
+
+	private HardwareCategory3 hardwareCategory3;
+
+	private HardwareCategory4 hardwareCategory4;
 
 	private HardwareComponent hardwareComponent;
 
-	// EINSATZ_STATUS_ID NUMBER EINSATZ_STATUS EINSATZ_STATUS_ID
-	private Partner hersteller;// HERSTELLER_PARTNID NUMBER PARTNER PARTNER_ID
+	private OperationalStatus operationalStatus;
+
+	private Partner hersteller;
 
 	private String inventoryOld;
 
-	private Konto konto;// KONTO_ID NUMBER KONTO KONTO_ID
+	private Konto konto;
 
 	// LIEFERANT_PARTNID NUMBER Needs to be checked
 
 	private Date startDate;
+
 	private Date accessDate;
+
 	private Date endDate;
-	// AM_JAHR_START DATE
-	// AM_JAHR_ZUGANG DATE
-	// AM_JAHR_ENDE DATE
 
 	private Long serviceNumber;
-	private String bestSellText;
-	// AM_NUTZDAUER NUMBER
-	// AM_BESTELL_TEXT VARCHAR2(160 BYTE)
 
-	private String amBanf; // AM_BANF VARCHAR2(64 BYTE)
-	private String amKommision; // AM_KOMMISSION VARCHAR2(160 BYTE)
+	private String bestSellText;
+
+	private String amBanf;
+
+	private String amKommision;
 
 	// LEASINGGEB_PARTNID NUMBER needs to be checked
 
-	private Sla sla; // SLA_ID NUMBER SLA SLA_ID
+	private Sla sla;
 
-	private String note1; // AM_BEMERKUNG1 VARCHAR2(1020 BYTE)
-	private String note2; // AM_BEMERKUNG2 VARCHAR2(1020 BYTE)
+	private String note1;
 
-	private String vUser; // VUSER VARCHAR2(32 BYTE)
+	private String note2;
 
-	private Long powerSupplyCount; // POWERSUPPLY_COUNT NUMBER
+	private String vUser;
+
+	private Long powerSupplyCount;
 
 	private Character powerSupply1;
+
 	private Character powerSupply2;
 
-	// POWER_SUPPLY_1 CHAR(1 BYTE)
-	// POWER_SUPPLY_2 CHAR(1 BYTE)
+	private Long acquitionValue;
 
-	private Long amAnschaffwert; // AM_ANSCHAFFWERT NUMBER(14,0)
-	private Long amSumme; // AM_L_SUMME NUMBER(14,0)
+	private Long amSumme;
 
-	private Long purchaseNumber; // BUCHWERT NUMBER(9,2)
-	private Date purchaseDate; // BUCHWERT_DATUM DATE
+	private Long purchaseNumber;
 
-	private String inventoryP69;// INVENTAR_P69 VARCHAR2(68 BYTE)
+	private Date purchaseDate;
 
-	private String cwidVerantw; // CWID_VERANTW_BETR VARCHAR2(320 BYTE)
-	private Long itset; // ITSET NUMBER
+	private String inventoryP69;
 
-	private String subResponsible; // SUB_RESPONSIBLE VARCHAR2(160 BYTE)
+	private String cwidVerantw;
 
-	private Long relevantIcsNumber; // RELEVANCE_ICS NUMBER
+	private Long itset;
 
-	private String requester; // ANFORDERER VARCHAR2(320 BYTE)
+	private String subResponsible;
 
-	private Timestamp sampleTestDate; // SAMPLE_TEST_DATE TIMESTAMP(6)
+	private Long relevantIcsNumber;
 
-	private String sampleTestResult; // SAMPLE_TEST_RESULT VARCHAR2(4000 BYTE)
+	private String requester;
 
-	private Partner partner;// OWNER_PARTNID NUMBER PARTNER PARTNER_ID
+	private Timestamp sampleTestDate;
 
-	private String sapDescription; // SAP_DESCRIPTION VARCHAR2(1020 BYTE)
+	private String sampleTestResult;
 
-	private Timestamp syncTimestamp; // SYNC_TIMESTAMP TIMESTAMP(6)
-	private Long syncConfig; // SYNC_CONFIG NUMBER
+	private Partner partner;
+
+	private String sapDescription;
+
+	private Timestamp syncTimestamp;
+
+	private Long syncConfig;
 
 	private Long duplicateSer;
+
 	private Long duplicateInv;
 
-	// DUPLICATE_SER NUMBER
-	// DUPLICATE_INV NUMBER
+	private String inventoryStockNumber;
 
-	private String inventoryStockNumber; // INVENTARNUMMER_OHNE VARCHAR2(1024
-											// BYTE)
+	private String cpuModel;
 
-	private String cpuModel; // CPU_MODEL VARCHAR2(90 BYTE)
-	private Long cpuCount; // CPU_COUNT NUMBER
-	private Long ramMemory; // RAM_MEMORY NUMBER
-	private Float intDiskSpace; // INT_DISK_SPACE FLOAT
-	private Float extDiskSpace; // EXT_DISK_SPACE FLOAT
-	private Float cpuSpeed; // CPU_SPEED FLOAT
+	private Long cpuCount;
 
-	private String vbp; // VBP VARCHAR2(68 BYTE)
-	private Long salesPrice; // SALES_PRICE NUMBER(9,2)
+	private Long ramMemory;
 
-	private String purchaseName; // PURCHASER_NAME VARCHAR2(400 BYTE)
-	private Long heightRackUnits; // HEIGHT_RACKUNITS NUMBER
-	private Long powerConsumption; // POWER_CONSUMPTION NUMBER
-	private Timestamp lastSyncTimestamp; // LAST_SYNC_TIMESTAMP TIMESTAMP(6)
-	private String lastSyncSource; // LAST_SYNC_SOURCE VARCHAR2(40 BYTE)
-	private String syncing; // SYNCING VARCHAR2(40 BYTE)
-	private String gxpFlag; // GXP_FLAG VARCHAR2(10 BYTE)
+	private Float intDiskSpace;
 
-	private LifecycleSubStat commercialStatus;// COMMERCIAL_STATUS_ID NUMBER
-												// LIFECYCLE_SUB_STAT
-												// LC_SUB_STAT_ID
+	private Float extDiskSpace;
 
-	private String contactForService;// CONTRACT_FOR_SERVICE VARCHAR2(100 BYTE)
-	private String acRequest; // AC_REQUEST VARCHAR2(30 BYTE)
-	private Date acRequestEndDate; // AC_REQUEST_END DATE
-	private String orderNumber; // ORDER_NUMBER VARCHAR2(100 BYTE)
-	private String specifics; // SPECIFICS VARCHAR2(4000 BYTE)
+	private Float cpuSpeed;
 
-	private ServiceContract serviceContract;// SERVICE_CONTRACT_ID NUMBER
-											// SERVICE_CONTRACT
-											// SERVICE_CONTRACT_ID Exist
-	private SeverityLevel severityLevel; // SEVERITY_LEVEL_ID NUMBER
-											// SEVERITY_LEVEL SEVERITY_LEVEL_ID
-											// Exist
-	private Long hbaCount; // HBA_COUNT NUMBER
-	private Long lanCount; // LAN_COUNT NUMBER
-	private SeverityLevel businessEssential; // BUSINESS_ESSENTIAL_ID NUMBER
-												// SEVERITY_LEVEL
-												// SEVERITY_LEVEL_ID Exist
-	private Long cpuCoreCount; // CPU_CORE_COUNT NUMBER
+	private String vbp;
+
+	private Long salesPrice;
+
+	private String purchaseName;
+
+	private Long heightRackUnits;
+
+	private Long powerConsumption;
+
+	private Timestamp lastSyncTimestamp;
+
+	private String lastSyncSource;
+
+	private String syncing;
+
+	private String gxpFlag;
+
+	private LifecycleSubStat commercialStatus;
+
+	private String contactForService;
+
+	private String acRequest;
+
+	private Date acRequestEndDate;
+
+	private String orderNumber;
+
+	private String specifics;
+
+	private ServiceContract serviceContract;
+
+	private SeverityLevel severityLevel;
+
+	private Long hbaCount;
+
+	private Long lanCount;
+
+	private SeverityLevel businessEssential;
+
+	private Long cpuCoreCount;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "HardwareComponentSeq")
@@ -307,13 +322,23 @@ public class HardwareComponent extends RevisionInfo implements
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "EINSATZ_STATUS_ID")
+	@JoinColumn(name = "HW_ID1")
 	public HardwareComponent getHardwareComponent() {
 		return hardwareComponent;
 	}
 
 	public void setHardwareComponent(HardwareComponent hardwareComponent) {
 		this.hardwareComponent = hardwareComponent;
+	}
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "EINSATZ_STATUS_ID")
+	public OperationalStatus getOperationalStatus() {
+		return operationalStatus;
+	}
+
+	public void setOperationalStatus(OperationalStatus operationalStatus) {
+		this.operationalStatus = operationalStatus;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
@@ -487,12 +512,12 @@ public class HardwareComponent extends RevisionInfo implements
 	}
 
 	@Column(name = "AM_ANSCHAFFWERT")
-	public Long getAmAnschaffwert() {
-		return amAnschaffwert;
+	public Long getAcquitionValue() {
+		return acquitionValue;
 	}
 
-	public void setAmAnschaffwert(Long amAnschaffwert) {
-		this.amAnschaffwert = amAnschaffwert;
+	public void setAcquitionValue(Long acquitionValue) {
+		this.acquitionValue = acquitionValue;
 	}
 
 	@Column(name = "AM_L_SUMME")
