@@ -19,30 +19,54 @@ import org.hibernate.annotations.Type;
 @SequenceGenerator(name = "PartnerSeq", sequenceName = "TBADM.SEQ_PARTNER")
 public class Partner extends DeletableRevisionInfo implements Serializable {
 	private static final long serialVersionUID = 1472262066294993295L;
-	private Long id;// PARTNER_ID NOT NULL NUMBER
-	private String name;// PARTNER_NAME NOT NULL VARCHAR2(320)
-	private Long number;// PARTNER_NR NUMBER
-	private Character bayerKonzern;// BAYER_KONZERN_Y_N CHAR(1)
-	private String businessUnit;// BUSINESS_UNIT VARCHAR2(160)
-	private String plz;// PLZ VARCHAR2(40)
-	private String ort;// ORT VARCHAR2(320)
-	private String strasse;// STRASSE VARCHAR2(320)
-	private String nr;// NR VARCHAR2(48)
-	private Long countryId;// COUNTRY_ID NUMBER
-	private String telephone;// TEL VARCHAR2(160)
-	private String fax;// FAX VARCHAR2(160)
-	private String mail;// MAIL VARCHAR2(160)
-	private String hotline;// HOTLINE VARCHAR2(160)
-	private String url;// URL VARCHAR2(320)
-	private String partnerType;// PARTNER_TYPE NOT NULL VARCHAR2(4)
-	private Timestamp lastSyncTimestamp;// LAST_SYNC_TIMESTAMP TIMESTAMP(6)
-	private String lastSyncSource;// LAST_SYNC_SOURCE VARCHAR2(40)
-	private String syncing;// SYNCING VARCHAR2(40)
-	private String companyCode;// COMPANY_CODE VARCHAR2(4)
-	private Character headquater;// HEADQUARTER_Y_N VARCHAR2(1)
-	private String subgroupLegal;// SUBGROUP_LEGAL VARCHAR2(80)
-	private String subgroupEconomic;// SUBGROUP_ECONOMIC VARCHAR2(80)
-	private Character kontoKorrentType;// KONTO_KORRENT_TYP VARCHAR2(1)
+
+	private Long id;
+
+	private String name;
+
+	private Long number;
+
+	private Character bayerKonzern;
+
+	private String businessUnit;
+
+	private String plz;
+
+	private String ort;
+
+	private String strasse;
+
+	private String nr;
+
+	private Long countryId;
+
+	private String telephone;
+
+	private String fax;
+
+	private String mail;
+
+	private String hotline;
+
+	private String url;
+
+	private String partnerType;
+
+	private Timestamp lastSyncTimestamp;
+
+	private String lastSyncSource;
+
+	private String syncing;
+
+	private String companyCode;
+
+	private Character headquater;
+
+	private String subgroupLegal;
+
+	private String subgroupEconomic;
+
+	private Character kontoKorrentType;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PartnerSeq")
