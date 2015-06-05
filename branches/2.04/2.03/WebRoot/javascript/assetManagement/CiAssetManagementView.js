@@ -115,7 +115,6 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 		var rbQueryMode = searchMode.getValue();
 		var queryMode = rbQueryMode.inputValue;
 		
-		console.log(queryMode);
 	    if (searchString != field.getRawValue())
 	    	field.setValue(searchString);
 
@@ -143,7 +142,10 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 		}
 	    
 	    params.query = searchString;
+	    
 	    params.queryMode = queryMode;
+	    AAM.setComponentType(queryMode);
+	    
 	    params.isAdvSearch = 'false';
 		
 		return params;
