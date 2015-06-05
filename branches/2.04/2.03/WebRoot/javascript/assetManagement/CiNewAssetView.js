@@ -895,7 +895,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	
 	onSapAssetSelect: function(combo, record, index) {
 		var value = record.get('nameEn');
-		var tEconomic = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic')
+		var tEconomic = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic');
         tEconomic.setValue(value);
 	},
 	
@@ -920,7 +920,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		tsapDescription.setValue("");
 		tDescription.setValue("");
 	},
-	
 	
 	loadComboboxData : function(){
 		this.loadCountryData();
