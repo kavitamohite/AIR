@@ -389,7 +389,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								fontSize: '8pt',
 								cursor:'pointer',
 								//'margin-left' : 300,
-								 'padding-left':'500',
+								 'padding-left':'500'
 							}
 						},{
 							id: 'cbCountry',
@@ -570,7 +570,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						        id: 'tfRequester',
 						        width: 325,
 						        lazyRender : true,
-								lazyInit : false,
+								lazyInit : false
 						    },{
 								xtype: 'hidden',
 						        id: 'tfRequesterHidden'
