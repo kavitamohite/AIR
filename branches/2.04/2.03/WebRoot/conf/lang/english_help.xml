@@ -109,5 +109,15 @@
         <gpsccontactOwningBusinessGroupText>
         	Owning Business Group Info
         </gpsccontactOwningBusinessGroupText>
+        
+        
+       	<help_details_assetManagement>Asset management</help_details_assetManagement>
+		<help_details_assetSearch>Asset search</help_details_assetSearch>
+		<help_details_newAsset>New asset</help_details_newAsset>
+		<help_details_intangible>Intangible Asset</help_details_intangible>
+		<help_details_tangible>Tangible asset</help_details_tangible>
+		<help_details_assetWithInventory>asset with inventory</help_details_assetWithInventory>
+		<help_details_assetWoInventory>asset without inventory</help_details_assetWoInventory>
+        
 	</Items>
 </LanguageItems>
