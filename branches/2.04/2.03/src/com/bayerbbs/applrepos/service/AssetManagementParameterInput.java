@@ -20,6 +20,8 @@ public class AssetManagementParameterInput {
 	
 	private String queryMode;
 	
+	private String dir;
+	
 	public Long getAssetId() {
 		return assetId;
 	}
@@ -91,7 +93,13 @@ public class AssetManagementParameterInput {
 	public void setQueryMode(String queryMode) {
 		this.queryMode = queryMode;
 	}
-	
-	
+
+	public String getDir() {
+		return dir;
+	}
+
+	public void setDir(String dir) {
+		this.dir = dir;
+	}
 	
 }
