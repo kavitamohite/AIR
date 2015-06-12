@@ -164,6 +164,18 @@
   	<url-pattern>/excelexport</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<description>AirAssetExcelExportServlet</description>
+  	<servlet-name>AirAssetExcelExportServlet</servlet-name>
+  	<servlet-class>
+  		com.bayerbbs.applrepos.servlet.AirAssetExcelExportServlet
+  	</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AirAssetExcelExportServlet</servlet-name>
+  	<url-pattern>/assetExcelExport</url-pattern>
+  </servlet-mapping>
   
   <servlet>
   	<description>GsToolMassnahmenBeschreibungServlet</description>
