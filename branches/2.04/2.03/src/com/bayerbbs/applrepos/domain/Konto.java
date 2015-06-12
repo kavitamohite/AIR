@@ -18,26 +18,25 @@ import javax.persistence.Table;
 @Table(name = "KONTO")
 @org.hibernate.annotations.Entity(dynamicInsert = true)
 @SequenceGenerator(name = "KontoSeq", sequenceName = "TBADM.SEQ_KONTO")
-public class Konto extends DeletableRevisionInfo implements Serializable{
+public class Konto extends DeletableRevisionInfo implements Serializable {
 
 	private static final long serialVersionUID = -4649584367492656471L;
 	private Long id;
 	private String name;
-	private String art; 
-	private String cwidVerantw; 
-	private String beschreibung; 
+	private String art;
+	private String cwidVerantw;
+	private String beschreibung;
 	private Long itset;
-	private String subResponsible; 
+	private String subResponsible;
 	private Long sisnetConfig;
 	private Timestamp lastSync;
 	private String lastSyncSource;
 	private String syncing;
-	private String khinr; 
-	private Long sisnetConfigSwitch; 
+	private String khinr;
+	private Long sisnetConfigSwitch;
 	private Long costCenterProtected;
 	private Konto deliveryBlock;
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "KontoSeq")
 	@Column(name = "KONTO_ID")
@@ -175,5 +174,4 @@ public class Konto extends DeletableRevisionInfo implements Serializable{
 	public void setDeliveryBlock(Konto deliveryBlock) {
 		this.deliveryBlock = deliveryBlock;
 	}
-
 }
