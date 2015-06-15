@@ -11,16 +11,17 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import com.bayerbbs.applrepos.domain.HardwareComponent;
 import com.bayerbbs.applrepos.domain.SoftwareComponent;
 import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
+import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.service.AssetManagementParameterInput;
 import com.bayerbbs.applrepos.service.AssetManagementParameterOutput;
 
 public class SoftwareComponentHbn {
 
 	@SuppressWarnings("unchecked")
-	public static AssetManagementParameterOutput searchAsset(AssetManagementParameterInput input) {
+	public static AssetManagementParameterOutput searchAsset(
+			AssetManagementParameterInput input) {
 		AssetManagementParameterOutput out = new AssetManagementParameterOutput();
 
 		List<AssetViewDataDTO> list = new ArrayList<AssetViewDataDTO>();
@@ -31,20 +32,24 @@ public class SoftwareComponentHbn {
 			tx = session.beginTransaction();
 			BigDecimal total = (BigDecimal) session.createSQLQuery(
 					"select count(*) from SOFTWAREKOMPONENTE where lower(PRODUKTBEZ) like '%"
-							+ input.getQuery().toLowerCase() + "%'").uniqueResult();
+							+ input.getQuery().toLowerCase() + "%'")
+					.uniqueResult();
 			out.setCountResultSet(total.longValue());
 
 			Criteria criteria = session.createCriteria(SoftwareComponent.class);
-			criteria.add(Restrictions.like("prouctDescription", "%" + input.getQuery() + "%").ignoreCase());
+			criteria.add(Restrictions.like("prouctDescription",
+					"%" + input.getQuery() + "%").ignoreCase());
 
-			// if (input.getSort() != null) {
-			// addSortingCriteria(criteria, input.getSort());
-			// }
+			if (input.getSort() != null) {
+				addSortingCriteria(criteria, input.getSort(), input.getDir());
+			}
 			criteria.setFirstResult(input.getStart());
 			criteria.setMaxResults(input.getLimit());
-			List<SoftwareComponent> values = (List<SoftwareComponent>) criteria.list();
+			List<SoftwareComponent> values = (List<SoftwareComponent>) criteria
+					.list();
 			list = getDTOList(values);
-			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list.size()]));
+			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list
+					.size()]));
 			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
@@ -59,63 +64,64 @@ public class SoftwareComponentHbn {
 		return out;
 	}
 
-	private static void addSortingCriteria(Criteria criteria, String sort) {
+	private static void addSortingCriteria(Criteria criteria, String sort,
+			String desc) {
 
-		if (sort.equals("manufacturer")) {
-			criteria.createAlias("partner", "partner");
-			criteria.addOrder(Order.asc("partner.name"));
-		} else if (sort.equals("sapDescription")) {
-			criteria.addOrder(Order.asc("sapDescription"));
+		if (sort.equals("sapDescription")) {
+			if ("DESC".equalsIgnoreCase(desc)) {
+				criteria.addOrder(Order.desc("sapDescription"));
+			} else {
+				criteria.addOrder(Order.asc("sapDescription"));
+			}
+		} else if (sort.equals("pspElement")) {
+			if ("DESC".equalsIgnoreCase(desc)) {
+				criteria.addOrder(Order.desc("amKommision"));
+			} else {
+				criteria.addOrder(Order.asc("amKommision"));
+			}
+		} else if (sort.equals("costCenter")) {
+			criteria.createAlias("konto", "konto");
+			if ("DESC".equalsIgnoreCase(desc)) {
+				criteria.addOrder(Order.desc("konto.name"));
+			} else {
+				criteria.addOrder(Order.asc("konto.name"));
+			}
+		} else if (sort.equals("site")) {
 		} else if (sort.equals("serialNumber")) {
-			criteria.addOrder(Order.asc("serialNumber"));
-		} else if (sort.equals("costCenterManager")) {
-			criteria.createAlias("konto", "konto");
-			criteria.addOrder(Order.asc("konto.cwidVerantw"));
-		} else if (sort.equals("organizationalunit")) {
-			criteria.addOrder(Order.asc("subResponsible"));
-		} else if (sort.equals("costCenter") || sort.equals("pspElement")) {
-			criteria.createAlias("konto", "konto");
-			criteria.addOrder(Order.asc("konto.name"));
-		} else if (sort.equals("inventoryNumber")) {
-			criteria.addOrder(Order.asc("inventoryNumber"));
-		} else if (sort.equals("requester")) {
-			criteria.addOrder(Order.asc("requester"));
+			if ("DESC".equalsIgnoreCase(desc)) {
+				criteria.addOrder(Order.desc("serialNumber"));
+			} else {
+				criteria.addOrder(Order.asc("serialNumber"));
+			}
 		} else if (sort.equals("technicalMaster")) {
-			criteria.addOrder(Order.asc("technicalMaster"));
+			if ("DESC".equalsIgnoreCase(desc)) {
+				criteria.addOrder(Order.desc("technicalMaster"));
+			} else {
+				criteria.addOrder(Order.asc("technicalMaster"));
+			}
 		} else if (sort.equals("technicalNumber")) {
-			criteria.addOrder(Order.asc("technicalNumber"));
-		} else if (sort.equals("acquisitionValue")) {
-			criteria.addOrder(Order.asc("amAnschaffwert"));
-		} else if (sort.equals("orderNumber")) {
-			criteria.addOrder(Order.asc("orderNumber"));
-		} else if (sort.equals("site")) {
-			// criteria.addOrder(Order.asc("amAnschaffwert"));
-		} else if (sort.equals("assetChecked")) {
-			// criteria.addOrder(Order.asc("assetChecked"));
-		} else if (sort.equals("sapAssetClass")) {
-			criteria.createAlias("hardwareCategory1", "hardwareCategory1");
-			criteria.addOrder(Order.asc("hardwareCategory1.hwKategory1"));
-		} else if (sort.equals("systemPlatformName")) {
-			// criteria.addOrder(Order.asc("systemPlatformName"));
-		} else if (sort.equals("subCategory")) {
-			criteria.createAlias("hardwareCategory2", "hardwareCategory2");
-			criteria.addOrder(Order.asc("hardwareCategory2.hwKategory2"));
-		} else if (sort.equals("type")) {
-			// criteria.addOrder(Order.asc("type"));
-		} else if (sort.equals("model")) {
-			// criteria.addOrder(Order.asc("model"));
-		} else if (sort.equals("hardwareSystem")) {
-			// criteria.addOrder(Order.asc("hardwareSystem"));
-		} else if (sort.equals("hardwareTransientSystem")) {
-			// criteria.addOrder(Order.asc("hardwareTransientSystem"));
-		} else if (sort.equals("site")) {
-			// criteria.addOrder(Order.asc("alias"));
-		} else if (sort.equals("alias")) {
-			// criteria.addOrder(Order.asc("amAnschaffwert"));
+			if ("DESC".equalsIgnoreCase(desc)) {
+				criteria.addOrder(Order.desc("technicalNumber"));
+			} else {
+				criteria.addOrder(Order.asc("technicalNumber"));
+			}
+		} else if (sort.equals("inventoryNumber")) {
+			if ("DESC".equalsIgnoreCase(desc)) {
+				criteria.addOrder(Order.desc("inventoryP69"));
+			} else {
+				criteria.addOrder(Order.asc("inventoryP69"));
+			}
+		} else if (sort.equals("organizationalunit")) {
+			if ("DESC".equalsIgnoreCase(desc)) {
+				criteria.addOrder(Order.desc("subResponsible"));
+			} else {
+				criteria.addOrder(Order.asc("subResponsible"));
+			}
 		}
 	}
 
-	private static List<AssetViewDataDTO> getDTOList(List<SoftwareComponent> values) {
+	private static List<AssetViewDataDTO> getDTOList(
+			List<SoftwareComponent> values) {
 
 		List<AssetViewDataDTO> list = new ArrayList<AssetViewDataDTO>();
 		for (SoftwareComponent hwComp : values) {
@@ -128,44 +134,54 @@ public class SoftwareComponentHbn {
 	private static AssetViewDataDTO getDTO(SoftwareComponent hwComp) {
 
 		AssetViewDataDTO dto = new AssetViewDataDTO();
+
 		dto.setId(hwComp.getId());
-		if (hwComp.getPartner() != null) {
-			dto.setManufacturer(hwComp.getPartner().getName());
-		}
 
+		// Asset Information
+		dto.setIdentNumber(hwComp.getName());
+		dto.setInventoryNumber(hwComp.getInventoryNumber());
 		dto.setSapDescription(hwComp.getProuctDescription());
-		dto.setSerialNumber(hwComp.getSerialNumber());
 
+		// Product
+		if (hwComp.getHersteller() != null) {
+			dto.setManufacturer(hwComp.getHersteller().getName());
+			dto.setManufacturerId(hwComp.getHersteller().getId());
+		}
+		//Product Name remaining
+
+
+		// Business Administration
+		dto.setOrderNumber(hwComp.getBestellNumber());
 		if (hwComp.getKonto() != null) {
 			dto.setCostCenter(hwComp.getKonto().getName());
-			dto.setCostCenterManager(hwComp.getKonto().getCwidVerantw());
-			dto.setPspElement(hwComp.getKonto().getName());
+			dto.setCostCenterId(hwComp.getKonto().getId());
+			if (hwComp.getKonto().getCwidVerantw() != null) {
+				List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(hwComp
+						.getKonto().getCwidVerantw());
+				dto.setCostCenterManager(persons.get(0).getDisplayNameFull());
+			}
+			dto.setPspElement(hwComp.getInnenauftrag());
 		}
-		dto.setOrganizationalunit(hwComp.getSubResponsible());
-		dto.setInventoryNumber(hwComp.getInventoryNumber());
-
 		dto.setRequester(hwComp.getRequester());
-		dto.setTechnicalMaster(hwComp.getTechnicalMaster());
-		dto.setTechnicalNumber(hwComp.getTechnicalNumer());
-		dto.setSite("SITE");
-		dto.setOrderNumber(hwComp.getBestellNumber());
-		dto.setAssetChecked("ASSET CHECKED");
+		dto.setOrganizationalunit(hwComp.getSubResponsible());
+		dto.setOwner("OWNER");
 		if (hwComp.getSoftwareCategory1() != null) {
 			dto.setSapAssetClass(hwComp.getSoftwareCategory1().getSwKategory1());
+			dto.setSapAssetClassId(hwComp.getSoftwareCategory1().getId());
+//			dto.setUsefulEconomicLife(hwComp.getSoftwareCategory1().get);
 		}
-		dto.setSapAssetClass("SAP ASSET CLASS");
-		if (hwComp.getSoftwareCategory2() != null) {
-			dto.setSubCategory(hwComp.getSoftwareCategory2().getHwKategory2());
-		}
-		dto.setType("TYPE");
-		dto.setSystemPlatformName("SYSTEM PLATOFORM");
-		dto.setHardwareSystem("HARDWARE SYSTEM");
-		dto.setHardwareTransientSystem("TRANSIENT SYSTEM");
+//		dto.setAcquisitionValue(hwComp.);
+		// dto.setBookValue();
+		// dto.setDateOfBookValue();
+
+		dto.setSerialNumber(hwComp.getSerialNumber());
+		dto.setAssetChecked("ASSET CHECKED");
 		dto.setAlias("ALIAS");
 		dto.setOsName("OS Name");
 		return dto;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static AssetManagementParameterOutput findAssetById(Long assetId) {
 		AssetManagementParameterOutput out = new AssetManagementParameterOutput();
 		List<AssetViewDataDTO> list = new ArrayList<AssetViewDataDTO>();
@@ -175,9 +191,11 @@ public class SoftwareComponentHbn {
 			tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(SoftwareComponent.class);
 			criteria.add(Restrictions.eq("id", assetId));
-			List<SoftwareComponent> values = (List<SoftwareComponent>) criteria.list();
+			List<SoftwareComponent> values = (List<SoftwareComponent>) criteria
+					.list();
 			list = getDTOList(values);
-			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list.size()]));
+			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list
+					.size()]));
 			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {

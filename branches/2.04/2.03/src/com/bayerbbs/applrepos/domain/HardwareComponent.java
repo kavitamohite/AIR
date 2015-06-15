@@ -35,7 +35,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private String technicalMaster;
 
-	private String technicalNumer;
+	private String technicalNumber;
 
 	private Schrank schrank;
 
@@ -235,12 +235,12 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@Column(name = "TECHNISCHE_NR")
-	public String getTechnicalNumer() {
-		return technicalNumer;
+	public String getTechnicalNumber() {
+		return technicalNumber;
 	}
 
-	public void setTechnicalNumer(String technicalNumer) {
-		this.technicalNumer = technicalNumer;
+	public void setTechnicalNumber(String technicalNumber) {
+		this.technicalNumber = technicalNumber;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
@@ -565,7 +565,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.cwidVerantw = cwidVerantw;
 	}
 
-	@Column(name = "itset")
+	@Column(name = "ITSET")
 	public Long getItset() {
 		return itset;
 	}
