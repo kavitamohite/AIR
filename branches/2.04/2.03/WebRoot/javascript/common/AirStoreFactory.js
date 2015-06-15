@@ -451,7 +451,14 @@ AIR.AirStoreFactory = function() {
 			        {name: 'help_details_licensecosts'},
 			        {name: 'help_details_connections'},
 			        {name: 'help_details_supportstuff'},
-			        {name: 'help_details_history'}
+			        {name: 'help_details_history'},
+			    	{ name : 'help_details_assetManagement'},
+			    	{ name : 'help_details_assetSearch'},
+			    	{ name : 'help_details_newAsset'},
+			    	{ name : 'help_details_intangible'},
+			    	{ name : 'help_details_tangible'},
+			    	{ name : 'help_details_assetWithInventory'},
+			    	{ name : 'help_details_assetWoInventory'}
 			    ]
 			});
 			
@@ -1024,6 +1031,7 @@ AIR.AirStoreFactory = function() {
 					{name : 'assetPSPElement'},
 					{name : 'assetRequester'},
 					{ name : 'assetTechnicalMaster'}, 
+					{name : 'assetIdentNumber'},
 					{ name : 'assetTechnicalNumber'}, 
 					{ name : 'assetAcquisitionValue'}, 
 					{ name : 'assetSite'}, 
@@ -1036,10 +1044,62 @@ AIR.AirStoreFactory = function() {
 					{ name : 'assetSystemPlatformName'}, 
 					{ name : 'assetHardwareSystem'}, 
 					{ name : 'assetHardwareTransientSystem'}, 
-					{ name : 'assetAlias'}, 
-					{ name : 'assetOsName'}
+					{name : 'assetAlias'}, 
+					{name : 'assetOsName'},
+					{name : 'assetIndentnumber'},
+					{name : 'assetInventoryNumber'},
+					{name : 'assetDescription'},
+					{name : 'assetReason'},
+					{name : 'assetManufacture'},
+					{name : 'assetSubcategory'},
+					{name : 'assetType'},
+					{name : 'assetModel'},
+					{name : 'assetSapDescription'},
+					{name : 'assetReset'},
+					{name : 'assetTechnicalNumber'},
+					{name : 'assetTechnicalMaster'},
+					{name : 'assetSystemPlatformName'},
+					{name : 'assetHardwareSystem'},
+					{name : 'assetOsname'},
+					{name : 'assetWorflowstatus'},
+					{name : 'assettransient'},
+					{name : 'assetWorflowstatustechnical'},
+					{name : 'assetGeneral'},
+					{name : 'assetITSecurity'},
+					{name : 'assetComment'},
+					{name : 'assetCountry'},
+					{name : 'assetSite'},
+					{name : 'assetBuilding'},
+					{name : 'assetRoom'},
+					{name : 'assetPosition'},
+					{name : 'assetOrdernumber'},
+					{name : 'assetInventory'},
+					{name : 'assetPSP'},
+					{name : 'assetPsptext'},
+					{name : 'assetCost'},
+					{name : 'assetRequester'},
+					{name : 'assetCostManager'},
+					{name : 'assetOrganisation'},
+					{name : 'assetOwner'},
+					{name : 'assetSapClass'},
+					{name : 'assetAquisition'},
+					{name : 'assetBookValue'},
+					{name : 'assetDateValue'},
+					{name : 'assetdepreciation'},
+					{name : 'asseteconomic'},
+					{name : 'assetRetirement'},
+					{name : 'assetEditor'},
 					
-					
+					//AssetManagement Links
+					{name : 'lMenuAssetManagement'},
+					{name : 'lMenuSearch'},
+					{name :'lNewAsset'},
+					{name :'lIntangibleAsset'},
+					{name :'lTangibleAsset'},
+					{name :'lAssetwithInventory'},
+					{name :'lAssetwithoutInventory'},
+					{name : 'rHardwarecomponent'},
+					{name : 'rSoftwarecomponent'}
 			    ]
 			});
 		
@@ -4049,11 +4109,15 @@ AIR.AirStoreFactory = function() {
 		createAssetListStore: function() {
 			var ciItemListRecord = Ext.data.Record.create([
 					//Asset Information
+					{ name : 'isIntangibleAsset'},
+					{ name : 'isTangibleAssetWithInventory'},
+					{ name : 'isTangibleAssetWithoutInventory'},
 					{ name : 'id'},
 					{ name : 'identNumber'},
 					{ name : 'inventoryNumber'},
 					{ name : 'sapDescription'},
 					{ name : 'reasonId'},
+					{ name : 'identNumber'},
 					
 					//Product
 					{ name : 'manufacturer'},
@@ -4284,30 +4348,23 @@ AIR.AirStoreFactory = function() {
  			    'cwid'		
  			]);
 
-
  			var ciCostcenterListReader = new Ext.data.XmlReader({
  				idProperty: 'id',
  				record: 'return'
 
  			}, ciCostcenterListRecord);
- 			
 
  			var ciCostcenterListstore = new Ext.data.XmlStore({
  				autoDestroy: true,
  				autoLoad: false,
- 				//storeId: 'typeListStore',
  				
  				proxy: new Ext.ux.soap.SoapProxy({
  					url: webcontext + '/BusinessAdministrationWSPort',
-
  					loadMethod: 'findCostcenterList',
  					timeout: 120000,
-
  					reader: ciCostcenterListReader
  				})
  			});
- 			
-
  			return ciCostcenterListstore;
  		},
  		
@@ -4341,9 +4398,7 @@ AIR.AirStoreFactory = function() {
 				}),
 				
 				fields: [ 'cwid', 'firstname', 'lastname' ],
-
 				reader: personPickerRecordReader,
-				
 				baseParams: {
 					cwid: '',
 					primaryCWID: 'Y'
@@ -4360,13 +4415,10 @@ AIR.AirStoreFactory = function() {
  			    'operationalStatusEn'		
  			]);
 
-
  			var operationalStatusListReader = new Ext.data.XmlReader({
  				idProperty: 'id',
  				record: 'return'
-
  			}, operationalStatusListRecord);
- 			
 
  			var operationalStatusListstore = new Ext.data.XmlStore({
  				autoDestroy: true,
@@ -4374,15 +4426,11 @@ AIR.AirStoreFactory = function() {
  				
  				proxy: new Ext.ux.soap.SoapProxy({
  					url: webcontext + '/OperationalStatusWSPort',
-
  					loadMethod: 'getOperationalStatusList',
  					timeout: 120000,
-
  					reader: operationalStatusListReader
  				})
  			});
- 			
-
  			return operationalStatusListstore;
  		},
  		
@@ -4390,7 +4438,7 @@ AIR.AirStoreFactory = function() {
 			var ciPspElementListRecord = Ext.data.Record.create([
 				{ name: 'id', type: 'int' },
  			    'name',
- 			   'nameEn'
+ 			    'nameEn'
  			]);
  			var ciPspElementListReader = new Ext.data.XmlReader({
  				idProperty: 'id',
@@ -4400,7 +4448,6 @@ AIR.AirStoreFactory = function() {
  			var ciPspElementListstore = new Ext.data.XmlStore({
  				autoDestroy: true,
  				autoLoad: false,
- 				
  				proxy: new Ext.ux.soap.SoapProxy({
  					url: webcontext + '/BusinessAdministrationWSPort',
 
@@ -4463,6 +4510,22 @@ AIR.AirStoreFactory = function() {
  				})
  			});
  			return ciSaveAssetstore;
+		},
+		
+		createReasonListStore: function(){
+			var reasonStore = new Ext.data.ArrayStore({
+		        fields: ['id', 'reason'],
+		        data : [
+		            [1, "This asset was not acquired during the period when the system P68 was active; therefore no P68 registration number has been assigned."],
+		            [2, "This asset has not been registered in the inventrory because the acquitisition value is below is below 1000 EUR till 2010 and 410 EUR from 2010 on."],
+		            [3, "This asset is external inventory (External asset registered on an external cost center), therefore no registration in the inventory."],
+		            [4, "This asset must not be registered in the inventory at the time when the acquisition is made according to requirements of the asset accounting.This asset must not be registered in the inventory at the time when the acquisition is made according to requirements of the asset accounting."],
+		            [5, "This asset has only been delivered for testing and therefore no inventory number has been assigned. This applies only for the procurement type T (Test)"],
+		            [6, "This asset is a sub-asset of an existing asset (e.g. a module) and therefore no distinct inventory number has been assigned to the sub-asset"]
+		        ]
+		    });
+			
+			return reasonStore;
 		}
 
 	};

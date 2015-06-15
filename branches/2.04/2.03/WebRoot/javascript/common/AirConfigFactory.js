@@ -47,7 +47,7 @@ AIR.AirConfigFactory = function() {
 			var itSystemCiFields = this.getBaseCiFields();
 			
 			itSystemCiFields.push('ciSubTypeId');
-			itSystemCiFields.push('osNameId');//bestimmt gleichzeitig auch noch osType und osGroup
+			itSystemCiFields.push('osNameId');
 			itSystemCiFields.push('clusterCode');
 			itSystemCiFields.push('clusterType');
 			itSystemCiFields.push('isVirtualHardwareClient');
@@ -206,34 +206,37 @@ AIR.AirConfigFactory = function() {
 		createAssetManagementGridConfig: function(selModel) {
 		    var columnConfig = [];
 		    columnConfig.push(selModel);
-			columnConfig.push({ id: 'manufacturer', header: 'Manufacturer', dataIndex: 'manufacturer', width: 150, sortable: true});
-			columnConfig.push({ id: 'sapDescription', header: 'SAP Description', dataIndex: 'sapDescription', width: 150, sortable: true});
-			columnConfig.push({ id: 'serialNumber', header: 'Serial Number', dataIndex: 'serialNumber', width: 150, sortable: true});
-			columnConfig.push({ id: 'costCenterManager', header: 'Cost center manager', dataIndex: 'costCenterManager', width: 150, sortable: true});
-			columnConfig.push({ id: 'organizationalunit', header: 'Org Unit', dataIndex: 'organizationalunit', width: 150, sortable: true});
-			columnConfig.push({ id: 'costCenter', header: 'Cost Center', dataIndex: 'costCenter', width: 150, sortable: true});
-			columnConfig.push({ id: 'inventoryNumber', header: 'Inventory Number', dataIndex: 'inventoryNumber', width: 150, sortable: true});																																	// true
+		    columnConfig.push({ id: 'sapDescription', header: 'SAP Description', dataIndex: 'sapDescription', width: 150, sortable: true});
 			columnConfig.push({ id: 'pspElement', header: 'PSP Element', dataIndex: 'pspElement', width: 150, sortable: true});
-			columnConfig.push({ id: 'requester', header: 'Requester', dataIndex: 'requester', width: 150, sortable: true});
+			columnConfig.push({ id: 'costCenter', header: 'Cost Center', dataIndex: 'costCenter', width: 150, sortable: true});
+			columnConfig.push({ id: 'site', header: 'Site', dataIndex: 'site', width: 150, sortable: true});
+			columnConfig.push({ id: 'serialNumber', header: 'Serial Number', dataIndex: 'serialNumber', width: 150, sortable: true});
 			columnConfig.push({ id: 'technicalMaster', header: 'Technical Master', dataIndex: 'technicalMaster', width: 150, sortable: true});
 			columnConfig.push({ id: 'technicalNumber', header: 'Technical Number', dataIndex: 'technicalNumber', width: 150, sortable: true});
-			columnConfig.push({ id: 'acquisitionValue', header: 'Acquisition Value', dataIndex: 'acquisitionValue', width: 150, sortable: true});
-			columnConfig.push({ id: 'site', header: 'Site', dataIndex: 'site', width: 150, sortable: true});
-			columnConfig.push({ id: 'orderNumber', header: 'Order Number', dataIndex: 'orderNumber', width: 150, sortable: true});
-			columnConfig.push({ id: 'assetChecked', header: 'Asset Checked', dataIndex: 'assetChecked', width: 150, sortable: true});
-			columnConfig.push({ id: 'sapAssetClass', header: 'SAP Asset Class', dataIndex: 'sapAssetClass', width: 150, sortable: true});
-			columnConfig.push({ id: 'subCategory', header: 'Sub Category', dataIndex: 'subCategory', width: 150, sortable: true});
-			columnConfig.push({ id: 'type', header: 'Type', dataIndex: 'type', width: 150, sortable: true});
-			columnConfig.push({ id: 'model', header: 'Model', dataIndex: 'model', width: 150, sortable: true});
-			columnConfig.push({ id: 'systemPlatformName', header: 'System Platform Name', dataIndex: 'systemPlatformName', width: 150, sortable: true});
-			columnConfig.push({ id: 'hardwareSystem', header: 'Hardware System', dataIndex: 'hardwareSystem', width: 150, sortable: true});
-			columnConfig.push({ id: 'hardwareTransientSystem', header: 'SAP Asset Class', hardwareTransientSystem: 'sapAssetClass', width: 150, sortable: true});
-			columnConfig.push({ id: 'alias', header: 'Alias', dataIndex: 'alias', width: 150, sortable: true});
-			columnConfig.push({ id: 'osName', header: 'OS Name', hardwareTransientSystem: 'osName', width: 150, sortable: true});
+			columnConfig.push({ id: 'inventoryNumber', header: 'Inventory Number', dataIndex: 'inventoryNumber', width: 150, sortable: true});
+			columnConfig.push({ id: 'organizationalunit', header: 'Org Unit', dataIndex: 'organizationalunit', width: 150, sortable: true});
+			
+//		    
+//			columnConfig.push({ id: 'manufacturer', header: 'Manufacturer', dataIndex: 'manufacturer', width: 150, sortable: true});
+//			columnConfig.push({ id: 'subCategory', header: 'Sub Category', dataIndex: 'subCategory', width: 150, sortable: true});
+//			columnConfig.push({ id: 'type', header: 'Type', dataIndex: 'type', width: 150, sortable: true});
+//			columnConfig.push({ id: 'model', header: 'Model', dataIndex: 'model', width: 150, sortable: true});
+//			columnConfig.push({ id: 'identNumber', header: 'Ident Number', dataIndex: 'identNumber', width: 150, sortable: true});
+//			columnConfig.push({ id: 'orderNumber', header: 'Order Number', dataIndex: 'orderNumber', width: 150, sortable: true});
+//			columnConfig.push({ id: 'costCenterManager', header: 'Cost center manager', dataIndex: 'costCenterManager', width: 150, sortable: true});
+//			columnConfig.push({ id: 'requester', header: 'Requester', dataIndex: 'requester', width: 150, sortable: true});
+//			columnConfig.push({ id: 'sapAssetClass', header: 'SAP Asset Class', dataIndex: 'sapAssetClass', width: 150, sortable: true});
+//			columnConfig.push({ id: 'acquisitionValue', header: 'Acquisition Value', dataIndex: 'acquisitionValue', width: 150, sortable: true});
+//			columnConfig.push({ id: 'hardwareSystem', header: 'Hardware System', dataIndex: 'hardwareSystem', width: 150, sortable: true});
+//			columnConfig.push({ id: 'hardwareTransientSystem', header: 'SAP Asset Class', hardwareTransientSystem: 'sapAssetClass', width: 150, sortable: true});
+//			columnConfig.push({ id: 'alias', header: 'Alias', dataIndex: 'alias', width: 150, sortable: true});
+//			columnConfig.push({ id: 'osName', header: 'OS Name', hardwareTransientSystem: 'osName', width: 150, sortable: true});
+//			columnConfig.push({ id: 'assetChecked', header: 'Asset Checked', dataIndex: 'assetChecked', width: 150, sortable: true});
+//			columnConfig.push({ id: 'systemPlatformName', header: 'System Platform Name', dataIndex: 'systemPlatformName', width: 150, sortable: true});
 
 			return columnConfig;
-		},
-	};
+		}
+	}
 }();
 // };
 Ext.reg('AIR.AirConfigFactory', AIR.AirConfigFactory);
