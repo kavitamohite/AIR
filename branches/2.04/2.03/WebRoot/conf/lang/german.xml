@@ -566,29 +566,93 @@
 		
 		
 		<!-- asset management -->
-		<assetManufacturer>Manufacturer</assetManufacturer>
-		<assetSAPDesc>SAP Description</assetSAPDesc>
-		<assetSerialNo>Serial Number</assetSerialNo>
-		<assetCostCenterManager>Cost Center Manager</assetCostCenterManager>
-		<assetOrganizationalUnit>Organizational Unit</assetOrganizationalUnit>
-		<assetCostCenter>Cost Center</assetCostCenter>
-		<assetInventoryNumber>Inventory Number</assetInventoryNumber>
-		<assetPSPElement>PSP Element</assetPSPElement>
-		<assetRequester>Requester</assetRequester>
-		<assetTechnicalMaster>Technical Master</assetTechnicalMaster>
-		<assetTechnicalNumber>Technical Number</assetTechnicalNumber>
-		<assetAcquisitionValue>Acquisition Value</assetAcquisitionValue>
-		<assetSite>Site</assetSite>
-		<assetOrderNumber>Order number</assetOrderNumber>
-		<assetChecked>Asset checked</assetChecked>
-		<sapAssetClass>Asset Class</sapAssetClass>
-		<assetSubCategory>Sub category</assetSubCategory>
-		<assetType>Type</assetType>
-		<assetModel>Model</assetModel>
-		<assetSystemPlatformName>System Platform Name</assetSystemPlatformName>
-		<assetHardwareSystem>Hardware System</assetHardwareSystem>
-		<assetHardwareTransientSystem>Hardware Transient System</assetHardwareTransientSystem>
-		<assetAlias>Alias</assetAlias>
-		<assetOsName>OS Name</assetOsName>
+		<assetManufacturer>Manufacturer-German</assetManufacturer>
+		<assetSAPDesc>SAP Description-German</assetSAPDesc>
+		<assetSerialNo>Serial Number-German</assetSerialNo>
+		<assetCostCenterManager>Cost Center Manager-German</assetCostCenterManager>
+		<assetOrganizationalUnit>Organizational Unit-German</assetOrganizationalUnit>
+		<assetCostCenter>Cost Center-German</assetCostCenter>
+		<assetInventoryNumber>Inventory Number-German</assetInventoryNumber>
+		<assetPSPElement>PSP Element-German</assetPSPElement>
+		<assetRequester>Requester-German</assetRequester>
+		<assetIdentNumber>Indent Number-German</assetIdentNumber>
+		<assetTechnicalMaster>Technical Master-German</assetTechnicalMaster>
+		<assetTechnicalNumber>Technical Number-German</assetTechnicalNumber>
+		<assetAcquisitionValue>Acquisition Value-German</assetAcquisitionValue>
+		<assetSite>Site-German</assetSite>
+		<assetOrderNumber>Order number-German</assetOrderNumber>
+		<assetChecked>Asset checked-German</assetChecked>
+		<sapAssetClass>Asset Class-German</sapAssetClass>
+		<assetSubCategory>Sub category-German</assetSubCategory>
+		<assetType>Type-German</assetType>
+		<assetModel>Model-German</assetModel>
+		<assetSystemPlatformName>System Platform Name-German</assetSystemPlatformName>
+		<assetHardwareSystem>Hardware System-German</assetHardwareSystem>
+		<assetHardwareTransientSystem>Hardware Transient System-German</assetHardwareTransientSystem>
+		<assetAlias>Alias-German</assetAlias>
+		<assetOsName>OS Name-German</assetOsName>
+		
+				<!-- asset management menu items-->
+		<lMenuAssetManagement>Asset Management</lMenuAssetManagement>
+		<lMenuSearch>Suche</lMenuSearch>
+		<lNewAsset>Neue Asset</lNewAsset>
+		<lIntangibleAsset>Software</lIntangibleAsset>
+		<lTangibleAsset>Hardware</lTangibleAsset>
+		<lAssetwithInventory>Mit Asset Inventory</lAssetwithInventory>
+		<lAssetwithoutInventory>Ohne Asset Inventory</lAssetwithoutInventory>
+		
+		<!-- asset management search-->
+		<rHardwarecomponent>Hardware Komponente</rHardwarecomponent>
+		<rSoftwarecomponent>Software Komponente</rSoftwarecomponent>
+		
+			<!-- asset management new screen-->
+			<assetIndentnumber>Spiegelstrich Nummer:</assetIndentnumber>
+			<assetInventoryNumber>Inventarnummer:</assetInventoryNumber>
+			<assetDescription>Beschreibung:</assetDescription>
+			<assetReason>Grund für Asset ohne Bestand:</assetReason>
+			<!-- asset management Product-->
+			<assetManufacture>Hersteller:</assetManufacture>
+			<assetSubcategory>Unterkategorie:</assetSubcategory>
+			<assetType>Typ:</assetType>
+			<assetModel>Modell:</assetModel>
+			<assetSapDescription>SAP-Beschreibung des ASSET:</assetSapDescription>
+			<assetReset>Zurücksetzen aller Einträge:</assetReset>
+			<!-- asset management Technics-->
+			<assetTechnicalNumber>Technische Nummer / Asset-ID:</assetTechnicalNumber>
+			<assetTechnicalMaster>Technische Master:</assetTechnicalMaster>
+			<assetSystemPlatformName>System platform name:</assetSystemPlatformName>
+			<assetHardwareSystem>Hardwaresystem (HWS):</assetHardwareSystem>
+			<assetOsname>OS-Name:</assetOsname>
+			<assetWorflowstatus>Worflowstatus technischen HWS:</assetWorflowstatus>
+			<assettransient>HW-transienten Systemen:</assettransient>
+			<assetWorflowstatustechnical>Worflowstatus technische:</assetWorflowstatustechnical>
+			<assetGeneral>Allgemeine Verwendung:</assetGeneral>
+			<assetITSecurity>IT-Security-Relevance:</assetITSecurity>
+			<assetComment>Kommentar:</assetComment>
+			<!-- asset management Location-->
+			<assetCountry>Land:</assetCountry>
+			<assetSite>Standort:</assetSite>
+			<assetBuilding>Gebäude:</assetBuilding>
+			<assetRoom>Zimmer:</assetRoom>
+			<assetPosition>Rack - Position:</assetPosition>
+			<!-- asset management Business Information-->
+			<assetOrdernumber>Bestellnummer:</assetOrdernumber>
+			<assetInventory>Inventarnummer:</assetInventory>
+			<assetPSP>PSP-Elemente:</assetPSP>
+			<assetPsptext>PSP-Text:</assetPsptext>
+			<assetCost>Kostenstelle:</assetCost>
+			<assetRequester>Anforderer:</assetRequester>
+			<assetCostManager>Cost Center Manager:</assetCostManager>
+		    <assetOrganisation>Organisationseinheit:</assetOrganisation>
+		    <assetOwner>Inhaber(Legal):</assetOwner>
+		    <assetSapClass>SAP Asset Klasse:</assetSapClass>
+		    <assetAquisition>Aquisition Wert(Euro):</assetAquisition>
+		    <assetBookValue>Buch Wert(Euro):</assetBookValue>
+		    <assetDateValue>Datum des Buches Wert:</assetDateValue>
+		    <assetdepreciation>Startdatum der Abschreibung:</assetdepreciation>
+		    <asseteconomic>Wirtschaftliche Nutzungsdauer (Monate):</asseteconomic>
+		    <assetRetirement>Datum der Außerbetriebnahme:</assetRetirement>
+		    <!-- asset management Contacts-->
+		    <assetEditor>Editoren Gruppe:</assetEditor>
 	</Items>
 </LanguageItems>

@@ -578,7 +578,7 @@
 		<assetInventoryNumber>Inventory Number</assetInventoryNumber>
 		<assetPSPElement>PSP Element</assetPSPElement>
 		<assetRequester>Requester</assetRequester>
-
+		<assetIdentNumber>Ident Number</assetIdentNumber>
 		<assetTechnicalMaster>Technical Master</assetTechnicalMaster>
 		<assetTechnicalNumber>Technical Number</assetTechnicalNumber>
 		<assetAcquisitionValue>Acquisition Value</assetAcquisitionValue>
@@ -594,6 +594,69 @@
 		<assetHardwareTransientSystem>Hardware Transient System</assetHardwareTransientSystem>
 		<assetAlias>Alias</assetAlias>
 		<assetOsName>OS Name</assetOsName>
+		
+		<!-- asset management menu items-->
+		<lMenuAssetManagement>Asset Management</lMenuAssetManagement>
+		<lMenuSearch>Search</lMenuSearch>
+		<lNewAsset>New Asset</lNewAsset>
+		<lIntangibleAsset>Software</lIntangibleAsset>
+		<lTangibleAsset>Hardware</lTangibleAsset>
+		<lAssetwithInventory>Asset with Inventory</lAssetwithInventory>
+		<lAssetwithoutInventory>Asset without Inventory</lAssetwithoutInventory>
+		
+		<!-- asset management search-->
+		<rHardwarecomponent>Hardware Component</rHardwarecomponent>
+		<rSoftwarecomponent>Software Component</rSoftwarecomponent>
+		
+		<!-- asset management new screen-->
+		<assetIndentnumber>Indent number:</assetIndentnumber>
+		<assetInventoryNumber>Inventory Number:</assetInventoryNumber>
+		<assetDescription>Description:</assetDescription>
+		<assetReason>Reason for Asset without Inventory:</assetReason>
+		<!-- asset management Product-->
+		<assetManufacture>Manufacturer:</assetManufacture>
+		<assetSubcategory>Sub Category:</assetSubcategory>
+		<assetType>Type:</assetType>
+		<assetModel>Model:</assetModel>
+		<assetSapDescription>SAP Description of the asset:</assetSapDescription>
+		<assetReset>Reset all Entries</assetReset>
+		<!-- asset management Technics-->
+		<assetTechnicalNumber>Technical Number / Asset-ID:</assetTechnicalNumber>
+		<assetTechnicalMaster>Technical Master:</assetTechnicalMaster>
+		<assetSystemPlatformName>System platform name:</assetSystemPlatformName>
+		<assetHardwareSystem>Hardwaresystem (HWS):</assetHardwareSystem>
+		<assetOsname>OS-Name:</assetOsname>
+		<assetWorflowstatus>Worflowstatus technical HWS:</assetWorflowstatus>
+		<assettransient>HW-transient systems:</assettransient>
+		<assetWorflowstatustechnical>Worflowstatus technical:</assetWorflowstatustechnical>
+		<assetGeneral>General Usage:</assetGeneral>
+		<assetITSecurity>IT-Security-Relevance:</assetITSecurity>
+		<assetComment>Comment:</assetComment>
+		<!-- asset management Location-->
+		<assetCountry>Country:</assetCountry>
+		<assetSite>Site:</assetSite>
+		<assetBuilding>Building:</assetBuilding>
+		<assetRoom>Room:</assetRoom>
+		<assetPosition>Rack - Position:</assetPosition>
+		<!-- asset management Business Information-->
+		<assetOrdernumber>Order Number:</assetOrdernumber>
+		<assetInventory>Inventory Number:</assetInventory>
+		<assetPSP>PSP-Elements:</assetPSP>
+		<assetPsptext>PSP-Text:</assetPsptext>
+		<assetCost>Cost center:</assetCost>
+		<assetRequester>Requester:</assetRequester>
+		<assetCostManager>Cost Center Manager:</assetCostManager>
+	    <assetOrganisation>Organizational Unit:</assetOrganisation>
+	    <assetOwner>Owner(legal):</assetOwner>
+	    <assetSapClass>SAP Asset Class:</assetSapClass>
+	    <assetAquisition>Aquisition Value(Euro):</assetAquisition>
+	    <assetBookValue>Book Value(Euro):</assetBookValue>
+	    <assetDateValue>Date of book value:</assetDateValue>
+	    <assetdepreciation>Start date depreciation:</assetdepreciation>
+	    <asseteconomic>Useful economic life (months):</asseteconomic>
+	    <assetRetirement>Retirement date:</assetRetirement>
+	    <!-- asset management Contacts-->
+	    <assetEditor>Editors group:</assetEditor>
 
 	</Items>
 </LanguageItems>
