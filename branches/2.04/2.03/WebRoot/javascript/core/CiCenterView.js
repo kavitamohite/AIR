@@ -6,29 +6,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		    layout: 'card',
 		    activeItem: 2,
 		    border: false,
-		    
-//		    deferredRender: false,
-//		    autoScroll: true,
-//		    baseCls: 'x-box',//round coerners
-		    
-//		    bodyStyle: {//style: kein Effekt
-////		    	borderTopLeftRadius: '100px 100px;'
-//		    	background: 'url("images/arrondissement_left.jpg") no-repeat top left;'
-//		    },
-		    
-//		    bodyStyle: {
-//		    	border-top-left-radius:     1em 5em;  
-//		    	border-top-right-radius:    1em 5em;  
-//		    },
-//		    cls: 'roundCorners',
-		    
-
-			/*
-		    bodyStyle: {
-	    		borderRadius: '30px 30px 0px 0px'
-//	    		backgroundColor: '#12638e'
-	    	},*/
-		    
 		    items: [{
 				xtype: 'AIR.MyPlaceView',
 				id: 'myPlaceView'
@@ -78,6 +55,9 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				},{
 					xtype: 'hidden',
 					id: 'isOnlyApplications'//onlyapplications
+				},{
+					xtype: 'hidden',
+					id: 'query'
 				},{
 					xtype: 'hidden',
 					id: 'queryMode'
@@ -138,10 +118,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				},{
 					xtype: 'hidden',
 					id: 'hprocessId'//hadvsearchoperationalStatusid
-				},
-				
-				
-				{
+				},{
 					xtype: 'hidden',
 					id: 'hbarRelevance'
 				},{
@@ -159,10 +136,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				},{
 					xtype: 'hidden',
 					id: 'hbusinessEssentialId'
-				},
-				
-				
-				{
+				},{
 					xtype: 'hidden',
 					id: 'houCiType'
 				},{
@@ -196,13 +170,12 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 
 		var ciEditView = this.getComponent('ciEditView');
 		
-		//vandana
 		var ciNewAssetView=this.getComponent('ciNewAssetView');
 		var clCiProduct = ciNewAssetView.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
-		var clCiLocation = ciNewAssetView.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location');
+		var clCiLocation = ciNewAssetView.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location');
 		var clCiTechnics = ciNewAssetView.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
 		var clCiBusinessInformation = ciNewAssetView.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
-		var clCiContacts = ciNewAssetView.getComponent('bottomPanel').getComponent('rightPanel').getComponent('contacts');
+		var clCiContacts = ciNewAssetView.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
 		var clCiReason = ciNewAssetView.getComponent('topPanel').getComponent('pReason');
 		
 		this.lastNavigation = {
@@ -259,7 +232,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					myPlaceView.update(viewId);
 					myPlaceView.updateLabels(AIR.AirApplicationManager.getLabels());
 					
-					
 					myPlaceTabView.loadMyOwnCIsGrid('myCis');
 					
 					if(options && options.callback)
@@ -269,7 +241,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-//						ciEditView.saveApplication({ skipLoading: true });
 						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
@@ -544,12 +515,14 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				
 			case 'clCiNewAsset':
 				this.getLayout().setActiveItem('ciNewAssetView');
-				clCiProduct.setVisible(false);
-				clCiLocation.setVisible(false);
-				clCiBusinessInformation.setVisible(false);
-				clCiTechnics.setVisible(false);
-				clCiContacts.setVisible(false);
+				
+				clCiProduct.setVisible(true);
+				clCiLocation.setVisible(true);
+				clCiBusinessInformation.setVisible(true);
+				clCiTechnics.setVisible(true);
+				clCiContacts.setVisible(true);
 				clCiReason.setVisible(false);
+				
 				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management-New Asset").setVisible(true);
 				
 				var verwerfenCallback = function() {
@@ -563,19 +536,14 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
 				if(AAM.getAssetId()){
-					this.forwardToEdit(options);
+					this.forwardToEdit(AAM.getAssetId());
 				}
 				break;
 					
 			case 'clCiTangibleAsset':
 				this.getLayout().setActiveItem('ciNewAssetView');
-				clCiProduct.setVisible(true);
-				clCiLocation.setVisible(true);
-				clCiBusinessInformation.setVisible(true);
-				clCiTechnics.setVisible(true);
-				clCiContacts.setVisible(true);
-				clCiReason.setVisible(false);
-				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Tangible Asset").setVisible(true);
+				ciNewAssetView.setTangibleView(true);
+				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset").setVisible(true);
 				
 				var verwerfenCallback = function() {
 					
@@ -591,13 +559,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					
 			case 'clCiIntangibleAsset':
 				this.getLayout().setActiveItem('ciNewAssetView');
-				clCiProduct.setVisible(true);
-				clCiLocation.setVisible(false);
-				clCiBusinessInformation.setVisible(true);
-				clCiTechnics.setVisible(false);
-				clCiContacts.setVisible(false);
-				clCiReason.setVisible(false);
-				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Intangible Asset").setVisible(true);
+				ciNewAssetView.setIntangibleView();
+				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Software Asset").setVisible(true);
 				
 				var verwerfenCallback = function() {
 					
@@ -612,43 +575,32 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					break;
 						
 			case 'clCiAssetwithInventory':
-				this.getLayout().setActiveItem('ciNewAssetView');
-				clCiProduct.setVisible(true);
-				clCiLocation.setVisible(true);
-				clCiBusinessInformation.setVisible(true);
-				clCiTechnics.setVisible(true);
-				clCiContacts.setVisible(true);
-				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Tangible Asset - Asset with Inventory").setVisible(true);
+				this.getLayout().setActiveItem('clCiAssetwithInventory');
+				ciNewAssetView.setTangibleView(true);
+				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset with Inventory").setVisible(true);
 				clCiReason.setVisible(false);
 				var verwerfenCallback = function() {
-					
 					if(options && options.callback)
 						options.callback();
-				}.createDelegate(this);
-				var saveCallback = function() {
-					verwerfenCallback();
-				}.createDelegate(this);
+					}.createDelegate(this);
+					var saveCallback = function() {
+						verwerfenCallback();
+					}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
 					break;	
 					
 			case 'clCiAssetwithoutInventory':
-				this.getLayout().setActiveItem('ciNewAssetView');
-				clCiProduct.setVisible(true);
-				clCiLocation.setVisible(true);
-				clCiBusinessInformation.setVisible(true);
-				clCiTechnics.setVisible(true);
-				clCiContacts.setVisible(true);
-				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Tangible Asset - Asset without Inventory").setVisible(true);
-				clCiReason.setVisible(true);
+				this.getLayout().setActiveItem('clCiAssetwithoutInventory');
+				ciNewAssetView.setTangibleView(false);
+				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset without Inventory").setVisible(true);
 				var verwerfenCallback = function() {
-					
-					if(options && options.callback)
-						options.callback();
-				}.createDelegate(this);
-				var saveCallback = function() {
-					verwerfenCallback();
-				}.createDelegate(this);
+						if(options && options.callback)
+							options.callback();
+					}.createDelegate(this);
+					var saveCallback = function() {
+						verwerfenCallback();
+					}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
 					break;	
@@ -661,18 +613,19 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		this.forwardNavigation();
 	},
 	
-	forwardToEdit: function(options){
+	forwardToEdit: function(assetId){
 		var ciDetailStore = AIR.AirStoreFactory.createAssetListStore();//createApplicationDetailStore
 		ciDetailStore.on('beforeload', this.onBeforeAssetLoad, this);
 		ciDetailStore.on('load', this.onAssetLoad, this);
 		
 		ciDetailStore.load({
 			params: {
-				assetId: AAM.getAssetId(),
+				assetId: assetId,
 				queryMode: AAM.getComponentType()
 			}
 		});
 		
+		AAM.setAssetId(null);
 	},
 	
 	onBeforeAssetLoad: function(store, options) {
@@ -741,11 +694,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		}
 	},
 	
-	
-//	onCiSelected: function(source, ciId, target) {
-//		this.getLayout().setActiveItem('ciEditView');
-//	},
-	
 	checkDataChanged: function(callbackMap) {
 		var dataChanged = false;
 			
@@ -796,10 +744,5 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		ciCreateView.updateToolTips(toolTips);
 	}
 	
-
-	
-//	afterRender: function(parentCt) {
-//		$(this).corner();//this 'ciCenterView'
-//	}
 });
 Ext.reg('AIR.CiCenterView', AIR.CiCenterView);

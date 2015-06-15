@@ -134,8 +134,6 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 	
 	    var params = this.getBaseSearchParams();
 				       
-	    var store = AIR.AirStoreManager.getStoreByName('itsecUserOptionListStore');
-
 	    params.showDeleted = 'N';
 	    if (this.isShowDeleted()) {
 		    params.showDeleted = 'Y';
@@ -163,8 +161,8 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 		var ciStandardSearchView = ciSearchViewPages.getComponent('ciAssetManageSearchView');
 		
 		ciSearchViewPages.getLayout().setActiveItem(0);
-		ciStandardSearchView.setHeight(100);//60
-		ciSearchViewPages.setHeight(100);//60
+		ciStandardSearchView.setHeight(100);
+		ciSearchViewPages.setHeight(100);
 		ciSearchViewPages.doLayout();
 		
 	},
@@ -184,7 +182,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 		if(Ext.isIE && !this.isMoved) {
 			this.isMoved = true; 
 		}
-		this.getComponent('ciAssetSearchResultView').search(params, isUpdate);
+		this.getComponent('ciAssetSearchResultView').search(params, isUpdate,this.onExcelExport.createDelegate(this));
 	},
 	onTabChange: function(tabPanel, tab, options) {
 		if(tabPanel) {
@@ -247,7 +245,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 			case AC.SEARCH_TYPE_SEARCH:
 				
 				var tfSearch = ciStandardSearchView.getComponent('pAssetSearch').getComponent('tfAssetSearch');
-				tfSearch.setValue(params.ciNameAliasQuery);//query
+				tfSearch.setValue(params.query);//query
 				
 				break;
 
@@ -280,11 +278,10 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 	
 	updateLabels: function(labels) {
 		this.getComponent('assetsearchpanelheader').setText(labels.searchpanelheader);
-		
-		var ciSearchViewPages = this.getComponent('ciAssetSearchViewPages');
-		var ciStandardSearchView = ciSearchViewPages.getComponent('ciAssetManageSearchView');
+
 		var ciStandardSearchView = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView');
 		ciStandardSearchView.updateLabels(labels);
+		
 		var ciSearchResultView = this.getComponent('ciAssetSearchResultView');
 		ciSearchResultView.updateLabels(labels);
 	},
@@ -302,6 +299,32 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 	    	isShowDeleted = true;
 		}
 	    return isShowDeleted;
+	},
+	
+	onExcelExport: function(link, event) {
+		var form = AIR.AirApplicationManager.getExportForm();
+		
+		form.action = '/AIR/assetExcelExport';
+		form.method = 'POST';
+		form.target = '_blank';
+		
+		var params = this.getSearchParams();
+		params.limit = 100000;
+		
+    	for(var key in params)
+    		if(form[key])
+    			form[key].value = params[key];
+	
+	    if(this.isAdvSearch) {
+	    	form.isAdvancedSearch.value = "true";
+	    	var params = this.getAdvancedSearchParams(params);
+	    	for(var key in params)
+	    		if(form['h'+key])
+	    			form['h'+key].value = params[key];
+	    }
+
+	    form.submit();
+	    
 	}
 });
 Ext.reg('AIR.CiAssetManagementView', AIR.CiAssetManagementView);

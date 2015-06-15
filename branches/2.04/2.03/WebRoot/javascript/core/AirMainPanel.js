@@ -7,12 +7,6 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
     
 	toolbarEmptyMessage: '<table><tr><td>&nbsp;</td></tr><table>',
     
-//    style: {
-//		backgroundColor: AC.AIR_BG_COLOR,
-//		color: AC.AIR_FONT_COLOR,
-//    	fontFamily: AC.AIR_FONT_TYPE
-//	},
-	
 	initComponent: function() {
 		Ext.apply(this, {
 		    items: [{
@@ -33,34 +27,6 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 				xtype: 'AIR.CiCenterView'
 		    	
 		    	
-//		    	region: 'center',
-//		    	xtype: 'panel',
-//		    	id: 'pLCiCenterView',
-//		    	
-//				layout: 'form',//fit form
-//				border: false,
-//				
-//				bodyStyle: {
-//		    		backgroundColor: '#12638e'
-//		    	},
-//		    	
-//		    	items: [
-////		    	{
-////		    		html: '<div style="background-color: white; border-radius:25px 25px 0px 0px; height: 25px;"></div>'
-////		    	},
-//		    	{
-//		    		xtype: 'panel',
-//		    		border: false,
-//		    		height: 25,
-//		    		
-//				    bodyStyle: {
-//			    		borderRadius: '25px 25px 0px 0px'
-////			    		backgroundColor: '#12638e'
-//			    	}
-//		    	},{
-//					id: 'ciCenterView',
-//					xtype: 'AIR.CiCenterView'
-//		    	}]
 		    },{
 		    	region: 'east',
 		        id: 'eastpanel',
@@ -70,7 +36,6 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 	        	
 		        collapsible: true,
 		        collapsed: false
-//		        collapseMode: 'mini'
 		    }],
 		    
 		    bbar: {
@@ -86,15 +51,11 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		
 		AIR.AirMainPanel.superclass.initComponent.call(this);
 		
-//		this.testRenderSequence();
 		this.addEvents('externalNavigation');
 	},
 
 	
 	update: function() {
-//		toolbar status message updates
-//		var toolbar = this.getFooterToolbar();
-//		var lStatus = toolbar.getComponent('lStatus');
 		
 		var ciInfoView = this.getComponent('eastpanel');
 		var ciTitleView = this.getComponent('ciTitleView');
@@ -106,7 +67,6 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		myPlaceHomeView.update();
 		navigationV.update();
 		
-//		AIR.AirApplicationManager.restoreUiState(this);
 	},
 	
 	
@@ -163,7 +123,6 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
             
             Ext.getCmp('ciSearchView'),
             Ext.getCmp('ciEditView'),
-//            Ext.getCmp('ciEditTabView'),
             Ext.getCmp('clCiDetails'),
             Ext.getCmp('clCiSpecifics'),
             Ext.getCmp('clCiSpecificsAnwendung'),
@@ -179,7 +138,6 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
             
             Ext.getCmp('ciCreateView'),
             Ext.getCmp('CiCreateInfoView'),
-//            Ext.getCmp('ciCreateWizardPagesView'),
             Ext.getCmp('CiCopyFromView'),
             Ext.getCmp('CiCopyFromDetailView'),
             Ext.getCmp('CiDeleteView'),
@@ -190,11 +148,6 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
             Ext.getCmp('ciCreateAppMandatoryView'),
             Ext.getCmp('ciCreateWizardP2'),
             Ext.getCmp('ciCreateAppRequiredView'),
-            
-//            Ext.getCmp('ciCreateWizardPage0'),
-//            Ext.getCmp('ciCreateWizardPage1'),
-//            Ext.getCmp('ciCreateWizardPage2'),
-//            Ext.getCmp('ciCreateWizardPage3'),
             
             Ext.getCmp('myPlaceTabView'),
             Ext.getCmp('myOwnCisView'),
@@ -209,7 +162,9 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
             Ext.getCmp('tbWizardAppownerDelegate'),
             Ext.getCmp('wizardCiowner'),
             Ext.getCmp('tbWizardciResponsible'),
-            Ext.getCmp('eastpanel')
+            Ext.getCmp('eastpanel'),
+            Ext.getCmp('ciNewAssetView')
+            
 		];
 		
 		Ext.each(ciViews, function(item, items, index) {

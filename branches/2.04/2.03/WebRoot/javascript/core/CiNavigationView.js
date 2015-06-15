@@ -315,7 +315,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	                cls: 'menuMainLink'
 				}]
 			},{
-
 				xtype: 'panel',
 				id: 'pCreateNewAsset',
 				border: false,
@@ -323,24 +322,20 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 				bodyStyle: {
 					background: 'transparent'
 				},
-                
-                items: [
-                        {
+                items: [{
 	                xtype: 'commandlink',
 	                id: 'clCiIntangibleAsset',
-	                text: 'Intangible Asset',
+	                text: 'Software',
 	                img: 'images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
 	                id: 'clCiTangibleAsset',
-	                text: 'Tangible Asset',
+	                text: 'Hardware',
 	                img: 'images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				}]
-			
 			},{
-
       			xtype: 'panel',
 				id: 'pTangibleAsset',
 				border: false,
@@ -348,7 +343,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 				bodyStyle: {
 					background: 'transparent'
 				},
-                
                 items: [
                         {
 	                xtype: 'commandlink',
@@ -363,13 +357,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	                img: 'images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
 				}]
-			
-			
-				
-			}
-			
-			
-			]
+			}]
 		});
 		
 		AIR.CiNavigationView.superclass.initComponent.call(this);
@@ -408,6 +396,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					pCreateDeleteMenuItems.setVisible(false);
 					pAssetManagementMenuItems.setVisible(false);
 					pCreateNewAsset.setVisible(false);
+					pTangibleAsset.setVisible(false);
 					break;
 				case 'clSearch':
 				case 'clAdvancedSearch':
@@ -417,6 +406,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					pCiDetailsMenuItems.setVisible(false);
 					pAssetManagementMenuItems.setVisible(false);
 					pCreateNewAsset.setVisible(false);
+					pTangibleAsset.setVisible(false);
 					break;
 				case 'clCiCreate':
 				case 'clCiCreateWizard':
@@ -427,6 +417,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					pCiDetailsMenuItems.setVisible(false);
 					pAssetManagementMenuItems.setVisible(false);
 					pCreateNewAsset.setVisible(false);
+					pTangibleAsset.setVisible(false);
 					break;
 				case 'clAssetManagement' :
 				case 'clCiAssetSearch' :
@@ -447,32 +438,17 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					pTangibleAsset.setVisible(false);
 					break;
 				case 'clCiTangibleAsset' :
+					pAssetManagementMenuItems.setVisible(true);
+					pCreateNewAsset.setVisible(true);
+					pCreateDeleteMenuItems.setVisible(false);
+					pMyPlaceMenuItems.setVisible(false);
+					pCiDetailsMenuItems.setVisible(false);
 					pTangibleAsset.setVisible(true);
 					break;
 				default:
 					break;
 			}
 			
-			/*
-//			AAM.updateCookie({ navigation: link.getId() });
-			AAM.updateCookie({
-				navigation: link.getId(),//viewId,
-				ciId: AAM.getCiId(),
-				tableId: AAM.getTableId(),
-				ciSubTypeId: AAM.getCiSubTypeId()
-			});*/
-			
-//			AIR.AirHistoryManager.add(link);
-			
-			
-//			for(var key in options) {
-//			   var value = options[key];
-//			   
-//			   if(typeof value !== 'function')
-//				   Util.log('CiNavigationView::onMenuSelect() options: link='+link.getId()+' '+key+'='+value);
-//			   else
-//				   Util.log('CiNavigationView::onMenuSelect() options: link='+link.getId() + ' key='+key);
-//			}
 			if(!options || !options.skipHistory) {
 //				Util.log('CiNavigationView::onMenuSelect() adding history: link='+link.getId());
 				
@@ -584,7 +560,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					var pCiDetailsMenuItems = this.getComponent('pCiDetailsMenuItems');
 					pCiDetailsMenuItems.setVisible(true);
 					
-//					this.updateMenu(parseInt(record.get('tableId')), record.get('applicationCat1Txt'));
 					this.updateMenu(AAM.getTableId(), AAM.getCiSubTypeId());
 				}
 				break;
@@ -616,7 +591,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 								return false; // Schleifenabbruch fuer speed
 							}
 					});
-					
 				}
 			}
 		}
@@ -629,19 +603,12 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	
 	updateMenuRights: function() {
 		this.updateOneMenuRight('clMyPlace');
-			// 'clMyPlaceMyCIs
-			// 'clMyPlaceMyCIsDelegate'
 		
 		this.updateOneMenuRight('clSearch');
 		this.updateOneMenuRight('clAdvancedSearch');
 		this.updateOneMenuRight('clOuSearch');
-			// clAdvancedSearch
-			// clOuSearch
 		
 		this.updateOneMenuRight('clCiCreate');
-			// 'clCiCreateCopyFrom'
-			// 'clCiDelete'
-			// 'clCiCreateWizard'
 	},
 	
 	updateMenu: function(tableId, ciSubType) {
@@ -653,10 +620,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		
 		switch(tableId) {
 			case AC.TABLE_ID_APPLICATION:
-//				var store = AIR.AirStoreManager.getStoreByName('applicationCat1ListStore');
-//				var cat1Id = store.getAt(store.findExact('english', ciSubType)).get('id');
-//				
-//				if(cat1Id == AC.APP_CAT1_APPLICATION) {
 				if(ciSubType == AC.APP_CAT1_APPLICATION) {
 					clCiLicense.setVisible(true);
 					clCiSupportStuff.setVisible(true);
@@ -668,12 +631,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 				break;
 		}
 	},
-	
-	
-//	onApplicationCancel: function() {
-//		var searchMenuItem = this.getComponent('clSearch');
-//		searchMenuItem.onClick();
-//	},
 	
 	update: function() {
     	var userNameC = this.getComponent('usernamecontainer');
@@ -711,8 +668,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		link = this.getComponent('clOuSearch');
 		link.updateText(labels.lMenuItemOuSearch);
 		
-		
-		
 		link = this.getComponent('clCiCreate');
 		link.updateText(labels.label_menu_createmenuitem);
 		
@@ -725,8 +680,6 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		link = this.getComponent('pCreateDeleteMenuItems').getComponent('clCiDelete');
 		link.updateText(labels.label_menu_delete);
 		
-		
-
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiDetails');
 		link.updateText(labels.label_menu_detailsdetails);
 		
@@ -745,6 +698,27 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiCompliance');
 		link.updateText(labels.label_menu_detailscompliance);
 		
+		link = this.getComponent('clAssetManagement');
+		link.updateText(labels.lMenuAssetManagement);
+		
+		link = this.getComponent('pAssetManagementMenuItems').getComponent('clCiAssetSearch');
+		link.updateText(labels.lMenuSearch);
+		
+		link = this.getComponent('pAssetManagementMenuItems').getComponent('clCiNewAsset');
+		link.updateText(labels.lNewAsset);
+		
+		link = this.getComponent('pCreateNewAsset').getComponent('clCiIntangibleAsset');
+		link.updateText(labels.lIntangibleAsset);
+		
+		link = this.getComponent('pCreateNewAsset').getComponent('clCiTangibleAsset');
+		link.updateText(labels.lTangibleAsset);
+		
+		link = this.getComponent('pTangibleAsset').getComponent('clCiAssetwithInventory');
+		link.updateText(labels.lAssetwithInventory);
+		
+		link = this.getComponent('pTangibleAsset').getComponent('clCiAssetwithoutInventory');
+		link.updateText(labels.lAssetwithoutInventory);
+		
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiLicense');
 		link.updateText(labels.label_menu_detailslicense);
 		
@@ -757,6 +731,5 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiHistory');
 		link.updateText(labels.label_menu_detailshistory);
 	}
-	
 });
 Ext.reg('AIR.CiNavigationView', AIR.CiNavigationView);

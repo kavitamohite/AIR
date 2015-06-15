@@ -6,6 +6,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		Ext.apply(this, {
 			border: false,
 		    autoScroll: true,
+		    layout: 'form',
 		    padding: 20,
 		    bodyStyle: {
 		    	backgroundColor: AC.AIR_BG_COLOR,
@@ -45,67 +46,71 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					columns : 2
 				},
 				bodyStyle : 'padding:10px 5px 0px 10px',
-				items : [ {
+				items : [{
 					xtype : 'textfield',
 					id : 'identNumber',
 					fieldLabel : 'Indent number',
-					lazyRender : true,
-					lazyInit : false,
 					width : 450,
 					style : {
 						marginBottom : 10,
 						fontSize : 12
-					}
-				}, {
-					xtype : 'textfield',
-					id : 'tinventory',
-					fieldLabel : 'Inventory Number',
-					width : 450,
-					style : {
-						marginBottom : 10,
-						fontSize : 12
-					}
-				}, {
-					xtype : 'textfield',
-					id : 'tDescription',
-					fieldLabel : 'Description',
-					width : 450,
-					style : {
-						marginBottom : 10,
-						fontSize : 12
-					}
-				}, {
-			    	xtype: 'panel',
-					id: 'pReason',
-					border: false,
-					layout: 'table',
-					width: 770,
-					items: [{
+						}
+					}, {
+						xtype : 'textfield',
+						id : 'tinventory',
+						fieldLabel : 'Inventory Number',
+						width : 450,
+						style : {
+							marginBottom : 10,
+							fontSize : 12
+						}
+					}, {
+						xtype : 'textfield',
+						id : 'tDescription',
+						fieldLabel : 'Description',
+						width : 450,
+						style : {
+							marginBottom : 10,
+							fontSize : 12
+						}
+					}, {
+				    	xtype: 'panel',
+						id: 'pReason',
+						border: false,
+						layout: 'table',
+						width: 770,
+						items: [{
 							xtype: 'label',
 							fieldLabel : 'lReason',
 							text:'Reason for Asset without Inventory:',
 							width: 200,
 							style: {
 								fontSize: 12,
-								'padding-right': '20px'
+								marginBottom : 10
 							}
 			    		}, {
-							xtype : 'combo',
-							id : 'cbReason',
-							//fieldLabel : 'Reason for Asset without Inventory',
-							lazyRender : true,
-							lazyInit : false,
-							width : 530,
+							id: 'cbReason',
+					        xtype: 'filterCombo',
+					        width: 530,
+					        enableKeyEvents: true,
+					        store: AIR.AirStoreFactory.createReasonListStore(),
+					        valueField: 'id',
+					        displayField: 'reason',
+							lastQuery: '',
+					        minChars: 0,
+					        triggerAction: 'all',
+					        mode: 'local',
 							style : {
-								marginBottom : 10,
-								fontSize : 12
+								marginBottom : 10
 							}
 						}]
-				}]
+					}]
 			}, {
 				xtype : 'panel',
 				id: 'bottomPanel',
 				border: false,
+				height: 420,
+				autoScroll: true,
 				layout: {
 			        type: 'table',
 			        columns: 2
@@ -124,25 +129,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						style : {
 							margin : '5 5 0 0'
 						},
-						items : [
-						         {
-							xtype : 'container',
-							html: '<a id="mailtoproduct" href="mailto:&subject=' + mail_Subject_product + '"><img src="' + img_Email + '"></a>',
-							id: 'mailproduct',
-							cls: 'x-plain',
-							isHideable: true,
-							
-							style: {
-								//textAlign: 'left',
-								color: AC.AIR_FONT_COLOR,
-								fontFamily: AC.AIR_FONT_TYPE,
-								fontWeight: 'normal',
-								fontSize: '8pt',
-								cursor:'pointer',
-								//'margin-left' : 300,
-								 'padding-left':'500'
-							}
-						},{
+						items : [{
 							id: 'cbManufacturer',
 					        xtype: 'filterCombo',
 					        fieldLabel: 'Manufacturer',
@@ -191,21 +178,55 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								marginBottom : 10
 							}
 						},{
-							id: 'cbModel',
-					        xtype: 'filterCombo',
-					        fieldLabel: 'Model',
-					        width: 370,
-					        enableKeyEvents: true,
-					        store: AIR.AirStoreFactory.createModelListStore(),
-					        valueField: 'id',
-					        displayField: 'name',
-							lastQuery: '',
-					        minChars: 0,
-					        triggerAction: 'all',
-					        mode: 'local',
+					    	xtype: 'panel',
+							id: 'pmodel',
+							border: false,
+							layout:'hbox',						
 							style : {
-								marginBottom : 10
-							}
+								marginBottom : 10,
+								fontSize : 12,
+							},
+							items: [{
+								xtype: 'label',
+								fieldLabel : 'Model',
+								text:'Model:',
+								width: 105,
+								style: {
+									fontSize: 12
+								}
+				    		},{
+				    			id: 'cbModel',
+						        xtype: 'filterCombo',
+						        fieldLabel: 'Model',
+						        width: 370,
+						        enableKeyEvents: true,
+						        store: AIR.AirStoreFactory.createModelListStore(),
+						        valueField: 'id',
+						        displayField: 'name',
+								lastQuery: '',
+						        minChars: 0,
+						        triggerAction: 'all',
+						        mode: 'local',
+								style : {
+									marginBottom : 10
+								}
+						    },{
+								xtype : 'container',
+								html: '<a id="mailtoproduct" href="mailto:&subject=' + mail_Subject_product + '"><img src="' + img_Email + '"></a>',
+								id: 'mailproduct',
+								cls: 'x-plain',
+								isHideable: true,
+								style: {
+									//textAlign: 'left',
+									color: AC.AIR_FONT_COLOR,
+									fontFamily: AC.AIR_FONT_TYPE,
+									fontWeight: 'normal',
+									fontSize: '8pt',
+									cursor:'pointer',
+									//'margin-left' : 300,
+									 'padding-left':'15px'
+								}	
+						    }]
 						},{
 							xtype: 'textfield',
 							id: 'tsapDescription',
@@ -215,16 +236,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						    	marginBottom: 10,
 						    	fontSize: 12
 						    }
-						}, {
-							xtype : 'button',
-							id : 'bReset',
-							text : 'Reset all Entries',
-							style : {
-								'margin-left' : 350,
-								fontSize : 12
-							}
-						},
-						]
+						}]
 					}, {
 						xtype : 'fieldset',
 						id: 'technics',
@@ -238,8 +250,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tTechnicalNumber',
 							fieldLabel : 'Technical Number / Asset-ID',
-							lazyRender : true,
-							lazyInit : false,
 							width : 370,
 							style : {
 								marginBottom : 10
@@ -248,8 +258,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tTechnicalMaster',
 							fieldLabel : 'Technical Master',
-							lazyRender : true,
-							lazyInit : false,
 							width : 370,
 							style : {
 								marginBottom : 10
@@ -266,8 +274,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tHardware',
 							fieldLabel : 'Hardwaresystem (HWS)',
-							lazyRender : true,
-							lazyInit : false,
 							width : 370,
 							style : {
 								marginBottom : 10
@@ -276,8 +282,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tOsName',
 							fieldLabel : 'OS-Name',
-							lazyRender : true,
-							lazyInit : false,
 							width : 370,
 							style : {
 								marginBottom : 10,
@@ -287,8 +291,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tWorkflowHWS',
 							fieldLabel : 'Worflowstatus technical HWS',
-							lazyRender : true,
-							lazyInit : false,
 							width : 370,
 							style : {
 								marginBottom : 10,
@@ -298,8 +300,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tTransient',
 							fieldLabel : 'HW-transient systems',
-							lazyRender : true,
-							lazyInit : false,
 							width : 370,
 							style : {
 								marginBottom : 10,
@@ -309,8 +309,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'combo',
 							id : 'cbWorkflowTechnical',
 							fieldLabel : 'Worflowstatus technical',
-							lazyRender : true,
-							lazyInit : false,
 							width : 370,
 							style : {
 								marginBottom : 10,
@@ -341,12 +339,12 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							items : [{
 								name : 'itsecurity',
 								boxLabel : 'Yes',
-								inputValue : 'START',
+								inputValue : '1',
 								width : 50
 							}, {
 								id : 'itsecurity',
 								boxLabel : 'No',
-								inputValue : 'EXACT',
+								inputValue : '0',
 								width : 50
 							}],
 							style : {
@@ -357,8 +355,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tComment',
 							fieldLabel : 'Comment',
-							lazyRender : true,
-							lazyInit : false,
 							width : 370,
 							style : {
 								marginBottom : 10,
@@ -367,112 +363,38 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						}]
 					},{
 						xtype : 'fieldset',
-						title : 'Location',
-						id : 'location',
-						autoHeight : true,
+						id : 'contacts',
+						title : 'Contacts',
 						hidden:true,
+						autoHeight : true,
 						style : {
 							margin : '5 5 0 0'
 						},
-						items : [{
-							xtype : 'container',
-							html: '<a id="mailtolocation" href="mailto:&subject=' + mail_Text_location + '"><img src="' + img_Email + '"></a>',
-							id: 'maillocation',
-							cls: 'x-plain',
-							isHideable: true,
-							
-							style: {
-								//textAlign: 'left',
-								color: AC.AIR_FONT_COLOR,
-								fontFamily: AC.AIR_FONT_TYPE,
-								fontWeight: 'normal',
-								fontSize: '8pt',
-								cursor:'pointer',
-								//'margin-left' : 300,
-								 'padding-left':'500'
-							}
-						},{
-							id: 'cbCountry',
-					        xtype: 'filterCombo',
-					        fieldLabel: 'Country',
-					        width: 370,
-					        enableKeyEvents: true,
-					        store: AIR.AirStoreFactory.createLandListStore(),
-					        valueField: 'id',
-					        displayField: AAM.getLanguage() == 'DE' ? 'name' : 'nameEn',
-							lastQuery: '',
-					        minChars: 0,
-					        triggerAction: 'all',
-					        mode: 'local',
+						items : [ {
+							xtype : 'textfield',
+							id : 'tCostcentermanager',
+							fieldLabel : 'Cost center manager',
+							width: 370,
 							style : {
 								marginBottom : 10
 							}
-						},{
-					        id: 'cbSite',
-					    	xtype: 'filterCombo',
-					        fieldLabel: 'Site',
-					        width: 370,
-					        store: AIR.AirStoreFactory.createSiteListStore(),
-					        valueField: 'id',
-					        displayField: AAM.getLanguage() == 'DE' ? 'name' : 'nameEn',
-							lastQuery: '',
-							minChars: 0,
-					        triggerAction: 'all',
-					        mode: 'local',
-					        queryParam: 'id',
+						}, {
+							xtype : 'textfield',
+							id : 'tOrganizationalunit',
+							fieldLabel : 'Organizational unit',
+							width: 370,
 							style : {
 								marginBottom : 10
 							}
-					    },{
-					        xtype: 'filterCombo',
-					        id: 'cbBuilding',
-					        width: 370,
-					        fieldLabel: 'Building',
-					        enableKeyEvents: true,
-					        store: AIR.AirStoreFactory.createBuildingListStoreFromSiteId(), //needs to be changed for building
-					        valueField: 'id',
-					        displayField: 'name',
-							lastQuery: '',
-					        triggerAction: 'all',
-					        lazyInit: false,
-					        mode: 'local',
-					        queryParam: 'id',
-					        style : {
+						}, {
+							xtype : 'combo',
+							id : 'cbeditor',
+							fieldLabel : 'Editors group',
+							width: 370,
+							style : {
 								marginBottom : 10
 							}
-			        	}, {
-					        xtype: 'filterCombo',//combo
-					        id: 'cbRoom',
-					        width: 370,
-					        fieldLabel: 'Room',
-					        enableKeyEvents: true,
-					        store: AIR.AirStoreFactory.createRoomListStoreFromBuildingId(), //AIR.AirStoreFactory.createRoomListStore(),
-					        valueField: 'id',
-					        displayField: 'name',
-							lastQuery: '',
-					        triggerAction: 'all',//all query
-					        mode: 'local',
-					        queryParam: 'id',
-					        style : {
-								marginBottom : 10
-							}
-				        }, {
-					        xtype: 'filterCombo',//combo
-					        id: 'cbRack',
-					        width: 370,
-					        fieldLabel: 'Rack - Position',
-					        enableKeyEvents: true,
-					        store: AIR.AirStoreFactory.createSchrankListStore(), //AIR.AirStoreFactory.createRoomListStore(),
-					        valueField: 'id',
-					        displayField: 'name',
-							lastQuery: '',
-					        triggerAction: 'all',//all query
-					        mode: 'local',
-					        queryParam: 'id',
-					        style : {
-								marginBottom : 10
-							}
-				        }]
+						}]
 					}]
 				}, {
 					xtype : 'panel',
@@ -486,14 +408,12 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						hidden:true,
 						autoHeight : true,
 						style : {
-							margin : '5 0 0 0'
+							margin : '5 5 0 0'
 						},
 						items : [ {
-							xtype : 'combo',
+							xtype : 'textfield',
 							id : 'cbOrderNumber',
 							fieldLabel : 'Order Number',
-							lazyRender : true,
-							lazyInit : false,
 							width: 370,
 							style : {
 								marginBottom : 10
@@ -502,8 +422,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tInventorynumber',
 							fieldLabel : 'Inventory Number',
-							lazyRender : true,
-							lazyInit : false,
 							width: 370,
 							style : {
 								marginBottom : 10
@@ -569,7 +487,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 								xtype: 'textfield',
 						        id: 'tfRequester',
 						        width: 325,
-						        lazyRender : true,
+						        
 								lazyInit : false
 						    },{
 								xtype: 'hidden',
@@ -588,8 +506,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tCostCenterMgr',
 							fieldLabel : 'Cost Center Manager',
-							lazyRender : true,
-							lazyInit : false,
 							width: 370,
 							style : {
 								marginBottom : 10,
@@ -642,10 +558,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tBook',
 							fieldLabel : 'Book Value(Euro)',
-							lazyRender : true,
-							lazyInit : false,
 							width: 370,
-							height : 50,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -654,10 +567,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tDate',
 							fieldLabel : 'Date of book value',
-							lazyRender : true,
-							lazyInit : false,
 							width: 370,
-							height : 50,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -666,10 +576,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tDepreciation',
 							fieldLabel : 'Start date depreciation',
-							lazyRender : true,
-							lazyInit : false,
 							width: 370,
-							height : 50,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
@@ -678,8 +585,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tEconomic',
 							fieldLabel : 'Useful economic life (months)',
-							lazyRender : true,
-							lazyInit : false,
 							width: 370,
 							style : {
 								marginBottom : 10,
@@ -689,54 +594,133 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 							xtype : 'textfield',
 							id : 'tRetirment',
 							fieldLabel : 'Retirement date',
-							lazyRender : true,
-							lazyInit : false,
 							width: 370,
-							height : 50,
 							style : {
 								marginBottom : 10,
 								fontSize : 12
 							}
-						} ]
+						}]
 					},{
 						xtype : 'fieldset',
-						id : 'contacts',
-						title : 'Contacts',
-						hidden:true,
+						title : 'Location',
+						id : 'location',
 						autoHeight : true,
+						hidden:true,
 						style : {
-							margin : '5 0 0 0'
+							margin : '5 5 0 0'
 						},
-						items : [ {
-							xtype : 'textfield',
-							id : 'tCostcentermanager',
-							fieldLabel : 'Cost center manager',
-							lazyRender : true,
-							lazyInit : false,
-							width: 370,
+						items : [{
+							id: 'cbCountry',
+					        xtype: 'filterCombo',
+					        fieldLabel: 'Country',
+					        width: 370,
+					        enableKeyEvents: true,
+					        store: AIR.AirStoreFactory.createLandListStore(),
+					        valueField: 'id',
+					        displayField: AAM.getLanguage() == 'DE' ? 'name' : 'nameEn',
+							lastQuery: '',
+					        minChars: 0,
+					        triggerAction: 'all',
+					        mode: 'local',
 							style : {
 								marginBottom : 10
 							}
-						}, {
-							xtype : 'textfield',
-							id : 'tOrganizationalunit',
-							fieldLabel : 'Organizational unit',
-							lazyRender : true,
-							lazyInit : false,
-							width: 370,
+						},{
+					        id: 'cbSite',
+					    	xtype: 'filterCombo',
+					        fieldLabel: 'Site',
+					        width: 370,
+					        store: AIR.AirStoreFactory.createSiteListStore(),
+					        valueField: 'id',
+					        displayField: AAM.getLanguage() == 'DE' ? 'name' : 'nameEn',
+							lastQuery: '',
+							minChars: 0,
+					        triggerAction: 'all',
+					        mode: 'local',
+					        queryParam: 'id',
 							style : {
 								marginBottom : 10
 							}
-						}, {
-							xtype : 'combo',
-							id : 'cbeditor',
-							fieldLabel : 'Editors group',
-							lazyRender : true,
-							lazyInit : false,
-							width: 370,
-							style : {
+					    },{
+					        xtype: 'filterCombo',
+					        id: 'cbBuilding',
+					        width: 370,
+					        fieldLabel: 'Building',
+					        enableKeyEvents: true,
+					        store: AIR.AirStoreFactory.createBuildingListStoreFromSiteId(), //needs to be changed for building
+					        valueField: 'id',
+					        displayField: 'name',
+							lastQuery: '',
+					        triggerAction: 'all',
+					        lazyInit: false,
+					        mode: 'local',
+					        queryParam: 'id',
+					        style : {
 								marginBottom : 10
 							}
+			        	}, {
+					        xtype: 'filterCombo',//combo
+					        id: 'cbRoom',
+					        width: 370,
+					        fieldLabel: 'Room',
+					        enableKeyEvents: true,
+					        store: AIR.AirStoreFactory.createRoomListStoreFromBuildingId(), //AIR.AirStoreFactory.createRoomListStore(),
+					        valueField: 'id',
+					        displayField: 'name',
+							lastQuery: '',
+					        triggerAction: 'all',//all query
+					        mode: 'local',
+					        queryParam: 'id',
+					        style : {
+								marginBottom : 10
+							}
+				        }, {
+					    	xtype: 'panel',
+							id: 'pRackposition',
+							border: false,
+							layout:'hbox',						
+							style : {
+								fontSize : 12,
+							},
+							items: [{
+									xtype: 'label',
+									fieldLabel : 'RackPosition',
+									text:'Rack - Position:',
+									width: 105,
+									style: {
+										fontSize: 12
+									}
+					    		},{
+						        xtype: 'filterCombo',//combo
+						        id: 'cbRack',
+						        width: 370,
+						        fieldLabel: 'Rack - Position',
+						        enableKeyEvents: true,
+						        store: AIR.AirStoreFactory.createSchrankListStore(),
+						        valueField: 'id',
+						        displayField: 'name',
+								lastQuery: '',
+						        triggerAction: 'all',//all query
+						        mode: 'local',
+						        queryParam: 'id',
+						        style : {
+									marginBottom : 10
+								}
+					        },{
+								xtype : 'container',
+								html: '<a id="mailtolocation" href="mailto:&subject=' + mail_Subject_product + '"><img src="' + img_Email + '"></a>',
+								id: 'maillocation',
+								cls: 'x-plain',
+								isHideable: true,
+								style: {
+									color: AC.AIR_FONT_COLOR,
+									fontFamily: AC.AIR_FONT_TYPE,
+									fontWeight: 'normal',
+									fontSize: '8pt',
+									cursor:'pointer',
+									 'padding-left':'15px'
+								}	
+					        }]
 						}]
 					}]
 				}]
@@ -765,7 +749,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					id : 'cancelBtn',
 					text : 'Cancel',
 					style : {
-						//marginBottom : 10,
 						fontSize : 12,
 						margin : '8 10 0 0',
 						width:80
@@ -790,8 +773,17 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						margin : '8 10 0 0',
 						width:80
 					}
-				},
-				{
+				},{
+					xtype : 'button',
+					id : 'bReset',
+					text : 'Reset all Entries',
+					style : {
+						//marginBottom : 10,
+						fontSize : 14,
+						margin : '8 10 0 0',
+						width:80
+					}
+				},{
 					xtype : 'button',
 					id : 'masterBtn',
 					text : 'Request for new master data',
@@ -847,19 +839,19 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		cbCostcenter.on('select', this.onCostCenterSelect, this);
 		cbCostcenter.on('keyup', this.onFieldKeyUp, this);
 		
-		var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
+		var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
 		cbCountry.on('select', this.onCountrySelect, this);
 		cbCountry.on('keyup', this.onFieldKeyUp, this);
 		
-		var cbSite = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite');
+		var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
 		cbSite.on('select', this.onSiteSelect, this);
 		cbSite.on('keyup', this.onFieldKeyUp, this);
 		
-		var cbBuilding = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');//.getComponent('pBuilding')
+		var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');//.getComponent('pBuilding')
 		cbBuilding.on('select', this.onBuildingSelect, this);
 		cbBuilding.on('keyup', this.onFieldKeyUp, this);
 		
-		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
+		var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
 		cbRoom.on('select', this.onRoomSelect, this);
 		cbRoom.on('keyup', this.onFieldKeyUp, this);
 		
@@ -875,14 +867,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		cbType.on('select', this.onTypeSelect, this);
 		cbType.on('keyup', this.onFieldKeyUp, this);
 		
-		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
+		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
 		cbModel.on('select', this.onModelSelect, this);
 		cbModel.on('keyup', this.onFieldKeyUp, this);
 		
-		var bReset = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('bReset');
-		bReset.on('click',this.resetProduct, this);
+		var bReset = this.getComponent('buttonPanel').getComponent('bReset');
+		bReset.on('click',this.resetFormFields, this);
 		
-	
 	},
 		
 	onRequesterAdd: function(link, event) {
@@ -905,20 +896,101 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         tPsptext.setValue(value);
 	},
 	
-	resetProduct: function(){
+	resetFormFields: function(){
+		//product
 		var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
 		var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
 		var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
+		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
 		var tsapDescription = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription');
 		var tDescription = this.getComponent('topPanel').getComponent('tDescription');
-		
+		//BusinessInformation
+		var cbOrderNumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumber');
+		var tInventorynumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
+		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
+		var tPsptext = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tPsptext');
+		var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter');
+		var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
+		var tCostCenterMgr = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tCostCenterMgr');
+		var tOrganisation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrganisation');
+		var tOwner = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOwner');
+		var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
+		var tAquisition = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tAquisition');
+		var tBook = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tBook');
+		var tDate = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tDate');
+		var tDepreciation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tDepreciation');
+		var tEconomic = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic');
+		var tRetirment = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tRetirment');
+		//Technics
+		var tTechnicalNumber = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalNumber');
+		var tTechnicalMaster = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalMaster');
+		var tSystemPlatform = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tSystemPlatform');
+		var tHardware = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tHardware');
+		var tOsName = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tOsName');
+		var tWorkflowHWS = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tWorkflowHWS');
+		var tTransient = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTransient');
+		var cbWorkflowTechnical = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbWorkflowTechnical');
+		var cbGeneralUsage = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbGeneralUsage');
+		var rbItSecurity = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('rbItSecurity');
+		var tComment = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tComment');
+		//Location
+		var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
+		var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
+		var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
+		var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
+		var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
+		//contacts
+		var tCostcentermanager = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('tCostcentermanager');
+		var tOrganizationalunit = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('tOrganizationalunit');
+		var cbeditor = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('cbeditor');
+				
+		//product reset
+
 		cbManufacturer.reset();
 		cbSubCategory.reset();
 		cbType.reset();
 		cbModel.reset();
 		tsapDescription.setValue("");
-		tDescription.setValue("");
+		tDescription.setValue("");		
+		//business reset
+		cbOrderNumber.reset();
+		tInventorynumber.setValue("");
+		cbPsp.reset();
+		tPsptext.setValue("");
+		cbCostcenter.reset();
+		tfRequester.setValue("");
+		tCostCenterMgr.setValue("");
+		tOrganisation.setValue("");
+		tOwner.setValue("");
+		cbSapAsset.reset();
+		tAquisition.setValue("");
+		tBook.setValue("");
+		tDate.setValue("");
+		tDepreciation.setValue("");
+		tEconomic.setValue("");
+		tRetirment.setValue("");
+		//technics reset
+		tTechnicalNumber.setValue("");
+		tTechnicalMaster.setValue("");
+		tSystemPlatform.setValue("");
+		tHardware.setValue("");
+		tOsName.setValue("");
+		tWorkflowHWS.setValue("");
+		tTransient.setValue("");
+		cbWorkflowTechnical.reset();
+		cbGeneralUsage.reset();
+		rbItSecurity.reset();
+		tComment.setValue("");
+		//Location reset
+		cbCountry.reset();
+		cbSite.reset();
+		cbBuilding.reset();
+		cbRoom.reset();
+		cbRack.reset();
+		//contacts reset
+		cbeditor.reset();
+		tCostcentermanager.setValue("");
+		tOrganizationalunit.setValue("");
 	},
 	
 	loadComboboxData : function(){
@@ -932,6 +1004,35 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	},
 	
 	updateLabels: function(labels){
+		/*this.setTitle(labels.lNewAsset);
+		this.setFieldLabel(this.getComponent('topPanel').getComponent('identNumber'), labels.assetIndentnumber);
+		this.setFieldLabel(this.getComponent('topPanel').getComponent('identNumber'), labels.assetInventoryNumber);
+		this.setFieldLabel(this.getComponent('topPanel').getComponent('tDescription'), labels.assetDescription);
+		this.setFieldLabel(this.getComponent('topPanel').getComponent('pReason').getComponent('lReason'), labels.assetReason);
+		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer'), labels.assetManufacture);
+		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory'), labels.assetSubcategory);
+		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType'), labels.assetType);
+		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel'), labels.assetModel);
+		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription'), labels.assetSapDescription);
+		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('bReset'), labels.assetReset);
+		*/
+		//this.setFieldLabel(this.getComponent('topPanel').getComponent('identNumber'), labels.assetIndentnumber);
+		
+		//AIR.AirAclManager.setNecessity(this.getComponent('topPanel').getComponent('identNumber'));*/
+		
+		//var textindentnumber = this.getComponent('topPanel').getComponent('identNumber');
+		
+		//this.setFieldLabel(fsCategoriesAndStatus.getComponent('cbAdvSearchGeneralUsageW'), labels.operationalStatus);
+		
+		//Ext.getBody('topPanel').getComponent('identNumber').el.up('.x-form-item', 10, true).child('.x-form-item-label').update(labels.assetIndentnumber);
+		
+	/*	link =this.getComponent('topPanel').getComponent('tinventory');
+		link.updateText(labels.assetInventoryNumber);*/
+		
+		
+		//this.getComponent('topPanel').getComponent('identNumber').fieldLabel =labels.assetIndentnumber;
+        //this.getComponent('topPanel').getComponent('tinventory').fieldLabel =labels.assetInventoryNumber;
+
 		this.loadComboboxData();
 	},
 	
@@ -943,7 +1044,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	manufacturerChanged: function(value) {
 		var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
 		var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
+		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
 		cbModel.reset();
 		cbSubCategory.reset();
 		cbType.reset();
@@ -976,7 +1077,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	},
 	
 	typeChanged: function(value) {
-		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
+		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
 		cbModel.reset();
 		cbModel.allQuery = value;
 		cbModel.getStore().load({
@@ -995,7 +1096,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	modelChanged: function(value) {
 		var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getRawValue();
 		var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getRawValue();
-		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel').getRawValue();
+		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel').getRawValue();
 		var tsapDescription = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription');
 		var tDescription = this.getComponent('topPanel').getComponent('tDescription');
 		var description = cbManufacturer+" "+cbType+" "+cbModel;
@@ -1010,9 +1111,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	},
 	
 	countryChanged: function(value) {
-		var cbSite = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite');
-		var cbBuilding = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');
-		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
+		var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
+		var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
+		var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
 		
 		cbRoom.reset();
 		cbBuilding.reset();
@@ -1039,8 +1140,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	},
 	
 	siteChanged: function(value) {
-		var cbBuilding = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');
-		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
+		var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
+		var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
 		
 		cbRoom.reset();
 		cbBuilding.reset();
@@ -1066,7 +1167,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	},
 	
 	buildingChanged: function(value) {
-		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
+		var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
 		cbRoom.reset();
 		cbRoom.getStore().removeAll();
 		
@@ -1088,7 +1189,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	},
 	
 	roomChanged: function(value){
-		var cbRack = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRack');
+		var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
 		cbRack.reset();
 		cbRack.getStore().removeAll();
 		
@@ -1116,7 +1217,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			},
 			callback: function (records, options, success) {
 				var value = this.getAt(0).data.firstname+" "+this.getAt(0).data.lastname+"/"+this.getAt(0).data.cwid;
-				var costCenterManager = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel')	.getComponent('contacts').getComponent('tCostcentermanager');
+				var costCenterManager = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('tCostcentermanager');
 				costCenterManager.setValue(value);
 			}
 		});
@@ -1133,7 +1234,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	},
 
 	loadCountryData: function(){
-		var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
+		var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
 		cbCountry.displayField = AAM.getLanguage() == 'DE' ? 'name' : 'nameEn';
 		cbCountry.getStore().load({
 			callback: function() {
@@ -1164,15 +1265,51 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		
 	},
 	
+	setIntangibleView: function(){
+		var clCiLocation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location');
+		var clCiTechnics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
+		var clCiContacts = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
+		
+		clCiLocation.items.items.forEach(function(item){
+			item.disable();
+		});
+		
+		clCiTechnics.items.items.forEach(function(item){
+			item.setDisabled(true);
+		});
+		
+		clCiContacts.items.items.forEach(function(item){
+			item.disable();
+		});
+	},
+	
+	setTangibleView: function(withInventory){
+		var clCiProduct = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
+		var clCiLocation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location');
+		var clCiTechnics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
+		var clCiBusinessInformation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
+		var clCiContacts = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
+		var clCiReason = this.getComponent('topPanel').getComponent('pReason');
+		
+		clCiLocation.enable();
+		clCiTechnics.enable();
+		clCiContacts.enable();
+		
+		if(!withInventory){
+			clCiReason.setVisible(true);
+		}
+		
+	},
+	
 	updateMailTemplateProduct: function() {
 		var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
 		
 		var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
 		var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
 		var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
-		
+		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
 		var mailText = mail_Text_product.replace('<manufacturer>', cbManufacturer.getRawValue());
+		
 		mailText = mailText.replace('<subcategory>', cbSubCategory.getRawValue());
 		mailText = mailText.replace('<model>', cbModel.getRawValue());
 		mailText = mailText.replace('<type>', cbType.getRawValue());
@@ -1188,11 +1325,11 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	updateMailTemplateLocation: function() {
 		var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
 		
-		var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
-		var cbSite = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite');
-		var cbBuilding = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');
-		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
-		var cbRack = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRack');
+		var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
+		var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
+		var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
+		var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
+		var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
 		
 		var mailText = mail_Text_location.replace('<country>', cbCountry.getRawValue());
 		mailText = mailText.replace('<site>', cbSite.getRawValue());
@@ -1209,6 +1346,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	},
 	
 	update: function(assetData){
+		if(assetData.isIntangibleAsset){
+			this.setIntangibleView();
+		} else if(assetData.isTangibleAssetWithInventory){
+			this.setTangibleView(true);
+		} else if(assetData.isTangibleAssetWithoutInventory){
+			this.setTangibleView(false);
+		}
 		console.log(assetData);
 		//Asset Description
 		var tDescription = this.getComponent('topPanel').getComponent('tDescription');
@@ -1235,7 +1379,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		cbType.setRawValue(assetData.type);
 		this.typeChanged(assetData.typeId);
 		
-		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel');
+		var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
 		cbModel.setValue(assetData.modelId);
 		cbModel.setRawValue(assetData.model);
 		
@@ -1277,11 +1421,11 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		tComment.setValue(assetData.generalUsageId);
 		
 		// Location
-		var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
-		var cbSite = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite');
-		var cbBuilding = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');
-		var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
-		var cbRack = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRack');
+		var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
+		var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
+		var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
+		var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
+		var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
 		
 		//Business Information
 		var cbOrderNumbr = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumbr');
@@ -1335,13 +1479,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var tRetirement = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tRetirment');
 		tRetirement.setValue(assetData.retirementDate);
 		
-		var tCostcentermanager = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('contacts').getComponent('tCostcentermanager');
+		var tCostcentermanager = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('tCostcentermanager');
 		tCostcentermanager.setValue(assetData.costCenterManager);
 		
-		var tOrganizationalunit = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('contacts').getComponent('tOrganizationalunit');
+		var tOrganizationalunit = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('tOrganizationalunit');
 		tOrganizationalunit.setValue(assetData.organizationalunit);
 		
-		var cbeditor = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('contacts').getComponent('cbeditor');
+		var cbeditor = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('cbeditor');
 		cbeditor.setValue(assetData.editorsGroupId);
 		
 		AAM.getMask(AC.MASK_TYPE_LOAD).hide();
@@ -1358,19 +1502,23 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var  sapAssetvalue=this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset').getValue();
 		var requesterValue=this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getValue();
 		var economicValue=this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic').getValue();
+		var generalUsageValue=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbGeneralUsage').getValue();
+		var itSecurityValue=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('rbItSecurity').getValue().inputValue;
 		
 		newAssetstore.load({
 			params:{
-			id: manufacturerValue,
-			hardwareCategory2_id:subCategoryValue,
-			hardwareCategory3_id:typeValue,
-			hardwareCategory4_id:modelValue,
-			kontoid:costcentervalue,
-			pspElement:pspValue,
-			hardwareCategory1_id:sapAssetvalue,
-			requester:requesterValue,
-			month:economicValue
-		}
+				id: manufacturerValue,
+				hardwareCategory2_id:subCategoryValue,
+				hardwareCategory3_id:typeValue,
+				hardwareCategory4_id:modelValue,
+				kontoid:costcentervalue,
+				pspElement:pspValue,
+				hardwareCategory1_id:sapAssetvalue,
+				requester:requesterValue,
+				month:economicValue,
+				generalUsageId:generalUsageValue,
+				itSecurityRelevance:itSecurityValue
+			}
 		});
 	}
 
