@@ -60,10 +60,7 @@ public class AirAssetExcelExportServlet extends HttpServlet {
 
 		fileName = fileName.concat(".xlsx");
 
-		res.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");// xlsx:
-																								// vnd.openxmlformats-officedocument.spreadsheetml.sheet,
-																								// xls:
-																								// vnd.ms-excel
+		res.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 		res.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 		res.setCharacterEncoding("application/x-www-form-urlencoded");
 	}
