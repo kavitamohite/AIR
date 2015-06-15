@@ -16,30 +16,25 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 		        	id: 'bAssetSelectDeselectAll',
 		        	disabled: true,
 		        	hidden: true,
-		    				        	
 		        	style: {
 		        		marginLeft: 5		        		
 		        		
 		        	},
-		        	
 		        	text: 'Select/Deselect All'
 		        },
 		        {
 			    	xtype: 'checkbox',
 			        id: 'cbAssetIsMultipleSelect',
 			        hidden: true,
-		    	    
 		        	style: {
 		        		marginLeft: 10
 		        	}
-			        
 		    	},
 		    	{
 		    		xtype: 'label',
 		    		id: 'lAssetIsMultipleSelect',
 		    		text: 'Multiple Selection',
 		    		hidden: true,
-		    		
 		    		style: {
 		    			margingLeft: 5,
 		    	        'font': '12px arial,tahoma,verdana,helvetica',
@@ -50,15 +45,12 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 	        },{
 	        	xtype: 'tabpanel',
 	        	id: 'tpCiAssetSearchResultTables',
-
 				enableTabScroll: true,
 				resizeTabs: true,
 				tabWidth: 145,
 				stateful: false,
-				
 	            plain: true,
 	            defaults: { autoScroll: true },
-        	
 	        	style: {
 	            	marginTop: 5,
 	            	'font': '11px arial,tahoma,verdana,helvetica'
@@ -134,6 +126,8 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 			ciResultGrid.on('rowdblclick', this.onRowDoubleClick, this);			
 			
 			var pagingBar = ciResultGrid.getBottomToolbar();
+			var clExcelExport = pagingBar.getComponent(ciResultGridId + '_clExcelExport');
+			clExcelExport.on('click', callback);
 		
 		}
 		if(this.getTabTitle(ciResultGridId) === AC.SEARCH_TYPE_ADV_SEARCH) {
@@ -247,7 +241,6 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 	
 	getCurrentSearchType: function() {
 		var tab = this.getComponent('tpCiAssetSearchResultTables').getActiveTab();
-		
 		return tab.getId() || null;
 	},
 	
@@ -273,30 +266,16 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 			ciSearchGrid = tpCiSearchResultTables.items.items[i];		
 			
 			ciSearchGrid.getColumnModel().setColumnHeader(0, "&#160;");
-			ciSearchGrid.getColumnModel().setColumnHeader(1, labels.assetManufacturer);
-			ciSearchGrid.getColumnModel().setColumnHeader(2, labels.assetSAPDesc);
-			ciSearchGrid.getColumnModel().setColumnHeader(3, labels.assetSerialNo);
-			ciSearchGrid.getColumnModel().setColumnHeader(4, labels.assetCostCenterManager);
-			ciSearchGrid.getColumnModel().setColumnHeader(5, labels.assetOrganizationalUnit);
-			ciSearchGrid.getColumnModel().setColumnHeader(6, labels.assetCostCenter);
-			ciSearchGrid.getColumnModel().setColumnHeader(7, labels.assetInventoryNumber);
-			ciSearchGrid.getColumnModel().setColumnHeader(8, labels.assetPSPElement);
-			ciSearchGrid.getColumnModel().setColumnHeader(9, labels.assetRequester);
-			ciSearchGrid.getColumnModel().setColumnHeader(10, labels.assetTechnicalMaster);
-			ciSearchGrid.getColumnModel().setColumnHeader(11, labels.assetTechnicalNumber);
-			ciSearchGrid.getColumnModel().setColumnHeader(12, labels.assetAcquisitionValue);
-			ciSearchGrid.getColumnModel().setColumnHeader(13, labels.assetSite);
-			ciSearchGrid.getColumnModel().setColumnHeader(14, labels.assetOrderNumber);
-			ciSearchGrid.getColumnModel().setColumnHeader(15, labels.assetChecked);
-			ciSearchGrid.getColumnModel().setColumnHeader(16, labels.sapAssetClass);
-			ciSearchGrid.getColumnModel().setColumnHeader(17, labels.assetSubCategory);
-			ciSearchGrid.getColumnModel().setColumnHeader(18, labels.assetType);
-			ciSearchGrid.getColumnModel().setColumnHeader(19, labels.assetModel);
-			ciSearchGrid.getColumnModel().setColumnHeader(20, labels.assetSystemPlatformName);
-			ciSearchGrid.getColumnModel().setColumnHeader(21, labels.assetHardwareSystem);
-			ciSearchGrid.getColumnModel().setColumnHeader(22, labels.assetHardwareTransientSystem);
-			ciSearchGrid.getColumnModel().setColumnHeader(23, labels.assetAlias);
-			ciSearchGrid.getColumnModel().setColumnHeader(24, labels.assetOsName);
+			ciSearchGrid.getColumnModel().setColumnHeader(1, labels.assetSAPDesc);
+			ciSearchGrid.getColumnModel().setColumnHeader(2, labels.assetPSPElement);
+			ciSearchGrid.getColumnModel().setColumnHeader(3, labels.assetCostCenter);
+			ciSearchGrid.getColumnModel().setColumnHeader(4, labels.assetSite);
+			ciSearchGrid.getColumnModel().setColumnHeader(5, labels.assetSerialNo);
+			ciSearchGrid.getColumnModel().setColumnHeader(6, labels.assetTechnicalMaster);
+			ciSearchGrid.getColumnModel().setColumnHeader(7, labels.assetTechnicalNumber);
+			ciSearchGrid.getColumnModel().setColumnHeader(8, labels.assetInventoryNumber);
+			ciSearchGrid.getColumnModel().setColumnHeader(9, labels.assetOrganizationalUnit);
+			
 		}
 	}
 });

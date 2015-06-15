@@ -9,12 +9,10 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
 			items: [{
 				id: 'pAssetSearch',
 				border: false,
-				
 				layout: 'table',
 			    layoutConfig: {
 			    	columns: 4
 			    },
-			    
 			    items: [{
 		        	xtype: 'textfield',
 		        	id: 'tfAssetSearch',
@@ -51,18 +49,14 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
 		        	style: {
 		        		marginLeft: 5
 		        	},
-		        	
 		        	text: 'Reset'
 		        },{
 		            xtype: 'radiogroup',
 					id: 'searchMode',
-					style: {
-						marginLeft: 5
-					},
 		            items: [{
-		            	id: 'hardwareSearchMode', name: 'queryMode', boxLabel: 'Hardware Component', inputValue: 'hardware', checked: true
+		            	id: 'hardwareSearchMode', name: 'sMode', boxLabel: 'Hardware Component', inputValue: 'hardware', checked: true
 		            }, {
-		            	id: 'softwareSearchMode', name: 'queryMode', boxLabel: 'Software Component', inputValue: 'software'
+		            	id: 'softwareSearchMode', name: 'sMode', boxLabel: 'Software Component', inputValue: 'software'
 		            }]
 				}]
 	        }]
@@ -78,7 +72,8 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
 	updateLabels: function(labels) {
 		this.getComponent('pAssetSearch').getComponent('clAssetSearch').setText(labels.newSearch);
 		this.getComponent('pAssetSearch').getComponent('bUpdateCiAssetSearchResult').setText(labels.bUpdateCiSearchResult);
-		
+		this.getComponent('pAssetSearch').getComponent('bAssetSearchReset').setText(labels.bUpdateCiSearchResult);
+		// update box label
 	}
 	
 });
