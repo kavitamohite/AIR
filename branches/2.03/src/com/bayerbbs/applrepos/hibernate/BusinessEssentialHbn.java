@@ -23,17 +23,18 @@ public class BusinessEssentialHbn {
 			List<BusinessEssential> input) {
 		ArrayList<BusinessEssentialDTO> listDTO = new ArrayList<BusinessEssentialDTO>();
 
-		for (Iterator<BusinessEssential> iter = input.iterator(); iter.hasNext();) {
+		for (Iterator<BusinessEssential> iter = input.iterator(); iter
+				.hasNext();) {
 			BusinessEssential data = iter.next();
-			   if(!data.getInherited()){
-					BusinessEssentialDTO dto = new BusinessEssentialDTO();
-					dto.setSeverityLevelId(data.getBusinessEssentialId());
-					dto.setSeverityLevel(data.getBusinessEssentialName());
-					dto.setSeverityGPSC(data.getBusinessEssentialCode());
-					dto.setBeCode(data.getBusinessEssentialCode());
-					dto.setUsage(data.getInherited_Y_N());
-					listDTO.add(dto);
-			   }
+			if (!data.getInherited()) {
+				BusinessEssentialDTO dto = new BusinessEssentialDTO();
+				dto.setSeverityLevelId(data.getBusinessEssentialId());
+				dto.setSeverityLevel(data.getBusinessEssentialName());
+				dto.setSeverityGPSC(data.getBusinessEssentialCode());
+				dto.setBeCode(data.getBusinessEssentialCode());
+				dto.setUsage(data.getInherited_Y_N());
+				listDTO.add(dto);
+			}
 
 		}
 		return listDTO;
@@ -56,18 +57,15 @@ public class BusinessEssentialHbn {
 		return output;
 	}
 
-
-	
 	/**
 	 * list all businessEssential (Severity_Level with usage = "ITSCM"
+	 * 
 	 * @return
 	 */
 	public static List<BusinessEssentialDTO> listBusinessEssentialHbn() {
 
 		return listBusinessEssential();
 	}
-
-
 
 	private static List<BusinessEssentialDTO> listBusinessEssential() {
 
@@ -103,5 +101,13 @@ public class BusinessEssentialHbn {
 		return listResult;
 	}
 
-	
+	public static BusinessEssential getBusinessEssential(Long businessEssentialID) {
+
+		BusinessEssential businessEssential = new BusinessEssential();
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	    businessEssential = (BusinessEssential) session.get(BusinessEssential.class, businessEssentialID);
+	    return businessEssential;
+	}
+
 }

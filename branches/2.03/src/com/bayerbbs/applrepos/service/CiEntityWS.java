@@ -39,6 +39,7 @@ import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.DirectLinkCIDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
+import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
 import com.bayerbbs.applrepos.dto.MassUpdateAttributeDTO;
 import com.bayerbbs.applrepos.dto.PathwayDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
@@ -51,6 +52,7 @@ import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationCat2Hbn;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
+import com.bayerbbs.applrepos.hibernate.BusinessEssentialHbn;
 import com.bayerbbs.applrepos.hibernate.CategoryBusinessHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
@@ -60,6 +62,7 @@ import com.bayerbbs.applrepos.hibernate.ConfidentialityHbn;
 import com.bayerbbs.applrepos.hibernate.HibernateUtil;
 import com.bayerbbs.applrepos.hibernate.ItSecGroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
+import com.bayerbbs.applrepos.hibernate.ItsecMassnahmeStatusHbn;
 import com.bayerbbs.applrepos.hibernate.LifecycleStatusHbn;
 import com.bayerbbs.applrepos.hibernate.OperationalStatusHbn;
 import com.bayerbbs.applrepos.hibernate.PathwayHbn;
@@ -1115,6 +1118,12 @@ public class CiEntityWS {
 		maDto.setAttributeValue(itSystem.getCiOwner());
 		maDto.setId("responsible");
 		massUpdateAttriuteDTOs.add(maDto);
+		
+		maDto = new MassUpdateAttributeDTO();
+        maDto.setAttributeName(AirKonstanten.BUSINESS_ESSENTIAL);
+        maDto.setAttributeValue(BusinessEssentialHbn.getBusinessEssential(itSystem.getBusinessEssentialId()).getBusinessEssentialName());
+        maDto.setId("businessEssentialId");
+		massUpdateAttriuteDTOs.add(maDto);
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.DELEGATE_PERSON_GROUP);
@@ -1126,10 +1135,15 @@ public class CiEntityWS {
 		maDto.setAttributeName(AirKonstanten.LIFE_CYCLE_STATUS);
 		if (itSystem.getLifecycleStatusId() != null && itSystem.getLifecycleStatusId() != 0)
 		{
-			LifecycleStatus lifecycleStatus = LifecycleStatusHbn.findById(
-					Long.valueOf(itSystem.getLifecycleStatusId()));
-			if(lifecycleStatus != null)
-				maDto.setAttributeValue(lifecycleStatus.getlcStatusEn());
+			LifecycleStatusDTO lifecycleStatusDTO = new LifecycleStatusDTO();
+			List<LifecycleStatusDTO> input = LifecycleStatusHbn.listLifecycleStatus(AirKonstanten.TABLE_ID_APPLICATION);
+			for (final LifecycleStatusDTO data : input) {
+				if(data.getLcSubStatusId().intValue()==itSystem.getLifecycleStatusId().intValue()){
+					lifecycleStatusDTO = data;
+				}
+			}
+
+			maDto.setAttributeValue(lifecycleStatusDTO.getLcStatus());
 		}
 
 		maDto.setId("lifecycleStatusId");
@@ -1192,7 +1206,7 @@ public class CiEntityWS {
 		maDto.setAttributeName(AirKonstanten.PRIMARY_FUNCTION);
 		if(itSystem.getPrimaryFunctionId() != null && itSystem.getPrimaryFunctionId() != 0)
 		maDto.setAttributeValue(ItSystemHbn.getItSystemPrimaryFunctionById(itSystem.getPrimaryFunctionId()));
-		maDto.setId("virtualHardwareSoftware");
+		maDto.setId("primaryFunctionId");
 		massUpdateAttriuteDTOs.add(maDto);
 		
 						
@@ -1437,8 +1451,16 @@ public class CiEntityWS {
         
         maDto = new  MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.LIFE_CYCLE_STATUS);
-        if(application.getLifecycleStatusId()!= null && application.getLifecycleStatusId()!= 0)
-        maDto.setAttributeValue(LifecycleStatusHbn.findById(application.getLifecycleStatusId()).getlcStatusEn());
+        LifecycleStatusDTO lifecycleStatusDTO = new LifecycleStatusDTO();
+        if(application.getLifecycleStatusId()!= null && application.getLifecycleStatusId()!= 0){
+            List<LifecycleStatusDTO> input = LifecycleStatusHbn.listLifecycleStatus(AirKonstanten.TABLE_ID_APPLICATION);
+    		for (final LifecycleStatusDTO data : input) {
+    			if(data.getLcSubStatusId().intValue()==application.getLifecycleStatusId().intValue()){
+    				lifecycleStatusDTO = data;
+    			}
+        }
+        }
+        maDto.setAttributeValue(lifecycleStatusDTO.getLcStatus());
         maDto.setId("lifecycleStatusId");
         massUpdateAttriuteDTOs.add(maDto);
 
@@ -1467,7 +1489,7 @@ public class CiEntityWS {
         
 		maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.BUSINESS_ESSENTIAL);
-        maDto.setAttributeValue(getBusinessEssential(application.getBusinessEssentialId()));
+        maDto.setAttributeValue(BusinessEssentialHbn.getBusinessEssential(application.getBusinessEssentialId()).getBusinessEssentialName());
         maDto.setId("businessEssentialId");
         massUpdateAttriuteDTOs.add(maDto);
 
@@ -1824,13 +1846,20 @@ public class CiEntityWS {
 			}
 			if(massUpdateParameterInput.getItsecGroupId()){
 				locationCi.setRefId(null);
-				locationCi.setItsecGroupId(templaeLocationCI.getItsecGroupId());
+				if(locationCi.getItsecGroupId() == 10136){
+					locationCi.setItsecGroupId(templaeLocationCI.getItsecGroupId());
+					ItsecMassnahmeStatusHbn.saveSaveguardAssignment(massUpdateParameterInput.getCiTypeId().intValue(), locationCi.getId(), templaeLocationCI.getServiceContractId());
+				}else{
+					locationCi.setItsecGroupId(templaeLocationCI.getItsecGroupId());
+				}
+
 			}
 			if(massUpdateParameterInput.getSlaId()){
 				locationCi.setSlaId(templaeLocationCI.getSlaId());
 			}
 			if(massUpdateParameterInput.getServiceContractId()){
 				locationCi.setServiceContractId(templaeLocationCI.getServiceContractId());
+
 			}
 			if(massUpdateParameterInput.getItSecSbAvailability()){
 				locationCi.setItSecSbAvailability(templaeLocationCI.getItSecSbAvailability());
@@ -1880,7 +1909,7 @@ public class CiEntityWS {
 			int [] updateCounts = stmt.executeBatch();
 			tx.commit();
 			System.out.println(updateCounts);
-		}		
+		}
 
 		toCommit = true;
 		} catch (Exception e) {
@@ -1922,6 +1951,9 @@ public class CiEntityWS {
 			if(massUpdateParameterInput.getApplicationCat2Id()){
 				application.setApplicationCat2Id(templateApplication.getApplicationCat2Id());
 			}
+			if(massUpdateParameterInput.isBusinessEssentialId()){
+				application.setBusinessEssentialId(templateApplication.getBusinessEssentialId());
+			}
 			if(massUpdateParameterInput.getLifecycleStatusId()){
 				application.setLifecycleStatusId(templateApplication.getLifecycleStatusId());
 			}
@@ -1960,7 +1992,14 @@ public class CiEntityWS {
 			}
 			if(massUpdateParameterInput.getItsecGroupId()){
 				application.setRefId(null);
-				application.setItsecGroupId(templateApplication.getItsecGroupId());
+				if(application.getItsecGroupId()==10136){
+					application.setItsecGroupId(templateApplication.getItsecGroupId());
+					ItsecMassnahmeStatusHbn.saveSaveguardAssignment(AirKonstanten.TABLE_ID_APPLICATION, application.getApplicationId(), templateApplication.getItsecGroupId());
+				}else{
+					application.setItsecGroupId(templateApplication.getItsecGroupId());
+
+				}
+
 			}
 			if(massUpdateParameterInput.getSlaId()){
 				application.setSlaId(templateApplication.getSlaId());
@@ -2042,7 +2081,7 @@ public class CiEntityWS {
 			int [] updateCounts = stmt.executeBatch();
 			tx.commit();
 			System.out.println(updateCounts);
-		}		
+		}	
 		toCommit = true;
 			
 		} catch (Exception e) {
@@ -2080,6 +2119,9 @@ public class CiEntityWS {
 			if(massUpdateParameterInput.getLifecycleStatusId()){
 				itSystem.setLifecycleStatusId(templateItSystem.getLifecycleStatusId());
 			}
+			if(massUpdateParameterInput.isBusinessEssentialId()){
+				itSystem.setBusinessEssentialId(templateItSystem.getBusinessEssentialId());
+			}
 			if(massUpdateParameterInput.getOperationalStatusId()){
 				itSystem.setEinsatzStatusId(templateItSystem.getEinsatzStatusId());
 			}
@@ -2088,6 +2130,9 @@ public class CiEntityWS {
 			}
 			if(massUpdateParameterInput.getSeverityLevelId()){
 				itSystem.setSeverityLevelId(templateItSystem.getSeverityLevelId());
+			}
+			if(massUpdateParameterInput.isOsNameId()){
+				itSystem.setOsNameId(templateItSystem.getOsNameId());
 			}
 			if(massUpdateParameterInput.getClusterCode()){
 				itSystem.setClusterCode(templateItSystem.getClusterCode());
@@ -2124,7 +2169,16 @@ public class CiEntityWS {
 			}
 			if(massUpdateParameterInput.getItsecGroupId()){
 				itSystem.setRefId(null);
-				itSystem.setItsecGroupId(templateItSystem.getItsecGroupId());
+				if(itSystem.getItsecGroupId()==10136){
+					itSystem.setItsecGroupId(templateItSystem.getItsecGroupId());
+					// Anlegen der ITSec Massnahmen
+						ItsecMassnahmeStatusHbn.saveSaveguardAssignment(AirKonstanten.TABLE_ID_IT_SYSTEM, itSystem.getId(), itSystem.getItsecGroupId());
+						massUpdateParameterInput.setItsecGroupId(false);
+				}else{
+					itSystem.setItsecGroupId(templateItSystem.getItsecGroupId());
+
+				}
+
 			}
 			if(massUpdateParameterInput.getGxpFlag()){
 				itSystem.setGxpFlag(templateItSystem.getGxpFlag());
