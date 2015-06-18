@@ -1122,7 +1122,7 @@ public class CiEntityWS {
 		maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.BUSINESS_ESSENTIAL);
         maDto.setAttributeValue(BusinessEssentialHbn.getBusinessEssential(itSystem.getBusinessEssentialId()).getBusinessEssentialName());
-        maDto.setId("businessEssentialId");
+        maDto.setId("businessEssentialId1");
 		massUpdateAttriuteDTOs.add(maDto);
 
 		maDto = new MassUpdateAttributeDTO();
@@ -1490,7 +1490,7 @@ public class CiEntityWS {
 		maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.BUSINESS_ESSENTIAL);
         maDto.setAttributeValue(BusinessEssentialHbn.getBusinessEssential(application.getBusinessEssentialId()).getBusinessEssentialName());
-        maDto.setId("businessEssentialId");
+        maDto.setId("businessEssentialId1");
         massUpdateAttriuteDTOs.add(maDto);
 
         
@@ -1951,7 +1951,7 @@ public class CiEntityWS {
 			if(massUpdateParameterInput.getApplicationCat2Id()){
 				application.setApplicationCat2Id(templateApplication.getApplicationCat2Id());
 			}
-			if(massUpdateParameterInput.isBusinessEssentialId()){
+			if(massUpdateParameterInput.getBusinessEssentialId1()){
 				application.setBusinessEssentialId(templateApplication.getBusinessEssentialId());
 			}
 			if(massUpdateParameterInput.getLifecycleStatusId()){
@@ -2119,7 +2119,7 @@ public class CiEntityWS {
 			if(massUpdateParameterInput.getLifecycleStatusId()){
 				itSystem.setLifecycleStatusId(templateItSystem.getLifecycleStatusId());
 			}
-			if(massUpdateParameterInput.isBusinessEssentialId()){
+			if(massUpdateParameterInput.getBusinessEssentialId1()){
 				itSystem.setBusinessEssentialId(templateItSystem.getBusinessEssentialId());
 			}
 			if(massUpdateParameterInput.getOperationalStatusId()){

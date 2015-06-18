@@ -57,7 +57,7 @@ public class MassUpdateParameterInput {
 	private boolean virtualHardwareSoftware;
 	private boolean isVirtualHardwareClient;
 	private boolean isVirtualHardwareHost;
-	public boolean businessEssentialId;
+	public boolean businessEssentialId1;
 	/**
 	 * @return the token
 	 */
@@ -637,14 +637,14 @@ public class MassUpdateParameterInput {
 	/**
 	 * @return the businessEssentialId
 	 */
-	public boolean isBusinessEssentialId() {
-		return businessEssentialId;
+	public boolean getBusinessEssentialId1() {
+		return businessEssentialId1;
 	}
 	/**
 	 * @param businessEssentialId the businessEssentialId to set
 	 */
-	public void setBusinessEssentialId(boolean businessEssentialId) {
-		this.businessEssentialId = businessEssentialId;
+	public void setBusinessEssentialId(boolean businessEssentialId1) {
+		this.businessEssentialId1 = businessEssentialId1;
 	}
 		
 
