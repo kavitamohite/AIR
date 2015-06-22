@@ -195,7 +195,6 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			tpCiSearchResultTables.setActiveTab(ciResultGridId);
 			
 			this.updateColumnLabels(AAM.getLabels());
-			
 
 			ciResultGrid.on('close', this.onTabClose, this);
 			ciResultGrid.on('activate', this.onTabActivate, this);
