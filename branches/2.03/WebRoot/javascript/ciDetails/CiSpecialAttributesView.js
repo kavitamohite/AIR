@@ -87,11 +87,9 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		        disabled: true,
 		        tooltip: 'Click to save all changes to the database',
 		        handler: function() {
-		       
+		        	var isSuccess = true;
 		        	var records = this.getComponent('specialAttributesListView').getStore().getRange();
 		        	records.forEach(function(record){
-		        		console.log(record.data);
-		        		
 			        	var specialAttributeSaveStore = AIR.AirStoreFactory.createSpecialAttributeSaveStore();
 
 		        		var params = {
@@ -106,26 +104,28 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 							params: params,
 							scope: this,
 						    callback: function(records, operation, success) {
-						    	var yesCallback = function() {
-									this.wizardStarted = false;
-									this.fireEvent('externalNavigation', this, null, 'clCiSpecialAttributes');
-								};
-
-								var callbackMap = {
-									yes: yesCallback.createDelegate(this)
-								};
-								
-								console.log(success);
-						        if (success) {
-						        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
-									afterSaveAppWindow.show();
-						        } else {
-						        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR', callbackMap);
-									afterSaveAppWindow.show();
-						        }
+								isSuccess = isSuccess && success;
 						    }
 						});
 		        	});
+		        	
+		        	var yesCallback = function() {
+						this.wizardStarted = false;
+						this.fireEvent('externalNavigation', this, null, 'clCiSpecialAttributes');
+					};
+		        	
+		        	var callbackMap = {
+						yes: yesCallback.createDelegate(this)
+					};
+		        	
+		        	if (isSuccess) {
+			        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
+						afterSaveAppWindow.show();
+			        } else {
+			        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR', callbackMap);
+						afterSaveAppWindow.show();
+			        }
+		        	
 		        },
 		        scope:this
 		    }]
@@ -165,11 +165,19 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		});
 		if(ci != undefined){
 			if(ci.get('ciOwner') === AAM.getCwid() || ci.get('ciOwnerDelegate') === AAM.getCwid() ||
-					ci.get('applicationSteward') === AAM.getCwid() ){
+					ci.get('applicationSteward') === AAM.getCwid()){
 					grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
 					btn.disabled = false;
 					return;
 				}
+		} else {
+			ci = AAM.getAppDetail();
+			if(ci.applicationOwnerHidden === AAM.getCwid() || ci.applicationOwnerDelegateHidden === AAM.getCwid() ||
+					ci.applicationStewardHidden === AAM.getCwid()){
+					grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
+					btn.disabled = false;
+					return;
+			}
 		}
 	},
 	
@@ -195,16 +203,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		});
 		
 		this.updateBasedOnRole(attributeValueListStore);
-	},
-	
-	filterFunc:function(query) { 
-			var grid = Ext.getCmp('specialAttributesListView');
-			console.log(query);
-//        currentRowId = Ext.getCmp('specialAttributesListView').getSelectionModel().getSelected().data.attributeId;
-//        console.log(currentRowId);
-//        this.store.clearFilter();
-//        this.store.filter( { property: 'attributeId', value: currentRowId, exactMatch: true } );
-    }
+	}
 	
 });
 Ext.reg('AIR.CiSpecialAttributesView', AIR.CiSpecialAttributesView);
