@@ -7,7 +7,7 @@ public class SpecialAttributeParameterInput {
 	private Long ciId;
 	private String token;
 	private String cwid;
-	private Long ciTypeId;
+	private String ciTypeId;
 	private Long tableId;
 
 	private SpecialAttributeViewDataDTO specialAttributeViewDataDTO;
@@ -36,11 +36,11 @@ public class SpecialAttributeParameterInput {
 		this.cwid = cwid;
 	}
 
-	public Long getCiTypeId() {
+	public String getCiTypeId() {
 		return ciTypeId;
 	}
 
-	public void setCiTypeId(Long ciTypeId) {
+	public void setCiTypeId(String ciTypeId) {
 		this.ciTypeId = ciTypeId;
 	}
 

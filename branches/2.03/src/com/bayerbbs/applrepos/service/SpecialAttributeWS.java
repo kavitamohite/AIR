@@ -14,8 +14,12 @@ public class SpecialAttributeWS {
 
 	public SpecialAttributeViewDataDTO[] getSpecialAttributes(
 			SpecialAttributeParameterInput input) {
-		
-		List<Attribute> attributes = AttributeHbn.listAttributeForCiType(input.getCiTypeId());
+		List<Attribute> attributes = null;
+		if(input.getCiTypeId() != null){
+			attributes = AttributeHbn.listAttributeForCiType(input.getCiTypeId());
+		} else {
+			attributes = AttributeHbn.listAttributeForTableId(input.getTableId());
+		}
 		List<SpecialAttribute> savedAttributes = SpecialAttributeHbn.findByCiId(input.getCiId());
 		List<SpecialAttributeViewDataDTO> specialAttributesViewDataList = new ArrayList<SpecialAttributeViewDataDTO>();
 		
@@ -44,7 +48,9 @@ public class SpecialAttributeWS {
 			SpecialAttributeViewDataDTO spa = new SpecialAttributeViewDataDTO();
 			spa.setAttributeName(temp.getName());
 			spa.setAttributeId(temp.getId());
-			spa.setGroup(temp.getAttributeGroup().getName());
+			if(temp.getAttributeGroup()!=null){
+				spa.setGroup(temp.getAttributeGroup().getName());
+			}
 			if(!specialAttributesViewDataList.contains(spa)){
 				specialAttributesViewDataList.add(spa);
 			}
