@@ -173,9 +173,6 @@ public class CiSearchParamsDTO { //implements Serializable
 		this.isTemplate = isTemplate;
 	}
 
-	
-
-	
 	public String getCiOwnerHidden() {
 		return ciOwnerHidden;
 	}
