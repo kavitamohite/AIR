@@ -351,7 +351,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 				var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
 				ciSubType = r.get('ciSubTypeId');
 			}
-						
+			AAM.setCiTypeId(record.data.applicationCat1Txt);		
 			AAM.setCiId(ciId);
 			AAM.setTableId(parseInt(record.data.tableId));
 			AAM.setCiSubTypeId(ciSubType);
@@ -389,7 +389,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
 		var tabCount = tpCiSearchResultTables.items.items.length;
 		
-		if(tabCount === 1)//0, 1 weil tab erst nach dem event zerstört wird
+		if(tabCount === 1)//0, 1 weil tab erst nach dem event zerstï¿½rt wird
 			this.setVisible(false);
 	},
 
