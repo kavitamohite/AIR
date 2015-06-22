@@ -38,7 +38,7 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
     		closable: false,    		
     		closeAction:'close',
     		border: false,
-    		title: 'Definition of relevent fields for transfer of values',
+    		title: 'Definition of relevant fields for transfer of values',
     		
     		width: 600,
     		height: 520,
