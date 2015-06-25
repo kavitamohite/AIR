@@ -31,7 +31,7 @@
 		<newSearch>New Search</newSearch>
 		<findFirst>First</findFirst><!-- Show all|All -->
 		<findAll>Show all</findAll>
-		
+		<bReset>Reset</bReset>
 		<browserOptimization>Optimized for Firefox Browser</browserOptimization>
 		<secureSystem>This CI is a secure system</secureSystem>
 		<editInGPSC>This CI could only be edited in HPSM</editInGPSC>
@@ -97,6 +97,7 @@
 		<label_menu_detailsprotection>Protection</label_menu_detailsprotection>
 		<label_menu_detailscompliance>Compliance</label_menu_detailscompliance>
 		<label_menu_detailslicense>License &amp; Costs</label_menu_detailslicense>
+		<label_menu_specialAttribute>Special Attribute</label_menu_specialAttribute>
 		<label_menu_detailsconnections>Relationships</label_menu_detailsconnections>
 		<label_menu_detailssupportstuff>Documentation</label_menu_detailssupportstuff>
 		<label_menu_detailshistory>History</label_menu_detailshistory>
@@ -561,8 +562,6 @@
 		<virtualHardwareClient>Virtual Hardware Client</virtualHardwareClient>
 		<virtualHardwareHost>Virtual Hardware Host</virtualHardwareHost>
 		<virtualHardwareSoftware>Virtual Software</virtualHardwareSoftware>
-<!--		<lifecycleStatus></lifecycleStatus>-->
-<!--		<operationalStatus></operationalStatus>-->
 		<primaryFunction>Primary Function</primaryFunction>
 		<licenseScanning>License Scanning</licenseScanning>
 		<directLinkCIPanelTitle>Direct Link CIS</directLinkCIPanelTitle>
@@ -599,10 +598,11 @@
 		<lMenuAssetManagement>Asset Management</lMenuAssetManagement>
 		<lMenuSearch>Search</lMenuSearch>
 		<lNewAsset>New Asset</lNewAsset>
-		<lIntangibleAsset>Software</lIntangibleAsset>
-		<lTangibleAsset>Hardware</lTangibleAsset>
 		<lAssetwithInventory>Asset with Inventory</lAssetwithInventory>
 		<lAssetwithoutInventory>Asset without Inventory</lAssetwithoutInventory>
+		<createhardwarepanelheader>Asset Management - Hardware Asset</createhardwarepanelheader>
+		<lAssetwithInventoryText>&lt;b&gt;Asset with Inventory&lt;/b&gt;&lt;br&gt;Use the wizard to create a new item</lAssetwithInventoryText>
+		<lAssetwithoutInventoryText>&lt;b&gt;Asset without Inventory&lt;/b&gt;&lt;br&gt;Use the wizard to create a new item</lAssetwithoutInventoryText>
 		
 		<!-- asset management search-->
 		<rHardwarecomponent>Hardware Component</rHardwarecomponent>
@@ -656,7 +656,7 @@
 	    <asseteconomic>Useful economic life (months):</asseteconomic>
 	    <assetRetirement>Retirement date:</assetRetirement>
 	    <!-- asset management Contacts-->
-	    <assetEditor>Editors group:</assetEditor>
+	    <assetEditor>Editors group*</assetEditor>
 
 	</Items>
 </LanguageItems>

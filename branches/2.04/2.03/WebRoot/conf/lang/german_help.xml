@@ -86,6 +86,12 @@
 			At &lt;i&gt;Using Regions&lt;/i&gt; click once on a item to select and a second time to unselect. Multiple choice is possible.
 		</help_details_licensecosts>
 		
+		<help_details_specialattributes>
+			&lt;b&gt;Special Attributes&lt;/b&gt;&lt;br&gt;
+			To Add, Modify,Delete an Attribute Values (that match into CI-type of the current CI) on TO_BE and AS_IS basis.&lt;br&gt;
+			&lt;i&gt;Note :- Saving the Attribute value will initiate the inheritance rule.&lt;/i&gt;
+		</help_details_specialattributes>
+		
 		<help_details_connections>[not translated]&lt;br&gt;
 			&lt;b&gt;Connections&lt;/b&gt;&lt;br&gt;
 			Shows all connections to directly attached business processes and/or other IT components.&lt;br&gt;&lt;br&gt;

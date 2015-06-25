@@ -86,6 +86,12 @@
 			At &lt;i&gt;Using Regions&lt;/i&gt; click once on a item to select and a second time to unselect. Multiple choice is possible.
 		</help_details_licensecosts>
 		
+		<help_details_specialattributes>
+			&lt;b&gt;Special Attributes&lt;/b&gt;&lt;br&gt;
+			To Add, Modify,Delete an Attribute Values (that match into CI-type of the current CI) on TO_BE and AS_IS basis.&lt;br&gt;
+			&lt;i&gt;Note :- Saving the Attribute value will initiate the inheritance rule.&lt;/i&gt;
+		</help_details_specialattributes>
+		
 		<help_details_connections>
 			&lt;b&gt;Connections&lt;/b&gt;&lt;br&gt;
 			Shows all connections to directly attached business processes and/or other IT components.&lt;br&gt;&lt;br&gt;
@@ -112,10 +118,8 @@
         
         
        	<help_details_assetManagement>Asset management</help_details_assetManagement>
-		<help_details_assetSearch>Asset search</help_details_assetSearch>
-		<help_details_newAsset>New asset</help_details_newAsset>
-		<help_details_intangible>Intangible Asset</help_details_intangible>
-		<help_details_tangible>Tangible asset</help_details_tangible>
+		<help_details_intangible>Software Asset</help_details_intangible>
+		<help_details_tangible>Hardware asset</help_details_tangible>
 		<help_details_assetWithInventory>asset with inventory</help_details_assetWithInventory>
 		<help_details_assetWoInventory>asset without inventory</help_details_assetWoInventory>
         

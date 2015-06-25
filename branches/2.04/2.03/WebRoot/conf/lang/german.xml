@@ -31,7 +31,7 @@
 		<newSearch>Neue Suche</newSearch>
 		<findFirst>Erste</findFirst><!-- Show all|All -->
 		<findAll>Zeige alle</findAll>
-		
+		<bReset>Reset</bReset>
 		<browserOptimization>Optimiert f&amp;uuml;r den Firefox Browser</browserOptimization>
 		<secureSystem>This CI is a secure system</secureSystem>
 		<editInGPSC>Dieses CI kann nur in HPSM editiert werden</editInGPSC>
@@ -97,6 +97,7 @@
 		<label_menu_detailsprotection>Schutzbedarf</label_menu_detailsprotection>
 		<label_menu_detailscompliance>Compliance</label_menu_detailscompliance>
 		<label_menu_detailslicense>Lizenzen &amp;amp; Kosten</label_menu_detailslicense>
+		<label_menu_specialAttribute>Special Attribute</label_menu_specialAttribute>
 		<label_menu_detailsconnections>Verkn&amp;uuml;pfungen</label_menu_detailsconnections>
 		<label_menu_detailssupportstuff>Dokumentation</label_menu_detailssupportstuff>
 		<label_menu_detailshistory>Historie</label_menu_detailshistory>
@@ -596,10 +597,12 @@
 		<lMenuAssetManagement>Asset Management</lMenuAssetManagement>
 		<lMenuSearch>Suche</lMenuSearch>
 		<lNewAsset>Neue Asset</lNewAsset>
-		<lIntangibleAsset>Software</lIntangibleAsset>
-		<lTangibleAsset>Hardware</lTangibleAsset>
 		<lAssetwithInventory>Mit Asset Inventory</lAssetwithInventory>
 		<lAssetwithoutInventory>Ohne Asset Inventory</lAssetwithoutInventory>
+		<createhardwarepanelheader>Asset Management - Hardware Asset</createhardwarepanelheader>
+		<lAssetwithInventoryText>&lt;b&gt;Mit Asset Inventory&lt;/b&gt;&lt;br&gt;Mit dem Assistenten kann ein neuer Datensatz mit allen Pflichtattributen angelegt werden.</lAssetwithInventoryText>
+		<lAssetwithoutInventoryText>&lt;b&gt;Ohne Asset Inventory&lt;/b&gt;&lt;br&gt;Mit dem Assistenten kann ein neuer Datensatz mit allen Pflichtattributen angelegt werden.</lAssetwithoutInventoryText>
+		
 		
 		<!-- asset management search-->
 		<rHardwarecomponent>Hardware Komponente</rHardwarecomponent>
