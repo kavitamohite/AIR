@@ -450,6 +450,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'help_details_compliance'},
 			        {name: 'help_details_licensecosts'},
 			        {name: 'help_details_connections'},
+			        {name: 'help_details_specialattributes'},
 			        {name: 'help_details_supportstuff'},
 			        {name: 'help_details_history'},
 			    	{ name : 'help_details_assetManagement'},
@@ -511,6 +512,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'bUpdateCiSearchResult'},
 			        {name: 'bExpandAdvSearchParams'},
 			        {name: 'bCollapseAdvSearchParams'},
+			        {name: 'bReset'},
 			        {name: 'searchTypeSearch'},
 			        {name: 'searchTypeAdvancedSearch'},
 			        {name: 'searchTypeOuSearch'},
@@ -536,6 +538,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'label_menu_detailscompliance'},
 			        {name: 'label_menu_detailsprotection'},
 			        {name: 'label_menu_detailslicense'},
+			        {name: 'label_menu_specialAttribute'},
 			        {name: 'label_menu_detailsconnections'},
 			        {name: 'label_menu_detailssupportstuff'},
 			        {name: 'label_menu_detailshistory'},
@@ -1093,13 +1096,14 @@ AIR.AirStoreFactory = function() {
 					//AssetManagement Links
 					{name : 'lMenuAssetManagement'},
 					{name : 'lMenuSearch'},
-					{name :'lNewAsset'},
-					{name :'lIntangibleAsset'},
-					{name :'lTangibleAsset'},
-					{name :'lAssetwithInventory'},
-					{name :'lAssetwithoutInventory'},
+					{name : 'lNewAsset'},
+					{name : 'lAssetwithInventory'},
+					{name : 'lAssetwithoutInventory'},
 					{name : 'rHardwarecomponent'},
-					{name : 'rSoftwarecomponent'}
+					{name : 'rSoftwarecomponent'},
+					{name : 'createhardwarepanelheader'},
+					{name : 'lAssetwithInventoryText'},
+					{name : 'lAssetwithoutInventoryText'}
 			    ]
 			});
 		
@@ -4109,9 +4113,9 @@ AIR.AirStoreFactory = function() {
 		createAssetListStore: function() {
 			var ciItemListRecord = Ext.data.Record.create([
 					//Asset Information
-					{ name : 'isIntangibleAsset'},
-					{ name : 'isTangibleAssetWithInventory'},
-					{ name : 'isTangibleAssetWithoutInventory'},
+					{ name : 'isSoftwareComponent'},
+					{ name : 'isHardwareWithInventory'},
+					{ name : 'isHardwareWithoutInventory'},
 					{ name : 'id'},
 					{ name : 'identNumber'},
 					{ name : 'inventoryNumber'},
@@ -4247,9 +4251,6 @@ AIR.AirStoreFactory = function() {
 		
 		createSubCategoryListStore: function() {
 			var ciSubCategoryRecord = Ext.data.Record.create([
-
-
-
 				{ name: 'id', type: 'int' },
  			    'name'					
  			]);
@@ -4292,14 +4293,12 @@ AIR.AirStoreFactory = function() {
  			var ciModelListstore = new Ext.data.XmlStore({
  				autoDestroy: true,
  				autoLoad: false,
-
+ 				storeId: 'modelListStore',
  				
  				proxy: new Ext.ux.soap.SoapProxy({
  					url: webcontext + '/ProductWSPort',
-
  					loadMethod: 'findModelList',
  					timeout: 120000,
-
  					reader: ciModelListReader
  				})
  			});
@@ -4314,34 +4313,28 @@ AIR.AirStoreFactory = function() {
  			    'name'					
  			]);
 
-
  			var ciTypeListReader = new Ext.data.XmlReader({
  				idProperty: 'id',
  				record: 'return'
-
  			}, ciTypeListRecord);
  			
-
  			var ciTypeListstore = new Ext.data.XmlStore({
  				autoDestroy: true,
  				autoLoad: false,
- 				//storeId: 'typeListStore',
+ 				storeId: 'typeListStore',
  				
  				proxy: new Ext.ux.soap.SoapProxy({
  					url: webcontext + '/ProductWSPort',
-
  					loadMethod: 'findTypeList',
  					timeout: 120000,
-
  					reader: ciTypeListReader
  				})
  			});
  			
-
  			return ciTypeListstore;
  		},
  		
- 		createCostcenterListStore: function() {
+ 		createCostCenterListStore: function() {
 			var ciCostcenterListRecord = Ext.data.Record.create([
 				{ name: 'id', type: 'int' },
  			    'name',
@@ -4357,6 +4350,7 @@ AIR.AirStoreFactory = function() {
  			var ciCostcenterListstore = new Ext.data.XmlStore({
  				autoDestroy: true,
  				autoLoad: false,
+ 				storeId: 'costCenterListStore',
  				
  				proxy: new Ext.ux.soap.SoapProxy({
  					url: webcontext + '/BusinessAdministrationWSPort',
@@ -4434,7 +4428,7 @@ AIR.AirStoreFactory = function() {
  			return operationalStatusListstore;
  		},
  		
- 		creatPspElementListStore: function() {
+ 		createPspElementListStore: function() {
 			var ciPspElementListRecord = Ext.data.Record.create([
 				{ name: 'id', type: 'int' },
  			    'name',
@@ -4448,6 +4442,8 @@ AIR.AirStoreFactory = function() {
  			var ciPspElementListstore = new Ext.data.XmlStore({
  				autoDestroy: true,
  				autoLoad: false,
+ 				storeId: 'pspElementListStore',
+ 				
  				proxy: new Ext.ux.soap.SoapProxy({
  					url: webcontext + '/BusinessAdministrationWSPort',
 
@@ -4460,7 +4456,7 @@ AIR.AirStoreFactory = function() {
  			return ciPspElementListstore;
  		},
  		
- 		creatSapAssetListStore: function() {
+ 		createSapAssetListStore: function() {
 			var ciSapAssetListRecord = Ext.data.Record.create([
 				{ name: 'id', type: 'int' },
  			    'name',
@@ -4474,13 +4470,11 @@ AIR.AirStoreFactory = function() {
  			var ciSapAssetListstore = new Ext.data.XmlStore({
  				autoDestroy: true,
  				autoLoad: false,
- 				
+ 				storeId: 'sapAssetListStore',
  				proxy: new Ext.ux.soap.SoapProxy({
  					url: webcontext + '/BusinessAdministrationWSPort',
-
  					loadMethod: 'findSapAssetList',
  					timeout: 120000,
-
  					reader: ciSapAssetListReader
  				})
  			});
@@ -4500,7 +4494,6 @@ AIR.AirStoreFactory = function() {
  			var ciSaveAssetstore = new Ext.data.XmlStore({
  				autoDestroy: true,
  				autoLoad: false,
- 				//storeId: 'manufactureListStore',
  				
  				proxy: new Ext.ux.soap.SoapProxy({
  					url: webcontext + '/AssetManagementWSPort',
@@ -4512,20 +4505,121 @@ AIR.AirStoreFactory = function() {
  			return ciSaveAssetstore;
 		},
 		
-		createReasonListStore: function(){
-			var reasonStore = new Ext.data.ArrayStore({
-		        fields: ['id', 'reason'],
-		        data : [
-		            [1, "This asset was not acquired during the period when the system P68 was active; therefore no P68 registration number has been assigned."],
-		            [2, "This asset has not been registered in the inventrory because the acquitisition value is below is below 1000 EUR till 2010 and 410 EUR from 2010 on."],
-		            [3, "This asset is external inventory (External asset registered on an external cost center), therefore no registration in the inventory."],
-		            [4, "This asset must not be registered in the inventory at the time when the acquisition is made according to requirements of the asset accounting.This asset must not be registered in the inventory at the time when the acquisition is made according to requirements of the asset accounting."],
-		            [5, "This asset has only been delivered for testing and therefore no inventory number has been assigned. This applies only for the procurement type T (Test)"],
-		            [6, "This asset is a sub-asset of an existing asset (e.g. a module) and therefore no distinct inventory number has been assigned to the sub-asset"]
-		        ]
-		    });
+		createAttributeValueListStore: function() {
+			var attributeValueRecord = Ext.data.Record.create([ {
+				name : 'id',
+				mapping : 'id',
+				type : 'int'
+			}, {
+				name : 'name',
+				mapping : 'name',
+				type: 'text'
+			}, {
+				name : 'attributeId',
+				mapping : 'attributeId',
+				type: 'int'
+			}]);
+	
+	
+			var attributeValueReader = new Ext.data.XmlReader({
+				record: 'return',
+				idProperty: 'id'
+			}, attributeValueRecord);
+	
+			var attributeValueListStore = new Ext.data.XmlStore({//XmlStore
+				autoDestroy: false,
+				storeId: 'attributeValueListStore',
+				autoLoad: false,
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/ApplicationWSPort',
+					loadMethod: 'getAttributeValue',
+					timeout: 120000,
+					reader: attributeValueReader
+				}),
+				
+				fields: [ 'id', 'name', 'attributeId'],
+
+				reader: attributeValueReader,
+				baseParams:{
+					query : 1 //use query to pass param
+				}
+			});
 			
-			return reasonStore;
+			return attributeValueListStore;
+		},
+		
+		createSpecialAttributeSaveStore: function() {
+			var specialAttributeSaveRecord = Ext.data.Record.create([
+	 	        'result'
+	 	    ]);
+	 	
+	 	    var specialAttributeSaveReader = new Ext.data.XmlReader({
+	 	    	record: 'return'
+	 	    }, specialAttributeSaveRecord); 
+	 		
+	 	    var specialAttributeSaveStore = new Ext.data.XmlStore({
+	 	    	autoDestroy: true,
+	 	    	autoLoad: false,
+	 	    	
+	 	      	fields: [ 'result' ],
+	 	      	
+	 	      	proxy: new Ext.ux.soap.SoapProxy({
+	 	      		url: webcontext + '/SpecialAttributeWSPort',
+	 	      		loadMethod: 'saveSpecialAttributes',
+	 	      		timeout: 120000,
+	 	      		reader: specialAttributeSaveReader
+	 	      	}),
+	 	    	
+	 	      	reader: specialAttributeSaveReader
+	 	    });
+	 	    
+	 	    return specialAttributeSaveStore;
+		},
+		
+		createSpecialAttributesListStore: function() {
+			var specialAttributeRecord = Ext.data.Record.create([ {
+				name : 'attributeId',
+				mapping : 'attributeId'
+			}, {
+				name : 'attributeName',
+				mapping : 'attributeName'
+			}, {
+				name : 'toBeValueId',
+				mapping : 'toBeValueId',
+				type: 'int'
+			}, {
+				name : 'asIsValueId',
+				mapping : 'asIsValueId',
+				type: 'int'
+			}, {
+				name : 'group',
+				mapping : 'group'
+			}]);
+	
+	
+			var specialAttributeReader = new Ext.data.XmlReader({
+				record: 'return',
+				idProperty: 'id'
+			}, specialAttributeRecord);
+	
+			var specialAttributeListStore = new Ext.data.XmlStore({//XmlStore
+				autoDestroy: false,
+				storeId: 'specialAttributeListStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/SpecialAttributeWSPort',
+					loadMethod: 'getSpecialAttributes',
+					timeout: 120000,
+					reader: specialAttributeReader
+				}),
+				
+				fields: [ 'attributeId', 'attributeName', 'toBeValueId', 'asIsValueId', 'group'],
+
+				reader: specialAttributeReader
+			});
+			
+			return specialAttributeListStore;
 		}
 
 	};

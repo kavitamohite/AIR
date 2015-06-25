@@ -76,6 +76,9 @@ AIR.CiInfoView = Ext.extend(Ext.Panel, {
 			case 'clCiLicense':
 				helpTextId = AC.HELP_ID_DETAILS_LICENSECOSTS;
 				break;
+			case 'clCiSpecialAttributes':
+				helpTextId = AC.HELP_ID_DETAILS_SPECIALATTIRUBTES;
+				break;
 			case 'clCiConnections':
 				helpTextId = AC.HELP_ID_DETAILS_CONNECTIONS;
 				break;
@@ -87,12 +90,6 @@ AIR.CiInfoView = Ext.extend(Ext.Panel, {
 				break;
 			case 'clAssetManagement':
 				helpTextId = AC.HELP_ID_ASSET_MANAGEMENT;
-				break;
-			case 'clCiAssetSearch' :
-				helpTextId = AC.HELP_ID_ASSET_SEARCH;
-				break;				
-			case 'clCiNewAsset' :
-				helpTextId = AC.HELP_ID_NEW_ASSET;
 				break;
 			case 'clCiIntangibleAsset' :
 				helpTextId = AC.HELP_ID_INTANGIBLE_ASSET;

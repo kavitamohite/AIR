@@ -144,12 +144,17 @@ AIR.AirApplicationManager = function() {
 				serviceModelListStore: null,
 				dedicatedListStore: null,
 				organisationalScopeListStore: null,
-				
     			sisoogleSourceListStore: null,//{ params: { params: { type: AC.SISOOGLE_ATTR_TYPE_INSERT_QUELLE } } },
-				
-			
 				linkCiTypeListStore: null,
-				groupTypesListStore: null
+				groupTypesListStore: null,
+				
+				sapAssetListStore: null,
+				landListStore: null, 
+				manufactureListStore: null, 
+				subCategoryListStore: null, 
+				costCenterListStore: null, 
+				pspElementListStore: null,
+				operationalStatusListStore: null
 			};
 			
 			this.storeCount = 0;
@@ -239,7 +244,13 @@ AIR.AirApplicationManager = function() {
 			}
 			//new wizard
 			
+			 //vandana
+			var ciNewAssetView = airViewport.getCenterView().getComponent('ciNewAssetView');
+			ciNewAssetView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
 			
+			var ciNewHardwareAsset = airViewport.getCenterView().getComponent('ciNewHardwareAsset');
+			ciNewHardwareAsset.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
+			//vandana
 			
 			var ciCreateView = airViewport.getCenterView().getComponent('ciCreateView');
 			var ciCopyFromView = ciCreateView.getComponent('ciCreatePagesView').getComponent('CiCopyFromView');
@@ -598,9 +609,12 @@ AIR.AirApplicationManager = function() {
 		getLanguage: function() {
 			return this.language;
 		},
-		
-		
-		
+		setCiTypeId: function(ciTypeId){
+			this.ciTypeId = ciTypeId;
+		},
+		getCiTypeId: function () {
+			return this.ciTypeId;
+		},
 		getCiId: function() {
 			return this.ciId;
 		},		

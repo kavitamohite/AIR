@@ -60,11 +60,6 @@ AIR.AirWindowFactory = function() {
 					}*/{
 						text: labels.dynamicWindowDataSavedOKButtonText,
 						handler: function() {
-							if(bIsDynamicWindowSpeichern) {
-								delegateCallback();
-								bIsDynamicWindowSpeichern = false;//see commonvars.js
-							}
-							
 							var callback = callbackMap['yes'];
 							callback();
 							dynamicWindow.close();
@@ -363,8 +358,8 @@ AIR.AirWindowFactory = function() {
 							callback();
 							//wenn grid.getSelectionModel().on('beforerowselect', this.onBeforeMassnahmeSelect, this);
 							//nicht verwendet wird wegen des Problems des falschen Erscheinenes des Fensters im Hintergrund
-							//ist das Verhalten genau umgekehrt. D.h. die unvollständige Massnahme muss wieder ausgewählt
-							//werden, anstatt das verhnidert wird die näcshte zu selektieren.
+							//ist das Verhalten genau umgekehrt. D.h. die unvollstï¿½ndige Massnahme muss wieder ausgewï¿½hlt
+							//werden, anstatt das verhnidert wird die nï¿½cshte zu selektieren.
 							dynamicWindow.close();
 						}
 					}*/];

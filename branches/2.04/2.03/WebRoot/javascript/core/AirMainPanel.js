@@ -12,35 +12,27 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		    items: [{
 		        region: 'north',
 				id: 'ciTitleView',
-				
 				xtype: 'AIR.CiTitleView',
 				height: 90
 		    },{
 		        region: 'west',
 	        	id: 'ciNavigationView',
-
 	        	xtype: 'AIR.CiNavigationView',
 		        width: 180//155 200
 		    },{
 			    region: 'center',
 				id: 'ciCenterView',
 				xtype: 'AIR.CiCenterView'
-		    	
-		    	
 		    },{
 		    	region: 'east',
 		        id: 'eastpanel',
-		    	
 		        xtype: 'AIR.CiInfoView',
 	        	width: 180,
-	        	
 		        collapsible: true,
 		        collapsed: false
 		    }],
-		    
 		    bbar: {
 		    	xtype: 'toolbar',
-		    	
 		    	items: [{
 			    	xtype: 'label',
 			    	id: 'lSouthToolbar',
@@ -68,7 +60,6 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		navigationV.update();
 		
 	},
-	
 	
 	switchLanguage: function(link, event) {
 		var newLanguage;
@@ -110,7 +101,6 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
 		var ciCenterView = this.getCenterView();
 		ciCenterView.updateToolTips(toolTips);
 	},
-	
 	
 	testRenderSequence: function() {
 		var ciViews = [
@@ -162,8 +152,7 @@ AIR.AirMainPanel = Ext.extend(Ext.Panel, {
             Ext.getCmp('tbWizardAppownerDelegate'),
             Ext.getCmp('wizardCiowner'),
             Ext.getCmp('tbWizardciResponsible'),
-            Ext.getCmp('eastpanel'),
-            Ext.getCmp('ciNewAssetView')
+            Ext.getCmp('eastpanel')
             
 		];
 		
