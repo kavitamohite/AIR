@@ -136,7 +136,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				}, {
 					id: 'clCiLicense',
 					xtype: 'AIR.CiLicenseView'
-				}, {
+				},{
+					id: 'clCiSpecialAttributes',
+					xtype: 'AIR.CiSpecialAttributesView'
+				},{
 					id: 'clCiConnections',
 					xtype: 'AIR.CiConnectionsView'
 				}, {
@@ -201,6 +204,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
 		if(ciLicenseView)
 			ciLicenseView.on('ciChange', this.onCiChange, this);
+		
+		var clCiSpecialAttributesView = ciEditTabView.getComponent('clCiSpecialAttributes');
+		clCiSpecialAttributesView.on('ciChange', this.onCiChange, this);
 		
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.on('ciChange', this.onCiChange, this);
@@ -423,6 +429,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			
 			var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 			ciComplianceView.update(ciData);
+
+			var ciSpecialAttributes = ciEditTabView.getComponent('clCiSpecialAttributes');
+			ciSpecialAttributes.update(ciData);
 			
 			var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 			ciConnectionsView.update(ciData);

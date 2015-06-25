@@ -47,11 +47,6 @@ AIR.CiCreateInfoView = Ext.extend(Ext.Panel, {
 		
 		AIR.CiCreateInfoView.superclass.initComponent.call(this);
 		
-//		var bStartWizzard = this.getComponent('bWizardDelegate');
-//		var bCopyFrom = this.getComponent('bCopyFromDelegate');
-//		
-//		bStartWizzard.on('click', this.startTheFunctionWizard, this);
-//		bCopyFrom.on('click', this.startTheFunctionCopyFrom, this);
 	},
 	
 	updateLabels: function(labels) {

@@ -102,10 +102,7 @@ AIR.CiCreateView = Ext.extend(Ext.Panel, {
 				items: [{
 					id: 'CiCreateInfoView',
 			    	xtype: 'AIR.CiCreateInfoView'
-				}/*, { 
-					id: 'ciCreateWizardPagesView',
-					xtype: 'AIR.CiCreateWizardPagesView'
-				}*/, { //statt ciCreateWizardPagesView:
+				}, { 
 					id: 'ciCreateWizardView',
 					xtype: 'AIR.CiCreateWizardView'
 				}, { 
@@ -114,7 +111,6 @@ AIR.CiCreateView = Ext.extend(Ext.Panel, {
 				}, {
 					id: 'ciDeleteView',
 					xtype: 'AIR.CiDeleteView'
-//					autoScroll: true
 				}]
 			}
 			]
