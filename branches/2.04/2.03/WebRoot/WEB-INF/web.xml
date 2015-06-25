@@ -136,7 +136,10 @@
   	<servlet-name>ApplicationService</servlet-name>
   	<url-pattern>/WaysWSPort</url-pattern>
   </servlet-mapping> 
-  
+  <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/SpecialAttributeWSPort</url-pattern>
+  </servlet-mapping>    
    <servlet-mapping>
   	<servlet-name>ApplicationService</servlet-name>
   	<url-pattern>/AssetManagementWSPort</url-pattern>

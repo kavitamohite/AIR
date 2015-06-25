@@ -76,8 +76,10 @@
 		implementation="com.bayerbbs.applrepos.service.AIRToolsWSDelegate"
 		url-pattern="/AIRToolsWSPort">
 	</endpoint>
-	
-	
+	<endpoint name="SpecialAttributeWSPort"
+		implementation="com.bayerbbs.applrepos.service.SpecialAttributeWSDelegate"
+		url-pattern="/SpecialAttributeWSPort">
+	</endpoint>
 	<endpoint name="SchrankWSPort"
 		implementation="com.bayerbbs.applrepos.service.SchrankWSDelegate"
 		url-pattern="/SchrankWSPort">
