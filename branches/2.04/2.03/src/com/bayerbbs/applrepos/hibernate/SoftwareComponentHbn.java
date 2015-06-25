@@ -66,18 +66,17 @@ public class SoftwareComponentHbn {
 
 	private static void addSortingCriteria(Criteria criteria, String sort,
 			String desc) {
-
 		if (sort.equals("sapDescription")) {
 			if ("DESC".equalsIgnoreCase(desc)) {
-				criteria.addOrder(Order.desc("sapDescription"));
+				criteria.addOrder(Order.desc("prouctDescription"));
 			} else {
-				criteria.addOrder(Order.asc("sapDescription"));
+				criteria.addOrder(Order.asc("prouctDescription"));
 			}
 		} else if (sort.equals("pspElement")) {
 			if ("DESC".equalsIgnoreCase(desc)) {
-				criteria.addOrder(Order.desc("amKommision"));
+				criteria.addOrder(Order.desc("innenauftrag"));
 			} else {
-				criteria.addOrder(Order.asc("amKommision"));
+				criteria.addOrder(Order.asc("innenauftrag"));
 			}
 		} else if (sort.equals("costCenter")) {
 			criteria.createAlias("konto", "konto");
@@ -86,30 +85,17 @@ public class SoftwareComponentHbn {
 			} else {
 				criteria.addOrder(Order.asc("konto.name"));
 			}
-		} else if (sort.equals("site")) {
 		} else if (sort.equals("serialNumber")) {
 			if ("DESC".equalsIgnoreCase(desc)) {
 				criteria.addOrder(Order.desc("serialNumber"));
 			} else {
 				criteria.addOrder(Order.asc("serialNumber"));
 			}
-		} else if (sort.equals("technicalMaster")) {
-			if ("DESC".equalsIgnoreCase(desc)) {
-				criteria.addOrder(Order.desc("technicalMaster"));
-			} else {
-				criteria.addOrder(Order.asc("technicalMaster"));
-			}
-		} else if (sort.equals("technicalNumber")) {
-			if ("DESC".equalsIgnoreCase(desc)) {
-				criteria.addOrder(Order.desc("technicalNumber"));
-			} else {
-				criteria.addOrder(Order.asc("technicalNumber"));
-			}
 		} else if (sort.equals("inventoryNumber")) {
 			if ("DESC".equalsIgnoreCase(desc)) {
-				criteria.addOrder(Order.desc("inventoryP69"));
+				criteria.addOrder(Order.desc("inventoryNumber"));
 			} else {
-				criteria.addOrder(Order.asc("inventoryP69"));
+				criteria.addOrder(Order.asc("inventoryNumber"));
 			}
 		} else if (sort.equals("organizationalunit")) {
 			if ("DESC".equalsIgnoreCase(desc)) {
@@ -126,6 +112,7 @@ public class SoftwareComponentHbn {
 		List<AssetViewDataDTO> list = new ArrayList<AssetViewDataDTO>();
 		for (SoftwareComponent hwComp : values) {
 			AssetViewDataDTO dto = getDTO(hwComp);
+			dto.setIsSoftwareComponent(true);
 			list.add(dto);
 		}
 		return list;

@@ -65,11 +65,11 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	// LIEFERANT_PARTNID NUMBER Needs to be checked
 
-	private Date startDate;
+	private String startDate;
 
 	private Date accessDate;
 
-	private Date endDate;
+	private String endDate;
 
 	private Long serviceNumber;
 
@@ -371,11 +371,11 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@Column(name = "AM_JAHR_START")
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
@@ -389,11 +389,11 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@Column(name = "AM_JAHR_ENDE")
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 

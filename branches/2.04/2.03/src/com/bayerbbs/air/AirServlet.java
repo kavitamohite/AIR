@@ -751,6 +751,7 @@ public class AirServlet extends HttpServlet {
 				append(compressJSFile("javascript/ciDetails/CiComplianceView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiLicenseView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiConnectionsView.js", version)).
+				append(compressJSFile("javascript/ciDetails/CiSpecialAttributesView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiSupportStuffView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiHistoryView.js", version)).
 				append(compressJSFile("javascript/ciDetails/ComplianceControlsWindow.js", version)).
@@ -772,11 +773,19 @@ public class AirServlet extends HttpServlet {
 	
 				//asset management
 				append(compressJSFile("javascript/assetManagement/CiAssetManagementView.js", version)).
-				append(compressJSFile("javascript/assetManagement/CiCreateAsset.js", version)).
+				append(compressJSFile("javascript/assetManagement/CiNewSoftwareAsset.js", version)).
 				append(compressJSFile("javascript/assetManagement/search/CiAssetManageSearchView.js", version)).
 				append(compressJSFile("javascript/assetManagement/search/CiAssetResultGrid.js", version)).				
 				append(compressJSFile("javascript/assetManagement/search/CiAssetResultView.js", version)).
 				append(compressJSFile("javascript/assetManagement/CiNewAssetView.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiTopPanel.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiProduct.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiContact.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiLocation.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiBusiness.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiTechnics.js", version)).
+				append(compressJSFile("javascript/assetManagement/CiNewHardwareAsset.js", version)).
+				append(compressJSFile("javascript/assetManagement/CiHardwareInfo.js", version)).
 				
 				append(compressJSFile("javascript/core/CiTitleView.js", version)).
 				append(compressJSFile("javascript/core/CiInfoView.js", version)).

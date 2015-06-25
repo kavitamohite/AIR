@@ -86,7 +86,9 @@
 		<mapping class="com.bayerbbs.applrepos.domain.SoftwareCategory1" />
 		<mapping class="com.bayerbbs.applrepos.domain.SoftwareCategory2" />
 		
-		
-		
+		<mapping class="com.bayerbbs.applrepos.domain.Attribute" />
+		<mapping class="com.bayerbbs.applrepos.domain.AttributeGroup" />
+		<mapping class="com.bayerbbs.applrepos.domain.AttributeValue" />
+		<mapping class="com.bayerbbs.applrepos.domain.SpecialAttribute" />
 	</session-factory>
 </hibernate-configuration>

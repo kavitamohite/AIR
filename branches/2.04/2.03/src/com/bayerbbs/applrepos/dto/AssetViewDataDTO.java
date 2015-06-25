@@ -2,9 +2,9 @@ package com.bayerbbs.applrepos.dto;
 
 public class AssetViewDataDTO {
 
-	private Boolean isIntangibleAsset;
-	private Boolean isTangibleAssetWithInventory;
-	private Boolean isTangibleAssetWithoutInventory;
+	private Boolean isSoftwareComponent;
+	private Boolean isHardwareWithInventory;
+	private Boolean isHardwareWithoutInventory;
 
 	// Asset Information
 	private Long id;
@@ -88,30 +88,28 @@ public class AssetViewDataDTO {
 	private String alias;
 	private Long kontoId;
 
-	public Boolean getIsIntangibleAsset() {
-		return isIntangibleAsset;
+	public Boolean getIsSoftwareComponent() {
+		return isSoftwareComponent;
 	}
 
-	public void setIsIntangibleAsset(Boolean isIntangibleAsset) {
-		this.isIntangibleAsset = isIntangibleAsset;
+	public void setIsSoftwareComponent(Boolean isSoftwareComponent) {
+		this.isSoftwareComponent = isSoftwareComponent;
 	}
 
-	public Boolean getIsTangibleAssetWithInventory() {
-		return isTangibleAssetWithInventory;
+	public Boolean getIsHardwareWithInventory() {
+		return isHardwareWithInventory;
 	}
 
-	public void setIsTangibleAssetWithInventory(
-			Boolean isTangibleAssetWithInventory) {
-		this.isTangibleAssetWithInventory = isTangibleAssetWithInventory;
+	public void setIsHardwareWithInventory(Boolean isHardwareWithInventory) {
+		this.isHardwareWithInventory = isHardwareWithInventory;
 	}
 
-	public Boolean getIsTangibleAssetWithoutInventory() {
-		return isTangibleAssetWithoutInventory;
+	public Boolean getIsHardwareWithoutInventory() {
+		return isHardwareWithoutInventory;
 	}
 
-	public void setIsTangibleAssetWithoutInventory(
-			Boolean isTangibleAssetWithoutInventory) {
-		this.isTangibleAssetWithoutInventory = isTangibleAssetWithoutInventory;
+	public void setIsHardwareWithoutInventory(Boolean isHardwareWithoutInventory) {
+		this.isHardwareWithoutInventory = isHardwareWithoutInventory;
 	}
 
 	public Long getId() {
