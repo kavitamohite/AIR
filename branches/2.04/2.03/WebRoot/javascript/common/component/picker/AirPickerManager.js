@@ -15,17 +15,8 @@ AIR.AirPickerManager = function() {
 				this.pickerMap.personPicker = personPicker;
 			} else personPicker.pickerConfig = pickerConfig;
 			
-			
-			//b) wegen veränderlicher pickerConfig, siehe auch AIR.AirPersonPicker::close().
-			//Leider kommt dann aber ein unerwünschtes und unerklärliches Verhalten wenn einen zweiten PersonPicker öffnet.
-			//Das selbe Verhalten beim GroupPicker
-//			var personPicker = new AIR.AirPersonPicker(event, pickerConfig);
-			
 			if(listener)
 				personPicker.on('personAdd', listener);
-//			else
-//				personPicker.mun(personPicker, 'personAdd');
-			
 			
 			personPicker.showAt([ event.xy[0], event.xy[1] -100 ]);
 			personPicker.update(field);
