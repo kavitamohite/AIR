@@ -21,7 +21,6 @@ import com.bayerbbs.applrepos.domain.HardwareComponent;
 import com.bayerbbs.applrepos.domain.Konto;
 import com.bayerbbs.applrepos.domain.OperationalStatus;
 import com.bayerbbs.applrepos.domain.Partner;
-import com.bayerbbs.applrepos.domain.Pspelement;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.domain.Standort;

@@ -10,10 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import com.bayerbbs.applrepos.domain.HardwareComponent;
 import com.bayerbbs.applrepos.domain.Konto;
-import com.bayerbbs.applrepos.domain.Pspelement;
-import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
 import com.bayerbbs.applrepos.dto.KeyValueEnDTO;
 
 public class PspElementHbn {
