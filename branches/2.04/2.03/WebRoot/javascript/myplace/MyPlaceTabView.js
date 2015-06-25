@@ -88,7 +88,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		if(Ext.isIE && !this.isMoved2) {
 			this.isMoved2 = true; 
 
-			//ohne dies vertauscht der IE willkürlich Spalten
+			//ohne dies vertauscht der IE willkï¿½rlich Spalten
 			this.myOwnCIsGrid.getColumnModel().setConfig(AIR.AirConfigFactory.createCiResultGridConfig(true));
 			this.updateLabels(AAM.getLabels());
 		}
@@ -113,7 +113,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		if(Ext.isIE && !this.isMoved) {
 			this.isMoved = true; 
 
-			//ohne dies vertauscht der IE willkürlich Spalten
+			//ohne dies vertauscht der IE willkï¿½rlich Spalten
 	
 			this.myDelegateCIsGrid.getColumnModel().setConfig(AIR.AirConfigFactory.createCiResultGridConfig(true));
 			this.updateLabels(AAM.getLabels());
@@ -169,7 +169,7 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
 			var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
 			var ciSubTypeId = r ? r.get('ciSubTypeId') : AC.APP_CAT1_APPLICATION;
-			
+			AAM.setCiTypeId(record.data.applicationCat1Txt);			
 			AAM.setCiId(ciId);
 			AAM.setTableId(parseInt(record.data.tableId));
 			AAM.setCiSubTypeId(ciSubTypeId);

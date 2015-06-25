@@ -351,7 +351,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 				var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
 				ciSubType = r.get('ciSubTypeId');
 			}
-						
+			AAM.setCiTypeId(record.data.applicationCat1Txt);								
 			AAM.setCiId(ciId);
 			AAM.setTableId(parseInt(record.data.tableId));
 			AAM.setCiSubTypeId(ciSubType);
