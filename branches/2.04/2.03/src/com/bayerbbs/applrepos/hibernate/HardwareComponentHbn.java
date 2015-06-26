@@ -224,6 +224,8 @@ public class HardwareComponentHbn {
 				.getBuilding();
 		Room room = hwComp.getSchrank().getRoom();
 		Schrank rack = hwComp.getSchrank();
+		
+		
 		// Location
 		dto.setCountryId(countryId);
 		
@@ -238,6 +240,8 @@ public class HardwareComponentHbn {
 		
 		dto.setRackId(rack.getId());
 		dto.setRack(rack.getName());
+		
+		
 		// Business Administration
 		dto.setOrderNumber(hwComp.getBestSellText());
 		if (hwComp.getKonto() != null) {
@@ -255,7 +259,12 @@ public class HardwareComponentHbn {
 				dto.setPspText(pspelement.getBeschreibung());
 			}
 		}
-		dto.setRequester(hwComp.getRequester());
+		dto.setRequesterId(hwComp.getRequester());
+		
+		List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(hwComp
+				.getKonto().getCwidVerantw());
+		dto.setRequester(persons.get(0).getDisplayNameFull());
+		
 		dto.setOrganizationalunit(hwComp.getSubResponsible());
 //		dto.setOwner("OWNER");
 		if (hwComp.getHardwareCategory1() != null) {

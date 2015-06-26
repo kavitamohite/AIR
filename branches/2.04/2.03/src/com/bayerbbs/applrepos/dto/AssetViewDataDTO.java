@@ -64,7 +64,7 @@ public class AssetViewDataDTO {
 	private Long pspElementId;
 	private String pspText;
 	private String requester;
-	private Long requesterId;
+	private String requesterId;
 	private String costCenterManager;
 	private String costCenterManagerId;
 	private String organizationalunit;
@@ -448,11 +448,11 @@ public class AssetViewDataDTO {
 		this.requester = requester;
 	}
 
-	public Long getRequesterId() {
+	public String getRequesterId() {
 		return requesterId;
 	}
 
-	public void setRequesterId(Long requesterId) {
+	public void setRequesterId(String requesterId) {
 		this.requesterId = requesterId;
 	}
 
