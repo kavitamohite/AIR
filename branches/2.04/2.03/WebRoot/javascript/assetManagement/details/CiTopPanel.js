@@ -38,6 +38,14 @@ AIR.CiTopPanel = Ext.extend(AIR.AirView, {
 		});
 
 		AIR.CiTopPanel.superclass.initComponent.call(this);
+	},
+	
+	update: function(assetData){
+		var identNumber = this.getComponent('identNumber');
+        identNumber.setValue(assetData.identNumber);
+
+        var tinventory = this.getComponent('tinventory');
+        tinventory.setValue(assetData.inventoryNumber);
 	}
 });
 Ext.reg('AIR.CiTopPanel', AIR.CiTopPanel);

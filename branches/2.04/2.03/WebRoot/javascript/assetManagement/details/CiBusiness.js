@@ -36,15 +36,15 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 		        enableKeyEvents: true,
 		        store: AIR.AirStoreManager.getStoreByName('pspElementListStore'),
 		        valueField: 'id',
+		        minChars: 0,
 		        displayField: 'name',
 				lastQuery: '',
-		        triggerAction: 'all',//all query
+		        triggerAction: 'all',
 		        mode: 'local',
-		        queryParam: 'id',
 		        style : {
 					marginBottom : 10
 				}
-			}, {
+			},{
 				xtype : 'textfield',
 				itemId: 'tPsptext',
 				disabled: true,
@@ -88,7 +88,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 					}
 			    },{
 					xtype : 'container',
-					html: '<a id="mailtocostcenter" href="mailto:ITILcenter@bayer.com &subject=' + mail_Subject_Costcenter + '&body='+ mail_blank_Text_Costcenter +'"><img src="' + img_Email + '"></a>',
+					html: '<a id="mailtocostcenter" href="mailto:ITILcenter@bayer.com&subject=' + mail_Subject_Costcenter + '&body='+ mail_blank_Text_Costcenter +'"><img src="' + img_Email + '"></a>',
 					itemId: 'mailCostcenter',
 					cls: 'x-plain',
 					isHideable: true,
@@ -98,7 +98,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 						fontWeight: 'normal',
 						fontSize: '8pt',
 						cursor:'pointer',
-						 'padding-left':'15px'
+						'padding-left':'15px'
 					}	
 			    }]
 			},{
@@ -121,6 +121,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 	    		},{
 					xtype: 'textfield',
 			        itemId: 'tfRequester',
+			        label: 'Requester',
 			        width: 325,
 					lazyInit : false
 			    },{
@@ -246,7 +247,116 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 		});
 
 		AIR.CiBusiness.superclass.initComponent.call(this);
+		
+		var clRequesterAdd = this.getComponent('pRequester').getComponent('clRequesterAdd');
+        var clRequesterRemove = this.getComponent('pRequester').getComponent('clRequesterRemove');
+        clRequesterAdd.on('click', this.onRequesterAdd, this);
+        clRequesterRemove.on('click', this.onRequesterRemove, this);
 
-	}
+        var cbPsp = this.getComponent('cbPsp');
+        cbPsp.on('select', this.onPSPSelect, this);
+//        cbPsp.on('keyup', this.onFieldKeyUp, this);
+        
+        var cbCostcenter = this.getComponent('pCost').getComponent('cbCostcenter');
+        cbCostcenter.on('select', this.onCostCenterSelect, this);
+//        cbCostcenter.on('keyup', this.onFieldKeyUp, this);
+        
+        var cbSapAsset = this.getComponent('cbSapAsset');
+        cbSapAsset.on('select', this.onSapAssetSelect, this);
+//        cbSapAsset.on('keyup', this.onFieldKeyUp, this);
+
+	}, 
+	
+    onRequesterAdd: function(link, event) {
+        AIR.AirPickerManager.openPersonPicker(null, this.getComponent('pRequester').getComponent('tfRequester'), event);
+    },
+
+    onRequesterRemove: function(link, event) {
+        AIR.AirPickerManager.openRemovePicker(null, this.getComponent('pRequester').getComponent('tfRequester'), event);
+    },
+    
+    onPSPSelect: function(combo, record, index) {
+        var value = record.get('nameEn');
+        var tPsptext = this.getComponent('tPsptext');
+        tPsptext.setValue(value);
+    },
+    
+    onCostCenterSelect: function(combo, record, index) {
+    	var costCenterManager = this.ownerCt.ownerCt.getComponent('leftPanel').getComponent('contacts').getComponent('tCostcentermanager');
+    	var costCenterManager1 = this.getComponent('tCostCenterMgr');
+
+    	personStore = AIR.AirStoreFactory.createPersonStore();
+        personStore.load({
+            params: {
+                query: record.get('cwid')
+            },
+            callback: function(records, options, success) {
+                var value = this.getAt(0).data.firstname + " " + this.getAt(0).data.lastname + "/" + this.getAt(0).data.cwid;
+                costCenterManager.setValue(value);
+                costCenterManager1.setValue(value);
+            }
+        });
+    },
+    
+    onSapAssetSelect: function(combo, record, index) {
+        var value = record.get('nameEn');
+        var tEconomic = this.getComponent('tEconomic');
+        tEconomic.setValue(value);
+    },
+    
+    update: function(assetData){
+    	var tOrderNumber = this.getComponent('cbOrderNumber');
+    	tOrderNumber.setValue(assetData.orderNumber);
+
+        var tInventorynumber = this.getComponent('tInventorynumber');
+        tInventorynumber.setValue(assetData.inventoryNumber);
+
+        var cbPsp = this.getComponent('cbPsp');
+        cbPsp.setValue(assetData.pspElementId);
+        cbPsp.setRawValue(assetData.pspElement);
+
+        var tPsptext = this.getComponent('tPsptext');
+        tPsptext.setValue(assetData.pspText);
+
+        var cbCostcenter = this.getComponent('pCost').getComponent('cbCostcenter');
+        cbCostcenter.setValue(assetData.costCenterId);
+
+        var tfRequester = this.getComponent('pRequester').getComponent('tfRequester');
+        tfRequester.setValue(assetData.requester);
+
+        var tfRequesterHidden = this.getComponent('pRequester').getComponent('tfRequesterHidden');
+        tfRequesterHidden.setValue(assetData.requesterId);
+
+        var tCostCenterMgr = this.getComponent('tCostCenterMgr');
+        tCostCenterMgr.setValue(assetData.costCenterManager);
+
+        var tOrganisation = this.getComponent('tOrganisation');
+        tOrganisation.setValue(assetData.organizationalunit);
+
+        var tOwner = this.getComponent('tOwner');
+        tOwner.setValue(assetData.owner);
+
+        var cbSapAsset = this.getComponent('cbSapAsset');
+        cbSapAsset.setValue(assetData.sapAssetClassId);
+
+        var tAquisition = this.getComponent('tAquisition');
+        tAquisition.setValue(assetData.acquisitionValue);
+
+        var tBook = this.getComponent('tBook');
+        tBook.setValue(assetData.bookValue);
+
+        var tDate = this.getComponent('tDate');
+        tDate.setValue(assetData.bookValueDate);
+
+        var tDepreciation = this.getComponent('tDepreciation');
+        tDepreciation.setValue(assetData.depreciationStartDate);
+
+        var tEconomic = this.getComponent('tEconomic');
+        tEconomic.setValue(assetData.usefulEconomicLife);
+
+        var tRetirement = this.getComponent('tRetirment');
+        tRetirement.setValue(assetData.retirementDate);
+
+    }
 });
 Ext.reg('AIR.CiBusiness', AIR.CiBusiness);

@@ -104,7 +104,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 				items : [{
 					name : 'itsecurity',
 					boxLabel : 'Yes',
-					inputValue : '1',
+					inputValue : '-1',
 					width : 50
 				}, {
 					id : 'itsecurity',
@@ -130,6 +130,43 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 		});
 
 		AIR.CiTechnics.superclass.initComponent.call(this);
+
+	},
+	
+	update: function(assetData){
+
+		var tTechnicalNumber = this.getComponent('tTechnicalNumber');
+        tTechnicalNumber.setValue(assetData.technicalNumber);
+
+        var tTechnicalMaster = this.getComponent('tTechnicalMaster');
+        tTechnicalMaster.setValue(assetData.technicalMaster);
+
+        var tSystemPlatform = this.getComponent('tSystemPlatform');
+        tSystemPlatform.setValue(assetData.systemPlatformName);
+
+        var tHardware = this.getComponent('tHardware');
+        tHardware.setValue(assetData.hardwareSystem);
+
+        var tOsName = this.getComponent('tOsName');
+        tOsName.setValue(assetData.osName);
+
+        var tWorkflowHWS = this.getComponent('tWorkflowHWS');
+        tWorkflowHWS.setValue(assetData.workflowTechnicalStatus);
+
+        var tTransient = this.getComponent('tTransient');
+        tTransient.setValue(assetData.hardwareTransientSystem);
+
+        var cbWorkflowTechnical = this.getComponent('cbWorkflowTechnical');
+        cbWorkflowTechnical.setValue(assetData.workflowStatusId);
+
+        var cbGeneralUsage = this.getComponent('cbGeneralUsage');
+        cbGeneralUsage.setValue(assetData.generalUsageId);
+
+        var rbItSecurity = this.getComponent('rbItSecurity');
+        rbItSecurity.setValue([true, false]);
+
+        var tComment = this.getComponent('tComment');
+        tComment.setValue(assetData.generalUsageId);
 
 	}
 });

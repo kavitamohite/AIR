@@ -93,7 +93,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 					}
 			    },{
 					xtype : 'container',
-					html: '<a id="mailtoproduct" href="mailto:&subject=' + mail_Subject_product + '"><img src="' + img_Email + '"></a>',
+					html: '<a id="mailtoproduct" href="mailto:ITILcenter@bayer.com&subject=' + mail_Subject_product + '"><img src="' + img_Email + '"></a>',
 					itemId: 'mailproduct',
 					cls: 'x-plain',
 					isHideable: true,
@@ -121,7 +121,146 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 		});
 
 		AIR.CiProduct.superclass.initComponent.call(this);
+		
+		var cbManufacturer = this.getComponent('cbManufacturer');
+        cbManufacturer.on('select', this.onManufacturerSelect, this);
+//        cbManufacturer.on('keyup', this.onFieldKeyUp, this);
+        
+        var cbSubCategory = this.getComponent('cbSubCategory');
+        cbSubCategory.on('select', this.onSubCategorySelect, this);
+//        cbSubCategory.on('keyup', this.onFieldKeyUp, this);
+        
+        var cbType = this.getComponent('cbType');
+        cbType.on('select', this.onTypeSelect, this);
+//        cbType.on('keyup', this.onFieldKeyUp, this);
 
-	}
+        var cbModel = this.getComponent('pmodel').getComponent('cbModel');
+        cbModel.on('select', this.onModelSelect, this);
+//        cbModel.on('keyup', this.onFieldKeyUp, this);
+
+	},
+	
+	onManufacturerSelect: function(combo, record, index) {
+        var value = record.get('id');
+        
+        var cbType = this.getComponent('cbType');
+        var cbModel = this.getComponent('pmodel').getComponent('cbModel');
+        var tsapDescription = this.getComponent('tsapDescription');
+        
+        cbModel.reset();
+        cbType.reset();
+        tsapDescription.setValue("");
+        
+        cbType.getStore().removeAll();
+        cbModel.getStore().removeAll();
+        
+        this.loadTypeStore(cbType);
+        this.updateMailTemplateProduct();
+    },
+
+    onSubCategorySelect: function(combo, record, index) {
+        var value = record.get('id');
+
+        var cbType = this.getComponent('cbType');
+        var cbModel = this.getComponent('pmodel').getComponent('cbModel');
+        var tsapDescription = this.getComponent('tsapDescription');
+        
+        cbModel.reset();
+        cbType.reset();
+        tsapDescription.setValue("");
+        
+        cbType.getStore().removeAll();
+        cbModel.getStore().removeAll();
+        
+        this.loadTypeStore(cbType);
+        this.updateMailTemplateProduct();
+    },
+    
+    loadTypeStore: function(cbType){
+        var partnerIdValue = this.getComponent('cbManufacturer').getValue();
+        var kategoryIdValue = this.getComponent('cbSubCategory').getValue();
+        
+        cbType.getStore().load({
+            params: {
+                partnerId: partnerIdValue,
+                kategory2Id: kategoryIdValue
+            }
+        });
+    },
+    
+    onTypeSelect: function(combo, record, index) {
+        var value = record.get('id');
+        
+        var cbModel = this.getComponent('pmodel').getComponent('cbModel');
+        var tsapDescription = this.getComponent('tsapDescription');
+        
+        cbModel.reset();
+        cbModel.getStore().removeAll();
+        tsapDescription.setValue("");
+        
+        cbModel.getStore().load({
+            params: {
+                id: value
+            }
+        });
+        
+        this.updateMailTemplateProduct();
+    },
+
+    onModelSelect: function(combo, record, index) {
+        var value = record.get('id');
+        
+        var cbManufacturer = this.getComponent('cbManufacturer').getRawValue();
+        var cbType = this.getComponent('cbType').getRawValue();
+        var cbModel = this.getComponent('pmodel').getComponent('cbModel').getRawValue();
+        
+        var tsapDescription = this.getComponent('tsapDescription');
+        
+        var description = cbManufacturer + " " + cbType + " " + cbModel;
+        tsapDescription.setValue(description);
+        
+        this.updateMailTemplateProduct();
+    },
+
+    updateMailTemplateProduct: function() {
+        var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
+
+        var cbManufacturer = this.getComponent('cbManufacturer');
+        var cbSubCategory = this.getComponent('cbSubCategory');
+        var cbType = this.getComponent('cbType');
+        var cbModel = this.getComponent('pmodel').getComponent('cbModel');
+        var mailText = mail_Text_product.replace('<manufacturer>', cbManufacturer.getRawValue());
+
+        mailText = mailText.replace('<subcategory>', cbSubCategory.getRawValue());
+        mailText = mailText.replace('<model>', cbModel.getRawValue());
+        mailText = mailText.replace('<type>', cbType.getRawValue());
+        mailText = mailText.replace('<Username>', AAM.getUserName());
+
+        var mailtemplate = 'mailto:ITILcenter@bayer.com';
+        mailtemplate += '&subject=' + mail_Subject_product + '';
+        mailtemplate += ('&body=' + mailText);
+        html = html.replace('{href}', mailtemplate);
+        this.getComponent('pmodel').getComponent('mailproduct').update(html);
+    },
+    
+    update: function(assetData){
+    	var cbManufacturer = this.getComponent('cbManufacturer');
+        cbManufacturer.setValue(assetData.manufacturerId);
+
+        var cbSubCategory = this.getComponent('cbSubCategory');
+        cbSubCategory.setValue(assetData.subcategoryId);
+
+        var cbType = this.getComponent('cbType');
+        cbType.setValue(assetData.typeId);
+        cbType.setRawValue(assetData.type);
+
+        var cbModel = this.getComponent('pmodel').getComponent('cbModel');
+        cbModel.setValue(assetData.modelId);
+        cbModel.setRawValue(assetData.model);
+
+        var tsapDescription = this.getComponent('tsapDescription');
+        tsapDescription.setValue(assetData.sapDescription);
+    }
+
 });
 Ext.reg('AIR.CiProduct', AIR.CiProduct);

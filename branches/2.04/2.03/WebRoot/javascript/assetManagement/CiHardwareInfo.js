@@ -56,7 +56,6 @@ AIR.CiHardwareInfo = Ext.extend(Ext.Panel, {
 	},
 
 	updateLabels: function(labels) {
-		console.log(this.getComponent('AssetwithInventory'));
 		this.getComponent('AssetwithInventory').el.dom.innerHTML = labels.lAssetwithInventoryText;
 		this.getComponent('bAssetwithInventory').setText(labels.lAssetwithInventory);
 		

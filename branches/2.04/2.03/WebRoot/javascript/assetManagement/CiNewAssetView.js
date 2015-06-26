@@ -130,61 +130,11 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						margin : '8 10 0 0',
 						width:80
 					}
-				},
-				]
+				}]
 			}]
         });
 
         AIR.CiNewAssetView.superclass.initComponent.call(this);
-
-        var clRequesterAdd = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('clRequesterAdd');
-        var clRequesterRemove = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('clRequesterRemove');
-        clRequesterAdd.on('click', this.onRequesterAdd, this);
-        clRequesterRemove.on('click', this.onRequesterRemove, this);
-
-        var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
-        cbSapAsset.on('select', this.onSapAssetSelect, this);
-        cbSapAsset.on('keyup', this.onFieldKeyUp, this);
-
-        var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
-        cbPsp.on('select', this.onPSPSelect, this);
-        cbPsp.on('keyup', this.onFieldKeyUp, this);
-
-        var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
-        cbCostcenter.on('select', this.onCostCenterSelect, this);
-        cbCostcenter.on('keyup', this.onFieldKeyUp, this);
-
-        var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
-        cbCountry.on('select', this.onCountrySelect, this);
-        cbCountry.on('keyup', this.onFieldKeyUp, this);
-
-        var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
-        cbSite.on('select', this.onSiteSelect, this);
-        cbSite.on('keyup', this.onFieldKeyUp, this);
-
-        var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding'); //.getComponent('pBuilding')
-        cbBuilding.on('select', this.onBuildingSelect, this);
-        cbBuilding.on('keyup', this.onFieldKeyUp, this);
-
-        var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
-        cbRoom.on('select', this.onRoomSelect, this);
-        cbRoom.on('keyup', this.onFieldKeyUp, this);
-
-        var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
-        cbManufacturer.on('select', this.onManufacturerSelect, this);
-        cbManufacturer.on('keyup', this.onFieldKeyUp, this);
-
-        var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
-        cbSubCategory.on('select', this.onSubCategorySelect, this);
-        cbSubCategory.on('keyup', this.onFieldKeyUp, this);
-
-        var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-        cbType.on('select', this.onTypeSelect, this);
-        cbType.on('keyup', this.onFieldKeyUp, this);
-
-        var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
-        cbModel.on('select', this.onModelSelect, this);
-        cbModel.on('keyup', this.onFieldKeyUp, this);
 
         var bReset = this.getComponent('buttonPanel').getComponent('bReset');
         bReset.on('click', this.resetFormFields, this);
@@ -194,26 +144,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		
 		saveBtn.hide();
 		cancelBtn.hide();
-    },
-
-    onRequesterAdd: function(link, event) {
-        AIR.AirPickerManager.openPersonPicker(null, this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester'), event);
-    },
-
-    onRequesterRemove: function(link, event) {
-        AIR.AirPickerManager.openRemovePicker(null, this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester'), event);
-    },
-
-    onSapAssetSelect: function(combo, record, index) {
-        var value = record.get('nameEn');
-        var tEconomic = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic');
-        tEconomic.setValue(value);
-    },
-
-    onPSPSelect: function(combo, record, index) {
-        var value = record.get('nameEn');
-        var tPsptext = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tPsptext');
-        tPsptext.setValue(value);
     },
 
     resetFormFields: function() {
@@ -354,174 +284,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
     },
 
-    onManufacturerSelect: function(combo, record, index) {
-        this.manufacturerChanged(record.get('id'));
-    },
-
-    manufacturerChanged: function(value) {
-        var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
-        var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-        var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
-        cbModel.reset();
-        cbSubCategory.reset();
-        cbType.reset();
-        this.updateMailTemplateProduct();
-    },
-
-    onSubCategorySelect: function(combo, record, index) {
-        this.subCategoryChanged(record.get('id'));
-        this.fireEvent('ciChange', this, combo, record);
-    },
-
-    subCategoryChanged: function(value) {
-        var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-        var partnerIdValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
-        var kategoryIdValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getValue();
-        cbType.allQuery = value;
-        cbType.reset();
-        cbType.getStore().load({
-            params: {
-                partnerId: partnerIdValue,
-                kategory2Id: kategoryIdValue
-            }
-        });
-        this.updateMailTemplateProduct();
-    },
-
-    onTypeSelect: function(combo, record, index) {
-        this.typeChanged(record.get('id'));
-        this.fireEvent('ciChange', this, combo, record);
-    },
-
-    typeChanged: function(value) {
-        var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
-        cbModel.reset();
-        cbModel.allQuery = value;
-        cbModel.getStore().load({
-            params: {
-                id: value
-            }
-        });
-        this.updateMailTemplateProduct();
-    },
-
-    onModelSelect: function(combo, record, index) {
-        this.modelChanged(record.get('id'));
-        this.fireEvent('ciChange', this, combo, record);
-    },
-
-    modelChanged: function(value) {
-        var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getRawValue();
-        var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getRawValue();
-        var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel').getRawValue();
-        var tsapDescription = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription');
-        var description = cbManufacturer + " " + cbType + " " + cbModel;
-        tsapDescription.setValue(description);
-        this.updateMailTemplateProduct();
-    },
-
-    onCountrySelect: function(combo, record, index) {
-        this.countryChanged(record.get('id'));
-        this.ownerCt.fireEvent('ciChange', this, combo, record);
-    },
-
-    countryChanged: function(value) {
-        var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
-        var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
-        var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
-        var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
-        cbRoom.reset();
-        cbBuilding.reset();
-        cbSite.reset();
-        cbRack.reset();
-
-        cbRoom.getStore().removeAll();
-        cbBuilding.getStore().removeAll();
-        cbSite.getStore().removeAll();
-        cbRack.getStore().removeAll();
-
-        cbSite.getStore().setBaseParam('id', value);
-        cbSite.allQuery = value;
-        cbSite.reset();
-        cbSite.getStore().load({
-            params: {
-                id: value
-            }
-        });
-        this.updateMailTemplateLocation();
-    },
-
-    onSiteSelect: function(combo, record, index) {
-        this.siteChanged(record.get('id'));
-        this.ownerCt.fireEvent('ciChange', this, combo, record);
-    },
-
-    siteChanged: function(value) {
-        var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
-        var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
-
-        cbRoom.reset();
-        cbBuilding.reset();
-
-        cbRoom.getStore().removeAll();
-        cbBuilding.getStore().removeAll();
-
-        cbBuilding.getStore().setBaseParam('id', value);
-        cbBuilding.allQuery = value;
-        cbBuilding.reset();
-        cbBuilding.getStore().load({
-            params: {
-                id: value
-            }
-        });
-        Util.enableCombo(cbRoom);
-        this.updateMailTemplateLocation();
-    },
-
-    onBuildingSelect: function(combo, record, index) {
-        this.buildingChanged(record.get('id'));
-        this.ownerCt.fireEvent('ciChange', this, combo, record);
-    },
-
-    buildingChanged: function(value) {
-        var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
-        cbRoom.reset();
-        cbRoom.getStore().removeAll();
-
-        cbRoom.getStore().setBaseParam('id', value);
-        cbRoom.allQuery = value;
-        cbRoom.reset();
-        cbRoom.getStore().load({
-            params: {
-                id: value
-            }
-        });
-        Util.enableCombo(cbRoom);
-        this.updateMailTemplateLocation();
-    },
-
-    onRoomSelect: function(combo, record, index) {
-        this.roomChanged(record.get('id'));
-        this.ownerCt.fireEvent('ciChange', this, combo, record);
-    },
-
-    roomChanged: function(value) {
-        var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
-        cbRack.reset();
-        cbRack.getStore().removeAll();
-
-        cbRack.getStore().setBaseParam('id', value);
-        cbRack.allQuery = value;
-        cbRack.reset();
-        cbRack.getStore().load({
-            params: {
-                id: value
-            }
-        });
-        Util.enableCombo(cbRack);
-        this.updateMailTemplateLocation();
-    },
-
     onFieldKeyUp: function(textfield, event) {
 		this.onCiAssetChange();
 	},
@@ -529,7 +291,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	onCiAssetChange:function() {		
 		this.enableAssetButtons();
 		this.ciModified = true;
-		
 	},
 	
 	enableAssetButtons: function() {	
@@ -562,252 +323,26 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
        
 	},
 
-    onCostCenterSelect: function(combo, record, index) {
-        personStore = AIR.AirStoreFactory.createPersonStore();
-        personStore.load({
-            params: {
-                query: record.get('cwid')
-            },
-            callback: function(records, options, success) {
-                var value = this.getAt(0).data.firstname + " " + this.getAt(0).data.lastname + "/" + this.getAt(0).data.cwid;
-                var costCenterManager = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('tCostcentermanager');
-                var costCenterManager1 = Ext.getCmp('ciNewAssetView').getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tCostCenterMgr');
-
-                costCenterManager.setValue(value);
-                costCenterManager1.setValue(value);
-            }
-        });
-    },
-
-    loadManufacturerData: function() {
-        var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
-        cbManufacturer.getStore().load();
-    },
-
-    loadCategoryData: function() {
-        var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
-        cbSubCategory.getStore().load();
-    },
-
-    loadCountryData: function() {
-        var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
-        cbCountry.displayField = AAM.getLanguage() == 'DE' ? 'name' : 'nameEn';
-        cbCountry.getStore().load({
-            callback: function() {
-                var field = AAM.getLanguage() == 'DE' ? 'name' : 'nameEn';
-                cbCountry.getStore().sort(field, 'ASC');
-            }
-        });
-    },
-
-    loadCostcenterData: function() {
-        var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
-        cbCostcenter.getStore().load();
-    },
-
-    loadOperationalStatusData: function() {
-        var cbGeneralUsage = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbGeneralUsage');
-        cbGeneralUsage.getStore().load();
-    },
-
-    loadPspElementData: function() {
-        var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
-        cbPsp.getStore().load();
-    },
-
-    loadSapAssetData: function() {
-        var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
-        cbSapAsset.getStore().load();
-
-    },
-
-    updateMailTemplateProduct: function() {
-        var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
-
-        var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
-        var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
-        var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-        var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
-        var mailText = mail_Text_product.replace('<manufacturer>', cbManufacturer.getRawValue());
-
-        mailText = mailText.replace('<subcategory>', cbSubCategory.getRawValue());
-        mailText = mailText.replace('<model>', cbModel.getRawValue());
-        mailText = mailText.replace('<type>', cbType.getRawValue());
-        mailText = mailText.replace('<Username>', 'Vandana Hemnani'); //username
-
-        var mailtemplate = 'mailto:vandana.hemnani@bayer.com';
-        mailtemplate += '&subject=' + mail_Subject_product + '';
-        mailtemplate += ('&body=' + mailText);
-        html = html.replace('{href}', mailtemplate);
-        this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('mailproduct').update(html);
-    },
-
-    updateMailTemplateLocation: function() {
-        var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
-
-        var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
-        var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
-        var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
-        var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
-        var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
-
-        var mailText = mail_Text_location.replace('<country>', cbCountry.getRawValue());
-        mailText = mailText.replace('<site>', cbSite.getRawValue());
-        mailText = mailText.replace('<building>', cbBuilding.getRawValue());
-        mailText = mailText.replace('<room>', cbRoom.getRawValue());
-        mailText = mailText.replace('<rack>', cbRack.getRawValue());
-        mailText = mailText.replace('<Username>', 'Vandana Hemnani'); //username
-
-        var mailtemplate = 'mailto:vandana.hemnani@bayer.com';
-        mailtemplate += '&subject=' + mail_Subject_location + '';
-        mailtemplate += ('&body=' + mailText);
-        html = html.replace('{href}', mailtemplate);
-        this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('maillocation').update(html);
-    },
-
     update: function(assetData) {
+    	console.log(assetData);
 
-        //Asset Description
-        var identNumber = this.getComponent('topPanel').getComponent('identNumber');
-        identNumber.setValue(assetData.identNumber);
+    	var topPanel = this.getComponent('topPanel');
+    	topPanel.update(assetData);
 
-        var tinventory = this.getComponent('topPanel').getComponent('tinventory');
-        tinventory.setValue(assetData.inventoryNumber);
-
-        //Product
-        var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
-        cbManufacturer.setValue(assetData.manufacturerId);
-
-        var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
-        cbSubCategory.setValue(assetData.subcategoryId);
-        this.subCategoryChanged(assetData.subcategoryId);
-
-        var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-        cbType.setValue(assetData.typeId);
-        cbType.setRawValue(assetData.type);
-        this.typeChanged(assetData.typeId);
-
-        var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
-        cbModel.setValue(assetData.modelId);
-        cbModel.setRawValue(assetData.model);
-
-        var tsapDescription = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription');
-        tsapDescription.setValue(assetData.sapDescription);
-
-        //Technics
-        var tTechnicalNumber = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalNumber');
-        tTechnicalNumber.setValue(assetData.technicalNumber);
-
-        var tTechnicalMaster = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalMaster');
-        tTechnicalMaster.setValue(assetData.technicalMaster);
-
-        var tSystemPlatform = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tSystemPlatform');
-        tSystemPlatform.setValue(assetData.systemPlatformName);
-
-        var tHardware = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tHardware');
-        tHardware.setValue(assetData.hardwareSystem);
-
-        var tOsName = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tOsName');
-        tOsName.setValue(assetData.osName);
-
-        var tWorkflowHWS = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tWorkflowHWS');
-        tWorkflowHWS.setValue(assetData.workflowTechnicalStatus);
-
-        var tTransient = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTransient');
-        tTransient.setValue(assetData.hardwareTransientSystem);
-
-        var cbWorkflowTechnical = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbWorkflowTechnical');
-        cbWorkflowTechnical.setValue(assetData.workflowStatusId);
-
-        var cbGeneralUsage = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbGeneralUsage');
-        cbGeneralUsage.setValue(assetData.generalUsageId);
-
-        var rbItSecurity = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('rbItSecurity');
-        rbItSecurity.setValue("START");
-
-        var tComment = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tComment');
-        tComment.setValue(assetData.generalUsageId);
-
-        // Location
-        var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
-        cbCountry.setValue(assetData.countryId);
-        
-        var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
-        cbSite.setValue(assetData.siteId);
-        cbSite.setRawValue(assetData.site);
-        
-        var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
-        cbBuilding.setValue(assetData.buildingId);
-        cbBuilding.setRawValue(assetData.building);
-        
-        var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
-        cbRoom.setValue(assetData.roomId);
-        cbRoom.setRawValue(assetData.room);
-        
-        var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
-        cbRack.setValue(assetData.rackId);
-        cbRack.setRawValue(assetData.rack);
-        
-        //Business Information
-        var cbOrderNumbr = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumbr');
-
-        var tInventorynumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
-        tInventorynumber.setValue(assetData.inventoryNumber);
-
-        var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
-        cbPsp.setValue(assetData.pspElementId);
-        cbPsp.setRawValue(assetData.pspElement);
-
-        var tPsptext = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tPsptext');
-        tPsptext.setValue(assetData.pspText);
-
-        var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
-        cbCostcenter.setValue(assetData.costCenterId);
-
-        var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
-        tfRequester.setValue(assetData.requester);
-
-        var tfRequesterHidden = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequesterHidden');
-        tfRequesterHidden.setValue(assetData.requesterId);
-
-        var tCostCenterMgr = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tCostCenterMgr');
-        tCostCenterMgr.setValue(assetData.costCenterManager);
-
-        var tOrganisation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrganisation');
-        tOrganisation.setValue(assetData.organizationalunit);
-
-        var tOwner = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOwner');
-        tOwner.setValue(assetData.owner);
-
-        var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
-        cbSapAsset.setValue(assetData.sapAssetClassId);
-
-        var tAquisition = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tAquisition');
-        tAquisition.setValue(assetData.acquisitionValue);
-
-        var tBook = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tBook');
-        tBook.setValue(assetData.bookValue);
-
-        var tDate = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tDate');
-        tDate.setValue(assetData.bookValueDate);
-
-        var tDepreciation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tDepreciation');
-        tDepreciation.setValue(assetData.depreciationStartDate);
-
-        var tEconomic = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic');
-        tEconomic.setValue(assetData.usefulEconomicLife);
-
-        var tRetirement = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tRetirment');
-        tRetirement.setValue(assetData.retirementDate);
-
-        var tCostcentermanager = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('tCostcentermanager');
-        tCostcentermanager.setValue(assetData.costCenterManager);
-
-        var tOrganizationalunit = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('tOrganizationalunit');
-        tOrganizationalunit.setValue(assetData.organizationalunit);
-
-        var cbeditor = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('cbeditor');
-        cbeditor.setValue(assetData.editorsGroupId);
+    	var product = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
+    	product.update(assetData);
+    	
+    	var location = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location');
+    	location.update(assetData);
+    	
+    	var business = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
+    	business.update(assetData);
+    	
+    	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
+    	contact.update(assetData);
+    	
+    	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
+    	technics.update(assetData);
 
         AAM.getMask(AC.MASK_TYPE_LOAD).hide();
     },
