@@ -165,7 +165,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
     	console.log(assetId);
     	
-    	var loadMask = Util.createMask('Loading', this.getComponent('topPanel'));
+    	var loadMask = Util.createMask('Loading', Ext.get('historyListView'));
 		loadMask.show();
 		var historyListStore = AIR.AirStoreFactory.createHistoryListStore();
 
