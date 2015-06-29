@@ -527,9 +527,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
-//				if(AAM.getAssetId()){
-//					this.forwardToEdit(AAM.getAssetId());
-//				}
 					break;
 					
 			case 'clCiAssetwithInventory':
@@ -541,7 +538,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				clCiContacts.setVisible(true);
 				
 				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset with Inventory").setVisible(true);
-				ciNewAssetView.resetFormFields();
+				ciNewAssetView.resetFormFields({});
 				var verwerfenCallback = function() {
 					if(options && options.callback)
 						options.callback();
@@ -565,14 +562,14 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				clCiContacts.setVisible(true);
 
 				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset without Inventory").setVisible(true);
-				ciNewAssetView.resetFormFields();
+				ciNewAssetView.resetFormFields({});
 				var verwerfenCallback = function() {
-						if(options && options.callback)
-							options.callback();
-					}.createDelegate(this);
-					var saveCallback = function() {
-						verwerfenCallback();
-					}.createDelegate(this);
+					if(options && options.callback)
+						options.callback();
+				}.createDelegate(this);
+				var saveCallback = function() {
+					verwerfenCallback();
+				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
 				if(AAM.getAssetId()){

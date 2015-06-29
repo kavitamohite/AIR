@@ -357,6 +357,60 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         var tRetirement = this.getComponent('tRetirment');
         tRetirement.setValue(assetData.retirementDate);
 
+    },
+    
+    resetFormFields: function(){
+    	var tOrderNumber = this.getComponent('cbOrderNumber');
+    	tOrderNumber.reset();
+
+        var tInventorynumber = this.getComponent('tInventorynumber');
+        tInventorynumber.reset();
+
+        var cbPsp = this.getComponent('cbPsp');
+        cbPsp.reset();
+
+        var tPsptext = this.getComponent('tPsptext');
+        tPsptext.reset();
+
+        var cbCostcenter = this.getComponent('pCost').getComponent('cbCostcenter');
+        cbCostcenter.reset();
+
+        var tfRequester = this.getComponent('pRequester').getComponent('tfRequester');
+        tfRequester.reset();
+
+        var tfRequesterHidden = this.getComponent('pRequester').getComponent('tfRequesterHidden');
+        tfRequesterHidden.reset();
+
+        var tCostCenterMgr = this.getComponent('tCostCenterMgr');
+        tCostCenterMgr.reset();
+
+        var tOrganisation = this.getComponent('tOrganisation');
+        tOrganisation.reset();
+
+        var tOwner = this.getComponent('tOwner');
+        tOwner.reset();
+
+        var cbSapAsset = this.getComponent('cbSapAsset');
+        cbSapAsset.reset();
+
+        var tAquisition = this.getComponent('tAquisition');
+        tAquisition.reset();
+
+        var tBook = this.getComponent('tBook');
+        tBook.reset();
+
+        var tDate = this.getComponent('tDate');
+        tDate.reset();
+
+        var tDepreciation = this.getComponent('tDepreciation');
+        tDepreciation.reset();
+
+        var tEconomic = this.getComponent('tEconomic');
+        tEconomic.reset();
+
+        var tRetirement = this.getComponent('tRetirment');
+        tRetirement.reset();
+    	
     }
 });
 Ext.reg('AIR.CiBusiness', AIR.CiBusiness);

@@ -56,6 +56,18 @@ AIR.CiContact = Ext.extend(Ext.form.FieldSet, {
         var cbeditor = this.getComponent('cbeditor');
         cbeditor.setValue(assetData.editorsGroupId);
 
+	},
+	
+	resetFormFields: function(){
+		var tCostcentermanager = this.getComponent('tCostcentermanager');
+        tCostcentermanager.reset();
+
+        var tOrganizationalunit = this.getComponent('tOrganizationalunit');
+        tOrganizationalunit.reset();
+
+        var cbeditor = this.getComponent('cbeditor');
+        cbeditor.reset();
+		
 	}
 });
 Ext.reg('AIR.CiContact', AIR.CiContact);

@@ -288,6 +288,23 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         cbRack.setValue(assetData.rackId);
         cbRack.setRawValue(assetData.rack);
 
+	},
+	
+	resetFormFields: function(){
+		var cbCountry = this.getComponent('cbCountry');
+        cbCountry.reset();
+        
+        var cbSite = this.getComponent('cbSite');
+        cbSite.reset();
+        
+        var cbBuilding = this.getComponent('cbBuilding');
+        cbBuilding.reset();
+        
+        var cbRoom = this.getComponent('cbRoom');
+        cbRoom.reset();
+        
+        var cbRack = this.getComponent('pRackposition').getComponent('cbRack');
+        cbRack.reset();
 	}
 });
 Ext.reg('AIR.CiLocation', AIR.CiLocation);

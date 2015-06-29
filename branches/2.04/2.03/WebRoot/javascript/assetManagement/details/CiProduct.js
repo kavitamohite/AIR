@@ -260,6 +260,23 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 
         var tsapDescription = this.getComponent('tsapDescription');
         tsapDescription.setValue(assetData.sapDescription);
+    },
+    
+    resetFormFields: function(){
+    	var cbManufacturer = this.getComponent('cbManufacturer');
+        cbManufacturer.reset();
+
+        var cbSubCategory = this.getComponent('cbSubCategory');
+        cbSubCategory.reset();
+
+        var cbType = this.getComponent('cbType');
+        cbType.reset();
+
+        var cbModel = this.getComponent('pmodel').getComponent('cbModel');
+        cbModel.reset();
+
+        var tsapDescription = this.getComponent('tsapDescription');
+        tsapDescription.reset();
     }
 
 });

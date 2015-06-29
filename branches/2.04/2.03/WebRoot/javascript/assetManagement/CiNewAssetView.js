@@ -82,6 +82,10 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                     }]
                 }]
             },{
+            	itemId: 'assetHistoryView',
+				xtype: 'AIR.CiHistoryView',
+				hidden: true
+			},{
 				xtype : 'panel',
 				id: 'buttonPanel',
 				layout : 'column',
@@ -93,6 +97,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					xtype : 'button',
 					id : 'saveBtn',
 					text : 'Save',
+					hidden: true,
 					style : {
 						fontSize : 12,
 						margin : '8 10 0 0',
@@ -105,6 +110,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					xtype : 'button',
 					id : 'cancelBtn',
 					text : 'Cancel',
+					hidden: true,
 					style : {
 						fontSize : 12,
 						margin : '8 10 0 0',
@@ -125,7 +131,21 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					id : 'bReset',
 					text : 'Reset all Entries',
 					style : {
-						//marginBottom : 10,
+						fontSize : 14,
+						margin : '8 10 0 0',
+						width:80
+					}
+				},{
+					xtype : 'button',
+					id : 'bHistory',
+					text : 'Asset History',
+					listeners: {
+                        click: {
+                            fn: this.onAssetHistoryButton,
+                            scope: this
+                        }
+					},
+					style : {
 						fontSize : 14,
 						margin : '8 10 0 0',
 						width:80
@@ -138,117 +158,133 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
         var bReset = this.getComponent('buttonPanel').getComponent('bReset');
         bReset.on('click', this.resetFormFields, this);
+        
+    },
+    
+    onAssetHistoryButton: function(){
+    	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
+    	console.log(assetId);
+    	
+    	var loadMask = Util.createMask('Loading', this.getComponent('topPanel'));
+		loadMask.show();
+		var historyListStore = AIR.AirStoreFactory.createHistoryListStore();
 
-        var saveBtn = this.getComponent('buttonPanel').getComponent('saveBtn');
-		var cancelBtn = this.getComponent('buttonPanel').getComponent('cancelBtn');
+		var params = {
+			cwid: AAM.getCwid(),
+			token: AAM.getToken(),
+			id: 18452,
+			tableId: 19
+		};
 		
-		saveBtn.hide();
-		cancelBtn.hide();
+		historyListStore.addListener('load', function() {
+			loadMask.hide();
+			assetHistoryWindow = new Ext.Window({
+	            title: 'History',
+	            layout: 'fit',
+	            autoScroll: true,
+	            width: 800,
+	            height: 600,
+	            modal: true,
+	            closeAction: 'hide',
+	            items: [{
+	          		    	xtype: 'grid',
+	        		        id: 'historyListView',
+	        		        layout: 'fit',
+	        		        height: 400,
+	        		    	store: this,
+	        		        emptyText: 'No data',
+	        		        border: false,
+	        		        autoScroll: true,
+	        		        
+	        		        columns: [{
+	        		            header: 'Date Time',
+	        		            dataIndex: 'datetime',
+	        		            id: 'historyDatetime',
+	        					menuDisabled: true,
+	        					width: 150
+	        		        },{
+	        		            header: 'Change Source',
+	        		            dataIndex: 'changeSource',
+	        		            id: 'historyChangeSource',
+	        					menuDisabled: true,
+	        					width: 150
+	        		        },{
+	        		            header: 'Change User',
+	        		            dataIndex: 'changeDBUser',
+	        		           	id: 'historyChangeDBUser',
+	        					menuDisabled: true,
+	        					width: 150
+	        		        },{
+	        		            header: 'Change user CWID',
+	        		            dataIndex: 'changeUserCWID',
+	        		            id: 'historyChangeUserCWID',
+	        					menuDisabled: true,
+	        					width: 150
+	        		    	},{
+	        		            header: 'Attribute Name',
+	        		            dataIndex: 'changeAttributeName',
+	        		            id: 'historyChangeAttributeName',
+	        					menuDisabled: true,
+	        					width: 150
+	        		        },{
+	        		            header: 'Asset id',
+	        		            dataIndex: 'ciId',
+	        		            id: 'ciId',
+	        					menuDisabled: true,
+	        					width: 150
+	        		    	},{
+	        		    		header: 'Old value',
+	        		            dataIndex: 'changeAttributeOldValue',
+	        		            id: 'historyChangeAttributeOldValue',
+	        					menuDisabled: true,
+	        					width: 150
+	        		    	},{
+	        		            header: 'New value',
+	        		            dataIndex: 'changeAttributeNewValue',
+	        		            id: 'historyChangeAttributeNewValue',
+	        					menuDisabled: true,
+	        					width: 150
+	        		        },{
+	        		        	header: 'Info Type',
+	        		        	dataIndex: 'infoType',
+	        		        	id: 'infoType',
+	        					hidden: true,
+	        					menuDisabled: true
+	        		        }],
+	        				
+	        				view: new Ext.grid.GroupingView({})
+	        		    }]
+	    	});
+	    	assetHistoryWindow.show();
+		});
+		
+		historyListStore.load({
+			params: params
+		});
+    	
+    	
     },
 
-    resetFormFields: function() {
-        //product
-        var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
-        var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
-        var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-        var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
-        var tsapDescription = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription');
-        //BusinessInformation
-        var cbOrderNumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumber');
-        var tInventorynumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
-        var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
-        var tPsptext = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tPsptext');
-        var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
-        var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
-        var tCostCenterMgr = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tCostCenterMgr');
-        var tOrganisation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrganisation');
-        var tOwner = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOwner');
-        var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
-        var tAquisition = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tAquisition');
-        var tBook = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tBook');
-        var tDate = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tDate');
-        var tDepreciation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tDepreciation');
-        var tEconomic = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic');
-        var tRetirment = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tRetirment');
-        //Technics
-        var tTechnicalNumber = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalNumber');
-        var tTechnicalMaster = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalMaster');
-        var tSystemPlatform = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tSystemPlatform');
-        var tHardware = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tHardware');
-        var tOsName = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tOsName');
-        var tWorkflowHWS = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tWorkflowHWS');
-        var tTransient = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTransient');
-        var cbWorkflowTechnical = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbWorkflowTechnical');
-        var cbGeneralUsage = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbGeneralUsage');
-        var rbItSecurity = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('rbItSecurity');
-        var tComment = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tComment');
-        //Location
-        var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
-        var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
-        var cbBuilding = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
-        var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
-        var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
-        //contacts
-        var tCostcentermanager = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('tCostcentermanager');
-        var tOrganizationalunit = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('tOrganizationalunit');
-        var cbeditor = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts').getComponent('cbeditor');
+    resetFormFields: function(assetData) {
+    	
+    	var topPanel = this.getComponent('topPanel');
+    	topPanel.update(assetData);
 
-        //product reset
-
-        cbManufacturer.reset();
-        cbSubCategory.reset();
-        cbType.reset();
-        cbModel.reset();
-        tsapDescription.setValue("");
-        //business reset
-        cbOrderNumber.reset();
-        tInventorynumber.setValue("");
-        cbPsp.reset();
-        tPsptext.setValue("");
-        cbCostcenter.reset();
-        tfRequester.setValue("");
-        tCostCenterMgr.setValue("");
-        tOrganisation.setValue("");
-        tOwner.setValue("");
-        cbSapAsset.reset();
-        tAquisition.setValue("");
-        tBook.setValue("");
-        tDate.setValue("");
-        tDepreciation.setValue("");
-        tEconomic.setValue("");
-        tRetirment.setValue("");
-        //technics reset
-        tTechnicalNumber.setValue("");
-        tTechnicalMaster.setValue("");
-        tSystemPlatform.setValue("");
-        tHardware.setValue("");
-        tOsName.setValue("");
-        tWorkflowHWS.setValue("");
-        tTransient.setValue("");
-        cbWorkflowTechnical.reset();
-        cbGeneralUsage.reset();
-        rbItSecurity.reset();
-        tComment.setValue("");
-        //Location reset
-        cbCountry.reset();
-        cbSite.reset();
-        cbBuilding.reset();
-        cbRoom.reset();
-        cbRack.reset();
-        //contacts reset
-        cbeditor.reset();
-        tCostcentermanager.setValue("");
-        tOrganizationalunit.setValue("");
-    },
-
-    loadComboboxData: function() {
-        this.loadCountryData();
-        this.loadManufacturerData();
-        this.loadCategoryData();
-        this.loadCostcenterData();
-        this.loadOperationalStatusData();
-        this.loadPspElementData();
-        this.loadSapAssetData();
+    	var product = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
+    	product.update(assetData);
+    	
+    	var location = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location');
+    	location.update(assetData);
+    	
+    	var business = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
+    	business.update(assetData);
+    	
+    	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
+    	contact.update(assetData);
+    	
+    	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
+    	technics.update(assetData);
+        
     },
 
     updateLabels: function(labels) {
