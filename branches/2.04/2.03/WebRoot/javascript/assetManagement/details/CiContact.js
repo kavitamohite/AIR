@@ -35,6 +35,14 @@ AIR.CiContact = Ext.extend(Ext.form.FieldSet, {
 				labelSeparator : ': <span style="color:red">*</span>',
 				fieldLabel : 'Editors group',
 				width: 370,
+				 enableKeyEvents: true,
+		        store: AIR.AirStoreManager.getStoreByName('editorGroupListStore'),
+		        //valueField: 'id',
+		        displayField: 'name',
+				lastQuery: '',
+		        minChars: 0,
+		        triggerAction: 'all',
+		        mode: 'local',
 				style : {
 					marginBottom : 10
 				}
