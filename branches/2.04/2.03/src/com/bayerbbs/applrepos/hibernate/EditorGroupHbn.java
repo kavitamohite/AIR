@@ -32,15 +32,18 @@ public class EditorGroupHbn {
 			EditorGroupDTO  editorDTO=null;
 			while(rs.next()){
 				editorDTO=new EditorGroupDTO();
-				editorDTO.setName(rs.getString(0));
-				editorDTO.setMembers(rs.getString(1));
-				//keyDTO.setNameEn(rs.getString(2));
+				editorDTO.setName(rs.getString(1));
+				editorDTO.setMembers(rs.getString(2));
 				System.out.println("rs next values "+rs);
+				data.add(editorDTO);
 			}
 			//Query selectEditorQuery = session.createSQLQuery(SQL_EDITOR_GROUP);
-			System.out.println("rs values "+rs);
-			rs.next();
+			System.out.println("rs values "+rs.toString());
+				
 			tx.commit();
+			rs.close();
+			stmt.close();
+			conn.close();
 		} catch (Exception e) {
 			System.out.println(e);
 			if (tx != null && tx.isActive()) {
