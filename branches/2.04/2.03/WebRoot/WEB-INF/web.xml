@@ -154,6 +154,11 @@
   	<url-pattern>/BusinessAdministrationWSPort</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/ContactWSPort</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
   	<description>AirCiExcelExportServlet</description>
   	<servlet-name>AirCiExcelExportServlet</servlet-name>
