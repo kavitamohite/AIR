@@ -66,8 +66,6 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 					xtype: 'label',
 					itemId:'lcost',
 					html:'Cost center: <span style="color:red">*</span>',
-					//fieldLabel : 'Cost center',
-					text:'Cost center:',
 					width: 105,
 					style: {
 						fontSize: 12
@@ -147,6 +145,9 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 					marginBottom : 10,
 					fontSize : 12
 				}
+			}, {
+				xtype: 'hidden',
+				itemId: 'costCenterManagerHidden'
 			}, {
 				xtype : 'textfield',
 				itemId: 'tOrganisation',
@@ -286,6 +287,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
     onCostCenterSelect: function(combo, record, index) {
     	var costCenterManager = this.ownerCt.ownerCt.getComponent('leftPanel').getComponent('contacts').getComponent('tCostcentermanager');
     	var costCenterManager1 = this.getComponent('tCostCenterMgr');
+    	var costCenterManagerHidden = this.getComponent('costCenterManagerHidden');
 
     	personStore = AIR.AirStoreFactory.createPersonStore();
         personStore.load({
@@ -293,9 +295,11 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
                 query: record.get('cwid')
             },
             callback: function(records, options, success) {
-                var value = this.getAt(0).data.firstname + " " + this.getAt(0).data.lastname + "/" + this.getAt(0).data.cwid;
+            	var cwid = this.getAt(0).data.cwid;
+                var value = this.getAt(0).data.firstname + " " + this.getAt(0).data.lastname + "/" + cwid;
                 costCenterManager.setValue(value);
                 costCenterManager1.setValue(value);
+                costCenterManagerHidden.setValue(cwid);
             }
         });
     },
@@ -361,58 +365,63 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 
     },
     
-    resetFormFields: function(){
+    updateParam: function(assetData){
     	var tOrderNumber = this.getComponent('cbOrderNumber');
-    	tOrderNumber.reset();
+    	assetData.orderNumber = tOrderNumber.getValue();
 
         var tInventorynumber = this.getComponent('tInventorynumber');
-        tInventorynumber.reset();
+        assetData.inventoryNumber = tInventorynumber.getValue();
 
         var cbPsp = this.getComponent('cbPsp');
-        cbPsp.reset();
+        assetData.pspElementId = cbPsp.getValue();
+        assetData.pspElement = cbPsp.getRawValue();
 
         var tPsptext = this.getComponent('tPsptext');
-        tPsptext.reset();
+        assetData.pspText = tPsptext.getValue();
 
         var cbCostcenter = this.getComponent('pCost').getComponent('cbCostcenter');
-        cbCostcenter.reset();
+        assetData.costCenterId = cbCostcenter.getValue();
 
         var tfRequester = this.getComponent('pRequester').getComponent('tfRequester');
-        tfRequester.reset();
+        assetData.requester = tfRequester.getValue();
 
         var tfRequesterHidden = this.getComponent('pRequester').getComponent('tfRequesterHidden');
-        tfRequesterHidden.reset();
+        assetData.requesterId = tfRequesterHidden.getValue();
 
         var tCostCenterMgr = this.getComponent('tCostCenterMgr');
-        tCostCenterMgr.reset();
+        assetData.costCenterManager = tCostCenterMgr.getValue();
+        
+        var costCenterManagerHidden = this.getComponent('costCenterManagerHidden');
+        assetData.costCenterManagerId = costCenterManagerHidden.getValue();
 
         var tOrganisation = this.getComponent('tOrganisation');
-        tOrganisation.reset();
+        assetData.organizationalunit = tOrganisation.getValue();
 
         var tOwner = this.getComponent('tOwner');
-        tOwner.reset();
+        assetData.owner = tOwner.getValue();
 
         var cbSapAsset = this.getComponent('cbSapAsset');
-        cbSapAsset.reset();
+        assetData.sapAssetClassId = cbSapAsset.getValue();
 
         var tAquisition = this.getComponent('tAquisition');
-        tAquisition.reset();
+        assetData.acquisitionValue = tAquisition.getValue();
 
         var tBook = this.getComponent('tBook');
-        tBook.reset();
+        assetData.bookValue = tBook.getValue();
 
         var tDate = this.getComponent('tDate');
-        tDate.reset();
+        assetData.bookValueDate = tDate.getValue();
 
         var tDepreciation = this.getComponent('tDepreciation');
-        tDepreciation.reset();
+        assetData.depreciationStartDate = tDepreciation.getValue();
 
         var tEconomic = this.getComponent('tEconomic');
-        tEconomic.reset();
+        assetData.usefulEconomicLife = tEconomic.getValue();
 
         var tRetirement = this.getComponent('tRetirment');
-        tRetirement.reset();
-    	
+        assetData.retirementDate = tRetirement.getValue();    	
+        
+        return assetData;
     }
 });
 Ext.reg('AIR.CiBusiness', AIR.CiBusiness);

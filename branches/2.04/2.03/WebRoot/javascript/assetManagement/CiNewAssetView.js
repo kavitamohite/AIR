@@ -160,22 +160,22 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         bReset.on('click', this.resetFormFields, this);
         
     	var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
-          cbManufacturer.on('select', this.onFieldKeyUp, this);
+    	cbManufacturer.on('select', this.onFieldKeyUp, this);
         
         var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
-           cbSubCategory.on('select', this.onFieldKeyUp, this);
+        cbSubCategory.on('select', this.onFieldKeyUp, this);
         
         var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-           cbType.on('select', this.onFieldKeyUp, this);
+        cbType.on('select', this.onFieldKeyUp, this);
 
         var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
-           cbModel.on('select', this.onFieldKeyUp, this);
+        cbModel.on('select', this.onFieldKeyUp, this);
         
         var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
-           cbCostcenter.on('select', this.onFieldKeyUp, this);
+        cbCostcenter.on('select', this.onFieldKeyUp, this);
            
-         var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
-         cbSapAsset.on('select', this.onFieldKeyUp, this);
+        var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
+        cbSapAsset.on('select', this.onFieldKeyUp, this);
          
         var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
         tfRequester.on('select', this.onFieldKeyUp, this);
@@ -199,25 +199,26 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     onAssetHistoryButton: function(){
     	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
     	console.log(assetId);
-    	
-    	var loadMask = Util.createMask('Loading', Ext.get('historyListView'));
-		loadMask.show();
+
+    	AAM.getMask(AC.MASK_TYPE_LOAD).show();
 		var historyListStore = AIR.AirStoreFactory.createHistoryListStore();
 
 		var params = {
 			cwid: AAM.getCwid(),
 			token: AAM.getToken(),
-			id:  43044,//18452,//AIR.AirApplicationManager.getAssetId(),///assetId,//
-			tableId: 19//AAM.getTableId()
+			id:  AAM.getAssetId(),
+			tableId: 19
 		};
 		
+		console.log(params);
+		
 		historyListStore.addListener('load', function() {
-			loadMask.hide();
+	    	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
+
 			assetHistoryWindow = new Ext.Window({
 	            title: 'History',
 	            layout: 'fit',
-	            //autoScroll: true,
-	            width: 1230,
+	            width: 1210,
 	            height: 600,
 	            modal: true,
 	            closeAction: 'hide',
@@ -229,7 +230,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	        		    	store: this,
 	        		        emptyText: 'No data',
 	        		        border: false,
-	        		        //autoScroll: true,
 	        		        
 	        		        columns: [{
 	        		            header: 'Date Time',
@@ -426,60 +426,33 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
     saveAsset: function() {
         newAssetstore = AIR.AirStoreFactory.createSaveAssetStore();
-        var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
+        var assetData = {};
         
-        var manufacturerId = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
-        var subcategoryId = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getValue();
-        var typeId = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getValue();
-        var modelId = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel').getValue();
-        var sapDescription = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription').getValue();
+        assetData.cwid = AIR.AirApplicationManager.getCwid();
         
-        var technicalNumber = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalNumber').getValue();
-        var technicalMaster = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalMaster').getValue();
-//        var tSystemPlatform = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tSystemPlatform');
-//        var tHardware = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tHardware');
-//        var tOsName = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tOsName');
-//        var tWorkflowHWS = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tWorkflowHWS');
-//        var tTransient = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTransient');
-//        var cbWorkflowTechnical = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbWorkflowTechnical');
-        var generalUsageId = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbGeneralUsage').getValue();
-        var itSecurityRelevance = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('rbItSecurity').getValue().inputValue;
-        var comment = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tComment').getValue();
+        var topPanel = this.getComponent('topPanel');
+        assetData = topPanel.updateParam(assetData);
+    	
+    	var product = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
+    	product.updateParam(assetData);
+    	
+    	var location = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location');
+    	location.updateParam(assetData);
+    	
+    	var business = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
+    	business.updateParam(assetData);
+    	
+    	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
+    	contact.updateParam(assetData);
+    	
+    	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
+    	technics.updateParam(assetData);
         
+    	console.log(assetData);
         
-        var pspValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp').getValue();
-        var costcentervalue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter').getValue();
-        var sapAssetvalue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset').getValue();
-        var requesterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getValue();
-        var economicValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic').getValue();
-        var generalUsageValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbGeneralUsage').getValue();
-        var itSecurityValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('rbItSecurity').getValue().inputValue;
-
-        console.log(itSecurityRelevance);
-//        newAssetstore.load({
-//            params: {
-//        		assetId: assetId,
-//            	manufacturerId: manufacturerId,
-//            	subcategoryId: subcategoryId,
-//            	typeId: typeId,
-//            	modelId: modelId,
-//            	sapDescription: sapDescription,
-//            	
-//            	technicalNumber: technicalNumber,
-//            	technicalMaster: technicalMaster,
-//            	generalUsageId: generalUsageId,
-//            	itSecurityRelevance: itSecurityRelevance,
-//            	comment: comment,
-//            	
-//                kontoid: costcentervalue,
-//                pspElement: pspValue,
-//                hardwareCategory1_id: sapAssetvalue,
-//                requester: requesterValue,
-//                month: economicValue,
-//                generalUsageId: generalUsageValue,
-//                itSecurityRelevance: itSecurityValue
-//            }
-//        });
+        newAssetstore.load({
+            params: assetData
+        });
     }
 
 });

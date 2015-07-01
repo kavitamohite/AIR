@@ -35,7 +35,7 @@ AIR.CiContact = Ext.extend(Ext.form.FieldSet, {
 				labelSeparator : ': <span style="color:red">*</span>',
 				fieldLabel : 'Editors group',
 				width: 370,
-				 enableKeyEvents: true,
+				enableKeyEvents: true,
 		        store: AIR.AirStoreManager.getStoreByName('editorGroupListStore'),
 		        //valueField: 'id',
 		        displayField: 'name',
@@ -66,16 +66,17 @@ AIR.CiContact = Ext.extend(Ext.form.FieldSet, {
 
 	},
 	
-	resetFormFields: function(){
+	updateParam: function(assetData){
 		var tCostcentermanager = this.getComponent('tCostcentermanager');
-        tCostcentermanager.reset();
+		assetData.costCenterManager = tCostcentermanager.getValue();
 
         var tOrganizationalunit = this.getComponent('tOrganizationalunit');
-        tOrganizationalunit.reset();
+        assetData.organizationalunit = tOrganizationalunit.getValue();
 
         var cbeditor = this.getComponent('cbeditor');
-        cbeditor.reset();
+        assetData.editorsGroupId = cbeditor.getValue();
 		
+        return assetData;
 	}
 });
 Ext.reg('AIR.CiContact', AIR.CiContact);

@@ -155,66 +155,66 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 
         AIR.CiNewSoftwareAsset.superclass.initComponent.call(this);
 
-        var bReset = this.getComponent('buttonPanel').getComponent('bReset');
-        bReset.on('click', this.resetFormFields, this);
-    	var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
-        cbManufacturer.on('select', this.onFieldKeyUp, this);
+	    var bReset = this.getComponent('buttonPanel').getComponent('bReset');
+	    bReset.on('click', this.resetFormFields, this);
+	
+	    var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
+	    cbManufacturer.on('select', this.enableAssetButtons, this);
       
-      var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
-         cbSubCategory.on('select', this.onFieldKeyUp, this);
+	    var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
+        cbSubCategory.on('select', this.enableAssetButtons, this);
       
-      var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
-         cbType.on('select', this.onFieldKeyUp, this);
+        var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
+        cbType.on('select', this.enableAssetButtons, this);
 
-      var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
-         cbModel.on('select', this.onFieldKeyUp, this);
+        var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
+        cbModel.on('select', this.enableAssetButtons, this);
       
-      var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
-         cbCostcenter.on('select', this.onFieldKeyUp, this);
+        var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
+        cbCostcenter.on('select', this.enableAssetButtons, this);
          
-       var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
-       cbSapAsset.on('select', this.onFieldKeyUp, this);
+        var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
+        cbSapAsset.on('select', this.enableAssetButtons, this);
        
-      var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
-      tfRequester.on('select', this.onFieldKeyUp, this);
+        var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
+        tfRequester.on('select', this.enableAssetButtons, this);
       
-      var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
-      cbRoom.on('select', this.onFieldKeyUp, this);
-      
-      var cbBuilding =this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');
-      cbBuilding.on('select', this.onFieldKeyUp, this);
-      
-      var cbSite = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite');
-      cbSite.on('select', this.onFieldKeyUp, this);
-      
-      var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
-      cbCountry.on('select', this.onFieldKeyUp, this);
-      
-      var cbRack = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
-      cbRack.on('select', this.onFieldKeyUp, this);
+        var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
+        cbRoom.on('select', this.enableAssetButtons, this);
+  
+        var cbBuilding =this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');
+        cbBuilding.on('select', this.enableAssetButtons, this);	
+  
+        var cbSite = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite');
+        cbSite.on('select', this.enableAssetButtons, this);
+  
+        var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
+        cbCountry.on('select', this.enableAssetButtons, this);
+  	
+        var cbRack = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
+        cbRack.on('select', this.enableAssetButtons, this);
 
     },
+    
     onAssetHistoryButton: function(){
     	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
     	console.log(assetId);
-    	
-    	var loadMask = Util.createMask('Loading', Ext.get('historyListView'));
-		loadMask.show();
+
+    	AAM.getMask(AC.MASK_TYPE_LOAD).show();
 		var historyListStore = AIR.AirStoreFactory.createHistoryListStore();
 
 		var params = {
 			cwid: AAM.getCwid(),
 			token: AAM.getToken(),
-			id:  30914,//18452,//AIR.AirApplicationManager.getAssetId(),///assetId,//
-			tableId: 20//AAM.getTableId()
+			id:  30914,
+			tableId: 20
 		};
 		
 		historyListStore.addListener('load', function() {
-			loadMask.hide();
+			AAM.getMask(AC.MASK_TYPE_LOAD).hide();
 			assetHistoryWindow = new Ext.Window({
 	            title: 'History',
 	            layout: 'fit',
-	            //autoScroll: true,
 	            width: 1230,
 	            height: 600,
 	            modal: true,
@@ -227,7 +227,6 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 	        		    	store: this,
 	        		        emptyText: 'No data',
 	        		        border: false,
-	        		        //autoScroll: true,
 	        		        
 	        		        columns: [{
 	        		            header: 'Date Time',
@@ -326,15 +325,6 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
         
     },
     
-    onFieldKeyUp: function(textfield, event) {
-		this.onCiAssetChange();
-	},
-	
-	onCiAssetChange:function() {		
-		this.enableAssetButtons();
-		this.ciModified = true;
-	},
-	
 	enableAssetButtons: function() {	
 		var saveBtn = this.getComponent('buttonPanel').getComponent('saveBtn');
 		var cancelBtn = this.getComponent('buttonPanel').getComponent('cancelBtn');

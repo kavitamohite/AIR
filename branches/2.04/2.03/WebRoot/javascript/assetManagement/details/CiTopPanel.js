@@ -41,6 +41,9 @@ AIR.CiTopPanel = Ext.extend(AIR.AirView, {
 	},
 	
 	update: function(assetData){
+		var assetId = this.getComponent('assetId');
+		assetId.setValue(assetData.id);
+		
 		var identNumber = this.getComponent('identNumber');
         identNumber.setValue(assetData.identNumber);
 
@@ -48,12 +51,17 @@ AIR.CiTopPanel = Ext.extend(AIR.AirView, {
         tinventory.setValue(assetData.inventoryNumber);
 	},
 	
-	resetFormFields: function(){
+	updateParam: function(assetData){
+		var assetId = this.getComponent('assetId');
+		assetData.id = assetId.getValue();
+		
 		var identNumber = this.getComponent('identNumber');
-        identNumber.reset();
+        assetData.identNumber = identNumber.getValue();
 
         var tinventory = this.getComponent('tinventory');
-        tinventory.reset();
+        assetData.inventoryNumber = tinventory.getValue();
+        
+        return assetData;
 	}
 });
 Ext.reg('AIR.CiTopPanel', AIR.CiTopPanel);
