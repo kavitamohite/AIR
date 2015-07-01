@@ -93,7 +93,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 					}
 			    },{
 					xtype : 'container',
-					html: '<a id="mailtoproduct" href="mailto:ITILcenter@bayer.com&subject=' + mail_Subject_product + '"><img src="' + img_Email + '"></a>',
+					html: '<a id="mailtoproduct" href="mailto:ITILcenter@bayer.com&subject=' + mail_Subject_product + '&body='+ mail_blank_Text_product +'"><img src="' + img_Email + '"></a>',
 					itemId: 'mailproduct',
 					cls: 'x-plain',
 					isHideable: true,
