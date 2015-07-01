@@ -135,6 +135,10 @@ AIR.AirPersonPicker = Ext.extend(Ext.Tip, {
 		var hiddenElement = Ext.getCmp(comp.getId() + 'Hidden');
 		var contains = false;
 		
+		if(!hiddenElement){
+			hiddenElement = comp.ownerCt.getComponent(comp.getItemId() + 'Hidden');
+		}
+		
 		if (element) {
 			if (element.maxContacts && element.maxContacts > 1) {
 				if (element.getValue().length == 0) {
