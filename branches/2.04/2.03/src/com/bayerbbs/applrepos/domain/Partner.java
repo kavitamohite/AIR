@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -305,6 +306,11 @@ public class Partner extends DeletableRevisionInfo implements Serializable {
 		} else {
 			this.kontoKorrentType = kontoKorrentType == true ? 'Y' : 'N';
 		}
+	}
+	
+	@Transient
+	public String getOwner(){
+		return this.getName() +" - "+this.getNumber();
 	}
 
 }

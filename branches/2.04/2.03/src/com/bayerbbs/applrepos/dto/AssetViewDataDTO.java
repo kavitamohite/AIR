@@ -5,6 +5,7 @@ public class AssetViewDataDTO {
 	private Boolean isSoftwareComponent;
 	private Boolean isHardwareWithInventory;
 	private Boolean isHardwareWithoutInventory;
+	private String cwid;
 
 	// Asset Information
 	private Long id;
@@ -86,7 +87,6 @@ public class AssetViewDataDTO {
 	private String serialNumber;
 	private String assetChecked;
 	private String alias;
-	private Long kontoId;
 
 	public Boolean getIsSoftwareComponent() {
 		return isSoftwareComponent;
@@ -110,6 +110,14 @@ public class AssetViewDataDTO {
 
 	public void setIsHardwareWithoutInventory(Boolean isHardwareWithoutInventory) {
 		this.isHardwareWithoutInventory = isHardwareWithoutInventory;
+	}
+
+	public String getCwid() {
+		return cwid;
+	}
+
+	public void setCwid(String cwid) {
+		this.cwid = cwid;
 	}
 
 	public Long getId() {
@@ -592,12 +600,49 @@ public class AssetViewDataDTO {
 		this.alias = alias;
 	}
 
-	public Long getKontoId() {
-		return kontoId;
-	}
-
-	public void setKontoId(Long kontoId) {
-		this.kontoId = kontoId;
+	@Override
+	public String toString() {
+		return "AssetViewDataDTO [isSoftwareComponent=" + isSoftwareComponent
+				+ ", isHardwareWithInventory=" + isHardwareWithInventory
+				+ ", isHardwareWithoutInventory=" + isHardwareWithoutInventory
+				+ ", id=" + id + ", identNumber=" + identNumber
+				+ ", inventoryNumber=" + inventoryNumber + ", sapDescription="
+				+ sapDescription + ", reasonId=" + reasonId + ", manufacturer="
+				+ manufacturer + ", manufacturerId=" + manufacturerId
+				+ ", subCategory=" + subCategory + ", subcategoryId="
+				+ subcategoryId + ", type=" + type + ", typeId=" + typeId
+				+ ", model=" + model + ", modelId=" + modelId
+				+ ", technicalNumber=" + technicalNumber + ", technicalMaster="
+				+ technicalMaster + ", systemPlatformName="
+				+ systemPlatformName + ", hardwareSystem=" + hardwareSystem
+				+ ", osName=" + osName + ", workflowStatusHws="
+				+ workflowStatusHws + ", hardwareTransientSystem="
+				+ hardwareTransientSystem + ", workflowStatusId="
+				+ workflowStatusId + ", workflowStatus=" + workflowStatus
+				+ ", generalUsageId=" + generalUsageId
+				+ ", itSecurityRelevance=" + itSecurityRelevance + ", comment="
+				+ comment + ", country=" + country + ", countryId=" + countryId
+				+ ", site=" + site + ", siteId=" + siteId + ", building="
+				+ building + ", buildingId=" + buildingId + ", room=" + room
+				+ ", roomId=" + roomId + ", rack=" + rack + ", rackId="
+				+ rackId + ", orderNumber=" + orderNumber + ", costCenter="
+				+ costCenter + ", costCenterId=" + costCenterId
+				+ ", pspElement=" + pspElement + ", pspElementId="
+				+ pspElementId + ", pspText=" + pspText + ", requester="
+				+ requester + ", requesterId=" + requesterId
+				+ ", costCenterManager=" + costCenterManager
+				+ ", costCenterManagerId=" + costCenterManagerId
+				+ ", organizationalunit=" + organizationalunit + ", owner="
+				+ owner + ", sapAssetClass=" + sapAssetClass
+				+ ", sapAssetClassId=" + sapAssetClassId
+				+ ", acquisitionValue=" + acquisitionValue + ", bookValue="
+				+ bookValue + ", bookValueDate=" + bookValueDate
+				+ ", depreciationStartDate=" + depreciationStartDate
+				+ ", usefulEconomicLife=" + usefulEconomicLife
+				+ ", retirementDate=" + retirementDate + ", editorsGroupId="
+				+ editorsGroupId + ", editorsGroup=" + editorsGroup
+				+ ", serialNumber=" + serialNumber + ", assetChecked="
+				+ assetChecked + ", alias=" + alias + "]";
 	}
 
 }

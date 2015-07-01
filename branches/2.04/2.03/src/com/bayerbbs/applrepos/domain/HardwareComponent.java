@@ -39,29 +39,47 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private Schrank schrank;
 
+	private Long schrankId;
+
 	private String serialNumber;
 
 	private String inventoryNumber;
 
 	private LifecycleSubStat lifecycleSubStat;
 
+	private Long lifecycleSubStatId;
+
 	private HardwareCategory1 hardwareCategory1;
+
+	private Long hardwareCategory1Id;
 
 	private HardwareCategory2 hardwareCategory2;
 
+	private Long hardwareCategory2Id;
+
 	private HardwareCategory3 hardwareCategory3;
 
+	private Long hardwareCategory3Id;
+
 	private HardwareCategory4 hardwareCategory4;
+
+	private Long hardwareCategory4Id;
 
 	private HardwareComponent hardwareComponent;
 
 	private OperationalStatus operationalStatus;
 
+	private Long operationalStatusId;
+
 	private Partner hersteller;
+
+	private Long herstellerId;
 
 	private String inventoryOld;
 
 	private Konto konto;
+
+	private Long kontoId;
 
 	// LIEFERANT_PARTNID NUMBER Needs to be checked
 
@@ -101,7 +119,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private Long purchaseNumber;
 
-	private Date purchaseDate;
+	private String purchaseDate;
 
 	private String inventoryP69;
 
@@ -244,13 +262,22 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SCHRANK_ID")
+	@JoinColumn(name = "SCHRANK_ID", insertable = false, updatable = false)
 	public Schrank getSchrank() {
 		return schrank;
 	}
 
 	public void setSchrank(Schrank schrank) {
 		this.schrank = schrank;
+	}
+
+	@Column(name = "SCHRANK_ID")
+	public Long getSchrankId() {
+		return schrankId;
+	}
+
+	public void setSchrankId(Long schrankId) {
+		this.schrankId = schrankId;
 	}
 
 	@Column(name = "SERIEN_NR")
@@ -272,7 +299,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "LC_SUB_STAT_ID")
+	@JoinColumn(name = "LC_SUB_STAT_ID", insertable = false, updatable = false)
 	public LifecycleSubStat getLifecycleSubStat() {
 		return lifecycleSubStat;
 	}
@@ -281,8 +308,17 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.lifecycleSubStat = lifecycleSubStat;
 	}
 
+	@Column(name = "LC_SUB_STAT_ID")
+	public Long getLifecycleSubStatId() {
+		return lifecycleSubStatId;
+	}
+
+	public void setLifecycleSubStatId(Long lifecycleSubStatId) {
+		this.lifecycleSubStatId = lifecycleSubStatId;
+	}
+
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HW_KATEGORIE1_ID")
+	@JoinColumn(name = "HW_KATEGORIE1_ID", insertable = false, updatable = false)
 	public HardwareCategory1 getHardwareCategory1() {
 		return hardwareCategory1;
 	}
@@ -291,8 +327,17 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.hardwareCategory1 = hardwareCategory1;
 	}
 
+	@Column(name = "HW_KATEGORIE1_ID")
+	public Long getHardwareCategory1Id() {
+		return hardwareCategory1Id;
+	}
+
+	public void setHardwareCategory1Id(Long hardwareCategory1Id) {
+		this.hardwareCategory1Id = hardwareCategory1Id;
+	}
+
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HW_KATEGORIE2_ID")
+	@JoinColumn(name = "HW_KATEGORIE2_ID", insertable = false, updatable = false)
 	public HardwareCategory2 getHardwareCategory2() {
 		return hardwareCategory2;
 	}
@@ -301,8 +346,17 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.hardwareCategory2 = hardwareCategory2;
 	}
 
+	@Column(name = "HW_KATEGORIE2_ID")
+	public Long getHardwareCategory2Id() {
+		return hardwareCategory2Id;
+	}
+
+	public void setHardwareCategory2Id(Long hardwareCategory2Id) {
+		this.hardwareCategory2Id = hardwareCategory2Id;
+	}
+
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HW_KATEGORIE3_ID")
+	@JoinColumn(name = "HW_KATEGORIE3_ID", insertable = false, updatable = false)
 	public HardwareCategory3 getHardwareCategory3() {
 		return hardwareCategory3;
 	}
@@ -311,14 +365,32 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.hardwareCategory3 = hardwareCategory3;
 	}
 
+	@Column(name = "HW_KATEGORIE3_ID")
+	public Long getHardwareCategory3Id() {
+		return hardwareCategory3Id;
+	}
+
+	public void setHardwareCategory3Id(Long hardwareCategory3Id) {
+		this.hardwareCategory3Id = hardwareCategory3Id;
+	}
+
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HW_KATEGORIE4_ID")
+	@JoinColumn(name = "HW_KATEGORIE4_ID", insertable = false, updatable = false)
 	public HardwareCategory4 getHardwareCategory4() {
 		return hardwareCategory4;
 	}
 
 	public void setHardwareCategory4(HardwareCategory4 hardwareCategory4) {
 		this.hardwareCategory4 = hardwareCategory4;
+	}
+
+	@Column(name = "HW_KATEGORIE4_ID")
+	public Long getHardwareCategory4Id() {
+		return hardwareCategory4Id;
+	}
+
+	public void setHardwareCategory4Id(Long hardwareCategory4Id) {
+		this.hardwareCategory4Id = hardwareCategory4Id;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
@@ -332,7 +404,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "EINSATZ_STATUS_ID")
+	@JoinColumn(name = "EINSATZ_STATUS_ID", insertable = false, updatable = false)
 	public OperationalStatus getOperationalStatus() {
 		return operationalStatus;
 	}
@@ -341,14 +413,32 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.operationalStatus = operationalStatus;
 	}
 
+	@Column(name = "EINSATZ_STATUS_ID")
+	public Long getOperationalStatusId() {
+		return operationalStatusId;
+	}
+
+	public void setOperationalStatusId(Long operationalStatusId) {
+		this.operationalStatusId = operationalStatusId;
+	}
+
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HERSTELLER_PARTNID")
+	@JoinColumn(name = "HERSTELLER_PARTNID", insertable = false, updatable = false)
 	public Partner getHersteller() {
 		return hersteller;
 	}
 
 	public void setHersteller(Partner hersteller) {
 		this.hersteller = hersteller;
+	}
+
+	@Column(name = "HERSTELLER_PARTNID")
+	public Long getHerstellerId() {
+		return herstellerId;
+	}
+
+	public void setHerstellerId(Long herstellerId) {
+		this.herstellerId = herstellerId;
 	}
 
 	@Column(name = "INVENTAR_OLD")
@@ -361,13 +451,22 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "KONTO_ID")
+	@JoinColumn(name = "KONTO_ID", insertable = false, updatable = false)
 	public Konto getKonto() {
 		return konto;
 	}
 
 	public void setKonto(Konto konto) {
 		this.konto = konto;
+	}
+
+	@Column(name = "KONTO_ID")
+	public Long getKontoId() {
+		return kontoId;
+	}
+
+	public void setKontoId(Long kontoId) {
+		this.kontoId = kontoId;
 	}
 
 	@Column(name = "AM_JAHR_START")
@@ -539,11 +638,11 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@Column(name = "BUCHWERT_DATUM")
-	public Date getPurchaseDate() {
+	public String getPurchaseDate() {
 		return purchaseDate;
 	}
 
-	public void setPurchaseDate(Date purchaseDate) {
+	public void setPurchaseDate(String purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
 
@@ -929,5 +1028,70 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	public void setCpuCoreCount(Long cpuCoreCount) {
 		this.cpuCoreCount = cpuCoreCount;
 	}
+
+	@Override
+	public String toString() {
+		return "HardwareComponent [id=" + id + ", name=" + name + ", assetId="
+				+ assetId + ", relevantItsec=" + relevantItsec
+				+ ", technicalMaster=" + technicalMaster + ", technicalNumber="
+				+ technicalNumber + ", schrank=" + schrank + ", schrankId="
+				+ schrankId + ", serialNumber=" + serialNumber
+				+ ", inventoryNumber=" + inventoryNumber
+				+ ", lifecycleSubStat=" + lifecycleSubStat
+				+ ", lifecycleSubStatId=" + lifecycleSubStatId
+				+ ", hardwareCategory1=" + hardwareCategory1
+				+ ", hardwareCategory1Id=" + hardwareCategory1Id
+				+ ", hardwareCategory2=" + hardwareCategory2
+				+ ", hardwareCategory2Id=" + hardwareCategory2Id
+				+ ", hardwareCategory3=" + hardwareCategory3
+				+ ", hardwareCategory3Id=" + hardwareCategory3Id
+				+ ", hardwareCategory4=" + hardwareCategory4
+				+ ", hardwareCategory4Id=" + hardwareCategory4Id
+				+ ", hardwareComponent=" + hardwareComponent
+				+ ", operationalStatus=" + operationalStatus
+				+ ", operationalStatusId=" + operationalStatusId
+				+ ", hersteller=" + hersteller + ", herstellerId="
+				+ herstellerId + ", inventoryOld=" + inventoryOld + ", konto="
+				+ konto + ", kontoId=" + kontoId + ", startDate=" + startDate
+				+ ", accessDate=" + accessDate + ", endDate=" + endDate
+				+ ", serviceNumber=" + serviceNumber + ", bestSellText="
+				+ bestSellText + ", amBanf=" + amBanf + ", amKommision="
+				+ amKommision + ", sla=" + sla + ", note1=" + note1
+				+ ", note2=" + note2 + ", vUser=" + vUser
+				+ ", powerSupplyCount=" + powerSupplyCount + ", powerSupply1="
+				+ powerSupply1 + ", powerSupply2=" + powerSupply2
+				+ ", acquitionValue=" + acquitionValue + ", amSumme=" + amSumme
+				+ ", purchaseNumber=" + purchaseNumber + ", purchaseDate="
+				+ purchaseDate + ", inventoryP69=" + inventoryP69
+				+ ", cwidVerantw=" + cwidVerantw + ", itset=" + itset
+				+ ", subResponsible=" + subResponsible + ", relevantIcsNumber="
+				+ relevantIcsNumber + ", requester=" + requester
+				+ ", sampleTestDate=" + sampleTestDate + ", sampleTestResult="
+				+ sampleTestResult + ", partner=" + partner
+				+ ", sapDescription=" + sapDescription + ", syncTimestamp="
+				+ syncTimestamp + ", syncConfig=" + syncConfig
+				+ ", duplicateSer=" + duplicateSer + ", duplicateInv="
+				+ duplicateInv + ", inventoryStockNumber="
+				+ inventoryStockNumber + ", cpuModel=" + cpuModel
+				+ ", cpuCount=" + cpuCount + ", ramMemory=" + ramMemory
+				+ ", intDiskSpace=" + intDiskSpace + ", extDiskSpace="
+				+ extDiskSpace + ", cpuSpeed=" + cpuSpeed + ", vbp=" + vbp
+				+ ", salesPrice=" + salesPrice + ", purchaseName="
+				+ purchaseName + ", heightRackUnits=" + heightRackUnits
+				+ ", powerConsumption=" + powerConsumption
+				+ ", lastSyncTimestamp=" + lastSyncTimestamp
+				+ ", lastSyncSource=" + lastSyncSource + ", syncing=" + syncing
+				+ ", gxpFlag=" + gxpFlag + ", commercialStatus="
+				+ commercialStatus + ", contactForService=" + contactForService
+				+ ", acRequest=" + acRequest + ", acRequestEndDate="
+				+ acRequestEndDate + ", orderNumber=" + orderNumber
+				+ ", specifics=" + specifics + ", serviceContract="
+				+ serviceContract + ", severityLevel=" + severityLevel
+				+ ", hbaCount=" + hbaCount + ", lanCount=" + lanCount
+				+ ", businessEssential=" + businessEssential
+				+ ", cpuCoreCount=" + cpuCoreCount + "]";
+	}
+	
+	
 
 }

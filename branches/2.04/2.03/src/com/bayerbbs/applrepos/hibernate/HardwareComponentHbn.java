@@ -1,6 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -12,15 +14,11 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import com.bayerbbs.applrepos.common.ApplReposTS;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
-import com.bayerbbs.applrepos.domain.HardwareCategory1;
-import com.bayerbbs.applrepos.domain.HardwareCategory2;
-import com.bayerbbs.applrepos.domain.HardwareCategory3;
-import com.bayerbbs.applrepos.domain.HardwareCategory4;
 import com.bayerbbs.applrepos.domain.HardwareComponent;
 import com.bayerbbs.applrepos.domain.Konto;
-import com.bayerbbs.applrepos.domain.OperationalStatus;
-import com.bayerbbs.applrepos.domain.Partner;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.domain.Standort;
@@ -73,7 +71,7 @@ public class HardwareComponentHbn {
 			if (input.getSort() != null) {
 				addSortingCriteria(criteria, input.getSort(), input.getDir());
 			}
-			
+
 			criteria.setFirstResult(input.getStart());
 			criteria.setMaxResults(input.getLimit());
 			List<HardwareComponent> values = (List<HardwareComponent>) criteria
@@ -204,9 +202,9 @@ public class HardwareComponentHbn {
 		// Technics
 		dto.setTechnicalNumber(hwComp.getTechnicalNumber());
 		dto.setTechnicalMaster(hwComp.getTechnicalMaster());
-//		dto.setSystemPlatformName("SYSTEM PLATOFORM");
-//		dto.setHardwareSystem("HARDWARE SYSTEM");
-//		dto.setHardwareTransientSystem("TRANSIENT SYSTEM");
+		// dto.setSystemPlatformName("SYSTEM PLATOFORM");
+		// dto.setHardwareSystem("HARDWARE SYSTEM");
+		// dto.setHardwareTransientSystem("TRANSIENT SYSTEM");
 		if (hwComp.getLifecycleSubStat() != null) {
 			dto.setWorkflowStatusId(hwComp.getLifecycleSubStat().getId());
 			dto.setWorkflowStatus(hwComp.getLifecycleSubStat().getStatus());
@@ -215,6 +213,7 @@ public class HardwareComponentHbn {
 			dto.setGeneralUsageId(hwComp.getOperationalStatus().getId());
 		}
 		dto.setItSecurityRelevance(hwComp.getRelevantItsec());
+		dto.setComment(hwComp.getNote1());
 
 		Long countryId = hwComp.getSchrank().getRoom().getBuildingArea()
 				.getBuilding().getTerrain().getStandort().getLandId();
@@ -224,64 +223,66 @@ public class HardwareComponentHbn {
 				.getBuilding();
 		Room room = hwComp.getSchrank().getRoom();
 		Schrank rack = hwComp.getSchrank();
-		
-		
+
 		// Location
 		dto.setCountryId(countryId);
-		
+
 		dto.setSiteId(site.getId());
 		dto.setSite(site.getName());
-		
+
 		dto.setBuildingId(building.getId());
 		dto.setBuilding(building.getName());
-		
+
 		dto.setRoomId(room.getId());
 		dto.setRoom(room.getName());
-		
+
 		dto.setRackId(rack.getId());
 		dto.setRack(rack.getName());
-		
-		
+
 		// Business Administration
 		dto.setOrderNumber(hwComp.getBestSellText());
 		if (hwComp.getKonto() != null) {
 			dto.setCostCenter(hwComp.getKonto().getName());
 			dto.setCostCenterId(hwComp.getKonto().getId());
-			if (hwComp.getKonto().getCwidVerantw() != null) {
+			if (hwComp.getCwidVerantw() != null) {
+				dto.setCostCenterManagerId(hwComp.getCwidVerantw());
 				List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(hwComp
-						.getKonto().getCwidVerantw());
+						.getCwidVerantw());
 				dto.setCostCenterManager(persons.get(0).getDisplayNameFull());
 			}
 			dto.setPspElement(hwComp.getAmKommision());
-			Konto pspelement = PspElementHbn.getPspElementByName(hwComp.getAmKommision());
-			if(pspelement != null){
+			Konto pspelement = PspElementHbn.getPspElementByName(hwComp
+					.getAmKommision());
+			if (pspelement != null) {
 				dto.setPspElementId(pspelement.getId());
 				dto.setPspText(pspelement.getBeschreibung());
 			}
 		}
 		dto.setRequesterId(hwComp.getRequester());
-		
+
 		List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(hwComp
-				.getKonto().getCwidVerantw());
+				.getCwidVerantw());
 		dto.setRequester(persons.get(0).getDisplayNameFull());
-		
+
 		dto.setOrganizationalunit(hwComp.getSubResponsible());
-//		dto.setOwner("OWNER");
+		if(hwComp.getPartner() != null){
+			dto.setOwner(hwComp.getPartner().getOwner());
+		}
 		if (hwComp.getHardwareCategory1() != null) {
 			dto.setSapAssetClass(hwComp.getHardwareCategory1().getHwKategory1());
 			dto.setSapAssetClassId(hwComp.getHardwareCategory1().getId());
 			dto.setUsefulEconomicLife(hwComp.getHardwareCategory1().getMonth());
 		}
 		dto.setAcquisitionValue(hwComp.getAcquitionValue());
-		// dto.setBookValue();
-		// dto.setDateOfBookValue();
+		dto.setBookValue(hwComp.getPurchaseNumber());
+		dto.setBookValueDate(hwComp.getPurchaseDate());
 
 		dto.setSerialNumber(hwComp.getSerialNumber());
 		dto.setDepreciationStartDate(hwComp.getStartDate());
 		dto.setRetirementDate(hwComp.getEndDate());
-//		dto.setAssetChecked("ASSET CHECKED");
-//		dto.setAlias("ALIAS");
-//		dto.setOsName("OS Name");
+		// dto.setAssetChecked("ASSET CHECKED");
+		// dto.setAlias("ALIAS");
+		// dto.setOsName("OS Name");
 		return dto;
 	}
 
@@ -318,82 +319,101 @@ public class HardwareComponentHbn {
 			AssetViewDataDTO dto) {
 
 		AssetManagementParameterOutput output = new AssetManagementParameterOutput();
-		HardwareComponent hardwareComponent = new HardwareComponent();
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
 		tx = session.beginTransaction();
 
-		hardwareComponent.setId(dto.getId());
-
-		hardwareComponent.setName("test");
-
-		Partner partner = ManufacturerHbn.findById(dto.getManufacturerId());
-		hardwareComponent.setHersteller(partner);
-		System.out.println("Manufacturer values " + dto.getManufacturerId());
-
-		HardwareCategory2 hardwareCategory2 = SubCategoryHbn.findById(dto
-				.getSubcategoryId());
-
-		hardwareComponent.setHardwareCategory2(hardwareCategory2);
-		System.out
-				.println("hardwareCategory2 values " + dto.getSubcategoryId());
-
-		HardwareCategory3 hardwareCategory3 = TypeHbn.findById(dto.getTypeId());
-
-		hardwareComponent.setHardwareCategory3(hardwareCategory3);
-		System.out.println("hardwareCategory3 values " + dto.getTypeId());
-
-		HardwareCategory4 hardwareCategory4 = ModelHbn.findById(dto
-				.getModelId());
-
-		hardwareComponent.setHardwareCategory4(hardwareCategory4);
-		System.out.println("hardwareCategory4 values " + dto.getModelId());
-
-		hardwareComponent.setAmKommision(dto.getPspElement());
-		System.out.println("PSP values " + dto.getPspElement());
-
-		Konto konto = CostcenterHbn.findById(dto.getKontoId());
-		hardwareComponent.setKonto(konto);
-		System.out.println("costcenter values " + dto.getKontoId());
-
-		HardwareCategory1 hardwareCategory1 = SapAssetHbn.findById(dto
-				.getSapAssetClassId());
-		hardwareComponent.setHardwareCategory1(hardwareCategory1);
-		System.out.println("hardwareCategory1 values "
-				+ dto.getSapAssetClassId());
-
-		hardwareComponent.setRequester(dto.getRequester());
-		System.out.println("requester values " + dto.getRequester());
-
-		hardwareComponent.setServiceNumber(dto.getUsefulEconomicLife());
-		System.out.println("month values " + dto.getUsefulEconomicLife());
-
-		OperationalStatus operationalStatus = OperationalStatusHbn.findById(dto
-				.getGeneralUsageId());
-		hardwareComponent.setOperationalStatus(operationalStatus);
-		System.out.println("operationalStatus values "
-				+ dto.getGeneralUsageId());
-
-		hardwareComponent.setRelevantItsec(dto.getItSecurityRelevance());
-		System.out.println("ItSecurityRelevanc values "
-				+ dto.getItSecurityRelevance());
-
-		// other fields
-		hardwareComponent.setBestSellText(null);
-		hardwareComponent.setInventoryNumber(null);
-		hardwareComponent.setItset(10002L);
-		hardwareComponent.setBusinessEssential(null);
-		hardwareComponent.setRelevantItsec((long) 0);
-
+		System.out.println(dto);
+		HardwareComponent hardwareComponent = getHardwareComponent(dto);
+		System.out.println(hardwareComponent);
 		try {
 			session.save(hardwareComponent);
 			session.flush();
 		} catch (Exception e) {
 			System.out.println("error---" + e.getMessage());
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+		} finally {
+			if (tx.isActive()) {
+				tx.commit();
+			}
+			session.close();
 		}
-		tx.commit();
-
 		return output;
+	}
+
+	private static HardwareComponent getHardwareComponent(AssetViewDataDTO dto) {
+		HardwareComponent hardwareComponent = new HardwareComponent();
+
+		if (dto.getId() == null) {
+			hardwareComponent
+					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			hardwareComponent.setInsertTimestamp(ApplReposTS
+					.getCurrentTimestamp());
+			hardwareComponent.setInsertUser(dto.getCwid());
+		} else {
+			hardwareComponent.setId(dto.getId());
+		}
+		hardwareComponent.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+		hardwareComponent.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+		hardwareComponent.setUpdateUser(dto.getCwid());
+
+		if (dto.getIdentNumber() != null && dto.getIdentNumber().length() > 0) {
+			hardwareComponent.setName(dto.getIdentNumber());
+		} else {
+			hardwareComponent.setName(getIdentNumber());
+		}
+
+		hardwareComponent.setTechnicalMaster(dto.getTechnicalMaster());
+		hardwareComponent.setTechnicalNumber(dto.getTechnicalNumber());
+		hardwareComponent.setSchrankId(dto.getRackId());
+		hardwareComponent.setSerialNumber(dto.getSerialNumber());
+		hardwareComponent.setLifecycleSubStatId(dto.getWorkflowStatusId());
+
+		hardwareComponent.setHardwareCategory1Id(dto.getSapAssetClassId());
+		hardwareComponent.setHardwareCategory2Id(dto.getSubcategoryId());
+		hardwareComponent.setHardwareCategory3Id(dto.getTypeId());
+		hardwareComponent.setHardwareCategory4Id(dto.getModelId());
+		hardwareComponent.setHerstellerId(dto.getManufacturerId());
+
+		hardwareComponent.setKontoId(dto.getCostCenterId());
+		hardwareComponent.setBestSellText(dto.getOrderNumber());
+		hardwareComponent.setAmKommision(dto.getPspElement());
+		hardwareComponent.setAcquitionValue(dto.getAcquisitionValue());
+		hardwareComponent.setInventoryP69(dto.getInventoryNumber());
+		hardwareComponent.setSubResponsible(dto.getOrganizationalunit());
+
+		hardwareComponent.setRequester(dto.getRequesterId());
+		hardwareComponent.setSapDescription(dto.getSapDescription());
+		hardwareComponent.setNote1(dto.getComment());
+		hardwareComponent.setPurchaseNumber(dto.getBookValue());
+		// hardwareComponent.setPurchaseDate(dto.getBookValueDate());
+		hardwareComponent.setCwidVerantw(dto.getCostCenterManagerId());
+		hardwareComponent.setServiceNumber(dto.getUsefulEconomicLife());
+
+		hardwareComponent.setStartDate(dto.getDepreciationStartDate());
+		hardwareComponent.setEndDate(dto.getRetirementDate());
+		hardwareComponent.setOperationalStatusId(dto.getGeneralUsageId());
+		hardwareComponent.setRelevantItsec(dto.getItSecurityRelevance());
+
+		Long itSet = null;
+		String strItSet = ApplReposHbn.getItSetFromCwid(dto.getRequesterId());
+		if (null != strItSet) {
+			itSet = Long.parseLong(strItSet);
+		}
+		if (null == itSet) {
+			itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
+		}
+		hardwareComponent.setItset(itSet);
+
+		return hardwareComponent;
+	}
+
+	private static String getIdentNumber() {
+
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+		return df.format(new Date(System.currentTimeMillis()));
 	}
 
 }
