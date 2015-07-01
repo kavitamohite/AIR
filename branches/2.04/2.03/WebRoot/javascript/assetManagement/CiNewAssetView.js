@@ -87,7 +87,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				hidden: true
 			},{
 				xtype : 'panel',
-				id: 'buttonPanel',
+				itemId: 'buttonPanel',
 				layout : 'column',
 				border: false,
 				autoScroll : true,
@@ -95,7 +95,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				bodyStyle : 'padding:10px 5px 0px 10px',
 				items : [{
 					xtype : 'button',
-					id : 'saveBtn',
+					itemId : 'saveBtn',
 					text : 'Save',
 					hidden: true,
 					style : {
@@ -108,7 +108,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		    		}.createDelegate(this)
 				},{
 					xtype : 'button',
-					id : 'cancelBtn',
+					itemId : 'cancelBtn',
 					text : 'Cancel',
 					hidden: true,
 					style : {
@@ -118,7 +118,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					}
 				},{
 					xtype : 'button',
-					id : 'inventoryBtn',
+					itemId : 'inventoryBtn',
 					text : 'Apply for inventory number',
 					style : {
 						//marginBottom : 10,
@@ -128,7 +128,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					}
 				},{
 					xtype : 'button',
-					id : 'bReset',
+					itemId : 'bReset',
 					text : 'Reset all Entries',
 					style : {
 						fontSize : 14,
@@ -137,7 +137,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					}
 				},{
 					xtype : 'button',
-					id : 'bHistory',
+					itemId : 'bHistory',
 					text : 'Asset History',
 					listeners: {
                         click: {
@@ -159,6 +159,41 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         var bReset = this.getComponent('buttonPanel').getComponent('bReset');
         bReset.on('click', this.resetFormFields, this);
         
+    	var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
+          cbManufacturer.on('select', this.onFieldKeyUp, this);
+        
+        var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
+           cbSubCategory.on('select', this.onFieldKeyUp, this);
+        
+        var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
+           cbType.on('select', this.onFieldKeyUp, this);
+
+        var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
+           cbModel.on('select', this.onFieldKeyUp, this);
+        
+        var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
+           cbCostcenter.on('select', this.onFieldKeyUp, this);
+           
+         var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
+         cbSapAsset.on('select', this.onFieldKeyUp, this);
+         
+        var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
+        tfRequester.on('select', this.onFieldKeyUp, this);
+        
+        var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
+        cbRoom.on('select', this.onFieldKeyUp, this);
+        
+        var cbBuilding =this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
+        cbBuilding.on('select', this.onFieldKeyUp, this);
+        
+        var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
+        cbSite.on('select', this.onFieldKeyUp, this);
+        
+        var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
+        cbCountry.on('select', this.onFieldKeyUp, this);
+        
+        var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
+        cbRack.on('select', this.onFieldKeyUp, this);
     },
     
     onAssetHistoryButton: function(){
@@ -172,8 +207,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var params = {
 			cwid: AAM.getCwid(),
 			token: AAM.getToken(),
-			id: 18452,
-			tableId: 19
+			id:  43044,//18452,//AIR.AirApplicationManager.getAssetId(),///assetId,//
+			tableId: 19//AAM.getTableId()
 		};
 		
 		historyListStore.addListener('load', function() {
@@ -181,8 +216,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			assetHistoryWindow = new Ext.Window({
 	            title: 'History',
 	            layout: 'fit',
-	            autoScroll: true,
-	            width: 800,
+	            //autoScroll: true,
+	            width: 1230,
 	            height: 600,
 	            modal: true,
 	            closeAction: 'hide',
@@ -194,7 +229,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	        		    	store: this,
 	        		        emptyText: 'No data',
 	        		        border: false,
-	        		        autoScroll: true,
+	        		        //autoScroll: true,
 	        		        
 	        		        columns: [{
 	        		            header: 'Date Time',
@@ -267,6 +302,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
     resetFormFields: function(assetData) {
     	
+    	var saveBtn = this.getComponent('buttonPanel').getComponent('saveBtn');
+		var cancelBtn = this.getComponent('buttonPanel').getComponent('cancelBtn');
+    	
     	var topPanel = this.getComponent('topPanel');
     	topPanel.update(assetData);
 
@@ -284,6 +322,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	
     	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
     	technics.update(assetData);
+    	
+    	saveBtn.hide();
+		cancelBtn.hide();
         
     },
 
@@ -347,7 +388,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		
 			if(cbManufacturerValue.length>0 && cbSubCategoryValue.length>0 && cbTypeValue.length>0 && cbModelValue .length>0
 				&& cbCountryValue.length>0 && cbSiteValue.length>0 && cbBuildingValue.length>0 && cbRoomValue.length && cbRackValue.length>0 
-				&& cbCostcenterValue.length>0 && cbSapAssetValue.length>0 ){
+				&& cbCostcenterValue.length>0 && cbSapAssetValue.length>0 &&tfRequesterValue.length>0 ){
 			saveBtn.show();
 			cancelBtn.show();
 			
