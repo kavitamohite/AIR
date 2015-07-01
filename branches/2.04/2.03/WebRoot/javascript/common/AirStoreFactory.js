@@ -4334,6 +4334,35 @@ AIR.AirStoreFactory = function() {
  			return ciTypeListstore;
  		},
  		
+ 		createEditorGroupListStore: function() {
+
+			var ciEditorGroupRecord = Ext.data.Record.create([
+				{ name: 'name',  },
+ 			    'members'
+ 			]);
+
+ 			var ciEditorGroupReader = new Ext.data.XmlReader({
+ 				//idProperty: 'id',
+ 				record: 'return'
+ 			}, ciEditorGroupRecord);
+ 			
+ 			var ciEditorGroupstore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'editorGroupListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/ContactWSPort',
+ 					loadMethod: 'findEditorGroupList',
+ 					timeout: 120000,
+ 					reader: ciEditorGroupReader
+ 				})
+ 			});
+ 			
+ 			return ciEditorGroupstore;
+ 		}
+ 						
+ 		, 		
  		createCostCenterListStore: function() {
 			var ciCostcenterListRecord = Ext.data.Record.create([
 				{ name: 'id', type: 'int' },
