@@ -2009,7 +2009,7 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createCiDetailStore: function(tableId) {
-			var ciDetailStore;
+			var ciDetailStore = null;
 			
 			switch(tableId) {
 				case AC.TABLE_ID_APPLICATION:
@@ -4360,9 +4360,8 @@ AIR.AirStoreFactory = function() {
  			});
  			
  			return ciEditorGroupstore;
- 		}
- 						
- 		, 		
+ 		},
+ 		
  		createCostCenterListStore: function() {
 			var ciCostcenterListRecord = Ext.data.Record.create([
 				{ name: 'id', type: 'int' },

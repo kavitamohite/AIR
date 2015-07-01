@@ -36,7 +36,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			},{
 				xtype: 'form',
 				id: 'exportForm',
-				//hidden: true,
 				border: false,
 				
 				//Important: h prefix for all hidden fields where the id corresponds the fields of CiAdvancedSearchView to avoid duplicate ExtJS Component field IDs
@@ -586,7 +585,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 	},
 	
 	forwardToEdit: function(assetId){
-		var ciDetailStore = AIR.AirStoreFactory.createAssetListStore();//createApplicationDetailStore
+		var ciDetailStore = AIR.AirStoreFactory.createAssetListStore();
 		ciDetailStore.on('beforeload', this.onBeforeAssetLoad, this);
 		ciDetailStore.on('load', this.onAssetLoad, this);
 		ciDetailStore.load({
@@ -595,7 +594,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				queryMode: AAM.getComponentType()
 			}
 		});
-		AAM.setAssetId(null);
 	},
 	
 	onBeforeAssetLoad: function(store, options) {
