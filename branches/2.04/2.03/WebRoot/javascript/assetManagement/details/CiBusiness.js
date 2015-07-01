@@ -30,7 +30,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 			}, {
 		        xtype: 'filterCombo',//combo
 		        itemId: 'cbPsp',
-		        labelSeparator : ': <span style="color:red">*</span>',
+		        //labelSeparator : ': <span style="color:red">*</span>',
 		        width: 370,
 		        fieldLabel: 'PSP-Element',
 		        enableKeyEvents: true,
@@ -65,7 +65,8 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 				items: [{
 					xtype: 'label',
 					itemId:'lcost',
-					fieldLabel : 'Cost center',
+					html:'Cost center: <span style="color:red">*</span>',
+					//fieldLabel : 'Cost center',
 					text:'Cost center:',
 					width: 105,
 					style: {
@@ -74,6 +75,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 	    		},{
 	    			xtype: 'filterCombo',
 	    			itemId: 'cbCostcenter',
+	    			labelSeparator : ': <span style="color:red">*</span>',
 			        width: 330,
 			        enableKeyEvents: true,
 			        store: AIR.AirStoreManager.getStoreByName('costCenterListStore'),
