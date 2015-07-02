@@ -1368,7 +1368,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		field = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsibleHidden');
 		if (!field.disabled) {
 			data.ciOwnerDelegateHidden = field.getValue();
-			// Sonderfall ciSubResponsible benötigt den Gruppennamen!
+			// Sonderfall ciSubResponsible benï¿½tigt den Gruppennamen!
 			field = this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible');
 			data.ciOwnerDelegate = field.getValue();
 		}
@@ -1377,7 +1377,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		field = this.getComponent('provider').getComponent('pProviderName').getComponent('idProviderName');
 		if (!field.disabled) {
 			data.providerName = field.getValue();
-			alert("provider name  ----"+field.getValue());
+			//alert("provider name  ----"+field.getValue());
 			/*field = this.getComponent('provider').getComponent('pProviderName').getComponent('ProviderNameHidden');			
 			if (field.getValue()) {
 				
@@ -1393,8 +1393,6 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('idProviderAddress');
 		if (!field.disabled) {
 			data.providerAddress = field.getValue();
-			alert("ProviderAddress  ----"+field.getValue());
-			alert("ProviderAddress  ----"+data.providerAddress);
 			/*field = this.getComponent('provider').getComponent('pProviderAddress').getComponent('ProviderAddressHidden');			
 			if (field.getValue()) {
 				
@@ -1415,9 +1413,9 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				field = this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSideHidden');
 	//			var value2 = field.getValue();
 				if (field.getValue()) {// && field.getValue().length > 0
-					//Entfernt, weil bei mit personpicker hinzugefügten Einträgen und durch den recordremover wieder entfernten
-					//Einträgen hier mit applicationSaveStore.setBaseParam nichts gesetzt wird, wenn ALLE Einträge gelöscht werden sollen
-					//Wenn '' nicht gesetzt/übertragen wird, werden die alten Daten wieder geladen.
+					//Entfernt, weil bei mit personpicker hinzugefï¿½gten Eintrï¿½gen und durch den recordremover wieder entfernten
+					//Eintrï¿½gen hier mit applicationSaveStore.setBaseParam nichts gesetzt wird, wenn ALLE Eintrï¿½ge gelï¿½scht werden sollen
+					//Wenn '' nicht gesetzt/ï¿½bertragen wird, werden die alten Daten wieder geladen.
 					data.gpsccontactResponsibleAtCustomerSideHidden = field.getValue();
 				}
 			} else {
