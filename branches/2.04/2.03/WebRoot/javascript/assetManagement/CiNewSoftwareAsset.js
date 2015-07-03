@@ -78,12 +78,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                         itemId: 'businessInformation'
                     }]
                 }],
-            },{
-            	itemId: 'assetHistoryView',
-				xtype: 'AIR.CiHistoryView',
-				hidden: true
-			},
-			{
+            }, {
                 xtype: 'panel',
                 itemId: 'buttonPanel',
                 layout: 'column',
