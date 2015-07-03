@@ -271,15 +271,11 @@ public class HardwareComponentHbn {
 		if (hwComp.getHardwareCategory1() != null) {
 			dto.setSapAssetClass(hwComp.getHardwareCategory1().getHwKategory1());
 			dto.setSapAssetClassId(hwComp.getHardwareCategory1().getId());
-			dto.setUsefulEconomicLife(hwComp.getHardwareCategory1().getMonth());
+			//dto.setUsefulEconomicLife(hwComp.getHardwareCategory1().getMonth());
 		}
-		dto.setAcquisitionValue(hwComp.getAcquitionValue());
-		dto.setBookValue(hwComp.getPurchaseNumber());
-		dto.setBookValueDate(hwComp.getPurchaseDate());
+		
 
 		dto.setSerialNumber(hwComp.getSerialNumber());
-		dto.setDepreciationStartDate(hwComp.getStartDate());
-		dto.setRetirementDate(hwComp.getEndDate());
 		// dto.setAssetChecked("ASSET CHECKED");
 		// dto.setAlias("ALIAS");
 		// dto.setOsName("OS Name");
@@ -380,20 +376,15 @@ public class HardwareComponentHbn {
 		hardwareComponent.setKontoId(dto.getCostCenterId());
 		hardwareComponent.setBestSellText(dto.getOrderNumber());
 		hardwareComponent.setAmKommision(dto.getPspElement());
-		hardwareComponent.setAcquitionValue(dto.getAcquisitionValue());
 		hardwareComponent.setInventoryP69(dto.getInventoryNumber());
 		hardwareComponent.setSubResponsible(dto.getOrganizationalunit());
 
 		hardwareComponent.setRequester(dto.getRequesterId());
 		hardwareComponent.setSapDescription(dto.getSapDescription());
 		hardwareComponent.setNote1(dto.getComment());
-		hardwareComponent.setPurchaseNumber(dto.getBookValue());
 		// hardwareComponent.setPurchaseDate(dto.getBookValueDate());
 		hardwareComponent.setCwidVerantw(dto.getCostCenterManagerId());
-		hardwareComponent.setServiceNumber(dto.getUsefulEconomicLife());
 
-		hardwareComponent.setStartDate(dto.getDepreciationStartDate());
-		hardwareComponent.setEndDate(dto.getRetirementDate());
 		hardwareComponent.setOperationalStatusId(dto.getGeneralUsageId());
 		hardwareComponent.setRelevantItsec(dto.getItSecurityRelevance());
 
