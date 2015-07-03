@@ -589,7 +589,7 @@
 		<assetType>Type</assetType>
 		<assetModel>Model</assetModel>
 		<assetSystemPlatformName>System Platform Name</assetSystemPlatformName>
-		<assetHardwareSystem>Hardware System</assetHardwareSystem>
+	
 		<assetHardwareTransientSystem>Hardware Transient System</assetHardwareTransientSystem>
 		<assetAlias>Alias</assetAlias>
 		<assetOsName>OS Name</assetOsName>
@@ -624,9 +624,9 @@
 		<assetTechnicalNumber>Technical Number / Asset-ID:</assetTechnicalNumber>
 		<assetTechnicalMaster>Technical Master:</assetTechnicalMaster>
 		<assetSystemPlatformName>System platform name:</assetSystemPlatformName>
-		<assetHardwareSystem>Hardwaresystem (HWS):</assetHardwareSystem>
+		
 		<assetOsname>OS-Name:</assetOsname>
-		<assetWorflowstatus>Worflowstatus technical HWS:</assetWorflowstatus>
+	
 		<assettransient>HW-transient systems:</assettransient>
 		<assetWorflowstatustechnical>Worflowstatus technical:</assetWorflowstatustechnical>
 		<assetGeneral>General Usage:</assetGeneral>
@@ -649,12 +649,7 @@
 	    <assetOrganisation>Organizational Unit:</assetOrganisation>
 	    <assetOwner>Owner(legal):</assetOwner>
 	    <assetSapClass>SAP Asset Class:</assetSapClass>
-	    <assetAquisition>Aquisition Value(Euro):</assetAquisition>
-	    <assetBookValue>Book Value(Euro):</assetBookValue>
-	    <assetDateValue>Date of book value:</assetDateValue>
-	    <assetdepreciation>Start date depreciation:</assetdepreciation>
-	    <asseteconomic>Useful economic life (months):</asseteconomic>
-	    <assetRetirement>Retirement date:</assetRetirement>
+	    
 	    <!-- asset management Contacts-->
 	    <assetEditor>Editors group*</assetEditor>
 

@@ -579,7 +579,7 @@
 		<assetIdentNumber>Indent Number-German</assetIdentNumber>
 		<assetTechnicalMaster>Technical Master-German</assetTechnicalMaster>
 		<assetTechnicalNumber>Technical Number-German</assetTechnicalNumber>
-		<assetAcquisitionValue>Acquisition Value-German</assetAcquisitionValue>
+	
 		<assetSite>Site-German</assetSite>
 		<assetOrderNumber>Order number-German</assetOrderNumber>
 		<assetChecked>Asset checked-German</assetChecked>
@@ -588,7 +588,7 @@
 		<assetType>Type-German</assetType>
 		<assetModel>Model-German</assetModel>
 		<assetSystemPlatformName>System Platform Name-German</assetSystemPlatformName>
-		<assetHardwareSystem>Hardware System-German</assetHardwareSystem>
+		
 		<assetHardwareTransientSystem>Hardware Transient System-German</assetHardwareTransientSystem>
 		<assetAlias>Alias-German</assetAlias>
 		<assetOsName>OS Name-German</assetOsName>
@@ -624,9 +624,9 @@
 			<assetTechnicalNumber>Technische Nummer / Asset-ID:</assetTechnicalNumber>
 			<assetTechnicalMaster>Technische Master:</assetTechnicalMaster>
 			<assetSystemPlatformName>System platform name:</assetSystemPlatformName>
-			<assetHardwareSystem>Hardwaresystem (HWS):</assetHardwareSystem>
+			
 			<assetOsname>OS-Name:</assetOsname>
-			<assetWorflowstatus>Worflowstatus technischen HWS:</assetWorflowstatus>
+			
 			<assettransient>HW-transienten Systemen:</assettransient>
 			<assetWorflowstatustechnical>Worflowstatus technische:</assetWorflowstatustechnical>
 			<assetGeneral>Allgemeine Verwendung:</assetGeneral>
@@ -649,12 +649,7 @@
 		    <assetOrganisation>Organisationseinheit:</assetOrganisation>
 		    <assetOwner>Inhaber(Legal):</assetOwner>
 		    <assetSapClass>SAP Asset Klasse:</assetSapClass>
-		    <assetAquisition>Aquisition Wert(Euro):</assetAquisition>
-		    <assetBookValue>Buch Wert(Euro):</assetBookValue>
-		    <assetDateValue>Datum des Buches Wert:</assetDateValue>
-		    <assetdepreciation>Startdatum der Abschreibung:</assetdepreciation>
-		    <asseteconomic>Wirtschaftliche Nutzungsdauer (Monate):</asseteconomic>
-		    <assetRetirement>Datum der Auﬂerbetriebnahme:</assetRetirement>
+		  
 		    <!-- asset management Contacts-->
 		    <assetEditor>Editoren Gruppe:</assetEditor>
 	</Items>
