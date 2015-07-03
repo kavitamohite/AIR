@@ -1085,12 +1085,6 @@ AIR.AirStoreFactory = function() {
 					{name : 'assetOrganisation'},
 					{name : 'assetOwner'},
 					{name : 'assetSapClass'},
-					{name : 'assetAquisition'},
-					{name : 'assetBookValue'},
-					{name : 'assetDateValue'},
-					{name : 'assetdepreciation'},
-					{name : 'asseteconomic'},
-					{name : 'assetRetirement'},
 					{name : 'assetEditor'},
 					
 					//AssetManagement Links
@@ -4140,7 +4134,7 @@ AIR.AirStoreFactory = function() {
 					{ name : 'technicalNumber'},
 					{ name : 'technicalMaster'},
 					{ name : 'systemPlatformName'},
-					{ name : 'hardwareSystem'},
+					
 					{ name : 'osName'},
 					{ name : 'workflowTechnicalStatus'},
 					{ name : 'hardwareTransientSystem'},
