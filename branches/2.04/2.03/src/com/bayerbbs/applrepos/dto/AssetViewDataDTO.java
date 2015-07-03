@@ -31,9 +31,9 @@ public class AssetViewDataDTO {
 	private String technicalNumber;
 	private String technicalMaster;
 	private String systemPlatformName;
-	private String hardwareSystem;
+	
 	private String osName;
-	private String workflowStatusHws;
+	
 	private String hardwareTransientSystem;
 	private Long workflowStatusId;
 	private String workflowStatus;
@@ -72,12 +72,6 @@ public class AssetViewDataDTO {
 	private String owner;
 	private String sapAssetClass;
 	private Long sapAssetClassId;
-	private Long acquisitionValue;
-	private Long bookValue;
-	private String bookValueDate;
-	private String depreciationStartDate;
-	private Long usefulEconomicLife;
-	private String retirementDate;
 
 	// Contacts
 	private Long editorsGroupId;
@@ -248,13 +242,6 @@ public class AssetViewDataDTO {
 		this.systemPlatformName = systemPlatformName;
 	}
 
-	public String getHardwareSystem() {
-		return hardwareSystem;
-	}
-
-	public void setHardwareSystem(String hardwareSystem) {
-		this.hardwareSystem = hardwareSystem;
-	}
 
 	public String getOsName() {
 		return osName;
@@ -272,14 +259,7 @@ public class AssetViewDataDTO {
 		this.hardwareTransientSystem = hardwareTransientSystem;
 	}
 
-	public String getWorkflowStatusHws() {
-		return workflowStatusHws;
-	}
-
-	public void setWorkflowStatusHws(String workflowStatusHws) {
-		this.workflowStatusHws = workflowStatusHws;
-	}
-
+	
 	public Long getWorkflowStatusId() {
 		return workflowStatusId;
 	}
@@ -512,53 +492,6 @@ public class AssetViewDataDTO {
 		this.sapAssetClassId = sapAssetClassId;
 	}
 
-	public Long getAcquisitionValue() {
-		return acquisitionValue;
-	}
-
-	public void setAcquisitionValue(Long acquisitionValue) {
-		this.acquisitionValue = acquisitionValue;
-	}
-
-	public Long getBookValue() {
-		return bookValue;
-	}
-
-	public void setBookValue(Long bookValue) {
-		this.bookValue = bookValue;
-	}
-
-	public String getBookValueDate() {
-		return bookValueDate;
-	}
-
-	public void setBookValueDate(String bookValueDate) {
-		this.bookValueDate = bookValueDate;
-	}
-
-	public String getDepreciationStartDate() {
-		return depreciationStartDate;
-	}
-
-	public void setDepreciationStartDate(String depreciationStartDate) {
-		this.depreciationStartDate = depreciationStartDate;
-	}
-
-	public Long getUsefulEconomicLife() {
-		return usefulEconomicLife;
-	}
-
-	public void setUsefulEconomicLife(Long usefulEconomicLife) {
-		this.usefulEconomicLife = usefulEconomicLife;
-	}
-
-	public String getRetirementDate() {
-		return retirementDate;
-	}
-
-	public void setRetirementDate(String retirementDate) {
-		this.retirementDate = retirementDate;
-	}
 
 	public Long getEditorsGroupId() {
 		return editorsGroupId;
@@ -614,9 +547,7 @@ public class AssetViewDataDTO {
 				+ ", model=" + model + ", modelId=" + modelId
 				+ ", technicalNumber=" + technicalNumber + ", technicalMaster="
 				+ technicalMaster + ", systemPlatformName="
-				+ systemPlatformName + ", hardwareSystem=" + hardwareSystem
-				+ ", osName=" + osName + ", workflowStatusHws="
-				+ workflowStatusHws + ", hardwareTransientSystem="
+				+ systemPlatformName + ",  osName=" + osName + ", hardwareTransientSystem="
 				+ hardwareTransientSystem + ", workflowStatusId="
 				+ workflowStatusId + ", workflowStatus=" + workflowStatus
 				+ ", generalUsageId=" + generalUsageId
@@ -635,11 +566,7 @@ public class AssetViewDataDTO {
 				+ ", organizationalunit=" + organizationalunit + ", owner="
 				+ owner + ", sapAssetClass=" + sapAssetClass
 				+ ", sapAssetClassId=" + sapAssetClassId
-				+ ", acquisitionValue=" + acquisitionValue + ", bookValue="
-				+ bookValue + ", bookValueDate=" + bookValueDate
-				+ ", depreciationStartDate=" + depreciationStartDate
-				+ ", usefulEconomicLife=" + usefulEconomicLife
-				+ ", retirementDate=" + retirementDate + ", editorsGroupId="
+				+ ", editorsGroupId="
 				+ editorsGroupId + ", editorsGroup=" + editorsGroup
 				+ ", serialNumber=" + serialNumber + ", assetChecked="
 				+ assetChecked + ", alias=" + alias + "]";
