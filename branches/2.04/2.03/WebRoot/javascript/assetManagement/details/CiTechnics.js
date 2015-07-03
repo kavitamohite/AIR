@@ -36,14 +36,6 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 				}
 			}, {
 				xtype : 'textfield',
-				id : 'tHardware',
-				fieldLabel : 'Hardwaresystem (HWS)',
-				width : 370,
-				style : {
-					marginBottom : 10
-				}
-			}, {
-				xtype : 'textfield',
 				id : 'tOsName',
 				fieldLabel : 'OS-Name',
 				width : 370,
@@ -51,16 +43,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 					marginBottom : 10,
 					fontSize : 12
 				}
-			}, {
-				xtype : 'textfield',
-				id : 'tWorkflowHWS',
-				fieldLabel : 'Worflowstatus technical HWS',
-				width : 370,
-				style : {
-					marginBottom : 10,
-					fontSize : 12
-				}
-			}, {
+			},  {
 				xtype : 'textfield',
 				id : 'tTransient',
 				fieldLabel : 'HW-transient systems',
@@ -144,14 +127,10 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         var tSystemPlatform = this.getComponent('tSystemPlatform');
         tSystemPlatform.setValue(assetData.systemPlatformName);
 
-        var tHardware = this.getComponent('tHardware');
-        tHardware.setValue(assetData.hardwareSystem);
 
         var tOsName = this.getComponent('tOsName');
         tOsName.setValue(assetData.osName);
 
-        var tWorkflowHWS = this.getComponent('tWorkflowHWS');
-        tWorkflowHWS.setValue(assetData.workflowTechnicalStatus);
 
         var tTransient = this.getComponent('tTransient');
         tTransient.setValue(assetData.hardwareTransientSystem);
@@ -182,14 +161,9 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         var tSystemPlatform = this.getComponent('tSystemPlatform');
         assetData.systemPlatformName = tSystemPlatform.getValue();
 
-        var tHardware = this.getComponent('tHardware');
-        assetData.hardwareSystem = tHardware.getValue();
-
-        var tOsName = this.getComponent('tOsName');
+         var tOsName = this.getComponent('tOsName');
         assetData.osName = tOsName.getValue();
 
-        var tWorkflowHWS = this.getComponent('tWorkflowHWS');
-        assetData.workflowTechnicalStatus = tWorkflowHWS.getValue();
 
         var tTransient = this.getComponent('tTransient');
         assetData.hardwareTransientSystem = tTransient.getValue();
