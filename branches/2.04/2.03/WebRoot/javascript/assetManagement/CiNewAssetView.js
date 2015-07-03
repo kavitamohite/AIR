@@ -118,16 +118,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					}
 				},{
 					xtype : 'button',
-					itemId : 'inventoryBtn',
-					text : 'Apply for inventory number',
-					style : {
-						//marginBottom : 10,
-						fontSize : 12,
-						margin : '8 10 0 0',
-						width:80
-					}
-				},{
-					xtype : 'button',
 					itemId : 'bReset',
 					text : 'Reset all Entries',
 					style : {
