@@ -186,67 +186,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 		        style : {
 					marginBottom : 10
 				}
-			}, {
-				xtype : 'textfield',
-				itemId: 'tAquisition',
-				disabled: true,
-				fieldLabel : 'Aquisition Value(Euro)',
-				width: 370,
-				style : {
-					marginBottom : 10,
-					fontSize : 12
-				}
-			}, {
-				xtype : 'textfield',
-				itemId: 'tBook',
-				disabled: true,
-				fieldLabel : 'Book Value(Euro)',
-				width: 370,
-				style : {
-					marginBottom : 10,
-					fontSize : 12
-				}
-			}, {
-				xtype : 'textfield',
-				itemId: 'tDate',
-				disabled: true,
-				fieldLabel : 'Date of book value',
-				width: 370,
-				style : {
-					marginBottom : 10,
-					fontSize : 12
-				}
-			}, {
-				xtype : 'textfield',
-				itemId: 'tDepreciation',
-				disabled: true,
-				fieldLabel : 'Start date depreciation',
-				width: 370,
-				style : {
-					marginBottom : 10,
-					fontSize : 12
-				}
-			}, {
-				xtype : 'textfield',
-				itemId: 'tEconomic',
-				disabled: true,
-				fieldLabel : 'Useful economic life (months)',
-				width: 370,
-				style : {
-					marginBottom : 10,
-					fontSize : 12
-				}
-			}, {
-				xtype : 'textfield',
-				itemId: 'tRetirment',
-				disabled: true,
-				fieldLabel : 'Retirement date',
-				width: 370,
-				style : {
-					marginBottom : 10,
-					fontSize : 12
-				}
-			}]
+			},]
 		});
 
 		AIR.CiBusiness.superclass.initComponent.call(this);
@@ -288,6 +228,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
     	var costCenterManager = this.ownerCt.ownerCt.getComponent('leftPanel').getComponent('contacts').getComponent('tCostcentermanager');
     	var costCenterManager1 = this.getComponent('tCostCenterMgr');
     	var costCenterManagerHidden = this.getComponent('costCenterManagerHidden');
+    	var tOwner = this.getComponent('tOwner');
 
     	personStore = AIR.AirStoreFactory.createPersonStore();
         personStore.load({
@@ -300,6 +241,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
                 costCenterManager.setValue(value);
                 costCenterManager1.setValue(value);
                 costCenterManagerHidden.setValue(cwid);
+                tOwner.setValue(cwid);
             }
         });
     },
@@ -345,23 +287,6 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         var cbSapAsset = this.getComponent('cbSapAsset');
         cbSapAsset.setValue(assetData.sapAssetClassId);
 
-        var tAquisition = this.getComponent('tAquisition');
-        tAquisition.setValue(assetData.acquisitionValue);
-
-        var tBook = this.getComponent('tBook');
-        tBook.setValue(assetData.bookValue);
-
-        var tDate = this.getComponent('tDate');
-        tDate.setValue(assetData.bookValueDate);
-
-        var tDepreciation = this.getComponent('tDepreciation');
-        tDepreciation.setValue(assetData.depreciationStartDate);
-
-        var tEconomic = this.getComponent('tEconomic');
-        tEconomic.setValue(assetData.usefulEconomicLife);
-
-        var tRetirement = this.getComponent('tRetirment');
-        tRetirement.setValue(assetData.retirementDate);
 
     },
     
@@ -403,7 +328,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         var cbSapAsset = this.getComponent('cbSapAsset');
         assetData.sapAssetClassId = cbSapAsset.getValue();
 
-        var tAquisition = this.getComponent('tAquisition');
+        /*var tAquisition = this.getComponent('tAquisition');
         assetData.acquisitionValue = tAquisition.getValue();
 
         var tBook = this.getComponent('tBook');
@@ -419,7 +344,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         assetData.usefulEconomicLife = tEconomic.getValue();
 
         var tRetirement = this.getComponent('tRetirment');
-        assetData.retirementDate = tRetirement.getValue();    	
+        assetData.retirementDate = tRetirement.getValue();   */ 	
         
         return assetData;
     }
