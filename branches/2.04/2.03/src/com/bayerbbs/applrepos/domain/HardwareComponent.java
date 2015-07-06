@@ -129,7 +129,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private String subResponsible;
 
-	private Long relevantIcsNumber;
+//	private Long relevantIcsNumber;
 
 	private String requester;
 
@@ -200,8 +200,6 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	private Long hbaCount;
 
 	private Long lanCount;
-
-	private SeverityLevel businessEssential;
 
 	private Long cpuCoreCount;
 
@@ -682,14 +680,14 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.subResponsible = subResponsible;
 	}
 
-	@Column(name = "RELEVANCE_ICS")
-	public Long getRelevantIcsNumber() {
-		return relevantIcsNumber;
-	}
-
-	public void setRelevantIcsNumber(Long relevantIcsNumber) {
-		this.relevantIcsNumber = relevantIcsNumber;
-	}
+//	@Column(name = "RELEVANCE_ICS")
+//	public Long getRelevantIcsNumber() {
+//		return relevantIcsNumber;
+//	}
+//
+//	public void setRelevantIcsNumber(Long relevantIcsNumber) {
+//		this.relevantIcsNumber = relevantIcsNumber;
+//	}
 
 	@Column(name = "ANFORDERER")
 	public String getRequester() {
@@ -1010,16 +1008,6 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.lanCount = lanCount;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "BUSINESS_ESSENTIAL_ID")
-	public SeverityLevel getBusinessEssential() {
-		return businessEssential;
-	}
-
-	public void setBusinessEssential(SeverityLevel businessEssential) {
-		this.businessEssential = businessEssential;
-	}
-
 	@Column(name = "CPU_CORE_COUNT")
 	public Long getCpuCoreCount() {
 		return cpuCoreCount;
@@ -1064,8 +1052,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 				+ ", purchaseNumber=" + purchaseNumber + ", purchaseDate="
 				+ purchaseDate + ", inventoryP69=" + inventoryP69
 				+ ", cwidVerantw=" + cwidVerantw + ", itset=" + itset
-				+ ", subResponsible=" + subResponsible + ", relevantIcsNumber="
-				+ relevantIcsNumber + ", requester=" + requester
+				+ ", subResponsible=" + subResponsible  + ", requester=" + requester
 				+ ", sampleTestDate=" + sampleTestDate + ", sampleTestResult="
 				+ sampleTestResult + ", partner=" + partner
 				+ ", sapDescription=" + sapDescription + ", syncTimestamp="
@@ -1088,7 +1075,6 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 				+ ", specifics=" + specifics + ", serviceContract="
 				+ serviceContract + ", severityLevel=" + severityLevel
 				+ ", hbaCount=" + hbaCount + ", lanCount=" + lanCount
-				+ ", businessEssential=" + businessEssential
 				+ ", cpuCoreCount=" + cpuCoreCount + "]";
 	}
 	

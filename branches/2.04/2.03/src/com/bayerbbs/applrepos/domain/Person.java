@@ -17,18 +17,17 @@ import org.hibernate.annotations.Type;
 public class Person implements Serializable {
 
 	private static final long serialVersionUID = -5657570461268334451L;
-	
+
 	private Long personId;
 	private String cwid;
 	private String personNo;
 	private String lastName;
 	private String firstName;
-	private String mail;		// the internet email address
-	
-	private Boolean inactive;	// inactive Y/N (or null)
-	private String pstat;		// "PRIMARY CWID", "SECONDARDY CWID", "MACHINE CWID"
-	
-	
+	private String mail; // the internet email address
+	private String orgUnitName;
+	private Boolean inactive; // inactive Y/N (or null)
+	private String pstat; // "PRIMARY CWID", "SECONDARDY CWID", "MACHINE CWID"
+
 	// ------------------------------------------------------
 	// -
 	// ------------------------------------------------------
@@ -72,7 +71,7 @@ public class Person implements Serializable {
 	public void setPersonId(Long personId) {
 		this.personId = personId;
 	}
-	
+
 	/**
 	 * Returns the value of the field {@link #cwid}.
 	 * 
@@ -113,7 +112,7 @@ public class Person implements Serializable {
 	public void setPersNr(String personNo) {
 		this.personNo = personNo;
 	}
-	
+
 	/**
 	 * Returns the value of the field {@link #lastName}.
 	 * 
@@ -159,7 +158,7 @@ public class Person implements Serializable {
 	 * 
 	 * @return Value of the {@link #inactive} field.
 	 */
-	@Type(type="yes_no")
+	@Type(type = "yes_no")
 	@Column(name = "INACTIVE")
 	public Boolean getInactive() {
 		return inactive;
@@ -213,6 +212,15 @@ public class Person implements Serializable {
 	 */
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	@Column(name = "ORG_UNIT_NAME")
+	public String getOrgUnitName() {
+		return orgUnitName;
+	}
+
+	public void setOrgUnitName(String orgUnitName) {
+		this.orgUnitName = orgUnitName;
 	}
 
 }

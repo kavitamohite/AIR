@@ -31,6 +31,8 @@ public class SoftwareComponent extends RevisionInfo implements Serializable {
 
 	private Partner hersteller;
 
+	private Long herstellerId;
+
 	private String herstellerAnsp;
 
 	private Long type;
@@ -39,7 +41,11 @@ public class SoftwareComponent extends RevisionInfo implements Serializable {
 
 	private SoftwareCategory1 softwareCategory1;
 
+	private Long softwareCategory1Id;
+
 	private SoftwareCategory2 softwareCategory2;
+
+	private Long softwareCategory2Id;
 
 	private SoftwareComponent softwareComponent;
 
@@ -53,7 +59,7 @@ public class SoftwareComponent extends RevisionInfo implements Serializable {
 
 	private String technicalMaster;
 
-	private String technicalNumer;
+	private String technicalNumber;
 
 	private Long lieferantid;
 
@@ -64,6 +70,8 @@ public class SoftwareComponent extends RevisionInfo implements Serializable {
 	private String bestellNumber; // BESTELL_NR
 
 	private Konto konto;// KONTO_ID
+
+	private Long kontoId;
 
 	private String innenauftrag;// Internal Order
 
@@ -181,13 +189,22 @@ public class SoftwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SW_HERSTELLER_ID")
+	@JoinColumn(name = "SW_HERSTELLER_ID", insertable = false, updatable = false)
 	public Partner getHersteller() {
 		return hersteller;
 	}
 
 	public void setHersteller(Partner hersteller) {
 		this.hersteller = hersteller;
+	}
+
+	@Column(name = "SW_HERSTELLER_ID")
+	public Long getHerstellerId() {
+		return herstellerId;
+	}
+
+	public void setHerstellerId(Long herstellerId) {
+		this.herstellerId = herstellerId;
 	}
 
 	@Column(name = "HERSTELLER_ANSP")
@@ -209,7 +226,7 @@ public class SoftwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SW_KATEGORIE1_ID")
+	@JoinColumn(name = "SW_KATEGORIE1_ID", insertable = false, updatable = false)
 	public SoftwareCategory1 getSoftwareCategory1() {
 		return softwareCategory1;
 	}
@@ -218,14 +235,32 @@ public class SoftwareComponent extends RevisionInfo implements Serializable {
 		this.softwareCategory1 = softwareCategory1;
 	}
 
+	@Column(name = "SW_KATEGORIE1_ID")
+	public Long getSoftwareCategory1Id() {
+		return softwareCategory1Id;
+	}
+
+	public void setSoftwareCategory1Id(Long softwareCategory1Id) {
+		this.softwareCategory1Id = softwareCategory1Id;
+	}
+
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SW_KATEGORIE2_ID")
+	@JoinColumn(name = "SW_KATEGORIE2_ID", insertable = false, updatable = false)
 	public SoftwareCategory2 getSoftwareCategory2() {
 		return softwareCategory2;
 	}
 
 	public void setSoftwareCategory2(SoftwareCategory2 softwareCategory2) {
 		this.softwareCategory2 = softwareCategory2;
+	}
+
+	@Column(name = "SW_KATEGORIE2_ID")
+	public Long getSoftwareCategory2Id() {
+		return softwareCategory2Id;
+	}
+
+	public void setSoftwareCategory2Id(Long softwareCategory2Id) {
+		this.softwareCategory2Id = softwareCategory2Id;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
@@ -275,12 +310,12 @@ public class SoftwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@Column(name = "TECHNISCHE_NR")
-	public String getTechnicalNumer() {
-		return technicalNumer;
+	public String getTechnicalNumber() {
+		return technicalNumber;
 	}
 
-	public void setTechnicalNumer(String technicalNumer) {
-		this.technicalNumer = technicalNumer;
+	public void setTechnicalNumber(String technicalNumer) {
+		this.technicalNumber = technicalNumer;
 	}
 
 	@Column(name = "SW_LIEFERANT_ID")
@@ -339,13 +374,22 @@ public class SoftwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "KONTO_ID")
+	@JoinColumn(name = "KONTO_ID", insertable = false, updatable = false)
 	public Konto getKonto() {
 		return konto;
 	}
 
 	public void setKonto(Konto konto) {
 		this.konto = konto;
+	}
+
+	@Column(name = "KONTO_ID")
+	public Long getKontoId() {
+		return kontoId;
+	}
+
+	public void setKontoId(Long kontoId) {
+		this.kontoId = kontoId;
 	}
 
 	@Column(name = "AM_JAHR_ENDE")
