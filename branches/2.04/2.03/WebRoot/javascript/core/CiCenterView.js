@@ -184,10 +184,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		
 		var ciNewSoftwareAsset=this.getComponent('ciNewSoftwareAsset');
 		var clSoftwareProduct = ciNewSoftwareAsset.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
-		var clSoftwareLocation = ciNewSoftwareAsset.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location');
 		var clSoftwareBusinessInformation = ciNewSoftwareAsset.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
 		var clSoftwareContacts = ciNewSoftwareAsset.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
-		
 		
 		this.lastNavigation = {
 			viewId: viewId,
@@ -497,7 +495,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			case 'clCiIntangibleAsset':
 				this.getLayout().setActiveItem('ciNewSoftwareAsset');
 				clSoftwareProduct.setVisible(true);
-				clSoftwareLocation.setVisible(true);
 				clSoftwareBusinessInformation.setVisible(true);
 				clSoftwareContacts.setVisible(true);
 				
@@ -510,6 +507,9 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				}.createDelegate(this);
 
 				this.handleNavigation(verwerfenCallback, saveCallback);
+				if(AAM.getAssetId()){
+					this.forwardToEdit(AAM.getAssetId());
+				}
 				break;
 					
 			case 'clCiTangibleAsset':
@@ -537,7 +537,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				clCiContacts.setVisible(true);
 				
 				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset with Inventory").setVisible(true);
-				ciNewAssetView.resetFormFields({});
+				ciNewAssetView.resetFormFields(null);
 				var verwerfenCallback = function() {
 					if(options && options.callback)
 						options.callback();
@@ -561,7 +561,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				clCiContacts.setVisible(true);
 
 				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset without Inventory").setVisible(true);
-				ciNewAssetView.resetFormFields({});
+				ciNewAssetView.resetFormFields(null);
 				var verwerfenCallback = function() {
 					if(options && options.callback)
 						options.callback();
@@ -594,6 +594,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				queryMode: AAM.getComponentType()
 			}
 		});
+		AAM.setAssetId(null);
 	},
 	
 	onBeforeAssetLoad: function(store, options) {
@@ -602,8 +603,15 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 	
 	onAssetLoad: function(store, records, options) {
 		var assetData = records[0].data;
-		var ciNewAssetView = this.getComponent('ciNewAssetView');
-		ciNewAssetView.update(assetData);
+		var isSoftwareComponent = (assetData.isSoftwareComponent === 'true');
+		var assetView;
+		console.log(isSoftwareComponent);
+		if(isSoftwareComponent){
+			assetView = this.getComponent('ciNewSoftwareAsset');
+		} else {
+			assetView = this.getComponent('ciNewAssetView');
+		}
+		assetView.update(assetData);
 	},
 	
 	forwardNavigation: function(options) {
