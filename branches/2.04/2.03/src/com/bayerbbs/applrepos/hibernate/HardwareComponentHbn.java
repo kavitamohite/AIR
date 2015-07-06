@@ -323,7 +323,7 @@ public class HardwareComponentHbn {
 		HardwareComponent hardwareComponent = getHardwareComponent(dto);
 		System.out.println(hardwareComponent);
 		try {
-			session.save(hardwareComponent);
+			session.saveOrUpdate(hardwareComponent);
 			session.flush();
 		} catch (Exception e) {
 			System.out.println("error---" + e.getMessage());
@@ -377,7 +377,7 @@ public class HardwareComponentHbn {
 		hardwareComponent.setBestSellText(dto.getOrderNumber());
 		hardwareComponent.setAmKommision(dto.getPspElement());
 		hardwareComponent.setInventoryP69(dto.getInventoryNumber());
-		hardwareComponent.setSubResponsible(dto.getOrganizationalunit());
+		hardwareComponent.setSubResponsible(dto.getEditorsGroup());
 
 		hardwareComponent.setRequester(dto.getRequesterId());
 		hardwareComponent.setSapDescription(dto.getSapDescription());

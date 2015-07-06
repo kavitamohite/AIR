@@ -1,7 +1,9 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -11,6 +13,9 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import com.bayerbbs.applrepos.common.ApplReposTS;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.Konto;
 import com.bayerbbs.applrepos.domain.SoftwareComponent;
 import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
@@ -134,8 +139,7 @@ public class SoftwareComponentHbn {
 			dto.setManufacturer(hwComp.getHersteller().getName());
 			dto.setManufacturerId(hwComp.getHersteller().getId());
 		}
-		//Product Name remaining
-
+		// Product Name remaining
 
 		// Business Administration
 		dto.setOrderNumber(hwComp.getBestellNumber());
@@ -147,7 +151,13 @@ public class SoftwareComponentHbn {
 						.getKonto().getCwidVerantw());
 				dto.setCostCenterManager(persons.get(0).getDisplayNameFull());
 			}
+			Konto pspelement = PspElementHbn.getPspElementByName(hwComp
+					.getInnenauftrag());
 			dto.setPspElement(hwComp.getInnenauftrag());
+			if (pspelement != null) {
+				dto.setPspElementId(pspelement.getId());
+				dto.setPspText(pspelement.getBeschreibung());
+			}
 		}
 		dto.setRequester(hwComp.getRequester());
 		dto.setOrganizationalunit(hwComp.getSubResponsible());
@@ -155,15 +165,9 @@ public class SoftwareComponentHbn {
 		if (hwComp.getSoftwareCategory1() != null) {
 			dto.setSapAssetClass(hwComp.getSoftwareCategory1().getSwKategory1());
 			dto.setSapAssetClassId(hwComp.getSoftwareCategory1().getId());
-//			dto.setUsefulEconomicLife(hwComp.getSoftwareCategory1().get);
 		}
-//		dto.setAcquisitionValue(hwComp.);
-		// dto.setBookValue();
-		// dto.setDateOfBookValue();
 
 		dto.setSerialNumber(hwComp.getSerialNumber());
-		dto.setAssetChecked("ASSET CHECKED");
-		dto.setAlias("ALIAS");
 		dto.setOsName("OS Name");
 		return dto;
 	}
@@ -195,6 +199,93 @@ public class SoftwareComponentHbn {
 			}
 		}
 		return out;
+	}
+
+	public static AssetManagementParameterOutput saveSoftwareAsset(
+			AssetViewDataDTO dto) {
+		AssetManagementParameterOutput output = new AssetManagementParameterOutput();
+		Session session = HibernateUtil.getSession();
+		Transaction tx = null;
+		tx = session.beginTransaction();
+
+		System.out.println(dto);
+		SoftwareComponent softwareComponent = getSoftwareComponent(dto);
+		System.out.println(softwareComponent);
+		try {
+			session.save(softwareComponent);
+			session.flush();
+		} catch (Exception e) {
+			System.out.println("error---" + e.getMessage());
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+		} finally {
+			if (tx.isActive()) {
+				tx.commit();
+			}
+			session.close();
+		}
+		return output;
+	}
+
+	private static SoftwareComponent getSoftwareComponent(AssetViewDataDTO dto) {
+		SoftwareComponent softwareComponent = new SoftwareComponent();
+
+		if (dto.getId() == null) {
+			softwareComponent
+					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			softwareComponent.setInsertTimestamp(ApplReposTS
+					.getCurrentTimestamp());
+			softwareComponent.setInsertUser(dto.getCwid());
+		} else {
+			softwareComponent.setId(dto.getId());
+		}
+		softwareComponent.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+		softwareComponent.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+		softwareComponent.setUpdateUser(dto.getCwid());
+
+		if (dto.getIdentNumber() != null && dto.getIdentNumber().length() > 0) {
+			softwareComponent.setName(dto.getIdentNumber());
+		} else {
+			softwareComponent.setName(getIdentNumber());
+		}
+
+		softwareComponent.setInventoryNumber(dto.getInventoryNumber());
+		softwareComponent.setTechnicalMaster(dto.getTechnicalMaster());
+		softwareComponent.setTechnicalNumber(dto.getTechnicalNumber());
+		softwareComponent.setSerialNumber(dto.getSerialNumber());
+
+		softwareComponent.setSoftwareCategory1Id(dto.getSapAssetClassId());
+		softwareComponent.setSoftwareCategory2Id(dto.getSubcategoryId());
+		softwareComponent.setHerstellerId(dto.getManufacturerId());
+
+		softwareComponent.setKontoId(dto.getCostCenterId());
+		softwareComponent.setBestellNumber(dto.getOrderNumber());
+		softwareComponent.setInnenauftrag(dto.getPspElement());
+		softwareComponent.setInventoryNumber(dto.getInventoryNumber());
+		softwareComponent.setSubResponsible(dto.getEditorsGroup());
+
+		softwareComponent.setRequester(dto.getRequesterId());
+		softwareComponent.setProuctDescription(dto.getSapDescription());
+		softwareComponent.setResponsible(dto.getCostCenterManagerId());
+
+		Long itSet = null;
+		String strItSet = ApplReposHbn.getItSetFromCwid(dto.getRequesterId());
+		if (null != strItSet) {
+			itSet = Long.parseLong(strItSet);
+		}
+		if (null == itSet) {
+			itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
+		}
+		softwareComponent.setItset(itSet);
+
+		return softwareComponent;
+	}
+
+	private static String getIdentNumber() {
+
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+		return df.format(new Date(System.currentTimeMillis()));
 	}
 
 }
