@@ -30,7 +30,11 @@ public class AssetManagementWS {
 	
 	public AssetManagementParameterOutput saveAsset(AssetViewDataDTO dto) {
 		AssetManagementParameterOutput output = new AssetManagementParameterOutput();
-		output = HardwareComponentHbn.saveHardwareAsset(dto);
+		if(dto.getIsSoftwareComponent() != null && dto.getIsSoftwareComponent()){
+			output = SoftwareComponentHbn.saveSoftwareAsset(dto);
+		} else {
+			output = HardwareComponentHbn.saveHardwareAsset(dto);
+		}
 		return output;
 	}
 }
