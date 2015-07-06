@@ -4394,6 +4394,9 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name: 'firstname',
 				mapping: 'firstname'
+			},{
+				name: 'orgUnit',
+				mapping: 'orgUnit'
 			}]);
 	
 			var personPickerRecordReader = new Ext.data.XmlReader({
