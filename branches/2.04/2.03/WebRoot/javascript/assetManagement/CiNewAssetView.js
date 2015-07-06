@@ -63,10 +63,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                     }, {
                         xtype: 'AIR.CiContact',
                         id: 'contacts'
-                    },{
-                    	xtype: 'panel',
-                    	height: 25,
-                    	border: false
                     }]
                 }, {
                     xtype: 'panel',
@@ -79,6 +75,10 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                     }, {
                         xtype: 'AIR.CiLocation',
                         id: 'location'
+                    },{
+                    	xtype: 'panel',
+                    	height: 119,
+                    	border: false
                     }]
                 }]
             },{
@@ -129,6 +129,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					xtype : 'button',
 					itemId : 'bHistory',
 					text : 'Asset History',
+					hidden: true,
 					listeners: {
                         click: {
                             fn: this.onAssetHistoryButton,
@@ -188,135 +189,138 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     
     onAssetHistoryButton: function(){
     	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
-    	console.log(assetId);
+    	if(assetId){
+        	AAM.getMask(AC.MASK_TYPE_LOAD).show();
+    		var historyListStore = AIR.AirStoreFactory.createHistoryListStore();
 
-    	AAM.getMask(AC.MASK_TYPE_LOAD).show();
-		var historyListStore = AIR.AirStoreFactory.createHistoryListStore();
+    		var params = {
+    			cwid: AAM.getCwid(),
+    			token: AAM.getToken(),
+    			id:  assetId,
+    			tableId: 19
+    		};
+    		
+    		console.log(params);
+    		
+    		historyListStore.addListener('load', function() {
+    	    	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
 
-		var params = {
-			cwid: AAM.getCwid(),
-			token: AAM.getToken(),
-			id:  AAM.getAssetId(),
-			tableId: 19
-		};
-		
-		console.log(params);
-		
-		historyListStore.addListener('load', function() {
-	    	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
-
-			assetHistoryWindow = new Ext.Window({
-	            title: 'History',
-	            layout: 'fit',
-	            width: 1210,
-	            height: 600,
-	            modal: true,
-	            closeAction: 'hide',
-	            items: [{
-	          		    	xtype: 'grid',
-	        		        id: 'historyListView',
-	        		        layout: 'fit',
-	        		        height: 400,
-	        		    	store: this,
-	        		        emptyText: 'No data',
-	        		        border: false,
-	        		        
-	        		        columns: [{
-	        		            header: 'Date Time',
-	        		            dataIndex: 'datetime',
-	        		            id: 'historyDatetime',
-	        					menuDisabled: true,
-	        					width: 150
-	        		        },{
-	        		            header: 'Change Source',
-	        		            dataIndex: 'changeSource',
-	        		            id: 'historyChangeSource',
-	        					menuDisabled: true,
-	        					width: 150
-	        		        },{
-	        		            header: 'Change User',
-	        		            dataIndex: 'changeDBUser',
-	        		           	id: 'historyChangeDBUser',
-	        					menuDisabled: true,
-	        					width: 150
-	        		        },{
-	        		            header: 'Change user CWID',
-	        		            dataIndex: 'changeUserCWID',
-	        		            id: 'historyChangeUserCWID',
-	        					menuDisabled: true,
-	        					width: 150
-	        		    	},{
-	        		            header: 'Attribute Name',
-	        		            dataIndex: 'changeAttributeName',
-	        		            id: 'historyChangeAttributeName',
-	        					menuDisabled: true,
-	        					width: 150
-	        		        },{
-	        		            header: 'Asset id',
-	        		            dataIndex: 'ciId',
-	        		            id: 'ciId',
-	        					menuDisabled: true,
-	        					width: 150
-	        		    	},{
-	        		    		header: 'Old value',
-	        		            dataIndex: 'changeAttributeOldValue',
-	        		            id: 'historyChangeAttributeOldValue',
-	        					menuDisabled: true,
-	        					width: 150
-	        		    	},{
-	        		            header: 'New value',
-	        		            dataIndex: 'changeAttributeNewValue',
-	        		            id: 'historyChangeAttributeNewValue',
-	        					menuDisabled: true,
-	        					width: 150
-	        		        },{
-	        		        	header: 'Info Type',
-	        		        	dataIndex: 'infoType',
-	        		        	id: 'infoType',
-	        					hidden: true,
-	        					menuDisabled: true
-	        		        }],
-	        				
-	        				view: new Ext.grid.GroupingView({})
-	        		    }]
-	    	});
-	    	assetHistoryWindow.show();
-		});
-		
-		historyListStore.load({
-			params: params
-		});
-    	
-    	
+    			assetHistoryWindow = new Ext.Window({
+    	            title: 'History',
+    	            layout: 'fit',
+    	            width: 1210,
+    	            height: 600,
+    	            modal: true,
+    	            closeAction: 'hide',
+    	            items: [{
+    	          		    	xtype: 'grid',
+    	        		        id: 'historyListView',
+    	        		        layout: 'fit',
+    	        		        height: 400,
+    	        		    	store: this,
+    	        		        emptyText: 'No data',
+    	        		        border: false,
+    	        		        
+    	        		        columns: [{
+    	        		            header: 'Date Time',
+    	        		            dataIndex: 'datetime',
+    	        		            id: 'historyDatetime',
+    	        					menuDisabled: true,
+    	        					width: 150
+    	        		        },{
+    	        		            header: 'Change Source',
+    	        		            dataIndex: 'changeSource',
+    	        		            id: 'historyChangeSource',
+    	        					menuDisabled: true,
+    	        					width: 150
+    	        		        },{
+    	        		            header: 'Change User',
+    	        		            dataIndex: 'changeDBUser',
+    	        		           	id: 'historyChangeDBUser',
+    	        					menuDisabled: true,
+    	        					width: 150
+    	        		        },{
+    	        		            header: 'Change user CWID',
+    	        		            dataIndex: 'changeUserCWID',
+    	        		            id: 'historyChangeUserCWID',
+    	        					menuDisabled: true,
+    	        					width: 150
+    	        		    	},{
+    	        		            header: 'Attribute Name',
+    	        		            dataIndex: 'changeAttributeName',
+    	        		            id: 'historyChangeAttributeName',
+    	        					menuDisabled: true,
+    	        					width: 150
+    	        		        },{
+    	        		            header: 'Asset id',
+    	        		            dataIndex: 'ciId',
+    	        		            id: 'ciId',
+    	        					menuDisabled: true,
+    	        					width: 150
+    	        		    	},{
+    	        		    		header: 'Old value',
+    	        		            dataIndex: 'changeAttributeOldValue',
+    	        		            id: 'historyChangeAttributeOldValue',
+    	        					menuDisabled: true,
+    	        					width: 150
+    	        		    	},{
+    	        		            header: 'New value',
+    	        		            dataIndex: 'changeAttributeNewValue',
+    	        		            id: 'historyChangeAttributeNewValue',
+    	        					menuDisabled: true,
+    	        					width: 150
+    	        		        },{
+    	        		        	header: 'Info Type',
+    	        		        	dataIndex: 'infoType',
+    	        		        	id: 'infoType',
+    	        					hidden: true,
+    	        					menuDisabled: true
+    	        		        }],
+    	        				
+    	        				view: new Ext.grid.GroupingView({})
+    	        		    }]
+    	    	});
+    	    	assetHistoryWindow.show();
+    		});
+    		
+    		historyListStore.load({
+    			params: params
+    		});
+    		
+    	}
     },
 
     resetFormFields: function(assetData) {
-    	
-    	var saveBtn = this.getComponent('buttonPanel').getComponent('saveBtn');
-		var cancelBtn = this.getComponent('buttonPanel').getComponent('cancelBtn');
-    	
-    	var topPanel = this.getComponent('topPanel');
-    	topPanel.update(assetData);
 
-    	var product = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
-    	product.update(assetData);
+    	if(!assetData){
+    		this.update({});
+    	} else {
+        	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
+        	
+        	if(assetId){
+        		var ciDetailStore = AIR.AirStoreFactory.createAssetListStore();
+        		ciDetailStore.on('beforeload', this.onBeforeAssetLoad, this);
+        		ciDetailStore.on('load', this.onAssetLoad, this);
+        		ciDetailStore.load({
+        			params: {
+        				assetId: assetId,
+        				queryMode: AAM.getComponentType()
+        			}
+        		});
+        	}
+
+    	}
     	
-    	var location = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location');
-    	location.update(assetData);
-    	
-    	var business = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
-    	business.update(assetData);
-    	
-    	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
-    	contact.update(assetData);
-    	
-    	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
-    	technics.update(assetData);
-    	
-    	saveBtn.hide();
-		cancelBtn.hide();
-        
     },
+    
+    onBeforeAssetLoad: function(store, options) {
+		AAM.getMask(AC.MASK_TYPE_LOAD).show();
+	},
+	
+	onAssetLoad: function(store, records, options) {
+		var assetData = records[0].data;
+		this.update(assetData);
+	},
 
     updateLabels: function(labels) {
 //    	this.getComponent('topPanel').getComponent('identNumber').fieldLabel = labels.assetIndentnumber;
@@ -357,12 +361,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	
 	onCiAssetChange:function() {		
 		this.enableAssetButtons();
-		this.ciModified = true;
 	},
 	
 	enableAssetButtons: function() {	
 		var saveBtn = this.getComponent('buttonPanel').getComponent('saveBtn');
 		var cancelBtn = this.getComponent('buttonPanel').getComponent('cancelBtn');
+		var bHistory = this.getComponent('buttonPanel').getComponent('bHistory');
+		
 		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getRawValue();
 		var cbSubCategoryValue=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
 		var cbTypeValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getRawValue();
@@ -376,18 +381,32 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var cbSapAssetValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset').getRawValue();
 		var tfRequesterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getRawValue();
 		
-			if(cbManufacturerValue.length>0 && cbSubCategoryValue.length>0 && cbTypeValue.length>0 && cbModelValue .length>0
-				&& cbCountryValue.length>0 && cbSiteValue.length>0 && cbBuildingValue.length>0 && cbRoomValue.length && cbRackValue.length>0 
-				&& cbCostcenterValue.length>0 && cbSapAssetValue.length>0 &&tfRequesterValue.length>0 ){
+
+		if (cbManufacturerValue.length > 0
+				&& cbSubCategoryValue.length > 0
+				&& cbTypeValue.length > 0 && cbModelValue.length > 0
+				&& cbCountryValue.length > 0 && cbSiteValue.length > 0
+				&& cbBuildingValue.length > 0 && cbRoomValue.length > 0
+				&& cbRackValue.length > 0
+				&& cbCostcenterValue.length > 0
+				&& cbSapAssetValue.length > 0
+				&& tfRequesterValue.length > 0) {
 			saveBtn.show();
 			cancelBtn.show();
-			
-			this.fireEvent('airAction', this, 'clear');
 		} else {
 			saveBtn.hide();
 			cancelBtn.hide();
 		}
-       
+		
+		var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
+    	
+    	if(assetId){
+    		bHistory.show();
+    	} else {
+    		bHistory.hide();
+    	}
+		
+		
 	},
 
     update: function(assetData) {
@@ -411,6 +430,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
     	technics.update(assetData);
 
+    	this.enableAssetButtons();
         AAM.getMask(AC.MASK_TYPE_LOAD).hide();
     },
 

@@ -60,13 +60,6 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                     }, {
                         xtype: 'AIR.CiContact',
                         itemId: 'contacts'
-                    }, {
-                        xtype: 'AIR.CiLocation',
-                        itemId: 'location'
-                    },{
-                    	xtype: 'panel',
-                    	height: 30,
-                    	border: false
                     }]
                 }, {
                     xtype: 'panel',
@@ -164,26 +157,10 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
         var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
         tfRequester.on('select', this.enableAssetButtons, this);
       
-        var cbRoom = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom');
-        cbRoom.on('select', this.enableAssetButtons, this);
-  
-        var cbBuilding =this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding');
-        cbBuilding.on('select', this.enableAssetButtons, this);	
-  
-        var cbSite = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite');
-        cbSite.on('select', this.enableAssetButtons, this);
-  
-        var cbCountry = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry');
-        cbCountry.on('select', this.enableAssetButtons, this);
-  	
-        var cbRack = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
-        cbRack.on('select', this.enableAssetButtons, this);
-
     },
     
     onAssetHistoryButton: function(){
     	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
-    	console.log(assetId);
 
     	AAM.getMask(AC.MASK_TYPE_LOAD).show();
 		var historyListStore = AIR.AirStoreFactory.createHistoryListStore();
@@ -191,7 +168,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 		var params = {
 			cwid: AAM.getCwid(),
 			token: AAM.getToken(),
-			id:  30914,
+			id:  assetId,
 			tableId: 20
 		};
 		
@@ -278,8 +255,6 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 		historyListStore.load({
 			params: params
 		});
-    	
-    	
     },
     
     resetFormFields: function(assetData){
@@ -293,8 +268,25 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     	var product = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
     	product.update(assetData);
     	
-    	var location = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location');
-    	location.update(assetData);
+    	var business = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
+    	business.update(assetData);
+    	
+    	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
+    	contact.update(assetData);
+    	
+    	saveBtn.hide();
+		cancelBtn.hide();
+        
+    },
+    
+    update: function(assetData) {
+    	console.log(assetData);
+
+    	var topPanel = this.getComponent('topPanel');
+    	topPanel.update(assetData);
+
+    	var product = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
+    	product.update(assetData);
     	
     	var business = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
     	business.update(assetData);
@@ -302,12 +294,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
     	contact.update(assetData);
     	
-    	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
-    	technics.update(assetData);
-    	
-    	saveBtn.hide();
-		cancelBtn.hide();
-        
+        AAM.getMask(AC.MASK_TYPE_LOAD).hide();
     },
     
 	enableAssetButtons: function() {	
@@ -317,17 +304,11 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 		var cbSubCategoryValue=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
 		var cbTypeValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getRawValue();
 		var cbModelValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel').getRawValue();
-		var cbRoomValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbRoom').getRawValue();
-		var cbBuildingValue =this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbBuilding').getRawValue();
-		var cbSiteValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbSite').getRawValue();
-		var cbCountryValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('cbCountry').getRawValue();
-		var cbRackValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack').getRawValue();
 		var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter').getRawValue();
 		var cbSapAssetValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset').getRawValue();
 		var tfRequesterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getRawValue();
 		
 			if(cbManufacturerValue.length>0 && cbSubCategoryValue.length>0 && cbTypeValue.length>0 && cbModelValue .length>0
-				&& cbCountryValue.length>0 && cbSiteValue.length>0 && cbBuildingValue.length>0 && cbRoomValue.length && cbRackValue.length>0 
 				/*&& cbCostcenterValue.length>0*/ && cbSapAssetValue.length>0 /*&&tfRequesterValue.length>0*/ ){
 			saveBtn.show();
 			cancelBtn.show();
@@ -374,32 +355,34 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 //        this.loadComboboxData();
 //    },
 //
-//    saveAsset: function() {
-//        newAssetstore = AIR.AirStoreFactory.createSaveAssetStore();
-//        var manufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
-//        var subCategoryValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getValue();
-//        var typeValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getValue();
-//        var modelValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel').getValue();
-//        var pspValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp').getValue();
-//        var costcentervalue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter').getValue();
-//        var sapAssetvalue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset').getValue();
-//        var requesterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getValue();
-//        var economicValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tEconomic').getValue();
-//
-//        newAssetstore.load({
-//            params: {
-//                itemId: manufacturerValue,
-//                hardwareCategory2_itemId: subCategoryValue,
-//                hardwareCategory3_itemId: typeValue,
-//                hardwareCategory4_itemId: modelValue,
-//                kontoitemId: costcentervalue,
-//                pspElement: pspValue,
-//                hardwareCategory1_itemId: sapAssetvalue,
-//                requester: requesterValue,
-//                month: economicValue,
-//            }
-//        });
-//    }
+	saveAsset: function() {
+        newAssetstore = AIR.AirStoreFactory.createSaveAssetStore();
+        var assetData = {};
+        
+        assetData.cwid = AIR.AirApplicationManager.getCwid();
+        assetData.isSoftwareComponent = true;
+        
+        var topPanel = this.getComponent('topPanel');
+        assetData = topPanel.updateParam(assetData);
+    	
+    	var product = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
+    	product.updateParam(assetData);
+    	
+    	var business = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
+    	business.updateParam(assetData);
+    	
+    	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
+    	contact.updateParam(assetData);
+    	
+    	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
+    	technics.updateParam(assetData);
+        
+    	console.log(assetData);
+        
+        newAssetstore.load({
+            params: assetData
+        });
+    }
 
 });
 Ext.reg('AIR.CiNewSoftwareAsset', AIR.CiNewSoftwareAsset);
