@@ -43,6 +43,7 @@ import com.bayerbbs.applrepos.dto.LifecycleStatusDTO;
 import com.bayerbbs.applrepos.dto.MassUpdateAttributeDTO;
 import com.bayerbbs.applrepos.dto.PathwayDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
+import com.bayerbbs.applrepos.dto.RolePersonDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
@@ -458,15 +459,17 @@ public class CiEntityWS {
 	
 	public CiItemsResultDTO findCis(ApplicationSearchParamsDTO input) {//CiSearchParamsDTO <T extends CiSearchParamsDTO>
 //		CiItemDTO[] ciItemDTOs = null;
-		CiItemsResultDTO result = null;
+		CiItemsResultDTO result = null;		
 		if (input.getIsTemplate()!=null &&input.getIsTemplate().equals(AirKonstanten.YES_SHORT)) {
-			String strItSet = ApplReposHbn.getItSetFromCwid(input.getCwid());
-			if (null != strItSet) {
-				input.setItSetId(strItSet);
-			}else{
-				input.setItSetId(AirKonstanten.IT_SET_DEFAULT.toString());
-			}
-
+			List<RolePersonDTO> listRolePerson = ApplReposHbn.findRolePersonAirAdministrator(input.getCwid());
+            if(listRolePerson.isEmpty()){
+    			String strItSet = ApplReposHbn.getItSetFromCwid(input.getCwid());
+    			if (null != strItSet) {
+    				input.setItSetId(strItSet);
+    			}else{
+    				input.setItSetId(AirKonstanten.IT_SET_DEFAULT.toString());
+    			}
+            }           	
 		}
 		
 		if(input.getCiTypeId() != null) {

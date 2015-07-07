@@ -35,7 +35,7 @@ public class ApplReposHbn {
 					         "INNER JOIN INTERFACES INT ON R2I.Interface_Id=INT.Interfaces_Id AND INT.Del_Quelle IS NULL AND INT.Token = 'AIR' " +
 								"WHERE    R2P.Cwid = :Cwid " +
 								"AND      ROL.Del_Quelle IS NULL";
-	private static final String SELECT_ROLE_BUSINESS_ESSENTIAL = "SELECT DISTINCT ROL.Role_Id, " +
+	private static final String SELECT_ROLE_BUSINESS_ESSENTIAL_OR_ADMINISTRATOR = "SELECT DISTINCT ROL.Role_Id, " +
 															    "ROL.Role_Name " +
 															    "FROM     ROLE ROL  " +
 															    "INNER JOIN ROLE_PERSON R2P ON ROL.Role_Id=R2P.Role_Id AND Current_Date BETWEEN R2P.Date_Start AND R2P.Date_End AND R2P.Del_Timestamp IS NULL " + 
@@ -441,7 +441,7 @@ public class ApplReposHbn {
 			try {
 				
 				@SuppressWarnings("unchecked")
-				List<Object[]> listTemp = session.createSQLQuery(SELECT_ROLE_BUSINESS_ESSENTIAL)
+				List<Object[]> listTemp = session.createSQLQuery(SELECT_ROLE_BUSINESS_ESSENTIAL_OR_ADMINISTRATOR)
 					.setString("Cwid", cwid.toUpperCase())
 					.setString("Role_Name", AirKonstanten.ROLE_BUSINESS_ESSENTIAL_EDITOR)
 					.list();
@@ -475,6 +475,51 @@ public class ApplReposHbn {
 		}
 		return listDTO;
 	}
+	public static List<RolePersonDTO> findRolePersonAirAdministrator(String cwid) {
+		
+		ArrayList<RolePersonDTO> listDTO = new ArrayList<RolePersonDTO>();
+		
+		if (StringUtils.isNotNullOrEmpty(cwid)) {
+
+			Session session = HibernateUtil.getSession();
+
+			try {
+				
+				@SuppressWarnings("unchecked")
+				List<Object[]> listTemp = session.createSQLQuery(SELECT_ROLE_BUSINESS_ESSENTIAL_OR_ADMINISTRATOR)
+					.setString("Cwid", cwid.toUpperCase())
+					.setString("Role_Name", AirKonstanten.ROLE_AIR_ADMINISTRATOR)
+					.list();
+				
+				for (Iterator<Object[]> iterator = listTemp.iterator(); iterator.hasNext();) 
+				{
+					Object obj[] = iterator.next();
+					try 
+					{
+						RolePersonDTO dto = new RolePersonDTO();
+						dto.setRoleId(((BigDecimal)obj[0]).longValue());
+						dto.setCwid(cwid.toUpperCase());
+						dto.setRoleName((String) obj[1]);
+						listDTO.add(dto);
+					} 
+					catch (Exception e) 
+					{
+						System.out.println(e.toString());
+					}
+					
+				}			
+			} 
+			catch (Exception e) 
+			{
+				System.out.println(e.toString());
+			}
+			finally 
+			{
+				session.flush();
+			}
+		}
+		return listDTO;
+	}	
 
 	public static String getCountReferencingTemplates(Long applicationId) {
 		StringBuffer sql = new StringBuffer();
