@@ -4508,6 +4508,31 @@ AIR.AirStoreFactory = function() {
  			return ciSapAssetListstore;
  		},
  		
+ 		createSapAssetSoftwareListStore: function() {
+			var ciSapAssetListRecord = Ext.data.Record.create([
+				{ name: 'id', type: 'int' },
+ 			    'name',
+ 			    'nameEn'
+ 			]);
+ 			var ciSapAssetListReader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'
+
+ 			}, ciSapAssetListRecord);
+ 			var ciSapAssetListstore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'sapAssetListStore',
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/BusinessAdministrationWSPort',
+ 					loadMethod: 'findSapAssetSoftwareList',
+ 					timeout: 120000,
+ 					reader: ciSapAssetListReader
+ 				})
+ 			});
+ 			return ciSapAssetListstore;
+ 		},
+ 		
  		createSaveAssetStore: function() {
 			var ciSaveAssetRecord = Ext.data.Record.create([
 				'result',				
@@ -4546,7 +4571,6 @@ AIR.AirStoreFactory = function() {
 				mapping : 'attributeId',
 				type: 'int'
 			}]);
-	
 	
 			var attributeValueReader = new Ext.data.XmlReader({
 				record: 'return',
@@ -4682,6 +4706,33 @@ AIR.AirStoreFactory = function() {
 			});
 			
 			return osListStore;
+		},
+		
+		createSoftwareproductListStore: function() {
+			var ciSoftwareproductRecord = Ext.data.Record.create([
+				{ name: 'id', type: 'int' },
+				    'name'				
+				]);
+
+				var ciSoftwareproductReader = new Ext.data.XmlReader({
+					idProperty: 'id',
+					record: 'return'
+				}, ciSoftwareproductRecord);
+				
+				var ciSoftwareproductstore = new Ext.data.XmlStore({
+					autoDestroy: true,
+					autoLoad: false,
+					storeId: 'softwareproductListStore',
+					
+					proxy: new Ext.ux.soap.SoapProxy({
+						url: webcontext + '/ProductWSPort',
+						loadMethod: 'findSoftwareProductList',
+						timeout: 120000,
+						reader: ciSoftwareproductReader
+					})
+				});
+				
+				return ciSoftwareproductstore;
 		}
 
 	};

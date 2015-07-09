@@ -498,6 +498,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				clSoftwareBusinessInformation.setVisible(true);
 				clSoftwareContacts.setVisible(true);
 				
+				clSoftwareBusinessInformation.getComponent('cbSapAsset').store = AIR.AirStoreManager.getStoreByName('sapAssetSoftwareListStore');
+				
 				var verwerfenCallback = function() {
 					if(options && options.callback)
 						options.callback();
@@ -535,6 +537,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				clCiBusinessInformation.setVisible(true);
 				clCiTechnics.setVisible(true);
 				clCiContacts.setVisible(true);
+				clCiBusinessInformation.getComponent('cbSapAsset').store = AIR.AirStoreManager.getStoreByName('sapAssetListStore');
 				
 				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset with Inventory").setVisible(true);
 				ciNewAssetView.resetFormFields(null);
@@ -559,7 +562,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				clCiBusinessInformation.setVisible(true);
 				clCiTechnics.setVisible(true);
 				clCiContacts.setVisible(true);
-
+				clCiBusinessInformation.getComponent('cbSapAsset').store = AIR.AirStoreManager.getStoreByName('sapAssetListStore');
+				
 				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset without Inventory").setVisible(true);
 				ciNewAssetView.resetFormFields(null);
 				var verwerfenCallback = function() {

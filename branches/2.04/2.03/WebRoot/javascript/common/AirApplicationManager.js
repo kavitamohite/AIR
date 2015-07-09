@@ -149,13 +149,15 @@ AIR.AirApplicationManager = function() {
 				groupTypesListStore: null,
 				
 				sapAssetListStore: null,
+				sapAssetSoftwareListStore: null,
 				landListStore: null, 
 				manufactureListStore: null, 
 				subCategoryListStore: null, 
 				costCenterListStore: null, 
 				pspElementListStore: null,
 				osListStore: null,
-				editorGroupListStore:null
+				editorGroupListStore:null,
+				softwareproductListStore:null
 			};
 			
 			this.storeCount = 0;
