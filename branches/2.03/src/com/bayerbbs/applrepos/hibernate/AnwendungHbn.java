@@ -604,7 +604,9 @@ public class AnwendungHbn extends BaseHbn {
 									application.setBarApplicationId(null);
 								}
 						}
-						
+						if(null!= dto.getBarApplicationId()){
+							application.setBarApplicationId(dto.getBarApplicationId());
+						}
 						// for BOV
 						if (null == application.getBovApplicationNeeded()) {
 							application.setBovApplicationNeeded(AirKonstanten.YES_SHORT);
