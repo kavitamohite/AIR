@@ -22,5 +22,11 @@ public class ProductWS {
 	public KeyValueDTO[] findModelList(Long id) {
 		return ModelHbn.getModelById(id);
 	}
-
+	
+	public KeyValueDTO[] findSoftwareManufacturerList(Long id) {
+		return ManufacturerHbn.getSoftwareManufacturerById(id);
+	}
+	public KeyValueDTO[] findSoftwareProductList(Long id) {
+		return ManufacturerHbn.getSoftwareProductById(id);
+	}
 }
