@@ -25,4 +25,7 @@ public class BusinessAdministrationWSDelegate {
 		return businessAdministrationWS.getOsNames();
 	}
 
+	public KeyValueEnDTO[] findSapAssetSoftwareList(Long id) {
+		return businessAdministrationWS.findSapAssetSoftwareList(id);
+	}
 }

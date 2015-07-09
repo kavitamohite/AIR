@@ -1,6 +1,5 @@
 package com.bayerbbs.applrepos.hibernate;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +9,9 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.applrepos.common.ApplReposTS;
@@ -34,28 +35,74 @@ public class SoftwareComponentHbn {
 		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
+
 			tx = session.beginTransaction();
-			BigDecimal total = (BigDecimal) session.createSQLQuery(
-					"select count(*) from SOFTWAREKOMPONENTE where lower(PRODUKTBEZ) like '%"
-							+ input.getQuery().toLowerCase() + "%'")
-					.uniqueResult();
-			out.setCountResultSet(total.longValue());
 
 			Criteria criteria = session.createCriteria(SoftwareComponent.class);
-			criteria.add(Restrictions.like("prouctDescription",
-					"%" + input.getQuery() + "%").ignoreCase());
+
+			Criterion sapDescription = Restrictions.like("prouctDescription",
+					"%" + input.getQuery() + "%").ignoreCase();
+			Criterion pspElement = Restrictions.like("innenauftrag",
+					"%" + input.getQuery() + "%").ignoreCase();
+			criteria.createAlias("konto", "konto");
+			Criterion kontoName = Restrictions.like("konto.name",
+					"%" + input.getQuery() + "%").ignoreCase();
+			Criterion serialNumber = Restrictions.like("serialNumber",
+					"%" + input.getQuery() + "%").ignoreCase();
+			Criterion technicalMaster = Restrictions.like("technicalMaster",
+					"%" + input.getQuery() + "%").ignoreCase();
+			Criterion technicalNumber = Restrictions.like("technicalNumber",
+					"%" + input.getQuery() + "%").ignoreCase();
+			Criterion inventoryNumber = Restrictions.like("inventoryNumber",
+					"%" + input.getQuery() + "%").ignoreCase();
+			Criterion orgUnit = Restrictions.like("subResponsible",
+					"%" + input.getQuery() + "%").ignoreCase();
+
+			Criterion completeCondition = Restrictions.disjunction()
+					.add(sapDescription).add(pspElement).add(kontoName)
+					.add(serialNumber).add(technicalMaster)
+					.add(technicalNumber).add(inventoryNumber).add(orgUnit);
+			criteria.add(completeCondition);
 
 			if (input.getSort() != null) {
 				addSortingCriteria(criteria, input.getSort(), input.getDir());
 			}
+
 			criteria.setFirstResult(input.getStart());
 			criteria.setMaxResults(input.getLimit());
 			List<SoftwareComponent> values = (List<SoftwareComponent>) criteria
 					.list();
+			criteria.setFirstResult(0);
+			Integer total = (Integer) criteria.setProjection(
+					Projections.rowCount()).uniqueResult();
+			out.setCountResultSet(total.longValue());
 			list = getDTOList(values);
 			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list
 					.size()]));
 			tx.commit();
+		
+//			tx = session.beginTransaction();
+//			BigDecimal total = (BigDecimal) session.createSQLQuery(
+//					"select count(*) from SOFTWAREKOMPONENTE where lower(PRODUKTBEZ) like '%"
+//							+ input.getQuery().toLowerCase() + "%'")
+//					.uniqueResult();
+//			out.setCountResultSet(total.longValue());
+//
+//			Criteria criteria = session.createCriteria(SoftwareComponent.class);
+//			criteria.add(Restrictions.like("prouctDescription",
+//					"%" + input.getQuery() + "%").ignoreCase());
+//
+//			if (input.getSort() != null) {
+//				addSortingCriteria(criteria, input.getSort(), input.getDir());
+//			}
+//			criteria.setFirstResult(input.getStart());
+//			criteria.setMaxResults(input.getLimit());
+//			List<SoftwareComponent> values = (List<SoftwareComponent>) criteria
+//					.list();
+//			list = getDTOList(values);
+//			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list
+//					.size()]));
+//			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
 				try {
@@ -123,52 +170,58 @@ public class SoftwareComponentHbn {
 		return list;
 	}
 
-	private static AssetViewDataDTO getDTO(SoftwareComponent hwComp) {
+	private static AssetViewDataDTO getDTO(SoftwareComponent swComp) {
 
 		AssetViewDataDTO dto = new AssetViewDataDTO();
 
-		dto.setId(hwComp.getId());
+		dto.setId(swComp.getId());
 
 		// Asset Information
-		dto.setIdentNumber(hwComp.getName());
-		dto.setInventoryNumber(hwComp.getInventoryNumber());
-		dto.setSapDescription(hwComp.getProuctDescription());
+		dto.setIdentNumber(swComp.getName());
+		dto.setInventoryNumber(swComp.getInventoryNumber());
+		dto.setSapDescription(swComp.getProuctDescription());
 
 		// Product
-		if (hwComp.getHersteller() != null) {
-			dto.setManufacturer(hwComp.getHersteller().getName());
-			dto.setManufacturerId(hwComp.getHersteller().getId());
+		if (swComp.getHersteller() != null) {
+			dto.setManufacturer(swComp.getHersteller().getName());
+			dto.setManufacturerId(swComp.getHersteller().getId());
 		}
 		// Product Name remaining
 
 		// Business Administration
-		dto.setOrderNumber(hwComp.getBestellNumber());
-		if (hwComp.getKonto() != null) {
-			dto.setCostCenter(hwComp.getKonto().getName());
-			dto.setCostCenterId(hwComp.getKonto().getId());
-			if (hwComp.getKonto().getCwidVerantw() != null) {
-				List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(hwComp
+		dto.setOrderNumber(swComp.getBestellNumber());
+		Konto pspelement = PspElementHbn.getPspElementByName(swComp
+				.getInnenauftrag());
+		dto.setPspElement(swComp.getInnenauftrag());
+		if (pspelement != null) {
+			dto.setPspElementId(pspelement.getId());
+			dto.setPspText(pspelement.getBeschreibung());
+		}
+		if (swComp.getKonto() != null) {
+			dto.setCostCenter(swComp.getKonto().getName());
+			dto.setCostCenterId(swComp.getKonto().getId());
+			if (swComp.getKonto().getCwidVerantw() != null) {
+				List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(swComp
 						.getKonto().getCwidVerantw());
 				dto.setCostCenterManager(persons.get(0).getDisplayNameFull());
-			}
-			Konto pspelement = PspElementHbn.getPspElementByName(hwComp
-					.getInnenauftrag());
-			dto.setPspElement(hwComp.getInnenauftrag());
-			if (pspelement != null) {
-				dto.setPspElementId(pspelement.getId());
-				dto.setPspText(pspelement.getBeschreibung());
+				dto.setOwner(persons.get(0).getDisplayNameFull());
+				dto.setCostCenterManagerId(swComp.getKonto().getCwidVerantw());
+				dto.setOrganizationalunit(persons.get(0).getOrgUnit());
 			}
 		}
-		dto.setRequester(hwComp.getRequester());
-		dto.setOrganizationalunit(hwComp.getSubResponsible());
-		dto.setOwner("OWNER");
-		if (hwComp.getSoftwareCategory1() != null) {
-			dto.setSapAssetClass(hwComp.getSoftwareCategory1().getSwKategory1());
-			dto.setSapAssetClassId(hwComp.getSoftwareCategory1().getId());
+		dto.setRequesterId(swComp.getRequester());
+		if(swComp.getRequester() != null){
+			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(swComp
+					.getRequester());
+			dto.setRequester(persons.get(0).getDisplayNameFull());
+		}
+		if (swComp.getSoftwareCategory1() != null) {
+			dto.setSapAssetClass(swComp.getSoftwareCategory1().getSwKategory1());
+			dto.setSapAssetClassId(swComp.getSoftwareCategory1().getId());
 		}
 
-		dto.setSerialNumber(hwComp.getSerialNumber());
-		dto.setOsName("OS Name");
+		dto.setSerialNumber(swComp.getSerialNumber());
+		dto.setEditorsGroup(swComp.getSubResponsible());
 		return dto;
 	}
 
@@ -203,7 +256,6 @@ public class SoftwareComponentHbn {
 
 	public static Boolean saveSoftwareAsset(
 			AssetViewDataDTO dto) {
-		AssetManagementParameterOutput output = new AssetManagementParameterOutput();
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
 		tx = session.beginTransaction();

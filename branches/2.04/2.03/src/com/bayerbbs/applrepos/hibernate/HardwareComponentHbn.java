@@ -342,7 +342,6 @@ public class HardwareComponentHbn {
 	public static Boolean saveHardwareAsset(
 			AssetViewDataDTO dto) {
 
-		AssetManagementParameterOutput output = new AssetManagementParameterOutput();
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
 		tx = session.beginTransaction();

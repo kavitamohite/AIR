@@ -24,5 +24,9 @@ public class BusinessAdministrationWS {
 	public KeyValueDTO[] getOsNames(){
 		return ItSystemHbn.getOsNames();
 	}
-
+	
+	public KeyValueEnDTO[] findSapAssetSoftwareList(Long id) {
+		return SapAssetHbn.getSapAssetSoftwareList();
+	}
+	
 }
