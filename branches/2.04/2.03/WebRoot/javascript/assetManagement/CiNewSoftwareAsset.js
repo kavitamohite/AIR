@@ -55,7 +55,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                     border: false,
                     width: 590,
                     items: [{
-                        xtype: 'AIR.CiProduct',
+                        xtype: 'AIR.CiSoftwareProduct',
                         itemId: 'product'
                     }, {
                         xtype: 'AIR.CiContact',
@@ -116,6 +116,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 					xtype : 'button',
 					itemId : 'bHistory',
 					text : 'Asset History',
+					hidden: true,
 					listeners: {
                         click: {
                             fn: this.onAssetHistoryButton,
@@ -139,7 +140,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 	    var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
 	    cbManufacturer.on('select', this.enableAssetButtons, this);
       
-	    var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
+	  /*  var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
         cbSubCategory.on('select', this.enableAssetButtons, this);
       
         var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
@@ -147,7 +148,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 
         var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
         cbModel.on('select', this.enableAssetButtons, this);
-      
+      */
         var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
         cbCostcenter.on('select', this.enableAssetButtons, this);
          
@@ -301,10 +302,10 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 		var saveBtn = this.getComponent('buttonPanel').getComponent('saveBtn');
 		var cancelBtn = this.getComponent('buttonPanel').getComponent('cancelBtn');
 		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getRawValue();
-		var cbSubCategoryValue=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
+	/*	var cbSubCategoryValue=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
 		var cbTypeValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getRawValue();
 		var cbModelValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel').getRawValue();
-		var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter').getRawValue();
+		*/var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter').getRawValue();
 		var cbSapAssetValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset').getRawValue();
 		var tfRequesterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getRawValue();
 		
