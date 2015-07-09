@@ -55,6 +55,67 @@ public class ManufacturerHbn  extends BaseHbn{
 		return data.toArray(new KeyValueDTO[0]);
 	}
 	
+	public static KeyValueDTO[] getSoftwareManufacturerById(Long partnerId){
+
+		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		Transaction tx = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			tx = session.beginTransaction();
+			@SuppressWarnings("unchecked")
+			List<Partner> values = session.createQuery("from Partner").list();
+
+			data = getDTOManufacturerList(values);
+
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null && tx.isActive()) {
+				try {
+
+					tx.rollback();
+				} catch (HibernateException e1) {
+					System.out.println("Error rolling back transaction");
+				}
+				// throw again the first exception
+				throw e;
+			}
+
+		}
+		Collections.sort(data);
+		return data.toArray(new KeyValueDTO[0]);
 	
+	}	
+	
+	
+
+	public static KeyValueDTO[] getSoftwareProductById(Long partnerId){
+	List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+	Transaction tx = null;
+	Session session = HibernateUtil.getSessionFactory().openSession();
+	try {
+		tx = session.beginTransaction();
+		@SuppressWarnings("unchecked")
+		List<Partner> values = session.createQuery("from Partner").list();
+
+		data = getDTOManufacturerList(values);
+
+		tx.commit();
+	} catch (RuntimeException e) {
+		if (tx != null && tx.isActive()) {
+			try {
+
+				tx.rollback();
+			} catch (HibernateException e1) {
+				System.out.println("Error rolling back transaction");
+			}
+			// throw again the first exception
+			throw e;
+		}
+
+	}
+	Collections.sort(data);
+	return data.toArray(new KeyValueDTO[0]);
+
+	}
 
 }
