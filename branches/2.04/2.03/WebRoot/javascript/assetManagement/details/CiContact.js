@@ -62,7 +62,7 @@ AIR.CiContact = Ext.extend(Ext.form.FieldSet, {
         tOrganizationalunit.setValue(assetData.organizationalunit);
 
         var cbeditor = this.getComponent('cbeditor');
-        cbeditor.setValue(assetData.editorsGroupId);
+        cbeditor.setRawValue(assetData.editorsGroup);
 
 	},
 	

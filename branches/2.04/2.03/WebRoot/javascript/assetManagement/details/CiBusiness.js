@@ -138,6 +138,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 			}, {
 				xtype : 'textfield',
 				itemId: 'tCostCenterMgr',
+				disabled: true,
 				fieldLabel : 'Cost Center Manager',
 				width: 370,
 				style : {
@@ -228,7 +229,8 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
     	var costCenterManager1 = this.getComponent('tCostCenterMgr');
     	var costCenterManagerHidden = this.getComponent('costCenterManagerHidden');
     	var tOwner = this.getComponent('tOwner');
-        var tOrganisation = this.getComponent('tOrganisation');
+    	var tOrganisation = this.ownerCt.ownerCt.getComponent('leftPanel').getComponent('contacts').getComponent('tOrganizationalunit');
+        var tOrganisation1 = this.getComponent('tOrganisation');
 
     	personStore = AIR.AirStoreFactory.createPersonStore();
         personStore.load({
@@ -239,12 +241,13 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
             	var cwid = this.getAt(0).data.cwid;
                 var value = this.getAt(0).data.firstname + " " + this.getAt(0).data.lastname + "/" + cwid;
                 var orgUnit = this.getAt(0).data.orgUnit;
-
+                console.log(orgUnit);
                 costCenterManager.setValue(value);
                 costCenterManager1.setValue(value);
                 costCenterManagerHidden.setValue(cwid);
                 tOwner.setValue(value);
                 tOrganisation.setValue(orgUnit);
+                tOrganisation1.setValue(orgUnit);
 
             }
         });

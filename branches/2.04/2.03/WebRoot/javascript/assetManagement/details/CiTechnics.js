@@ -35,15 +35,22 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 					marginBottom : 10
 				}
 			}, {
-				xtype : 'textfield',
-				id : 'tOsName',
-				fieldLabel : 'OS-Name',
-				width : 370,
+				id: 'tOsName',
+		        xtype: 'filterCombo',
+		        fieldLabel: 'OS-Name',
+		        width: 370,
+		        enableKeyEvents: true,
+		        store: AIR.AirStoreManager.getStoreByName('osListStore'),
+		        valueField: 'osId',
+		        displayField: 'osName',
+				lastQuery: '',
+		        minChars: 0,
+		        triggerAction: 'all',
+		        mode: 'local',
 				style : {
-					marginBottom : 10,
-					fontSize : 12
+					marginBottom : 10
 				}
-			},  {
+			}, {
 				xtype : 'textfield',
 				id : 'tTransient',
 				fieldLabel : 'HW-transient systems',
@@ -127,10 +134,8 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         var tSystemPlatform = this.getComponent('tSystemPlatform');
         tSystemPlatform.setValue(assetData.systemPlatformName);
 
-
         var tOsName = this.getComponent('tOsName');
-        tOsName.setValue(assetData.osName);
-
+        tOsName.setValue(assetData.osNameId);
 
         var tTransient = this.getComponent('tTransient');
         tTransient.setValue(assetData.hardwareTransientSystem);
@@ -142,8 +147,11 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         cbGeneralUsage.setValue(assetData.generalUsageId);
 
         var rbItSecurity = this.getComponent('rbItSecurity');
-        console.log(assetData.itSecurityRelevance)
-//        rbItSecurity.setValue([true, false]);
+        if(assetData.itSecurityRelevance == -1){
+            rbItSecurity.items.items[0].setValue(true);
+        } else {
+        	rbItSecurity.items.items[1].setValue(true);
+        }
 
         var tComment = this.getComponent('tComment');
         tComment.setValue(assetData.comment);

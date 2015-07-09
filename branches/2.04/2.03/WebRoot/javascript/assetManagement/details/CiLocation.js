@@ -171,16 +171,19 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         cbSite.getStore().removeAll();
         cbRack.getStore().removeAll();
 
-        cbSite.getStore().setBaseParam('id', value);
-        cbSite.allQuery = value;
-        cbSite.reset();
-        cbSite.getStore().load({
+        this.loadSiteStore(value);
+        this.updateMailTemplateLocation();
+
+	},
+	
+	loadSiteStore: function(value){
+		var cbSite = this.getComponent('cbSite');
+		
+		cbSite.getStore().load({
             params: {
                 id: value
             }
-        });
-        this.updateMailTemplateLocation();
-
+		});
 	},
 	
 	onSiteSelect: function(combo, record, index) {
@@ -209,6 +212,16 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         this.updateMailTemplateLocation();
 	},
 	
+	loadBuildingStore: function(value){
+		 var cbBuilding = this.getComponent('cbBuilding');
+		
+		 cbBuilding.getStore().load({
+		    params: {
+		        id: value
+		    }
+		 });
+	},
+	
 	onBuildingSelect: function(combo, record, index) {
         var value = record.get('id');
         
@@ -221,15 +234,19 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         cbRoom.getStore().removeAll();
         cbRack.getStore().removeAll();
 
-        cbRoom.getStore().setBaseParam('id', value);
-        cbRoom.allQuery = value;
-        cbRoom.reset();
-        cbRoom.getStore().load({
+        this.loadRoomStore(value);
+        this.updateMailTemplateLocation();
+	},
+	
+	loadRoomStore: function(value){
+		var cbRoom = this.getComponent('cbRoom');
+		
+		cbRoom.getStore().load({
             params: {
                 id: value
             }
         });
-        this.updateMailTemplateLocation();
+		
 	},
 	
 	onRoomSelect: function(combo, record, index) {
@@ -239,15 +256,18 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         cbRack.reset();
         cbRack.getStore().removeAll();
 
-        cbRack.getStore().setBaseParam('id', value);
-        cbRack.allQuery = value;
-        cbRack.reset();
-        cbRack.getStore().load({
+        this.loadRackStore(value);
+        this.updateMailTemplateLocation();
+	},
+	
+	loadRackStore: function(value){
+		var cbRack = this.getComponent('pRackposition').getComponent('cbRack');
+		
+		cbRack.getStore().load({
             params: {
                 id: value
             }
         });
-        this.updateMailTemplateLocation();
 	},
 
 	updateMailTemplateLocation: function() {
@@ -292,6 +312,13 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         var cbRack = this.getComponent('pRackposition').getComponent('cbRack');
         cbRack.setValue(assetData.rackId);
         cbRack.setRawValue(assetData.rack);
+        
+        if(assetData.countryId){
+        	this.loadSiteStore(assetData.countryId);
+        	this.loadBuildingStore(assetData.siteId);
+        	this.loadRoomStore(assetData.buildingId);
+        	this.loadRackStore(assetData.roomId);
+        }
 
 	},
 		
@@ -307,7 +334,6 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         
         var cbRoom = this.getComponent('cbRoom');
         assetData.roomId = cbRoom.getValue();
-        cbRoom.setRawValue(assetData.room);
         
         var cbRack = this.getComponent('pRackposition').getComponent('cbRack');
         assetData.rackId = cbRack.getValue();
