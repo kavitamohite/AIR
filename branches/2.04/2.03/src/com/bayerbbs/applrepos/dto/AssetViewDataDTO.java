@@ -33,6 +33,7 @@ public class AssetViewDataDTO {
 	private String systemPlatformName;
 	
 	private String osName;
+	private Integer osNameId;
 	
 	private String hardwareTransientSystem;
 	private Long workflowStatusId;
@@ -249,6 +250,14 @@ public class AssetViewDataDTO {
 
 	public void setOsName(String osName) {
 		this.osName = osName;
+	}
+	
+	public Integer getOsNameId() {
+		return osNameId;
+	}
+
+	public void setOsNameId(Integer osNameId) {
+		this.osNameId = osNameId;
 	}
 
 	public String getHardwareTransientSystem() {

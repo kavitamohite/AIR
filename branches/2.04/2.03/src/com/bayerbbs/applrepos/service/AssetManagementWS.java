@@ -6,7 +6,8 @@ import com.bayerbbs.applrepos.hibernate.SoftwareComponentHbn;
 
 public class AssetManagementWS {
 
-	public AssetManagementParameterOutput searchAsset(AssetManagementParameterInput input) {
+	public AssetManagementParameterOutput searchAsset(
+			AssetManagementParameterInput input) {
 
 		AssetManagementParameterOutput out = null;
 
@@ -22,19 +23,20 @@ public class AssetManagementWS {
 			} else {
 				out = SoftwareComponentHbn.searchAsset(input);
 			}
-
 		}
 
 		return out;
 	}
-	
+
 	public AssetManagementParameterOutput saveAsset(AssetViewDataDTO dto) {
 		AssetManagementParameterOutput output = new AssetManagementParameterOutput();
+		Boolean result = false;
 		if(dto.getIsSoftwareComponent() != null && dto.getIsSoftwareComponent()){
-			output = SoftwareComponentHbn.saveSoftwareAsset(dto);
+			result = SoftwareComponentHbn.saveSoftwareAsset(dto);
 		} else {
-			output = HardwareComponentHbn.saveHardwareAsset(dto);
+			result = HardwareComponentHbn.saveHardwareAsset(dto);
 		}
+		output.setResult(result);
 		return output;
 	}
 }

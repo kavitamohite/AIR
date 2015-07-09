@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,11 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "HARDWAREKOMPONENTE")
@@ -29,7 +29,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private String name;
 
-	private String assetId;
+	 private String assetId;
 
 	private Long relevantItsec;
 
@@ -43,7 +43,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private String serialNumber;
 
-	private String inventoryNumber;
+	// private String inventoryNumber;
 
 	private LifecycleSubStat lifecycleSubStat;
 
@@ -65,7 +65,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private Long hardwareCategory4Id;
 
-	private HardwareComponent hardwareComponent;
+	// private HardwareComponent hardwareComponent;
 
 	private OperationalStatus operationalStatus;
 
@@ -75,7 +75,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private Long herstellerId;
 
-	private String inventoryOld;
+	// private String inventoryOld;
 
 	private Konto konto;
 
@@ -83,43 +83,43 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	// LIEFERANT_PARTNID NUMBER Needs to be checked
 
-	private String startDate;
+	// private String startDate;
+	//
+	// private Date accessDate;
+	//
+	// private String endDate;
 
-	private Date accessDate;
-
-	private String endDate;
-
-	private Long serviceNumber;
+	// private Long serviceNumber;
 
 	private String bestSellText;
 
-	private String amBanf;
+	// private String amBanf;
 
 	private String amKommision;
 
 	// LEASINGGEB_PARTNID NUMBER needs to be checked
 
-	private Sla sla;
+	// private Sla sla;
 
 	private String note1;
 
 	private String note2;
 
-	private String vUser;
+	// private String vUser;
+	//
+	// private Long powerSupplyCount;
+	//
+	// private Character powerSupply1;
+	//
+	// private Character powerSupply2;
+	//
+	// private Long acquitionValue;
 
-	private Long powerSupplyCount;
-
-	private Character powerSupply1;
-
-	private Character powerSupply2;
-
-	private Long acquitionValue;
-
-	private Long amSumme;
-
-	private Long purchaseNumber;
-
-	private String purchaseDate;
+	// private Long amSumme;
+	//
+	// private Long purchaseNumber;
+	//
+	// private String purchaseDate;
 
 	private String inventoryP69;
 
@@ -129,39 +129,39 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private String subResponsible;
 
-//	private Long relevantIcsNumber;
+	// private Long relevantIcsNumber;
 
 	private String requester;
 
-	private Timestamp sampleTestDate;
-
-	private String sampleTestResult;
-
-	private Partner partner;
+	// private Timestamp sampleTestDate;
+	//
+	// private String sampleTestResult;
+	//
+	// private Partner partner;
 
 	private String sapDescription;
 
-	private Timestamp syncTimestamp;
-
-	private Long syncConfig;
-
-	private Long duplicateSer;
-
-	private Long duplicateInv;
-
-	private String inventoryStockNumber;
-
-	private String cpuModel;
-
-	private Long cpuCount;
-
-	private Long ramMemory;
-
-	private Float intDiskSpace;
-
-	private Float extDiskSpace;
-
-	private Float cpuSpeed;
+	// private Timestamp syncTimestamp;
+	//
+	// private Long syncConfig;
+	//
+	// private Long duplicateSer;
+	//
+	// private Long duplicateInv;
+	//
+	// private String inventoryStockNumber;
+	//
+	// private String cpuModel;
+	//
+	// private Long cpuCount;
+	//
+	// private Long ramMemory;
+	//
+	// private Float intDiskSpace;
+	//
+	// private Float extDiskSpace;
+	//
+	// private Float cpuSpeed;
 
 	private String vbp;
 
@@ -203,6 +203,8 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private Long cpuCoreCount;
 
+	private ItSystem itSystem;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "HardwareComponentSeq")
 	@Column(name = "HW_ID")
@@ -223,14 +225,14 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "ASSET_ID")
-	public String getAssetId() {
-		return assetId;
-	}
-
-	public void setAssetId(String assetId) {
-		this.assetId = assetId;
-	}
+	 @Column(name = "ASSET_ID")
+	 public String getAssetId() {
+	 return assetId;
+	 }
+	
+	 public void setAssetId(String assetId) {
+	 this.assetId = assetId;
+	 }
 
 	@Column(name = "RELEVANZ_ITSEC")
 	public Long getRelevantItsec() {
@@ -287,14 +289,14 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.serialNumber = serialNumber;
 	}
 
-	@Column(name = "INVENTAR_NR")
-	public String getInventoryNumber() {
-		return inventoryNumber;
-	}
-
-	public void setInventoryNumber(String inventoryNumber) {
-		this.inventoryNumber = inventoryNumber;
-	}
+	// @Column(name = "INVENTAR_NR")
+	// public String getInventoryNumber() {
+	// return inventoryNumber;
+	// }
+	//
+	// public void setInventoryNumber(String inventoryNumber) {
+	// this.inventoryNumber = inventoryNumber;
+	// }
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "LC_SUB_STAT_ID", insertable = false, updatable = false)
@@ -391,15 +393,15 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.hardwareCategory4Id = hardwareCategory4Id;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HW_ID1")
-	public HardwareComponent getHardwareComponent() {
-		return hardwareComponent;
-	}
-
-	public void setHardwareComponent(HardwareComponent hardwareComponent) {
-		this.hardwareComponent = hardwareComponent;
-	}
+	// @OneToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "HW_ID1")
+	// public HardwareComponent getHardwareComponent() {
+	// return hardwareComponent;
+	// }
+	//
+	// public void setHardwareComponent(HardwareComponent hardwareComponent) {
+	// this.hardwareComponent = hardwareComponent;
+	// }
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "EINSATZ_STATUS_ID", insertable = false, updatable = false)
@@ -439,14 +441,14 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.herstellerId = herstellerId;
 	}
 
-	@Column(name = "INVENTAR_OLD")
-	public String getInventoryOld() {
-		return inventoryOld;
-	}
-
-	public void setInventoryOld(String inventoryOld) {
-		this.inventoryOld = inventoryOld;
-	}
+	// @Column(name = "INVENTAR_OLD")
+	// public String getInventoryOld() {
+	// return inventoryOld;
+	// }
+	//
+	// public void setInventoryOld(String inventoryOld) {
+	// this.inventoryOld = inventoryOld;
+	// }
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "KONTO_ID", insertable = false, updatable = false)
@@ -467,41 +469,41 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.kontoId = kontoId;
 	}
 
-	@Column(name = "AM_JAHR_START")
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
-	@Column(name = "AM_JAHR_ZUGANG")
-	public Date getAccessDate() {
-		return accessDate;
-	}
-
-	public void setAccessDate(Date accessDate) {
-		this.accessDate = accessDate;
-	}
-
-	@Column(name = "AM_JAHR_ENDE")
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-
-	@Column(name = "AM_NUTZDAUER")
-	public Long getServiceNumber() {
-		return serviceNumber;
-	}
-
-	public void setServiceNumber(Long serviceNumber) {
-		this.serviceNumber = serviceNumber;
-	}
+	// @Column(name = "AM_JAHR_START")
+	// public String getStartDate() {
+	// return startDate;
+	// }
+	//
+	// public void setStartDate(String startDate) {
+	// this.startDate = startDate;
+	// }
+	//
+	// @Column(name = "AM_JAHR_ZUGANG")
+	// public Date getAccessDate() {
+	// return accessDate;
+	// }
+	//
+	// public void setAccessDate(Date accessDate) {
+	// this.accessDate = accessDate;
+	// }
+	//
+	// @Column(name = "AM_JAHR_ENDE")
+	// public String getEndDate() {
+	// return endDate;
+	// }
+	//
+	// public void setEndDate(String endDate) {
+	// this.endDate = endDate;
+	// }
+	//
+	// @Column(name = "AM_NUTZDAUER")
+	// public Long getServiceNumber() {
+	// return serviceNumber;
+	// }
+	//
+	// public void setServiceNumber(Long serviceNumber) {
+	// this.serviceNumber = serviceNumber;
+	// }
 
 	@Column(name = "AM_BESTELL_TEXT")
 	public String getBestSellText() {
@@ -512,14 +514,14 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.bestSellText = bestSellText;
 	}
 
-	@Column(name = "AM_BANF")
-	public String getAmBanf() {
-		return amBanf;
-	}
-
-	public void setAmBanf(String amBanf) {
-		this.amBanf = amBanf;
-	}
+	// @Column(name = "AM_BANF")
+	// public String getAmBanf() {
+	// return amBanf;
+	// }
+	//
+	// public void setAmBanf(String amBanf) {
+	// this.amBanf = amBanf;
+	// }
 
 	@Column(name = "AM_KOMMISSION")
 	public String getAmKommision() {
@@ -530,15 +532,15 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.amKommision = amKommision;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SLA_ID")
-	public Sla getSla() {
-		return sla;
-	}
-
-	public void setSla(Sla sla) {
-		this.sla = sla;
-	}
+	// @OneToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "SLA_ID")
+	// public Sla getSla() {
+	// return sla;
+	// }
+	//
+	// public void setSla(Sla sla) {
+	// this.sla = sla;
+	// }
 
 	@Column(name = "AM_BEMERKUNG1")
 	public String getNote1() {
@@ -558,91 +560,91 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.note2 = note2;
 	}
 
-	@Column(name = "VUSER")
-	public String getvUser() {
-		return vUser;
-	}
+	// @Column(name = "VUSER")
+	// public String getvUser() {
+	// return vUser;
+	// }
+	//
+	// public void setvUser(String vUser) {
+	// this.vUser = vUser;
+	// }
 
-	public void setvUser(String vUser) {
-		this.vUser = vUser;
-	}
+	// @Column(name = "POWERSUPPLY_COUNT")
+	// public Long getPowerSupplyCount() {
+	// return powerSupplyCount;
+	// }
+	//
+	// public void setPowerSupplyCount(Long powerSupplyCount) {
+	// this.powerSupplyCount = powerSupplyCount;
+	// }
+	//
+	// @Type(type = "yes_no")
+	// @Column(name = "POWER_SUPPLY_1")
+	// public Boolean getPowerSupply1() {
+	// if (powerSupply1 == null)
+	// return null;
+	// return powerSupply1 == 'Y' ? Boolean.TRUE : Boolean.FALSE;
+	// }
+	//
+	// public void setPowerSupply1(Boolean powerSupply1) {
+	// if (powerSupply1 == null) {
+	// this.powerSupply1 = null;
+	// } else {
+	// this.powerSupply1 = powerSupply1 == true ? 'Y' : 'N';
+	// }
+	// }
+	//
+	// @Type(type = "yes_no")
+	// @Column(name = "POWER_SUPPLY_2")
+	// public Boolean getPowerSupply2() {
+	// if (powerSupply2 == null)
+	// return null;
+	// return powerSupply2 == 'Y' ? Boolean.TRUE : Boolean.FALSE;
+	// }
+	//
+	// public void setPowerSupply2(Boolean powerSupply2) {
+	// if (powerSupply2 == null) {
+	// this.powerSupply2 = null;
+	// } else {
+	// this.powerSupply2 = powerSupply2 == true ? 'Y' : 'N';
+	// }
+	// }
 
-	@Column(name = "POWERSUPPLY_COUNT")
-	public Long getPowerSupplyCount() {
-		return powerSupplyCount;
-	}
-
-	public void setPowerSupplyCount(Long powerSupplyCount) {
-		this.powerSupplyCount = powerSupplyCount;
-	}
-
-	@Type(type = "yes_no")
-	@Column(name = "POWER_SUPPLY_1")
-	public Boolean getPowerSupply1() {
-		if (powerSupply1 == null)
-			return null;
-		return powerSupply1 == 'Y' ? Boolean.TRUE : Boolean.FALSE;
-	}
-
-	public void setPowerSupply1(Boolean powerSupply1) {
-		if (powerSupply1 == null) {
-			this.powerSupply1 = null;
-		} else {
-			this.powerSupply1 = powerSupply1 == true ? 'Y' : 'N';
-		}
-	}
-
-	@Type(type = "yes_no")
-	@Column(name = "POWER_SUPPLY_2")
-	public Boolean getPowerSupply2() {
-		if (powerSupply2 == null)
-			return null;
-		return powerSupply2 == 'Y' ? Boolean.TRUE : Boolean.FALSE;
-	}
-
-	public void setPowerSupply2(Boolean powerSupply2) {
-		if (powerSupply2 == null) {
-			this.powerSupply2 = null;
-		} else {
-			this.powerSupply2 = powerSupply2 == true ? 'Y' : 'N';
-		}
-	}
-
-	@Column(name = "AM_ANSCHAFFWERT")
-	public Long getAcquitionValue() {
-		return acquitionValue;
-	}
-
-	public void setAcquitionValue(Long acquitionValue) {
-		this.acquitionValue = acquitionValue;
-	}
-
-	@Column(name = "AM_L_SUMME")
-	public Long getAmSumme() {
-		return amSumme;
-	}
-
-	public void setAmSumme(Long amSumme) {
-		this.amSumme = amSumme;
-	}
-
-	@Column(name = "BUCHWERT")
-	public Long getPurchaseNumber() {
-		return purchaseNumber;
-	}
-
-	public void setPurchaseNumber(Long purchaseNumber) {
-		this.purchaseNumber = purchaseNumber;
-	}
-
-	@Column(name = "BUCHWERT_DATUM")
-	public String getPurchaseDate() {
-		return purchaseDate;
-	}
-
-	public void setPurchaseDate(String purchaseDate) {
-		this.purchaseDate = purchaseDate;
-	}
+	// @Column(name = "AM_ANSCHAFFWERT")
+	// public Long getAcquitionValue() {
+	// return acquitionValue;
+	// }
+	//
+	// public void setAcquitionValue(Long acquitionValue) {
+	// this.acquitionValue = acquitionValue;
+	// }
+	//
+	// @Column(name = "AM_L_SUMME")
+	// public Long getAmSumme() {
+	// return amSumme;
+	// }
+	//
+	// public void setAmSumme(Long amSumme) {
+	// this.amSumme = amSumme;
+	// }
+	//
+	// @Column(name = "BUCHWERT")
+	// public Long getPurchaseNumber() {
+	// return purchaseNumber;
+	// }
+	//
+	// public void setPurchaseNumber(Long purchaseNumber) {
+	// this.purchaseNumber = purchaseNumber;
+	// }
+	//
+	// @Column(name = "BUCHWERT_DATUM")
+	// public String getPurchaseDate() {
+	// return purchaseDate;
+	// }
+	//
+	// public void setPurchaseDate(String purchaseDate) {
+	// this.purchaseDate = purchaseDate;
+	// }
 
 	@Column(name = "INVENTAR_P69")
 	public String getInventoryP69() {
@@ -680,14 +682,14 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.subResponsible = subResponsible;
 	}
 
-//	@Column(name = "RELEVANCE_ICS")
-//	public Long getRelevantIcsNumber() {
-//		return relevantIcsNumber;
-//	}
-//
-//	public void setRelevantIcsNumber(Long relevantIcsNumber) {
-//		this.relevantIcsNumber = relevantIcsNumber;
-//	}
+	// @Column(name = "RELEVANCE_ICS")
+	// public Long getRelevantIcsNumber() {
+	// return relevantIcsNumber;
+	// }
+	//
+	// public void setRelevantIcsNumber(Long relevantIcsNumber) {
+	// this.relevantIcsNumber = relevantIcsNumber;
+	// }
 
 	@Column(name = "ANFORDERER")
 	public String getRequester() {
@@ -698,33 +700,33 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.requester = requester;
 	}
 
-	@Column(name = "SAMPLE_TEST_DATE")
-	public Timestamp getSampleTestDate() {
-		return sampleTestDate;
-	}
-
-	public void setSampleTestDate(Timestamp sampleTestDate) {
-		this.sampleTestDate = sampleTestDate;
-	}
-
-	@Column(name = "SAMPLE_TEST_RESULT")
-	public String getSampleTestResult() {
-		return sampleTestResult;
-	}
-
-	public void setSampleTestResult(String sampleTestResult) {
-		this.sampleTestResult = sampleTestResult;
-	}
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "OWNER_PARTNID")
-	public Partner getPartner() {
-		return partner;
-	}
-
-	public void setPartner(Partner partner) {
-		this.partner = partner;
-	}
+	// @Column(name = "SAMPLE_TEST_DATE")
+	// public Timestamp getSampleTestDate() {
+	// return sampleTestDate;
+	// }
+	//
+	// public void setSampleTestDate(Timestamp sampleTestDate) {
+	// this.sampleTestDate = sampleTestDate;
+	// }
+	//
+	// @Column(name = "SAMPLE_TEST_RESULT")
+	// public String getSampleTestResult() {
+	// return sampleTestResult;
+	// }
+	//
+	// public void setSampleTestResult(String sampleTestResult) {
+	// this.sampleTestResult = sampleTestResult;
+	// }
+	//
+	// @OneToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "OWNER_PARTNID")
+	// public Partner getPartner() {
+	// return partner;
+	// }
+	//
+	// public void setPartner(Partner partner) {
+	// this.partner = partner;
+	// }
 
 	@Column(name = "SAP_DESCRIPTION")
 	public String getSapDescription() {
@@ -735,104 +737,104 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.sapDescription = sapDescription;
 	}
 
-	@Column(name = "SYNC_TIMESTAMP")
-	public Timestamp getSyncTimestamp() {
-		return syncTimestamp;
-	}
-
-	public void setSyncTimestamp(Timestamp syncTimestamp) {
-		this.syncTimestamp = syncTimestamp;
-	}
-
-	@Column(name = "SYNC_CONFIG")
-	public Long getSyncConfig() {
-		return syncConfig;
-	}
-
-	public void setSyncConfig(Long syncConfig) {
-		this.syncConfig = syncConfig;
-	}
-
-	@Column(name = "DUPLICATE_SER")
-	public Long getDuplicateSer() {
-		return duplicateSer;
-	}
-
-	public void setDuplicateSer(Long duplicateSer) {
-		this.duplicateSer = duplicateSer;
-	}
-
-	@Column(name = "DUPLICATE_INV")
-	public Long getDuplicateInv() {
-		return duplicateInv;
-	}
-
-	public void setDuplicateInv(Long duplicateInv) {
-		this.duplicateInv = duplicateInv;
-	}
-
-	@Column(name = "INVENTARNUMMER_OHNE")
-	public String getInventoryStockNumber() {
-		return inventoryStockNumber;
-	}
-
-	public void setInventoryStockNumber(String inventoryStockNumber) {
-		this.inventoryStockNumber = inventoryStockNumber;
-	}
-
-	@Column(name = "CPU_MODEL")
-	public String getCpuModel() {
-		return cpuModel;
-	}
-
-	public void setCpuModel(String cpuModel) {
-		this.cpuModel = cpuModel;
-	}
-
-	@Column(name = "CPU_COUNT")
-	public Long getCpuCount() {
-		return cpuCount;
-	}
-
-	public void setCpuCount(Long cpuCount) {
-		this.cpuCount = cpuCount;
-	}
-
-	@Column(name = "RAM_MEMORY")
-	public Long getRamMemory() {
-		return ramMemory;
-	}
-
-	public void setRamMemory(Long ramMemory) {
-		this.ramMemory = ramMemory;
-	}
-
-	@Column(name = "INT_DISK_SPACE")
-	public Float getIntDiskSpace() {
-		return intDiskSpace;
-	}
-
-	public void setIntDiskSpace(Float intDiskSpace) {
-		this.intDiskSpace = intDiskSpace;
-	}
-
-	@Column(name = "EXT_DISK_SPACE")
-	public Float getExtDiskSpace() {
-		return extDiskSpace;
-	}
-
-	public void setExtDiskSpace(Float extDiskSpace) {
-		this.extDiskSpace = extDiskSpace;
-	}
-
-	@Column(name = "CPU_SPEED")
-	public Float getCpuSpeed() {
-		return cpuSpeed;
-	}
-
-	public void setCpuSpeed(Float cpuSpeed) {
-		this.cpuSpeed = cpuSpeed;
-	}
+	// @Column(name = "SYNC_TIMESTAMP")
+	// public Timestamp getSyncTimestamp() {
+	// return syncTimestamp;
+	// }
+	//
+	// public void setSyncTimestamp(Timestamp syncTimestamp) {
+	// this.syncTimestamp = syncTimestamp;
+	// }
+	//
+	// @Column(name = "SYNC_CONFIG")
+	// public Long getSyncConfig() {
+	// return syncConfig;
+	// }
+	//
+	// public void setSyncConfig(Long syncConfig) {
+	// this.syncConfig = syncConfig;
+	// }
+	//
+	// @Column(name = "DUPLICATE_SER")
+	// public Long getDuplicateSer() {
+	// return duplicateSer;
+	// }
+	//
+	// public void setDuplicateSer(Long duplicateSer) {
+	// this.duplicateSer = duplicateSer;
+	// }
+	//
+	// @Column(name = "DUPLICATE_INV")
+	// public Long getDuplicateInv() {
+	// return duplicateInv;
+	// }
+	//
+	// public void setDuplicateInv(Long duplicateInv) {
+	// this.duplicateInv = duplicateInv;
+	// }
+	//
+	// @Column(name = "INVENTARNUMMER_OHNE")
+	// public String getInventoryStockNumber() {
+	// return inventoryStockNumber;
+	// }
+	//
+	// public void setInventoryStockNumber(String inventoryStockNumber) {
+	// this.inventoryStockNumber = inventoryStockNumber;
+	// }
+	//
+	// @Column(name = "CPU_MODEL")
+	// public String getCpuModel() {
+	// return cpuModel;
+	// }
+	//
+	// public void setCpuModel(String cpuModel) {
+	// this.cpuModel = cpuModel;
+	// }
+	//
+	// @Column(name = "CPU_COUNT")
+	// public Long getCpuCount() {
+	// return cpuCount;
+	// }
+	//
+	// public void setCpuCount(Long cpuCount) {
+	// this.cpuCount = cpuCount;
+	// }
+	//
+	// @Column(name = "RAM_MEMORY")
+	// public Long getRamMemory() {
+	// return ramMemory;
+	// }
+	//
+	// public void setRamMemory(Long ramMemory) {
+	// this.ramMemory = ramMemory;
+	// }
+	//
+	// @Column(name = "INT_DISK_SPACE")
+	// public Float getIntDiskSpace() {
+	// return intDiskSpace;
+	// }
+	//
+	// public void setIntDiskSpace(Float intDiskSpace) {
+	// this.intDiskSpace = intDiskSpace;
+	// }
+	//
+	// @Column(name = "EXT_DISK_SPACE")
+	// public Float getExtDiskSpace() {
+	// return extDiskSpace;
+	// }
+	//
+	// public void setExtDiskSpace(Float extDiskSpace) {
+	// this.extDiskSpace = extDiskSpace;
+	// }
+	//
+	// @Column(name = "CPU_SPEED")
+	// public Float getCpuSpeed() {
+	// return cpuSpeed;
+	// }
+	//
+	// public void setCpuSpeed(Float cpuSpeed) {
+	// this.cpuSpeed = cpuSpeed;
+	// }
 
 	@Column(name = "VBP")
 	public String getVbp() {
@@ -1017,67 +1019,14 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.cpuCoreCount = cpuCoreCount;
 	}
 
-	@Override
-	public String toString() {
-		return "HardwareComponent [id=" + id + ", name=" + name + ", assetId="
-				+ assetId + ", relevantItsec=" + relevantItsec
-				+ ", technicalMaster=" + technicalMaster + ", technicalNumber="
-				+ technicalNumber + ", schrank=" + schrank + ", schrankId="
-				+ schrankId + ", serialNumber=" + serialNumber
-				+ ", inventoryNumber=" + inventoryNumber
-				+ ", lifecycleSubStat=" + lifecycleSubStat
-				+ ", lifecycleSubStatId=" + lifecycleSubStatId
-				+ ", hardwareCategory1=" + hardwareCategory1
-				+ ", hardwareCategory1Id=" + hardwareCategory1Id
-				+ ", hardwareCategory2=" + hardwareCategory2
-				+ ", hardwareCategory2Id=" + hardwareCategory2Id
-				+ ", hardwareCategory3=" + hardwareCategory3
-				+ ", hardwareCategory3Id=" + hardwareCategory3Id
-				+ ", hardwareCategory4=" + hardwareCategory4
-				+ ", hardwareCategory4Id=" + hardwareCategory4Id
-				+ ", hardwareComponent=" + hardwareComponent
-				+ ", operationalStatus=" + operationalStatus
-				+ ", operationalStatusId=" + operationalStatusId
-				+ ", hersteller=" + hersteller + ", herstellerId="
-				+ herstellerId + ", inventoryOld=" + inventoryOld + ", konto="
-				+ konto + ", kontoId=" + kontoId + ", startDate=" + startDate
-				+ ", accessDate=" + accessDate + ", endDate=" + endDate
-				+ ", serviceNumber=" + serviceNumber + ", bestSellText="
-				+ bestSellText + ", amBanf=" + amBanf + ", amKommision="
-				+ amKommision + ", sla=" + sla + ", note1=" + note1
-				+ ", note2=" + note2 + ", vUser=" + vUser
-				+ ", powerSupplyCount=" + powerSupplyCount + ", powerSupply1="
-				+ powerSupply1 + ", powerSupply2=" + powerSupply2
-				+ ", acquitionValue=" + acquitionValue + ", amSumme=" + amSumme
-				+ ", purchaseNumber=" + purchaseNumber + ", purchaseDate="
-				+ purchaseDate + ", inventoryP69=" + inventoryP69
-				+ ", cwidVerantw=" + cwidVerantw + ", itset=" + itset
-				+ ", subResponsible=" + subResponsible  + ", requester=" + requester
-				+ ", sampleTestDate=" + sampleTestDate + ", sampleTestResult="
-				+ sampleTestResult + ", partner=" + partner
-				+ ", sapDescription=" + sapDescription + ", syncTimestamp="
-				+ syncTimestamp + ", syncConfig=" + syncConfig
-				+ ", duplicateSer=" + duplicateSer + ", duplicateInv="
-				+ duplicateInv + ", inventoryStockNumber="
-				+ inventoryStockNumber + ", cpuModel=" + cpuModel
-				+ ", cpuCount=" + cpuCount + ", ramMemory=" + ramMemory
-				+ ", intDiskSpace=" + intDiskSpace + ", extDiskSpace="
-				+ extDiskSpace + ", cpuSpeed=" + cpuSpeed + ", vbp=" + vbp
-				+ ", salesPrice=" + salesPrice + ", purchaseName="
-				+ purchaseName + ", heightRackUnits=" + heightRackUnits
-				+ ", powerConsumption=" + powerConsumption
-				+ ", lastSyncTimestamp=" + lastSyncTimestamp
-				+ ", lastSyncSource=" + lastSyncSource + ", syncing=" + syncing
-				+ ", gxpFlag=" + gxpFlag + ", commercialStatus="
-				+ commercialStatus + ", contactForService=" + contactForService
-				+ ", acRequest=" + acRequest + ", acRequestEndDate="
-				+ acRequestEndDate + ", orderNumber=" + orderNumber
-				+ ", specifics=" + specifics + ", serviceContract="
-				+ serviceContract + ", severityLevel=" + severityLevel
-				+ ", hbaCount=" + hbaCount + ", lanCount=" + lanCount
-				+ ", cpuCoreCount=" + cpuCoreCount + "]";
+	@OneToOne
+	@JoinTable(name = "it_system_hw", joinColumns = { @JoinColumn(name = "hw_id", referencedColumnName = "hw_id") }, inverseJoinColumns = { @JoinColumn(name = "it_system_id", referencedColumnName = "it_system_id") })
+	public ItSystem getItSystem() {
+		return itSystem;
 	}
-	
-	
+
+	public void setItSystem(ItSystem itSystem) {
+		this.itSystem = itSystem;
+	}
 
 }

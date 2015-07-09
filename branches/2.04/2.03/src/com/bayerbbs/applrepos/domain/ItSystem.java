@@ -1,14 +1,21 @@
 package com.bayerbbs.applrepos.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -46,6 +53,7 @@ public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisi
 	private Integer primaryFunctionId;
 	private Integer licenseScanningId;
 	
+	private List<HardwareComponent> hardwareComponents = new ArrayList<HardwareComponent>();
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "MySeqItSystem")
@@ -206,4 +214,15 @@ public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisi
 	public void setLicenseScanningId(Integer licenseScanningId) {
 		this.licenseScanningId = licenseScanningId;
 	}
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "it_system_hw", joinColumns = { @JoinColumn(name = "it_system_id", referencedColumnName = "it_system_id") }, inverseJoinColumns = { @JoinColumn(name = "hw_id", referencedColumnName = "hw_id") })
+	public List<HardwareComponent> getHardwareComponents() {
+		return hardwareComponents;
+	}
+
+	public void setHardwareComponents(List<HardwareComponent> hardwareComponents) {
+		this.hardwareComponents = hardwareComponents;
+	}
+
 }

@@ -20,5 +20,9 @@ public class BusinessAdministrationWSDelegate {
 	public KeyValueEnDTO[] findSapAssetList(DefaultDataInput input) {
 		return businessAdministrationWS.findSapAssetList(input.getId());
 	}
+	
+	public KeyValueDTO[] getOsNames(){
+		return businessAdministrationWS.getOsNames();
+	}
 
 }

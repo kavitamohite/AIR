@@ -201,7 +201,7 @@ public class SoftwareComponentHbn {
 		return out;
 	}
 
-	public static AssetManagementParameterOutput saveSoftwareAsset(
+	public static Boolean saveSoftwareAsset(
 			AssetViewDataDTO dto) {
 		AssetManagementParameterOutput output = new AssetManagementParameterOutput();
 		Session session = HibernateUtil.getSession();
@@ -219,13 +219,14 @@ public class SoftwareComponentHbn {
 			if (tx.isActive()) {
 				tx.rollback();
 			}
+			return false;
 		} finally {
 			if (tx.isActive()) {
 				tx.commit();
 			}
 			session.close();
 		}
-		return output;
+		return true;
 	}
 
 	private static SoftwareComponent getSoftwareComponent(AssetViewDataDTO dto) {
