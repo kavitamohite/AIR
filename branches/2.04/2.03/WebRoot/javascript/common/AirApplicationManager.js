@@ -154,7 +154,7 @@ AIR.AirApplicationManager = function() {
 				subCategoryListStore: null, 
 				costCenterListStore: null, 
 				pspElementListStore: null,
-				operationalStatusListStore: null,
+				osListStore: null,
 				editorGroupListStore:null
 			};
 			

@@ -4136,6 +4136,7 @@ AIR.AirStoreFactory = function() {
 					{ name : 'systemPlatformName'},
 					
 					{ name : 'osName'},
+					{ name : 'osNameId'},
 					{ name : 'workflowTechnicalStatus'},
 					{ name : 'hardwareTransientSystem'},
 					{ name : 'workflowStatusId'},
@@ -4169,6 +4170,7 @@ AIR.AirStoreFactory = function() {
 					{ name : 'requester'},
 					{ name : 'requesterId'},
 					{ name : 'costCenterManager'},
+					{ name : 'costCenterManagerId'},
 					{ name : 'organizationalunit'},
 					{ name : 'owner'},
 					{ name : 'sapAssetClass'},
@@ -4645,6 +4647,41 @@ AIR.AirStoreFactory = function() {
 			});
 			
 			return specialAttributeListStore;
+		},
+		
+		createOsListStore: function(){
+			var osRecord = Ext.data.Record.create([ {
+				name : 'osId',
+				mapping : 'id'
+			}, {
+				name : 'osName',
+				mapping : 'name'
+			}]);
+	
+	
+			var osReader = new Ext.data.XmlReader({
+				record: 'return',
+				idProperty: 'id'
+			}, osRecord);
+	
+			var osListStore = new Ext.data.XmlStore({//XmlStore
+				autoDestroy: false,
+				storeId: 'osListStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/BusinessAdministrationWSPort',
+					loadMethod: 'getOsNames',
+					timeout: 120000,
+					reader: osReader
+				}),
+				
+				fields: [ 'osId', 'osName'],
+
+				reader: osReader
+			});
+			
+			return osListStore;
 		}
 
 	};

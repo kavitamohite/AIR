@@ -69,7 +69,7 @@ AIR.AirWindowFactory = function() {
 					break;
 				case 'DATA_SAVED_ERROR':
 					var windowTitle = labels.dynamicWindowDataSavedErrorTitle;
-					var windowText = message;
+					var windowText = labels.dynamicWindowDataSaveFailTitle;
 					var windowIcon = img_Failed;
 
 					var buttonConfigs = [{
