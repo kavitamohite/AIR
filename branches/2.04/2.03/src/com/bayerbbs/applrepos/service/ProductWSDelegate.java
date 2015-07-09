@@ -28,4 +28,13 @@ public class ProductWSDelegate {
 			DefaultDataInput input) {
 		return productWS.findModelList(input.getId());
 	}
+	public KeyValueDTO[] findSoftwareManufacturerList(
+			DefaultDataInput input) {
+		return productWS.findSoftwareManufacturerList(input.getId());
+	}
+	public KeyValueDTO[] findSoftwareProductList(
+			DefaultDataInput input) {
+		return productWS.findSoftwareProductList(input.getId());
+	}
+	
 }
