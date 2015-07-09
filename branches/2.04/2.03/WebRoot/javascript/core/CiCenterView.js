@@ -605,7 +605,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		var assetData = records[0].data;
 		var isSoftwareComponent = (assetData.isSoftwareComponent === 'true');
 		var assetView;
-		console.log(isSoftwareComponent);
 		if(isSoftwareComponent){
 			assetView = this.getComponent('ciNewSoftwareAsset');
 		} else {
@@ -615,7 +614,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 	},
 	
 	forwardNavigation: function(options) {
-		//var ciEditTabView = this.getComponent('ciEditView').getComponent('ciEditTabView');
 		var ciEditView = this.getComponent('ciEditView');
 		
 		if(this.lastNavigation.options && this.lastNavigation.options.reset)
