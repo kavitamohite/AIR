@@ -5051,7 +5051,7 @@ body.ext-ie6.x-body-masked .x-window select {
 }
 
 .x-box-inner {
-	background: none repeat scroll 0 0 #FFFFFF;
+	background: none repeat scroll 0 0 ;
     overflow:hidden;
     zoom:1;
     position:relative;
