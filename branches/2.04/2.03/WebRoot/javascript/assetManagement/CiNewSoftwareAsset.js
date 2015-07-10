@@ -60,6 +60,10 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                     }, {
                         xtype: 'AIR.CiContact',
                         itemId: 'contacts'
+                    },{
+                    	xtype: 'panel',
+                    	height: 110,
+                    	border: false
                     }]
                 }, {
                     xtype: 'panel',
@@ -272,6 +276,15 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     	
     },
     
+    onBeforeAssetLoad: function(store, options) {
+		AAM.getMask(AC.MASK_TYPE_LOAD).show();
+	},
+	
+	onAssetLoad: function(store, records, options) {
+		var assetData = records[0].data;
+		this.update(assetData);
+	},
+    
     update: function(assetData) {
     	var topPanel = this.getComponent('topPanel');
     	topPanel.update(assetData);
@@ -372,9 +385,6 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
     	contact.updateParam(assetData);
     	
-    	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
-    	technics.updateParam(assetData);
-        
     	console.log(assetData);
         
         newAssetstore.load({
