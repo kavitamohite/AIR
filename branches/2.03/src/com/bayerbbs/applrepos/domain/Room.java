@@ -41,6 +41,7 @@ public class Room extends CiBase1 implements Serializable {
 	 //vandana
     private String Provider_Name;
     private String Provider_Address; 
+    private String It_Head;
     
     @Column(name = "PROVIDER_NAME")
 	public String getProvider_Name() {
@@ -60,6 +61,13 @@ public class Room extends CiBase1 implements Serializable {
 	
     //ended vandana
 
+	@Column(name = "IT_HEAD")
+	public String getIt_Head() {
+		return It_Head;
+	}
+	public void setIt_Head(String It_Head) {
+		this.It_Head = It_Head;
+	}
 	
 
 	@Id
