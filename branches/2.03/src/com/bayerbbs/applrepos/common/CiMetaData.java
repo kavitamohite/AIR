@@ -10,8 +10,9 @@ public class CiMetaData {
 	private String locationFields;
 	private String providerName;
 	private String providerAddress;
+	private String itHead;
 	
-	public CiMetaData(String idField, String nameField, String aliasField, String locationFields, String typeName, String tableName, Integer tableId, String providerName, String providerAddress) {
+	public CiMetaData(String idField, String nameField, String aliasField, String locationFields, String typeName, String tableName, Integer tableId, String providerName, String providerAddress,String itHead) {
 		this.idField = idField;
 		this.nameField = nameField;
 		this.aliasField = aliasField;
@@ -21,6 +22,7 @@ public class CiMetaData {
 		this.locationFields = locationFields;
 		this.providerName = providerName;
 		this.providerAddress = providerAddress;
+		this.itHead=itHead;
 	}
 	
 	public String getIdField() {
@@ -48,33 +50,24 @@ public class CiMetaData {
 		return locationFields;
 	}
 
-	/**
-	 * @return the providerName
-	 */
 	public String getProviderName() {
 		return providerName;
 	}
 
-	/**
-	 * @param providerName the providerName to set
-	 */
 	public void setProviderName(String providerName) {
 		this.providerName = providerName;
 	}
 
-	/**
-	 * @return the providerAddress
-	 */
+
 	public String getProviderAddress() {
 		return providerAddress;
 	}
 
-	/**
-	 * @param providerAddress the providerAddress to set
-	 */
 	public void setProviderAddress(String providerAddress) {
 		this.providerAddress = providerAddress;
 	}
-	
+	public String getItHead() {
+		return itHead;
+	}
 	
 }
