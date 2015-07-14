@@ -375,6 +375,7 @@ public class CiEntityWS {
 			//vandana
 			roomDTO.setProviderName(room.getProvider_Name());
 			roomDTO.setProviderAddress(room.getProvider_Address());
+			roomDTO.setItHead(room.getIt_Head());
 			//vandana
 			
 			

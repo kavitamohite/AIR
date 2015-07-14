@@ -35,6 +35,7 @@ public class RoomWS {
 		roomDTO.setProviderNameHidden(input.getProviderNameHidden());
 		roomDTO.setProviderAddress(input.getProviderAddress());
 		roomDTO.setProviderAddressHidden(input.getProviderAddressHidden());
+		roomDTO.setItHead(input.getItHead());
 		//vandana
 
 		//Agreements

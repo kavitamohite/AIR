@@ -43,7 +43,7 @@ public class CiItemDTO { //implements Serializable
 	//Added by vandana
 	private String providerName;
 	private String providerAddress;
-	
+	private String itHead;
 	public CiItemDTO() {
 	}
 
@@ -201,6 +201,17 @@ public class CiItemDTO { //implements Serializable
 	public void setProviderAddress(String providerAddress) {
 		this.providerAddress = providerAddress;
 	}
+
+	public String getItHead() {
+		return itHead;
+	}
+
+
+	public void setItHead(String itHead) {
+		this.itHead = itHead;
+	}
+	
+	
 	
 	//added by vandana
 	

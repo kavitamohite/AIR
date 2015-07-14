@@ -10,6 +10,10 @@ public class RoomEditParameterInput extends BaseEditParameterInput {
 	private Long severityLevelId;
 	private Long businessEssentialId;
 	
+	//vandana
+	private String itHead;
+
+	
 //	private String street;
 //	private String streetNumber;
 //	private String postalCode;
@@ -73,4 +77,13 @@ public class RoomEditParameterInput extends BaseEditParameterInput {
 	public void setBusinessEssentialId(Long businessEssentialId) {
 		this.businessEssentialId = businessEssentialId;
 	}
+
+
+	public String getItHead() {
+		return itHead;
+	}
+	public void setItHead(String itHead) {
+		this.itHead = itHead;
+	}
+	
 }

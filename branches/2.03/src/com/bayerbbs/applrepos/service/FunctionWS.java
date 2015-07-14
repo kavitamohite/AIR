@@ -32,8 +32,8 @@ public class FunctionWS {
 	
 	protected FunctionDTO getFunctionDTOFromFromEditInput(BaseEditParameterInput input){
 		FunctionDTO functionDTO = new FunctionDTO();
-		functionDTO.setTableId(AirKonstanten.TABLE_ID_SITE);
-		
+		//functionDTO.setTableId(AirKonstanten.TABLE_ID_SITE);//commented by vandana
+		functionDTO.setTableId(AirKonstanten.TABLE_ID_FUNCTION);
 		//Specifics
 		functionDTO.setId(input.getId());
 		functionDTO.setName(input.getName());
