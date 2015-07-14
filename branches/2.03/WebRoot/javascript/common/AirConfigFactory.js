@@ -20,6 +20,7 @@ AIR.AirConfigFactory = function() {
 				columnConfig.push({ id: 'isTemplate', header: 'Template', dataIndex: 'isTemplate', hidden:true});
 				columnConfig.push({ id: 'providerName', header: 'Provider Name', dataIndex: 'providerName', width: 150, sortable: true});// vandana
 				columnConfig.push({ id: 'providerAddress', header: 'Provider Address', dataIndex: 'providerAddress', width: 150, sortable: true});// vandana
+				columnConfig.push({ id: 'itHead', header: 'IT Head', dataIndex: 'itHead', width: 150, sortable: true});// vandana
 				
 			}
 			
@@ -144,7 +145,8 @@ AIR.AirConfigFactory = function() {
 			roomCiFields.push('buildingAreaData');
 			roomCiFields.push('providerName');//vandana
 			roomCiFields.push('providerAddress');//vandana
-			
+			roomCiFields.push('itHead');//vandana;
+			;;
 			return Ext.data.Record.create(roomCiFields);
 		},
 		
