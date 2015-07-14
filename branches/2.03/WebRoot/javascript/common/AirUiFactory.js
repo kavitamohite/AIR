@@ -223,7 +223,34 @@ AIR.AirUiFactory = function() {
 				    	id: ownerId + 'ciSubResponsibleRemove',
 				    	img: img_RemovePerson
 				    }]
-				}]
+				},
+                //RFC 11517
+				{
+				xtype: 'container',
+				id: 'p' + ownerId + 'ciItHead',
+				hidden: true,
+				layout: 'column',
+				style: {
+					marginTop: 5
+				},
+				items:[{
+					xtype: 'label',
+					id: 'label' + ownerId + 'ciItHead',
+					//text :'IT Head',
+					width: 200,
+					style: {
+						fontSize: 12
+					}
+	    		},{
+					xtype: 'textfield',
+			        width: 230,
+			        id: ownerId + 'ciItHead',
+			        enableKeyEvents: true,
+			        allowBlank: true ,
+			        //readOnly: true
+			    }]}
+				 //RFC 11517
+				]
 			};
 			
 			
