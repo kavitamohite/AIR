@@ -211,6 +211,7 @@ public final class AirKonstanten {
 	public static final String PRIMARY_FUNCTION = "Primary Function";
 	public static final String PROVIDER_NAME = "PROVIDER_NAME";
 	public static final String PROVIDER_ADDRESS = "PROVIDER_ADDRESS";
+	public static final String IT_HEAD = "IT_HEAD";
 	
 	public static final String LINK = "Link";
 	public static final String GR1435 = "GR1435";
