@@ -1,5 +1,7 @@
 package com.bayerbbs.applrepos.dto;
 
+import com.bayerbbs.applrepos.constants.AirKonstanten;
+
 
 
 public class ApplicationDTO extends CiBaseDTO {
@@ -813,6 +815,10 @@ public class ApplicationDTO extends CiBaseDTO {
 
 	public void setClassInformationId(Long classInformationId) {
 		this.classInformationId = classInformationId;
+		// RFC 10057 info message secure system
+		if (null != classInformationId && AirKonstanten.CONFIDENTIALITY_SECRET.longValue() == classInformationId.longValue()){
+			setMessageTextSecureSystem("secureSystem");
+		}
 	}
 
 	public String getClassInformationExplanation() {

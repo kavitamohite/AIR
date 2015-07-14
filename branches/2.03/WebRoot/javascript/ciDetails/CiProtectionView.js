@@ -62,7 +62,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 		        fieldLabel: 'Information Class',
 		        id: 'protectionClassInformation',
 		        
-		        store: AIR.AirStoreManager.getStoreByName('classInformationListStore'),
+		        store: AIR.AirStoreManager.getStoreByName('itSecSBConfidentialityListStore'),
 		        valueField: 'id',
 		        displayField: 'text',
 		        
@@ -244,16 +244,16 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 			taProtectionIntegrityDescription.setVisible(false);
 			taProtectionIntegrityDescription.reset();
 			
-			cbProtectionConfidentiality.setVisible(true);
+			cbProtectionConfidentiality.setVisible(false);
 
-			taProtectionConfidentialityDescription.setVisible(true);
+			taProtectionConfidentialityDescription.setVisible(false);
 			
-			if (data.itSecSbConfidentialityId && data.itSecSbConfidentialityId != 0 && !data.isCiCreate) {
+/*			if (data.itSecSbConfidentialityId && data.itSecSbConfidentialityId != 0 && !data.isCiCreate) {
 				cbProtectionConfidentiality.setValue(data.itSecSbConfidentialityId);
 			} else {
 				cbProtectionConfidentiality.setValue('');
 			}
-
+*/
 			if (data.itSecSbConfidentialityTxt && data.itSecSbConfidentialityTxt != 0 && !data.isCiCreate) {
 				taProtectionConfidentialityDescription.setValue(data.itSecSbConfidentialityTxt);
 			} else {

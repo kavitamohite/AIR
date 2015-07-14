@@ -109,7 +109,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     						        fieldLabel: 'Information Class',
     						        id: 'selectAttrprotectionClassInformation',
     						        hidden: true,
-    						        store: AIR.AirStoreManager.getStoreByName('classInformationListStore'),
+    						        store: AIR.AirStoreManager.getStoreByName('itSecSBConfidentialityListStore'),// RFC 11441
     						        valueField: 'id',
     						        displayField: 'text',
     						        
@@ -978,6 +978,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         var selectAttrprotectionClassInformationExplanation = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionClassInformationExplanation');
         var selectAttrprotectionIntegrity = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrity');
         var selectAttrprotectionIntegrityDescription = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrityDescription');
+        var selectAttrprotectionConfidentiality = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionConfidentiality');
+        var selectAttrprotectionConfidentialityDescription = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionConfidentialityDescription');
         var selectAttrcbgRegulationsW = this.getComponent('selectAttrCompliance').getComponent('selectAttrcbgRegulationsW');
         var cbselectAttrItSecGroup = this.getComponent('selectAttrCompliance').getComponent('cbselectAttrItSecGroup');
         var selectAttrselectAttrpriorityLevel = this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrpriorityLevel');
@@ -1004,6 +1006,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			selectAttrapplicationCat.setVisible(true);
 			selectAttrprotectionClassInformation.setVisible(true);
 			selectAttrprotectionClassInformationExplanation.setVisible(true);
+			selectAttrprotectionConfidentiality.setVisible(false);
+			selectAttrprotectionConfidentialityDescription.setVisible(false);
 			selectAttrselectAttrseverityLevel.setVisible(true);
 			selectAttrselectAttrpriorityLevel.setVisible(true);
 			selectAttrlifecycleStatus.setVisible(true);

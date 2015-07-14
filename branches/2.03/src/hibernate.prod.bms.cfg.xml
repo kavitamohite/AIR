@@ -3,8 +3,8 @@
 	<session-factory>
 		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
 		<property name="hibernate.connection.url">jdbc:oracle:thin:@(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = mdelevs0038.ad.glpoly.net)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = MTRANSBP)))</property>
-		<property name="hibernate.connection.username">mxtba</property>
-		<property name="hibernate.connection.password">isbb2007</property>
+		<property name="hibernate.connection.username">MYVZR</property>
+		<property name="hibernate.connection.password">ItilBM!41#2015</property>
 		<property name="hibernate.connection.pool_size">10</property>
   		<property name="hibernate.connection.autoReconnect">true</property>
   		<property name="hibernate.connection.validationQuery">SELECT 1</property>

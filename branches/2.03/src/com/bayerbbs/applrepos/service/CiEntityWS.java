@@ -1633,20 +1633,7 @@ public class CiEntityWS {
         maDto.setAttributeValue(application.getItSecSbAvailabilityTxt());
         maDto.setId("itSecSbAvailabilityTxt");
         massUpdateAttriuteDTOs.add(maDto);
-        
-        maDto = new MassUpdateAttributeDTO();
-        maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
-        if(application.getItSecSbConfidentiality() != null && application.getItSecSbConfidentiality() != 0)
-        maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(application.getItSecSbConfidentiality()).getConfidentialityNameEn());
-        maDto.setId("itSecSbConfidentiality");
-        massUpdateAttriuteDTOs.add(maDto);
-        
-        maDto = new MassUpdateAttributeDTO();
-        maDto.setAttributeName(AirKonstanten.EXPLANATION_FOR_PROTECTION_LEVEL_CONFIDENTIALITY);
-        maDto.setAttributeValue(application.getItSecSbConfidentialityTxt());
-        maDto.setId("itSecSbConfidentialityTxt");
-        massUpdateAttriuteDTOs.add(maDto);
-        
+                
         maDto = new MassUpdateAttributeDTO();
         maDto.setAttributeName(AirKonstanten.INFORMATION_CLASS);
         if(application.getClassInformationId()!=null && application.getClassInformationId()!=0)
@@ -2015,12 +2002,6 @@ public class CiEntityWS {
 			}
 			if(massUpdateParameterInput.getItSecSbAvailabilityTxt()){
 				application.setItSecSbAvailabilityTxt(templateApplication.getItSecSbAvailabilityTxt());
-			}
-			if(massUpdateParameterInput.getItSecSbConfidentiality()){
-				application.setItSecSbConfidentiality(templateApplication.getItSecSbConfidentiality());
-			}
-			if(massUpdateParameterInput.getItSecSbConfidentialityTxt()){
-				application.setItSecSbConfidentialityTxt(templateApplication.getItSecSbConfidentialityTxt());
 			}
 			if(massUpdateParameterInput.isClassInformationId()){
 				application.setClassInformationId(templateApplication.getClassInformationId());
@@ -2794,12 +2775,6 @@ public class CiEntityWS {
 			}
 			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbAvailabilityTxt())){
 				application.setItSecSbAvailabilityTxt(mAttrParameterInput.getItSecSbAvailabilityTxt());
-			}
-			if(mAttrParameterInput.getItSecSbConfidentialityId()!=null && mAttrParameterInput.getItSecSbConfidentialityId()!=0){
-				application.setItSecSbConfidentiality(mAttrParameterInput.getItSecSbConfidentialityId());
-			}
-			if(StringUtils.isNotNullOrEmpty(mAttrParameterInput.getItSecSbConfidentialityTx())){
-				application.setItSecSbConfidentialityTxt(mAttrParameterInput.getItSecSbConfidentialityTx());
 			}
 			if(mAttrParameterInput.getClassInformationId()!=null && mAttrParameterInput.getClassInformationId()!=0){
 				application.setClassInformationId(mAttrParameterInput.getClassInformationId());

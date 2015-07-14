@@ -462,8 +462,11 @@ public class Application extends DeletableRevisionInfo {
 		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
 	}
 	
+     // added by kaushal RFC 11441
+	//The classification information shall be consistently provided under the label "Information Class"
+	//The information should be retrieved from and stored to the attribute ITSEC_SB_VERTR_ID.
 
-	//in Basisklasse
+/*	//in Basisklasse
 	@Column(name = "ITSEC_SB_VERTR_ID")
 	public Long getItSecSbConfidentiality() {
 		return itSecSbConfidentiality;
@@ -482,10 +485,10 @@ public class Application extends DeletableRevisionInfo {
 	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
 		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
 	}
-
+*/
 	
-	
-	@Column(name = "CLASS_INFORMATION_ID")
+	//RFC 11441
+	@Column(name = "ITSEC_SB_VERTR_ID")  //@Column(name = "CLASS_INFORMATION_ID")
 	public Long getClassInformationId() {
 		return classInformationId;
 	}
@@ -494,7 +497,7 @@ public class Application extends DeletableRevisionInfo {
 		this.classInformationId = classInformationId;
 	}
 
-	@Column(name = "CLASS_INFORMATION_EXPLANATION")
+	@Column(name = "ITSEC_SB_VERTR_TXT") // @Column(name = "CLASS_INFORMATION_EXPLANATION")
 	public String getClassInformationExplanation() {
 		return classInformationExplanation;
 	}

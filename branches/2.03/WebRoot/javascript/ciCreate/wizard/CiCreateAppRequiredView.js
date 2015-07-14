@@ -303,8 +303,8 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		        width: 250,
 		        fieldLabel: 'Information Class',
 		        id: 'cbProtectionClassInformationW',
-		        
-		        store: AIR.AirStoreManager.getStoreByName('classInformationListStore'),//classInformationListStore,
+		        //RFC 11441
+		        store: AIR.AirStoreManager.getStoreByName('itSecSBConfidentialityListStore'),//classInformationListStore,
 		        valueField: 'id',
 		        displayField: 'text',
 		        
