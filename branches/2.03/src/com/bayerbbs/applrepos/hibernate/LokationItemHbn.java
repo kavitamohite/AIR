@@ -61,6 +61,10 @@ public class LokationItemHbn extends BaseHbn {
 			sql.append(AirKonstanten.PROVIDER_ADDRESS);
 			sql.append(",  ");
 		}
+		if(metaData.getItHead()!=null){
+			sql.append(AirKonstanten.IT_HEAD);
+			sql.append(",");
+		}
 		sql.append(locationFields).append(" FROM ").append(metaData.getTableName()).append(" ci").
 		append(" JOIN search_loc lk on ").append(LK).append(metaData.getIdField()).append(" = ").append(CI).append(metaData.getIdField()).
 		append(" WHERE (").//del_timestamp IS NULL AND 
@@ -261,7 +265,9 @@ public class LokationItemHbn extends BaseHbn {
 						ci.setProviderName(rs.getString("provider_name"));
 						ci.setProviderAddress(rs.getString("provider_address"));
 					}
-										
+					if(metaData.getItHead()!=null){
+						ci.setItHead(rs.getString("It_Head"));
+					}					
 					cis.add(ci);
 					//i++;
 				}// else break;

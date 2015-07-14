@@ -236,7 +236,7 @@ public class functionHbn extends BaseHbn {
 }
 	
 	public static CiItemsResultDTO findFunctionBy(ApplicationSearchParamsDTO input) {
-		CiMetaData metaData = new CiMetaData("FUNCTION_ID", "FUNCTION_NAME", null, "land_kennzeichen", "Function", "function", AirKonstanten.TABLE_ID_FUNCTION,null,null);
+		CiMetaData metaData = new CiMetaData("FUNCTION_ID", "FUNCTION_NAME", null, "land_kennzeichen", "Function", "function", AirKonstanten.TABLE_ID_FUNCTION,null,null,null);
 		return findFunctionCisBy(input, metaData);
 	}
 	public static CiItemsResultDTO findFunctionCisBy(CiSearchParamsDTO input, CiMetaData metaData) {

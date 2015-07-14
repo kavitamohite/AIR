@@ -229,7 +229,7 @@ private static void setUpCi(Ways ci, PathwayDTO ciDTO, String cwid, boolean isCi
 }
 
 public static CiItemsResultDTO findPathwayBy(ApplicationSearchParamsDTO input) {
-	CiMetaData metaData = new CiMetaData("WAYS_ID", "WAYS_NAME", null, "land_kennzeichen", "Ways", "way", AirKonstanten.TABLE_ID_WAYS,null,null);
+	CiMetaData metaData = new CiMetaData("WAYS_ID", "WAYS_NAME", null, "land_kennzeichen", "Ways", "way", AirKonstanten.TABLE_ID_WAYS,null,null,null);
 	return findPathwayCisBy(input, metaData);
 }
 public static CiItemsResultDTO findPathwayCisBy(CiSearchParamsDTO input, CiMetaData metaData) {

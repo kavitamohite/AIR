@@ -54,7 +54,7 @@ public class RoomHbn extends LokationItemHbn {
 	
 	//CiItemDTO[]
 	public static CiItemsResultDTO findRoomsBy(CiSearchParamsDTO input) {
-		CiMetaData metaData = new CiMetaData("raum_id", "raum_name", "raumalias", "land_kennzeichen,standort_code,terrain_name,gebaeude_name,area_name", "Room", "raum", AirKonstanten.TABLE_ID_ROOM,AirKonstanten.PROVIDER_NAME, AirKonstanten.PROVIDER_ADDRESS);//land_name_en,standort_name
+		CiMetaData metaData = new CiMetaData("raum_id", "raum_name", "raumalias", "land_kennzeichen,standort_code,terrain_name,gebaeude_name,area_name", "Room", "raum", AirKonstanten.TABLE_ID_ROOM,AirKonstanten.PROVIDER_NAME, AirKonstanten.PROVIDER_ADDRESS,AirKonstanten.IT_HEAD);//land_name_en,standort_name
 		return findLocationCisBy(input, metaData);
 	}
 
@@ -126,6 +126,7 @@ public class RoomHbn extends LokationItemHbn {
 						//vandana
 						room.setProvider_Name(dto.getProviderName());
 						room.setProvider_Address(dto.getProviderAddress());
+						room.setIt_Head(dto.getItHead());
 						//vandana
 
 
@@ -420,6 +421,7 @@ public class RoomHbn extends LokationItemHbn {
 						
 						room.setProvider_Name(dto.getProviderName());
 						room.setProvider_Address(dto.getProviderAddress());
+						room.setIt_Head(dto.getItHead());
 						//vandana
 						
 
@@ -573,6 +575,7 @@ public class RoomHbn extends LokationItemHbn {
 		//vandana
 		dto.setProviderName(room.getProvider_Name());
 		dto.setProviderAddress(room.getProvider_Address());
+		dto.setItHead(room.getIt_Head());
 	}
 
 	

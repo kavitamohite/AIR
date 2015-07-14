@@ -40,7 +40,7 @@ public class StandortHbn extends LokationItemHbn {
 
 
 	public static CiItemsResultDTO findSitesBy(ApplicationSearchParamsDTO input) {
-		CiMetaData metaData = new CiMetaData("standort_id", "standort_name", null, "land_kennzeichen", "Site", "standort", AirKonstanten.TABLE_ID_SITE,null,null);
+		CiMetaData metaData = new CiMetaData("standort_id", "standort_name", null, "land_kennzeichen", "Site", "standort", AirKonstanten.TABLE_ID_SITE,null,null,null);
 		return findLocationCisBy(input, metaData);
 	}
 
