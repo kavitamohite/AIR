@@ -615,6 +615,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'businessProcess'},
 	
 			        // contacts
+			        {name :'ciItHead'},
 			        {name: 'provider'},
 			        {name: 'idProviderName'},//vandana
 			        {name: 'idProviderAddress'},//vandana
@@ -1113,6 +1114,8 @@ AIR.AirStoreFactory = function() {
 			        {name: 'applicationOwnerDelegate'},
 			        {name: 'applicationOwnerDelegateText'},
 			        
+			        {name :'ciItHead'},
+			        {name :'ciItHeadText'},
 			        {name: 'ciResponsible'},
 			        {name: 'ciResponsibleText'},
 			        {name: 'ciSubResponsible'},
@@ -1586,7 +1589,8 @@ AIR.AirStoreFactory = function() {
 			    {name: 'tableId'},
 			    {name: 'deleteQuelle'},
 			    {name: 'providerName'},//vandana
-			    {name: 'providerAddress'}//vandana
+			    {name: 'providerAddress'},//vandana
+			    {name: 'itHead'}//vandana
 			]);
 	
 			var ciItemListReader = new Ext.data.XmlReader({
