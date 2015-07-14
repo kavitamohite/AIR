@@ -22,6 +22,7 @@ public class RoomDTO extends LocationDTO implements Serializable {
 	private String providerNameHidden;
 	private String providerAddress;
 	private String providerAddressHidden;
+	private String itHead;
 	
 	//====================
 	private String severityLevelIdAcl;
@@ -131,53 +132,45 @@ public class RoomDTO extends LocationDTO implements Serializable {
 		this.buildingAreaData = buildingAreaData;
 	}
 	//vandana
-	/**
-	 * @return the providerName
-	 */
+
 	public String getProviderName() {
 		return providerName;
 	}
-	/**
-	 * @param providerName the providerName to set
-	 */
+
 	public void setProviderName(String providerName) {
 		this.providerName = providerName;
 	}
-	/**
-	 * @return the providerNameHidden
-	 */
+
 	public String getProviderNameHidden() {
 		return providerNameHidden;
 	}
-	/**
-	 * @param providerNameHidden the providerNameHidden to set
-	 */
+
 	public void setProviderNameHidden(String providerNameHidden) {
 		this.providerNameHidden = providerNameHidden;
 	}
-	/**
-	 * @return the providerAddress
-	 */
+	
 	public String getProviderAddress() {
 		return providerAddress;
 	}
-	/**
-	 * @param providerAddress the providerAddress to set
-	 */
+
 	public void setProviderAddress(String providerAddress) {
 		this.providerAddress = providerAddress;
 	}
-	/**
-	 * @return the providerAddressHidden
-	 */
+	
 	public String getProviderAddressHidden() {
 		return providerAddressHidden;
 	}
-	/**
-	 * @param providerAddressHidden the providerAddressHidden to set
-	 */
+	
 	public void setProviderAddressHidden(String providerAddressHidden) {
 		this.providerAddressHidden = providerAddressHidden;
+	}
+	
+	public String getItHead() {
+		return itHead;
+	}
+	
+	public void setItHead(String itHead) {
+		this.itHead = itHead;
 	}
 	
 }
