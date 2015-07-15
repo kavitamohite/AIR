@@ -12,7 +12,6 @@ public class AssetViewDataDTO {
 	private String identNumber;
 	private String inventoryNumber;
 	private String sapDescription;
-	private Long reasonId;
 
 	// Product
 	private String manufacturer;
@@ -80,8 +79,6 @@ public class AssetViewDataDTO {
 
 	// Others
 	private String serialNumber;
-	private String assetChecked;
-	private String alias;
 
 	public Boolean getIsSoftwareComponent() {
 		return isSoftwareComponent;
@@ -145,14 +142,6 @@ public class AssetViewDataDTO {
 
 	public void setSapDescription(String sapDescription) {
 		this.sapDescription = sapDescription;
-	}
-
-	public Long getReasonId() {
-		return reasonId;
-	}
-
-	public void setReasonId(Long reasonId) {
-		this.reasonId = reasonId;
 	}
 
 	public String getManufacturer() {
@@ -526,37 +515,22 @@ public class AssetViewDataDTO {
 		this.serialNumber = serialNumber;
 	}
 
-	public String getAssetChecked() {
-		return assetChecked;
-	}
-
-	public void setAssetChecked(String assetChecked) {
-		this.assetChecked = assetChecked;
-	}
-
-	public String getAlias() {
-		return alias;
-	}
-
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
-
 	@Override
 	public String toString() {
 		return "AssetViewDataDTO [isSoftwareComponent=" + isSoftwareComponent
 				+ ", isHardwareWithInventory=" + isHardwareWithInventory
 				+ ", isHardwareWithoutInventory=" + isHardwareWithoutInventory
-				+ ", id=" + id + ", identNumber=" + identNumber
-				+ ", inventoryNumber=" + inventoryNumber + ", sapDescription="
-				+ sapDescription + ", reasonId=" + reasonId + ", manufacturer="
+				+ ", cwid=" + cwid + ", id=" + id + ", identNumber="
+				+ identNumber + ", inventoryNumber=" + inventoryNumber
+				+ ", sapDescription=" + sapDescription + ", manufacturer="
 				+ manufacturer + ", manufacturerId=" + manufacturerId
 				+ ", subCategory=" + subCategory + ", subcategoryId="
 				+ subcategoryId + ", type=" + type + ", typeId=" + typeId
 				+ ", model=" + model + ", modelId=" + modelId
 				+ ", technicalNumber=" + technicalNumber + ", technicalMaster="
 				+ technicalMaster + ", systemPlatformName="
-				+ systemPlatformName + ",  osName=" + osName + ", hardwareTransientSystem="
+				+ systemPlatformName + ", osName=" + osName + ", osNameId="
+				+ osNameId + ", hardwareTransientSystem="
 				+ hardwareTransientSystem + ", workflowStatusId="
 				+ workflowStatusId + ", workflowStatus=" + workflowStatus
 				+ ", generalUsageId=" + generalUsageId
@@ -574,11 +548,10 @@ public class AssetViewDataDTO {
 				+ ", costCenterManagerId=" + costCenterManagerId
 				+ ", organizationalunit=" + organizationalunit + ", owner="
 				+ owner + ", sapAssetClass=" + sapAssetClass
-				+ ", sapAssetClassId=" + sapAssetClassId
-				+ ", editorsGroupId="
+				+ ", sapAssetClassId=" + sapAssetClassId + ", editorsGroupId="
 				+ editorsGroupId + ", editorsGroup=" + editorsGroup
-				+ ", serialNumber=" + serialNumber + ", assetChecked="
-				+ assetChecked + ", alias=" + alias + "]";
+				+ ", serialNumber=" + serialNumber + "]";
 	}
+
 
 }
