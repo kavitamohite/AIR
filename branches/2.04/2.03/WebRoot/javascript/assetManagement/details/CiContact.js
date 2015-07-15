@@ -77,6 +77,12 @@ AIR.CiContact = Ext.extend(Ext.form.FieldSet, {
         assetData.editorsGroup = cbeditor.getRawValue();
 		
         return assetData;
+	},
+	
+	updateLabels: function(labels) {
+    	Util.updateFieldLabel(this.getComponent('tCostcentermanager'), labels.assetCostManager); 
+    	Util.updateFieldLabel(this.getComponent('tOrganizationalunit'), labels.assetOrganisation);  
+    	Util.updateFieldLabel(this.getComponent('cbeditor'), labels.assetEditor);  
 	}
 });
 Ext.reg('AIR.CiContact', AIR.CiContact);

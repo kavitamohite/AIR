@@ -14,7 +14,6 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 				itemId: 'cbCountry',
 		        xtype: 'filterCombo',
 		        fieldLabel: 'Country',
-		        labelSeparator : ': <span style="color:red">*</span>',
 		        width: 370,
 		        enableKeyEvents: true,
 		        store: AIR.AirStoreManager.getStoreByName('landListStore'),
@@ -31,7 +30,6 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 		        itemId: 'cbSite',
 		    	xtype: 'filterCombo',
 		        fieldLabel: 'Site',
-		        labelSeparator : ': <span style="color:red">*</span>',
 		        width: 370,
 		        store: AIR.AirStoreFactory.createSiteListStore(),
 		        valueField: 'id',
@@ -47,7 +45,6 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 		    },{
 		        xtype: 'filterCombo',
 		        itemId: 'cbBuilding',
-		        labelSeparator : ': <span style="color:red">*</span>',
 		        width: 370,
 		        fieldLabel: 'Building',
 		        enableKeyEvents: true,
@@ -65,7 +62,6 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         	}, {
 		        xtype: 'filterCombo',//combo
 		        itemId: 'cbRoom',
-		        labelSeparator : ': <span style="color:red">*</span>',
 		        width: 370,
 		        fieldLabel: 'Room',
 		        enableKeyEvents: true,
@@ -88,19 +84,18 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 					fontSize : 12,
 				},
 				items: [{
-						xtype: 'label',
-						fieldLabel : 'RackPosition',
-				        html:'Rack - Position <span style="color:red">*</span>',
-						//text:'Rack - Position:',
-						width: 105,
-						style: {
-							fontSize: 12
-						}
-		    		},{
+					itemId: 'cbFieldRack',
+					text: 'Rack - Position *',
+					xtype: 'label',
+					fieldLabel : 'Rack Position',
+					width: 105,
+					style: {
+						fontSize: 12
+					}
+	    		},{
 			        xtype: 'filterCombo',
 			        itemId: 'cbRack',
 			        width: 332,
-                    fieldLabel: 'Rack - Position',
 			        enableKeyEvents: true,
 			        store: AIR.AirStoreFactory.createSchrankListStore(),
 			        valueField: 'id',
@@ -134,19 +129,15 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 		
 		var cbCountry = this.getComponent('cbCountry');
         cbCountry.on('select', this.onCountrySelect, this);
-//        cbCountry.on('keyup', this.onFieldKeyUp, this);
         
         var cbSite = this.getComponent('cbSite');
         cbSite.on('select', this.onSiteSelect, this);
-//        cbSite.on('keyup', this.onFieldKeyUp, this);
         
-        var cbBuilding = this.getComponent('cbBuilding'); //.getComponent('pBuilding')
+        var cbBuilding = this.getComponent('cbBuilding'); 
         cbBuilding.on('select', this.onBuildingSelect, this);
-//        cbBuilding.on('keyup', this.onFieldKeyUp, this);
 
         var cbRoom = this.getComponent('cbRoom');
         cbRoom.on('select', this.onRoomSelect, this);
-//        cbRoom.on('keyup', this.onFieldKeyUp, this);
         
         var cbRack = this.getComponent('pRackposition').getComponent('cbRack');
         cbRack.on('select', this.updateMailTemplateLocation, this);
@@ -339,6 +330,15 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         assetData.rackId = cbRack.getValue();
 
         return assetData;
+	},
+	
+	updateLabels: function(labels) {
+    	Util.updateFieldLabel(this.getComponent('cbCountry'), labels.assetCountry); 
+    	Util.updateFieldLabel(this.getComponent('cbSite'), labels.assetSite);  
+    	Util.updateFieldLabel(this.getComponent('cbBuilding'), labels.assetBuilding);  
+    	Util.updateFieldLabel(this.getComponent('cbRoom'), labels.assetRoom); 
+    	Util.updateLabel(this.getComponent('pRackposition').getComponent('cbFieldRack'), labels.assetPosition);
 	}
+	
 });
 Ext.reg('AIR.CiLocation', AIR.CiLocation);

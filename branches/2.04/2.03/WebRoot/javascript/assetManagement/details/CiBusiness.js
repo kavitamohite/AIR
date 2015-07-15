@@ -29,7 +29,6 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 			}, {
 		        xtype: 'filterCombo',//combo
 		        itemId: 'cbPsp',
-		        //labelSeparator : ': <span style="color:red">*</span>',
 		        width: 370,
 		        fieldLabel: 'PSP-Element',
 		        enableKeyEvents: true,
@@ -64,7 +63,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 				items: [{
 					xtype: 'label',
 					itemId:'lcost',
-					html:'Cost center: <span style="color:red">*</span>',
+					text:'Cost center *',
 					width: 105,
 					style: {
 						fontSize: 12
@@ -112,7 +111,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 				items: [{
 					xtype: 'label',
 					itemId: 'labeltfRequester',
-					html:'Requester: <span style="color:red">*</span>',
+					text:'Requester *',
 					width: 105,
 					style: {
 						fontSize: 12
@@ -337,6 +336,21 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         assetData.sapAssetClassId = cbSapAsset.getValue();
 
         return assetData;
-    }
+    },
+    
+    updateLabels: function(labels) {
+    	Util.updateFieldLabel(this.getComponent('cbOrderNumber'), labels.assetOrdernumber); 
+    	Util.updateFieldLabel(this.getComponent('tInventorynumber'), labels.assetInventory);  
+    	Util.updateFieldLabel(this.getComponent('cbPsp'), labels.assetPSP);  
+    	Util.updateFieldLabel(this.getComponent('tPsptext'), labels.assetPsptext);  
+    	Util.updateFieldLabel(this.getComponent('tCostCenterMgr'), labels.assetCostManager);  
+    	Util.updateFieldLabel(this.getComponent('tOrganisation'), labels.assetOrganisation);  
+    	Util.updateFieldLabel(this.getComponent('tOwner'), labels.assetOwner);  
+    	Util.updateFieldLabel(this.getComponent('cbSapAsset'), labels.assetSapClass);  
+    	
+    	Util.updateLabel(this.getComponent('pCost').getComponent('lcost'), labels.assetCost);  
+    	Util.updateLabel(this.getComponent('pRequester').getComponent('labeltfRequester'), labels.assetRequester); 
+	}
+
 });
 Ext.reg('AIR.CiBusiness', AIR.CiBusiness);

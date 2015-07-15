@@ -172,7 +172,6 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
          var tOsName = this.getComponent('tOsName');
         assetData.osName = tOsName.getValue();
 
-
         var tTransient = this.getComponent('tTransient');
         assetData.hardwareTransientSystem = tTransient.getValue();
 
@@ -189,6 +188,19 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         assetData.comment = tComment.getValue();
 
         return assetData;
+	},
+	
+	updateLabels: function(labels) {
+    	Util.updateFieldLabel(this.getComponent('tTechnicalNumber'), labels.assetTechnicalNumber); 
+    	Util.updateFieldLabel(this.getComponent('tTechnicalMaster'), labels.assetTechnicalMaster);  
+    	Util.updateFieldLabel(this.getComponent('tSystemPlatform'), labels.assetSystemPlatformName);  
+    	Util.updateFieldLabel(this.getComponent('tOsName'), labels.assetOsname);  
+    	Util.updateFieldLabel(this.getComponent('tTransient'), labels.assettransient);  
+    	Util.updateFieldLabel(this.getComponent('cbWorkflowTechnical'), labels.assetWorflowstatustechnical);  
+    	Util.updateFieldLabel(this.getComponent('cbGeneralUsage'), labels.assetGeneral);  
+    	Util.updateFieldLabel(this.getComponent('rbItSecurity'), labels.assetITSecurity);  
+    	Util.updateFieldLabel(this.getComponent('tComment'), labels.assetComment);  
 	}
+	
 });
 Ext.reg('AIR.CiTechnics', AIR.CiTechnics);

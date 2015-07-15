@@ -62,6 +62,11 @@ AIR.CiTopPanel = Ext.extend(AIR.AirView, {
         assetData.inventoryNumber = tinventory.getValue();
         
         return assetData;
+	},
+	
+	updateLabels: function(labels) {
+		Util.updateFieldLabel(this.getComponent('identNumber'), labels.assetIndentnumber);
+		Util.updateFieldLabel(this.getComponent('tinventory'), labels.assetInventoryNumber);
 	}
 });
 Ext.reg('AIR.CiTopPanel', AIR.CiTopPanel);

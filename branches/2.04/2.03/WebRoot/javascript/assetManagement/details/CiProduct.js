@@ -13,7 +13,6 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 			items : [{
 				itemId: 'cbManufacturer',
 		        xtype: 'filterCombo',
-		        labelSeparator : ': <span style="color:red">*</span>',
 		        fieldLabel: 'Manufacturer',
 		        width: 370,
 		        enableKeyEvents: true,
@@ -30,7 +29,6 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 			},{
 				itemId: 'cbSubCategory',
 		        xtype: 'filterCombo',
-		        labelSeparator : ': <span style="color:red">*</span>',
 		        fieldLabel: 'Sub Category',
 		        width: 370,
 		        enableKeyEvents: true,
@@ -47,7 +45,6 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 			},{
 				itemId: 'cbType',
 		        xtype: 'filterCombo',
-		        labelSeparator : ': <span style="color:red">*</span>',
 		        fieldLabel: 'Type',
 		        width: 370,
 		        enableKeyEvents: true,
@@ -66,11 +63,11 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 				itemId: 'pmodel',
 				border: false,
 				layout:'hbox',						
-				
 				items: [{
+					itemId: 'cbFieldModel',
 					xtype: 'label',
+					text: 'Model *',
 					fieldLabel : 'Model',
-					html: 'Model: <span style="color:red">*</span>',
 					width: 105,
 					style: {
 						fontSize: 12
@@ -98,14 +95,12 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 					cls: 'x-plain',
 					isHideable: true,
 					style: {
-						//textAlign: 'left',
 						color: AC.AIR_FONT_COLOR,
 						fontFamily: AC.AIR_FONT_TYPE,
 						fontWeight: 'normal',
 						fontSize: '8pt',
 						cursor:'pointer',
-						//'margin-left' : 300,
-						 'padding-left':'15px'
+						'padding-left':'15px'
 					}	
 			    }]
 			},{
@@ -124,19 +119,15 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 		
 		var cbManufacturer = this.getComponent('cbManufacturer');
         cbManufacturer.on('select', this.onManufacturerSelect, this);
-//        cbManufacturer.on('keyup', this.onFieldKeyUp, this);
         
         var cbSubCategory = this.getComponent('cbSubCategory');
         cbSubCategory.on('select', this.onSubCategorySelect, this);
-//        cbSubCategory.on('keyup', this.onFieldKeyUp, this);
         
         var cbType = this.getComponent('cbType');
         cbType.on('select', this.onTypeSelect, this);
-//        cbType.on('keyup', this.onFieldKeyUp, this);
 
         var cbModel = this.getComponent('pmodel').getComponent('cbModel');
         cbModel.on('select', this.onModelSelect, this);
-//        cbModel.on('keyup', this.onFieldKeyUp, this);
 
 	},
 	
@@ -296,7 +287,15 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
         assetData.sapDescription = tsapDescription.getValue();
         
         return assetData;
-    }
+    },
+    
+    updateLabels: function(labels) {
+    	Util.updateFieldLabel(this.getComponent('cbManufacturer'), labels.assetManufacture); 
+    	Util.updateFieldLabel(this.getComponent('cbSubCategory'), labels.assetSubcategory);  
+    	Util.updateFieldLabel(this.getComponent('cbType'), labels.assetType);  
+    	Util.updateFieldLabel(this.getComponent('tsapDescription'), labels.assetSapDescription);  
+    	Util.updateLabel(this.getComponent('pmodel').getComponent('cbFieldModel'), labels.assetModel);
+	}
 
 });
 Ext.reg('AIR.CiProduct', AIR.CiProduct);
