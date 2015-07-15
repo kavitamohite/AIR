@@ -192,6 +192,7 @@
 			<contactsCIOwnerApplication>Application Manager</contactsCIOwnerApplication>
 				<ciResponsible>Primary Person</ciResponsible>
 				<ciSubResponsible>Delegate</ciSubResponsible>
+				<ciItHead>IT Head</ciItHead>
 			<contactsGPSC>HPSM contacts</contactsGPSC>
 				<gpsccontactResponsibleAtCustomerSide>Responsible at Customer Side</gpsccontactResponsibleAtCustomerSide>
 				<gpsccontactSupportGroup>Support Group - IM Resolver</gpsccontactSupportGroup>
