@@ -4114,8 +4114,6 @@ AIR.AirStoreFactory = function() {
 					{ name : 'identNumber'},
 					{ name : 'inventoryNumber'},
 					{ name : 'sapDescription'},
-					{ name : 'reasonId'},
-					{ name : 'identNumber'},
 					
 					//Product
 					{ name : 'manufacturer'},
@@ -4137,7 +4135,6 @@ AIR.AirStoreFactory = function() {
 					
 					{ name : 'osName'},
 					{ name : 'osNameId'},
-					{ name : 'workflowTechnicalStatus'},
 					{ name : 'hardwareTransientSystem'},
 					{ name : 'workflowStatusId'},
 					{ name : 'generalUsageId'},
@@ -4175,12 +4172,6 @@ AIR.AirStoreFactory = function() {
 					{ name : 'owner'},
 					{ name : 'sapAssetClass'},
 					{ name : 'sapAssetClassId'},
-					{ name : 'acquisitionValue'},
-					{ name : 'bookValue'},
-					{ name : 'bookValueDate'},
-					{ name : 'depreciationStartDate'},
-					{ name : 'usefulEconomicLife'},
-					{ name : 'retirementDate'},
 					
 					// Contacts
 					{ name : 'editorsGroupId'},
@@ -4188,8 +4179,6 @@ AIR.AirStoreFactory = function() {
 					
 					//Others
 					{ name : 'serialNumber'},
-					{ name : 'assetChecked'},
-					{ name : 'alias'}
 			]);
 	
 			var ciItemListReader = new Ext.data.XmlReader({
