@@ -199,17 +199,21 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
         this.fireEvent('beforeCiSelect');
         var record = grid.getStore().getAt(rowIndex);
         AAM.setAssetId(record.id);
+        
     },
 
     onRowDoubleClick: function(grid, rowIndex, e) {
         this.onRowClick(grid, rowIndex, e);
         var record = grid.getStore().getAt(rowIndex).data;
 		if(Boolean(record.isHardwareWithInventory)){
-			 this.fireEvent('externalNavigation', this, grid, 'clCiAssetwithInventory');
+			AAM.setComponentType("hardware");
+			this.fireEvent('externalNavigation', this, grid, 'clCiAssetwithInventory');
 		} else if(Boolean(record.isHardwareWithoutInventory)){
-			 this.fireEvent('externalNavigation', this, grid, 'clCiAssetwithoutInventory');
+			AAM.setComponentType("hardware");
+			this.fireEvent('externalNavigation', this, grid, 'clCiAssetwithoutInventory');
 		} else if(Boolean(record.isSoftwareComponent)){
-			 this.fireEvent('externalNavigation', this, grid, 'clCiIntangibleAsset');
+			AAM.setComponentType("software"); 
+			this.fireEvent('externalNavigation', this, grid, 'clCiIntangibleAsset');
 		} 
        
     },
@@ -230,7 +234,6 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
         if (tabCount === 1) //0, 1 weil tab erst nach dem event zerst�rt wird
             this.setVisible(false);
     },
-
 
     getSearchParams: function(tabId) {
         if (!tabId) {
@@ -271,15 +274,15 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
             ciSearchGrid = tpCiSearchResultTables.items.items[i];
 
             ciSearchGrid.getColumnModel().setColumnHeader(0, "&#160;");
-            ciSearchGrid.getColumnModel().setColumnHeader(1, labels.assetSAPDesc);
-            ciSearchGrid.getColumnModel().setColumnHeader(2, labels.assetPSPElement);
+            ciSearchGrid.getColumnModel().setColumnHeader(1, labels.assetSapDescription);
+            ciSearchGrid.getColumnModel().setColumnHeader(2, labels.assetPSP);
             ciSearchGrid.getColumnModel().setColumnHeader(3, labels.assetCostCenter);
-            ciSearchGrid.getColumnModel().setColumnHeader(4, labels.assetSite);
+            ciSearchGrid.getColumnModel().setColumnHeader(4, labels.site);
             ciSearchGrid.getColumnModel().setColumnHeader(5, labels.assetSerialNo);
             ciSearchGrid.getColumnModel().setColumnHeader(6, labels.assetTechnicalMaster);
             ciSearchGrid.getColumnModel().setColumnHeader(7, labels.assetTechnicalNumber);
             ciSearchGrid.getColumnModel().setColumnHeader(8, labels.assetInventoryNumber);
-            ciSearchGrid.getColumnModel().setColumnHeader(9, labels.assetOrganizationalUnit);
+            ciSearchGrid.getColumnModel().setColumnHeader(9, labels.assetOrganisation);
 
         }
     }
