@@ -277,7 +277,7 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
 		case 'OK':
 	    		Ext.Msg.show({
 	    			title: 'Mass Update Completed',
-	    			msg: 'Templtae linking completed.',
+	    			msg: 'Template linking completed.',
 	    			buttons: Ext.MessageBox.OK,
 	    			icon: Ext.MessageBox.INFO			
 	    		});			
