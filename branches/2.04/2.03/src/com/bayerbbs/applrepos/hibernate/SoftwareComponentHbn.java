@@ -81,28 +81,6 @@ public class SoftwareComponentHbn {
 					.size()]));
 			tx.commit();
 		
-//			tx = session.beginTransaction();
-//			BigDecimal total = (BigDecimal) session.createSQLQuery(
-//					"select count(*) from SOFTWAREKOMPONENTE where lower(PRODUKTBEZ) like '%"
-//							+ input.getQuery().toLowerCase() + "%'")
-//					.uniqueResult();
-//			out.setCountResultSet(total.longValue());
-//
-//			Criteria criteria = session.createCriteria(SoftwareComponent.class);
-//			criteria.add(Restrictions.like("prouctDescription",
-//					"%" + input.getQuery() + "%").ignoreCase());
-//
-//			if (input.getSort() != null) {
-//				addSortingCriteria(criteria, input.getSort(), input.getDir());
-//			}
-//			criteria.setFirstResult(input.getStart());
-//			criteria.setMaxResults(input.getLimit());
-//			List<SoftwareComponent> values = (List<SoftwareComponent>) criteria
-//					.list();
-//			list = getDTOList(values);
-//			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list
-//					.size()]));
-//			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
 				try {
@@ -213,7 +191,11 @@ public class SoftwareComponentHbn {
 		if(swComp.getRequester() != null){
 			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(swComp
 					.getRequester());
-			dto.setRequester(persons.get(0).getDisplayNameFull());
+			if(persons.size() > 0){
+				dto.setRequester(persons.get(0).getDisplayNameFull());
+			} else {
+				dto.setRequester(swComp.getRequester());
+			}
 		}
 		if (swComp.getSoftwareCategory1() != null) {
 			dto.setSapAssetClass(swComp.getSoftwareCategory1().getSwKategory1());
