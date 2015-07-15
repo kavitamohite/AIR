@@ -667,6 +667,18 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	
+	<Identifier>
+		<id>ciItHead</id>
+		<ciTypeId>3</ciTypeId>
+		<Mandatory>optional</Mandatory>
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType>Text</attributeType>
+		<attributeLength>50</attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
 
 	<Identifier>
 		<id>gpsccontactResponsibleAtCustomerSide</id>
