@@ -121,7 +121,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 		var taProtectionAvailabilityDescription = this.getComponent('protectionAvailabilityDescription');
 		var cbProtectionClassInformation = this.getComponent('protectionClassInformation');
 		var taProtectionClassInformationExplanation = this.getComponent('protectionClassInformationExplanation');
-		
+		cbProtectionClassInformation.getStore().sort('id', 'ASC');
 		
 		cbProtectionAvailability.on('select', this.onComboSelect, this);
 		cbProtectionAvailability.on('change', this.onComboChange, this);
@@ -139,6 +139,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 
 		var cbProtectionConfidentiality = this.getComponent('protectionConfidentiality');
 		var taProtectionConfidentialityDescription = this.getComponent('protectionConfidentialityDescription');
+		cbProtectionConfidentiality.getStore().sort('id', 'ASC');
 
 		
 		cbProtectionIntegrity.on('select', this.onComboSelect, this);
@@ -424,7 +425,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 		
 		this.setFieldLabel(this.getComponent('protectionIntegrity'), labels.itSecSbIntegrityId);
 		this.setFieldLabel(this.getComponent('protectionIntegrityDescription'), labels.itSecSbIntegrityDescription);
-		this.setFieldLabel(this.getComponent('protectionConfidentiality'), labels.itSecSbConfidentialityId);
+		this.setFieldLabel(this.getComponent('protectionConfidentiality'), labels.protectionClassInformation);
 		this.setFieldLabel(this.getComponent('protectionConfidentialityDescription'), labels.itSecSbConfidentialityDescription);
 	},
 	

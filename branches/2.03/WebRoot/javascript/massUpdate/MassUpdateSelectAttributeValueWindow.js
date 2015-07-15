@@ -84,7 +84,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     						    },{
     						        xtype: 'filterCombo',
     						        width: 230,
-    						        fieldLabel: 'Confidentiality',
+    						        fieldLabel: 'Information Class',  //RFC 11441
     						        id: 'selectAttrprotectionConfidentiality',
     						        
     						        store: AIR.AirStoreManager.getStoreByName('itSecSBConfidentialityListStore'),  // itSecSBConfidentialityListStore
