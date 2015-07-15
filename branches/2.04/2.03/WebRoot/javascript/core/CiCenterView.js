@@ -517,7 +517,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			case 'clCiTangibleAsset':
 				this.getLayout().setActiveItem('ciNewHardwareAsset');
 				var ciNewHardwareAsset = this.getComponent('ciNewHardwareAsset');
-				ciNewHardwareAsset.updateLabels(AIR.AirApplicationManager.getLabels());
 
 				var verwerfenCallback = function() {
 					if(options && options.callback)
@@ -705,10 +704,10 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		ciNewAssetView.updateLabels(labels);
 		
 		var ciNewSoftwareAsset = this.getComponent('ciNewSoftwareAsset');
-//		ciNewSoftwareAsset.updateLabels(labels);
+		ciNewSoftwareAsset.updateLabels(labels);
 		
-//		var ciNewHardwareAsset = this.getComponent('ciNewHardwareAsset');
-//		ciNewHardwareAsset.updateLabels(labels);
+		var ciNewHardwareAsset = this.getComponent('ciNewHardwareAsset');
+		ciNewHardwareAsset.updateLabels(labels);
 		
 	},
 	

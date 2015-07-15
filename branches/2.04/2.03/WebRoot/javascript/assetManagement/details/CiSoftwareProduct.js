@@ -34,9 +34,9 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 				layout:'hbox',						
 				
 				items: [{
+					itemId: 'labelProductName',
 					xtype: 'label',
 					fieldLabel : 'ProductName',
-					html: 'Product Name: <span style="color:red">*</span>',
 					width: 105,
 					style: {
 						fontSize: 12
@@ -44,7 +44,6 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 	    		},{
 	    			itemId: 'cbProductName',
 			        xtype: 'filterCombo',
-			        fieldLabel: 'Product Name',
 			        width: 330,
 			        enableKeyEvents: true,
 			        store: AIR.AirStoreManager.getStoreByName('softwareproductListStore'),
@@ -94,7 +93,6 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 
         var cbProductName = this.getComponent('pProductName').getComponent('cbProductName');
         cbProductName.on('select', this.onProductSelect, this);
-//        cbModel.on('keyup', this.onFieldKeyUp, this);
 
 	},
 	
@@ -113,18 +111,13 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
         this.updateMailTemplateProduct();
     },
 
-     
-
     onProductSelect: function(combo, record, index) {
-        var value = record.get('id');
         
         var cbManufacturer = this.getComponent('cbManufacturer').getRawValue();
-    
         var cbProductName = this.getComponent('pProductName').getComponent('cbProductName').getRawValue();
+        var description = cbManufacturer + "  " + cbProductName;
         
         var tsapDescription = this.getComponent('tsapDescription');
-        
-        var description = cbManufacturer + "  " + cbProductName;
         tsapDescription.setValue(description);
         
         this.updateMailTemplateProduct();
@@ -133,26 +126,23 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
     updateMailTemplateProduct: function() {
         var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
 
-        var cbManufacturer = this.getComponent('cbManufacturer');
+        var cbManufacturer = this.getComponent('cbManufacturer').getRawValue();
+        var cbProductName = this.getComponent('pProductName').getComponent('cbProductName').getRawValue();
   
-       // var cbModel = this.getComponent('pmodel').getComponent('cbModel');
-        var mailText = mail_Text_product.replace('<manufacturer>', cbManufacturer.getRawValue());
-
-        mailText = mailText.replace('<model>', cbProductName.getRawValue());
-      
+        var mailText = mail_Text_product.replace('<manufacturer>', cbManufacturer);
+        mailText = mailText.replace('<model>', cbProductName);
         mailText = mailText.replace('<Username>', AAM.getUserName());
 
         var mailtemplate = 'mailto:ITILcenter@bayer.com';
         mailtemplate += '&subject=' + mail_Subject_product + '';
         mailtemplate += ('&body=' + mailText);
         html = html.replace('{href}', mailtemplate);
-        this.getComponent('pmodel').getComponent('mailproduct').update(html);
+        this.getComponent('pProductName').getComponent('mailproduct').update(html);
     },
     
     update: function(assetData){
     	var cbManufacturer = this.getComponent('cbManufacturer');
         cbManufacturer.setValue(assetData.manufacturerId);
-
 /*
         var cbModel = this.getComponent('pmodel').getComponent('cbModel');
         cbModel.setValue(assetData.modelId);
@@ -169,7 +159,14 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
    
         
         return assetData;
-    }
+    },
+    
+    updateLabels: function(labels) {
+    	Util.updateFieldLabel(this.getComponent('cbManufacturer'), labels.assetManufacture); 
+    	Util.updateLabel(this.getComponent('pProductName').getComponent('labelProductName'), labels.assetSubcategory);  
+    	Util.updateFieldLabel(this.getComponent('tsapDescription'), labels.assetSapDescription);  
+    },
+
 
 });
 Ext.reg('AIR.CiSoftwareProduct', AIR.CiSoftwareProduct);

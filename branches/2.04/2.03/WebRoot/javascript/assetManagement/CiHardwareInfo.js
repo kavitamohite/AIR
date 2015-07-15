@@ -11,6 +11,8 @@ AIR.CiHardwareInfo = Ext.extend(Ext.Panel, {
 		    items: [{
 		    	xtype: 'label',
 		        itemId: 'AssetwithInventory',
+		        html: '<b>Asset without Inventory</b><br>Use the wizard to create a new item',
+		        width: 300,
 		        style:{
 		        	textAlign: 'left',
 				  	backgroundColor: AC.AIR_BG_COLOR,
@@ -24,7 +26,6 @@ AIR.CiHardwareInfo = Ext.extend(Ext.Panel, {
 				itemId: 'bAssetwithInventory',
 			},{ 
 				xtype: 'container',	  
-				html: '',
 		        height: 24,
 				cls: 'x-plain',
 				style: {
@@ -38,12 +39,13 @@ AIR.CiHardwareInfo = Ext.extend(Ext.Panel, {
 			},{
 		    	xtype: 'label',
 		        itemId: 'AssetwithoutInventory',
+		        width: 300,
 		        style:{
 		        	textAlign: 'left',
 				  	backgroundColor: AC.AIR_BG_COLOR,
 				  	color: AC.AIR_FONT_COLOR,
 				    fontFamily: AC.AIR_FONT_TYPE,
-				  	fontSize: '10pt',
+				  	fontSize: '10pt'
  		        }
 		    },{
 				xtype: 'button',
@@ -56,10 +58,11 @@ AIR.CiHardwareInfo = Ext.extend(Ext.Panel, {
 	},
 
 	updateLabels: function(labels) {
-		this.getComponent('AssetwithInventory').el.dom.innerHTML = labels.lAssetwithInventoryText;
-		this.getComponent('bAssetwithInventory').setText(labels.lAssetwithInventory);
 		
-		this.getComponent('AssetwithoutInventory').el.dom.innerHTML = labels.lAssetwithoutInventoryText;
+		
+		Util.updateLabel(this.getComponent('AssetwithInventory'), labels.lAssetwithInventoryText);
+		Util.updateLabel(this.getComponent('AssetwithoutInventory'), labels.lAssetwithoutInventoryText);
+		this.getComponent('bAssetwithInventory').setText(labels.lAssetwithInventory);
 		this.getComponent('bAssetwithoutInventory').setText(labels.lAssetwithoutInventory);
 	}
 	

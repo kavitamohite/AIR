@@ -323,36 +323,23 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	},
 
     updateLabels: function(labels) {
-//    	this.getComponent('topPanel').getComponent('identNumber').fieldLabel = labels.assetIndentnumber;
-//    	Util.setFieldLabel(this.getComponent('topPanel').getComponent('identNumber'), labels.assetIndentnumber);
-//    	this.setFieldLabel(this.getComponent('topPanel').getComponent('identNumber'), "abcd");
-        /*this.setTitle(labels.lNewAsset);
-		this.setFieldLabel(this.getComponent('topPanel').getComponent('identNumber'), labels.assetIndentnumber);
-		this.setFieldLabel(this.getComponent('topPanel').getComponent('identNumber'), labels.assetInventoryNumber);
-		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer'), labels.assetManufacture);
-		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory'), labels.assetSubcategory);
-		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType'), labels.assetType);
-		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel'), labels.assetModel);
-		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription'), labels.assetSapDescription);
-		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('bReset'), labels.assetReset);
-		*/
-        //this.setFieldLabel(this.getComponent('topPanel').getComponent('identNumber'), labels.assetIndentnumber);
+    	var topPanel = this.getComponent('topPanel');
+    	topPanel.updateLabels(labels);
 
-        //AIR.AirAclManager.setNecessity(this.getComponent('topPanel').getComponent('identNumber'));*/
-
-        //var textindentnumber = this.getComponent('topPanel').getComponent('identNumber');
-
-        //this.setFieldLabel(fsCategoriesAndStatus.getComponent('cbAdvSearchGeneralUsageW'), labels.operationalStatus);
-
-        //Ext.getBody('topPanel').getComponent('identNumber').el.up('.x-form-item', 10, true).child('.x-form-item-label').update(labels.assetIndentnumber);
-
-        /*	link =this.getComponent('topPanel').getComponent('tinventory');
-		link.updateText(labels.assetInventoryNumber);*/
-
-
-        //this.getComponent('topPanel').getComponent('identNumber').fieldLabel =labels.assetIndentnumber;
-        //this.getComponent('topPanel').getComponent('tinventory').fieldLabel =labels.assetInventoryNumber;
-
+    	var product = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
+    	product.updateLabels(labels);
+    	
+    	var location = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location');
+    	location.updateLabels(labels);
+    	
+    	var business = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
+    	business.updateLabels(labels);
+    	
+    	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
+    	contact.updateLabels(labels);
+    	
+    	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
+    	technics.updateLabels(labels);
     },
 
     onFieldKeyUp: function(textfield, event) {

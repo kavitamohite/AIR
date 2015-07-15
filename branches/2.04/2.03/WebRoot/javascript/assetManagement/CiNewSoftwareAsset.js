@@ -332,40 +332,22 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     	}
 	},
 
-//    updateLabels: function(labels) {
-//    	AIR.getStoreByName('manufactureListStore');
-//        /*this.setTitle(labels.lNewAsset);
-//		this.setFieldLabel(this.getComponent('topPanel').getComponent('identNumber'), labels.assetIndentnumber);
-//		this.setFieldLabel(this.getComponent('topPanel').getComponent('identNumber'), labels.assetInventoryNumber);
-//		this.setFieldLabel(this.getComponent('topPanel').getComponent('tDescription'), labels.assetDescription);
-//		this.setFieldLabel(this.getComponent('topPanel').getComponent('pReason').getComponent('lReason'), labels.assetReason);
-//		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer'), labels.assetManufacture);
-//		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory'), labels.assetSubcategory);
-//		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType'), labels.assetType);
-//		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbModel'), labels.assetModel);
-//		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription'), labels.assetSapDescription);
-//		this.setFieldLabel(this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('bReset'), labels.assetReset);
-//		*/
-//        //this.setFieldLabel(this.getComponent('topPanel').getComponent('identNumber'), labels.assetIndentnumber);
-//
-//        //AIR.AirAclManager.setNecessity(this.getComponent('topPanel').getComponent('identNumber'));*/
-//
-//        //var textindentnumber = this.getComponent('topPanel').getComponent('identNumber');
-//
-//        //this.setFieldLabel(fsCategoriesAndStatus.getComponent('cbAdvSearchGeneralUsageW'), labels.operationalStatus);
-//
-//        //Ext.getBody('topPanel').getComponent('identNumber').el.up('.x-form-item', 10, true).child('.x-form-item-label').update(labels.assetIndentnumber);
-//
-//        /*	link =this.getComponent('topPanel').getComponent('tinventory');
-//		link.updateText(labels.assetInventoryNumber);*/
-//
-//
-//        //this.getComponent('topPanel').getComponent('identNumber').fieldLabel =labels.assetIndentnumber;
-//        //this.getComponent('topPanel').getComponent('tinventory').fieldLabel =labels.assetInventoryNumber;
-//
-//        this.loadComboboxData();
-//    },
-//
+    updateLabels: function(labels) {
+
+    	var topPanel = this.getComponent('topPanel');
+    	topPanel.updateLabels(labels);
+
+    	var product = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
+    	product.updateLabels(labels);
+    	
+    	var business = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
+    	business.updateLabels(labels);
+    	
+    	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
+    	contact.updateLabels(labels);
+    	
+    },
+
 	saveAsset: function() {
         newAssetstore = AIR.AirStoreFactory.createSaveAssetStore();
         var assetData = {};

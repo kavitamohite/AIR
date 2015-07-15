@@ -555,8 +555,6 @@
 		
 		<!-- CiSpecificsItItemView -->
 		<osGroup>Group</osGroup>
-<!--		<osType></osType>-->
-<!--		<osName></osName>-->
 		<clusterCode>Cluster Code</clusterCode>
 		<clusterType>Cluster Type</clusterType>
 		<virtualHardwareClient>Virtual Hardware Client</virtualHardwareClient>
@@ -568,31 +566,8 @@
 		<directLinkagesCIPanelTitle>Linkages</directLinkagesCIPanelTitle>
 		
 		<!-- asset management -->
-		<assetManufacturer>Manufacturer</assetManufacturer>
-		<assetSAPDesc>SAP Description</assetSAPDesc>
 		<assetSerialNo>Serial Number</assetSerialNo>
-		<assetCostCenterManager>Cost Center Manager</assetCostCenterManager>
-		<assetOrganizationalUnit>Organizational Unit</assetOrganizationalUnit>
 		<assetCostCenter>Cost Center</assetCostCenter>
-		<assetInventoryNumber>Inventory Number</assetInventoryNumber>
-		<assetPSPElement>PSP Element</assetPSPElement>
-		<assetRequester>Requester</assetRequester>
-		<assetIdentNumber>Ident Number</assetIdentNumber>
-		<assetTechnicalMaster>Technical Master</assetTechnicalMaster>
-		<assetTechnicalNumber>Technical Number</assetTechnicalNumber>
-		<assetAcquisitionValue>Acquisition Value</assetAcquisitionValue>
-		<assetSite>Site</assetSite>
-		<assetOrderNumber>Order number</assetOrderNumber>
-		<assetChecked>Asset checked</assetChecked>
-		<sapAssetClass>Asset Class</sapAssetClass>
-		<assetSubCategory>Sub category</assetSubCategory>
-		<assetType>Type</assetType>
-		<assetModel>Model</assetModel>
-		<assetSystemPlatformName>System Platform Name</assetSystemPlatformName>
-	
-		<assetHardwareTransientSystem>Hardware Transient System</assetHardwareTransientSystem>
-		<assetAlias>Alias</assetAlias>
-		<assetOsName>OS Name</assetOsName>
 		
 		<!-- asset management menu items-->
 		<lMenuAssetManagement>Asset Management</lMenuAssetManagement>
@@ -603,55 +578,56 @@
 		<createhardwarepanelheader>Asset Management - Hardware Asset</createhardwarepanelheader>
 		<lAssetwithInventoryText>&lt;b&gt;Asset with Inventory&lt;/b&gt;&lt;br&gt;Use the wizard to create a new item</lAssetwithInventoryText>
 		<lAssetwithoutInventoryText>&lt;b&gt;Asset without Inventory&lt;/b&gt;&lt;br&gt;Use the wizard to create a new item</lAssetwithoutInventoryText>
+		<assetReset>Reset all Entries</assetReset>
 		
 		<!-- asset management search-->
 		<rHardwarecomponent>Hardware Component</rHardwarecomponent>
 		<rSoftwarecomponent>Software Component</rSoftwarecomponent>
 		
 		<!-- asset management new screen-->
-		<assetIndentnumber>Indent number:</assetIndentnumber>
-		<assetInventoryNumber>Inventory Number:</assetInventoryNumber>
-		<assetDescription>Description:</assetDescription>
-		<assetReason>Reason for Asset without Inventory:</assetReason>
+		<assetIndentnumber>Indent number</assetIndentnumber>
+		<assetInventoryNumber>Inventory Number</assetInventoryNumber>
+		<assetDescription>Description</assetDescription>
+
 		<!-- asset management Product-->
-		<assetManufacture>Manufacturer:</assetManufacture>
-		<assetSubcategory>Sub Category:</assetSubcategory>
-		<assetType>Type:</assetType>
-		<assetModel>Model:</assetModel>
-		<assetSapDescription>SAP Description of the asset:</assetSapDescription>
-		<assetReset>Reset all Entries</assetReset>
-		<!-- asset management Technics-->
-		<assetTechnicalNumber>Technical Number / Asset-ID:</assetTechnicalNumber>
-		<assetTechnicalMaster>Technical Master:</assetTechnicalMaster>
-		<assetSystemPlatformName>System platform name:</assetSystemPlatformName>
+		<assetManufacture>Manufacturer *</assetManufacture>
+		<assetSubcategory>Sub Category *</assetSubcategory>
+		<assetType>Type *</assetType>
+		<assetModel>Model *</assetModel>
+		<assetSapDescription>SAP Description</assetSapDescription>
 		
-		<assetOsname>OS-Name:</assetOsname>
-	
-		<assettransient>HW-transient systems:</assettransient>
-		<assetWorflowstatustechnical>Worflowstatus technical:</assetWorflowstatustechnical>
-		<assetGeneral>General Usage:</assetGeneral>
-		<assetITSecurity>IT-Security-Relevance:</assetITSecurity>
-		<assetComment>Comment:</assetComment>
 		<!-- asset management Location-->
-		<assetCountry>Country:</assetCountry>
-		<assetSite>Site:</assetSite>
-		<assetBuilding>Building:</assetBuilding>
-		<assetRoom>Room:</assetRoom>
-		<assetPosition>Rack - Position:</assetPosition>
+		<assetCountry>Country *</assetCountry>
+		<assetSite>Site *</assetSite>
+		<assetBuilding>Building *</assetBuilding>
+		<assetRoom>Room *</assetRoom>
+		<assetPosition>Rack - Position *</assetPosition>
+		
 		<!-- asset management Business Information-->
-		<assetOrdernumber>Order Number:</assetOrdernumber>
-		<assetInventory>Inventory Number:</assetInventory>
-		<assetPSP>PSP-Elements:</assetPSP>
-		<assetPsptext>PSP-Text:</assetPsptext>
-		<assetCost>Cost center:</assetCost>
-		<assetRequester>Requester:</assetRequester>
-		<assetCostManager>Cost Center Manager:</assetCostManager>
-	    <assetOrganisation>Organizational Unit:</assetOrganisation>
-	    <assetOwner>Owner(legal):</assetOwner>
-	    <assetSapClass>SAP Asset Class:</assetSapClass>
+		<assetOrdernumber>Order Number</assetOrdernumber>
+		<assetInventory>Inventory Number</assetInventory>
+		<assetPSP>PSP-Elements</assetPSP>
+		<assetPsptext>PSP-Text</assetPsptext>
+		<assetCost>Cost center *</assetCost>
+		<assetRequester>Requester *</assetRequester>
+		<assetCostManager>Cost Center Manager *</assetCostManager>
+	    <assetOrganisation>Organizational Unit</assetOrganisation>
+	    <assetOwner>Owner(legal) *</assetOwner>
+	    <assetSapClass>SAP Asset Class</assetSapClass>
+		
+		<!-- asset management Technics-->
+		<assetTechnicalNumber>Technical Number / Asset-ID</assetTechnicalNumber>
+		<assetTechnicalMaster>Technical Master</assetTechnicalMaster>
+		<assetSystemPlatformName>System platform name</assetSystemPlatformName>
+		<assetOsname>OS-Name</assetOsname>
+		<assettransient>HW-transient systems</assettransient>
+		<assetWorflowstatustechnical>Worflowstatus technical</assetWorflowstatustechnical>
+		<assetGeneral>General Usage</assetGeneral>
+		<assetITSecurity>IT-Security-Relevance</assetITSecurity>
+		<assetComment>Comment</assetComment>
 	    
 	    <!-- asset management Contacts-->
-	    <assetEditor>Editors group*</assetEditor>
+	    <assetEditor>Editors group *</assetEditor>
 
 	</Items>
 </LanguageItems>
