@@ -597,6 +597,7 @@
 		<assetType>Typ *</assetType>
 		<assetModel>Modell *</assetModel>
 		<assetSapDescription>SAP-Beschreibung</assetSapDescription>
+		<assetSoftwareProduct>Produktname</assetSoftwareProduct>
 		
 		<!-- asset management Location-->
 		<assetCountry>Land *</assetCountry>
