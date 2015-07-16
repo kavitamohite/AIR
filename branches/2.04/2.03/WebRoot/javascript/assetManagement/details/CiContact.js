@@ -13,7 +13,6 @@ AIR.CiContact = Ext.extend(Ext.form.FieldSet, {
 			items : [ {
 				xtype : 'textfield',
 				itemId: 'tCostcentermanager',
-				labelSeparator : ': <span style="color:red">*</span>',
 				fieldLabel : 'Cost center manager',
 				disabled: true,
 				width: 370,
@@ -32,7 +31,6 @@ AIR.CiContact = Ext.extend(Ext.form.FieldSet, {
 			}, {
 				xtype : 'combo',
 				itemId: 'cbeditor',
-				labelSeparator : ': <span style="color:red">*</span>',
 				fieldLabel : 'Editors group',
 				width: 370,
 				enableKeyEvents: true,

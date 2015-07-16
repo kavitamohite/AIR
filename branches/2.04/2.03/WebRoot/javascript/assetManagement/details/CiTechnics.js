@@ -62,7 +62,6 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 			}, {
 				xtype : 'combo',
 				id : 'cbWorkflowTechnical',
-				labelSeparator : ': <span style="color:red">*</span>',
 				fieldLabel : 'Worflowstatus technical',
 				width : 370,
 				style : {

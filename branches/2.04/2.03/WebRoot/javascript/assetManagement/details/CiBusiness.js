@@ -160,8 +160,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 			}, {
 				xtype : 'textfield',
 				itemId: 'tOwner',
-				labelSeparator : ': <span style="color:red">*</span>',
-				fieldLabel : 'Owner(legal)',
+				fieldLabel : 'Owner(legal) *',
 				disabled: true,
 				width: 370,
 				style : {
@@ -171,15 +170,14 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 			},  {
 		        xtype: 'filterCombo',
 		        itemId: 'cbSapAsset',
-		        labelSeparator : ': <span style="color:red">*</span>',
 		        width: 370,
-		        fieldLabel: 'SAP Asset Class',
+		        fieldLabel: 'SAP Asset Class *',
 		        enableKeyEvents: true,
 		        store: AIR.AirStoreManager.getStoreByName('sapAssetListStore'),
 		        valueField: 'id',
 		        displayField: 'name',
 				lastQuery: '',
-		        triggerAction: 'all',//all query
+		        triggerAction: 'all',
 		        mode: 'local',
 		        queryParam: 'id',
 		        style : {

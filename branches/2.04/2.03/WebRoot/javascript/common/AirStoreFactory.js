@@ -1058,6 +1058,7 @@ AIR.AirStoreFactory = function() {
 					{name : 'assetType'},
 					{name : 'assetModel'},
 					{name : 'assetSapDescription'},
+					{name : 'assetSoftwareProduct'},
 					{name : 'assetReset'},
 					{name : 'assetTechnicalNumber'},
 					{name : 'assetTechnicalMaster'},

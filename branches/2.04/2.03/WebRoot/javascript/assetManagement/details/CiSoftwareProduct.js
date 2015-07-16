@@ -13,11 +13,9 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 			items : [{
 				itemId: 'cbManufacturer',
 		        xtype: 'filterCombo',
-		        labelSeparator : ': <span style="color:red">*</span>',
-		        //fieldLabel: 'Manufacturer',
 		        width: 370,
 		        enableKeyEvents: true,
-		        store: AIR.AirStoreManager.getStoreByName('manufactureListStore'),//manufactureListStore
+		        store: AIR.AirStoreManager.getStoreByName('manufactureListStore'),
 		        valueField: 'id',
 		        displayField: 'name',
 				lastQuery: '',
@@ -36,7 +34,7 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 				items: [{
 					itemId: 'labelProductName',
 					xtype: 'label',
-					fieldLabel : 'ProductName',
+					text : 'Product Name *',
 					width: 105,
 					style: {
 						fontSize: 12
@@ -46,7 +44,7 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 			        xtype: 'filterCombo',
 			        width: 330,
 			        enableKeyEvents: true,
-			        store: AIR.AirStoreManager.getStoreByName('softwareproductListStore'),//softwareproductListStore
+			        store: AIR.AirStoreManager.getStoreByName('softwareproductListStore'),
 			        valueField: 'id',
 			        displayField: 'name',
 					lastQuery: '',
@@ -179,7 +177,7 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
     
     updateLabels: function(labels) {
     	Util.updateFieldLabel(this.getComponent('cbManufacturer'), labels.assetManufacture); 
-    	///Util.updateFieldLabel(this.getComponent('pProductName').getComponent('labelProductName'), labels.assetSoftwareProduct);  
+    	Util.updateLabel(this.getComponent('pProductName').getComponent('labelProductName'), labels.assetSoftwareProduct);  
     	Util.updateFieldLabel(this.getComponent('tsapDescription'), labels.assetSapDescription);  
     },
 
