@@ -26,6 +26,7 @@ public class AssetViewDataDTO {
 	private String model;
 	private Long modelId;
 
+	 private String softwareId;//product name in software
 	// Technicas
 	private String technicalNumber;
 	private String technicalMaster;
@@ -513,6 +514,21 @@ public class AssetViewDataDTO {
 
 	public void setSerialNumber(String serialNumber) {
 		this.serialNumber = serialNumber;
+	}
+
+	
+	/**
+	 * @return the softwareId
+	 */
+	public String getSoftwareId() {
+		return softwareId;
+	}
+
+	/**
+	 * @param softwareId the softwareId to set
+	 */
+	public void setSoftwareId(String softwareId) {
+		this.softwareId = softwareId;
 	}
 
 	@Override
