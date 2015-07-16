@@ -99,3 +99,8 @@ var mail_Subject_Costcenter = "Master%20data%20for%20Cost%20center,%20PSP-Elemen
 
 var mail_Text_Costcenter	= "Dear%20Sir%20or%20Madam,%0A%0Aplease%20create%20new%20object%20as%20follows:%0A%0ACostcenter[KST]:%20%20<costcenter>%0A%0APSP-Element[PSP]:%20%20<psp>%0A%0ABest%20regards,%0A<Username>";
 var mail_blank_Text_Costcenter = "Dear%20Sir%20or%20Madam,%0A%0Aplease%20create%20new%20object%20as%20follows:%0A%0ACostcenter[KST]:%0A%0APSP-Element[PSP]:,";
+
+
+var mail_Subject_softwareproduct	= "Master%20data%20for%20the%20Manufacturer,%20Product%20Name%20must%20be%20created.";
+var mail_Text_softwareproduct		= "Dear%20Sir%20or%20Madam,%0A%0Aplease%20create%20new%20object%20as%20follows:%0A%0AManufacturer:%20%20<softwaremanufacturer>%0A%0AProduct Name:%20%20<ProductName>%0A%0ABest%20regards,%0A<Username>";
+var mail_blank_Text_softwareproduct = "Dear%20Sir%20or%20Madam,%0A%0Aplease%20create%20new%20object%20as%20follows:%0A%0AManufacturer:%0A%0AProduct Name:";
