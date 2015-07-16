@@ -9,6 +9,7 @@ public class ProductWSDelegate {
 	
 	ProductWS productWS=new ProductWS();
 	
+	
 	public KeyValueDTO[] findManufacturerList(
 			DefaultDataInput input) {
 		return productWS.findManufacturerList(input.getId());
