@@ -149,7 +149,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	//
 	// private Long duplicateInv;
 	//
-	// private String inventoryStockNumber;
+	private String inventoryStockNumber;
 	//
 	// private String cpuModel;
 	//
@@ -773,14 +773,14 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	// this.duplicateInv = duplicateInv;
 	// }
 	//
-	// @Column(name = "INVENTARNUMMER_OHNE")
-	// public String getInventoryStockNumber() {
-	// return inventoryStockNumber;
-	// }
-	//
-	// public void setInventoryStockNumber(String inventoryStockNumber) {
-	// this.inventoryStockNumber = inventoryStockNumber;
-	// }
+	 @Column(name = "INVENTARNUMMER_OHNE")
+	 public String getInventoryStockNumber() {
+	 return inventoryStockNumber;
+	 }
+	
+	 public void setInventoryStockNumber(String inventoryStockNumber) {
+	 this.inventoryStockNumber = inventoryStockNumber;
+	 }
 	//
 	// @Column(name = "CPU_MODEL")
 	// public String getCpuModel() {

@@ -389,7 +389,11 @@ public class HardwareComponentHbn {
 		} else {
 			hardwareComponent.setName(getIdentNumber());
 		}
-		hardwareComponent.setInventoryP69(dto.getInventoryNumber());
+		if(dto.getInventoryNumber() == null || dto.getInventoryNumber().length() == 0){
+			hardwareComponent.setInventoryStockNumber("ExtInventory");
+		} else {
+			hardwareComponent.setInventoryP69(dto.getInventoryNumber());
+		}
 
 		//Product
 		hardwareComponent.setHerstellerId(dto.getManufacturerId());
