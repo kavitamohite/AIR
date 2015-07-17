@@ -292,7 +292,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
     resetFormFields: function(assetData) {
 
-    	if(!assetData){
+    	if(!assetData || !assetData.id){
     		this.update({});
     	} else {
         	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
@@ -392,13 +392,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	} else {
     		bHistory.hide();
     	}
-		
-		
 	},
 
     update: function(assetData) {
-    	console.log(assetData);
-
     	var topPanel = this.getComponent('topPanel');
     	topPanel.update(assetData);
 

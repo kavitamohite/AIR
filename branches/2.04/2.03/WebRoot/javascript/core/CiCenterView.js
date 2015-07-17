@@ -441,7 +441,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					if(ciCreateWizardView)
 						ciCreateWizardView.wizardStarted = false;
 
-					var ciCreatePagesView = this.getComponent('ciCreateView').getComponent('ciCreatePagesView');//Ext.getCmp('ciCreatePagesView');//CiCreationCardPanel
+					var ciCreatePagesView = this.getComponent('ciCreateView').getComponent('ciCreatePagesView');
 					ciCreatePagesView.getLayout().setActiveItem('ciDeleteView');
 					
 					
@@ -517,7 +517,8 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			case 'clCiTangibleAsset':
 				this.getLayout().setActiveItem('ciNewHardwareAsset');
 				var ciNewHardwareAsset = this.getComponent('ciNewHardwareAsset');
-
+				ciNewHardwareAsset.updateLabels(AIR.AirApplicationManager.getLabels());
+				
 				var verwerfenCallback = function() {
 					if(options && options.callback)
 						options.callback();

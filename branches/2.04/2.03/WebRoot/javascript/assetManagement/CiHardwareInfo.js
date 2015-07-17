@@ -11,7 +11,7 @@ AIR.CiHardwareInfo = Ext.extend(Ext.Panel, {
 		    items: [{
 		    	xtype: 'label',
 		        itemId: 'AssetwithInventory',
-		        html: '<b>Asset without Inventory</b><br>Use the wizard to create a new item',
+//		        text: '<b>Asset without Inventory</b><br>Use the wizard to create a new item',
 		        width: 300,
 		        style:{
 		        	textAlign: 'left',
@@ -39,6 +39,7 @@ AIR.CiHardwareInfo = Ext.extend(Ext.Panel, {
 			},{
 		    	xtype: 'label',
 		        itemId: 'AssetwithoutInventory',
+//		        text: '<b>Asset without Inventory</b><br>Use the wizard to create a new item',
 		        width: 300,
 		        style:{
 		        	textAlign: 'left',
@@ -59,11 +60,16 @@ AIR.CiHardwareInfo = Ext.extend(Ext.Panel, {
 
 	updateLabels: function(labels) {
 		
-		
-		Util.updateLabel(this.getComponent('AssetwithInventory'), labels.lAssetwithInventoryText);
-		Util.updateLabel(this.getComponent('AssetwithoutInventory'), labels.lAssetwithoutInventoryText);
+		if (this.getComponent('AssetwithInventory').rendered){
+			this.getComponent('AssetwithInventory').el.dom.innerHTML = labels.lAssetwithInventoryText;
+		} 
 		this.getComponent('bAssetwithInventory').setText(labels.lAssetwithInventory);
+		
+		if (this.getComponent('AssetwithoutInventory').rendered){
+			this.getComponent('AssetwithoutInventory').el.dom.innerHTML = labels.lAssetwithoutInventoryText;
+		} 
 		this.getComponent('bAssetwithoutInventory').setText(labels.lAssetwithoutInventory);
+		
 	}
 	
 });
