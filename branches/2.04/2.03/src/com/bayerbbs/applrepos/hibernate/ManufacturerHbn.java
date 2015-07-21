@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.domain.Partner;
-import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 public class ManufacturerHbn  extends BaseHbn{
 	public static Partner findById(Long id) {
@@ -25,6 +24,7 @@ public class ManufacturerHbn  extends BaseHbn{
 		return listDTO;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static KeyValueDTO[] getManufacturerById(Long partnerId) {
 
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
@@ -32,11 +32,8 @@ public class ManufacturerHbn  extends BaseHbn{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			@SuppressWarnings("unchecked")
-			List<Partner> values = session.createQuery("from Partner").list();
-
+			List<Partner> values = session.createQuery("from Partner p where p.number is null and p.deleteTimestamp is null").list();
 			data = getDTOManufacturerList(values);
-
 			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {

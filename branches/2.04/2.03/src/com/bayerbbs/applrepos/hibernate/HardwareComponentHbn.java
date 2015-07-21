@@ -114,7 +114,6 @@ public class HardwareComponentHbn {
 				criteria.addOrder(Order.asc("amKommision"));
 			}
 		} else if (sort.equals("costCenter")) {
-			criteria.createAlias("konto", "konto");
 			if ("DESC".equalsIgnoreCase(desc)) {
 				criteria.addOrder(Order.desc("konto.name"));
 			} else {
@@ -264,11 +263,13 @@ public class HardwareComponentHbn {
 				dto.setOrganizationalunit(persons.get(0).getOrgUnit());
 			}
 		}
-		dto.setRequesterId(hwComp.getRequester());
-
-		List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(hwComp
-				.getRequester());
-		dto.setRequester(persons.get(0).getDisplayNameFull());
+		if(hwComp.getRequester() != null){
+			dto.setRequesterId(hwComp.getRequester());
+			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(hwComp
+					.getRequester());
+			dto.setRequester(persons.get(0).getDisplayNameFull());
+			
+		}
 //		if(hwComp.getPartner() != null){
 //			dto.setOwner(hwComp.getPartner().getOwner());
 //		}
@@ -389,7 +390,7 @@ public class HardwareComponentHbn {
 		} else {
 			hardwareComponent.setName(getIdentNumber());
 		}
-		if(dto.getInventoryNumber() == null || dto.getInventoryNumber().length() == 0){
+		if(dto.getInventoryNumber() == null && hardwareComponent.getInventoryStockNumber() != null){
 			hardwareComponent.setInventoryStockNumber("ExtInventory");
 		} else {
 			hardwareComponent.setInventoryP69(dto.getInventoryNumber());

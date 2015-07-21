@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.applrepos.domain.Konto;
@@ -36,8 +37,9 @@ public class CostcenterHbn extends BaseHbn{
 		try {
 			tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(Konto.class);
-			criteria.add(Restrictions.isNotNull("cwidVerantw"));
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			criteria.add(Restrictions.eq("art", "KST"));
+			criteria.addOrder(Order.asc("name"));
 			List<Konto> values = criteria.list();
 
 			data = getDTOCostcenterList(values);
@@ -46,12 +48,10 @@ public class CostcenterHbn extends BaseHbn{
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
 				try {
-
 					tx.rollback();
 				} catch (HibernateException e1) {
 					System.out.println("Error rolling back transaction");
 				}
-				// throw again the first exception
 				throw e;
 			}
 
