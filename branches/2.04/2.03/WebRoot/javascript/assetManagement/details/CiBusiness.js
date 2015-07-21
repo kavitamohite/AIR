@@ -71,7 +71,6 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 	    		},{
 	    			xtype: 'filterCombo',
 	    			itemId: 'cbCostcenter',
-	    			labelSeparator : ': <span style="color:red">*</span>',
 			        width: 330,
 			        enableKeyEvents: true,
 			        store: AIR.AirStoreManager.getStoreByName('costCenterListStore'),
@@ -137,7 +136,6 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 			}, {
 				xtype : 'textfield',
 				itemId: 'tCostCenterMgr',
-				disabled: true,
 				fieldLabel : 'Cost Center Manager',
 				width: 370,
 				style : {
@@ -235,17 +233,18 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
                 query: record.get('cwid')
             },
             callback: function(records, options, success) {
-            	var cwid = this.getAt(0).data.cwid;
-                var value = this.getAt(0).data.firstname + " " + this.getAt(0).data.lastname + "/" + cwid;
-                var orgUnit = this.getAt(0).data.orgUnit;
-                console.log(orgUnit);
-                costCenterManager.setValue(value);
-                costCenterManager1.setValue(value);
-                costCenterManagerHidden.setValue(cwid);
-                tOwner.setValue(value);
-                tOrganisation.setValue(orgUnit);
-                tOrganisation1.setValue(orgUnit);
+            	if(this.getAt(0)){
+                	var cwid = this.getAt(0).data.cwid;
+                    var value = this.getAt(0).data.lastname + ", "+ this.getAt(0).data.firstname + " (" + cwid + ")";
+                    var orgUnit = this.getAt(0).data.orgUnit;
 
+                    costCenterManager.setValue(value);
+                    costCenterManager1.setValue(value);
+                    costCenterManagerHidden.setValue(cwid);
+                    tOwner.setValue(value);
+                    tOrganisation.setValue(orgUnit);
+                    tOrganisation1.setValue(orgUnit);
+            	}
             }
         });
     },

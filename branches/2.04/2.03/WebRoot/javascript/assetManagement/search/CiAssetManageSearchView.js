@@ -56,7 +56,7 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
                     items: [{
                         id: 'hardwareSearchMode',
                         name: 'sMode',
-                        boxLabel: 'Hardware Component',
+                        boxLabel: 'Hardware Component &nbsp; &nbsp;',
                         inputValue: 'hardware',
                         checked: true
                     }, {
