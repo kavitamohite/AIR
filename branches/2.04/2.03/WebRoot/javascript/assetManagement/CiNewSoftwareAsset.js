@@ -62,7 +62,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                         itemId: 'contacts'
                     },{
                     	xtype: 'panel',
-                    	height: 110,
+                    	height: 149,
                     	border: false
                     }]
                 }, {

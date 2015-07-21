@@ -77,7 +77,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                         id: 'location'
                     },{
                     	xtype: 'panel',
-                    	height: 119,
+                    	height: 80,
                     	border: false
                     }]
                 }]

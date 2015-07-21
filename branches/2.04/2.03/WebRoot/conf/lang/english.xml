@@ -585,7 +585,7 @@
 		<rSoftwarecomponent>Software Component</rSoftwarecomponent>
 		
 		<!-- asset management new screen-->
-		<assetIndentnumber>Indent number</assetIndentnumber>
+		<assetIndentnumber>Ident number</assetIndentnumber>
 		<assetInventoryNumber>Inventory Number</assetInventoryNumber>
 		<assetDescription>Description</assetDescription>
 
@@ -607,7 +607,7 @@
 		<!-- asset management Business Information-->
 		<assetOrdernumber>Order Number</assetOrdernumber>
 		<assetInventory>Inventory Number</assetInventory>
-		<assetPSP>PSP-Elements</assetPSP>
+		<assetPSP>PSP-Element</assetPSP>
 		<assetPsptext>PSP-Text</assetPsptext>
 		<assetCost>Cost center *</assetCost>
 		<assetRequester>Requester *</assetRequester>
@@ -622,7 +622,7 @@
 		<assetSystemPlatformName>System platform name</assetSystemPlatformName>
 		<assetOsname>OS-Name</assetOsname>
 		<assettransient>HW-transient systems</assettransient>
-		<assetWorflowstatustechnical>Worflowstatus technical</assetWorflowstatustechnical>
+		<assetWorflowstatustechnical>Lifecycle status</assetWorflowstatustechnical>
 		<assetGeneral>General Usage</assetGeneral>
 		<assetITSecurity>IT-Security-Relevance</assetITSecurity>
 		<assetComment>Comment</assetComment>
