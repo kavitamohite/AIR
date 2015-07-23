@@ -157,7 +157,8 @@ AIR.AirApplicationManager = function() {
 				pspElementListStore: null,
 				osListStore: null,
 				editorGroupListStore:null,
-				softwareproductListStore:null
+				softwareproductListStore:null,
+				softwaremanufacturerListStore:null
 			};
 			
 			this.storeCount = 0;
