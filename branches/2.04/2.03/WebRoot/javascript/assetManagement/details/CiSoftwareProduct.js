@@ -15,7 +15,7 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 		        xtype: 'filterCombo',
 		        width: 370,
 		        enableKeyEvents: true,
-		        store: AIR.AirStoreManager.getStoreByName('manufactureListStore'),
+		        store: AIR.AirStoreManager.getStoreByName('softwaremanufacturerListStore'),
 		        valueField: 'id',
 		        displayField: 'name',
 				lastQuery: '',
