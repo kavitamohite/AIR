@@ -4525,7 +4525,7 @@ AIR.AirStoreFactory = function() {
  		
  		createSaveAssetStore: function() {
 			var ciSaveAssetRecord = Ext.data.Record.create([
-				'result',				
+				'result','id','identNumber','inventoryNumber'
  			]);
 
  			var ciSaveAssetReader = new Ext.data.XmlReader({
