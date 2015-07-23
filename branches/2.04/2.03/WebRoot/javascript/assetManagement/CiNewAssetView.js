@@ -200,8 +200,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     			tableId: 19
     		};
     		
-    		console.log(params);
-    		
     		historyListStore.addListener('load', function() {
     	    	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
 
@@ -366,9 +364,11 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var cbCountryValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry').getRawValue();
 		var cbRackValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack').getRawValue();
 		var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter').getRawValue();
-		var cbSapAssetValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset').getRawValue();
 		var tfRequesterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getRawValue();
 		
+		var cbOrderNumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumber');
+		var tInventorynumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
+		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
 
 		if (cbManufacturerValue.length > 0
 				&& cbSubCategoryValue.length > 0
@@ -377,18 +377,37 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				&& cbBuildingValue.length > 0 && cbRoomValue.length > 0
 				&& cbRackValue.length > 0
 				&& cbCostcenterValue.length > 0
-				&& cbSapAssetValue.length > 0
 				&& tfRequesterValue.length > 0) {
-			saveBtn.show();
-			cancelBtn.show();
+			var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
+			
+			rolePersonListStore.each(function(item) {
+				var value = item.data.roleName;
+				console.log(value);
+				if(value === 'AIR Asset Manager'){
+					saveBtn.show();
+					cancelBtn.show();
+					
+					cbOrderNumber.enable();
+					tInventorynumber.enable();
+					cbPsp.enable();
+				} else if(value === 'AIR Asset Editor'){
+					saveBtn.show();
+					cancelBtn.show();
+					
+					cbOrderNumber.disable();
+					tInventorynumber.disable();
+					cbPsp.disable();
+				}
+			});
+			
 		} else {
 			saveBtn.hide();
 			cancelBtn.hide();
 		}
 		
 		var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
-    	
-    	if(assetId){
+
+		if(assetId){
     		bHistory.show();
     	} else {
     		bHistory.hide();
@@ -466,6 +485,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	
     	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
     	if (success) {
+    		console.log(records[0].data);
     		var topPanel = this.getComponent('topPanel');
 	    	topPanel.update(records[0].data);
 	    	
