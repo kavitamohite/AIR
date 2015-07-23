@@ -292,7 +292,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
     resetFormFields: function(assetData) {
 
-    	if(!assetData || !assetData.id){
+    	if(!assetData){
     		this.update({});
     	} else {
         	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
@@ -307,8 +307,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         				queryMode: AAM.getComponentType()
         			}
         		});
+        	} else {
+        		this.update({});
         	}
-
     	}
     	
     },
@@ -453,7 +454,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     },
     
     onSaved: function(store, records, options) {
-    	console.log(records[0].data.result);
     	var success = (records[0].data.result == 'true');
     	var yesCallback = function() {
 			this.wizardStarted = false;
@@ -464,9 +464,11 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			yes: yesCallback.createDelegate(this)
 		};
     	
-    	console.log(options);
     	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
     	if (success) {
+    		var topPanel = this.getComponent('topPanel');
+	    	topPanel.update(records[0].data);
+	    	
         	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
 			afterSaveAppWindow.show();
         } else {

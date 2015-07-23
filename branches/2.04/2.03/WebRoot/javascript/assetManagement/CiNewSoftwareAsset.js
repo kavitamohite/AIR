@@ -270,6 +270,8 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
         				queryMode: AAM.getComponentType()
         			}
         		});
+        	} else {
+        		this.update({});
         	}
 
     	}
@@ -367,11 +369,37 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
     	contact.updateParam(assetData);
     	
-    	console.log(assetData);
-        
+    	newAssetstore.on('load', this.onSaved, this);
         newAssetstore.load({
             params: assetData
         });
+        
+    },
+    
+    onSaved: function(store, records, options) {
+    	console.log(records[0].data);
+    	var success = (records[0].data.result == 'true');
+    	var yesCallback = function() {
+			this.wizardStarted = false;
+			this.fireEvent('externalNavigation', this, null, 'clCiNewAssetView');
+		};
+    	
+    	var callbackMap = {
+			yes: yesCallback.createDelegate(this)
+		};
+    	
+    	console.log(options);
+    	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
+    	if (success) {
+    		var topPanel = this.getComponent('topPanel');
+	    	topPanel.update(records[0].data);
+	    	
+    		var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
+			afterSaveAppWindow.show();
+        } else {
+        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR', callbackMap);
+			afterSaveAppWindow.show();
+        }
     }
 
 });
