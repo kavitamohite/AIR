@@ -236,31 +236,31 @@ public class SoftwareComponentHbn {
 		return out;
 	}
 
-	public static Boolean saveSoftwareAsset(
+	public static AssetViewDataDTO saveSoftwareAsset(
 			AssetViewDataDTO dto) {
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
 		tx = session.beginTransaction();
 
-		System.out.println(dto);
 		SoftwareComponent softwareComponent = getSoftwareComponent(dto);
-		System.out.println(softwareComponent);
 		try {
-			session.save(softwareComponent);
+			session.saveOrUpdate(softwareComponent);
 			session.flush();
 		} catch (Exception e) {
 			System.out.println("error---" + e.getMessage());
 			if (tx.isActive()) {
 				tx.rollback();
 			}
-			return false;
+			return null;
 		} finally {
 			if (tx.isActive()) {
 				tx.commit();
 			}
 			session.close();
 		}
-		return true;
+		dto.setId(softwareComponent.getId());
+		dto.setIdentNumber(softwareComponent.getName());
+		return dto;
 	}
 
 	private static SoftwareComponent getSoftwareComponent(AssetViewDataDTO dto) {

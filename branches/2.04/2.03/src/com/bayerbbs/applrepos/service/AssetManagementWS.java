@@ -30,13 +30,18 @@ public class AssetManagementWS {
 
 	public AssetManagementParameterOutput saveAsset(AssetViewDataDTO dto) {
 		AssetManagementParameterOutput output = new AssetManagementParameterOutput();
-		Boolean result = false;
-		if(dto.getIsSoftwareComponent() != null && dto.getIsSoftwareComponent()){
-			result = SoftwareComponentHbn.saveSoftwareAsset(dto);
+		if (dto.getIsSoftwareComponent() != null
+				&& dto.getIsSoftwareComponent()) {
+			dto = SoftwareComponentHbn.saveSoftwareAsset(dto);
 		} else {
-			result = HardwareComponentHbn.saveHardwareAsset(dto);
+			dto = HardwareComponentHbn.saveHardwareAsset(dto);
 		}
-		output.setResult(result);
+		if (dto == null) {
+			output.setResult(false);
+		} else {
+			output.setResult(true);
+			output.setAssetViewDataDTO(new AssetViewDataDTO[] { dto });
+		}
 		return output;
 	}
 }

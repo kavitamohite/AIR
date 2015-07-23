@@ -324,6 +324,7 @@ public class HardwareComponentHbn {
 			criteria.add(Restrictions.eq("id", assetId));
 			values = (List<HardwareComponent>) criteria.list();
 			tx.commit();
+			session.close();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
 				try {
@@ -340,16 +341,19 @@ public class HardwareComponentHbn {
 		return null;
 	}
 	
-	public static Boolean saveHardwareAsset(
+	public static AssetViewDataDTO saveHardwareAsset(
 			AssetViewDataDTO dto) {
-
-		Session session = HibernateUtil.getSession();
-		Transaction tx = null;
-		tx = session.beginTransaction();
 
 		System.out.println(dto);
 		HardwareComponent hardwareComponent = getHardwareComponent(dto);
 		System.out.println(hardwareComponent);
+
+//		ItSystemHbn.saveItSystem(hardwareComponent.getItSystem());
+		
+		Session session = HibernateUtil.getSession();
+		Transaction tx = null;
+		tx = session.beginTransaction();
+
 		try {
 			session.saveOrUpdate(hardwareComponent);
 			session.flush();
@@ -358,14 +362,16 @@ public class HardwareComponentHbn {
 			if (tx.isActive()) {
 				tx.rollback();
 			}
-			return false;
+			return null;
 		} finally {
 			if (tx.isActive()) {
 				tx.commit();
 			}
 			session.close();
 		}
-		return true;
+		dto.setId(hardwareComponent.getId());
+		dto.setIdentNumber(hardwareComponent.getName());
+		return dto;
 	}
 
 	private static HardwareComponent getHardwareComponent(AssetViewDataDTO dto) {
@@ -390,10 +396,12 @@ public class HardwareComponentHbn {
 		} else {
 			hardwareComponent.setName(getIdentNumber());
 		}
-		if(dto.getInventoryNumber() == null && hardwareComponent.getInventoryStockNumber() != null){
+		if(dto.getInventoryNumber().length() == 0 && hardwareComponent.getInventoryStockNumber() == null){
 			hardwareComponent.setInventoryStockNumber("ExtInventory");
+			hardwareComponent.setInventoryP69(null);
 		} else {
 			hardwareComponent.setInventoryP69(dto.getInventoryNumber());
+			hardwareComponent.setInventoryStockNumber(null);
 		}
 
 		//Product
@@ -424,7 +432,27 @@ public class HardwareComponentHbn {
 		hardwareComponent.setCwidVerantw(dto.getCostCenterManagerId());
 		hardwareComponent.setRequester(dto.getRequesterId());
 		hardwareComponent.setHardwareCategory1Id(dto.getSapAssetClassId());
-		
+
+//		if(hardwareComponent.getItSystem() != null){
+//			hardwareComponent.getItSystem().setName(dto.getSystemPlatformName()); 
+//			hardwareComponent.getItSystem().setOsNameId(dto.getOsNameId());
+//		} else if(dto.getSystemPlatformName() != null){
+//			ItSystem itSystem = new ItSystem();
+//			itSystem.setName(dto.getSystemPlatformName());
+//			itSystem.setOsNameId(dto.getOsNameId());
+//			itSystem
+//					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+//			itSystem.setInsertTimestamp(ApplReposTS
+//					.getCurrentTimestamp());
+//			itSystem.setInsertUser(dto.getCwid());
+//			
+//			itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+//			itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+//			itSystem.setUpdateUser(dto.getCwid());
+//		
+//			hardwareComponent.setItSystem(itSystem);
+//		}
+
 		Long itSet = null;
 		String strItSet = ApplReposHbn.getItSetFromCwid(dto.getRequesterId());
 		if (null != strItSet) {
@@ -434,6 +462,7 @@ public class HardwareComponentHbn {
 			itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
 		}
 		hardwareComponent.setItset(itSet);
+//		hardwareComponent.getItSystem().setItset(itSet);
 
 		return hardwareComponent;
 	}
