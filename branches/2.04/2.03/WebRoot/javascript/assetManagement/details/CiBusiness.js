@@ -156,11 +156,19 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 					fontSize : 12
 				}
 			}, {
-				xtype : 'textfield',
+				xtype : 'filterCombo',
 				itemId: 'tOwner',
-				fieldLabel : 'Owner(legal) *',
-				disabled: true,
+				//fieldLabel : 'Owner(legal) *',
+				//disabled: true,
 				width: 370,
+				 enableKeyEvents: true,
+			     store: AIR.AirStoreManager.getStoreByName('legalentityListStore'),
+			      valueField: 'id',
+			      displayField: 'name',
+				  lastQuery: '',
+			      triggerAction: 'all',
+			      mode: 'local',
+			      queryParam: 'id',
 				style : {
 					marginBottom : 10,
 					fontSize : 12
@@ -241,7 +249,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
                     costCenterManager.setValue(value);
                     costCenterManager1.setValue(value);
                     costCenterManagerHidden.setValue(cwid);
-                    tOwner.setValue(value);
+                    //tOwner.setValue(value);
                     tOrganisation.setValue(orgUnit);
                     tOrganisation1.setValue(orgUnit);
             	}
