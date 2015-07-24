@@ -247,6 +247,16 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
             	}
             }
         });
+        
+        console.log( this.getComponent('pCost').getComponent('cbCostcenter').getRawValue());
+        if(this.getComponent('pCost').getComponent('cbCostcenter').getRawValue()=='out-of-scope')
+         {
+        	tOwner.setValue('');
+        	tOrganisation1.setValue('');
+        	costCenterManager1.setValue('');
+        	costCenterManager.setValue('');
+        	tOrganisation.setValue('');
+         }
     },
     
     onSapAssetSelect: function(combo, record, index) {
