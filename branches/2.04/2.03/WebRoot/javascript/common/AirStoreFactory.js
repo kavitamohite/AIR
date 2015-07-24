@@ -4748,7 +4748,37 @@ AIR.AirStoreFactory = function() {
 				});
 				
 				return ciSoftwareproductstore;
+		},
+		
+		createLegalentityListStore: function(){
+
+			var ciLegalentityRecord = Ext.data.Record.create([
+				{ name: 'id', type: 'int' },
+				    'name'				
+				]);
+
+				var ciLegalentityReader = new Ext.data.XmlReader({
+					idProperty: 'id',
+					record: 'return'
+				}, ciLegalentityRecord);
+				
+				var ciLegalentitystore = new Ext.data.XmlStore({
+					autoDestroy: true,
+					autoLoad: false,
+					storeId: 'legalentityListStore',
+					
+					proxy: new Ext.ux.soap.SoapProxy({
+						url: webcontext + '/BusinessAdministrationWSPort',
+						loadMethod: 'findLegalEntityList',
+						timeout: 120000,
+						reader: ciLegalentityReader
+					})
+				});
+				
+				return ciLegalentitystore;
+		
 		}
+		
 
 	};
 }();
