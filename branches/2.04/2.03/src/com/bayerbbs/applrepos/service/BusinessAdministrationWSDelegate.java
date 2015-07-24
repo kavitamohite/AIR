@@ -28,4 +28,8 @@ public class BusinessAdministrationWSDelegate {
 	public KeyValueEnDTO[] findSapAssetSoftwareList(Long id) {
 		return businessAdministrationWS.findSapAssetSoftwareList(id);
 	}
+	
+	public KeyValueDTO[] findLegalEntityList(Long id) {
+		return businessAdministrationWS.findLegalEntityList(id);
+	}
 }
