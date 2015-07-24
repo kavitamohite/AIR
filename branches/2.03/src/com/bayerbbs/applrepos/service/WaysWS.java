@@ -6,6 +6,7 @@ package com.bayerbbs.applrepos.service;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Ways;
 import com.bayerbbs.applrepos.dto.PathwayDTO;
+import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 import com.bayerbbs.applrepos.hibernate.PathwayHbn;
 
 /**
@@ -20,12 +21,28 @@ public class WaysWS {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 		if(null != input &&(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) ){
 			PathwayDTO pathwayDTO = getPathwayDTOFromFromEditInput(input);
+			
+			String strItSet = ApplReposHbn.getItSetFromCwid(input.getCwid());
+			if (null != strItSet) {
+				pathwayDTO.setItset(Long.valueOf(strItSet));
+			}else{
+				pathwayDTO.setItset(AirKonstanten.IT_SET_DEFAULT);
+			}
 			output = PathwayHbn.createPathway(input.getCwid(), pathwayDTO, true);
 			if(AirKonstanten.RESULT_OK.equals(output.getResult())){
 				Ways way = PathwayHbn.findByName(input.getName());
 				output.setCiId(way.getId());
 			}
 			
+		}
+		return output;
+	}
+	
+	public CiEntityEditParameterOutput saveWays(BaseEditParameterInput input){
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		if(null != input &&(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))){
+			PathwayDTO pathwayDTO = getPathwayDTOFromFromEditInput(input);
+			output = PathwayHbn.saveWays(pathwayDTO,input.getCwid());
 		}
 		return output;
 	}

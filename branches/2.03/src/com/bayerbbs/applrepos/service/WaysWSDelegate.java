@@ -14,5 +14,9 @@ public class WaysWSDelegate {
 	
 	public CiEntityEditParameterOutput createWays(BaseEditParameterInput editInput) {
 		return pathwayWS.createWays(editInput);
-	}	
+	}
+	
+	public CiEntityEditParameterOutput saveWays(BaseEditParameterInput input){
+		return pathwayWS.saveWays(input);
+	}
 }

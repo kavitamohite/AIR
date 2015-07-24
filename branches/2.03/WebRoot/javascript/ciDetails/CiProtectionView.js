@@ -315,7 +315,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 			this.getComponent('protectionConfidentiality').setVisible(false);
 			this.getComponent('protectionConfidentialityDescription').setVisible(false);
 		}	
-		//Added by vandana
+/*		//Added by vandana
 		if(data.tableId == AC.TABLE_ID_PATHWAY){
 			this.getComponent('protectionAvailability').setVisible(false);
 			this.getComponent('protectionAvailabilityDescription').setVisible(false);
@@ -328,7 +328,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 			this.getComponent('protectionConfidentialityDescription').setVisible(false);
 		}	
 		//Ended by vandana
-		this.doLayout();
+*/		this.doLayout();
 	},
 	
 	updateAccessMode: function(data) {

@@ -807,7 +807,9 @@ AIR.AirApplicationManager = function() {
 				t === AC.TABLE_ID_BUILDING_AREA ||
 				t === AC.TABLE_ID_BUILDING ||
 				t === AC.TABLE_ID_TERRAIN ||
-				t === AC.TABLE_ID_SITE;
+				t === AC.TABLE_ID_SITE ||
+				t === AC.TABLE_ID_PATHWAY ||
+				t === AC.TABLE_ID_FUNCTION;
 			
 			return is;
 		},

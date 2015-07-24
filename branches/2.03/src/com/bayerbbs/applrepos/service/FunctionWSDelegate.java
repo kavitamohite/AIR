@@ -14,5 +14,9 @@ public class FunctionWSDelegate {
 	
 	public CiEntityEditParameterOutput createFunction(BaseEditParameterInput editInput) {
 		return functionWS.createFunction(editInput);
-	}	
+	}
+	
+	public CiEntityEditParameterOutput saveFunction(BaseEditParameterInput editInput){
+		return functionWS.saveFunction(editInput);
+	}
 }

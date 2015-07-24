@@ -6,6 +6,8 @@ package com.bayerbbs.applrepos.service;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Function;
 import com.bayerbbs.applrepos.domain.FunctionDTO;
+import com.bayerbbs.applrepos.dto.PathwayDTO;
+import com.bayerbbs.applrepos.hibernate.PathwayHbn;
 import com.bayerbbs.applrepos.hibernate.functionHbn;
 
 /**
@@ -28,6 +30,16 @@ public class FunctionWS {
 			
 		}
 		return output;
+	}
+	
+	public CiEntityEditParameterOutput saveFunction(BaseEditParameterInput input){
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		if(null != input &&(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))){
+			FunctionDTO functionDTO = getFunctionDTOFromFromEditInput(input);
+			output = functionHbn.saveFunction(functionDTO,input.getCwid());
+		}
+		return output;
+		
 	}
 	
 	protected FunctionDTO getFunctionDTOFromFromEditInput(BaseEditParameterInput input){
@@ -103,5 +115,4 @@ public class FunctionWS {
 		return functionDTO;
 		
 	}
-
 }
