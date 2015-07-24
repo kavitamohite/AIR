@@ -613,7 +613,7 @@
 		<assetRequester>Requester *</assetRequester>
 		<assetCostManager>Cost Center Manager *</assetCostManager>
 	    <assetOrganisation>Organizational Unit</assetOrganisation>
-	    <assetOwner>Owner(legal) *</assetOwner>
+	    <assetOwner>Legal Entity</assetOwner>
 	    <assetSapClass>SAP Asset Class</assetSapClass>
 		
 		<!-- asset management Technics-->
