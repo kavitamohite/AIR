@@ -5,6 +5,7 @@ import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.KeyValueEnDTO;
 import com.bayerbbs.applrepos.hibernate.CostcenterHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
+import com.bayerbbs.applrepos.hibernate.ManufacturerHbn;
 import com.bayerbbs.applrepos.hibernate.PspElementHbn;
 import com.bayerbbs.applrepos.hibernate.SapAssetHbn;
 
@@ -27,6 +28,10 @@ public class BusinessAdministrationWS {
 	
 	public KeyValueEnDTO[] findSapAssetSoftwareList(Long id) {
 		return SapAssetHbn.getSapAssetSoftwareList();
+	}
+	
+	public KeyValueDTO[] findLegalEntityList(Long id) {
+		return ManufacturerHbn.getLegalEntity(id);
 	}
 	
 }
