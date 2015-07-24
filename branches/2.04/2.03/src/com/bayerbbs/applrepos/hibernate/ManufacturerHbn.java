@@ -87,14 +87,14 @@ public class ManufacturerHbn  extends BaseHbn{
 		Collections.sort(data);
 		return data.toArray(new KeyValueDTO[0]);
 	}
-	public static KeyValueDTO[] getSoftwareProductById(Long partnerId) {
+	public static KeyValueDTO[] getLegalEntity(Long partnerId) {
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
 		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
 			@SuppressWarnings("unchecked")
-			List<Partner> values = session.createQuery("from Partner").list();
+			List<Partner> values = session.createQuery("from Partner p where p.number is null and p.deleteTimestamp is null").list();
 
 			data = getDTOManufacturerList(values);
 
