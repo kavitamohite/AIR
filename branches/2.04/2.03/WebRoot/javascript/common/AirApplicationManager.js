@@ -158,7 +158,8 @@ AIR.AirApplicationManager = function() {
 				osListStore: null,
 				editorGroupListStore:null,
 				softwareproductListStore:null,
-				softwaremanufacturerListStore:null
+				softwaremanufacturerListStore:null,
+				legalentityListStore:null
 			};
 			
 			this.storeCount = 0;
