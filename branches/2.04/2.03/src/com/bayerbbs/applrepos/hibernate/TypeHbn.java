@@ -9,9 +9,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.bayerbbs.applrepos.domain.HardwareCategory2;
 import com.bayerbbs.applrepos.domain.HardwareCategory3;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.dto.TypeDTO;
 
 public class TypeHbn  extends BaseHbn{
 	
@@ -31,7 +31,7 @@ public class TypeHbn  extends BaseHbn{
 	}
 
 	@SuppressWarnings("unchecked")
-	public static KeyValueDTO[] getTypeById(Long partnerId, Long kategory2Id) {
+	public static KeyValueDTO[] getTypeById(TypeDTO type) {
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
 
 		Transaction tx = null;
@@ -40,8 +40,8 @@ public class TypeHbn  extends BaseHbn{
 			tx = session.beginTransaction();
 
 			Query query = session.getNamedQuery("findCategorybyPartnerIdandkategoryId");
-			query.setParameter("partnerId", partnerId);
-			query.setParameter("kategory2Id", kategory2Id);
+			query.setParameter("partnerId", type.getPartnerId());
+			query.setParameter("kategory2Id", type.getKategory2Id());
 			List<HardwareCategory3> values = query.list();
 			data = getDTOTypeList(values);
 

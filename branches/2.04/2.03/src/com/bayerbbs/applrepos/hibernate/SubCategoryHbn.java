@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.domain.HardwareCategory2;
-import com.bayerbbs.applrepos.domain.Partner;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 
 
@@ -29,7 +28,7 @@ public class SubCategoryHbn extends BaseHbn {
 	}
 	
 	
-	public static KeyValueDTO[] getSubCategoryById(Long category2Id) {
+	public static KeyValueDTO[] findSubCategoryList() {
 
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
 
