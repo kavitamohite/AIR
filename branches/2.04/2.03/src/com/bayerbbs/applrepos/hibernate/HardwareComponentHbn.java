@@ -267,8 +267,9 @@ public class HardwareComponentHbn {
 			dto.setRequesterId(hwComp.getRequester());
 			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(hwComp
 					.getRequester());
-			dto.setRequester(persons.get(0).getDisplayNameFull());
-			
+			if(persons.size() > 0){
+				dto.setRequester(persons.get(0).getDisplayNameFull());
+			}
 		}
 //		if(hwComp.getPartner() != null){
 //			dto.setOwner(hwComp.getPartner().getOwner());
@@ -429,6 +430,7 @@ public class HardwareComponentHbn {
 		hardwareComponent.setBestSellText(dto.getOrderNumber());
 		hardwareComponent.setAmKommision(dto.getPspElement());
 		hardwareComponent.setKontoId(dto.getCostCenterId());
+		hardwareComponent.setAssetId(dto.getHardwareTransientSystem());
 		hardwareComponent.setCwidVerantw(dto.getCostCenterManagerId());
 		hardwareComponent.setRequester(dto.getRequesterId());
 		hardwareComponent.setHardwareCategory1Id(dto.getSapAssetClassId());
