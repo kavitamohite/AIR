@@ -123,7 +123,9 @@ public class LDAPAuthCeye {
 		Hashtable<String, String> authEnv = new Hashtable<String, String>(11);
 
 		int returncode = -1;
-
+		if (password == null || "".equals(password) || username == null || "".equals(username))
+			return -9;
+		
 		// user search
 		String userDN = null;
 		try {
