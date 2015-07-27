@@ -12,17 +12,17 @@ public class ProductWSDelegate {
 	
 	public KeyValueDTO[] findManufacturerList(
 			DefaultDataInput input) {
-		return productWS.findManufacturerList(input.getId());
+		return productWS.findManufacturerList();
 	}
 
 	public KeyValueDTO[] findSubCategoryList(
 			DefaultDataInput input) {
-		return productWS.findSubCategoryList(input.getId());
+		return productWS.findSubCategoryList();
 	}
 	
 	public KeyValueDTO[] findTypeList(
 			TypeDTO input) {
-		return productWS.findTypeList(input.getPartnerId(), input.getKategory2Id());
+		return productWS.findTypeList(input);
 	}
 	
 	public KeyValueDTO[] findModelList(
