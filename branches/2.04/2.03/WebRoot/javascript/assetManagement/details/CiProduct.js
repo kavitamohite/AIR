@@ -54,7 +54,6 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 				lastQuery: '',
 		        minChars: 0,
 		        triggerAction: 'all',
-		        mode: 'local',
 				style : {
 					marginBottom : 10
 				}

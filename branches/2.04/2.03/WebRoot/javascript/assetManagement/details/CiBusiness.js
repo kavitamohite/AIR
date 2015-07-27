@@ -201,15 +201,12 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 
         var cbPsp = this.getComponent('cbPsp');
         cbPsp.on('select', this.onPSPSelect, this);
-//        cbPsp.on('keyup', this.onFieldKeyUp, this);
         
         var cbCostcenter = this.getComponent('pCost').getComponent('cbCostcenter');
         cbCostcenter.on('select', this.onCostCenterSelect, this);
-//        cbCostcenter.on('keyup', this.onFieldKeyUp, this);
         
         var cbSapAsset = this.getComponent('cbSapAsset');
         cbSapAsset.on('select', this.onSapAssetSelect, this);
-//        cbSapAsset.on('keyup', this.onFieldKeyUp, this);
 
 	}, 
 	
@@ -263,6 +260,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         	tOrganisation1.setValue('');
         	costCenterManager1.setValue('');
         	costCenterManager.setValue('');
+        	costCenterManagerHidden.setValue('');
         	tOrganisation.setValue('');
          }
     },
