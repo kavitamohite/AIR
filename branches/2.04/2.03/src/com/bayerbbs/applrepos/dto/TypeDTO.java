@@ -5,9 +5,8 @@ public class TypeDTO {
 	private String category3Name;
 	private Long partnerId;
 	private Long kategory2Id;
+	private String query;
 
-	
-	
 	/**
 	 * @return the category3Id
 	 */
@@ -16,7 +15,8 @@ public class TypeDTO {
 	}
 
 	/**
-	 * @param category3Id the category3Id to set
+	 * @param category3Id
+	 *            the category3Id to set
 	 */
 	public void setCategory3Id(Long category3Id) {
 		this.category3Id = category3Id;
@@ -38,7 +38,8 @@ public class TypeDTO {
 	}
 
 	/**
-	 * @param partnerId the partnerId to set
+	 * @param partnerId
+	 *            the partnerId to set
 	 */
 	public void setPartnerId(Long partnerId) {
 		this.partnerId = partnerId;
@@ -52,12 +53,19 @@ public class TypeDTO {
 	}
 
 	/**
-	 * @param kategory2Id the kategory2Id to set
+	 * @param kategory2Id
+	 *            the kategory2Id to set
 	 */
 	public void setKategory2Id(Long kategory2Id) {
 		this.kategory2Id = kategory2Id;
 	}
-	
-	
+
+	public String getQuery() {
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
+	}
 
 }
