@@ -110,7 +110,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					xtype : 'button',
 					itemId : 'cancelBtn',
 					text : 'Cancel',
-					hidden: true,
 					style : {
 						fontSize : 12,
 						margin : '8 10 0 0',
@@ -146,9 +145,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         });
 
         AIR.CiNewAssetView.superclass.initComponent.call(this);
+        this.addEvents('externalNavigation');
 
         var bReset = this.getComponent('buttonPanel').getComponent('bReset');
         bReset.on('click', this.resetFormFields, this);
+
+        var cancelBtn = this.getComponent('buttonPanel').getComponent('cancelBtn');
+        cancelBtn.on('click', this.goToAssetManagement, this);
         
     	var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
     	cbManufacturer.on('select', this.onFieldKeyUp, this);
@@ -287,6 +290,10 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     		
     	}
     },
+    
+    goToAssetManagement: function(button, event) {
+		this.fireEvent('externalNavigation', this, button, 'clAssetManagement');
+	},
 
     resetFormFields: function(assetData) {
 
@@ -351,7 +358,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	
 	enableAssetButtons: function() {	
 		var saveBtn = this.getComponent('buttonPanel').getComponent('saveBtn');
-		var cancelBtn = this.getComponent('buttonPanel').getComponent('cancelBtn');
 		var bHistory = this.getComponent('buttonPanel').getComponent('bHistory');
 		
 		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getRawValue();
@@ -385,14 +391,12 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				console.log(value);
 				if(value === 'AIR Asset Manager'){
 					saveBtn.show();
-					cancelBtn.show();
 					
 					cbOrderNumber.enable();
 					tInventorynumber.enable();
 					cbPsp.enable();
 				} else if(value === 'AIR Asset Editor'){
 					saveBtn.show();
-					cancelBtn.show();
 					
 					cbOrderNumber.disable();
 					tInventorynumber.disable();
@@ -402,7 +406,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			
 		} else {
 			saveBtn.hide();
-			cancelBtn.hide();
 		}
 		
 		var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();

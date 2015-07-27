@@ -121,11 +121,12 @@ AIR.CiAssetResultGrid = Ext.extend(Ext.grid.GridPanel, {
                 this.setHeight(305);
                 break;
             case 20:
-                this.setHeight(500);
-                break;
             case 50:
-            case 100:
-                this.setHeight(1145);
+			case 100:
+			case 500:
+			case 1000:
+			case 10000:	
+                this.setHeight(500);
                 break;
             default:
                 break;

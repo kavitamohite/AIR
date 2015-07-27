@@ -57,7 +57,6 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
         var assetSearch = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch');
         assetSearch.getComponent('clAssetSearch').on('click', this.onSearch, this);
         assetSearch.getComponent('tfAssetSearch').on('specialkey', this.onSearchEnter, this);
-        assetSearch.getComponent('bAssetSearchReset').on('click', this.onReset, this);
 
         var ciSearchResultView = this.getComponent('ciAssetSearchResultView');
         ciSearchResultView.getComponent('tpCiAssetSearchResultTables').on('tabchange', this.onTabChange, this);
