@@ -154,7 +154,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         cancelBtn.on('click', this.goToAssetManagement, this);
         
     	var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
-    	cbManufacturer.on('select', this.onFieldKeyUp, this);
+    	cbManufacturer.on('change', this.onFieldKeyUp, this);
         
         var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
         cbSubCategory.on('select', this.onFieldKeyUp, this);
@@ -348,11 +348,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	technics.updateLabels(labels);
     },
 
-    onFieldKeyUp: function(textfield, event) {
-		this.onCiAssetChange();
-	},
-	
-	onCiAssetChange:function() {		
+    onFieldKeyUp: function(field, newValue, oldValue) {
 		this.enableAssetButtons();
 	},
 	
@@ -388,7 +384,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			
 			rolePersonListStore.each(function(item) {
 				var value = item.data.roleName;
-				console.log(value);
 				if(value === 'AIR Asset Manager'){
 					saveBtn.show();
 					
@@ -466,8 +461,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
     	technics.updateParam(assetData);
         
-    	console.log(assetData);
-        
     	newAssetstore.on('load', this.onSaved, this);
         newAssetstore.load({
             params: assetData
@@ -488,7 +481,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	
     	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
     	if (success) {
-    		console.log(records[0].data);
     		var topPanel = this.getComponent('topPanel');
 	    	topPanel.update(records[0].data);
 	    	

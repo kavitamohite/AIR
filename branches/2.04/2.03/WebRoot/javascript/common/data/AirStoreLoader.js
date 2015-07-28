@@ -62,7 +62,6 @@ AIR.AirStoreLoader = Ext.extend(Ext.util.Observable, {
     },
     
     onLoad: function(store, records, options) {
-    	console.log(store);
     	this.fireEvent('storeLoaded', store, records, options);
         
         if(this.loadCount == this.storeCounter) {

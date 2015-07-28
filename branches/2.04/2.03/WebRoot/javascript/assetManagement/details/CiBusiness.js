@@ -136,6 +136,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 			}, {
 				xtype : 'textfield',
 				itemId: 'tCostCenterMgr',
+				disabled: true,
 				fieldLabel : 'Cost Center Manager',
 				width: 370,
 				style : {
@@ -158,17 +159,15 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 			}, {
 				xtype : 'filterCombo',
 				itemId: 'tOwner',
-				//fieldLabel : 'Owner(legal) *',
-				//disabled: true,
 				width: 370,
-				 enableKeyEvents: true,
-			     store: AIR.AirStoreManager.getStoreByName('legalentityListStore'),
-			      valueField: 'id',
-			      displayField: 'name',
-				  lastQuery: '',
-			      triggerAction: 'all',
-			      mode: 'local',
-			      queryParam: 'id',
+				enableKeyEvents: true,
+				store: AIR.AirStoreManager.getStoreByName('legalentityListStore'),
+				valueField: 'id',
+				displayField: 'name',
+				lastQuery: '',
+				triggerAction: 'all',
+				mode: 'local',
+				queryParam: 'id',
 				style : {
 					marginBottom : 10,
 					fontSize : 12
@@ -253,7 +252,6 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
             }
         });
         
-        console.log( this.getComponent('pCost').getComponent('cbCostcenter').getRawValue());
         if(this.getComponent('pCost').getComponent('cbCostcenter').getRawValue()=='out-of-scope')
          {
         	tOwner.setValue('');

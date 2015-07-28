@@ -168,12 +168,10 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         var tSystemPlatform = this.getComponent('tSystemPlatform');
         assetData.systemPlatformName = tSystemPlatform.getValue();
 
-         var tOsName = this.getComponent('tOsName');
+        var tOsName = this.getComponent('tOsName');
         assetData.osName = tOsName.getRawValue();
         assetData.osNameId = tOsName.getValue();
         
-        console.log(assetData);
- 
         var tTransient = this.getComponent('tTransient');
         assetData.hardwareTransientSystem = tTransient.getValue();
 
