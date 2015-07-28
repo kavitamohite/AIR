@@ -323,6 +323,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         assetData.pspText = tPsptext.getValue();
 
         var cbCostcenter = this.getComponent('pCost').getComponent('cbCostcenter');
+        assetData.costCenter = cbCostcenter.getRawValue();
         assetData.costCenterId = cbCostcenter.getValue();
 
         var tfRequester = this.getComponent('pRequester').getComponent('tfRequester');
@@ -341,6 +342,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         assetData.organizationalunit = tOrganisation.getValue();
 
         var tOwner = this.getComponent('tOwner');
+        assetData.legal = tOwner.getRawValue();
         assetData.owner = tOwner.getValue();
 
         var cbSapAsset = this.getComponent('cbSapAsset');
@@ -358,7 +360,6 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
     	Util.updateFieldLabel(this.getComponent('tOrganisation'), labels.assetOrganisation);  
     	Util.updateFieldLabel(this.getComponent('tOwner'), labels.assetOwner);  
     	Util.updateFieldLabel(this.getComponent('cbSapAsset'), labels.assetSapClass);  
-    	
     	Util.updateLabel(this.getComponent('pCost').getComponent('lcost'), labels.assetCost);  
     	Util.updateLabel(this.getComponent('pRequester').getComponent('labeltfRequester'), labels.assetRequester); 
 	}

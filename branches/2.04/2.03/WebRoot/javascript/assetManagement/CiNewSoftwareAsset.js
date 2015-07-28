@@ -324,14 +324,14 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 				if(value === 'AIR Asset Manager'){
 					saveBtn.show();
 					
-					cbOrderNumber.enable();
-					tInventorynumber.enable();
+					cbOrderNumber.setReadOnly(false);
+					tInventorynumber.setReadOnly(false);
 					cbPsp.enable();
 				} else if(value === 'AIR Asset Editor'){
 					saveBtn.show();
 					
-					cbOrderNumber.disable();
-					tInventorynumber.disable();
+					cbOrderNumber.setReadOnly(true);
+					tInventorynumber.setReadOnly(true);;
 					cbPsp.disable();
 				}
 			});

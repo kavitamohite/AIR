@@ -182,9 +182,11 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         assetData.hardwareTransientSystem = tTransient.getValue();
 
         var cbWorkflowTechnical = this.getComponent('cbWorkflowTechnical');
+        assetData.workflowStatus = cbWorkflowTechnical.getRawValue();
         assetData.workflowStatusId = cbWorkflowTechnical.getValue();
 
         var cbGeneralUsage = this.getComponent('cbGeneralUsage');
+        assetData.generalUsage = cbGeneralUsage.getRawValue();
         assetData.generalUsageId = cbGeneralUsage.getValue();
 
         var rbItSecurity = this.getComponent('rbItSecurity');

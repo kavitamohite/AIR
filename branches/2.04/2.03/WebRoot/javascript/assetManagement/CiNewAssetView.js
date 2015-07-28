@@ -167,11 +167,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         
         var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
         cbCostcenter.on('select', this.onFieldKeyUp, this);
+        cbCostcenter.on('change', this.onFieldKeyUp, this);
            
         var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
         cbSapAsset.on('select', this.onFieldKeyUp, this);
          
         var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
+        tfRequester.on('change', this.onFieldKeyUp, this);
         tfRequester.on('select', this.onFieldKeyUp, this);
         
         var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
@@ -356,16 +358,16 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var saveBtn = this.getComponent('buttonPanel').getComponent('saveBtn');
 		var bHistory = this.getComponent('buttonPanel').getComponent('bHistory');
 		
-		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getRawValue();
-		var cbSubCategoryValue=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
-		var cbTypeValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getRawValue();
-		var cbModelValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel').getRawValue();
-		var cbRoomValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom').getRawValue();
-		var cbBuildingValue =this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding').getRawValue();
-		var cbSiteValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite').getRawValue();
-		var cbCountryValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry').getRawValue();
-		var cbRackValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack').getRawValue();
-		var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter').getRawValue();
+		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
+		var cbSubCategoryValue=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getValue();
+		var cbTypeValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getValue();
+		var cbModelValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel').getValue();
+		var cbRoomValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom').getValue();
+		var cbBuildingValue =this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding').getValue();
+		var cbSiteValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite').getValue();
+		var cbCountryValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry').getValue();
+		var cbRackValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack').getValue();
+		var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter').getValue();
 		var tfRequesterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getRawValue();
 		
 		var cbOrderNumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumber');
@@ -387,14 +389,14 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				if(value === 'AIR Asset Manager'){
 					saveBtn.show();
 					
-					cbOrderNumber.enable();
-					tInventorynumber.enable();
+					cbOrderNumber.setReadOnly(false);
+					tInventorynumber.setReadOnly(false);
 					cbPsp.enable();
 				} else if(value === 'AIR Asset Editor'){
 					saveBtn.show();
 					
-					cbOrderNumber.disable();
-					tInventorynumber.disable();
+					cbOrderNumber.setReadOnly(true);
+					tInventorynumber.setReadOnly(true);;
 					cbPsp.disable();
 				}
 			});
@@ -439,12 +441,23 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	AAM.getMask(AC.MASK_TYPE_LOAD).show();
     	
         newAssetstore = AIR.AirStoreFactory.createSaveAssetStore();
-        var assetData = {};
+        var assetData = this.getUpdateParam();
+        
+    	newAssetstore.on('load', this.onSaved, this);
+        newAssetstore.load({
+            params: assetData
+        });
+        
+    },
+    
+    getUpdateParam: function(){
+    	
+    	var assetData = {};
         
         assetData.cwid = AIR.AirApplicationManager.getCwid();
         
         var topPanel = this.getComponent('topPanel');
-        assetData = topPanel.updateParam(assetData);
+        topPanel.updateParam(assetData);
     	
     	var product = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
     	product.updateParam(assetData);
@@ -460,12 +473,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	
     	var technics = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
     	technics.updateParam(assetData);
-        
-    	newAssetstore.on('load', this.onSaved, this);
-        newAssetstore.load({
-            params: assetData
-        });
-        
+    	
+    	return assetData;
     },
     
     onSaved: function(store, records, options) {
@@ -486,10 +495,43 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	    	
         	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
 			afterSaveAppWindow.show();
+			
+			this.sendEmail();
         } else {
         	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR', callbackMap);
 			afterSaveAppWindow.show();
         }
+    },
+    
+    sendEmail: function(){
+    	var assetData = this.getUpdateParam();
+    	
+    	var mailText = mail_blank_text_hardware_asset.replace('<username>', AAM.getUserName());
+    	mailText = mailText.replace('<manufacturer>',assetData.manufacturer);
+    	mailText = mailText.replace('<subcategory>',assetData.subcategory);
+    	mailText = mailText.replace('<type>',assetData.type);
+    	mailText = mailText.replace('<model>',assetData.model);
+    	mailText = mailText.replace('<sapDescription>',assetData.sapDescription);
+
+    	mailText = mailText.replace('<orderNumber>',assetData.orderNumber);
+    	mailText = mailText.replace('<costCenter>',assetData.costCenter);
+    	mailText = mailText.replace('<legalEntity>',assetData.legal);
+
+    	mailText = mailText.replace('<technicalNumber>',assetData.technicalNumber);
+    	mailText = mailText.replace('<technicalMaster>',assetData.technicalMaster);
+    	mailText = mailText.replace('<generalUsage>',assetData.generalUsage);
+    	mailText = mailText.replace('<lifecycleStatus>',assetData.workflowStatus);
+
+    	mailText = mailText.replace('<country>',assetData.country);
+    	mailText = mailText.replace('<site>',assetData.site);
+    	mailText = mailText.replace('<building>',assetData.building);
+    	mailText = mailText.replace('<room>',assetData.room);
+    	mailText = mailText.replace('<rack>',assetData.rack);
+
+    	mailText = mailText.replace('<costCenterManager>',assetData.costCenterManager);
+    		
+    	var email = 'mailto:iao-bestellwesen@bayer.com&subject='+mail_subject_hardware_asset+'&body='+mailText;
+    	window.location.href = email;
     }
 
 });
