@@ -258,11 +258,13 @@ public class HardwareComponentHbn {
 				dto.setCostCenterManagerId(hwComp.getCwidVerantw());
 				List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(hwComp
 						.getCwidVerantw());
-				dto.setCostCenterManager(persons.get(0).getDisplayNameFull());
-				dto.setOwner(persons.get(0).getDisplayNameFull());
-				dto.setOrganizationalunit(persons.get(0).getOrgUnit());
+				if(persons.size() > 0){
+					dto.setCostCenterManager(persons.get(0).getDisplayNameFull());
+					dto.setOwner(persons.get(0).getDisplayNameFull());
+				}
 			}
 		}
+		dto.setOrganizationalunit(hwComp.getSubResponsible());
 		if(hwComp.getRequester() != null){
 			dto.setRequesterId(hwComp.getRequester());
 			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(hwComp
@@ -434,7 +436,7 @@ public class HardwareComponentHbn {
 		hardwareComponent.setCwidVerantw(dto.getCostCenterManagerId());
 		hardwareComponent.setRequester(dto.getRequesterId());
 		hardwareComponent.setHardwareCategory1Id(dto.getSapAssetClassId());
-
+		hardwareComponent.setSubResponsible(dto.getOrganizationalunit());
 //		if(hardwareComponent.getItSystem() != null){
 //			hardwareComponent.getItSystem().setName(dto.getSystemPlatformName()); 
 //			hardwareComponent.getItSystem().setOsNameId(dto.getOsNameId());
