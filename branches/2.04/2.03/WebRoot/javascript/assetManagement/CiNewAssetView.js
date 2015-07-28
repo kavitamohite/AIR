@@ -518,7 +518,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	mailText = mailText.replace('<legalEntity>',assetData.legal);
 
     	mailText = mailText.replace('<technicalNumber>',assetData.technicalNumber);
-    	mailText = mailText.replace('<technicalMaster>',assetData.technicalMaster);
+    	mailText = mailText.replace('<technicaMaster>',assetData.technicalMaster);
     	mailText = mailText.replace('<generalUsage>',assetData.generalUsage);
     	mailText = mailText.replace('<lifecycleStatus>',assetData.workflowStatus);
 
