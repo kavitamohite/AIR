@@ -218,29 +218,32 @@ public class HardwareComponentHbn {
 		dto.setItSecurityRelevance(hwComp.getRelevantItsec());
 		dto.setComment(hwComp.getNote1());
 
-		//Location
-		Long countryId = hwComp.getSchrank().getRoom().getBuildingArea()
-				.getBuilding().getTerrain().getStandort().getLandId();
-		Standort site = hwComp.getSchrank().getRoom().getBuildingArea()
-				.getBuilding().getTerrain().getStandort();
-		Building building = hwComp.getSchrank().getRoom().getBuildingArea()
-				.getBuilding();
-		Room room = hwComp.getSchrank().getRoom();
 		Schrank rack = hwComp.getSchrank();
 
-		dto.setCountryId(countryId);
+		if(rack != null){
+			//Location
+			
+			Room room = rack.getRoom();
+			Building building = room.getBuildingArea().getBuilding();
+			Standort site = building.getTerrain().getStandort();
+			
+			Long countryId = site.getLandId();
+			
+			dto.setCountryId(countryId);
 
-		dto.setSiteId(site.getId());
-		dto.setSite(site.getName());
+			dto.setSiteId(site.getId());
+			dto.setSite(site.getName());
 
-		dto.setBuildingId(building.getId());
-		dto.setBuilding(building.getName());
+			dto.setBuildingId(building.getId());
+			dto.setBuilding(building.getName());
 
-		dto.setRoomId(room.getId());
-		dto.setRoom(room.getName());
+			dto.setRoomId(room.getId());
+			dto.setRoom(room.getName());
 
-		dto.setRackId(rack.getId());
-		dto.setRack(rack.getName());
+			dto.setRackId(rack.getId());
+			dto.setRack(rack.getName());
+
+		}
 
 		// Business Administration
 		dto.setOrderNumber(hwComp.getBestSellText());
