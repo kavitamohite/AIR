@@ -14,7 +14,7 @@ AIR.CiTopPanel = Ext.extend(AIR.AirView, {
 			items : [ {
 				xtype : 'textfield',
 				itemId: 'identNumber',
-				disabled : true,
+				readOnly : true,
 				fieldLabel : 'Indent number',
 				width : 450,
 				style : {
@@ -24,7 +24,7 @@ AIR.CiTopPanel = Ext.extend(AIR.AirView, {
 			}, {
 				xtype : 'textfield',
 				itemId: 'tinventory',
-				disabled : true,
+				readOnly : true,
 				fieldLabel : 'Inventory Number',
 				width : 450,
 				style : {

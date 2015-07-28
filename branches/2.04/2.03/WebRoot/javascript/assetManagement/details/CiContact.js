@@ -14,7 +14,7 @@ AIR.CiContact = Ext.extend(Ext.form.FieldSet, {
 				xtype : 'textfield',
 				itemId: 'tCostcentermanager',
 				fieldLabel : 'Cost center manager',
-				disabled: true,
+				readOnly: true,
 				width: 370,
 				style : {
 					marginBottom : 10
@@ -23,7 +23,7 @@ AIR.CiContact = Ext.extend(Ext.form.FieldSet, {
 				xtype : 'textfield',
 				itemId: 'tOrganizationalunit',
 				fieldLabel : 'Organizational unit',
-				disabled: true,
+				readOnly: true,
 				width: 370,
 				style : {
 					marginBottom : 10

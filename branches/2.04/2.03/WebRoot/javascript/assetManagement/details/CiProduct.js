@@ -132,7 +132,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 	
 	onManufacturerSelect: function(combo, record, index) {
         var value = record.get('id');
-        
+        Util.log(value);
         var partnerIdValue = this.getComponent('cbManufacturer').getValue();
         var kategoryIdValue = this.getComponent('cbSubCategory').getValue();
         

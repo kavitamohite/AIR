@@ -500,6 +500,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				clSoftwareBusinessInformation.getComponent('cbSapAsset').store = AIR.AirStoreManager.getStoreByName('sapAssetSoftwareListStore');
 
 				AAM.setComponentType("software");
+				ciNewSoftwareAsset.resetFormFields(null);
 				
 				var verwerfenCallback = function() {
 					if(options && options.callback)

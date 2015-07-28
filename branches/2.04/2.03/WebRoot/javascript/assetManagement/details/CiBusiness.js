@@ -45,7 +45,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 			},{
 				xtype : 'textfield',
 				itemId: 'tPsptext',
-				disabled: true,
+				readOnly: true,
 				fieldLabel : 'PSP-Text',
 				width: 370,
 				style : {
@@ -120,7 +120,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 			        itemId: 'tfRequester',
 			        label: 'Requester',
 			        width: 325,
-					lazyInit : false
+			        readOnly: true
 			    },{
 					xtype: 'hidden',
 			        itemId: 'tfRequesterHidden'
@@ -136,7 +136,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 			}, {
 				xtype : 'textfield',
 				itemId: 'tCostCenterMgr',
-				disabled: true,
+				readOnly: true,
 				fieldLabel : 'Cost Center Manager',
 				width: 370,
 				style : {
@@ -150,7 +150,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 				xtype : 'textfield',
 				itemId: 'tOrganisation',
 				fieldLabel : 'Organizational Unit',
-				disabled: true,
+				readOnly: true,
 				width: 370,
 				style : {
 					marginBottom : 10,

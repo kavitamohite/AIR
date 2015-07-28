@@ -60,11 +60,16 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 					fontSize : 12
 				}
 			}, {
-				xtype : 'combo',
 				id : 'cbWorkflowTechnical',
+				xtype: 'filterCombo',
 				fieldLabel : 'Worflowstatus technical',
 				width : 370,
-				style : {
+				store: AIR.AirStoreManager.getStoreByName('lifecycleStatusListStore'),//lifecycleStatusListStore,
+		        valueField: 'id',
+		        displayField: 'text',
+		        triggerAction: 'all',
+		        mode: 'local',
+		        style : {
 					marginBottom : 10,
 					fontSize : 12
 				}
@@ -77,8 +82,6 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 		        store: AIR.AirStoreManager.getStoreByName('operationalStatusListStore'),
 		        valueField: 'operationalStatusId',
 		        displayField: 'operationalStatus',
-				lastQuery: '',
-		        minChars: 0,
 		        triggerAction: 'all',
 		        mode: 'local',
 				style : {
@@ -141,6 +144,9 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 
         var cbWorkflowTechnical = this.getComponent('cbWorkflowTechnical');
         cbWorkflowTechnical.setValue(assetData.workflowStatusId);
+        
+        var filterData = { tableId: AC.TABLE_ID_HARDWARE_COMPONENT };
+        cbWorkflowTechnical.filterByData(filterData);
 
         var cbGeneralUsage = this.getComponent('cbGeneralUsage');
         cbGeneralUsage.setValue(assetData.generalUsageId);
