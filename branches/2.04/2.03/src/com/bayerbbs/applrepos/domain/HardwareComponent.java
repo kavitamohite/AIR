@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +28,7 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private String name;
 
-	 private String assetId;
+	private String assetId;
 
 	private Long relevantItsec;
 
@@ -133,35 +132,13 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 
 	private String requester;
 
-	// private Timestamp sampleTestDate;
-	//
-	// private String sampleTestResult;
-	//
-	// private Partner partner;
+	private Partner partner;
+
+	private Long partnerId;
 
 	private String sapDescription;
 
-	// private Timestamp syncTimestamp;
-	//
-	// private Long syncConfig;
-	//
-	// private Long duplicateSer;
-	//
-	// private Long duplicateInv;
-	//
 	private String inventoryStockNumber;
-	//
-	// private String cpuModel;
-	//
-	// private Long cpuCount;
-	//
-	// private Long ramMemory;
-	//
-	// private Float intDiskSpace;
-	//
-	// private Float extDiskSpace;
-	//
-	// private Float cpuSpeed;
 
 	private String vbp;
 
@@ -225,14 +202,14 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 		this.name = name;
 	}
 
-	 @Column(name = "ASSET_ID")
-	 public String getAssetId() {
-	 return assetId;
-	 }
-	
-	 public void setAssetId(String assetId) {
-	 this.assetId = assetId;
-	 }
+	@Column(name = "ASSET_ID")
+	public String getAssetId() {
+		return assetId;
+	}
+
+	public void setAssetId(String assetId) {
+		this.assetId = assetId;
+	}
 
 	@Column(name = "RELEVANZ_ITSEC")
 	public Long getRelevantItsec() {
@@ -718,15 +695,24 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	// this.sampleTestResult = sampleTestResult;
 	// }
 	//
-	// @OneToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(name = "OWNER_PARTNID")
-	// public Partner getPartner() {
-	// return partner;
-	// }
-	//
-	// public void setPartner(Partner partner) {
-	// this.partner = partner;
-	// }
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "OWNER_PARTNID", insertable = false, updatable = false)
+	public Partner getPartner() {
+		return partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
+	}
+
+	@Column(name = "OWNER_PARTNID")
+	public Long getPartnerId() {
+		return partnerId;
+	}
+
+	public void setPartnerId(Long partnerId) {
+		this.partnerId = partnerId;
+	}
 
 	@Column(name = "SAP_DESCRIPTION")
 	public String getSapDescription() {
@@ -773,14 +759,15 @@ public class HardwareComponent extends RevisionInfo implements Serializable {
 	// this.duplicateInv = duplicateInv;
 	// }
 	//
-	 @Column(name = "INVENTARNUMMER_OHNE")
-	 public String getInventoryStockNumber() {
-	 return inventoryStockNumber;
-	 }
-	
-	 public void setInventoryStockNumber(String inventoryStockNumber) {
-	 this.inventoryStockNumber = inventoryStockNumber;
-	 }
+	@Column(name = "INVENTARNUMMER_OHNE")
+	public String getInventoryStockNumber() {
+		return inventoryStockNumber;
+	}
+
+	public void setInventoryStockNumber(String inventoryStockNumber) {
+		this.inventoryStockNumber = inventoryStockNumber;
+	}
+
 	//
 	// @Column(name = "CPU_MODEL")
 	// public String getCpuModel() {

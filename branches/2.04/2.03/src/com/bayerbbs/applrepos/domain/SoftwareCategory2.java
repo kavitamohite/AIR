@@ -23,6 +23,7 @@ public class SoftwareCategory2 {
 	private SoftwareCategory1 softwareCategory1;
 	private String fremdSwMgr;
 	private Partner hersteller;
+	private Long herstellerId;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SwCategorySeq")
@@ -73,7 +74,7 @@ public class SoftwareCategory2 {
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "HERSTELLER_PARTNID")
+	@JoinColumn(name = "HERSTELLER_PARTNID", insertable = false, updatable = false)
 	public Partner getHersteller() {
 		return hersteller;
 	}
@@ -82,6 +83,13 @@ public class SoftwareCategory2 {
 		this.hersteller = hersteller;
 	}
 	
-	
+	@Column(name = "HERSTELLER_PARTNID")
+	public Long getHerstellerId() {
+		return herstellerId;
+	}
+
+	public void setHerstellerId(Long herstellerId) {
+		this.herstellerId = herstellerId;
+	}
 
 }

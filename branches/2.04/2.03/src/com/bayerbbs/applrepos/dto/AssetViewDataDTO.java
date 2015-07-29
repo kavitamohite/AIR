@@ -26,15 +26,15 @@ public class AssetViewDataDTO {
 	private String model;
 	private Long modelId;
 
-	 private String softwareId;//product name in software
+	private String softwareId;// product name in software
 	// Technicas
 	private String technicalNumber;
 	private String technicalMaster;
 	private String systemPlatformName;
-	
+
 	private String osName;
 	private Integer osNameId;
-	
+
 	private String hardwareTransientSystem;
 	private Long workflowStatusId;
 	private String workflowStatus;
@@ -71,6 +71,7 @@ public class AssetViewDataDTO {
 	private String costCenterManagerId;
 	private String organizationalunit;
 	private String owner;
+	private Long ownerId;
 	private String sapAssetClass;
 	private Long sapAssetClassId;
 
@@ -233,7 +234,6 @@ public class AssetViewDataDTO {
 		this.systemPlatformName = systemPlatformName;
 	}
 
-
 	public String getOsName() {
 		return osName;
 	}
@@ -241,7 +241,7 @@ public class AssetViewDataDTO {
 	public void setOsName(String osName) {
 		this.osName = osName;
 	}
-	
+
 	public Integer getOsNameId() {
 		return osNameId;
 	}
@@ -258,7 +258,6 @@ public class AssetViewDataDTO {
 		this.hardwareTransientSystem = hardwareTransientSystem;
 	}
 
-	
 	public Long getWorkflowStatusId() {
 		return workflowStatusId;
 	}
@@ -475,6 +474,14 @@ public class AssetViewDataDTO {
 		this.owner = owner;
 	}
 
+	public Long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+	}
+
 	public String getSapAssetClass() {
 		return sapAssetClass;
 	}
@@ -490,7 +497,6 @@ public class AssetViewDataDTO {
 	public void setSapAssetClassId(Long sapAssetClassId) {
 		this.sapAssetClassId = sapAssetClassId;
 	}
-
 
 	public Long getEditorsGroupId() {
 		return editorsGroupId;
@@ -516,7 +522,6 @@ public class AssetViewDataDTO {
 		this.serialNumber = serialNumber;
 	}
 
-	
 	/**
 	 * @return the softwareId
 	 */
@@ -525,7 +530,8 @@ public class AssetViewDataDTO {
 	}
 
 	/**
-	 * @param softwareId the softwareId to set
+	 * @param softwareId
+	 *            the softwareId to set
 	 */
 	public void setSoftwareId(String softwareId) {
 		this.softwareId = softwareId;
@@ -568,6 +574,5 @@ public class AssetViewDataDTO {
 				+ editorsGroupId + ", editorsGroup=" + editorsGroup
 				+ ", serialNumber=" + serialNumber + "]";
 	}
-
 
 }
