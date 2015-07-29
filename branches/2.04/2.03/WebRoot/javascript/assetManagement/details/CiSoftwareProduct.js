@@ -56,7 +56,7 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 					}
 			    },{
 					xtype : 'container',
-					html: '<a id="mailtoproductsoftware" href="mailto:ITILcenter@bayer.com&subject=' + mail_Subject_softwareproduct + '&body='+ mail_blank_Text_softwareproduct +'"><img src="' + img_Email + '"></a>',
+					html: '<a id="mailtoproductsoftware" href="mailto:ITILcenter@bayer.com&subject=' + mail_Subject_softwareproduct +'"><img src="' + img_Email + '"></a>',
 					itemId: 'mailproduct',
 					cls: 'x-plain',
 					isHideable: true,
@@ -84,6 +84,9 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 
 		AIR.CiSoftwareProduct.superclass.initComponent.call(this);
 		
+    	var cbManufacturer = this.getComponent('cbManufacturer');
+    	cbManufacturer.on('select', this.updateMailTemplateProduct, this);
+    	
         var cbProductName = this.getComponent('pProductName').getComponent('cbProductName');
         cbProductName.on('select', this.onProductSelect, this);
 
@@ -114,8 +117,14 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
     },
     
     updateMailTemplateProduct: function() {
-        var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
-        var mailText = mail_blank_Text_softwareproduct.replace('<Username>', AAM.getUserName());
+    	var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
+
+        var cbManufacturer = this.getComponent('cbManufacturer');
+        var cbProductName = this.getComponent('pProductName').getComponent('cbProductName');
+        var mailText = mail_Text_softwareproduct.replace('<manufacturer>', cbManufacturer.getRawValue());
+        mailText = mailText.replace('<productName>', cbProductName.getRawValue());
+        mailText = mailText.replace('<Username>', AAM.getUserName());
+
         var mailtemplate = 'mailto:ITILcenter@bayer.com';
         mailtemplate += '&subject=' + mail_Subject_softwareproduct + '';
         mailtemplate += ('&body=' + mailText);

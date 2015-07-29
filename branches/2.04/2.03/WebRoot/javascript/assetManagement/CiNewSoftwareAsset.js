@@ -94,7 +94,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                         width: 80
                     },
                     handler: function(button, event) {
-                        this.saveAsset(); //button, event
+                        this.saveAsset(); 
                     }.createDelegate(this)
                 }, {
                     xtype: 'button',

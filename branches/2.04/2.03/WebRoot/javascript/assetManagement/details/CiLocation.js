@@ -109,7 +109,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 					}
 		        },{
 					xtype : 'container',
-					html: '<a id="mailtolocation" href="mailto:ITILcenter@bayer.com&subject=' + mail_Subject_product +  '&body='+ mail_blank_Text_location +'"><img src="' + img_Email + '"></a>',
+					html: '<a id="mailtolocation" href="mailto:ITILcenter@bayer.com&subject=' + mail_Subject_product + '"><img src="' + img_Email + '"></a>',
 					itemId: 'maillocation',
 					cls: 'x-plain',
 					isHideable: true,
@@ -162,6 +162,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         cbRack.getStore().removeAll();
 
         this.loadSiteStore(value);
+        this.updateMailTemplateLocation();
 	},
 	
 	loadSiteStore: function(value){
@@ -197,6 +198,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
                 id: value
             }
         });
+        this.updateMailTemplateLocation();
 	},
 	
 	loadBuildingStore: function(value){
@@ -222,6 +224,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         cbRack.getStore().removeAll();
 
         this.loadRoomStore(value);
+        this.updateMailTemplateLocation();
 	},
 	
 	loadRoomStore: function(value){
@@ -243,6 +246,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         cbRack.getStore().removeAll();
 
         this.loadRackStore(value);
+        this.updateMailTemplateLocation();
 	},
 	
 	loadRackStore: function(value){
@@ -257,12 +261,26 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 
 	updateMailTemplateLocation: function() {
 		var html = '<a id="mailtolocation" href="{href}"><img src="' + img_Email + '"></a>';
-		var mailText = mail_blank_Text_location.replace('<Username>', AAM.getUserName());
+		
+		var cbCountry = this.getComponent('cbCountry');
+		var cbSite = this.getComponent('cbSite');
+		var cbBuilding = this.getComponent('cbBuilding');
+		var cbRoom = this.getComponent('cbRoom');
+		var cbRack = this.getComponent('pRackposition').getComponent('cbRack');
+		
+		var mailText = mail_Text_location.replace('<country>', cbCountry.getRawValue());
+		mailText = mailText.replace('<site>', cbSite.getRawValue());
+		mailText = mailText.replace('<building>', cbBuilding.getRawValue());
+		mailText = mailText.replace('<room>', cbRoom.getRawValue());
+		mailText = mailText.replace('<rack>', cbRack.getRawValue());
+		mailText = mailText.replace('<Username>', AAM.getUserName());
+		
 		var mailtemplate = 'mailto:ITILcenter@bayer.com';
 		mailtemplate += '&subject=' + mail_Subject_location + '';
 		mailtemplate += ('&body=' + mailText);
 		html = html.replace('{href}', mailtemplate);
 		this.getComponent('pRackposition').getComponent('maillocation').update(html);
+		
 	},
 	
 	update: function(assetData){

@@ -248,14 +248,14 @@ AIR.AirApplicationManager = function() {
 				ciCreateWizardView.on('airAction', this.onAirAction, this);
 			}
 			//new wizard
-			
-			 //vandana
 			var ciNewAssetView = airViewport.getCenterView().getComponent('ciNewAssetView');
 			ciNewAssetView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
 			
 			var ciNewHardwareAsset = airViewport.getCenterView().getComponent('ciNewHardwareAsset');
 			ciNewHardwareAsset.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
-			//vandana
+
+			var ciNewSoftwareAsset = airViewport.getCenterView().getComponent('ciNewSoftwareAsset');
+			ciNewSoftwareAsset.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
 			
 			var ciCreateView = airViewport.getCenterView().getComponent('ciCreateView');
 			var ciCopyFromView = ciCreateView.getComponent('ciCreatePagesView').getComponent('CiCopyFromView');

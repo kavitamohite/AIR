@@ -318,7 +318,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         		this.update({});
         	}
     	}
-    	
     },
     
     onBeforeAssetLoad: function(store, options) {
@@ -374,13 +373,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var tInventorynumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
 		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
 
-		if (cbManufacturerValue.length > 0
-				&& cbSubCategoryValue.length > 0
-				&& cbTypeValue.length > 0 && cbModelValue.length > 0
-				&& cbCountryValue.length > 0 && cbSiteValue.length > 0
-				&& cbBuildingValue.length > 0 && cbRoomValue.length > 0
-				&& cbRackValue.length > 0
-				&& cbCostcenterValue.length > 0
+		if (cbManufacturerValue > 0
+				&& cbSubCategoryValue > 0
+				&& cbTypeValue > 0 && cbModelValue > 0
+				&& cbCountryValue > 0 && cbSiteValue > 0
+				&& cbBuildingValue > 0 && cbRoomValue > 0
+				&& cbRackValue > 0
+				&& cbCostcenterValue > 0
 				&& tfRequesterValue.length > 0) {
 			var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
 			

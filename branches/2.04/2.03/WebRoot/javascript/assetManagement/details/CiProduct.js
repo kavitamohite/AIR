@@ -52,6 +52,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 		        valueField: 'id',
 		        displayField: 'name',
 				lastQuery: '',
+				mode: 'local',
 		        minChars: 0,
 		        triggerAction: 'all',
 				style : {
@@ -89,7 +90,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 					}
 			    },{
 					xtype : 'container',
-					html: '<a id="mailtoproduct" href="mailto:ITILcenter@bayer.com&subject=' + mail_Subject_product + '&body='+ mail_blank_Text_product +'"><img src="' + img_Email + '"></a>',
+					html: '<a id="mailtoproduct" href="mailto:ITILcenter@bayer.com&subject=' + mail_Subject_product +'"><img src="' + img_Email + '"></a>',
 					itemId: 'mailproduct',
 					cls: 'x-plain',
 					isHideable: true,
@@ -148,6 +149,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
         cbModel.getStore().removeAll();
         
         this.loadTypeStore(partnerIdValue, kategoryIdValue);
+        this.updateMailTemplateProduct();
     },
 
     onSubCategorySelect: function(combo, record, index) {
@@ -168,6 +170,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
         cbModel.getStore().removeAll();
         
         this.loadTypeStore(partnerIdValue, kategoryIdValue);
+        this.updateMailTemplateProduct();
     },
     
     loadTypeStore: function(partnerIdValue, kategoryIdValue){
@@ -193,7 +196,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
         tsapDescription.setValue("");
         
         this.loadModelStore(value);
-        
+        this.updateMailTemplateProduct();
     },
     
     loadModelStore: function(value){
@@ -218,11 +221,22 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
         var description = cbManufacturer + " " + cbType + " " + cbModel;
         tsapDescription.setValue(description);
         
+        this.updateMailTemplateProduct();
     },
 
     updateMailTemplateProduct: function() {
         var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
-        var mailText = mail_blank_Text_product.replace('<Username>', AAM.getUserName());
+
+        var cbManufacturer = this.getComponent('cbManufacturer');
+        var cbSubCategory = this.getComponent('cbSubCategory');
+        var cbType = this.getComponent('cbType');
+        var cbModel = this.getComponent('pmodel').getComponent('cbModel');
+        var mailText = mail_Text_product.replace('<manufacturer>', cbManufacturer.getRawValue());
+        mailText = mailText.replace('<subcategory>', cbSubCategory.getRawValue());
+        mailText = mailText.replace('<model>', cbModel.getRawValue());
+        mailText = mailText.replace('<type>', cbType.getRawValue());
+        mailText = mailText.replace('<Username>', AAM.getUserName());
+
         var mailtemplate = 'mailto:ITILcenter@bayer.com';
         mailtemplate += '&subject=' + mail_Subject_product + '';
         mailtemplate += ('&body=' + mailText);
