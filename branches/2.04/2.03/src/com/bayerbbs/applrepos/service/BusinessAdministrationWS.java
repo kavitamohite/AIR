@@ -31,7 +31,7 @@ public class BusinessAdministrationWS {
 	}
 	
 	public KeyValueDTO[] findLegalEntityList(Long id) {
-		return ManufacturerHbn.getLegalEntity(id);
+		return ManufacturerHbn.findLegalEntityList();
 	}
 	
 }
