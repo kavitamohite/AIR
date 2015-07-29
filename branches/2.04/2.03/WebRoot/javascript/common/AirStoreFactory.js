@@ -4699,31 +4699,32 @@ AIR.AirStoreFactory = function() {
 		},
 		   createSoftwaremanufacturerListStore: function(){
 			   var ciSoftwaremanufacturerRecord = Ext.data.Record.create([
-			                   { name: 'id', type: 'int' },
-		  				    'name'				
-		  				]);
-		
-		  				var ciSoftwaremanufacturerReader = new Ext.data.XmlReader({
-		  					idProperty: 'id',
-		  					record: 'return'
-		  				}, ciSoftwaremanufacturerRecord);
-		  				
-		  				var ciSoftwaremanufacturerstore = new Ext.data.XmlStore({
-		  					autoDestroy: true,
-		  					autoLoad: false,
-		  					storeId: 'softwaremanufacturerListStore',
-		  					
-		  					proxy: new Ext.ux.soap.SoapProxy({
-		  						url: webcontext + '/ProductWSPort',
-		  						loadMethod: 'findSoftwareManufacturerList',
-		  						timeout: 120000,
-		  						reader: ciSoftwaremanufacturerReader
-		  					})
-		  				});
-		  				
-		  				return ciSoftwaremanufacturerstore;
-		  		},
-		createSoftwareproductListStore: function() {
+	                   { name: 'id', type: 'int' },
+  				    'name'				
+  				]);
+
+  				var ciSoftwaremanufacturerReader = new Ext.data.XmlReader({
+  					idProperty: 'id',
+  					record: 'return'
+  				}, ciSoftwaremanufacturerRecord);
+  				
+  				var ciSoftwaremanufacturerstore = new Ext.data.XmlStore({
+  					autoDestroy: true,
+  					autoLoad: false,
+  					storeId: 'softwaremanufacturerListStore',
+  					
+  					proxy: new Ext.ux.soap.SoapProxy({
+  						url: webcontext + '/ProductWSPort',
+  						loadMethod: 'findSoftwareManufacturerList',
+  						timeout: 120000,
+  						reader: ciSoftwaremanufacturerReader
+  					})
+  				});
+  				
+  				return ciSoftwaremanufacturerstore;
+  		},
+		  		
+		createSoftwareProductListStore: function() {
 			var ciSoftwareproductRecord = Ext.data.Record.create([
 				{ name: 'id', type: 'int' },
 				    'name'				

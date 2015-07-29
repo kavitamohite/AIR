@@ -44,7 +44,7 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 			        xtype: 'filterCombo',
 			        width: 330,
 			        enableKeyEvents: true,
-			        store: AIR.AirStoreManager.getStoreByName('softwareproductListStore'),
+			        store: AIR.AirStoreFactory.createSoftwareProductListStore(),
 			        valueField: 'id',
 			        displayField: 'name',
 					lastQuery: '',
@@ -85,11 +85,28 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 		AIR.CiSoftwareProduct.superclass.initComponent.call(this);
 		
     	var cbManufacturer = this.getComponent('cbManufacturer');
-    	cbManufacturer.on('select', this.updateMailTemplateProduct, this);
+    	cbManufacturer.on('select', this.onManufacturerSelect, this);
     	
         var cbProductName = this.getComponent('pProductName').getComponent('cbProductName');
         cbProductName.on('select', this.onProductSelect, this);
 
+	},
+	
+	onManufacturerSelect: function(combo, record, index) {
+		var value = record.get('id');
+        this.loadProductStore(value);
+        this.updateMailTemplateProduct();
+    },
+	
+	
+	loadProductStore: function(value){
+		var cbProduct = this.getComponent('pProductName').getComponent('cbProductName');
+		
+		cbProduct.getStore().load({
+            params: {
+                id: value
+            }
+		});
 	},
 	
     onProductSelect: function(combo, record, index) {
@@ -100,7 +117,6 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
         
         var tsapDescription = this.getComponent('tsapDescription');
         tsapDescription.setValue(description);
-        
     },
     
     update: function(assetData){
