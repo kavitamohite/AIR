@@ -305,7 +305,17 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         var cbSapAsset = this.getComponent('cbSapAsset');
         cbSapAsset.setValue(assetData.sapAssetClassId);
 
-
+        this.updateMailTemplate();
+    },
+    
+    updateMailTemplate: function() {
+        var html = '<a id="mailtocostcenter" href="{href}"><img src="' + img_Email + '"></a>';
+        var mailText = mail_blank_Text_Costcenter.replace('<Username>', AAM.getUserName());
+        var mailtemplate = 'mailto:ITILcenter@bayer.com';
+        mailtemplate += '&subject=' + mail_Subject_Costcenter + '';
+        mailtemplate += ('&body=' + mailText);
+        html = html.replace('{href}', mailtemplate);
+        this.getComponent('pCost').getComponent('mailCostcenter').update(html);
     },
     
     updateParam: function(assetData){

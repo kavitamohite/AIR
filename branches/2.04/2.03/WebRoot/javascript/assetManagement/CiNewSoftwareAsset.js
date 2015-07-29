@@ -100,7 +100,6 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                     xtype: 'button',
                     itemId: 'cancelBtn',
                     text: 'Cancel',
-                    hidden: true,
                     style: {
                         fontSize: 12,
                         margin: '8 10 0 0',
@@ -137,10 +136,14 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
         });
 
         AIR.CiNewSoftwareAsset.superclass.initComponent.call(this);
+        this.addEvents('externalNavigation');
 
 	    var bReset = this.getComponent('buttonPanel').getComponent('bReset');
 	    bReset.on('click', this.resetFormFields, this);
 	
+	    var cancelBtn = this.getComponent('buttonPanel').getComponent('cancelBtn');
+        cancelBtn.on('click', this.goToAssetManagement, this);
+        
 	    var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
 	    cbManufacturer.on('select', this.enableAssetButtons, this);
       
@@ -249,7 +252,11 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 			params: params
 		});
     },
-    
+
+    goToAssetManagement: function(button, event) {
+		this.fireEvent('externalNavigation', this, button, 'clAssetManagement');
+	},
+
     resetFormFields: function(assetData) {
 
     	if(!assetData){
@@ -304,19 +311,18 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     
 	enableAssetButtons: function() {	
 		var saveBtn = this.getComponent('buttonPanel').getComponent('saveBtn');
-		var cancelBtn = this.getComponent('buttonPanel').getComponent('cancelBtn');
 		var bHistory = this.getComponent('buttonPanel').getComponent('bHistory');
 		
-		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getRawValue();
+		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
 
-		var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter').getRawValue();
+		var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter').getValue();
 		var tfRequesterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getRawValue();
 		
 		var cbOrderNumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumber');
 		var tInventorynumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
 		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
 
-		if (cbManufacturerValue.length > 0 && cbCostcenterValue.length > 0	&& tfRequesterValue.length > 0) {
+		if (cbManufacturerValue > 0 && cbCostcenterValue > 0) {
 			var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
 			
 			rolePersonListStore.each(function(item) {

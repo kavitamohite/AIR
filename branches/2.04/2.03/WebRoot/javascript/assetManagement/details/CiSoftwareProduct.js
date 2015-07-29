@@ -107,9 +107,20 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
         var cbProductName = this.getComponent('pProductName').getComponent('cbProductName');
         cbProductName.setValue(assetData.softwareId);
      
-
         var tsapDescription = this.getComponent('tsapDescription');
         tsapDescription.setValue(assetData.sapDescription);
+        
+        this.updateMailTemplateProduct();
+    },
+    
+    updateMailTemplateProduct: function() {
+        var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
+        var mailText = mail_blank_Text_softwareproduct.replace('<Username>', AAM.getUserName());
+        var mailtemplate = 'mailto:ITILcenter@bayer.com';
+        mailtemplate += '&subject=' + mail_Subject_softwareproduct + '';
+        mailtemplate += ('&body=' + mailText);
+        html = html.replace('{href}', mailtemplate);
+        this.getComponent('pProductName').getComponent('mailproduct').update(html);
     },
     
     updateParam: function(assetData){
