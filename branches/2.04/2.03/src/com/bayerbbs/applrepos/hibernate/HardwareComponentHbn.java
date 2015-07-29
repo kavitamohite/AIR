@@ -263,7 +263,6 @@ public class HardwareComponentHbn {
 						.getCwidVerantw());
 				if(persons.size() > 0){
 					dto.setCostCenterManager(persons.get(0).getDisplayNameFull());
-					dto.setOwner(persons.get(0).getDisplayNameFull());
 				}
 			}
 		}
@@ -276,9 +275,10 @@ public class HardwareComponentHbn {
 				dto.setRequester(persons.get(0).getDisplayNameFull());
 			}
 		}
-//		if(hwComp.getPartner() != null){
-//			dto.setOwner(hwComp.getPartner().getOwner());
-//		}
+		if(hwComp.getPartner() != null){
+			dto.setOwnerId(hwComp.getPartnerId());
+			dto.setOwner(hwComp.getPartner().getOwner());
+		}
 		if (hwComp.getHardwareCategory1() != null) {
 			dto.setSapAssetClass(hwComp.getHardwareCategory1().getHwKategory1());
 			dto.setSapAssetClassId(hwComp.getHardwareCategory1().getId());

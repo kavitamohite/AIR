@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.HibernateException;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.applrepos.domain.SoftwareCategory2;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
@@ -27,30 +27,21 @@ public class SoftwareProductHbn extends BaseHbn{
 	public static KeyValueDTO[] getSoftwareProductById(Long id) {
 
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
-		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			tx = session.beginTransaction();
+			Criteria criteria = session.createCriteria(SoftwareCategory2.class);
+			criteria.add(Restrictions.eq("herstellerId", id));
 			@SuppressWarnings("unchecked")
-			List<SoftwareCategory2> values = session.createQuery("from SoftwareCategory2").list();
+			List<SoftwareCategory2> values = (List<SoftwareCategory2>) criteria.list();
 
 			data = getDTOSoftwareProductList(values);
-
-			tx.commit();
+			session.close();
 		} catch (RuntimeException e) {
-			if (tx != null && tx.isActive()) {
-				try {
-
-					tx.rollback();
-				} catch (HibernateException e1) {
-					System.out.println("Error rolling back transaction");
-				}
-				// throw again the first exception
-				throw e;
-			}
-
+			session.close();
+			throw e;
 		}
+
 		Collections.sort(data);
-		return data.toArray(new KeyValueDTO[0]);
+		return data.toArray(new KeyValueDTO[data.size()]);
 	}
 }

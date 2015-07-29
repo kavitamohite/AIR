@@ -31,6 +31,16 @@ public class ManufacturerHbn  extends BaseHbn{
 		}
 		return listDTO;
 	}
+	
+	private static List<KeyValueDTO> getLegalDTOList(List<Partner> input) {
+		List<KeyValueDTO> listDTO = new ArrayList<KeyValueDTO>();
+
+		for (Partner partner : input) {
+			listDTO.add(new KeyValueDTO(partner.getId(), partner.getOwner()));
+		}
+		return listDTO;
+	}
+
 
 
 	public static KeyValueDTO[] findManufacturerList() {
@@ -61,10 +71,9 @@ public class ManufacturerHbn  extends BaseHbn{
 	}
 	
 	
-	public static KeyValueDTO[] getSoftwareManufacturerById(Long partnerId) {
+	public static KeyValueDTO[] findSoftwareManufacturerList() {
 
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
-		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
 			try {
@@ -81,35 +90,23 @@ public class ManufacturerHbn  extends BaseHbn{
 				stmt.close();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			session.close();
 			e.printStackTrace();
 		}
 		Collections.sort(data);
 		return data.toArray(new KeyValueDTO[0]);
 	}
-	public static KeyValueDTO[] getLegalEntity(Long partnerId) {
+	public static KeyValueDTO[] findLegalEntityList() {
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
-		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			tx = session.beginTransaction();
 			@SuppressWarnings("unchecked")
 			List<Partner> values = session.createQuery("from Partner p where p.number is null and p.deleteTimestamp is null").list();
 
-			data = getDTOManufacturerList(values);
-
-			tx.commit();
+			data = getLegalDTOList(values);
+			session.close();
 		} catch (RuntimeException e) {
-			if (tx != null && tx.isActive()) {
-				try {
-
-					tx.rollback();
-				} catch (HibernateException e1) {
-					System.out.println("Error rolling back transaction");
-				}
-				// throw again the first exception
-				throw e;
-			}
+			session.close();
 		}
 		Collections.sort(data);
 		return data.toArray(new KeyValueDTO[0]);
