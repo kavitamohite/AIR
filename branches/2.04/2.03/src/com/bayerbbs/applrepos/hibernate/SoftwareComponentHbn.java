@@ -184,10 +184,10 @@ public class SoftwareComponentHbn {
 				dto.setCostCenterManager(persons.get(0).getDisplayNameFull());
 				dto.setOwner(persons.get(0).getDisplayNameFull());
 				dto.setCostCenterManagerId(swComp.getKonto().getCwidVerantw());
-				dto.setOrganizationalunit(persons.get(0).getOrgUnit());
 			}
 		}
 		dto.setRequesterId(swComp.getRequester());
+		dto.setOrganizationalunit(swComp.getSubResponsible());
 		if(swComp.getRequester() != null){
 			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(swComp
 					.getRequester());
