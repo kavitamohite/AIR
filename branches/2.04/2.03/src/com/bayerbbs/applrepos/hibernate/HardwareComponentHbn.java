@@ -263,10 +263,14 @@ public class HardwareComponentHbn {
 						.getCwidVerantw());
 				if(persons.size() > 0){
 					dto.setCostCenterManager(persons.get(0).getDisplayNameFull());
+					dto.setOrganizationalunit(persons.get(0).getOrgUnit());
 				}
 			}
+
 		}
-		dto.setOrganizationalunit(hwComp.getSubResponsible());
+		if(hwComp.getSubResponsible() != null && hwComp.getSubResponsible().length() > 0){
+			dto.setOrganizationalunit(hwComp.getSubResponsible());
+		}
 		if(hwComp.getRequester() != null){
 			dto.setRequesterId(hwComp.getRequester());
 			List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(hwComp
@@ -402,9 +406,11 @@ public class HardwareComponentHbn {
 		} else {
 			hardwareComponent.setName(getIdentNumber());
 		}
-		if(dto.getInventoryNumber().length() == 0 && hardwareComponent.getInventoryStockNumber() == null){
-			hardwareComponent.setInventoryStockNumber("ExtInventory");
-			hardwareComponent.setInventoryP69(null);
+		if(dto.getInventoryNumber().length() == 0){
+			if(hardwareComponent.getInventoryStockNumber() == null){
+				hardwareComponent.setInventoryStockNumber("ExtInventory");
+				hardwareComponent.setInventoryP69(null);
+			}
 		} else {
 			hardwareComponent.setInventoryP69(dto.getInventoryNumber());
 			hardwareComponent.setInventoryStockNumber(null);
@@ -440,6 +446,7 @@ public class HardwareComponentHbn {
 		hardwareComponent.setRequester(dto.getRequesterId());
 		hardwareComponent.setHardwareCategory1Id(dto.getSapAssetClassId());
 		hardwareComponent.setSubResponsible(dto.getOrganizationalunit());
+		hardwareComponent.setPartnerId(dto.getOwnerId());
 //		if(hardwareComponent.getItSystem() != null){
 //			hardwareComponent.getItSystem().setName(dto.getSystemPlatformName()); 
 //			hardwareComponent.getItSystem().setOsNameId(dto.getOsNameId());
