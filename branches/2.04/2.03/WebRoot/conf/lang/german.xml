@@ -612,7 +612,7 @@
 		<assetSystemPlatformName>System platform name</assetSystemPlatformName>
 		<assetOsname>OS-Name</assetOsname>
 		<assettransient>HW-transienten Systemen</assettransient>
-		<assetWorflowstatustechnical>Worflowstatus technische</assetWorflowstatustechnical>
+		<assetWorflowstatustechnical>Lebenszyklusstatus</assetWorflowstatustechnical>
 		<assetGeneral>Allgemeine Verwendung</assetGeneral>
 		<assetITSecurity>IT-Security-Relevance</assetITSecurity>
 		<assetComment>Kommentar</assetComment>

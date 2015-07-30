@@ -300,7 +300,8 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         tOrganisation.setValue(assetData.organizationalunit);
 
         var tOwner = this.getComponent('tOwner');
-        tOwner.setValue(assetData.owner);
+        tOwner.setValue(assetData.ownerId);
+        tOwner.setRawValue(assetData.owner);
 
         var cbSapAsset = this.getComponent('cbSapAsset');
         cbSapAsset.setValue(assetData.sapAssetClassId);
@@ -352,8 +353,8 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         assetData.organizationalunit = tOrganisation.getValue();
 
         var tOwner = this.getComponent('tOwner');
-        assetData.legal = tOwner.getRawValue();
-        assetData.owner = tOwner.getValue();
+        assetData.ownerId = tOwner.getValue();
+        assetData.owner = tOwner.getRawValue();
 
         var cbSapAsset = this.getComponent('cbSapAsset');
         assetData.sapAssetClassId = cbSapAsset.getValue();

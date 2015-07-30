@@ -600,6 +600,9 @@ AIR.AirApplicationManager = function() {
 		getLastName: function() {
 			return this.lastName;
 		},
+		getFullName: function(){
+			return AAM.lastName+', '+AAM.firstName+' ('+AAM.cwid+')';
+		},
 		
 		
 		setLastLogon: function(lastLogon) {

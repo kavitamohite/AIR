@@ -4171,6 +4171,7 @@ AIR.AirStoreFactory = function() {
 					{ name : 'costCenterManagerId'},
 					{ name : 'organizationalunit'},
 					{ name : 'owner'},
+					{ name : 'ownerId'},
 					{ name : 'sapAssetClass'},
 					{ name : 'sapAssetClassId'},
 					

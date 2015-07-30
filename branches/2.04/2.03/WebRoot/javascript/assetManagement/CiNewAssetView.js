@@ -300,7 +300,10 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     resetFormFields: function(assetData) {
 
     	if(!assetData){
-    		this.update({});
+    		assetData = {};
+    		assetData.requester = AAM.getFullName();
+    		assetData.requesterId = AAM.cwid;
+    		this.update(assetData);
     	} else {
         	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
         	
@@ -315,7 +318,10 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         			}
         		});
         	} else {
-        		this.update({});
+        		assetData = {};
+        		assetData.requester = AAM.getFullName();
+        		assetData.requesterId = AAM.cwid;
+        		this.update(assetData);
         	}
     	}
     },
@@ -360,6 +366,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
 		var cbSubCategoryValue=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getValue();
 		var cbTypeValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getValue();
+		var cbLifeCycleStatusValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbWorkflowTechnical').getValue();
 		var cbModelValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel').getValue();
 		var cbRoomValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom').getValue();
 		var cbBuildingValue =this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding').getValue();
@@ -373,13 +380,11 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var tInventorynumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
 		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
 
-		if (cbManufacturerValue > 0
-				&& cbSubCategoryValue > 0
+		if (cbManufacturerValue > 0 && cbSubCategoryValue > 0
 				&& cbTypeValue > 0 && cbModelValue > 0
 				&& cbCountryValue > 0 && cbSiteValue > 0
 				&& cbBuildingValue > 0 && cbRoomValue > 0
-				&& cbRackValue > 0
-				&& cbCostcenterValue > 0
+				&& cbRackValue > 0 && cbCostcenterValue > 0
 				&& tfRequesterValue.length > 0) {
 			var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
 			
@@ -391,7 +396,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					cbOrderNumber.setReadOnly(false);
 					tInventorynumber.setReadOnly(false);
 					cbPsp.enable();
-				} else if(value === 'AIR Asset Editor'){
+				} else if(value === 'AIR Asset Editor' && cbLifeCycleStatusValue != 1007){
 					saveBtn.show();
 					
 					cbOrderNumber.setReadOnly(true);
