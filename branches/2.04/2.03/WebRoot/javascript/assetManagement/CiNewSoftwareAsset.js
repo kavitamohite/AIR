@@ -146,10 +146,16 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
         
 	    var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
 	    cbManufacturer.on('select', this.enableAssetButtons, this);
-      
+	    cbManufacturer.on('keypress', this.enableAssetButtons, this);
+	    
+	    var cbProductName = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pProductName').getComponent('cbProductName');
+	    cbProductName.on('select', this.enableAssetButtons, this);
+	    cbProductName.on('keypress', this.enableAssetButtons, this);
+	    
         var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
         cbCostcenter.on('select', this.enableAssetButtons, this);
-         
+        cbCostcenter.on('keypress', this.enableAssetButtons, this); 
+        
         var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
         tfRequester.on('change', this.enableAssetButtons, this);
         
@@ -314,7 +320,8 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 		var bHistory = this.getComponent('buttonPanel').getComponent('bHistory');
 		
 		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
-
+		var cbProductNameValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pProductName').getComponent('cbProductName').getValue();
+		
 		var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter').getValue();
 		var tfRequesterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getRawValue();
 		
@@ -322,7 +329,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 		var tInventorynumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
 		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
 
-		if (cbManufacturerValue > 0 && cbCostcenterValue > 0) {
+		if (cbManufacturerValue > 0 && cbProductNameValue > 0 && cbCostcenterValue > 0) {
 			var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
 			
 			rolePersonListStore.each(function(item) {

@@ -154,42 +154,48 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         cancelBtn.on('click', this.goToAssetManagement, this);
         
     	var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
-    	cbManufacturer.on('change', this.onFieldKeyUp, this);
+    	cbManufacturer.on('select', this.onFieldKeyUp, this);
+    	cbManufacturer.on('keypress', this.onFieldKeyUp, this);
         
         var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
         cbSubCategory.on('select', this.onFieldKeyUp, this);
+        cbSubCategory.on('keypress', this.onFieldKeyUp, this);
         
         var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
         cbType.on('select', this.onFieldKeyUp, this);
+        cbType.on('keypress', this.onFieldKeyUp, this);
 
         var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
         cbModel.on('select', this.onFieldKeyUp, this);
+        cbModel.on('keypress', this.onFieldKeyUp, this);
         
         var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
         cbCostcenter.on('select', this.onFieldKeyUp, this);
-        cbCostcenter.on('change', this.onFieldKeyUp, this);
+        cbCostcenter.on('keypress', this.onFieldKeyUp, this);
            
-        var cbSapAsset = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbSapAsset');
-        cbSapAsset.on('select', this.onFieldKeyUp, this);
-         
         var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
         tfRequester.on('change', this.onFieldKeyUp, this);
         tfRequester.on('select', this.onFieldKeyUp, this);
         
         var cbRoom = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom');
         cbRoom.on('select', this.onFieldKeyUp, this);
+        cbRoom.on('keypress', this.onFieldKeyUp, this);
         
         var cbBuilding =this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding');
         cbBuilding.on('select', this.onFieldKeyUp, this);
+        cbBuilding.on('keypress', this.onFieldKeyUp, this);
         
         var cbSite = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite');
         cbSite.on('select', this.onFieldKeyUp, this);
+        cbSite.on('keypress', this.onFieldKeyUp, this);
         
         var cbCountry = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry');
         cbCountry.on('select', this.onFieldKeyUp, this);
+        cbCountry.on('keypress', this.onFieldKeyUp, this);
         
         var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
         cbRack.on('select', this.onFieldKeyUp, this);
+        cbRack.on('keypress', this.onFieldKeyUp, this);
     },
     
     onAssetHistoryButton: function(){
@@ -396,12 +402,16 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					cbOrderNumber.setReadOnly(false);
 					tInventorynumber.setReadOnly(false);
 					cbPsp.enable();
-				} else if(value === 'AIR Asset Editor' && cbLifeCycleStatusValue != 1007){
+				} else if(value === 'AIR Asset Editor'){
 					saveBtn.show();
 					
 					cbOrderNumber.setReadOnly(true);
 					tInventorynumber.setReadOnly(true);;
 					cbPsp.disable();
+					
+					if(cbLifeCycleStatusValue == 1007){
+						saveBtn.hide();
+					}
 				}
 			});
 			
@@ -519,7 +529,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
     	mailText = mailText.replace('<orderNumber>',assetData.orderNumber);
     	mailText = mailText.replace('<costCenter>',assetData.costCenter);
-    	mailText = mailText.replace('<legalEntity>',assetData.legal);
+    	mailText = mailText.replace('<legalEntity>',assetData.owner);
 
     	mailText = mailText.replace('<technicalNumber>',assetData.technicalNumber);
     	mailText = mailText.replace('<technicaMaster>',assetData.technicalMaster);
