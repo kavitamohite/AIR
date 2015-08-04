@@ -31,6 +31,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 		    	xtype: 'filterCombo',
 		        fieldLabel: 'Site',
 		        width: 370,
+		        enableKeyEvents: true,
 		        store: AIR.AirStoreFactory.createSiteListStore(),
 		        valueField: 'id',
 		        displayField: AAM.getLanguage() == 'DE' ? 'name' : 'nameEn',

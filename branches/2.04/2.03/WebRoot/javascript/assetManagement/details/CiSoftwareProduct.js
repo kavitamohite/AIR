@@ -122,10 +122,12 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
     update: function(assetData){
     	var cbManufacturer = this.getComponent('cbManufacturer');
         cbManufacturer.setValue(assetData.manufacturerId);
-
+        this.loadProductStore(assetData.manufacturerId);
+        
         var cbProductName = this.getComponent('pProductName').getComponent('cbProductName');
-        cbProductName.setValue(assetData.softwareId);
-     
+        cbProductName.setValue(assetData.subcategoryId);
+        cbProductName.setRawValue(assetData.subcategory);
+        
         var tsapDescription = this.getComponent('tsapDescription');
         tsapDescription.setValue(assetData.sapDescription);
         
@@ -152,6 +154,10 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
     	var cbManufacturer = this.getComponent('cbManufacturer');
     	assetData.manufacturerId = cbManufacturer.getValue();
 
+    	var cbProductName = this.getComponent('pProductName').getComponent('cbProductName');
+    	assetData.subcategory = cbProductName.getRawValue();
+        assetData.subcategoryId = cbProductName.getValue();
+        
         var tsapDescription = this.getComponent('tsapDescription');
         assetData.sapDescription = tsapDescription.getValue();
         
