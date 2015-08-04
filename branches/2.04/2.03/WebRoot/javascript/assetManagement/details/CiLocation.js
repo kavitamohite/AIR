@@ -16,6 +16,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 		        fieldLabel: 'Country',
 		        width: 370,
 		        enableKeyEvents: true,
+		        forceSelection: true,
 		        store: AIR.AirStoreManager.getStoreByName('landListStore'),
 		        valueField: 'id',
 		        displayField: AAM.getLanguage() == 'DE' ? 'name' : 'nameEn',
@@ -32,6 +33,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 		        fieldLabel: 'Site',
 		        width: 370,
 		        enableKeyEvents: true,
+		        forceSelection: true,
 		        store: AIR.AirStoreFactory.createSiteListStore(),
 		        valueField: 'id',
 		        displayField: AAM.getLanguage() == 'DE' ? 'name' : 'nameEn',
@@ -49,6 +51,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 		        width: 370,
 		        fieldLabel: 'Building',
 		        enableKeyEvents: true,
+		        forceSelection: true,
 		        store: AIR.AirStoreFactory.createBuildingListStoreFromSiteId(), 
 		        valueField: 'id',
 		        displayField: 'name',
@@ -61,16 +64,17 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 					marginBottom : 10
 				}
         	}, {
-		        xtype: 'filterCombo',//combo
+		        xtype: 'filterCombo',
 		        itemId: 'cbRoom',
 		        width: 370,
 		        fieldLabel: 'Room',
 		        enableKeyEvents: true,
+		        forceSelection: true,
 		        store: AIR.AirStoreFactory.createRoomListStoreFromBuildingId(),
 		        valueField: 'id',
 		        displayField: 'name',
 				lastQuery: '',
-		        triggerAction: 'all',//all query
+		        triggerAction: 'all',
 		        mode: 'local',
 		        queryParam: 'id',
 		        style : {
@@ -98,6 +102,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 			        itemId: 'cbRack',
 			        width: 332,
 			        enableKeyEvents: true,
+			        forceSelection: true,
 			        store: AIR.AirStoreFactory.createSchrankListStore(),
 			        valueField: 'id',
 			        displayField: 'name',
