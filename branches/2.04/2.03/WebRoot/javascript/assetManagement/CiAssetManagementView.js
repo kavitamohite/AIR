@@ -307,7 +307,14 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
         form.method = 'POST';
         form.target = '_blank';
 
-        var params = this.getSearchParams();
+        var params = this.getSearchParams(); // this.getComponent('ciAssetSearchResultView').getComponent('tpCiAssetSearchResultTables').getActiveTab().getBottomToolbar().initialConfig.store.lastOptions.params
+        var sortInfo = this.getComponent('ciAssetSearchResultView').getComponent('tpCiAssetSearchResultTables').getActiveTab().getBottomToolbar().initialConfig.store.getSortState();
+        
+        if(sortInfo){
+        	params.sort = sortInfo.field;
+        	params.dir = sortInfo.direction;
+        }
+        
         params.limit = 100000;
 
         for (var key in params)

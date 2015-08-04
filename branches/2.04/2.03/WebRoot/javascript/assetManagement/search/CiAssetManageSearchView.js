@@ -70,9 +70,6 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
     updateLabels: function(labels) {
         this.getComponent('pAssetSearch').getComponent('clAssetSearch').setText(labels.newSearch);
         this.getComponent('pAssetSearch').getComponent('bUpdateCiAssetSearchResult').setText(labels.bUpdateCiSearchResult);
-//        this.getComponent('pAssetSearch').getComponent('bAssetSearchReset').getComponent('searchMode').getComponent('hardwareSearchMode').setText(labels.bReset);
-//        this.getComponent('pAssetSearch').getComponent('bAssetSearchReset').getComponent('searchMode').getComponent('hardwareSearchMode').setText(labels.bReset);
-        // update box label
     }
 
 });
