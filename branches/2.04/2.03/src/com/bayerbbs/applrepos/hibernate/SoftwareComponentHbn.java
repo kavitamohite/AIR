@@ -164,6 +164,10 @@ public class SoftwareComponentHbn {
 			dto.setManufacturer(swComp.getHersteller().getName());
 			dto.setManufacturerId(swComp.getHersteller().getId());
 		}
+		if (swComp.getSoftwareCategory2() != null) {
+			dto.setSubCategory(swComp.getSoftwareCategory2().getHwKategory2());
+			dto.setSubcategoryId(swComp.getSoftwareCategory2().getId());
+		}
 		// Product Name remaining
 
 		// Business Administration
@@ -178,13 +182,20 @@ public class SoftwareComponentHbn {
 		if (swComp.getKonto() != null) {
 			dto.setCostCenter(swComp.getKonto().getName());
 			dto.setCostCenterId(swComp.getKonto().getId());
+			dto.setCostCenterManagerId(swComp.getKonto().getCwidVerantw());
 			if (swComp.getKonto().getCwidVerantw() != null) {
 				List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(swComp
 						.getKonto().getCwidVerantw());
-				dto.setCostCenterManager(persons.get(0).getDisplayNameFull());
-				dto.setOwner(persons.get(0).getDisplayNameFull());
-				dto.setCostCenterManagerId(swComp.getKonto().getCwidVerantw());
+				if(persons.size() > 0){
+					dto.setCostCenterManager(persons.get(0).getDisplayNameFull());
+					dto.setOrganizationalunit(persons.get(0).getOrgUnit());
+				}
+				
 			}
+		}
+		
+		if(swComp.getSubResponsible() != null && swComp.getSubResponsible().length() > 0){
+			dto.setOrganizationalunit(swComp.getSubResponsible());
 		}
 		dto.setRequesterId(swComp.getRequester());
 		dto.setOrganizationalunit(swComp.getSubResponsible());
@@ -197,13 +208,16 @@ public class SoftwareComponentHbn {
 				dto.setRequester(swComp.getRequester());
 			}
 		}
+		if(swComp.getPartner() != null){
+			dto.setOwnerId(swComp.getPartnerId());
+			dto.setOwner(swComp.getPartner().getOwner());
+		}
 		if (swComp.getSoftwareCategory1() != null) {
 			dto.setSapAssetClass(swComp.getSoftwareCategory1().getSwKategory1());
 			dto.setSapAssetClassId(swComp.getSoftwareCategory1().getId());
 		}
 
 		dto.setSerialNumber(swComp.getSerialNumber());
-		dto.setEditorsGroup(swComp.getSubResponsible());
 		return dto;
 	}
 
@@ -298,7 +312,8 @@ public class SoftwareComponentHbn {
 		softwareComponent.setBestellNumber(dto.getOrderNumber());
 		softwareComponent.setInnenauftrag(dto.getPspElement());
 		softwareComponent.setInventoryNumber(dto.getInventoryNumber());
-		softwareComponent.setSubResponsible(dto.getEditorsGroup());
+		softwareComponent.setSubResponsible(dto.getOrganizationalunit());
+		softwareComponent.setPartnerId(dto.getOwnerId());
 
 		softwareComponent.setRequester(dto.getRequesterId());
 		softwareComponent.setProuctDescription(dto.getSapDescription());

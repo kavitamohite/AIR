@@ -144,14 +144,18 @@ public class AirAssetExcelExportServlet extends HttpServlet {
 		String query = req.getParameter("query");
 		String cwid = req.getParameter("cwid");
 		String queryMode = req.getParameter("queryMode");
-
+		String sort = req.getParameter("sort");
+		String dir = req.getParameter("dir");
+		
 		AssetManagementParameterInput input = new AssetManagementParameterInput();
 		input.setCwid(cwid);
 		input.setQuery(query);
 		input.setQueryMode(queryMode);
 		input.setStart(0);
 		input.setLimit(10000);
-
+		input.setSort(sort);
+		input.setDir(dir);
+		
 		AssetManagementParameterOutput out = null;
 
 		if (input.getQueryMode().equalsIgnoreCase("hardware")) {

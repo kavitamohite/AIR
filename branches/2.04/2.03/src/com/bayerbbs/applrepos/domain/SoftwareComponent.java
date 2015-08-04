@@ -142,6 +142,8 @@ public class SoftwareComponent extends RevisionInfo implements Serializable {
 	private String requester; // ANFORDERER
 
 	private Partner partner;// OWNER_PARTNID
+	
+	private Long partnerId;// OWNER_PARTNID
 
 	private String inventoryStockNumber; // INVENTARNUMMER_OHNE
 
@@ -447,13 +449,22 @@ public class SoftwareComponent extends RevisionInfo implements Serializable {
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "OWNER_PARTNID")
+	@JoinColumn(name = "OWNER_PARTNID", insertable = false, updatable = false)
 	public Partner getPartner() {
 		return partner;
 	}
 
 	public void setPartner(Partner partner) {
 		this.partner = partner;
+	}
+	
+	@Column(name = "OWNER_PARTNID")
+	public Long getPartnerId() {
+		return partnerId;
+	}
+
+	public void setPartnerId(Long partnerId) {
+		this.partnerId = partnerId;
 	}
 
 	@Column(name = "SYNC_TIMESTAMP")

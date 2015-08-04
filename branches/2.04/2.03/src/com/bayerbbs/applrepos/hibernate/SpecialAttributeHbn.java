@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Types;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -21,14 +24,18 @@ public class SpecialAttributeHbn {
 			SpecialAttributeViewDataDTO specialAttributeViewDataDTO) {
 
 		SpecialAttribute asIs = null, toBe = null;
+		Long oldAsIsvalue = null, oldToBevalue = null;
+		
 		List<SpecialAttribute> specialAttribute = findByCiIdAndAttributeId(
 				cIid, specialAttributeViewDataDTO.getAttributeId());
 
 		for (SpecialAttribute spAttribute : specialAttribute) {
 			if ("AS_IS".equals(spAttribute.getStatus())) {
 				asIs = spAttribute;
+				oldAsIsvalue = asIs.getAttributeValue().getId();
 			} else {
 				toBe = spAttribute;
+				oldToBevalue = toBe.getAttributeValue().getId();
 			}
 		}
 
@@ -57,7 +64,6 @@ public class SpecialAttributeHbn {
 			asIs.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			asIs.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 			asIs.setUpdateUser(cwid);
-
 		}
 
 		if (toBe == null) {
@@ -92,18 +98,24 @@ public class SpecialAttributeHbn {
 		Transaction tx = null;
 		tx = session.beginTransaction();
 		try {
-			if (asIs.getId() == null && asIs.getAttributeValue() != null) {
+			/*if (asIs.getId() == null && asIs.getAttributeValue() != null) {
 				session.createSQLQuery(createInsertQuery(asIs, cwid))
 						.executeUpdate();
 			} else if (asIs.getId() != null) {
 				session.update(asIs);
-			}
-			if (toBe.getId() == null && toBe.getAttributeValue() != null) {
+			}*/
+			startInheritance(asIs.getTableId(), asIs.getCiId(), asIs.getAttribute().getId(), asIs.getAttributeValue().getId(), oldAsIsvalue,
+					AirKonstanten.APPLICATION_GUI_NAME, cwid);
+			
+		/*	if (toBe.getId() == null && toBe.getAttributeValue() != null) {
 				session.createSQLQuery(createInsertQuery(toBe, cwid))
 						.executeUpdate();
 			} else if (toBe.getId() != null) {
 				session.update(toBe);
-			}
+			}*/
+			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
+					AirKonstanten.APPLICATION_GUI_NAME, cwid);
+			
 			session.flush();
 			tx.commit();
 		} catch (Exception e) {
@@ -187,5 +199,42 @@ public class SpecialAttributeHbn {
 		return insertQuery;
 
 	}
+	
+	public static void startInheritance(Long tableId, Long ciId, Long attributeId, Long attributeValueId, Long prevAttributeValueId, String source, String user) {
+		String sql = "{? = call PCK_INHERITANCE.FV_Inheritance_Attr(?,?,?,?,?,?,?)}";
+		
+		Transaction ta = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+		
+		try {
+			ta = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+			
+			CallableStatement stmt = conn.prepareCall(sql);
+			stmt.registerOutParameter(1, Types.VARCHAR);
+			stmt.setLong(2, tableId);
+			stmt.setLong(3, ciId);
+			stmt.setLong(4, attributeId);
+			stmt.setLong(5, attributeValueId);
+			stmt.setLong(6, prevAttributeValueId);
+			stmt.setString(7, source);
+			stmt.setString(8, user);
+			stmt.execute();
+			ta.commit();
+			
+			stmt.close();
+			conn.close();
+			
+			commit = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+	}
+
 
 }
