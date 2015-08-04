@@ -59,6 +59,12 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					id: 'searchAction'//searchPoint
 				},{
 					xtype: 'hidden',
+					id: 'sort'
+				},{
+					xtype: 'hidden',
+					id: 'dir'
+				},{
+					xtype: 'hidden',
 					id: 'isOnlyApplications'//onlyapplications
 				},{
 					xtype: 'hidden',
