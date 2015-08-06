@@ -21,10 +21,10 @@ import org.hibernate.annotations.Type;
 @NamedQueries({
 	@NamedQuery(name="findCategorybyPartnerIdandkategoryId", query="FROM HardwareCategory3 WHERE  partnerId=:partnerId and kategory2Id =:kategory2Id")
 })
-public class HardwareCategory3 {
-	private Long id;// HW_KATEGORIE1_ID NOT NULL NUMBER
-	private String hwKategory3;// HW_KATEGORIE1 NOT NULL VARCHAR2(160)
-	private String text;// HW_KATEGORIE1_TXT VARCHAR2(1020)
+public class HardwareCategory3 extends DeletableRevisionInfo{
+	private Long id;
+	private String hwKategory3;
+	private String text;
 
 	private Partner partner;
 	private HardwareCategory2 hwCategory2;
@@ -32,10 +32,6 @@ public class HardwareCategory3 {
 	private Character hwsFlag;
 	private Long partnerId;
 	private Long kategory2Id;
-
-	// PARTNER_ID NUMBER
-	// HW_KATEGORIE2_ID NOT NULL NUMBER
-	// HWS_FLAG VARCHAR2(1)
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "HwCategorySeq3")

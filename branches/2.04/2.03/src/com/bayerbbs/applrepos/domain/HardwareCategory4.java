@@ -22,7 +22,7 @@ import org.hibernate.annotations.Type;
 @NamedQueries({
 	@NamedQuery(name="findCategory4byKategory3Id", query="FROM HardwareCategory4 WHERE  kategory3Id=:kategory3Id")
 })
-public class HardwareCategory4 {
+public class HardwareCategory4 extends DeletableRevisionInfo{
 	private Long id;
 	private String hwKategory4;
 	private String text;

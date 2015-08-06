@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.dto.ProductDTO;
 import com.bayerbbs.applrepos.dto.TypeDTO;
 import com.bayerbbs.applrepos.hibernate.ManufacturerHbn;
 import com.bayerbbs.applrepos.hibernate.ModelHbn;
@@ -9,20 +10,20 @@ import com.bayerbbs.applrepos.hibernate.SubCategoryHbn;
 import com.bayerbbs.applrepos.hibernate.TypeHbn;
 
 public class ProductWS {
-	public KeyValueDTO[] findManufacturerList() {
+	public ProductDTO[] findManufacturerList() {
 		return ManufacturerHbn.findManufacturerList();
 	}
 
-	public KeyValueDTO[] findSubCategoryList() {
+	public ProductDTO[] findSubCategoryList() {
 		return SubCategoryHbn.findSubCategoryList();
 	}
 
-	public KeyValueDTO[] findTypeList(TypeDTO type) {
-		return TypeHbn.getTypeById(type);
+	public ProductDTO[] findTypeList(TypeDTO type) {
+		return TypeHbn.findTypeList(type);
 	}
 
-	public KeyValueDTO[] findModelList(Long id) {
-		return ModelHbn.getModelById(id);
+	public ProductDTO[] findModelList(Long id) {
+		return ModelHbn.findModelList(id);
 	}
 
 	public KeyValueDTO[] findSoftwareManufacturerList(Long id) {
