@@ -98,23 +98,28 @@ public class SpecialAttributeHbn {
 		Transaction tx = null;
 		tx = session.beginTransaction();
 		try {
-			/*if (asIs.getId() == null && asIs.getAttributeValue() != null) {
+			if (asIs.getId() == null && asIs.getAttributeValue() != null) {
 				session.createSQLQuery(createInsertQuery(asIs, cwid))
 						.executeUpdate();
+				startInheritance(asIs.getTableId(), asIs.getCiId(), asIs.getAttribute().getId(), asIs.getAttributeValue().getId(), oldAsIsvalue,
+						AirKonstanten.APPLICATION_GUI_NAME, cwid);
 			} else if (asIs.getId() != null) {
 				session.update(asIs);
-			}*/
-			startInheritance(asIs.getTableId(), asIs.getCiId(), asIs.getAttribute().getId(), asIs.getAttributeValue().getId(), oldAsIsvalue,
-					AirKonstanten.APPLICATION_GUI_NAME, cwid);
+				startInheritance(asIs.getTableId(), asIs.getCiId(), asIs.getAttribute().getId(), asIs.getAttributeValue().getId(), oldAsIsvalue,
+						AirKonstanten.APPLICATION_GUI_NAME, cwid);
+			}
 			
-		/*	if (toBe.getId() == null && toBe.getAttributeValue() != null) {
+			
+			if (toBe.getId() == null && toBe.getAttributeValue() != null) {
 				session.createSQLQuery(createInsertQuery(toBe, cwid))
 						.executeUpdate();
+				startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
+						AirKonstanten.APPLICATION_GUI_NAME, cwid);
 			} else if (toBe.getId() != null) {
 				session.update(toBe);
-			}*/
-			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
-					AirKonstanten.APPLICATION_GUI_NAME, cwid);
+				startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
+						AirKonstanten.APPLICATION_GUI_NAME, cwid);
+			}
 			
 			session.flush();
 			tx.commit();
@@ -219,7 +224,7 @@ public class SpecialAttributeHbn {
 			stmt.setLong(3, ciId);
 			stmt.setLong(4, attributeId);
 			stmt.setLong(5, attributeValueId);
-			stmt.setLong(6, prevAttributeValueId);
+			stmt.setObject(6, prevAttributeValueId);
 			stmt.setString(7, source);
 			stmt.setString(8, user);
 			stmt.execute();

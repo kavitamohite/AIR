@@ -1,7 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -9,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.domain.HardwareCategory2;
-import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.dto.ProductDTO;
 
 
 public class SubCategoryHbn extends BaseHbn {
@@ -18,19 +17,22 @@ public class SubCategoryHbn extends BaseHbn {
 		return findById(HardwareCategory2.class, id);
 	}
 	
-	private static List<KeyValueDTO> getDTOSubCategoryList(List<HardwareCategory2> input) {
-		List<KeyValueDTO> listDTO = new ArrayList<KeyValueDTO>();
+	private static List<ProductDTO> getDTOSubCategoryList(List<HardwareCategory2> input) {
+		List<ProductDTO> listDTO = new ArrayList<ProductDTO>();
 
 		for (HardwareCategory2 data : input) {
-			listDTO.add(new KeyValueDTO(data.getId(), data.getHwKategory2()));
+			ProductDTO productDTO = new ProductDTO();
+			productDTO.setSubcategory(data.getHwKategory2());
+			productDTO.setSubcategoryId(data.getId());
+			listDTO.add(productDTO);
 		}
 		return listDTO;
 	}
 	
 	
-	public static KeyValueDTO[] findSubCategoryList() {
+	public static ProductDTO[] findSubCategoryList() {
 
-		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		List<ProductDTO> data = new ArrayList<ProductDTO>();
 
 		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -52,14 +54,12 @@ public class SubCategoryHbn extends BaseHbn {
 				} catch (HibernateException e1) {
 					System.out.println("Error rolling back transaction");
 				}
-				// throw again the first exception
 				throw e;
 			}
 
 		}
 
-		Collections.sort(data);
-		return data.toArray(new KeyValueDTO[0]);
+		return data.toArray(new ProductDTO[data.size()]);
 	}
 	
 }

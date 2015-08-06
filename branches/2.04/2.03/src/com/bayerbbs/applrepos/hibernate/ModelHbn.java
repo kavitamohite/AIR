@@ -1,16 +1,15 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.HibernateException;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.applrepos.domain.HardwareCategory4;
-import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.dto.ProductDTO;
 
 public class ModelHbn extends BaseHbn {
 
@@ -18,48 +17,49 @@ public class ModelHbn extends BaseHbn {
 		return findById(HardwareCategory4.class, id);
 	}
 
-	private static List<KeyValueDTO> getDTOModelList(List<HardwareCategory4> input) {
-		List<KeyValueDTO> listDTO = new ArrayList<KeyValueDTO>();
+	private static List<ProductDTO> getDTOModelList(List<HardwareCategory4> input) {
+		List<ProductDTO> listDTO = new ArrayList<ProductDTO>();
 
 		for (HardwareCategory4 data : input) {
-			listDTO.add(new KeyValueDTO(data.getId(), data.getHwKategory4()));
+			if(data.getHwCategory3().getPartner() != null){
+				ProductDTO productDTO = new ProductDTO();
+				productDTO.setSubcategory(data.getHwCategory3().getHwCategory2().getHwKategory2());
+				productDTO.setSubcategoryId(data.getHwCategory3().getHwCategory2().getId());
+				productDTO.setManufacturer(data.getHwCategory3().getPartner().getName());
+				productDTO.setManufacturerId(data.getHwCategory3().getPartnerId());
+				productDTO.setType(data.getHwCategory3().getHwKategory3());
+				productDTO.setTypeId(data.getHwCategory3().getId());
+				productDTO.setModel(data.getHwKategory4());
+				productDTO.setModelId(data.getId());
+				listDTO.add(productDTO);
+			}
 		}
 		return listDTO;
 	}
 
 	@SuppressWarnings("unchecked")
-	public static KeyValueDTO[] getModelById(Long kategory3Id) {
-		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
-
-		Transaction tx = null;
+	public static ProductDTO[] findModelList(Long kategory3Id) {
+		List<ProductDTO> data = new ArrayList<ProductDTO>();
+		List<HardwareCategory4> values = new ArrayList<HardwareCategory4>();
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			tx = session.beginTransaction();
 
-			Query query = session.getNamedQuery("findCategory4byKategory3Id");
-			query.setParameter("kategory3Id", kategory3Id);
-			List<HardwareCategory4> values = query.list();
-			data = getDTOModelList(values);
-			// Model model = (Model)query.uniqueResult();
-
-			// return (List<ModelDTO>) model;
-
-			tx.commit();
-		} catch (RuntimeException e) {
-			if (tx != null && tx.isActive()) {
-				try {
-
-					tx.rollback();
-				} catch (HibernateException e1) {
-					System.out.println("Error rolling back transaction");
-				}
-				// throw again the first exception
-				throw e;
+			if (kategory3Id != null) {
+				Query query = session.getNamedQuery("findCategory4byKategory3Id");
+				query.setParameter("kategory3Id", kategory3Id);
+				values = query.list();
+			} else {
+				Criteria criteria = session.createCriteria(HardwareCategory4.class);
+				criteria.add(Restrictions.isNull("deleteTimestamp"));
+				values = criteria.list();
 			}
 
+			data = getDTOModelList(values);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			throw e;
 		}
-		Collections.sort(data);
-		return data.toArray(new KeyValueDTO[0]);
+		return data.toArray(new ProductDTO[data.size()]);
 	}
 
 }

@@ -12,10 +12,11 @@ import org.hibernate.Session;
 
 import com.bayerbbs.applrepos.domain.Partner;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
+import com.bayerbbs.applrepos.dto.ProductDTO;
 
 public class ManufacturerHbn extends BaseHbn {
 
-	private static final String SQL_Hardware_Product = "select * from partner where partner_id in (select partner_id from hw_kategorie3)";
+	private static final String SQL_Hardware_Product = "select * from partner where partner_id in (select partner_id from hw_kategorie3) order by partner_name asc";
 	private static final String SQL_Software_Product = "select * from partner where partner_id in (select hersteller_partnid from SW_KATEGORIE2)";
 
 	public static Partner findById(Long id) {
@@ -32,9 +33,9 @@ public class ManufacturerHbn extends BaseHbn {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static KeyValueDTO[] findManufacturerList() {
+	public static ProductDTO[] findManufacturerList() {
 
-		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		List<ProductDTO> data = new ArrayList<ProductDTO>();
 		Session session = HibernateUtil.getSessionFactory().openSession();
 
 		try {
@@ -42,10 +43,10 @@ public class ManufacturerHbn extends BaseHbn {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(SQL_Hardware_Product);
 			while (rs.next()) {
-				KeyValueDTO keyValueDTO = new KeyValueDTO();
-				keyValueDTO.setId(rs.getLong(1));
-				keyValueDTO.setName(rs.getString(2));
-				data.add(keyValueDTO);
+				ProductDTO productDTO = new ProductDTO();
+				productDTO.setManufacturerId(rs.getLong(1));
+				productDTO.setManufacturer(rs.getString(2));
+				data.add(productDTO);
 			}
 			rs.close();
 			stmt.close();
@@ -53,8 +54,7 @@ public class ManufacturerHbn extends BaseHbn {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		Collections.sort(data);
-		return data.toArray(new KeyValueDTO[0]);
+		return data.toArray(new ProductDTO[data.size()]);
 	}
 
 	@SuppressWarnings("deprecation")
