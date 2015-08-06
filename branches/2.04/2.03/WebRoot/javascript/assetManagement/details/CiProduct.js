@@ -17,8 +17,8 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 		        width: 370,
 		        enableKeyEvents: true,
 		        store: AIR.AirStoreManager.getStoreByName('manufactureListStore'),
-		        valueField: 'id',
-		        displayField: 'name',
+		        valueField: 'manufacturerId',
+		        displayField: 'manufacturer',
 				lastQuery: '',
 		        minChars: 0,
 		        triggerAction: 'all',
@@ -33,8 +33,8 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 		        width: 370,
 		        enableKeyEvents: true,
 		        store: AIR.AirStoreManager.getStoreByName('subCategoryListStore'),
-		        valueField: 'id',
-		        displayField: 'name',
+		        valueField: 'subcategoryId',
+		        displayField: 'subcategory',
 				lastQuery: '',
 		        minChars: 0,
 		        triggerAction: 'all',
@@ -48,9 +48,9 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 		        fieldLabel: 'Type',
 		        width: 370,
 		        enableKeyEvents: true,
-		        store: AIR.AirStoreFactory.createTypeListStore(),
-		        valueField: 'id',
-		        displayField: 'name',
+		        store: AIR.AirStoreManager.getStoreByName('typeListStore'),
+		        valueField: 'typeId',
+		        displayField: 'type',
 				lastQuery: '',
 				mode: 'local',
 		        minChars: 0,
@@ -78,9 +78,9 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 			        fieldLabel: 'Model',
 			        width: 330,
 			        enableKeyEvents: true,
-			        store: AIR.AirStoreFactory.createModelListStore(),
-			        valueField: 'id',
-			        displayField: 'name',
+			        store: AIR.AirStoreManager.getStoreByName('modelListStore'),
+			        valueField: 'modelId',
+			        displayField: 'model',
 					lastQuery: '',
 			        minChars: 0,
 			        triggerAction: 'all',
@@ -132,8 +132,6 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 	},
 	
 	onManufacturerSelect: function(combo, record, index) {
-        var value = record.get('id');
-        Util.log(value);
         var partnerIdValue = this.getComponent('cbManufacturer').getValue();
         var kategoryIdValue = this.getComponent('cbSubCategory').getValue();
         
@@ -153,8 +151,6 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
     },
 
     onSubCategorySelect: function(combo, record, index) {
-        var value = record.get('id');
-
         var partnerIdValue = this.getComponent('cbManufacturer').getValue();
         var kategoryIdValue = this.getComponent('cbSubCategory').getValue();
         
@@ -174,9 +170,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
     },
     
     loadTypeStore: function(partnerIdValue, kategoryIdValue){
-        
         var cbType = this.getComponent('cbType');
-        
         cbType.getStore().load({
             params: {
                 partnerId: partnerIdValue,
@@ -186,8 +180,12 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
     },
     
     onTypeSelect: function(combo, record, index) {
-        var value = record.get('id');
-        
+    	var value = record.get('typeId');
+    	
+    	this.setManufacturer(record);
+    	this.setSubCategory(record);
+    	this.setType(record);
+    	
         var cbModel = this.getComponent('pmodel').getComponent('cbModel');
         var tsapDescription = this.getComponent('tsapDescription');
         
@@ -208,22 +206,46 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
             }
         });
     },
-
+    
     onModelSelect: function(combo, record, index) {
-        var value = record.get('id');
-        
-        var cbManufacturer = this.getComponent('cbManufacturer').getRawValue();
-        var cbType = this.getComponent('cbType').getRawValue();
-        var cbModel = this.getComponent('pmodel').getComponent('cbModel').getRawValue();
-        
-        var tsapDescription = this.getComponent('tsapDescription');
-        
-        var description = cbManufacturer + " " + cbType + " " + cbModel;
-        tsapDescription.setValue(description);
-        
+    	this.setManufacturer(record);
+    	this.setSubCategory(record);
+    	this.setType(record);
+    	this.setModel(record);
+    	this.setSapDescription(record);
         this.updateMailTemplateProduct();
     },
 
+    setManufacturer: function(record){
+    	var cbManufacturer = this.getComponent('cbManufacturer');
+        cbManufacturer.setValue(record.get('manufacturerId'));
+        cbManufacturer.setRawValue(record.get('manufacturer'));
+    },
+    
+    setSubCategory: function(record){
+        var cbSubCategory = this.getComponent('cbSubCategory');
+        cbSubCategory.setValue(record.get('subcategoryId'));
+        cbSubCategory.setRawValue(record.get('subcategory'));
+    },
+    
+    setType: function(record){
+    	var cbType = this.getComponent('cbType');
+        cbType.setValue(record.get('typeId'));
+        cbType.setRawValue(record.get('type'));
+    },
+    
+    setModel: function(record){
+    	var cbModel = this.getComponent('pmodel').getComponent('cbModel');
+        cbModel.setValue(record.get('modelId'));
+        cbModel.setRawValue(record.get('model'));    	
+    },
+    
+    setSapDescription: function(record){
+        var tsapDescription = this.getComponent('tsapDescription');
+        var description = record.get('manufacturer') + " " + record.get('type') + " " + record.get('model');
+        tsapDescription.setValue(description);
+    },
+    
     updateMailTemplateProduct: function() {
         var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
 
@@ -265,6 +287,9 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
         if(assetData.manufacturerId){
         	this.loadTypeStore(assetData.manufacturerId, assetData.subcategoryId);
         	this.loadModelStore(assetData.typeId);
+        } else {
+        	this.loadTypeStore();
+        	this.loadModelStore();
         }
         
         this.updateMailTemplateProduct();

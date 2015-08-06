@@ -315,8 +315,6 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
         	params.dir = sortInfo.direction;
         }
         
-        params.limit = 100000;
-
         for (var key in params)
             if (form[key])
                 form[key].value = params[key];
@@ -328,6 +326,8 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
                 if (form['h' + key])
                     form['h' + key].value = params[key];
         }
+        
+        Util.log(form);
 
         form.submit();
 

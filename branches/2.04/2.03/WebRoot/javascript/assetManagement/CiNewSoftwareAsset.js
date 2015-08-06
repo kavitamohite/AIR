@@ -266,7 +266,10 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     resetFormFields: function(assetData) {
 
     	if(!assetData){
-    		this.update({});
+    		assetData = {};
+    		assetData.requester = AAM.getFullName();
+    		assetData.requesterId = AAM.cwid;
+    		this.update(assetData);
     	} else {
         	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
         	

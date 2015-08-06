@@ -4210,8 +4210,8 @@ AIR.AirStoreFactory = function() {
 
 		createManufactureListStore: function() {
 			var ciManufactureRecord = Ext.data.Record.create([
-				{ name: 'id', type: 'int' },
- 			    'name'				
+				{ name: 'manufacturerId', type: 'int' },
+ 			    'manufacturer'				
  			]);
 
  			var ciManufactureReader = new Ext.data.XmlReader({
@@ -4238,8 +4238,8 @@ AIR.AirStoreFactory = function() {
 		
 		createSubCategoryListStore: function() {
 			var ciSubCategoryRecord = Ext.data.Record.create([
-				{ name: 'id', type: 'int' },
- 			    'name'					
+				{ name: 'subcategoryId', type: 'int' },
+ 			    'subcategory'					
  			]);
 
  			var ciSubCategoryReader = new Ext.data.XmlReader({
@@ -4263,41 +4263,15 @@ AIR.AirStoreFactory = function() {
  			
  			return ciSubCategorystore;
  		},
-
-		
-		createModelListStore: function() {
-			var ciModelListRecord = Ext.data.Record.create([
-				{ name: 'id', type: 'int' },
- 			    'name'					
- 			]);
-
- 			var ciModelListReader = new Ext.data.XmlReader({
-				idProperty: 'id',
- 				record: 'return'
-
- 			}, ciModelListRecord);
- 			
- 			var ciModelListstore = new Ext.data.XmlStore({
- 				autoDestroy: true,
- 				autoLoad: false,
- 				storeId: 'modelListStore',
- 				
- 				proxy: new Ext.ux.soap.SoapProxy({
- 					url: webcontext + '/ProductWSPort',
- 					loadMethod: 'findModelList',
- 					timeout: 120000,
- 					reader: ciModelListReader
- 				})
- 			});
- 			
-
- 			return ciModelListstore;
- 		},
-
-		createTypeListStore: function() {
+ 		
+ 		createTypeListStore: function() {
 			var ciTypeListRecord = Ext.data.Record.create([
-				{ name: 'id', type: 'int' },
- 			    'name'					
+				{ name: 'manufacturerId', type: 'int' },
+				'manufacturer',	
+				{ name: 'subcategoryId', type: 'int' },
+				'subcategory',
+				{ name: 'typeId', type: 'int' },
+				'type'					
  			]);
 
  			var ciTypeListReader = new Ext.data.XmlReader({
@@ -4320,7 +4294,41 @@ AIR.AirStoreFactory = function() {
  			
  			return ciTypeListstore;
  		},
- 		
+		
+		createModelListStore: function() {
+			var ciModelListRecord = Ext.data.Record.create([
+				{ name: 'manufacturerId', type: 'int' },
+				'manufacturer',	
+				{ name: 'subcategoryId', type: 'int' },
+				'subcategory',
+				{ name: 'typeId', type: 'int' },
+				'type',					
+				{ name: 'modelId', type: 'int' },
+ 			    'model'					
+ 			]);
+
+ 			var ciModelListReader = new Ext.data.XmlReader({
+				idProperty: 'id',
+ 				record: 'return'
+
+ 			}, ciModelListRecord);
+ 			
+ 			var ciModelListstore = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'modelListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/ProductWSPort',
+ 					loadMethod: 'findModelList',
+ 					timeout: 120000,
+ 					reader: ciModelListReader
+ 				})
+ 			});
+
+ 			return ciModelListstore;
+ 		},
+
  		createEditorGroupListStore: function() {
 
 			var ciEditorGroupRecord = Ext.data.Record.create([
