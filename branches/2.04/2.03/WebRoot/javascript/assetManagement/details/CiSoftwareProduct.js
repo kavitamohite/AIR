@@ -96,12 +96,16 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 		var value = record.get('id');
         this.loadProductStore(value);
         this.updateMailTemplateProduct();
+        
+        var tsapDescription = this.getComponent('tsapDescription');
+        tsapDescription.setValue('');
     },
 	
 	
 	loadProductStore: function(value){
 		var cbProduct = this.getComponent('pProductName').getComponent('cbProductName');
-		
+		cbProduct.getStore().removeAll();
+		cbProduct.reset();
 		cbProduct.getStore().load({
             params: {
                 id: value
