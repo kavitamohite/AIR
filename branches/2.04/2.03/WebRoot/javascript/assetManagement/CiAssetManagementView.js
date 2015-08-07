@@ -309,6 +309,10 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 
         var params = this.getSearchParams(); // this.getComponent('ciAssetSearchResultView').getComponent('tpCiAssetSearchResultTables').getActiveTab().getBottomToolbar().initialConfig.store.lastOptions.params
         var sortInfo = this.getComponent('ciAssetSearchResultView').getComponent('tpCiAssetSearchResultTables').getActiveTab().getBottomToolbar().initialConfig.store.getSortState();
+        var pagination = this.getComponent('ciAssetSearchResultView').getComponent('tpCiAssetSearchResultTables').getActiveTab().getBottomToolbar().initialConfig.store.lastOptions.params;
+        
+        params.start = pagination.start;
+        params.limit = pagination.limit;
         
         if(sortInfo){
         	params.sort = sortInfo.field;
@@ -327,8 +331,6 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
                     form['h' + key].value = params[key];
         }
         
-        Util.log(form);
-
         form.submit();
 
     }
