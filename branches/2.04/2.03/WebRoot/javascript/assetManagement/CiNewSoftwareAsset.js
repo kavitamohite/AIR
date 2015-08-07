@@ -382,7 +382,18 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 
 	saveAsset: function() {
         newAssetstore = AIR.AirStoreFactory.createSaveAssetStore();
-        var assetData = {};
+        
+    	var assetData = this.getUpdateParam();
+    	
+    	newAssetstore.on('load', this.onSaved, this);
+        newAssetstore.load({
+            params: assetData
+        });
+        
+    },
+    
+    getUpdateParam: function(){
+    	var assetData = {};
         
         assetData.cwid = AIR.AirApplicationManager.getCwid();
         assetData.isSoftwareComponent = true;
@@ -399,11 +410,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     	var contact = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
     	contact.updateParam(assetData);
     	
-    	newAssetstore.on('load', this.onSaved, this);
-        newAssetstore.load({
-            params: assetData
-        });
-        
+    	return assetData;
     },
     
     onSaved: function(store, records, options) {
@@ -424,11 +431,32 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 	    	
     		var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
 			afterSaveAppWindow.show();
+			
+			this.sendEmail();
         } else {
         	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR', callbackMap);
 			afterSaveAppWindow.show();
         }
+    },
+    
+    sendEmail: function(){
+    	var assetData = this.getUpdateParam();
+    	
+    	var mailText = mail_blank_text_software_asset.replace('<username>', AAM.getUserName());
+    	mailText = mailText.replace('<manufacturer>',assetData.manufacturer);
+    	mailText = mailText.replace('<productName>',assetData.subcategory);
+    	mailText = mailText.replace('<sapDescription>',assetData.sapDescription);
+
+    	mailText = mailText.replace('<orderNumber>',assetData.orderNumber);
+    	mailText = mailText.replace('<costCenter>',assetData.costCenter);
+    	mailText = mailText.replace('<legalEntity>',assetData.owner);
+
+    	mailText = mailText.replace('<costCenterManager>',assetData.costCenterManager);
+    		
+    	var email = 'mailto:iao-bestellwesen@bayer.com&subject='+mail_subject_hardware_asset+'&body='+mailText;
+    	window.location.href = email;
     }
+
 
 });
 Ext.reg('AIR.CiNewSoftwareAsset', AIR.CiNewSoftwareAsset);
