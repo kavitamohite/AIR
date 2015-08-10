@@ -332,7 +332,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 		var tInventorynumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
 		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
 
-		if (cbManufacturerValue > 0 && cbProductNameValue > 0 && cbCostcenterValue > 0) {
+		if (cbManufacturerValue > 0 && cbProductNameValue > 0 && cbCostcenterValue > 0 && tfRequesterValue.length > 0) {
 			var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
 			
 			rolePersonListStore.each(function(item) {

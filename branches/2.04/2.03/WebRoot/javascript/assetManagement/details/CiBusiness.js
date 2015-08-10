@@ -210,17 +210,21 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 	}, 
 	
     onRequesterAdd: function(link, event) {
-        AIR.AirPickerManager.openPersonPicker(null, this.getComponent('pRequester').getComponent('tfRequester'), event);
+        AIR.AirPickerManager.openPersonPicker(this.onRequesterChange.createDelegate(this), this.getComponent('pRequester').getComponent('tfRequester'), event);
     },
 
     onRequesterRemove: function(link, event) {
-        AIR.AirPickerManager.openRemovePicker(null, this.getComponent('pRequester').getComponent('tfRequester'), event);
+        AIR.AirPickerManager.openRemovePicker(this.onRequesterChange.createDelegate(this), this.getComponent('pRequester').getComponent('tfRequester'), event);
     },
     
     onPSPSelect: function(combo, record, index) {
         var value = record.get('nameEn');
         var tPsptext = this.getComponent('tPsptext');
         tPsptext.setValue(value);
+    },
+    
+    onRequesterChange: function(a, b, c){
+    	this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
     },
     
     onCostCenterSelect: function(combo, record, index) {
