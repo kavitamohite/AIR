@@ -156,6 +156,7 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
     
     updateParam: function(assetData){
     	var cbManufacturer = this.getComponent('cbManufacturer');
+    	assetData.manufacturer = cbManufacturer.getRawValue();
     	assetData.manufacturerId = cbManufacturer.getValue();
 
     	var cbProductName = this.getComponent('pProductName').getComponent('cbProductName');
