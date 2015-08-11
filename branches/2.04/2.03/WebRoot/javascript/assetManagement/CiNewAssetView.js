@@ -512,8 +512,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			
 			this.sendEmail();
         } else {
-        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR', callbackMap);
-			afterSaveAppWindow.show();
+        	var dataSavedErrorWindow = AIR.AirWindowFactory.createDynamicMessageWindow('AFTER_APP_SAVE_FAIL', null, records[0].data.error);
+			dataSavedErrorWindow.show();
         }
     },
     
