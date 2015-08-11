@@ -18,14 +18,17 @@ import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.HardwareComponent;
+import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.domain.Konto;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
+import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.service.AssetManagementParameterInput;
 import com.bayerbbs.applrepos.service.AssetManagementParameterOutput;
+import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 
 public class HardwareComponentHbn {
 
@@ -179,7 +182,7 @@ public class HardwareComponentHbn {
 		// Asset Information
 		dto.setIdentNumber(hwComp.getName());
 		dto.setInventoryNumber(hwComp.getInventoryP69());
-		hwComp.getItSystem();
+
 		// Product
 		if (hwComp.getHersteller() != null) {
 			dto.setManufacturer(hwComp.getHersteller().getName());
@@ -356,9 +359,6 @@ public class HardwareComponentHbn {
 
 		System.out.println(dto);
 		HardwareComponent hardwareComponent = getHardwareComponent(dto);
-		System.out.println(hardwareComponent);
-
-//		ItSystemHbn.saveItSystem(hardwareComponent.getItSystem());
 		
 		Session session = HibernateUtil.getSession();
 		Transaction tx = null;
@@ -447,25 +447,26 @@ public class HardwareComponentHbn {
 		hardwareComponent.setHardwareCategory1Id(dto.getSapAssetClassId());
 		hardwareComponent.setSubResponsible(dto.getOrganizationalunit());
 		hardwareComponent.setPartnerId(dto.getOwnerId());
-//		if(hardwareComponent.getItSystem() != null){
-//			hardwareComponent.getItSystem().setName(dto.getSystemPlatformName()); 
-//			hardwareComponent.getItSystem().setOsNameId(dto.getOsNameId());
-//		} else if(dto.getSystemPlatformName() != null){
-//			ItSystem itSystem = new ItSystem();
-//			itSystem.setName(dto.getSystemPlatformName());
-//			itSystem.setOsNameId(dto.getOsNameId());
-//			itSystem
-//					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-//			itSystem.setInsertTimestamp(ApplReposTS
-//					.getCurrentTimestamp());
-//			itSystem.setInsertUser(dto.getCwid());
-//			
-//			itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-//			itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
-//			itSystem.setUpdateUser(dto.getCwid());
-//		
-//			hardwareComponent.setItSystem(itSystem);
-//		}
+		ItSystem itSystem = hardwareComponent.getItSystem();
+		ItSystemDTO itDTO = new ItSystemDTO();
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		if(itSystem != null){
+			ItSystemHbn.getItSystem(itDTO, itSystem);
+			itDTO.setId(itSystem.getId());
+			itDTO.setAlias(dto.getSystemPlatformName());
+			itDTO.setName(dto.getSystemPlatformName());
+			itDTO.setOsNameId(dto.getOsNameId());
+			output = ItSystemHbn.saveItSystem(dto.getCwid(), itDTO);
+		} else if(dto.getSystemPlatformName() != null || dto.getOsNameId() != null){
+			itDTO.setAlias(dto.getSystemPlatformName());
+			itDTO.setName(dto.getSystemPlatformName());
+			itDTO.setOsNameId(dto.getOsNameId());
+			itDTO.setCiSubTypeId(1);
+			itDTO.setId(0l);
+			output = ItSystemHbn.createItSystem(dto.getCwid(), itDTO, true);
+		}
+		itSystem = ItSystemHbn.findItSystemById(itDTO.getId());
+		hardwareComponent.setItSystem(itSystem);
 
 		Long itSet = null;
 		String strItSet = ApplReposHbn.getItSetFromCwid(dto.getRequesterId());
@@ -476,7 +477,6 @@ public class HardwareComponentHbn {
 			itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
 		}
 		hardwareComponent.setItset(itSet);
-//		hardwareComponent.getItSystem().setItset(itSet);
 
 		return hardwareComponent;
 	}

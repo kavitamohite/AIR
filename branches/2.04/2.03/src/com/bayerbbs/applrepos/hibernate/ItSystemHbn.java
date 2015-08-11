@@ -1485,7 +1485,7 @@ public class ItSystemHbn extends BaseHbn {
 		try {
 			Connection conn = session.connection();
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("Select o.os_name_id, o.os_name from os_name o where del_timestamp is null");
+			ResultSet rs = stmt.executeQuery("select os_name_id, os_name from v_md_os where hw_ident_or_trans = 1  ORDER BY os_name");
 			while (rs.next()) {
 				KeyValueDTO osNameDto = new KeyValueDTO();
 				osNameDto.setId(Long.parseLong(rs.getString(1)));
