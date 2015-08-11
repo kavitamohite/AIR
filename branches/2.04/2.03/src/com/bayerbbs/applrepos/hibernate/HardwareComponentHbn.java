@@ -357,30 +357,33 @@ public class HardwareComponentHbn {
 	public static AssetViewDataDTO saveHardwareAsset(
 			AssetViewDataDTO dto) {
 
-		System.out.println(dto);
 		HardwareComponent hardwareComponent = getHardwareComponent(dto);
 		
-		Session session = HibernateUtil.getSession();
-		Transaction tx = null;
-		tx = session.beginTransaction();
+		if(hardwareComponent != null){
+			
+			Session session = HibernateUtil.getSession();
+			Transaction tx = null;
+			tx = session.beginTransaction();
 
-		try {
-			session.saveOrUpdate(hardwareComponent);
-			session.flush();
-		} catch (Exception e) {
-			System.out.println("error---" + e.getMessage());
-			if (tx.isActive()) {
-				tx.rollback();
+			try {
+				session.saveOrUpdate(hardwareComponent);
+				session.flush();
+			} catch (Exception e) {
+				System.out.println("error---" + e.getMessage());
+				if (tx.isActive()) {
+					tx.rollback();
+				}
+				return null;
+			} finally {
+				if (tx.isActive()) {
+					tx.commit();
+				}
+				session.close();
 			}
-			return null;
-		} finally {
-			if (tx.isActive()) {
-				tx.commit();
-			}
-			session.close();
+			dto.setId(hardwareComponent.getId());
+			dto.setIdentNumber(hardwareComponent.getName());
 		}
-		dto.setId(hardwareComponent.getId());
-		dto.setIdentNumber(hardwareComponent.getName());
+		
 		return dto;
 	}
 
@@ -465,20 +468,24 @@ public class HardwareComponentHbn {
 			itDTO.setId(0l);
 			output = ItSystemHbn.createItSystem(dto.getCwid(), itDTO, true);
 		}
-		itSystem = ItSystemHbn.findItSystemById(itDTO.getId());
-		hardwareComponent.setItSystem(itSystem);
-
-		Long itSet = null;
-		String strItSet = ApplReposHbn.getItSetFromCwid(dto.getRequesterId());
-		if (null != strItSet) {
-			itSet = Long.parseLong(strItSet);
+		if(output.getMessages().length > 0){
+			dto.setError(output.getMessages()[0]);
+			return null;
+		} else {
+			itSystem = ItSystemHbn.findItSystemById(itDTO.getId());
+			hardwareComponent.setItSystem(itSystem);
+			Long itSet = null;
+			String strItSet = ApplReposHbn.getItSetFromCwid(dto.getRequesterId());
+			if (null != strItSet) {
+				itSet = Long.parseLong(strItSet);
+			}
+			if (null == itSet) {
+				itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
+			}
+			hardwareComponent.setItset(itSet);
+	
+			return hardwareComponent;
 		}
-		if (null == itSet) {
-			itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
-		}
-		hardwareComponent.setItset(itSet);
-
-		return hardwareComponent;
 	}
 
 	private static String getIdentNumber() {

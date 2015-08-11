@@ -6,6 +6,7 @@ public class AssetViewDataDTO {
 	private Boolean isHardwareWithInventory;
 	private Boolean isHardwareWithoutInventory;
 	private String cwid;
+	private String error;
 
 	// Asset Information
 	private Long id;
@@ -112,6 +113,14 @@ public class AssetViewDataDTO {
 
 	public void setCwid(String cwid) {
 		this.cwid = cwid;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 
 	public Long getId() {

@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
+import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.HardwareComponentHbn;
 import com.bayerbbs.applrepos.hibernate.SoftwareComponentHbn;
@@ -39,7 +40,11 @@ public class AssetManagementWS {
 		if (dto == null) {
 			output.setResult(false);
 		} else {
-			output.setResult(true);
+			if(StringUtils.isNotNullOrEmpty(dto.getError())){
+				output.setResult(false);
+			} else {
+				output.setResult(true);
+			}
 			output.setAssetViewDataDTO(new AssetViewDataDTO[] { dto });
 		}
 		return output;
