@@ -166,8 +166,8 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		        fieldLabel: 'Operational Status',
 				lastQuery: '',
 		        store: AIR.AirStoreManager.getStoreByName('operationalStatusListStore'),
-		        valueField: 'id',
-		        displayField: 'text',
+		        valueField: 'operationalStatusId',
+		        displayField: 'operationalStatus',
 		        
 		        triggerAction: 'all',
 		        lazyRender: true,
