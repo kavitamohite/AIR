@@ -120,9 +120,28 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 				}
 			}]
 		});
-
+		
 		AIR.CiTechnics.superclass.initComponent.call(this);
+		
+		var tOsName = this.getComponent('tOsName');
+		tOsName.on('change', this.onComboChange, this);
 
+		var cbWorkflowTechnical = this.getComponent('cbWorkflowTechnical');
+		cbWorkflowTechnical.on('change', this.onComboChange, this);
+		
+		var cbGeneralUsage = this.getComponent('cbGeneralUsage');
+		cbGeneralUsage.on('change', this.onComboChange, this);
+	},
+	
+	onComboChange: function(combo, newValue, oldValue) {
+    	if(Util.isComboValueValid(combo, newValue, oldValue)) {
+	    	
+	    	if(typeof newValue === 'string' && newValue.length === 0) {
+	    		combo.reset();
+	    		combo.setValue(null);
+	    		this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
+	    	} 
+		}
 	},
 	
 	update: function(assetData){

@@ -119,15 +119,19 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 		
 		var cbManufacturer = this.getComponent('cbManufacturer');
         cbManufacturer.on('select', this.onManufacturerSelect, this);
+        cbManufacturer.on('change', this.onComboChange, this);
         
         var cbSubCategory = this.getComponent('cbSubCategory');
         cbSubCategory.on('select', this.onSubCategorySelect, this);
+        cbSubCategory.on('change', this.onComboChange, this);
         
         var cbType = this.getComponent('cbType');
         cbType.on('select', this.onTypeSelect, this);
-
+        cbType.on('change', this.onComboChange, this);
+        
         var cbModel = this.getComponent('pmodel').getComponent('cbModel');
         cbModel.on('select', this.onModelSelect, this);
+        cbModel.on('change', this.onComboChange, this);
 
 	},
 	
@@ -149,7 +153,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
         this.loadTypeStore(partnerIdValue, kategoryIdValue);
         this.updateMailTemplateProduct();
     },
-
+    
     onSubCategorySelect: function(combo, record, index) {
         var partnerIdValue = this.getComponent('cbManufacturer').getValue();
         var kategoryIdValue = this.getComponent('cbSubCategory').getValue();
@@ -215,7 +219,18 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
     	this.setSapDescription(record);
         this.updateMailTemplateProduct();
     },
-
+    
+    onComboChange: function(combo, newValue, oldValue) {
+    	if(Util.isComboValueValid(combo, newValue, oldValue)) {
+	    	
+	    	if(typeof newValue === 'string' && newValue.length === 0) {
+	    		combo.reset();
+	    		combo.setValue(null);
+	    		this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
+	    	} 
+		}
+	},
+	
     setManufacturer: function(record){
     	var cbManufacturer = this.getComponent('cbManufacturer');
         cbManufacturer.setValue(record.get('manufacturerId'));

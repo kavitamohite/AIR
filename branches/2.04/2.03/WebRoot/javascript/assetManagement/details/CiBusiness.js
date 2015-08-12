@@ -200,14 +200,30 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 
         var cbPsp = this.getComponent('cbPsp');
         cbPsp.on('select', this.onPSPSelect, this);
+        cbPsp.on('change', this.onComboChange, this);
         
         var cbCostcenter = this.getComponent('pCost').getComponent('cbCostcenter');
         cbCostcenter.on('select', this.onCostCenterSelect, this);
+        cbCostcenter.on('change', this.onComboChange, this);
         
         var cbSapAsset = this.getComponent('cbSapAsset');
         cbSapAsset.on('select', this.onSapAssetSelect, this);
-
+        cbSapAsset.on('change', this.onComboChange, this);
+        
+        var tOwner = this.getComponent('tOwner');
+        tOwner.on('change', this.onComboChange, this);
 	}, 
+	
+	onComboChange: function(combo, newValue, oldValue) {
+    	if(Util.isComboValueValid(combo, newValue, oldValue)) {
+	    	
+	    	if(typeof newValue === 'string' && newValue.length === 0) {
+	    		combo.reset();
+	    		combo.setValue(null);
+	    		this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
+	    	} 
+		}
+	},
 	
     onRequesterAdd: function(link, event) {
         AIR.AirPickerManager.openPersonPicker(this.onRequesterChange.createDelegate(this), this.getComponent('pRequester').getComponent('tfRequester'), event);
@@ -223,7 +239,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         tPsptext.setValue(value);
     },
     
-    onRequesterChange: function(a, b, c){
+    onRequesterChange: function(){
     	this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
     },
     

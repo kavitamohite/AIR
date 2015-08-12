@@ -135,18 +135,33 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 		
 		var cbCountry = this.getComponent('cbCountry');
         cbCountry.on('select', this.onCountrySelect, this);
+        cbCountry.on('change', this.onComboChange, this);
         
         var cbSite = this.getComponent('cbSite');
         cbSite.on('select', this.onSiteSelect, this);
+        cbSite.on('change', this.onComboChange, this);
         
         var cbBuilding = this.getComponent('cbBuilding'); 
         cbBuilding.on('select', this.onBuildingSelect, this);
-
+        cbSite.on('change', this.onComboChange, this);
+        
         var cbRoom = this.getComponent('cbRoom');
         cbRoom.on('select', this.onRoomSelect, this);
+        cbRoom.on('change', this.onComboChange, this);
         
         var cbRack = this.getComponent('pRackposition').getComponent('cbRack');
+        cbRack.on('change', this.onComboChange, this);
+	},
 
+	onComboChange: function(combo, newValue, oldValue) {
+    	if(Util.isComboValueValid(combo, newValue, oldValue)) {
+	    	
+	    	if(typeof newValue === 'string' && newValue.length === 0) {
+	    		combo.reset();
+	    		combo.setValue(null);
+	    		this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
+	    	} 
+		}
 	},
 	
 	onCountrySelect: function(combo, record, index) {
