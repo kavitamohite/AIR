@@ -468,7 +468,7 @@ public class HardwareComponentHbn {
 			itDTO.setId(0l);
 			output = ItSystemHbn.createItSystem(dto.getCwid(), itDTO, true);
 		}
-		if(output.getMessages().length > 0){
+		if(output.getMessages()[0].length() > 0){
 			dto.setError(output.getMessages()[0]);
 			return null;
 		} else {
