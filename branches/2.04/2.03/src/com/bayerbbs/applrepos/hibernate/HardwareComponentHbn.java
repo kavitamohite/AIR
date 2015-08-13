@@ -460,7 +460,7 @@ public class HardwareComponentHbn {
 			itDTO.setName(dto.getSystemPlatformName());
 			itDTO.setOsNameId(dto.getOsNameId());
 			output = ItSystemHbn.saveItSystem(dto.getCwid(), itDTO);
-		} else if(dto.getSystemPlatformName() != null || dto.getOsNameId() != null){
+		} else if(dto.getSystemPlatformName().length() != 0|| dto.getOsNameId() != 0){
 			itDTO.setAlias(dto.getSystemPlatformName());
 			itDTO.setName(dto.getSystemPlatformName());
 			itDTO.setOsNameId(dto.getOsNameId());
@@ -468,12 +468,14 @@ public class HardwareComponentHbn {
 			itDTO.setId(0l);
 			output = ItSystemHbn.createItSystem(dto.getCwid(), itDTO, true);
 		}
-		if(output.getMessages()[0].length() > 0){
+		if(output.getMessages() != null && output.getMessages()[0].length() > 0){
 			dto.setError(output.getMessages()[0]);
 			return null;
 		} else {
-			itSystem = ItSystemHbn.findItSystemById(itDTO.getId());
-			hardwareComponent.setItSystem(itSystem);
+			if(itDTO.getId() != null){
+				itSystem = ItSystemHbn.findItSystemById(itDTO.getId());
+				hardwareComponent.setItSystem(itSystem);
+			}
 			Long itSet = null;
 			String strItSet = ApplReposHbn.getItSetFromCwid(dto.getRequesterId());
 			if (null != strItSet) {
