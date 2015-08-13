@@ -38,7 +38,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                 }
             }, {
                 xtype: 'AIR.CiTopPanel',
-                itemId: 'topPanel',
+                itemId: 'topPanel'
             }, {
                 xtype: 'panel',
                 itemId: 'bottomPanel',
@@ -74,7 +74,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                         xtype: 'AIR.CiBusiness',
                         itemId: 'businessInformation'
                     }]
-                }],
+                }]
             }, {
                 xtype: 'panel',
                 itemId: 'buttonPanel',
@@ -110,7 +110,6 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                     itemId: 'bReset',
                     text: 'Reset all Entries',
                     style: {
-                        //marginBottom : 10,
                         fontSize: 14,
                         margin: '8 10 0 0',
                         width: 80
@@ -131,7 +130,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 						margin : '8 10 0 0',
 						width:80
 					}
-				}  ]
+				}]
             }]
         });
 

@@ -86,10 +86,23 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 		
     	var cbManufacturer = this.getComponent('cbManufacturer');
     	cbManufacturer.on('select', this.onManufacturerSelect, this);
-    	
+    	 cbManufacturer.on('change', this.onComboChange, this);
+    	 
         var cbProductName = this.getComponent('pProductName').getComponent('cbProductName');
         cbProductName.on('select', this.onProductSelect, this);
+        cbProductName.on('change', this.onComboChange, this);
 
+	},
+	
+	onComboChange: function(combo, newValue, oldValue) {
+    	if(Util.isComboValueValid(combo, newValue, oldValue)) {
+	    	
+	    	if(typeof newValue === 'string' && newValue.length === 0) {
+	    		combo.reset();
+	    		combo.setValue(null);
+	    		this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
+	    	} 
+		}
 	},
 	
 	onManufacturerSelect: function(combo, record, index) {
@@ -172,7 +185,7 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
     	Util.updateFieldLabel(this.getComponent('cbManufacturer'), labels.assetManufacture); 
     	Util.updateLabel(this.getComponent('pProductName').getComponent('labelProductName'), labels.assetSoftwareProduct);  
     	Util.updateFieldLabel(this.getComponent('tsapDescription'), labels.assetSapDescription);  
-    },
+    }
 
 });
 Ext.reg('AIR.CiSoftwareProduct', AIR.CiSoftwareProduct);

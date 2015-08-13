@@ -173,6 +173,7 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
     },
 
     onGridLoaded: function(store, records, options) {
+    	Util.log(store);
         this.loadMask.hide();
     },
 

@@ -4175,12 +4175,8 @@ AIR.AirStoreFactory = function() {
 					{ name : 'sapAssetClass'},
 					{ name : 'sapAssetClassId'},
 					
-					// Contacts
-					{ name : 'editorsGroupId'},
-					{ name : 'editorsGroup'},
-					
 					//Others
-					{ name : 'serialNumber'},
+					{ name : 'serialNumber'}
 			]);
 	
 			var ciItemListReader = new Ext.data.XmlReader({
@@ -4332,7 +4328,7 @@ AIR.AirStoreFactory = function() {
  		createEditorGroupListStore: function() {
 
 			var ciEditorGroupRecord = Ext.data.Record.create([
-				{ name: 'name',  },
+				{ name: 'name'  },
  			    'members'
  			]);
 

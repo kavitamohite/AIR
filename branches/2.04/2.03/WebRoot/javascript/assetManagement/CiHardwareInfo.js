@@ -23,7 +23,7 @@ AIR.CiHardwareInfo = Ext.extend(Ext.Panel, {
 		    },{
 				xtype: 'button',
 				visible: true,
-				itemId: 'bAssetwithInventory',
+				itemId: 'bAssetwithInventory'
 			},{ 
 				xtype: 'container',	  
 		        height: 24,
@@ -51,7 +51,7 @@ AIR.CiHardwareInfo = Ext.extend(Ext.Panel, {
 		    },{
 				xtype: 'button',
 				visible: true,
-				itemId: 'bAssetwithoutInventory',
+				itemId: 'bAssetwithoutInventory'
 			}]
 		});
 		

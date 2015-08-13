@@ -86,7 +86,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 				border: false,
 				layout:'hbox',						
 				style : {
-					fontSize : 12,
+					fontSize : 12
 				},
 				items: [{
 					itemId: 'cbFieldRack',
