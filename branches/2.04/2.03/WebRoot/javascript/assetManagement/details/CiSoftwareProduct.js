@@ -86,7 +86,7 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
 		
     	var cbManufacturer = this.getComponent('cbManufacturer');
     	cbManufacturer.on('select', this.onManufacturerSelect, this);
-    	 cbManufacturer.on('change', this.onComboChange, this);
+    	cbManufacturer.on('change', this.onComboChange, this);
     	 
         var cbProductName = this.getComponent('pProductName').getComponent('cbProductName');
         cbProductName.on('select', this.onProductSelect, this);
