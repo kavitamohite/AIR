@@ -28,7 +28,7 @@ public class AirAssetExcelExportServlet extends HttpServlet {
 
 	private static final String[] COLUMNS = { "SAP Description", "PSP Element",
 			"Cost center", "Site", "Serial Number", "Technical Master",
-			"Technical Number", "Inventory Number", "Organizational Unit" };
+			"Technical Number/Asset-Id", "Inventory Number", "Organizational Unit" };
 	private static final String UNDERSCORE = "_";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
