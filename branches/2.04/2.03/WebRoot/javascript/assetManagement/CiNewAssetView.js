@@ -396,13 +396,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			
 			rolePersonListStore.each(function(item) {
 				var value = item.data.roleName;
-				if(value === 'AIR Asset Manager'){
+				if(value === AC.USER_ROLE_AIR_ASSET_MANAGER){
 					saveBtn.show();
 					
 					cbOrderNumber.setReadOnly(false);
 					tInventorynumber.setReadOnly(false);
 					cbPsp.enable();
-				} else if(value === 'AIR Asset Editor'){
+				} else if(value === AC.USER_ROLE_AIR_ASSET_EDITOR){
 					saveBtn.show();
 					
 					cbOrderNumber.setReadOnly(true);

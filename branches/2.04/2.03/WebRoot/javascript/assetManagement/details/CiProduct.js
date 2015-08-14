@@ -148,7 +148,6 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
         tsapDescription.setValue("");
         
         cbType.getStore().removeAll();
-        cbModel.getStore().removeAll();
         
         this.loadTypeStore(partnerIdValue, kategoryIdValue);
         this.updateMailTemplateProduct();
@@ -167,7 +166,6 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
         tsapDescription.setValue("");
         
         cbType.getStore().removeAll();
-        cbModel.getStore().removeAll();
         
         this.loadTypeStore(partnerIdValue, kategoryIdValue);
         this.updateMailTemplateProduct();
