@@ -65,7 +65,11 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 								AC.USER_ROLE_AIR_APPLICATION_MANAGER,
 								AC.USER_ROLE_AIR_INFRASTRUCTURE_MANAGER,
 								AC.USER_ROLE_AIR_ADMINISTRATOR,
-								AC.USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE))
+								AC.USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE)),
+								
+				new Array('clAssetManagement',
+						new Array(AC.USER_ROLE_AIR_ASSET_MANAGER,
+								AC.USER_ROLE_AIR_ASSET_EDITOR))
 
 		);
 		
@@ -582,6 +586,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		this.updateOneMenuRight('clOuSearch');
 		
 		this.updateOneMenuRight('clCiCreate');
+		
+		this.updateOneMenuRight('clAssetManagement');
 	},
 	
 	updateMenu: function(tableId, ciSubType) {
