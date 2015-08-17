@@ -223,7 +223,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 	    	
 	    	if(typeof newValue === 'string' && newValue.length === 0) {
 	    		combo.reset();
-	    		combo.setValue(null);
+	    		combo.setValue("");
 	    		this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
 	    	} 
 		}
