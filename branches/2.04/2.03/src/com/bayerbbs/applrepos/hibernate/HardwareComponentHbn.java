@@ -382,6 +382,7 @@ public class HardwareComponentHbn {
 			}
 			if(output.getMessages() != null && output.getMessages()[0].length() > 0){
 				dto.setError(output.getMessages()[0]);
+				hardwareComponent = null;
 			} else {
 				if(itDTO.getId() != null){
 					itSystem = ItSystemHbn.findItSystemById(itDTO.getId());
@@ -424,7 +425,7 @@ public class HardwareComponentHbn {
 	private static String validateHardwareComponent(HardwareComponent hardwareComponent) {
 		HardwareComponent existingHwComp = findByInventoryNumber(hardwareComponent.getInventoryP69());
 		String error = null;
-		if(existingHwComp != null){
+		if(existingHwComp != null && existingHwComp.getId().longValue() != hardwareComponent.getId().longValue()){
 			error = "Asset with same inventory number already exist.";
 		}
 		return error;
