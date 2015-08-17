@@ -365,20 +365,31 @@ public class HardwareComponentHbn {
 			ItSystem itSystem = hardwareComponent.getItSystem();
 			ItSystemDTO itDTO = new ItSystemDTO();
 			CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-			if(itSystem != null){
-				ItSystemHbn.getItSystem(itDTO, itSystem);
-				itDTO.setId(itSystem.getId());
-				itDTO.setAlias(dto.getSystemPlatformName());
-				itDTO.setName(dto.getSystemPlatformName());
-				itDTO.setOsNameId(dto.getOsNameId());
-				output = ItSystemHbn.saveItSystem(dto.getCwid(), itDTO);
-			} else if(dto.getSystemPlatformName().length() != 0|| dto.getOsNameId() != 0){
-				itDTO.setAlias(dto.getSystemPlatformName());
-				itDTO.setName(dto.getSystemPlatformName());
-				itDTO.setOsNameId(dto.getOsNameId());
-				itDTO.setCiSubTypeId(1);
-				itDTO.setId(0l);
-				output = ItSystemHbn.createItSystem(dto.getCwid(), itDTO, true);
+			
+			if(dto.getSystemPlatformName().length() != 0 && dto.getOsNameId() != 0){
+				if(itSystem != null){
+					ItSystemHbn.getItSystem(itDTO, itSystem);
+					itDTO.setId(itSystem.getId());
+					itDTO.setAlias(dto.getSystemPlatformName());
+					itDTO.setName(dto.getSystemPlatformName());
+					itDTO.setOsNameId(dto.getOsNameId());
+					output = ItSystemHbn.saveItSystem(dto.getCwid(), itDTO);
+				} else {
+					itDTO.setAlias(dto.getSystemPlatformName());
+					itDTO.setName(dto.getSystemPlatformName());
+					itDTO.setOsNameId(dto.getOsNameId());
+					itDTO.setCiSubTypeId(1);
+					itDTO.setId(0l);
+					output = ItSystemHbn.createItSystem(dto.getCwid(), itDTO, true);
+				}
+			} else {
+				if(itSystem != null ){
+					String[] err = {"System platform name is missing." };
+					output.setMessages(err);
+				} else if(dto.getSystemPlatformName().length() != 0 || dto.getOsNameId() != 0) {
+					String[] err = {"System platform name or Os name is missing." };
+					output.setMessages(err);					
+				}
 			}
 			if(output.getMessages() != null && output.getMessages()[0].length() > 0){
 				dto.setError(output.getMessages()[0]);
