@@ -384,7 +384,7 @@ public class HardwareComponentHbn {
 				}
 			} else {
 				if(itSystem != null ){
-					String[] err = {"System platform name is missing." };
+					String[] err = {"System platform name or Os name is missing." };
 					output.setMessages(err);
 				} else if(dto.getSystemPlatformName().length() != 0 || dto.getOsNameId() != 0) {
 					String[] err = {"System platform name or Os name is missing." };
@@ -436,7 +436,7 @@ public class HardwareComponentHbn {
 	private static String validateHardwareComponent(HardwareComponent hardwareComponent) {
 		HardwareComponent existingHwComp = findByInventoryNumber(hardwareComponent.getInventoryP69());
 		String error = null;
-		if(existingHwComp != null && existingHwComp.getId().longValue() != hardwareComponent.getId().longValue()){
+		if(existingHwComp != null && (hardwareComponent.getId() == null || existingHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
 			error = "Asset with same inventory number already exist.";
 		}
 		return error;
