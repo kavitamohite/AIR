@@ -16,6 +16,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.HardwareComponent;
 import com.bayerbbs.applrepos.domain.Konto;
 import com.bayerbbs.applrepos.domain.SoftwareComponent;
 import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
@@ -287,7 +288,7 @@ public class SoftwareComponentHbn {
 					.getCurrentTimestamp());
 			softwareComponent.setInsertUser(dto.getCwid());
 		} else {
-			softwareComponent.setId(dto.getId());
+			softwareComponent = findById(dto.getId());
 		}
 		softwareComponent.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 		softwareComponent.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
@@ -300,8 +301,6 @@ public class SoftwareComponentHbn {
 		}
 
 		softwareComponent.setInventoryNumber(dto.getInventoryNumber());
-		softwareComponent.setTechnicalMaster(dto.getTechnicalMaster());
-		softwareComponent.setTechnicalNumber(dto.getTechnicalNumber());
 		softwareComponent.setSerialNumber(dto.getSerialNumber());
 
 		softwareComponent.setSoftwareCategory1Id(dto.getSapAssetClassId());
@@ -332,6 +331,34 @@ public class SoftwareComponentHbn {
 		return softwareComponent;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static SoftwareComponent findById(Long assetId) {
+		Transaction tx = null;
+		List<SoftwareComponent> values = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			tx = session.beginTransaction();
+			Criteria criteria = session.createCriteria(SoftwareComponent.class);
+			criteria.add(Restrictions.eq("id", assetId));
+			values = (List<SoftwareComponent>) criteria.list();
+			tx.commit();
+			session.close();
+		} catch (RuntimeException e) {
+			if (tx != null && tx.isActive()) {
+				try {
+					tx.rollback();
+				} catch (HibernateException e1) {
+					System.out.println("Error rolling back transaction");
+				}
+				throw e;
+			}
+		}
+		if(values != null && values.size() > 0){
+			return values.get(0);
+		}
+		return null;
+	}
+	
 	private static String getIdentNumber() {
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
