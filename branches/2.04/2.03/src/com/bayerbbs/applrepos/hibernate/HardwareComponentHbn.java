@@ -524,14 +524,15 @@ public class HardwareComponentHbn {
 		hardwareComponent.setPartnerId(dto.getOwnerId());
 		
 		Long itSet = null;
-		String strItSet = ApplReposHbn.getItSetFromCwid(dto.getRequesterId());
-		if (null != strItSet) {
-			itSet = Long.parseLong(strItSet);
-		}
-		if (null == itSet) {
+		if(hardwareComponent.getItset() == null){
+			String strItSet = ApplReposHbn.getItSetFromCwid(dto.getRequesterId());
 			itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
+
+			if (null != strItSet) {
+				itSet = Long.parseLong(strItSet);
+			}
+			hardwareComponent.setItset(itSet);
 		}
-		hardwareComponent.setItset(itSet);
 
 		return hardwareComponent;
 		
