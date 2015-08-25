@@ -14,7 +14,8 @@ public class BusinessAdministrationWSDelegate {
 	}
 
 	public KeyValueEnDTO[] findPspElementList(DefaultDataInput input) {
-		return businessAdministrationWS.findPspElementList(input.getId());
+		Boolean isChecked = input.getName() != null ? (input.getName().equalsIgnoreCase("true") ? true : false) : false;
+		return businessAdministrationWS.findPspElementList(isChecked);
 	}
 
 	public KeyValueEnDTO[] findSapAssetList(DefaultDataInput input) {

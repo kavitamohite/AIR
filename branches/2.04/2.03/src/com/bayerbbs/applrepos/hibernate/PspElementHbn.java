@@ -25,14 +25,17 @@ public class PspElementHbn {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static KeyValueEnDTO[] getPspElementById(Long kontoId) {
-
+	public static KeyValueEnDTO[] findPspElementList(Boolean isChecked) {
+		String query = "select k from Konto k where k.art='PSP' and  k.deleteTimestamp is null";
+		if(isChecked){
+			query = "select k from Konto k where k.art='PSP' and  k.deleteTimestamp is not null";
+		}
 		List<KeyValueEnDTO> data = new ArrayList<KeyValueEnDTO>();
 		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			List<Konto> values = session.createQuery("select k from Konto k where k.art='PSP' and  k.deleteTimestamp is null").list();
+			List<Konto> values = session.createQuery(query).list();
 			data = getDTOPspElementList(values);
 			tx.commit();
 		} catch (RuntimeException e) {

@@ -14,8 +14,8 @@ public class BusinessAdministrationWS {
 		return CostcenterHbn.getCostcenterList(id);
 	}
 
-	public KeyValueEnDTO[] findPspElementList(Long id) {
-		return PspElementHbn.getPspElementById(id);
+	public KeyValueEnDTO[] findPspElementList(Boolean isChecked) {
+		return PspElementHbn.findPspElementList(isChecked);
 	}
 
 	public KeyValueEnDTO[] findSapAssetList(Long id) {
