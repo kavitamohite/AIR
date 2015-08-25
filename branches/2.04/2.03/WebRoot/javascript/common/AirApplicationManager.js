@@ -18,7 +18,6 @@ AIR.AirApplicationManager = function() {
 				var checkAuthStore = AIR.AirStoreFactory.createCheckAuthStore();
 //				checkAuthStore.on('load', this.onAuthCheck, this);
 				
-
 				if(this.isAnwendungsEinsprung()) {
 					var einsprungData = this.getEinsprungData();
 					
@@ -793,12 +792,12 @@ AIR.AirApplicationManager = function() {
 		},
 		
 		isAnwendungsEinsprung: function() {
-			var baseURI = Ext.isIE ? document.URL || document.location : Ext.getBody().dom.baseURI;
+			var baseURI = document.URL || document.location ;
 			return baseURI.indexOf('?') > -1;
 		},
 		
 		getEinsprungData: function() {
-			var baseURI = Ext.isIE ? document.URL || document.location : Ext.getBody().dom.baseURI;
+			var baseURI = document.URL || document.location;
 			
 			if(baseURI.indexOf('#') > -1)
 				baseURI = baseURI.split('#')[0];
