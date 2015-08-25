@@ -151,7 +151,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 	    cbProductName.on('select', this.enableAssetButtons, this);
 	    cbProductName.on('keypress', this.enableAssetButtons, this);
 	    
-        var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter');
+        var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter');
         cbCostcenter.on('select', this.enableAssetButtons, this);
         cbCostcenter.on('keypress', this.enableAssetButtons, this); 
         
@@ -324,7 +324,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
 		var cbProductNameValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pProductName').getComponent('cbProductName').getValue();
 		
-		var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pCost').getComponent('cbCostcenter').getValue();
+		var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter').getValue();
 		var tfRequesterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester').getRawValue();
 		
 		var cbOrderNumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumber');
