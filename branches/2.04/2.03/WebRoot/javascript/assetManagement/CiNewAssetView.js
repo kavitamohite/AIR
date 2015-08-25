@@ -384,7 +384,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		
 		var cbOrderNumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumber');
 		var tInventorynumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
-		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbPsp');
+		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pPSPElement').getComponent('cbPsp');
 
 		if (cbManufacturerValue > 0 && cbSubCategoryValue > 0
 				&& cbTypeValue > 0 && cbModelValue > 0

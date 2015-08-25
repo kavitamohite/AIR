@@ -27,21 +27,44 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
                     marginBottom: 10
                 }
             }, {
-                xtype: 'filterCombo', //combo
-                itemId: 'cbPsp',
-                width: 370,
-                fieldLabel: 'PSP-Element',
-                enableKeyEvents: true,
-                store: AIR.AirStoreManager.getStoreByName('pspElementListStore'),
-                valueField: 'id',
-                minChars: 0,
-                displayField: 'name',
-                lastQuery: '',
-                triggerAction: 'all',
-                mode: 'local',
+                xtype: 'panel',
+                itemId: 'pPSPElement',
+                border: false,
+                layout: 'hbox',
                 style: {
-                    marginBottom: 10
-                }
+                    fontSize: 12
+                },
+                items: [{
+                    xtype: 'label',
+                    itemId: 'lPSPelement',
+                    text: 'PSP-Element',
+                    width: 105,
+                    style: {
+                        fontSize: 12
+                    }
+                }, {
+                    xtype: 'filterCombo', //combo
+                    itemId: 'cbPsp',
+                    width: 370,
+                    fieldLabel: 'PSP-Element',
+                    enableKeyEvents: true,
+                    store: AIR.AirStoreManager.getStoreByName('pspElementListStore'),
+                    valueField: 'id',
+                    minChars: 0,
+                    displayField: 'name',
+                    lastQuery: '',
+                    triggerAction: 'all',
+                    mode: 'local',
+                    style: {
+                        marginBottom: 10
+                    }
+                }, {
+                    xtype: 'checkbox',
+                    itemId: 'checkPspElement',
+                    style: {
+                	 'margin-left': '15px'
+                    }
+                }]
             }, {
                 xtype: 'textfield',
                 itemId: 'tPsptext',
@@ -167,9 +190,12 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         clRequesterAdd.on('click', this.onRequesterAdd, this);
         clRequesterRemove.on('click', this.onRequesterRemove, this);
 
-        var cbPsp = this.getComponent('cbPsp');
+        var cbPsp = this.getComponent('pPSPElement').getComponent('cbPsp');
         cbPsp.on('select', this.onPSPSelect, this);
         cbPsp.on('change', this.onComboChange, this);
+        
+        var checkPspElement = this.getComponent('pPSPElement').getComponent('checkPspElement');
+        checkPspElement.on('check', this.onCheckPsp, this);
 
         var cbCostcenter = this.getComponent('cbCostcenter');
         cbCostcenter.on('select', this.onCostCenterSelect, this);
@@ -206,6 +232,22 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         var value = record.get('nameEn');
         var tPsptext = this.getComponent('tPsptext');
         tPsptext.setValue(value);
+    },
+    
+    onCheckPsp: function(checkbox,isChecked,record){
+    	var checkPspElement = this.getComponent('pPSPElement').getComponent('checkPspElement');
+    	var cbPsp = this.getComponent('pPSPElement').getComponent('cbPsp');
+    	cbPsp.reset();
+    	
+    	var value={
+      		name:'true'
+      	};
+    	if(!isChecked) {
+	    	value.name = 'false';
+    	}
+		cbPsp.getStore().load({
+			params: value
+		});
     },
 
     onRequesterChange: function() {
@@ -262,7 +304,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         var tInventorynumber = this.getComponent('tInventorynumber');
         tInventorynumber.setValue(assetData.inventoryNumber);
 
-        var cbPsp = this.getComponent('cbPsp');
+        var cbPsp = this.getComponent('pPSPElement').getComponent('cbPsp');
         cbPsp.setValue(assetData.pspElementId);
         cbPsp.setRawValue(assetData.pspElement);
 
@@ -303,7 +345,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         var tInventorynumber = this.getComponent('tInventorynumber');
         assetData.inventoryNumber = tInventorynumber.getValue();
 
-        var cbPsp = this.getComponent('cbPsp');
+        var cbPsp = this.getComponent('pPSPElement').getComponent('cbPsp');
         assetData.pspElementId = cbPsp.getValue();
         assetData.pspElement = cbPsp.getRawValue();
 
@@ -342,7 +384,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
     updateLabels: function(labels) {
         Util.updateFieldLabel(this.getComponent('cbOrderNumber'), labels.assetOrdernumber);
         Util.updateFieldLabel(this.getComponent('tInventorynumber'), labels.assetInventory);
-        Util.updateFieldLabel(this.getComponent('cbPsp'), labels.assetPSP);
+        Util.updateLabel(this.getComponent('pPSPElement').getComponent('lPSPelement'), labels.assetPSP);
         Util.updateFieldLabel(this.getComponent('tPsptext'), labels.assetPsptext);
         Util.updateFieldLabel(this.getComponent('tCostCenterMgr'), labels.assetCostManager);
         Util.updateFieldLabel(this.getComponent('tOrganisation'), labels.assetOrganisation);
