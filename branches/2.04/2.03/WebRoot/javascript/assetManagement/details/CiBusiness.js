@@ -52,52 +52,21 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
                     marginBottom: 10
                 }
             }, {
-                xtype: 'panel',
-                itemId: 'pCost',
-                border: false,
-                layout: 'hbox',
+                xtype: 'filterCombo', //combo
+                itemId: 'cbCostcenter',
+                width: 370,
+                fieldLabel: 'Cost center *',
+                enableKeyEvents: true,
+                store: AIR.AirStoreManager.getStoreByName('costCenterListStore'),
+                valueField: 'id',
+                minChars: 0,
+                displayField: 'name',
+                lastQuery: '',
+                triggerAction: 'all',
+                mode: 'local',
                 style: {
-                    marginBottom: 10,
-                    fontSize: 12
-                },
-                items: [{
-                    xtype: 'label',
-                    itemId: 'lcost',
-                    text: 'Cost center *',
-                    width: 105,
-                    style: {
-                        fontSize: 12
-                    }
-                }, {
-                    xtype: 'filterCombo',
-                    itemId: 'cbCostcenter',
-                    width: 330,
-                    enableKeyEvents: true,
-                    store: AIR.AirStoreManager.getStoreByName('costCenterListStore'),
-                    valueField: 'id',
-                    displayField: 'name',
-                    lastQuery: '',
-                    minChars: 0,
-                    triggerAction: 'all',
-                    mode: 'local',
-                    style: {
-                        marginBottom: 10
-                    }
-                }, {
-                    xtype: 'container',
-                    html: '<a id="mailtocostcenter" href="mailto:ITILcenter@bayer.com&subject=' + mail_Subject_Costcenter + '&body=' + mail_blank_Text_Costcenter + '"><img src="' + img_Email + '"></a>',
-                    itemId: 'mailCostcenter',
-                    cls: 'x-plain',
-                    isHideable: true,
-                    style: {
-                        color: AC.AIR_FONT_COLOR,
-                        fontFamily: AC.AIR_FONT_TYPE,
-                        fontWeight: 'normal',
-                        fontSize: '8pt',
-                        cursor: 'pointer',
-                        'padding-left': '15px'
-                    }
-                }]
+                    marginBottom: 10
+                }
             }, {
                 xtype: 'panel',
                 itemId: 'pRequester',
@@ -202,7 +171,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         cbPsp.on('select', this.onPSPSelect, this);
         cbPsp.on('change', this.onComboChange, this);
 
-        var cbCostcenter = this.getComponent('pCost').getComponent('cbCostcenter');
+        var cbCostcenter = this.getComponent('cbCostcenter');
         cbCostcenter.on('select', this.onCostCenterSelect, this);
         cbCostcenter.on('change', this.onComboChange, this);
 
@@ -272,7 +241,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
             }
         });
 
-        if (this.getComponent('pCost').getComponent('cbCostcenter').getRawValue() == 'out-of-scope') {
+        if (this.getComponent('cbCostcenter').getRawValue() == 'out-of-scope') {
             tOwner.setValue('');
             tOrganisation1.setValue('');
             costCenterManager1.setValue('');
@@ -300,7 +269,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         var tPsptext = this.getComponent('tPsptext');
         tPsptext.setValue(assetData.pspText);
 
-        var cbCostcenter = this.getComponent('pCost').getComponent('cbCostcenter');
+        var cbCostcenter = this.getComponent('cbCostcenter');
         cbCostcenter.setValue(assetData.costCenterId);
 
         var costCenterManagerHidden = this.getComponent('costCenterManagerHidden');
@@ -325,17 +294,6 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         var cbSapAsset = this.getComponent('cbSapAsset');
         cbSapAsset.setValue(assetData.sapAssetClassId);
 
-        this.updateMailTemplate();
-    },
-
-    updateMailTemplate: function() {
-        var html = '<a id="mailtocostcenter" href="{href}"><img src="' + img_Email + '"></a>';
-        var mailText = mail_blank_Text_Costcenter.replace('<Username>', AAM.getUserName());
-        var mailtemplate = 'mailto:ITILcenter@bayer.com';
-        mailtemplate += '&subject=' + mail_Subject_Costcenter + '';
-        mailtemplate += ('&body=' + mailText);
-        html = html.replace('{href}', mailtemplate);
-        this.getComponent('pCost').getComponent('mailCostcenter').update(html);
     },
 
     updateParam: function(assetData) {
@@ -352,7 +310,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         var tPsptext = this.getComponent('tPsptext');
         assetData.pspText = tPsptext.getValue();
 
-        var cbCostcenter = this.getComponent('pCost').getComponent('cbCostcenter');
+        var cbCostcenter = this.getComponent('cbCostcenter');
         assetData.costCenter = cbCostcenter.getRawValue();
         assetData.costCenterId = cbCostcenter.getValue();
 
@@ -390,7 +348,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         Util.updateFieldLabel(this.getComponent('tOrganisation'), labels.assetOrganisation);
         Util.updateFieldLabel(this.getComponent('tOwner'), labels.assetOwner);
         Util.updateFieldLabel(this.getComponent('cbSapAsset'), labels.assetSapClass);
-        Util.updateLabel(this.getComponent('pCost').getComponent('lcost'), labels.assetCost);
+        Util.updateFieldLabel(this.getComponent('cbCostcenter'), labels.assetCost);
         Util.updateLabel(this.getComponent('pRequester').getComponent('labeltfRequester'), labels.assetRequester);
     }
 
