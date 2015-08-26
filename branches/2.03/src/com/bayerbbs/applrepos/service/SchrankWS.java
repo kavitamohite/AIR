@@ -155,7 +155,7 @@ public class SchrankWS {
 		return output;
 	}
 
-	public static void createByCopyInternal(CiCopyParameterInput copyInput,
+	public static void createPositionCopyInternal(CiCopyParameterInput copyInput,
 			CiEntityEditParameterOutput output) {
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
 			SchrankDTO dto = new SchrankDTO();
