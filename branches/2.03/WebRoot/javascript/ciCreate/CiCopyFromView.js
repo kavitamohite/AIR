@@ -5,7 +5,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 	
 	initComponent: function() {
 		Ext.apply(this, {
-			//irgendwo muss leider die initiale Groesse für die child container angegeben sein
+			//irgendwo muss leider die initiale Groesse fï¿½r die child container angegeben sein
 //			width: 600,
 			height: 1200,
 			
@@ -173,8 +173,8 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 				ciNameAliasQuery: this.query,//query
 				queryMode: 'CONTAINS',
 				searchAction: 'search',
-				// Rückbau: alle Datentypen dürfen kopiert werden				
-				isOnlyApplications: 'true',//onlyapplications
+				// Rï¿½ckbau: alle Datentypen dï¿½rfen kopiert werden				
+				//isOnlyApplications: 'true',//onlyapplications//11154 vandana
    			 	cwid: AIR.AirApplicationManager.getCwid(),
    			 	token: AIR.AirApplicationManager.getToken()
 			};
@@ -207,7 +207,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 		this.applicationCat1 = record.data.applicationCat1Txt;
 		this.applicationCat2 = record.data.applicationCat2Txt;
 		this.tableId = record.data.tableId;
-		
+		AAM.setTableId(parseInt(record.data.tableId));//vandana
 		var bCopyFromNext = this.getComponent('pCopyFromSearchCard').getComponent('pCopyFromCiSearch').getComponent('bCopyFromNext');
 		bCopyFromNext.show();
 //		bCopyFromNext.enable();
@@ -291,7 +291,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 		switch(records[0].data.result) {
 			case 'OK':
 				AAM.setCiId(parseInt(records[0].data.applicationId));//applicationId!! id
-//				AAM.setTableId(AC.TABLE_ID_APPLICATION); // nach unten verschoben
+//		AAM.setTableId(AC.TABLE_ID_APPLICATION); // nach unten verschoben
 				
 				var data = {
 					name: this.applicationName,
@@ -302,7 +302,9 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 	
 				var continueEditingCallback = function() {
 					var grid = this.getComponent('pCopyFromSearchCard').getComponent('CiSearchWizzardResultGrid');
+					console.log(grid);
 					var record = grid.getSelectionModel().getSelected();//grid.getStore().getAt(rowIndex);
+					//console.log('record---'+record);
 					
 //					var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
 //					var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));
@@ -315,8 +317,7 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 					};
 
 					// Setze TableID aus dem Source-Object
-					AAM.setTableId(parseInt(record.get('tableId')));
-
+					
 					this.fireEvent('externalNavigation', this, null, 'clCiDetails', options);
 					
 //					this.fireEvent('externalNavigation', this, null, 'clCiDetails');
