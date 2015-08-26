@@ -120,5 +120,68 @@ public class WaysWS {
 		return pathwayDTO;
 		
 	}
+	//Added by vandana for ways copy
+	public static void createWayByCopyInternal(CiCopyParameterInput copyInput,
+			CiEntityEditParameterOutput output) {
+		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			PathwayDTO dto = new PathwayDTO();
+			Ways waySource = PathwayHbn.findById(copyInput.getCiIdSource());
+
+			if (null != waySource) {
+				PathwayHbn.getWays(dto, waySource);
+				dto.setId(new Long(0));
+				dto.setName(copyInput.getCiNameTarget());
+				dto.setAlias(copyInput.getCiAliasTarget());
+				
+				// set the actual cwid as responsible
+				dto.setCiOwner(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerDelegate(waySource.getCiOwnerDelegate());
+				dto.setCiOwnerDelegateHidden(waySource.getCiOwnerDelegate());
+				dto.setTemplate(waySource.getTemplate());
+				
+				dto.setRelevanzItsec(waySource.getRelevanceITSEC());
+				dto.setRelevanceICS(waySource.getRelevanceICS());
+				
+				// save / create itSystem
+				dto.setWaysId(waySource.getWaysId());
+				CiEntityEditParameterOutput createOutput = PathwayHbn.createPathway(copyInput.getCwid(), dto, true);
+
+				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
+					Ways ways = PathwayHbn.findByName(copyInput.getCiNameTarget());
+					if (null != ways) {
+						dto.setId(ways.getId());
+						
+						Long ciId = ways.getId();
+						Ways wayTarget = PathwayHbn.findById(ciId);
+						
+						if (null != wayTarget) {
+							CiEntityEditParameterOutput temp = PathwayHbn.copyPathway(copyInput.getCwid(), waySource.getId(), wayTarget.getId(), copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
+							
+							if (null != temp) {
+								output.setCiId(temp.getCiId());
+								output.setResult(temp.getResult());
+								output.setMessages(temp.getMessages());
+								output.setDisplayMessage(temp.getDisplayMessage());
+							}
+						}
+					}
+				}
+				else {
+					output.setCiId(createOutput.getCiId());
+					output.setResult(createOutput.getResult());
+					output.setMessages(createOutput.getMessages());
+					output.setDisplayMessage(createOutput.getDisplayMessage());
+				}
+			}
+		}
+
+		if (null == output.getDisplayMessage() && null != output.getMessages()) {
+			output.setDisplayMessage(output.getMessages()[0]);
+		}
+	}
+
+
+
 
 }
