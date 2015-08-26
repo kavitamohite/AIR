@@ -211,4 +211,61 @@ public class ItSystemWS {
 		return output;
 	}
 
+	//Vandana
+	public static void createItsystemByCopyInternal(CiCopyParameterInput copyInput,
+			CiEntityEditParameterOutput output) {
+		
+		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
+			ItSystemDTO dto = new ItSystemDTO();
+			ItSystem itSystemSource = ItSystemHbn.findItSystemById(copyInput.getCiIdSource());
+			if (null != itSystemSource) {
+				ItSystemHbn.getItSystem(dto, itSystemSource);
+				dto.setId(new Long(0));
+				dto.setName(copyInput.getCiNameTarget());
+				dto.setAlias(copyInput.getCiAliasTarget());
+				
+				// set the actual cwid as responsible
+				dto.setCiOwner(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
+				dto.setCiOwnerDelegateHidden(dto.getCiOwnerDelegate());	
+				// save / create itSystem
+				CiEntityEditParameterOutput createOutput = ItSystemHbn.createItSystem(copyInput.getCwid(), dto, null);
+				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
+					ItSystem itSystem = ItSystemHbn.findItSystemByName(copyInput.getCiNameTarget());
+					if (null != itSystem) {
+                          dto.setId(itSystem.getId());
+						
+						Long ciId = itSystem.getId();
+						ItSystem itSystemTarget = ItSystemHbn.findItSystemById(ciId);
+						if (null != itSystemTarget) {
+							CiEntityEditParameterOutput temp = ItSystemHbn.copyTtsystem(copyInput.getCwid(),
+									itSystemSource.getId(), itSystemTarget.getId(), copyInput.getCiNameTarget(),copyInput.getCiAliasTarget());
+							if (null != temp) {
+								output.setCiId(temp.getCiId());
+								output.setResult(temp.getResult());
+								output.setMessages(temp.getMessages());
+								output.setDisplayMessage(temp.getDisplayMessage());
+							}
+							
+							
+						}
+						
+					}
+				}
+				else {
+					output.setCiId(createOutput.getCiId());
+					output.setResult(createOutput.getResult());
+					output.setMessages(createOutput.getMessages());
+					output.setDisplayMessage(createOutput.getDisplayMessage());
+				}
+			}
+		}
+
+		if (null == output.getDisplayMessage() && null != output.getMessages()) {
+			output.setDisplayMessage(output.getMessages()[0]);
+		}
+	
+		
+	}
+	
 }
