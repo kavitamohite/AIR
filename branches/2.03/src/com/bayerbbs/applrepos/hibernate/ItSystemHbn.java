@@ -1567,6 +1567,158 @@ public class ItSystemHbn extends BaseHbn {
 		dto.setBusinessEssentialId(itSystem.getBusinessEssentialId());
 		dto.setCiSubTypeId(itSystem.getCiSubTypeId());
 	}
+	//vandana 11154
+	public static CiEntityEditParameterOutput copyTtsystem(String cwid, Long itsystemIdSource, Long itsystemIdTarget, String ciNameTarget, String ciAliasTarget) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		String validationMessage = null;
+		
+		if (null != cwid) {
+			cwid = cwid.toUpperCase();
+			
+				// check der InputWerte
+				List<String> messages = new ArrayList<String>();
+
+				if (messages.isEmpty()) {	
+				Session session = HibernateUtil.getSession();
+				Transaction tx = null;
+				tx = session.beginTransaction();
+				ItSystem itsystemSource = (ItSystem) session.get(ItSystem.class, itsystemIdSource);
+				ItSystem itsystemTarget = null;
+				if (null == itsystemIdSource) {
+					// Komplette Neuanlage des Datensatzes mit Insert/Update-Feldern
+					
+					itsystemTarget = new ItSystem();
+					
+					itsystemTarget.setInsertUser(cwid);
+					itsystemTarget.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+					itsystemTarget.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+
+					
+					itsystemTarget.setUpdateUser(itsystemTarget.getInsertUser());
+					itsystemTarget.setUpdateQuelle(itsystemTarget.getInsertQuelle());
+					itsystemTarget.setUpdateTimestamp(itsystemTarget.getInsertTimestamp());
+					
+					//itsystemTarget.setItSystemName(ciNameTarget);
+					itsystemTarget.setAlias(ciAliasTarget); 
+					 
+					itsystemTarget.setCiOwner(cwid.toUpperCase());
+					itsystemTarget.setCiOwnerDelegate(itsystemSource.getCiOwnerDelegate());
+					itsystemTarget.setTemplate(itsystemSource.getTemplate());
+					
+					itsystemTarget.setRelevanceITSEC(itsystemSource.getRelevanceITSEC());
+					itsystemTarget.setRelevanceICS(itsystemSource.getRelevanceICS());
+
+				}
+				else {
+					// Reaktivierung / Übernahme des bestehenden Datensatzes
+					itsystemTarget = (ItSystem) session.get(ItSystem.class, itsystemIdTarget);
+					
+					output.setCiId(itsystemIdTarget);
+					
+					itsystemTarget.setUpdateUser(cwid);
+					itsystemTarget.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+					itsystemTarget.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+				}
+				if (null == itsystemSource) {
+					// itsystem was not found in database
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the itsystem id "	+ itsystemIdSource + " was not found in database" });
+				}
+				else if (null != itsystemTarget.getDeleteTimestamp()) {
+					// room is deleted
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the itsystem id "	+ itsystemIdTarget + " is deleted" });
+				}else {
+
+					/*itsystemTarget.setItSystemId(itsystemSource.getItSystemId());
+					itsystemTarget.setCiSubTypeId(itsystemSource.getCiSubTypeId());
+					itsystemTarget.setOsNameId(itsystemSource.getOsNameId());*/
+					
+					// ==========
+					itsystemTarget.setSeverityLevelId(itsystemSource.getSeverityLevelId());
+					itsystemTarget.setBusinessEssentialId(itsystemSource.getBusinessEssentialId());
+
+					// ==============================
+					itsystemTarget.setItSecSbAvailability(itsystemSource.getItSecSbAvailability());
+					itsystemTarget.setItSecSbAvailabilityTxt(itsystemSource.getItSecSbAvailabilityTxt());
+					
+					// der kopierende User wird Responsible
+					itsystemTarget.setCiOwner(cwid);
+					itsystemTarget.setCiOwnerDelegate(itsystemSource.getCiOwnerDelegate());
+					
+					// ==========
+					// compliance
+					// ==========
+					
+					// IT SET only view!
+					itsystemTarget.setItset(itsystemSource.getItset());
+					itsystemTarget.setTemplate(itsystemSource.getTemplate());
+					itsystemTarget.setItsecGroupId(null);
+					itsystemTarget.setRefId(null);
+					
+				}
+				boolean toCommit = false;
+				try {
+					if (null == validationMessage) {
+						if (null != itsystemTarget && null == itsystemTarget.getDeleteTimestamp()) {
+							session.saveOrUpdate(itsystemTarget);
+							session.flush();
+							
+							output.setCiId(itsystemTarget.getId());
+						}
+						toCommit = true;
+					}
+				} catch (Exception e) {
+					String message = e.getMessage();
+					log.error(message);
+					// handle exception
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					
+					if (null != message && message.startsWith("ORA-20000: ")) {
+						message = message.substring("ORA-20000: ".length());
+					}
+					
+					output.setMessages(new String[] { message });
+				}finally {
+					String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+					if (toCommit && null != itsystemTarget) {
+						if (null == hbnMessage) {
+							output.setResult(AirKonstanten.RESULT_OK);
+							output.setMessages(new String[] { EMPTY });
+						} else {
+							output.setResult(AirKonstanten.RESULT_ERROR);
+							output.setMessages(new String[] { hbnMessage });
+						}
+					}
+				}
+				} else {
+					// messages
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					String astrMessages[] = new String[messages.size()];
+					for (int i = 0; i < messages.size(); i++) {
+						astrMessages[i] = messages.get(i);
+					}
+					output.setMessages(astrMessages);
+				}
+
+		} else {
+			// cwid missing
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { "cwid missing" });
+		}
+
+		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
+			// TODO errorcodes / Texte
+			if (null != output.getMessages() && output.getMessages().length > 0) {
+				output.setDisplayMessage(output.getMessages()[0]);
+			}
+		}
+		
+		return output;
+	
+	}
+	//vandana
 	
 	public static void sendBusinessEssentialChangedMail(ItSystem itsystem, ItSystemDTO dto, Long businessEssentialIdOld) {
 		
