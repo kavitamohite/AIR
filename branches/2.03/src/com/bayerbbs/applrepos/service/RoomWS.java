@@ -169,7 +169,7 @@ public class RoomWS {
 		return RoomHbn.findRoomsByBuildingAreaId(id);//input
 	}
 
-	public static void createByCopyInternal(CiCopyParameterInput copyInput,
+	public static void createRoomCopyInternal(CiCopyParameterInput copyInput,
 			CiEntityEditParameterOutput output) {
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
 			RoomDTO dto = new RoomDTO();
