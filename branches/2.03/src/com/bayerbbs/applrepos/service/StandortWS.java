@@ -166,7 +166,7 @@ public class StandortWS {
 		return StandortHbn.findSitesByLandId(id);//input
 	}
 	
-	public static void createByCopyInternal(CiCopyParameterInput copyInput,
+	public static void createSiteCopyInternal(CiCopyParameterInput copyInput,
 			CiEntityEditParameterOutput output) {
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
 			StandortDTO dto = new StandortDTO();
