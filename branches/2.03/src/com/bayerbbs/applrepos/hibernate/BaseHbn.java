@@ -497,7 +497,8 @@ public class BaseHbn {
 		Hashtable<String,String> tableContacts = new Hashtable<String,String>();
 		Session session = HibernateUtil.getSession();
 		ciDTO.setDownStreamAdd((String) session.createSQLQuery("SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Id), 4000, 1) FROM TABLE(Pck_Air.FT_RelatedCIs(:Table_Id, :Id, :Direction)) WHERE Table_Id IN (1, 2)").setLong("Table_Id", ciDTO.getTableId()).setLong("Id", ci.getId()).setString("Direction",AirKonstanten.DN).uniqueResult());
-		for (String contact : Arrays.asList(((String) session.createSQLQuery("SELECT Tools.FV_GetContactList(:Table_Id, :Ci_Id, :Group_Types) FROM DUAL").setLong("Table_Id",ciDTO.getTableId().longValue()).setLong("Ci_Id", ci.getId()).setText("Group_Types",(String) session.createSQLQuery(strSQL).uniqueResult()).uniqueResult()).split(", ")))
+		//commented RFC 11154
+		/*for (String contact : Arrays.asList(((String) session.createSQLQuery("SELECT Tools.FV_GetContactList(:Table_Id, :Ci_Id, :Group_Types) FROM DUAL").setLong("Table_Id",ciDTO.getTableId().longValue()).setLong("Ci_Id", ci.getId()).setText("Group_Types",(String) session.createSQLQuery(strSQL).uniqueResult()).uniqueResult()).split(", ")))
 		{
 			String contactType = contact.substring(1, contact.indexOf("]:")).trim();
 			String contactEntry = contact.substring(contact.indexOf("]:")+3).trim();
@@ -509,7 +510,7 @@ public class BaseHbn {
 			if (tableContacts.containsKey(contactType))
 				contactEntry = tableContacts.get(contactType).concat(",").concat(contactEntry);
 			tableContacts.put(contactType, contactEntry);
-		}
+		}*/
 		session.close();
 		for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) 
 		{
