@@ -163,7 +163,7 @@ public class TerrainWS {
 		return TerrainHbn.findTerrainsBySiteId(id);//input
 	}
 	
-	public static void createByCopyInternal(CiCopyParameterInput copyInput,
+	public static void createTerrainCopyInternal(CiCopyParameterInput copyInput,
 			CiEntityEditParameterOutput output) {
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
 			TerrainDTO dto = new TerrainDTO();
