@@ -51,7 +51,7 @@ public class SpecialAttributeHbn {
 			asIs.setStatus(asIsStatus);
 		}
 
-		if (specialAttributeViewDataDTO.getAsIsValueId() == 0l) {
+		if (specialAttributeViewDataDTO.getAsIsValueId() == null || specialAttributeViewDataDTO.getAsIsValueId() == 0l) {
 			asIs.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			asIs.setDeleteTimestamp(ApplReposTS.getCurrentTimestamp());
 			asIs.setDeleteUser(cwid);
@@ -78,7 +78,7 @@ public class SpecialAttributeHbn {
 			toBe.setStatus(toBeStatus);
 		}
 
-		if (specialAttributeViewDataDTO.getToBeValueId() == 0l) {
+		if (specialAttributeViewDataDTO.getToBeValueId() == null || specialAttributeViewDataDTO.getToBeValueId() == 0l) {
 			toBe.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			toBe.setDeleteTimestamp(ApplReposTS.getCurrentTimestamp());
 			toBe.setDeleteUser(cwid);
@@ -168,7 +168,7 @@ public class SpecialAttributeHbn {
 			tx = session.beginTransaction();
 			values = session.createQuery(
 					"select h from SpecialAttribute as h where h.ciId = "
-							+ cIid).list();
+							+ cIid +" and h.deleteTimestamp is null").list();
 
 			HibernateUtil.close(tx, session, true);
 		} catch (RuntimeException e) {
