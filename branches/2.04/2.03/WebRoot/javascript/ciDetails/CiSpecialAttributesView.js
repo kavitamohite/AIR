@@ -46,7 +46,17 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                    	expand : function(combo){
 	                    		var attributeId = Ext.getCmp('specialAttributesListView').getSelectionModel().selection.record.data.attributeId;
 	                    		combo.store.filter('attributeId',attributeId);
-	                    	}
+	                    	},
+	                    	change : function(combo, newValue, oldValue) {
+	                            if (Util.isComboValueValid(combo, newValue, oldValue)) {
+
+	                                if (typeof newValue === 'string' && newValue.length === 0) {
+	                                    combo.reset();
+	                                    combo.setValue("");
+	                                    this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
+	                                }
+	                            }
+	                        }
 	                    }
 	               },
 	               renderer: this.columnRenderer
@@ -69,7 +79,17 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                    	expand : function(combo){
 	                    		var attributeId = Ext.getCmp('specialAttributesListView').getSelectionModel().selection.record.data.attributeId;
 	                    		combo.store.filter('attributeId',attributeId);
-	                    	}
+	                    	},
+	                    	change : function(combo, newValue, oldValue) {
+	                            if (Util.isComboValueValid(combo, newValue, oldValue)) {
+
+	                                if (typeof newValue === 'string' && newValue.length === 0) {
+	                                    combo.reset();
+	                                    combo.setValue("");
+	                                    this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
+	                                }
+	                            }
+	                        }
 	                    }
 	               },
   	               renderer: this.columnRenderer
