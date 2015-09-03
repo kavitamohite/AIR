@@ -53,7 +53,6 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                                if (typeof newValue === 'string' && newValue.length === 0) {
 	                                    combo.reset();
 	                                    combo.setValue("");
-	                                    this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
 	                                }
 	                            }
 	                        }
@@ -86,7 +85,6 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                                if (typeof newValue === 'string' && newValue.length === 0) {
 	                                    combo.reset();
 	                                    combo.setValue("");
-	                                    this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
 	                                }
 	                            }
 	                        }
