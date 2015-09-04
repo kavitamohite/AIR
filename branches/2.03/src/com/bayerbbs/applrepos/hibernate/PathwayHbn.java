@@ -46,6 +46,7 @@ public class PathwayHbn extends BaseHbn{
 	public static CiEntityEditParameterOutput createPathway(String cwid,
 			PathwayDTO pathwayDTO, boolean forceOverride) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		Long id = null;
 
 		if (null != cwid) {
 
@@ -63,7 +64,7 @@ public class PathwayHbn extends BaseHbn{
 
 					boolean autoCommit = false;
 					try {
-						session.save(way);
+						id =(Long) session.save(way);
 						session.flush();
 						autoCommit = true;
 
@@ -78,6 +79,7 @@ public class PathwayHbn extends BaseHbn{
 								output.setResult(AirKonstanten.RESULT_OK);
 								output.setMessages(new String[] { EMPTY });
 								output.setTableId(AirKonstanten.TABLE_ID_WAYS);
+								output.setCiId(id);
 							} else {
 								output.setResult(AirKonstanten.RESULT_ERROR);
 								output.setMessages(new String[] { hbnMessage });
@@ -194,8 +196,8 @@ public class PathwayHbn extends BaseHbn{
 	public static void getWays(PathwayDTO dto, Ways way) {
 		dto.setTableId(AirKonstanten.TABLE_ID_WAYS);
 		BaseHbn.getCi((CiBaseDTO) dto, (CiBase) way);
-		dto.setWaysId(way.getWaysId());
-		dto.setWaysName(way.getWayName());
+		dto.setId(way.getWaysId());
+		dto.setName(way.getWayName());
 
 	}
 	

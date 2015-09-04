@@ -28,12 +28,7 @@ public class WaysWS {
 			}else{
 				pathwayDTO.setItset(AirKonstanten.IT_SET_DEFAULT);
 			}
-			output = PathwayHbn.createPathway(input.getCwid(), pathwayDTO, true);
-			if(AirKonstanten.RESULT_OK.equals(output.getResult())){
-				Ways way = PathwayHbn.findByName(input.getName());
-				output.setCiId(way.getId());
-			}
-			
+			output = PathwayHbn.createPathway(input.getCwid(), pathwayDTO, true);			
 		}
 		return output;
 	}
@@ -144,7 +139,7 @@ public class WaysWS {
 				dto.setRelevanceICS(waySource.getRelevanceICS());
 				
 				// save / create itSystem
-				dto.setWaysId(waySource.getWaysId());
+				dto.setId(waySource.getWaysId());
 				CiEntityEditParameterOutput createOutput = PathwayHbn.createPathway(copyInput.getCwid(), dto, true);
 
 				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {

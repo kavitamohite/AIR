@@ -164,7 +164,20 @@ AIR.AirConfigFactory = function() {
 					return Ext.data.Record.create(pathwayCiFields);
 								
 				},
-				//Ended by vandana
+		  //Ended by vandana
+		
+		createServiceCiRecord: function(){
+			var serviceCiFields = this.getBaseCiFields();
+			serviceCiFields.push('serviceAias');
+			serviceCiFields.push('orderNumber');
+			serviceCiFields.push('projectName');
+			serviceCiFields.push('serviceDescription');
+			serviceCiFields.push('organisationalScope');
+			serviceCiFields.push('companyCode');
+			return Ext.data.Record.create(serviceCiFields);
+			
+		},
+				
 
 		getLocationCiFields: function() {
 			var locationCiFields = this.getBaseCiFields();

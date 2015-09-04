@@ -139,7 +139,11 @@
     <servlet-mapping>
   	<servlet-name>ApplicationService</servlet-name>
   	<url-pattern>/SpecialAttributeWSPort</url-pattern>
-  </servlet-mapping>  
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/ServiceWSPort</url-pattern>
+  </servlet-mapping>   
   
   <servlet>
   	<description>AirCiExcelExportServlet</description>

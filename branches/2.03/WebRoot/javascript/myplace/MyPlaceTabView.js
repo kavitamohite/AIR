@@ -166,7 +166,8 @@ AIR.MyPlaceTabView = Ext.extend(Ext.Panel, {
 		   record.data.tableId == AC.TABLE_ID_SITE ||
 		   record.data.tableId == AC.TABLE_ID_IT_SYSTEM||
 		   record.data.tableId == AC.TABLE_ID_FUNCTION||
-		   record.data.tableId == AC.TABLE_ID_PATHWAY) {//11154
+		   record.data.tableId == AC.TABLE_ID_PATHWAY ||
+		   record.data.tableId == AC.TABLE_ID_SERVICE) {//11154
 			
 			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
 			var r = Util.getStoreRecord(store, 'text', record.get('applicationCat1Txt'));

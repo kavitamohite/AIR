@@ -28,6 +28,8 @@ import com.bayerbbs.applrepos.domain.LifecycleStatus;
 import com.bayerbbs.applrepos.domain.OperationalStatus;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
+import com.bayerbbs.applrepos.domain.Service;
+import com.bayerbbs.applrepos.domain.ServiceDTO;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.domain.Ways;
@@ -72,6 +74,7 @@ import com.bayerbbs.applrepos.hibernate.PriorityLevelHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
 import com.bayerbbs.applrepos.hibernate.SchrankHbn;
 import com.bayerbbs.applrepos.hibernate.ServiceContractHbn;
+import com.bayerbbs.applrepos.hibernate.ServiceHbn;
 import com.bayerbbs.applrepos.hibernate.SeverityLevelHbn;
 import com.bayerbbs.applrepos.hibernate.SlaHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
@@ -486,6 +489,23 @@ public class CiEntityWS {
 
 	// Added by vandana
 
+	public ServiceDTO getService(CiDetailParameterInput input) {
+		ServiceDTO serviceDTO = new ServiceDTO();
+		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+			Service service = ServiceHbn.findById(Service.class,
+					input.getCiId());
+			serviceDTO.setTableId(AirKonstanten.TABLE_ID_SERVICE);
+			serviceDTO.setAlias(service.getServiceAias());
+			serviceDTO.setServiceDescription(service.getServiceDescription());
+			serviceDTO.setProjectName(service.getProjectName());
+			serviceDTO.setOrderNumber(service.getOrderNumber());
+			serviceDTO.setOrganisationalScope(service.getOrganisationalScope());
+			serviceDTO.setCompanyCode(service.getCompanyCode());
+			setCiBaseData(serviceDTO, service);
+		}
+		return serviceDTO;
+	}
+
 	public CiItemsResultDTO findCis(ApplicationSearchParamsDTO input) {// CiSearchParamsDTO
 																		// <T
 																		// extends
@@ -537,8 +557,11 @@ public class CiEntityWS {
 				result = functionHbn.findFunctionBy(input);
 				break;
 			// Added by vandana
+			case AirKonstanten.TABLE_ID_SERVICE:
+				result = ServiceHbn.findServiceBy(input);// ciItemDTOs
+				break;
 			case AirKonstanten.TABLE_ID_WAYS:
-				result = PathwayHbn.findPathwayBy(input);// ciItemDTOs
+				result = PathwayHbn.findPathwayBy(input);
 				break;
 			// Ended by vandana
 			default:

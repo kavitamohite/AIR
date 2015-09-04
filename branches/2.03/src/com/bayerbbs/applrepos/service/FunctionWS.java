@@ -22,12 +22,7 @@ public class FunctionWS {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 		if(null != input &&(LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) ){
 			FunctionDTO functionDTO = getFunctionDTOFromFromEditInput(input);
-			output = functionHbn.createFunction(input.getCwid(), functionDTO, true);
-			if(AirKonstanten.RESULT_OK.equals(output.getResult())){
-				Function function = functionHbn.findByName(input.getName());
-				output.setCiId(function.getId());
-			}
-			
+			output = functionHbn.createFunction(input.getCwid(), functionDTO, true);			
 		}
 		return output;
 	}

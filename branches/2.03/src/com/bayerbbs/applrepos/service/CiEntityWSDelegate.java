@@ -2,6 +2,7 @@ package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.FunctionDTO;
+import com.bayerbbs.applrepos.domain.ServiceDTO;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
@@ -97,5 +98,9 @@ public class CiEntityWSDelegate {
 	public MassUpdateValueTransferParameterOutPut changeAttrMassUpdateSave(MassUpdateChangeAttrParameterInput mAttrParameterInput){
 		return ciEntityWS.changeAttrMassUpdateSave(mAttrParameterInput);
 	}
+	public ServiceDTO getService(CiDetailParameterInput input) {
+		return ciEntityWS.getService(input);
+	}
+
 
 }

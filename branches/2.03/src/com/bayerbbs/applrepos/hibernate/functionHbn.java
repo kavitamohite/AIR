@@ -48,6 +48,7 @@ public class functionHbn extends BaseHbn {
 	public static CiEntityEditParameterOutput createFunction(String cwid,
 			FunctionDTO functionDTO, boolean forceOverride) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		Long id = null;
 
 		if (null != cwid) {
 
@@ -65,7 +66,7 @@ public class functionHbn extends BaseHbn {
 
 					boolean autoCommit = false;
 					try {
-						session.save(function);
+						id = (Long) session.save(function);
 						session.flush();
 						autoCommit = true;
 
@@ -80,6 +81,7 @@ public class functionHbn extends BaseHbn {
 								output.setResult(AirKonstanten.RESULT_OK);
 								output.setMessages(new String[] { EMPTY });
 								output.setTableId(AirKonstanten.TABLE_ID_FUNCTION);
+								output.setCiId(id);
 							} else {
 								output.setResult(AirKonstanten.RESULT_ERROR);
 								output.setMessages(new String[] { hbnMessage });

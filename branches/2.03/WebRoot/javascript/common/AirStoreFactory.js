@@ -1901,6 +1901,9 @@ AIR.AirStoreFactory = function() {
 				 break;
 				case AC.TABLE_ID_FUNCTION:
 					ciDetailStore = this.createFunctionDetailStore();
+				break;
+				case AC.TABLE_ID_SERVICE:
+					ciDetailStore = this.createServiceDetailStore();								
 				default: break;
 				}
 			
@@ -2118,6 +2121,28 @@ AIR.AirStoreFactory = function() {
 		},
 		//Added by vandana
 		
+		createServiceDetailStore: function() {
+			var ciDetailRecord = AIR.AirConfigFactory.createServiceCiRecord();
+			
+			var ciDetailReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, ciDetailRecord);
+			
+			var ciDetailStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'ciServiceStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getService',
+					timeout: 120000,
+					reader: ciDetailReader
+				})
+				
+			});
+			return ciDetailStore;			
+		},
 		createApplicationDetailStore: function() {
 			var applicationDetailRecord = Ext.data.Record.create([{
 				name : 'id',//applicationId
@@ -2608,7 +2633,8 @@ AIR.AirStoreFactory = function() {
 				case AC.TABLE_ID_POSITION:			wsName = 'Schrank'; break;
 				case AC.TABLE_ID_TERRAIN:			wsName = 'Terrain'; break;
 				case AC.TABLE_ID_FUNCTION:          wsName = 'Function'; break;
-				case AC.TABLE_ID_PATHWAY:          wsName = 'Ways'; break;//Added by vandana
+				case AC.TABLE_ID_PATHWAY:           wsName = 'Ways'; break;
+				case AC.TABLE_ID_SERVICE:           wsName = 'Service'; break;
 				default: wsName = 'Application'; break;
 			}
 	

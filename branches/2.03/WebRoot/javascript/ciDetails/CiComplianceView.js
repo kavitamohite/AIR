@@ -386,8 +386,11 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			tfItsetName.setValue(data.itsetName);
 		} else if(!data.isCiCreate) {
 			var itsetStore = AIR.AirStoreManager.getStoreByName('itSetListStore');
-			var itsetName = itsetStore.getById(data.itset).get('text');
-			tfItsetName.setValue(itsetName);
+			if(itsetStore.getById(data.itset)!=undefined){
+				var itsetName = itsetStore.getById(data.itset).get('text');
+				tfItsetName.setValue(itsetName);
+			}
+
 		}
 		
 		var isTemplate = data.template == '1' || data.template == '-1';
@@ -736,6 +739,15 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	update: function(data) {
+		if(data.tableId == AC.TABLE_ID_SERVICE){
+			var fsComplianceDetails = this.getComponent('fsComplianceDetails');
+			var fsRelevantRegulations = this.getComponent('fsRelevantRegulations');
+			var fsComplianceMgmt = this.getComponent('fsComplianceMgmt');
+			fsComplianceDetails.setVisible(false);
+			fsRelevantRegulations.setVisible(false);
+			fsComplianceMgmt.setVisible(false);
+			return;
+		}
 		var rgRelevanceBYTSEC = this.getComponent('fsComplianceMgmt').getComponent('rgRelevanceBYTSEC');
 		
 		var tfItsetName = this.getComponent('fsComplianceDetails').getComponent('pItSet').getComponent('tfItsetName');
@@ -826,6 +838,16 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	setData: function(data) {
+		if(data.tableId == AC.TABLE_ID_SERVICE){
+			var fsComplianceDetails = this.getComponent('fsComplianceDetails');
+			var fsRelevantRegulations = this.getComponent('fsRelevantRegulations');
+			var fsComplianceMgmt = this.getComponent('fsComplianceMgmt');
+			fsComplianceDetails.setVisible(false);
+			fsRelevantRegulations.setVisible(false);
+			fsComplianceMgmt.setVisible(false);
+			return;
+		}
+		
 		var rgRelevanceBYTSEC = this.getComponent('fsComplianceMgmt').getComponent('rgRelevanceBYTSEC');
 
 		if (null === rgRelevanceBYTSEC.getValue()) {

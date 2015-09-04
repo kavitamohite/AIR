@@ -261,7 +261,8 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION ||
 		   ciDetail.tableId == AC.TABLE_ID_ROOM ||
 		   ciDetail.tableId == AC.TABLE_ID_BUILDING ||
-		   ciDetail.tableId == AC.TABLE_ID_IT_SYSTEM) {
+		   ciDetail.tableId == AC.TABLE_ID_IT_SYSTEM ||
+		   ciDetail.tableId == AC.TABLE_ID_SERVICE) {
 			tfAlias.setVisible(true);
 		} else {
 			tfAlias.setVisible(false);

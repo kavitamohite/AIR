@@ -759,13 +759,14 @@ public class AirServlet extends HttpServlet {
 				append(compressJSFile("javascript/myplace/MyPlaceTabView.js", version)).
 				append(compressJSFile("javascript/myplace/MyPlaceView.js", version)).
 				append(compressJSFile("javascript/myplace/MyPlaceHomeView.js", version)).
-				
+								
 				append(compressJSFile("javascript/ciEdit/CiEditView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiDetailsView.js", version)).
 				append(compressJSFile("javascript/ciDetails/specifics/CiSpecificsView.js", version)).
 				append(compressJSFile("javascript/ciDetails/specifics/CiSpecificsAnwendungView.js", version)).
 				append(compressJSFile("javascript/ciDetails/specifics/CiSpecificsLocationItemView.js", version)).//CiSpecificsTerrainView.js
 				append(compressJSFile("javascript/ciDetails/specifics/CiSpecificsItItemView.js", version)).
+				append(compressJSFile("javascript/ciDetails/specifics/CiSpecificsServiceView.js", version)).
 				
 				append(compressJSFile("javascript/ciDetails/CiContactsView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiAgreementsView.js", version)).

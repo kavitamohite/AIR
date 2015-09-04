@@ -304,7 +304,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 				taProtectionConfidentialityDescription.setValue('');
 			}
 		}
-		if(data.tableId == AC.TABLE_ID_FUNCTION){
+		if(data.tableId == AC.TABLE_ID_FUNCTION || data.tableId == AC.TABLE_ID_SERVICE){
 			this.getComponent('protectionAvailability').setVisible(false);
 			this.getComponent('protectionAvailabilityDescription').setVisible(false);
 			this.getComponent('protectionClassInformation').setVisible(false);

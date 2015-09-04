@@ -3,7 +3,11 @@
 	<!-- General -->
 	<Error>
 		<code>100</code>
-		<message>the cwid missing</message>
+		<message>The cwid missing</message>
+	</Error>
+	<Error>
+		<code>101</code>
+		<message>The ci id should be zero</message>
 	</Error>
 
 
@@ -137,6 +141,11 @@
 	<Error>
 	  <code>10000</code>
 	  <message>An function with this name already exists</message>
+	</Error>
+	
+	<Error>
+	  <code>11000</code>
+	  <message>An Service with this name or alias already exists</message>
 	</Error>
 </ErrorCodeItems>
 		

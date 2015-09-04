@@ -303,4 +303,46 @@
 		<Upstream>N</Upstream>
 		<Downstream>Y</Downstream>
 	</Identifier>
+	<Identifier>
+		<Source>Service</Source>
+		<Destination>Application</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>Y</Upstream>
+		<Downstream>N</Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Service</Source>
+		<Destination>Application Platform</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>y</Upstream>
+		<Downstream>N</Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Service</Source>
+		<Destination>Middleware</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>Y</Upstream>
+		<Downstream>N</Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Service</Source>
+		<Destination>Common Service</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>Y</Upstream>
+		<Downstream>N</Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Service</Source>
+		<Destination>Hardware System</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>Y</Upstream>
+		<Downstream>N</Downstream>
+	</Identifier>
+	<Identifier>
+		<Source>Service</Source>
+		<Destination>Transient System Platform</Destination>
+		<Relevance>operational</Relevance>
+		<Upstream>Y</Upstream>
+		<Downstream>N</Downstream>
+	</Identifier>					
 </ConnectionPropertyItems>

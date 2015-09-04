@@ -114,4 +114,9 @@
 		implementation="com.bayerbbs.applrepos.service.SpecialAttributeWSDelegate"
 		url-pattern="/SpecialAttributeWSPort">
 	</endpoint>
+	<endpoint name="ServiceWSPort"
+		implementation="com.bayerbbs.applrepos.service.ServiceWSDelegate"
+		url-pattern="/ServiceWSPort">
+	</endpoint>	
+	
 </endpoints>

@@ -14,7 +14,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * @author equuw
@@ -35,9 +34,6 @@ public class Ways extends CiBase1 implements Serializable {
 	private String connection;
 	private String vendorCircuitName;
 
-	private Long id;
-	private String name;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "mySeqWays")
 	@Column(name = "WAYS_ID")
@@ -56,24 +52,6 @@ public class Ways extends CiBase1 implements Serializable {
 
 	public void setWayName(String wayName) {
 		setName(wayName);
-	}
-
-	@Transient
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@Transient
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Column(name = "CONNECTION")

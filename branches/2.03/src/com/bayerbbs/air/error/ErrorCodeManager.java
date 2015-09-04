@@ -13,11 +13,14 @@ public class ErrorCodeManager {
 	public String getErrorMessage(String errorCode, String test) {
 		
 		String errorMessageDisplay = null;
+		if(hmErrorMessages.isEmpty()){
+			ErrorCodeReader reader = new ErrorCodeReader();
+			
+			// TODO Optimierung nicht jedesmal einlesen / nur für Entwicklung
+			hmErrorMessages = reader.readErrorMessageData();
+		}
 		
-		ErrorCodeReader reader = new ErrorCodeReader();
-		
-		// TODO Optimierung nicht jedesmal einlesen / nur für Entwicklung
-		hmErrorMessages = reader.readErrorMessageData();
+
 		
 		ErrorCode errorCodeData = hmErrorMessages.get(errorCode);
 		

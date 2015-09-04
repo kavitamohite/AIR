@@ -156,7 +156,12 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 					specificsView = new AIR.CiSpecificsItItemView({ id: 'clCiSpecificsItItem', height: 460 });//400
 				//NEW TEST
 				
-				break;             
+				break;
+			case AC.TABLE_ID_SERVICE:
+				specificsView = this.getComponent('clCiSpecificsService');
+				if(!specificsView)
+					specificsView = new AIR.CiSpecificsServiceView({id: 'clCiSpecificsService', height: 460});
+				break;
 			
 		}
 		

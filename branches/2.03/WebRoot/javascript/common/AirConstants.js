@@ -67,7 +67,7 @@ AIR.AirConstants = {
 	TABLE_ID_FUNCTION: 33,
 	TABLE_ID_PATHWAY:  37,
 //	TABLE_ID_WAY: 37,
-//	TABLE_ID_SERVICE: 123,
+	TABLE_ID_SERVICE: 123,
 	
 	// CI-SUB-TYPES
 	// ------------

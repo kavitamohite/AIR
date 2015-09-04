@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
-	public final static String AIR_VERSION = "2.03.006";
+	public final static String AIR_VERSION = "2.03.007";
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
@@ -34,7 +34,8 @@ public final class AirKonstanten {
 	public static final int TABLE_ID_SITE			= 12;
 	public static final int TABLE_ID_WAYS			= 37;
 	public static final int TABLE_ID_FUNCTION       = 33;
-
+	public static final int TABLE_ID_SERVICE        = 123;
+	
 	public static final String CITypes_IT_SYSTEM	= "'Transient System Platform', 'Hardware System'";
 	public static final String CITypes_ANWENDUNG	= "'Application', 'Application Platform', 'Middleware', 'Common Service'";
 	public static final String CITypes_SCHRANK		= "'Position'";
@@ -44,6 +45,7 @@ public final class AirKonstanten {
 	public static final String CITypes_TERRAIN		= "'Terrain'";
 	public static final String CITypes_STANDORT		= "'Site'";
 	public static final String CITypes_WAYS			= "'Way'";
+	public static final String CITypes_SERVICE      = "'Service'";
 	public static final String NOT_BUSINESS_ESSENTIAL = "Not Business Essential";
 	
 	public static final String APPLICATION_GUI_NAME = "AIR";
@@ -176,6 +178,7 @@ public final class AirKonstanten {
 		CI_TYPE_ORDERING.put("Site", 12);
 		CI_TYPE_ORDERING.put("Function", 13);
 		CI_TYPE_ORDERING.put("Way", 14);
+		CI_TYPE_ORDERING.put("Service", 15);
 	}
 	
 	public static final String PRODUCTIONSERVER = "BYZREG";
@@ -224,8 +227,8 @@ public final class AirKonstanten {
 	public static final String SERVICE_CONTRACT = "Service Contract";
 	public static final String PROTECTION_LEVEL_INTEGRITY = "Protection Level Integrity";
 	public static final String EXPLANATION_FOR_PROTECTION_LEVEL = "Explanation for Protection Level";
-	public static final String PROTECTION_LEVEL_CONFIDENTIALITY = "Protection Level Confidentiality";
-	public static final String EXPLANATION_FOR_PROTECTION_LEVEL_CONFIDENTIALITY = "Explanation for Protection Level Confidentiality";
+	public static final String PROTECTION_LEVEL_CONFIDENTIALITY = "Protection Level Information Class";//RFC 11441
+	public static final String EXPLANATION_FOR_PROTECTION_LEVEL_CONFIDENTIALITY = "Explanation for Information Class"; //RFC 11441
 	public static final String PROTECTION_LEVEL_AVAILABILITY = "Protection Level Availability";
 	public static final String EXPLANATION_FOR_PROTECTION_LEVEL_AVAILABILITY = "Explanation for Protection Level Availability";
 	public static final String INFORMATION_CLASS = "Information Class";
