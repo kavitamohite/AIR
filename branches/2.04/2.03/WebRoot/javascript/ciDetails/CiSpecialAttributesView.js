@@ -70,7 +70,6 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                    valueField: 'id',
 	                    displayField: 'name',
 	                    triggerAction: 'all',
-	                    lastQuery: '',
 	                    mode : 'local',
 	                    disabled: true,
 	                    listeners: {
@@ -158,7 +157,13 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
             if(record != -1){
                 return attributes.getAt(record).get('name') ? attributes.getAt(record).get('name'): "";
             } else {
-            	return "";
+            	attributes = Ext.getCmp('specialAttributesListView').getColumnModel().getColumnById('asIsValue').getEditor().getStore();
+            	record = attributes.findExact('id', value);
+                if(record != -1){
+                    return attributes.getAt(record).get('name') ? attributes.getAt(record).get('name'): "";
+                } else {
+                	return "";
+                }
             }
         } else return "";
     },
