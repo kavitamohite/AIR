@@ -45,7 +45,9 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                    listeners: {
 	                    	expand : function(combo){
 	                    		var attributeId = Ext.getCmp('specialAttributesListView').getSelectionModel().selection.record.data.attributeId;
-	                    		combo.store.filter('attributeId',attributeId);
+	                    		combo.store.filterBy(function(record){
+	                    			return record.data.attributeId === parseInt(attributeId) && record.data.selectable === true;
+	                    		},this);
 	                    	},
 	                    	change : function(combo, newValue, oldValue) {
 	                            if (Util.isComboValueValid(combo, newValue, oldValue)) {
