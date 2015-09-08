@@ -4565,6 +4565,10 @@ AIR.AirStoreFactory = function() {
 				name : 'attributeId',
 				mapping : 'attributeId',
 				type: 'int'
+			}, {
+				name: 'selectable',
+				name: 'selectable',
+				type: 'boolean'
 			}]);
 	
 			var attributeValueReader = new Ext.data.XmlReader({
