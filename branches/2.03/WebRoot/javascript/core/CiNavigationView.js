@@ -263,13 +263,13 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	                text: 'License',
 	                img: 'images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
-				},{
+				},/*{
 	                xtype: 'commandlink',
 	                id: 'clCiSpecialAttributes',
 	                text: 'Special Attributes',
 	                img: 'images/Transparent.png',//images/Transparent.png
 	                cls: 'menuSubLink'
-				},{
+				},*/{
 	                xtype: 'commandlink',
 	                id: 'clCiConnections',
 	                text: 'Connections',
@@ -636,8 +636,8 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiLicense');
 		link.updateText(labels.label_menu_detailslicense);
 		
-		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiSpecialAttributes');
-		link.updateText(labels.label_menu_specialAttribute);
+		//link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiSpecialAttributes');
+		//link.updateText(labels.label_menu_specialAttribute);
 		
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiConnections');
 		link.updateText(labels.label_menu_detailsconnections);

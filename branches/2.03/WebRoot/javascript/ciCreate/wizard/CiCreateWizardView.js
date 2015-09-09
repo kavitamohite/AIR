@@ -154,32 +154,30 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 				errorData.push(labels.wizardapplicationNameSAPillegal.replace('{0}', this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW').getRawValue()).replace('{1}', this.getComponent('ciCreateWizardP1').getComponent('cbAppCat2W').getRawValue()));
 			}
 		}
-		
-
-		
-		if(params.comments.length === 0)
-			errorData.push(labels.comments);
-		
-		if(params.lifecycleStatusId.length === 0)
-			errorData.push(labels.lifecycleStatus);
-		
-		if(params.applicationCat1Id == AC.APP_CAT1_APPLICATION) {
-			if(!params.organisationalScope)
-				errorData.push(labels.organisationalScope);
+		if(!AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR)){
+			if(params.comments.length === 0)
+				errorData.push(labels.comments);
 			
-			if(!params.barRelevance || params.barRelevance === 'U')
-				errorData.push(labels.rgBARrelevance);
+			if(params.lifecycleStatusId.length === 0)
+				errorData.push(labels.lifecycleStatus);
 			
-			if(params.applicationOwnerHidden.length === 0)
-				errorData.push(labels.applicationOwner);
-			
-			if(params.applicationStewardHidden.length === 0)
-				errorData.push(labels.applicationSteward);
-			
-			if(params.applicationOwnerDelegateHidden.length === 0)
-				errorData.push(labels.applicationOwnerDelegate);
+			if(params.applicationCat1Id === AC.APP_CAT1_APPLICATION) {
+				if(!params.organisationalScope)
+					errorData.push(labels.organisationalScope);
+				
+				if(!params.barRelevance || params.barRelevance === 'U')
+					errorData.push(labels.rgBARrelevance);
+				
+				if(params.applicationOwnerHidden.length === 0)
+					errorData.push(labels.applicationOwner);
+				
+				if(params.applicationStewardHidden.length === 0)
+					errorData.push(labels.applicationSteward);
+				
+				if(params.applicationOwnerDelegateHidden.length === 0)
+					errorData.push(labels.applicationOwnerDelegate);
+			}			
 		}
-		
 		if(errorData.length === 0) {
 			var checkParams = {};
 			this.params = params;
@@ -279,11 +277,10 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 			case 'OK':
 				//noch ciSubTypeId (und tableId) aus combo holen
 				var cbCiTypeW = this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW');
-				var r = cbCiTypeW.getStore().getById(cbCiTypeW.getValue());
-				
+								
 				AAM.setCiId(records[0].data.applicationId);
-				AAM.setTableId(r.get('ciTypeId'));//AC.TABLE_ID_APPLICATION
-				AAM.setCiSubTypeId(r.get('ciSubTypeId'));
+				AAM.setTableId(AC.TABLE_ID_APPLICATION);//AC.TABLE_ID_APPLICATION
+				AAM.setCiSubTypeId(cbCiTypeW.getValue());
 				
 				//ci type, ci sub type und name bei der response dazu?
 				var data = {
