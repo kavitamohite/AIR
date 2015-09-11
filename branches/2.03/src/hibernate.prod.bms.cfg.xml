@@ -68,6 +68,8 @@
 		<mapping class="com.bayerbbs.applrepos.domain.Land" />
 		<mapping class="com.bayerbbs.applrepos.domain.Function" />
 		<mapping class="com.bayerbbs.applrepos.domain.Ways" />
+	    <mapping class="com.bayerbbs.applrepos.domain.Service" />		
+		
 		
 		
 	</session-factory>

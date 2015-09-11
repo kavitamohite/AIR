@@ -22,13 +22,12 @@ if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
 	redirect = "/AIR";
 } else {
 	if(hostName.equals(AirKonstanten.SERVERNAME_BMS_PROD))
-		redirect = "/AIR_P_MS";
+		redirect = "/AIR-P-MS";
 	else{
 		if(hostName.equals(AirKonstanten.SERVERNAME_BMS_QA)){
-			redirect = "/AIR_Q_MS";
+			redirect = "/AIR-Q-MS";
 		}else
 			redirect = "/AIR";
-
 	}				    		
 }
 
