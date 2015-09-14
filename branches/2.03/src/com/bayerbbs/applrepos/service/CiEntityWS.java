@@ -464,11 +464,38 @@ public class CiEntityWS {
 
 	public FunctionDTO getFunction(CiDetailParameterInput input) {
 		FunctionDTO functionDTO = new FunctionDTO();
-		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
+		String cwid = input.getCwid();
+		if (LDAPAuthWS.isLoginValid(cwid, input.getToken())) {
 
 			Function function = functionHbn.findById(input.getCiId());
 			functionDTO.setTableId(AirKonstanten.TABLE_ID_FUNCTION);
 			setFunctionDTO(function, functionDTO);
+			boolean isEditable = false;
+			if (null != function && null == function.getDeleteQuelle()) {
+
+				if (null == function.getCiOwner() && null == function.getCiOwnerDelegate()) {
+					//wenn kein owner oder delegate, dürfen alle editieren
+					isEditable = true;
+				}
+
+				if (!isEditable && (cwid.equals(function.getCiOwner()) || 
+						   cwid.equals(function.getCiOwnerDelegate()))) {
+					isEditable = true;
+				}
+				
+				if (!isEditable && null != function.getCiOwnerDelegate()) {
+					if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(function.getCiOwnerDelegate(), cwid))) {
+						isEditable = true;
+					}
+				}
+			}
+			if (isEditable) {
+				functionDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
+			} else {
+				functionDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
+			}
+			
+
 
 		}
 		return functionDTO;
@@ -482,7 +509,14 @@ public class CiEntityWS {
 			Ways pathway = PathwayHbn.findById(input.getCiId());
 			pathwayDTO.setTableId(AirKonstanten.TABLE_ID_WAYS);
 			setCiBaseData(pathwayDTO, pathway);
-
+			AccessRightChecker checker = new AccessRightChecker();
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(),
+					input.getToken(), pathway)) {
+				pathwayDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
+			} else {
+				pathwayDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
+			}
+		
 		}
 		return pathwayDTO;
 	}
@@ -502,6 +536,13 @@ public class CiEntityWS {
 			serviceDTO.setOrganisationalScope(service.getOrganisationalScope());
 			serviceDTO.setCompanyCode(service.getCompanyCode());
 			setCiBaseData(serviceDTO, service);
+			AccessRightChecker checker = new AccessRightChecker();
+			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(),
+					input.getToken(), service)) {
+				serviceDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
+			} else {
+				serviceDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
+			}
 		}
 		return serviceDTO;
 	}

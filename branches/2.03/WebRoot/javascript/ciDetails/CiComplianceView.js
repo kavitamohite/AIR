@@ -739,7 +739,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	update: function(data) {
-		if(data.tableId == AC.TABLE_ID_SERVICE){
+/*		if(data.tableId === AC.TABLE_ID_SERVICE){
 			var fsComplianceDetails = this.getComponent('fsComplianceDetails');
 			var fsRelevantRegulations = this.getComponent('fsRelevantRegulations');
 			var fsComplianceMgmt = this.getComponent('fsComplianceMgmt');
@@ -747,7 +747,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			fsRelevantRegulations.setVisible(false);
 			fsComplianceMgmt.setVisible(false);
 			return;
-		}
+		}*/
 		var rgRelevanceBYTSEC = this.getComponent('fsComplianceMgmt').getComponent('rgRelevanceBYTSEC');
 		
 		var tfItsetName = this.getComponent('fsComplianceDetails').getComponent('pItSet').getComponent('tfItsetName');
@@ -838,7 +838,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	setData: function(data) {
-		if(data.tableId == AC.TABLE_ID_SERVICE){
+/*		if(data.tableId === AC.TABLE_ID_SERVICE){
 			var fsComplianceDetails = this.getComponent('fsComplianceDetails');
 			var fsRelevantRegulations = this.getComponent('fsRelevantRegulations');
 			var fsComplianceMgmt = this.getComponent('fsComplianceMgmt');
@@ -846,7 +846,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			fsRelevantRegulations.setVisible(false);
 			fsComplianceMgmt.setVisible(false);
 			return;
-		}
+		}*/
 		
 		var rgRelevanceBYTSEC = this.getComponent('fsComplianceMgmt').getComponent('rgRelevanceBYTSEC');
 

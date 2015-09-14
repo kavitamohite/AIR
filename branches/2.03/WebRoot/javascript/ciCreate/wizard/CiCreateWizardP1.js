@@ -22,7 +22,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {
 				id: 'cbCiTypeW',
 			    fieldLabel: 'Type',
 			    
-			    valueField: 'id',
+			    valueField: 'ciSubTypeId',
 		        displayField: 'text',
 		        editable: false,
 		        lastQuery: '',
@@ -170,7 +170,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {
 		var r = Util.getComboRecord(cbCiTypeW, 'ciTypeId', AC.TABLE_ID_APPLICATION);
 		
 		if(r) {
-			cbCiTypeW.setValue(r.get('id'));
+			cbCiTypeW.setValue(r.get('ciSubTypeId'));
 			
 			var data = {
 				applicationCat1Id: r.get('ciSubTypeId')
