@@ -118,5 +118,21 @@
 		implementation="com.bayerbbs.applrepos.service.ServiceWSDelegate"
 		url-pattern="/ServiceWSPort">
 	</endpoint>	
+	<endpoint name="AssetManagementWSPort"
+		implementation="com.bayerbbs.applrepos.service.AssetManagementWSDelegate"
+		url-pattern="/AssetManagementWSPort">
+	</endpoint>
+	<endpoint name="ProductWSPort"
+		implementation="com.bayerbbs.applrepos.service.ProductWSDelegate"
+		url-pattern="/ProductWSPort">
+	</endpoint>
+	<endpoint name="BusinessAdministrationWSPort"
+		implementation="com.bayerbbs.applrepos.service.BusinessAdministrationWSDelegate"
+		url-pattern="/BusinessAdministrationWSPort">
+	</endpoint>
+	<endpoint name="ContactWSPort"
+		implementation="com.bayerbbs.applrepos.service.ContactWSDelegate"
+		url-pattern="/ContactWSPort">
+	</endpoint>	
 	
 </endpoints>

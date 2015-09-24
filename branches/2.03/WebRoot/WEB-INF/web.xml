@@ -144,6 +144,28 @@
   	<servlet-name>ApplicationService</servlet-name>
   	<url-pattern>/ServiceWSPort</url-pattern>
   </servlet-mapping>   
+  <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/SpecialAttributeWSPort</url-pattern>
+  </servlet-mapping>    
+   <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/AssetManagementWSPort</url-pattern>
+  </servlet-mapping> 
+   <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/ProductWSPort</url-pattern>
+  </servlet-mapping>
+   
+   <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/BusinessAdministrationWSPort</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/ContactWSPort</url-pattern>
+  </servlet-mapping>
   
   <servlet>
   	<description>AirCiExcelExportServlet</description>
@@ -158,6 +180,18 @@
   	<url-pattern>/excelexport</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<description>AirAssetExcelExportServlet</description>
+  	<servlet-name>AirAssetExcelExportServlet</servlet-name>
+  	<servlet-class>
+  		com.bayerbbs.applrepos.servlet.AirAssetExcelExportServlet
+  	</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AirAssetExcelExportServlet</servlet-name>
+  	<url-pattern>/assetExcelExport</url-pattern>
+  </servlet-mapping>
   
   <servlet>
   	<description>GsToolMassnahmenBeschreibungServlet</description>
