@@ -44,4 +44,8 @@ public class BuildingWSDelegate {
 	public KeyValueDTO[] findBuildingAreasByBuildingId(DefaultDataInput detailInput) {
 		return buildingWS.findBuildingAreasByBuildingId(detailInput.getId());
 	}
+	
+	public KeyValueDTO[] findBuildingsBySiteId(DefaultDataInput input){
+		return buildingWS.findBuildingsBySiteId(input.getId());
+	}
 }

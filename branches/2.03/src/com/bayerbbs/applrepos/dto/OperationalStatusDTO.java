@@ -1,6 +1,6 @@
 package com.bayerbbs.applrepos.dto;
 
-public class OperationalStatusDTO {
+public class OperationalStatusDTO implements Comparable<OperationalStatusDTO> {
 
 	/**
 	 * The DTO (Data transfer object) for the database table "EINSATZ_STATUS" - operational status
@@ -44,6 +44,10 @@ public class OperationalStatusDTO {
 	}
 	public void setSort(Long sort) {
 		this.sort = sort;
+	}
+	@Override
+	public int compareTo(OperationalStatusDTO other) {
+		return operationalStatus.compareTo(other.getOperationalStatus());
 	}
 	
 }

@@ -9,7 +9,7 @@
   		<property name="hibernate.connection.autoReconnect">true</property>
   		<property name="hibernate.connection.validationQuery">SELECT 1</property>
   
-  		<property name="show_sql">false</property>
+  		<property name="show_sql">true</property>
   		<property name="dialect">org.hibernate.dialect.OracleDialect</property>
 
 		<mapping package="com.bayerbbs.applrepos.domain" />
@@ -73,5 +73,24 @@
 		<mapping class="com.bayerbbs.applrepos.domain.AttributeValue" />
 		<mapping class="com.bayerbbs.applrepos.domain.SpecialAttribute" />
 		<mapping class="com.bayerbbs.applrepos.domain.Service" />		
+
+		
+		<!-- Asset Management -->
+		<mapping class="com.bayerbbs.applrepos.domain.HardwareComponent" />
+		<mapping class="com.bayerbbs.applrepos.domain.LifecycleSubStat" />
+		<mapping class="com.bayerbbs.applrepos.domain.HardwareCategory1" />
+		<mapping class="com.bayerbbs.applrepos.domain.HardwareCategory2" />
+		<mapping class="com.bayerbbs.applrepos.domain.HardwareCategory3" />
+		<mapping class="com.bayerbbs.applrepos.domain.HardwareCategory4" />
+		<mapping class="com.bayerbbs.applrepos.domain.Partner" />
+		<mapping class="com.bayerbbs.applrepos.domain.Konto" />
+		
+		<mapping class="com.bayerbbs.applrepos.domain.Sla" />
+		<mapping class="com.bayerbbs.applrepos.domain.ServiceContract" />
+		<mapping class="com.bayerbbs.applrepos.domain.SeverityLevel" />
+		<mapping class="com.bayerbbs.applrepos.domain.SoftwareComponent" />
+		<mapping class="com.bayerbbs.applrepos.domain.SoftwareCategory1" />
+		<mapping class="com.bayerbbs.applrepos.domain.SoftwareCategory2" />
+		
 	</session-factory>
 </hibernate-configuration>

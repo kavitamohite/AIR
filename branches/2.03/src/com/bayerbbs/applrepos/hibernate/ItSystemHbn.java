@@ -24,6 +24,7 @@ import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.EditorGroupDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.KeyValueType2DTO;
@@ -1724,6 +1725,28 @@ public class ItSystemHbn extends BaseHbn {
 		
 		ApplReposHbn.sendBusinessEssentialChangedMail(itsystem.getCiOwner(), (dto.getCiSubTypeId()==AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING?AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM:AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM), itsystem.getName(), itsystem.getAlias(), dto.getBusinessEssentialId(), businessEssentialIdOld, dto.getTableId(), dto.getId());
 	
+	}
+	
+	public static KeyValueDTO[] getOsNames(){
+		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Connection conn = session.connection();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select os_name_id, os_name from v_md_os where hw_ident_or_trans = 1  ORDER BY os_name");
+			while (rs.next()) {
+				KeyValueDTO osNameDto = new KeyValueDTO();
+				osNameDto.setId(Long.parseLong(rs.getString(1)));
+				osNameDto.setName(rs.getString(2));
+				data.add(osNameDto);
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return data.toArray(new KeyValueDTO[data.size()]);
 	}
 
 }

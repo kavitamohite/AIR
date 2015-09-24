@@ -2,6 +2,7 @@ package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Schrank;
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.SchrankDTO;
 import com.bayerbbs.applrepos.hibernate.BaseHbn;
 import com.bayerbbs.applrepos.hibernate.SchrankHbn;
@@ -213,6 +214,10 @@ public class SchrankWS {
 		if (null == output.getDisplayMessage() && null != output.getMessages()) {
 			output.setDisplayMessage(output.getMessages()[0]);
 		}
+	}
+
+	public KeyValueDTO[] findSchrankByRoomId(Long id) {
+		return SchrankHbn.findSchrankByRoomId(id);
 	}
 
 }

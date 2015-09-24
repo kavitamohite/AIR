@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -73,10 +74,7 @@ public class OperationalStatusHbn {
 		try {
 			tx = session.beginTransaction();
 			@SuppressWarnings("unchecked")
-			List<OperationalStatus> values = session
-					.createQuery(
-							"select h from OperationalStatus as h order by h.sort")
-					.list();
+			List<OperationalStatus> values = session.createQuery("select h from OperationalStatus as h order by h.sort").list();
 
 			listResult = getDTOList(values);
 
@@ -84,17 +82,14 @@ public class OperationalStatusHbn {
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
 				try {
-					// Second try catch as the rollback could fail as well
 					tx.rollback();
 				} catch (HibernateException e1) {
 					System.out.println("Error rolling back transaction");
 				}
-				// throw again the first exception
 				throw e;
 			}
-
 		}
-
+		Collections.sort(listResult);
 		return listResult;
 	}
 

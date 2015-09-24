@@ -39,6 +39,7 @@ public class PersonsHbn {
 			dto.setLastname(data.getLastname());
 			dto.setFirstname(data.getFirstname());
 			dto.setMail(data.getMail());
+			dto.setOrgUnit(data.getOrgUnitName());
 
 			listDTO.add(dto);
 		}

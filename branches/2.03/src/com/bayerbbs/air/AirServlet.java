@@ -806,7 +806,27 @@ public class AirServlet extends HttpServlet {
 				
 				append(compressJSFile("javascript/massUpdate/MassUpdateAttributeValueTransferWindow.js", version)).
 				append(compressJSFile("javascript/massUpdate/MassUpdateComplianceCotrolSelectionWindow.js",version)).
-				append(compressJSFile("javascript/massUpdate/MassUpdateSelectAttributeValueWindow.js",version)).				
+				append(compressJSFile("javascript/massUpdate/MassUpdateSelectAttributeValueWindow.js",version)).
+				append(compressJSFile("javascript/ciDetails/CiSpecialAttributesView.js", version)).
+
+
+                //asset management
+				append(compressJSFile("javascript/assetManagement/CiAssetManagementView.js", version)).
+				append(compressJSFile("javascript/assetManagement/CiNewSoftwareAsset.js", version)).
+				append(compressJSFile("javascript/assetManagement/search/CiAssetManageSearchView.js", version)).
+				append(compressJSFile("javascript/assetManagement/search/CiAssetResultGrid.js", version)).				
+				append(compressJSFile("javascript/assetManagement/search/CiAssetResultView.js", version)).
+				append(compressJSFile("javascript/assetManagement/CiNewAssetView.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiTopPanel.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiProduct.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiContact.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiLocation.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiBusiness.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiTechnics.js", version)).
+				append(compressJSFile("javascript/assetManagement/details/CiSoftwareProduct.js", version)).
+				append(compressJSFile("javascript/assetManagement/CiNewHardwareAsset.js", version)).
+				append(compressJSFile("javascript/assetManagement/CiHardwareInfo.js", version)).
+				
 				
 	//			===================================================================================================================
 				

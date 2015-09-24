@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
+import com.bayerbbs.applrepos.dto.KeyValueDTO;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "SchrankWSService", portName = "SchrankWSPort")
 public class SchrankWSDelegate {
@@ -15,5 +16,9 @@ public class SchrankWSDelegate {
 	
 	public CiEntityEditParameterOutput createSchrank(SchrankEditParameterInput editInput) {
 		return schrankWS.createSchrank(editInput);
+	}
+	
+	public KeyValueDTO[] findSchrankByRoomId(DefaultDataInput detailInput) {
+		return schrankWS.findSchrankByRoomId(detailInput.getId());
 	}
 }

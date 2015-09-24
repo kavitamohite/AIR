@@ -466,4 +466,8 @@ public class BuildingWS {
 		}
 	}
 
+	public KeyValueDTO[] findBuildingsBySiteId(Long id) {
+		return BuildingHbn.findBuildingsBySiteId(id);
+	}
+
 }
