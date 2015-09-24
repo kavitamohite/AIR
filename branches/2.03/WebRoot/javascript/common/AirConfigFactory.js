@@ -51,7 +51,7 @@ AIR.AirConfigFactory = function() {
 			var itSystemCiFields = this.getBaseCiFields();
 			
 			itSystemCiFields.push('ciSubTypeId');
-			itSystemCiFields.push('osNameId');//bestimmt gleichzeitig auch noch osType und osGroup
+			itSystemCiFields.push('osNameId');
 			itSystemCiFields.push('clusterCode');
 			itSystemCiFields.push('clusterType');
 			itSystemCiFields.push('isVirtualHardwareClient');
@@ -225,8 +225,24 @@ AIR.AirConfigFactory = function() {
 
 			
 			return baseCiFields;
+		},
+		
+		createAssetManagementGridConfig: function(selModel) {
+		    var columnConfig = [];
+		    columnConfig.push(selModel);
+		    columnConfig.push({ id: 'sapDescription', header: 'SAP Description', dataIndex: 'sapDescription', width: 150, sortable: true});
+			columnConfig.push({ id: 'pspElement', header: 'PSP Element', dataIndex: 'pspElement', width: 150, sortable: true});
+			columnConfig.push({ id: 'costCenter', header: 'Cost Center', dataIndex: 'costCenter', width: 150, sortable: true});
+			columnConfig.push({ id: 'site', header: 'Site', dataIndex: 'site', width: 150, sortable: false});
+			columnConfig.push({ id: 'serialNumber', header: 'Serial Number', dataIndex: 'serialNumber', width: 150, sortable: true});
+			columnConfig.push({ id: 'technicalMaster', header: 'Technical Master', dataIndex: 'technicalMaster', width: 150, sortable: true});
+			columnConfig.push({ id: 'technicalNumber', header: 'Technical Number', dataIndex: 'technicalNumber', width: 150, sortable: true});
+			columnConfig.push({ id: 'inventoryNumber', header: 'Inventory Number', dataIndex: 'inventoryNumber', width: 150, sortable: true});
+			columnConfig.push({ id: 'organizationalunit', header: 'Org Unit', dataIndex: 'organizationalunit', width: 150, sortable: true});
+			
+			return columnConfig;
 		}
-	};
+	}
 }();
 // };
 Ext.reg('AIR.AirConfigFactory', AIR.AirConfigFactory);

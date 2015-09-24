@@ -135,6 +135,10 @@ AIR.AirPersonPicker = Ext.extend(Ext.Tip, {
 		var hiddenElement = Ext.getCmp(comp.getId() + 'Hidden');
 		var contains = false;
 		
+		if(!hiddenElement){
+			hiddenElement = comp.ownerCt.getComponent(comp.getItemId() + 'Hidden');
+		}
+		
 		if (element) {
 			if (element.maxContacts && element.maxContacts > 1) {
 				if (element.getValue().length == 0) {
@@ -214,7 +218,11 @@ AIR.AirPersonPicker = Ext.extend(Ext.Tip, {
 		
 		
 		var beginTitle = this.comp.getValue().length == 0 ? 'Add' : 'Replace';
-		var title = beginTitle + ' CWID to '+ Ext.get('label'+ this.comp.getId()).dom.innerHTML +'<br>(Type "Lastname, Firstname" or "CWID")<br><hr>';
+		if(Ext.get('label'+this.comp.getId())){
+			var title = beginTitle + ' CWID to '+ Ext.get('label'+ this.comp.getId()).dom.innerHTML +'<br>(Type "Lastname, Firstname" or "CWID")<br><hr>';
+		} else {
+			var title = beginTitle + ' CWID to '+ this.comp.label +'<br>(Type "Lastname, Firstname" or "CWID")<br><hr>';
+		}
 		
 		this.setTitle(title);
 	},

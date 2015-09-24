@@ -14,7 +14,6 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 	    	   checkOnly : true,
 	    	   sortable: true,
 	    	   singleSelect: true,
-//	    	   singleSelect: this.getId().substring(0, this.getId().indexOf('_')) === AC.SEARCH_TYPE_ADV_SEARCH ? false : true 
 	    		listeners: {
 	    			beforerowselect : function(selModel, rowIndex, keepExisting, record ){
 	    				if(selModel.grid.ownerCt.ownerCt.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect').getValue()){
@@ -56,14 +55,6 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 		this.defaultColumnConfig = columns;
 	    
 		var colModel = new Ext.grid.ColumnModel(columns);
-		
-//		if (columns[0].id != 'name') {
-//			selModel = AC.resultGridSelModel;
-//		} else {
-//			selModel = new Ext.grid.RowSelectionModel({
-//				singleSelect: true
-//			});
-//		}
 
 		var applicationListStore = AIR.AirStoreFactory.createCiItemListStore();//createApplicationListStore
 		

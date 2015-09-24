@@ -18,7 +18,6 @@ AIR.AirApplicationManager = function() {
 				var checkAuthStore = AIR.AirStoreFactory.createCheckAuthStore();
 //				checkAuthStore.on('load', this.onAuthCheck, this);
 				
-
 				if(this.isAnwendungsEinsprung()) {
 					var einsprungData = this.getEinsprungData();
 					
@@ -144,12 +143,22 @@ AIR.AirApplicationManager = function() {
 				serviceModelListStore: null,
 				dedicatedListStore: null,
 				organisationalScopeListStore: null,
-				
     			sisoogleSourceListStore: null,//{ params: { params: { type: AC.SISOOGLE_ATTR_TYPE_INSERT_QUELLE } } },
-				
-			
 				linkCiTypeListStore: null,
-				groupTypesListStore: null
+				groupTypesListStore: null,
+				
+				sapAssetListStore: null,
+				sapAssetSoftwareListStore: null,
+				landListStore: null, 
+				manufactureListStore: null, 
+				subCategoryListStore: null,
+				typeListStore: null,
+				modelListStore: null,
+				costCenterListStore: null, 
+				pspElementListStore: null,
+				osListStore: null,
+				softwaremanufacturerListStore:null,
+				legalentityListStore:null
 			};
 			
 			this.storeCount = 0;
@@ -238,8 +247,14 @@ AIR.AirApplicationManager = function() {
 				ciCreateWizardView.on('airAction', this.onAirAction, this);
 			}
 			//new wizard
+			var ciNewAssetView = airViewport.getCenterView().getComponent('ciNewAssetView');
+			ciNewAssetView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
 			
-			
+			var ciNewHardwareAsset = airViewport.getCenterView().getComponent('ciNewHardwareAsset');
+			ciNewHardwareAsset.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
+
+			var ciNewSoftwareAsset = airViewport.getCenterView().getComponent('ciNewSoftwareAsset');
+			ciNewSoftwareAsset.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
 			
 			var ciCreateView = airViewport.getCenterView().getComponent('ciCreateView');
 			var ciCopyFromView = ciCreateView.getComponent('ciCreatePagesView').getComponent('CiCopyFromView');
@@ -277,6 +292,10 @@ AIR.AirApplicationManager = function() {
 			if(ciCreateWizardPagesView)
 				ciCreateWizardPagesView.on('airAction', this.onAirAction, this);
 			ciDeleteView.on('airAction', this.onAirAction, this);
+			
+			//Asset Management
+			var ciAssetSearchResultView = ciCenterView.getComponent('ciAssetManagementView').getComponent('ciAssetSearchResultView');
+			ciAssetSearchResultView.on('externalNavigation', navigationView.onExternalNavigation, navigationView);
 		},
 		
 		getCallbackManager: function() {
@@ -581,6 +600,9 @@ AIR.AirApplicationManager = function() {
 		getLastName: function() {
 			return this.lastName;
 		},
+		getFullName: function(){
+			return AAM.lastName+', '+AAM.firstName+' ('+AAM.cwid+')';
+		},
 		
 		
 		setLastLogon: function(lastLogon) {
@@ -594,9 +616,12 @@ AIR.AirApplicationManager = function() {
 		getLanguage: function() {
 			return this.language;
 		},
-		
-		
-		
+		setCiTypeId: function(ciTypeId){
+			this.ciTypeId = ciTypeId;
+		},
+		getCiTypeId: function () {
+			return this.ciTypeId;
+		},
 		getCiId: function() {
 			return this.ciId;
 		},		
@@ -621,21 +646,22 @@ AIR.AirApplicationManager = function() {
 		setSelectedCiIds: function(selectedCiIds) {
 			this.selectedCiIds = selectedCiIds;
 		},
-		setCiTypeId: function(ciTypeId){
-			this.ciTypeId = ciTypeId;
+		
+		getAssetId: function(){
+			return this.assetId;
 		},
-		getCiTypeId: function () {
-			return this.ciTypeId;
-		},		
 		
-//		getCiData: function() {
-//			return this.ciData;
-//		},
-//		
-//		setCiData: function(ciData) {
-//			this.ciData = ciData;
-//		},
+		setAssetId: function(assetId){
+			this.assetId = assetId;
+		},
 		
+		getComponentType: function(){
+			return this.componentType;
+		},
+		
+		setComponentType: function(componentType){
+			this.componentType = componentType;
+		},
 		
 		getHelpText: function(helpTextId) {
 			var languageHelpStore = AIR.AirStoreManager.getStoreByName('languageHelpStore');
@@ -667,7 +693,6 @@ AIR.AirApplicationManager = function() {
 			
 			return null;
 		},
-		
 		
 		updateCookie: function(data, removeOthers) {
 			var airCookie = Ext.state.Manager.get('airCookie') || {};
@@ -767,12 +792,12 @@ AIR.AirApplicationManager = function() {
 		},
 		
 		isAnwendungsEinsprung: function() {
-			var baseURI = Ext.isIE ? document.URL || document.location : Ext.getBody().dom.baseURI;
+			var baseURI = document.URL || document.location ;
 			return baseURI.indexOf('?') > -1;
 		},
 		
 		getEinsprungData: function() {
-			var baseURI = Ext.isIE ? document.URL || document.location : Ext.getBody().dom.baseURI;
+			var baseURI = document.URL || document.location;
 			
 			if(baseURI.indexOf('#') > -1)
 				baseURI = baseURI.split('#')[0];
@@ -807,9 +832,7 @@ AIR.AirApplicationManager = function() {
 				t === AC.TABLE_ID_BUILDING_AREA ||
 				t === AC.TABLE_ID_BUILDING ||
 				t === AC.TABLE_ID_TERRAIN ||
-				t === AC.TABLE_ID_SITE ||
-				t === AC.TABLE_ID_PATHWAY ||
-				t === AC.TABLE_ID_FUNCTION;
+				t === AC.TABLE_ID_SITE;
 			
 			return is;
 		},
@@ -879,7 +902,12 @@ AIR.AirApplicationManager = function() {
 		setSlaInValid: function(salInValid){
 			this.salInValid = salInValid;
 		},
-		
+		setCiTypeId: function(ciTypeId){
+			this.ciTypeId = ciTypeId;
+		},
+		getCiTypeId: function () {
+			return this.ciTypeId;
+		},
 		isSlaInvalid: function(){
 			if(this.salInValid == undefined){
 				return false;

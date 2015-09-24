@@ -81,6 +81,10 @@ AIR.AirRemovePicker = Ext.extend(Ext.Tip, {
 		var element = Ext.getCmp(this.comp.getId());
 		var hiddenElement = Ext.getCmp(this.comp.getId() + 'Hidden');
 		
+		if(!hiddenElement){
+			hiddenElement = comp.ownerCt.getComponent(comp.getItemId() + 'Hidden');
+		}
+		
 		var values = '';
 		var hiddenValues = '';
 		var i = 0;
@@ -124,6 +128,10 @@ AIR.AirRemovePicker = Ext.extend(Ext.Tip, {
 		var element = Ext.getCmp(comp.getId());
 		var hiddenElement = Ext.getCmp(comp.getId() + 'Hidden');
 		
+		if(!hiddenElement){
+			hiddenElement = comp.ownerCt.getComponent(comp.getItemId() + 'Hidden');
+		}
+		
 		if (element && hiddenElement ) {
 			values = element.getValue().split('\n');
 			hiddenValues = hiddenElement.getValue().split(',');
@@ -136,8 +144,14 @@ AIR.AirRemovePicker = Ext.extend(Ext.Tip, {
 				store.loadData(rec);
 			}
 		}
+		
+		if(Ext.get('label'+this.comp.getId())){
+			var title = 'Remove Records from '+ Ext.get('label'+comp.getId()).dom.innerHTML +'<br><hr>';
+		} else {
+			var title = 'Remove Records from '+ this.comp.label +'<br><hr>'; 
+		}
 
-		this.setTitle('Remove Records from '+ Ext.get('label'+comp.getId()).dom.innerHTML +'<br><hr>');
+		this.setTitle(title);
 	},
 	
 	close: function() {

@@ -16,8 +16,14 @@ AIR.AirConstants = {
 	HELP_ID_DETAILS_LICENSECOSTS: 'help_details_licensecosts',
 	HELP_ID_DETAILS_SPECIALATTIRUBTES: 'help_details_specialattributes',
 	HELP_ID_DETAILS_CONNECTIONS: 'help_details_connections',
+	HELP_ID_DETAILS_SPECIALATTIRUBTES: 'help_details_specialattributes',
 	HELP_ID_DETAILS_SUPPORTSTUFF: 'help_details_supportstuff',
 	HELP_ID_DETAILS_HISTORY: 'help_details_history',
+	HELP_ID_ASSET_MANAGEMENT: 'help_details_assetManagement',
+	HELP_ID_INTANGIBLE_ASSET: 'help_details_intangible',
+	HELP_ID_TANGIBLE_ASSET: 'help_details_tangible',
+	HELP_ID_ASSET_WITH_INVENTORY: 'help_details_assetWithInventory',
+	HELP_ID_ASSET_WO_INVENTORY: 'help_details_assetWoInventory',
 	
 	LOGIN_WINDOW_INFO_TEXT: 
 		'<div style="color: darkblue; font-family: Arial, Helvetica, sans-serif !important; font-size: 7pt !important; font-weight: bold !important;">'+
@@ -49,6 +55,8 @@ AIR.AirConstants = {
 	USER_ROLE_DEVELOPER: 'AIR Developer',
 	USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR: 'AIR BusinessEssential-Editor',//AIR
 	USER_ROLE_AIR_COMPLIANCE_EDITOR: 'AIR Compliance Editor',
+	USER_ROLE_AIR_ASSET_MANAGER:'AIR Asset Manager',
+	USER_ROLE_AIR_ASSET_EDITOR:'AIR Asset Editor',
 	//--
 	USER_ROLE_BOV_ADMIN: 'BOV Admin',
 	USER_ROLE_BOV_EDITOR: 'BOV Editor',

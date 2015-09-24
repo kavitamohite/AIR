@@ -8,27 +8,19 @@ AIR.CiInfoView = Ext.extend(Ext.Panel, {
 	        padding: 5,
 	        border: false,
 	        layout: 'fit',
-	        
 	        headerStyle: {//headerStyle bodyStyle
 			    backgroundImage: 'url(' + img_HeaderBottom + ')',
-//			    backgroundRepeat: 'repeat',
-//			  	backgroundColor: '#FFFFFF',
 		    	fontFamily: AC.AIR_FONT_TYPE,
-//		    	borderBottomColor: '#FFFFFF',
 		    	color: '#ededed'
 			},
-	            
             bodyStyle: {
 		    	backgroundImage: 'url("' + img_gradientNavi_Info + '")',//img_MenuLeft
 		    	backgroundRepeat: 'repeat-x',//'no-repeat',
 		    	backgroundPosition: 'left top'
             },
-            
             items: [{
             	xtype: 'label',
-            	
             	id: 'lInfoText',
-            	
         		style: {
                 	color: AC.AIR_FONT_COLOR,
                 	fontFamily: AC.AIR_FONT_TYPE,
@@ -63,15 +55,6 @@ AIR.CiInfoView = Ext.extend(Ext.Panel, {
 			case 'clCiCreate':
 				helpTextId = AC.HELP_ID_CREATE_CI;
 				break;
-//			case 'menuItemWizard':
-//				helpTextId = AC.HELP_ID_INFOTEXT;
-//				break;
-//			case 'menuItemCopyFrom':
-//				helpTextId = AC.HELP_ID_INFOTEXT;
-//				break;
-//			case 'menuItemDelete':
-//				helpTextId = AC.HELP_ID_INFOTEXT;
-//				break;
 			case 'clCiDetails':
 				helpTextId = AC.HELP_ID_DETAILS_DETAILS;
 				break;
@@ -105,8 +88,22 @@ AIR.CiInfoView = Ext.extend(Ext.Panel, {
 			case 'clCiHistory':
 				helpTextId = AC.HELP_ID_DETAILS_HISTORY;
 				break;
+			case 'clAssetManagement':
+				helpTextId = AC.HELP_ID_ASSET_MANAGEMENT;
+				break;
+			case 'clCiIntangibleAsset' :
+				helpTextId = AC.HELP_ID_INTANGIBLE_ASSET;
+				break;
+			case 'clCiTangibleAsset' :
+				helpTextId = AC.HELP_ID_TANGIBLE_ASSET;
+				break;
+			case 'clCiAssetwithInventory' :
+				helpTextId = AC.HELP_ID_ASSET_WITH_INVENTORY;
+				break;
+			case 'clCiAssetwithoutInventory' :
+				helpTextId = AC.HELP_ID_ASSET_WO_INVENTORY;
+				break;
 			default:
-//				helpTextId = AC.HELP_ID_INFOTEXT;
 				break;
 		}
 		

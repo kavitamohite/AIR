@@ -537,6 +537,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'bExpandAdvSearchParams'},
 			        {name: 'bCollapseAdvSearchParams'},
 			        {name: 'searchTypeSearch'},
+			        {name: 'bReset'},
 			        {name: 'searchTypeAdvancedSearch'},
 			        {name: 'searchTypeOuSearch'},
 			        
@@ -1781,6 +1782,34 @@ AIR.AirStoreFactory = function() {
 			return applicationStore;
 		},
 		
+		createSchrankListStore: function() {
+			var record = Ext.data.Record.create([
+ 			    { name: 'id', type: 'int' },
+ 			    'name'
+ 			]);
+
+ 			var reader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'
+ 			}, record);
+
+ 			var store = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'schrankListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/SchrankWSPort',
+ 					loadMethod: 'findSchrankByRoomId',
+ 					timeout: 120000,
+ 					reader: reader
+ 				})
+ 			});
+ 			
+ 			return store;
+ 		},
+		
+		
 		createRoomListStore: function() {
 			var record = Ext.data.Record.create([
  			    { name: 'id', type: 'int' },
@@ -1807,6 +1836,34 @@ AIR.AirStoreFactory = function() {
  			
  			return store;
  		},
+
+ 		createRoomListStoreFromBuildingId: function() {
+			var record = Ext.data.Record.create([
+ 			    { name: 'id', type: 'int' },
+ 			    'name'
+ 			]);
+
+ 			var reader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'//return keyValueDTO
+ 			}, record);
+
+ 			var store = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'roomListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/RoomWSPort',
+ 					loadMethod: 'findRoomsByBuildingId',
+ 					timeout: 120000,
+ 					reader: reader
+ 				})
+ 			});
+ 			
+ 			return store;
+ 		},
+ 		
 		
  		createBuildingAreaListStore: function() {
 			var record = Ext.data.Record.create([
@@ -1862,6 +1919,34 @@ AIR.AirStoreFactory = function() {
  			
  			return store;
  		},
+ 		createBuildingListStoreFromSiteId: function() {
+			var record = Ext.data.Record.create([
+ 			    { name: 'id', type: 'int' },
+ 			    'name'
+ 			    
+ 			]);
+
+ 			var reader = new Ext.data.XmlReader({
+ 				idProperty: 'id',
+ 				record: 'return'//return keyValueDTO
+ 			}, record);
+
+ 			var store = new Ext.data.XmlStore({
+ 				autoDestroy: true,
+ 				autoLoad: false,
+ 				storeId: 'buildingListStore',
+ 				
+ 				proxy: new Ext.ux.soap.SoapProxy({
+ 					url: webcontext + '/BuildingWSPort',
+ 					loadMethod: 'findBuildingsBySiteId',
+ 					timeout: 120000,
+ 					reader: reader
+ 				})
+ 			});
+ 			
+ 			return store;
+ 		},
+ 		
 		
  		createTerrainListStore: function() {
 			var record = Ext.data.Record.create([
@@ -1953,7 +2038,7 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createCiDetailStore: function(tableId) {
-			var ciDetailStore;
+			var ciDetailStore = null;
 			
 			switch(tableId) {
 				case AC.TABLE_ID_APPLICATION:
@@ -4420,7 +4505,7 @@ AIR.AirStoreFactory = function() {
 			
 			return personPickerStore;
 		},
-		createOperationalStatusListStore: function() {
+/*		createOperationalStatusListStore: function() {
 			var operationalStatusListRecord = Ext.data.Record.create([
 				{ name: 'operationalStatusId', type: 'int' },
  			    'operationalStatus',
@@ -4444,7 +4529,7 @@ AIR.AirStoreFactory = function() {
  				})
  			});
  			return operationalStatusListstore;
- 		},
+ 		},*/
  		createPspElementListStore: function() {
 			var ciPspElementListRecord = Ext.data.Record.create([
 				{ name: 'id', type: 'int' },

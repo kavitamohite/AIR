@@ -1,6 +1,4 @@
 Util = {
-//Util = function() {
-//	return {
 		log: function(message) {
 	    	if(window.console)
 	            window.console.log(message);
@@ -92,21 +90,11 @@ Util = {
 		setDateFieldValue: function(dateField, date) {
 			var v = dateField.formatDate(dateField.parseDate(date));
 			dateField.value = v;
-			
-	//        if(dateField.rendered){
-	//        	dateField.el.dom.value = (Ext.isEmpty(v) ? '' : v);
-	//        	dateField.validate();
-	//        }
 			dateField.el.dom.value = v;
 		},
 		
 		setFieldValue: function(field, value) {
 			field.value = value;
-			
-	//        if(dateField.rendered){
-	//        	dateField.el.dom.value = (Ext.isEmpty(v) ? '' : v);
-	//        	dateField.validate();
-	//        }
 			field.el.dom.value = value;
 		},
 		
@@ -140,8 +128,6 @@ Util = {
 				scopes += records[i].get('id');
 			}
 			
-	//		scopes = records.join(',');
-			
 			return scopes;
 		},
 		
@@ -154,14 +140,6 @@ Util = {
 			return false;
 		},
 		
-	//	initLoadMasks: function() {
-	//		this.masks = {};
-	//		this.masks.startupMask = new Ext.LoadMask(Ext.getBody(), { msg: 'Initializing AIR...' });
-	//		this.masks.loadMask = new Ext.LoadMask(Ext.getBody(), { msg: 'Loading data...' });
-	//		this.masks.saveMask = new Ext.LoadMask(Ext.getBody(), { msg: 'Saving data...' });//msg: AIR.AirApplicationManager.getLabels().gerneral_message_saving
-	//	},
-	
-	
 		createMask: function(message, parentEl) {
 			return new Ext.LoadMask(parentEl, { msg: message });
 		},
@@ -181,7 +159,6 @@ Util = {
 			
 			return record;
 		},
-		
 		
 		getCiTypeRecord: function(ciData) {
 			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
@@ -262,7 +239,22 @@ Util = {
 		restorePreviousValue: function(combo, oldValue) {
 			combo.getStore().clearFilter();
 			combo.setValue(oldValue);
+		},
+		
+		updateFieldLabel: function(field, label){
+			if (!field.rendered){
+				field.fieldLabel = label;
+			} else{
+				field.label.update(label);
+			}
+		},
+		
+		updateLabel: function(field, label){
+			if (!field.rendered){
+	    		field.fieldLabel = label;
+			} else{
+				field.update(label);
+			}
 		}
+
 };
-//	};
-//}();

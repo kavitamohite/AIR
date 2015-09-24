@@ -6,29 +6,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		    layout: 'card',
 		    activeItem: 2,
 		    border: false,
-		    
-//		    deferredRender: false,
-//		    autoScroll: true,
-//		    baseCls: 'x-box',//round coerners
-		    
-//		    bodyStyle: {//style: kein Effekt
-////		    	borderTopLeftRadius: '100px 100px;'
-//		    	background: 'url("images/arrondissement_left.jpg") no-repeat top left;'
-//		    },
-		    
-//		    bodyStyle: {
-//		    	border-top-left-radius:     1em 5em;  
-//		    	border-top-right-radius:    1em 5em;  
-//		    },
-//		    cls: 'roundCorners',
-		    
-
-			/*
-		    bodyStyle: {
-	    		borderRadius: '30px 30px 0px 0px'
-//	    		backgroundColor: '#12638e'
-	    	},*/
-		    
 		    items: [{
 				xtype: 'AIR.MyPlaceView',
 				id: 'myPlaceView'
@@ -45,9 +22,20 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 	        	xtype: 'AIR.CiCreateView',
 	        	id: 'ciCreateView'
 			},{
+	        	xtype: 'AIR.CiAssetManagementView',
+	        	id: 'ciAssetManagementView'
+			},{
+	        	xtype: 'AIR.CiNewAssetView',
+	        	id: 'ciNewAssetView'
+			},{
+	        	xtype: 'AIR.CiNewSoftwareAsset',
+	        	id: 'ciNewSoftwareAsset'
+			},{
+				xtype: 'AIR.CiNewHardwareAsset',
+				id: 'ciNewHardwareAsset'
+			},{
 				xtype: 'form',
 				id: 'exportForm',
-				//hidden: true,
 				border: false,
 				
 				//Important: h prefix for all hidden fields where the id corresponds the fields of CiAdvancedSearchView to avoid duplicate ExtJS Component field IDs
@@ -71,7 +59,16 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					id: 'searchAction'//searchPoint
 				},{
 					xtype: 'hidden',
+					id: 'sort'
+				},{
+					xtype: 'hidden',
+					id: 'dir'
+				},{
+					xtype: 'hidden',
 					id: 'isOnlyApplications'//onlyapplications
+				},{
+					xtype: 'hidden',
+					id: 'query'
 				},{
 					xtype: 'hidden',
 					id: 'queryMode'
@@ -132,10 +129,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				},{
 					xtype: 'hidden',
 					id: 'hprocessId'//hadvsearchoperationalStatusid
-				},
-				
-				
-				{
+				},{
 					xtype: 'hidden',
 					id: 'hbarRelevance'
 				},{
@@ -153,10 +147,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				},{
 					xtype: 'hidden',
 					id: 'hbusinessEssentialId'
-				},
-				
-				
-				{
+				},{
 					xtype: 'hidden',
 					id: 'houCiType'
 				},{
@@ -190,6 +181,18 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 
 		var ciEditView = this.getComponent('ciEditView');
 		
+		var ciNewAssetView=this.getComponent('ciNewAssetView');
+		var clCiProduct = ciNewAssetView.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
+		var clCiLocation = ciNewAssetView.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location');
+		var clCiTechnics = ciNewAssetView.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics');
+		var clCiBusinessInformation = ciNewAssetView.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
+		var clCiContacts = ciNewAssetView.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
+		
+		var ciNewSoftwareAsset=this.getComponent('ciNewSoftwareAsset');
+		var clSoftwareProduct = ciNewSoftwareAsset.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product');
+		var clSoftwareBusinessInformation = ciNewSoftwareAsset.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation');
+		var clSoftwareContacts = ciNewSoftwareAsset.getComponent('bottomPanel').getComponent('leftPanel').getComponent('contacts');
+		
 		this.lastNavigation = {
 			viewId: viewId,
 			link: link,
@@ -199,14 +202,10 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		
 		switch(viewId) {
 			case 'clMyPlace':
-//			    var ciSearchResultView = Ext.getCmp('ciSearchResultView');
-//			    ciSearchResultView.setVisible(false);
 
 				var verwerfenCallback = function() {
 					if(ciEditView)
 						ciEditView.ciModified = false;
-//					if(ciCreateWizardPagesView)
-//						ciCreateWizardPagesView.wizardStarted = false;
 					if(ciCreateWizardView)
 						ciCreateWizardView.wizardStarted = false;
 					
@@ -219,7 +218,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-//						ciEditView.saveApplication({ skipLoading: true });
 						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
@@ -228,12 +226,9 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				break;
 			case 'clMyPlaceMyCIs':
 				var verwerfenCallback = function() {
-//					searchAction = 'myCis';
 					
 					if(ciEditView)
 						ciEditView.ciModified = false;
-//					if(ciCreateWizardPagesView)
-//						ciCreateWizardPagesView.wizardStarted = false;
 					if(ciCreateWizardView)
 						ciCreateWizardView.wizardStarted = false;
 					
@@ -244,7 +239,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					myPlaceView.update(viewId);
 					myPlaceView.updateLabels(AIR.AirApplicationManager.getLabels());
 					
-					
 					myPlaceTabView.loadMyOwnCIsGrid('myCis');
 					
 					if(options && options.callback)
@@ -254,7 +248,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-//						ciEditView.saveApplication({ skipLoading: true });
 						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
@@ -263,12 +256,9 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				break;
 			case 'clMyPlaceMyCIsDelegate':
 				var verwerfenCallback = function() {
-//					searchAction = 'myCisSubstitute';
 					
 					if(ciEditView)
 						ciEditView.ciModified = false;
-//					if(ciCreateWizardPagesView)
-//						ciCreateWizardPagesView.wizardStarted = false;
 					if(ciCreateWizardView)
 						ciCreateWizardView.wizardStarted = false;
 
@@ -278,7 +268,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					
 					myPlaceView.update(viewId);
 					myPlaceView.updateLabels(AIR.AirApplicationManager.getLabels());
-
 					
 					myPlaceTabView.loadDelegateCIsGrid('myCisSubstitute');
 					
@@ -289,7 +278,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-//						ciEditView.saveApplication({ skipLoading: true });
 						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
@@ -317,7 +305,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-//						ciEditView.saveApplication({ skipLoading: true });
 						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
@@ -343,7 +330,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-//						ciEditView.saveApplication({ skipLoading: true });
 						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
@@ -354,8 +340,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var verwerfenCallback = function() {
 					if(ciEditView)
 						ciEditView.ciModified = false;
-//					if(ciCreateWizardPagesView)
-//						ciCreateWizardPagesView.wizardStarted = false;
 					if(ciCreateWizardView)
 						ciCreateWizardView.wizardStarted = false;
 					
@@ -370,7 +354,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			var saveCallback = function() {
 				verwerfenCallback();
 				if(ciEditView)
-//					ciEditView.saveApplication({ skipLoading: true });
 					ciEditView.onSaveApplication();
 			}.createDelegate(this);
 
@@ -381,8 +364,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					this.getLayout().setActiveItem('ciCreateView');
 					if(ciEditView)
 						ciEditView.ciModified = false;
-//					if(ciCreateWizardPagesView)
-//						ciCreateWizardPagesView.wizardStarted = false;
 					if(ciCreateWizardView)
 						ciCreateWizardView.wizardStarted = false;
 
@@ -396,7 +377,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-//						ciEditView.saveApplication({ skipLoading: true });
 						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
@@ -409,29 +389,11 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					
 					if(ciEditView)
 						ciEditView.ciModified = false;
-//					if(ciCreateWizardPagesView) {
-//						ciCreateWizardPagesView.wizardStarted = false;
-//					
-//						var ciCreatePagesView = this.getComponent('ciCreateView').getComponent('ciCreatePagesView');//Ext.getCmp('ciCreatePagesView');//CiCreationCardPanel
-//						ciCreatePagesView.getLayout().setActiveItem('ciCreateWizardPagesView');
-//						
-//						//notwendig, wenn Wizard info/start Seite durch skipWizard user option ausgeschaltet wurde. Alternative: skipWizard auswerten und evtl. wizard hier nicht starten 
-//						ciCreatePagesView.getComponent('ciCreateWizardPagesView').wizardStart(false);
-//						
-//						if(options && options.callback)
-//							options.callback();
-//					}
 					
 					//RFC 8271 - Wizard for Mandatory and/or Required Fields
 					if(ciCreateWizardView) {
 						ciCreatePagesView.getLayout().setActiveItem('ciCreateWizardView');
 						ciCreateWizardView.reset();
-						
-						//if(options && options.wizardStarted !== undefined)
-							//ciCreateWizardView.wizardStarted = options.wizardStarted;
-						
-						//ciCreateWizardView.wizardStarted = false;
-//						ciCreatePagesView.wizardStarted = false;
 						
 						if(options && options.callback)
 							options.callback();
@@ -442,7 +404,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-//						ciEditView.saveApplication({ skipLoading: true });
 						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
@@ -455,8 +416,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					
 					if(ciEditView)
 						ciEditView.ciModified = false;
-//					if(ciCreateWizardPagesView)
-//						ciCreateWizardPagesView.wizardStarted = false;
 					if(ciCreateWizardView)
 						ciCreateWizardView.wizardStarted = false;
 
@@ -465,7 +424,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					
 					var ciCopyFromView = ciCreatePagesView.getComponent('CiCopyFromView');
 					ciCopyFromView.reset();
-//					ciCopyFromView.getLayout().setActiveItem(0);
 
 					if(options && options.callback)
 						options.callback();
@@ -474,7 +432,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-//						ciEditView.saveApplication({ skipLoading: true });
 						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
@@ -487,12 +444,10 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					
 					if(ciEditView)
 						ciEditView.ciModified = false;
-//					if(ciCreateWizardPagesView)
-//						ciCreateWizardPagesView.wizardStarted = false;
 					if(ciCreateWizardView)
 						ciCreateWizardView.wizardStarted = false;
 
-					var ciCreatePagesView = this.getComponent('ciCreateView').getComponent('ciCreatePagesView');//Ext.getCmp('ciCreatePagesView');//CiCreationCardPanel
+					var ciCreatePagesView = this.getComponent('ciCreateView').getComponent('ciCreatePagesView');
 					ciCreatePagesView.getLayout().setActiveItem('ciDeleteView');
 					
 					
@@ -506,7 +461,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				var saveCallback = function() {
 					verwerfenCallback();
 					if(ciEditView)
-//						ciEditView.saveApplication({ skipLoading: true });
 						ciEditView.onSaveApplication();
 				}.createDelegate(this);
 
@@ -529,48 +483,153 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					ciCreateWizardView.wizardStarted = false;
 				
 				this.forwardNavigation(options);
-				
-				/*if(options.isCiCreate) {
-					this.getLayout().setActiveItem('ciEditView');
-					ciEditView.createCi(viewId, link, options);
-				} else {
-					AAM.updateCookie({
-						navigation: viewId,
-						ciId: AAM.getCiId(),
-						tableId: AAM.getTableId()
-					});
-	
-					if(ciEditView) {
-						this.forwardNavigation(options);
-					} else {
-						ciEditView = new AIR.CiEditView({ id: 'ciEditView' });
-	//					var v = ciEditView.getComponent('clCiHistory');
-						ciEditView.getComponent('clCiHistory').on('afterlayout', this.onCiEditTabViewAdded, this);//ciEditView afterrender .getComponent('clCiCompliance')
-	//					ciEditView.on('afterlayout', this.onCiEditTabViewAdded, this);//ciEditView afterrender .getComponent('clCiCompliance')
-	//					
-	//					for(var i = 0; i < ciEditView.items.items.length; i++)
-	//						ciEditView.items.items[i].on('afterlayout', this.onCiEditTabViewAdded, this);
-						
-						//ciEditView.add(ciEditTabView);
-						ciEditView.doLayout(true, true);
-					}
-				}*/
 				break;
 			
+			case 'clAssetManagement':
+				this.getLayout().setActiveItem('ciAssetManagementView');
+				var verwerfenCallback = function() {
+					if(options && options.callback)
+						options.callback();
+					}.createDelegate(this);
+				var saveCallback = function() {
+						verwerfenCallback();
+					}.createDelegate(this);
+
+				this.handleNavigation(verwerfenCallback, saveCallback);
+					break;
+				
+			case 'clCiIntangibleAsset':
+				this.getLayout().setActiveItem('ciNewSoftwareAsset');
+				clSoftwareProduct.setVisible(true);
+				clSoftwareBusinessInformation.setVisible(true);
+				clSoftwareContacts.setVisible(true);
+				clSoftwareBusinessInformation.getComponent('cbSapAsset').store = AIR.AirStoreManager.getStoreByName('sapAssetSoftwareListStore');
+
+				AAM.setComponentType("software");
+				ciNewSoftwareAsset.resetFormFields(null);
+				
+				var verwerfenCallback = function() {
+					if(options && options.callback)
+						options.callback();
+				}.createDelegate(this);
+				var saveCallback = function() {
+					verwerfenCallback();
+				}.createDelegate(this);
+
+				this.handleNavigation(verwerfenCallback, saveCallback);
+				if(AAM.getAssetId()){
+					this.forwardToEdit(AAM.getAssetId());
+				}
+				break;
+					
+			case 'clCiTangibleAsset':
+				this.getLayout().setActiveItem('ciNewHardwareAsset');
+				var ciNewHardwareAsset = this.getComponent('ciNewHardwareAsset');
+				ciNewHardwareAsset.updateLabels(AIR.AirApplicationManager.getLabels());
+				
+				var verwerfenCallback = function() {
+					if(options && options.callback)
+						options.callback();
+				}.createDelegate(this);
+				var saveCallback = function() {
+					verwerfenCallback();
+				}.createDelegate(this);
+
+				this.handleNavigation(verwerfenCallback, saveCallback);
+					break;
+					
+			case 'clCiAssetwithInventory':
+				this.getLayout().setActiveItem('ciNewAssetView');
+				clCiProduct.setVisible(true);
+				clCiLocation.setVisible(true);
+				clCiBusinessInformation.setVisible(true);
+				clCiTechnics.setVisible(true);
+				clCiContacts.setVisible(true);
+				clCiBusinessInformation.getComponent('cbSapAsset').store = AIR.AirStoreManager.getStoreByName('sapAssetListStore');
+				AAM.setComponentType("hardware");
+				
+				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset with Inventory").setVisible(true);
+				ciNewAssetView.resetFormFields(null);
+				var verwerfenCallback = function() {
+					if(options && options.callback)
+						options.callback();
+					}.createDelegate(this);
+					var saveCallback = function() {
+						verwerfenCallback();
+					}.createDelegate(this);
+
+				this.handleNavigation(verwerfenCallback, saveCallback);
+				if(AAM.getAssetId()){
+					this.forwardToEdit(AAM.getAssetId());
+				}
+					break;	
+					
+			case 'clCiAssetwithoutInventory':
+				this.getLayout().setActiveItem('ciNewAssetView');
+				clCiProduct.setVisible(true);
+				clCiLocation.setVisible(true);
+				clCiBusinessInformation.setVisible(true);
+				clCiTechnics.setVisible(true);
+				clCiContacts.setVisible(true);
+				clCiBusinessInformation.getComponent('cbSapAsset').store = AIR.AirStoreManager.getStoreByName('sapAssetListStore');
+				AAM.setComponentType("hardware");
+				
+				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset without Inventory").setVisible(true);
+				ciNewAssetView.resetFormFields(null);
+				var verwerfenCallback = function() {
+					if(options && options.callback)
+						options.callback();
+				}.createDelegate(this);
+				var saveCallback = function() {
+					verwerfenCallback();
+				}.createDelegate(this);
+
+				this.handleNavigation(verwerfenCallback, saveCallback);
+				if(AAM.getAssetId()){
+					this.forwardToEdit(AAM.getAssetId());
+				}
+					break;	
 			default: break;
 		}
 	},
 	
 	onCiEditTabViewAdded: function(ct) {
-//		Util.log(ct.getId());
-//		alert(ct.getId());
-		
 		AIR.AirApplicationManager.registerCiEditView(this);
 		this.forwardNavigation();
 	},
 	
+	forwardToEdit: function(assetId){
+		var ciDetailStore = AIR.AirStoreFactory.createAssetListStore();
+		ciDetailStore.on('beforeload', this.onBeforeAssetLoad, this);
+		ciDetailStore.on('load', this.onAssetLoad, this);
+		ciDetailStore.load({
+			params: {
+				assetId: assetId,
+				queryMode: AAM.getComponentType()
+			}
+		});
+		AAM.setAssetId(null);
+	},
+	
+	onBeforeAssetLoad: function(store, options) {
+		AAM.getMask(AC.MASK_TYPE_LOAD).show();
+	},
+	
+	onAssetLoad: function(store, records, options) {
+		if(records[0]!=undefined){
+			var assetData = records[0].data;
+			var isSoftwareComponent = (assetData.isSoftwareComponent === 'true');
+			var assetView;
+			if(isSoftwareComponent){
+				assetView = this.getComponent('ciNewSoftwareAsset');
+			} else {
+				assetView = this.getComponent('ciNewAssetView');
+			}
+			assetView.update(assetData);
+		}
+	},
+	
 	forwardNavigation: function(options) {
-		//var ciEditTabView = this.getComponent('ciEditView').getComponent('ciEditTabView');
 		var ciEditView = this.getComponent('ciEditView');
 		
 		if(this.lastNavigation.options && this.lastNavigation.options.reset)
@@ -588,13 +647,10 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 	
 	handleNavigation: function(callback, saveCallback) {
 		var ciEditView = this.getComponent('ciEditView');//.getComponent('ciEditTabView');
-//		var ciCreateWizardPagesView = this.getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardPagesView');
 		
 		//RFC 8271 - Wizard for Mandatory and/or Required Fields
 		var ciCreateWizardView = this.getComponent('ciCreateView').getComponent('ciCreatePagesView').getComponent('ciCreateWizardView');
 		//RFC 8271 - Wizard for Mandatory and/or Required Fields
-		
-
 		
 		if(ciEditView && ciEditView.isCiModified()) {
 			var isCiInvalid = ACM.getRequiredFields(AIR.AirApplicationManager.getAppDetail()).length > 0;
@@ -602,16 +658,13 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				isCiInvalid: isCiInvalid
 			};
 			
-//			 if(!ciEditView.itsecChanged) {
-				var callbackMap = {
-					verwerfen: callback,
-					speichern: saveCallback//ciEditView.saveApplication.createDelegate(ciEditView)
-				};
-				
-				var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_CHANGED', callbackMap, null, null, options);
-				dynamicWindow.show();
-//			 } else 
-//				 saveCallback();
+			var callbackMap = {
+				verwerfen: callback,
+				speichern: saveCallback//ciEditView.saveApplication.createDelegate(ciEditView)
+			};
+			
+			var dynamicWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_CHANGED', callbackMap, null, null, options);
+			dynamicWindow.show();
 			 
 		} else if(ciCreateWizardView && ciCreateWizardView.isWizardStarted()) {
 			var callbackMap = {
@@ -624,11 +677,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			callback();
 		}
 	},
-	
-	
-//	onCiSelected: function(source, ciId, target) {
-//		this.getLayout().setActiveItem('ciEditView');
-//	},
 	
 	checkDataChanged: function(callbackMap) {
 		var dataChanged = false;
@@ -661,6 +709,19 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		
 		var ciCreateView = this.getComponent('ciCreateView');
 		ciCreateView.updateLabels(labels);
+		
+		var ciAssetManagementView = this.getComponent('ciAssetManagementView');
+		ciAssetManagementView.updateLabels(labels);
+		
+		var ciNewAssetView = this.getComponent('ciNewAssetView');
+		ciNewAssetView.updateLabels(labels);
+		
+		var ciNewSoftwareAsset = this.getComponent('ciNewSoftwareAsset');
+		ciNewSoftwareAsset.updateLabels(labels);
+		
+		var ciNewHardwareAsset = this.getComponent('ciNewHardwareAsset');
+		ciNewHardwareAsset.updateLabels(labels);
+		
 	},
 	
 	updateToolTips: function(toolTips) {
@@ -674,10 +735,5 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 		ciCreateView.updateToolTips(toolTips);
 	}
 	
-
-	
-//	afterRender: function(parentCt) {
-//		$(this).corner();//this 'ciCenterView'
-//	}
 });
 Ext.reg('AIR.CiCenterView', AIR.CiCenterView);

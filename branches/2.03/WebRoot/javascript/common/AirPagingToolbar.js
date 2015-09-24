@@ -39,8 +39,8 @@ AIR.AirPagingToolbar = Ext.extend(Ext.PagingToolbar, {
 		
 		Ext.apply(this, {
 		    displayInfo: true,
-		    displayMsg: 'Displaying CIs {0} - {1} of {2}',
-		    emptyMsg: 'No CIs to display',
+		    displayMsg: 'Displaying Results {0} - {1} of {2}',
+		    emptyMsg: 'No result to display',
 		
 			items: this.complete ? items : []
 		});
