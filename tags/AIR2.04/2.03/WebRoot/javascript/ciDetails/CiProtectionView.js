@@ -78,7 +78,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 		        
 		        enableKeyEvents: true,
 		        allowBlank: true
-		    },{
+		    },/*{
 		    	xtype: 'textfield',
 		    	width: 230,
 		        fieldLabel: 'Application Protection',
@@ -87,7 +87,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 		        enableKeyEvents: true,
 		        allowBlank: true,
 		        disabled: true
-			},{
+			},*/{
 		        xtype: 'filterCombo',
 		        width: 230,
 		        fieldLabel: 'Integrity',
@@ -166,15 +166,15 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 	},
 	
 	onProtectionClassInformationSelect: function(combo, record, index) {
-		this.getComponent('protectionApplicationProtection').setValue(record.data['classProtectionName']);
+		//this.getComponent('protectionApplicationProtection').setValue(record.data['classProtectionName']);
 		this.fireEvent('ciChange', this, combo, record);
     },
     onProtectionClassInformationChange: function (combo, newValue, oldValue) {
     	if(this.isComboValueValid(combo, newValue, oldValue))
     		this.fireEvent('ciChange', this, combo, newValue);
 		
-		if(newValue == '')
-			this.getComponent('protectionApplicationProtection').setValue('');
+/*		if(newValue == '')
+			this.getComponent('protectionApplicationProtection').setValue('');*/
     },
     
     onProtectionClassInformationExplanationChange: function(textarea, newValue, oldValue) {
@@ -208,7 +208,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 
 		var cbProtectionClassInformation = this.getComponent('protectionClassInformation');
 		var taProtectionClassInformationExplanation = this.getComponent('protectionClassInformationExplanation');
-		var tfProtectionApplicationProtection = this.getComponent('protectionApplicationProtection');
+		//var tfProtectionApplicationProtection = this.getComponent('protectionApplicationProtection');
 		
 		var cbProtectionIntegrity = this.getComponent('protectionIntegrity');
 		var taProtectionIntegrityDescription = this.getComponent('protectionIntegrityDescription');
@@ -220,7 +220,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 		if(data.tableId == AC.TABLE_ID_APPLICATION) {
 			cbProtectionClassInformation.setVisible(true);
 			taProtectionClassInformationExplanation.setVisible(true);
-			tfProtectionApplicationProtection.setVisible(true);
+			//tfProtectionApplicationProtection.setVisible(true);
 			
 			if (data.classInformationId && data.classInformationId != 0 && !data.isCiCreate) {
 				cbProtectionClassInformation.setValue(data.classInformationId);
@@ -234,11 +234,11 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 				taProtectionClassInformationExplanation.setValue('');
 			}
 			
-			if (data.protectionApplicationProtection && data.protectionApplicationProtection != 0 && !data.isCiCreate) {
+/*			if (data.protectionApplicationProtection && data.protectionApplicationProtection != 0 && !data.isCiCreate) {
 				tfProtectionApplicationProtection.setValue(data.protectionApplicationProtection);
 			} else {
 				tfProtectionApplicationProtection.setValue('');
-			}
+			}*/
 			
 			cbProtectionIntegrity.setVisible(false);
 			cbProtectionIntegrity.reset();
@@ -268,11 +268,11 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 		} else {
 			cbProtectionClassInformation.setVisible(false);
 			taProtectionClassInformationExplanation.setVisible(false);
-			tfProtectionApplicationProtection.setVisible(false);
+			//tfProtectionApplicationProtection.setVisible(false);
 			
 			cbProtectionClassInformation.reset();
 			taProtectionClassInformationExplanation.reset();
-			tfProtectionApplicationProtection.reset();
+			//tfProtectionApplicationProtection.reset();
 			
 			cbProtectionIntegrity.setVisible(true);
 			taProtectionIntegrityDescription.setVisible(true);
@@ -309,7 +309,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 			this.getComponent('protectionAvailabilityDescription').setVisible(false);
 			this.getComponent('protectionClassInformation').setVisible(false);
 			this.getComponent('protectionClassInformationExplanation').setVisible(false);
-			this.getComponent('protectionApplicationProtection').setVisible(false);
+			//this.getComponent('protectionApplicationProtection').setVisible(false);
 			this.getComponent('protectionIntegrity').setVisible(false);
 			this.getComponent('protectionIntegrityDescription').setVisible(false);
 			this.getComponent('protectionConfidentiality').setVisible(false);
@@ -421,7 +421,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 		this.setFieldLabel(this.getComponent('protectionAvailabilityDescription'), labels.itSecSbAvailabilityDescription);
 		this.setFieldLabel(this.getComponent('protectionClassInformation'), labels.protectionClassInformation);
 		this.setFieldLabel(this.getComponent('protectionClassInformationExplanation'), labels.protectionClassInformationExplanation);
-		this.setFieldLabel(this.getComponent('protectionApplicationProtection'), labels.protectionApplicationProtection);
+		//this.setFieldLabel(this.getComponent('protectionApplicationProtection'), labels.protectionApplicationProtection);
 		
 		this.setFieldLabel(this.getComponent('protectionIntegrity'), labels.itSecSbIntegrityId);
 		this.setFieldLabel(this.getComponent('protectionIntegrityDescription'), labels.itSecSbIntegrityDescription);
@@ -434,7 +434,7 @@ AIR.CiProtectionView = Ext.extend(AIR.AirView, {
 		this.setTooltipData(this.getComponent('protectionAvailabilityDescription').label, toolTips.itSecSbAvailabilityDescription, toolTips.itSecSbAvailabilityDescriptionText);
 		this.setTooltipData(this.getComponent('protectionClassInformation').label, toolTips.protectionClassInformation, toolTips.protectionClassInformationText);
 		this.setTooltipData(this.getComponent('protectionClassInformationExplanation').label, toolTips.protectionClassInformationExplanation, toolTips.protectionClassInformationExplanationText);
-		this.setTooltipData(this.getComponent('protectionApplicationProtection').label, toolTips.itSecSbAppProtection, toolTips.itSecSbAppProtectionText);
+		//this.setTooltipData(this.getComponent('protectionApplicationProtection').label, toolTips.itSecSbAppProtection, toolTips.itSecSbAppProtectionText);
 	}
 
 });
