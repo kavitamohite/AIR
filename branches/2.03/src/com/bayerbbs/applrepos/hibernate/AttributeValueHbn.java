@@ -7,9 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
-import com.bayerbbs.applrepos.domain.Attribute;
 import com.bayerbbs.applrepos.domain.AttributeValue;
 import com.bayerbbs.applrepos.dto.AttributeValueDTO;
 
@@ -23,11 +21,7 @@ public class AttributeValueHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			Attribute a = new Attribute();
-//			a.setId(1l);
 			Criteria criteria = session.createCriteria(AttributeValue.class);
-			criteria.add(Restrictions.eq("applicationSelectable", true));
-//			criteria.add(Restrictions.eq("attribute", a);
 			List<AttributeValue> listResult = criteria.list();
 
 			resultDTO = convertToDTO(listResult);
@@ -60,6 +54,7 @@ public class AttributeValueHbn {
 			aDto.setId(aVal.getId());
 			aDto.setName(aVal.getName());
 			aDto.setAttributeId(aVal.getAttribute().getId());
+			aDto.setSelectable(aVal.getApplicationSelectable());
 			resultDTO.add(aDto);
 		}
 		return resultDTO;

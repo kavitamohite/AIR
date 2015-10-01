@@ -46,6 +46,8 @@ public class HardwareComponentHbn {
 
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
 
+			Criterion hwName = Restrictions.like("name",
+					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion sapDescription = Restrictions.like("sapDescription",
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion pspElement = Restrictions.like("amKommision",
@@ -61,12 +63,11 @@ public class HardwareComponentHbn {
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion inventoryNumber = Restrictions.like("inventoryP69",
 					"%" + input.getQuery() + "%").ignoreCase();
-
 			Criterion orgUnit = Restrictions.like("subResponsible",
 					"%" + input.getQuery() + "%").ignoreCase();
 
 			Criterion completeCondition = Restrictions.disjunction()
-					.add(sapDescription).add(pspElement).add(kontoName)
+					.add(hwName).add(sapDescription).add(pspElement).add(kontoName)
 					.add(serialNumber).add(technicalMaster)
 					.add(technicalNumber).add(inventoryNumber).add(orgUnit);
 			criteria.add(completeCondition);

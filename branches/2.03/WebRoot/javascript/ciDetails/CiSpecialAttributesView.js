@@ -45,8 +45,18 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                    listeners: {
 	                    	expand : function(combo){
 	                    		var attributeId = Ext.getCmp('specialAttributesListView').getSelectionModel().selection.record.data.attributeId;
-	                    		combo.store.filter('attributeId',attributeId);
-	                    	}
+	                    		combo.store.filterBy(function(record){
+	                    			return record.data.attributeId === parseInt(attributeId) && record.data.selectable === true;
+	                    		},this);
+	                    	},
+	                    	change : function(combo, newValue, oldValue) {
+	                            if (Util.isComboValueValid(combo, newValue, oldValue)) {
+
+	                                if (typeof newValue === 'string' && newValue.length === 0) {
+	                                    combo.reset();
+	                                }
+	                            }
+	                        }
 	                    }
 	               },
 	               renderer: this.columnRenderer
@@ -62,14 +72,23 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                    valueField: 'id',
 	                    displayField: 'name',
 	                    triggerAction: 'all',
-	                    lastQuery: '',
 	                    mode : 'local',
 	                    disabled: true,
 	                    listeners: {
 	                    	expand : function(combo){
 	                    		var attributeId = Ext.getCmp('specialAttributesListView').getSelectionModel().selection.record.data.attributeId;
-	                    		combo.store.filter('attributeId',attributeId);
-	                    	}
+	                    		combo.store.filterBy(function(record){
+	                    			return record.data.attributeId === parseInt(attributeId) && record.data.selectable === true;
+	                    		},this);
+	                    	},
+	                    	change : function(combo, newValue, oldValue) {
+	                            if (Util.isComboValueValid(combo, newValue, oldValue)) {
+
+	                                if (typeof newValue === 'string' && newValue.length === 0) {
+	                                    combo.reset();
+	                                }
+	                            }
+	                        }
 	                    }
 	               },
   	               renderer: this.columnRenderer
@@ -142,7 +161,13 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
             if(record != -1){
                 return attributes.getAt(record).get('name') ? attributes.getAt(record).get('name'): "";
             } else {
-            	return "";
+            	attributes = Ext.getCmp('specialAttributesListView').getColumnModel().getColumnById('asIsValue').getEditor().getStore();
+            	record = attributes.findExact('id', value);
+                if(record != -1){
+                    return attributes.getAt(record).get('name') ? attributes.getAt(record).get('name'): "";
+                } else {
+                	return "";
+                }
             }
         } else return "";
     },
@@ -166,17 +191,17 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		if(ci != undefined){
 			if(ci.get('ciOwner') === AAM.getCwid() || ci.get('ciOwnerDelegate') === AAM.getCwid() ||
 					ci.get('applicationSteward') === AAM.getCwid()){
-					grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
-					btn.disabled = false;
-					return;
-				}
+				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
+				btn.disabled = false;
+				return;
+			}
 		} else {
 			ci = AAM.getAppDetail();
 			if(ci.applicationOwnerHidden === AAM.getCwid() || ci.applicationOwnerDelegateHidden === AAM.getCwid() ||
 					ci.applicationStewardHidden === AAM.getCwid()){
-					grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
-					btn.disabled = false;
-					return;
+				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
+				btn.disabled = false;
+				return;
 			}
 		}
 	},

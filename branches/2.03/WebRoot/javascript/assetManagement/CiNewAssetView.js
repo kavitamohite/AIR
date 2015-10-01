@@ -504,13 +504,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	
     	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
     	if (success) {
+    		this.sendEmail();
+    		
     		var topPanel = this.getComponent('topPanel');
 	    	topPanel.update(records[0].data);
 	    	
         	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
 			afterSaveAppWindow.show();
-			
-			this.sendEmail();
         } else {
         	var dataSavedErrorWindow = AIR.AirWindowFactory.createDynamicMessageWindow('AFTER_APP_SAVE_FAIL', null, records[0].data.error);
 			dataSavedErrorWindow.show();
@@ -520,32 +520,35 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     sendEmail: function(){
     	var assetData = this.getUpdateParam();
     	
-    	var mailText = mail_blank_text_hardware_asset.replace('<username>', AAM.getUserName());
-    	mailText = mailText.replace('<manufacturer>',assetData.manufacturer);
-    	mailText = mailText.replace('<subcategory>',assetData.subcategory);
-    	mailText = mailText.replace('<type>',assetData.type);
-    	mailText = mailText.replace('<model>',assetData.model);
-    	mailText = mailText.replace('<sapDescription>',assetData.sapDescription);
+    	if(assetData.id){
+    		var mailText = mail_blank_text_hardware_asset.replace('<username>', AAM.getUserName());
+        	mailText = mailText.replace('<manufacturer>',assetData.manufacturer);
+        	mailText = mailText.replace('<subcategory>',assetData.subcategory);
+        	mailText = mailText.replace('<type>',assetData.type);
+        	mailText = mailText.replace('<model>',assetData.model);
+        	mailText = mailText.replace('<sapDescription>',assetData.sapDescription);
 
-    	mailText = mailText.replace('<orderNumber>',assetData.orderNumber);
-    	mailText = mailText.replace('<costCenter>',assetData.costCenter);
-    	mailText = mailText.replace('<legalEntity>',assetData.owner);
+        	mailText = mailText.replace('<orderNumber>',assetData.orderNumber);
+        	mailText = mailText.replace('<costCenter>',assetData.costCenter);
+        	mailText = mailText.replace('<legalEntity>',assetData.owner);
 
-    	mailText = mailText.replace('<technicalNumber>',assetData.technicalNumber);
-    	mailText = mailText.replace('<technicaMaster>',assetData.technicalMaster);
-    	mailText = mailText.replace('<generalUsage>',assetData.generalUsage);
-    	mailText = mailText.replace('<lifecycleStatus>',assetData.workflowStatus);
+        	mailText = mailText.replace('<technicalNumber>',assetData.technicalNumber);
+        	mailText = mailText.replace('<technicaMaster>',assetData.technicalMaster);
+        	mailText = mailText.replace('<generalUsage>',assetData.generalUsage);
+        	mailText = mailText.replace('<lifecycleStatus>',assetData.workflowStatus);
 
-    	mailText = mailText.replace('<country>',assetData.country);
-    	mailText = mailText.replace('<site>',assetData.site);
-    	mailText = mailText.replace('<building>',assetData.building);
-    	mailText = mailText.replace('<room>',assetData.room);
-    	mailText = mailText.replace('<rack>',assetData.rack);
+        	mailText = mailText.replace('<country>',assetData.country);
+        	mailText = mailText.replace('<site>',assetData.site);
+        	mailText = mailText.replace('<building>',assetData.building);
+        	mailText = mailText.replace('<room>',assetData.room);
+        	mailText = mailText.replace('<rack>',assetData.rack);
 
-    	mailText = mailText.replace('<costCenterManager>',assetData.costCenterManager);
-    		
-    	var email = 'mailto:iao-bestellwesen@bayer.com&subject='+mail_subject_hardware_asset+'&body='+mailText;
-    	window.location.href = email;
+        	mailText = mailText.replace('<costCenterManager>',assetData.costCenterManager);
+        		
+        	var email = 'mailto:iao-bestellwesen@bayer.com&subject='+mail_subject_hardware_asset+'&body='+mailText;
+        	window.location.href = email;
+    	}
+    	
     }
 
 });

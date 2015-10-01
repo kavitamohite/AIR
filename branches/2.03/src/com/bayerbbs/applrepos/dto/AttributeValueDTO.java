@@ -5,6 +5,7 @@ public class AttributeValueDTO {
 	private Long id;
 	private String name;
 	private Long attributeId;
+	private Boolean selectable;
 
 	public Long getId() {
 		return id;
@@ -28,6 +29,14 @@ public class AttributeValueDTO {
 
 	public void setAttributeId(Long attributeId) {
 		this.attributeId = attributeId;
+	}
+
+	public Boolean getSelectable() {
+		return selectable;
+	}
+
+	public void setSelectable(Boolean selectable) {
+		this.selectable = selectable;
 	}
 
 }
