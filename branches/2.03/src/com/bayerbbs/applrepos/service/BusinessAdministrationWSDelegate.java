@@ -33,4 +33,8 @@ public class BusinessAdministrationWSDelegate {
 	public KeyValueDTO[] findLegalEntityList(Long id) {
 		return businessAdministrationWS.findLegalEntityList(id);
 	}
+	
+	public KeyValueDTO[] getSystemPlatformListById(DefaultDataInput input) {
+		return businessAdministrationWS.getSystemPlatformListById(input.getId());
+	}
 }

@@ -6,14 +6,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
@@ -22,7 +25,9 @@ import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.CiBase;
+import com.bayerbbs.applrepos.domain.HardwareComponent;
 import com.bayerbbs.applrepos.domain.ItSystem;
+import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.EditorGroupDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
@@ -1747,6 +1752,30 @@ public class ItSystemHbn extends BaseHbn {
 			System.out.println(e);
 		}
 		return data.toArray(new KeyValueDTO[data.size()]);
+	}
+
+
+	public static KeyValueDTO[] getSystemPlatformListById(Long id) {
+		
+		List<ItSystem> itSystems = null;
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Criteria criteria = session.createCriteria(ItSystem.class);
+			criteria.add(Restrictions.eq("osNameId", id.intValue()));
+			itSystems = (List<ItSystem>) criteria.list();
+			session.close();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+
+		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
+		for (ItSystem itSystem : itSystems) {
+			if (null == itSystem.getDeleteTimestamp()) {
+				data.add(new KeyValueDTO(itSystem.getId(), itSystem.getName()));
+			}
+		}
+		return data.toArray(new KeyValueDTO[0]);
 	}
 
 }

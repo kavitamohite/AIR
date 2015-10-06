@@ -4863,7 +4863,35 @@ AIR.AirStoreFactory = function() {
 				
 				return ciLegalentitystore;
 		
-		}		
+		},
+		
+		createSystemPlatformStore: function(){
+
+			var ciSystemPlatformRecord = Ext.data.Record.create([
+				{ name: 'id', type: 'int' },
+				    'name'				
+				]);
+
+				var ciSystemPlatformReader = new Ext.data.XmlReader({
+					idProperty: 'id',
+					record: 'return'
+				}, ciSystemPlatformRecord);
+				
+				var ciSystemPlatformstore = new Ext.data.XmlStore({
+					autoDestroy: true,
+					autoLoad: false,
+					storeId: 'systemPlatformListStore',
+					
+					proxy: new Ext.ux.soap.SoapProxy({
+						url: webcontext + '/BusinessAdministrationWSPort',
+						loadMethod: 'getSystemPlatformListById',
+						timeout: 120000,
+						reader: ciSystemPlatformReader
+					})
+				});
+				
+				return ciSystemPlatformstore;
+		}
 		
 	};
 }();

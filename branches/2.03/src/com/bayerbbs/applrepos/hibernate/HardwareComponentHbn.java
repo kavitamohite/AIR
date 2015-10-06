@@ -24,11 +24,9 @@ import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
-import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.service.AssetManagementParameterInput;
 import com.bayerbbs.applrepos.service.AssetManagementParameterOutput;
-import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 
 public class HardwareComponentHbn {
 
@@ -208,6 +206,7 @@ public class HardwareComponentHbn {
 		dto.setTechnicalMaster(hwComp.getTechnicalMaster());
 		if(hwComp.getItSystem()!= null){
 			 dto.setSystemPlatformName(hwComp.getItSystem().getName());
+			 dto.setSystemPlatformNameId(hwComp.getItSystem().getId());
 			 dto.setOsNameId(hwComp.getItSystem().getOsNameId());
 		}
 		dto.setHardwareTransientSystem(hwComp.getAssetId());
@@ -362,44 +361,12 @@ public class HardwareComponentHbn {
 		
 		String error = validateHardwareComponent(hardwareComponent);
 		
-		if(error == null){
-			ItSystem itSystem = hardwareComponent.getItSystem();
-			ItSystemDTO itDTO = new ItSystemDTO();
-			CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-			
-			if(dto.getSystemPlatformName().length() != 0 && dto.getOsNameId() != 0){
-				if(itSystem != null){
-					ItSystemHbn.getItSystem(itDTO, itSystem);
-					itDTO.setId(itSystem.getId());
-					itDTO.setAlias(dto.getSystemPlatformName());
-					itDTO.setName(dto.getSystemPlatformName());
-					itDTO.setOsNameId(dto.getOsNameId());
-					output = ItSystemHbn.saveItSystem(dto.getCwid(), itDTO);
-				} else {
-					itDTO.setAlias(dto.getSystemPlatformName());
-					itDTO.setName(dto.getSystemPlatformName());
-					itDTO.setOsNameId(dto.getOsNameId());
-					itDTO.setCiSubTypeId(1);
-					itDTO.setId(0l);
-					output = ItSystemHbn.createItSystem(dto.getCwid(), itDTO, true);
-				}
-			} else {
-				if(itSystem != null ){
-					String[] err = {"System platform name or Os name is missing." };
-					output.setMessages(err);
-				} else if(dto.getSystemPlatformName().length() != 0 || dto.getOsNameId() != 0) {
-					String[] err = {"System platform name or Os name is missing." };
-					output.setMessages(err);					
-				}
-			}
-			if(output.getMessages() != null && output.getMessages()[0].length() > 0){
-				dto.setError(output.getMessages()[0]);
-				hardwareComponent = null;
-			} else {
-				if(itDTO.getId() != null){
-					itSystem = ItSystemHbn.findItSystemById(itDTO.getId());
-					hardwareComponent.setItSystem(itSystem);
-				}
+		if (error == null) {
+			ItSystem itSystem = null;
+
+			if (dto.getSystemPlatformName() != null && dto.getSystemPlatformNameId() != 0) {
+				itSystem = ItSystemHbn.findItSystemById(dto.getSystemPlatformNameId());
+				hardwareComponent.setItSystem(itSystem);
 			}
 		} else {
 			dto.setError(error);

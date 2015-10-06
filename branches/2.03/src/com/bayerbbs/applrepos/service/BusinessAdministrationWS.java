@@ -34,4 +34,8 @@ public class BusinessAdministrationWS {
 		return ManufacturerHbn.findLegalEntityList();
 	}
 	
+	public KeyValueDTO[] getSystemPlatformListById(Long id) {
+		return ItSystemHbn.getSystemPlatformListById(id);
+	}
+	
 }

@@ -31,6 +31,7 @@ public class AssetViewDataDTO {
 	// Technicas
 	private String technicalNumber;
 	private String technicalMaster;
+	private Long systemPlatformNameId;
 	private String systemPlatformName;
 
 	private String osName;
@@ -233,6 +234,14 @@ public class AssetViewDataDTO {
 
 	public void setTechnicalMaster(String technicalMaster) {
 		this.technicalMaster = technicalMaster;
+	}
+	
+	public Long getSystemPlatformNameId() {
+		return systemPlatformNameId;
+	}
+
+	public void setSystemPlatformNameId(Long systemPlatformNameId) {
+		this.systemPlatformNameId = systemPlatformNameId;
 	}
 
 	public String getSystemPlatformName() {
