@@ -20,10 +20,6 @@ public class RoomWS {
 		roomDTO.setFloor(input.getFloor());
 		roomDTO.setAreaId(input.getAreaId());
 		
-//		roomDTO.setStreet(input.getStreet());
-//		roomDTO.setStreetNumber(input.getStreetNumber());
-//		roomDTO.setPostalCode(input.getPostalCode());
-//		roomDTO.setLocation(input.getLocation());
 		
 		//Contacts
 		roomDTO.setCiOwner(input.getCiOwner());
@@ -47,13 +43,10 @@ public class RoomWS {
 		//Protection
 		roomDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
 		roomDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
-//		roomDTO.setClassInformationId(input.getClassInformationId());
-//		roomDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		roomDTO.setClassInformationId(input.getClassInformationId());
+		roomDTO.setClassInformationTxt(input.getClassInformationExplanation());
 		roomDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
-		roomDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
-		roomDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
-		roomDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
-		
+		roomDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());		
 		//Compliance
 		roomDTO.setItset(input.getItset());
 		roomDTO.setTemplate(input.getTemplate());
@@ -64,8 +57,7 @@ public class RoomWS {
 		
 		roomDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		roomDTO.setRelevanceGR1920(input.getRelevanceGR1920());
-//		roomDTO.setRelevanceICS(input.getRelevanceICS());
-//		roomDTO.setRelevanzItsec(input.getRelevanzITSEC());
+
 		roomDTO.setGxpFlag(input.getGxpFlag());
 		roomDTO.setGxpFlagId(input.getGxpFlag());
 		
@@ -143,17 +135,6 @@ public class RoomWS {
 				dto.setId(room.getId());
 				BaseHbn.saveGpscContacts(dto, input.getCwid());
 				
-				/*
-				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, false);
-				if (null != listCi && 1 == listCi.size()) {
-					Long ciId = listCi.get(0).getId();
-					output.setCiId(ciId);
-					output.setTableId(AirKonstanten.TABLE_ID_ROOM);
-				} else {
-					// unknown?
-					output.setCiId(new Long(-1));
-				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {

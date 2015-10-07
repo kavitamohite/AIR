@@ -53,10 +53,11 @@ public class Application extends DeletableRevisionInfo {
 	// protection
 	private Long itSecSbAvailability;
 	private String itSecSbAvailabilityTxt;
-	private Long itSecSbConfidentiality;
-	private String itSecSbConfidentialityTxt;
 	private Long classInformationId;
 	private String classInformationExplanation;
+	private Long itSecSbIntegrityId;
+	private String itSecSbIntegrityTxt;
+	
 	private String dataPrivacyPersonalData;
 	private String dataPrivacyBetweenCountries;
 
@@ -116,6 +117,7 @@ public class Application extends DeletableRevisionInfo {
 	private String bovOwnershipStatus;
 	private Timestamp sampleTestDate;
 	private String sampleTestResult;
+	
 	
 	public Application() {
 	}
@@ -324,24 +326,6 @@ public class Application extends DeletableRevisionInfo {
 		this.businessEssentialId = businessEssentialId;
 	}
 
-// task 142
-//	/**
-//	 * @return the riskAnalysisYN
-//	 */
-//	@Column(name = "RISK_ANALYSIS_YN")
-//	public String getRiskAnalysisYN() {
-//		return riskAnalysisYN;
-//	}
-//
-//	/**
-//	 * Sets the value of the {@link #riskAnalysisYN} field.
-//	 * 
-//	 * @param riskAnalysisYN
-//	 *            The value to set.
-//	 */
-//	public void setRiskAnalysisYN(String riskAnalysisYN) {
-//		this.riskAnalysisYN = riskAnalysisYN;
-//	}
 
 	@Column(name = "LICENSE_TYPE_ID")
 	public Long getLicenseTypeId() {
@@ -462,30 +446,6 @@ public class Application extends DeletableRevisionInfo {
 		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
 	}
 	
-     // added by kaushal RFC 11441
-	//The classification information shall be consistently provided under the label "Information Class"
-	//The information should be retrieved from and stored to the attribute ITSEC_SB_VERTR_ID.
-
-/*	//in Basisklasse
-	@Column(name = "ITSEC_SB_VERTR_ID")
-	public Long getItSecSbConfidentiality() {
-		return itSecSbConfidentiality;
-	}
-
-	public void setItSecSbConfidentiality(Long itSecSbConfidentiality) {
-		this.itSecSbConfidentiality = itSecSbConfidentiality;
-	}
-
-	//in Basisklasse
-	@Column(name = "ITSEC_SB_VERTR_TXT")
-	public String getItSecSbConfidentialityTxt() {
-		return itSecSbConfidentialityTxt;
-	}
-
-	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
-		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
-	}
-*/
 	
 	//RFC 11441
 	@Column(name = "ITSEC_SB_VERTR_ID")  //@Column(name = "CLASS_INFORMATION_ID")
@@ -712,6 +672,40 @@ public class Application extends DeletableRevisionInfo {
 	}
 	public void setSampleTestResult(String sampleTestResult) {
 		this.sampleTestResult = sampleTestResult;
+	}
+
+
+	/**
+	 * @return the itSecSbIntegrityId
+	 */
+	@Column(name = "ITSEC_SB_INTEG_ID")
+	public Long getItSecSbIntegrityId() {
+		return itSecSbIntegrityId;
+	}
+
+
+	/**
+	 * @param itSecSbIntegrityId the itSecSbIntegrityId to set
+	 */
+	public void setItSecSbIntegrityId(Long itSecSbIntegrityId) {
+		this.itSecSbIntegrityId = itSecSbIntegrityId;
+	}
+
+
+	/**
+	 * @return the itSecSbIntegrityTxt
+	 */
+	@Column(name = "ITSEC_SB_INTEG_TXT")	
+	public String getItSecSbIntegrityTxt() {
+		return itSecSbIntegrityTxt;
+	}
+
+
+	/**
+	 * @param itSecSbIntegrityTxt the itSecSbIntegrityTxt to set
+	 */
+	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
+		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
 	}
 		
 }

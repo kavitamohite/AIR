@@ -996,6 +996,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		var ciTypesByRole = AAM.getAdvSearchCiTypes();
 
 		AAM.filterCiTypes(combo, ciTypesByRole);
+		combo.getStore().sort('text', 'ASC');
 	},
 	
 //	filterCiTypesByUserRole: function(cbCiType) {

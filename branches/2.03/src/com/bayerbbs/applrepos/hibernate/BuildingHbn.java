@@ -68,9 +68,7 @@ public class BuildingHbn extends LokationItemHbn {
 			
 			if (null != dto.getId() && 0 == dto.getId()) {
 
-				// check der InputWerte
-//				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
+
 				List<String> messages = validateBuilding(dto, false);//validateCi  , listCi
 
 				
@@ -78,51 +76,7 @@ public class BuildingHbn extends LokationItemHbn {
 					Building building = new Building();
 					boolean isNameAndAliasNameAllowed = true;
 					
-					/*List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-					
-					if (isNameAndAliasNameAllowed) {
-						if (null != listCi && 0 < listCi.size()) {
-							// name is not allowed
-							isNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCi.get(0).getDeleteQuelle()) {
-								boolean override = forceOverride != null && forceOverride.booleanValue();
-								
-								if(override) {
-									// ENTWICKLUNG RFC8279
-									Session session = HibernateUtil.getSession();
-									Building buildingDeleted = (Building)session.get(Building.class, listCi.get(0).getId());
-									
-									// reactivate
-									reactivateBuilding(cwid, dto, buildingDeleted);
-									// save the data
-									dto.setId(buildingDeleted.getId());
-									return saveBuilding(cwid, dto);
 
-								} else {
-									output.setMessages(new String[] {"Building Name '" + listCi.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-								}
-							}
-							else {
-								output.setMessages(new String[] {"Building Name '" + listCi.get(0).getName() + "' already exists."});
-							}
-						}
-					}
-					
-					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
-						if (null != listCI && 0 < listCI.size()) {
-							// alias is not allowed
-							isNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCI.get(0).getDeleteQuelle()) {
-								output.setMessages(new String[] {"Building Alias '" + listCI.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-							}
-							else {
-								output.setMessages(new String[] {"Building Alias '" + listCI.get(0).getAlias() + "' already exists."});
-							}
-						}						
-					}*/
 					
 					
 					if (isNameAndAliasNameAllowed) {
@@ -131,47 +85,8 @@ public class BuildingHbn extends LokationItemHbn {
 						Session session = HibernateUtil.getSession();
 						Transaction tx = null;
 						tx = session.beginTransaction();
-						
-						/*
-						// calculates the ItSet
-						Long itSet = null;
-						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
-						if (null != strItSet) {
-							itSet = Long.parseLong(strItSet);
-						}
-						if (null == itSet) {
-							// set default itSet
-							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
-						}
 
-						// ci - insert values
-						building.setInsertUser(cwid);
-						building.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-						building.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
-
-						// ci - update values
-						building.setUpdateUser(building.getInsertUser());
-						building.setUpdateQuelle(building.getInsertQuelle());
-						building.setUpdateTimestamp(building.getInsertTimestamp());
-
-						// ci - attributes
-						building.setBuildingName(dto.getName());
-						
-						
-						if (null != dto.getCiOwnerHidden()) {
-							building.setCiOwner(dto.getCiOwnerHidden());
-						}
-						if (null != dto.getCiOwnerDelegateHidden()) {
-							building.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
-						}
-						
-						building.setTemplate(dto.getTemplate());
-//						building.setBusinessEssentialId(dto.getBusinessEssentialId());
-						
-						building.setRelevanceITSEC(dto.getRelevanzItsec());
-						building.setRelevanceICS(dto.getRelevanceICS());*/
-						
-						
+												
 						building.setAlias(dto.getAlias());
 						
 						setUpCi(building, dto, cwid, true);
@@ -245,108 +160,18 @@ public class BuildingHbn extends LokationItemHbn {
 			if (null != dto.getId() && 0 == dto.getId()) {
 
 				// check der InputWerte
-//				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING_AREA, true);
 				List<String> messages = validateBuildingArea(dto, false);//validateCi, listCi
 
 				if (messages.isEmpty()) {
 					BuildingArea buildingArea = new BuildingArea();
 					boolean isNameAndAliasNameAllowed = true;
-					
-					/*
-					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING_AREA, true);
-						
-						if (null != listCi && 0 < listCi.size()) {
-							// name is not allowed
-							isNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCi.get(0).getDeleteQuelle()) {
-								boolean override = forceOverride != null && forceOverride.booleanValue();
-								
-								if(override) {
-									// ENTWICKLUNG RFC8279
-									Session session = HibernateUtil.getSession();
-									BuildingArea buildingAreaDeleted = (BuildingArea)session.get(BuildingArea.class, listCi.get(0).getId());
-									
-									// reactivate
-									reactivateBuildingArea(cwid, dto, buildingAreaDeleted);
-									// save the data
-									dto.setId(buildingAreaDeleted.getId());
-									return saveBuildingArea(cwid, dto);
-
-								} else {
-									output.setMessages(new String[] {"Building Name '" + listCi.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-								}
-							}
-							else {
-								output.setMessages(new String[] {"Building Name '" + listCi.get(0).getName() + "' already exists."});
-							}
-						}
-					}
-					
-					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
-						if (null != listCI && 0 < listCI.size()) {
-							// alias is not allowed
-							isNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCI.get(0).getDeleteQuelle()) {
-								output.setMessages(new String[] {"Building Alias '" + listCI.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-							}
-							else {
-								output.setMessages(new String[] {"Building Alias '" + listCI.get(0).getAlias() + "' already exists."});
-							}
-						}						
-					}*/
-					
+										
 					
 					if (isNameAndAliasNameAllowed) {
 						// create the ci
 
 						Session session = HibernateUtil.getSession();
 						Transaction tx = session.beginTransaction();
-
-
-						
-						/*buildingArea.setName(dto.getName());
-						
-						// ci - insert values
-						buildingArea.setInsertUser(cwid);
-						buildingArea.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-						buildingArea.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
-
-						// ci - update values
-						buildingArea.setUpdateUser(buildingArea.getInsertUser());
-						buildingArea.setUpdateQuelle(buildingArea.getInsertQuelle());
-						buildingArea.setUpdateTimestamp(buildingArea.getInsertTimestamp());
-
-						
-
-						
-						
-						// calculates the ItSet
-						Long itSet = null;
-						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
-						if (null != strItSet) {
-							itSet = Long.parseLong(strItSet);
-						}
-						if (null == itSet) {
-							// set default itSet
-							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
-						}
-
-						
-						if (null != dto.getCiOwnerHidden()) {
-							buildingArea.setCiOwner(dto.getCiOwnerHidden());
-						}
-						if (null != dto.getCiOwnerDelegateHidden()) {
-							buildingArea.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
-						}
-						
-						buildingArea.setTemplate(dto.getTemplate());
-						
-						buildingArea.setRelevanceITSEC(dto.getRelevanzItsec());
-						buildingArea.setRelevanceICS(dto.getRelevanceICS());*/
 						
 						setUpCi(buildingArea, dto, cwid, true);
 						
@@ -420,8 +245,6 @@ public class BuildingHbn extends LokationItemHbn {
 				Long id = new Long(dto.getId());
 
 				// check der InputWerte
-//				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-//				List<String> messages = validateCi(dto);//, listCi
 				List<String> messages = validateBuilding(dto, true);
 
 				if (messages.isEmpty()) {
@@ -437,19 +260,7 @@ public class BuildingHbn extends LokationItemHbn {
 						output.setErrorMessage("1001", EMPTY+id);
 					} else {
 						// building found - change values
-						
-						// validate template
-//						if (null != building.getTemplate() && -1 == building.getTemplate().longValue()) {
-//							if (null != dto.getTemplate()) {
-//								if (0 == dto.getTemplate().longValue()) {
-//									// user wants to change to non template
-//									// check if there are referencing values
-//									if (!"0".equals(ApplReposHbn.getCountReferencingTemplates(id))) {
-//										output.setErrorMessage("1002");
-//									}
-//								}
-//							}
-//						}
+
 						
 						setUpCi(building, dto, cwid, false);
 						
@@ -465,188 +276,6 @@ public class BuildingHbn extends LokationItemHbn {
 						building.setProvider_Address(dto.getProviderAddress());
 						//vandana
 						
-						
-						/*
-						building.setUpdateUser(cwid);
-						building.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-						building.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
-						
-						// RFC8344 change Insert-Quelle? // RFC 8532
-//						if (ApplreposConstants.INSERT_QUELLE_ANT.equals(application.getInsertQuelle()) ||
-//							ApplreposConstants.INSERT_QUELLE_RFC.equals(application.getInsertQuelle())  ||
-//							ApplreposConstants.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())) {
-//							application.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
-//						}
-
-						// ======
-						// Basics
-						// ======
-
-//						if (null != dto.getName()) {
-//							building.setBuildingName(dto.getName());
-//						}
-						if (null != dto.getAlias()) {
-							building.setAlias(dto.getAlias());
-						}
-
-						
-
-						
-						// ================
-						// Owner / Delegate
-						// ================
-						if (null != dto.getCiOwnerHidden()) {
-							if(StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {
-								building.setCiOwner(null);
-							}
-							else {
-								building.setCiOwner(dto.getCiOwnerHidden());
-							}
-						}
-						if (null != dto.getCiOwnerDelegateHidden()) {
-							if(StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {
-								building.setCiOwnerDelegate(null);
-							}
-							else {
-								building.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
-							}
-						}
-						
-//						building.setSlaId(dto.getSlaId());
-//						building.setServiceContractId(dto.getServiceContractId());
-						if (null != dto.getSlaId()) {
-							if (-1 == dto.getSlaId()) {
-								building.setSlaId(null);
-							}
-							else {
-								building.setSlaId(dto.getSlaId());
-							}
-						}
-						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
-							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
-							building.setServiceContractId(dto.getServiceContractId());
-						}
-
-
-						
-//						Long businessEssentialIdOld = building.getBusinessEssentialId();
-//						if (hasBusinessEssentialChanged) {
-//							sendBusinessEssentialChangedMail(building, dto, businessEssentialIdOld);
-//						}
-						
-						if (null != dto.getItSecSbAvailabilityId()) {
-							if (-1 == dto.getItSecSbAvailabilityId()) {
-								building.setItSecSbAvailability(null);
-							}
-							else if (0 != dto.getItSecSbAvailabilityId().longValue()) {
-								building.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
-							}
-						}
-						if (null != dto.getItSecSbAvailabilityDescription()) {
-							building.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
-						}
-						
-						// ==========
-						// compliance
-						// ==========
-						// Template
-						if (null != dto.getTemplate()) {
-//							if (-1 == dto.getTemplate()) {
-//								application.setTemplate(null);
-//							}
-//							else {
-							building.setTemplate(dto.getTemplate());
-//							}
-						}
-						
-						if (null != dto.getItsecGroupId() && 0 != dto.getItsecGroupId()) {
-							if (-1 == dto.getItsecGroupId()) {
-								building.setItsecGroupId(null);
-							}
-							else {
-								building.setItsecGroupId(dto.getItsecGroupId());
-							}
-						}
-						
-						if (null != dto.getRefId()) {
-							if (-1 == dto.getRefId()) {
-								building.setRefId(null);
-							}
-							else {
-								building.setRefId(dto.getRefId());
-							}
-						}
-						
-//						if (null != dto.getRelevanceICS()) {
-//							building.setRelevanceICS(dto.getRelevanceICS());
-//						}
-//						if (null != dto.getRelevanzItsec()) {//getRelevanceITSEC
-//							building.setRelevanceITSEC(dto.getRelevanzItsec());//getRelevanceITSEC
-//						}
-						
-//						if (null != dto.getRelevanceICS()) {
-//							building.setRelevanceICS(dto.getRelevanceGR1920());
-//						}
-//						if (null != dto.getRelevanzItsec()) {
-//							building.setRelevanceITSEC(dto.getRelevanceGR1435());
-//						}
-						
-						if (null == dto.getRelevanzItsec()) {
-							if ("Y".equals(dto.getRelevanceGR1435())) {
-								dto.setRelevanzItsec(new Long(-1));
-							}
-							else if ("N".equals(dto.getRelevanceGR1435())) {
-								dto.setRelevanzItsec(new Long(0));
-							}
-						}
-						if (null == dto.getRelevanceICS()) {
-							if ("Y".equals(dto.getRelevanceGR1920())) {
-								dto.setRelevanceICS(new Long(-1));
-							}
-							else if ("N".equals(dto.getRelevanceGR1920())) {
-								dto.setRelevanceICS(new Long(0));
-							}
-						}
-						
-						building.setRelevanceITSEC(dto.getRelevanzItsec());
-						building.setRelevanceICS(dto.getRelevanceICS());
-						
-
-						if (null == dto.getGxpFlag()) {
-							//	we don't know, let the current value 
-						}
-						else {
-							if (EMPTY.equals(dto.getGxpFlag())) {
-								building.setGxpFlag(null);
-							}
-							else {
-								building.setGxpFlag(dto.getGxpFlag());
-							}
-						}
-
-						if (null != dto.getItSecSbAvailabilityId()) {
-							if (-1 == dto.getItSecSbAvailabilityId()) {
-								building.setItSecSbAvailability(null);
-							}
-							else if (0 != dto.getItSecSbAvailabilityId().longValue()) {
-								building.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
-							}
-						}
-						if (null != dto.getItSecSbAvailabilityDescription()) {
-							building.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
-						}
-						
-						
-//						if (null != dto.getClassInformationId()) {
-//							if (-1 == dto.getClassInformationId()) {
-//								building.setClassInformationId(null);
-//							} else {
-//								building.setClassInformationId(dto.getClassInformationId());
-//							}
-//						}
-//						if (null != dto.getClassInformationExplanation()) {
-//							building.setClassInformationExplanation(dto.getClassInformationExplanation());
-//						}*/
 					}
 					
 					boolean toCommit = false;
@@ -725,10 +354,7 @@ public class BuildingHbn extends LokationItemHbn {
 			if (null != dto.getId() || 0 < dto.getId().longValue()) {
 				Long id = new Long(dto.getId());
 
-				// check der InputWerte
-//				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-//				List<String> messages = validateCi(dto);//, listCi
+
 				List<String> messages = validateBuildingArea(dto, true);
 
 				if (messages.isEmpty()) {
@@ -743,20 +369,6 @@ public class BuildingHbn extends LokationItemHbn {
 						// building is deleted
 						output.setErrorMessage("1001", EMPTY+id);
 					} else {
-						// building found - change values
-						
-						// validate template
-//						if (null != building.getTemplate() && -1 == building.getTemplate().longValue()) {
-//							if (null != dto.getTemplate()) {
-//								if (0 == dto.getTemplate().longValue()) {
-//									// user wants to change to non template
-//									// check if there are referencing values
-//									if (!"0".equals(ApplReposHbn.getCountReferencingTemplates(id))) {
-//										output.setErrorMessage("1002");
-//									}
-//								}
-//							}
-//						}
 						
 						setUpCi(buildingArea, dto, cwid, false);
 						//vandana
@@ -764,192 +376,6 @@ public class BuildingHbn extends LokationItemHbn {
 						buildingArea.setProvider_Name(dto.getProviderName());
 						buildingArea.setProvider_Address(dto.getProviderAddress());
 						
-						/*
-						buildingArea.setUpdateUser(cwid);
-						buildingArea.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-						buildingArea.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
-						
-						// RFC8344 change Insert-Quelle? // RFC 8532
-//						if (ApplreposConstants.INSERT_QUELLE_ANT.equals(application.getInsertQuelle()) ||
-//							ApplreposConstants.INSERT_QUELLE_RFC.equals(application.getInsertQuelle())  ||
-//							ApplreposConstants.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())) {
-//							application.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
-//						}
-
-						// ======
-						// Basics
-						// ======
-
-//						if (null != dto.getName()) {
-//							building.setBuildingName(dto.getName());
-//						}
-						
-						if (null != dto.getBuildingId()) {
-							//ORA-20000: Building area 1157 cannot be moved to another building. Set parameter CHECK_LOCATION_INTEGRITY to N to disable this check.
-							//ORA-06512: at "TBADM.TRG_088_BIU", line 210
-							//ORA-04088: error during execution of trigger 'TBADM.TRG_088_BIU'
-							Building building = findById(dto.getBuildingId());
-							buildingArea.setBuilding(building);
-							buildingArea.setBuildingId(dto.getBuildingId());
-						}
-						
-						// ================
-						// Owner / Delegate
-						// ================
-						if (null != dto.getCiOwnerHidden()) {
-							if(StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {
-								buildingArea.setCiOwner(null);
-							}
-							else {
-								buildingArea.setCiOwner(dto.getCiOwnerHidden());
-							}
-						}
-						if (null != dto.getCiOwnerDelegateHidden()) {
-							if(StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {
-								buildingArea.setCiOwnerDelegate(null);
-							}
-							else {
-								buildingArea.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
-							}
-						}
-						
-//						buildingArea.setSlaId(dto.getSlaId());
-//						buildingArea.setServiceContractId(dto.getServiceContractId());
-						
-						if (null != dto.getSlaId()) {
-							if (-1 == dto.getSlaId()) {
-								buildingArea.setSlaId(null);
-							}
-							else {
-								buildingArea.setSlaId(dto.getSlaId());
-							}
-						}
-						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
-							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
-							buildingArea.setServiceContractId(dto.getServiceContractId());
-						}
-						
-
-
-						
-//						Long businessEssentialIdOld = building.getBusinessEssentialId();
-//						if (hasBusinessEssentialChanged) {
-//							sendBusinessEssentialChangedMail(building, dto, businessEssentialIdOld);
-//						}
-						
-						if (null != dto.getItSecSbAvailabilityId()) {
-							if (-1 == dto.getItSecSbAvailabilityId()) {
-								buildingArea.setItSecSbAvailability(null);
-							}
-							else if (0 != dto.getItSecSbAvailabilityId().longValue()) {
-								buildingArea.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
-							}
-						}
-						if (null != dto.getItSecSbAvailabilityDescription()) {
-							buildingArea.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
-						}
-						
-						// ==========
-						// compliance
-						// ==========
-						// Template
-						if (null != dto.getTemplate()) {
-//							if (-1 == dto.getTemplate()) {
-//								application.setTemplate(null);
-//							}
-//							else {
-							buildingArea.setTemplate(dto.getTemplate());
-//							}
-						}
-						
-						if (null != dto.getItsecGroupId() && 0 != dto.getItsecGroupId()) {
-							if (-1 == dto.getItsecGroupId()) {
-								buildingArea.setItsecGroupId(null);
-							}
-							else {
-								buildingArea.setItsecGroupId(dto.getItsecGroupId());
-							}
-						}
-						
-						if (null != dto.getRefId()) {
-							if (-1 == dto.getRefId()) {
-								buildingArea.setRefId(null);
-							}
-							else {
-								buildingArea.setRefId(dto.getRefId());
-							}
-						}
-						
-//						if (null != dto.getRelevanceICS()) {
-//							building.setRelevanceICS(dto.getRelevanceICS());
-//						}
-//						if (null != dto.getRelevanzItsec()) {//getRelevanceITSEC
-//							building.setRelevanceITSEC(dto.getRelevanzItsec());//getRelevanceITSEC
-//						}
-						
-//						if (null != dto.getRelevanceICS()) {
-//							building.setRelevanceICS(dto.getRelevanceGR1920());
-//						}
-//						if (null != dto.getRelevanzItsec()) {
-//							building.setRelevanceITSEC(dto.getRelevanceGR1435());
-//						}
-						
-						if (null == dto.getRelevanzItsec()) {
-							if ("Y".equals(dto.getRelevanceGR1435())) {
-								dto.setRelevanzItsec(new Long(-1));
-							}
-							else if ("N".equals(dto.getRelevanceGR1435())) {
-								dto.setRelevanzItsec(new Long(0));
-							}
-						}
-						if (null == dto.getRelevanceICS()) {
-							if ("Y".equals(dto.getRelevanceGR1920())) {
-								dto.setRelevanceICS(new Long(-1));
-							}
-							else if ("N".equals(dto.getRelevanceGR1920())) {
-								dto.setRelevanceICS(new Long(0));
-							}
-						}
-						
-						buildingArea.setRelevanceITSEC(dto.getRelevanzItsec());
-						buildingArea.setRelevanceICS(dto.getRelevanceICS());
-						
-
-						if (null == dto.getGxpFlag()) {
-							//	we don't know, let the current value 
-						}
-						else {
-							if (EMPTY.equals(dto.getGxpFlag())) {
-								buildingArea.setGxpFlag(null);
-							}
-							else {
-								buildingArea.setGxpFlag(dto.getGxpFlag());
-							}
-						}
-
-						if (null != dto.getItSecSbAvailabilityId()) {
-							if (-1 == dto.getItSecSbAvailabilityId()) {
-								buildingArea.setItSecSbAvailability(null);
-							}
-							else if (0 != dto.getItSecSbAvailabilityId().longValue()) {
-								buildingArea.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
-							}
-						}
-						if (null != dto.getItSecSbAvailabilityDescription()) {
-							buildingArea.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
-						}
-						
-						
-//						if (null != dto.getClassInformationId()) {
-//							if (-1 == dto.getClassInformationId()) {
-//								building.setClassInformationId(null);
-//							} else {
-//								building.setClassInformationId(dto.getClassInformationId());
-//							}
-//						}
-//						if (null != dto.getClassInformationExplanation()) {
-//							building.setClassInformationExplanation(dto.getClassInformationExplanation());
-//						}*/
 					}
 					
 					boolean toCommit = false;

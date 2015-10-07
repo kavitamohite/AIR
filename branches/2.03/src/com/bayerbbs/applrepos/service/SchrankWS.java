@@ -28,13 +28,10 @@ public class SchrankWS {
 		
 		schrankDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
 		schrankDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
-//		schrankDTO.setClassInformationId(input.getClassInformationId());
-//		schrankDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		schrankDTO.setClassInformationId(input.getClassInformationId());
+		schrankDTO.setClassInformationTxt(input.getClassInformationExplanation());
 		schrankDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
-		schrankDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
-		schrankDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
-		schrankDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
-		
+		schrankDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());		
 		
 		schrankDTO.setItset(input.getItset());
 		schrankDTO.setTemplate(input.getTemplate());
@@ -43,8 +40,7 @@ public class SchrankWS {
 		
 		schrankDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		schrankDTO.setRelevanceGR1920(input.getRelevanceGR1920());
-//		schrankDTO.setRelevanceICS(input.getRelevanceICS());
-//		schrankDTO.setRelevanzItsec(input.getRelevanzITSEC());
+
 		schrankDTO.setGxpFlag(input.getGxpFlag());
 		schrankDTO.setGxpFlagId(input.getGxpFlag());
 		
@@ -113,15 +109,7 @@ public class SchrankWS {
 		if (null != input && (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) ) {
 			SchrankDTO dto = getSchrankDTOFromEditInput(input);
 
-			// create Application - fill attributes
-//			if (null == dto.getCiOwner()) {
-//				dto.setCiOwner(input.getCwid().toUpperCase());
-//				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
-//			}
-			
-//			if (null == dto.getBusinessEssentialId()) {
-//				dto.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-//			}
+
 
 			// save / create application
 			output = SchrankHbn.createSchrank(input.getCwid(), dto, true);
@@ -134,17 +122,6 @@ public class SchrankWS {
 				dto.setId(schrank.getId());
 				BaseHbn.saveGpscContacts(dto, input.getCwid());
 				
-				/*
-				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_POSITION, false);
-				if (null != listCi && 1 == listCi.size()) {
-					Long ciId = listCi.get(0).getId();
-					output.setCiId(ciId);
-					output.setTableId(AirKonstanten.TABLE_ID_POSITION);
-				} else {
-					// unknown?
-					output.setCiId(new Long(-1));
-				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {

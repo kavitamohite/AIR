@@ -31,16 +31,11 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	private String itSecSbAvailabilityTxt;
 	
 	//nur Application!!
-//	private Long classInformationId;
-//	private String classInformationExplanation;
+	private Long classInformationId;
+	private String classInformationTxt;
 	
 	private Long itSecSbIntegrityId;
 	private String itSecSbIntegrityTxt;
-//	private String itSecSbIntegrityDescription;
-
-	private Long itSecSbConfidentialityId;
-	private String itSecSbConfidentialityTxt;
-//	private String itSecSbConfidentialityDescription;
 	
 	private Timestamp sampleTestDate;
 	private String sampleTestResult;
@@ -61,15 +56,6 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-//	@Column(name = "RESPONSIBLE")
-//	public String getCiOwner() {
-//		return ciOwner;
-//	}
-//
-//	public void setCiOwner(String ciOwner) {
-//		this.ciOwner = ciOwner;
-//	}
 
 	@Column(name = "SUB_RESPONSIBLE")
 	public String getCiOwnerDelegate() {
@@ -183,26 +169,6 @@ public abstract class CiBase extends DeletableRevisionInfo {
 		this.itSecSbAvailabilityTxt = itSecSbAvailabilityTxt;
 	}
 	
-	
-	//nur Application!!
-//	@Column(name = "CLASS_INFORMATION_ID")
-//	public Long getClassInformationId() {
-//		return classInformationId;
-//	}
-//
-//	public void setClassInformationId(Long classInformationId) {
-//		this.classInformationId = classInformationId;
-//	}
-//
-//	@Column(name = "CLASS_INFORMATION_EXPLANATION")
-//	public String getClassInformationExplanation() {
-//		return classInformationExplanation;
-//	}
-//
-//	public void setClassInformationExplanation(String classInformationExplanation) {
-//		this.classInformationExplanation = classInformationExplanation;
-//	}
-	
 	@Column(name = "ITSEC_SB_INTEG_ID")
 	public Long getItSecSbIntegrityId() {
 		return itSecSbIntegrityId;
@@ -210,12 +176,7 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	public void setItSecSbIntegrityId(Long itSecSbIntegrityId) {
 		this.itSecSbIntegrityId = itSecSbIntegrityId;
 	}
-//	public String getItSecSbIntegrityTxt() {
-//		return itSecSbIntegrityTxt;
-//	}
-//	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
-//		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
-//	}
+
 	
 	@Column(name = "ITSEC_SB_INTEG_TXT")
 	public String getItSecSbIntegrityTxt() {
@@ -224,42 +185,33 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
 		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
 	}
-//	public String getItSecSbIntegrityDescription() {
-//		return itSecSbIntegrityDescription;
-//	}
-//	public void setItSecSbIntegrityDescription(String itSecSbIntegrityDescription) {
-//		this.itSecSbIntegrityDescription = itSecSbIntegrityDescription;
-//	}
-
-	
+	/**
+	 * @return the classInformationId
+	 */
 	@Column(name = "ITSEC_SB_VERTR_ID")
-	public Long getItSecSbConfidentialityId() {
-		return itSecSbConfidentialityId;
+	public Long getClassInformationId() {
+		return classInformationId;
 	}
-	public void setItSecSbConfidentialityId(Long itSecSbConfidentialityId) {
-		this.itSecSbConfidentialityId = itSecSbConfidentialityId;
+	/**
+	 * @param classInformationId the classInformationId to set
+	 */
+	public void setClassInformationId(Long classInformationId) {
+		this.classInformationId = classInformationId;
 	}
-//	public String getItSecSbConfidentialityTxt() {
-//		return itSecSbConfidentialityTxt;
-//	}
-//	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
-//		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
-//	}
-	
-	
+	/**
+	 * @return the classInformationExplanation
+	 */
 	@Column(name = "ITSEC_SB_VERTR_TXT")
-	public String getItSecSbConfidentialityTxt() {
-		return itSecSbConfidentialityTxt;
+	public String getClassInformationTxt() {
+		return classInformationTxt;
 	}
-	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
-		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
+	/**
+	 * @param classInformationExplanation the classInformationExplanation to set
+	 */
+	public void setClassInformationTxt(String classInformationTxt) {
+		this.classInformationTxt = classInformationTxt;
 	}
-//	public String getItSecSbConfidentialityDescription() {
-//		return itSecSbConfidentialityDescription;
-//	}
-//	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
-//		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
-//	}
+	
 	@Column(name = "SAMPLE_TEST_DATE")
 	public Timestamp getSampleTestDate() {
 		return sampleTestDate;

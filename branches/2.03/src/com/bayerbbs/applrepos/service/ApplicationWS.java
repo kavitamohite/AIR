@@ -427,9 +427,6 @@ public class ApplicationWS {
 		dto.setSeverityLevelId(editInput.getSeverityLevelId());
 		dto.setBusinessEssentialId(editInput.getBusinessEssentialId());
 
-//		dto.setClusterCode(editInput.getClusterCode());
-//		dto.setClusterType(editInput.getClusterType());
-
 		// contacts
 		dto.setCiOwner(editInput.getCiOwner());//setResponsible
 		dto.setCiOwnerDelegate(editInput.getCiOwnerDelegate());//setSubResponsible
@@ -516,8 +513,6 @@ public class ApplicationWS {
 		dto.setClassInformationId(editInput.getClassInformationId());
 		dto.setClassInformationExplanation(editInput.getClassInformationExplanation());
 
-		dto.setItSecSbConfidentialityId(editInput.getItSecSbConfidentialityId());
-		dto.setItSecSbConfidentialityTxt(editInput.getItSecSbConfidentialityTxt());
 		
 		dto.setCategoryBusinessId(editInput.getCategoryBusinessId());
 		dto.setClassDataId(editInput.getClassDataId());
@@ -538,6 +533,9 @@ public class ApplicationWS {
 		dto.setUpStreamDelete(editInput.getUpStreamDelete());
 		dto.setDownStreamAdd(editInput.getDownStreamAdd());
 		dto.setDownStreamDelete(editInput.getDownStreamDelete());
+		
+		dto.setItSecSbIntegrityId(editInput.getItSecSbIntegrityId());
+		dto.setItSecSbIntegrityTxt(editInput.getItSecSbIntegrityTxt());
 		
 		return dto;
 	}

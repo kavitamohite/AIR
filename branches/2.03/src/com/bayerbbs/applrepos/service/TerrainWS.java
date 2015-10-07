@@ -32,12 +32,10 @@ public class TerrainWS {
 		//Protection
 		terrainDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
 		terrainDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
-//		terrainDTO.setClassInformationId(input.getClassInformationId());
-//		terrainDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		terrainDTO.setClassInformationId(input.getClassInformationId());
+		terrainDTO.setClassInformationTxt(input.getClassInformationExplanation());
 		terrainDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
 		terrainDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
-		terrainDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
-		terrainDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
 		
 		//Compliance
 		terrainDTO.setItset(input.getItset());
@@ -49,8 +47,7 @@ public class TerrainWS {
 		
 		terrainDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		terrainDTO.setRelevanceGR1920(input.getRelevanceGR1920());
-//		terrainDTO.setRelevanceICS(input.getRelevanceICS());
-//		terrainDTO.setRelevanzItsec(input.getRelevanzITSEC());
+
 		terrainDTO.setGxpFlag(input.getGxpFlag());
 		terrainDTO.setGxpFlagId(input.getGxpFlag());
 		

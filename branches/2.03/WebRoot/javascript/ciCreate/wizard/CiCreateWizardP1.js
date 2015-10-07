@@ -97,6 +97,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {
 		var ciTypesByRole = AAM.getCreationCiTypes();
 
 		AAM.filterCiTypes(combo, ciTypesByRole);
+		combo.getStore().sort('text', 'ASC');
 		
 	},
 	

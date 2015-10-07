@@ -344,25 +344,7 @@ public class CiEntityWS {
 			buildingAreaDTO.setProviderAddress(buildingArea
 					.getProvider_Address());
 			// vandana
-			/*
-			 * Terrain terrain = buildingArea.getBuilding().getTerrain();
-			 * Set<Building> buildings = terrain.getBuildings();
-			 * 
-			 * if(buildings != null && buildings.size() > 0) { // BuildingDTO
-			 * area = null; // Set<BuildingDTO> areas = new
-			 * HashSet<BuildingDTO>(); // for(Building building : buildings) {
-			 * // building = new BuildingAreaDTO(); //
-			 * building.setAreaId(building.getId()); //
-			 * building.setName(building.getName()); // buildings.add(building);
-			 * // } // buildingAreaDTO.setBuildingAreas(buildings);
-			 * 
-			 * StringBuilder data = new StringBuilder(); for(Building building :
-			 * buildings) { if(data.length() > 0) data.append(KOMMA);
-			 * data.append
-			 * (building.getId()).append(EQUAL).append(building.getName()); }
-			 * buildingAreaDTO.setBuildingData(data.toString()); }
-			 */
-
+	
 			AccessRightChecker checker = new AccessRightChecker();
 			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(),
 					input.getToken(), buildingArea)) {
@@ -378,8 +360,7 @@ public class CiEntityWS {
 
 	public RoomDTO getRoom(CiDetailParameterInput input) {
 		RoomDTO roomDTO = new RoomDTO();
-		// CiDetailParameterOutput<RoomDTO> output = new
-		// CiDetailParameterOutput<RoomDTO>();
+
 
 		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 			Room room = RoomHbn.findById(input.getCiId());
@@ -429,38 +410,14 @@ public class CiEntityWS {
 				roomDTO.setSeverityLevelIdAcl(AirKonstanten.NO_SHORT);
 			}
 
-			// ...
-			// --------------------------
 
-			/*
-			 * if(buildingAreas != null && buildingAreas.size() > 0) { //
-			 * BuildingAreaDTO area = null; // Set<BuildingAreaDTO> areas = new
-			 * HashSet<BuildingAreaDTO>(); // for(BuildingArea buildingArea :
-			 * buildingAreas) { // area = new BuildingAreaDTO(); //
-			 * area.setAreaId(buildingArea.getId()); //
-			 * area.setName(buildingArea.getName()); // areas.add(area); // } //
-			 * roomDTO.setBuildingAreas(areas);
-			 * 
-			 * StringBuilder data = new StringBuilder(); for(BuildingArea
-			 * buildingArea : buildingAreas) { if(data.length() > 0)
-			 * data.append(KOMMA);
-			 * data.append(buildingArea.getId()).append(EQUAL
-			 * ).append(buildingArea.getName()); }
-			 * roomDTO.setBuildingAreaData(data.toString()); }
-			 */
 		}
 
 		// output.setCiDetailDTO(roomDTO);//setRoomDTO setCiDetailDTO
 		return roomDTO;
 	}
 
-	// public ItSystemDTO[] getSystemPlatformsById(CiEntityParameterInput
-	// detailInput) {
-	// List<ItSystem> itSystems =
-	// RoomHbn.getSystemPlatformsById(detailInput.getCiId());
-	//
-	// return null;
-	// }
+
 
 	public FunctionDTO getFunction(CiDetailParameterInput input) {
 		FunctionDTO functionDTO = new FunctionDTO();
@@ -917,10 +874,8 @@ public class CiEntityWS {
 		ciBaseDTO.setItSecSbAvailabilityTxt(ciBase.getItSecSbAvailabilityTxt());// setItSecSbAvailabilityDescription
 		ciBaseDTO.setItSecSbIntegrityId(ciBase.getItSecSbIntegrityId());
 		ciBaseDTO.setItSecSbIntegrityTxt(ciBase.getItSecSbIntegrityTxt());
-		ciBaseDTO.setItSecSbConfidentialityId(ciBase
-				.getItSecSbConfidentialityId());
-		ciBaseDTO.setItSecSbConfidentialityTxt(ciBase
-				.getItSecSbConfidentialityTxt());
+        ciBaseDTO.setClassInformationId(ciBase.getClassInformationId());
+        ciBaseDTO.setClassInformationTxt(ciBase.getClassInformationTxt());
 
 		ciBaseDTO.setItset(ciBase.getItset());
 		ciBaseDTO.setItsecGroupId(ciBase.getItsecGroupId());
@@ -1045,10 +1000,8 @@ public class CiEntityWS {
 		ciBaseDTO.setItSecSbAvailabilityTxt(ciBase.getItSecSbAvailabilityTxt());// setItSecSbAvailabilityDescription
 		ciBaseDTO.setItSecSbIntegrityId(ciBase.getItSecSbIntegrityId());
 		ciBaseDTO.setItSecSbIntegrityTxt(ciBase.getItSecSbIntegrityTxt());
-		ciBaseDTO.setItSecSbConfidentialityId(ciBase
-				.getItSecSbConfidentialityId());
-		ciBaseDTO.setItSecSbConfidentialityTxt(ciBase
-				.getItSecSbConfidentialityTxt());
+        ciBaseDTO.setClassInformationId(ciBase.getClassInformationId());
+        ciBaseDTO.setClassInformationTxt(ciBase.getClassInformationTxt());
 
 		ciBaseDTO.setItset(ciBase.getItset());
 		ciBaseDTO.setTemplate(ciBase.getTemplate());
@@ -1392,17 +1345,17 @@ public class CiEntityWS {
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
-		if (itSystem.getItSecSbConfidentialityId() != null
-				&& itSystem.getItSecSbConfidentialityId() != 0)
+		if (itSystem.getClassInformationId() != null
+				&& itSystem.getClassInformationId() != 0)
 			maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(
-					itSystem.getItSecSbConfidentialityId())
+					itSystem.getClassInformationId())
 					.getConfidentialityNameEn());
 		maDto.setId("itSecSbConfidentiality");
 		massUpdateAttriuteDTOs.add(maDto);
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.EXPLANATION_FOR_PROTECTION_LEVEL_CONFIDENTIALITY);
-		maDto.setAttributeValue(itSystem.getItSecSbConfidentialityTxt());
+		maDto.setAttributeValue(itSystem.getClassInformationTxt());
 		maDto.setId("itSecSbConfidentialityTxt");
 		massUpdateAttriuteDTOs.add(maDto);
 
@@ -1503,16 +1456,16 @@ public class CiEntityWS {
 		massUpdateAttriuteDTOs.add(maDto);
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
-		if (ciBase1.getItSecSbConfidentialityId() != null
-				&& ciBase1.getItSecSbConfidentialityId() != 0)
+		if (ciBase1.getClassInformationId() != null
+				&& ciBase1.getClassInformationId() != 0)
 			maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(
-					ciBase1.getItSecSbConfidentialityId())
+					ciBase1.getClassInformationId())
 					.getConfidentialityNameEn());
 		maDto.setId("itSecSbConfidentiality");
 		massUpdateAttriuteDTOs.add(maDto);
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.EXPLANATION_FOR_PROTECTION_LEVEL_CONFIDENTIALITY);
-		maDto.setAttributeValue(ciBase1.getItSecSbConfidentialityTxt());
+		maDto.setAttributeValue(ciBase1.getClassInformationTxt());
 		maDto.setId("itSecSbConfidentialityTxt");
 		massUpdateAttriuteDTOs.add(maDto);
 		maDto = new MassUpdateAttributeDTO();
@@ -2022,12 +1975,12 @@ public class CiEntityWS {
 							.getItSecSbAvailabilityTxt());
 				}
 				if (massUpdateParameterInput.getItSecSbConfidentiality()) {
-					locationCi.setItSecSbConfidentialityId(templaeLocationCI
-							.getItSecSbConfidentialityId());
+					locationCi.setClassInformationId(templaeLocationCI
+							.getClassInformationId());
 				}
 				if (massUpdateParameterInput.getItSecSbConfidentialityTxt()) {
-					locationCi.setItSecSbConfidentialityTxt(templaeLocationCI
-							.getItSecSbConfidentialityTxt());
+					locationCi.setClassInformationTxt(templaeLocationCI
+							.getClassInformationTxt());
 				}
 				if (massUpdateParameterInput.isItSecSbIntegrityId()) {
 					locationCi.setItSecSbIntegrityId(templaeLocationCI
@@ -2413,12 +2366,12 @@ public class CiEntityWS {
 							.getItSecSbAvailabilityTxt());
 				}
 				if (massUpdateParameterInput.getItSecSbConfidentiality()) {
-					itSystem.setItSecSbConfidentialityId(templateItSystem
-							.getItSecSbConfidentialityId());
+					itSystem.setClassInformationId(templateItSystem
+							.getClassInformationId());
 				}
 				if (massUpdateParameterInput.getItSecSbConfidentialityTxt()) {
-					itSystem.setItSecSbConfidentialityTxt(templateItSystem
-							.getItSecSbConfidentialityTxt());
+					itSystem.setClassInformationTxt(templateItSystem
+							.getClassInformationTxt());
 				}
 				itSystem.setUpdateUser(massUpdateParameterInput.getCwid());
 				itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
@@ -2927,13 +2880,13 @@ public class CiEntityWS {
 				}
 				if (mAttrParameterInput.getItSecSbConfidentialityId() != null
 						&& mAttrParameterInput.getItSecSbConfidentialityId() != 0) {
-					locationCi.setItSecSbConfidentialityId(mAttrParameterInput
-							.getItSecSbConfidentialityId());
+					locationCi.setClassInformationId(mAttrParameterInput
+							.getClassInformationId());
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getItSecSbConfidentialityTx())) {
-					locationCi.setItSecSbConfidentialityTxt(mAttrParameterInput
-							.getItSecSbConfidentialityTx());
+					locationCi.setClassInformationTxt(mAttrParameterInput
+							.getClassInformationExplanation());
 				}
 				if (mAttrParameterInput.getItSecSbIntegrityId() != null
 						&& mAttrParameterInput.getItSecSbIntegrityId() != 0) {
@@ -3359,13 +3312,13 @@ public class CiEntityWS {
 				}
 				if (mAttrParameterInput.getItSecSbConfidentialityId() != null
 						&& mAttrParameterInput.getItSecSbConfidentialityId() != 0) {
-					itSystem.setItSecSbConfidentialityId(mAttrParameterInput
-							.getItSecSbConfidentialityId());
+					itSystem.setClassInformationId(mAttrParameterInput
+							.getClassInformationId());
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getItSecSbConfidentialityTx())) {
-					itSystem.setItSecSbConfidentialityTxt(mAttrParameterInput
-							.getItSecSbConfidentialityTx());
+					itSystem.setClassInformationTxt(mAttrParameterInput
+							.getClassInformationExplanation());
 				}
 				if (mAttrParameterInput.getItSecSbIntegrityId() != null
 						&& mAttrParameterInput.getItSecSbIntegrityId() != 0) {

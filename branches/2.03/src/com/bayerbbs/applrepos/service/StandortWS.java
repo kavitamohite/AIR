@@ -35,12 +35,10 @@ public class StandortWS {
 		//Protection
 		standortDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
 		standortDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
-//		standortDTO.setClassInformationId(input.getClassInformationId());
-//		standortDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		standortDTO.setClassInformationId(input.getClassInformationId());
+		standortDTO.setClassInformationTxt(input.getClassInformationExplanation());
 		standortDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
 		standortDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
-		standortDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
-		standortDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
 		
 		//Compliance
 		standortDTO.setItset(input.getItset());
@@ -52,8 +50,6 @@ public class StandortWS {
 		
 		standortDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		standortDTO.setRelevanceGR1920(input.getRelevanceGR1920());
-//		standortDTO.setRelevanceICS(input.getRelevanceICS());
-//		standortDTO.setRelevanzItsec(input.getRelevanzITSEC());
 		standortDTO.setGxpFlag(input.getGxpFlag());
 		standortDTO.setGxpFlagId(input.getGxpFlag());
 		
@@ -139,18 +135,6 @@ public class StandortWS {
 				
 				dto.setId(standort.getId());
 				BaseHbn.saveGpscContacts(dto, input.getCwid());
-				
-				/*
-				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_SITE, false);
-				if (null != listCi && 1 == listCi.size()) {
-					Long ciId = listCi.get(0).getId();
-					output.setCiId(ciId);
-					output.setTableId(AirKonstanten.TABLE_ID_SITE);
-				} else {
-					// unknown?
-					output.setCiId(new Long(-1));
-				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {

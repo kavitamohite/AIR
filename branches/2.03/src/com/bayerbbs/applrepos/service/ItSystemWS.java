@@ -24,18 +24,7 @@ public class ItSystemWS {
 				
 				dto.setId(itSystem.getId());
 				BaseHbn.saveGpscContacts(dto, input.getCwid());
-				
-				/*
-				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_IT_SYSTEM, false);
-				if (null != listCi && 1 == listCi.size()) {
-					Long ciId = listCi.get(0).getId();
-					output.setCiId(ciId);
-					output.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
-				} else {
-					// unknown?
-					output.setCiId(new Long(-1));
-				}*/
+
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {
@@ -145,10 +134,9 @@ public class ItSystemWS {
 		itSystemDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
 		itSystemDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
 		itSystemDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
-		itSystemDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
-		itSystemDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
-//		itSystemDTO.setClassInformationId(input.getClassInformationId());
-//		itSystemDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+
+		itSystemDTO.setClassInformationId(input.getClassInformationId());
+		itSystemDTO.setClassInformationTxt(input.getClassInformationExplanation());
 		
 		//Compliance
 		itSystemDTO.setItset(input.getItset());
@@ -160,8 +148,6 @@ public class ItSystemWS {
 		
 		itSystemDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		itSystemDTO.setRelevanceGR1920(input.getRelevanceGR1920());
-//		itSystemDTO.setRelevanceICS(input.getRelevanceICS());
-//		itSystemDTO.setRelevanzItsec(input.getRelevanzITSEC());
 		itSystemDTO.setGxpFlag(input.getGxpFlag());
 		itSystemDTO.setGxpFlagId(input.getGxpFlag());
 		

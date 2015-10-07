@@ -46,12 +46,10 @@ public class BuildingWS {
 		//Protection
 		buildingDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
 		buildingDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
-//		buildingDTO.setClassInformationId(input.getClassInformationId());
-//		buildingDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		buildingDTO.setClassInformationId(input.getClassInformationId());
+		buildingDTO.setClassInformationTxt(input.getClassInformationExplanation());
 		buildingDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
 		buildingDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
-		buildingDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
-		buildingDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
 		
 		
 		//Compliance
@@ -133,13 +131,11 @@ public class BuildingWS {
 		//Protection
 		buildingAreaDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
 		buildingAreaDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
-//		buildingAreaDTO.setItSecSbAvailabilityDescription(input.getItSecSbAvailabilityDescription());
-//		buildingAreaDTO.setClassInformationId(input.getClassInformationId());
-//		buildingAreaDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		buildingAreaDTO.setClassInformationId(input.getClassInformationId());
+		buildingAreaDTO.setClassInformationTxt(input.getClassInformationExplanation());
 		buildingAreaDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
 		buildingAreaDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
-		buildingAreaDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
-		buildingAreaDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
+
 		
 		
 		//Compliance
@@ -152,8 +148,7 @@ public class BuildingWS {
 		
 		buildingAreaDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		buildingAreaDTO.setRelevanceGR1920(input.getRelevanceGR1920());
-//		buildingAreaDTO.setRelevanceICS(input.getRelevanceICS());
-//		buildingAreaDTO.setRelevanzItsec(input.getRelevanzITSEC());
+
 		buildingAreaDTO.setGxpFlag(input.getGxpFlag());
 		buildingAreaDTO.setGxpFlagId(input.getGxpFlag());
 		
@@ -250,12 +245,6 @@ public class BuildingWS {
 		if (null != input && (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) ) {
 			BuildingDTO dto = getBuildingDTOFromEditInput(input);
 
-			// create Application - fill attributes
-//			if (null == dto.getCiOwner()) {
-//				dto.setCiOwner(input.getCwid().toUpperCase());
-//				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
-//			}
-
 			// save / create application
 			output = BuildingHbn.createBuilding(input.getCwid(), dto, true);
 
@@ -266,18 +255,6 @@ public class BuildingWS {
 				
 				dto.setId(building.getId());
 				BaseHbn.saveGpscContacts(dto, input.getCwid());
-				
-				/*
-				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING, false);
-				if (null != listCi && 1 == listCi.size()) {
-					Long ciId = listCi.get(0).getId();
-					output.setCiId(ciId);
-					output.setTableId(AirKonstanten.TABLE_ID_BUILDING);
-				} else {
-					// unknown?
-					output.setCiId(new Long(-1));
-				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {
@@ -295,12 +272,6 @@ public class BuildingWS {
 		if (null != input && (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) ) {
 			BuildingAreaDTO dto = getBuildingAreaDTOFromEditInput(input);
 
-			// create Application - fill attributes
-//			if (null == dto.getCiOwner()) {
-//				dto.setCiOwner(input.getCwid().toUpperCase());
-//				dto.setCiOwnerHidden(input.getCwid().toUpperCase());
-//			}
-
 			// save / create application
 			output = BuildingHbn.createBuildingArea(input.getCwid(), dto, true);
 
@@ -311,18 +282,6 @@ public class BuildingWS {
 				
 				dto.setId(buildingArea.getId());
 				BaseHbn.saveGpscContacts(dto, input.getCwid());
-				
-				/*
-				// get detail
-				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_BUILDING_AREA, false);
-				if (null != listCi && 1 == listCi.size()) {
-					Long ciId = listCi.get(0).getId();
-					output.setCiId(ciId);
-					output.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
-				} else {
-					// unknown?
-					output.setCiId(new Long(-1));
-				}*/
 			} else {
 				// TODO errorcodes / Texte
 				if (null != output.getMessages() && output.getMessages().length > 0) {

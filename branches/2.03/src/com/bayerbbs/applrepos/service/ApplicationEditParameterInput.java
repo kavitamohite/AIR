@@ -123,6 +123,9 @@ public class ApplicationEditParameterInput {
 	private Long classInformationId;
 	private String classInformationExplanation;
 	
+	private Long itSecSbIntegrityId;
+	private String itSecSbIntegrityTxt;
+	
 	private Long categoryBusinessId;
 	private Long classDataId;
 
@@ -931,5 +934,39 @@ public class ApplicationEditParameterInput {
 	public void setBarApplicationId(String barApplicationId) {
 		this.barApplicationId = barApplicationId;
 	}
+
+
+	/**
+	 * @return the itSecSbIntegrityId
+	 */
+	public Long getItSecSbIntegrityId() {
+		return itSecSbIntegrityId;
+	}
+
+
+	/**
+	 * @param itSecSbIntegrityId the itSecSbIntegrityId to set
+	 */
+	public void setItSecSbIntegrityId(Long itSecSbIntegrityId) {
+		this.itSecSbIntegrityId = itSecSbIntegrityId;
+	}
+
+
+	/**
+	 * @return the itSecSbIntegrityTxt
+	 */
+	public String getItSecSbIntegrityTxt() {
+		return itSecSbIntegrityTxt;
+	}
+
+
+	/**
+	 * @param itSecSbIntegrityTxt the itSecSbIntegrityTxt to set
+	 */
+	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
+		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
+	}
+	
+	
 	
 }

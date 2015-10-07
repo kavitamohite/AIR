@@ -18,9 +18,6 @@ public class ApplicationDTO extends CiBaseDTO {
 	private Long primaryFunctionId;
 	private String primaryFunctionTxt;
 	
-//	private String clusterCode;
-//	private String clusterType;
-
 	private String comments;
 
 	private Long lifecycleStatusId;
@@ -104,11 +101,8 @@ public class ApplicationDTO extends CiBaseDTO {
 	private String itSecSbIntegrityDescription;
 	private Long itSecSbAvailabilityId;
 	private String itSecSbAvailabilityTxt;
-//	private String itSecSbAvailabilityDescription;
-
-//	private Long itSecSbConfidentialityId;
-//	private String itSecSbConfidentialityTxt;
-//	private String itSecSbConfidentialityDescription;
+	private Long classInformationId;
+	private String classInformationExplanation;
 
 	// gpsc (baseCiDTO / local)
 	private String gpsccontactOwningBusinessGroup;
@@ -129,8 +123,6 @@ public class ApplicationDTO extends CiBaseDTO {
 
 	private Long classDataId;
 	private String classData;
-	private Long classInformationId;
-	private String classInformationExplanation;
 	private String applicationProtection;	// only for display usage
 	private String serviceModel;
 
@@ -161,22 +153,6 @@ public class ApplicationDTO extends CiBaseDTO {
 	public void setApplicationCat2Id(Long applicationCat2Id) {
 		this.applicationCat2Id = applicationCat2Id;
 	}
-
-//	public String getClusterCode() {
-//		return clusterCode;
-//	}
-//
-//	public void setClusterCode(String clusterCode) {
-//		this.clusterCode = clusterCode;
-//	}
-//
-//	public String getClusterType() {
-//		return clusterType;
-//	}
-//
-//	public void setClusterType(String clusterType) {
-//		this.clusterType = clusterType;
-//	}
 
 	public String getComments() {
 		return comments;

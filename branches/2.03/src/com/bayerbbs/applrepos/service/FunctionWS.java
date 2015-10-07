@@ -53,20 +53,7 @@ public class FunctionWS {
 		functionDTO.setCiOwnerDelegate(input.getCiOwnerDelegate());
 		functionDTO.setCiOwnerDelegateHidden(input.getCiOwnerDelegateHidden());
 
-		//Agreements
-		functionDTO.setSlaId(input.getSlaId());
-		functionDTO.setServiceContractId(input.getServiceContractId());
 
-		
-		//Protection
-		functionDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
-		functionDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
-//		functionDTO.setClassInformationId(input.getClassInformationId());
-//		functionDTO.setClassInformationExplanation(input.getClassInformationExplanation());
-		functionDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
-		functionDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
-		functionDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
-		functionDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
 		
 		//Compliance
 		functionDTO.setItset(input.getItset());
@@ -78,35 +65,10 @@ public class FunctionWS {
 		
 		functionDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		functionDTO.setRelevanceGR1920(input.getRelevanceGR1920());
-//		functionDTO.setRelevanceICS(input.getRelevanceICS());
-//		functionDTO.setRelevanzItsec(input.getRelevanzITSEC());
+
 		functionDTO.setGxpFlag(input.getGxpFlag());
 		functionDTO.setGxpFlagId(input.getGxpFlag());
 		
-		functionDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
-		functionDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
-		functionDTO.setGpsccontactServiceCoordinatorHidden(input.getGpsccontactServiceCoordinatorHidden());
-		functionDTO.setGpsccontactEscalationHidden(input.getGpsccontactEscalationHidden());
-		functionDTO.setGpsccontactCiOwnerHidden(input.getGpsccontactCiOwnerHidden());
-		functionDTO.setGpsccontactServiceCoordinatorIndivHidden(input.getGpsccontactServiceCoordinatorIndivHidden());
-		functionDTO.setGpsccontactEscalationIndivHidden(input.getGpsccontactEscalationIndivHidden());
-		functionDTO.setGpsccontactResponsibleAtCustomerSideHidden(input.getGpsccontactResponsibleAtCustomerSideHidden());
-		functionDTO.setGpsccontactSystemResponsibleHidden(input.getGpsccontactSystemResponsibleHidden());
-		functionDTO.setGpsccontactImpactedBusinessHidden(input.getGpsccontactImpactedBusinessHidden()); 
-
-		functionDTO.setGpsccontactSupportGroup(input.getGpsccontactSupportGroup());
-		functionDTO.setGpsccontactChangeTeam(input.getGpsccontactChangeTeam());
-		functionDTO.setGpsccontactServiceCoordinator(input.getGpsccontactServiceCoordinator());
-		functionDTO.setGpsccontactEscalation(input.getGpsccontactEscalation());
-		functionDTO.setGpsccontactCiOwner(input.getGpsccontactCiOwner());
-		functionDTO.setGpsccontactServiceCoordinatorIndiv(input.getGpsccontactServiceCoordinatorIndiv());
-		functionDTO.setGpsccontactEscalationIndiv(input.getGpsccontactEscalationIndiv());
-		functionDTO.setGpsccontactResponsibleAtCustomerSide(input.getGpsccontactResponsibleAtCustomerSide());
-		functionDTO.setGpsccontactSystemResponsible(input.getGpsccontactSystemResponsible());
-		functionDTO.setGpsccontactImpactedBusiness(input.getGpsccontactImpactedBusiness());
-		
-		functionDTO.setDownStreamAdd(input.getDownStreamAdd());
-		functionDTO.setDownStreamDelete(input.getDownStreamDelete());
 		return functionDTO;
 		
 	}

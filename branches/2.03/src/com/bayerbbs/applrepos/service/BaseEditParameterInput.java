@@ -36,12 +36,9 @@ public class BaseEditParameterInput {
 	private Long itSecSbIntegrityId;
 	private String itSecSbIntegrityTxt;
 //	private String itSecSbIntegrityDescription;
-
-	private Long itSecSbConfidentialityId;
-	private String itSecSbConfidentialityTxt;
 	
-//	private Long classInformationId;
-//	private String classInformationExplanation;
+	private Long classInformationId;
+	private String classInformationExplanation;
 
 	private String downStreamAdd;
 	private String downStreamDelete;
@@ -230,32 +227,32 @@ public class BaseEditParameterInput {
 		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
 	}
 	
-	public Long getItSecSbConfidentialityId() {
-		return itSecSbConfidentialityId;
-	}
-	public void setItSecSbConfidentialityId(Long itSecSbConfidentialityId) {
-		this.itSecSbConfidentialityId = itSecSbConfidentialityId;
-	}
-	public String getItSecSbConfidentialityTxt() {
-		return itSecSbConfidentialityTxt;
-	}
-	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
-		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
-	}
 
-//	public Long getClassInformationId() {
-//		return classInformationId;
-//	}
-//	public void setClassInformationId(Long classInformationId) {
-//		this.classInformationId = classInformationId;
-//	}
-//	public String getClassInformationExplanation() {
-//		return classInformationExplanation;
-//	}
-//	public void setClassInformationExplanation(String classInformationExplanation) {
-//		this.classInformationExplanation = classInformationExplanation;
-//	}
 	
+	/**
+	 * @return the classInformationId
+	 */
+	public Long getClassInformationId() {
+		return classInformationId;
+	}
+	/**
+	 * @param classInformationId the classInformationId to set
+	 */
+	public void setClassInformationId(Long classInformationId) {
+		this.classInformationId = classInformationId;
+	}
+	/**
+	 * @return the classInformationExplanation
+	 */
+	public String getClassInformationExplanation() {
+		return classInformationExplanation;
+	}
+	/**
+	 * @param classInformationExplanation the classInformationExplanation to set
+	 */
+	public void setClassInformationExplanation(String classInformationExplanation) {
+		this.classInformationExplanation = classInformationExplanation;
+	}
 	public String getDownStreamAdd() {
 		return downStreamAdd;
 	}

@@ -66,12 +66,11 @@ public class WaysWS {
 		//Protection
 		pathwayDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
 		pathwayDTO.setItSecSbAvailabilityTxt(input.getItSecSbAvailabilityTxt());//setItSecSbAvailabilityDescription/getItSecSbAvailabilityDescription
-//		pathwayDTO.setClassInformationId(input.getClassInformationId());
-//		pathwayDTO.setClassInformationExplanation(input.getClassInformationExplanation());
+		pathwayDTO.setClassInformationId(input.getClassInformationId());
+		pathwayDTO.setClassInformationTxt(input.getClassInformationExplanation());
 		pathwayDTO.setItSecSbIntegrityId(input.getItSecSbIntegrityId());
 		pathwayDTO.setItSecSbIntegrityTxt(input.getItSecSbIntegrityTxt());
-		pathwayDTO.setItSecSbConfidentialityId(input.getItSecSbConfidentialityId());
-		pathwayDTO.setItSecSbConfidentialityTxt(input.getItSecSbConfidentialityTxt());
+
 		
 		//Compliance
 		pathwayDTO.setItset(input.getItset());
@@ -83,8 +82,7 @@ public class WaysWS {
 		
 		pathwayDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		pathwayDTO.setRelevanceGR1920(input.getRelevanceGR1920());
-//		pathwayDTO.setRelevanceICS(input.getRelevanceICS());
-//		pathwayDTO.setRelevanzItsec(input.getRelevanzITSEC());
+
 		pathwayDTO.setGxpFlag(input.getGxpFlag());
 		pathwayDTO.setGxpFlagId(input.getGxpFlag());
 		

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -25,11 +24,8 @@ import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.CiBase;
-import com.bayerbbs.applrepos.domain.HardwareComponent;
 import com.bayerbbs.applrepos.domain.ItSystem;
-import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
-import com.bayerbbs.applrepos.dto.EditorGroupDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.KeyValueType2DTO;
@@ -126,11 +122,6 @@ public class ItSystemHbn extends BaseHbn {
 			
 			if (null != dto.getId() || 0 < dto.getId().longValue()) {
 				Long id = new Long(dto.getId());
-
-				// check der InputWerte
-//				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-//				List<String> messages = validateCi(dto);//, listCi
 				
 				List<String> messages = validateItSystem(dto, true);
 
@@ -163,21 +154,6 @@ public class ItSystemHbn extends BaseHbn {
 							}
 							itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
 						}
-
-						
-						
-						// validate template
-//						if (null != itSystem.getTemplate() && -1 == itSystem.getTemplate().longValue()) {
-//							if (null != dto.getTemplate()) {
-//								if (0 == dto.getTemplate().longValue()) {
-//									// user wants to change to non template
-//									// check if there are referencing values
-//									if (!"0".equals(ApplReposHbn.getCountReferencingTemplates(id))) {
-//										output.setErrorMessage("1002");
-//									}
-//								}
-//							}
-//						}
 						
 						setUpCi(itSystem, dto, cwid, false);
 						setUpItSystem(itSystem, dto, cwid);
@@ -187,301 +163,6 @@ public class ItSystemHbn extends BaseHbn {
 						
 						if(dto.getDownStreamAdd() != null && dto.getDownStreamAdd().length() > 0 || dto.getDownStreamDelete() != null && dto.getDownStreamDelete().length() > 0)
 							CiEntitiesHbn.saveCiRelations(dto.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), AirKonstanten.DN, cwid);
-
-						/*
-						itSystem.setUpdateUser(cwid);
-						itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-						itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
-						
-						// RFC8344 change Insert-Quelle? // RFC 8532
-//						if (ApplreposConstants.INSERT_QUELLE_ANT.equals(application.getInsertQuelle()) ||
-//							ApplreposConstants.INSERT_QUELLE_RFC.equals(application.getInsertQuelle())  ||
-//							ApplreposConstants.INSERT_QUELLE_SISEC.equals(application.getInsertQuelle())) {
-//							application.setInsertQuelle(ApplreposConstants.APPLICATION_GUI_NAME);
-//						}
-
-						// ======
-						// Basics
-						// ======
-
-//						if (null != dto.getName()) {
-//							itSystem.setItSystemName(dto.getName());
-//						}
-						 
-						if (null != dto.getAlias())
-							itSystem.setAlias(dto.getAlias());
-						
-						if(null != dto.getOsNameId()) {
-							if(dto.getOsNameId() > -1)
-								itSystem.setOsNameId(dto.getOsNameId());
-							else
-								itSystem.setOsNameId(null);
-						}
-						
-						if(DELETE.equals(dto.getClusterCode()))
-							itSystem.setClusterCode(null);
-						else
-							itSystem.setClusterCode(dto.getClusterCode());
-							
-						if(DELETE.equals(dto.getClusterType()))
-							itSystem.setClusterType(null);
-						else
-							itSystem.setClusterType(dto.getClusterType());
-						
-						if(DELETE.equals(dto.getVirtualHardwareSoftware()))
-							itSystem.setVirtualHardwareSoftware(null);
-						else
-							itSystem.setVirtualHardwareSoftware(dto.getVirtualHardwareSoftware());
-						
-						
-						if(DELETE.equals(dto.getIsVirtualHardwareClient()))
-							itSystem.setIsVirtualHardwareClient(null);
-						else
-							itSystem.setIsVirtualHardwareClient(dto.getIsVirtualHardwareClient());
-						
-						if(DELETE.equals(dto.getIsVirtualHardwareHost()))
-							itSystem.setIsVirtualHardwareHost(null);
-						else
-							itSystem.setIsVirtualHardwareHost(dto.getIsVirtualHardwareHost());
-						
-//						if(null != dto.getIsVirtualHardwareClient())
-//							itSystem.setIsVirtualHardwareClient(dto.getIsVirtualHardwareClient());
-//						
-//						if(null != dto.getIsVirtualHardwareHost())
-//							itSystem.setIsVirtualHardwareHost(dto.getIsVirtualHardwareHost());
-						
-						
-						if(null != dto.getLifecycleStatusId()) {
-							if(dto.getOsNameId() > -1)
-								itSystem.setLifecycleStatusId(dto.getLifecycleStatusId());
-							else
-								itSystem.setLifecycleStatusId(null);
-						}
-							
-						if(null != dto.getEinsatzStatusId()) {
-							if(dto.getOsNameId() > -1)
-								itSystem.setEinsatzStatusId(dto.getEinsatzStatusId());
-							else
-								itSystem.setEinsatzStatusId(null);
-						}
-							
-						if(null != dto.getPrimaryFunctionId()) {
-							if(dto.getOsNameId() > -1)
-								itSystem.setPrimaryFunctionId(dto.getPrimaryFunctionId());
-							else
-								itSystem.setPrimaryFunctionId(null);
-						}
-							
-						if(null != dto.getLicenseScanningId()) {
-							if(dto.getOsNameId() > -1)
-								itSystem.setLicenseScanningId(dto.getLicenseScanningId());
-							else
-								itSystem.setLicenseScanningId(null);
-						}
-						
-
-						if (null != dto.getSeverityLevelId()) {
-							if (-1 == dto.getSeverityLevelId()) {
-								itSystem.setSeverityLevelId(null);
-							}
-							else {
-								itSystem.setSeverityLevelId(dto.getSeverityLevelId());
-							}
-						}
-						
-						if (null != dto.getSeverityLevelId()) {
-							if (-1 == dto.getSeverityLevelId()) {
-								itSystem.setSeverityLevelId(null);
-							}
-							else {
-								itSystem.setSeverityLevelId(dto.getSeverityLevelId());
-							}
-						}
-						
-						itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
-						
-						
-						// ================
-						// Owner / Delegate
-						// ================
-						if (null != dto.getCiOwnerHidden()) {
-							if(StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {
-								itSystem.setCiOwner(null);
-							}
-							else {
-								itSystem.setCiOwner(dto.getCiOwnerHidden());
-							}
-						}
-						if (null != dto.getCiOwnerDelegateHidden()) {
-							if(StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {
-								itSystem.setCiOwnerDelegate(null);
-							}
-							else {
-								itSystem.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
-							}
-						}
-						
-//						itSystem.setSlaId(dto.getSlaId());
-//						itSystem.setServiceContractId(dto.getServiceContractId());
-//						itSystem.setSeverityLevelId(dto.getSeverityLevelId());
-						
-						if (null != dto.getSlaId()) {
-							if (-1 == dto.getSlaId()) {
-								itSystem.setSlaId(null);
-							}
-							else {
-								itSystem.setSlaId(dto.getSlaId());
-							}
-						}
-						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
-							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
-							itSystem.setServiceContractId(dto.getServiceContractId());
-						}
-						
-						if (null != dto.getSeverityLevelId()) {
-							if (-1 == dto.getSeverityLevelId()) {
-								itSystem.setSeverityLevelId(null);
-							}
-							else {
-								itSystem.setSeverityLevelId(dto.getSeverityLevelId());
-							}
-						}
-						
-
-						boolean hasBusinessEssentialChanged = false;
-						if (null == dto.getBusinessEssentialId()) {
-							if (null == itSystem.getBusinessEssentialId()) {
-								// set the default value
-								itSystem.setBusinessEssentialId(AirKonstanten.BUSINESS_ESSENTIAL_DEFAULT);
-								hasBusinessEssentialChanged = true;
-							}
-						}
-						else {
-							if (null == itSystem.getBusinessEssentialId() || itSystem.getBusinessEssentialId().longValue() != dto.getBusinessEssentialId().longValue()) {
-								hasBusinessEssentialChanged = true;
-							}
-							itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
-						}
-						
-						Long businessEssentialIdOld = itSystem.getBusinessEssentialId();
-						if (hasBusinessEssentialChanged) {
-//							sendBusinessEssentialChangedMail(itSystem, dto, businessEssentialIdOld);
-						}
-						
-						
-						if (null != dto.getItSecSbAvailabilityId()) {
-							if (-1 == dto.getItSecSbAvailabilityId()) {
-								itSystem.setItSecSbAvailability(null);
-							}
-							else if (0 != dto.getItSecSbAvailabilityId().longValue()) {
-								itSystem.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
-							}
-						}
-						if (null != dto.getItSecSbAvailabilityDescription()) {
-							itSystem.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
-						}
-						
-						// ==========
-						// compliance
-						// ==========
-						// Template
-						if (null != dto.getTemplate()) {
-//							if (-1 == dto.getTemplate()) {
-//								application.setTemplate(null);
-//							}
-//							else {
-							itSystem.setTemplate(dto.getTemplate());
-//							}
-						}
-						
-						if (null != dto.getItsecGroupId() && 0 != dto.getItsecGroupId()) {
-							if (-1 == dto.getItsecGroupId()) {
-								itSystem.setItsecGroupId(null);
-							}
-							else {
-								itSystem.setItsecGroupId(dto.getItsecGroupId());
-							}
-						}
-						
-						if (null != dto.getRefId()) {
-							if (-1 == dto.getRefId()) {
-								itSystem.setRefId(null);
-							}
-							else {
-								itSystem.setRefId(dto.getRefId());
-							}
-						}
-						
-//						if (null != dto.getRelevanceICS()) {
-//							itSystem.setRelevanceICS(dto.getRelevanceICS());
-//						}
-//						if (null != dto.getRelevanzItsec()) {//getRelevanceITSEC
-//							itSystem.setRelevanceITSEC(dto.getRelevanzItsec());//getRelevanceITSEC
-//						}
-						
-//						if (null != dto.getRelevanceICS()) {
-//							itSystem.setRelevanceICS(dto.getRelevanceGR1920());
-//						}
-//						if (null != dto.getRelevanzItsec()) {
-//							itSystem.setRelevanceITSEC(dto.getRelevanceGR1435());
-//						}
-						
-						if (null == dto.getRelevanzItsec()) {
-							if (Y.equals(dto.getRelevanceGR1435())) {
-								dto.setRelevanzItsec(new Long(-1));
-							}
-							else if (N.equals(dto.getRelevanceGR1435())) {
-								dto.setRelevanzItsec(new Long(0));
-							}
-						}
-						if (null == dto.getRelevanceICS()) {
-							if (Y.equals(dto.getRelevanceGR1920())) {
-								dto.setRelevanceICS(new Long(-1));
-							}
-							else if (N.equals(dto.getRelevanceGR1920())) {
-								dto.setRelevanceICS(new Long(0));
-							}
-						}
-						
-//						itSystem.setRelevanceITSEC(dto.getRelevanzItsec());
-//						itSystem.setRelevanceICS(dto.getRelevanceICS());
-						
-
-						if (null == dto.getGxpFlag()) {
-							//	we don't know, let the current value 
-						}
-						else {
-							if (EMPTY.equals(dto.getGxpFlag())) {
-								itSystem.setGxpFlag(null);
-							}
-							else {
-								itSystem.setGxpFlag(dto.getGxpFlag());
-							}
-						}
-
-						if (null != dto.getItSecSbAvailabilityId()) {
-							if (-1 == dto.getItSecSbAvailabilityId()) {
-								itSystem.setItSecSbAvailability(null);
-							}
-							else if (0 != dto.getItSecSbAvailabilityId().longValue()) {
-								itSystem.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
-							}
-						}
-						if (null != dto.getItSecSbAvailabilityDescription()) {
-							itSystem.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
-						}
-						
-						
-//						if (null != dto.getClassInformationId()) {
-//							if (-1 == dto.getClassInformationId()) {
-//								itSystem.setClassInformationId(null);
-//							} else {
-//								itSystem.setClassInformationId(dto.getClassInformationId());
-//							}
-//						}
-//						if (null != dto.getClassInformationExplanation()) {
-//							itSystem.setClassInformationExplanation(dto.getClassInformationExplanation());
-//						}*/
 					}
 					
 					boolean toCommit = false;
@@ -591,13 +272,6 @@ public class ItSystemHbn extends BaseHbn {
 			itSystem.setIsVirtualHardwareHost(null);
 		else
 			itSystem.setIsVirtualHardwareHost(dto.getIsVirtualHardwareHost());
-		
-//		if(null != dto.getIsVirtualHardwareClient())
-//			itSystem.setIsVirtualHardwareClient(dto.getIsVirtualHardwareClient());
-//		
-//		if(null != dto.getIsVirtualHardwareHost())
-//			itSystem.setIsVirtualHardwareHost(dto.getIsVirtualHardwareHost());
-		
 		
 		if(null != dto.getLifecycleStatusId()) {
 			if(dto.getLifecycleStatusId() > -1)
@@ -738,62 +412,11 @@ public class ItSystemHbn extends BaseHbn {
 			
 			if (null != dto.getId() && 0 == dto.getId()) {
 
-				// check der InputWerte
-//				List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-//				List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
 				List<String> messages = validateItSystem(dto, false);//validateCi , listCi
 
 				if (messages.isEmpty()) {
 					ItSystem itSystem = new ItSystem();
 					boolean isNameAndAliasNameAllowed = true;
-					
-					/*
-					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_IT_SYSTEM, true);
-
-						if (null != listCI && 0 < listCI.size()) {
-							// name is not allowed
-							isNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCI.get(0).getDeleteQuelle()) {
-								boolean override = forceOverride != null && forceOverride.booleanValue();
-								
-								if(override) {
-									// ENTWICKLUNG RFC8279
-									Session session = HibernateUtil.getSession();
-									ItSystem itSystemDeleted = (ItSystem)session.get(ItSystem.class, listCI.get(0).getId());
-									
-									// reactivate
-									reactivateItSystem(cwid, dto, itSystemDeleted);
-									// save the data
-									dto.setId(itSystemDeleted.getId());
-									return saveItSystem(cwid, dto);
-
-								} else {
-									output.setMessages(new String[] {"ItSystem Name '" + listCI.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-								}
-							}
-							else {
-								output.setMessages(new String[] {"ItSystem Name '" + listCI.get(0).getName() + "' already exists."});
-							}
-						}
-					}
-					
-					if (isNameAndAliasNameAllowed) {
-						List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_IT_SYSTEM, true);
-						
-						if (null != listCI && 0 < listCI.size()) {
-							// alias is not allowed
-							isNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCI.get(0).getDeleteQuelle()) {
-								output.setMessages(new String[] {"ItSystem Alias '" + listCI.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-							}
-							else {
-								output.setMessages(new String[] {"ItSystem Alias '" + listCI.get(0).getAlias() + "' already exists."});
-							}
-						}						
-					}*/
 					
 					
 					if (isNameAndAliasNameAllowed) {
@@ -806,39 +429,6 @@ public class ItSystemHbn extends BaseHbn {
 						setUpCi(itSystem, dto, cwid, true);
 						setUpItSystem(itSystem, dto, cwid);
 						
-						/*
-						// calculates the ItSet
-						Long itSet = null;
-						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
-						if (null != strItSet) {
-							itSet = Long.parseLong(strItSet);
-						}
-						if (null == itSet) {
-							// set default itSet
-							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
-						}
-						
-						// ci - insert values
-						itSystem.setInsertUser(cwid);
-						itSystem.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-						itSystem.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
-
-						// ci - update values
-						itSystem.setUpdateUser(itSystem.getInsertUser());
-						itSystem.setUpdateQuelle(itSystem.getInsertQuelle());
-						itSystem.setUpdateTimestamp(itSystem.getInsertTimestamp());
-
-						// ci - attributes
-//						itSystem.setItSystemName(dto.getName());
-
-						
-						if (null != dto.getCiOwnerHidden()) {
-							itSystem.setCiOwner(dto.getCiOwnerHidden());
-						}
-						if (null != dto.getCiOwnerDelegateHidden()) {
-							itSystem.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
-						}*/
-
 						
 						boolean toCommit = false;
 						try {
@@ -1072,10 +662,6 @@ public class ItSystemHbn extends BaseHbn {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql.toString());
 			
-//			stmt = conn.prepareStatement(sql.toString(), ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//			rs = stmt.executeQuery();
-//			if(0 != start)
-//				rs.absolute(start + 1);//relative
 			
 			if(null == start)
 				start = 0;
@@ -1122,14 +708,6 @@ public class ItSystemHbn extends BaseHbn {
 		} finally {
 			HibernateUtil.close(ta, session, commit);
 
-//			try {
-//				rs.close();
-//				stmt.close();
-//				conn.close();
-//				session.close();
-//			} catch (SQLException e) {
-//				System.out.println(e);
-//			}
 		}
 		
 		CiItemsResultDTO result = new CiItemsResultDTO();
@@ -1476,8 +1054,6 @@ public class ItSystemHbn extends BaseHbn {
 	}
 	
 	static List<String> validateItSystem(CiBaseDTO dto, boolean isUpdate) {
-//		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-//		List<String> messages = BaseHbn.validateCi(dto);//, listCi
 		
 		List<String> messages = validateCi(dto);//new ArrayList<String>();
 
@@ -1510,21 +1086,13 @@ public class ItSystemHbn extends BaseHbn {
 			if(itSystems.size() > 0) {
 				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 				
-//				Building building = buildings.get(0);
-//				if(building.getDeleteTimestamp() == null)
 					messages.add(errorCodeManager.getErrorMessage("8000", null));
-//				else
-//					messages.add(errorCodeManager.getErrorMessage("8001", null));
 			}
 
 			if(applications.size() > 0) {
 				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 				
-//				Building building = buildings.get(0);
-//				if(building.getDeleteTimestamp() == null)
 					messages.add(errorCodeManager.getErrorMessage("9000", null));
-//				else
-//					messages.add(errorCodeManager.getErrorMessage("9001", null));
 			}
 		}
 
@@ -1637,10 +1205,6 @@ public class ItSystemHbn extends BaseHbn {
 					output.setMessages(new String[] { "the itsystem id "	+ itsystemIdTarget + " is deleted" });
 				}else {
 
-					/*itsystemTarget.setItSystemId(itsystemSource.getItSystemId());
-					itsystemTarget.setCiSubTypeId(itsystemSource.getCiSubTypeId());
-					itsystemTarget.setOsNameId(itsystemSource.getOsNameId());*/
-					
 					// ==========
 					itsystemTarget.setSeverityLevelId(itsystemSource.getSeverityLevelId());
 					itsystemTarget.setBusinessEssentialId(itsystemSource.getBusinessEssentialId());

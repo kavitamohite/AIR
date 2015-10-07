@@ -329,6 +329,18 @@ public class AnwendungHbn extends BaseHbn {
 							application.setBusinessEssentialId(dto.getBusinessEssentialId());
 						}
 						
+						if(null != dto.getItSecSbIntegrityId()){
+							if(-1 == dto.getItSecSbIntegrityId()){
+								application.setItSecSbIntegrityId(null);
+							}
+							else if(0 != dto.getItSecSbIntegrityId().longValue()){
+								application.setItSecSbIntegrityId(dto.getItSecSbIntegrityId());
+							}
+						}
+						if(StringUtils.isNotNullOrEmpty(dto.getItSecSbIntegrityTxt())){
+							application.setItSecSbIntegrityTxt(dto.getItSecSbIntegrityTxt());
+						}
+						
 						if (null != dto.getItSecSbAvailabilityId()) {
 							if (-1 == dto.getItSecSbAvailabilityId()) {
 								application.setItSecSbAvailability(null);
@@ -1665,17 +1677,13 @@ public class AnwendungHbn extends BaseHbn {
 				// itSec
 				applicationDTO.setItSecSbIntegrityId(rsMessage.getLong("ITSEC_SB_INTEG_ID"));
 				applicationDTO.setItSecSbIntegrityTxt(rsMessage.getString("ITSEC_SB_INTEG_TXT"));//ITSECSBINTEG
-//				applicationDTO.setItSecSbIntegrityDescription(rsMessage.getString("ITSEC_SB_INTEG_TXT"));
 				
 				applicationDTO.setItSecSbAvailabilityId(rsMessage.getLong("ITSEC_SB_VERFG_ID"));
 				applicationDTO.setItSecSbAvailabilityTxt(rsMessage.getString("ITSEC_SB_VERFG_TXT"));//ITSECSBVERFG
-//				applicationDTO.setItSecSbAvailabilityDescription(rsMessage.getString("ITSEC_SB_VERFG_TXT"));
 				
-//				RFC 11441
-/*				applicationDTO.setItSecSbConfidentialityId(rsMessage.getLong("ITSEC_SB_VERTR_ID"));
-				applicationDTO.setItSecSbConfidentialityTxt(rsMessage.getString("ITSEC_SB_VERTR_TXT"));//ITSECSBVERTR
-*///				applicationDTO.setItSecSbConfidentialityDescription(rsMessage.getString("ITSEC_SB_VERTR_TXT"));
-
+				applicationDTO.setClassInformationId(rsMessage.getLong("ITSEC_SB_VERTR_ID"));
+				applicationDTO.setClassInformationTxt(rsMessage.getString("ITSEC_SB_VERTR_TXT"));	
+				
 				
 				if (null == applicationDTO.getItSecSbIntegrityId()) {
 					applicationDTO.setItSecSbIntegrityId(new Long(0));
@@ -1683,21 +1691,15 @@ public class AnwendungHbn extends BaseHbn {
 				if (null == applicationDTO.getItSecSbAvailabilityId()) {
 					applicationDTO.setItSecSbAvailabilityId(new Long(0));
 				}
-				if (null == applicationDTO.getItSecSbConfidentialityId()) {
-					applicationDTO.setItSecSbConfidentialityId(new Long(0));
+				if(null == applicationDTO.getClassInformationId()){
+					applicationDTO.setClassInformationId(new Long(0));
 				}
 				
 				applicationDTO.setCategoryBusinessId(rsMessage.getLong("CATEGORY_BUSINESS_ID"));
 				applicationDTO.setCategoryBusiness(rsMessage.getString("CATEGORY_BUSINESS_NAME"));
 				
 				applicationDTO.setClassDataId(rsMessage.getLong("CLASS_DATA_ID"));
-				applicationDTO.setClassData(rsMessage.getString("CLASS_DATA_NAME"));
-/*	//				RFC 11441			
-				applicationDTO.setClassInformationId(rsMessage.getLong("CLASS_INFORMATION_ID"));
-				applicationDTO.setClassInformationExplanation(rsMessage.getString("CLASS_INFORMATION_EXPLANATION"));*/
-				applicationDTO.setClassInformationId(rsMessage.getLong("ITSEC_SB_VERTR_ID"));
-				applicationDTO.setClassInformationExplanation(rsMessage.getString("ITSEC_SB_VERTR_TXT"));				
-				
+				applicationDTO.setClassData(rsMessage.getString("CLASS_DATA_NAME"));				
 				applicationDTO.setApplicationProtection(rsMessage.getString("CLASS_PROTECTION_NAME"));
 				
 				applicationDTO.setServiceEnvironmentOwner(rsMessage.getString("SE_OWNER"));

@@ -48,21 +48,17 @@ public class CiBaseDTO {// implements Serializable
 	// Protection
 	private Long itSecSbAvailabilityId;
 	private String itSecSbAvailabilityTxt;
-//	private String itSecSbAvailabilityDescription;
 	
 	
 	//nur Application!!
-//	private Long classInformationId;
-//	private String classInformationExplanation;
+	private Long classInformationId;
+	private String classInformationTxt;
 	
 	
 	private Long itSecSbIntegrityId;
 	private String itSecSbIntegrityTxt;
-//	private String itSecSbIntegrityDescription;
 
-	private Long itSecSbConfidentialityId;
-	private String itSecSbConfidentialityTxt;
-//	private String itSecSbConfidentialityDescription;
+
 	
 	//====================
 	private String relevanceOperational = AirKonstanten.NO_SHORT;
@@ -465,40 +461,39 @@ public class CiBaseDTO {// implements Serializable
 	public void setItSecSbIntegrityTxt(String itSecSbIntegrityTxt) {
 		this.itSecSbIntegrityTxt = itSecSbIntegrityTxt;
 	}
-//	public String getItSecSbIntegrityDescription() {
-//		return itSecSbIntegrityDescription;
-//	}
-//	public void setItSecSbIntegrityDescription(String itSecSbIntegrityDescription) {
-//		this.itSecSbIntegrityDescription = itSecSbIntegrityDescription;
-//	}
+
 
 	
-	public Long getItSecSbConfidentialityId() {
-		return itSecSbConfidentialityId;
+	/**
+	 * @return the classInformationId
+	 */
+	public Long getClassInformationId() {
+		return classInformationId;
 	}
-	public void setItSecSbConfidentialityId(Long itSecSbConfidentialityId) {
-		this.itSecSbConfidentialityId = itSecSbConfidentialityId;
-	
-		// RFC 10057 info message secure system
-		if (null != itSecSbConfidentialityId && AirKonstanten.CONFIDENTIALITY_SECRET.longValue() == itSecSbConfidentialityId.longValue()){
+
+	/**
+	 * @param classInformationId the classInformationId to set
+	 */
+	public void setClassInformationId(Long classInformationId) {
+		this.classInformationId = classInformationId;
+		if (null != classInformationId && AirKonstanten.CONFIDENTIALITY_SECRET.longValue() == classInformationId.longValue()){
 			setMessageTextSecureSystem("secureSystem");
 		}
 	}
-	public String getItSecSbConfidentialityTxt() {
-		return itSecSbConfidentialityTxt;
+
+	/**
+	 * @return the classInformationExplanation
+	 */
+	public String getClassInformationTxt() {
+		return classInformationTxt;
 	}
-	public void setItSecSbConfidentialityTxt(String itSecSbConfidentialityTxt) {
-		this.itSecSbConfidentialityTxt = itSecSbConfidentialityTxt;
-	}
-//	public String getItSecSbConfidentialityDescription() {
-//		return itSecSbConfidentialityDescription;
-//	}
-//	public void setItSecSbConfidentialityDescription(String itSecSbConfidentialityDescription) {
-//		this.itSecSbConfidentialityDescription = itSecSbConfidentialityDescription;
-//	}
-	
-	
-	
+
+	/**
+	 * @param classInformationExplanation the classInformationExplanation to set
+	 */
+	public void setClassInformationTxt(String classInformationTxt) {
+		this.classInformationTxt = classInformationTxt;
+	}	
 	public String getDownStreamAdd() {
 		return downStreamAdd;
 	}

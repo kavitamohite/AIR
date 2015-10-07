@@ -62,8 +62,7 @@ public class BaseHbn {
 					messages.add(errorCodeManager.getErrorMessage("1107")); // "subresponsible is not valid");
 				}
 				else {
-					// sub responsible is a valid group
-//					dto.setSubResponsibleHidden(dto.getSubResponsible());
+
 					dto.setCiOwnerDelegateHidden(dto.getCiOwnerDelegate());//
 				}
 			}
@@ -74,47 +73,6 @@ public class BaseHbn {
 		
 		return messages;
 		
-		/*
-		if (StringUtils.isNullOrEmpty(dto.getName())) {
-			messages.add("name must not be is empty");
-		}
-		else {
-			List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-//			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), false);//true
-			
-			if (!listCi.isEmpty()) {
-				// check if the name is unique
-				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
-					messages.add(errorCodeManager.getErrorMessage("1100", dto.getName()));
-				}
-			}
-		}
-
-		//evtl. berücksichtigen, dass nicht alle CI-Typen einen alias haben. Z.B wenn CI-Typ ohne Alias "-1" zurückgibt
-		//nicht den Namen für den Alias setzen.
-		if (StringUtils.isNullOrEmpty(dto.getAlias())) {
-			// messages.add("application alias is empty");
-			dto.setAlias(dto.getName());
-		}
-		else {
-			List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias());
-//			List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), dto.getTableId(), false);//true
-
-			if (!listCi.isEmpty()) {
-				// check if the alias is unique
-				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
-					messages.add(errorCodeManager.getErrorMessage("1101", dto.getAlias()));
-				}
-			}
-		}
-		
-		if (null == dto.getTemplate()) {
-			// TODO 1 TESTCODE Template
-			dto.setTemplate(new Long(0)); // no template
-		}
-
-
-		return messages;*/
 	}
 
 	
@@ -184,7 +142,6 @@ public class BaseHbn {
 	}
 	
 	private static void setUpCi(CiBase ci, CiBaseDTO ciDTO, String cwid, boolean isCiCreate) {
-//	protected <T extends CiBase>  void setUpCi(T ci, CiBaseDTO ciDTO, String cwid) {
 		ci.setName(ciDTO.getName());
 		
 		
@@ -203,15 +160,6 @@ public class BaseHbn {
 			ci.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 		}
 		
-		
-//		if (null != ciDTO.getCiOwnerHidden()) {
-//			if(StringUtils.isNullOrEmpty(ciDTO.getCiOwnerHidden())) {
-//				ci.setCiOwner(null);
-//			}
-//			else {
-//				ci.setCiOwner(ciDTO.getCiOwnerHidden());
-//			}
-//		}
 		if (null != ciDTO.getCiOwnerDelegateHidden()) {
 			if(StringUtils.isNullOrEmpty(ciDTO.getCiOwnerDelegateHidden())) {
 				ci.setCiOwnerDelegate(null);
@@ -231,8 +179,7 @@ public class BaseHbn {
 			}
 		}
 		if (null != ciDTO.getServiceContractId() || null != ciDTO.getSlaId()) {
-			// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
-//			ci.setServiceContractId(ciDTO.getServiceContractId());
+
 			if (-1 == ciDTO.getServiceContractId()) {
 				ci.setServiceContractId(null);
 			}
@@ -268,16 +215,16 @@ public class BaseHbn {
 		}
 		
 		
-		if (null != ciDTO.getItSecSbConfidentialityId()) {
-			if (-1 == ciDTO.getItSecSbConfidentialityId()) {
-				ci.setItSecSbConfidentialityId(null);
+		if (null != ciDTO.getClassInformationId()) {
+			if (-1 == ciDTO.getClassInformationId()) {
+				ci.setClassInformationId(null);
 			}
-			else if (0 != ciDTO.getItSecSbConfidentialityId().longValue()) {
-				ci.setItSecSbConfidentialityId(ciDTO.getItSecSbConfidentialityId());
+			else if (0 != ciDTO.getClassInformationId().longValue()) {
+				ci.setClassInformationId(ciDTO.getClassInformationId());
 			}
 		}
-		if (null != ciDTO.getItSecSbConfidentialityTxt()) {
-			ci.setItSecSbConfidentialityTxt(ciDTO.getItSecSbConfidentialityTxt());
+		if (null != ciDTO.getClassInformationTxt()) {
+			ci.setClassInformationTxt(ciDTO.getClassInformationTxt());
 		}
 		
 
@@ -462,10 +409,10 @@ public class BaseHbn {
 		ciDTO.setItsecGroupId(ci.getItsecGroupId());
 		ciDTO.setItSecSbAvailabilityId(ci.getItSecSbAvailability());
 		ciDTO.setItSecSbAvailabilityTxt(ci.getItSecSbAvailabilityTxt());
-		ciDTO.setItSecSbConfidentialityId(ci.getItSecSbConfidentialityId());
-		ciDTO.setItSecSbConfidentialityTxt(ci.getItSecSbConfidentialityTxt());
 		ciDTO.setItSecSbIntegrityId(ci.getItSecSbIntegrityId());
 		ciDTO.setItSecSbIntegrityTxt(ci.getItSecSbIntegrityTxt());
+		ciDTO.setClassInformationId(ci.getClassInformationId());
+		ciDTO.setClassInformationTxt(ci.getClassInformationTxt());
 		ciDTO.setItset(ci.getItset());
 		ciDTO.setRefId(ci.getRefId());
 		ciDTO.setRelevanceICS(ci.getRelevanceICS());
@@ -473,6 +420,7 @@ public class BaseHbn {
 		ciDTO.setServiceContractId(ci.getServiceContractId());
 		ciDTO.setSlaId(ci.getSlaId());
 		ciDTO.setTemplate(ci.getTemplate());
+		
 
 		String strSQL = "SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Group_Type_Name),4000,1) FROM V_MD_GROUP_TYPE";
 		switch (ciDTO.getTableId())
@@ -497,20 +445,6 @@ public class BaseHbn {
 		Hashtable<String,String> tableContacts = new Hashtable<String,String>();
 		Session session = HibernateUtil.getSession();
 		ciDTO.setDownStreamAdd((String) session.createSQLQuery("SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Id), 4000, 1) FROM TABLE(Pck_Air.FT_RelatedCIs(:Table_Id, :Id, :Direction)) WHERE Table_Id IN (1, 2)").setLong("Table_Id", ciDTO.getTableId()).setLong("Id", ci.getId()).setString("Direction",AirKonstanten.DN).uniqueResult());
-		//commented RFC 11154
-		/*for (String contact : Arrays.asList(((String) session.createSQLQuery("SELECT Tools.FV_GetContactList(:Table_Id, :Ci_Id, :Group_Types) FROM DUAL").setLong("Table_Id",ciDTO.getTableId().longValue()).setLong("Ci_Id", ci.getId()).setText("Group_Types",(String) session.createSQLQuery(strSQL).uniqueResult()).uniqueResult()).split(", ")))
-		{
-			String contactType = contact.substring(1, contact.indexOf("]:")).trim();
-			String contactEntry = contact.substring(contact.indexOf("]:")+3).trim();
-		    Matcher matcher = pattern.matcher(contactEntry);
-		    while (matcher.find())
-		    {
-		        contactEntry = replace.matcher(matcher.group()).replaceAll("");
-		    }	    	
-			if (tableContacts.containsKey(contactType))
-				contactEntry = tableContacts.get(contactType).concat(",").concat(contactEntry);
-			tableContacts.put(contactType, contactEntry);
-		}*/
 		session.close();
 		for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) 
 		{

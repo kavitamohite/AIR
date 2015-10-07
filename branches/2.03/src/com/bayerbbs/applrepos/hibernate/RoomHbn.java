@@ -42,14 +42,7 @@ public class RoomHbn extends LokationItemHbn {
 	
 	public static List<ItSystem> getSystemPlatformsById(Long roomId) {
 		List<ItSystem> itSystems = new ArrayList<ItSystem>();
-		
-//		select its.it_system_name, its.hw_ident_or_trans from it_system its 
-//		join it_system_hw itshw on itshw.it_system_id = its.it_system_id 
-//		join hardwarekomponente hwk on hwk.hw_id = itshw.hw_id 
-//		join schrank s on s.schrank_id = hwk.schrank_id 
-//		where s.raum_id = roomId 
-//		order by its.it_system_name
-		
+				
 		return itSystems;
 	}
 	
@@ -93,18 +86,6 @@ public class RoomHbn extends LokationItemHbn {
 						// room is deleted
 						output.setErrorMessage("1001", EMPTY+id);
 					} else {
-						// validate template
-//						if (null != room.getTemplate() && -1 == room.getTemplate().longValue()) {
-//							if (null != dto.getTemplate()) {
-//								if (0 == dto.getTemplate().longValue()) {
-//									// user wants to change to non template
-//									// check if there are referencing values
-//									if (!"0".equals(ApplReposHbn.getCountReferencingTemplates(id))) {
-//										output.setErrorMessage("1002");
-//									}
-//								}
-//							}
-//						}
 						
 						hasBusinessEssentialChanged = false;
 						businessEssentialIdOld = room.getBusinessEssentialId();
@@ -137,9 +118,6 @@ public class RoomHbn extends LokationItemHbn {
 						if (null != dto.getFloor()) {
 							room.setFloor(dto.getFloor());
 						}
-//						if (null != dto.getRoomType()) {
-//							room.setRoomType(dto.getRoomType());
-//						}
 						
 						if (null != dto.getAreaId() && !room.getBuildingAreaId().equals(dto.getAreaId())) {
 							BuildingArea area = BuildingHbn.findBuildingAreaById(dto.getAreaId());
@@ -329,55 +307,7 @@ public class RoomHbn extends LokationItemHbn {
 				if (messages.isEmpty()) {
 					Room room = new Room();
 					boolean isNameAndAliasNameAllowed = true;
-					
-					/*List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_ROOM, true);
-					
-					if (isNameAndAliasNameAllowed) {
-						
-						if (null != listCI && 0 < listCI.size()) {
-							// name is not allowed
-							isNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCI.get(0).getDeleteQuelle()) {
-								boolean override = forceOverride != null && forceOverride.booleanValue();
-								
-								if(override) {
-									// ENTWICKLUNG RFC8279
-									Session session = HibernateUtil.getSession();
-									Room roomDeleted = (Room)session.get(Room.class, listCI.get(0).getId());
-									
-									// reactivate
-									reactivateRoom(cwid, dto, roomDeleted);
-									// save the data
-									dto.setId(roomDeleted.getId());
-									return saveRoom(cwid, dto);
 
-								} else {
-									output.setMessages(new String[] {"Room Name '" + listCI.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-								}
-							}
-							else {
-								output.setMessages(new String[] {"Room Name '" + listCI.get(0).getName() + "' already exists."});
-							}
-						}
-					}
-					
-					if (isNameAndAliasNameAllowed) {
-						if(listCI == null)
-							listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_ROOM, true);
-						
-						if (null != listCI && 0 < listCI.size()) {
-							// alias is not allowed
-							isNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCI.get(0).getDeleteQuelle()) {
-								output.setMessages(new String[] {"Room Alias '" + listCI.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-							}
-							else {
-								output.setMessages(new String[] {"Room Alias '" + listCI.get(0).getAlias() + "' already exists."});
-							}
-						}						
-					}*/
 					
 					
 					if (isNameAndAliasNameAllowed) {
@@ -386,27 +316,6 @@ public class RoomHbn extends LokationItemHbn {
 						Transaction tx = null;
 						tx = session.beginTransaction();
 
-						
-						// calculates the ItSet
-						/*Long itSet = null;
-						String strItSet = ApplReposHbn.getItSetFromCwid(dto.getCiOwner());
-						if (null != strItSet) {
-							itSet = Long.parseLong(strItSet);
-						}
-						if (null == itSet) {
-							// set default itSet
-							itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
-						}
-
-						// ci - insert values
-						room.setInsertUser(cwid);
-						room.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-						room.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
-
-						// ci - update values
-						room.setUpdateUser(room.getInsertUser());
-						room.setUpdateQuelle(room.getInsertQuelle());
-						room.setUpdateTimestamp(room.getInsertTimestamp());*/
 
 						// ci - attributes
 						room.setAlias(dto.getAlias());
@@ -461,13 +370,6 @@ public class RoomHbn extends LokationItemHbn {
 					// messages
 					output.setResult(AirKonstanten.RESULT_ERROR);
 					output.setMessages(messages.toArray(new String[0]));
-					
-					
-//					String astrMessages[] = new String[messages.size()];
-//					for (int i = 0; i < messages.size(); i++) {
-//						astrMessages[i] = messages.get(i);
-//					}
-//					output.setMessages(astrMessages);
 				}
 			} else {
 				// ci id not 0

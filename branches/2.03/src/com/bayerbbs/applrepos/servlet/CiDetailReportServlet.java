@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -34,9 +35,11 @@ import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.ApplicationDTO;
+import com.bayerbbs.applrepos.dto.ConfidentialityDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
+import com.bayerbbs.applrepos.hibernate.ConfidentialityHbn;
 import com.bayerbbs.applrepos.hibernate.HibernateUtil;
 import com.bayerbbs.applrepos.hibernate.ItSecGroupHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
@@ -103,6 +106,7 @@ public class CiDetailReportServlet extends HttpServlet {
 	private static final int LANG_GSTOOL_DE = 1;
 	private static final int LANG_GSTOOL_EN = 2;
 	private static final String SQL_RESULT_BESCHREIBUNG = "BESCHREIBUNG";
+	private static HashMap<Long, String> confidentialityList= new HashMap<Long, String>();
 	private String ciName = "";
 	private String HeaderCIName = "";
 	private Integer headerpageNo = 0;
@@ -582,10 +586,10 @@ public class CiDetailReportServlet extends HttpServlet {
 				getValue(dto.getItSecSbAvailabilityId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
 				dto.getItSecSbAvailabilityTxt() });
-		CIData.add(new String[] { "Protection Level Confidentiality",
-				getValue(dto.getItSecSbConfidentialityId()) });
+		CIData.add(new String[] { "Protection Level Class Information",
+				getConfidentialityList().get(dto.getClassInformationId())  });
 		CIData.add(new String[] { "Explanation for Protection Level",
-				dto.getItSecSbConfidentialityTxt() });
+				dto.getClassInformationTxt() });
 		return CIData;
 	}
 
@@ -655,10 +659,10 @@ public class CiDetailReportServlet extends HttpServlet {
 				getValue(schrank.getItSecSbAvailability()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
 				schrank.getItSecSbAvailabilityTxt() });
-		CIData.add(new String[] { "Protection Level Confidentiality",
-				getValue(schrank.getItSecSbConfidentialityId()) });
+		CIData.add(new String[] { "Protection Level Information Class",
+				getConfidentialityList().get(standort.getClassInformationId())  });
 		CIData.add(new String[] { "Explanation for Protection Level",
-				schrank.getItSecSbConfidentialityTxt() });
+				schrank.getClassInformationTxt() });
 		return CIData;
 	}
 
@@ -730,10 +734,10 @@ public class CiDetailReportServlet extends HttpServlet {
 				getValue(room.getItSecSbAvailability()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
 				room.getItSecSbAvailabilityTxt() });
-		CIData.add(new String[] { "Protection Level Confidentiality",
-				getValue(room.getItSecSbConfidentialityId()) });
+		CIData.add(new String[] { "Protection Level Information Class",
+				getConfidentialityList().get(room.getClassInformationId())  });
 		CIData.add(new String[] { "Explanation for Protection Level",
-				room.getItSecSbConfidentialityTxt() });
+				room.getClassInformationTxt() });
 		return CIData;
 	}
 
@@ -802,10 +806,10 @@ public class CiDetailReportServlet extends HttpServlet {
 				getValue(buildingArea.getItSecSbAvailability()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
 				buildingArea.getItSecSbAvailabilityTxt() });
-		CIData.add(new String[] { "Protection Level Confidentiality",
-				getValue(buildingArea.getItSecSbConfidentialityId()) });
+		CIData.add(new String[] { "Protection Level Information Information Class",
+				getConfidentialityList().get(buildingArea.getClassInformationId())  });
 		CIData.add(new String[] { "Explanation for Protection Level",
-				buildingArea.getItSecSbConfidentialityTxt() });
+				buildingArea.getClassInformationTxt() });
 		return CIData;
 	}
 
@@ -865,10 +869,10 @@ public class CiDetailReportServlet extends HttpServlet {
 				getValue(building.getItSecSbAvailability()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
 				building.getItSecSbAvailabilityTxt() });
-		CIData.add(new String[] { "Protection Level Confidentiality",
-				getValue(building.getItSecSbConfidentialityId()) });
+		CIData.add(new String[] { "Protection Level Information Class",
+				getConfidentialityList().get(building.getClassInformationId())  });
 		CIData.add(new String[] { "Explanation for Protection Level",
-				building.getItSecSbConfidentialityTxt() });
+				building.getClassInformationTxt() });
 		//vandana
 		CIData.add(new String[] { "Provider Name", building.getProvider_Name() });
 		CIData.add(new String[] { "Provider Address", building.getProvider_Address() });
@@ -928,10 +932,10 @@ public class CiDetailReportServlet extends HttpServlet {
 				getValue(terrain.getItSecSbAvailability()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
 				terrain.getItSecSbAvailabilityTxt() });
-		CIData.add(new String[] { "Protection Level Confidentiality",
-				getValue(terrain.getItSecSbConfidentialityId()) });
+		CIData.add(new String[] { "Protection Level Information Class",
+				getConfidentialityList().get(terrain.getClassInformationId())  });
 		CIData.add(new String[] { "Explanation for Protection Level",
-				terrain.getItSecSbConfidentialityTxt() });
+				terrain.getClassInformationTxt() });
 		return CIData;
 	}
 
@@ -985,10 +989,10 @@ public class CiDetailReportServlet extends HttpServlet {
 				getValue(standort.getItSecSbAvailability()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
 				standort.getItSecSbAvailabilityTxt() });
-		CIData.add(new String[] { "Protection Level Confidentiality",
-				getValue(standort.getItSecSbConfidentialityId()) });
+		CIData.add(new String[] { "Protection Level Class Information",
+				getConfidentialityList().get(standort.getClassInformationId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
-				standort.getItSecSbConfidentialityTxt() });
+				standort.getClassInformationTxt() });
 		return CIData;
 	}
 
@@ -1053,10 +1057,10 @@ public class CiDetailReportServlet extends HttpServlet {
 				getValue(itSystem.getItSecSbAvailability()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
 				itSystem.getItSecSbAvailabilityTxt() });
-		CIData.add(new String[] { "Protection Level Confidentiality",
-				getValue(itSystem.getItSecSbConfidentialityId()) });
+		CIData.add(new String[] { "Protection Level Class Information",
+				getConfidentialityList().get(itSystem.getClassInformationId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
-				itSystem.getItSecSbConfidentialityTxt() });
+				itSystem.getClassInformationTxt() });
 		return CIData;
 	}
 
@@ -1097,7 +1101,18 @@ public class CiDetailReportServlet extends HttpServlet {
 			return "";
 
 	}
-
+  private static HashMap<Long, String> getConfidentialityList(){
+	  if(confidentialityList.isEmpty()){
+		  List<ConfidentialityDTO> listResult = new ArrayList<ConfidentialityDTO>();
+		  listResult =ConfidentialityHbn.listConfidentiality();
+		  if(!listResult.isEmpty()){
+			  for(ConfidentialityDTO coDto : listResult){
+				  confidentialityList.put(coDto.getConfidentialityId(), coDto.getConfidentialityName());
+			  }
+		  }
+	  }
+	  return confidentialityList;
+  }
 
 
 

@@ -457,56 +457,6 @@ public class SchrankHbn extends LokationItemHbn {
 					Schrank schrank = new Schrank();
 					boolean isNameAndAliasNameAllowed = true;
 					
-					/*
-					List<CiBaseDTO> listCI = null;
-					
-					if (isNameAndAliasNameAllowed) {
-						listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), AirKonstanten.TABLE_ID_POSITION, true);
-						
-						if (null != listCI && 0 < listCI.size()) {
-							// name is not allowed
-							isNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCI.get(0).getDeleteQuelle()) {
-								boolean override = forceOverride != null && forceOverride.booleanValue();
-								
-								if(override) {
-									// ENTWICKLUNG RFC8279
-									Session session = HibernateUtil.getSession();
-									Schrank schrankDeleted = (Schrank)session.get(Schrank.class, listCI.get(0).getId());
-									
-									// reactivate
-									reactivateSchrank(cwid, dto, schrankDeleted);
-									// save the data
-									dto.setId(schrankDeleted.getId());
-									return saveSchrank(cwid, dto);
-
-								} else {
-									output.setMessages(new String[] {"Standort Name '" + listCI.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-								}
-							}
-							else {
-								output.setMessages(new String[] {"Standort Name '" + listCI.get(0).getName() + "' already exists."});
-							}
-						}
-					}
-					
-					if (isNameAndAliasNameAllowed) {
-						if(listCI == null)
-							listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias(), AirKonstanten.TABLE_ID_POSITION, true);
-						
-						if (null != listCI && 0 < listCI.size()) {
-							// alias is not allowed
-							isNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listCI.get(0).getDeleteQuelle()) {
-								output.setMessages(new String[] {"Standort Alias '" + listCI.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-							}
-							else {
-								output.setMessages(new String[] {"Standort Alias '" + listCI.get(0).getAlias() + "' already exists."});
-							}
-						}						
-					}*/
 					
 					
 					if (isNameAndAliasNameAllowed) {
@@ -521,54 +471,6 @@ public class SchrankHbn extends LokationItemHbn {
 						Room room = RoomHbn.findById(dto.getRoomId());
 						schrank.setRoom(room);
 						
-						/*
-						// ci - insert values
-						schrank.setInsertUser(cwid);
-						schrank.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-						schrank.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
-
-						// ci - update values
-						schrank.setUpdateUser(schrank.getInsertUser());
-						schrank.setUpdateQuelle(schrank.getInsertQuelle());
-						schrank.setUpdateTimestamp(schrank.getInsertTimestamp());
-						
-
-						if (null != dto.getCiOwnerHidden()) {
-							schrank.setCiOwner(dto.getCiOwnerHidden());
-						}
-						if (null != dto.getCiOwnerDelegateHidden()) {
-							schrank.setCiOwnerDelegate(dto.getCiOwnerDelegateHidden());
-						}
-						
-						if (null != dto.getSlaId()) {
-							if (-1 == dto.getSlaId()) {
-								schrank.setSlaId(null);
-							}
-							else {
-								schrank.setSlaId(dto.getSlaId());
-							}
-						}
-						if (null != dto.getServiceContractId() || null != dto.getSlaId()) {
-							// wenn SLA gesetzt ist, und ServiceContract nicht, dann muss der Service Contract gelöscht werden
-							schrank.setServiceContractId(dto.getServiceContractId());
-						}
-
-						if (null != dto.getItSecSbAvailabilityId()) {
-							if (-1 == dto.getItSecSbAvailabilityId()) {
-								schrank.setItSecSbAvailability(null);
-							}
-							else if (0 != dto.getItSecSbAvailabilityId().longValue()) {
-								schrank.setItSecSbAvailability(dto.getItSecSbAvailabilityId());
-							}
-						}
-						if (null != dto.getItSecSbAvailabilityDescription()) {
-							schrank.setItSecSbAvailabilityText(dto.getItSecSbAvailabilityDescription());
-						}
-
-						schrank.setTemplate(dto.getTemplate());
-						
-						schrank.setRelevanceITSEC(dto.getRelevanzItsec());
-						schrank.setRelevanceICS(dto.getRelevanceICS());*/
 						
 						if (null != dto.getSeverityLevelId()) {
 							if (-1 == dto.getSeverityLevelId()) {
@@ -646,8 +548,6 @@ public class SchrankHbn extends LokationItemHbn {
 	}
 	
 	private static List<String> validateSchrank(SchrankDTO dto, boolean isUpdate) {
-//		List<CiBaseDTO> listCI = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), false);//true
-//		List<String> messages = BaseHbn.validateCi(dto);//, listCI
 		
 		Schrank schrank = findByNameAndRoomId(dto.getName(), dto.getRoomId());
 		
@@ -657,12 +557,9 @@ public class SchrankHbn extends LokationItemHbn {
 		
 		if(alreadyExists) {//schrank != null
 			ErrorCodeManager errorCodeManager = new ErrorCodeManager();
-			
-//			Building building = buildings.get(0);
-//			if(building.getDeleteTimestamp() == null)
+
 				messages.add(errorCodeManager.getErrorMessage("2000", null));
-//			else
-//				messages.add(errorCodeManager.getErrorMessage("2001", null));
+
 		}
 		
 		if (null == dto.getBusinessEssentialId()) {
