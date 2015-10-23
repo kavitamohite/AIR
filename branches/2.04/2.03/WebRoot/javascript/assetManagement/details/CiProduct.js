@@ -112,7 +112,45 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 			    	marginBottom: 10,
 			    	fontSize: 12
 			    }
-			}]
+			},
+			//C0000049066 vandana
+			{
+				xtype: 'panel',
+                itemId: 'pMultipleAsset',
+                border: false,
+                layout: 'hbox',
+                style: {
+                    fontSize: 12
+                },
+                items: [{
+    				xtype : 'button',
+    				itemId : 'multipleAsset',
+    				text : 'Multiple Assets',
+    				style : {
+    					fontSize : 12,
+    					'margin-left': '15px'
+    				},    			
+    			}, 
+                { 	
+    				xtype: 'checkbox',
+                    itemId: 'checkmultipleasset',  
+                    style: {
+                   	 'margin-left': '40px'
+                       },
+    			  },
+                  {
+                	  xtype: 'textfield',
+                      itemId: 'tmultipleasset',
+                      emptyText: 'Number of Assets',
+                      disabled: true,
+                      style: {
+                        	 'margin-left': '25px',
+                            }
+                   }
+                  ]         
+			},				
+			//C0000049066 vandana
+			]
 		});
 
 		AIR.CiProduct.superclass.initComponent.call(this);
@@ -135,6 +173,16 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 
 	},
 	
+	/*onCheckMultipleAsset: function(checkbox, isChecked){
+		tmultipleasset=this.getComponent('pMultipleAsset').getComponent('tmultipleasset');
+		if(isChecked) {
+			tmultipleasset.enable();
+		}
+		else if(!isChecked){
+			tmultipleasset.disable();
+		}
+				
+	},*/
 	onManufacturerSelect: function(combo, record, index) {
         var partnerIdValue = this.getComponent('cbManufacturer').getValue();
         var kategoryIdValue = this.getComponent('cbSubCategory').getValue();
