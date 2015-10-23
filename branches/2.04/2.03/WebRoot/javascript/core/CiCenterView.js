@@ -159,7 +159,30 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				},{
 					xtype: 'hidden',
 					id: 'houQueryMode'
-				}]
+				},
+				//vandana C0000049066
+				{
+					xtype: 'hidden',
+					id: 'manufacturer'
+				},{
+					xtype: 'hidden',
+					id: 'subCategory'
+				},{
+					xtype: 'hidden',
+					id: 'type'
+				},{
+					xtype: 'hidden',
+					id: 'model'
+				},{
+					xtype: 'hidden',
+					id: 'sapDescription'
+				},
+				{
+					xtype: 'hidden',
+					id: 'multipleasset'
+				}
+				//C0000049066
+				]
 			}]
 		});
 		
