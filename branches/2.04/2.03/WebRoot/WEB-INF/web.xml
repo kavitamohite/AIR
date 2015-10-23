@@ -186,6 +186,19 @@
   </servlet-mapping>
   
   <servlet>
+  	<description>AirNewExcelExportServlet</description>
+  	<servlet-name>AirNewExcelExportServlet</servlet-name>
+  	<servlet-class>
+  		com.bayerbbs.applrepos.servlet.AirNewExcelExportServlet
+  	</servlet-class>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AirNewExcelExportServlet</servlet-name>
+  	<url-pattern>/newExcelExport</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
   	<description>GsToolMassnahmenBeschreibungServlet</description>
   	<servlet-name>GsToolMassnahmenBeschreibungServlet</servlet-name>
   	<servlet-class>
