@@ -124,7 +124,30 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						margin : '8 10 0 0',
 						width:80
 					}
-				},{
+				},
+				{
+					xtype : 'button',
+					itemId : 'bImport',
+					text : 'Import',
+					hidden:true,
+					style : {
+						fontSize : 14,
+						margin : '8 10 0 0',
+						width:80
+					}
+				},
+				{
+					xtype : 'button',
+					itemId : 'bExport',
+					text : 'Export',
+					hidden:true,
+					style : {
+						fontSize : 14,
+						margin : '8 10 0 0',
+						width:80
+					}
+				},
+				{
 					xtype : 'button',
 					itemId : 'bHistory',
 					text : 'Asset History',
@@ -146,6 +169,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
         AIR.CiNewAssetView.superclass.initComponent.call(this);
         this.addEvents('externalNavigation');
+        
+        var bExport=this.getComponent('buttonPanel').getComponent('bExport');
+        bExport.on('click', this.testExcelExport, this);
 
         var bReset = this.getComponent('buttonPanel').getComponent('bReset');
         bReset.on('click', this.resetFormFields, this);
@@ -196,7 +222,56 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
         cbRack.on('select', this.onFieldKeyUp, this);
         cbRack.on('keypress', this.onFieldKeyUp, this);
+        
+        var checkmultipleasset=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').getComponent('checkmultipleasset');
+        checkmultipleasset.on('check', this.onCheckMultipleAsset, this);
     },
+    
+    //C0000049066
+    onCheckMultipleAsset: function(checkbox, isChecked){
+		var bExport = this.getComponent('buttonPanel').getComponent('bExport');
+		var bImport = this.getComponent('buttonPanel').getComponent('bImport');
+		var tmultipleasset=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').getComponent('tmultipleasset');
+		if(isChecked) {
+			tmultipleasset.enable();
+			bExport.show();
+			bImport.show();
+		}
+		else if(!isChecked){
+			tmultipleasset.disable();
+			tmultipleasset.setValue('');
+			bExport.hide();
+			bImport.hide();
+		}				
+	},
+  
+    testExcelExport:function(link, event){
+    	var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
+    	var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
+  	    var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
+    	var cbmodel=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
+    	var tsapDescription=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription');
+    	var tmultipleasset=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').getComponent('tmultipleasset');
+    	console.log('tmultipleasset--'+tmultipleasset.getRawValue())
+    	var exportForm = AAM.getExportForm();
+		
+		exportForm.action = '/AIR/newExcelExport';
+		exportForm.method = 'POST';
+		exportForm.target = '_blank';
+		exportForm.searchAction.value = link.getId().substring(0, link.getId().indexOf('_'));
+		exportForm.cwid.value = AAM.getCwid();
+		
+		exportForm.manufacturer.value = cbManufacturer.getRawValue();
+		exportForm.subCategory.value = cbSubCategory.getRawValue();
+		exportForm.type.value = cbType.getRawValue();
+		exportForm.model.value = cbmodel.getRawValue();
+		exportForm.sapDescription.value = tsapDescription.getRawValue();
+		exportForm.multipleasset.value=tmultipleasset.getRawValue();
+
+		exportForm.submit();
+    	
+    },
+    //C0000049066
     
     onAssetHistoryButton: function(){
     	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
