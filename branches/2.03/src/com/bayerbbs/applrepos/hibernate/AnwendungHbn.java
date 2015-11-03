@@ -1,9 +1,11 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.math.BigDecimal;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -37,22 +39,9 @@ import com.bayerbbs.applrepos.service.CiItemDTO;
 
 
 public class AnwendungHbn extends BaseHbn {
-//	private static final String PARAMETER_QUERYMODE_BEGINS_WITH = "BEGINS_WITH";
-//	private static final String PARAMETER_QUERYMODE_CONTAINS = "CONTAINS";
-//	private static final String PARAMETER_QUERYMODE_EMPTYSTRING = "";
+
 	
 	private static final String SQL_GET_ITSET = "SELECT pck_sync_tools.fn_ITSet(:responsible, :subResponsible, :tableID, :itemID, :source) AS ITSet FROM DUAL";
-//	private static final String Y = "Y";
-//	private static final String COMMA = ",";
-//	
-//	private static final String NOT_EQUAL = "<>";
-//	private static final String EQUAL = "=";
-//	
-//	private static final String NOT_LIKE = "not like";
-//	private static final String LIKE = "like";
-	
-//	private static final String EMPTY = "";
-	
 
 	private static final Log log = LogFactory.getLog(AnwendungHbn.class);
 	
@@ -189,9 +178,6 @@ public class AnwendungHbn extends BaseHbn {
 						// application is deleted
 						output.setErrorMessage("1001", EMPTY+id);
 						
-// TODO reactivate RFC 8279
-//						reactivateApplication(cwid, dto, application);
-//						application = (Application)session.get(Application.class, id);
 					} else {
 						// application found - change values
 						
@@ -363,14 +349,6 @@ public class AnwendungHbn extends BaseHbn {
 						if (null != dto.getClassInformationExplanation()) {
 							application.setClassInformationExplanation(dto.getClassInformationExplanation());
 						}
-						
-						
-//						if (null != dto.getClusterCode()) {
-//							application.setClusterCode(dto.getClusterCode());
-//						}
-//						if (null != dto.getClusterType()) {
-//							application.setClusterType(dto.getClusterType());
-//						}
 						
 						if (null != dto.getCiOwnerHidden()) {
 							if(StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {
@@ -696,26 +674,67 @@ public class AnwendungHbn extends BaseHbn {
 		
 		return result;
 	}
+	
+	public static void updateDWHTypeAndCategory(String type, String category, Long ApplicationId){
+		StringBuilder builder = new StringBuilder();
+		builder.append("APP-").append(ApplicationId.toString());
+		String SQL = "UPDATE DWH_ENTITY set TYPE = ? ,CATEGORy = ? WHERE ID = ?";
+		Session session = HibernateUtil.getSession();		
+		Query selectQueryForCategory = session.createSQLQuery(SQL);
+		selectQueryForCategory.setString(0, type);
+		selectQueryForCategory.setString(1, category);
+		selectQueryForCategory.setString(2, builder.toString());		
+		selectQueryForCategory.executeUpdate();
+	
+		session.flush();
+		session.close();
 
+		
+	}
 
 	public static ApplicationEditParameterOutput createAnwendung(String cwid, ApplicationDTO dto, Boolean forceOverride, boolean neuanlage) {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
+		Long id = null;
 
 		// TODO check validate token
 
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
 			
+			
 			if (null != dto.getId() && 0 == dto.getId()) {
-//				List<String> messages = AnwendungHbn.validateApplication(dto);
-				List<String> messages = validateAnwendung(dto, false);//ItSystemHbn.validateItSystem
+				
+				    List<String> messages = new ArrayList<String>();
+					ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+
+				
+					List<Application> applications = ItSystemHbn.findApplicationsByNameOrAlias(dto.getName(), dto.getAlias());
+					List<ItSystem> itSystems = ItSystemHbn.findItSystemsByNameOrAlias(dto.getName(), dto.getAlias());
+					
+					if(itSystems.size() > 0) {
+							messages.add(errorCodeManager.getErrorMessage("8000", null));
+					}
+					if(applications.size() > 0) {
+							messages.add(errorCodeManager.getErrorMessage("9000", null));
+					}
+					if(!messages.isEmpty()){
+						// messages
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						String astrMessages[] = new String[messages.size()];
+						for (int i = 0; i < messages.size(); i++) {
+							astrMessages[i] = messages.get(i);
+						}
+						output.setMessages(astrMessages);
+						return output;
+					}
+					messages = validateAnwendung(dto, false);//ItSystemHbn.validateItSystem
 
 				if (messages.isEmpty()) {
 					Application application = new Application();
 					boolean isApplicationNameAndAliasNameAllowed = true;
 					
 					//ApplicationDTO
-					if (isApplicationNameAndAliasNameAllowed) {
+/*					if (isApplicationNameAndAliasNameAllowed) {
 						List<CiItemDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getName(), true);
 						if (null != listApplications && 0 < listApplications.size()) {
 							// application name is not allowed
@@ -742,10 +761,10 @@ public class AnwendungHbn extends BaseHbn {
 								output.setMessages(new String[] {"Application Name '" + listApplications.get(0).getName() + "' already exists."});
 							}
 						}
-					}
+					}*/
 					
 					//ApplicationDTO
-					if (isApplicationNameAndAliasNameAllowed) {
+/*					if (isApplicationNameAndAliasNameAllowed) {
 						List<CiItemDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getAlias(), true);
 						if (null != listApplications && 0 < listApplications.size()) {
 							// application alias is not allowed
@@ -758,12 +777,12 @@ public class AnwendungHbn extends BaseHbn {
 								output.setMessages(new String[] {"Application Alias '" + listApplications.get(0).getAlias() + "' already exists."});
 							}
 						}						
-					}
+					}*/
 					
-					if (!neuanlage) {
+/*					if (!neuanlage) {
 						output.setResult(AirKonstanten.RESULT_OK);
 						return output;
-					}
+					}*/
 					
 					
 					if (isApplicationNameAndAliasNameAllowed) {
@@ -807,8 +826,7 @@ public class AnwendungHbn extends BaseHbn {
 						application.setApplicationName(dto.getName());
 						application.setApplicationAlias(dto.getAlias());
 						application.setComments(dto.getComments());
-//						application.setClusterCode(dto.getClusterCode());
-//						application.setClusterType(dto.getClusterType());
+
 						application.setApplicationCat2Id(dto.getApplicationCat2Id());
 						application.setLifecycleStatusId(dto.getLifecycleStatusId());
 						application.setOperationalStatusId(dto.getOperationalStatusId());
@@ -907,7 +925,7 @@ public class AnwendungHbn extends BaseHbn {
 						
 						boolean toCommit = false;
 						try {
-							session.save(application);
+							id =(Long) session.save(application);
 							session.flush();
 							toCommit = true;
 						} catch (Exception e) {
@@ -920,6 +938,7 @@ public class AnwendungHbn extends BaseHbn {
 								if (null == hbnMessage) {
 									output.setResult(AirKonstanten.RESULT_OK);
 									output.setMessages(new String[] { EMPTY });
+									output.setApplicationId(id);
 								} else {
 									output.setResult(AirKonstanten.RESULT_ERROR);
 									output.setMessages(new String[] { hbnMessage });
@@ -1124,108 +1143,7 @@ public class AnwendungHbn extends BaseHbn {
 		}
 		return output;
 	}
-	
-	//ApplicationDTO CiItemDTO
-	/*private static List<String> validateApplication(ApplicationDTO dto) {
-		List<String> messages = new ArrayList<String>();
-		
-		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 
-		if (StringUtils.isNullOrEmpty(dto.getName())) {
-			// messages.add("application name is empty");
-		} else {//ApplicationDTO
-			List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName());
-			if (!listCi.isEmpty()) {
-				// check if the name is unique
-				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
-					messages.add(errorCodeManager.getErrorMessage("1100", dto.getName()));
-				}
-			}
-		}
-
-		if (StringUtils.isNullOrEmpty(dto.getAlias())) {
-			// messages.add("application alias is empty");
-			dto.setAlias(dto.getName());
-		} else {//ApplicationDTO
-			List<CiItemDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getAlias());
-			if (!listCi.isEmpty()) {
-				// check if the alias is unique
-				if (dto.getId().longValue() != listCi.get(0).getId().longValue()) {
-					messages.add(errorCodeManager.getErrorMessage("1101", dto.getAlias()));
-				}
-			}
-		}
-
-		
-		if (null == dto.getTemplate()) {
-			// TODO 1 TESTCODE Template
-			dto.setTemplate(new Long (0)); // no template
-		}
-
-		if (null == dto.getBusinessEssentialId()) {
-			// messages.add("business essential is empty");
-			// TODO 1 TESTCODE getBusinessEssentialId
-			dto.setBusinessEssentialId(null);
-		}
-
-		// =================
-		// validate contacts
-		// =================
-		// responsible
-		if (StringUtils.isNullOrEmpty(dto.getCiOwnerHidden())) {//getResponsibleHidden
-			// RFC 9102 - darf jetzt nicht mehr leer sein und wird automatisch vorbelegt.
-			dto.setCiOwnerHidden(dto.getApplicationOwnerHidden());
-		}
-		else {
-			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getCiOwnerHidden());//getResponsibleHidden
-			if (null == listPersons || listPersons.isEmpty()) {
-				messages.add(errorCodeManager.getErrorMessage("1103"));
-			}
-			else if (1 != listPersons.size()) {
-				messages.add(errorCodeManager.getErrorMessage("1104"));
-			}
-		}
-
-		// application owner delegate
-		if (!StringUtils.isNullOrEmpty(dto.getApplicationOwnerDelegateHidden())) {
-			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getApplicationOwnerDelegateHidden());
-			if (null == listPersons || listPersons.isEmpty()) {
-				// not a valid person, maybe a group?
-				GroupsDTO group = GroupHbn.findGroupByName(dto.getApplicationOwnerDelegate());
-				if (null == group) {
-					messages.add(errorCodeManager.getErrorMessage("1105"));
-				}
-				else {
-					// sub responsible is a valid group
-					dto.setApplicationOwnerDelegateHidden(dto.getApplicationOwnerDelegate());
-				}
-			}
-			else if (1 != listPersons.size()) {
-				messages.add(errorCodeManager.getErrorMessage("1106"));
-			}
-		}
-		// subresponsible
-		if (!StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {//getSubResponsibleHidden
-			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getCiOwnerDelegateHidden());
-			if (null == listPersons || listPersons.isEmpty()) {
-				// not a valid person, maybe a group?
-				GroupsDTO group = GroupHbn.findGroupByName(dto.getCiOwnerDelegate());//getSubResponsible
-				if (null == group) {
-					messages.add(errorCodeManager.getErrorMessage("1107")); // "subresponsible is not valid");
-				}
-				else {
-					// sub responsible is a valid group
-//					dto.setSubResponsibleHidden(dto.getSubResponsible());
-					dto.setCiOwnerDelegateHidden(dto.getCiOwnerDelegate());//
-				}
-			}
-			else if (1 != listPersons.size()) {
-				messages.add(errorCodeManager.getErrorMessage("1108")); 
-			}
-		}
-		
-		return messages;
-	}*/
 
 	/**
 	 * mark an application as deleted
@@ -1556,8 +1474,6 @@ public class AnwendungHbn extends BaseHbn {
 				}
 
 				applicationDTO.setUserCreate(rsMessage.getString("USER_CREATE"));
-//				applicationDTO.setClusterCode(rsMessage.getString("CLUSTER_CODE"));
-//				applicationDTO.setClusterType(rsMessage.getString("CLUSTER_TYPE"));
 				applicationDTO.setDeleteTimestamp(ApplReposTS.getTimestampDisp(rsMessage.getTimestamp("DEL_TIMESTAMP")));
 				applicationDTO.setDeleteUser(rsMessage.getString("DEL_USER"));
 				applicationDTO.setDeleteQuelle(rsMessage.getString("DEL_QUELLE"));
@@ -1617,14 +1533,6 @@ public class AnwendungHbn extends BaseHbn {
 				applicationDTO.setGxpFlagTxt(rsMessage.getString("GXP_FLAG"));
 
 				// TODO neue Attribute
-
-// task 142				
-//				if (ApplreposConstants.YES_SHORT.equals(rsMessage
-//						.getString("RISK_ANALYSIS_YN"))) {
-//					applicationDTO.setRiskAnalysisYN("true");
-//				} else {
-//					applicationDTO.setRiskAnalysisYN("false");
-//				}
 				applicationDTO.setLicenseTypeId(rsMessage.getLong("LICENSE_TYPE_ID"));
 				applicationDTO.setLicenseTypeTxt(rsMessage.getString("LICENSE_TYPE_TXT"));
 				
@@ -3243,10 +3151,8 @@ public class AnwendungHbn extends BaseHbn {
 	
 	
 	static List<String> validateAnwendung(ApplicationDTO dto, boolean isUpdate) {
-//		List<CiBaseDTO> listCi = CiEntitiesHbn.findCisByNameOrAlias(dto.getName(), dto.getTableId(), true);
-//		List<String> messages = BaseHbn.validateCi(dto);//, listCi
 		
-		List<String> messages = validateCi(dto);//new ArrayList<String>();
+		List<String> messages = new ArrayList<String>();//new ArrayList<String>();
 		
 		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 
@@ -3270,18 +3176,7 @@ public class AnwendungHbn extends BaseHbn {
 					}
 				}
 			}
-		} else {
-			List<Application> applications = ItSystemHbn.findApplicationsByNameOrAlias(dto.getName(), dto.getAlias());
-			List<ItSystem> itSystems = ItSystemHbn.findItSystemsByNameOrAlias(dto.getName(), dto.getAlias());
-			
-			if(itSystems.size() > 0) {
-					messages.add(errorCodeManager.getErrorMessage("8000", null));
-			}
-
-			if(applications.size() > 0) {
-					messages.add(errorCodeManager.getErrorMessage("9000", null));
-			}
-		}
+		} 
 		
 		if (null == dto.getTemplate()) {
 			// TODO 1 TESTCODE Template
@@ -3337,8 +3232,6 @@ public class AnwendungHbn extends BaseHbn {
 					messages.add(errorCodeManager.getErrorMessage("1107")); // "subresponsible is not valid");
 				}
 				else {
-					// sub responsible is a valid group
-//					dto.setSubResponsibleHidden(dto.getSubResponsible());
 					dto.setCiOwnerDelegateHidden(dto.getCiOwnerDelegate());//
 				}
 			}
@@ -3352,21 +3245,4 @@ public class AnwendungHbn extends BaseHbn {
 
 		return messages;
 	}
-
-	/*private static boolean isNot(String options) {
-		if(options == null)
-			return false;
-		
-		boolean isNot = options.indexOf(',') > 0 ? options.split(COMMA)[0].equals(Y) : options.equals(Y);//options != null && 
-		
-		return isNot;
-	}
-	
-	private static String getLikeNotLikeOperator(boolean isNot) {
-		return isNot ? NOT_LIKE : LIKE;
-	}
-	
-	private static String getEqualNotEqualOperator(boolean isNot) {
-		return isNot ? NOT_EQUAL : EQUAL;
-	}*/
 }

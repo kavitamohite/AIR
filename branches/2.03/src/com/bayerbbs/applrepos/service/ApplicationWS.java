@@ -7,6 +7,8 @@ import java.util.List;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
+import com.bayerbbs.applrepos.domain.ApplicationCat1;
+import com.bayerbbs.applrepos.domain.ApplicationCat2;
 import com.bayerbbs.applrepos.domain.ApplicationRegion;
 import com.bayerbbs.applrepos.dto.ApplicationAccessDTO;
 import com.bayerbbs.applrepos.dto.ApplicationContact;
@@ -23,6 +25,8 @@ import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
+import com.bayerbbs.applrepos.hibernate.ApplicationCat1Hbn;
+import com.bayerbbs.applrepos.hibernate.ApplicationCat2Hbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationProcessHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationRegionHbn;
 import com.bayerbbs.applrepos.hibernate.AttributeValueHbn;
@@ -316,30 +320,33 @@ public class ApplicationWS {
 
 			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
 				// get detail
-				List<Application> listAnwendung = AnwendungHbn.findApplicationByName(editInput.getName());
-				if (null != listAnwendung && 1 == listAnwendung.size()) {
-					output.setApplicationId(listAnwendung.get(0).getApplicationId());
-					
-					Long ciId = listAnwendung.get(0).getApplicationId();
-					
+				//List<Application> listAnwendung = AnwendungHbn.findApplicationByName(editInput.getName());
+				Long applicationId = output.getApplicationId();
+				if (null != applicationId && 0 < applicationId) {
 					//--- neu seit Wizard RFC 8271 - required Attributes
+					
+			        ApplicationCat2 applicationCat2 =ApplicationCat2Hbn.findById(dto.getApplicationCat2Id());
+			        System.out.println(applicationCat2.getAnwendungKat2Text());
+			        ApplicationCat1 applicationCat1 =ApplicationCat1Hbn.findById(applicationCat2.getAnwendungKat1Id());
+			        AnwendungHbn.updateDWHTypeAndCategory(applicationCat1.getApplicationCat1En(),applicationCat2.getAnwendungKat2Text(), applicationId);
+			        System.out.println(applicationCat1.getApplicationCat1En());
 					
 					if (null != editInput.getGpsccontactSupportGroupHidden()) {
 						CiGroupsHbn.saveCiGroup(editInput.getCwid(), dto.getTableId(),
-								ciId, new Long(1), "SUPPORT GROUP - IM RESOLVER",
+								applicationId, new Long(1), "SUPPORT GROUP - IM RESOLVER",
 										dto.getGpsccontactSupportGroup());//getGpsccontactSupportGroupHidden
 					}
 					if (null != editInput.getGpsccontactOwningBusinessGroupHidden()) {
 						CiGroupsHbn.saveCiGroup(editInput.getCwid(), dto.getTableId(),
-								ciId, new Long(6), "OWNING BUSINESS GROUP",
+								applicationId, new Long(6), "OWNING BUSINESS GROUP",
 								dto.getGpsccontactOwningBusinessGroup());//getGpsccontactOwningBusinessGroupHidden
 					}
 					
 					if (null != dto.getLicenseUsingRegions()) {
-						ApplicationRegionHbn.saveApplicationRegionsAll(editInput.getCwid(), ciId, dto.getLicenseUsingRegions());
+						ApplicationRegionHbn.saveApplicationRegionsAll(editInput.getCwid(), applicationId, dto.getLicenseUsingRegions());
 					}
 
-					ApplicationProcessHbn.saveApplicationProcessAll(editInput.getCwid(), ciId, dto.getBusinessProcessHidden());
+					ApplicationProcessHbn.saveApplicationProcessAll(editInput.getCwid(), applicationId, dto.getBusinessProcessHidden());
 
 				} else {
 					// unknown?

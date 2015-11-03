@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.domain.ApplicationCat1;
+import com.bayerbbs.applrepos.domain.ApplicationCat2;
 import com.bayerbbs.applrepos.dto.ApplicationCat1DTO;
 import com.bayerbbs.applrepos.dto.CiTypeDTO;
 
@@ -37,6 +38,12 @@ public class ApplicationCat1Hbn {
 			listDTO.add(dto);
 		}
 		return listDTO;
+	}
+	
+	public static ApplicationCat1 findById(Long id){
+		Session session = HibernateUtil.getSession();
+		return (ApplicationCat1)session.get(ApplicationCat1.class, id);
+		
 	}
 
 	

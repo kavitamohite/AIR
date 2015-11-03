@@ -15,6 +15,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.applrepos.common.ApplReposTS;
+import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.HardwareComponent;
@@ -364,7 +365,7 @@ public class HardwareComponentHbn {
 		if (error == null) {
 			ItSystem itSystem = null;
 
-			if (dto.getSystemPlatformName() != null && dto.getSystemPlatformNameId() != 0) {
+			if (StringUtils.isNotNullOrEmpty(dto.getSystemPlatformName()) && dto.getSystemPlatformNameId() != 0 && dto.getSystemPlatformNameId() != null) {
 				itSystem = ItSystemHbn.findItSystemById(dto.getSystemPlatformNameId());
 				hardwareComponent.setItSystem(itSystem);
 			}

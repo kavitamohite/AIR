@@ -176,6 +176,8 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 	},
 	
 	update: function(assetData){
+		
+		
 
 		var tTechnicalNumber = this.getComponent('tTechnicalNumber');
         tTechnicalNumber.setValue(assetData.technicalNumber);
@@ -183,11 +185,15 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         var tTechnicalMaster = this.getComponent('tTechnicalMaster');
         tTechnicalMaster.setValue(assetData.technicalMaster);
 
-        var tSystemPlatform = this.getComponent('cbSystemPlatform');
-        tSystemPlatform.setValue(assetData.systemPlatformName);
-
         var tOsName = this.getComponent('tOsName');
         tOsName.setValue(assetData.osNameId);
+        
+        this.loadSystemPlatformStore(assetData.osNameId);
+        
+        var tSystemPlatform = this.getComponent('cbSystemPlatform');
+        tSystemPlatform.
+        tSystemPlatform.setValue(assetData.systemPlatformNameId);
+        tSystemPlatform.setRawValue(assetData.systemPlatformName);
 
         var tTransient = this.getComponent('tTransient');
         tTransient.setValue(assetData.hardwareTransientSystem);
@@ -223,7 +229,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 
         var tSystemPlatform = this.getComponent('cbSystemPlatform');
         assetData.systemPlatformNameId = tSystemPlatform.getValue();
-        assetData.systemPlatformName = tSystemPlatform.getRawValue();
+        assetData.systemPlatformName = tSystemPlatform.getStore().getById(assetData.systemPlatformNameId).get('text');
         
         var tOsName = this.getComponent('tOsName');
         assetData.osName = tOsName.getRawValue();

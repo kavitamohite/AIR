@@ -10,7 +10,10 @@ public class ApplicationWSDelegate {
 
 	//ApplicationParamOutput
 	public CiItemsResultDTO checkAllowedApplicationName(ApplicationParameterInput anwParamInp) {
-		return applicationWS.checkAllowedApplicationName(anwParamInp);
+		CiItemsResultDTO output = new CiItemsResultDTO();//ApplicationParamOutput
+		output.setCountResultSet(0);
+		//return applicationWS.checkAllowedApplicationName(anwParamInp);
+		return output;
 	}
 
 	//ApplicationParamOutput
