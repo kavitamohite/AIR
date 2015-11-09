@@ -15,6 +15,7 @@ import org.hibernate.Transaction;
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
+import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
@@ -105,11 +106,18 @@ public class RoomHbn extends LokationItemHbn {
 
 						
 						setUpCi(room, dto, cwid, false);
-						//vandana
 						room.setProvider_Name(dto.getProviderName());
 						room.setProvider_Address(dto.getProviderAddress());
-						room.setIt_Head(dto.getItHead());
-						//vandana
+						//C0000069237
+						if (null != dto.getItHeadHidden()) {
+							if(StringUtils.isNullOrEmpty(dto.getItHeadHidden())) {
+								room.setIt_Head(dto.getItHeadHidden());
+							}
+							else {
+								room.setIt_Head(dto.getItHeadHidden());
+							}
+						}
+						//C0000069237
 
 
 						if (null != dto.getAlias()) {
@@ -327,12 +335,20 @@ public class RoomHbn extends LokationItemHbn {
 						room.setBuildingAreaId(dto.getAreaId());
 						BuildingArea buildingArea = BuildingHbn.findBuildingAreaById(dto.getAreaId());
 						room.setBuildingArea(buildingArea);
-	                      //vandana
+						
+	                    //kaushal
 						
 						room.setProvider_Name(dto.getProviderName());
 						room.setProvider_Address(dto.getProviderAddress());
-						room.setIt_Head(dto.getItHead());
-						//vandana
+						if (null != dto.getItHeadHidden()) {
+							if(StringUtils.isNullOrEmpty(dto.getItHeadHidden())) {
+								room.setIt_Head(dto.getItHeadHidden());
+							}
+							else {
+								room.setIt_Head(dto.getItHeadHidden());
+							}
+						}
+						//kaushal
 						
 
 						if (null == dto.getBusinessEssentialId()) {

@@ -696,16 +696,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		tfProviderName.on('keyup', this.onFieldKeyUp, this);
 		tfProviderAddress.on('keyup', this.onFieldKeyUp, this);
-		
-		//ended vandana
-		
-		//added vandana
-		var ciItHead = this.getComponent('fsCIOwner').getComponent('pciItHead').getComponent('ciItHead');
-		ciItHead.on('change', this.onItHeadChange, this);
-		ciItHead.on('keyup', this.onFieldKeyUp, this);
-		
-		//ended vandana
-		
+			
 		var pApplicationOwner = this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner');
 		var clApplicationOwnerAdd = pApplicationOwner.getComponent('applicationOwnerAdd');
 		var clApplicationOwnerRemove = pApplicationOwner.getComponent('applicationOwnerRemove');
@@ -741,12 +732,16 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		clCiSubResponsibleAdd.on('click', this.onCiSubResponsibleAdd, this);
 		clCiSubResponsibleAddgroup.on('click', this.onCiSubResponsibleAddgroup, this);
 		clCiSubResponsibleRemove.on('click', this.onCiSubResponsibleRemove, this);
-		
-		//added vandana
-/*		var pProviderName = this.getComponent('provider').getComponent('pProviderName');
-		var pProviderAddress = this.getComponent('provider').getComponent('pProviderAddress');*/
 				
-		//ended vandana
+		//added kaushal (C0000069237)
+		var pciItHead = this.getComponent('fsCIOwner').getComponent('pciItHead');
+		var clCiItHeadAdd = pciItHead.getComponent('ciItHeadAdd');
+		var clCiItHeadRemove = pciItHead.getComponent('ciItHeadRemove');
+		clCiItHeadAdd.on('click',this.onCiItHeadAdd,this);
+		clCiItHeadRemove.on('click', this.onCiItHeadRemove,this);
+		
+		//ended Kaushal
+		
 		var pGpsccontactResponsibleAtCustomerSide = this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide');
 		var clGpsccontactResponsibleAtCustomerSideAdd = pGpsccontactResponsibleAtCustomerSide.getComponent('gpsccontactResponsibleAtCustomerSideAdd');
 		var clGpsccontactResponsibleAtCustomerSideRemove = pGpsccontactResponsibleAtCustomerSide.getComponent('gpsccontactResponsibleAtCustomerSideRemove');
@@ -839,13 +834,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		onFieldKeyUp: function(textfield, event) {
 			this.fireEvent('ciChange', this, textfield);
 		},
-		
-	//Ended by vandana
-		onItHeadChange: function(textfield, newValue, oldValue) {
-	    	this.fireEvent('ciChange', this, textfield, newValue);
-            
-		},
-		
+				
 	onGpsccontactBusinessOwnerRepresentativeAdd: function(link, event) {
 //		createPersonPickerTip(event, 'gpsccontactBusinessOwnerRepresentative');
 		AIR.AirPickerManager.openPersonPicker(
@@ -988,8 +977,15 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirPickerManager.openRemovePicker(
 			this.onRecordRemoved.createDelegate(this), this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSide'), event);
 	},
-	
-	
+	onCiItHeadAdd: function(link, event) {
+		AIR.AirPickerManager.openPersonPicker(
+				this.onPersonAdded.createDelegate(this),this.getComponent('fsCIOwner').getComponent('pciItHead').getComponent('ciItHead'), event);		
+	},
+	onCiItHeadRemove: function(link,event){
+		AIR.AirPickerManager.openRemovePicker(
+				this.onRecordRemoved.createDelegate(this),this.getComponent('fsCIOwner').getComponent('pciItHead').getComponent('ciItHead'), event);
+	},
+		
 	onCiSubResponsibleAdd: function(link, event) {
 //		createPersonPickerTip(event, 'ciSubResponsible');
 		AIR.AirPickerManager.openPersonPicker(
@@ -1192,8 +1188,10 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				pciItHead.getComponent('ciItHead').reset();						
 			}else{
 				pciItHead.getComponent('ciItHead').setValue(data.itHead);
+				pciItHead.getComponent('ciItHeadHidden').setValue(data.itHeadHidden);
 		} }else {
 			pciItHead.getComponent('ciItHead').setValue('');
+			pciItHead.getComponent('ciItHeadHidden').setValue('');			
 		}
 
 		var pProviderName = this.getComponent('provider').getComponent('pProviderName');
@@ -1446,9 +1444,10 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			data.ciOwnerDelegate = field.getValue();
 		}
 		
-		field = this.getComponent('fsCIOwner').getComponent('pciItHead').getComponent('ciItHead');
+		field = this.getComponent('fsCIOwner').getComponent('pciItHead').getComponent('ciItHeadHidden');
 		if (!field.disabled) {
 			data.itHead = field.getValue();
+			data.itHeadHidden = field.getValue();
 		}
 
 		//added by vandana

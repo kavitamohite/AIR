@@ -12,6 +12,7 @@ public class RoomEditParameterInput extends BaseEditParameterInput {
 	
 	//vandana
 	private String itHead;
+	private String itHeadHidden;
 
 	
 	
@@ -54,6 +55,18 @@ public class RoomEditParameterInput extends BaseEditParameterInput {
 	}
 	public void setItHead(String itHead) {
 		this.itHead = itHead;
+	}
+	/**
+	 * @return the itHeadHidden
+	 */
+	public String getItHeadHidden() {
+		return itHeadHidden;
+	}
+	/**
+	 * @param itHeadHidden the itHeadHidden to set
+	 */
+	public void setItHeadHidden(String itHeadHidden) {
+		this.itHeadHidden = itHeadHidden;
 	}
 	
 }

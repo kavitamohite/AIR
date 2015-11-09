@@ -383,11 +383,19 @@ public class CiEntityWS {
 			roomDTO.setStreetNumber(building.getStreetNumber());
 			roomDTO.setPostalCode(building.getPostalCode());
 			roomDTO.setLocation(building.getLocation());
-			// vandana
 			roomDTO.setProviderName(room.getProvider_Name());
 			roomDTO.setProviderAddress(room.getProvider_Address());
-			roomDTO.setItHead(room.getIt_Head());
-			// vandana
+			
+			//C0000069237
+			roomDTO.setItHeadHidden(room.getIt_Head());
+			if (StringUtils.isNotNullOrEmpty(room.getIt_Head())) {// ItHead
+				List<PersonsDTO> listPers = PersonsHbn.findPersonByCWID(room.getIt_Head());// ItHead
+				if (null != listPers && 1 == listPers.size()) {
+					PersonsDTO tempPers = listPers.get(0);
+					roomDTO.setItHead(tempPers.getDisplayNameFull());
+				}
+			}
+			//C0000069237
 
 			// Standard Zugriffsrechte setzen.
 			AccessRightChecker checker = new AccessRightChecker();

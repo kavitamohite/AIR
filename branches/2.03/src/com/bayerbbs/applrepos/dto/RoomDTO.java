@@ -23,6 +23,7 @@ public class RoomDTO extends LocationDTO implements Serializable {
 	private String providerAddress;
 	private String providerAddressHidden;
 	private String itHead;
+	private String itHeadHidden;
 	
 	//====================
 	private String severityLevelIdAcl;
@@ -171,6 +172,18 @@ public class RoomDTO extends LocationDTO implements Serializable {
 	
 	public void setItHead(String itHead) {
 		this.itHead = itHead;
+	}
+	/**
+	 * @return the itHeadHidden
+	 */
+	public String getItHeadHidden() {
+		return itHeadHidden;
+	}
+	/**
+	 * @param itHeadHidden the itHeadHidden to set
+	 */
+	public void setItHeadHidden(String itHeadHidden) {
+		this.itHeadHidden = itHeadHidden;
 	}
 	
 }

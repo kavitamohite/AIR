@@ -2577,6 +2577,12 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'protectionApplicationProtection',
 				mapping : 'applicationDTO > applicationProtection'
+			}, {
+				name : 'itSecSbIntegrityId',
+				mapping : 'applicationDTO > itSecSbIntegrityId'
+			}, {
+				name : 'itSecSbIntegrityTxt',
+				mapping : 'applicationDTO > itSecSbIntegrityTxt'
 			},
 
 

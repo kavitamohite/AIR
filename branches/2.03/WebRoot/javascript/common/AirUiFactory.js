@@ -224,7 +224,7 @@ AIR.AirUiFactory = function() {
 				    	img: img_RemovePerson
 				    }]
 				},
-                //RFC 11517
+                //change request C0000069237
 				{
 				xtype: 'container',
 				id: 'p' + ownerId + 'ciItHead',
@@ -245,10 +245,22 @@ AIR.AirUiFactory = function() {
 					xtype: 'textfield',
 			        width: 230,
 			        id: ownerId + 'ciItHead',
-			        enableKeyEvents: true,
+			        disabled: false,
+			        //enableKeyEvents: true,
 			        allowBlank: true ,
-			        //readOnly: true
-			    }]}
+			        readOnly: true
+			    },{
+					xtype: 'hidden',
+			        id: ownerId + 'ciItHeadHidden'
+			    },{
+			    	xtype: 'commandlink',
+			    	id: ownerId + 'ciItHeadAdd',
+			    	img: img_AddPerson
+			    },{
+			    	xtype: 'commandlink',
+			    	id: ownerId + 'ciItHeadRemove',
+			    	img: img_RemovePerson
+			    }			    ]}
 				 //RFC 11517
 				]
 			};

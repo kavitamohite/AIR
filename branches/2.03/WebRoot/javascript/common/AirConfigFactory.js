@@ -143,10 +143,11 @@ AIR.AirConfigFactory = function() {
 			roomCiFields.push('severityLevelIdAcl');
 			roomCiFields.push('businessEssentialIdAcl');
 			roomCiFields.push('buildingAreaData');
-			roomCiFields.push('providerName');//vandana
-			roomCiFields.push('providerAddress');//vandana
-			roomCiFields.push('itHead');//vandana;
-			;;
+			roomCiFields.push('providerName');
+			roomCiFields.push('providerAddress');
+			roomCiFields.push('itHead');
+			roomCiFields.push('itHeadHidden');
+						
 			return Ext.data.Record.create(roomCiFields);
 		},
 		
