@@ -173,10 +173,10 @@ AIR.AirBootstrap = Ext.extend(Object, {
 	    		var startMask = AAM.getMask(AC.MASK_TYPE_START);
 	    		startMask.show();
         }.createDelegate(this));
-        task.delay(100);
+        task.delay(10000);
 	    
         task = new Ext.util.DelayedTask(this.openUi.createDelegate(this));
-        task.delay(100);
+        task.delay(10000);
     },
     
     
