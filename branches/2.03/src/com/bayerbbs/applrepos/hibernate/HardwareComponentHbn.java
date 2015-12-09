@@ -365,13 +365,13 @@ public class HardwareComponentHbn {
 		if (error == null) {
 			ItSystem itSystem = null;
 
-			if (StringUtils.isNotNullOrEmpty(dto.getSystemPlatformName()) && dto.getSystemPlatformNameId() != 0 && dto.getSystemPlatformNameId() != null) {
-				itSystem = ItSystemHbn.findItSystemById(dto.getSystemPlatformNameId());
+			if (StringUtils.isNotNullOrEmpty(dto.getSystemPlatformName())) {
+				itSystem = ItSystemHbn.findItSystemByName(dto.getSystemPlatformName());
 				hardwareComponent.setItSystem(itSystem);
 			}
 		} else {
 			dto.setError(error);
-			hardwareComponent = null;
+			return dto;
 		}
 		
 		if(hardwareComponent != null){
@@ -388,7 +388,8 @@ public class HardwareComponentHbn {
 				if (tx.isActive()) {
 					tx.rollback();
 				}
-				return null;
+				dto.setError(e.getMessage());
+				return dto;
 			} finally {
 				if (tx.isActive()) {
 					tx.commit();

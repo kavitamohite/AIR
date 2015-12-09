@@ -102,12 +102,12 @@ public class SpecialAttributeHbn {
 
 			if (toBe.getId() == null && toBe.getAttributeValue() != null) {
 				session.createSQLQuery(createInsertQuery(toBe, cwid)).executeUpdate();
-				startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
-						AirKonstanten.APPLICATION_GUI_NAME, cwid);
+/*				startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
+						AirKonstanten.APPLICATION_GUI_NAME, cwid);*/
 			} else if (toBe.getId() != null) {
 				session.update(toBe);
-				startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
-						AirKonstanten.APPLICATION_GUI_NAME, cwid);
+/*				startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
+						AirKonstanten.APPLICATION_GUI_NAME, cwid);*/
 			}
 
 			session.flush();
@@ -124,6 +124,13 @@ public class SpecialAttributeHbn {
 				tx.commit();
 			}
 			session.close();
+		}		
+		if (toBe.getId() == null && toBe.getAttributeValue() != null) {
+			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
+					AirKonstanten.APPLICATION_GUI_NAME, cwid);
+		} else if (toBe.getId() != null) {
+			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
+					AirKonstanten.APPLICATION_GUI_NAME, cwid);
 		}
 
 		return true;

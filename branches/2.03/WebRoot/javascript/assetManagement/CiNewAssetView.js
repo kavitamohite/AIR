@@ -38,7 +38,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                 }
             }, {
                 xtype: 'AIR.CiTopPanel',
-                id: 'topPanel',
+                id: 'topPanel'
             }, {
                 xtype: 'panel',
                 id: 'bottomPanel',

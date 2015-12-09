@@ -425,13 +425,12 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     	
     	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
     	if (success) {
+			this.sendEmail();
     		var topPanel = this.getComponent('topPanel');
 	    	topPanel.update(records[0].data);
 	    	
     		var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
-			afterSaveAppWindow.show();
-			
-			this.sendEmail();
+			afterSaveAppWindow.show();			
         } else {
         	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR', callbackMap);
 			afterSaveAppWindow.show();
@@ -441,19 +440,21 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     sendEmail: function(){
     	var assetData = this.getUpdateParam();
     	
-    	var mailText = mail_blank_text_software_asset.replace('<username>', AAM.getUserName());
-    	mailText = mailText.replace('<manufacturer>',assetData.manufacturer);
-    	mailText = mailText.replace('<productName>',assetData.subcategory);
-    	mailText = mailText.replace('<sapDescription>',assetData.sapDescription);
+    	if(assetData.id){
+        	var mailText = mail_blank_text_software_asset.replace('<username>', AAM.getUserName());
+        	mailText = mailText.replace('<manufacturer>',assetData.manufacturer);
+        	mailText = mailText.replace('<productName>',assetData.subcategory);
+        	mailText = mailText.replace('<sapDescription>',assetData.sapDescription);
 
-    	mailText = mailText.replace('<orderNumber>',assetData.orderNumber);
-    	mailText = mailText.replace('<costCenter>',assetData.costCenter);
-    	mailText = mailText.replace('<legalEntity>',assetData.owner);
+        	mailText = mailText.replace('<orderNumber>',assetData.orderNumber);
+        	mailText = mailText.replace('<costCenter>',assetData.costCenter);
+        	mailText = mailText.replace('<legalEntity>',assetData.owner);
 
-    	mailText = mailText.replace('<costCenterManager>',assetData.costCenterManager);
-    		
-    	var email = 'mailto:iao-bestellwesen@bayer.com&subject='+mail_subject_hardware_asset+'&body='+mailText;
-    	window.location.href = email;
+        	mailText = mailText.replace('<costCenterManager>',assetData.costCenterManager);
+        		
+        	var email = 'mailto:iao-bestellwesen@bayer.com&subject='+mail_subject_hardware_asset+'&body='+mailText;
+        	window.location.href = email;
+    	}
     }
 
 

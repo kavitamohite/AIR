@@ -26,25 +26,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 				style : {
 					marginBottom : 10
 				}
-			},{
-		        itemId: 'cbSystemPlatform',
-		    	xtype: 'filterCombo',
-		        fieldLabel: 'System platform name',
-		        width: 370,
-		        enableKeyEvents: true,
-		        forceSelection: true,
-		        store: AIR.AirStoreFactory.createSystemPlatformStore(),
-		        valueField: 'id',
-		        displayField: 'name',
-				lastQuery: '',
-				minChars: 0,
-		        triggerAction: 'all',
-		        mode: 'local',
-		        queryParam: 'id',
-				style : {
-					marginBottom : 10
-				}
-		    },{
+			},			{
 				id: 'tOsName',
 		        xtype: 'filterCombo',
 		        fieldLabel: 'OS-Name',
@@ -60,7 +42,25 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 				style : {
 					marginBottom : 10
 				}
-			}, {
+			},{
+		        itemId: 'cbSystemPlatform',
+		    	xtype: 'filterCombo',
+		        fieldLabel: 'System platform name',
+		        width: 370,
+		        enableKeyEvents: true,
+		        forceSelection: true,
+		        store: AIR.AirStoreFactory.createSystemPlatformStore(),
+		        valueField: 'name',
+		        displayField: 'name',
+				lastQuery: '',
+				minChars: 0,
+		        triggerAction: 'all',
+		        mode: 'local',
+		        queryParam: 'name',
+				style : {
+					marginBottom : 10
+				}
+		    }, {
 				xtype : 'textfield',
 				id : 'tTransient',
 				fieldLabel : 'HW-transient systems',
@@ -167,12 +167,23 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 	
 	loadSystemPlatformStore: function(value){
 		var cbSystemPlatform = this.getComponent('cbSystemPlatform');
+		var cbSystemPlatformStore=cbSystemPlatform.getStore();
+		cbSystemPlatformStore.on('beforeload',this.onBeforeCbSystemPlatformStore,this);
+		cbSystemPlatformStore.on('load',this.onChangeCbSystemPlatformStore,this);
 		
 		cbSystemPlatform.getStore().load({
             params: {
                 id: value
             }
         });
+	},
+	onBeforeCbSystemPlatformStore: function(store, options){
+		var loadMask = AIR.AirApplicationManager.getMask(AC.MASK_TYPE_LOAD);
+		loadMask.show();
+	},
+	onChangeCbSystemPlatformStore: function(store, records, options){
+		var loadMask = AIR.AirApplicationManager.getMask(AC.MASK_TYPE_LOAD);
+		loadMask.hide();
 	},
 	
 	update: function(assetData){
@@ -191,8 +202,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         this.loadSystemPlatformStore(assetData.osNameId);
         
         var tSystemPlatform = this.getComponent('cbSystemPlatform');
-        tSystemPlatform.
-        tSystemPlatform.setValue(assetData.systemPlatformNameId);
+        tSystemPlatform.setValue(assetData.systemPlatformName);
         tSystemPlatform.setRawValue(assetData.systemPlatformName);
 
         var tTransient = this.getComponent('tTransient');
@@ -228,8 +238,8 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         assetData.technicalMaster = tTechnicalMaster.getValue();
 
         var tSystemPlatform = this.getComponent('cbSystemPlatform');
-        assetData.systemPlatformNameId = tSystemPlatform.getValue();
-        assetData.systemPlatformName = tSystemPlatform.getStore().getById(assetData.systemPlatformNameId).get('text');
+        assetData.systemPlatformName = tSystemPlatform.getValue();
+        //assetData.systemPlatformName = tSystemPlatform.getStore().getById(assetData.systemPlatformNameId).get('text');
         
         var tOsName = this.getComponent('tOsName');
         assetData.osName = tOsName.getRawValue();

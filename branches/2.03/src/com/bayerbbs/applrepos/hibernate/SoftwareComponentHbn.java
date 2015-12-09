@@ -40,7 +40,9 @@ public class SoftwareComponentHbn {
 			tx = session.beginTransaction();
 
 			Criteria criteria = session.createCriteria(SoftwareComponent.class);
-
+			
+			Criterion swName = Restrictions.like("name",
+					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion sapDescription = Restrictions.like("prouctDescription",
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion pspElement = Restrictions.like("innenauftrag",
@@ -62,7 +64,7 @@ public class SoftwareComponentHbn {
 			Criterion completeCondition = Restrictions.disjunction()
 					.add(sapDescription).add(pspElement).add(kontoName)
 					.add(serialNumber).add(technicalMaster)
-					.add(technicalNumber).add(inventoryNumber).add(orgUnit);
+					.add(technicalNumber).add(inventoryNumber).add(orgUnit).add(swName);
 			criteria.add(completeCondition);
 
 			if (input.getSort() != null) {

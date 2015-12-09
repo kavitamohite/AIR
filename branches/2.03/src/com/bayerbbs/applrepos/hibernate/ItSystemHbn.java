@@ -1320,6 +1320,8 @@ public class ItSystemHbn extends BaseHbn {
 
 
 	public static KeyValueDTO[] getSystemPlatformListById(Long id) {
+		if(id==null)
+			return new KeyValueDTO[0];
 		
 		List<ItSystem> itSystems = null;
 		

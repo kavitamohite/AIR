@@ -111,7 +111,6 @@ public class AIRWS {
 			temp.setItsecUserOptionValue(personTemp.getValue());
 			itsecUserOptions[i] = temp;
 		}
-
 		return itsecUserOptions;
 	}
 
@@ -125,7 +124,7 @@ public class AIRWS {
 			for (int i = 0; i < arrayRP.length; i++) {
 				arrayRP[i] = listRolePerson.get(i);
 			}
-		}
+		}		
 		return arrayRP;
 	}
 
@@ -166,6 +165,9 @@ public class AIRWS {
 					editInput.getShowDeleted());
 
 		}
+		CiEntitiesHbn.findCisByNameOrAlias("BYZREH", false, "CONTAINS", false, "applicationName", "ASC", 10, 100);
+		CiEntitiesHbn.findCountCisByNameOrAlias("BYZREH", false, "CONTAINS", false);
+		System.out.println("CiEntitiesHbn.findCountCisByNameOrAlias  calling");
 
 		return output;
 	}

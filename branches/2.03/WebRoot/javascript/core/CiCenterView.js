@@ -486,8 +486,12 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				break;
 			
 			case 'clAssetManagement':
-				this.getLayout().setActiveItem('ciAssetManagementView');
 				var verwerfenCallback = function() {
+				this.getLayout().setActiveItem('ciAssetManagementView');
+				if(ciEditView)
+					ciEditView.ciModified = false;
+				if(ciCreateWizardView)
+					ciCreateWizardView.wizardStarted = false;
 					if(options && options.callback)
 						options.callback();
 					}.createDelegate(this);
@@ -499,16 +503,20 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					break;
 				
 			case 'clCiIntangibleAsset':
+				
+				var verwerfenCallback = function() {
 				this.getLayout().setActiveItem('ciNewSoftwareAsset');
+				if(ciEditView)
+					ciEditView.ciModified = false;
+				if(ciCreateWizardView)
+					ciCreateWizardView.wizardStarted = false;
 				clSoftwareProduct.setVisible(true);
 				clSoftwareBusinessInformation.setVisible(true);
 				clSoftwareContacts.setVisible(true);
 				clSoftwareBusinessInformation.getComponent('cbSapAsset').store = AIR.AirStoreManager.getStoreByName('sapAssetSoftwareListStore');
 
 				AAM.setComponentType("software");
-				ciNewSoftwareAsset.resetFormFields(null);
-				
-				var verwerfenCallback = function() {
+				ciNewSoftwareAsset.resetFormFields(null);				
 					if(options && options.callback)
 						options.callback();
 				}.createDelegate(this);
@@ -522,12 +530,15 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				}
 				break;
 					
-			case 'clCiTangibleAsset':
-				this.getLayout().setActiveItem('ciNewHardwareAsset');
-				var ciNewHardwareAsset = this.getComponent('ciNewHardwareAsset');
-				ciNewHardwareAsset.updateLabels(AIR.AirApplicationManager.getLabels());
-				
+			case 'clCiTangibleAsset':				
 				var verwerfenCallback = function() {
+				this.getLayout().setActiveItem('ciNewHardwareAsset');
+				if(ciEditView)
+					ciEditView.ciModified = false;
+				if(ciCreateWizardView)
+					ciCreateWizardView.wizardStarted = false;
+				var ciNewHardwareAsset = this.getComponent('ciNewHardwareAsset');
+				ciNewHardwareAsset.updateLabels(AIR.AirApplicationManager.getLabels());				
 					if(options && options.callback)
 						options.callback();
 				}.createDelegate(this);
@@ -539,7 +550,13 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					break;
 					
 			case 'clCiAssetwithInventory':
+
+				var verwerfenCallback = function() {
 				this.getLayout().setActiveItem('ciNewAssetView');
+				if(ciEditView)
+					ciEditView.ciModified = false;
+				if(ciCreateWizardView)
+					ciCreateWizardView.wizardStarted = false;
 				clCiProduct.setVisible(true);
 				clCiLocation.setVisible(true);
 				clCiBusinessInformation.setVisible(true);
@@ -550,7 +567,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				
 				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset with Inventory").setVisible(true);
 				ciNewAssetView.resetFormFields(null);
-				var verwerfenCallback = function() {
 					if(options && options.callback)
 						options.callback();
 					}.createDelegate(this);
@@ -565,7 +581,12 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					break;	
 					
 			case 'clCiAssetwithoutInventory':
+				var verwerfenCallback = function() {
 				this.getLayout().setActiveItem('ciNewAssetView');
+				if(ciEditView)
+					ciEditView.ciModified = false;
+				if(ciCreateWizardView)
+					ciCreateWizardView.wizardStarted = false;
 				clCiProduct.setVisible(true);
 				clCiLocation.setVisible(true);
 				clCiBusinessInformation.setVisible(true);
@@ -576,7 +597,6 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				
 				ciNewAssetView.getComponent('assetPanelHeader').setText("Asset Management - Hardware Asset - Asset without Inventory").setVisible(true);
 				ciNewAssetView.resetFormFields(null);
-				var verwerfenCallback = function() {
 					if(options && options.callback)
 						options.callback();
 				}.createDelegate(this);
