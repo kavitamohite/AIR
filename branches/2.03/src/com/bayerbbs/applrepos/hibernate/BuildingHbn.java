@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -84,6 +85,7 @@ public class BuildingHbn extends LokationItemHbn {
 
 						Session session = HibernateUtil.getSession();
 						Transaction tx = null;
+						Long buildingId= null;
 						tx = session.beginTransaction();
 
 												
@@ -107,7 +109,7 @@ public class BuildingHbn extends LokationItemHbn {
 						
 						boolean toCommit = false;
 						try {
-							session.save(building);
+							buildingId = (Long) session.save(building);
 							session.flush();
 							toCommit = true;
 						} catch (Exception e) {
@@ -121,6 +123,7 @@ public class BuildingHbn extends LokationItemHbn {
 									output.setResult(AirKonstanten.RESULT_OK);
 									output.setMessages(new String[] { EMPTY });
 									output.setTableId(AirKonstanten.TABLE_ID_BUILDING);
+									output.setCiId(buildingId);
 								} else {
 									output.setResult(AirKonstanten.RESULT_ERROR);
 									output.setMessages(new String[] { hbnMessage });
@@ -172,6 +175,7 @@ public class BuildingHbn extends LokationItemHbn {
 
 						Session session = HibernateUtil.getSession();
 						Transaction tx = session.beginTransaction();
+						Long buildingAreaId = null;
 						
 						setUpCi(buildingArea, dto, cwid, true);
 						
@@ -188,7 +192,7 @@ public class BuildingHbn extends LokationItemHbn {
 						
 						boolean toCommit = false;
 						try {
-							session.save(buildingArea);
+							buildingAreaId =(Long) session.save(buildingArea);
 							session.flush();
 							toCommit = true;
 						} catch (Exception e) {
@@ -202,6 +206,7 @@ public class BuildingHbn extends LokationItemHbn {
 									output.setResult(AirKonstanten.RESULT_OK);
 									output.setMessages(new String[] { EMPTY });
 									output.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
+									output.setCiId(buildingAreaId);
 								} else {
 									output.setResult(AirKonstanten.RESULT_ERROR);
 									output.setMessages(new String[] { hbnMessage });
@@ -836,14 +841,15 @@ public class BuildingHbn extends LokationItemHbn {
 	
 	public static BuildingArea findByNameAndBuildingId(String name,	Long buildingId) {
 		Session session = HibernateUtil.getSession();
-		
 		Query q = session.getNamedQuery("findByNameAndBuildingId");
 		q.setParameter("name", name);
 		q.setParameter("buildingId", buildingId);
-
-		BuildingArea room = (BuildingArea)q.uniqueResult();
-		
-		return room;
+		BuildingArea buildingArea = (BuildingArea)q.uniqueResult();
+		if(buildingArea!=null && name.equalsIgnoreCase(buildingArea.getBuildingAreaName())){
+			return buildingArea;
+		}else{
+			return null;
+		}	
 	}
 	
 	

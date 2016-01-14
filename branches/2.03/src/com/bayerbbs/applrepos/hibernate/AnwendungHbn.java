@@ -731,60 +731,7 @@ public class AnwendungHbn extends BaseHbn {
 
 				if (messages.isEmpty()) {
 					Application application = new Application();
-					boolean isApplicationNameAndAliasNameAllowed = true;
-					
-					//ApplicationDTO
-/*					if (isApplicationNameAndAliasNameAllowed) {
-						List<CiItemDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getName(), true);
-						if (null != listApplications && 0 < listApplications.size()) {
-							// application name is not allowed
-							isApplicationNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listApplications.get(0).getDeleteQuelle()) {
-								boolean override = forceOverride != null && forceOverride.booleanValue();
-								
-								if(override) {
-									// TODO ENTWICKLUNG RFC8279
-									Session session = HibernateUtil.getSession();
-									Application applicationDeleted = (Application)session.get(Application.class, listApplications.get(0).getId());
-									// reactivate application
-									reactivateApplication(cwid, dto, applicationDeleted);
-									// save the data
-									dto.setId(applicationDeleted.getApplicationId());
-									return saveAnwendung(cwid, dto);
-
-								} else {
-									output.setMessages(new String[] {"Application Name '" + listApplications.get(0).getName() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-								}
-							}
-							else {
-								output.setMessages(new String[] {"Application Name '" + listApplications.get(0).getName() + "' already exists."});
-							}
-						}
-					}*/
-					
-					//ApplicationDTO
-/*					if (isApplicationNameAndAliasNameAllowed) {
-						List<CiItemDTO> listApplications = CiEntitiesHbn.findExistantCisByNameOrAlias(dto.getAlias(), true);
-						if (null != listApplications && 0 < listApplications.size()) {
-							// application alias is not allowed
-							isApplicationNameAndAliasNameAllowed = false;
-							output.setResult(AirKonstanten.RESULT_ERROR);
-							if (null != listApplications.get(0).getDeleteQuelle()) {
-								output.setMessages(new String[] {"Application Alias '" + listApplications.get(0).getAlias() + "' already exists but marked as deleted<br>Please ask ITILcenter@bayer.com for reactivation."});
-							}
-							else {
-								output.setMessages(new String[] {"Application Alias '" + listApplications.get(0).getAlias() + "' already exists."});
-							}
-						}						
-					}*/
-					
-/*					if (!neuanlage) {
-						output.setResult(AirKonstanten.RESULT_OK);
-						return output;
-					}*/
-					
-					
+					boolean isApplicationNameAndAliasNameAllowed = true;					
 					if (isApplicationNameAndAliasNameAllowed) {
 						// calculates the ItSet
 						Long itSet = null;
@@ -1006,27 +953,6 @@ public class AnwendungHbn extends BaseHbn {
 			application.setDeleteUser(null);
 
 			
-//			application
-//					.setApplicationName(dto.getApplicationName());
-//			application.setApplicationAlias(dto
-//					.getApplicationAlias());
-//			application.setComments(dto.getComments());
-//			if (null == dto.getResponsible()) {
-//				dto.setResponsible(cwid.toUpperCase());
-//			}
-
-			// calculates the ItSet
-//			Long itSet = null;
-//			String strItSet = ApplReposHbn.getItSetFromCwid(dto
-//					.getResponsible());
-//			if (null != strItSet) {
-//				itSet = Long.parseLong(strItSet);
-//			}
-//			if (null == itSet) {
-//				// set default itSet
-//				itSet = new Long(ApplreposConstants.IT_SET_DEFAULT);
-//			}
-
 
 			// Daten setzen
 			// ============

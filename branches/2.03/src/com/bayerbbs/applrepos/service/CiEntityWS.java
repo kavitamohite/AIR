@@ -1935,6 +1935,12 @@ public class CiEntityWS {
 
 				if (massUpdateParameterInput.getResponsible()) {
 					locationCi.setCiOwner(templaeLocationCI.getCiOwner());
+					Long itSet = null;
+					String strItSet = ApplReposHbn.getItSetFromCwid(templaeLocationCI.getCiOwner());
+					if (null != strItSet) {
+						itSet = Long.parseLong(strItSet);
+						locationCi.setItset(itSet);
+					}
 				}
 				if (massUpdateParameterInput.getSubResponsible()) {
 					locationCi.setCiOwnerDelegate(templaeLocationCI
@@ -2171,6 +2177,14 @@ public class CiEntityWS {
 				if (massUpdateParameterInput.isApplicationOwner()) {
 					application.setApplicationOwner(templateApplication
 							.getApplicationOwner());
+					String itSet=ApplReposHbn.getItSetFromCwid(templateApplication.getApplicationOwner());
+					if (null != itSet) {
+						application.setItset(Long.parseLong(itSet));//getItset(responsible, subResponsible, tableId, itemId, source);
+					}
+					if (null == itSet) {
+						// set default itSet
+						application.setItset(new Long(AirKonstanten.IT_SET_GERMANY));//nicht IT_SET_DEFAULT ?
+					}
 				}
 				if (massUpdateParameterInput.isApplicationOwnerDelegate()) {
 					application.setApplicationOwnerDelegate(templateApplication
@@ -2323,6 +2337,16 @@ public class CiEntityWS {
 				}
 				if (massUpdateParameterInput.getResponsible()) {
 					itSystem.setCiOwner(templateItSystem.getCiOwner());
+					Long itSet = null;
+					String strItSet = ApplReposHbn.getItSetFromCwid(templateItSystem.getCiOwner());
+					if (null != strItSet) {
+						itSet = Long.parseLong(strItSet);
+					}
+					if (null == itSet) {
+						// set default itSet
+						itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
+					}
+					itSystem.setItset(itSet);
 				}
 				if (massUpdateParameterInput.getSubResponsible()) {
 					itSystem.setCiOwnerDelegate(templateItSystem
@@ -2910,6 +2934,12 @@ public class CiEntityWS {
 						.getCiOwnerPrimaryPerson())) {
 					locationCi.setCiOwner(mAttrParameterInput
 							.getCiOwnerPrimaryPerson());
+					Long itSet = null;
+					String strItSet = ApplReposHbn.getItSetFromCwid(mAttrParameterInput.getCiOwnerPrimaryPerson());
+					if (null != strItSet) {
+						itSet = Long.parseLong(strItSet);
+						locationCi.setItset(itSet);
+					}
 
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
@@ -3077,6 +3107,14 @@ public class CiEntityWS {
 						.getApplicationOwner())) {
 					application.setApplicationOwner(mAttrParameterInput
 							.getApplicationOwner());
+					String itSet=ApplReposHbn.getItSetFromCwid(mAttrParameterInput.getApplicationOwner());
+					if (null != itSet) {
+						application.setItset(Long.parseLong(itSet));//getItset(responsible, subResponsible, tableId, itemId, source);
+					}
+					if (null == itSet) {
+						// set default itSet
+						application.setItset(new Long(AirKonstanten.IT_SET_GERMANY));//nicht IT_SET_DEFAULT ?
+					}
 
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
@@ -3342,7 +3380,16 @@ public class CiEntityWS {
 						.getCiOwnerPrimaryPerson())) {
 					itSystem.setCiOwner(mAttrParameterInput
 							.getCiOwnerPrimaryPerson());
-
+					Long itSet = null;
+					String strItSet = ApplReposHbn.getItSetFromCwid(mAttrParameterInput.getCiOwnerPrimaryPerson());
+					if (null != strItSet) {
+						itSet = Long.parseLong(strItSet);
+					}
+					if (null == itSet) {
+						// set default itSet
+						itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
+					}
+					itSystem.setItset(itSet);
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getCiOwnerDelegate())) {

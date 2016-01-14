@@ -248,12 +248,8 @@ public class BuildingWS {
 			// save / create application
 			output = BuildingHbn.createBuilding(input.getCwid(), dto, true);
 
-			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
-				Building building = BuildingHbn.findByNameAndTerrainId(dto.getName(), dto.getTerrainId());
-				output.setCiId(building.getId());
-				output.setTableId(AirKonstanten.TABLE_ID_BUILDING);
-				
-				dto.setId(building.getId());
+			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {				
+				dto.setId(output.getCiId());
 				BaseHbn.saveGpscContacts(dto, input.getCwid());
 			} else {
 				// TODO errorcodes / Texte
@@ -275,12 +271,8 @@ public class BuildingWS {
 			// save / create application
 			output = BuildingHbn.createBuildingArea(input.getCwid(), dto, true);
 
-			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {
-				BuildingArea buildingArea = BuildingHbn.findByNameAndBuildingId(dto.getName(), dto.getBuildingId());
-				output.setCiId(buildingArea.getId());
-				output.setTableId(AirKonstanten.TABLE_ID_BUILDING_AREA);
-				
-				dto.setId(buildingArea.getId());
+			if (AirKonstanten.RESULT_OK.equals(output.getResult())) {				
+				dto.setId(output.getCiId());
 				BaseHbn.saveGpscContacts(dto, input.getCwid());
 			} else {
 				// TODO errorcodes / Texte
@@ -331,16 +323,12 @@ public class BuildingWS {
 				CiEntityEditParameterOutput createOutput = BuildingHbn.createBuilding(copyInput.getCwid(), dto, null);
 
 				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
-					Building building = BuildingHbn.findByNameAndTerrainId(copyInput.getCiNameTarget(), buildingSource.getTerrainId());
-					if (null != building) {
-						dto.setId(building.getId());
-						
-						Long ciId = building.getId();
-						Building buildingTarget = BuildingHbn.findById(ciId);
-						
+					Long ciId = createOutput.getCiId();
+					if (null != ciId && 0 != ciId) {
+						dto.setId(ciId);						
+						Building buildingTarget = BuildingHbn.findById(ciId);						
 						if (null != buildingTarget) {
-							CiEntityEditParameterOutput temp = BuildingHbn.copyBuilding(copyInput.getCwid(), buildingSource.getId(), buildingTarget.getId(), copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
-							
+							CiEntityEditParameterOutput temp = BuildingHbn.copyBuilding(copyInput.getCwid(), buildingSource.getId(), buildingTarget.getId(), copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());							
 							if (null != temp) {
 								output.setCiId(temp.getCiId());
 								output.setResult(temp.getResult());
@@ -392,11 +380,11 @@ public class BuildingWS {
 
 				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
 					// Problem keine gefundene BuildingArea!!!
-					BuildingArea buildingArea = BuildingHbn.findByNameAndBuildingId(copyInput.getCiNameTarget(), buildingAreaSource.getBuildingAreaId());
-					if (null != buildingArea) {
-						dto.setId(buildingArea.getId());
+					Long ciId = createOutput.getCiId();
+
+					if (null != ciId && 0 != ciId) {
+						dto.setId(ciId);
 						
-						Long ciId = buildingArea.getId();
 						BuildingArea buildingAreaTarget = BuildingHbn.findBuildingAreaById(ciId);
 						
 						if (null != buildingAreaTarget) {

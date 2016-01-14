@@ -166,8 +166,7 @@ public class AIRWS {
 
 		}
 		CiEntitiesHbn.findCisByNameOrAlias("BYZREH", false, "CONTAINS", false, "applicationName", "ASC", 10, 100);
-		CiEntitiesHbn.findCountCisByNameOrAlias("BYZREH", false, "CONTAINS", false);
-		System.out.println("CiEntitiesHbn.findCountCisByNameOrAlias  calling");
+		System.out.println("CiEntitiesHbn.findCisByNameOrAlias  calling");
 
 		return output;
 	}
