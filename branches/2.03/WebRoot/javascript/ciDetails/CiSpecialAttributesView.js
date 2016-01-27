@@ -23,13 +23,19 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		            id: 'attributeId',
 		            hidden: true
 		        },{
+		            header: 'Group',
+		            dataIndex: 'group',
+		            id: 'group',
+		            flex : 1,
+					menuDisabled: true
+		    	},{
 		            header: 'Attribute Name',
 		            dataIndex: 'attributeName',
 		            id: 'attributeName',
 					menuDisabled: true,
 					flex : 1 
 		        },{
-		            header: 'To be value',
+		            header: 'Attribute To be value',
 		            dataIndex: 'toBeValueId',
 		            id: 'toBeValue',
 		            menuDisabled: true,
@@ -61,7 +67,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	               },
 	               renderer: this.columnRenderer
 		        }, {
-		            header: 'As is value',
+		            header: 'Attribute As is value',
 		            dataIndex: 'asIsValueId',
 		           	id: 'asIsValue',
 		           	menuDisabled: true,
@@ -92,13 +98,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                    }
 	               },
   	               renderer: this.columnRenderer
-		        },{
-		            header: 'Group',
-		            dataIndex: 'group',
-		            id: 'group',
-		            flex : 1,
-					menuDisabled: true
-		    	}]				
+		        }]				
 		    }],
 		    buttons: [{
 		        text: 'Save',

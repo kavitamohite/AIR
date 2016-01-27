@@ -744,7 +744,7 @@ AIR.AirApplicationManager = function() {
 			var keyCode = event.keyCode;//Ext.isIE ? event.charCode : event.keyCode;
 			
 			switch(keyCode) {
-				case 116: //F5
+/*				case 116: //F5
 				case 117: //F6
 					// Standard DOM (Mozilla): 
 					if(event.preventDefault)
@@ -756,7 +756,7 @@ AIR.AirApplicationManager = function() {
 //						event.returnValue = false;
 						event.keyCode = 0;//WHY NECESSARY?
 					} 
-					return false;
+					return false;*/
 				
 				case 8: //backspace
 					var uiElement = Ext.isIE ? event.srcElement : event.target;
