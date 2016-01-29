@@ -16,7 +16,7 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 	    	   singleSelect: true,
 	    		listeners: {
 	    			beforerowselect : function(selModel, rowIndex, keepExisting, record ){
-	    				if(selModel.grid.ownerCt.ownerCt.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect').getValue()){
+	    				if(selModel.grid.ownerCt.ownerCt.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect') != undefined &&  selModel.grid.ownerCt.ownerCt.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect').getValue()){
 		    				if(record.data.isTemplate=='-1')
 			    				return false;
 			    				else {

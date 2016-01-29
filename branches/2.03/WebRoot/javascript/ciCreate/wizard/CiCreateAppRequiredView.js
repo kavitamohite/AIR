@@ -220,7 +220,7 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		        displayField: 'text',
 		        
 //		        typeAhead: true,
-//		        forceSelection: true,
+		        forceSelection: true,     // Added by enqmu
 //		        autoSelect: false,
 		        
 		        triggerAction: 'all',
@@ -238,7 +238,7 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		        displayField: 'text',
 		        
 //		        typeAhead: true,
-//		        forceSelection: true,
+		        forceSelection: true,        // Added by enqmu
 //		        autoSelect: false,
 		        
 		        triggerAction: 'all',
@@ -257,7 +257,7 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		        displayField: 'text',
 		        
 //		        typeAhead: true,
-//		        forceSelection: true,
+		        forceSelection: true,    // Added by enqmu
 //		        autoSelect: false,
 		        
 		        triggerAction: 'all',
@@ -282,7 +282,7 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 //				},
 		        
 //		        typeAhead: true,
-//		        forceSelection: true,
+		        forceSelection: true,      // Added by enqmu
 //		        autoSelect: false,
 		        
 		        triggerAction: 'all',//all query
@@ -308,8 +308,8 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		        valueField: 'id',
 		        displayField: 'text',
 		        
-//		        typeAhead: true,
-//		        forceSelection: true,
+//		        typeAhead: true,		        
+		        forceSelection: true,       // Added by enqmu
 //		        autoSelect: false,
 		        
 		        triggerAction: 'all',//all query
@@ -368,6 +368,28 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		var clGPSCOwningBusinessGroupRemove = this.getComponent('fsContactsGPSCW').getComponent('pGPSCOwningBusinessGroup').getComponent('clGPSCOwningBusinessGroupRemove');
 		clGPSCOwningBusinessGroupAdd.on('click', this.onGPSCOwningBusinessGroupAdd, this);
 		clGPSCOwningBusinessGroupRemove.on('click', this.onGPSCOwningBusinessGroupRemove, this);
+		
+		// Added by enqmu
+		this.getComponent('cbProtectionAvailabilityW').on('select', this.onComboInformationChange, this);
+		this.getComponent('cbProtectionAvailabilityW').on('change', this.onComboInformationChange, this);
+		
+		this.getComponent('cbSeverityLevelW').on('select', this.onComboInformationChange, this);
+		this.getComponent('cbSeverityLevelW').on('change', this.onComboInformationChange, this);
+		
+		this.getComponent('cbSlaW').on('select', this.onComboInformationChange, this);
+		this.getComponent('cbSlaW').on('change', this.onComboInformationChange, this);
+		
+		this.getComponent('cbProtectionClassInformationW').on('select', this.onComboInformationChange, this);
+		this.getComponent('cbProtectionClassInformationW').on('change', this.onComboInformationChange, this);
+		
+		this.getComponent('cbBusinessEssentialW').on('select', this.onComboInformationChange, this);
+		this.getComponent('cbBusinessEssentialW').on('change', this.onComboInformationChange, this);
+		// end by enqmu
+	},
+	
+	// Added by enqmu
+	onComboInformationChange: function(combo, newValue, oldValue) {
+		this.isComboValueValid(combo, newValue, oldValue);
 	},
 	
 	onBusinessProcessAdd: function(link, event) {
@@ -468,8 +490,8 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		// Sonderbearbeitung Rechte Business Essential
 		if(AAM.hasRole(AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)) {
 
-			// nur für die Rolle BusinessEssential-Editor
-			// unter Prüfung der Insert-Source mittels isEditable
+			// nur fï¿½r die Rolle BusinessEssential-Editor
+			// unter Prï¿½fung der Insert-Source mittels isEditable
 			if (AIR.AirAclManager.isEditable(cbBusinessEssentialW)) {
 				Util.enableCombo(cbBusinessEssentialW);
 				AIR.AirAclManager.setNecessityInternal(cbBusinessEssentialW.label, 'mandatory');
