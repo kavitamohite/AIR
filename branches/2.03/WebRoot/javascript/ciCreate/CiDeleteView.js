@@ -127,7 +127,7 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 		var params = { 
 		 	cwid: AIR.AirApplicationManager.getCwid(),
 		 	token: AIR.AirApplicationManager.getToken(),
-		 	ciId: this.ciId,//id applicationId	Flag für Owner und Delegate Apps!
+		 	ciId: this.ciId,//id applicationId	Flag fï¿½r Owner und Delegate Apps!
 			tableId: this.tableId
 		};
 
@@ -186,7 +186,7 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 		 	token: AIR.AirApplicationManager.getToken(),
 			start: 0,
 			limit: 20,
-			searchAction: 'myCisForDelete'// Parameter für Owner und Delegate Apps anstatt myCis!
+			searchAction: 'myCisForDelete'// Parameter fï¿½r Owner und Delegate Apps anstatt myCis!
 		};
 		
 		var grid = this.getComponent('CiDeleteResultGrid');
@@ -202,6 +202,13 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 	
 	onGridBeforeLoaded: function(store, options) {
 		AAM.getMask(AC.MASK_TYPE_LOAD).show();
+		// Added by enqmu
+		var grid = this.getComponent('CiDeleteResultGrid');
+		grid.selModel = undefined;
+		var col = grid.colModel.config[0];
+		if(col.dataIndex=='')
+		grid.colModel.config.remove(col);
+		// end
 	},
 	
 	onGridLoaded: function(store, records, options) {
@@ -220,15 +227,16 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 			bDelete.setText(labels.CiDeleteViewButtonDelete);
 		
 		var grid = this.getComponent('CiDeleteResultGrid');
-		grid.getColumnModel().setColumnHeader(0, labels.searchResultName);
-		grid.getColumnModel().setColumnHeader(1, labels.searchResultAlias);
-		grid.getColumnModel().setColumnHeader(2, labels.searchResultType);
-		grid.getColumnModel().setColumnHeader(3, labels.searchResultCategory);
-		grid.getColumnModel().setColumnHeader(4, labels.searchResultAppOwner);
-		grid.getColumnModel().setColumnHeader(5, labels.searchResultAppOwnerDelegate);
-		grid.getColumnModel().setColumnHeader(6, labels.searchResultAppSteward);
-		grid.getColumnModel().setColumnHeader(7, labels.applicationManager);
-		grid.getColumnModel().setColumnHeader(8, labels.applicationManagerDelegate);
+//		grid.getColumnModel().setColumnHeader(0, labels.searchResultName);
+		grid.getColumnModel().setColumnHeader(1, labels.searchResultName);    // Index incremented by 1 by enqmu
+		grid.getColumnModel().setColumnHeader(2, labels.searchResultAlias);
+		grid.getColumnModel().setColumnHeader(3, labels.searchResultType);
+		grid.getColumnModel().setColumnHeader(4, labels.searchResultCategory);
+		grid.getColumnModel().setColumnHeader(5, labels.searchResultAppOwner);
+		grid.getColumnModel().setColumnHeader(6, labels.searchResultAppOwnerDelegate);
+		grid.getColumnModel().setColumnHeader(7, labels.searchResultAppSteward);
+		grid.getColumnModel().setColumnHeader(8, labels.applicationManager);
+		grid.getColumnModel().setColumnHeader(9, labels.applicationManagerDelegate);
 	},
 	
 	reset: function() {
