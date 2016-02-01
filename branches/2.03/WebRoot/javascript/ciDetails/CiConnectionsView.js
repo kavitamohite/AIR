@@ -9,7 +9,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			id: 'raDeleteUpStreamConnectionColumn',
 			
 			actions: [{
-				iconCls: 'icon-delete'//iconCls ist gleichzeitig id/iconIndex für Spalte!
+				iconCls: 'icon-delete'//iconCls ist gleichzeitig id/iconIndex fï¿½r Spalte!
 //				qtipIndex: 'qtip1',
 //				tooltip: 'Open'
 			}],
@@ -27,7 +27,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			id: 'raDeleteDownStreamConnectionColumn',
 			
 			actions: [{
-				iconCls: 'icon-delete'//iconCls ist gleichzeitig id/iconIndex für Spalte!
+				iconCls: 'icon-delete'//iconCls ist gleichzeitig id/iconIndex fï¿½r Spalte!
 //				qtipIndex: 'qtip1',
 //				tooltip: 'Open'
 			}],
@@ -183,14 +183,14 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    		items: [{
 		    			html: '&nbsp',
 		    			border: false,
-		    			flex: 2
+		    			//flex: 2
 		    		},{
 			    		xtype: 'button',
 			    		id: 'bEditConnections',
 			    		text: 'Edit Connections',
 			    		autoWidth: false,
 			    		
-			    		flex: 1,
+			    		//flex: 1,
 			    		
 			    		pack: 'end',
 			    		enableToggle: true
@@ -371,9 +371,9 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	//muss nach dem Rendern in initComponent() von edittabpanel als Klasse(!) aufgerufen werden!!.
-	//Das listview el ist erst NACH dem vollständigen Rendern dieses Panels mit allen Unterelementen
+	//Das listview el ist erst NACH dem vollstï¿½ndigen Rendern dieses Panels mit allen Unterelementen
 	//vorhanden.
-	//Zum Testen behelfsmäßig in onConnectionsCiSearch aufgerufen.
+	//Zum Testen behelfsmï¿½ï¿½ig in onConnectionsCiSearch aufgerufen.
 	createDropTargets: function() {
 		var lvUpStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvUpStreamConnections');
 		var lvDownStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvDownStreamConnections');
@@ -469,7 +469,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var downStreamListView = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvDownStreamConnections');
 		
 		//Funktioniert nicht wie erwartet. idProperty im reader des listView Stores ist undefined, obwohl in AirStoreFactory.createCiConnectionsStore()
-		//idProperty: 'dwhEntityId' gesetzt ist. So müsste es funktionieren.
+		//idProperty: 'dwhEntityId' gesetzt ist. So mï¿½sste es funktionieren.
 //		var alreadyExists = upStreamListView.getStore().getById(newCiId) ||
 //							downStreamListView.getStore().getById(newCiId);
 //		alreadyExists = alreadyExists == undefined ? false : true;
@@ -490,12 +490,12 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
         if (record.phantom) {//wenn record schon persistent war, geladen wurde
         	store.remove(record);
         } else {
-        	//wenn record zuvor durch user aus edit Suchtabelle neu hinzugefügt wurde und wieder
-        	//aus up oder down stream listview gelöscht wurde. --> nicht zum Löschen übertragen!
+        	//wenn record zuvor durch user aus edit Suchtabelle neu hinzugefï¿½gt wurde und wieder
+        	//aus up oder down stream listview gelï¿½scht wurde. --> nicht zum Lï¿½schen ï¿½bertragen!
         	store.removed.push(record);
         }
         
-        //zu löschende Verknüpfung (record) aus den stores löschen, in denen record EVTL. zuvor lokal hinzugefügt wurde
+        //zu lï¿½schende Verknï¿½pfung (record) aus den stores lï¿½schen, in denen record EVTL. zuvor lokal hinzugefï¿½gt wurde
 		var lvUpStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvUpStreamConnections');
 		var records = lvUpStreamConnections.getStore().getModifiedRecords();
 		for(var i = 0; i < records.length; i++)
@@ -643,7 +643,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		// Variante 1 (die beste) und 2 funktionieren/greifen erst ab zweitem CI Neuladen und Combobox Bedienung/expand.
-		// Grund unbekannt. Daher unschöne aber sichere Variante 3.
+		// Grund unbekannt. Daher unschï¿½ne aber sichere Variante 3.
 		
 		/* Variante 2
 		var r = Util.getComboRecord(cbConnectionsObjectType, 'ciTypeId', parseInt(data.tableId));//tableId
@@ -676,8 +676,8 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 //	onRowDoubleClick: function (grid, rowIndex, e) {
 //		
-//		//überflüssig, da durch von up/down connections hinzufügen schon aktiviert. Wenn bereits
-//		//vorhandene gelöscht sind diese nie phantom
+//		//ï¿½berflï¿½ssig, da durch von up/down connections hinzufï¿½gen schon aktiviert. Wenn bereits
+//		//vorhandene gelï¿½scht sind diese nie phantom
 ////		if(!grid.getStore().getAt(rowIndex).phantom)
 //		activateButtonSaveApplication();//activateStandardButtons();
 //		
@@ -772,7 +772,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		tfConnectionsQuickSearch.el.up('.x-form-item', 10, true).child('.x-form-item-label').update(labels.CiConnectionsViewQuickSearch);
 				
 		
-//		this.doLayout();//getComponent('p1').getComponent('p11'). bringt nichts für bEditConnections Größe
+//		this.doLayout();//getComponent('p1').getComponent('p11'). bringt nichts fï¿½r bEditConnections Grï¿½ï¿½e
 	},
 	
 	updateToolTips: function(toolTips) {
@@ -836,7 +836,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
     	var isAdmin = AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);//AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_MANAGER) || 
 		var isEditable = (data.relevanceStrategic == 'Y' || data.relevanceOperational == 'Y' || isAdmin);
 		
-		//location CI - upstream: nicht löschbar - downstream und name=unknown: nicht löschbar
+		//location CI - upstream: nicht lï¿½schbar - downstream und name=unknown: nicht lï¿½schbar
 		isEditable = isEditable && !record.get('isReferenced') &&
 					 ((direction === AC.UPSTREAM && (data.tableId == AC.TABLE_ID_IT_SYSTEM || data.tableId == AC.TABLE_ID_APPLICATION)) || 
 					  (direction === AC.DOWNSTREAM && record.get('ciName') !== AC.UNKNOWN));// AAM.isLocationCi(data.tableId) && 
@@ -846,7 +846,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
         	raDeleteConnection.tpl.html += '<div class="ux-row-action-item icon-delete " style="" qtip=""></div>';
         raDeleteConnection.tpl.html += '</div>';
 
-        cell.css += (cell.css ? ' ' : '') + 'ux-row-action-cell';//nötig, damit die icons nebeneinander sind!
+        cell.css += (cell.css ? ' ' : '') + 'ux-row-action-cell';//nï¿½tig, damit die icons nebeneinander sind!
         
 //        var dataRecord = raDeleteUpStreamConnection.getData(value, cell, record, row, col, store);
         
