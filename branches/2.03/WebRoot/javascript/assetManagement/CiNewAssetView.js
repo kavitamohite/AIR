@@ -519,8 +519,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     
     sendEmail: function(){
     	var assetData = this.getUpdateParam();
-    	
-    	if(assetData.id){
+    	if(assetData.id &&  assetData.inventoryNumber !=undefined && assetData.inventoryNumber !=''){
     		var mailText = mail_blank_text_hardware_asset.replace('<username>', AAM.getUserName());
         	mailText = mailText.replace('<manufacturer>',assetData.manufacturer);
         	mailText = mailText.replace('<subcategory>',assetData.subcategory);
