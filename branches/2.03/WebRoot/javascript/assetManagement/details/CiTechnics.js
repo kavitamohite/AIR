@@ -12,6 +12,14 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 			},
 			items : [ {
 				xtype : 'textfield',
+				id : 'tSerialNumber',
+				fieldLabel : 'Serial Number',
+				width : 370,
+				style : {
+					marginBottom : 10
+				}
+			}, {
+				xtype : 'textfield',
 				id : 'tTechnicalNumber',
 				fieldLabel : 'Technical Number / Asset-ID',
 				width : 370,
@@ -188,7 +196,8 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 	
 	update: function(assetData){
 		
-		
+		var tSerialNumber = this.getComponent('tSerialNumber');
+		tSerialNumber.setValue(assetData.serialNumber);
 
 		var tTechnicalNumber = this.getComponent('tTechnicalNumber');
         tTechnicalNumber.setValue(assetData.technicalNumber);
@@ -230,6 +239,10 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 	},
 	
 	updateParam: function(assetData){
+		
+
+		var tSerialNumber = this.getComponent('tSerialNumber');
+		assetData.serialNumber = tSerialNumber.getValue();
 
 		var tTechnicalNumber = this.getComponent('tTechnicalNumber');
 		assetData.technicalNumber = tTechnicalNumber.getValue();
@@ -266,6 +279,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 	},
 	
 	updateLabels: function(labels) {
+		Util.updateFieldLabel(this.getComponent('tSerialNumber'), labels.assetSerialNo);
     	Util.updateFieldLabel(this.getComponent('tTechnicalNumber'), labels.assetTechnicalNumber); 
     	Util.updateFieldLabel(this.getComponent('tTechnicalMaster'), labels.assetTechnicalMaster);  
     	Util.updateFieldLabel(this.getComponent('cbSystemPlatform'), labels.assetSystemPlatformName);  

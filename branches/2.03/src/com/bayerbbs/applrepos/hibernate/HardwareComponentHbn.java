@@ -472,6 +472,7 @@ public class HardwareComponentHbn {
 		hardwareComponent.setSchrankId(dto.getRackId());
 		
 		//Technics
+		hardwareComponent.setSerialNumber(dto.getSerialNumber());
 		hardwareComponent.setTechnicalMaster(dto.getTechnicalMaster());
 		hardwareComponent.setTechnicalNumber(dto.getTechnicalNumber());
 		hardwareComponent.setLifecycleSubStatId(dto.getWorkflowStatusId());

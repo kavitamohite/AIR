@@ -1089,6 +1089,7 @@ AIR.AirStoreFactory = function() {
 					{name : 'assetReset'},
 					{name : 'assetTechnicalNumber'},
 					{name : 'assetTechnicalMaster'},
+					{name : 'assetSerialNo'},
 					{name : 'assetSystemPlatformName'},
 					{name : 'assetHardwareSystem'},
 					{name : 'assetOsname'},
@@ -4227,6 +4228,7 @@ AIR.AirStoreFactory = function() {
 					{ name : 'modelId'},
 					
 					//Technicas
+					{ name : 'serialNumber'},
 					{ name : 'technicalNumber'},
 					{ name : 'technicalMaster'},
 					{ name : 'systemPlatformName'},
