@@ -48,11 +48,12 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                    triggerAction: 'all',
 	                    mode : 'local',
 	                    disabled: true,
+	                    editable: false,
 	                    listeners: {
 	                    	expand : function(combo){
 	                    		var attributeId = Ext.getCmp('specialAttributesListView').getSelectionModel().selection.record.data.attributeId;
 	                    		combo.store.filterBy(function(record){
-	                    			return record.data.attributeId === parseInt(attributeId) && record.data.selectable === true;
+	                    			return record.data.attributeId === parseInt(attributeId) && record.data.selectable === true || record.data.name ==='None';
 	                    		},this);
 	                    	},
 	                    	change : function(combo, newValue, oldValue) {
@@ -80,11 +81,12 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                    triggerAction: 'all',
 	                    mode : 'local',
 	                    disabled: true,
+			           	editable: false,
 	                    listeners: {
 	                    	expand : function(combo){
 	                    		var attributeId = Ext.getCmp('specialAttributesListView').getSelectionModel().selection.record.data.attributeId;
 	                    		combo.store.filterBy(function(record){
-	                    			return record.data.attributeId === parseInt(attributeId) && record.data.selectable === true;
+	                    			return record.data.attributeId === parseInt(attributeId) && record.data.selectable === true || record.data.name ==='None';
 	                    		},this);
 	                    	},
 	                    	change : function(combo, newValue, oldValue) {

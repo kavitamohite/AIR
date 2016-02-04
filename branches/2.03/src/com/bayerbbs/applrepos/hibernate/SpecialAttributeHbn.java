@@ -22,15 +22,20 @@ public class SpecialAttributeHbn {
 	public static boolean saveSpecialAttributeFromDTO(String cwid, Long cIid, Long tableId, SpecialAttributeViewDataDTO specialAttributeViewDataDTO) {
 
 		SpecialAttribute asIs = null, toBe = null;
+		SpecialAttribute asIsTemp = new SpecialAttribute(), toBeTemp = new SpecialAttribute();
 		Long oldToBevalue = null;
+		Long oldAsIsvalue = null;
 		List<SpecialAttribute> specialAttribute = findByCiIdAndAttributeId(cIid, specialAttributeViewDataDTO.getAttributeId());
 
 		for (SpecialAttribute spAttribute : specialAttribute) {
 			if ("AS_IS".equals(spAttribute.getStatus())) {
 				asIs = spAttribute;
+				oldAsIsvalue = asIs.getAttributeValue().getId();
+				asIsTemp.setDeleteTimestamp(asIs.getDeleteTimestamp());;
 			} else {
 				toBe = spAttribute;
 				oldToBevalue = toBe.getAttributeValue().getId();
+				toBeTemp.setDeleteTimestamp(toBe.getDeleteTimestamp());
 			}
 		}
 
@@ -46,13 +51,13 @@ public class SpecialAttributeHbn {
 			asIs.setStatus(asIsStatus);
 		}
 
-		if (specialAttributeViewDataDTO.getAsIsValueId() == null || specialAttributeViewDataDTO.getAsIsValueId() == 0l) {
+		if (specialAttributeViewDataDTO.getAsIsValueId() == null || specialAttributeViewDataDTO.getAsIsValueId() == 0l || specialAttributeViewDataDTO.getAsIsValueId() == 1000000000000L) {
 			asIs.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-			asIs.setDeleteTimestamp(ApplReposTS.getCurrentTimestamp());
+			asIs.setDeleteTimestamp(ApplReposTS.getDeletionTimestamp());
 			asIs.setDeleteUser(cwid);
 		} else {
 			asIs.setAttributeValue(new AttributeValue(specialAttributeViewDataDTO.getAsIsValueId()));
-
+            asIsTemp.setDeleteTimestamp(null);
 			asIs.setDeleteQuelle(null);
 			asIs.setDeleteTimestamp(null);
 			asIs.setDeleteUser(null);
@@ -74,13 +79,13 @@ public class SpecialAttributeHbn {
 			toBe.setStatus(toBeStatus);
 		}
 
-		if (specialAttributeViewDataDTO.getToBeValueId() == null || specialAttributeViewDataDTO.getToBeValueId() == 0l) {
+		if (specialAttributeViewDataDTO.getToBeValueId() == null || specialAttributeViewDataDTO.getToBeValueId() == 0l || specialAttributeViewDataDTO.getAsIsValueId() == Long.MAX_VALUE) {
 			toBe.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-			toBe.setDeleteTimestamp(ApplReposTS.getCurrentTimestamp());
+			toBe.setDeleteTimestamp(ApplReposTS.getDeletionTimestamp());
 			toBe.setDeleteUser(cwid);
 		} else {
 			toBe.setAttributeValue(new AttributeValue(specialAttributeViewDataDTO.getToBeValueId()));
-
+            toBeTemp.setDeleteTimestamp(null);
 			toBe.setDeleteQuelle(null);
 			toBe.setDeleteTimestamp(null);
 			toBe.setDeleteUser(null);
@@ -96,18 +101,22 @@ public class SpecialAttributeHbn {
 		try {
 			if (asIs.getId() == null && asIs.getAttributeValue() != null) {
 				session.createSQLQuery(createInsertQuery(asIs, cwid)).executeUpdate();
-			} else if (asIs.getId() != null) {
-				session.update(asIs);
+			} else if (asIs.getId() != null && asIsTemp.getDeleteTimestamp()==null) {
+				if(oldAsIsvalue!= null && specialAttributeViewDataDTO.getAsIsValueId()!=null &&(oldAsIsvalue.longValue() != specialAttributeViewDataDTO.getAsIsValueId().longValue())){					
+				}else{
+					session.update(asIs);
+				}					
 			}
 
 			if (toBe.getId() == null && toBe.getAttributeValue() != null) {
 				session.createSQLQuery(createInsertQuery(toBe, cwid)).executeUpdate();
-/*				startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
-						AirKonstanten.APPLICATION_GUI_NAME, cwid);*/
-			} else if (toBe.getId() != null) {
-				session.update(toBe);
-/*				startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
-						AirKonstanten.APPLICATION_GUI_NAME, cwid);*/
+
+			} else if (toBe.getId() != null && toBeTemp.getDeleteTimestamp()==null && oldToBevalue!=null) {
+				if(specialAttributeViewDataDTO.getToBeValueId()!=null &&(oldToBevalue.longValue() != specialAttributeViewDataDTO.getToBeValueId().longValue())){
+					
+				}else{
+					session.update(toBe);
+				}
 			}
 
 			session.flush();
@@ -125,12 +134,18 @@ public class SpecialAttributeHbn {
 			}
 			session.close();
 		}		
-		if (toBe.getId() == null && toBe.getAttributeValue() != null) {
-			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
+		if (specialAttributeViewDataDTO.getToBeValueId() == null && toBe.getAttributeValue() != null && toBeTemp.getDeleteTimestamp()==null ) {
+			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
 					AirKonstanten.APPLICATION_GUI_NAME, cwid);
-		} else if (toBe.getId() != null) {
-			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), toBe.getAttributeValue().getId(), oldToBevalue,
-					AirKonstanten.APPLICATION_GUI_NAME, cwid);
+		} else if (specialAttributeViewDataDTO.getToBeValueId() != null && toBe.getDeleteTimestamp()==null ) {
+					if(oldToBevalue!=null && specialAttributeViewDataDTO.getToBeValueId()!= null &&(oldToBevalue.longValue()!=specialAttributeViewDataDTO.getToBeValueId().longValue())){
+						startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
+								AirKonstanten.APPLICATION_GUI_NAME, cwid);
+					}else{
+						if(oldToBevalue==null)
+						startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
+								AirKonstanten.APPLICATION_GUI_NAME, cwid);
+					}
 		}
 
 		return true;
@@ -221,7 +236,7 @@ public class SpecialAttributeHbn {
 			stmt.setLong(2, tableId);
 			stmt.setLong(3, ciId);
 			stmt.setLong(4, attributeId);
-			stmt.setLong(5, attributeValueId);
+			stmt.setObject(5, attributeValueId);
 			stmt.setObject(6, prevAttributeValueId);
 			stmt.setString(7, source);
 			stmt.setString(8, user);

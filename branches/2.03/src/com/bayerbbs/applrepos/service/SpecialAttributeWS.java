@@ -24,24 +24,27 @@ public class SpecialAttributeWS {
 		List<SpecialAttributeViewDataDTO> specialAttributesViewDataList = new ArrayList<SpecialAttributeViewDataDTO>();
 		
 		for(SpecialAttribute speAttribute : savedAttributes){
-			SpecialAttributeViewDataDTO spa = new SpecialAttributeViewDataDTO();
-			spa.setAttributeName(speAttribute.getAttribute().getName());
-			spa.setGroup(speAttribute.getAttribute().getAttributeGroup().getName());
-			spa.setAttributeId(speAttribute.getAttribute().getId());
-			
-			if(specialAttributesViewDataList.contains(spa)){
-				spa = specialAttributesViewDataList.get(specialAttributesViewDataList.indexOf(spa));
-			} 
-			
-			if("AS_IS".equals(speAttribute.getStatus())){
-				spa.setAsIsValueId(speAttribute.getAttributeValue().getId());
-			} else {
-				spa.setToBeValueId(speAttribute.getAttributeValue().getId());
+			if(speAttribute.getDeleteTimestamp()==null){
+				SpecialAttributeViewDataDTO spa = new SpecialAttributeViewDataDTO();
+				spa.setAttributeName(speAttribute.getAttribute().getName());
+				spa.setGroup(speAttribute.getAttribute().getAttributeGroup().getName());
+				spa.setAttributeId(speAttribute.getAttribute().getId());
+				
+				if(specialAttributesViewDataList.contains(spa)){
+					spa = specialAttributesViewDataList.get(specialAttributesViewDataList.indexOf(spa));
+				} 
+				
+				if("AS_IS".equals(speAttribute.getStatus())){
+					spa.setAsIsValueId(speAttribute.getAttributeValue().getId());
+				} else {
+					spa.setToBeValueId(speAttribute.getAttributeValue().getId());
+				}
+				
+				if(!specialAttributesViewDataList.contains(spa)){
+					specialAttributesViewDataList.add(spa);
+				} 
 			}
-			
-			if(!specialAttributesViewDataList.contains(spa)){
-				specialAttributesViewDataList.add(spa);
-			} 
+
 		}
 		
 		for(Attribute temp : attributes){

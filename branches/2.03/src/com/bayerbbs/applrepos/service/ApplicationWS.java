@@ -1356,10 +1356,11 @@ public class ApplicationWS {
 	public AttributeValueDTO[] getAttributeValue(ApplicationParameterInput input){
 		List<AttributeValueDTO> values = AttributeValueHbn.listAttributeValue();
 		AttributeValueDTO blank = new AttributeValueDTO();
-		blank.setAttributeId(null);
-		blank.setId(null);
-		blank.setName("");
-		values.add(0, blank);
+		blank.setAttributeId(Long.MAX_VALUE);
+		blank.setId(Long.MAX_VALUE);
+		blank.setName("None");
+		blank.setSelectable(true);
+		values.add(blank);
 		return values.toArray(new AttributeValueDTO[values.size()]);
 	}
 }
