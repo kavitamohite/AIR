@@ -388,7 +388,13 @@ public class HardwareComponentHbn {
 				if (tx.isActive()) {
 					tx.rollback();
 				}
-				dto.setError(e.getMessage());
+				String meassage1 = e.getCause().getMessage();
+				if(meassage1.contains("Only SAP may")){
+					dto.setError("You are not allowed to update inventory number starting with 1251 and SAP ");
+				}else{
+					dto.setError(e.getCause().getMessage());
+				}
+				
 				return dto;
 			} finally {
 				if (tx.isActive()) {
