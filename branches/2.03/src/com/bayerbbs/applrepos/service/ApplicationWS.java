@@ -1359,7 +1359,12 @@ public class ApplicationWS {
 		blank.setAttributeId(Long.MAX_VALUE);
 		blank.setId(Long.MAX_VALUE);
 		blank.setName("None");
-		blank.setSelectable(true);
+		AttributeValueDTO blank1 = new AttributeValueDTO();
+		blank1.setSelectable(true);
+		blank1.setAttributeId(null);
+		blank1.setId(null);
+		blank1.setName("");
+		values.add(0, blank1);
 		values.add(blank);
 		return values.toArray(new AttributeValueDTO[values.size()]);
 	}
