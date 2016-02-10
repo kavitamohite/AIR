@@ -530,7 +530,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         	mailText = mailText.replace('<orderNumber>',assetData.orderNumber);
         	mailText = mailText.replace('<costCenter>',assetData.costCenter);
         	mailText = mailText.replace('<legalEntity>',assetData.owner);
-
+        	
+        	mailText = mailText.replace('<serialNumber>', assetData.serialNumber);   // added by enqmu
         	mailText = mailText.replace('<technicalNumber>',assetData.technicalNumber);
         	mailText = mailText.replace('<technicaMaster>',assetData.technicalMaster);
         	mailText = mailText.replace('<generalUsage>',assetData.generalUsage);
