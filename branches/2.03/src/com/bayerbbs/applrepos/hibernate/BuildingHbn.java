@@ -8,10 +8,12 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
@@ -21,6 +23,7 @@ import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
+import com.bayerbbs.applrepos.domain.SoftwareCategory2;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
@@ -840,16 +843,26 @@ public class BuildingHbn extends LokationItemHbn {
 	
 	
 	public static BuildingArea findByNameAndBuildingId(String name,	Long buildingId) {
-		Session session = HibernateUtil.getSession();
-		Query q = session.getNamedQuery("findByNameAndBuildingId");
-		q.setParameter("name", name);
-		q.setParameter("buildingId", buildingId);
-		BuildingArea buildingArea = (BuildingArea)q.uniqueResult();
-		if(buildingArea!=null && name.equalsIgnoreCase(buildingArea.getBuildingAreaName())){
-			return buildingArea;
-		}else{
-			return null;
-		}	
+		Session session = HibernateUtil.getSession();		
+		try {
+			Criteria criteria = session.createCriteria(BuildingArea.class);
+			criteria.add(Restrictions.eq("buildingId", buildingId));
+			criteria.add(Restrictions.eq("buildingAreaName", name));
+			
+			List<BuildingArea> buildingAreas = criteria.list();
+			if(buildingAreas.size()>1){
+				return buildingAreas.get(0);
+			}else{
+                if(buildingAreas.size()==1 && name.equalsIgnoreCase(buildingAreas.get(0).getName())){
+                	return buildingAreas.get(0);
+                }else{
+                	return null;
+                }
+			}			
+		} catch (RuntimeException e) {
+			session.close();
+			throw e;
+		}
 	}
 	
 	
