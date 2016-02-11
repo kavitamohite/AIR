@@ -207,6 +207,16 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 
         var tOwner = this.getComponent('tOwner');
         tOwner.on('change', this.onComboChange, this);
+        
+		Ext.QuickTips.register({
+		    target: this.getComponent('pPSPElement').getComponent('checkPspElement'),
+		    title: 'Incl Technically Completed',
+		    text: '',
+		    width: 200,
+		    showDelay: 1,      // Show 50ms after entering target
+		    trackMouse: true,
+		    dismissDelay: 99000 // Hide after 99 seconds hover
+		});//avanti
     },
 
     onComboChange: function(combo, newValue, oldValue) {
