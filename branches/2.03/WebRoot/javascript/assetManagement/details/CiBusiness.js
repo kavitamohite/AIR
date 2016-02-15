@@ -247,6 +247,9 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
     onCheckPsp: function(checkbox,isChecked,record){
     	var checkPspElement = this.getComponent('pPSPElement').getComponent('checkPspElement');
     	var cbPsp = this.getComponent('pPSPElement').getComponent('cbPsp');
+    	var cpPspStore = cbPsp.getStore();
+    	cpPspStore.on('beforeload',this.cpPspStoreOnBeforeLoad,this);
+    	cpPspStore.on('load',this.cpPspStoreOnLoad,this);
     	cbPsp.reset();
     	
     	var value={
@@ -255,10 +258,19 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
     	if(!isChecked) {
 	    	value.name = 'false';
     	}
-		cbPsp.getStore().load({
+    	cpPspStore.load({
 			params: value
 		});
     },
+    cpPspStoreOnBeforeLoad: function(store, options){
+		var loadMask = AIR.AirApplicationManager.getMask(AC.MASK_TYPE_LOAD);
+		loadMask.show();
+	},
+	cpPspStoreOnLoad: function(store,options){
+		var loadMask = AIR.AirApplicationManager.getMask(AC.MASK_TYPE_LOAD);
+		loadMask.hide();
+	},
+    
 
     onRequesterChange: function() {
         this.ownerCt.ownerCt.ownerCt.enableAssetButtons();
