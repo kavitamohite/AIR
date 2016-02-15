@@ -11,7 +11,7 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
                 border: false,
                 layout: 'table',
                 layoutConfig: {
-                    columns: 3
+                    columns: 4  // 3 changed by enqmu
                 },
                 items: [{
                     xtype: 'textfield',
@@ -41,7 +41,17 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
                     style: {
                         marginLeft: 5
                     }
-                }, {
+                },
+                {  // Added by enqmu
+                    xtype: 'button',
+                    id: 'bSaveColumnsPreference',
+                    hidden: true,
+                    text: 'Save Columns Preference',
+                    style: {
+                        marginLeft: 5
+                    }
+                },
+                {
                     xtype: 'radiogroup',
                     id: 'searchMode',
                     items: [{

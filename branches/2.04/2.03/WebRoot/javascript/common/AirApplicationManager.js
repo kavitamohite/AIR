@@ -15,6 +15,7 @@ AIR.AirApplicationManager = function() {
 			var airCookie = Ext.state.Manager.get('airCookie');
 			
 			if(airCookie) {
+				
 				var checkAuthStore = AIR.AirStoreFactory.createCheckAuthStore();
 //				checkAuthStore.on('load', this.onAuthCheck, this);
 				
@@ -673,7 +674,7 @@ AIR.AirApplicationManager = function() {
 		getLabels: function() {
 			var storeId = 'languageStore' + this.getLanguage();
 			var languageStore = AIR.AirStoreManager.getStoreByName(storeId);
-			
+//			alert('Anit Kumar --->'+languageStore.data.items[0].data.assetSapDescription);
 			return languageStore.data.items[0].data;
 		},
 
@@ -743,8 +744,8 @@ AIR.AirApplicationManager = function() {
 		disableInvalidKeys: function(event, el, options) {
 			var keyCode = event.keyCode;//Ext.isIE ? event.charCode : event.keyCode;
 			
-			switch(keyCode) {
-				case 116: //F5
+			switch(keyCode) {   // case 116 and 117 commented by enqmu
+				/*case 116: //F5
 				case 117: //F6
 					// Standard DOM (Mozilla): 
 					if(event.preventDefault)
@@ -756,7 +757,7 @@ AIR.AirApplicationManager = function() {
 //						event.returnValue = false;
 						event.keyCode = 0;//WHY NECESSARY?
 					} 
-					return false;
+					return false;*/
 				
 				case 8: //backspace
 					var uiElement = Ext.isIE ? event.srcElement : event.target;
@@ -909,7 +910,16 @@ AIR.AirApplicationManager = function() {
 			}else{
 				return this.salInValid;
 			}
+		},
+		
+		// Added by enqmu
+		setAssetColumns: function(columns){
+			this.columns = columns;
+		},
+		getAssetColumns: function() {
+			return this.columns;
 		}
+		// End 
 		
 	};
 }();

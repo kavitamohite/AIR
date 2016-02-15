@@ -14,6 +14,7 @@ public class UserOptionParameterInput {
 	private String tooltip;			// YES, NO
 	private String showDeleted;		// YES, NO
 	
+	private String userColumnsPreference;  // added by enqmu
 	
 	public String getCwid() {
 		return cwid;
@@ -74,6 +75,12 @@ public class UserOptionParameterInput {
 	}
 	public void setShowDeleted(String showDeleted) {
 		this.showDeleted = showDeleted;
+	}
+	public String getUserColumnsPreference() {
+		return userColumnsPreference;
+	}
+	public void setUserColumnsPreference(String userColumnsPreference) {
+		this.userColumnsPreference = userColumnsPreference;
 	}
 	
 }

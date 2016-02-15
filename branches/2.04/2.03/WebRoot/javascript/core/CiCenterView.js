@@ -180,8 +180,54 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				{
 					xtype: 'hidden',
 					id: 'multipleasset'
-				}
+				},
 				//C0000049066
+				// C0000049066 - Start by anit
+				{
+					xtype: 'hidden',
+					id: 'pspElement'
+				},
+				{
+					xtype: 'hidden',
+					id: 'costCenter'
+				},
+				{
+					xtype: 'hidden',
+					id: 'technicalMaster'
+				},
+				{   
+					xtype: 'hidden',
+					id: 'technicalNumber'
+				},
+				{   
+					xtype: 'hidden',
+					id: 'inventorynumber'
+				},
+				{   
+					xtype: 'hidden',
+					id: 'organisation'
+				},
+				{   
+					xtype: 'hidden',
+					id: 'country'
+				},
+				{
+					xtype: 'hidden',
+					id: 'site'
+				},
+				{
+					xtype: 'hidden',
+					id: 'building'
+				},
+				{
+					xtype: 'hidden',
+					id: 'room'
+				},
+				{
+					xtype: 'hidden',
+					id: 'rackPosition'
+				}
+				// C0000049066 - End by anit   
 				]
 			}]
 		});

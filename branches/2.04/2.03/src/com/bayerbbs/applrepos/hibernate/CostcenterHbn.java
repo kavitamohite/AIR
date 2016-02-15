@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,5 +61,44 @@ public class CostcenterHbn extends BaseHbn{
 		}
 		return data.toArray(new CostCenterDTO[0]);
 	}
-
+	
+	/**
+	 * This method provides the costCenterId for a Cost Center name
+	 * @author enqmu
+	 * 
+	 */
+	public static Konto findCostCenterIdByName(String name)
+    {
+    	Konto returnObj = null;
+//    	String query = "select * from KONTO where KONTO_NAME = ?";
+    	try {
+    		Session session = HibernateUtil.getSessionFactory().openSession();
+    		Criteria criteria = session.createCriteria(Konto.class);
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
+			criteria.add(Restrictions.eq("art", "KST"));
+			criteria.add(Restrictions.eq("name", name));
+			criteria.addOrder(Order.asc("name"));
+			List<Konto> values = criteria.list();
+			if(values != null && !values.isEmpty())
+			{
+				returnObj = values.get(0);
+			}
+			session.close();
+    		/*Connection conn = session.connection();
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setString(1, name);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				subCategoryId = rs.getLong(1);
+				break;
+			}
+			rs.close();
+			stmt.close();*/
+    	} catch(Exception ex)
+    	{
+    		ex.printStackTrace();
+    	}
+    	return returnObj;
+    }
+	
 }

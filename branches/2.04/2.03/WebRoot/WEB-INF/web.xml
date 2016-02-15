@@ -267,11 +267,22 @@
 	  	<servlet-name>BovApplicationServlet</servlet-name>
 	  	<url-pattern>/BovApplicationServlet</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+   <servlet-name>AirExcelImportServlet</servlet-name>
+   <servlet-class>com.bayerbbs.applrepos.servlet.AirExcelImportServlet</servlet-class>
+</servlet>
 
-  <!--
+<servlet-mapping>
+   <servlet-name>AirExcelImportServlet</servlet-name>
+   <url-pattern>/AirExcelImportServlet</url-pattern>
+</servlet-mapping>
+	
+
+  
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>-->
+  </welcome-file-list>
   
   <listener>
   	<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>

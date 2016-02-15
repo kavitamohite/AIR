@@ -30,7 +30,9 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 	        		backgroundColor: '#DFE8F6'
 	        	},
 			    
-			    items: [{
+			    items: [
+				
+			     {
 		            xtype: 'textfield',
 		            id: 'tfCwid',
 		            fieldLabel: 'CWID',

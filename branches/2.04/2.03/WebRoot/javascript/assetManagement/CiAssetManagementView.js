@@ -2,6 +2,7 @@ Ext.namespace('AIR');
 
 AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
     initComponent: function() {
+    	// this.columnsData = 'serialNumber;pspElement;costCenter;sapDescription;site;technicalMaster;technicalNumber;inventoryNumber;organizationalunit';
         Ext.apply(this, {
             border: false,
             autoScroll: true,
@@ -64,6 +65,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
         ciSearchResultView.getComponent('pAssetSearchResultOptions').getComponent('bAssetSelectDeselectAll').on('click', this.selectDeselectAll, this);
 
         this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bUpdateCiAssetSearchResult').on('click', this.onUpdateCiSearchResult, this);
+        this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bSaveColumnsPreference').on('click', this.updateUserProfileColumnsPreference, this);  // added by enqmu
     },
 
     selectDeselectAll: function(button, event) {
@@ -88,7 +90,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 
         var searchAction = AC.SEARCH_TYPE_SEARCH; //searchType
         params.searchAction = searchAction; //searchType
-
+        
         this.processSearch(params);
     },
 
@@ -172,6 +174,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 
         if (isUpdateSearchAvailable) {
             button.show();
+            this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bSaveColumnsPreference').show();  // added by enqmu
         } else {
             button.hide();
         }
@@ -180,6 +183,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
         if (Ext.isIE && !this.isMoved) {
             this.isMoved = true;
         }
+        this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bSaveColumnsPreference').show();  // added by enqmu
         this.getComponent('ciAssetSearchResultView').search(params, isUpdate, this.onExcelExport.createDelegate(this));
     },
     onTabChange: function(tabPanel, tab, options) {
@@ -269,7 +273,35 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 
         params.searchAction = searchAction;
         this.processSearch(params, true);
+    }, 
+    updateUserProfileColumnsPreference: function(button, event) {  // added by enqmu
+    	var tpCiSearchResultTables = this.getComponent('ciAssetSearchResultView').getComponent('tpCiAssetSearchResultTables');
+    	var columns = ""; 
+        for(var i = 1; i < 10; i++)
+        {
+        	columns += tpCiSearchResultTables.getActiveTab().getColumnModel().getColumnId(i) + ";";
+        }
+        AAM.setAssetColumns(columns);
+        
+        this.saveUserColumnsPreferenceOptions();
     },
+    
+    saveUserColumnsPreferenceOptions: function() {  // added by enqmu
+		var userOptionSaveStore = AIR.AirStoreFactory.createUserOptionColumnsPreferenceSaveStore();
+		
+		var params = {
+			cwid: AIR.AirApplicationManager.getCwid(),
+			token: AIR.AirApplicationManager.getToken(),
+		};
+		
+		params.userColumnsPreference = AAM.getAssetColumns();
+		
+		userOptionSaveStore.load({
+			params: params
+		});
+		Ext.Msg.alert('Message', 'User profile columns preference has been updated.');
+	},
+    
     onReset: function(button, event) {
         var ciStandardSearchView = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView');
         ciStandardSearchView.reset();

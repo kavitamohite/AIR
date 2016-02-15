@@ -9,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -50,9 +51,13 @@ public class HardwareComponentHbn {
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion pspElement = Restrictions.like("amKommision",
 					"%" + input.getQuery() + "%").ignoreCase();
-			criteria.createAlias("konto", "konto");
-			Criterion kontoName = Restrictions.like("konto.name",
-					"%" + input.getQuery() + "%").ignoreCase();
+			/* Condition updated by enqmu */
+//			criteria.createAlias("konto", "konto");
+			criteria.createAlias("konto", "konto", CriteriaSpecification.LEFT_JOIN);
+			/*Criterion kontoName = Restrictions.like("konto.name",
+					"%" + input.getQuery() + "%").ignoreCase();*/ 
+			Criterion kontoName = Restrictions.and(Restrictions.isNotNull("konto"), Restrictions.like("konto.name", "%" + input.getQuery() + "%").ignoreCase());
+			/* End by enqmu */
 			Criterion serialNumber = Restrictions.like("serialNumber",
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion technicalMaster = Restrictions.like("technicalMaster",
@@ -358,7 +363,8 @@ public class HardwareComponentHbn {
 			AssetViewDataDTO dto) {
 
 		HardwareComponent hardwareComponent = getHardwareComponent(dto);
-		
+		hardwareComponent.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());    // added by enqmu
+		hardwareComponent.setInsertUser(dto.getCwid());			// added by enqmu
 		String error = validateHardwareComponent(hardwareComponent);
 		
 		if(error == null){
@@ -366,7 +372,7 @@ public class HardwareComponentHbn {
 			ItSystemDTO itDTO = new ItSystemDTO();
 			CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 			
-			if(dto.getSystemPlatformName().length() != 0 && dto.getOsNameId() != 0){
+			if(dto.getSystemPlatformName() != null && dto.getSystemPlatformName().length() != 0 && dto.getOsNameId() != 0){ // NULL check added by anit
 				if(itSystem != null){
 					ItSystemHbn.getItSystem(itDTO, itSystem);
 					itDTO.setId(itSystem.getId());
@@ -383,13 +389,13 @@ public class HardwareComponentHbn {
 					output = ItSystemHbn.createItSystem(dto.getCwid(), itDTO, true);
 				}
 			} else {
-				if(itSystem != null ){
+				/*if(itSystem != null ){  // Commented by anit
 					String[] err = {"System platform name or Os name is missing." };
 					output.setMessages(err);
 				} else if(dto.getSystemPlatformName().length() != 0 || dto.getOsNameId() != 0) {
 					String[] err = {"System platform name or Os name is missing." };
 					output.setMessages(err);					
-				}
+				}*/
 			}
 			if(output.getMessages() != null && output.getMessages()[0].length() > 0){
 				dto.setError(output.getMessages()[0]);
@@ -481,7 +487,7 @@ public class HardwareComponentHbn {
 		} else {
 			hardwareComponent.setName(getIdentNumber());
 		}
-		if(dto.getInventoryNumber().length() == 0){
+		if(dto.getInventoryNumber() != null && dto.getInventoryNumber().length() == 0){
 			if(hardwareComponent.getInventoryStockNumber() == null){
 				hardwareComponent.setInventoryStockNumber("ExtInventory");
 				hardwareComponent.setInventoryP69(null);
@@ -542,5 +548,31 @@ public class HardwareComponentHbn {
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
 		return df.format(new Date(System.currentTimeMillis()));
 	}
-
+	
+	
+	/**
+	 * @author enqmu
+	 * This method checks for Hardware component exists for an inventory number or not.
+	 * @param inventoryP69
+	 * @return boolean
+	 */
+	public static boolean isHardwareComponentByInventoryNumberExists(String inventoryP69) {
+		
+		boolean returnFlag = false;
+		
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			Criteria criteria = session.createCriteria(HardwareComponent.class);
+			criteria.add(Restrictions.eq("inventoryP69", inventoryP69));
+			List<HardwareComponent> values = (List<HardwareComponent>) criteria.list();
+			if(values != null && !values.isEmpty()){
+				returnFlag = true;
+			}
+			session.close();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		
+		return returnFlag;
+	}
 }

@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -856,4 +859,33 @@ public class SchrankHbn extends LokationItemHbn {
 		
 		return data.toArray(new KeyValueDTO[0]);
 	}
+	
+	/**
+	 * This method provides the schrankId for a Schrank name
+	 * @author enqmu
+	 * 
+	 */
+	public static long findSchrankIdByName(String name)
+    {
+    	long schrankId = -1l;
+    	String query = "select SCHRANK_ID from SCHRANK where SCHRANK_NAME = ?";
+    	try {
+    		Session session = HibernateUtil.getSessionFactory().openSession();
+    		Connection conn = session.connection();
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setString(1, name);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				schrankId = rs.getLong(1);
+				break;
+			}
+			rs.close();
+			stmt.close();
+    	} catch(Exception ex)
+    	{
+    		ex.printStackTrace();
+    	}
+    	return schrankId;
+    }
+	
 }

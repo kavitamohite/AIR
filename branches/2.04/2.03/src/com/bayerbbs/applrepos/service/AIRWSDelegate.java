@@ -27,4 +27,10 @@ public class AIRWSDelegate {
 	public ApplicationEditParameterOutput saveUserOption(UserOptionParameterInput editInput) {
 		return airWS.saveUserOption(editInput);
 	}
+	
+	// Added by enqmu
+	public ApplicationEditParameterOutput saveUserColumnsProfilePreference(UserOptionParameterInput editInput) {
+		return airWS.saveUserColumnsProfilePreference(editInput);
+	}
+	
 }

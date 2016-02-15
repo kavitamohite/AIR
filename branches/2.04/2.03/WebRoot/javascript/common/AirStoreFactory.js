@@ -356,6 +356,38 @@ AIR.AirStoreFactory = function() {
 			return userOptionSaveStore;
 		},
 		
+		// Added by enqmu
+		createUserOptionColumnsPreferenceSaveStore: function() {
+			var userOptionSaveRecord = Ext.data.Record.create([
+	            {name: 'result'},
+	            {name: 'displayMessage'},
+	            {name: 'messages'}
+	      	]);
+	
+			var userOptionSaveReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, userOptionSaveRecord); 
+	
+			var userOptionSaveStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'userOptionSaveStore',
+				autoLoad: false,
+	          
+		      	proxy: new Ext.ux.soap.SoapProxy({
+		      		url: webcontext +'/AIRWSPort',
+		      		loadMethod: 'saveUserColumnsProfilePreference',
+		      		timeout: 120000,
+		      		reader: userOptionSaveReader
+		      	}),
+	      	
+	      		fields: [ 'result', 'displayMessage', 'messages' ],
+	      	         
+	      		reader: userOptionSaveReader
+			});
+			
+			return userOptionSaveStore;
+		},
+		
 		createRolePersonListStore: function() {
 			var rolePersonListRecord = Ext.data.Record.create([
 	            {name: 'id', mapping: 'roleId'},

@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,5 +64,67 @@ public class TypeHbn  extends BaseHbn{
 		}
 		return data.toArray(new ProductDTO[data.size()]);
 	}
-
+	
+	/**
+	 * This method provides the typeId for a Type name
+	 * @author enqmu
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public static Long findTypeIdByWhereName(Long partnerId, Long kategory2Id, String name)
+    {
+    	Long typeId = null;
+    	TypeDTO type = new TypeDTO();
+    	type.setPartnerId(partnerId);
+    	type.setKategory2Id(kategory2Id);
+//    	String query = "select * from HW_KATEGORIE3 where HW_KATEGORIE3 = ?";
+    	try {
+//    		Session session = HibernateUtil.getSessionFactory().openSession();
+    		/*ProductDTO[] productDTOArr = findTypeList(type);
+    		
+    		for(ProductDTO productDTO: productDTOArr)
+    		{
+    			if(productDTO != null && productDTO.getManufacturerId() != null && productDTO.getManufacturerId().equals(partnerId) && productDTO.getSubcategoryId() != null && productDTO.getSubcategoryId().equals(kategory2Id) && productDTO.getType().equalsIgnoreCase(name))
+    			{
+    				typeId = productDTO.getTypeId();
+    			}
+    		}*/
+    		
+    		Session session = HibernateUtil.getSessionFactory().openSession();
+    		Criteria criteria = session.createCriteria(HardwareCategory3.class);
+			criteria.add(Restrictions.eq("partnerId", partnerId));
+			criteria.add(Restrictions.eq("kategory2Id", kategory2Id));
+			criteria.add(Restrictions.eq("hwKategory3", name)); 
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
+			
+			List<HardwareCategory3> values = criteria.list();
+			
+			if(values != null && !values.isEmpty())
+			{
+				for(HardwareCategory3 objHardwareCategory3 : values)
+				{
+					if(objHardwareCategory3 != null && objHardwareCategory3.getId() != null)
+					{
+						typeId = objHardwareCategory3.getId();
+						break;
+					}
+				}
+			}
+    		/*Connection conn = session.connection();
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setString(1, name);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				typeId = rs.getLong(1);
+				break;
+			}
+			rs.close();
+			stmt.close();*/
+    	} catch(Exception ex)
+    	{
+    		ex.printStackTrace();
+    	}
+    	return typeId;
+    }
+	
 }

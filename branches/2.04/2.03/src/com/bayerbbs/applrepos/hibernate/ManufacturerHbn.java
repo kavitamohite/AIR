@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -99,5 +100,37 @@ public class ManufacturerHbn extends BaseHbn {
 		return data.toArray(new KeyValueDTO[0]);
 
 	}
+	
+	/**
+	 * @author enqmu
+	 * This method returns the Product for a manufacturer name.
+	 * @param name - Manufacturer name
+	 * @return ProductDTO 
+	 */
+    public static Long findManufacturerIdByName(String name)
+    {
+    	Long manufacturerId = null;
+    	String query = "select * from partner where partner_id in (select partner_id from hw_kategorie3) and partner_name = ?";
 
+		try {
+			
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			Connection conn = session.connection();
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setString(1, name);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				manufacturerId = rs.getLong(1);
+				break;
+			}
+			rs.close();
+			stmt.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return manufacturerId;
+
+    }
+        
 }

@@ -32,6 +32,7 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		this.airLoginWindow = new AIR.AirLoginWindow();
 		this.airLoginWindow.on('login', this.onLogin, this);
 		this.airLoginWindow.show();	
+		
 	},
 	
 	init: function() {
@@ -55,13 +56,15 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		
 		
 		//disable F5,F6
-		if(Ext.isIE) {
+		if(Ext.isIE) {  // commented by enqmu
 			document.attachEvent('onkeydown', AIR.AirApplicationManager.disableInvalidKeys, true);//onkeydown onkeypress
 			document.attachEvent('onunload', AIR.AirApplicationManager.disableInvalidKeys, true);
 		} else {
 			document.addEventListener('keypress', AIR.AirApplicationManager.disableInvalidKeys, true);
 			document.addEventListener('unload', AIR.AirApplicationManager.disableInvalidKeys, true);
 		}
+		
+		
 	},
 	
 	onLogin: function(cwid, password) {
@@ -244,11 +247,11 @@ AIR.AirBootstrap = Ext.extend(Object, {
 	},
 	
 	onAirRendered: function(lastRenderedView) {//airMainPanel
-		AAM.restoreUiState(this.airMainPanel);//schon hier, da nötig für CiEditView.updateLabels() wegen tableId
+		AAM.restoreUiState(this.airMainPanel);//schon hier, da nï¿½tig fï¿½r CiEditView.updateLabels() wegen tableId
 		
 		this.airMainPanel.update();
 		this.airMainPanel.updateLabels(AAM.getLabels());
-		//performance Verbesserung: erst rendern wenn user zum ersten Mal über einem Label anhält, anstatt alles nach App Start.
+		//performance Verbesserung: erst rendern wenn user zum ersten Mal ï¿½ber einem Label anhï¿½lt, anstatt alles nach App Start.
 		this.airMainPanel.updateToolTips(AAM.getToolTips());
 		
 		var delayedTask = new Ext.util.DelayedTask(function() {

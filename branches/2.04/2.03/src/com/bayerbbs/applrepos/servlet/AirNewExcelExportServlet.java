@@ -27,8 +27,8 @@ public class AirNewExcelExportServlet extends HttpServlet {
 	private static final long serialVersionUID = 3569239290421829949L;
 
 	private static final String[] COLUMNS = { "Manufacturer","Sub Category","Type","Model","SAP Description", "PSP Element",
-			"Cost center", "Site", "Serial Number", "Technical Master",
-			"Technical Number/Asset-Id", "Inventory Number", "Organizational Unit" };
+			"Cost center", "Country", "Site", "Building","Room", "Rack - Position",/* "Serial Number", */ "Technical Master",
+			"Technical Number/Asset-Id", "Inventory Number", "Organizational Unit" };   // Serial Number commented by anit
 	private static final String UNDERSCORE = "_";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -89,11 +89,18 @@ public class AirNewExcelExportServlet extends HttpServlet {
 			headerCell.setCellValue(COLUMNS[i]);
 			headerCell.setCellStyle(headerRowStyle);
 		}
-
+		
+		int lastRowNum = 0;
+		
+		if(req.getParameter("multipleasset") != null)
+		{
+			lastRowNum = Integer.parseInt(req.getParameter("multipleasset"))+3;
+		}
+		
 		Row row = null;
 		Cell cell = null;
-			for(int i=3;i<=Integer.parseInt(req.getParameter("multipleasset"))+3;){
-			row = sheet.createRow(i++);
+			for(int i=3; i < lastRowNum; i++){
+			row = sheet.createRow(i);
 			
 			cell = row.createCell(0);
 			cell.setCellValue(req.getParameter("manufacturer"));
@@ -108,9 +115,41 @@ public class AirNewExcelExportServlet extends HttpServlet {
 			cell.setCellValue(req.getParameter("model"));
 			
 			cell = row.createCell(4);
-			cell.setCellValue(req.getParameter("sapDescription"));	
+			cell.setCellValue(req.getParameter("sapDescription"));
 			
+			cell = row.createCell(5);
+			cell.setCellValue(req.getParameter("pspElement"));
+			
+			cell = row.createCell(6);
+			cell.setCellValue(req.getParameter("costCenter"));
+			
+			cell = row.createCell(7);
+			cell.setCellValue(req.getParameter("country"));
+			
+			cell = row.createCell(8);
+			cell.setCellValue(req.getParameter("site"));
+			
+			cell = row.createCell(9);
+			cell.setCellValue(req.getParameter("building"));
+			
+			cell = row.createCell(10);
+			cell.setCellValue(req.getParameter("room"));
+			
+			cell = row.createCell(11);
+			cell.setCellValue(req.getParameter("rackPosition"));
+			
+			cell = row.createCell(12);
+			cell.setCellValue(req.getParameter("technicalMaster"));
 		
+			cell = row.createCell(13);
+			cell.setCellValue(req.getParameter("technicalNumber"));
+			
+			cell = row.createCell(14);
+			cell.setCellValue(req.getParameter("inventorynumber"));
+			
+			cell = row.createCell(15);
+			cell.setCellValue(req.getParameter("organisation"));
+			
 			}		
 			return workbook;
 	}

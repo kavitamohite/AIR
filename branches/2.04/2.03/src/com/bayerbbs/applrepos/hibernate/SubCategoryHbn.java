@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,4 +65,31 @@ public class SubCategoryHbn extends BaseHbn {
 		return data.toArray(new ProductDTO[data.size()]);
 	}
 	
+	/**
+	 * This method provides the subCategoryId for a sub Category name
+	 * @author enqmu
+	 * 
+	 */
+	public static Long findSubCategoryIdByName(String name)
+    {
+    	Long subCategoryId = null;
+    	String query = "select HW_KATEGORIE2_ID from HW_KATEGORIE2 where HW_KATEGORIE2 = ?";
+    	try {
+    		Session session = HibernateUtil.getSessionFactory().openSession();
+    		Connection conn = session.connection();
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setString(1, name);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				subCategoryId = rs.getLong(1);
+				break;
+			}
+			rs.close();
+			stmt.close();
+    	} catch(Exception ex)
+    	{
+    		ex.printStackTrace();
+    	}
+    	return subCategoryId;
+    } 
 }

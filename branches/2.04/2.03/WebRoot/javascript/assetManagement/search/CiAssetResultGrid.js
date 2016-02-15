@@ -3,7 +3,6 @@ Ext.namespace('AIR');
 AIR.CiAssetResultGrid = Ext.extend(Ext.grid.GridPanel, {
     complete: true,
     boxReady: false,
-
     initComponent: function() {
         var expander = new Ext.ux.grid.RowExpander({
             tpl: new Ext.Template(
@@ -14,6 +13,7 @@ AIR.CiAssetResultGrid = Ext.extend(Ext.grid.GridPanel, {
             checkOnly: true,
             sortable: true,
             singleSelect: true,
+            
             listeners: {
                 beforerowselect: function(selModel, rowIndex, keepExisting, record) {
                     if (selModel.grid.ownerCt.ownerCt.getComponent('pAssetSearchResultOptions').getComponent('cbAssetIsMultipleSelect').getValue()) {
@@ -38,12 +38,14 @@ AIR.CiAssetResultGrid = Ext.extend(Ext.grid.GridPanel, {
             }
         });
 
-
+        
         var columns = AIR.AirConfigFactory.createAssetManagementGridConfig(selModel);
-
+        
         for (var i = 1; i < columns.length; i++)
+        {
             columns[i].renderer = this.columnRenderer;
-
+        }
+            
         this.defaultColumnConfig = columns;
 
         var colModel = new Ext.grid.ColumnModel(columns);

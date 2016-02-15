@@ -2,9 +2,9 @@ Ext.namespace('AIR');
 
 AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
     initComponent: function() {
+    	
         Ext.apply(this, {
             hidden: true,
-
             items: [{
                 xtype: 'panel',
                 id: 'pAssetSearchResultOptions',
@@ -81,6 +81,7 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
     },
 
     search: function(params, isUpdate, callback) { //ownerView
+    	
         this.ciTypeId = params.ciTypeId;
         this.ciSubTypeId = params.ciSubTypeId;
 
@@ -113,8 +114,8 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
             tpCiSearchResultTables.add(ciResultGrid);
             tpCiSearchResultTables.getItem(ciResultGridId).setTitle(this.getTabTitle(ciResultGridId) + '_' + tabCount); //ciResultGridId
             tpCiSearchResultTables.setActiveTab(ciResultGridId);
-
-            this.updateColumnLabels(AAM.getLabels());
+            
+//            this.updateColumnLabels(AAM.getLabels());
 
             ciResultGrid.on('close', this.onTabClose, this);
             ciResultGrid.on('activate', this.onTabActivate, this);
@@ -201,8 +202,8 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
         var record = grid.getStore().getAt(rowIndex);
         AAM.setAssetId(record.id);
         
+        
     },
-
     onRowDoubleClick: function(grid, rowIndex, e) {
         this.onRowClick(grid, rowIndex, e);
         var record = grid.getStore().getAt(rowIndex).data;
@@ -230,6 +231,14 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
         delete this.ciResultGridParamSets[grid.getId()];
 
         var tpCiSearchResultTables = this.getComponent('tpCiAssetSearchResultTables');
+        
+        var columns = ""; 
+        for(var i = 1; i < 10; i++)
+        {
+        	columns += tpCiSearchResultTables.getActiveTab().getColumnModel().getColumnId(i) + ";";
+        }
+        AAM.setAssetColumns(columns);
+        
         var tabCount = tpCiSearchResultTables.items.items.length;
 
         if (tabCount === 1) //0, 1 weil tab erst nach dem event zerst�rt wird
@@ -263,7 +272,7 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
             }
         }
 
-        this.updateColumnLabels(labels);
+//        this.updateColumnLabels(labels);
     },
 
     updateColumnLabels: function(labels) {
@@ -273,7 +282,6 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
 
         for (var i = 0; i < tpCiSearchResultTables.items.items.length; i++) {
             ciSearchGrid = tpCiSearchResultTables.items.items[i];
-
             ciSearchGrid.getColumnModel().setColumnHeader(0, "&#160;");
             ciSearchGrid.getColumnModel().setColumnHeader(1, labels.assetSapDescription);
             ciSearchGrid.getColumnModel().setColumnHeader(2, labels.assetPSP);
@@ -286,6 +294,7 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
             ciSearchGrid.getColumnModel().setColumnHeader(9, labels.assetOrganisation);
 
         }
+
     }
 });
 Ext.reg('AIR.CiAssetResultView', AIR.CiAssetResultView);

@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,5 +64,34 @@ public class ModelHbn extends BaseHbn {
 		}
 		return data.toArray(new ProductDTO[data.size()]);
 	}
+	
+	/**
+	 * This method provides the typeId for a Type name
+	 * @author enqmu
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public static HardwareCategory4 findModelIdByWhereName(String name)
+    {
+    	HardwareCategory4 returnHardwareCategory4 = null;
+    	try {
+    		Session session = HibernateUtil.getSessionFactory().openSession();
+    		Criteria criteria = session.createCriteria(HardwareCategory4.class);
+    		criteria.add(Restrictions.eq("hwKategory4", name));
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
+			
+			List<HardwareCategory4> values = criteria.list();
+			
+			if(values != null && !values.isEmpty()) {
+				returnHardwareCategory4 = values.get(0);
+			}
+			
+    	} catch(RuntimeException ex)
+    	{
+    		ex.printStackTrace();
+    		throw ex;
+    	}
+    	return returnHardwareCategory4;
+    }
 
 }

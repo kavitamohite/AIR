@@ -36,7 +36,43 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                     marginTop: 25,
                     marginBottom: 20
                 }
-            }, {
+            },
+            {   // Added by enqmu
+            	xtype: 'window',
+            	id: 'formWindow',
+            	closeAction: 'hide',
+            	modal: true,
+            	title: 'Upload File:',
+            	hidden: true,
+            	width: 300,
+            	items: [ {   
+            		xtype: 'panel',
+            		id: 'importPanel',
+            		html: "<form id='importExcelFile' action='AirExcelImportServlet' method='post' target='_blank' enctype='multipart/form-data'><input id='file' name='file' type='file' size='50' /><input type='hidden' id='usercwid' name='usercwid' /></form>",
+//            		items: [
+//            		        {
+//            		        	xtype: 'panel',
+//            		        	id: 'formPanel',
+//            		        	// hidden: true,
+//            		        	// title: 'Upload File:',
+//            		        	// width: 400,
+//            		        	html: "<form id='importExcelFile' action='AirExcelImportServlet' method='post' target='_blank' enctype='multipart/form-data'><input id='file' name='file' type='file' size='50' /></form>",
+//            		        }
+//            		        ]
+            			},
+                {
+    				xtype : 'button',
+    				itemId : 'uploadBtn',
+    				text : 'Upload',
+    				style : {
+    					fontSize : 12,
+    					margin : '8 10 0 0',
+    					width:80
+    				}
+    			} ]
+            },
+            // End
+            {
                 xtype: 'AIR.CiTopPanel',
                 id: 'topPanel',
             }, {
@@ -106,7 +142,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					handler: function(button, event) {
 		    	   		this.saveAsset();//button, event
 		    		}.createDelegate(this)
-				},{
+				}, 
+				{
 					xtype : 'button',
 					itemId : 'cancelBtn',
 					text : 'Cancel',
@@ -172,7 +209,15 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         
         var bExport=this.getComponent('buttonPanel').getComponent('bExport');
         bExport.on('click', this.testExcelExport, this);
-
+        
+        
+        var bImport=this.getComponent('buttonPanel').getComponent('bImport');
+        bImport.on('click', this.testExcelImport, this);
+        // added by anit.k
+        var uploadBtn=this.getComponent('formWindow').getComponent('uploadBtn');
+        uploadBtn.on('click', this.importExcel, this);
+        // end
+        
         var bReset = this.getComponent('buttonPanel').getComponent('bReset');
         bReset.on('click', this.resetFormFields, this);
 
@@ -246,13 +291,29 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	},
   
     testExcelExport:function(link, event){
+    	alert('testExcelExport');
     	var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
     	var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
   	    var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
     	var cbmodel=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
     	var tsapDescription=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription');
-    	var tmultipleasset=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').getComponent('tmultipleasset');
+    	var tmultipleasset=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').getComponent('tmultipleasset');  
     	console.log('tmultipleasset--'+tmultipleasset.getRawValue())
+    	// Added by anit
+    	var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter').getRawValue();
+    	var cbPspValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pPSPElement').getComponent('cbPsp').getRawValue();
+    	var cbSiteValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite').getRawValue();
+    	var tTechnicalMasterValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalMaster').getRawValue();
+    	var tTechnicalNumberValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalNumber').getRawValue();
+    	var tInventorynumberValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber').getRawValue();
+    	var tOrganisationValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrganisation').getRawValue();
+    	var tCountryValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry').getRawValue();
+    	var tSiteValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite').getRawValue();
+    	var tBuildingValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding').getRawValue(); 
+    	var tRoomValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom').getRawValue();
+    	alert(this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom').getRawValue() + '  ' + this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom').getValue());
+    	var tRackPositionValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack').getRawValue();
+    	// end by anit
     	var exportForm = AAM.getExportForm();
 		
 		exportForm.action = '/AIR/newExcelExport';
@@ -267,11 +328,37 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		exportForm.model.value = cbmodel.getRawValue();
 		exportForm.sapDescription.value = tsapDescription.getRawValue();
 		exportForm.multipleasset.value=tmultipleasset.getRawValue();
-
+		// Added by anit
+		exportForm.pspElement.value = cbPspValue;
+		exportForm.costCenter.value = cbCostcenterValue;
+		exportForm.site.value = cbSiteValue;
+		exportForm.technicalMaster.value = tTechnicalMasterValue;
+		exportForm.technicalNumber.value = tTechnicalNumberValue;
+		exportForm.inventorynumber.value = tInventorynumberValue;
+		exportForm.organisation.value = tOrganisationValue;
+		exportForm.country.value = tCountryValue;
+		exportForm.site.value = tSiteValue;
+		exportForm.building.value = tBuildingValue;
+		exportForm.room.value = tRoomValue;
+		exportForm.rackPosition.value = tRackPositionValue;
+		// End by anit
 		exportForm.submit();
     	
     },
     //C0000049066
+    
+    // Added by anit.k
+    testExcelImport:function(link, event) {
+    	this.getComponent('formWindow').show();
+    	document.getElementById('importExcelFile').value='';
+    },
+    importExcel:function(link, event) {
+    	this.getComponent('formWindow').hide();
+    	document.getElementById('usercwid').value = AIR.AirApplicationManager.getCwid();
+    	var importExcelFile = document.getElementById('importExcelFile');
+    	importExcelFile.submit();
+    },
+    // end
     
     onAssetHistoryButton: function(){
     	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();

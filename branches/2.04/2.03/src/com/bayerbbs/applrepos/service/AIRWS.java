@@ -169,5 +169,21 @@ public class AIRWS {
 
 		return output;
 	}
+	
+	// Added by enqmu
+	public ApplicationEditParameterOutput saveUserColumnsProfilePreference(UserOptionParameterInput editInput) {
+
+		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
+
+		if (null != editInput && editInput.isSave() && StringUtils.isNotNullOrEmpty(editInput.getCwid())) {
+
+			List<PersonOptionDTO> listOptions = PersonOptionHbn.findPersonOptionsWithDeleted(editInput.getCwid());
+
+			PersonOptionHbn
+					.savePersonOptions(editInput.getCwid(), listOptions, "AIR_USER_PROFILE_COLUMNS_PREFERENCE", editInput.getUserColumnsPreference());
+		}
+
+		return output;
+	}
 
 }

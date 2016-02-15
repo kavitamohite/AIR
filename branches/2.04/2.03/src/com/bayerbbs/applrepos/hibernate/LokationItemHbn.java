@@ -11,10 +11,13 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
@@ -22,6 +25,7 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.CiBase1;
 import com.bayerbbs.applrepos.domain.CiBase2;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
+import com.bayerbbs.applrepos.domain.HardwareCategory4;
 import com.bayerbbs.applrepos.domain.Land;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.service.CiItemDTO;
@@ -316,4 +320,33 @@ public class LokationItemHbn extends BaseHbn {
 		if(ciDTO.getDownStreamAdd() != null && ciDTO.getDownStreamAdd().length() > 0 || ciDTO.getDownStreamDelete() != null && ciDTO.getDownStreamDelete().length() > 0)
 			CiEntitiesHbn.saveCiRelations(ciDTO.getTableId(), ciDTO.getId(), ciDTO.getDownStreamAdd(), ciDTO.getDownStreamDelete(), "DOWNSTREAM", cwid);
 	}
+	
+	/**
+	 * This method provides the typeId for a Type name
+	 * @author enqmu
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public static Land findLandByWhereName(String name)
+    {
+    	Land land = null;
+    	try {
+    		Session session = HibernateUtil.getSessionFactory().openSession();
+    		Criteria criteria = session.createCriteria(Land.class);
+    		criteria.add(Restrictions.or(Restrictions.eq("name", name), Restrictions.eq("nameEn", name)));
+			
+			
+			List<Land> values = criteria.list();
+			
+			if(values != null && !values.isEmpty()) {
+				land = values.get(0);
+			}
+			
+    	} catch(Exception ex)
+    	{
+    		ex.printStackTrace();
+    	}
+    	return land;
+    }
+	
 }
