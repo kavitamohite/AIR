@@ -24,18 +24,16 @@ public class SpecialAttributeHbn {
 		SpecialAttribute asIs = null, toBe = null;
 		SpecialAttribute asIsTemp = new SpecialAttribute(), toBeTemp = new SpecialAttribute();
 		Long oldToBevalue = null;
-		Long oldAsIsvalue = null;
 		List<SpecialAttribute> specialAttribute = findByCiIdAndAttributeId(cIid, specialAttributeViewDataDTO.getAttributeId());
 
 		for (SpecialAttribute spAttribute : specialAttribute) {
 			if ("AS_IS".equals(spAttribute.getStatus())) {
 				asIs = spAttribute;
-				oldAsIsvalue = asIs.getAttributeValue().getId();
-				asIsTemp.setDeleteTimestamp(asIs.getDeleteTimestamp());;
+				asIsTemp.setDeleteTimestamp(asIs.getDeleteTimestamp());
 			} else {
 				toBe = spAttribute;
 				oldToBevalue = toBe.getAttributeValue().getId();
-				toBeTemp.setDeleteTimestamp(toBe.getDeleteTimestamp());
+				toBeTemp.setDeleteTimestamp(toBe.getDeleteTimestamp());;
 			}
 		}
 
@@ -101,22 +99,15 @@ public class SpecialAttributeHbn {
 		try {
 			if (asIs.getId() == null && asIs.getAttributeValue() != null) {
 				session.createSQLQuery(createInsertQuery(asIs, cwid)).executeUpdate();
-			} else if (asIs.getId() != null && asIsTemp.getDeleteTimestamp()==null) {
-				if(oldAsIsvalue!= null && specialAttributeViewDataDTO.getAsIsValueId()!=null &&(oldAsIsvalue.longValue() != specialAttributeViewDataDTO.getAsIsValueId().longValue())){					
-				}else{
-					session.update(asIs);
-				}					
+			} else if (asIs.getId() != null) {
+				session.update(asIs);					
 			}
 
 			if (toBe.getId() == null && toBe.getAttributeValue() != null) {
 				session.createSQLQuery(createInsertQuery(toBe, cwid)).executeUpdate();
 
-			} else if (toBe.getId() != null && toBeTemp.getDeleteTimestamp()==null && oldToBevalue!=null) {
-				if(specialAttributeViewDataDTO.getToBeValueId()!=null &&(oldToBevalue.longValue() != specialAttributeViewDataDTO.getToBeValueId().longValue())){
-					
-				}else{
-					session.update(toBe);
-				}
+			} else if (toBe.getId() != null) {
+				session.update(toBe);
 			}
 
 			session.flush();
@@ -134,18 +125,18 @@ public class SpecialAttributeHbn {
 			}
 			session.close();
 		}		
-		if (specialAttributeViewDataDTO.getToBeValueId() == null && toBe.getAttributeValue() != null && toBeTemp.getDeleteTimestamp()==null ) {
-			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
+		if (specialAttributeViewDataDTO.getToBeValueId() == null
+				&& toBe.getAttributeValue() != null) {
+			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
+					.getAttribute().getId(),
+					specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
 					AirKonstanten.APPLICATION_GUI_NAME, cwid);
-		} else if (specialAttributeViewDataDTO.getToBeValueId() != null && toBe.getDeleteTimestamp()==null ) {
-					if(oldToBevalue!=null && specialAttributeViewDataDTO.getToBeValueId()!= null &&(oldToBevalue.longValue()!=specialAttributeViewDataDTO.getToBeValueId().longValue())){
-						startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
-								AirKonstanten.APPLICATION_GUI_NAME, cwid);
-					}else{
-						if(oldToBevalue==null)
-						startInheritance(toBe.getTableId(), toBe.getCiId(), toBe.getAttribute().getId(), specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
-								AirKonstanten.APPLICATION_GUI_NAME, cwid);
-					}
+		} else if (specialAttributeViewDataDTO.getToBeValueId() != null) {
+
+			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
+					.getAttribute().getId(),
+					specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
+					AirKonstanten.APPLICATION_GUI_NAME, cwid);
 		}
 
 		return true;
