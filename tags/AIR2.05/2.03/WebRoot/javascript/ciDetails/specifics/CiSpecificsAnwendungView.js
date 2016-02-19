@@ -631,7 +631,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		
 		var cbApplicationCat2 = this.getComponent('applicationCat2');
 		//cbApplicationCat2.getStore().filter('applicationCat1Id', data.applicationCat1Id);
-		var filterData = {//falls app w/o cat soll trotzdem die cat2 von cat1=Application auswählbar sein
+		var filterData = {//falls app w/o cat soll trotzdem die cat2 von cat1=Application auswï¿½hlbar sein
 			applicationCat1Id: data.applicationCat1Id != '0' ? data.applicationCat1Id : AC.APP_CAT1_APPLICATION
 		};
 		cbApplicationCat2.filterByData(filterData);
@@ -642,18 +642,18 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		
 		
 		// ------
-//		selectedCategoryBusinessId = data.categoryBusinessId;//muss gesetzt werden für andere Codestellen?
+//		selectedCategoryBusinessId = data.categoryBusinessId;//muss gesetzt werden fï¿½r andere Codestellen?
 		if (data.categoryBusinessId && data.categoryBusinessId != 0) {
 			this.getComponent('specificsCategory').getComponent('cbApplicationBusinessCat').setValue(data.categoryBusinessId);
 		} else {
 			this.getComponent('specificsCategory').getComponent('cbApplicationBusinessCat').setValue('');
 		}
 		
-//		selectedDataClassId = data.dataClassId;//muss gesetzt werden für andere Codestellen?
+//		selectedDataClassId = data.dataClassId;//muss gesetzt werden fï¿½r andere Codestellen?
 		if (data.dataClassId && data.dataClassId != 0) {// && data.dataClassId != '0'	selectedDataClassId statt data.dataClassId
 			this.getComponent('specificsCategory').getComponent('cbDataClass').setValue(data.dataClassId);//selectedDataClassId
 			
-			//wenn cbApplicationBusinessCat geändert wird, müssen die Werte für dataClassListStore aktualisiert werden
+			//wenn cbApplicationBusinessCat geï¿½ndert wird, mï¿½ssen die Werte fï¿½r dataClassListStore aktualisiert werden
 //			dataClassListStore.load();
 		} else {
 			this.getComponent('specificsCategory').getComponent('cbDataClass').clearValue();
@@ -729,8 +729,8 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 					var organisationalScope = data.organisationalScope;
 					
 					Ext.each(scopes, function(item, index, all) {
-						var r = store.getAt(store.findExact('name', item));
-						organisationalScope = organisationalScope.replace(item, r.data.name);
+						var r = store.getAt(store.findExact('name', item.trim()));
+						organisationalScope = organisationalScope.replace(item.trim(), r.data.name.trim());
 					});
 					taOrganisationalScope.setValue(organisationalScope.replace(/,/g,'\n'));//data.licenseUsingRegions.replace(',','\n')
 				}
@@ -749,7 +749,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		this.loadApplicationBusinessProcesses(data.id);//applicationId
 		
 		//kein Effekt zur Verhinderung der Verkleinerung der combo Breite nachdem wenn auf Contacts die Primary Person
-		//gelöscht und wieder hinzugefügt wurde. (*1)
+		//gelï¿½scht und wieder hinzugefï¿½gt wurde. (*1)
 	},
 	
 	updateAccessMode: function(data) {
