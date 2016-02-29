@@ -16,7 +16,7 @@ import com.bayerbbs.applrepos.dto.ProductDTO;
 
 public class ManufacturerHbn extends BaseHbn {
 
-	private static final String SQL_Hardware_Product = "select * from partner where partner_id in (select partner_id from hw_kategorie3) order by partner_name asc";
+	private static final String SQL_Hardware_Product = "select * from partner where partner_id in (select partner_id from hw_kategorie3) and p.partnerType like 'O'  order by partner_name asc";
 	private static final String SQL_Software_Product = "select * from partner where partner_id in (select hersteller_partnid from SW_KATEGORIE2)";
 
 	public static Partner findById(Long id) {
@@ -89,7 +89,7 @@ public class ManufacturerHbn extends BaseHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			@SuppressWarnings("unchecked")
-			List<Partner> values = session.createQuery("from Partner p where p.number is not null and p.deleteTimestamp is null").list();
+			List<Partner> values = session.createQuery("from Partner p where p.number is not null and p.partnerType like 'O' and p.deleteTimestamp is null").list();
 			data = getLegalDTOList(values);
 			session.close();
 		} catch (RuntimeException e) {
