@@ -68,6 +68,29 @@
 		<mapping class="com.bayerbbs.applrepos.domain.Land" />
 		<mapping class="com.bayerbbs.applrepos.domain.Function" />
 		<mapping class="com.bayerbbs.applrepos.domain.Ways" />
+		<mapping class="com.bayerbbs.applrepos.domain.Attribute" />
+		<mapping class="com.bayerbbs.applrepos.domain.AttributeGroup" />
+		<mapping class="com.bayerbbs.applrepos.domain.AttributeValue" />
+		<mapping class="com.bayerbbs.applrepos.domain.SpecialAttribute" />
+		<mapping class="com.bayerbbs.applrepos.domain.Service" />		
+
+		
+		<!-- Asset Management -->
+		<mapping class="com.bayerbbs.applrepos.domain.HardwareComponent" />
+		<mapping class="com.bayerbbs.applrepos.domain.LifecycleSubStat" />
+		<mapping class="com.bayerbbs.applrepos.domain.HardwareCategory1" />
+		<mapping class="com.bayerbbs.applrepos.domain.HardwareCategory2" />
+		<mapping class="com.bayerbbs.applrepos.domain.HardwareCategory3" />
+		<mapping class="com.bayerbbs.applrepos.domain.HardwareCategory4" />
+		<mapping class="com.bayerbbs.applrepos.domain.Partner" />
+		<mapping class="com.bayerbbs.applrepos.domain.Konto" />
+		
+		<mapping class="com.bayerbbs.applrepos.domain.Sla" />
+		<mapping class="com.bayerbbs.applrepos.domain.ServiceContract" />
+		<mapping class="com.bayerbbs.applrepos.domain.SeverityLevel" />
+		<mapping class="com.bayerbbs.applrepos.domain.SoftwareComponent" />
+		<mapping class="com.bayerbbs.applrepos.domain.SoftwareCategory1" />
+		<mapping class="com.bayerbbs.applrepos.domain.SoftwareCategory2" />		
 		
 		
 	</session-factory>
