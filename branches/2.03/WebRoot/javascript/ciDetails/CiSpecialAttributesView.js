@@ -105,7 +105,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		    buttons: [{
 		        text: 'Save',
 		        id: 'saveAttributeBtn',
-		        disabled: true,
+		        hidden: true,
 		        tooltip: 'Click to save all changes to the database',
 		        handler: function() {
 		        	var isSuccess = true;
@@ -154,8 +154,11 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		
 		AIR.CiSpecialAttributesView.superclass.initComponent.call(this);
 		
+		
+		
 	},
 	
+
 	columnRenderer: function(value,metaData,record) {
         if(value) {
             var attributes = Ext.getCmp('specialAttributesListView').getColumnModel().getColumnById('toBeValue').getEditor().getStore();
@@ -184,6 +187,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		rolePersonListStore.each(function(item) {
 			var value = item.data.roleName;
 			if(value === 'AIR_SPECIAL_ATTRIBUTE_EDITOR'){
+				btn.show();
 				grid.getColumnModel().getColumnById('toBeValue').editor.disabled = false;
 				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
 				btn.disabled = false;
