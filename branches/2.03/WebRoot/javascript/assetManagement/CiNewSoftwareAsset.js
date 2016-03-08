@@ -96,7 +96,20 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                     handler: function(button, event) {
                         this.saveAsset(); 
                     }.createDelegate(this)
-                }, {
+                },{
+					xtype : 'button',
+					itemId : 'softwareCopyBtn',
+					text : 'Copy',
+					hidden: true,
+					style : {
+						fontSize : 12,
+						margin : '8 10 0 0',
+						width:80
+					},
+					handler: function(button, event) {
+		    	   		this.copyAsset();//button, event
+		    		}.createDelegate(this)
+				}, {
                     xtype: 'button',
                     itemId: 'cancelBtn',
                     text: 'Cancel',
@@ -319,6 +332,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     
 	enableAssetButtons: function() {	
 		var saveBtn = this.getComponent('buttonPanel').getComponent('saveBtn');
+		var copyBtn = this.getComponent('buttonPanel').getComponent('softwareCopyBtn');
 		var bHistory = this.getComponent('buttonPanel').getComponent('bHistory');
 		
 		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
@@ -338,6 +352,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 				var value = item.data.roleName;
 				if(value === 'AIR Asset Manager'){
 					saveBtn.show();
+					copyBtn.show();
 					
 					cbOrderNumber.setReadOnly(false);
 					tInventorynumber.setReadOnly(false);
@@ -352,6 +367,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 			});
 		} else {
 			saveBtn.hide();
+			copyBtn.hide();
 		}
 		
 		var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
@@ -384,6 +400,22 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
         
     	var assetData = this.getUpdateParam();
     	
+    	newAssetstore.on('load', this.onSaved, this);
+        newAssetstore.load({
+            params: assetData
+        });
+        
+    },
+    
+    copyAsset: function() {
+    	AAM.getMask(AC.MASK_TYPE_LOAD).show();
+    	
+        newAssetstore = AIR.AirStoreFactory.createSaveAssetStore();
+        var assetData = this.getUpdateParam();
+        
+        assetData.id=undefined;
+        assetData.identNumber=undefined;
+        
     	newAssetstore.on('load', this.onSaved, this);
         newAssetstore.load({
             params: assetData
