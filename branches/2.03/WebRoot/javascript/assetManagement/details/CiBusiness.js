@@ -212,7 +212,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 		    target: this.getComponent('pPSPElement').getComponent('checkPspElement'),
 		    title: 'Incl Technically Completed',
 		    text: '',
-		    width: 200,
+		    width: 180,
 		    showDelay: 1,      // Show 50ms after entering target
 		    trackMouse: true,
 		    dismissDelay: 99000 // Hide after 99 seconds hover
