@@ -189,9 +189,11 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    		id: 'bEditConnections',
 			    		text: 'Edit Connections',
 			    		autoWidth: false,
-			    		
+			    		style: {
+			    			align: 'right'
+			    		},
 			    		//flex: 1,
-			    		
+			    		//buttonAlign: 'right',
 			    		pack: 'end',
 			    		enableToggle: true
 		    		}]
