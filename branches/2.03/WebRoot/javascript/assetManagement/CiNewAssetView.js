@@ -43,8 +43,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                 xtype: 'panel',
                 id: 'bottomPanel',
                 border: false,
-                height: 420,
-                autoScroll: true,
+                height: 770,
+                //autoScroll: true,
                 layout: {
                     type: 'table',
                     columns: 2
@@ -105,6 +105,19 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 					},
 					handler: function(button, event) {
 		    	   		this.saveAsset();//button, event
+		    		}.createDelegate(this)
+				},{
+					xtype : 'button',
+					itemId : 'copyBtn',
+					text : 'Copy',
+					hidden: true,
+					style : {
+						fontSize : 12,
+						margin : '8 10 0 0',
+						width:80
+					},
+					handler: function(button, event) {
+		    	   		this.copyAsset();//button, event
 		    		}.createDelegate(this)
 				},{
 					xtype : 'button',
@@ -367,6 +380,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 	
 	enableAssetButtons: function() {	
 		var saveBtn = this.getComponent('buttonPanel').getComponent('saveBtn');
+		var copyBtn = this.getComponent('buttonPanel').getComponent('copyBtn');
 		var bHistory = this.getComponent('buttonPanel').getComponent('bHistory');
 		
 		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
@@ -398,6 +412,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 				var value = item.data.roleName;
 				if(value === AC.USER_ROLE_AIR_ASSET_MANAGER){
 					saveBtn.show();
+					copyBtn.show();
 					
 					cbOrderNumber.setReadOnly(false);
 					tInventorynumber.setReadOnly(false);
@@ -417,6 +432,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			
 		} else {
 			saveBtn.hide();
+			copyBtn.hide();
 		}
 		
 		var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
@@ -463,6 +479,23 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         });
         
     },
+    
+    copyAsset: function() {
+    	AAM.getMask(AC.MASK_TYPE_LOAD).show();
+    	
+        newAssetstore = AIR.AirStoreFactory.createSaveAssetStore();
+        var assetData = this.getUpdateParam();
+        
+        assetData.id=undefined;
+        assetData.identNumber=undefined;
+        
+    	newAssetstore.on('load', this.onSaved, this);
+        newAssetstore.load({
+            params: assetData
+        });
+        
+    },
+    
     
     getUpdateParam: function(){
     	
@@ -526,7 +559,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         	mailText = mailText.replace('<type>',assetData.type);
         	mailText = mailText.replace('<model>',assetData.model);
         	mailText = mailText.replace('<sapDescription>',assetData.sapDescription);
-
+        	
+        	//var legalEntity = assetData.owner;
+        	
         	mailText = mailText.replace('<orderNumber>',assetData.orderNumber);
         	mailText = mailText.replace('<costCenter>',assetData.costCenter);
         	mailText = mailText.replace('<legalEntity>',assetData.owner);
