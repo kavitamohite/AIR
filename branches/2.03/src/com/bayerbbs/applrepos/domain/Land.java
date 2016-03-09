@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "LAND")
 @NamedQueries(
-	@NamedQuery(name="findAllLand", query="from Land")
+	@NamedQuery(name="findAllLand", query="from Land ORDER BY NLSSORT(nameEn, 'NLS_SORT=GENERIC_M')")
 )
 public class Land implements Comparable<Land> {//extends RevisionInfo {
 	private Long id;
