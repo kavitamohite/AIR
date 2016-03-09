@@ -2,11 +2,9 @@ package com.bayerbbs.applrepos.hibernate;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import com.bayerbbs.applrepos.domain.HardwareCategory2;
 import com.bayerbbs.applrepos.dto.ProductDTO;
 
@@ -40,11 +38,11 @@ public class SubCategoryHbn extends BaseHbn {
 			tx = session.beginTransaction();
 			@SuppressWarnings("unchecked")
 			List<HardwareCategory2> values = session
-					.createQuery("from HardwareCategory2")
+					.createQuery("from HardwareCategory2 ORDER BY NLSSORT(hwKategory2, 'NLS_SORT=GENERIC_M')")
 					.list();
-
+			
 			data = getDTOSubCategoryList(values);
-
+			
 			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
@@ -58,7 +56,6 @@ public class SubCategoryHbn extends BaseHbn {
 			}
 
 		}
-
 		return data.toArray(new ProductDTO[data.size()]);
 	}
 	
