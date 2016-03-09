@@ -36,7 +36,7 @@ public class SapAssetHbn extends BaseHbn{
 		try {
 			tx = session.beginTransaction();
 			@SuppressWarnings("unchecked")
-			List<HardwareCategory1> values = session.createQuery("from HardwareCategory1").list();
+			List<HardwareCategory1> values = session.createQuery("from HardwareCategory1 ORDER BY NLSSORT(hwKategory1, 'NLS_SORT=GENERIC_M')").list();
 
 			data = getDTOSapAssetList(values);
 
@@ -54,7 +54,7 @@ public class SapAssetHbn extends BaseHbn{
 			}
 
 		}
-		Collections.sort(data);
+		//Collections.sort(data);
 		return data.toArray(new KeyValueEnDTO[0]);
 	}
 	
