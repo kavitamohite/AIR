@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.applrepos.domain.HardwareCategory3;
@@ -51,6 +52,7 @@ public class TypeHbn  extends BaseHbn{
 				Criteria criteria = session.createCriteria(HardwareCategory3.class);
 				criteria.add(Restrictions.isNotNull("partnerId"));
 				criteria.add(Restrictions.isNull("deleteTimestamp"));
+				criteria.addOrder(Order.asc("hwKategory3").ignoreCase());
 				values = criteria.list();
 			}
 			data = getDTOTypeList(values);
