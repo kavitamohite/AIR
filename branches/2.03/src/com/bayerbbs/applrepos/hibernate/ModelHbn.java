@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.applrepos.domain.HardwareCategory4;
@@ -51,6 +53,7 @@ public class ModelHbn extends BaseHbn {
 			} else {
 				Criteria criteria = session.createCriteria(HardwareCategory4.class);
 				criteria.add(Restrictions.isNull("deleteTimestamp"));
+				criteria.addOrder(Order.asc("hwKategory4").ignoreCase());
 				values = criteria.list();
 			}
 
