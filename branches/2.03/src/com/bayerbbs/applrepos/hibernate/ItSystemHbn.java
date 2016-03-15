@@ -1440,16 +1440,28 @@ public class ItSystemHbn extends BaseHbn {
 			return new KeyValueDTO[0];
 
 		List<ItSystem> itSystems = null;
-
+		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
+			tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(ItSystem.class);
 			criteria.add(Restrictions.eq("osNameId", id.intValue()));
-			criteria.addOrder(Order.asc("ItSystemName").ignoreCase());
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
+			criteria.addOrder(Order.asc("itSystemName").ignoreCase());
 			itSystems = (List<ItSystem>) criteria.list();
-			session.close();
+			tx.commit();
+			//session.close();
 		} catch (RuntimeException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			if (tx != null && tx.isActive()) {
+				try {
+					tx.rollback();
+				} catch (HibernateException e1) {
+					System.out.println("Error rolling back transaction");
+				}
+				throw e;
+			}
+
 		}
 
 		List<KeyValueDTO> data = new ArrayList<KeyValueDTO>();
