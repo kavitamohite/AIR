@@ -2760,27 +2760,6 @@ public class CiEntityWS {
 		try {
 			if (LDAPAuthWS.isLoginValid(mAttrParameterInput.getCwid(),
 					mAttrParameterInput.getToken())) {
-				// application owner delegate
-				if (!StringUtils.isNullOrEmpty(mAttrParameterInput
-						.getApplicationDelegate())) {
-					List<PersonsDTO> listPersons = PersonsHbn
-							.findPersonByCWID(mAttrParameterInput
-									.getApplicationDelegate());
-					if (!listPersons.isEmpty()) {
-						mAttrParameterInput.setApplicationDelegate(listPersons
-								.get(0).getCwid());
-					}
-				}
-				if (!StringUtils.isNullOrEmpty(mAttrParameterInput
-						.getCiOwnerDelegate())) {
-					List<PersonsDTO> listPersons = PersonsHbn
-							.findPersonByCWID(mAttrParameterInput
-									.getApplicationDelegate());
-					if (!listPersons.isEmpty()) {
-						mAttrParameterInput.setCiOwnerDelegate(listPersons.get(
-								0).getCwid());
-					}
-				}
 				if (mAttrParameterInput.getCiTypeId() == AirKonstanten.TABLE_ID_APPLICATION) {
 					parameterOutPut = applicationSelectAttrMassUpdate(mAttrParameterInput);
 				} else if (mAttrParameterInput.getCiTypeId() == AirKonstanten.TABLE_ID_IT_SYSTEM)
@@ -2943,9 +2922,9 @@ public class CiEntityWS {
 
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
-						.getCiOwnerDelegate())) {
+						.getCiOwnerDelegateHidden())) {
 					locationCi.setCiOwnerDelegate(mAttrParameterInput
-							.getCiOwnerDelegate());
+							.getCiOwnerDelegateHidden());
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getRelevanceGR1435())) {
@@ -3118,9 +3097,9 @@ public class CiEntityWS {
 
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
-						.getApplicationDelegate())) {
+						.getApplicationDelegateHidden())) {
 					application.setApplicationOwnerDelegate(mAttrParameterInput
-							.getApplicationDelegate());
+							.getApplicationDelegateHidden());
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getApplicationSteward())) {
@@ -3133,9 +3112,9 @@ public class CiEntityWS {
 							.getCiOwnerPrimaryPerson());
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
-						.getCiOwnerDelegate())) {
+						.getCiOwnerDelegateHidden())) {
 					application.setSubResponsible(mAttrParameterInput
-							.getCiOwnerDelegate());
+							.getCiOwnerDelegateHidden());
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getVersion())) {
@@ -3392,9 +3371,9 @@ public class CiEntityWS {
 					itSystem.setItset(itSet);
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
-						.getCiOwnerDelegate())) {
+						.getCiOwnerDelegateHidden())) {
 					itSystem.setCiOwnerDelegate(mAttrParameterInput
-							.getCiOwnerDelegate());
+							.getCiOwnerDelegateHidden());
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getClusterCode())) {
