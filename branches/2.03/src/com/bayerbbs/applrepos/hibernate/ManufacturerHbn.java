@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,7 +17,9 @@ import com.bayerbbs.applrepos.dto.ProductDTO;
 
 public class ManufacturerHbn extends BaseHbn {
 
+
 	private static final String SQL_Hardware_Product = "select * from partner where partner_id in (select partner_id from hw_kategorie3) ORDER BY NLSSORT(partner_name, 'NLS_SORT=GENERIC_M') ";
+
 	private static final String SQL_Software_Product = "select * from partner where partner_id in (select hersteller_partnid from SW_KATEGORIE2)";
 
 	public static Partner findById(Long id) {
@@ -90,6 +93,7 @@ public class ManufacturerHbn extends BaseHbn {
 		try {
 			@SuppressWarnings("unchecked")
 			List<Partner> values = session.createQuery("from Partner p where p.number is not null and p.deleteTimestamp is null ORDER BY NLSSORT(name, 'NLS_SORT=GENERIC_M') ").list();
+
 			data = getLegalDTOList(values);
 			session.close();
 		} catch (RuntimeException e) {
@@ -98,6 +102,34 @@ public class ManufacturerHbn extends BaseHbn {
 		//Collections.sort(data);
 		return data.toArray(new KeyValueDTO[0]);
 
+	}
+	
+	public static Long findPartnerByPartnerNameAndNumber(String partnerName, long partnerNumber) {
+		Long partnerId = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			Connection conn = session.connection();
+			PreparedStatement pstmt = conn.prepareStatement("select * FROM PARTNER where PARTNER_NAME = ? and PARTNER_NR = ?");
+			pstmt.setString(1, partnerName);
+			pstmt.setLong(2, partnerNumber);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				partnerId = rs.getLong(1);
+				break;
+			}
+			rs.close();
+			pstmt.close();
+			conn.close();
+			session.close();
+			System.out.println("returnFlag >>>>>>>>>>>>> "+partnerId);
+		} catch(Exception ex)
+		{
+			System.out.println("Error ------> "+ex.getMessage());
+			ex.printStackTrace();
+			partnerId = null;
+		}
+		return partnerId;
 	}
 
 }
