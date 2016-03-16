@@ -11,10 +11,12 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
@@ -365,5 +367,41 @@ public class LokationItemHbn extends BaseHbn {
 		
 		if(ciDTO.getDownStreamAdd() != null && ciDTO.getDownStreamAdd().length() > 0 || ciDTO.getDownStreamDelete() != null && ciDTO.getDownStreamDelete().length() > 0)
 			CiEntitiesHbn.saveCiRelations(ciDTO.getTableId(), ciDTO.getId(), ciDTO.getDownStreamAdd(), ciDTO.getDownStreamDelete(), "DOWNSTREAM", cwid);
+	}
+	
+	/**
+	 * This method provides the typeId for a Type name
+	 * @author enqmu
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public static Land findLandByWhereName(String name)
+    {
+    	Land land = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+    	try {
+    		Criteria criteria = session.createCriteria(Land.class);
+    		criteria.add(Restrictions.or(Restrictions.eq("name", name), Restrictions.eq("nameEn", name)));
+			
+			
+			land = (Land) criteria.uniqueResult();			
+			
+    	} catch(RuntimeException ex)
+    	{
+    		ex.printStackTrace();
+    		throw ex;
+    	}finally{
+    		session.close();
+    	}
+    	return land;
+    }
+	
+	/**
+	 * @author ENQMU
+	 * @param id
+	 * @return Land - land
+	 */
+	public static Land findLandById(Long id) {
+		return findById(Land.class, id);
 	}
 }
