@@ -228,19 +228,114 @@ AIR.AirConfigFactory = function() {
 			return baseCiFields;
 		},
 		
-		createAssetManagementGridConfig: function(selModel) {
-		    var columnConfig = [];
-		    columnConfig.push(selModel);
-		    columnConfig.push({ id: 'sapDescription', header: 'SAP Description', dataIndex: 'sapDescription', width: 150, sortable: true});
-			columnConfig.push({ id: 'pspElement', header: 'PSP Element', dataIndex: 'pspElement', width: 150, sortable: true});
-			columnConfig.push({ id: 'costCenter', header: 'Cost Center', dataIndex: 'costCenter', width: 150, sortable: true});
-			columnConfig.push({ id: 'site', header: 'Site', dataIndex: 'site', width: 150, sortable: false});
-			columnConfig.push({ id: 'serialNumber', header: 'Serial Number', dataIndex: 'serialNumber', width: 150, sortable: true});
-			columnConfig.push({ id: 'technicalMaster', header: 'Technical Master', dataIndex: 'technicalMaster', width: 150, sortable: true});
-			columnConfig.push({ id: 'technicalNumber', header: 'Technical Number', dataIndex: 'technicalNumber', width: 150, sortable: true});
-			columnConfig.push({ id: 'inventoryNumber', header: 'Inventory Number', dataIndex: 'inventoryNumber', width: 150, sortable: true});
-			columnConfig.push({ id: 'organizationalunit', header: 'Org Unit', dataIndex: 'organizationalunit', width: 150, sortable: true});
-			
+		createAssetManagementGridConfig : function(selModel) {
+
+			var columnConfig = [];
+			var columns = AAM.getAssetColumns();
+
+			if (columns == undefined || columns.length == 0) {
+				var itsecUserOptionListStore = AIR.AirStoreManager
+						.getStoreByName('itsecUserOptionListStore');
+				var index = itsecUserOptionListStore.findExact(
+						'itsecUserOptionName',
+						'AIR_USER_PROFILE_COLUMNS_PREFERENCE');
+				if (index >= 0) {
+					columns = itsecUserOptionListStore.getAt(index).get(
+							'itsecUserOptionValue');
+				} else {
+					columns = AC.AIR_USER_PROFILE_COLUMNS_PREFERENCE;
+				}
+
+			}
+
+			columnConfig.push(selModel);
+			var columnsArr = columns.split(';');
+			for (var i = 0; i < columnsArr.length; i++) {
+				switch (columnsArr[i]) {
+				case 'sapDescription':
+					columnConfig.push({
+						id : 'sapDescription',
+						header : 'SAP Description',
+						dataIndex : 'sapDescription',
+						width : 150,
+						sortable : true
+					});
+					break;
+				case 'pspElement':
+					columnConfig.push({
+						id : 'pspElement',
+						header : 'PSP Element',
+						dataIndex : 'pspElement',
+						width : 150,
+						sortable : true
+					});
+					break;
+				case 'costCenter':
+					columnConfig.push({
+						id : 'costCenter',
+						header : 'Cost Center',
+						dataIndex : 'costCenter',
+						width : 150,
+						sortable : true
+					});
+					break;
+				case 'site':
+					columnConfig.push({
+						id : 'site',
+						header : 'Site',
+						dataIndex : 'site',
+						width : 150,
+						sortable : false
+					});
+					break;
+				case 'serialNumber':
+					columnConfig.push({
+						id : 'serialNumber',
+						header : 'Serial Number',
+						dataIndex : 'serialNumber',
+						width : 150,
+						sortable : true
+					});
+					break;
+				case 'technicalMaster':
+					columnConfig.push({
+						id : 'technicalMaster',
+						header : 'Technical Master',
+						dataIndex : 'technicalMaster',
+						width : 150,
+						sortable : true
+					});
+					break;
+				case 'technicalNumber':
+					columnConfig.push({
+						id : 'technicalNumber',
+						header : 'Technical Number',
+						dataIndex : 'technicalNumber',
+						width : 150,
+						sortable : true
+					});
+					break;
+				case 'inventoryNumber':
+					columnConfig.push({
+						id : 'inventoryNumber',
+						header : 'Inventory Number',
+						dataIndex : 'inventoryNumber',
+						width : 150,
+						sortable : true
+					});
+					break;
+				case 'organizationalunit':
+					columnConfig.push({
+						id : 'organizationalunit',
+						header : 'Org Unit',
+						dataIndex : 'organizationalunit',
+						width : 150,
+						sortable : true
+					});
+					break;
+				}
+			}
+
 			return columnConfig;
 		}
 	}
