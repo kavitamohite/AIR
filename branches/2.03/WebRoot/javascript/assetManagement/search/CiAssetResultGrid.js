@@ -38,7 +38,7 @@ AIR.CiAssetResultGrid = Ext.extend(Ext.grid.GridPanel, {
             }
         });
 
-
+        this.selModel = selModel;
         var columns = AIR.AirConfigFactory.createAssetManagementGridConfig(selModel);
 
         for (var i = 1; i < columns.length; i++)
