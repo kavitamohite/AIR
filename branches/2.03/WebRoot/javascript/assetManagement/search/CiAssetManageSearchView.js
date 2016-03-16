@@ -11,7 +11,7 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
                 border: false,
                 layout: 'table',
                 layoutConfig: {
-                    columns: 3
+                    columns: 6 
                 },
                 items: [{
                     xtype: 'textfield',
@@ -41,7 +41,35 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
                     style: {
                         marginLeft: 5
                     }
-                }, {
+                },
+                {
+                    xtype: 'button',
+                    id: 'bSaveColumnsPreference',
+                    hidden: true,
+                    text: 'Save Columns Preference',
+                    style: {
+                        marginLeft: 5
+                    }
+                },
+                {
+                    xtype: 'button',
+                    id: 'bImportAssets',
+                    hidden: true,
+                    text: 'Import',
+                    style: {
+                        marginLeft: 5
+                    }
+                },
+                {
+                    xtype: 'button',
+                    id: 'bExportAssets',
+                    hidden: true,
+                    text: 'Export',
+                    style: {
+                        marginLeft: 5
+                    }
+                },
+                {
                     xtype: 'radiogroup',
                     id: 'searchMode',
                     items: [{
@@ -61,6 +89,7 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
         });
 
         AIR.CiAssetManageSearchView.superclass.initComponent.call(this);
+        
     },
 
     reset: function() {
