@@ -1091,6 +1091,7 @@ public class ItSystemHbn extends BaseHbn {
 		q.setParameter("name", name);
 
 		ItSystem itSystem = (ItSystem) q.uniqueResult();
+		session.close();
 
 		return itSystem;
 	}
@@ -1472,5 +1473,75 @@ public class ItSystemHbn extends BaseHbn {
 		}
 		return data.toArray(new KeyValueDTO[0]);
 	}
-
+	
+	public static int getMaximumDCNumberInSequence()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Connection conn = session.connection();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select max(TO_NUMBER(SUBSTR(IT_SYSTEM_NAME,3))) FROM it_system it WHERE DEL_TIMESTAMP is null and regexp_like (it_system_name ,'^DC[0-9]*{4}?[0-9]*$') ORDER BY insert_timestamp DESC");
+			while (rs.next()) {
+				return rs.getInt(1);
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public static List<String> getAvailabeDCNumbers()
+	{
+		List<String> returnList = new ArrayList<String>();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Connection conn = session.connection();
+			Statement stmt = conn.createStatement();   
+			ResultSet rs = stmt.executeQuery("select 'DC'||TRIM(to_char (q1,'0000'))sequence from ( select to_number(trim(level)) - 1 q1 from dual connect by level <=9999 minus SELECT TO_NUMBER(SUBSTR(trim(IT_SYSTEM_NAME),3)) q1 FROM it_system it WHERE DEL_TIMESTAMP IS NULL AND regexp_like (it_system_name ,'^DC[[:digit:]]{4}$'))");
+			while (rs.next()) {
+				returnList.add(rs.getString(1));
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		System.out.println("returnList size >>>>>>>>> "+returnList.size());
+		return returnList;
+	}
+	
+	public static ItSystem saveItSystem(ItSystem itSystem)
+	{
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		try {
+			String strItSet = ApplReposHbn.getItSetFromCwid(itSystem.getCiOwner());
+			if (null != strItSet) {
+				itSystem.setItset(Long.parseLong(strItSet));
+			}
+			
+			session.saveOrUpdate(itSystem);
+			session.flush();
+		} catch(Exception ex)
+		{
+			System.out.println("Error >>>>>>>>>>>>> "+ex.getMessage());
+			ex.printStackTrace();
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			return null;
+		} finally {
+			if (tx.isActive()) {
+				tx.commit();
+			}
+			session.close();
+		}
+		return itSystem;
+	}
 }
