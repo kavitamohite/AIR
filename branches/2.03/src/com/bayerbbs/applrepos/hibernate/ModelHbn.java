@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -64,5 +64,31 @@ public class ModelHbn extends BaseHbn {
 		}
 		return data.toArray(new ProductDTO[data.size()]);
 	}
+	/**
+	 * This method provides the typeId for a Type name
+	 * @author enqmu
+	 * 
+	 */
+	public static HardwareCategory4 findModelIdByWhereName(String name)
+    {
+    	HardwareCategory4 returnHardwareCategory4 = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+    	try {
+    		Criteria criteria = session.createCriteria(HardwareCategory4.class);
+    		criteria.setFetchMode("hwCategory3", FetchMode.EAGER);
+    		criteria.add(Restrictions.eq("hwKategory4", name));
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
+			returnHardwareCategory4 = (HardwareCategory4) criteria.uniqueResult();
+			
+    	} catch(RuntimeException ex)
+    	{
+    		ex.printStackTrace();
+    		throw ex;
+    	}finally{
+    		session.close();
+    	}
+    	return returnHardwareCategory4;
+    }
+	
 
 }
