@@ -58,5 +58,31 @@ public class CostcenterHbn extends BaseHbn{
 		}
 		return data.toArray(new CostCenterDTO[0]);
 	}
+	/**
+	 * This method provides the costCenterId for a Cost Center name
+	 * @author enqmu
+	 * 
+	 */
+	public static Konto findCostCenterIdByName(String name)
+    {
+    	Konto returnObj = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+    	try {
+    		Criteria criteria = session.createCriteria(Konto.class);
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
+			criteria.add(Restrictions.eq("art", "KST"));
+			criteria.add(Restrictions.eq("name", name));
+			criteria.addOrder(Order.asc("name"));
+			returnObj = (Konto) criteria.uniqueResult();
+
+    	} catch(RuntimeException ex)
+    	{
+    		ex.printStackTrace();
+    		throw ex;
+    	}finally{
+			session.close();
+    	}
+    	return returnObj;
+    }
 
 }
