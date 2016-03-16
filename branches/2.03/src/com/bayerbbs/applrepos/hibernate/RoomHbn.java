@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -674,5 +677,40 @@ public class RoomHbn extends LokationItemHbn {
 		
 		return data.toArray(new KeyValueDTO[0]);
 	}
+	
+	/**
+	 * This method provides the Building for a buildingId and building name
+	 * @author enqmu
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public static Long findRoomIdByWhereName(Long buildingId, String name)
+    {
+		Long roomId = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+    	try {
+    		Connection conn = session.connection();
+			PreparedStatement pstmt = conn.prepareStatement("SELECT RAUM_ID FROM RAUM r WHERE AREA_ID IN (SELECT  AREA_ID FROM BUILDING_AREA ba WHERE GEBAEUDE_ID = ? AND DEL_QUELLE IS NULL) AND DEL_QUELLE IS NULL AND RAUM_NAME=?");
+			pstmt.setLong(1, buildingId);
+			pstmt.setString(2, name);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				roomId = rs.getLong(1);
+				break;
+			}
+			rs.close();
+			pstmt.close();
+			conn.close();
+    	} catch(Exception ex)
+    	{
+    		System.out.println("Error -------> "+ex.getMessage());
+    		ex.printStackTrace();
+    	}finally{
+    		session.close();
+    	}
+    	return roomId;
+    }
+
 
 }
