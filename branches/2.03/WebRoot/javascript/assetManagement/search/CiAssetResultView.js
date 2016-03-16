@@ -88,7 +88,7 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
         var bSelectDeselectAll = this.getComponent('pAssetSearchResultOptions').getComponent('bAssetSelectDeselectAll');
         var cbIsMultipleSelect = this.getComponent('pAssetSearchResultOptions').getComponent('cbAssetIsMultipleSelect');
         var lIsMultipleSelect = this.getComponent('pAssetSearchResultOptions').getComponent('lAssetIsMultipleSelect');
-
+        
         var ciResultGrid;
         var ciResultGridId;
 
@@ -113,8 +113,8 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
             tpCiSearchResultTables.add(ciResultGrid);
             tpCiSearchResultTables.getItem(ciResultGridId).setTitle(this.getTabTitle(ciResultGridId) + '_' + tabCount); //ciResultGridId
             tpCiSearchResultTables.setActiveTab(ciResultGridId);
-
-            this.updateColumnLabels(AAM.getLabels());
+            ciResultGrid.getSelectionModel().singleSelect = false;     // Added by enqmu
+//            this.updateColumnLabels(AAM.getLabels());
 
             ciResultGrid.on('close', this.onTabClose, this);
             ciResultGrid.on('activate', this.onTabActivate, this);
@@ -263,7 +263,7 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
             }
         }
 
-        this.updateColumnLabels(labels);
+//        this.updateColumnLabels(labels);
     },
 
     updateColumnLabels: function(labels) {
