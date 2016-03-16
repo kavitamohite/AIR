@@ -103,7 +103,47 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 						'padding-left':'15px'
 					}	
 			    }]
-			},{
+			},
+			{
+				xtype: 'panel',
+                itemId: 'pMultipleAsset',
+                border: false,
+                layout: 'hbox',
+                style: {
+                    fontSize: 12,
+                    'padding-bottom':'5px'
+                },
+                items: [{
+    				xtype : 'label',
+    				itemId : 'multipleAsset',
+    				text : 'Multiple Assets',
+    				style : {
+    					fontSize : 12,
+    					'margin-left': '15px',
+    					'font-weight': 'bold'
+    				},    			
+    			}, 
+                { 	
+    				xtype: 'checkbox',
+                    itemId: 'checkmultipleasset',  
+                    style: {
+                   	 'margin-left': '40px'
+                       },
+    			  },
+                  {
+                	  xtype: 'textfield',
+                      itemId: 'tmultipleasset',
+                      emptyText: 'Number of Assets',
+                      disabled: true,
+                      style: {
+                        	 'margin-left': '25px',
+                            }
+                   }
+    			  
+                  ]   
+                
+			}
+			,{
 				xtype: 'textfield',
 				itemId: 'tsapDescription',
 				fieldLabel: 'SAP Description of the asset',
@@ -296,6 +336,12 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
 
         var tsapDescription = this.getComponent('tsapDescription');
         tsapDescription.setValue(assetData.sapDescription);
+        
+        // Added by enqmu
+        this.getComponent('pMultipleAsset').getComponent('checkmultipleasset').setValue(false);
+        this.getComponent('pMultipleAsset').getComponent('tmultipleasset').setValue("");
+        this.getComponent('pMultipleAsset').getComponent('tmultipleasset').disable();
+        // end
         
         if(assetData.manufacturerId){
         	this.loadTypeStore(assetData.manufacturerId, assetData.subcategoryId);
