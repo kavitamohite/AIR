@@ -7,9 +7,11 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.air.error.ErrorCodeManager;
 import com.bayerbbs.applrepos.common.ApplReposTS;
@@ -19,7 +21,6 @@ import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
-import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.KeyValueEnDTO;
 import com.bayerbbs.applrepos.dto.StandortDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
@@ -530,5 +531,28 @@ public class StandortHbn extends LokationItemHbn {
 		
 		return output;
 	}
+	/**
+	 * This method provides the typeId for a Type name
+	 * @author enqmu
+	 * 
+	 */
+	public static Standort findSiteByNameAndLandId(String name, Long landId)
+    {
+		Standort site = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();		
+    	try {
+    		Criteria criteria = session.createCriteria(Standort.class);
+    		criteria.add(Restrictions.or(Restrictions.eq("standortName", name), Restrictions.eq("nameEn", name)));
+    		criteria.add(Restrictions.eq("landId", landId));
+    		
+			site = (Standort) criteria.uniqueResult();
+    	} catch(Exception ex)
+    	{
+    		ex.printStackTrace();
+    	}finally{
+    		session.close();
+    	}
+    	return site;
+    }
 
 }
