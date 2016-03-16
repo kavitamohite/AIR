@@ -914,8 +914,13 @@ AIR.AirApplicationManager = function() {
 			}else{
 				return this.salInValid;
 			}
-		}
-		
+		},
+		setAssetColumns : function(columns) {
+			this.columns = columns;
+		},
+		getAssetColumns : function() {
+			return this.columns;
+		}		
 	};
 }();
 
