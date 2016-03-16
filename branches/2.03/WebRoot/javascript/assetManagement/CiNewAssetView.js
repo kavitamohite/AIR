@@ -36,7 +36,31 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                     marginTop: 25,
                     marginBottom: 20
                 }
-            }, {
+            },
+            {   // Added by enqmu
+            	xtype: 'window',
+            	id: 'formWindow',
+            	closeAction: 'hide',
+            	modal: true,
+            	title: 'Upload File:',
+            	hidden: true,
+            	width: 300,
+            	items: [ {   
+            		xtype: 'panel',
+            		id: 'importPanel',
+            		html: "<form id='importExcelFile' action='AirExcelImportServlet' method='post' target='_blank' enctype='multipart/form-data'><input id='file' name='file' type='file' /><input type='hidden' id='usercwid' name='usercwid' /></form>",
+            			},
+                {
+    				xtype : 'button',
+    				itemId : 'uploadBtn',
+    				text : 'Upload',
+    				style : {
+    					fontSize : 12,
+    					margin : '8 10 0 0',
+    					width:80
+    				}
+    			} ]
+            },{
                 xtype: 'AIR.CiTopPanel',
                 id: 'topPanel'
             }, {
@@ -137,6 +161,28 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 						margin : '8 10 0 0',
 						width:80
 					}
+				},
+				{
+					xtype : 'button',
+					itemId : 'bImport',
+					text : 'Import',
+					hidden: false,
+					style : {
+						fontSize : 14,
+						margin : '8 10 0 0',
+						width:80
+					}
+				},
+				{
+					xtype : 'button',
+					itemId : 'bExport',
+					text : 'Export',
+					hidden: false,
+					style : {
+						fontSize : 14,
+						margin : '8 10 0 0',
+						width:80
+					}
 				},{
 					xtype : 'button',
 					itemId : 'bHistory',
@@ -159,7 +205,26 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 
         AIR.CiNewAssetView.superclass.initComponent.call(this);
         this.addEvents('externalNavigation');
-
+        
+        var bExport=this.getComponent('buttonPanel').getComponent('bExport');
+        bExport.on('click', this.exportAssetAlert, this);  
+        
+        
+        var bImport=this.getComponent('buttonPanel').getComponent('bImport');
+        bImport.on('click', this.importAssetAlert, this);
+        // added by enqmu
+        var uploadBtn=this.getComponent('formWindow').getComponent('uploadBtn');
+        uploadBtn.on('click', this.importExcel, this);
+        this.generateDCFlag = false;
+        var btnDCName = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('pSystemPlatform').getComponent('dcName');
+        btnDCName.on('click', this.generateDCNumbers, this);
+        var cbSubCategoryValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
+        if(cbSubCategoryValue == 'Server')
+		{
+//			btnDCName.disabled = false;
+			Ext.Msg.alert('Message', 'Press DC Name button to auto generate DC numbers otherwise it will not be generated.');
+		}
+        // end
         var bReset = this.getComponent('buttonPanel').getComponent('bReset');
         bReset.on('click', this.resetFormFields, this);
 
@@ -173,6 +238,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
         cbSubCategory.on('select', this.onFieldKeyUp, this);
         cbSubCategory.on('keypress', this.onFieldKeyUp, this);
+        cbSubCategory.on('change', this.onSubCategoryChange, this);
         
         var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
         cbType.on('select', this.onFieldKeyUp, this);
@@ -181,6 +247,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
         cbModel.on('select', this.onFieldKeyUp, this);
         cbModel.on('keypress', this.onFieldKeyUp, this);
+        cbModel.on('change', this.onSubCategoryChange, this);
         
         var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter');
         cbCostcenter.on('select', this.onFieldKeyUp, this);
@@ -209,7 +276,238 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         var cbRack = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack');
         cbRack.on('select', this.onFieldKeyUp, this);
         cbRack.on('keypress', this.onFieldKeyUp, this);
+        
+        var checkmultipleasset=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').getComponent('checkmultipleasset');
+        checkmultipleasset.on('check', this.onCheckMultipleAsset, this);
+        
+//        this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').hide();
+//        bExport.hide();
+//        bImport.hide();
+//        btnDCName.hide();
+        
     },
+    
+    
+    
+    
+    
+    //C0000049066
+    onCheckMultipleAsset: function(checkbox, isChecked){
+		var bExport = this.getComponent('buttonPanel').getComponent('bExport');
+		var bImport = this.getComponent('buttonPanel').getComponent('bImport');
+		var tmultipleasset=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').getComponent('tmultipleasset');
+		if(isChecked) {
+			tmultipleasset.enable();
+			/*bExport.show();
+			bImport.show();*/
+		}
+		else if(!isChecked){
+			tmultipleasset.disable();
+			tmultipleasset.setValue('');
+			/*bExport.hide();
+			bImport.hide();*/
+		}				
+	},
+	
+	assetsExcelExport:function(link, event){
+		
+		if(link != 'yes')
+		{
+			return;
+		}
+		
+    	var cbManufacturer = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer');
+    	var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
+  	    var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
+    	var cbmodel=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
+    	var tsapDescription=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('tsapDescription');
+    	var tmultipleasset=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').getComponent('tmultipleasset');  
+    	console.log('tmultipleasset--'+tmultipleasset.getRawValue())
+    	// Added by anit
+    	var cbCostcenterValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter').getRawValue();
+    	var cbPspValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pPSPElement').getComponent('cbPsp').getRawValue();
+    	var cbSiteValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite').getRawValue();
+    	var tTechnicalMasterValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalMaster').getRawValue();
+    	var tSerialNumberValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tSerialNumber').getRawValue();
+    	var tTechnicalNumberValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalNumber').getRawValue();
+    	var tInventorynumberValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber').getRawValue();
+    	var tOrderNumberValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumber').getRawValue();
+    	var tOrganisationValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrganisation').getRawValue();     // 
+    	var tOwnerValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOwner').getRawValue();
+    	
+    	var tCountryValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbCountry').getRawValue();
+    	var tSiteValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbSite').getRawValue();
+    	var tBuildingValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbBuilding').getRawValue(); 
+    	var tRoomValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('cbRoom').getRawValue();
+    	var tRackPositionValue = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('location').getComponent('pRackposition').getComponent('cbRack').getRawValue();
+    	// end by anit
+    	var exportForm = AAM.getExportForm();
+		
+		exportForm.action = '/AIR/newExcelExport';
+		exportForm.method = 'POST';
+		exportForm.target = '_blank';
+		
+		exportForm.searchAction.value = this.searchActionValue; // link.getId().substring(0, link.getId().indexOf('_')); // by enqmu
+		exportForm.cwid.value = AAM.getCwid();
+		
+		if(cbManufacturer.getRawValue() == null || cbManufacturer.getRawValue() == '' || cbManufacturer.getRawValue() == 'unknown')
+		{
+			Ext.Msg.alert('Error', 'Manufacturer must be provided.');
+			return;
+		}
+		else {
+			exportForm.manufacturer.value = cbManufacturer.getRawValue();
+		}
+		
+		if(cbSubCategory.getRawValue() == null || cbSubCategory.getRawValue() == '' || cbSubCategory.getRawValue() == 'unknown')
+		{
+			Ext.Msg.alert('Error', 'SubCategory must be provided.');
+			return;
+		}
+		else {
+			exportForm.subCategory.value = cbSubCategory.getRawValue();
+		}
+		
+		if(cbType.getRawValue() == null || cbType.getRawValue() == '' || cbType.getRawValue() == 'unknown')
+		{
+			Ext.Msg.alert('Error', 'Type must be provided.');
+			return;
+		}
+		else {
+			exportForm.type.value = cbType.getRawValue();
+		}
+		
+		if(cbmodel.getRawValue() == null || cbmodel.getRawValue() == '' || cbmodel.getRawValue() == 'unknown')
+		{
+			Ext.Msg.alert('Error', 'Model must be provided.');
+			return;
+		}
+		else {
+			exportForm.model.value = cbmodel.getRawValue();
+		}
+		
+		var tCheckmultipleassetValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').getComponent('checkmultipleasset').getValue();
+		
+		if(tCheckmultipleassetValue == false)
+		{
+			exportForm.multipleasset.value = 1;
+		}
+		else
+		{
+			exportForm.multipleasset.value = tmultipleasset.getRawValue();
+		}
+		
+		if(exportForm.multipleasset.value < 1 || exportForm.multipleasset.value % 1 != 0) {
+			Ext.Msg.alert('Message', 'Number of assets should be a number and not be less than 1.');
+			return;
+		}
+		
+		exportForm.sapDescription.value = tsapDescription.getRawValue();
+		
+		// Added by anit
+		exportForm.pspElement.value = cbPspValue;
+		exportForm.costCenter.value = cbCostcenterValue;
+		exportForm.site.value = cbSiteValue;
+		exportForm.serialNumber.value = tSerialNumberValue;
+		exportForm.technicalMaster.value = tTechnicalMasterValue;
+		exportForm.technicalNumber.value = tTechnicalNumberValue;
+		exportForm.inventorynumber.value = tInventorynumberValue;
+		exportForm.orderNumber.value = tOrderNumberValue;
+		exportForm.organisation.value = tOrganisationValue;
+		exportForm.country.value = tCountryValue;
+		exportForm.site.value = tSiteValue;
+		exportForm.building.value = tBuildingValue;
+		if(tRoomValue != null && tRoomValue.indexOf(',') > -1)
+		{
+			exportForm.room.value = tRoomValue.split(',')[0];
+		}
+		else
+		{
+			exportForm.room.value = tRoomValue;
+		}
+		exportForm.rackPosition.value = tRackPositionValue;
+		exportForm.generateDCFlag.value = this.generateDCFlag;
+		if(tOwnerValue != '' && tOwnerValue.indexOf('-') > -1)
+		{
+			var strArr = tOwnerValue.split('-');
+			if(strArr[0] != null) {
+				exportForm.companyName.value = strArr[0].trim();
+			}
+			if(strArr[1] != null) {
+				exportForm.companyCode.value = strArr[1].trim();
+			}
+		}
+		this.generateDCFlag = false;
+		// End by anit
+		exportForm.submit();
+    	
+    },
+    //C0000049066
+    exportAssetAlert :function(link, event){
+    	
+    	this.searchActionValue = link.getId().substring(0, link.getId().indexOf('_'));
+    	
+		var message='Are you sure you want to perform the export for the updated Asset details?';
+		var windowTitle= 'Start Export of Assets';
+		Ext.Msg.show({
+			   title: windowTitle,
+			   msg: message,
+			   buttons: Ext.Msg.YESNO,
+			   fn: this.assetsExcelExport,
+			   scope: this,
+			   icon: Ext.MessageBox.INFO
+			});
+    },
+    
+    importAssetAlert :function(){
+		var message='Are you sure you want to perform the import for the updated Asset details?';
+		var windowTitle= 'Start Import of Assets';
+		Ext.Msg.show({
+			   title: windowTitle,
+			   msg: message,
+			   buttons: Ext.Msg.YESNO,
+			   fn: this.testExcelImport,
+			   scope: this,
+			   icon: Ext.MessageBox.INFO
+			});
+    },
+    
+    testExcelImport:function(button,object) {
+    	if(button=='yes'){
+        	this.getComponent('formWindow').show();
+        	document.getElementById('importExcelFile').value='';
+    	}
+    },
+    importExcel:function(link, event) {
+    	this.getComponent('formWindow').hide();
+    	document.getElementById('usercwid').value = AIR.AirApplicationManager.getCwid();
+    	var importExcelFile = document.getElementById('importExcelFile');
+    	importExcelFile.submit();
+    }, 
+    generateDCNumbers:function(button, event) {
+    	var cbSubCategoryValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
+        if(cbSubCategoryValue == 'Server')
+		{
+        	this.generateDCFlag = true;
+        }
+        else
+        {
+        	this.generateDCFlag = false;
+        }
+    },
+    onSubCategoryChange:function(field, newValue, oldValue) {
+    	var cbSubCategoryValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
+    	var btnDCName = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('pSystemPlatform').getComponent('dcName');
+		if(cbSubCategoryValue == 'Server')
+		{
+			Ext.Msg.alert('Message', 'Press DC Name button to auto generate DC numbers otherwise it will not be generated.');
+		}
+		else
+		{
+			
+		}
+    },
+    // end
     
     onAssetHistoryButton: function(){
     	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
@@ -384,7 +682,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var bHistory = this.getComponent('buttonPanel').getComponent('bHistory');
 		
 		var cbManufacturerValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbManufacturer').getValue();
-		var cbSubCategoryValue=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getValue();
+		var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
+		var cbSubCategoryValue = cbSubCategory.getValue();
 		var cbTypeValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType').getValue();
 		var cbLifeCycleStatusValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('cbWorkflowTechnical').getValue();
 		var cbModelValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel').getValue();
@@ -399,7 +698,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		var cbOrderNumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbOrderNumber');
 		var tInventorynumber = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber');
 		var cbPsp = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pPSPElement').getComponent('cbPsp');
-
+		
 		if (cbManufacturerValue > 0 && cbSubCategoryValue > 0
 				&& cbTypeValue > 0 && cbModelValue > 0
 				&& cbCountryValue > 0 && cbSiteValue > 0
