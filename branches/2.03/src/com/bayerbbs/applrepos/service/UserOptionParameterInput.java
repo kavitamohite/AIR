@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
+
 public class UserOptionParameterInput {
 
 	private String cwid;
@@ -13,6 +14,9 @@ public class UserOptionParameterInput {
 	private String skipWizard;		// YES, NO
 	private String tooltip;			// YES, NO
 	private String showDeleted;		// YES, NO
+	
+	private String userColumnsPreference;  
+
 	
 	
 	public String getCwid() {
@@ -75,5 +79,18 @@ public class UserOptionParameterInput {
 	public void setShowDeleted(String showDeleted) {
 		this.showDeleted = showDeleted;
 	}
+	/**
+	 * @return the userColumnsPreference
+	 */
+	public String getUserColumnsPreference() {
+		return userColumnsPreference;
+	}
+	/**
+	 * @param userColumnsPreference the userColumnsPreference to set
+	 */
+	public void setUserColumnsPreference(String userColumnsPreference) {
+		this.userColumnsPreference = userColumnsPreference;
+	}
+	
 	
 }
