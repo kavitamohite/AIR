@@ -9,10 +9,11 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.air.error.ErrorCodeManager;
@@ -23,7 +24,6 @@ import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
-import com.bayerbbs.applrepos.domain.SoftwareCategory2;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
@@ -1271,5 +1271,48 @@ public class BuildingHbn extends LokationItemHbn {
 		Collections.sort(data);
 		return data.toArray(new KeyValueDTO[0]);
 	}
+	
+	/**
+	 * This method provides the Building for a siteId and building name
+	 * @author enqmu
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public static Building findLandByWhereName(Long siteId, String name)
+    {
+		Building building = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+    	try {
+    		Criteria criteria = session.createCriteria(Building.class);
+    		Criterion buildingName = Restrictions.eq("buildingName", name);   
+    		criteria.createAlias("terrain", "terrain", CriteriaSpecification.LEFT_JOIN);
+    		criteria.createAlias("terrain.standort", "terrain.standort", CriteriaSpecification.LEFT_JOIN);
+			Criterion standortCriterion = Restrictions.and(Restrictions.isNotNull("terrain"), Restrictions.isNotNull("terrain.standort"));
+			Criterion siteIdCriterion = Restrictions.eq("terrain.standort.id", siteId); 
+			
+			Criterion completeCondition = Restrictions.conjunction()
+					.add(buildingName)
+					.add(standortCriterion)
+					.add(siteIdCriterion)
+					;
+			criteria.add(completeCondition);	
+			
+			List<Building> values = (List<Building>) criteria
+					.list();
+			
+			if(values != null && !values.isEmpty())
+			{
+				building = values.get(0);
+			}
+			
+    	} catch(RuntimeException ex)
+    	{
+    		ex.printStackTrace();
+    		throw ex;
+    	}finally{
+    		session.close();
+    	}
+    	return building;
+    }
 
 }
