@@ -159,7 +159,104 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				},{
 					xtype: 'hidden',
 					id: 'houQueryMode'
-				}]
+				},
+				//vandana C0000049066
+				{
+					xtype: 'hidden',
+					id: 'manufacturer'
+				},{
+					xtype: 'hidden',
+					id: 'subCategory'
+				},{
+					xtype: 'hidden',
+					id: 'type'
+				},{
+					xtype: 'hidden',
+					id: 'model'
+				},{
+					xtype: 'hidden',
+					id: 'sapDescription'
+				},
+				{
+					xtype: 'hidden',
+					id: 'multipleasset'
+				},
+				//C0000049066
+				// C0000049066 - Start by anit
+				{
+					xtype: 'hidden',
+					id: 'pspElement'
+				},
+				{
+					xtype: 'hidden',
+					id: 'costCenter'
+				},
+				{
+					xtype: 'hidden',
+					id: 'serialNumber'
+				},
+				{
+					xtype: 'hidden',
+					id: 'technicalMaster'
+				},
+				{   
+					xtype: 'hidden',
+					id: 'technicalNumber'
+				},
+				{   
+					xtype: 'hidden',
+					id: 'inventorynumber'
+				},
+				{   
+					xtype: 'hidden',
+					id: 'organisation'
+				},
+				{   
+					xtype: 'hidden',
+					id: 'country'
+				},
+				{
+					xtype: 'hidden',
+					id: 'site'
+				},
+				{
+					xtype: 'hidden',
+					id: 'building'
+				},
+				{
+					xtype: 'hidden',
+					id: 'room'
+				},
+				{
+					xtype: 'hidden',
+					id: 'rackPosition'
+				},
+				{
+					xtype: 'hidden',
+					id: 'generateDCFlag'
+				},
+				{
+					xtype: 'hidden',
+					id: 'selectedHwAssets'
+				},
+				{
+					xtype: 'hidden',
+					id: 'language'
+				},
+				{
+					xtype: 'hidden',
+					id: 'orderNumber'
+				},
+				{
+					xtype: 'hidden',
+					id: 'companyCode'
+				},
+				{
+					xtype: 'hidden',
+					id: 'companyName'
+				}
+				// C0000049066 - End by anit   
+				]
 			}]
 		});
 		
@@ -578,6 +675,15 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				if(AAM.getAssetId()){
 					this.forwardToEdit(AAM.getAssetId());
 				}
+				// Added by enqmu
+				var cbSubCategoryValue = clCiProduct.getComponent('cbSubCategory').getRawValue();
+				var btnDCName = clCiTechnics.getComponent('pSystemPlatform').getComponent('dcName');
+		        if(cbSubCategoryValue == 'Server')
+				{
+					btnDCName.disabled = false;
+					Ext.Msg.alert('Message', 'Press DC Name button to auto generate DC numbers otherwise it will not be generated.');
+				}
+		        // end
 					break;	
 					
 			case 'clCiAssetwithoutInventory':
@@ -608,6 +714,15 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				if(AAM.getAssetId()){
 					this.forwardToEdit(AAM.getAssetId());
 				}
+				// Added by enqmu
+				var cbSubCategoryValue = clCiProduct.getComponent('cbSubCategory').getRawValue();
+				var btnDCName = clCiTechnics.getComponent('pSystemPlatform').getComponent('dcName');
+		        if(cbSubCategoryValue == 'Server')
+				{
+					btnDCName.disabled = false;
+					Ext.Msg.alert('Message', 'Press DC Name button to auto generate DC numbers otherwise it will not be generated.');
+				}
+				// end
 					break;	
 			default: break;
 		}
