@@ -50,25 +50,51 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 				style : {
 					marginBottom : 10
 				}
-			},{
-		        itemId: 'cbSystemPlatform',
-		    	xtype: 'filterCombo',
-		        fieldLabel: 'System platform name',
-		        width: 370,
-		        enableKeyEvents: true,
-		        forceSelection: true,
-		        store: AIR.AirStoreFactory.createSystemPlatformStore(),
-		        valueField: 'name',
-		        displayField: 'name',
-				lastQuery: '',
-				minChars: 0,
-		        triggerAction: 'all',
-		        mode: 'local',
-		        queryParam: 'name',
-				style : {
-					marginBottom : 10
+			},
+		    {
+                xtype: 'panel',
+                itemId: 'pSystemPlatform',
+                border: false,
+                layout: 'hbox',
+                style: {
+                    fontSize: 12
+                },
+                items: [{
+                    xtype: 'label',
+                    text: 'System platform name:',
+                    width: 105,
+                    style: {
+                        fontSize: 12
+                    }
+                }, {
+                    xtype: 'filterCombo', //combo
+                    itemId: 'cbSystemPlatform',
+                    width: 370,
+                    fieldLabel: 'System platform name',
+                    enableKeyEvents: true,
+                    store: AIR.AirStoreFactory.createSystemPlatformStore(),
+                    valueField: 'id',
+                    minChars: 0,
+                    displayField: 'name',
+                    lastQuery: '',
+                    triggerAction: 'all',
+                    mode: 'local',
+                    style: {
+                        marginBottom: 10
+                    }
+                }, {
+					xtype : 'button',
+					itemId : 'dcName',
+					text : 'DC Name',
+					style : {
+						fontSize : 14,
+						marginLeft: 5,
+						width:80
+					}
 				}
-		    }, {
+]
+            },
+		    {
 				xtype : 'textfield',
 				id : 'tTransient',
 				fieldLabel : 'HW-transient systems',
@@ -166,7 +192,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 	onOsSelect: function(combo, record, index) {
         var value = record.id;
         
-        var cbSystemPlatform = this.getComponent('cbSystemPlatform');
+        var cbSystemPlatform = this.getComponent('pSystemPlatform').getComponent('cbSystemPlatform');
         cbSystemPlatform.reset();
         cbSystemPlatform.getStore().removeAll();
 
@@ -174,7 +200,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 	},
 	
 	loadSystemPlatformStore: function(value){
-		var cbSystemPlatform = this.getComponent('cbSystemPlatform');
+		var cbSystemPlatform = this.getComponent('pSystemPlatform').getComponent('cbSystemPlatform');
 		var cbSystemPlatformStore=cbSystemPlatform.getStore();
 		cbSystemPlatformStore.on('beforeload',this.onBeforeCbSystemPlatformStore,this);
 		cbSystemPlatformStore.on('load',this.onChangeCbSystemPlatformStore,this);
@@ -210,7 +236,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         
         this.loadSystemPlatformStore(assetData.osNameId);
         
-        var tSystemPlatform = this.getComponent('cbSystemPlatform');
+        var tSystemPlatform = this.getComponent('pSystemPlatform').getComponent('cbSystemPlatform');
         tSystemPlatform.setValue(assetData.systemPlatformName);
         tSystemPlatform.setRawValue(assetData.systemPlatformName);
 
@@ -250,7 +276,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
         var tTechnicalMaster = this.getComponent('tTechnicalMaster');
         assetData.technicalMaster = tTechnicalMaster.getValue();
 
-        var tSystemPlatform = this.getComponent('cbSystemPlatform');
+        var tSystemPlatform = this.getComponent('pSystemPlatform').getComponent('cbSystemPlatform');
         assetData.systemPlatformName = tSystemPlatform.getValue();
         //assetData.systemPlatformName = tSystemPlatform.getStore().getById(assetData.systemPlatformNameId).get('text');
         
@@ -282,7 +308,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
 		Util.updateFieldLabel(this.getComponent('tSerialNumber'), labels.assetSerialNo);
     	Util.updateFieldLabel(this.getComponent('tTechnicalNumber'), labels.assetTechnicalNumber); 
     	Util.updateFieldLabel(this.getComponent('tTechnicalMaster'), labels.assetTechnicalMaster);  
-    	Util.updateFieldLabel(this.getComponent('cbSystemPlatform'), labels.assetSystemPlatformName);  
+    	Util.updateFieldLabel(this.getComponent('pSystemPlatform').getComponent('cbSystemPlatform'), labels.assetSystemPlatformName);  
     	Util.updateFieldLabel(this.getComponent('tOsName'), labels.assetOsname);  
     	Util.updateFieldLabel(this.getComponent('tTransient'), labels.assettransient);  
     	Util.updateFieldLabel(this.getComponent('cbWorkflowTechnical'), labels.assetWorflowstatustechnical);  
