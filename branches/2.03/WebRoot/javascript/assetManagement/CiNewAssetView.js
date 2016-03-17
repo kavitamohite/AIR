@@ -67,7 +67,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                 xtype: 'panel',
                 id: 'bottomPanel',
                 border: false,
-                height: 770,
+                height: 700,
                 //autoScroll: true,
                 layout: {
                     type: 'table',
@@ -99,10 +99,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                     }, {
                         xtype: 'AIR.CiLocation',
                         id: 'location'
-                    },{
-                    	xtype: 'panel',
-                    	height: 80,
-                    	border: false
                     }]
                 }]
             },{
