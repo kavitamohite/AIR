@@ -609,7 +609,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					ciCreateWizardView.wizardStarted = false;
 				clSoftwareProduct.setVisible(true);
 				clSoftwareBusinessInformation.setVisible(true);
-				clSoftwareContacts.setVisible(true);
+				clSoftwareContacts.setVisible(false);
 				clSoftwareBusinessInformation.getComponent('cbSapAsset').store = AIR.AirStoreManager.getStoreByName('sapAssetSoftwareListStore');
 
 				AAM.setComponentType("software");
@@ -658,7 +658,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				clCiLocation.setVisible(true);
 				clCiBusinessInformation.setVisible(true);
 				clCiTechnics.setVisible(true);
-				clCiContacts.setVisible(true);
+				clCiContacts.setVisible(false);
 				clCiBusinessInformation.getComponent('cbSapAsset').store = AIR.AirStoreManager.getStoreByName('sapAssetListStore');
 				AAM.setComponentType("hardware");
 				
@@ -697,7 +697,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				clCiLocation.setVisible(true);
 				clCiBusinessInformation.setVisible(true);
 				clCiTechnics.setVisible(true);
-				clCiContacts.setVisible(true);
+				clCiContacts.setVisible(false);
 				clCiBusinessInformation.getComponent('cbSapAsset').store = AIR.AirStoreManager.getStoreByName('sapAssetListStore');
 				AAM.setComponentType("hardware");
 				
