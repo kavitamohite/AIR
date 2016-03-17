@@ -1474,7 +1474,7 @@ public class ItSystemHbn extends BaseHbn {
 		return data.toArray(new KeyValueDTO[0]);
 	}
 	
-	public static int getMaximumDCNumberInSequence()
+	public static long getMaximumDCNumberInSequence()
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
@@ -1482,7 +1482,7 @@ public class ItSystemHbn extends BaseHbn {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select max(TO_NUMBER(SUBSTR(IT_SYSTEM_NAME,3))) FROM it_system it WHERE DEL_TIMESTAMP is null and regexp_like (it_system_name ,'^DC[0-9]*{4}?[0-9]*$') ORDER BY insert_timestamp DESC");
 			while (rs.next()) {
-				return rs.getInt(1);
+				return rs.getLong(1);
 			}
 			rs.close();
 			stmt.close();
@@ -1491,7 +1491,7 @@ public class ItSystemHbn extends BaseHbn {
 			System.out.println(e);
 			e.printStackTrace();
 		}
-		return -1;
+		return -1l;
 	}
 	
 	public static List<String> getAvailabeDCNumbers()
