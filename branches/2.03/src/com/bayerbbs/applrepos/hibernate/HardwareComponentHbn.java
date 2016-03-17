@@ -375,8 +375,9 @@ public class HardwareComponentHbn {
 		HardwareComponent hardwareComponent = getHardwareComponent(dto);
 		
 		String error = validateHardwareComponent(hardwareComponent);
+		String tecError = validateHardwareComponent(hardwareComponent);
 		
-		if (error == null) {
+		if (error == null && tecError == null) {
 			ItSystem itSystem = null;
 
 			if (StringUtils.isNotNullOrEmpty(dto.getSystemPlatformName())) {
@@ -384,7 +385,10 @@ public class HardwareComponentHbn {
 				hardwareComponent.setItSystem(itSystem);
 			}
 		} else {
-			dto.setError(error);
+			
+				dto.setError(error);
+				dto.setError(tecError);
+			
 			return dto;
 		}
 		
@@ -424,14 +428,30 @@ public class HardwareComponentHbn {
 	}
 
 	private static String validateHardwareComponent(HardwareComponent hardwareComponent) {
-		HardwareComponent existingHwComp = findByInventoryNumber(hardwareComponent.getInventoryP69());
+		HardwareComponent existingInHwComp = findByInventoryNumber(hardwareComponent.getInventoryP69());
+		HardwareComponent existingInHwComp1 = findByTechnicalNumber(hardwareComponent.getTechnicalNumber());	
 		String error = null;
-		if(existingHwComp != null && (hardwareComponent.getId() == null || existingHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
-			error = "Asset with same inventory number already exist.";
+		if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
+			error = "Asset with same Inventory number already exist.";
 		}
+		
+		if(existingInHwComp1 != null && (hardwareComponent.getId() == null || existingInHwComp1.getId().longValue() != hardwareComponent.getId().longValue())){
+			error = "Asset with same Technical number already exist.";
+		}
+	
 		return error;
 	}
-
+	
+	/*private static String validateTechnicalNumber(HardwareComponent hardwareComponent) {
+		HardwareComponent existingTecHwComp = findByTechnicalNumber(hardwareComponent.getTechnicalNumber());
+		
+		String tecError = null;
+		if(existingTecHwComp != null && (hardwareComponent.getId() == null || existingTecHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
+			tecError = "Asset with same Technicalnumber already exist.";
+		}
+		return tecError;
+	}*/
+	
 	private static HardwareComponent findByInventoryNumber(String inventoryP69) {
 		List<HardwareComponent> values = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -448,6 +468,24 @@ public class HardwareComponentHbn {
 		}
 		return null;
 	}
+	
+	private static HardwareComponent findByTechnicalNumber(String technicalNumber) {
+		List<HardwareComponent> values = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Criteria criteria = session.createCriteria(HardwareComponent.class);
+			criteria.add(Restrictions.eq("technicalNumber", technicalNumber));
+			values = (List<HardwareComponent>) criteria.list();
+			session.close();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		if(values != null && values.size() > 0){
+			return values.get(0);
+		}
+		return null;
+	}
+	
 	private static HardwareComponent findByIndenNumber(String indentNumber) {
 		HardwareComponent value = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
