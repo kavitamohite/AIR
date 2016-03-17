@@ -385,9 +385,11 @@ public class HardwareComponentHbn {
 				hardwareComponent.setItSystem(itSystem);
 			}
 		} else {
-			
+			if(StringUtils.isNotNullOrEmpty(error))
 				dto.setError(error);
+			else if(StringUtils.isNotNullOrEmpty(tecError)){
 				dto.setError(tecError);
+			}
 			
 			return dto;
 		}
