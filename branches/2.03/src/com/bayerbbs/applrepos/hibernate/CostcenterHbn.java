@@ -32,6 +32,7 @@ public class CostcenterHbn extends BaseHbn{
 	public static CostCenterDTO[] getCostcenterList(Long kontoId) {
 
 		List<CostCenterDTO> data = new ArrayList<CostCenterDTO>();
+		List<Konto> values = new ArrayList<Konto>();
 		Transaction tx = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
@@ -39,8 +40,8 @@ public class CostcenterHbn extends BaseHbn{
 			Criteria criteria = session.createCriteria(Konto.class);
 			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			criteria.add(Restrictions.eq("art", "KST"));
-			criteria.addOrder(Order.asc("name"));
-			List<Konto> values = criteria.list();
+			criteria.addOrder(Order.asc("name").ignoreCase());
+			 values = criteria.list();
 
 			data = getDTOCostcenterList(values);
 
@@ -56,6 +57,7 @@ public class CostcenterHbn extends BaseHbn{
 			}
 
 		}
+		
 		return data.toArray(new CostCenterDTO[0]);
 	}
 	/**
