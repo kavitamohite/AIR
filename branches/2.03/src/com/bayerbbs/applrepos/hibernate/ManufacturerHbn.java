@@ -20,7 +20,7 @@ public class ManufacturerHbn extends BaseHbn {
 
 	private static final String SQL_Hardware_Product = "select * from partner where partner_id in (select partner_id from hw_kategorie3) ORDER BY NLSSORT(partner_name, 'NLS_SORT=GENERIC_M') ";
 
-	private static final String SQL_Software_Product = "select * from partner where partner_id in (select hersteller_partnid from SW_KATEGORIE2)";
+	private static final String SQL_Software_Product = "select * from partner where partner_id in (select hersteller_partnid from SW_KATEGORIE2) ORDER BY NLSSORT(partner_name, 'NLS_SORT=GENERIC_M')";
 
 	public static Partner findById(Long id) {
 		return findById(Partner.class, id);
@@ -83,7 +83,7 @@ public class ManufacturerHbn extends BaseHbn {
 			session.close();
 			e.printStackTrace();
 		}
-		Collections.sort(data);
+		//Collections.sort(data);
 		return data.toArray(new KeyValueDTO[0]);
 	}
 
