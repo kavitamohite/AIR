@@ -493,6 +493,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         else
         {
         	this.generateDCFlag = false;
+        	Ext.Msg.alert('Message', 'DC Name button can only be used for server category asset.');
         }
     },
     onSubCategoryChange:function(field, newValue, oldValue) {
