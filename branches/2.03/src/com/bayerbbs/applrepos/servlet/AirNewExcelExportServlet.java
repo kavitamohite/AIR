@@ -21,9 +21,14 @@ import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 public class AirNewExcelExportServlet extends HttpServlet {
 	private static final long serialVersionUID = 3569239290421829949L;
 
-	private static final String[] COLUMNS = { "Company Code", "Company Name", "Manufacturer", "Type", "Model", "Serial Number",
+	private static final String[] SERVER_COLUMNS = { "Company Code", "Company Name", "Manufacturer", "Type", "Model", "Serial Number",
 			"Tech.Nr.", "Country", "Site", "Building", "Room", "Rack - Position", "Inventory Number", "Order-Nr.",
-			"PSP - Element", "Cost Center", "User", "DC-Name", "Anzeige ID", "IP-Adresse-RIB", "Sub-Net-Mask", "Default Gateway" };
+			"PSP - Element", "Cost Center", "User", "DC-Name", "IP-Adresse-RIB", "Sub-Net-Mask", "Default Gateway" };
+	
+	private static final String[] NON_SERVER_COLUMNS = { "Company Code", "Company Name", "Manufacturer", "Type", "Model", "Serial Number",
+		"Tech.Nr.", "Country", "Site", "Building", "Room", "Rack - Position", "Inventory Number", "Order-Nr.",
+		"PSP - Element", "Cost Center", "User", "Anzeige ID" };
+	
 	private static final String UNDERSCORE = "_";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -87,15 +92,22 @@ public class AirNewExcelExportServlet extends HttpServlet {
 		headerRowStyle.setWrapText(true);
 		headerRowStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		
+		String[] columns = NON_SERVER_COLUMNS;
+		
+		if(subCategory.equalsIgnoreCase("Server"))
+		{
+			columns = SERVER_COLUMNS;
+		}
+		
 		int count = 0;
-		for (int i = 0; i < COLUMNS.length; i++) {
+		for (int i = 0; i < columns.length; i++) {
 			// Escaping DC-Name Column when subCategory is server.
-			if(subCategory != null && !subCategory.equalsIgnoreCase("Server") && COLUMNS[i].equals("DC-Name"))
+			/*if(subCategory != null && !subCategory.equalsIgnoreCase("Server") && COLUMNS[i].equals("DC-Name"))
 			{
 				continue;
-			}
+			}*/
 			headerCell = headerRow.createCell(count++);
-			headerCell.setCellValue(COLUMNS[i]);
+			headerCell.setCellValue(columns[i]);
 			headerCell.setCellStyle(headerRowStyle);
 		}
 		
@@ -127,7 +139,7 @@ public class AirNewExcelExportServlet extends HttpServlet {
 			cell = row.createCell(4);
 			cell.setCellValue(req.getParameter("model"));
 			
-			if(subCategory != null && subCategory.equalsIgnoreCase("Server") && genearteDCFlag.equals("true"))
+			if(subCategory != null && subCategory.equalsIgnoreCase("Server") && genearteDCFlag != null && genearteDCFlag.equals("true"))
 			{
 				cell = row.createCell(17);
 				if(availableDCNumbers != null && !availableDCNumbers.isEmpty() && availableDCNumbers.get(dcNameIndex) != null)
