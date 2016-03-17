@@ -1,33 +1,53 @@
 Ext.namespace('AIR');
 
-AIR.CiTopPanel = Ext.extend(AIR.AirView, {
+AIR.CiTopPanel = Ext.extend(Ext.form.FieldSet, {
 
 	initComponent : function() {
 		Ext.apply(this, {
-			layout : 'form',
+			layout : 'hbox',
 			autoScroll : true,
 			autoHeight : true,
-			layoutConfig : {
-				columns : 2
-			},
 			bodyStyle : 'padding:10px 5px 0px 10px',
-			items : [ {
+			items : [ 
+			   {
+			    	xtype: 'label',
+			    	itemId: 'identNumberLabel',
+			    	text: 'Ident number',
+			    	width: 105,
+			    	style: {
+			    		fontSize: 12
+			    	}
+			   },         
+			  {
 				xtype : 'textfield',
 				itemId: 'identNumber',
 				readOnly : true,
-				fieldLabel : 'Indent number',
-				width : 450,
+				fieldLabel : 'Ident number',
+				width : 200,
 				style : {
 					marginBottom : 10,
 					fontSize : 12
 				}
-			}, {
+			}, 
+			
+			{
+			    xtype: 'label',
+			    itemId: 'inventoryNumberLabel',
+			    text: 'Inventory Number',
+			    width: 105,
+			    style: {
+			    	marginLeft : 10,
+			        fontSize: 12
+			    }
+			},
+							{
 				xtype : 'textfield',
 				itemId: 'tinventory',
 				readOnly : true,
-				fieldLabel : 'Inventory Number',
-				width : 450,
+				//fieldLabel : 'Inventory Number',
+				width : 200,
 				style : {
+					marginLeft : 10,
 					marginBottom : 10,
 					fontSize : 12
 				}
@@ -65,8 +85,9 @@ AIR.CiTopPanel = Ext.extend(AIR.AirView, {
 	},
 	
 	updateLabels: function(labels) {
-		Util.updateFieldLabel(this.getComponent('identNumber'), labels.assetIndentnumber);
-		Util.updateFieldLabel(this.getComponent('tinventory'), labels.assetInventoryNumber);
+		Util.updateLabel(this.getComponent('identNumberLabel'), labels.assetIndentnumber);
+		Util.updateLabel(this.getComponent('inventoryNumberLabel'), labels.assetInventoryNumber);
+		
 	}
 });
 Ext.reg('AIR.CiTopPanel', AIR.CiTopPanel);
