@@ -849,6 +849,7 @@ public class HardwareComponentHbn {
 					itSystem.setInsertUser(assetDto.getCwid());
 					itSystem.setCiOwner(assetDto.getCwid());
 					itSystem.setItSystemName(assetDto.getSystemPlatformName());
+					itSystem.setCiSubTypeId(AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING);
 					itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 					itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 					itSystem.setUpdateUser(assetDto.getCwid());
@@ -858,7 +859,7 @@ public class HardwareComponentHbn {
 					itSystem.setDeleteQuelle(null);
 					ItSystemHbn.saveItSystem(itSystem);
 					
-					haComponent=findByIndenNumber(indentNumber);
+					haComponent = findByIndenNumber(indentNumber);
 					hwIDIndent.put(haComponent.getId(), itSystem.getId());
 					
 				}
