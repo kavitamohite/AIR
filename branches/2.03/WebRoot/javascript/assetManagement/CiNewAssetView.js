@@ -214,12 +214,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         this.generateDCFlag = false;
         var btnDCName = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('pSystemPlatform').getComponent('dcName');
         btnDCName.on('click', this.generateDCNumbers, this);
-        var cbSubCategoryValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
-        if(cbSubCategoryValue == 'Server')
-		{
-//			btnDCName.disabled = false;
-			Ext.Msg.alert('Message', 'Press DC Name button to auto generate DC numbers otherwise it will not be generated.');
-		}
+
         // end
         var bReset = this.getComponent('buttonPanel').getComponent('bReset');
         bReset.on('click', this.resetFormFields, this);
@@ -234,7 +229,6 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         var cbSubCategory = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory');
         cbSubCategory.on('select', this.onFieldKeyUp, this);
         cbSubCategory.on('keypress', this.onFieldKeyUp, this);
-        cbSubCategory.on('change', this.onSubCategoryChange, this);
         
         var cbType = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbType');
         cbType.on('select', this.onFieldKeyUp, this);
@@ -243,7 +237,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         var cbModel = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pmodel').getComponent('cbModel');
         cbModel.on('select', this.onFieldKeyUp, this);
         cbModel.on('keypress', this.onFieldKeyUp, this);
-        cbModel.on('change', this.onSubCategoryChange, this);
+        cbModel.on('select', this.onModelSelect, this);
         
         var cbCostcenter = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cbCostcenter');
         cbCostcenter.on('select', this.onFieldKeyUp, this);
@@ -275,12 +269,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         
         var checkmultipleasset=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').getComponent('checkmultipleasset');
         checkmultipleasset.on('check', this.onCheckMultipleAsset, this);
-        
-//        this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').hide();
-//        bExport.hide();
-//        bImport.hide();
-//        btnDCName.hide();
-        
+            
     },
     
     
@@ -485,6 +474,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         if(cbSubCategoryValue == 'Server')
 		{
         	this.generateDCFlag = true;
+        	var dcConstantStore = AIR.AirStoreFactory.getMaximumDCConstantStore();
+        	dcConstantStore.on('load', this.updateDCConstant, this);
+        	dcConstantStore.load();
         }
         else
         {
@@ -492,19 +484,17 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         	Ext.Msg.alert('Message', 'DC Name button can only be used for server category asset.');
         }
     },
-    onSubCategoryChange:function(field, newValue, oldValue) {
+    updateDCConstant: function(store, records, options) {
+    	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('pSystemPlatform').getComponent('cbSystemPlatform').setValue(records[0].data.dcConstant);
+    },
+    onModelSelect:function(field, newValue, oldValue) {
     	var cbSubCategoryValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
-    	var btnDCName = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('pSystemPlatform').getComponent('dcName');
 		if(cbSubCategoryValue == 'Server')
 		{
 			Ext.Msg.alert('Message', 'Press DC Name button to auto generate DC numbers otherwise it will not be generated.');
 		}
-		else
-		{
-			
-		}
+		
     },
-    // end
     
     onAssetHistoryButton: function(){
     	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
