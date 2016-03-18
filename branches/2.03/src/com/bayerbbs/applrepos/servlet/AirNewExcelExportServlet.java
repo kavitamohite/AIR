@@ -64,9 +64,9 @@ public class AirNewExcelExportServlet extends HttpServlet {
 			HttpServletResponse res) {
 		
 		String genearteDCFlag = req.getParameter("generateDCFlag");
-		System.out.println("generateDCFlag >>>>>>>>>>>> "+genearteDCFlag + " " + ItSystemHbn.getAvailabeDCNumbers());
-		int maxDCNumberFound = ItSystemHbn.getMaximumDCNumberInSequence();
-		List<String> availableDCNumbers = ItSystemHbn.getAvailabeDCNumbers();
+//		System.out.println("generateDCFlag >>>>>>>>>>>> "+genearteDCFlag + " " + ItSystemHbn.getAvailabeDCNumbers());
+		long maxDCNumberFound = ItSystemHbn.getMaximumDCNumberInSequence();
+//		List<String> availableDCNumbers = ItSystemHbn.getAvailabeDCNumbers();
 		String subCategory = req.getParameter("subCategory");
 		
 		Workbook workbook = new XSSFWorkbook();
@@ -119,7 +119,7 @@ public class AirNewExcelExportServlet extends HttpServlet {
 		}
 		
 		Row row = null;
-		int dcNameIndex = 0;
+//		int dcNameIndex = 0;
 		Cell cell = null;
 			for(int i=1; i < lastRowNum; i++){
 			row = sheet.createRow(i);
@@ -142,12 +142,13 @@ public class AirNewExcelExportServlet extends HttpServlet {
 			if(subCategory != null && subCategory.equalsIgnoreCase("Server") && genearteDCFlag != null && genearteDCFlag.equals("true"))
 			{
 				cell = row.createCell(17);
-				if(availableDCNumbers != null && !availableDCNumbers.isEmpty() && availableDCNumbers.get(dcNameIndex) != null)
+				/*if(availableDCNumbers != null && !availableDCNumbers.isEmpty() && availableDCNumbers.get(dcNameIndex) != null)
 				{
 					cell.setCellValue(availableDCNumbers.get(dcNameIndex++));
 				} else {
 					cell.setCellValue("DC"+maxDCNumberFound++);
-				}
+				}*/
+				cell.setCellValue("DC"+(++maxDCNumberFound));
 			}
 			
 			/*cell = row.createCell(4);
