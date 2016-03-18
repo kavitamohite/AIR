@@ -254,4 +254,13 @@ public class ItSystemWS {
 		
 	}
 	
+	public CiEntityEditParameterOutput getNextDCNumber()
+	{
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		long cdConstant = ItSystemHbn.getMaximumDCNumberInSequence();
+		cdConstant++;		
+		output.setDcConstant("DC"+cdConstant);
+		return output;
+	}
+	
 }
