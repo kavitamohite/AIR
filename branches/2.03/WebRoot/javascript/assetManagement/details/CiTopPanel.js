@@ -34,9 +34,10 @@ AIR.CiTopPanel = Ext.extend(Ext.form.FieldSet, {
 			    xtype: 'label',
 			    itemId: 'inventoryNumberLabel',
 			    text: 'Inventory Number',
-			    width: 105,
+			    width: 180,
 			    style: {
-			    	marginLeft : 10,
+			    	marginLeft : 50,
+			    	marginRight: 15,
 			        fontSize: 12
 			    }
 			},
