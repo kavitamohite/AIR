@@ -380,6 +380,33 @@ AIR.AirStoreFactory = function() {
 			return userOptionSaveStore;
 		},
 		
+		getMaximumDCConstantStore: function() {
+			var dcConstantRecord = Ext.data.Record.create([{name: 'dcConstant'}]);
+			
+			var dcConstantReader = new Ext.data.XmlReader({
+				record: 'return',
+			}, dcConstantRecord); 
+			
+			var dcConstantStore = new Ext.data.XmlStore({
+				autoDestroy: false,
+				storeId: 'dcConstantStore',
+				autoLoad: false,
+	          
+		      	proxy: new Ext.ux.soap.SoapProxy({
+		      		url: webcontext +'/ItSystemWSPort',
+		      		loadMethod: 'getNextDCNumber',
+		      		timeout: 120000,
+		      		reader: dcConstantReader
+		      	}),
+		      	fields: [ 'dcConstant' ],
+		      	
+		      	reader: dcConstantReader
+			});
+			
+			return dcConstantStore;
+			
+		},
+		
 		createRolePersonListStore: function() {
 			var rolePersonListRecord = Ext.data.Record.create([
 	            {name: 'id', mapping: 'roleId'},
