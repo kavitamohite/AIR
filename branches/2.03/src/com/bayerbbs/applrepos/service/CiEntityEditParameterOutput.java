@@ -10,7 +10,7 @@ public class CiEntityEditParameterOutput {
 	private Long ciId;
 	private Integer tableId;
 	private Integer ciSubTypeId;
-	
+	private String dcConstant;
 	
 	public CiEntityEditParameterOutput() {
 	}
@@ -71,4 +71,12 @@ public class CiEntityEditParameterOutput {
 		setMessages(new String[] { detailedMessage });		
 	}
 
+	public String getDcConstant() {
+		return dcConstant;
+	}
+
+	public void setDcConstant(String dcConstant) {
+		this.dcConstant = dcConstant;
+	}
+	
 }
