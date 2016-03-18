@@ -21,4 +21,9 @@ public class ItSystemWSDelegate {
 	public CiEntityEditParameterOutput saveItSystem(ItSystemEditParameterInput editInput) {
 		return itSystemWS.saveItSystem(editInput);
 	}
+	
+	public CiEntityEditParameterOutput getNextDCNumber() {
+		return itSystemWS.getNextDCNumber();
+	}
+	
 }
