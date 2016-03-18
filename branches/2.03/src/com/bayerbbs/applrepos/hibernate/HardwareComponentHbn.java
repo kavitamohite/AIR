@@ -382,7 +382,19 @@ public class HardwareComponentHbn {
 
 			if (StringUtils.isNotNullOrEmpty(dto.getSystemPlatformName())) {
 				itSystem = ItSystemHbn.findItSystemByName(dto.getSystemPlatformName());
-				hardwareComponent.setItSystem(itSystem);
+				if(itSystem == null) {
+					itSystem = new ItSystem();
+					itSystem.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+					itSystem.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+					itSystem.setInsertUser(dto.getCwid());
+					itSystem.setCiOwner(dto.getCwid());
+					itSystem.setItSystemName(dto.getSystemPlatformName());
+				}
+				itSystem.setCiSubTypeId(AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING);
+				itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+				itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+				itSystem.setUpdateUser(dto.getCwid());
+				hardwareComponent.setItSystem(ItSystemHbn.saveItSystem(itSystem));
 			}
 		} else {
 			if(StringUtils.isNotNullOrEmpty(error))
@@ -402,7 +414,6 @@ public class HardwareComponentHbn {
 
 			try {
 				session.saveOrUpdate(hardwareComponent);
-				session.flush();
 			} catch (Exception e) {
 				System.out.println("error---" + e.getMessage());
 				if (tx.isActive()) {
@@ -420,6 +431,7 @@ public class HardwareComponentHbn {
 				if (tx.isActive()) {
 					tx.commit();
 				}
+				session.flush();
 				session.close();
 			}
 			dto.setId(hardwareComponent.getId());
