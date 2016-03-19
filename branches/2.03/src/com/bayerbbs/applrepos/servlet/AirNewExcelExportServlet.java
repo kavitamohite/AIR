@@ -148,7 +148,7 @@ public class AirNewExcelExportServlet extends HttpServlet {
 				} else {
 					cell.setCellValue("DC"+maxDCNumberFound++);
 				}*/
-				cell.setCellValue("DC"+(++maxDCNumberFound));
+				cell.setCellValue("DC"+(String.format("%04d", ++maxDCNumberFound)));
 			}
 			
 			/*cell = row.createCell(4);
