@@ -259,7 +259,7 @@ public class ItSystemWS {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 		long cdConstant = ItSystemHbn.getMaximumDCNumberInSequence();
 		cdConstant++;		
-		output.setDcConstant("DC"+cdConstant);
+		output.setDcConstant("DC"+String.format("%04d", cdConstant));
 		return output;
 	}
 	
