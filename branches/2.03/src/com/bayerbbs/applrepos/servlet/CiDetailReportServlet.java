@@ -134,6 +134,7 @@ public class CiDetailReportServlet extends HttpServlet {
 		String cwid = req.getParameter("cwid");
 		String lastName = req.getParameter("lastName");
 		String firstName = req.getParameter("firstName");
+		this.fileName="Compliance_Statements_";
 		footerPreparedBy = "Prepared By " + lastName + ", " + firstName + " ("
 				+ cwid + ")" + ")";
 		Date date1 = new Date();
@@ -144,7 +145,7 @@ public class CiDetailReportServlet extends HttpServlet {
 				Long.valueOf(tableId), Long.valueOf(ciId), language);
 		List<String[]> CIData = getCiData(ciId, tableId);
 		this.ciName = ciName.replaceAll(" {1,10}", "");
-		this.fileName = fileName + ciName + ".pdf";
+		this.fileName = this.fileName + ciName + ".pdf";
 
 		totalPageNo = 2 + complianceDetails.size();
 
