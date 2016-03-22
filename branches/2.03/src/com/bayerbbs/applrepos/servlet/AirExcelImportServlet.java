@@ -113,7 +113,10 @@ public class AirExcelImportServlet extends HttpServlet {
 			List<AssetViewDataDTO> assests = new ArrayList<AssetViewDataDTO>();
 			// List of errors generated while saving hardware assets.
 //			List<String> errorsInSaving = new ArrayList<String>();
-			
+			// List of imported Inventory numbers
+			List<String> inventoryNumbers = new ArrayList<String>();
+			// List of imported DC Numbers
+			List<String> dcNumbers = new ArrayList<String>();
 			String message = null;
 			
 			while (filesIterator.hasNext()) 
@@ -229,14 +232,29 @@ public class AirExcelImportServlet extends HttpServlet {
 										String dbSubCategory = objModel.getHwCategory3().getHwCategory2().getHwKategory2();
 										if(dbSubCategory != null && dbSubCategory.equalsIgnoreCase("Server"))
 										{
-											String dcName =  getExcelDataByColumnNumber(row, 17);
-											if(dcName != null && !dcName.isEmpty() && dcName.matches("^DC[0-9]*{4}?[0-9]*$"))
-											{
-												obAssetViewDataDTO.setSystemPlatformName(dcName);
+											String dcName =  getExcelDataByColumnNumber(row, 17);  
+											if(!dcNumbers.contains(dcName)) {
+												dcNumbers.add(dcName);
+												if(dcName != null && !dcName.isEmpty() && dcName.matches("^DC[0-9]*{4}?[0-9]*$"))
+												{
+													if(HardwareComponentHbn.findByItSystemName(dcName) != null)
+													{
+														errors.add("DC Name ("+ dcName +") at row number "+rowNum + " already exists. Please change it and try again later.");
+													}
+													else
+													{
+														obAssetViewDataDTO.setSystemPlatformName(dcName);
+													}
+
+												}
+												else
+												{
+													errors.add("The DC name format should be DCXXXX(DC = text constants and  xxxx four digit numbers) at row number : "+rowNum + ".");
+												}
 											}
 											else
 											{
-												errors.add("The DC name format should be DCXXXX(DC = text constants and  xxxx four digit numbers) at row number : "+rowNum + ".");
+												errors.add("Please remove duplicate DC Name ("+ dcName +") at row number "+rowNum + " and try again later.");
 											}
 										}
 										String dbType = objModel.getHwCategory3().getHwKategory3();
@@ -286,21 +304,21 @@ public class AirExcelImportServlet extends HttpServlet {
 								{
 									obAssetViewDataDTO.setCostCenter(costCenter);  
 									konto = CostcenterHbn.findCostCenterIdByName(costCenter);
-									if(konto != null) {
-										obAssetViewDataDTO.setCostCenterId(konto.getId());
-										obAssetViewDataDTO.setCostCenterManagerId(konto.getCwidVerantw());
-										
-										if(konto.getCwidVerantw() != null) {
-											List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(konto.getCwidVerantw());
-//											if(persons != null && !persons.isEmpty())
-//											{
-//												dbOrganizationalUnitValue = persons.get(0).getOrgUnit();
-//												logger.info("Company name >>>>>>> "+ dbOrganizationalUnitValue);
-//											}
-										}
-										
-									}
-									else
+//									if(konto != null) {
+//										obAssetViewDataDTO.setCostCenterId(konto.getId());
+//										obAssetViewDataDTO.setCostCenterManagerId(konto.getCwidVerantw());
+//										
+////										if(konto.getCwidVerantw() != null) {
+////											List<PersonsDTO> persons = PersonsHbn.findPersonByCWID(konto.getCwidVerantw());
+//////											if(persons != null && !persons.isEmpty())
+//////											{
+//////												dbOrganizationalUnitValue = persons.get(0).getOrgUnit();
+//////												logger.info("Company name >>>>>>> "+ dbOrganizationalUnitValue);
+//////											}
+////										}
+//										
+//									}
+									if(konto == null)
 									{
 										errors.add("Please correct invalid Cost center name ("+ costCenter +") at row number : "+rowNum + " and try again later.");
 									}
@@ -409,14 +427,21 @@ public class AirExcelImportServlet extends HttpServlet {
 								String inventoryNumber = getExcelDataByColumnNumber(row, 12);
 								if(inventoryNumber != null)
 								{
-									boolean exists = HardwareComponentHbn.isHardwareComponentByInventoryNumberExists(inventoryNumber.trim());
-									if(exists)
-									{
-										errors.add("Inventory number ("+ inventoryNumber +") at row number "+rowNum + " already exists. Please change it and try again later.");
+									if(!inventoryNumbers.contains("inventoryNumber")) {
+										inventoryNumbers.add(inventoryNumber);
+										boolean exists = HardwareComponentHbn.isHardwareComponentByInventoryNumberExists(inventoryNumber.trim());
+										if(exists)
+										{
+											errors.add("Inventory number ("+ inventoryNumber +") at row number "+rowNum + " already exists. Please change it and try again later.");
+										}
+										else
+										{
+											obAssetViewDataDTO.setInventoryNumber(inventoryNumber.trim());
+										}
 									}
 									else
 									{
-										obAssetViewDataDTO.setInventoryNumber(inventoryNumber.trim());
+										errors.add("Please remove duplicate inventory number ("+ inventoryNumber +") at row number "+rowNum + " and try again later.");
 									}
 								}
 								
