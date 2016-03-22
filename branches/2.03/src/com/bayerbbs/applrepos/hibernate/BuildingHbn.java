@@ -1278,7 +1278,7 @@ public class BuildingHbn extends LokationItemHbn {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public static Building findLandByWhereName(Long siteId, String name)
+	public static Building findBuildingByWhereName(Long siteId, String name)
     {
 		Building building = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
