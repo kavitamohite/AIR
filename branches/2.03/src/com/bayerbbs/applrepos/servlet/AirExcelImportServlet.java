@@ -232,30 +232,37 @@ public class AirExcelImportServlet extends HttpServlet {
 										String dbSubCategory = objModel.getHwCategory3().getHwCategory2().getHwKategory2();
 										if(dbSubCategory != null && dbSubCategory.equalsIgnoreCase("Server"))
 										{
-											String dcName =  getExcelDataByColumnNumber(row, 17);  
-											if(!dcNumbers.contains(dcName)) {
-												dcNumbers.add(dcName);
-												if(dcName != null && !dcName.isEmpty() && dcName.matches("^DC[0-9]*{4}?[0-9]*$"))
-												{
-													if(HardwareComponentHbn.findByItSystemName(dcName) != null)
+											String dcName =  getExcelDataByColumnNumber(row, 17);
+											if(dcName != null && !dcName.isEmpty())
+											{
+												if(!dcNumbers.contains(dcName)) {
+													dcNumbers.add(dcName);
+													if(dcName != null && !dcName.isEmpty() && dcName.matches("^DC[0-9]*{4}?[0-9]*$"))
 													{
-														errors.add("DC Name ("+ dcName +") at row number "+rowNum + " already exists. Please change it and try again later.");
+														if(HardwareComponentHbn.findByItSystemName(dcName) != null)
+														{
+															errors.add("DC name ("+ dcName +") at row number "+rowNum + " already exists. Please change it and try again later.");
+														}
+														else
+														{
+															obAssetViewDataDTO.setSystemPlatformName(dcName);
+														}
+
 													}
 													else
 													{
-														obAssetViewDataDTO.setSystemPlatformName(dcName);
+														errors.add("The DC name format should be DCXXXX(DC = text constants and  xxxx four digit numbers) at row number : "+rowNum + ".");
 													}
-
 												}
 												else
 												{
-													errors.add("The DC name format should be DCXXXX(DC = text constants and  xxxx four digit numbers) at row number : "+rowNum + ".");
+													errors.add("Please remove duplicate DC Name ("+ dcName +") at row number "+rowNum + " and try again later.");
 												}
 											}
-											else
+											/*else
 											{
-												errors.add("Please remove duplicate DC Name ("+ dcName +") at row number "+rowNum + " and try again later.");
-											}
+												errors.add("Please input DC name at row number : "+rowNum + " and try again later.");
+											}*/
 										}
 										String dbType = objModel.getHwCategory3().getHwKategory3();
 										if(dbType != null && type != null && !dbType.equalsIgnoreCase(type))
@@ -425,7 +432,7 @@ public class AirExcelImportServlet extends HttpServlet {
 								obAssetViewDataDTO.setTechnicalNumber(getExcelDataByColumnNumber(row, 6));
 
 								String inventoryNumber = getExcelDataByColumnNumber(row, 12);
-								if(inventoryNumber != null)
+								if(inventoryNumber != null && !inventoryNumber.isEmpty())
 								{
 									if(!inventoryNumbers.contains("inventoryNumber")) {
 										inventoryNumbers.add(inventoryNumber);
@@ -444,6 +451,10 @@ public class AirExcelImportServlet extends HttpServlet {
 										errors.add("Please remove duplicate inventory number ("+ inventoryNumber +") at row number "+rowNum + " and try again later.");
 									}
 								}
+								/*else
+								{
+									errors.add("Please input inventory number at row number "+rowNum + " and try again later.");
+								}*/
 								
 								obAssetViewDataDTO.setOrderNumber(getExcelDataByColumnNumber(row, 13));
 								
