@@ -477,7 +477,7 @@ public class HardwareComponentHbn {
 	}	
 	
 	
-	private static HardwareComponent findByItSystemName(String itSystemName){
+	public static HardwareComponent findByItSystemName(String itSystemName){
 		List<HardwareComponent> hardwareComponents = null;
 		Transaction tx = null;
 		Session session = HibernateUtil.getSession();
