@@ -434,7 +434,7 @@ public class AirExcelImportServlet extends HttpServlet {
 								String inventoryNumber = getExcelDataByColumnNumber(row, 12);
 								if(inventoryNumber != null && !inventoryNumber.isEmpty())
 								{
-									if(!inventoryNumbers.contains("inventoryNumber")) {
+									if(!inventoryNumbers.contains(inventoryNumber)) {
 										inventoryNumbers.add(inventoryNumber);
 										boolean exists = HardwareComponentHbn.isHardwareComponentByInventoryNumberExists(inventoryNumber.trim());
 										if(exists)
