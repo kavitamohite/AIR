@@ -403,6 +403,12 @@ public class HardwareComponentHbn {
 			return dto;
 		}
 		
+		error=validateHardwareComponentForITSystem(hardwareComponent);
+		if (StringUtils.isNotNullOrEmpty(error)) {
+			dto.setError(error);
+			return dto;
+		}		
+		
 		if(hardwareComponent != null){
 			
 			Session session = HibernateUtil.getSession();
@@ -456,12 +462,20 @@ public class HardwareComponentHbn {
 					if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
 						error = "Asset with same Technical Master already exist.";
 					}
-
 				}
 			}
 		}
 		return error;
 	}
+	private static String validateHardwareComponentForITSystem(HardwareComponent hardwareComponent) {
+		HardwareComponent existingInHwComp = findByItSystemName(hardwareComponent.getItSystem().getItSystemName());			
+		String error = null;
+		if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
+			error = "Asset with same  System Platform Number already exist.";
+		}
+		return error;
+	}	
+	
 	
 	private static HardwareComponent findByItSystemName(String itSystemName){
 		List<HardwareComponent> hardwareComponents = null;
@@ -470,7 +484,7 @@ public class HardwareComponentHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			hardwareComponents = session.createQuery("select h from HardwareComponent as h where h.deleteTimestamp is null and h.itSystem.itSystemName= '"	+ itSystemName + "'").list();
+			hardwareComponents = session.createQuery("select h from HardwareComponent as h where h.itSystem.itSystemName= '"	+ itSystemName + "'").list();
 			tx.commit();
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
@@ -497,7 +511,6 @@ public class HardwareComponentHbn {
 		try {
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
 			criteria.add(Restrictions.eq("technicalMaster", technicalMaster));
-			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			values = (List<HardwareComponent>) criteria.list();
 			session.close();
 		} catch (RuntimeException e) {
@@ -517,7 +530,6 @@ public class HardwareComponentHbn {
 		try {
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
 			criteria.add(Restrictions.eq("serialNumber", serialNumber));
-			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			values = (List<HardwareComponent>) criteria.list();
 			session.close();
 		} catch (RuntimeException e) {
@@ -537,7 +549,6 @@ public class HardwareComponentHbn {
 		try {
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
 			criteria.add(Restrictions.eq("inventoryP69", inventoryP69));
-			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			values = (List<HardwareComponent>) criteria.list();
 			session.close();
 		} catch (RuntimeException e) {
@@ -555,7 +566,6 @@ public class HardwareComponentHbn {
 		try {
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
 			criteria.add(Restrictions.eq("technicalNumber", technicalNumber));
-			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			values = (List<HardwareComponent>) criteria.list();
 			session.close();
 		} catch (RuntimeException e) {
