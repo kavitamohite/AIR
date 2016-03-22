@@ -370,12 +370,12 @@ public class AirExcelImportServlet extends HttpServlet {
 											Long buildingId = null;
 											if(building != null && !building.isEmpty())
 											{
-												Building buildingObj = BuildingHbn.findBuildingByWhereName(standort.getId(), building);
-												if(buildingObj != null)
+												buildingId = BuildingHbn.findBuildingIdBySiteIdAndName(standort.getId(), building);
+												if(buildingId != null)
 												{
-													logger.info("Building Id >>>>> "+buildingObj.getBuildingId());
-													logger.info("Building name >>>>> "+buildingObj.getBuildingName());
-													buildingId = buildingObj.getBuildingId();
+													logger.info("Building Id >>>>> "+buildingId);
+//													logger.info("Building name >>>>> "+buildingObj.getBuildingName());
+//													buildingId = buildingObj.getBuildingId();
 												}
 												
 												if(buildingId == null)

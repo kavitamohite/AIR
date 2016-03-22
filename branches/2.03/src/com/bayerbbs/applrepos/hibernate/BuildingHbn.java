@@ -1,5 +1,8 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1313,6 +1316,40 @@ public class BuildingHbn extends LokationItemHbn {
     		session.close();
     	}
     	return building;
+    }
+	
+	/**
+	 * This method provides the Building for a buildingId and building name
+	 * @author enqmu
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public static Long findBuildingIdBySiteIdAndName(Long siteId, String name)
+    {
+		Long buildingId = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+    	try {
+    		Connection conn = session.connection();
+			PreparedStatement pstmt = conn.prepareStatement("SELECT GEBAEUDE_ID FROM GEBAEUDE r WHERE TERRAIN_ID IN (SELECT TERRAIN_ID FROM TERRAIN WHERE DEL_QUELLE IS NULL and STANDORT_ID = ?) AND DEL_QUELLE IS NULL AND GEBAEUDE_NAME=?");
+			pstmt.setLong(1, siteId);
+			pstmt.setString(2, name);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				buildingId = rs.getLong(1);
+				break;
+			}
+			rs.close();
+			pstmt.close();
+			conn.close();
+    	} catch(Exception ex)
+    	{
+    		System.out.println("Error -------> "+ex.getMessage());
+    		ex.printStackTrace();
+    	}finally{
+    		session.close();
+    	}
+    	return buildingId;
     }
 
 }
