@@ -25,6 +25,7 @@ import org.hibernate.criterion.Restrictions;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.HardwareComponent;
 import com.bayerbbs.applrepos.domain.ItSystem;
@@ -438,29 +439,97 @@ public class HardwareComponentHbn {
 	}
 
 	private static String validateHardwareComponent(HardwareComponent hardwareComponent) {
-		HardwareComponent existingInHwComp = findByInventoryNumber(hardwareComponent.getInventoryP69());
-//		HardwareComponent existingInHwComp1 = findByTechnicalNumber(hardwareComponent.getTechnicalNumber());	
+		HardwareComponent existingInHwComp = findByInventoryNumber(hardwareComponent.getInventoryP69());			
 		String error = null;
 		if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
 			error = "Asset with same Inventory number already exist.";
+		}else{
+			existingInHwComp = findByTechnicalNumber(hardwareComponent.getTechnicalNumber());
+			if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
+				error = "Asset with same Technical number already exist.";
+			}else{
+				existingInHwComp = findBySerialNumber(hardwareComponent.getSerialNumber());
+				if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
+					error = "Asset with same Serial number already exist.";
+				}else{
+					existingInHwComp = findByTechnicalMaster(hardwareComponent.getTechnicalMaster());
+					if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
+						error = "Asset with same Technical Master already exist.";
+					}
+
+				}
+			}
 		}
-		
-/*		if(existingInHwComp1 != null && (hardwareComponent.getId() == null || existingInHwComp1.getId().longValue() != hardwareComponent.getId().longValue())){
-			error = "Asset with same Technical number already exist.";
-		}
-	*/
 		return error;
 	}
 	
-	/*private static String validateTechnicalNumber(HardwareComponent hardwareComponent) {
-		HardwareComponent existingTecHwComp = findByTechnicalNumber(hardwareComponent.getTechnicalNumber());
+	private static HardwareComponent findByItSystemName(String itSystemName){
+		List<HardwareComponent> hardwareComponents = null;
+		Transaction tx = null;
+		Session session = HibernateUtil.getSession();
 		
-		String tecError = null;
-		if(existingTecHwComp != null && (hardwareComponent.getId() == null || existingTecHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
-			tecError = "Asset with same Technicalnumber already exist.";
+		try {
+			tx = session.beginTransaction();
+			hardwareComponents = session.createQuery("select h from HardwareComponent as h where h.deleteTimestamp is null and h.itSystem.itSystemName= '"	+ itSystemName + "'").list();
+			tx.commit();
+		} catch (RuntimeException e) {
+			if (tx != null && tx.isActive()) {
+				try {
+					// Second try catch as the rollback could fail as well
+					tx.rollback();
+				} catch (HibernateException e1) {
+					System.out.print(e1.getMessage());
+				}
+				// throw again the first exception
+				throw e;
+			}
+
 		}
-		return tecError;
-	}*/
+		if(hardwareComponents!=null && hardwareComponents.size() > 0){
+			return hardwareComponents.get(0);
+		}
+		return null;
+	}
+	
+    private static HardwareComponent findByTechnicalMaster(String technicalMaster){
+		List<HardwareComponent> values = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Criteria criteria = session.createCriteria(HardwareComponent.class);
+			criteria.add(Restrictions.eq("technicalMaster", technicalMaster));
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
+			values = (List<HardwareComponent>) criteria.list();
+			session.close();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		if(values != null && values.size() > 0){
+			return values.get(0);
+		}
+		return null;
+
+    	
+    }	
+	
+    private static HardwareComponent findBySerialNumber(String serialNumber){
+		List<HardwareComponent> values = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Criteria criteria = session.createCriteria(HardwareComponent.class);
+			criteria.add(Restrictions.eq("serialNumber", serialNumber));
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
+			values = (List<HardwareComponent>) criteria.list();
+			session.close();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		if(values != null && values.size() > 0){
+			return values.get(0);
+		}
+		return null;
+
+    	
+    }
 	
 	private static HardwareComponent findByInventoryNumber(String inventoryP69) {
 		List<HardwareComponent> values = null;
@@ -468,6 +537,7 @@ public class HardwareComponentHbn {
 		try {
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
 			criteria.add(Restrictions.eq("inventoryP69", inventoryP69));
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			values = (List<HardwareComponent>) criteria.list();
 			session.close();
 		} catch (RuntimeException e) {
@@ -485,6 +555,7 @@ public class HardwareComponentHbn {
 		try {
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
 			criteria.add(Restrictions.eq("technicalNumber", technicalNumber));
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			values = (List<HardwareComponent>) criteria.list();
 			session.close();
 		} catch (RuntimeException e) {
