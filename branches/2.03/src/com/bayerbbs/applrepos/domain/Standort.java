@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "STANDORT")
 @org.hibernate.annotations.Entity(dynamicInsert = true)
 @NamedQueries({
-	@NamedQuery(name="findSitesByLandId", query="FROM Standort s WHERE s.landId=:landId"),
+	@NamedQuery(name="findSitesByLandId", query="FROM Standort s WHERE s.landId=:landId ORDER BY NLSSORT(site_name_en, 'NLS_SORT=GENERIC_M') "),
 	@NamedQuery(name="findByNameAndCountryId", query="FROM Standort s WHERE s.standortName=:name AND s.landId=:landId")
 })
 @SequenceGenerator(name = "MySeqStandort", sequenceName = "SEQ_STANDORT")
