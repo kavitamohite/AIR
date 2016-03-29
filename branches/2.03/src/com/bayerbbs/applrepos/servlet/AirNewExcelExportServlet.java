@@ -1,7 +1,6 @@
 package com.bayerbbs.applrepos.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +15,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.bayerbbs.applrepos.hibernate.HardwareComponentHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 
 public class AirNewExcelExportServlet extends HttpServlet {
@@ -148,7 +148,9 @@ public class AirNewExcelExportServlet extends HttpServlet {
 				} else {
 					cell.setCellValue("DC"+maxDCNumberFound++);
 				}*/
-				cell.setCellValue("DC"+(String.format("%04d", ++maxDCNumberFound)));
+				String dcName = "DC"+(String.format("%04d", ++maxDCNumberFound));
+				cell.setCellValue(dcName);
+				HardwareComponentHbn.saveITSystem(req.getParameter("cwid"), dcName);
 			}
 			
 			/*cell = row.createCell(4);
