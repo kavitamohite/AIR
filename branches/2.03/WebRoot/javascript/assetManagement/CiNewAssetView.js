@@ -767,7 +767,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     },
     
     copyAsset: function() {
-    	AAM.getMask(AC.MASK_TYPE_LOAD).show();
+    	// AAM.getMask(AC.MASK_TYPE_LOAD).show();
     	
         newAssetstore = AIR.AirStoreFactory.createSaveAssetStore();
         var assetData = this.getUpdateParam();
@@ -837,7 +837,14 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     },
     
     onCopy: function(store, records, options) {
-    	var success = (records[0].data.result == 'true');
+    	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tSerialNumber').setValue('');
+    	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalNumber').setValue('');
+    	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalMaster').setValue('');
+    	this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber').setValue('');
+    	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('pSystemPlatform').getComponent('cbSystemPlatform').setValue('');
+    	this.getComponent('buttonPanel').getComponent('copyBtn').hide();
+    	
+    	/*var success = (records[0].data.result == 'true');
     	var yesCallback = function() {
 			this.wizardStarted = false;
 			this.fireEvent('externalNavigation', this, null, 'clCiNewAssetView');
@@ -857,7 +864,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         } else {
         	var dataSavedErrorWindow = AIR.AirWindowFactory.createDynamicMessageWindow('AFTER_APP_SAVE_FAIL', null, records[0].data.error);
 			dataSavedErrorWindow.show();
-        }
+        }*/
     },
     
     sendEmail: function(){
