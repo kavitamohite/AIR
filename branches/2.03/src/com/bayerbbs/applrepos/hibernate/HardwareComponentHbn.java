@@ -740,6 +740,41 @@ public class HardwareComponentHbn {
 		return null;
 	}
 	
+	public static boolean saveITSystem(String cwid, String itSystemName)
+	{
+		boolean returnFlag = false;
+		ItSystem itSystem = null;
+		try {
+		if(itSystemName != null) {
+			itSystem = ItSystemHbn.findItSystemByName(itSystemName);
+			if(itSystem == null) {
+				itSystem = new ItSystem();
+			}
+			itSystem.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			itSystem.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+			itSystem.setInsertUser(cwid);
+			itSystem.setCiOwner(cwid);
+			itSystem.setItSystemName(itSystemName);
+			itSystem.setCiSubTypeId(AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING);
+			itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+			itSystem.setUpdateUser(cwid);
+			itSystem.setDeleteUser(null);
+			itSystem.setDeleteTimestamp(null);
+			itSystem.setDeleteUser(null);
+			itSystem.setDeleteQuelle(null);
+			ItSystemHbn.saveItSystem(itSystem);
+			returnFlag = true;	
+		}
+		} catch(Exception ex)
+		{
+			returnFlag = false;
+			System.out.println("Error ----> "+ex.getMessage());
+			ex.printStackTrace();
+		}
+		return returnFlag;
+	}
+	
 	public static String saveHardwareAssets(List<AssetViewDataDTO> assests)
 	{
 		String message = "File uploaded successfully.";
