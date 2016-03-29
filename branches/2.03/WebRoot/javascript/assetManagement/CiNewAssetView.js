@@ -775,7 +775,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         assetData.id=undefined;
         assetData.identNumber=undefined;
         
-    	newAssetstore.on('load', this.onSaved, this);
+    	newAssetstore.on('load', this.onCopy, this);
         newAssetstore.load({
             params: assetData
         });
@@ -825,6 +825,30 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	if (success) {
     		this.sendEmail();
     		
+    		var topPanel = this.getComponent('topPanel');
+	    	topPanel.update(records[0].data);
+	    	
+        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
+			afterSaveAppWindow.show();
+        } else {
+        	var dataSavedErrorWindow = AIR.AirWindowFactory.createDynamicMessageWindow('AFTER_APP_SAVE_FAIL', null, records[0].data.error);
+			dataSavedErrorWindow.show();
+        }
+    },
+    
+    onCopy: function(store, records, options) {
+    	var success = (records[0].data.result == 'true');
+    	var yesCallback = function() {
+			this.wizardStarted = false;
+			this.fireEvent('externalNavigation', this, null, 'clCiNewAssetView');
+		};
+    	
+    	var callbackMap = {
+			yes: yesCallback.createDelegate(this)
+		};
+    	
+    	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
+    	if (success) {
     		var topPanel = this.getComponent('topPanel');
 	    	topPanel.update(records[0].data);
 	    	
