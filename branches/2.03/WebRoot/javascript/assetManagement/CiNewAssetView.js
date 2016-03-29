@@ -776,6 +776,11 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         
         assetData.id=undefined;
         assetData.identNumber=undefined;
+        assetData.serialNumber=undefined;
+        assetData.technicalNumber=undefined;
+        assetData.technicalMaster=undefined;
+        assetData.systemPlatformName=undefined;
+        assetData.inventoryNumber=undefined;
         
     	newAssetstore.on('load', this.onCopy, this);
         newAssetstore.load({
