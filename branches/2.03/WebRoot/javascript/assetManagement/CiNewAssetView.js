@@ -391,6 +391,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		exportForm.sapDescription.value = tsapDescription.getRawValue();
 		
 		// Added by anit
+		exportForm.cwid.value = AIR.AirApplicationManager.getCwid();
 		exportForm.pspElement.value = cbPspValue;
 		exportForm.costCenter.value = cbCostcenterValue;
 		exportForm.site.value = cbSiteValue;
@@ -475,10 +476,13 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	
         if(cbSubCategoryValue == 'Server' && this.multipleAssetChecked == false)
 		{
-        	this.generateDCFlag = true;
         	var dcConstantStore = AIR.AirStoreFactory.getMaximumDCConstantStore();
         	dcConstantStore.on('load', this.updateDCConstant, this);
         	dcConstantStore.load();
+        }
+        else if(cbSubCategoryValue == 'Server' && this.multipleAssetChecked == true)
+        {
+        	this.generateDCFlag = true;
         }
         else if(cbSubCategoryValue != 'Server')
         {
