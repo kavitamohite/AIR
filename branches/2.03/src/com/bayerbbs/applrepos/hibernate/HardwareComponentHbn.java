@@ -471,7 +471,7 @@ public class HardwareComponentHbn {
 		HardwareComponent existingInHwComp = findByItSystemName(hardwareComponent.getItSystem().getItSystemName());			
 		String error = null;
 		if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
-			error = "Asset with same  System Platform Number already exist.";
+			error = "Asset with same  System Platform Name already exist.";
 		}
 		return error;
 	}	
