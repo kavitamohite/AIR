@@ -204,7 +204,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         
         var bExport=this.getComponent('buttonPanel').getComponent('bExport');
         bExport.on('click', this.exportAssetAlert, this);  
-        
+        this.multipleAssetChecked = false;
         
         var bImport=this.getComponent('buttonPanel').getComponent('bImport');
         bImport.on('click', this.importAssetAlert, this);
@@ -278,6 +278,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     
     //C0000049066
     onCheckMultipleAsset: function(checkbox, isChecked){
+    	this.multipleAssetChecked = isChecked;
 		var bExport = this.getComponent('buttonPanel').getComponent('bExport');
 		var bImport = this.getComponent('buttonPanel').getComponent('bImport');
 		var tmultipleasset=this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('pMultipleAsset').getComponent('tmultipleasset');
@@ -471,14 +472,15 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     }, 
     generateDCNumbers:function(button, event) {
     	var cbSubCategoryValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
-        if(cbSubCategoryValue == 'Server')
+    	
+        if(cbSubCategoryValue == 'Server' && this.multipleAssetChecked == false)
 		{
         	this.generateDCFlag = true;
         	var dcConstantStore = AIR.AirStoreFactory.getMaximumDCConstantStore();
         	dcConstantStore.on('load', this.updateDCConstant, this);
         	dcConstantStore.load();
         }
-        else
+        else if(cbSubCategoryValue != 'Server')
         {
         	this.generateDCFlag = false;
         	Ext.Msg.alert('Message', 'DC Name button can only be used for server category asset.');
