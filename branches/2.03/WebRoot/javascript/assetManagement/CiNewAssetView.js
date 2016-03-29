@@ -474,8 +474,14 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     generateDCNumbers:function(button, event) {
     	var cbSubCategoryValue = this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('product').getComponent('cbSubCategory').getRawValue();
     	
+    	if(cbSubCategoryValue == 'Server')
+    	{
+    		Ext.Msg.alert('Message', 'DC Names are generated and available in the Export file. Please click on Export below.');
+    	}
+    	
         if(cbSubCategoryValue == 'Server' && this.multipleAssetChecked == false)
 		{
+        	this.generateDCFlag = true;
         	var dcConstantStore = AIR.AirStoreFactory.getMaximumDCConstantStore();
         	dcConstantStore.on('load', this.updateDCConstant, this);
         	dcConstantStore.load();
