@@ -67,6 +67,36 @@ AIR.AirWindowFactory = function() {
 					}];
 					
 					break;
+				case 'ASSET_COPY':
+					var windowTitle = 'Asset Copied';
+					var windowText = 'Asset copied successfully';
+					var windowIcon = img_OK;
+
+					var buttonConfigs = [/*{
+						text: 'Yes',
+						handler: function() {
+							var callback = callbackMap['yes'];
+							callback();
+							dynamicWindow.close();
+						}
+					}, {
+						text: 'No',
+						handler: function() {
+							var callback = callbackMap['no'];
+							callback();
+							dynamicWindow.close();
+						}
+					}*/{
+						text: labels.dynamicWindowDataSavedOKButtonText,
+						handler: function() {
+							var callback = callbackMap['yes'];
+							callback();
+							dynamicWindow.close();
+						}
+					}];
+					
+					break;
+					
 				case 'DATA_SAVED_ERROR':
 					var windowTitle = labels.dynamicWindowDataSavedErrorTitle;
 					var windowText = labels.dynamicWindowDataSaveFailTitle;

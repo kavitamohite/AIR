@@ -468,10 +468,12 @@ public class HardwareComponentHbn {
 		return error;
 	}
 	private static String validateHardwareComponentForITSystem(HardwareComponent hardwareComponent) {
-		HardwareComponent existingInHwComp = findByItSystemName(hardwareComponent.getItSystem().getItSystemName());			
 		String error = null;
-		if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
-			error = "Asset with same  System Platform Name already exist.";
+		if(hardwareComponent.getItSystem()!=null){
+			HardwareComponent existingInHwComp = findByItSystemName(hardwareComponent.getItSystem().getItSystemName());			
+			if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
+				error = "Asset with same  System Platform Name already exist.";
+			}
 		}
 		return error;
 	}	

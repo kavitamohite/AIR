@@ -608,8 +608,8 @@
 		<assetPosition>Rack - Position *</assetPosition>
 		
 		<!-- asset management Technics-->
-		<assetTechnicalNumber>Technische Nummer / Asset-ID</assetTechnicalNumber>
-		<assetTechnicalMaster>Technische Master</assetTechnicalMaster>
+		<assetTechnicalNumber>Technischer Nummer / Asset-ID</assetTechnicalNumber>
+		<assetTechnicalMaster>Technischer Master</assetTechnicalMaster>
 		<assetSystemPlatformName>System platform name</assetSystemPlatformName>
 		<assetOsname>OS-Name</assetOsname>
 		<assettransient>HW-transienten Systemen</assettransient>

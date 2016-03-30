@@ -55,7 +55,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
             	items: [ {   
             		xtype: 'panel',
             		id: 'assetsImportPanel',
-            		html: "<form id='importAssetsExcelFile' action='AirExcelImportServlet' method='post' target='_blank' enctype='multipart/form-data'><input id='file' name='file' type='file' /><input type='hidden' id='importCwid' name='importCwid' /></form>",
+            		html: "<form id='importAssetsExcelFile' action='AirExcelImportServlet' method='post' target='_blank' enctype='multipart/form-data'><input id='file' name='file' type='file' /><input type='hidden' id='importCwid' name='importCwid' /></form>"
             			},
                 {
     				xtype : 'button',
@@ -456,7 +456,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 
 		var params = {
 			cwid : AIR.AirApplicationManager.getCwid(),
-			token : AIR.AirApplicationManager.getToken(),
+			token : AIR.AirApplicationManager.getToken()
 		};
 
 		params.userColumnsPreference = AAM.getAssetColumns();

@@ -854,12 +854,12 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     },
     
     onCopy: function(store, records, options) {
-    	/*this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tSerialNumber').setValue('');
+    	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tSerialNumber').setValue('');
     	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalNumber').setValue('');
     	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalMaster').setValue('');
     	this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber').setValue('');
     	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('pSystemPlatform').getComponent('cbSystemPlatform').setValue('');
-    	this.getComponent('buttonPanel').getComponent('copyBtn').hide();*/
+    	this.getComponent('buttonPanel').getComponent('copyBtn').hide();
     	
     	var success = (records[0].data.result == 'true');
     	var yesCallback = function() {
@@ -876,7 +876,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     		var topPanel = this.getComponent('topPanel');
 	    	topPanel.update(records[0].data);
 	    	
-        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
+        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('ASSET_COPY', callbackMap);
 			afterSaveAppWindow.show();
         } else {
         	var dataSavedErrorWindow = AIR.AirWindowFactory.createDynamicMessageWindow('AFTER_APP_SAVE_FAIL', null, records[0].data.error);

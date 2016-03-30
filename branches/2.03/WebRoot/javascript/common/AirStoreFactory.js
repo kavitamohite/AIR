@@ -384,7 +384,7 @@ AIR.AirStoreFactory = function() {
 			var dcConstantRecord = Ext.data.Record.create([{name: 'dcConstant'}]);
 			
 			var dcConstantReader = new Ext.data.XmlReader({
-				record: 'return',
+				record: 'return'
 			}, dcConstantRecord); 
 			
 			var dcConstantStore = new Ext.data.XmlStore({
@@ -4957,7 +4957,7 @@ AIR.AirStoreFactory = function() {
 			});
 			
 			return userOptionSaveStore;
-		},
+		}
 
 		
 	};

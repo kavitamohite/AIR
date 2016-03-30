@@ -121,14 +121,14 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
     					fontSize : 12,
     					'margin-left': '15px',
     					'font-weight': 'bold'
-    				},    			
+    				}    			
     			}, 
                 { 	
     				xtype: 'checkbox',
                     itemId: 'checkmultipleasset',  
                     style: {
                    	 'margin-left': '40px'
-                       },
+                       }
     			  },
                   {
                 	  xtype: 'textfield',
@@ -136,7 +136,7 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
                       emptyText: 'Number of Assets',
                       disabled: true,
                       style: {
-                        	 'margin-left': '25px',
+                        	 'margin-left': '25px'
                             }
                    }
     			  
