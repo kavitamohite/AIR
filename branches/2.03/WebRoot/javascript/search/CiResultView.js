@@ -173,6 +173,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		if(isUpdate) {
 			ciResultGrid = tpCiSearchResultTables.getActiveTab();
 			ciResultGridId = ciResultGrid.getId();
+			var pagingBar = ciResultGrid.getBottomToolbar();
+			params.limit=pagingBar.pageSize;
 			this.ciResultGridParamSets[ciResultGridId] = params;
 		} else {
 			var tabCount = ++this.tabCount;

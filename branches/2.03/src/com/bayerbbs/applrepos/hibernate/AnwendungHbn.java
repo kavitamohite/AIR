@@ -2633,8 +2633,8 @@ public class AnwendungHbn extends BaseHbn {
 //					dto.setCiId(ciId);
 					dto.setDatetime(rsMessage.getString("DATEVALUE"));	//toLocaleString TODO History Datumsformat
 					dto.setChangeSource(rsMessage.getString("CHANGESOURCE"));
-					dto.setChangeUserCWID(rsMessage.getString("CHANGEUSER"));
-					dto.setChangeDBUser(rsMessage.getString("CWID"));
+					dto.setChangeUserCWID(rsMessage.getString("CWID"));
+					dto.setChangeDBUser(rsMessage.getString("CHANGEUSER"));
 					dto.setChangeObjectName(rsMessage.getString("OBJECT_NAME"));
 					dto.setChangeAttributeName(rsMessage.getString("ATTRIBUTE_GLOSSARY"));
 					dto.setChangeAttributeOldValue(rsMessage.getString("OLD_VALUE"));

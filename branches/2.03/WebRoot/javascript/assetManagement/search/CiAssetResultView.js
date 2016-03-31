@@ -95,6 +95,8 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
         if (isUpdate) {
             ciResultGrid = tpCiSearchResultTables.getActiveTab();
             ciResultGridId = ciResultGrid.getId();
+            var pagingBar = ciResultGrid.getBottomToolbar();
+            params.limit=pagingBar.pageSize;
             this.ciResultGridParamSets[ciResultGridId] = params;
         } else {
             var tabCount = ++this.tabCount;
@@ -263,7 +265,7 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
             }
         }
 
-//        this.updateColumnLabels(labels);
+        //this.updateColumnLabels(labels);
     },
 
     updateColumnLabels: function(labels) {
@@ -275,15 +277,15 @@ AIR.CiAssetResultView = Ext.extend(Ext.Panel, {
             ciSearchGrid = tpCiSearchResultTables.items.items[i];
 
             ciSearchGrid.getColumnModel().setColumnHeader(0, "&#160;");
-            ciSearchGrid.getColumnModel().setColumnHeader(1, labels.assetSapDescription);
-            ciSearchGrid.getColumnModel().setColumnHeader(2, labels.assetPSP);
-            ciSearchGrid.getColumnModel().setColumnHeader(3, labels.assetCostCenter);
-            ciSearchGrid.getColumnModel().setColumnHeader(4, labels.site);
-            ciSearchGrid.getColumnModel().setColumnHeader(5, labels.assetSerialNo);
-            ciSearchGrid.getColumnModel().setColumnHeader(6, labels.assetTechnicalMaster);
-            ciSearchGrid.getColumnModel().setColumnHeader(7, labels.assetTechnicalNumber);
-            ciSearchGrid.getColumnModel().setColumnHeader(8, labels.assetInventoryNumber);
-            ciSearchGrid.getColumnModel().setColumnHeader(9, labels.assetOrganisation);
+            ciSearchGrid.getColumnModel().setColumnHeader('sapDescription', labels.assetSapDescription);
+            ciSearchGrid.getColumnModel().setColumnHeader('pspElement', labels.assetPSP);
+            ciSearchGrid.getColumnModel().setColumnHeader('costCenter', labels.assetCostCenter);
+            ciSearchGrid.getColumnModel().setColumnHeader('site', labels.site);
+            ciSearchGrid.getColumnModel().setColumnHeader('serialNumber', labels.assetSerialNo);
+            ciSearchGrid.getColumnModel().setColumnHeader('technicalMaster', labels.assetTechnicalMaster);
+            ciSearchGrid.getColumnModel().setColumnHeader('technicalNumber', labels.assetTechnicalNumber);
+            ciSearchGrid.getColumnModel().setColumnHeader('inventoryNumber', labels.assetInventoryNumber);
+            ciSearchGrid.getColumnModel().setColumnHeader('organizationalunit', labels.assetOrganisation);
 
         }
     }
