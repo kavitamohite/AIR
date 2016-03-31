@@ -48,7 +48,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
             	items: [ {   
             		xtype: 'panel',
             		id: 'importPanel',
-            		html: "<form id='importExcelFile' action='AirExcelImportServlet' method='post' target='_blank' enctype='multipart/form-data'><input id='file' name='file' type='file' /><input type='hidden' id='usercwid' name='usercwid' /></form>",
+            		html: "<form id='importExcelFile' action='AirExcelImportServlet' method='post' target='_blank' enctype='multipart/form-data'><input id='file' name='file' type='file' /><input type='hidden' id='usercwid' name='usercwid' /></form>"
             			},
                 {
     				xtype : 'button',
