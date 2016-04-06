@@ -405,12 +405,11 @@ public class HardwareComponentHbn {
 					itSystem.setInsertUser(dto.getCwid());
 					itSystem.setCiOwner(dto.getCwid());
 					itSystem.setItSystemName(dto.getSystemPlatformName());
+					itSystem.setCiSubTypeId(AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING);
 				}
-				itSystem.setCiSubTypeId(AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING);
-				itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-				itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
-				itSystem.setUpdateUser(dto.getCwid());
 				hardwareComponent.setItSystem(ItSystemHbn.saveItSystem(itSystem));
+			}else {
+				hardwareComponent.setItSystem(null);
 			}
 		} else {
 			if(StringUtils.isNotNullOrEmpty(error))
