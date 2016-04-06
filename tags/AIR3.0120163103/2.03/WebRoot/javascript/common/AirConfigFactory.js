@@ -232,6 +232,7 @@ AIR.AirConfigFactory = function() {
 
 			var columnConfig = [];
 			var columns = AAM.getAssetColumns();
+			var label = AIR.AirApplicationManager.getLabels();
 
 			if (columns == undefined || columns.length == 0) {
 				var itsecUserOptionListStore = AIR.AirStoreManager
@@ -255,7 +256,7 @@ AIR.AirConfigFactory = function() {
 				case 'sapDescription':
 					columnConfig.push({
 						id : 'sapDescription',
-						header : 'SAP Description',
+						header : label.assetSapDescription,
 						dataIndex : 'sapDescription',
 						width : 150,
 						sortable : true
@@ -264,7 +265,7 @@ AIR.AirConfigFactory = function() {
 				case 'pspElement':
 					columnConfig.push({
 						id : 'pspElement',
-						header : 'PSP Element',
+						header : label.assetPSP,
 						dataIndex : 'pspElement',
 						width : 150,
 						sortable : true
@@ -273,7 +274,7 @@ AIR.AirConfigFactory = function() {
 				case 'costCenter':
 					columnConfig.push({
 						id : 'costCenter',
-						header : 'Cost Center',
+						header : label.assetCostCenter,
 						dataIndex : 'costCenter',
 						width : 150,
 						sortable : true
@@ -282,7 +283,7 @@ AIR.AirConfigFactory = function() {
 				case 'site':
 					columnConfig.push({
 						id : 'site',
-						header : 'Site',
+						header : label.site,
 						dataIndex : 'site',
 						width : 150,
 						sortable : false
@@ -291,7 +292,7 @@ AIR.AirConfigFactory = function() {
 				case 'serialNumber':
 					columnConfig.push({
 						id : 'serialNumber',
-						header : 'Serial Number',
+						header : label.assetSerialNo,
 						dataIndex : 'serialNumber',
 						width : 150,
 						sortable : true
@@ -300,7 +301,7 @@ AIR.AirConfigFactory = function() {
 				case 'technicalMaster':
 					columnConfig.push({
 						id : 'technicalMaster',
-						header : 'Technical Master',
+						header : label.assetTechnicalMaster,
 						dataIndex : 'technicalMaster',
 						width : 150,
 						sortable : true
@@ -309,7 +310,7 @@ AIR.AirConfigFactory = function() {
 				case 'technicalNumber':
 					columnConfig.push({
 						id : 'technicalNumber',
-						header : 'Technical Number',
+						header : label.assetTechnicalNumber,
 						dataIndex : 'technicalNumber',
 						width : 150,
 						sortable : true
@@ -318,7 +319,7 @@ AIR.AirConfigFactory = function() {
 				case 'inventoryNumber':
 					columnConfig.push({
 						id : 'inventoryNumber',
-						header : 'Inventory Number',
+						header : label.assetInventoryNumber,
 						dataIndex : 'inventoryNumber',
 						width : 150,
 						sortable : true
@@ -328,7 +329,7 @@ AIR.AirConfigFactory = function() {
 					columnConfig.push({
 						id : 'organizationalunit',
 						header : 'Org Unit',
-						dataIndex : 'organizationalunit',
+						dataIndex : label.assetOrganisation,
 						width : 150,
 						sortable : true
 					});

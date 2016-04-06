@@ -610,9 +610,9 @@
 		<!-- asset management Technics-->
 		<assetTechnicalNumber>Technischer Nummer / Asset-ID</assetTechnicalNumber>
 		<assetTechnicalMaster>Technischer Master</assetTechnicalMaster>
-		<assetSystemPlatformName>System platform name</assetSystemPlatformName>
+		<assetSystemPlatformName>System Platform Name</assetSystemPlatformName>
 		<assetOsname>OS-Name</assetOsname>
-		<assettransient>HW-transienten Systemen</assettransient>
+		<assettransient>HW-Transienten Systemen</assettransient>
 		<assetWorflowstatustechnical>Lebenszyklusstatus</assetWorflowstatustechnical>
 		<assetGeneral>Allgemeine Verwendung</assetGeneral>
 		<assetITSecurity>IT-Security-Relevance</assetITSecurity>
