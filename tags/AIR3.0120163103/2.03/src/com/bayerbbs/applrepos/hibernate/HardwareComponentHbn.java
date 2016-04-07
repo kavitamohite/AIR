@@ -388,11 +388,20 @@ public class HardwareComponentHbn {
 	
 	public static AssetViewDataDTO saveHardwareAsset(
 			AssetViewDataDTO dto) {
+		HardwareComponent hardwareComponent = new HardwareComponent();
 
-		HardwareComponent hardwareComponent = getHardwareComponent(dto);
+		if (dto.getId() == null) {
+			hardwareComponent
+					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			hardwareComponent.setInsertTimestamp(ApplReposTS
+					.getCurrentTimestamp());
+			hardwareComponent.setInsertUser(dto.getCwid());
+		} else {
+			hardwareComponent = findById(dto.getId());
+		}
 		
-		String error = validateHardwareComponent(hardwareComponent);
-		
+		String error = validateHardwareComponent(dto,hardwareComponent);
+		hardwareComponent = getHardwareComponent(dto,hardwareComponent);
 		if (error == null) {
 			ItSystem itSystem = null;
 
@@ -459,28 +468,37 @@ public class HardwareComponentHbn {
 		return dto;
 	}
 
-	private static String validateHardwareComponent(HardwareComponent hardwareComponent) {
-		HardwareComponent existingInHwComp = findByInventoryNumber(hardwareComponent.getInventoryP69());			
+	private static String validateHardwareComponent(AssetViewDataDTO asetViewDataDTO,HardwareComponent hardwareComponent) {
+		HardwareComponent existingInHwComp = null;
 		String error = null;
-		if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
-			error = "Asset with same Inventory number already exist.";
-		}else{
-			existingInHwComp = findByTechnicalNumber(hardwareComponent.getTechnicalNumber());
+		if(StringUtils.isNotNullOrEmpty(asetViewDataDTO.getInventoryNumber()) && !asetViewDataDTO.getInventoryNumber().equals(hardwareComponent.getInventoryP69())){
+			existingInHwComp = findByInventoryNumber(asetViewDataDTO.getInventoryNumber());
+			if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
+				error = "Asset with same Inventory number already exist.";
+			}
+			return error;
+		}
+		if(StringUtils.isNotNullOrEmpty(asetViewDataDTO.getTechnicalNumber()) && !asetViewDataDTO.getTechnicalNumber().equals(hardwareComponent.getTechnicalNumber())){
+			existingInHwComp = findByTechnicalNumber(asetViewDataDTO.getTechnicalNumber());
 			if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
 				error = "Asset with same Technical number already exist.";
-			}else{
-				existingInHwComp = findBySerialNumber(hardwareComponent.getSerialNumber());
-				if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
-					error = "Asset with same Serial number already exist.";
-				}else{
-					existingInHwComp = findByTechnicalMaster(hardwareComponent.getTechnicalMaster());
-					if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
-						error = "Asset with same Technical Master already exist.";
-					}
-				}
 			}
+            return error;
 		}
-		return error;
+		if(StringUtils.isNotNullOrEmpty(asetViewDataDTO.getSerialNumber()) && !asetViewDataDTO.getSerialNumber().equals(hardwareComponent.getSerialNumber())){
+			existingInHwComp = findBySerialNumber(asetViewDataDTO.getSerialNumber());
+			if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
+				error = "Asset with same Serial number already exist.";
+			}
+			return error;
+		}
+		if(StringUtils.isNotNullOrEmpty(asetViewDataDTO.getTechnicalMaster()) && !asetViewDataDTO.getTechnicalMaster().equals(hardwareComponent.getTechnicalMaster())){
+			existingInHwComp = findByTechnicalMaster(asetViewDataDTO.getTechnicalMaster());
+			if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
+				error = "Asset with same Technical Master already exist.";
+			}			
+		}
+		    return error;
 	}
 	private static String validateHardwareComponentForITSystem(HardwareComponent hardwareComponent) {
 		String error = null;
@@ -608,19 +626,7 @@ public class HardwareComponentHbn {
 		return value;
 	}	
 
-	private static HardwareComponent getHardwareComponent(AssetViewDataDTO dto) {
-		HardwareComponent hardwareComponent = new HardwareComponent();
-
-		if (dto.getId() == null) {
-			hardwareComponent
-					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
-			hardwareComponent.setInsertTimestamp(ApplReposTS
-					.getCurrentTimestamp());
-			hardwareComponent.setInsertUser(dto.getCwid());
-		} else {
-			hardwareComponent = findById(dto.getId());
-		}
-		
+	private static HardwareComponent getHardwareComponent(AssetViewDataDTO dto,HardwareComponent hardwareComponent) {		
 		hardwareComponent.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 		hardwareComponent.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 		hardwareComponent.setUpdateUser(dto.getCwid());
