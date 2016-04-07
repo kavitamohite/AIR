@@ -586,6 +586,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	        		            header: 'New value',
     	        		            dataIndex: 'changeAttributeNewValue',
     	        		            id: 'historyChangeAttributeNewValue',
+    	        		            css: 'color: red;',
     	        					menuDisabled: true,
     	        					width: 150
     	        		        },{

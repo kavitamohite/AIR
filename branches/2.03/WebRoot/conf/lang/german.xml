@@ -586,6 +586,10 @@
 		<!-- asset management search-->
 		<rHardwarecomponent>Hardware Komponente</rHardwarecomponent>
 		<rSoftwarecomponent>Software Komponente</rSoftwarecomponent>
+		<bDeleteAssets>Löschen</bDeleteAssets>
+		<bSaveColumnsPreference>Spaltenauswahl speichern</bSaveColumnsPreference>
+		
+		
 		
 		<!-- asset management new screen-->
 		<assetIndentnumber>Spiegelstrich Nummer</assetIndentnumber>
@@ -629,6 +633,8 @@
 	    <assetOrganisation>Organisationseinheit</assetOrganisation>
 	    <assetOwner>Inhaber(Legal) *</assetOwner>
 	    <assetSapClass>SAP Asset Klasse</assetSapClass>
+	    <assetInsertUser>inset Benutzer</assetInsertUser>
+	    <assetInsertSource>Einsatz Quelle</assetInsertSource>
 	  
 	    <!-- asset management Contacts-->
 	    <assetEditor>Editoren Gruppe *</assetEditor>

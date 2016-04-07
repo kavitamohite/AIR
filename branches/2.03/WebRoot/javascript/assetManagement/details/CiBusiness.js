@@ -180,7 +180,30 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
                 style: {
                     marginBottom: 10
                 }
-            }]
+            },
+            {
+                xtype: 'textfield',
+                itemId: 'tInsertUser',
+                readOnly: true,
+                fieldLabel: 'Insert User',
+                width: 370,
+                style: {
+                    marginBottom: 10,
+                    fontSize: 12
+                }
+            },
+            {
+                xtype: 'textfield',
+                itemId: 'tInsertSource',
+                readOnly: true,
+                fieldLabel: 'Insert Source',
+                width: 370,
+                style: {
+                    marginBottom: 5,
+                    fontSize: 12
+                }
+            }            
+            ]
         });
 
         AIR.CiBusiness.superclass.initComponent.call(this);
@@ -357,7 +380,12 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 
         var cbSapAsset = this.getComponent('cbSapAsset');
         cbSapAsset.setValue(assetData.sapAssetClassId);
-
+        
+        var tInsertUser = this.getComponent('tInsertUser');
+        tInsertUser.setValue(assetData.insertUser);
+        
+        var tInsertSource = this.getComponent('tInsertSource');
+        tInsertSource.setValue(assetData.insertSource);
     },
 
     updateParam: function(assetData) {
@@ -414,6 +442,8 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         Util.updateFieldLabel(this.getComponent('cbSapAsset'), labels.assetSapClass);
         Util.updateFieldLabel(this.getComponent('cbCostcenter'), labels.assetCost);
         Util.updateLabel(this.getComponent('pRequester').getComponent('labeltfRequester'), labels.assetRequester);
+        Util.updateFieldLabel(this.getComponent('tInsertUser'), labels.assetInsertUser);
+        Util.updateFieldLabel(this.getComponent('tInsertSource'),labels.assetInsertSource);
     }
 
 });

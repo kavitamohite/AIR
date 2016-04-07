@@ -585,7 +585,9 @@
 		
 		<!-- asset management search-->
 		<rHardwarecomponent>Hardware Component</rHardwarecomponent>
-		<rSoftwarecomponent>Software Component</rSoftwarecomponent>
+		<rSoftwarecomponent>Software Component</rSoftwarecomponent>bDeleteAssets
+		<bDeleteAssets>Delete</bDeleteAssets>
+		<bSaveColumnsPreference>Save Columns Preference</bSaveColumnsPreference>
 		
 		<!-- asset management new screen-->
 		<assetIndentnumber>Ident number</assetIndentnumber>
@@ -618,6 +620,9 @@
 	    <assetOrganisation>Organizational Unit</assetOrganisation>
 	    <assetOwner>Legal Entity</assetOwner>
 	    <assetSapClass>SAP Asset Class</assetSapClass>
+	    <assetInsertUser>Insert User</assetInsertUser>
+	    <assetInsertSource>Insert Source</assetInsertSource>
+	    
 		
 		<!-- asset management Technics-->
 		<assetTechnicalNumber>Technical Number / Asset-ID</assetTechnicalNumber>

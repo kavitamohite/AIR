@@ -80,7 +80,7 @@ var img_TestLink	= imgcontext + 'configuration_type2_16x16.png';
 
 // Mailtemplate
 var mail_Subject	= "Your%20Todo%20for%20the%20CI%20<CIName>";
-var mail_Text		= "Dear%20CI%20Owner,%0A%0APlease%20update%20your%20information%20to%20the%20CI%20%20<CIName>%20%20in%20the%20Application%20Infrastructure%20Repository%20(https://air-q.de.bayer.cnb)%20to%20the%20following:%0A%20-%20add%20text%20here%0A%0ABest%20regards,%0A<Username>";
+var mail_Text		= "Dear%20CI%20Owner,%0A%0APlease%20update%20your%20information%20to%20the%20CI%20%20<CIName>%20%20in%20the%20Application%20Infrastructure%20Repository%20(https://air.de.bayer.cnb)%20to%20the%20following:%0A%20-%20add%20text%20here%0A%0ABest%20regards,%0A<Username>";
 
 // Check on DB-Connection
 var dbLoginCheckInterval = 1000 * 60; //1000 milliSecs = 1 sec. * 60 = 1 min. (check every minute)

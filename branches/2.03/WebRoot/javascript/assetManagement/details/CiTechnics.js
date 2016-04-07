@@ -73,7 +73,7 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
                     fieldLabel: 'System platform name',
                     enableKeyEvents: true,
                     store: AIR.AirStoreFactory.createSystemPlatformStore(),
-                    valueField: 'id',
+                    valueField: 'name',
                     minChars: 0,
                     displayField: 'name',
                     lastQuery: '',

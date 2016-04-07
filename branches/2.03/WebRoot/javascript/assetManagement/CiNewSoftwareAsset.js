@@ -43,8 +43,8 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                 xtype: 'panel',
                 itemId: 'bottomPanel',
                 border: false,
-                height: 420,
-                autoScroll: true,
+                height: 480,
+                autoScroll: false,
                 layout: {
                     type: 'table',
                     columns: 2

@@ -83,6 +83,10 @@ public class AssetViewDataDTO {
 
 	// Others
 	private String serialNumber;
+	
+	private String insertUser;
+	
+	private String insertSource;
 
 	public Boolean getIsSoftwareComponent() {
 		return isSoftwareComponent;
@@ -554,43 +558,66 @@ public class AssetViewDataDTO {
 	public void setSoftwareId(String softwareId) {
 		this.softwareId = softwareId;
 	}
+	
+	
+
+	public String getInsertUser() {
+		return insertUser;
+	}
+
+	public void setInsertUser(String insertUser) {
+		this.insertUser = insertUser;
+	}
+
+	public String getInsertSource() {
+		return insertSource;
+	}
+
+	public void setInsertSource(String insertSource) {
+		this.insertSource = insertSource;
+	}
 
 	@Override
 	public String toString() {
 		return "AssetViewDataDTO [isSoftwareComponent=" + isSoftwareComponent
 				+ ", isHardwareWithInventory=" + isHardwareWithInventory
 				+ ", isHardwareWithoutInventory=" + isHardwareWithoutInventory
-				+ ", cwid=" + cwid + ", id=" + id + ", identNumber="
-				+ identNumber + ", inventoryNumber=" + inventoryNumber
-				+ ", sapDescription=" + sapDescription + ", manufacturer="
-				+ manufacturer + ", manufacturerId=" + manufacturerId
-				+ ", subCategory=" + subCategory + ", subcategoryId="
-				+ subcategoryId + ", type=" + type + ", typeId=" + typeId
-				+ ", model=" + model + ", modelId=" + modelId
-				+ ", technicalNumber=" + technicalNumber + ", technicalMaster="
-				+ technicalMaster + ", systemPlatformName="
-				+ systemPlatformName + ", osName=" + osName + ", osNameId="
-				+ osNameId + ", hardwareTransientSystem="
-				+ hardwareTransientSystem + ", workflowStatusId="
-				+ workflowStatusId + ", workflowStatus=" + workflowStatus
-				+ ", generalUsageId=" + generalUsageId
-				+ ", itSecurityRelevance=" + itSecurityRelevance + ", comment="
-				+ comment + ", country=" + country + ", countryId=" + countryId
-				+ ", site=" + site + ", siteId=" + siteId + ", building="
-				+ building + ", buildingId=" + buildingId + ", room=" + room
-				+ ", roomId=" + roomId + ", rack=" + rack + ", rackId="
-				+ rackId + ", orderNumber=" + orderNumber + ", costCenter="
-				+ costCenter + ", costCenterId=" + costCenterId
-				+ ", pspElement=" + pspElement + ", pspElementId="
-				+ pspElementId + ", pspText=" + pspText + ", requester="
-				+ requester + ", requesterId=" + requesterId
-				+ ", costCenterManager=" + costCenterManager
+				+ ", cwid=" + cwid + ", error=" + error + ", id=" + id
+				+ ", identNumber=" + identNumber + ", inventoryNumber="
+				+ inventoryNumber + ", sapDescription=" + sapDescription
+				+ ", manufacturer=" + manufacturer + ", manufacturerId="
+				+ manufacturerId + ", subCategory=" + subCategory
+				+ ", subcategoryId=" + subcategoryId + ", type=" + type
+				+ ", typeId=" + typeId + ", model=" + model + ", modelId="
+				+ modelId + ", softwareId=" + softwareId + ", technicalNumber="
+				+ technicalNumber + ", technicalMaster=" + technicalMaster
+				+ ", systemPlatformNameId=" + systemPlatformNameId
+				+ ", systemPlatformName=" + systemPlatformName + ", osName="
+				+ osName + ", osNameId=" + osNameId
+				+ ", hardwareTransientSystem=" + hardwareTransientSystem
+				+ ", workflowStatusId=" + workflowStatusId
+				+ ", workflowStatus=" + workflowStatus + ", generalUsageId="
+				+ generalUsageId + ", itSecurityRelevance="
+				+ itSecurityRelevance + ", comment=" + comment + ", country="
+				+ country + ", countryId=" + countryId + ", site=" + site
+				+ ", siteId=" + siteId + ", building=" + building
+				+ ", buildingId=" + buildingId + ", room=" + room + ", roomId="
+				+ roomId + ", rack=" + rack + ", rackId=" + rackId
+				+ ", orderNumber=" + orderNumber + ", costCenter=" + costCenter
+				+ ", costCenterId=" + costCenterId + ", pspElement="
+				+ pspElement + ", pspElementId=" + pspElementId + ", pspText="
+				+ pspText + ", requester=" + requester + ", requesterId="
+				+ requesterId + ", costCenterManager=" + costCenterManager
 				+ ", costCenterManagerId=" + costCenterManagerId
 				+ ", organizationalunit=" + organizationalunit + ", owner="
-				+ owner + ", sapAssetClass=" + sapAssetClass
-				+ ", sapAssetClassId=" + sapAssetClassId + ", editorsGroupId="
-				+ editorsGroupId + ", editorsGroup=" + editorsGroup
-				+ ", serialNumber=" + serialNumber + "]";
+				+ owner + ", ownerId=" + ownerId + ", sapAssetClass="
+				+ sapAssetClass + ", sapAssetClassId=" + sapAssetClassId
+				+ ", editorsGroupId=" + editorsGroupId + ", editorsGroup="
+				+ editorsGroup + ", serialNumber=" + serialNumber
+				+ ", insertUser=" + insertUser + ", insertSource="
+				+ insertSource + "]";
 	}
+
+
 
 }

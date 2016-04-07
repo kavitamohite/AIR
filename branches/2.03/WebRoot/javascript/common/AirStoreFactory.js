@@ -1142,6 +1142,8 @@ AIR.AirStoreFactory = function() {
 					{name : 'assetOwner'},
 					{name : 'assetSapClass'},
 					{name : 'assetEditor'},
+					{name : 'assetInsertUser'},
+					{name : 'assetInsertSource'},					
 					
 					//AssetManagement Links
 					{name : 'lMenuAssetManagement'},
@@ -1153,7 +1155,10 @@ AIR.AirStoreFactory = function() {
 					{name : 'rSoftwarecomponent'},
 					{name : 'createhardwarepanelheader'},
 					{name : 'lAssetwithInventoryText'},
-					{name : 'lAssetwithoutInventoryText'}
+					{name : 'lAssetwithoutInventoryText'},
+					{name : 'bDeleteAssets'},
+					{name : 'bSaveColumnsPreference'}
+					
 			    ]
 			});
 		
@@ -4302,7 +4307,10 @@ AIR.AirStoreFactory = function() {
 					{ name : 'sapAssetClassId'},
 					
 					//Others
-					{ name : 'serialNumber'}
+					{ name : 'serialNumber'},
+					{ name : 'insertUser'},
+					{ name : 'insertSource'},
+					
 			]);
 	
 			var ciItemListReader = new Ext.data.XmlReader({

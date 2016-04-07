@@ -221,6 +221,8 @@ public class SoftwareComponentHbn {
 		}
 
 		dto.setSerialNumber(swComp.getSerialNumber());
+		dto.setInsertUser(swComp.getInsertUser());
+		dto.setInsertSource(swComp.getInsertQuelle());
 		return dto;
 	}
 
