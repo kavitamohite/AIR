@@ -131,5 +131,28 @@ public class ManufacturerHbn extends BaseHbn {
 		}
 		return partnerId;
 	}
+	
+	public static Partner findByPartnerNameAndNumber(String partnerName, long partnerNumber) {
+        
+        try {
+               Session session = HibernateUtil.getSessionFactory().openSession();
+               
+               List<Partner> parners = session.createQuery("from Partner p where p.name= '"      + partnerName + "'" +" and p.number="+partnerNumber).list();
+               
+               if(parners != null && !parners.isEmpty())
+               {
+                     return parners.get(0);
+               }
+               
+               session.close();
+        } catch(Exception ex)
+        {
+               System.out.println("Error ------> "+ex.getMessage());
+               ex.printStackTrace();
+               return null;
+        }
+        return null;
+ }
+
 
 }
