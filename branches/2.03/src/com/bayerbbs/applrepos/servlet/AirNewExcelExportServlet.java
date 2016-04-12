@@ -15,8 +15,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.bayerbbs.applrepos.domain.Partner;
 import com.bayerbbs.applrepos.hibernate.HardwareComponentHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
+import com.bayerbbs.applrepos.hibernate.ManufacturerHbn;
 
 public class AirNewExcelExportServlet extends HttpServlet {
 	private static final long serialVersionUID = 3569239290421829949L;
@@ -125,7 +127,15 @@ public class AirNewExcelExportServlet extends HttpServlet {
 			row = sheet.createRow(i);
 			
 			cell = row.createCell(0);
-			cell.setCellValue(req.getParameter("companyCode"));
+			
+			// cell.setCellValue(req.getParameter("companyCode"));
+			if(req.getParameter("companyName") != null && req.getParameter("companyCode") != null)
+			{
+				Partner partner = ManufacturerHbn.findByPartnerNameAndNumber(req.getParameter("companyName"), Long.parseLong(req.getParameter("companyCode")));
+				if(partner != null) {
+					cell.setCellValue(partner.getCompanyCode());
+				}
+			}
 			
 			cell = row.createCell(1);
 			cell.setCellValue(req.getParameter("companyName"));
