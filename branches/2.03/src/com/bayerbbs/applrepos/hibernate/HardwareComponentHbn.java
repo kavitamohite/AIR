@@ -53,7 +53,7 @@ public class HardwareComponentHbn {
 			tx = session.beginTransaction();
 
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
-
+            criteria.add(Restrictions.isNull("deleteTimestamp"));
 			Criterion hwName = Restrictions.like("name",
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion sapDescription = Restrictions.like("sapDescription",

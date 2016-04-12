@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "HARDWAREKOMPONENTE")
 @org.hibernate.annotations.Entity(dynamicInsert = true)
 @SequenceGenerator(name = "HardwareComponentSeq", sequenceName = "TBADM.SEQ_HARDWAREKOMPONENTE")
-public class HardwareComponent extends RevisionInfo implements Serializable {
+public class HardwareComponent extends DeletableRevisionInfo implements Serializable {
 
 	private static final long serialVersionUID = 2374268074399112605L;
 

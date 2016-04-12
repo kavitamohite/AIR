@@ -11,7 +11,7 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
                 border: false,
                 layout: 'table',
                 layoutConfig: {
-                    columns: 6 
+                    columns: 7 
                 },
                 items: [{
                     xtype: 'textfield',
@@ -54,6 +54,7 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
                 {
                     xtype: 'button',
                     id: 'bImportAssets',
+                    width: 80,
                     hidden: true,
                     text: 'Import',
                     style: {
@@ -63,12 +64,23 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
                 {
                     xtype: 'button',
                     id: 'bExportAssets',
+                    width: 80,
                     hidden: true,
                     text: 'Export',
                     style: {
                         marginLeft: 5
                     }
                 },
+                {
+                    xtype: 'button',
+                    id: 'bDeleteAssets',
+                    width: 80,
+                    hidden: true,
+                    text: 'Delete',
+                    style: {
+                        marginLeft: 5
+                    }
+                },                
                 {
                     xtype: 'radiogroup',
                     id: 'searchMode',
@@ -99,6 +111,12 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
     updateLabels: function(labels) {
         this.getComponent('pAssetSearch').getComponent('clAssetSearch').setText(labels.newSearch);
         this.getComponent('pAssetSearch').getComponent('bUpdateCiAssetSearchResult').setText(labels.bUpdateCiSearchResult);
+        this.getComponent('pAssetSearch').getComponent('bDeleteAssets').setText(labels.bDeleteAssets);
+        this.getComponent('pAssetSearch').getComponent('bSaveColumnsPreference').setText(labels.bSaveColumnsPreference);
+
+        
+        
+        
     }
 
 });

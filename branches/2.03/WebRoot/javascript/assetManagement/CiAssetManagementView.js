@@ -92,6 +92,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
         this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bExportAssets').on('click', this.exportAssetAlert, this);  // added by enqmu
         this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bImportAssets').on('click', this.importAssetAlert, this);  // added by enqmu
         this.getComponent('assetsFormWindow').getComponent('uploadAssetsBtn').on('click', this.importAssetsExcel, this);  // added by enqmu
+        this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bDeleteAssets').on('click',this.deleteAssetAlert,this);
     },
 
     selectDeselectAll: function(button, event) {
@@ -210,12 +211,43 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
             this.isMoved = true;
         }
         this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bSaveColumnsPreference').show();  // added by enqmu
-        this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bImportAssets').show();
-        this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bExportAssets').show();
+        var bImportAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bImportAssets');
+        var bExportAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bExportAssets');
+        var bDeleteAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bDeleteAssets');
+        var searchMode = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('searchMode');
         
+        if(searchMode.getValue().inputValue=='hardware'){
+        	bImportAssets.show();
+        	bExportAssets.show();
+    		if(AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_ASSET_MANAGER)){
+    			bDeleteAssets.show();
+   		}    		
+        }else{
+        	bImportAssets.hide();
+        	bExportAssets.hide();
+        	bDeleteAssets.hide();
+        }     
         this.getComponent('ciAssetSearchResultView').search(params, isUpdate, this.onExcelExport.createDelegate(this));
     },
     onTabChange: function(tabPanel, tab, options) {
+        var bImportAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bImportAssets');
+        var bExportAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bExportAssets');
+        var bDeleteAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bDeleteAssets');
+        var searchMode = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('searchMode');
+        var params = this.getComponent('ciAssetSearchResultView').getSearchParams(tab.getId());
+        
+        if(params.queryMode=='hardware'){
+        	bImportAssets.show();
+        	bExportAssets.show();
+    		if(AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_ASSET_MANAGER)){
+    			bDeleteAssets.show();
+   		}    		
+        }else{
+        	bImportAssets.hide();
+        	bExportAssets.hide();
+        	bDeleteAssets.hide();
+        }
+    	
         if (tabPanel) {
             var bUpdateCiSearchResult = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bUpdateCiAssetSearchResult');
 
@@ -236,7 +268,6 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
         }
 
         var searchType = tab.getId().substring(0, tab.getId().indexOf('_'));
-        var params = this.getComponent('ciAssetSearchResultView').getSearchParams(tab.getId());
         var viewId;
 
         switch (searchType) {
@@ -391,6 +422,82 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 			   scope: this,
 			   icon: Ext.MessageBox.INFO
 			});
+    },
+    
+    deleteAssetAlert: function(){
+    	var message='Are you sure, you want to perform the deletion of assets?';
+    	var windowTitle = 'Start deletion of assets';
+    	Ext.Msg.show({
+			   title: windowTitle,
+			   msg: message,
+			   buttons: Ext.Msg.YESNO,
+			   fn: this.deleteAssets,
+			   scope: this,
+			   icon: Ext.MessageBox.INFO
+			});
+    	
+    },
+    
+    deleteAssets: function(button,event){
+    	if(button != 'yes'){
+    		return;
+    	}
+    	
+    	var selectedRecords = this.getComponent('ciAssetSearchResultView').getComponent('tpCiAssetSearchResultTables').getActiveTab().selModel;
+    	var selectedRecordsCount = selectedRecords.getCount();
+    	 var selectedHwAssets = '';
+    	if(selectedRecordsCount == 0){
+    		Ext.Msg.alert('Message', 'Please select any hardware component');
+    		return
+    	}else{
+    		selectedHwAssets=this.getComponent('ciAssetSearchResultView').getComponent('tpCiAssetSearchResultTables').getActiveTab().selModel.getSelections()[0].data.id ;
+            for(var i = 1; i < selectedRecordsCount; i++)
+            {
+            	selectedHwAssets += ","+this.getComponent('ciAssetSearchResultView').getComponent('tpCiAssetSearchResultTables').getActiveTab().selModel.getSelections()[i].data.id ;
+            }
+    	}    	
+    	var deleteAssetStore = AIR.AirStoreFactory.createAssetDeleteStore();
+    	deleteAssetStore.on('beforeload',this.onBeforeDeleteAsset,this);
+    	deleteAssetStore.on('load',this.onDeleteAsset,this);
+		var params = {
+				cwid: AAM.getCwid(),
+				token: AAM.getToken(),
+				selectedAssets: selectedHwAssets
+		};
+    	deleteAssetStore.load({
+    		params: params
+    	}
+    	); 
+    },
+    
+    onBeforeDeleteAsset: function(store,options){
+		var deeteMask = AIR.AirApplicationManager.getMask(AC.MASK_TYPE_SAVE);
+		deeteMask.show();
+    },
+    
+    onDeleteAsset: function(store, records, options){
+		var deeteMask = AIR.AirApplicationManager.getMask(AC.MASK_TYPE_SAVE);
+		deeteMask.hide();
+		if(records[0].data.result=='OK'){
+			this.onUpdateCiSearchResult();
+    		Ext.Msg.show({
+    			title: 'Asset Deletion Completed',
+    			msg: 'Asset Deletion Completed.',
+    			buttons: Ext.MessageBox.OK,
+    			icon: Ext.MessageBox.INFO			
+    		});	
+    		
+		}else{
+			var msg = records[0].data.messages;
+	   		Ext.Msg.show({
+    			title: 'Error',
+    			msg: msg,
+    			buttons: Ext.MessageBox.OK,
+    			icon: Ext.MessageBox.ERROR			
+    		});
+
+		}
+
     },
     importAssetsExcel : function(button, event) {
     	this.getComponent('assetsFormWindow').hide();

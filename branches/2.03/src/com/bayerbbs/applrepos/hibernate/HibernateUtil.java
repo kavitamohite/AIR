@@ -63,8 +63,7 @@ public class HibernateUtil {
 				    		if(hostName.equals(AirKonstanten.SERVERNAME_BMS_QA)){
 						    	config = new AnnotationConfiguration().configure("hibernate.qa.bms.cfg.xml");
 				    		}else
-						    	config = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
-
+						    	config = new AnnotationConfiguration().configure("hibernate.dev.cfg.xml");
 				    	}				    		
 				    }
 //					transbaseConf = config;
@@ -111,8 +110,15 @@ public class HibernateUtil {
 			    	else{
 			    		if(hostName.equals(AirKonstanten.SERVERNAME_BMS_QA)){
 					    	conf = new AnnotationConfiguration().configure("hibernate.qa.bms.cfg.xml");
-			    		}else
-					    	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+			    		}else {
+			    			if(hostName.equals(AirKonstanten.SERVERNAME_QA)){
+						    	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+
+			    			}else {
+						    	conf = new AnnotationConfiguration().configure("hibernate.dev.cfg.xml");
+							}
+			    				
+			    		}
 
 			    	}				    		
 			    }

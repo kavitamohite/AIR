@@ -22,6 +22,9 @@ public class AssetManagementParameterInput {
 	
 	private String dir;
 	
+	
+	private String selectedAssets;
+	
 	public Long getAssetId() {
 		return assetId;
 	}
@@ -101,5 +104,15 @@ public class AssetManagementParameterInput {
 	public void setDir(String dir) {
 		this.dir = dir;
 	}
+
+	public String getSelectedAssets() {
+		return selectedAssets;
+	}
+
+	public void setSelectedAssets(String selectedAssets) {
+		this.selectedAssets = selectedAssets;
+	}
+	
+	
 	
 }

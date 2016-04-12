@@ -4055,6 +4055,33 @@ AIR.AirStoreFactory = function() {
 			
 			return directLinkageCIAnswersStore;
 		},
+		
+
+		createAssetDeleteStore : function() {
+			var deleteAssetRecord = new Ext.data.Record.create([
+			                    {name: 'result'}, 
+			                    {name: 'displayMessage'}, 
+			                    {name: 'messages'} ]);
+			var deleteAssetReader = new Ext.data.XmlReader({
+				record : 'return'
+			}, deleteAssetRecord);
+			
+			var deleteAssetStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'deleteAssetStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/AssetManagementWSPort',
+					loadMethod: 'deleteAssets',
+					timeout: 120000,
+					reader: deleteAssetReader
+				}),			
+			fields: [ 'result','displayMessage','messages'],			
+			reader: deleteAssetReader				
+			});
+			return 	deleteAssetStore;		
+		},
 		createMassUpdateSaveStore: function() {
 			var massUpdateSaveRecord = Ext.data.Record.create([
 			         {name: 'result'}, 

@@ -18,4 +18,8 @@ public class AssetManagementWSDelegate {
 			AssetViewDataDTO input) {
 		return assetManagementWS.saveAsset(input);
 	}
+	
+	public DeleteAssetParameterOutput deleteAssets(AssetManagementParameterInput input){
+		return assetManagementWS.deleteAssets(input);		
+	}
 }
