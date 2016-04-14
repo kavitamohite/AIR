@@ -325,6 +325,8 @@ public class HardwareComponentHbn {
 		
 		//Contacts
 		dto.setEditorsGroup(hwComp.getSubResponsible());
+		dto.setInsertSource(hwComp.getInsertQuelle());
+		dto.setInsertUser(hwComp.getInsertUser());
 		
 		return dto;
 	}

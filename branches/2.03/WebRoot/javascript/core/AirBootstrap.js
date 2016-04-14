@@ -226,11 +226,11 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		
 		var viewPort = new AIR.AirViewport(this.airMainPanel);
 	
-		var delayedTask = new Ext.util.DelayedTask(function() {
-			var airTaskManager = new AIR.AirTaskManager();
-			airTaskManager.startDbSessionCheckTask(AIR.AirApplicationManager.getCwid(), AIR.AirApplicationManager.getToken());//orig: keine params
-		});
-		delayedTask.delay(100);
+//		var delayedTask = new Ext.util.DelayedTask(function() {
+//			var airTaskManager = new AIR.AirTaskManager();
+//			airTaskManager.startDbSessionCheckTask(AIR.AirApplicationManager.getCwid(), AIR.AirApplicationManager.getToken());//orig: keine params
+//		});
+//		delayedTask.delay(100);
 	},
 	
 	onTokenCheckFailure: function(response, options) {

@@ -289,4 +289,11 @@
   
   <listener>
   	<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
-  </listener></web-app>
+  </listener>
+  
+  	<session-config>
+		<session-timeout>2400</session-timeout>
+	</session-config>
+  
+  
+  </web-app>

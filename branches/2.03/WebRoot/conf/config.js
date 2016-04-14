@@ -83,7 +83,7 @@ var mail_Subject	= "Your%20Todo%20for%20the%20CI%20<CIName>";
 var mail_Text		= "Dear%20CI%20Owner,%0A%0APlease%20update%20your%20information%20to%20the%20CI%20%20<CIName>%20%20in%20the%20Application%20Infrastructure%20Repository%20(https://air.de.bayer.cnb)%20to%20the%20following:%0A%20-%20add%20text%20here%0A%0ABest%20regards,%0A<Username>";
 
 // Check on DB-Connection
-var dbLoginCheckInterval = 1000 * 60; //1000 milliSecs = 1 sec. * 60 = 1 min. (check every minute)
+var dbLoginCheckInterval = 1000 * 60 * 10; //1000 milliSecs = 1 sec. * 60 = 1 min. (check every minute)
 
 //Mailtemplate
 var mail_Subject_product	= "Master%20data%20for%20the%20Manufacturer,%20Subcategory,%20Type,%20Model%20must%20be%20created.";
