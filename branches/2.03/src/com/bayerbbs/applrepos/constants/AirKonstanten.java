@@ -14,8 +14,10 @@ public final class AirKonstanten {
 	public final static String SERVERNAME_BMS_PROD = "mdelevs0300.ad.glpoly.net";
 	public final static String SERVERNAME_BMS_QA = "mdelevs0475.ad.glpoly.net";
 	public final static String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
+	public final static String TRANSBASE_QA_HOST = "by08vf.bayer-ag.com";
 	public final static String TRANSBASE_BMS_PROD_HOST_SERVICENAME = "MTRANSBP";
 	public final static String TRANSBASE_BMS_QA_HOST_SERVICENAME = "MTRANSBQ";
+	
 
 	public final static Long IT_SET_DEFAULT = new Long(11397);
 	public final static Long IT_SET_GERMANY = new Long(10002);

@@ -246,6 +246,11 @@
   	<servlet-name>AirServlet</servlet-name>
   	<url-pattern>/Q</url-pattern>
   </servlet-mapping>
+    <servlet-mapping>
+  	<servlet-name>AirServlet</servlet-name>
+  	<url-pattern>/D</url-pattern>
+  </servlet-mapping>
+  
   
 	<servlet>
 	  	<description>BovApplicationServlet</description>

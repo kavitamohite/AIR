@@ -1,8 +1,10 @@
-<%@ page language="java" import="java.util.*, org.hibernate.cfg.*, java.net.InetAddress, com.bayerbbs.applrepos.constants.AirKonstanten" pageEncoding="ISO-8859-1" %>
+<%@ page language="java" import="java.util.*,org.hibernate.cfg.*,java.net.InetAddress,com.bayerbbs.applrepos.constants.AirKonstanten" pageEncoding="ISO-8859-1" %>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme()+ "://" +request.getServerName()+ ":" +request.getServerPort() + path;
-	
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path;
+
 	//Configuration conf = new AnnotationConfiguration().configure();
 	AnnotationConfiguration conf;
 	InetAddress iAddress;
@@ -12,33 +14,52 @@
 		hostName = iAddress.getHostName();
 	} catch (Exception ex) {
 		System.out.println(ex.getMessage());
-	} 
-    if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
-    	conf = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
-    } else {
-    	if(hostName.equals(AirKonstanten.SERVERNAME_BMS_PROD))
-	    	conf = new AnnotationConfiguration().configure("hibernate.prod.bms.cfg.xml");
-    	else{
-    		if(hostName.equals(AirKonstanten.SERVERNAME_BMS_QA)){
-		    	conf = new AnnotationConfiguration().configure("hibernate.qa.bms.cfg.xml");
-    		}else
-		    	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+	}
+	if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
+		conf = new AnnotationConfiguration()
+				.configure("hibernate.prod.cfg.xml");
+	} else {
+		if (hostName.equals(AirKonstanten.SERVERNAME_BMS_PROD))
+			conf = new AnnotationConfiguration()
+					.configure("hibernate.prod.bms.cfg.xml");
+		else {
+			if (hostName.equals(AirKonstanten.SERVERNAME_BMS_QA)) {
+				conf = new AnnotationConfiguration()
+						.configure("hibernate.qa.bms.cfg.xml");
+			} else {
+				if (hostName.equals(AirKonstanten.SERVERNAME_QA)) {
+					conf = new AnnotationConfiguration()
+							.configure("hibernate.qa.cfg.xml");
+				} else
+					conf = new AnnotationConfiguration()
+							.configure("hibernate.dev.cfg.xml");
+			}
 
-    	}				    		
-    }
-	String dbConnectionUrl = conf.getProperty("hibernate.connection.url");
-	String redirectPath="";
-	if(dbConnectionUrl.contains(AirKonstanten.TRANSBASE_PROD_HOST)){
-		redirectPath = "/AIR/P" ;
-	}else{
-		if(dbConnectionUrl.contains(AirKonstanten.TRANSBASE_BMS_PROD_HOST_SERVICENAME)){
-			redirectPath = "/AIR-P-MS/P" ;
-		}else
-			if(dbConnectionUrl.contains(AirKonstanten.TRANSBASE_BMS_QA_HOST_SERVICENAME)){
-				redirectPath = "/AIR-Q-MS/Q" ;
-			}else
-				redirectPath = "/AIR/Q" ;		
-	}	
+		}
+	}
+	String dbConnectionUrl = conf
+			.getProperty("hibernate.connection.url");
+	String redirectPath = "";
+	if (dbConnectionUrl.contains(AirKonstanten.TRANSBASE_PROD_HOST)) {
+		redirectPath = "/AIR/P";
+	} else {
+		if (dbConnectionUrl
+				.contains(AirKonstanten.TRANSBASE_BMS_PROD_HOST_SERVICENAME)) {
+			redirectPath = "/AIR-P-MS/P";
+		} else {
+			if (dbConnectionUrl
+					.contains(AirKonstanten.TRANSBASE_BMS_QA_HOST_SERVICENAME)) {
+				redirectPath = "/AIR-Q-MS/Q";
+			} else {
+				if (dbConnectionUrl
+						.contains(AirKonstanten.TRANSBASE_QA_HOST)) {
+					redirectPath = "/AIR/Q";
+				} else
+					redirectPath = "/AIR/D";
+			}
+		}
+
+	}
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
