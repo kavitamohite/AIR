@@ -47,6 +47,7 @@ public final class AirKonstanten {
 	public static final String CITypes_TERRAIN		= "'Terrain'";
 	public static final String CITypes_STANDORT		= "'Site'";
 	public static final String CITypes_WAYS			= "'Way'";
+	public static final String CITypes_FUNCTION		= "'Function'";
 	public static final String CITypes_SERVICE      = "'Service'";
 	public static final String NOT_BUSINESS_ESSENTIAL = "Not Business Essential";
 	
