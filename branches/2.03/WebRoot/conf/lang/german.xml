@@ -630,7 +630,7 @@
 		<assetCost>Kostenstelle *</assetCost>
 		<assetRequester>Anforderer *</assetRequester>
 		<assetCostManager>Cost Center Manager</assetCostManager>
-	    <assetOrganisation>Organisationseinheit</assetOrganisation>
+	    <assetOrganisation>Org.Einheit</assetOrganisation>
 	    <assetOwner>Inhaber(Legal) *</assetOwner>
 	    <assetSapClass>SAP Asset Klasse</assetSapClass>
 	    <assetInsertUser>inset Benutzer</assetInsertUser>
