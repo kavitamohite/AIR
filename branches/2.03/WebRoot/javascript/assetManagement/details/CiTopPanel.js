@@ -13,7 +13,7 @@ AIR.CiTopPanel = Ext.extend(Ext.form.FieldSet, {
 			    	xtype: 'label',
 			    	itemId: 'identNumberLabel',
 			    	text: 'Ident number',
-			    	width: 105,
+			    	width: 120,
 			    	style: {
 			    		fontSize: 12
 			    	}
