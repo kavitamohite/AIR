@@ -98,6 +98,7 @@
 		<label_menu_detailscompliance>Compliance</label_menu_detailscompliance>
 		<label_menu_detailslicense>Lizenzen &amp;amp; Kosten</label_menu_detailslicense>
 		<label_menu_specialAttribute>Special Attribute</label_menu_specialAttribute>
+		//<label_menu_detailsnetwork>Network</label_menu_detailsnetwork>
 		<label_menu_detailsconnections>Verkn&amp;uuml;pfungen</label_menu_detailsconnections>
 		<label_menu_detailssupportstuff>Dokumentation</label_menu_detailssupportstuff>
 		<label_menu_detailshistory>Historie</label_menu_detailshistory>
@@ -560,12 +561,14 @@
 		<virtualHardwareClient>Hardware Virtualisierung Client</virtualHardwareClient>
 		<virtualHardwareHost>Hardware Virtualisierung Host</virtualHardwareHost>
 		<virtualHardwareSoftware>Hardware Virtualisierung Software</virtualHardwareSoftware>
+		<backupType>Backup Type</backupType>
 <!--		<lifecycleStatus></lifecycleStatus>-->
 <!--		<operationalStatus></operationalStatus>-->
 		<primaryFunction>Primary Function</primaryFunction>
 		<licenseScanning>License Scanning</licenseScanning>
 		<directLinkCIPanelTitle>Direct Link CIS</directLinkCIPanelTitle>
 		<directLinkagesCIPanelTitle>Linkages</directLinkagesCIPanelTitle>
+		<servicePack>Service Pack</servicePack>
 		
 		
 		<!-- asset management -->
