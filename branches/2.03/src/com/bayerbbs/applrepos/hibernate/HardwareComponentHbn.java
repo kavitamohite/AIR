@@ -62,6 +62,8 @@ public class HardwareComponentHbn {
 					"%" + input.getQuery() + "%").ignoreCase();
 			criteria.createAlias("konto", "konto", CriteriaSpecification.LEFT_JOIN);
 			Criterion kontoName = Restrictions.and(Restrictions.isNotNull("konto"), Restrictions.like("konto.name", "%" + input.getQuery() + "%").ignoreCase());
+			//Criterion pspElementName = Restrictions.and(Restrictions.isNotNull("konto"), Restrictions.like("konto.beschreibung", "%" + input.getQuery() + "%").ignoreCase());
+			
 			Criterion serialNumber = Restrictions.like("serialNumber",
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion technicalMaster = Restrictions.like("technicalMaster",
@@ -72,6 +74,7 @@ public class HardwareComponentHbn {
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion orgUnit = Restrictions.like("subResponsible",
 					"%" + input.getQuery() + "%").ignoreCase();
+			Criterion odrNumber = Restrictions.like("bestSellText",	"%" + input.getQuery() + "%").ignoreCase();
 			criteria.createAlias("hardwareCategory4", "hardwareCategory4", CriteriaSpecification.LEFT_JOIN);
 			Criterion modelName = Restrictions.and(Restrictions.isNotNull("hardwareCategory4"), Restrictions.like("hardwareCategory4.hwKategory4", "%" + input.getQuery() + "%").ignoreCase());
 			criteria.createAlias("hardwareCategory3", "hardwareCategory3", CriteriaSpecification.LEFT_JOIN);
@@ -82,6 +85,43 @@ public class HardwareComponentHbn {
 			Criterion manufacturerName = Restrictions.and(Restrictions.isNotNull("hersteller"), Restrictions.like("hersteller.name", "%" + input.getQuery() + "%").ignoreCase());
 			criteria.createAlias("itSystem", "itSystem", CriteriaSpecification.LEFT_JOIN);
 			Criterion itSystemName = Restrictions.and(Restrictions.isNotNull("itSystem"), Restrictions.like("itSystem.itSystemName", "%" + input.getQuery() + "%").ignoreCase());
+			
+			criteria.createAlias("hardwareCategory1", "hardwareCategory1", CriteriaSpecification.LEFT_JOIN);
+			Criterion sapAsset = Restrictions.and(Restrictions.isNotNull("hardwareCategory1"), Restrictions.like("hardwareCategory1.hwKategory1", "%" + input.getQuery() + "%").ignoreCase());
+			
+		
+			Criterion businessInfoInsertUser =  Restrictions.like("insertUser",	"%" + input.getQuery() + "%").ignoreCase();
+			Criterion businessInfoInsertQuelle =  Restrictions.like("insertQuelle",	"%" + input.getQuery() + "%").ignoreCase();
+			criteria.createAlias("partner", "partner", CriteriaSpecification.LEFT_JOIN);
+			Criterion legalEntity = Restrictions.and(Restrictions.isNotNull("partner"), Restrictions.like("partner.name", "%" + input.getQuery() + "%").ignoreCase());
+			Criterion requesterId;
+			if(input.getQuery().matches(".*\\d.*")){
+				requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase(); 
+			} else{
+			List<PersonsDTO> personList=  PersonsHbn.findPersonsByFunctionAndQuery(input.getQuery(),"Y","N","N",null,"Name");
+			if(personList.size()>0){
+				String[] cwidIds =new String[personList.size()];
+				int i = 0;
+				for(PersonsDTO personCwid : personList){
+										
+					cwidIds[i] = personCwid.getCwid();
+						i++;
+					}
+								
+				requesterId= Restrictions.in("requester", cwidIds);
+				
+			}else{
+				requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase();
+			}
+			}
+			
+			Criterion costManagerId= Restrictions.like("cwidVerantw",	"%" + input.getQuery() + "%").ignoreCase();
+			
+			Criterion assetId= Restrictions.like("assetId",	"%" + input.getQuery() + "%").ignoreCase();
+			criteria.createAlias("lifecycleSubStat", "lifecycleSubStat", CriteriaSpecification.LEFT_JOIN);
+			Criterion lifeCycleStatus =  Restrictions.like("lifecycleSubStat.status",	"%" + input.getQuery() + "%").ignoreCase();
+			criteria.createAlias("schrank", "schrank", CriteriaSpecification.LEFT_JOIN);
+			Criterion rackPosition =  Restrictions.and(Restrictions.isNotNull("schrank"), Restrictions.like("schrank.schrankName", "%" + input.getQuery() + "%").ignoreCase());
 			
 			
 			Criterion completeCondition = Restrictions.disjunction()
@@ -99,6 +139,17 @@ public class HardwareComponentHbn {
 					.add(subcategoryName)
 					.add(manufacturerName)
 					.add(itSystemName)
+					.add(odrNumber)
+					.add(sapAsset)
+					.add(businessInfoInsertUser)
+					.add(businessInfoInsertQuelle)
+					.add(requesterId)
+					.add(costManagerId)
+					.add(assetId)
+					.add(rackPosition)
+					.add(lifeCycleStatus)
+					.add(legalEntity)
+					
 					;
 			criteria.add(completeCondition);
 
