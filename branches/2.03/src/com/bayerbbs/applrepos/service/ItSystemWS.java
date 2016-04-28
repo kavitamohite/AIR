@@ -111,6 +111,8 @@ public class ItSystemWS {
 		itSystemDTO.setIsVirtualHardwareClient(input.getIsVirtualHardwareClient());
 		itSystemDTO.setIsVirtualHardwareHost(input.getIsVirtualHardwareHost());
 		itSystemDTO.setVirtualHardwareSoftware(input.getVirtualHardwareSoftware());
+		itSystemDTO.setBackupType(input.getBackupType());
+		itSystemDTO.setServicePack(input.getServicePackFor());
 		itSystemDTO.setLifecycleStatusId(input.getLifecycleStatusId());
 		itSystemDTO.setEinsatzStatusId(input.getEinsatzStatusId());
 		itSystemDTO.setPrimaryFunctionId(input.getPrimaryFunctionId());
@@ -261,6 +263,23 @@ public class ItSystemWS {
 		cdConstant++;		
 		output.setDcConstant("DC"+String.format("%04d", cdConstant));
 		return output;
+	}
+	
+	public ItSytemNetworkInformationOutPut getDNSDetailQIP(CiDetailParameterInput input){
+		ItSytemNetworkInformationOutPut informationOutPut = new ItSytemNetworkInformationOutPut();
+		
+		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))
+			informationOutPut = ItSystemHbn.getDNSDetailQIP(input.getCiId());
+		
+		return informationOutPut;
+	}
+
+	public ItSytemNetworkInformationOutPut getNetworkTcpIp(CiDetailParameterInput input) {
+		ItSytemNetworkInformationOutPut informationOutPut = new ItSytemNetworkInformationOutPut();
+		
+		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))
+			informationOutPut = ItSystemHbn.getNetworkTcpIp(input.getCiId());
+		return informationOutPut;
 	}
 	
 }
