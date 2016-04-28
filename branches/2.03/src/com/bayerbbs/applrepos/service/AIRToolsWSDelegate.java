@@ -179,6 +179,15 @@ public class AIRToolsWSDelegate {
 	public KeyValueDTO[] getItSystemClusterTypes() {
 		return airToolsWS.getItSystemClusterTypes();
 	}
+	public KeyValueDTO[] getBackupType1() {
+		return airToolsWS.getBackupType1();
+	}
+	
+	public KeyValueDTO[] getServicePack1() {
+		return airToolsWS.getServicePack1();
+	}
+	
+	
 	public KeyValueDTO[] getVirtualHardwareSoftwareTypes() {
 		return airToolsWS.getVirtualHardwareSoftwareTypes();
 	}
@@ -197,5 +206,6 @@ public class AIRToolsWSDelegate {
 	public GroupTypesDTO[] getGroupTypesList() {
 		return airToolsWS.getGroupTypesList();
 	}
+
 
 }
