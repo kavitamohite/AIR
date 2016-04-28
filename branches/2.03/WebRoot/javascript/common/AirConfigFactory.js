@@ -63,7 +63,8 @@ AIR.AirConfigFactory = function() {
 			itSystemCiFields.push('licenseScanningId');
 			itSystemCiFields.push('upStreamAdd');
 			itSystemCiFields.push('upStreamDelete');
-			
+			itSystemCiFields.push('backupType');
+			itSystemCiFields.push('servicePack')
 			itSystemCiFields.push('severityLevelId');
 			itSystemCiFields.push('priorityLevelId');
 			itSystemCiFields.push('businessEssentialId');
