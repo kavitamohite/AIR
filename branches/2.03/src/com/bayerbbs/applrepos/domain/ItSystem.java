@@ -52,7 +52,12 @@ public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisi
 	
 	private Integer primaryFunctionId;
 	private Integer licenseScanningId;
+	private String backupType;
+	private String servicePack;
 	
+	
+	
+
 	private List<HardwareComponent> hardwareComponents = new ArrayList<HardwareComponent>();
 	
 	@Id
@@ -213,6 +218,22 @@ public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisi
 	}
 	public void setLicenseScanningId(Integer licenseScanningId) {
 		this.licenseScanningId = licenseScanningId;
+	}
+	
+	@Column(name = "BACKUP_TYPE")
+	public String getBackupType() {
+		return backupType;
+	}
+	public void setBackupType(String backupType) {
+		this.backupType = backupType;
+	}
+
+	@Column(name = "operating_system_version")
+	public String getServicePack() {
+		return servicePack;
+	}
+	public void setServicePack(String servicePack) {
+		this.servicePack = servicePack;
 	}
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
