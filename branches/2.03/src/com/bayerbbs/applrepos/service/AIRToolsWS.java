@@ -317,6 +317,17 @@ public class AIRToolsWS {
 		List<KeyValueDTO> clusterCodes = ItSystemHbn.getItSystemClusterTypes();
 		return clusterCodes.toArray(new KeyValueDTO[0]);
 	}
+	//Avanti
+	public KeyValueDTO[] getBackupType1() {
+		List<KeyValueDTO> backupType = ItSystemHbn.getBackupType();
+		return backupType.toArray(new KeyValueDTO[0]);
+	}
+	
+	public KeyValueDTO[] getServicePack1(){
+		List<KeyValueDTO> servicePack = ItSystemHbn.getServicePack();
+		return servicePack.toArray(new KeyValueDTO[0]);
+	}
+	
 	public KeyValueDTO[] getVirtualHardwareSoftwareTypes() {
 		List<KeyValueDTO> virtualHWSWTypes = ItSystemHbn.getVirtualHardwareSoftwareTypes();
 		return virtualHWSWTypes.toArray(new KeyValueDTO[0]);
@@ -337,5 +348,7 @@ public class AIRToolsWS {
 	public GroupTypesDTO[] getGroupTypesList() {
 		return GroupTypesHbn.getArrayFromList(GroupTypesHbn.listGroupTypesHbn());
 	}
+	
+	
 
 }
