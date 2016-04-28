@@ -25,7 +25,8 @@ public class ItSystemEditParameterInput extends BaseEditParameterInput {
 	
 	private String upStreamAdd;
 	private String upStreamDelete;
-
+	private String backupType;
+	private String servicePackFor;
 	
 	
 	public String getAlias() {
@@ -137,4 +138,28 @@ public class ItSystemEditParameterInput extends BaseEditParameterInput {
 	public void setUpStreamDelete(String upStreamDelete) {
 		this.upStreamDelete = upStreamDelete;
 	}
+
+	public String getBackupType() {
+		return backupType;
+	}
+	
+	public void setBackupType(String backupType) {
+		this.backupType = backupType;
+	}
+	/**
+	 * @return the servicePackFor
+	 */
+	public String getServicePackFor() {
+		return servicePackFor;
+	}
+	/**
+	 * @param servicePackFor the servicePackFor to set
+	 */
+	public void setServicePackFor(String servicePackFor) {
+		this.servicePackFor = servicePackFor;
+	}
+	
+
+	
+	
 }
