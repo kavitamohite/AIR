@@ -774,6 +774,7 @@ public class AirServlet extends HttpServlet {
 				append(compressJSFile("javascript/ciDetails/CiComplianceView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiLicenseView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiSpecialAttributesView.js", version)).
+				append(compressJSFile("javascript/ciDetails/CiNetworkView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiConnectionsView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiSupportStuffView.js", version)).
 				append(compressJSFile("javascript/ciDetails/CiHistoryView.js", version)).
