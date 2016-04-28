@@ -641,5 +641,8 @@
 	  
 	    <!-- asset management Contacts-->
 	    <assetEditor>Editoren Gruppe *</assetEditor>
+	    
+	    <!-- Networks -->
+	    <CiNetworkViewTitle>Network</CiNetworkViewTitle>
 	</Items>
 </LanguageItems>
