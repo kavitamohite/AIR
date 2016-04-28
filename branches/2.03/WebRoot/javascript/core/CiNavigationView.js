@@ -263,6 +263,12 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 	                cls: 'menuSubLink'
 				},{
 	                xtype: 'commandlink',
+	                id: 'clCiNetwork',
+	                text: 'Network',
+	                img: 'images/Transparent.png',//images/Transparent.png
+	                cls: 'menuSubLink'
+				},{
+	                xtype: 'commandlink',
 	                id: 'clCiConnections',
 	                text: 'Connections',
 	                img: 'images/Transparent.png',//images/Transparent.png
@@ -469,6 +475,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			case 'clCiProtection':
 			case 'clCiCompliance':
 			case 'clCiLicense':
+			case 'clCiNetwork':	
 			case 'clCiConnections':
 			case 'clCiSupportStuff':
 			case 'clCiHistory':
@@ -596,17 +603,25 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		var pCiDetailsMenuItems = this.getComponent('pCiDetailsMenuItems');
 		var clCiLicense = pCiDetailsMenuItems.getComponent('clCiLicense');
 		var clCiSupportStuff = pCiDetailsMenuItems.getComponent('clCiSupportStuff');
+		var clCiNetwork = pCiDetailsMenuItems.getComponent('clCiNetwork');
 		
 		switch(tableId) {
 			case AC.TABLE_ID_APPLICATION:
 				if(ciSubType == AC.APP_CAT1_APPLICATION) {
 					clCiLicense.setVisible(true);
 					clCiSupportStuff.setVisible(true);
+					clCiNetwork.setVisible(false);
+					break;
+				}
+			case AC.TABLE_ID_IT_SYSTEM:
+				if(ciSubType == AC.CI_SUB_TYPE_TRANSIENT_SYSTEM) {
+					clCiNetwork.setVisible(true);
 					break;
 				}
 			default:
 				clCiLicense.setVisible(false);
 				clCiSupportStuff.setVisible(false);
+				clCiNetwork.setVisible(false);
 				break;
 		}
 	},
@@ -694,6 +709,9 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiLicense');
 		link.updateText(labels.label_menu_detailslicense);
+		
+		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiNetwork');
+		link.updateText(labels.label_menu_detailsnetwork);
 		
 		link = this.getComponent('pCiDetailsMenuItems').getComponent('clCiConnections');
 		link.updateText(labels.label_menu_detailsconnections);
