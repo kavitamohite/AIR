@@ -28,16 +28,19 @@ import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
+import com.bayerbbs.applrepos.dto.ItSystemNetworkInformationDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.KeyValueType2DTO;
 import com.bayerbbs.applrepos.dto.KeyValueTypeDTO;
 import com.bayerbbs.applrepos.dto.OsNameDTO;
 import com.bayerbbs.applrepos.dto.OsTypeDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
+import com.bayerbbs.applrepos.service.CiDetailParameterInput;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.CiItemsResultDTO;
 import com.bayerbbs.applrepos.service.CiSearchParamsDTO;
+import com.bayerbbs.applrepos.service.ItSytemNetworkInformationOutPut;
 import com.bayerbbs.applrepos.service.LDAPAuthWS;
 
 public class ItSystemHbn extends BaseHbn {
@@ -276,11 +279,21 @@ public class ItSystemHbn extends BaseHbn {
 		else
 			itSystem.setClusterType(dto.getClusterType());
 
+		if(DELETE.equals(dto.getBackupType()))
+			itSystem.setBackupType(null);
+		else
+			itSystem.setBackupType(dto.getBackupType());
+		
 		if (DELETE.equals(dto.getVirtualHardwareSoftware()))
 			itSystem.setVirtualHardwareSoftware(null);
 		else
-			itSystem.setVirtualHardwareSoftware(dto
-					.getVirtualHardwareSoftware());
+			itSystem.setVirtualHardwareSoftware(dto.getVirtualHardwareSoftware());
+		
+		if(DELETE.equals(dto.getServicePack()))
+			itSystem.setServicePack(null);
+		else
+			itSystem.setServicePack(dto.getServicePack());
+		
 
 		if (DELETE.equals(dto.getIsVirtualHardwareClient()))
 			itSystem.setIsVirtualHardwareClient(null);
@@ -953,7 +966,78 @@ public class ItSystemHbn extends BaseHbn {
 
 		return clusterTypes;
 	}
+	//Avanti
+	public static List<KeyValueDTO> getBackupType() {
+		List<KeyValueDTO> backupType = new ArrayList<KeyValueDTO>();
 
+		Transaction ta = null;
+		Statement stmt = null;
+		// Connection conn = null;
+		Session session = HibernateUtil.getSession();
+
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT DISTINCT backup_type FROM it_system WHERE backup_type IS NOT NULL ORDER BY backup_type");
+
+		try {
+			ta = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+
+			long i = 1;
+			while (rs.next())
+				backupType.add(new KeyValueDTO(i++, rs
+						.getString("backup_type").trim()));
+
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+
+		return backupType;
+	}
+
+	public static List<KeyValueDTO> getServicePack() {
+		List<KeyValueDTO> servicePack = new ArrayList<KeyValueDTO>();
+
+		Transaction ta = null;
+		Statement stmt = null;
+		// Connection conn = null;
+		Session session = HibernateUtil.getSession();
+
+		boolean commit = false;
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("Select distinct operating_system_version From It_System where operating_system_version Is Not Null Order By operating_system_version");
+
+		try {
+			ta = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+			stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery(sql.toString());
+
+			long i = 1;
+			while (rs.next())
+				servicePack.add(new KeyValueDTO(i++, rs
+						.getString("operating_system_version").trim()));
+
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+
+		return servicePack;
+	}
+
+	
 	public static List<KeyValueDTO> getVirtualHardwareSoftwareTypes() {
 		List<KeyValueDTO> virtualHWSWTypes = new ArrayList<KeyValueDTO>();
 
@@ -1223,6 +1307,8 @@ public class ItSystemHbn extends BaseHbn {
 		dto.setEinsatzStatusId(itSystem.getEinsatzStatusId());
 		dto.setPrimaryFunctionId(itSystem.getPrimaryFunctionId());
 		dto.setLicenseScanningId(itSystem.getLicenseScanningId());
+		dto.setBackupType(itSystem.getBackupType());
+		dto.setServicePack(itSystem.getServicePack());
 		dto.setSeverityLevelId(itSystem.getSeverityLevelId());
 		dto.setBusinessEssentialId(itSystem.getBusinessEssentialId());
 		dto.setCiSubTypeId(itSystem.getCiSubTypeId());
@@ -1544,4 +1630,105 @@ public class ItSystemHbn extends BaseHbn {
 		}
 		return itSystem;
 	}
+	
+	///////////Avanti
+	
+	public static ItSytemNetworkInformationOutPut getDNSDetailQIP(Long ciId) {
+		String sql = "Select netz.nwa_name ,netz.domain_name, netz.ip_adresse,vl.vlan_name From Netzwerkanschluss Netz ,Subnet Sub , vlan vl Where NETZ.it_System_Id="+ciId+" And Netz.Del_Timestamp Is Null  And Netz.Insert_Quelle='QIP' and Netz.Subnetz_Id=Sub.Subnetz_Id and Sub.Vlan_Id=Vl.Vlan_Id";
+		
+		Transaction ta = null;
+		Statement stmt = null;
+//		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		List<ItSystemNetworkInformationDTO> itSystemNetworkInformation = new ArrayList<ItSystemNetworkInformationDTO>();
+		ItSytemNetworkInformationOutPut output = new ItSytemNetworkInformationOutPut();
+		
+		try {
+			ta = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+			stmt = conn.prepareStatement(sql);
+		
+			ResultSet rs = stmt.executeQuery(sql);
+
+			//boolean isReferenced = false;
+			ItSystemNetworkInformationDTO itSystemNetworkInfo = null;
+			
+			while (rs.next()) {
+				itSystemNetworkInfo = new ItSystemNetworkInformationDTO();
+				
+				itSystemNetworkInfo.setHostName(rs.getString("nwa_name"));
+				itSystemNetworkInfo.setAdDomain(rs.getString("domain_name"));
+				itSystemNetworkInfo.setIpAddress(rs.getString("ip_adresse"));
+				itSystemNetworkInfo.setVlan(rs.getString("vlan_name"));
+				itSystemNetworkInformation.add(itSystemNetworkInfo);
+			}
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		output.setNetworkInformationDtos(itSystemNetworkInformation.toArray(new ItSystemNetworkInformationDTO[0]));
+		
+		return output;
+	}
+
+	public static ItSytemNetworkInformationOutPut getNetworkTcpIp(Long ciId) {
+		String sql = "Select netz.nwa_name ,vl.vlan_name, netz.ip_adresse ,netz.subnetmask ,netz.default_gateway ,m.mac_address,netz.Insert_Quelle  From Netzwerkanschluss Netz ,Subnet Sub , vlan vl , MAC m Where NETZ.it_System_Id="+ciId+"  And Netz.Del_Timestamp Is Null  And Netz.Insert_Quelle='HPED' And Netz.Subnetz_Id=Sub.Subnetz_Id And Sub.Vlan_Id=Vl.Vlan_Id AND netz.mac_id = m.mac_id";
+		
+		Transaction ta = null;
+		Statement stmt = null;
+//		Connection conn = null;
+		Session session = HibernateUtil.getSession();
+		
+		boolean commit = false;
+
+		List<ItSystemNetworkInformationDTO> itSystemNetworkInformation = new ArrayList<ItSystemNetworkInformationDTO>();
+		ItSytemNetworkInformationOutPut output = new ItSytemNetworkInformationOutPut();
+		
+		try {
+			ta = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+			stmt = conn.prepareStatement(sql);
+		
+			ResultSet rs = stmt.executeQuery(sql);
+
+			//boolean isReferenced = false;
+			ItSystemNetworkInformationDTO itSystemNetworkInfo = null;
+			
+			while (rs.next()) {
+				itSystemNetworkInfo = new ItSystemNetworkInformationDTO();
+				
+				itSystemNetworkInfo.setHostName(rs.getString("nwa_name"));
+				itSystemNetworkInfo.setVlan(rs.getString("vlan_name"));
+				itSystemNetworkInfo.setIpAddress(rs.getString("ip_adresse"));
+				itSystemNetworkInfo.setNetMask(rs.getString("subnetmask"));
+				itSystemNetworkInfo.setGateWay(rs.getString("default_gateway"));
+				itSystemNetworkInfo.setMacAdress(rs.getString("mac_address"));
+				itSystemNetworkInfo.setSource(rs.getString("Insert_Quelle"));
+				itSystemNetworkInformation.add(itSystemNetworkInfo);
+			}
+			
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		
+		output.setNetworkInformationDtos(itSystemNetworkInformation.toArray(new ItSystemNetworkInformationDTO[0]));
+		
+		return output;
+	}
+	
+	
+	
+	
 }
