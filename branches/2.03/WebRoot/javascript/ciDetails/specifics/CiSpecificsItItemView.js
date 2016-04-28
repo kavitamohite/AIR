@@ -72,6 +72,19 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			        lazyRender: true,
 			        lazyInit: false,
 			        mode: 'local'
+				},{
+					xtype: 'filterCombo',
+			        id: 'cbServicePack',
+			        width: 230,
+			       // fieldLabel: 'Service Pack',
+					lastQuery: '',
+			        store: new Ext.data.Store(),
+			        valueField: 'name',
+			        displayField: 'name',
+			        triggerAction: 'all',
+			        lazyRender: true,
+			        lazyInit: false,
+			        mode: 'local'
 				}]
 		    },{
 				xtype: 'filterCombo',
@@ -97,6 +110,19 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		        valueField: 'id',
 		        displayField: 'name',
 		        
+		        triggerAction: 'all',
+		        lazyRender: true,
+		        lazyInit: false,
+		        mode: 'local'
+			},{
+				xtype: 'filterCombo',
+		        id: 'cbBackupType',
+		        width: 230,
+		        //fieldLabel: 'Backup Type',
+				lastQuery: '',
+		        store: new Ext.data.Store(),
+		        valueField: 'id',
+		        displayField: 'name',   
 		        triggerAction: 'all',
 		        lazyRender: true,
 		        lazyInit: false,
@@ -130,7 +156,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		        id: 'cbVirtualSoftware',
 				
 		        width: 230,
-		        fieldLabel: 'Virtual Software',
+		        //fieldLabel: 'Virtual Software',
 				
 		        
 				lastQuery: '',
@@ -248,7 +274,9 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			clusterTypesListStore: null,
 			virtualSoftwareListStore: null,
 			itSystemPrimaryFunctionsListStore: null,
-			itSystemLicenseScanningsListStore: null
+			itSystemLicenseScanningsListStore: null,
+			backupTypeListStore: null,
+			servicePackListStore: null
 		};
 		
 		var storeCount = 0;
@@ -268,8 +296,10 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		var cbOsGroup = this.getComponent('fsOs').getComponent('cbOsGroup');
 		var cbOsType = this.getComponent('fsOs').getComponent('cbOsType');
 		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
+		var cbServicePack = this.getComponent('fsOs').getComponent('cbServicePack');
 		var cbClusterCode = this.getComponent('cbClusterCode');
 		var cbClusterType = this.getComponent('cbClusterType');
+		var cbBackupType = this.getComponent('cbBackupType');
 		var cbVirtualSoftware = this.getComponent('cbVirtualSoftware');
 		var cbPrimaryFunction = this.getComponent('cbPrimaryFunction');
 		var cbLicenseScanning = this.getComponent('cbLicenseScanning');
@@ -277,8 +307,10 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		cbOsGroup.bindStore(AIR.AirStoreManager.getStoreByName('osGroupsListStore'));
 		cbOsType.bindStore(AIR.AirStoreManager.getStoreByName('osTypesListStore'));
 		cbOsName.bindStore(AIR.AirStoreManager.getStoreByName('osNamesListStore'));
+		cbServicePack.bindStore(AIR.AirStoreManager.getStoreByName('servicePackListStore'));
 		cbClusterCode.bindStore(AIR.AirStoreManager.getStoreByName('clusterCodesListStore'));
 		cbClusterType.bindStore(AIR.AirStoreManager.getStoreByName('clusterTypesListStore'));
+		cbBackupType.bindStore(AIR.AirStoreManager.getStoreByName('backupTypeListStore'));
 		cbVirtualSoftware.bindStore(AIR.AirStoreManager.getStoreByName('virtualSoftwareListStore'));
 		cbPrimaryFunction.bindStore(AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore'));
 		cbLicenseScanning.bindStore(AIR.AirStoreManager.getStoreByName('itSystemLicenseScanningsListStore'));
@@ -288,19 +320,22 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
         cbOsGroup.on('select', this.onOsGroupSelect, this);
         cbOsType.on('select', this.onOsTypeSelect, this);
         cbOsName.on('select', this.onOsNameSelect, this);//onOsNameSelect onSelect
+        cbServicePack.on('select', this.onSelect, this);
         cbClusterCode.on('select', this.onClusterCodeSelect, this);
         cbClusterType.on('select', this.onSelect, this);
         cbVirtualSoftware.on('select', this.onSelect, this);
         cbPrimaryFunction.on('select', this.onSelect, this);
+        cbBackupType.on('select', this.onSelect, this);
         
         cbOsGroup.on('change', this.onOsGroupChange, this);
         cbOsType.on('change', this.onOsTypeChange, this);
         cbOsName.on('change', this.onOsNameChange, this);//onChange
+        cbServicePack.on('change', this.onChange, this);
         cbClusterCode.on('change', this.onClusterCodeChange, this);
         cbClusterType.on('change', this.onChange, this);
         cbVirtualSoftware.on('change', this.onChange, this);
         cbPrimaryFunction.on('change', this.onChange, this);
-        
+        cbBackupType.on('change', this.onChange, this);
         cbClusterCode.on('keyup', this.onClusterCodeKeyUp, this);
 
         
@@ -452,9 +487,10 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		var cbOsName = this.getComponent('fsOs').getComponent('cbOsName');
 		var cbOsType = this.getComponent('fsOs').getComponent('cbOsType');
 		var cbOsGroup = this.getComponent('fsOs').getComponent('cbOsGroup');
-		
+		var cbServicePack = this.getComponent('fsOs').getComponent('cbServicePack');
 		var cbClusterCode = this.getComponent('cbClusterCode');
 		var cbClusterType = this.getComponent('cbClusterType');
+		var cbBackupType = this.getComponent('cbBackupType');
 		var cbVirtualSoftware = this.getComponent('cbVirtualSoftware');
 		var cbItSystemLifecycleStatus = this.getComponent('cbItSystemLifecycleStatus');
 		var cbItSystemOperationalStatus = this.getComponent('cbItSystemOperationalStatus');
@@ -464,6 +500,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		var rgVirtualHWClient = this.getComponent('rgVirtualHWClient');
 		var rgVirtualHWHost = this.getComponent('rgVirtualHWHost');
 		
+		cbServicePack.reset();
 		cbOsName.reset();
 		cbOsType.reset();
 		cbOsGroup.reset();
@@ -474,7 +511,9 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			tfItSystemCiAlias.enable();
 			tfItSystemCiAlias.reset();
 			
+			//cbServicePack.reset();
 			cbVirtualSoftware.reset();
+			cbBackupType.reset();
 			cbItSystemLifecycleStatus.reset();
 			cbItSystemOperationalStatus.reset();
 			cbPrimaryFunction.reset();
@@ -489,8 +528,9 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			Util.enableCombo(cbOsName);
 			
 			Util.enableCombo(cbClusterCode);
-
+			Util.enableCombo(cbServicePack);
 			Util.enableCombo(cbVirtualSoftware);
+			Util.enableCombo(cbBackupType);
 			Util.enableCombo(cbItSystemLifecycleStatus);
 			Util.enableCombo(cbItSystemOperationalStatus);
 			Util.enableCombo(cbPrimaryFunction);
@@ -537,9 +577,10 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			}
 			
 			cbVirtualSoftware.setValue(data.virtualHardwareSoftware);
+			cbBackupType.setValue(data.backupType);
 			cbItSystemLifecycleStatus.setValue(data.lifecycleStatusId);
 			cbItSystemOperationalStatus.setValue(data.einsatzStatusId);
-			
+			cbServicePack.setValue(data.servicePack);
 			cbPrimaryFunction.setValue(data.primaryFunctionId);
 			if(typeof data.licenseScanningId === 'string' && data.licenseScanningId.length === 0) {
 				if(osTypeRecord)
@@ -622,6 +663,19 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			else
 				data.virtualHardwareSoftware = '-1';
 		 
+		field = this.getComponent('fsOs').getComponent('cbServicePack');
+		if(!field.disabled)
+			if(field.getValue())//.length > 0
+				data.servicePackFor = field.getRawValue();
+			else
+				data.servicePackFor = '-1';
+		
+		field = this.getComponent('cbBackupType');
+		if(!field.disabled)
+			if(field.getValue())//.length > 0
+				data.backupType = field.getRawValue();
+			else
+				data.backupType = '-1';
 		
 		field = this.getComponent('cbItSystemLifecycleStatus');
 		if(!field.disabled)
@@ -675,6 +729,8 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		AIR.AirAclManager.setAccessMode(this.getComponent('rgVirtualHWClient'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('rgVirtualHWHost'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbVirtualSoftware'), data);
+		//AIR.AirAclManager.setAccessMode(this.getComponent('cbBackupType'), data);
+		//AIR.AirAclManager.setAccessMode(this.getComponent('fsOs').getComponent('cbServicePack'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbItSystemLifecycleStatus'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbItSystemOperationalStatus'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbPrimaryFunction'), data);
@@ -701,6 +757,8 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		this.setBoxLabel(this.getComponent('rgVirtualHWHost').items.items[0], labels.general_yes);
 		this.setBoxLabel(this.getComponent('rgVirtualHWHost').items.items[1], labels.general_no);
 		this.setFieldLabel(this.getComponent('cbVirtualSoftware'), labels.virtualHardwareSoftware);
+		this.setFieldLabel(this.getComponent('cbBackupType'), labels.backupType);
+		this.setFieldLabel(this.getComponent('fsOs').getComponent('cbServicePack'), labels.servicePack);
 		this.setFieldLabel(this.getComponent('cbItSystemLifecycleStatus'), labels.lifecycleStatus);
 		this.setFieldLabel(this.getComponent('cbItSystemOperationalStatus'), labels.operationalStatus);
 		this.setFieldLabel(this.getComponent('cbPrimaryFunction'), labels.primaryFunction);
