@@ -572,6 +572,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 			case 'clCiCompliance':
 			case 'clCiLicense':
 			case 'clCiSpecialAttributes':
+			case 'clCiNetwork':
 			case 'clCiConnections':
 			case 'clCiSupportStuff':
 			case 'clCiHistory':
