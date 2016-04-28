@@ -591,6 +591,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'label_menu_detailslicense'},
 			        {name: 'label_menu_specialAttribute'},
 			        {name: 'label_menu_detailsconnections'},
+			        {name: 'label_menu_detailsnetwork'},
 			        {name: 'label_menu_detailssupportstuff'},
 			        {name: 'label_menu_detailshistory'},
 	
@@ -1073,9 +1074,11 @@ AIR.AirStoreFactory = function() {
 					{name: 'clusterType'},
 					{name: 'virtualHardwareClient'},
 					{name: 'virtualHardwareHost'},
+					{name: 'backupType'},
 					{name: 'virtualHardwareSoftware'},
 					{name: 'primaryFunction'},
 					{name: 'licenseScanning'},
+					{name: 'servicePack'},
 					
 					//AssetManagement
 					{name : 'assetManufacturer'},
@@ -3049,6 +3052,77 @@ AIR.AirStoreFactory = function() {
 		    return genericIdNameStore;
 		},
 		
+		createDNSDetailQIPStore: function(){
+			
+			var ciDNSDetailQIPRecord = Ext.data.Record.create([
+			    {name: 'id'},
+			    {name: 'hostName'},//name
+			    {name: 'ipAddress'},//type
+			    {name: 'adDomain'},
+			    {name: 'vlan'}
+			   
+			  ]);
+			  var ciDNSDetailQIPReader = new Ext.data.XmlReader({
+			    	record: 'networkInformationDtos',//viewdataDTO
+			        idProperty: 'id',//id
+			        	
+			        fields: ['id', 'hostName', 'ipAddress', 'adDomain', 'vlan']//name type
+			    }, ciDNSDetailQIPRecord);
+				
+			    var ciDNSDetailQIPStore = new Ext.data.XmlStore({
+			    	autoDestroy: true,
+			    	autoLoad: false,
+			    	
+			      	proxy: new Ext.ux.soap.SoapProxy({
+			      		url: webcontext + '/ItSystemWSPort',//ApplicationWSPort
+			      		loadMethod: 'getDNSDetailQIP',
+			      		timeout: 120000,
+			      		reader: ciDNSDetailQIPReader
+			      	}),
+			    	
+			      	reader: ciDNSDetailQIPReader
+			    });
+			    
+			    return ciDNSDetailQIPStore;
+		},
+		
+		createNetworkTcpIpStore: function(){
+			
+			var ciNetworkTcpIpRecord = Ext.data.Record.create([
+			    {name: 'id'},
+			    {name: 'hostName'},
+			    {name: 'vlan'},
+			    {name: 'ipAddress'},
+			    {name: 'netMask'},
+			    {name: 'gateWay'},
+			    {name: 'macAdress'},
+			    {name: 'source'},
+			   
+			  ]);
+			  var ciNetworkTcpIpReader = new Ext.data.XmlReader({
+			    	record: 'networkInformationDtos',//viewdataDTO
+			        idProperty: 'id',//id
+			        	
+			        fields: ['id', 'hostName', 'vlan', 'ipAddress','netMask', 'gateWay', 'macAdress', 'source']//name type
+			    }, ciNetworkTcpIpRecord);
+				
+			    var ciNetworkTcpIpStore = new Ext.data.XmlStore({
+			    	autoDestroy: true,
+			    	autoLoad: false,
+			    	
+			      	proxy: new Ext.ux.soap.SoapProxy({
+			      		url: webcontext + '/ItSystemWSPort',//ApplicationWSPort
+			      		loadMethod: 'getNetworkTcpIp',
+			      		timeout: 120000,
+			      		reader: ciNetworkTcpIpReader
+			      	}),
+			    	
+			      	reader: ciNetworkTcpIpReader
+			    });
+			    
+			    return ciNetworkTcpIpStore;
+		},
+		
 		createCiConnectionsStore: function() {//isUpStream
 			var method = 'getDwhEntityRelations';
 			
@@ -3124,6 +3198,62 @@ AIR.AirStoreFactory = function() {
 			
 	        return clusterCodesListStore;
 			        
+		},
+		//Avanti
+		createBackupTypeListStore: function() {
+			var backupTypesRecord = Ext.data.Record.create([
+  		      	{ name: 'id', type: 'int' },
+  		      	{ name: 'name' }
+  		    ]);
+  		
+  		    var backupTypesReader = new Ext.data.XmlReader({
+  				record: 'return',
+  				idProperty: 'id'
+  		    }, backupTypesRecord); 
+  		
+  		    var backupTypesStore = new Ext.data.XmlStore({
+  		    	autoDestroy: true,
+  				autoLoad: false,
+  				storeId: 'backupTypeListStore',
+  				
+  		      	proxy: new Ext.ux.soap.SoapProxy({
+  		      		url: webcontext +'/AIRToolsWSPort',
+  		      		loadMethod: 'getBackupType1',
+  		      		timeout: 120000,
+  		      		reader: backupTypesReader
+  		      	}),
+  		      	fields: [ 'id', 'name' ]
+  		    });
+  		    
+  		    return backupTypesStore;
+		},
+		
+		createServicePackListStore: function() {
+			var servicePackRecord = Ext.data.Record.create([
+  		      	{ name: 'id', type: 'int' },
+  		      	{ name: 'name' }
+  		    ]);
+  		
+  		    var servicePackReader = new Ext.data.XmlReader({
+  				record: 'return',
+  				idProperty: 'id'
+  		    }, servicePackRecord); 
+  		
+  		    var servicePackStore = new Ext.data.XmlStore({
+  		    	autoDestroy: true,
+  				autoLoad: false,
+  				storeId: 'servicePackListStore',
+  				
+  		      	proxy: new Ext.ux.soap.SoapProxy({
+  		      		url: webcontext +'/AIRToolsWSPort',
+  		      		loadMethod: 'getServicePack1',
+  		      		timeout: 120000,
+  		      		reader: servicePackReader
+  		      	}),
+  		      	fields: [ 'id', 'name' ]
+  		    });
+  		    
+  		    return servicePackStore;
 		},
 		
 		createOsGroupsListStore: function() {
