@@ -26,4 +26,13 @@ public class ItSystemWSDelegate {
 		return itSystemWS.getNextDCNumber();
 	}
 	
+	public ItSytemNetworkInformationOutPut getDNSDetailQIP(CiDetailParameterInput input){
+		return itSystemWS.getDNSDetailQIP(input);
+		
+	}
+	public ItSytemNetworkInformationOutPut getNetworkTcpIp(CiDetailParameterInput input){
+		return itSystemWS.getNetworkTcpIp(input);
+		
+	}
+
 }
