@@ -98,6 +98,7 @@
 		<label_menu_detailscompliance>Compliance</label_menu_detailscompliance>
 		<label_menu_detailslicense>License &amp; Costs</label_menu_detailslicense>
 		<label_menu_specialAttribute>Special Attribute</label_menu_specialAttribute>
+		<label_menu_detailsnetwork>Network</label_menu_detailsnetwork>
 		<label_menu_detailsconnections>Relationships</label_menu_detailsconnections>
 		<label_menu_detailssupportstuff>Documentation</label_menu_detailssupportstuff>
 		<label_menu_detailshistory>History</label_menu_detailshistory>
@@ -563,10 +564,12 @@
 		<virtualHardwareClient>Virtual Hardware Client</virtualHardwareClient>
 		<virtualHardwareHost>Virtual Hardware Host</virtualHardwareHost>
 		<virtualHardwareSoftware>Virtual Software</virtualHardwareSoftware>
+		<backupType>Backup Type</backupType>
 		<primaryFunction>Primary Function</primaryFunction>
 		<licenseScanning>License Scanning</licenseScanning>
 		<directLinkCIPanelTitle>Direct Link CIS</directLinkCIPanelTitle>
 		<directLinkagesCIPanelTitle>Linkages</directLinkagesCIPanelTitle>
+		<servicePack>Service Pack</servicePack>
 		
 		<!-- asset management -->
 		<assetSerialNo>Serial Number</assetSerialNo>
@@ -637,6 +640,9 @@
 	    
 	    <!-- asset management Contacts-->
 	    <assetEditor>Editors group *</assetEditor>
+	    
+	    <!-- Networks -->
+	    <CiNetworkViewTitle>Network</CiNetworkViewTitle>
 
 	</Items>
 </LanguageItems>
