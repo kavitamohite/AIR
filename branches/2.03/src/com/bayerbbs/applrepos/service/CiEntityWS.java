@@ -155,6 +155,8 @@ public class CiEntityWS {
 					.getIsVirtualHardwareHost());
 			itSystemDTO.setVirtualHardwareSoftware(itSystem
 					.getVirtualHardwareSoftware());
+			itSystemDTO.setBackupType(itSystem.getBackupType());
+			itSystemDTO.setServicePack(itSystem.getServicePack());
 			itSystemDTO.setLifecycleStatusId(itSystem.getLifecycleStatusId());
 			itSystemDTO.setEinsatzStatusId(itSystem.getEinsatzStatusId());
 			itSystemDTO.setPrimaryFunctionId(itSystem.getPrimaryFunctionId());
