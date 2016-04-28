@@ -140,6 +140,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 					id: 'clCiSpecialAttributes',
 					xtype: 'AIR.CiSpecialAttributesView'
 				},{
+					id: 'clCiNetwork',
+					xtype: 'AIR.CiNetworkView'
+				},{
 					id: 'clCiConnections',
 					xtype: 'AIR.CiConnectionsView'
 				}, {
@@ -208,6 +211,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var clCiSpecialAttributesView = ciEditTabView.getComponent('clCiSpecialAttributes');
 		clCiSpecialAttributesView.on('ciChange', this.onCiChange, this);
 		
+		var ciNetworkView = ciEditTabView.getComponent('clCiNetwork');
+		ciNetworkView.on('ciChange', this.onCiChange, this);
+		
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.on('ciChange', this.onCiChange, this);
 
@@ -252,6 +258,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.clear(options);
+		
+		var ciNetworkView = ciEditTabView.getComponent('clCiNetwork');
+		//ciNetworkView.clear(options);
 		
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.clear(options);
@@ -417,6 +426,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			var ciContactsView = ciEditTabView.getComponent('clCiContacts');
 			ciContactsView.update(ciData);
 			
+			
 			var ciAgreementsView = ciEditTabView.getComponent('clCiAgreements');
 			ciAgreementsView.update(ciData);
 			
@@ -432,6 +442,11 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 
 			var ciSpecialAttributes = ciEditTabView.getComponent('clCiSpecialAttributes');
 			ciSpecialAttributes.update(ciData);
+			if(ciData.tableId==AC.TABLE_ID_IT_SYSTEM && ciData.ciSubTypeId==AC.CI_SUB_TYPE_TRANSIENT_SYSTEM){
+				var ciNetworkView = ciEditTabView.getComponent('clCiNetwork');
+				ciNetworkView.update(ciData);
+			}
+
 			
 			var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 			ciConnectionsView.update(ciData);
@@ -562,6 +577,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			if(ciLicenseView)
 				ciLicenseView.setData(data);
 		}
+		
+		var ciNetworkView = ciEditTabView.getComponent('clCiNetwork');
+		//ciNetworkView.setData(data);
 		
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.setData(data);
@@ -841,6 +859,9 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.updateLabels(labels);
+		
+		var ciNetworkView = ciEditTabView.getComponent('clCiNetwork');
+		ciNetworkView.updateLabels(labels);
 
 		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
 		if(ciLicenseView)
@@ -885,9 +906,12 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		ciComplianceView.updateToolTips(toolTips);
 		
+		var ciNetworkView = ciEditTabView.getComponent('clCiNetwork');
+		ciNetworkView.updateToolTips(toolTips);
+
 		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
 		ciConnectionsView.updateToolTips(toolTips);
-
+		
 		var ciLicenseView = ciEditTabView.getComponent('clCiLicense');
 		if(ciLicenseView)
 			ciLicenseView.updateToolTips(toolTips);
