@@ -26,6 +26,9 @@ public class ItSystemDTO extends CiBaseDTO {
 	private String upStreamAdd;
 	private String upStreamDelete;
 	
+	private String backupType;
+	private String servicePack;
+	
 	
 	public Integer getCiSubTypeId() {
 		return ciSubTypeId;
@@ -129,4 +132,31 @@ public class ItSystemDTO extends CiBaseDTO {
 	public void setUpStreamDelete(String upStreamDelete) {
 		this.upStreamDelete = upStreamDelete;
 	}
+	/**
+	 * @return the backupType
+	 */
+	public String getBackupType() {
+		return backupType;
+	}
+	/**
+	 * @param backupType the backupType to set
+	 */
+	public void setBackupType(String backupType) {
+		this.backupType = backupType;
+	}
+	/**
+	 * @return the servicePack
+	 */
+	public String getServicePack() {
+		return servicePack;
+	}
+	/**
+	 * @param servicePack the servicePack to set
+	 */
+	public void setServicePack(String servicePack) {
+		this.servicePack = servicePack;
+	}
+	
+
+	
 }
