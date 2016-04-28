@@ -79,6 +79,9 @@ AIR.CiInfoView = Ext.extend(Ext.Panel, {
 			case 'clCiSpecialAttributes':
 				helpTextId = AC.HELP_ID_DETAILS_SPECIALATTIRUBTES;
 				break;
+			case 'clCiNetwork':
+				helpTextId = AC.HELP_ID_DETAILS_NETWORK;
+				break;	
 			case 'clCiConnections':
 				helpTextId = AC.HELP_ID_DETAILS_CONNECTIONS;
 				break;
