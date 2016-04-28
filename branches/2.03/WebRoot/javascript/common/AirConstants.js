@@ -15,6 +15,7 @@ AIR.AirConstants = {
 	HELP_ID_DETAILS_COMPLIANCE: 'help_details_compliance',
 	HELP_ID_DETAILS_LICENSECOSTS: 'help_details_licensecosts',
 	HELP_ID_DETAILS_SPECIALATTIRUBTES: 'help_details_specialattributes',
+	HELP_ID_DETAILS_NETWORK: 'help_details_network',
 	HELP_ID_DETAILS_CONNECTIONS: 'help_details_connections',
 	HELP_ID_DETAILS_SPECIALATTIRUBTES: 'help_details_specialattributes',
 	HELP_ID_DETAILS_SUPPORTSTUFF: 'help_details_supportstuff',
@@ -83,6 +84,7 @@ AIR.AirConstants = {
 	CI_SUB_TYPE_APPLICATION_PLATFORM: -10006,
 	CI_SUB_TYPE_MIDDLEWARE: -10007,
 	CI_SUB_TYPE_COMMON_SERVICE: -10013,
+	CI_SUB_TYPE_TRANSIENT_SYSTEM: 2,
 	
 	APP_CAT1_APPLICATION: '5',//'Application',
 	APP_CAT1_APPLICATION_PLATFORM: '-10006',//'Application Platform',
