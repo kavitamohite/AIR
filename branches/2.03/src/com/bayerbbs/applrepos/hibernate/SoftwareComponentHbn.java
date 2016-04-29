@@ -73,7 +73,7 @@ public class SoftwareComponentHbn {
 			
 			
 			Criterion orderNo =  Restrictions.like("bestellNumber",	"%" + input.getQuery() + "%").ignoreCase();
-			Criterion requesterId;
+			/*Criterion requesterId;
 			if((input.getQuery()!=null && !input.getQuery().equals("")) && (!input.getQuery().matches(".*\\d.*"))){
 				
 				
@@ -94,7 +94,8 @@ public class SoftwareComponentHbn {
 				}
 			} else{
 				requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase(); 
-			}
+			}*/
+			Criterion requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase();
 			Criterion costManagerId= Restrictions.and(Restrictions.isNotNull("konto"), Restrictions.like("konto.cwidVerantw", "%" + input.getQuery() + "%").ignoreCase());
 			
 			

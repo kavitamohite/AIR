@@ -52,6 +52,7 @@ public class HardwareComponentHbn {
 		try {
 			tx = session.beginTransaction();
 
+			System.out.println("start timings"+System.currentTimeMillis());
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
             criteria.add(Restrictions.isNull("deleteTimestamp"));
 			Criterion hwName = Restrictions.like("name",
@@ -86,7 +87,7 @@ public class HardwareComponentHbn {
 			criteria.createAlias("itSystem", "itSystem", CriteriaSpecification.INNER_JOIN);
 			Criterion itSystemName = Restrictions.and(Restrictions.isNotNull("itSystem"), Restrictions.like("itSystem.itSystemName", "%" + input.getQuery() + "%").ignoreCase());
 			
-			Criterion osName=null;
+			/*Criterion osName=null;
 			
 			if((input.getQuery()!=null && !input.getQuery().equals("")) && (!input.getQuery().matches(".*\\d.*"))){
 				
@@ -105,7 +106,7 @@ public class HardwareComponentHbn {
 					
 				}
 			} 
-			
+			*/
 			
 			criteria.createAlias("hardwareCategory1", "hardwareCategory1", CriteriaSpecification.INNER_JOIN);
 			Criterion sapAsset = Restrictions.and(Restrictions.isNotNull("hardwareCategory1"), Restrictions.like("hardwareCategory1.hwKategory1", "%" + input.getQuery() + "%").ignoreCase());
@@ -115,8 +116,8 @@ public class HardwareComponentHbn {
 			Criterion businessInfoInsertQuelle =  Restrictions.like("insertQuelle",	"%" + input.getQuery() + "%").ignoreCase();
 			criteria.createAlias("partner", "partner", CriteriaSpecification.INNER_JOIN);
 			Criterion legalEntity = Restrictions.and(Restrictions.isNotNull("partner"), Restrictions.like("partner.name", "%" + input.getQuery() + "%").ignoreCase());
-			Criterion requesterId;
-			if((input.getQuery()!=null && !input.getQuery().equals("")) && (!input.getQuery().matches(".*\\d.*"))){
+			//Criterion requesterId;
+			/*if((input.getQuery()!=null && !input.getQuery().equals("")) && (!input.getQuery().matches(".*\\d.*"))){
 				
 				
 				List<PersonsDTO> personList=  PersonsHbn.findPersonsByFunctionAndQuery(input.getQuery(),"Y","Y","Y",null,"Name");
@@ -136,8 +137,9 @@ public class HardwareComponentHbn {
 				}
 			} else{
 				requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase(); 
-			}
+			}*/
 			
+			Criterion requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase(); 
 			Criterion costManagerId= Restrictions.like("cwidVerantw",	"%" + input.getQuery() + "%").ignoreCase();
 			
 			Criterion assetId= Restrictions.like("assetId",	"%" + input.getQuery() + "%").ignoreCase();
@@ -175,9 +177,9 @@ public class HardwareComponentHbn {
 					
 		;	
 			
-			if(osName!=null){
+			/*if(osName!=null){
 				completeCondition = Restrictions.disjunction().add(completeCondition).add(osName);
-				}
+				}*/
 			criteria.add(completeCondition);
 			
 
@@ -198,6 +200,8 @@ public class HardwareComponentHbn {
 			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list
 					.size()]));
 			tx.commit();
+			
+			System.out.println("end timings"+System.currentTimeMillis());
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
 				try {
