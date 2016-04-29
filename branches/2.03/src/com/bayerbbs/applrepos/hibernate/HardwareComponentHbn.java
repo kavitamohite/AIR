@@ -75,44 +75,67 @@ public class HardwareComponentHbn {
 			Criterion orgUnit = Restrictions.like("subResponsible",
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion odrNumber = Restrictions.like("bestSellText",	"%" + input.getQuery() + "%").ignoreCase();
-			criteria.createAlias("hardwareCategory4", "hardwareCategory4", CriteriaSpecification.LEFT_JOIN);
+			criteria.createAlias("hardwareCategory4", "hardwareCategory4", CriteriaSpecification.INNER_JOIN);
 			Criterion modelName = Restrictions.and(Restrictions.isNotNull("hardwareCategory4"), Restrictions.like("hardwareCategory4.hwKategory4", "%" + input.getQuery() + "%").ignoreCase());
-			criteria.createAlias("hardwareCategory3", "hardwareCategory3", CriteriaSpecification.LEFT_JOIN);
+			criteria.createAlias("hardwareCategory3", "hardwareCategory3", CriteriaSpecification.INNER_JOIN);
 			Criterion typeName = Restrictions.and(Restrictions.isNotNull("hardwareCategory3"), Restrictions.like("hardwareCategory3.hwKategory3", "%" + input.getQuery() + "%").ignoreCase());
-			criteria.createAlias("hardwareCategory2", "hardwareCategory2", CriteriaSpecification.LEFT_JOIN);
+			criteria.createAlias("hardwareCategory2", "hardwareCategory2", CriteriaSpecification.INNER_JOIN);
 			Criterion subcategoryName = Restrictions.and(Restrictions.isNotNull("hardwareCategory2"), Restrictions.like("hardwareCategory2.hwKategory2", "%" + input.getQuery() + "%").ignoreCase());
-			criteria.createAlias("hersteller", "hersteller", CriteriaSpecification.LEFT_JOIN);
+			criteria.createAlias("hersteller", "hersteller", CriteriaSpecification.INNER_JOIN);
 			Criterion manufacturerName = Restrictions.and(Restrictions.isNotNull("hersteller"), Restrictions.like("hersteller.name", "%" + input.getQuery() + "%").ignoreCase());
-			criteria.createAlias("itSystem", "itSystem", CriteriaSpecification.LEFT_JOIN);
+			criteria.createAlias("itSystem", "itSystem", CriteriaSpecification.INNER_JOIN);
 			Criterion itSystemName = Restrictions.and(Restrictions.isNotNull("itSystem"), Restrictions.like("itSystem.itSystemName", "%" + input.getQuery() + "%").ignoreCase());
 			
-			criteria.createAlias("hardwareCategory1", "hardwareCategory1", CriteriaSpecification.LEFT_JOIN);
+			Criterion osName=null;
+			
+			if((input.getQuery()!=null && !input.getQuery().equals("")) && (!input.getQuery().matches(".*\\d.*"))){
+				
+				
+				List<Integer> osIdList=  ItSystemHbn.findItSystemOsIdByName("%" + input.getQuery() + "%");
+				if(osIdList.size()>0){
+					Integer[] osIds =new Integer[osIdList.size()];
+					int i = 0;
+					for(Integer osId : osIdList){
+											
+						osIds[i] = osId;
+							i++;
+						}
+									
+					osName= Restrictions.in("itSystem.osNameId", osIds);
+					
+				}
+			} 
+			
+			
+			criteria.createAlias("hardwareCategory1", "hardwareCategory1", CriteriaSpecification.INNER_JOIN);
 			Criterion sapAsset = Restrictions.and(Restrictions.isNotNull("hardwareCategory1"), Restrictions.like("hardwareCategory1.hwKategory1", "%" + input.getQuery() + "%").ignoreCase());
 			
 		
 			Criterion businessInfoInsertUser =  Restrictions.like("insertUser",	"%" + input.getQuery() + "%").ignoreCase();
 			Criterion businessInfoInsertQuelle =  Restrictions.like("insertQuelle",	"%" + input.getQuery() + "%").ignoreCase();
-			criteria.createAlias("partner", "partner", CriteriaSpecification.LEFT_JOIN);
+			criteria.createAlias("partner", "partner", CriteriaSpecification.INNER_JOIN);
 			Criterion legalEntity = Restrictions.and(Restrictions.isNotNull("partner"), Restrictions.like("partner.name", "%" + input.getQuery() + "%").ignoreCase());
 			Criterion requesterId;
-			if(input.getQuery().matches(".*\\d.*")){
-				requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase(); 
-			} else{
-			List<PersonsDTO> personList=  PersonsHbn.findPersonsByFunctionAndQuery(input.getQuery(),"Y","N","N",null,"Name");
-			if(personList.size()>0){
-				String[] cwidIds =new String[personList.size()];
-				int i = 0;
-				for(PersonsDTO personCwid : personList){
-										
-					cwidIds[i] = personCwid.getCwid();
-						i++;
-					}
-								
-				requesterId= Restrictions.in("requester", cwidIds);
+			if((input.getQuery()!=null && !input.getQuery().equals("")) && (!input.getQuery().matches(".*\\d.*"))){
 				
-			}else{
-				requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase();
-			}
+				
+				List<PersonsDTO> personList=  PersonsHbn.findPersonsByFunctionAndQuery(input.getQuery(),"Y","Y","Y",null,"Name");
+				if(personList.size()>0){
+					String[] cwidIds =new String[personList.size()];
+					int i = 0;
+					for(PersonsDTO personCwid : personList){
+											
+						cwidIds[i] = personCwid.getCwid();
+							i++;
+						}
+									
+					requesterId= Restrictions.in("requester", cwidIds);
+					
+				}else{
+					requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase();
+				}
+			} else{
+				requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase(); 
 			}
 			
 			Criterion costManagerId= Restrictions.like("cwidVerantw",	"%" + input.getQuery() + "%").ignoreCase();
@@ -150,8 +173,13 @@ public class HardwareComponentHbn {
 					.add(lifeCycleStatus)
 					.add(legalEntity)
 					
-					;
+		;	
+			
+			if(osName!=null){
+				completeCondition = Restrictions.disjunction().add(completeCondition).add(osName);
+				}
 			criteria.add(completeCondition);
+			
 
 			if (input.getSort() != null) {
 				addSortingCriteria(criteria, input.getSort(), input.getDir());

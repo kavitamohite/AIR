@@ -74,25 +74,26 @@ public class SoftwareComponentHbn {
 			
 			Criterion orderNo =  Restrictions.like("bestellNumber",	"%" + input.getQuery() + "%").ignoreCase();
 			Criterion requesterId;
-			if(input.getQuery().matches(".*\\d.*")){
-				requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase();
-			}	
-			else{
-			List<PersonsDTO> personList=  PersonsHbn.findPersonsByFunctionAndQuery(input.getQuery(),"Y","N","N",null,"Name");
-			if(personList.size()>0){
-				String[] cwidIds =new String[personList.size()];
-				int i = 0;
-				for(PersonsDTO personCwid : personList){
-										
-					cwidIds[i] = personCwid.getCwid();
-						i++;
-					}
-								
-				requesterId= Restrictions.in("requester", cwidIds);
+			if((input.getQuery()!=null && !input.getQuery().equals("")) && (!input.getQuery().matches(".*\\d.*"))){
 				
-			}else{
-				requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase();
-			}
+				
+				List<PersonsDTO> personList=  PersonsHbn.findPersonsByFunctionAndQuery(input.getQuery(),"Y","Y","Y",null,"Name");
+				if(personList.size()>0){
+					String[] cwidIds =new String[personList.size()];
+					int i = 0;
+					for(PersonsDTO personCwid : personList){
+											
+						cwidIds[i] = personCwid.getCwid();
+							i++;
+						}
+									
+					requesterId= Restrictions.in("requester", cwidIds);
+					
+				}else{
+					requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase();
+				}
+			} else{
+				requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase(); 
 			}
 			Criterion costManagerId= Restrictions.and(Restrictions.isNotNull("konto"), Restrictions.like("konto.cwidVerantw", "%" + input.getQuery() + "%").ignoreCase());
 			

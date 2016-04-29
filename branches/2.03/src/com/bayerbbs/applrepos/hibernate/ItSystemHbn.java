@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -1728,7 +1729,37 @@ public class ItSystemHbn extends BaseHbn {
 		return output;
 	}
 	
+	public static ArrayList<Integer> findItSystemOsIdByName(String name) {
+		ArrayList<Integer> osNamesId= new ArrayList<Integer>();
+		Transaction ta = null;
+		
+		Session session = HibernateUtil.getSession();
+
+		boolean commit = false;
+		String sql = "SELECT os_name_id FROM v_md_os where os_name like ?";
 	
+		try {
+			ta = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, name);
+			ResultSet rs = stmt.executeQuery();
+		
+			if(null != rs){
+				while(rs.next()){
+				osNamesId.add(rs.getInt("os_name_id"));
+				}
+			}
+
+			commit = true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		} finally {
+			HibernateUtil.close(ta, session, commit);
+		}
+		return osNamesId;
+	}	
 	
 	
 }

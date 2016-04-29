@@ -229,15 +229,18 @@ public class PersonsHbn {
 		List<PersonsDTO> listResult = new ArrayList<PersonsDTO>();
 		
 		String searchCWIDType = null;
-		
+		int allCwids=0;
 		if ("Y".equals(primaryCWID)) {
 			searchCWIDType = "PRIMARY CWID";
+			allCwids++;
 		}
 		if ("Y".equals(secondaryCWID)) {
 			searchCWIDType = "SECONDARY CWID";
+			allCwids++;
 		}
 		if ("Y".equals(machineCWID)) {
 			searchCWIDType = "MACHINE CWID";
+			allCwids++;
 		}
 
 		if (null != functionCWID) {
@@ -260,7 +263,10 @@ public class PersonsHbn {
 			} else {
 				queryparts[0] = query;
 			}
-			String where = "WHERE pstat = '" + searchCWIDType + "' AND NVL(inactive, 'N') = 'N' " ;
+			String where = "WHERE NVL(inactive, 'N') = 'N' " ;
+			if(allCwids!=3){
+				 where += "AND pstat = '" + searchCWIDType + "' " ;	
+			}
 			if (queryMethod.equals("Name")) {
 				switch (StringUtils.countMatches(query, ",")) {
 					case 0:
