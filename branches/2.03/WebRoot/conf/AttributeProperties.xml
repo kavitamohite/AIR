@@ -1901,5 +1901,29 @@
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
-	</Identifier>				
+	</Identifier>		
+	<Identifier>
+		<id>cbBackupType</id>
+		<Mandatory>optional</Mandatory>
+		<ciTypeId>1</ciTypeId>
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>	
+	<Identifier>
+		<id>cbServicePack</id>
+		<Mandatory>optional</Mandatory>
+		<ciTypeId>1</ciTypeId>
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>N</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>	
 </AttributePropertyItems>
