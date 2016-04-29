@@ -729,8 +729,8 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		AIR.AirAclManager.setAccessMode(this.getComponent('rgVirtualHWClient'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('rgVirtualHWHost'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbVirtualSoftware'), data);
-		//AIR.AirAclManager.setAccessMode(this.getComponent('cbBackupType'), data);
-		//AIR.AirAclManager.setAccessMode(this.getComponent('fsOs').getComponent('cbServicePack'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('cbBackupType'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('fsOs').getComponent('cbServicePack'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbItSystemLifecycleStatus'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbItSystemOperationalStatus'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbPrimaryFunction'), data);
