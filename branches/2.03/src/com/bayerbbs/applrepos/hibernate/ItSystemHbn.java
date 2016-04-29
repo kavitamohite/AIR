@@ -599,11 +599,13 @@ public class ItSystemHbn extends BaseHbn {
 		}
 
 		if (StringUtils.isNotNullOrEmpty(input.getItSecGroupId())) {
-			isNot = isNot(input.getItSecGroupOptions());
-			sql.append(
-					" AND NVL(itsec_gruppe_id, -1) "
-							+ getEqualNotEqualOperator(isNot) + " ").append(
-					Long.parseLong(input.getItSecGroupId()));
+			Long itsec = Long.parseLong(input.getItSecGroupId());
+			isNot = isNot(input.getItSecGroupId());
+			if(1234567<=itsec && itsec<=1234578){
+				sql.append(" and NVL(ITSEC_GRUPPE_ID, -1) "+ getEqualNotEqualOperator(isNot) +" ").append(10136);
+			}else{
+				sql.append(" and NVL(ITSEC_GRUPPE_ID, -1) "+ getEqualNotEqualOperator(isNot) +" ").append(itsec);
+			}
 		}
 
 		if (StringUtils.isNotNullOrEmpty(input.getSource())) {

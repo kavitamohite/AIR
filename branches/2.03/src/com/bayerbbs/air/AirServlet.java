@@ -528,6 +528,10 @@ public class AirServlet extends HttpServlet {
 		for (ItSecGroupDTO itsecGroupItem : itsecGroupsSimple) {
 			itsecGroupSimpleLine += "['" + itsecGroupItem.getItSecGroupId() + "','" + itsecGroupItem.getItSecGroupName() + "','" + itsecGroupItem.getCiKat1() + "'," + itsecGroupItem.getTableId() +"],";
 		}
+		itsecGroupSimpleLine="['1234567','None','-1234567',123],['1234568','None','-1234568',33],['1234569','None','-1234569',37],"+
+        "['1234570','None','-1234570',12],['1234571','None','-1234571',30],['1234572','None','-1234572',88],['1234574','None','-10006',2],"+
+        "['1234573','None','-1234567',1],['1234574','None','5',2],['1234579','None','-10013',2],['1234575','None','-1234574',13],"+
+        "['1234576','None','-1234575',3],['1234577','None','-10007',2],['1234579','None','-10006',2],['1234578','None','-1234576',4],"+itsecGroupSimpleLine;
 		itsecGroupSimpleLine = "var itsecGroupSimpleData = [" + itsecGroupSimpleLine.substring(0, itsecGroupSimpleLine.length()-1) + "];";
 		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
 		ts = System.currentTimeMillis();

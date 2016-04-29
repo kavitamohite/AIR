@@ -2336,8 +2336,13 @@ public class AnwendungHbn extends BaseHbn {
 			sql.append(" and NVL(anw.ITSET, 0) "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(itSetId));
 		}
 		if(StringUtils.isNotNullOrEmpty(itSecGroupId)) {
+			Long itsec = Long.parseLong(itSecGroupId);
 			isNot = isNot(itSecGroupOptions);
-			sql.append(" and NVL(anw.ITSEC_GRUPPE_ID, -1) "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(itSecGroupId));
+			if(1234567<=itsec && itsec<=1234579){
+				sql.append(" and NVL(anw.ITSEC_GRUPPE_ID, -1) "+ getEqualNotEqualOperator(isNot) +" ").append(10136);
+			}else{
+				sql.append(" and NVL(anw.ITSEC_GRUPPE_ID, -1) "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(itSecGroupId));
+			}
 		}
 		if(StringUtils.isNotNullOrEmpty(source)) {
 			isNot = isNot(sourceOptions);

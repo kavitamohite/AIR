@@ -1052,7 +1052,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		var cbAdvSearchITSecGroupW = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('cbAdvSearchITSecGroupW');
 		var cbCiType = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbCiType');
 		var record = cbCiType.getStore().getById(cbCiType.getValue());
-		this.filterItSecGroup(cbAdvSearchITSecGroupW, combo.getValue(), record);
+		//this.filterItSecGroup(cbAdvSearchITSecGroupW, combo.getValue(), record);
 	},
 	
 	processCiTypeChange: function(cbCiType, newValue) {
@@ -1330,8 +1330,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	filterItSecGroup: function(combo, itset, ciTypeRecord) {
 		var filterData = {};
 		
-		if(itset)
-			filterData.itsetId = itset;
+/*		if(itset)
+			filterData.itsetId = itset;*/
 	
 		
 		if(ciTypeRecord.get('ciTypeId') == AC.TABLE_ID_APPLICATION) {
@@ -1341,6 +1341,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		}
 		
 		combo.filterByData(filterData);
+		
 	},
 	
 	
