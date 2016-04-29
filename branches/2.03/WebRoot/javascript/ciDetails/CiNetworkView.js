@@ -129,7 +129,7 @@ AIR.CiNetworkView = Ext.extend(AIR.AirView, {
 	},
 
 	updateLabels: function(labels) {
-		//this.setTitle(labels.CiNetworkViewTitle);
+		this.setTitle(labels.ciNetworkViewTitle);
 	},
 	
 	update: function(data) {
