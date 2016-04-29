@@ -152,7 +152,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			        },{
 			            xtype: 'checkboxgroup',
 		    			id: 'cbgAdvSearchShowDeleted',
-		    			// width: 120,
+		    			 width: 20,
 		    			fieldLabel: 'deleted',
 		    			
 		    			columns: 1,
@@ -1386,7 +1386,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		var pAdvSearchSingleAttrs = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs');
 		
 		//CI-Typen filtern, die je nach User Rolle AirApplicationLayer, AirInfrastructureLayer, AirDefault, AirAdministrator
-		//auswählbar sein sollen oder nicht. Wo Filtern? Direkt nach dem Anmelden bereits in AIRToolsWS/CiEntitiesHbn.getCiTypes
+		//auswï¿½hlbar sein sollen oder nicht. Wo Filtern? Direkt nach dem Anmelden bereits in AIRToolsWS/CiEntitiesHbn.getCiTypes
 		//oder AirApplicationManager::ciTypeListStore, CiAdvancedSearchView?
 	    var field = pAdvSearchSingleAttrs.getComponent('cbCiType');
 //	    var value = Util.getComboRecord(field, 'text', field.getRawValue()).get('id');
@@ -1795,7 +1795,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	},
 	
 
-	//für button reset bei mehreren tabs
+	//fï¿½r button reset bei mehreren tabs
 	reset: function() {//link
 		/*if(!link) {
 			var cbCiType = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbCiType');
