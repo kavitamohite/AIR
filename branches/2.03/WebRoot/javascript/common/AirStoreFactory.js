@@ -949,7 +949,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'dynamicWindowConfirmDeleteTitle'},
 			        {name: 'dynamicWindowConfirmDeleteText'},
 			        
-			        
+			        {name: 'ciNetworkViewTitle'},
 			        {name: 'ciCopyFromViewTitle'},
 			        {name: 'ciCopyFromDetailViewHeaderLabel'},
 			        {name: 'ciCopyFromDetailViewTitle'},
@@ -1369,7 +1369,10 @@ AIR.AirStoreFactory = function() {
 			        {name: 'supportstuffCMSupportingTool'},
 			        {name: 'supportstuffCMSupportingToolText'},
 			        {name: 'supportstuffUMProcess'},
-			        {name: 'supportstuffUMProcessText'}
+			        {name: 'supportstuffUMProcessText'},
+			        
+			        {name: 'deletedData'},
+			        {name: 'ddd'}
 			    ]
 			});
 			
