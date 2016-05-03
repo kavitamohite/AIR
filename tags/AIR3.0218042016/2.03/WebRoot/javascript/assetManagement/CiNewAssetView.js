@@ -900,7 +900,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         	mailText = mailText.replace('<sapDescription>',assetData.sapDescription);
         	
         	//var legalEntity = assetData.owner;
-        	
+        	mailText = mailText.replace('<inventoryNumber>',assetData.inventoryNumber);
         	mailText = mailText.replace('<orderNumber>',assetData.orderNumber);
         	mailText = mailText.replace('<costCenter>',assetData.costCenter);
         	mailText = mailText.replace('<legalEntity>',assetData.owner);
