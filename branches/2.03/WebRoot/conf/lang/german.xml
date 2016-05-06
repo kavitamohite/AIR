@@ -643,6 +643,8 @@
 	    <assetEditor>Editoren Gruppe *</assetEditor>
 	    
 	    <!-- Networks -->
-	    <CiNetworkViewTitle>Network</CiNetworkViewTitle>
+	    <ciNetworkViewTitle>Network</ciNetworkViewTitle>
+	    
+	    //<deletedData>Click to neglect deleted data</deletedData>
 	</Items>
 </LanguageItems>
