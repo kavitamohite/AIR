@@ -72,6 +72,18 @@ public class HardwareComponentHbn {
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion orgUnit = Restrictions.like("subResponsible",
 					"%" + input.getQuery() + "%").ignoreCase();
+			criteria.createAlias("hardwareCategory4", "hardwareCategory4", CriteriaSpecification.LEFT_JOIN);
+			Criterion modelName = Restrictions.and(Restrictions.isNotNull("hardwareCategory4"), Restrictions.like("hardwareCategory4.hwKategory4", "%" + input.getQuery() + "%").ignoreCase());
+			criteria.createAlias("hardwareCategory3", "hardwareCategory3", CriteriaSpecification.LEFT_JOIN);
+			Criterion typeName = Restrictions.and(Restrictions.isNotNull("hardwareCategory3"), Restrictions.like("hardwareCategory3.hwKategory3", "%" + input.getQuery() + "%").ignoreCase());
+			criteria.createAlias("hardwareCategory2", "hardwareCategory2", CriteriaSpecification.LEFT_JOIN);
+			Criterion subcategoryName = Restrictions.and(Restrictions.isNotNull("hardwareCategory2"), Restrictions.like("hardwareCategory2.hwKategory2", "%" + input.getQuery() + "%").ignoreCase());
+			criteria.createAlias("hersteller", "hersteller", CriteriaSpecification.LEFT_JOIN);
+			Criterion manufacturerName = Restrictions.and(Restrictions.isNotNull("hersteller"), Restrictions.like("hersteller.name", "%" + input.getQuery() + "%").ignoreCase());
+			criteria.createAlias("itSystem", "itSystem", CriteriaSpecification.LEFT_JOIN);
+			Criterion itSystemName = Restrictions.and(Restrictions.isNotNull("itSystem"), Restrictions.like("itSystem.itSystemName", "%" + input.getQuery() + "%").ignoreCase());
+			Criterion odrNumber = Restrictions.like("bestSellText",	"%" + input.getQuery() + "%").ignoreCase();
+
 
 			Criterion completeCondition = Restrictions.disjunction()
 					.add(hwName)
@@ -83,6 +95,12 @@ public class HardwareComponentHbn {
 					.add(technicalNumber)
 					.add(inventoryNumber)
 					.add(orgUnit)
+					.add(modelName)
+					.add(typeName)
+					.add(subcategoryName)
+					.add(manufacturerName)
+					.add(itSystemName)
+					.add(odrNumber)
 					;
 			criteria.add(completeCondition);
 
