@@ -642,7 +642,10 @@
 	    <assetEditor>Editors group *</assetEditor>
 	    
 	    <!-- Networks -->
-	    <CiNetworkViewTitle>Network</CiNetworkViewTitle>
+	    <ciNetworkViewTitle>Network</ciNetworkViewTitle>
+	    
+	    //<deletedData>Click to neglect deleted data</deletedData>
+	    //<ddd>ddd</ddd>
 
 	</Items>
 </LanguageItems>
