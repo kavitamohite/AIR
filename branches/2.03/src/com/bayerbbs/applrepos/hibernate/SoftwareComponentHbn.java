@@ -9,7 +9,6 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -60,54 +59,11 @@ public class SoftwareComponentHbn {
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion orgUnit = Restrictions.like("subResponsible",
 					"%" + input.getQuery() + "%").ignoreCase();
-			Criterion businessInfoInsertUser =  Restrictions.like("insertUser",	"%" + input.getQuery() + "%").ignoreCase();
-			Criterion businessInfoInsertQuelle =  Restrictions.like("insertQuelle",	"%" + input.getQuery() + "%").ignoreCase();
-			criteria.createAlias("partner", "partner", CriteriaSpecification.LEFT_JOIN);
-			Criterion manufacturer = Restrictions.and(Restrictions.isNotNull("partner"), Restrictions.like("partner.name", "%" + input.getQuery() + "%").ignoreCase());
-			criteria.createAlias("hersteller", "hersteller", CriteriaSpecification.LEFT_JOIN);
-			Criterion manufacturerName = Restrictions.and(Restrictions.isNotNull("hersteller"), Restrictions.like("hersteller.name", "%" + input.getQuery() + "%").ignoreCase());
-			criteria.createAlias("softwareCategory2", "softwareCategory2", CriteriaSpecification.LEFT_JOIN);
-			Criterion productName = Restrictions.and(Restrictions.isNotNull("softwareCategory2"), Restrictions.like("softwareCategory2.hwKategory2", "%" + input.getQuery() + "%").ignoreCase());
-			criteria.createAlias("softwareCategory1", "softwareCategory1", CriteriaSpecification.LEFT_JOIN);
-			Criterion sapAsset = Restrictions.and(Restrictions.isNotNull("softwareCategory1"), Restrictions.like("softwareCategory1.swKategory1", "%" + input.getQuery() + "%").ignoreCase());
-			
-			
-			Criterion orderNo =  Restrictions.like("bestellNumber",	"%" + input.getQuery() + "%").ignoreCase();
-			/*Criterion requesterId;
-			if((input.getQuery()!=null && !input.getQuery().equals("")) && (!input.getQuery().matches(".*\\d.*"))){
-				
-				
-				List<PersonsDTO> personList=  PersonsHbn.findPersonsByFunctionAndQuery(input.getQuery(),"Y","Y","Y",null,"Name");
-				if(personList.size()>0){
-					String[] cwidIds =new String[personList.size()];
-					int i = 0;
-					for(PersonsDTO personCwid : personList){
-											
-						cwidIds[i] = personCwid.getCwid();
-							i++;
-						}
-									
-					requesterId= Restrictions.in("requester", cwidIds);
-					
-				}else{
-					requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase();
-				}
-			} else{
-				requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase(); 
-			}*/
-			Criterion requesterId= Restrictions.like("requester",	"%" + input.getQuery() + "%").ignoreCase();
-			Criterion costManagerId= Restrictions.and(Restrictions.isNotNull("konto"), Restrictions.like("konto.cwidVerantw", "%" + input.getQuery() + "%").ignoreCase());
-			
-			
+
 			Criterion completeCondition = Restrictions.disjunction()
 					.add(sapDescription).add(pspElement).add(kontoName)
 					.add(serialNumber).add(technicalMaster)
-					.add(technicalNumber).add(inventoryNumber).add(orgUnit).add(swName)
-					.add(businessInfoInsertUser).add(businessInfoInsertQuelle)
-					.add(manufacturer).add(requesterId)
-					.add(orderNo).add(costManagerId)
-					.add(productName).add(manufacturerName)
-					.add(sapAsset);
+					.add(technicalNumber).add(inventoryNumber).add(orgUnit).add(swName);
 			criteria.add(completeCondition);
 
 			if (input.getSort() != null) {
