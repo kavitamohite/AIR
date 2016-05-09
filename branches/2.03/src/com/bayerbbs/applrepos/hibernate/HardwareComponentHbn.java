@@ -25,7 +25,6 @@ import org.hibernate.criterion.Restrictions;
 import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
-import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.HardwareComponent;
 import com.bayerbbs.applrepos.domain.ItSystem;
@@ -53,7 +52,7 @@ public class HardwareComponentHbn {
 			tx = session.beginTransaction();
 
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
-
+            criteria.add(Restrictions.isNull("deleteTimestamp"));
 			Criterion hwName = Restrictions.like("name",
 					"%" + input.getQuery() + "%").ignoreCase();
 			Criterion sapDescription = Restrictions.like("sapDescription",
