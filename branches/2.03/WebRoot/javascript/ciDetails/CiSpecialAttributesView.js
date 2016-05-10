@@ -103,7 +103,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		        }]				
 		    }],
 		    buttons: [{
-		        text: 'Save',
+		        text: 'Save Attributes',
 		        id: 'saveAttributeBtn',
 		        hidden: true,
 		        tooltip: 'Click to save all changes to the database',
