@@ -1069,7 +1069,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			cbAdvSearchITCategoryW.setVisible(true);
 
 			record = cbCiType.getStore().getById(newValue);
-			if(record && record.get('ciTypeId') === AC.TABLE_ID_APPLICATION) {//newValue.length === 0
+			if(record && record.get('ciTypeId') == AC.TABLE_ID_APPLICATION) {//newValue.length === 0
 				var filterData = {
 					applicationCat1Id: record.get('ciSubTypeId')
 				};

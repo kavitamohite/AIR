@@ -167,6 +167,8 @@ AIR.CiOuSearchView = Ext.extend(AIR.AirView, {
 		});
 		
 		AIR.CiOuSearchView.superclass.initComponent.call(this);
+		this.getComponent('cbOuSearchObjectType').getStore().sort('english', 'ASC');
+
 	},
 	
 	reset: function() {

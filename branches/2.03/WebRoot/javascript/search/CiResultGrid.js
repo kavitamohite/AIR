@@ -20,22 +20,33 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 		    				if(record.data.isTemplate=='-1')
 			    				return false;
 			    				else {
-			    					var isAdmin = AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
-			    					if(isAdmin)
-			    						return true;
+		    						if(record.data.deleteQuelle.length!=0){
+		    				    		Ext.Msg.show({
+		    				    			title: 'Mass Update Authorisation',
+		    				    			msg: 'Deleted CI not allowed to mass update',
+		    				    			buttons: Ext.MessageBox.OK,
+		    				    			icon: Ext.MessageBox.INFO			
+		    				    		});
+		    							return false;	
+		    						}
 			    					else{
-			    						var cwid=AAM.getCwid();
-			    					    if(record.data.ciOwner===cwid || record.data.ciOwnerDelegate===cwid || record.data.applicationOwner===cwid  || record.data.applicationSteward==cwid || record.data.applicationOwnerDelegate===cwid )    						
-			    							return true;
-			    						else{
-			    				    		Ext.Msg.show({
-			    				    			title: 'Mass Update Authorisation',
-			    				    			msg: 'You are not authorised to update this CI',
-			    				    			buttons: Ext.MessageBox.OK,
-			    				    			icon: Ext.MessageBox.INFO			
-			    				    		});
-			    							return false;	    					
+			    						var isAdmin = AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
+			    						if((isAdmin)){
+			    							return true;	
+			    						}else{
+				    						var cwid=AAM.getCwid();
+				    					    if(record.data.ciOwner===cwid || record.data.ciOwnerDelegate===cwid || record.data.applicationOwner===cwid  || record.data.applicationSteward==cwid || record.data.applicationOwnerDelegate===cwid )    						
+				    							return true;
+				    						else{
+				    				    		Ext.Msg.show({
+				    				    			title: 'Mass Update Authorisation',
+				    				    			msg: 'You are not authorised to update this CI',
+				    				    			buttons: Ext.MessageBox.OK,
+				    				    			icon: Ext.MessageBox.INFO			
+				    				    		});
+				    							return false;	    					
 
+				    						}
 			    						}
 			    					    
 			    					}

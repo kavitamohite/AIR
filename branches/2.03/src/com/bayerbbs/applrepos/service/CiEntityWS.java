@@ -1354,7 +1354,7 @@ public class CiEntityWS {
 		massUpdateAttriuteDTOs.add(maDto);
 
 		maDto = new MassUpdateAttributeDTO();
-		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
+		maDto.setAttributeName(AirKonstanten.INFORMATION_CLASS);
 		if (itSystem.getClassInformationId() != null
 				&& itSystem.getClassInformationId() != 0)
 			maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(
@@ -1364,7 +1364,7 @@ public class CiEntityWS {
 		massUpdateAttriuteDTOs.add(maDto);
 
 		maDto = new MassUpdateAttributeDTO();
-		maDto.setAttributeName(AirKonstanten.EXPLANATION_FOR_PROTECTION_LEVEL_CONFIDENTIALITY);
+		maDto.setAttributeName(AirKonstanten.EXPLANATION_FOR_INFORMATION_CLASS);
 		maDto.setAttributeValue(itSystem.getClassInformationTxt());
 		maDto.setId("itSecSbConfidentialityTxt");
 		massUpdateAttriuteDTOs.add(maDto);
@@ -1465,7 +1465,7 @@ public class CiEntityWS {
 		maDto.setId("itSecSbIntegrityTxt");
 		massUpdateAttriuteDTOs.add(maDto);
 		maDto = new MassUpdateAttributeDTO();
-		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_CONFIDENTIALITY);
+		maDto.setAttributeName(AirKonstanten.INFORMATION_CLASS);
 		if (ciBase1.getClassInformationId() != null
 				&& ciBase1.getClassInformationId() != 0)
 			maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(
@@ -1474,7 +1474,7 @@ public class CiEntityWS {
 		maDto.setId("itSecSbConfidentiality");
 		massUpdateAttriuteDTOs.add(maDto);
 		maDto = new MassUpdateAttributeDTO();
-		maDto.setAttributeName(AirKonstanten.EXPLANATION_FOR_PROTECTION_LEVEL_CONFIDENTIALITY);
+		maDto.setAttributeName(AirKonstanten.EXPLANATION_FOR_INFORMATION_CLASS);
 		maDto.setAttributeValue(ciBase1.getClassInformationTxt());
 		maDto.setId("itSecSbConfidentialityTxt");
 		massUpdateAttriuteDTOs.add(maDto);
@@ -1736,10 +1736,9 @@ public class CiEntityWS {
 		maDto.setAttributeName(AirKonstanten.INFORMATION_CLASS);
 		if (application.getClassInformationId() != null
 				&& application.getClassInformationId() != 0)
-			maDto.setAttributeValue(ClassInformationHbn
-					.getClassInformationById(
+			maDto.setAttributeValue(ConfidentialityHbn.getConfidentialityById(
 							application.getClassInformationId())
-					.getClassInformationName());
+					.getConfidentialityNameEn());
 		maDto.setId("classInformationId");
 		massUpdateAttriuteDTOs.add(maDto);
 
@@ -2580,6 +2579,7 @@ public class CiEntityWS {
 		Session session = HibernateUtil.getSession();
 		Transaction tx = session.beginTransaction();
 		boolean toCommit = false;
+		CiBase1 locationCiTemplate=null;
 
 		Long ciTypeId = input.getCiTypeId();
 		String sql = "";
@@ -2587,27 +2587,34 @@ public class CiEntityWS {
 
 			sql = "select h from Schrank as h where h.id in("
 					+ input.getSelectedCIs() + ")";
+			locationCiTemplate = SchrankHbn.findById(input.getTemplateCiId());
 		} else {
 			if (ciTypeId == AirKonstanten.TABLE_ID_ROOM) {
 				sql = "select h from Room as h where h.id in("
 						+ input.getSelectedCIs() + ")";
+				locationCiTemplate = RoomHbn.findById(input.getTemplateCiId());
 			} else {
 				if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING) {
 
 					sql = "select h from Building as h where h.id in("
 							+ input.getSelectedCIs() + ")";
+					locationCiTemplate = BuildingHbn.findById(input.getTemplateCiId());
 				} else {
 					if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING_AREA) {
 						sql = "select h from BuildingArea as h where h.id in("
 								+ input.getSelectedCIs() + ")";
+						locationCiTemplate = BuildingHbn.findBuildingAreaById(input.getTemplateCiId());
 					} else {
 						if (ciTypeId == AirKonstanten.TABLE_ID_TERRAIN) {
 							sql = "select h from Terrain as h where h.id in("
 									+ input.getSelectedCIs() + ")";
+							locationCiTemplate = TerrainHbn.findById(input.getTemplateCiId());
 						} else {
 							if (ciTypeId == AirKonstanten.TABLE_ID_SITE) {
 								sql = "select h from Standort as h where h.id in("
 										+ input.getSelectedCIs() + ")";
+								
+								locationCiTemplate = StandortHbn.findById(input.getTemplateCiId());
 							}
 						}
 					}
@@ -2624,6 +2631,7 @@ public class CiEntityWS {
 				while (locationCIs.next()) {
 					CiBase1 locationCi = (CiBase1) locationCIs.get(0);
 					locationCi.setRefId(input.getTemplateCiId());
+					locationCi.setItsecGroupId(locationCiTemplate.getItsecGroupId());
 
 					if (++count % 20 == 0) {
 						session.flush();
@@ -2661,8 +2669,9 @@ public class CiEntityWS {
 	private MassUpdateValueTransferParameterOutPut linkItSystemWithTemplate(
 			MassUpdateLinkTemplateParameterInput input) {
 		MassUpdateValueTransferParameterOutPut output = new MassUpdateValueTransferParameterOutPut();
+		ItSystem itSystemTemplate = ItSystemHbn.findItSystemById(input.getTemplateCiId());
 		Session session = HibernateUtil.getSession();
-		;
+		
 		Transaction tx = session.beginTransaction();
 		boolean toCommit = false;
 		try {
@@ -2677,6 +2686,7 @@ public class CiEntityWS {
 
 				ItSystem itSystem = (ItSystem) itSystems.get(0);
 				itSystem.setRefId(input.getTemplateCiId());
+				itSystem.setItsecGroupId(itSystemTemplate.getItsecGroupId());
 
 				if (++count % 20 == 0) {
 					session.flush();
@@ -2715,6 +2725,7 @@ public class CiEntityWS {
 		Transaction tx = session.beginTransaction();
 		boolean toCommit = false;
 		try {
+			Application applicationTemplate = (Application)AnwendungHbn.findApplicationById(input.getTemplateCiId());
 			ScrollableResults applications = session
 					.createQuery(
 							"select h from Application as h where h.applicationId in("
@@ -2726,6 +2737,7 @@ public class CiEntityWS {
 
 				Application application = (Application) applications.get(0);
 				application.setRefId(input.getTemplateCiId());
+				application.setItsecGroupId(applicationTemplate.getItsecGroupId());
 
 				if (++count % 20 == 0) {
 					session.flush();

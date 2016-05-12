@@ -991,6 +991,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         
         
         this.filterCombo(cbselectAttrItSecGroup);
+		var filterData = { tableId: this.ciTypeId };
+		selectAttrlifecycleStatus.filterByData(filterData);
         
         
 		if(this.ciTypeId==AC.TABLE_ID_APPLICATION ){
