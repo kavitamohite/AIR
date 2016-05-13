@@ -384,7 +384,13 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		
 		this.getComponent('cbBusinessEssentialW').on('select', this.onComboInformationChange, this);
 		this.getComponent('cbBusinessEssentialW').on('change', this.onComboInformationChange, this);
+		this.getComponent('cbBusinessEssentialW').getStore().sort('text','ASC');
+		this.getComponent('cbProtectionAvailabilityW').getStore().sort('text','ASC');
+		this.getComponent('cbProtectionClassInformationW').getStore().sort('text','ASC');
+		this.getComponent('cbSeverityLevelW').getStore().sort('text','ASC');
 		// end by enqmu
+		
+		
 	},
 	
 	// Added by enqmu
