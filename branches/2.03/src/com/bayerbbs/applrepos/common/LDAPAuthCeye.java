@@ -4,14 +4,10 @@ import java.util.Hashtable;
 
 import javax.naming.AuthenticationException;
 import javax.naming.Context;
-import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
-import javax.naming.directory.SearchControls;
-import javax.naming.directory.SearchResult;
 
-import com.sun.tools.xjc.model.CWildcardTypeInfo;
 
 /**
  * LDAPAuthCeye - builds a wrapper for C-Eye for authorisation against LDAP
@@ -34,7 +30,7 @@ public class LDAPAuthCeye {
 	// private static final String ldapURL = "ldaps://ldaps.bayer-ag.com:636/";	// IBM LDAP Service
 	private static final String ldapURL = "ldaps://BYYMT9.DE.bayer.cnb:636/";			// Microsoft AD (über LDAP)
 
-	private Hashtable<String, String> env = new Hashtable<String, String>();
+
 	 private static final String LDAP_START = "cn=";
      private static final String LDAP_END = ",OU=Users,OU=LEV,OU=1251,OU=DE,DC=DE,DC=bayer,DC=cnb"; 
 
@@ -83,7 +79,7 @@ public class LDAPAuthCeye {
 		if (password == null || "".equals(password) || username == null || "".equals(username))
 			return -9;
 			authEnv.put(Context.INITIAL_CONTEXT_FACTORY,
-					"com.sun.jndi.ldap.LdapCtxFactory");
+					LDAP_FACTORY);
 			authEnv.put(Context.PROVIDER_URL, ldapURL);
 
 			
