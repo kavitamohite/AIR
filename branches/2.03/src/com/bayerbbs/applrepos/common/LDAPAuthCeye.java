@@ -19,14 +19,6 @@ public class LDAPAuthCeye {
 
 	private static final String LDAP_FACTORY = "com.sun.jndi.ldap.LdapCtxFactory";
 
-	// private static final String MASCHINE_USER = "MXSNT";
-	private static final String MASCHINE_USER = "CN=MXSNT,OU=Non-PersonalMailboxAccounts,OU=Resources,OU=_DomainOperations,DC=DE,DC=bayer,DC=cnb";
-	
-	private static final String MASCHINE_USER_PWD = "isbb2007";
-
-	// private static final String MX_SEARCH_CONTEXT = "ou=itaccounts,o=bayer"; // IBM LDAP Service
-	private static final String MX_SEARCH_CONTEXT = "";
-
 	// private static final String ldapURL = "ldaps://ldaps.bayer-ag.com:636/";	// IBM LDAP Service
 	private static final String ldapURL = "ldaps://BYYMT9.DE.bayer.cnb:636/";			// Microsoft AD (über LDAP)
 
@@ -34,8 +26,6 @@ public class LDAPAuthCeye {
 	 private static final String LDAP_START = "cn=";
      private static final String LDAP_END = ",OU=Users,OU=LEV,OU=1251,OU=DE,DC=DE,DC=bayer,DC=cnb"; 
 
-	/** hashtable for ldap handling */
-	private DirContext ctx = null;
 
 	/**
 	 * @param args

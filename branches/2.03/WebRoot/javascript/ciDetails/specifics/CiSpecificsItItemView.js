@@ -504,6 +504,16 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		cbOsName.reset();
 		cbOsType.reset();
 		cbOsGroup.reset();
+		
+		var filterData = {
+				itSystemType: data.ciSubTypeId
+			};
+		cbOsType.filterByData(filterData);
+		cbOsName.filterByData(filterData);
+		filterData={
+				type: data.ciSubTypeId
+		};
+		cbOsGroup.filterByData(filterData);
 	
 		if(data.isCiCreate) {
 			tfItSystemCiName.enable();
@@ -567,6 +577,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			}
 			
 			var clusterCodeRecord = Util.getComboRecord(cbClusterCode, 'type', data.clusterCode);
+			if(clusterCodeRecord!=undefined)
 			cbClusterCode.setValue(clusterCodeRecord.get('id'));
 
 			if(data.clusterCode == 'N') {

@@ -2812,6 +2812,14 @@ public class CiEntityWS {
 													+ mAttrParameterInput
 															.getSelectedCIs()
 													+ ")";
+										}else{
+											if (ciTypeId == AirKonstanten.TABLE_ID_WAYS) {
+												sql = "select h from Ways as h where h.id in("
+													+ mAttrParameterInput
+															.getSelectedCIs()
+													+ ")";
+											}
+											
 										}
 									}
 								}
@@ -2903,13 +2911,13 @@ public class CiEntityWS {
 					locationCi.setItSecSbAvailabilityTxt(mAttrParameterInput
 							.getItSecSbAvailabilityTxt());
 				}
-				if (mAttrParameterInput.getItSecSbConfidentialityId() != null
-						&& mAttrParameterInput.getItSecSbConfidentialityId() != 0) {
+				if (mAttrParameterInput.getClassInformationId() != null
+						&& mAttrParameterInput.getClassInformationId() != 0) {
 					locationCi.setClassInformationId(mAttrParameterInput
 							.getClassInformationId());
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
-						.getItSecSbConfidentialityTx())) {
+						.getClassInformationExplanation())) {
 					locationCi.setClassInformationTxt(mAttrParameterInput
 							.getClassInformationExplanation());
 				}
@@ -3096,6 +3104,16 @@ public class CiEntityWS {
 							.setClassInformationExplanation(mAttrParameterInput
 									.getClassInformationExplanation());
 				}
+				if (mAttrParameterInput.getItSecSbIntegrityId() != null
+						&& mAttrParameterInput.getItSecSbIntegrityId() != 0) {
+					application.setItSecSbIntegrityId(mAttrParameterInput
+							.getItSecSbIntegrityId());
+				}
+				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+						.getItSecSbIntegrityTxt())) {
+					application.setItSecSbIntegrityTxt(mAttrParameterInput
+							.getItSecSbIntegrityTxt());
+				}				
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getApplicationOwner())) {
 					application.setApplicationOwner(mAttrParameterInput

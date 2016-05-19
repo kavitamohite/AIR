@@ -84,31 +84,9 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     						    },{
     						        xtype: 'filterCombo',
     						        width: 230,
-    						        fieldLabel: 'Information Class',  //RFC 11441
-    						        id: 'selectAttrprotectionConfidentiality',
-    						        
-    						        store: AIR.AirStoreManager.getStoreByName('itSecSBConfidentialityListStore'),  // itSecSBConfidentialityListStore
-    						        
-    						        valueField: 'id',
-    						        displayField: 'text',
-    						        
-    						        triggerAction: 'all',
-    						        lazyRender: true,
-    						        lazyInit: false,
-    						        mode: 'local'
-    						    },{
-    						    	xtype: 'textarea',
-    						        id: 'selectAttrprotectionConfidentialityDescription',
-
-    						        width: 230,
-    						        fieldLabel: 'Explanation',
-    						        allowBlank: true
-    						    },{
-    						        xtype: 'filterCombo',
-    						        width: 230,
     						        fieldLabel: 'Information Class',
     						        id: 'selectAttrprotectionClassInformation',
-    						        hidden: true,
+    						        hidden: false,
     						        store: AIR.AirStoreManager.getStoreByName('itSecSBConfidentialityListStore'),// RFC 11441
     						        valueField: 'id',
     						        displayField: 'text',
@@ -122,14 +100,14 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     						        width: 230,
     						        fieldLabel: 'Info Class',
     						        id: 'selectAttrprotectionClassInformationExplanation',
-    						        hidden: true,
+    						        hidden: false,
     						        allowBlank: true
     						    },{
     						        xtype: 'filterCombo',
     						        width: 230,
     						        fieldLabel: 'Integrity',
     						        id: 'selectAttrprotectionIntegrity',
-    						        hidden: true,
+    						        hidden: false,
     						        store: AIR.AirStoreManager.getStoreByName('itSecSBAvailabilityListStore'),
     						        valueField: 'id',
     						        displayField: 'text',
@@ -141,7 +119,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     						    },{
     						    	xtype: 'textarea',
     						        id: 'selectAttrprotectionIntegrityDescription',
-    						        hidden: true,
+    						        hidden: false,
     						        width: 230,
     						        fieldLabel: 'Explanation',
     						        allowBlank: true
@@ -830,6 +808,11 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         selectAttrserviceContract.on('select', this.onServiceContractSelect, this);
         selectAttrserviceContract.on('change', this.onServiceContractChange, this);
         selectAttrserviceContract.on('keyup', this.onServiceContractKeyUp, this);
+        this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrpriorityLevel').getStore().sort('text','ASC');
+        this.getComponent('selectAttrAgreement').getComponent('selectAttrBusinessEssential').getStore().sort('text','ASC');
+        this.getComponent('selectAttrCompliance').getComponent('selectAttrCBrelevanceGxp').getStore().sort('text','ASC');
+        
+        
 
 
 
@@ -875,20 +858,20 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		selectAttrCbOsName.filterByData(filterData);
 		selectAttrCbOsName.setValue('');
 		
-		var selectcAttCbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
-		var osGroupRecord = Util.getComboRecord(cbOsGroup, 'name', record.get('osGroup'));
+		var selectcAttCbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('selectcAttCbOsGroup');
+		var osGroupRecord = Util.getComboRecord(selectcAttCbOsGroup, 'name', record.get('osGroup'));
 		selectcAttCbOsGroup.setValue(osGroupRecord.get('id'));
 		
 	},
 	setOsName: function(combo, record) {
 		var selectAttrCbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsType');
-		cbOsType.reset();
+		selectAttrCbOsType.reset();
 		var osTypeRecord = Util.getComboRecord(selectAttrCbOsType, 'osTypeId', record.get('osTypeId'));//type
 		selectAttrCbOsType.setValue(osTypeRecord.get('osTypeId'));
 		
-		var selectcAttCbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('cbOsGroup');
+		var selectcAttCbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('selectcAttCbOsGroup');
 		selectcAttCbOsGroup.reset();
-		var osGroupRecord = Util.getComboRecord(cbOsGroup, 'name', osTypeRecord.get('osGroup'));
+		var osGroupRecord = Util.getComboRecord(selectcAttCbOsGroup, 'name', osTypeRecord.get('osGroup'));
 		selectcAttCbOsGroup.setValue(osGroupRecord.get('id'));
 		
 		
@@ -978,8 +961,6 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         var selectAttrprotectionClassInformationExplanation = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionClassInformationExplanation');
         var selectAttrprotectionIntegrity = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrity');
         var selectAttrprotectionIntegrityDescription = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrityDescription');
-        var selectAttrprotectionConfidentiality = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionConfidentiality');
-        var selectAttrprotectionConfidentialityDescription = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionConfidentialityDescription');
         var selectAttrcbgRegulationsW = this.getComponent('selectAttrCompliance').getComponent('selectAttrcbgRegulationsW');
         var cbselectAttrItSecGroup = this.getComponent('selectAttrCompliance').getComponent('cbselectAttrItSecGroup');
         var selectAttrselectAttrpriorityLevel = this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrpriorityLevel');
@@ -1006,10 +987,6 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			selectAttrapplicationVersion.setVisible(true);
 			selectAttrtaCiDescriptionW.setVisible(true);
 			selectAttrapplicationCat.setVisible(true);
-			selectAttrprotectionClassInformation.setVisible(true);
-			selectAttrprotectionClassInformationExplanation.setVisible(true);
-			selectAttrprotectionConfidentiality.setVisible(false);
-			selectAttrprotectionConfidentialityDescription.setVisible(false);
 			selectAttrselectAttrseverityLevel.setVisible(true);
 			selectAttrselectAttrpriorityLevel.setVisible(true);
 			selectAttrlifecycleStatus.setVisible(true);
@@ -1083,6 +1060,18 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         selectAttrserviceContract.bindStore(AIR.AirStoreManager.getStoreByName('serviceContractListStore'));
         
 		storeLoader.destroy();
+		if(this.ciTypeId==AC.TABLE_ID_IT_SYSTEM){
+			var filterData = {
+					itSystemType: this.ciSubTypeId
+				};
+			selectAttrCbOsType.filterByData(filterData);
+			selectAttrCbOsName.filterByData(filterData);
+			filterData={
+					type: this.ciSubTypeId
+			};
+			selectcAttCbOsGroup.filterByData(filterData);
+			
+		}
     },
     onSave: function(button, event){
 		var msgText = 'You are in mass update mode. Are you sure that you update all elements marked in the list with the selected attributes ?';
@@ -1151,8 +1140,6 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			
 			var selectAttrprotectionAvailability =this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionAvailability');
 			var  selectAttrprotectionAvailabilityDescription=this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionAvailabilityDescription');
-			var selectAttrprotectionConfidentiality=this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionConfidentiality');
-			var selectAttrprotectionConfidentialityDescription = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionConfidentialityDescription');
             var selectAttrprotectionClassInformation = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionClassInformation');           
 			var selectAttrprotectionClassInformationExplanation =this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionClassInformationExplanation');
 			var selectAttrprotectionIntegrity=this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrity');
@@ -1220,8 +1207,6 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				 	itSecSbAvailabilityTxt: selectAttrprotectionAvailabilityDescription.getValue(),
 				 	itSecSbIntegrityId: selectAttrprotectionIntegrity.getValue(),
 				 	itSecSbIntegrityTxt: selectAttrprotectionIntegrityDescription.getValue(),
-				 	itSecSbConfidentialityId: selectAttrprotectionConfidentiality.getValue(),
-				    itSecSbConfidentialityTx: selectAttrprotectionConfidentialityDescription.getValue(),
 				 	classInformationId: selectAttrprotectionClassInformation.getValue(),
 				 	classInformationExplanation: selectAttrprotectionClassInformationExplanation.getValue(),
 				 	itsecGroupId: cbselectAttrItSecGroup.getValue(),
