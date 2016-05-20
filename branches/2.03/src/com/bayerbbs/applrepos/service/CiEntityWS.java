@@ -2780,56 +2780,60 @@ public class CiEntityWS {
 					parameterOutPut = itSystemSelectAttMassUpdate(mAttrParameterInput);
 
 				else {
-
-					Long ciTypeId = mAttrParameterInput.getCiTypeId();
-					String sql = "";
-					if (ciTypeId == AirKonstanten.TABLE_ID_POSITION) {
-						sql = "select h from Schrank as h where h.id in("
-								+ mAttrParameterInput.getSelectedCIs() + ")";
-					} else {
-						if (ciTypeId == AirKonstanten.TABLE_ID_ROOM) {
-							sql = "select h from Room as h where h.id in("
-									+ mAttrParameterInput.getSelectedCIs()
-									+ ")";
+					if(mAttrParameterInput.getCiTypeId()== AirKonstanten.TABLE_ID_FUNCTION){
+						parameterOutPut = functionSelectAttrMassUpdate(mAttrParameterInput);
+					}else{
+						Long ciTypeId = mAttrParameterInput.getCiTypeId();
+						String sql = "";
+						if (ciTypeId == AirKonstanten.TABLE_ID_POSITION) {
+							sql = "select h from Schrank as h where h.id in("
+									+ mAttrParameterInput.getSelectedCIs() + ")";
 						} else {
-							if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING) {
-								sql = "select h from Building as h where h.id in("
+							if (ciTypeId == AirKonstanten.TABLE_ID_ROOM) {
+								sql = "select h from Room as h where h.id in("
 										+ mAttrParameterInput.getSelectedCIs()
 										+ ")";
 							} else {
-								if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING_AREA) {
-									sql = "select h from BuildingArea as h where h.id in("
-											+ mAttrParameterInput
-													.getSelectedCIs() + ")";
+								if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING) {
+									sql = "select h from Building as h where h.id in("
+											+ mAttrParameterInput.getSelectedCIs()
+											+ ")";
 								} else {
-									if (ciTypeId == AirKonstanten.TABLE_ID_TERRAIN) {
-										sql = "select h from Terrain as h where h.id in("
+									if (ciTypeId == AirKonstanten.TABLE_ID_BUILDING_AREA) {
+										sql = "select h from BuildingArea as h where h.id in("
 												+ mAttrParameterInput
 														.getSelectedCIs() + ")";
 									} else {
-										if (ciTypeId == AirKonstanten.TABLE_ID_SITE) {
-											sql = "select h from Standort as h where h.id in("
+										if (ciTypeId == AirKonstanten.TABLE_ID_TERRAIN) {
+											sql = "select h from Terrain as h where h.id in("
 													+ mAttrParameterInput
-															.getSelectedCIs()
-													+ ")";
-										}else{
-											if (ciTypeId == AirKonstanten.TABLE_ID_WAYS) {
-												sql = "select h from Ways as h where h.id in("
-													+ mAttrParameterInput
-															.getSelectedCIs()
-													+ ")";
+															.getSelectedCIs() + ")";
+										} else {
+											if (ciTypeId == AirKonstanten.TABLE_ID_SITE) {
+												sql = "select h from Standort as h where h.id in("
+														+ mAttrParameterInput
+																.getSelectedCIs()
+														+ ")";
+											}else{
+												if (ciTypeId == AirKonstanten.TABLE_ID_WAYS) {
+													sql = "select h from Ways as h where h.id in("
+														+ mAttrParameterInput
+																.getSelectedCIs()
+														+ ")";
+												}
+												
 											}
-											
 										}
 									}
-								}
 
+								}
 							}
 						}
-					}
-					parameterOutPut = locationCISelectAttrMassUpdate(
-							mAttrParameterInput, sql);
+						parameterOutPut = locationCISelectAttrMassUpdate(
+								mAttrParameterInput, sql);
 
+					
+					}
 				}
 
 			}
@@ -2945,8 +2949,14 @@ public class CiEntityWS {
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getCiOwnerDelegateHidden())) {
-					locationCi.setCiOwnerDelegate(mAttrParameterInput
-							.getCiOwnerDelegateHidden());
+					if(isNumeric(mAttrParameterInput
+							.getCiOwnerDelegateHidden())){
+						locationCi.setCiOwnerDelegate(mAttrParameterInput
+								.getCiOwnerDelegate());
+					}else{
+						locationCi.setCiOwnerDelegate(mAttrParameterInput
+								.getCiOwnerDelegateHidden());
+					}
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getRelevanceGR1435())) {
@@ -3130,8 +3140,14 @@ public class CiEntityWS {
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getApplicationDelegateHidden())) {
-					application.setApplicationOwnerDelegate(mAttrParameterInput
-							.getApplicationDelegateHidden());
+					if(isNumeric(mAttrParameterInput
+						.getApplicationDelegateHidden())){
+						application.setApplicationOwnerDelegate(mAttrParameterInput
+								.getApplicationDelegate());
+					}else{
+						application.setApplicationOwnerDelegate(mAttrParameterInput
+								.getApplicationDelegateHidden());
+					}
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getApplicationSteward())) {
@@ -3145,8 +3161,14 @@ public class CiEntityWS {
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getCiOwnerDelegateHidden())) {
-					application.setSubResponsible(mAttrParameterInput
-							.getCiOwnerDelegateHidden());
+					if(isNumeric(mAttrParameterInput
+						.getCiOwnerDelegateHidden())){
+						application.setSubResponsible(mAttrParameterInput
+								.getCiOwnerDelegate());
+					}else{
+						application.setSubResponsible(mAttrParameterInput
+								.getCiOwnerDelegateHidden());
+					}
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getVersion())) {
@@ -3288,12 +3310,136 @@ public class CiEntityWS {
 		}
 		return parameterOutPut;
 	}
+	
+	private MassUpdateValueTransferParameterOutPut functionSelectAttrMassUpdate(
+			MassUpdateChangeAttrParameterInput mAttrParameterInput) {
+		MassUpdateValueTransferParameterOutPut parameterOutPut = new MassUpdateValueTransferParameterOutPut();
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		boolean toCommit = false;
+		try {
+			ScrollableResults functions = session
+					.createQuery(
+							"select h from Function as h where h.id in("
+									+ mAttrParameterInput.getSelectedCIs()
+									+ ")").setCacheMode(CacheMode.IGNORE)
+					.scroll(ScrollMode.FORWARD_ONLY);
+			int count = 0;
+			while (functions.next()) {
+				Function function = (Function) functions.get(0);
+				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+						.getCiOwnerPrimaryPerson())) {
+					function.setCiOwner(mAttrParameterInput
+							.getCiOwnerPrimaryPerson());
+					Long itSet = null;
+					String strItSet = ApplReposHbn
+							.getItSetFromCwid(mAttrParameterInput
+									.getCiOwnerPrimaryPerson());
+					if (null != strItSet) {
+						itSet = Long.parseLong(strItSet);
+					}
+					if (null == itSet) {
+						// set default itSet
+						itSet = new Long(AirKonstanten.IT_SET_DEFAULT);
+					}
+					function.setItset(itSet);
+				}
+				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+						.getCiOwnerDelegateHidden())) {
+					if(isNumeric(mAttrParameterInput
+							.getCiOwnerDelegateHidden())){
+						function.setCiOwnerDelegate(mAttrParameterInput
+								.getCiOwnerDelegate());
+					}else{
+						function.setCiOwnerDelegate(mAttrParameterInput
+								.getCiOwnerDelegateHidden());
+					}
+				}
+				if (mAttrParameterInput.getItsecGroupId() != null
+						&& mAttrParameterInput.getItsecGroupId() != 0) {
+					function.setRefId(null);
+					function.setItsecGroupId(mAttrParameterInput
+							.getItsecGroupId());
+				}
+
+				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+						.getRelevanceGR1435())) {
+					if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput
+							.getRelevanceGR1435())) {
+						function.setRelevanceITSEC(-1l);
+					}
+				}
+				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+						.getRelevanceGR1920())) {
+					if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput
+							.getRelevanceGR1920())) {
+						function.setRelevanceICS(-1l);
+					}
+				}
+				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+						.getGxpFlag())) {
+					if ("null".equals(mAttrParameterInput.getGxpFlag())) {
+						function.setGxpFlag(null);
+					} else {
+						function.setGxpFlag(mAttrParameterInput.getGxpFlag());
+					}
+				}
+				function.setUpdateUser(mAttrParameterInput.getCwid());
+				function.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+				function.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+				if (++count % 20 == 0) {
+					session.flush();
+					session.clear();
+				}
+			}
+			session.flush();
+			session.clear();
+			tx.commit();
+			if (mAttrParameterInput.getItsecGroupId() != null) {
+				tx = session.beginTransaction();
+				String sql = "{call pck_Logical_Integrity.P_CI_Safeguard_Assignment (?,?,?)}";
+
+				Connection conn = session.connection();
+
+				CallableStatement stmt = conn.prepareCall(sql);
+				String selectedCIsarray[] = mAttrParameterInput
+						.getSelectedCIs().split(",");
+				int size = selectedCIsarray.length;
+				for (int i = 0; i < size; i++) {
+					stmt.setLong(1, mAttrParameterInput.getCiTypeId());
+					stmt.setLong(2, Long.valueOf(selectedCIsarray[i]));
+					stmt.setLong(3,
+							Long.valueOf(mAttrParameterInput.getItsecGroupId()));
+					stmt.addBatch();
+				}
+				int[] updateCounts = stmt.executeBatch();
+				tx.commit();
+				System.out.println(updateCounts);
+			}
+			toCommit = true;
+		} catch (Exception e) {
+			parameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+			parameterOutPut.setMessages(new String[] { e.getCause()
+					.getMessage() });
+		} finally {
+			if (toCommit) {
+				String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+				if (null == hbnMessage) {
+					parameterOutPut.setResult(AirKonstanten.RESULT_OK);
+					parameterOutPut.setMessages(new String[] { "" });
+				} else {
+					parameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+					parameterOutPut.setMessages(new String[] { hbnMessage });
+				}
+			}
+		}
+		return parameterOutPut;
+	}
 
 	private MassUpdateValueTransferParameterOutPut itSystemSelectAttMassUpdate(
 			MassUpdateChangeAttrParameterInput mAttrParameterInput) {
 		MassUpdateValueTransferParameterOutPut parameterOutPut = new MassUpdateValueTransferParameterOutPut();
 		Session session = HibernateUtil.getSession();
-		;
 		Transaction tx = session.beginTransaction();
 		boolean toCommit = false;
 		try {
@@ -3404,8 +3550,15 @@ public class CiEntityWS {
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getCiOwnerDelegateHidden())) {
-					itSystem.setCiOwnerDelegate(mAttrParameterInput
-							.getCiOwnerDelegateHidden());
+					if(isNumeric(mAttrParameterInput
+							.getCiOwnerDelegateHidden())){
+						itSystem.setCiOwnerDelegate(mAttrParameterInput
+								.getCiOwnerDelegate());
+
+					}else{
+						itSystem.setCiOwnerDelegate(mAttrParameterInput
+								.getCiOwnerDelegateHidden());
+					}
 				}
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getClusterCode())) {
@@ -3506,5 +3659,7 @@ public class CiEntityWS {
 		}
 		return parameterOutPut;
 	}
-
+	public boolean isNumeric(String s) {
+	    return java.util.regex.Pattern.matches("\\d+", s);
+	}
 }

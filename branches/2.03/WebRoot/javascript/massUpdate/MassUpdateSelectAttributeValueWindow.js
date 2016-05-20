@@ -1015,6 +1015,11 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		if(this.ciTypeId==AC.TABLE_ID_ROOM || this.ciTypeId==AC.TABLE_ID_POSITION ){
 			selectAttrselectAttrseverityLevel.setVisible(true);
 		}
+		if(this.ciTypeId==AC.TABLE_ID_FUNCTION){
+			this.getComponent('selectAttrProtection').setVisible(false);
+			this.getComponent('selectAttrAgreement').setVisible(false);
+
+		}
 		if((this.ciTypeId==AC.TABLE_ID_APPLICATION  || this.ciTypeId==AC.TABLE_ID_IT_SYSTEM || this.ciTypeId==AC.TABLE_ID_ROOM || this.ciTypeId==AC.TABLE_ID_POSITION) && AAM.hasRole(AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)){
 			selectAttrBusinessEssential.setVisible(true);
 		}
