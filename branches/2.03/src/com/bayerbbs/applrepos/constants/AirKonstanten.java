@@ -37,6 +37,7 @@ public final class AirKonstanten {
 	public static final int TABLE_ID_WAYS			= 37;
 	public static final int TABLE_ID_FUNCTION       = 33;
 	public static final int TABLE_ID_SERVICE        = 123;
+	public static final int TABLE_ID_BUSINESS_APPLICATION	= 183;
 	
 	public static final String CITypes_IT_SYSTEM	= "'Transient System Platform', 'Hardware System'";
 	public static final String CITypes_ANWENDUNG	= "'Application', 'Application Platform', 'Middleware', 'Common Service'";
@@ -50,6 +51,7 @@ public final class AirKonstanten {
 	public static final String CITypes_FUNCTION		= "'Function'";
 	public static final String CITypes_SERVICE      = "'Service'";
 	public static final String NOT_BUSINESS_ESSENTIAL = "Not Business Essential";
+	public static final String CITypes_BUSINESS_APPLICATION	=  "'Business Application'";
 	
 	public static final String APPLICATION_GUI_NAME = "AIR";
 	public static final String UNKNOWN = "unknown";
@@ -182,6 +184,7 @@ public final class AirKonstanten {
 		CI_TYPE_ORDERING.put("Function", 13);
 		CI_TYPE_ORDERING.put("Way", 14);
 		CI_TYPE_ORDERING.put("Service", 15);
+		CI_TYPE_ORDERING.put("Business Application", 16);
 	}
 	
 	public static final String PRODUCTIONSERVER = "BYZREG";
