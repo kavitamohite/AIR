@@ -1014,7 +1014,7 @@
 
 	<Identifier>
 		<id>protectionClassInformation</id>
-		<Mandatory>required</Mandatory>
+		<Mandatory>optional</Mandatory>
 		<ciTypeId>2</ciTypeId>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -1827,7 +1827,7 @@
 	</Identifier>
 	<Identifier>
 		<id>cbProtectionClassInformationW</id>
-		<Mandatory>required</Mandatory>
+		<Mandatory>optional</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>

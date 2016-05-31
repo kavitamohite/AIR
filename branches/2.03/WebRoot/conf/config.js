@@ -29,6 +29,8 @@ var manual_de = doccontext + 'Manual.pdf';
 var img_AppLogo = imgcontext + 'AIR_Logo_48x50.png';
 
 var img_HeaderTop		= imgcontext + 'header_colorgradient_blue_1x65.jpg';
+var img_HeaderTop_Q		= imgcontext + 'header_colorgradient_Q_1x65.jpg';
+var img_HeaderTop_D		= imgcontext + 'header_colorgradient_D_1x65.jpg';
 var img_HeaderBottom	= imgcontext + 'header_colorgradient_blue_1x25.jpg';
 var img_HeaderBottom2	= imgcontext + 'header_colorgradient_blue_r_155x25.png'; // muss noch angepasst werden im Code
 var img_CornerLeft		= imgcontext + 'rounding_left_blue_15x15.jpg';

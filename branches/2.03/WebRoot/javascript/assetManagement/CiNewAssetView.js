@@ -864,7 +864,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalMaster').setValue('');
     	this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber').setValue('');
     	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('pSystemPlatform').getComponent('cbSystemPlatform').setValue('');
-    	this.getComponent('buttonPanel').getComponent('copyBtn').hide();
+    	//this.getComponent('buttonPanel').getComponent('copyBtn').hide();
     	
     	var success = (records[0].data.result == 'true');
     	var yesCallback = function() {

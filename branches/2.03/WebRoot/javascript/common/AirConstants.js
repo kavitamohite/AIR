@@ -2,6 +2,10 @@ Ext.namespace('AIR');
 
 
 AIR.AirConstants = {
+		
+	SERVERNAME_PROD : "air.de.bayer.cnb",
+	SERVERNAME_QA:"air-q.de.bayer.cnb",
+	SERVERNAME_D : "air-d.de.bayer.cnb",
 	HELP_ID_INFOTEXT: 'help_infotext',
 	HELP_ID_MYPLACE: 'help_myplace',
 	HELP_ID_SEARCH: 'help_search',

@@ -123,8 +123,7 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 				region: 'center',
 				xtype: 'panel',
 				id: 'pCiTitleCenter',
-				
-			    border: false,
+				border: false,
 			    height: 65,
 			    
 //				layout: 'hbox',
@@ -143,7 +142,7 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 				},
 
 			    style: {
-			    	backgroundImage: 'url("' + img_HeaderTop + '")',
+			       	backgroundImage: 'url("' + img_HeaderTop + '")',
 			    	backgroundRepeat: 'repeat-x'
 			    },
 			    
@@ -227,11 +226,33 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 				throw new Error('Not supported language: '+language);
 				break;
 		}
-		
-//		clLanguage.setIcon(clLanguage.img);
+		//		clLanguage.setIcon(clLanguage.img);
 		
 		//PROBLEM: event gets fired before AIR.AirApplicationManager is registered on clLanguage's click event during startup
 //		clLanguage.fireEvent('click', clLanguage);
+	
+		var hostName=window.location.hostname;
+		var pCiTitleCenter = this.getComponent('pCiTitleCenter');
+		
+		switch(hostName) {
+			case AC.SERVERNAME_D:
+				pCiTitleCenter.el.setStyle('background-image','url('+img_HeaderTop_D+')');  
+				break;
+			case AC.SERVERNAME_QA:
+				
+				pCiTitleCenter.el.setStyle('background-image','url('+img_HeaderTop_Q+')');    
+				break;    
+				
+			case AC.SERVERNAME_PROD:
+				pCiTitleCenter.el.setStyle('background-image','url('+img_HeaderTop+')'); 
+				break;
+			default:
+				//pCiTitleCenter.el.setStyle('background-image','url('+img_HeaderTop_D+')');
+				throw new Error('Not supported environment: '+environment);
+				//break;
+		}
+		
+
 	},
 	
 	updateLabels: function(labels) {
