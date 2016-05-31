@@ -142,7 +142,7 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 				},
 
 			    style: {
-			       	backgroundImage: 'url("' + img_HeaderTop + '")',
+			       	backgroundImage: 'url("' + img_HeaderTop_D + '")',
 			    	backgroundRepeat: 'repeat-x'
 			    },
 			    
