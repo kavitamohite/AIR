@@ -45,6 +45,10 @@ a:active {text-decoration: none; color:#085E8B;}
     color: #ededed;
 	font-weight: bold;
 }
+.AppLabelTag-name-Q {
+    color: #085e8b;
+	font-weight: bold;
+}
 
 .AppLabelTag-container {
 	line-height: 0px;
@@ -53,6 +57,13 @@ a:active {text-decoration: none; color:#085E8B;}
 .AppLabelTag-version {
 	font-size: 7pt;
 	color: #ededed;
+	font-weight: bold;
+	//margin-top: 5pt;
+	text-align: left;
+}
+.AppLabelTag-version-Q {
+	font-size: 7pt;
+	color: #085e8b;
 	font-weight: bold;
 	//margin-top: 5pt;
 	text-align: left;

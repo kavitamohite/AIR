@@ -19,12 +19,25 @@ Ext.ux.AppLabelTag = Ext.extend(Ext.BoxComponent, {
 			'<div class="AppLabelTag-name">{shortName}&nbsp;-&nbsp;{longName}</div>'+
 			'<div class="AppLabelTag-container"><div class="AppLabelTag-version">{version}&nbsp;{database}</div><div class="AppLabelTag-browserOptimization">{browserOptimization}</div></div>'+
 		'</div>',
-   
+		
+		renderTplQ:
+			
+			'<div>'+
+				'<div class="AppLabelTag-name-Q">{shortName}&nbsp;-&nbsp;{longName}</div>'+
+				'<div class="AppLabelTag-container"><div class="AppLabelTag-version-Q">{version}&nbsp;{database}</div><div class="AppLabelTag-browserOptimization">{browserOptimization}</div></div>'+
+			'</div>',
+			
     onRender: function(ct, position) {
         //if(!this.text && !this.img)
         //    throw new Error('commandlink requires text or img or both attributes');
-
-        this.template = new Ext.Template(this.renderTpl);
+    	var hostName=window.location.hostname;
+		if(hostName==AC.SERVERNAME_QA) {
+			
+        this.template = new Ext.Template(this.renderTplQ);
+		}
+		else{
+			this.template = new Ext.Template(this.renderTpl);	
+		}
         this.template.compile();
         
         var targs = {
