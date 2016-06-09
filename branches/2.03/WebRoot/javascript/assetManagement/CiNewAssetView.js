@@ -625,7 +625,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     		this.update(assetData);
     	} else {
         	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
-        	
+        	//var insertSource = this.getComponent('')
         	if(assetId){
         		var ciDetailStore = AIR.AirStoreFactory.createAssetListStore();
         		ciDetailStore.on('beforeload', this.onBeforeAssetLoad, this);
@@ -797,6 +797,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         assetData.systemPlatformName=undefined;
         assetData.inventoryNumber=undefined;
         
+        
     	newAssetstore.on('load', this.onCopy, this);
         newAssetstore.load({
             params: assetData
@@ -808,6 +809,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     getUpdateParam: function(){
     	
     	var assetData = {};
+    	
+    	assetData.insertUser = AAM.cwid;
+		assetData.insertSource = 'AIR';
         
         assetData.cwid = AIR.AirApplicationManager.getCwid();
         
@@ -859,13 +863,19 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     },
     
     onCopy: function(store, records, options) {
+    	var assetData = this.getUpdateParam();
     	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tSerialNumber').setValue('');
     	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalNumber').setValue('');
     	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tTechnicalMaster').setValue('');
     	this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber').setValue('');
     	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('pSystemPlatform').getComponent('cbSystemPlatform').setValue('');
-    	//this.getComponent('buttonPanel').getComponent('copyBtn').hide();
+    	this.getComponent('bottomPanel').getComponent('leftPanel').getComponent('technics').getComponent('tOsName').setValue('');
+    	var tInsertUser = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInsertUser').setValue('');
+    	var tInsertSource = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInsertSource').setValue('');
     	
+    	
+    	 tInsertUser.setValue(assetData.insertUser);
+    	 tInsertSource.setValue(assetData.insertSource);
     	var success = (records[0].data.result == 'true');
     	var yesCallback = function() {
 			this.wizardStarted = false;
@@ -880,6 +890,11 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	if (success) {
     		var topPanel = this.getComponent('topPanel');
 	    	topPanel.update(records[0].data);
+	    	
+	    	/*var businessInformation = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInsertUser');
+	    	businessInformation.update(records[0].data);*/
+	    	//businessInformation.value = "";
+	    	//businessInformation.setValue(assetData.insertSource);
 	    	
         	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('ASSET_COPY', callbackMap);
 			afterSaveAppWindow.show();
