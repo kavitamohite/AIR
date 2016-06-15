@@ -115,7 +115,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		AIR.CiAgreementsView.superclass.initComponent.call(this);
 		
-		//in eine AirDetailView für alle CI Detail Seiten?
+		//in eine AirDetailView fï¿½r alle CI Detail Seiten?
 		this.addEvents('ciBeforeChange', 'ciChange');
 		
 		var cbSla = this.getComponent('sla');
@@ -299,7 +299,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbPriorityLevel = this.getComponent('priorityLevel');
 		if(data.tableId == AC.TABLE_ID_APPLICATION ||
-		   data.tableId == AC.TABLE_ID_IT_SYSTEM) {
+		   data.tableId == AC.TABLE_ID_IT_SYSTEM ) {
 			cbPriorityLevel.setVisible(true);
 			
 			if (data.priorityLevelId && data.priorityLevelId != 0 && !data.isCiCreate) {
@@ -356,7 +356,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			this.updateAccessMode(data);
 		}
 		
-		if(data.tableId == AC.TABLE_ID_FUNCTION){
+		if((data.tableId ==AC.TABLE_ID_FUNCTION)|| (data.tableId == AC.TABLE_ID_BUSINESS_APPLICATION)){
 			cbSla.setVisible(false);
 			cbServiceContract.setVisible(false);
 			cbPriorityLevel.setVisible(false);
@@ -382,7 +382,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirAclManager.setAccessMode(this.getComponent('serviceContract'), data);
 		
 		if(data.tableId == AC.TABLE_ID_APPLICATION ||
-		   data.tableId == AC.TABLE_ID_IT_SYSTEM)
+		   data.tableId == AC.TABLE_ID_IT_SYSTEM )
 			AIR.AirAclManager.setAccessMode(this.getComponent('priorityLevel'), data);
 		
 		if(data.tableId == AC.TABLE_ID_APPLICATION ||
@@ -394,8 +394,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			var cbBusinessEssential = this.getComponent('businessEssential');
 			if(AAM.hasRole(AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)) {
 
-				// nur für die Rolle BusinessEssential-Editor
-				// unter Prüfung der Insert-Source mittels isEditable
+				// nur fï¿½r die Rolle BusinessEssential-Editor
+				// unter Prï¿½fung der Insert-Source mittels isEditable
 				if (AIR.AirAclManager.isEditable(cbBusinessEssential)) {
 					Util.enableCombo(cbBusinessEssential);
 					
@@ -405,7 +405,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //					AIR.AirAclManager.setNecessity(cbBusinessEssential);
 					AIR.AirAclManager.setNecessityInternal(cbBusinessEssential.label, 'mandatory');
 					
-					// this.setEditable(aclItemCmp); // diese Methode prüft die Rechte und verhindert das Editieren...
+					// this.setEditable(aclItemCmp); // diese Methode prï¿½ft die Rechte und verhindert das Editieren...
 					// deshalb setzen wir das FormElement einzeln auf true
 	//				AIR.AirAclManager.setFormElementEnable(cbBusinessEssential, true);
 				}
@@ -455,7 +455,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		if(data.tableId == AC.TABLE_ID_APPLICATION ||
-		   data.tableId == AC.TABLE_ID_IT_SYSTEM) {
+		   data.tableId == AC.TABLE_ID_IT_SYSTEM ) {
 			field = this.getComponent('priorityLevel');
 			if (!field.disabled) {
 				if(field.getValue().length > 0) {
@@ -469,7 +469,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		if(data.tableId == AC.TABLE_ID_APPLICATION ||
 		   data.tableId == AC.TABLE_ID_ROOM ||
 		   data.tableId == AC.TABLE_ID_POSITION ||
-		   data.tableId == AC.TABLE_ID_IT_SYSTEM) {
+		   data.tableId == AC.TABLE_ID_IT_SYSTEM ) {
 		
 			field = this.getComponent('severityLevel');
 			if (!field.disabled) {

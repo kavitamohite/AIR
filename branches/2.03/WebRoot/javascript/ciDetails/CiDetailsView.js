@@ -132,6 +132,8 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.getComponent('detailsInsertdata').reset();
 		this.getComponent('detailsUpdatedata').reset();
 		this.getComponent('detailsDeletedata').reset();
+		this.getComponent('detailsBarAppId').reset();
+		
 	},
 	
 	update: function(ciDetail) {//data
@@ -179,7 +181,8 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			//mailTemplate
 			name: ciDetail.name,//applicationName
-			ciOwnerDelegate: ciDetail.ciOwnerDelegate//ciSubResponsible
+			ciOwnerDelegate: ciDetail.ciOwnerDelegate,//ciSubResponsible
+			barAppId:ciDetail.barAppId,//Business Application Id
 		};
 
 		
@@ -193,6 +196,9 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var tfInsertData = this.getComponent('detailsInsertdata');
 		var tfUpdateData = this.getComponent('detailsUpdatedata');
 		var tfDeleteData = this.getComponent('detailsDeletedata');
+		
+		
+		
 		
 
 		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION) {
@@ -241,7 +247,21 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			tfAppOwner.setVisible(false);
 		}
 		
-		
+		if(ciDetail.tableId == AC.TABLE_ID_BUSINESS_APPLICATION) {
+			
+			if(!ciDetail.isCiCreate) {
+				tfAppOwner.setValue(data.applicationOwner);
+			} else {
+				tfAppOwner.reset();
+			}
+			
+			tfAppOwner.setVisible(true);
+		} else {
+			if(ciDetail.tableId != AC.TABLE_ID_APPLICATION){
+			tfAppOwner.reset();
+			tfAppOwner.setVisible(false);
+		}
+		}
 		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION ||
 		   ciDetail.tableId == AC.TABLE_ID_ROOM ||
 		   ciDetail.tableId == AC.TABLE_ID_POSITION ||
@@ -258,23 +278,41 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			cbBusinessEssential.setVisible(false);
 		}
 		
+		
+		
 		if(ciDetail.tableId == AC.TABLE_ID_APPLICATION ||
 		   ciDetail.tableId == AC.TABLE_ID_ROOM ||
 		   ciDetail.tableId == AC.TABLE_ID_BUILDING ||
 		   ciDetail.tableId == AC.TABLE_ID_IT_SYSTEM ||
-		   ciDetail.tableId == AC.TABLE_ID_SERVICE) {
+		   ciDetail.tableId == AC.TABLE_ID_SERVICE ||
+		   ciDetail.tableId == AC.TABLE_ID_BUSINESS_APPLICATION) {
 			tfAlias.setVisible(true);
 		} else {
 			tfAlias.setVisible(false);
 		}
+		if(ciDetail.tableId == AC.TABLE_ID_BUSINESS_APPLICATION){
+		
+			tfSla.setVisible(false);
+			
+		}else{
+			
+			tfSla.setVisible(true);
+		}
 		
 		if(!ciDetail.isCiCreate) {
 			tfAlias.setValue(data.alias);
-			tfCiOwner.setValue(data.ciOwner);
+			if(ciDetail.tableId != AC.TABLE_ID_BUSINESS_APPLICATION){
+				tfCiOwner.setValue(data.ciOwner);
+			}else{
+				tfCiOwner.reset();
+			}
+			
 			var labels = AIR.AirApplicationManager.getLabels();
-			var label = data.applicationCat1Id == AC.APP_CAT1_APPLICATION ? labels.applicationManager : labels.label_details_ciOwner;
+			var label = data.applicationCat1Id == AC.APP_CAT1_APPLICATION? labels.applicationManager : labels.label_details_ciOwner;
 			this.setFieldLabel(tfCiOwner, label);
+			if(ciDetail.tableId != AC.TABLE_ID_BUSINESS_APPLICATION){
 			tfSla.setValue(data.slaName);
+			}
 	
 			var value = ciDetail.insertQuelle + ' ' + ciDetail.insertUser + ' ' + ciDetail.insertTimestamp;
 			tfInsertData.setValue(value);

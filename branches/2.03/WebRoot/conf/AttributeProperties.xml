@@ -1925,5 +1925,16 @@
 		<attributeType></attributeType>
 		<attributeLength></attributeLength>
 		<attributeMask></attributeMask>
-	</Identifier>	
+	</Identifier>
+	<Identifier>
+	<id>baServiceCiName</id>
+		<Mandatory>mandatory</Mandatory>
+		<ciTypeId>183</ciTypeId>
+		<Relevance>operational</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<attributeType></attributeType>
+		<attributeLength>656</attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>		
 </AttributePropertyItems>

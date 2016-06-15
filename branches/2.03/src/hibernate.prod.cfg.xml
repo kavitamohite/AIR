@@ -72,7 +72,8 @@
 		<mapping class="com.bayerbbs.applrepos.domain.AttributeGroup" />
 		<mapping class="com.bayerbbs.applrepos.domain.AttributeValue" />
 		<mapping class="com.bayerbbs.applrepos.domain.SpecialAttribute" />
-		<mapping class="com.bayerbbs.applrepos.domain.Service" />		
+		<mapping class="com.bayerbbs.applrepos.domain.Service" />	
+		<mapping class="com.bayerbbs.applrepos.domain.BusinessApplication" />	
 
 		
 		<!-- Asset Management -->

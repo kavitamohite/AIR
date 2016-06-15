@@ -102,7 +102,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        flex: 8,
 				        				        
 				        allowBlank: true,
-				        disabled: true	// keine Änderung zulassen - nur ANZEIGE
+				        disabled: true	// keine ï¿½nderung zulassen - nur ANZEIGE
 			    	}]
 				},{
 					xtype: 'panel',
@@ -347,9 +347,9 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				break;
 			case AC.CI_GROUP_ID_NON_BYTSEC:
 				
-				//wenn original DB update Wert Undefined (0,-1) stand (siehe update function), können die Massnahmen zu diesem CI noch 
+				//wenn original DB update Wert Undefined (0,-1) stand (siehe update function), kï¿½nnen die Massnahmen zu diesem CI noch 
 				//nicht angelegt worden sein,
-				//da diese entweder noch nie vorhanden waren, oder zwischenzeitlich wieder gelöscht wurden, nachdem der compliance Status
+				//da diese entweder noch nie vorhanden waren, oder zwischenzeitlich wieder gelï¿½scht wurden, nachdem der compliance Status
 				//zwischenzeitlich wieder auf Undefined (0,-1) stand. Diese Methode wird aufgerufen, wenn der user auf diese rbg klickt und
 				//wenn rbg.setValue() programmatisch aufgerufen wird.
 				if(this.previousComplianceType != this.complianceType) {
@@ -399,7 +399,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 		cbIsTemplate.setValue(isTemplate);
 		if(data.barRelevance === 'Y')
-			cbIsTemplate.disable();//BAR relevante CIs dürfen keine templates sein
+			cbIsTemplate.disable();//BAR relevante CIs dï¿½rfen keine templates sein
 		if(data.templateLinkWithCIs === 'Y'){
 			cbIsTemplate.disable();
 		}else{
@@ -457,8 +457,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if(hasTemplate) {
 				Util.disableCombo(cbItSecGroup);
 				
-				//nicht getStore().getById() damit gegen die gefilterten Daten geprüft wird
-				//snapshot.key statt data.key, da nur nicht löschmarkierte Templates gültig sind. Siehe auch 
+				//nicht getStore().getById() damit gegen die gefilterten Daten geprï¿½ft wird
+				//snapshot.key statt data.key, da nur nicht lï¿½schmarkierte Templates gï¿½ltig sind. Siehe auch 
 				//filterCombo(cbReferencedTemplate) mit deleteTimestamp.
 				
 				var storeData = cbReferencedTemplate.getStore().snapshot ? cbReferencedTemplate.getStore().snapshot : cbReferencedTemplate.getStore().data;
@@ -488,7 +488,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			//weil store ein mapping bei id/itsecGroupId hat geht cbItSecGroup.getStore().getById() nicht. Andersrum, das mapping client+serverseitig rausnehmen hat nicht geklappt.
 			var isItsecGroupValid = cbItSecGroup.getStore().findExact('id', data.itsecGroupId) > -1;//cbItSecGroup.getStore().getAt(cbItSecGroup.getStore().findExact('id', data.itsecGroupId));//cbItSecGroup.getStore().getById(data.itsecGroupId);//.data.key(data.itsecGroupId)
-			if(isItsecGroupValid || cbReferencedTemplate.getValue().length > 0) {//wenn template gesetzt und dessen itsecgruppe sonst invalid wäre
+			if(isItsecGroupValid || cbReferencedTemplate.getValue().length > 0) {//wenn template gesetzt und dessen itsecgruppe sonst invalid wï¿½re
 				cbItSecGroup.setValue(data.itsecGroupId);
 			} else if(!data.isCiCreate) {
 				cbItSecGroup.setRawValue(AC.LABEL_INVALID + data.itsecGroupTxt);
@@ -562,7 +562,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		* ohne vorheriges Speichern das ComplianceControlsWindow laden, wenn
 		* - cbReferencedTemplate ODER cbItSecGroup ein INVALID: haben
 		* - cbReferencedTemplate UND cbItSecGroup leer sind
-		* - die itSecGroup NICHT geändert wurde
+		* - die itSecGroup NICHT geï¿½ndert wurde
 		*/
 		var isNewTemplate = newTemplate !== template && (newTemplate.length > 0 || template != '0') && cbReferencedTemplate.el.dom.value.indexOf(AC.LABEL_INVALID) === -1;
 		var isNewItSecGroup = newItSecGroup !== itSecGroup && (newItSecGroup.length > 0 || itSecGroup !== AC.CI_GROUP_ID_DEFAULT_ITSEC) && cbItSecGroup.el.dom.value.indexOf(AC.LABEL_INVALID) === -1;
@@ -676,7 +676,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	onReferencedTemplateChange: function(combo, newValue, oldValue) {
 		if(newValue.indexOf(AC.LABEL_INVALID) > -1) {
-			//sollte nicht nötig sein, aber ciTemplateValidText vom vtype ciTemplateValid überschreibt den invalid message text immer mit den Platzhaltern {0} und {1}
+			//sollte nicht nï¿½tig sein, aber ciTemplateValidText vom vtype ciTemplateValid ï¿½berschreibt den invalid message text immer mit den Platzhaltern {0} und {1}
 			//var message = AIR.AirApplicationManager.getLabels().referencedTemplateInvalid;
 			//message = message.replace('{0}', AIR.AirApplicationManager.getAppDetail().itsetName).replace('{1}', AIR.AirApplicationManager.getAppDetail().applicationCat1Txt);//data.
 			//combo.markInvalid(message);
@@ -739,14 +739,20 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	update: function(data) {
-/*		if(data.tableId === AC.TABLE_ID_SERVICE){
-			var fsComplianceDetails = this.getComponent('fsComplianceDetails');
-			var fsRelevantRegulations = this.getComponent('fsRelevantRegulations');
-			var fsComplianceMgmt = this.getComponent('fsComplianceMgmt');
+		/*var fsComplianceDetails = this.getComponent('fsComplianceDetails');
+		
+		var fsComplianceMgmt = this.getComponent('fsComplianceMgmt');
+		if(data.tableId === AC.TABLE_ID_BUSINESS_APPLICATION){
+			
 			fsComplianceDetails.setVisible(false);
-			fsRelevantRegulations.setVisible(false);
+			
 			fsComplianceMgmt.setVisible(false);
-			return;
+			
+		}else{
+			fsComplianceDetails.setVisible(true);
+			
+			fsComplianceMgmt.setVisible(true);
+			
 		}*/
 		var rgRelevanceBYTSEC = this.getComponent('fsComplianceMgmt').getComponent('rgRelevanceBYTSEC');
 		
@@ -826,7 +832,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('lItSecGroup'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup'), data);
-		//Compliance Controls sind nur sichtbar, nicht editierbar. Sie sollen immer über bEditItSecGroup zu öffnen sein
+		//Compliance Controls sind nur sichtbar, nicht editierbar. Sie sollen immer ï¿½ber bEditItSecGroup zu ï¿½ffnen sein
 
 		var cbgRegulations = this.getComponent('fsRelevantRegulations').getComponent('cbgRegulations');
 		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[0], data);//1435
@@ -936,10 +942,10 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	reset: function() {
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
-		cbItSecGroup.setValue('');//clearValue();//reset --> löscht den filter
+		cbItSecGroup.setValue('');//clearValue();//reset --> lï¿½scht den filter
 		
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
-		cbReferencedTemplate.setValue('');//clearValue();//reset --> löscht den filter
+		cbReferencedTemplate.setValue('');//clearValue();//reset --> lï¿½scht den filter
 	},
 	
 	filterByItSet: function(combo, itsetId) {
@@ -1039,7 +1045,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var nValueString = newValue.toString();
 		var isReallyNoInt = (nValueString.length !== newValue.length) || nValueString === 'NaN';
 		//parseInt Bugfix: if newValue is i.e. '111Bayer Group' nValue would successfully converted to int, namely 111. This must must not happen
-		//wenn die combo einen Filter hat, muss immer gefiltert werden, bevor der letzte gültige Wert zurückgesetzt wird,
+		//wenn die combo einen Filter hat, muss immer gefiltert werden, bevor der letzte gï¿½ltige Wert zurï¿½ckgesetzt wird,
 		//sonst verschwindet der Filter, bzw. combo.data array ist leer (wodurch?).
 		if(combo.lastQuery)
 		combo.filterByData();
@@ -1077,7 +1083,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setTooltipData(lGXP, toolTips.gxpFlag, toolTips.gxpFlagText);
 		
 		var label = Ext.isIE ? cbgRegulations.items.items[0].label.dom.nextSibling.children[0] : cbgRegulations.items.items[0].label.dom.nextElementSibling.children[0];
-		this.setTooltipData(label, toolTips.relevanceGR1435, toolTips.relevanceGR1435Text);//oder nur für checkbox el.dom
+		this.setTooltipData(label, toolTips.relevanceGR1435, toolTips.relevanceGR1435Text);//oder nur fï¿½r checkbox el.dom
 		
 		label = Ext.isIE ? cbgRegulations.items.items[1].label.dom.nextSibling.children[0] : cbgRegulations.items.items[1].label.dom.nextElementSibling.children[0];
 		this.setTooltipData(label, toolTips.relevanceGR2059, toolTips.relevanceGR2059Text);

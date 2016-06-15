@@ -151,7 +151,10 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				}, {
 					id: 'clCiHistory',
 					xtype: 'AIR.CiHistoryView'
-				}],
+				}/*{
+					id: 'clCiSpecificsBusinessApplication',
+					xtype: 'AIR.CiSpecificsBusinessApplication'
+				}*/],
 				
 				buttonAlign: 'left',
 				
@@ -380,6 +383,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	   			 	token: AAM.getToken()
 				}
 			});
+				
 		} else {
 			var labels = AAM.getLabels();
 			var message = labels.CiEinsprungCiIdInvalidMessage.replace('{0}', AAM.getCiId() || '');
@@ -590,6 +594,26 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		}
 	},
 	
+	//Added By ENFZM
+	setBusinessAppData: function(data) {
+		
+		var ciEditTabView = this.getComponent('ciEditTabView');
+		data.cwid = AAM.getCwid();
+		data.token = AAM.getToken();
+		data.id = AAM.getCiId();
+		
+		if(!data.tableId) {
+			var tableId = this.tableId || AAM.getTableId() || AC.TABLE_ID_APPLICATION;//Test: AC.TABLE_ID_TERRAIN
+			data.tableId = tableId;
+		}
+		
+		
+		var ciConnectionsView = ciEditTabView.getComponent('clCiConnections');
+		ciConnectionsView.setData(data);
+		
+		
+	},
+	
 	//move to CiCenterView ?
 	saveApplication: function(options) {//button, event
 		if(!options)//damit nach compl. status Wechsel von Undefined auf External nicht der save button deaktiviert bleibt
@@ -616,7 +640,13 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		this.skipLoading = options && options.skipLoading ? true : false;
 
 		var data = {};
+		if(ciData.tableId==AC.TABLE_ID_BUSINESS_APPLICATION){
+			data.barAppId=ciData.barAppId;
+		this.setBusinessAppData(data);
+		
+		}else{
 		this.setCiData(data);
+		}
 		
 		
 		var saveCallback = function() {

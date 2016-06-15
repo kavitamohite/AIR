@@ -840,7 +840,7 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		//location CI - upstream: nicht l�schbar - downstream und name=unknown: nicht l�schbar
 		isEditable = isEditable && !record.get('isReferenced') &&
-					 ((direction === AC.UPSTREAM && (data.tableId == AC.TABLE_ID_IT_SYSTEM || data.tableId == AC.TABLE_ID_APPLICATION)) || 
+					 ((direction === AC.UPSTREAM && (data.tableId == AC.TABLE_ID_IT_SYSTEM || data.tableId == AC.TABLE_ID_APPLICATION || data.tableId == AC.TABLE_ID_BUSINESS_APPLICATION)) || 
 					  (direction === AC.DOWNSTREAM && record.get('ciName') !== AC.UNKNOWN));// AAM.isLocationCi(data.tableId) && 
 		
         raDeleteConnection.tpl.html = '<div class="ux-row-action">';

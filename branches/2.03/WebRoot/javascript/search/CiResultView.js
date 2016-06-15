@@ -209,7 +209,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			var clExcelExport = pagingBar.getComponent(ciResultGridId + '_clExcelExport');
 			clExcelExport.on('click', callback);
 		}
-		if(this.getTabTitle(ciResultGridId) === AC.SEARCH_TYPE_ADV_SEARCH) {
+		if((this.getTabTitle(ciResultGridId) === AC.SEARCH_TYPE_ADV_SEARCH)&& (this.ciTypeId!=AC.TABLE_ID_BUSINESS_APPLICATION)) {
+			
 			bMassUpdate.setVisible(true);
 			bSelectDeselectAll.setVisible(true);
 			cbIsMultipleSelect.setVisible(true);
@@ -234,7 +235,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	    });
 		ciResultGrid.setPagingParams(params);
 	},
-	onTabActivate: function(tab){		
+	onTabActivate: function(tab){	
+		
 		var ciResultGridId = tab.getId();		
 		var searchAction = ciResultGridId.substring(0, ciResultGridId.indexOf('_'));
 		var bMassUpdate = this.getComponent('pSearchResultOptions').getComponent('bMassUpdate');
@@ -245,7 +247,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		var  cbmassUpdateType = this.getComponent('pcbmassUpdateType').getComponent('cbmassUpdateType');
 
 		
-		if(searchAction === AC.SEARCH_TYPE_ADV_SEARCH) {
+		if((searchAction === AC.SEARCH_TYPE_ADV_SEARCH) && (this.ciResultGridParamSets[ciResultGridId].ciTypeId!=AC.TABLE_ID_BUSINESS_APPLICATION)) {
 			bMassUpdate.setVisible(true);
 			bSelectDeselectAll.setVisible(true);
 			cbIsMultipleSelect.setVisible(true);
@@ -341,7 +343,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		   record.data.tableId == AC.TABLE_ID_IT_SYSTEM ||
 		   record.data.tableId == AC.TABLE_ID_FUNCTION||
 		   record.data.tableId == AC.TABLE_ID_PATHWAY ||
-		   record.data.tableId == AC.TABLE_ID_SERVICE) {//Added by vandana
+		   record.data.tableId == AC.TABLE_ID_SERVICE || 
+		   record.data.tableId == AC.TABLE_ID_BUSINESS_APPLICATION) {//Added by vandana
 			
 			var store = AIR.AirStoreManager.getStoreByName('ciTypeListStore');
 			

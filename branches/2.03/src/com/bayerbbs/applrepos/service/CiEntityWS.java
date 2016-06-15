@@ -19,6 +19,8 @@ import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.ApplicationCat2;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
+import com.bayerbbs.applrepos.domain.BusinessApplication;
+import com.bayerbbs.applrepos.domain.BusinessApplicationDTO;
 import com.bayerbbs.applrepos.domain.CiBase1;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Function;
@@ -55,6 +57,7 @@ import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
 import com.bayerbbs.applrepos.hibernate.ApplicationCat2Hbn;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
+import com.bayerbbs.applrepos.hibernate.BusinessApplicationHbn;
 import com.bayerbbs.applrepos.hibernate.BusinessEssentialHbn;
 import com.bayerbbs.applrepos.hibernate.CategoryBusinessHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
@@ -468,6 +471,44 @@ public class CiEntityWS {
 		return functionDTO;
 	}
 
+	//Added by ENFZM
+	public BusinessApplicationDTO getBusinessApplication(
+			ApplicationDetailParameterInput input) {
+		BusinessApplicationDTO businessApplicationDTO = new BusinessApplicationDTO();
+		String cwid = input.getCwid();
+		if (LDAPAuthWS.isLoginValid(cwid, input.getToken())) {
+
+			BusinessApplication businessApplication = BusinessApplicationHbn
+					.findById(input.getId());
+			businessApplicationDTO
+					.setTableId(AirKonstanten.TABLE_ID_BUSINESS_APPLICATION);
+			setBusinessApplicationDTO(businessApplication,
+					businessApplicationDTO);
+
+			boolean isEditable = false;
+			if (null != businessApplication
+					&& null == businessApplication.getDeleteQuelle()) {
+
+				if ((cwid.equals(businessApplication.getApplicationOwner()))
+						|| (cwid.equals(businessApplication
+								.getApplicationSteward()))) {
+					isEditable = true;
+				}
+
+			}
+			if (isEditable) {
+				businessApplicationDTO
+						.setRelevanceOperational(AirKonstanten.YES_SHORT);
+			} else {
+				businessApplicationDTO
+						.setRelevanceOperational(AirKonstanten.NO_SHORT);
+			}
+
+		}
+		return businessApplicationDTO;
+	}
+	// Ended
+	
 	// Added by vandana
 	public PathwayDTO getWays(CiDetailParameterInput input) {
 		PathwayDTO pathwayDTO = new PathwayDTO();
@@ -539,7 +580,7 @@ public class CiEntityWS {
 			switch (input.getCiTypeId()) {
 			case AirKonstanten.TABLE_ID_APPLICATION:
 				return new ApplicationWS().findApplications(input);// (ApplicationSearchParamsDTO)
-
+				
 			case AirKonstanten.TABLE_ID_IT_SYSTEM:
 				result = ItSystemHbn.findItSystemsBy(input);
 				break;
@@ -571,7 +612,13 @@ public class CiEntityWS {
 			case AirKonstanten.TABLE_ID_WAYS:
 				result = PathwayHbn.findPathwayBy(input);
 				break;
-			// Ended by vandana
+				// Ended by vandana
+				//Added by ENFZM
+			case AirKonstanten.TABLE_ID_BUSINESS_APPLICATION:
+				result = BusinessApplicationHbn.findBusinessApplicationBy(input);
+				
+				break;
+			
 			default:
 				// ciItemDTOs = new CiItemDTO[0];
 				result = new CiItemsResultDTO();
@@ -626,6 +673,146 @@ public class CiEntityWS {
 		}
 
 		return output;
+	}
+	
+	private void setBusinessApplicationDTO(
+			BusinessApplication businessApplication,
+			BusinessApplicationDTO businessApplicationDTO) {
+
+		businessApplicationDTO.setId(businessApplication.getId());
+		businessApplicationDTO.setBarAppId(businessApplication.getBarAppid());
+		businessApplicationDTO
+				.setName(businessApplication.getApplicationName());
+
+		if (StringUtils.isNotNullOrEmpty((businessApplication
+				.getApplicationAlias()))) {
+			businessApplicationDTO.setAlias(businessApplication
+					.getApplicationAlias());
+		}
+
+		if (StringUtils.isNotNullOrEmpty(businessApplication
+				.getApplicationDescription())) {
+			businessApplicationDTO
+					.setApplicationDescription(businessApplication
+							.getApplicationDescription());
+		}
+
+		businessApplicationDTO.setInsertQuelle(businessApplication
+				.getInsertQuelle());
+		businessApplicationDTO.setInsertUser(businessApplication
+				.getInsertUser());
+
+		if (null != businessApplication.getInsertTimestamp())
+			businessApplicationDTO.setInsertTimestamp(businessApplication
+					.getInsertTimestamp().toString());
+		if (null != businessApplication.getExternallyHosted()) {
+			businessApplicationDTO.setExternallyHosted(businessApplication
+					.getExternallyHosted());
+		}
+
+		businessApplicationDTO.setLastModification(businessApplication
+				.getLastModification());
+
+		businessApplicationDTO.setUpdateQuelle(businessApplication
+				.getUpdateQuelle());
+		businessApplicationDTO.setUpdateUser(businessApplication
+				.getUpdateUser());
+
+		if (null != businessApplication.getUpdateTimestamp())
+			businessApplicationDTO.setUpdateTimestamp(businessApplication
+					.getUpdateTimestamp().toString());
+
+		businessApplicationDTO.setDeleteQuelle(businessApplication
+				.getDeleteQuelle());
+		businessApplicationDTO.setDeleteUser(businessApplication
+				.getDeleteUser());
+
+		if (null != businessApplication.getDeleteTimestamp())
+			businessApplicationDTO.setDeleteTimestamp(businessApplication
+					.getDeleteTimestamp().toString());
+
+		businessApplicationDTO.setApplicationOwnerHidden(businessApplication
+				.getApplicationOwner());
+
+		if (StringUtils.isNotNullOrEmpty(businessApplicationDTO
+				.getApplicationOwnerHidden())) {// getCiOwner
+			List<PersonsDTO> listPers = PersonsHbn
+					.findPersonByCWID(businessApplicationDTO
+							.getApplicationOwnerHidden());// getCiOwner
+			if (null != listPers && 1 == listPers.size()) {
+				PersonsDTO tempPers = listPers.get(0);
+				businessApplicationDTO.setApplicationOwner(tempPers
+						.getDisplayNameFull());
+			}
+		}
+
+		businessApplicationDTO.setCiOwnerHidden(businessApplication
+				.getApplicationOwner());
+
+		if (StringUtils.isNotNullOrEmpty(businessApplicationDTO
+				.getCiOwnerHidden())) {// getCiOwner
+			List<PersonsDTO> listPers = PersonsHbn
+					.findPersonByCWID(businessApplicationDTO.getCiOwnerHidden());// getCiOwner
+			if (null != listPers && 1 == listPers.size()) {
+				PersonsDTO tempPers = listPers.get(0);
+				businessApplicationDTO
+						.setCiOwner(tempPers.getDisplayNameFull());
+			}
+		}
+
+		businessApplicationDTO.setApplicationStewardHidden(businessApplication
+				.getApplicationSteward());
+
+		if (StringUtils.isNotNullOrEmpty(businessApplicationDTO
+				.getApplicationStewardHidden())) {// getCiOwner
+			List<PersonsDTO> listPers = PersonsHbn
+					.findPersonByCWID(businessApplicationDTO
+							.getApplicationStewardHidden());// getCiOwner
+			if (null != listPers && 1 == listPers.size()) {
+				PersonsDTO tempPers = listPers.get(0);
+				businessApplicationDTO.setApplicationSteward(tempPers
+						.getDisplayNameFull());
+			}
+		}
+
+		businessApplicationDTO.setLifecycleStatusId(businessApplication
+				.getLifecycleStatusId());
+		Long relevanceItsec = businessApplication.getRelevanceITSEC();
+		Long relevanceICS = businessApplication.getRelevanceICS();
+
+		if (-1 == relevanceItsec) {
+			businessApplicationDTO.setRelevanceGR1435(YES);
+		} else {// if (0 == relevanceItsec) {
+			businessApplicationDTO.setRelevanceGR1435(NO);
+		}
+		if (-1 == relevanceICS) {
+			businessApplicationDTO.setRelevanceGR1920(YES);
+		} else {// (0 == relevanceICS) {
+			businessApplicationDTO.setRelevanceGR1920(NO);
+		}
+
+		businessApplicationDTO.setGxpFlagId(businessApplication.getGxpFlag());
+		businessApplicationDTO.setGxpFlag(businessApplication.getGxpFlag());
+
+		String source = businessApplicationDTO.getInsertQuelle();
+		if (!source.equals(AirKonstanten.INSERT_QUELLE_SISEC)
+				&& !source.equals(AirKonstanten.APPLICATION_GUI_NAME)) {
+
+			businessApplicationDTO.setCiOwnerAcl(AirKonstanten.NO_SHORT);
+			businessApplicationDTO
+					.setCiOwnerDelegateAcl(AirKonstanten.NO_SHORT);
+			businessApplicationDTO
+					.setRelevanceGR1435Acl(AirKonstanten.NO_SHORT);
+			businessApplicationDTO
+					.setRelevanceGR1920Acl(AirKonstanten.NO_SHORT);
+			businessApplicationDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
+			businessApplicationDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
+			businessApplicationDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
+			businessApplicationDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
+			businessApplicationDTO
+					.setServiceContractIdAcl(AirKonstanten.NO_SHORT);
+
+		}
 	}
 
 	private void setFunctionDTO(Function function, FunctionDTO functionDTO) {

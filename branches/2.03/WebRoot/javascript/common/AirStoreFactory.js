@@ -2111,7 +2111,10 @@ AIR.AirStoreFactory = function() {
 					ciDetailStore = this.createFunctionDetailStore();
 				break;
 				case AC.TABLE_ID_SERVICE:
-					ciDetailStore = this.createServiceDetailStore();								
+					ciDetailStore = this.createServiceDetailStore();
+				break;	
+				case AC.TABLE_ID_BUSINESS_APPLICATION:
+					ciDetailStore = this.createBusinessApplicationDetailStore();
 				default: break;
 				}
 			
@@ -2304,6 +2307,8 @@ AIR.AirStoreFactory = function() {
 			return ciDetailStore;
 			
 		},
+	
+		
 		//Added by vandana
 		createPathwayDetailStore: function() {
 			var ciDetailRecord = AIR.AirConfigFactory.createPathwayCiRecord();
@@ -2825,6 +2830,43 @@ AIR.AirStoreFactory = function() {
 			return applicationCreateStore;
 		},
 		
+		//Avanti
+		/*createBusinessApplicationCreateStore: function() {
+			var businessApplicationCreateRecord = Ext.data.Record.create([ {
+					name: 'result'
+				}, {
+					name: 'displayMessage'
+				}, {
+					name: 'messages'
+				}, {
+					name: 'applicationId'
+				}]
+			);
+			
+			var businessApplicationCreateReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, businessApplicationCreateRecord);
+			
+			var businessApplicationCreateStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'businessApplicationCreateStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/BusinessAdministrationWSPort',
+					loadMethod: 'createBusinessApplication',
+					timeout: 120000,
+					reader: businessApplicationCreateReader
+				}),
+				
+				fields: [ 'result', 'displayMessage', 'messages' ],
+	
+				reader: businessApplicationCreateReader
+			});
+			
+			return businessApplicationCreateStore;
+		},*/
+		
 		createCiCreateStore: function(ciType) {
 			return this.createCiSaveStore(ciType, true);
 		},
@@ -2849,6 +2891,7 @@ AIR.AirStoreFactory = function() {
 				case AC.TABLE_ID_FUNCTION:          wsName = 'Function'; break;
 				case AC.TABLE_ID_PATHWAY:           wsName = 'Ways'; break;
 				case AC.TABLE_ID_SERVICE:           wsName = 'Service'; break;
+				case AC.TABLE_ID_BUSINESS_APPLICATION:           wsName = 'BusinessApplication'; break;
 				default: wsName = 'Application'; break;
 			}
 	
@@ -5125,8 +5168,34 @@ AIR.AirStoreFactory = function() {
 			});
 			
 			return userOptionSaveStore;
-		}
-
+		},
+		
+		//Avanti
+		
+		
+		createBusinessApplicationDetailStore: function() {
+			var ciBusinessApplicationRecord = AIR.AirConfigFactory.createBusinessApplicationCiRecord();
+			var ciBusinessApplicationReader = new Ext.data.XmlReader({
+				record: 'return'
+			}, ciBusinessApplicationRecord);
+			
+			var ciDetailStore = new Ext.data.XmlStore({
+				autoDestroy: true,
+				storeId: 'businessApplicationStore',
+				autoLoad: false,
+				
+				proxy: new Ext.ux.soap.SoapProxy({
+					url: webcontext + '/CiEntityWSPort',
+					loadMethod: 'getBusinessApplication',
+					timeout: 120000,
+					reader: ciBusinessApplicationReader
+					//reader: ciDetailReader
+				})
+				
+			});
+			return ciDetailStore;			
+		
+		}		
 		
 	};
 }();

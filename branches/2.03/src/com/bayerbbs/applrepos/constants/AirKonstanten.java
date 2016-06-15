@@ -165,6 +165,7 @@ public final class AirKonstanten {
 	
 	public static final String IT_SYSTEM_TYPE_HARDWARE_SYSTEM = "Hardware System";
 	public static final String IT_SYSTEM_TYPE_SYSTEM_PLATFORM = "Transient System Platform";
+	public static final String IT_SYSTEM_TYPE_BUSINESS_APPLICATION = "Business Application";
 	
 	public static final Map<String, Integer> CI_TYPE_ORDERING = new HashMap<String, Integer>();
 	
@@ -240,6 +241,7 @@ public final class AirKonstanten {
 	public static final String INFORMATION_CLASS = "Information Class";
 	public static final String EXPLANATION_FOR_INFORMATION_CLASS = "Explanation for Information Class";
 	
-	
+	//Table Names
+	public static final String TABLE_BUSINESS_APPLICATION="BUSINESS_APPLICATION";
 	
 }

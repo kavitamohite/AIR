@@ -133,6 +133,10 @@
 	<endpoint name="ContactWSPort"
 		implementation="com.bayerbbs.applrepos.service.ContactWSDelegate"
 		url-pattern="/ContactWSPort">
+	</endpoint>
+	<endpoint name="BusinessApplicationWSPort"
+		implementation="com.bayerbbs.applrepos.service.BusinessApplicationWSDelegate"
+		url-pattern="/BusinessApplicationWSPort">
 	</endpoint>	
 	
 </endpoints>

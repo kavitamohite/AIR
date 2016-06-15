@@ -122,6 +122,10 @@
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>ApplicationService</servlet-name>
+  	<url-pattern>/BusinessApplicationWSPort</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ApplicationService</servlet-name>
   	<url-pattern>/StandortWSPort</url-pattern>
   </servlet-mapping>
   <servlet-mapping>

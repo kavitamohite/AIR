@@ -13,6 +13,10 @@ public class ApplicationEditParameterOutput {
 	
 	private Long applicationId;
 	
+	private Long ciId;
+	
+	private Integer tableId;
+	
 	public ApplicationEditParameterOutput() {
 	}
 
@@ -61,4 +65,33 @@ public class ApplicationEditParameterOutput {
 		setMessages(new String[] { detailedMessage });		
 	}
 
+	/**
+	 * @return the ciId
+	 */
+	public Long getCiId() {
+		return ciId;
+	}
+
+	/**
+	 * @param ciId the ciId to set
+	 */
+	public void setCiId(Long ciId) {
+		this.ciId = ciId;
+	}
+
+	/**
+	 * @return the tableId
+	 */
+	public Integer getTableId() {
+		return tableId;
+	}
+
+	/**
+	 * @param tableId the tableId to set
+	 */
+	public void setTableId(Integer tableId) {
+		this.tableId = tableId;
+	}
+
+	
 }

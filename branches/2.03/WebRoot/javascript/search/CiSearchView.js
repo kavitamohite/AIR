@@ -495,7 +495,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 	},
 	
 	setUpdateSearchAvailable: function(link, button) {
-		var tabSearchType = this.getComponent('ciSearchResultView').getCurrentSearchType().replace(' ', '');//z.B. Advanced Search --> AdvancedSearch //oder über params.searchType?
+		var tabSearchType = this.getComponent('ciSearchResultView').getCurrentSearchType().replace(' ', '');//z.B. Advanced Search --> AdvancedSearch //oder ï¿½ber params.searchType?
 		var navigationSearchType = link.getId().substring(2, link.getId().length);
 		
 		var isUpdateSearchAvailable = tabSearchType.indexOf(navigationSearchType) === 0;
@@ -528,7 +528,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 				height += pAdditionalSearchAttributes.getHeight();
 			}
 			
-			if(ciAdvancedSearchView.getWidth() < 955)//wenn niedrige (Beamer) Auslösung, die Höhe vergrößern
+			if(ciAdvancedSearchView.getWidth() < 955)//wenn niedrige (Beamer) Auslï¿½sung, die Hï¿½he vergrï¿½ï¿½ern
 				height += 30;
 		}
 		
@@ -610,6 +610,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		
 		var searchType = tab.getId().substring(0, tab.getId().indexOf('_'));
 		var params = this.getComponent('ciSearchResultView').getSearchParams(tab.getId());
+		
 		var viewId;
 		
 		switch(searchType) {
@@ -634,7 +635,7 @@ AIR.CiSearchView = Ext.extend(AIR.AirView, {
 		}
 		
 		this.updateParams(params, searchType);
-		if(options.viewId && options.viewId !== viewId)//wenn durch MenuLinkklick und Adv. Seach Tab Klick versch. navMenuLink IDs in den options stehen, gleichsetzen. Nötig/sinnvoll ?
+		if(options.viewId && options.viewId !== viewId)//wenn durch MenuLinkklick und Adv. Seach Tab Klick versch. navMenuLink IDs in den options stehen, gleichsetzen. Nï¿½tig/sinnvoll ?
 			viewId = options.viewId;
 		
 		this.fireEvent('externalNavigation', this, tab, viewId, options);

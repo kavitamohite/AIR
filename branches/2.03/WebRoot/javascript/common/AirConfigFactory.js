@@ -159,6 +159,27 @@ AIR.AirConfigFactory = function() {
 						
 		},
 		
+		//Added by ENFZM
+		createBusinessApplicationCiRecord: function(){
+			var businessApplicationCiFields = this.getBaseCiFields();
+		
+			businessApplicationCiFields.push('barAppId');
+			businessApplicationCiFields.push('applicationDescription');
+			businessApplicationCiFields.push('lifecycleStatusId');
+			businessApplicationCiFields.push('lastModification');
+			businessApplicationCiFields.push('externallyHosted');
+			businessApplicationCiFields.push('applicationOwnerHidden');
+			businessApplicationCiFields.push('applicationOwner');
+			businessApplicationCiFields.push('applicationStewardHidden');
+			businessApplicationCiFields.push('applicationSteward');
+			
+			
+			
+			
+			return Ext.data.Record.create(businessApplicationCiFields);
+		},
+		//Ended
+		
 		  //Added by vandana		
 			createPathwayCiRecord: function(){
 					

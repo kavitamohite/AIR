@@ -11,6 +11,7 @@ public class CiItemDTO { //implements Serializable
     private String applicationCat2Txt;
     private String location;
 	private Integer tableId;
+	private String typeName;
 	
 //	isTemplate Y = -1, N = 0, else = all
 	private String isTemplate;
@@ -51,6 +52,7 @@ public class CiItemDTO { //implements Serializable
 		setId(dwhEntity.getCiId());
 		setName(dwhEntity.getCiName());
 		setAlias(dwhEntity.getCiAlias());
+		setTypeName(dwhEntity.getCiType());
 		setCiOwner(dwhEntity.getCiOwner());
 		setCiOwnerDelegate(dwhEntity.getCiOwnerDelegate());
 		setApplicationCat1Txt(dwhEntity.getCiType());
@@ -210,6 +212,21 @@ public class CiItemDTO { //implements Serializable
 	public void setItHead(String itHead) {
 		this.itHead = itHead;
 	}
+
+	/**
+	 * @return the typeName
+	 */
+	public String getTypeName() {
+		return typeName;
+	}
+
+	/**
+	 * @param typeName the typeName to set
+	 */
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+	
 	
 	
 	

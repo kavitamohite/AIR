@@ -66,9 +66,9 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 		if(specificsView.rendered) {
 //			specificsView.update(data);
 			
-			//! Sonst springt er wieder zur Maske des vorherig ausgewählten CI Typs. Grund: setActiveItem löst
+			//! Sonst springt er wieder zur Maske des vorherig ausgewï¿½hlten CI Typs. Grund: setActiveItem lï¿½st
 			//intern nochmal ein afterlayout aus. Dadurch wird in this.onViewAdded() wieder setActiveItem aufgerufen
-			//und so wieder zur Maske des vorherig ausgewählten CI Typs zurückgeschaltet.
+			//und so wieder zur Maske des vorherig ausgewï¿½hlten CI Typs zurï¿½ckgeschaltet.
 			this.un('add', this.onViewAdded, this);//afterlayout
 			this.getLayout().setActiveItem(specificsView.getId());
 			
@@ -162,7 +162,17 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 				if(!specificsView)
 					specificsView = new AIR.CiSpecificsServiceView({id: 'clCiSpecificsService', height: 460});
 				break;
+			case AC.TABLE_ID_BUSINESS_APPLICATION:
+				specificsView = this.getComponent('clCiSpecificsBusinessApplication');
+				
+				if(!specificsView)
+					specificsView = new AIR.CiSpecificsBusinessApplication({ id: 'clCiSpecificsBusinessApplication', height: 500 });//800
 			
+				/*specificsView = this.getComponent('clCiSpecificsService');
+				if(!specificsView)
+					specificsView = new AIR.CiSpecificsServiceView({id: 'clCiSpecificsService', height: 460});
+				break;*/
+				break;
 		}
 		
 		return specificsView;
@@ -186,8 +196,8 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 //		this.fireEvent('viewInitialized', this, childView);
 //	},
 	
-	//damit die Höhenänderung auch für clCiSpecificsLocationItem mit 250 sichtbar ist, muss auch die Höhe
-	//430 von ciEditTabView geändert werden.
+	//damit die Hï¿½henï¿½nderung auch fï¿½r clCiSpecificsLocationItem mit 250 sichtbar ist, muss auch die Hï¿½he
+	//430 von ciEditTabView geï¿½ndert werden.
 	updateHeight: function(specificsView) {
 		var h;
 		switch(specificsView.getId()) {
@@ -200,6 +210,9 @@ AIR.CiSpecificsView = Ext.extend(AIR.AirView, {
 			case 'clCiSpecificsItItem':
 				h = 460;//400 450
 				break;
+			case 'clCiSpecificsBusinessApplication':
+				h = 500;
+			
 		}
 		
 //		h = specificsView.getHeight();

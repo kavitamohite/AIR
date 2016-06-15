@@ -57,7 +57,6 @@
 		<mapping class="com.bayerbbs.applrepos.domain.Sla" />
 <!--		<mapping class="com.bayerbbs.applrepos.domain.SystemPlatform" />-->
 		<mapping class="com.bayerbbs.applrepos.domain.SeverityLevel" />
-		
 		<mapping class="com.bayerbbs.applrepos.domain.CiLokationsKette" />
 		<mapping class="com.bayerbbs.applrepos.domain.Room" />
 		<mapping class="com.bayerbbs.applrepos.domain.Building" />
@@ -72,7 +71,8 @@
 		<mapping class="com.bayerbbs.applrepos.domain.AttributeGroup" />
 		<mapping class="com.bayerbbs.applrepos.domain.AttributeValue" />
 		<mapping class="com.bayerbbs.applrepos.domain.SpecialAttribute" />
-		<mapping class="com.bayerbbs.applrepos.domain.Service" />		
+		<mapping class="com.bayerbbs.applrepos.domain.Service" />
+		<mapping class="com.bayerbbs.applrepos.domain.BusinessApplication" />	
 
 		
 		<!-- Asset Management -->

@@ -1099,7 +1099,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var fsApplicationOwner = this.getComponent('fsApplicationOwner');
 		var fsApplicationSteward = this.getComponent('fsApplicationSteward');
 		
-		if(data.tableId == AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION) {
+		if((data.tableId == AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION) ||(data.tableId == AC.TABLE_ID_BUSINESS_APPLICATION)) {
 			fsApplicationOwner.setVisible(true);
 			fsApplicationSteward.setVisible(true);
 			
@@ -1130,7 +1130,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				pApplicationSteward.getComponent('applicationStewardHidden').setValue('');
 				pApplicationSteward.getComponent('applicationSteward').setValue('');
 			}
-			
+			if(data.tableId !=AC.TABLE_ID_BUSINESS_APPLICATION){
 			var pApplicationOwnerDelegate = fsApplicationOwner.getComponent('pApplicationOwnerDelegate');
 			if(data.applicationOwnerDelegateHidden && data.applicationOwnerDelegateHidden != 0) {
 				if(data.isCiCreate) {
@@ -1143,6 +1143,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			} else {
 				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue('');
 				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue('');
+			}
 			}
 		} else {
 			fsApplicationOwner.setVisible(false);
@@ -1161,7 +1162,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 
 		
-
+		
 		var pCIOwner = this.getComponent('fsCIOwner').getComponent('pCIOwner');
 		if(data.ciOwner) {//ciResponsible && data.ciResponsible != 0
 			pCIOwner.getComponent('ciResponsible').setValue(data.ciOwner);//ciResponsible
@@ -1181,6 +1182,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		//added conditionset vandana
 		var pciItHead = this.getComponent('fsCIOwner').getComponent('pciItHead');
+		
 		console.log(pciItHead.getComponent('ciItHead'));
 		console.log(data);
 		if(data.itHead) {//ciSubResponsible && data.ciSubResponsible != 0
@@ -1214,6 +1216,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			pProviderAddress.getComponent('idProviderAddress').setValue('');	
 		}
 		
+		
 		//vandana
 		if(data.tableId == AC.TABLE_ID_BUILDING || data.tableId == AC.TABLE_ID_BUILDING_AREA|| data.tableId == AC.TABLE_ID_ROOM) {
 			this.getComponent('provider').setVisible(true);
@@ -1233,18 +1236,27 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		//ended  vandana
 		
+		//Added by ENFZM
+		if(data.tableId == AC.TABLE_ID_BUSINESS_APPLICATION ) {
+			this.getComponent('fsCIOwner').setVisible(false);
+			}
+		else{
+			this.getComponent('fsCIOwner').setVisible(true);
+		}
+		
 	
 		this.updateAccessMode(data);
 	
-	
+		
 		var labels = AIR.AirApplicationManager.getLabels();
 //		var label = data.applicationCat1Txt === 'Application' ? labels.applicationManager : labels.label_details_ciOwner;
 //		var label = AAM.getAppDetail().tableId == AC.TABLE_ID_APPLICATION && AAM.getAppDetail().applicationCat1Id && AAM.getAppDetail().applicationCat1Id == AC.APP_CAT1_APPLICATION ? labels.applicationManager : labels.label_details_ciOwner;
 		var ciTypeId = AAM.getAppDetail() ? AAM.getAppDetail().tableId : AAM.getTableId();
 		var ciSubTypeId = AAM.getAppDetail() ? AAM.getAppDetail().applicationCat1Id ? AAM.getAppDetail().applicationCat1Id : AAM.getAppDetail().ciSubTypeId : AAM.getCiSubTypeId();
 		var label = ciTypeId == AC.TABLE_ID_APPLICATION && ciSubTypeId == AC.APP_CAT1_APPLICATION ? labels.applicationManager : labels.label_details_ciOwner;
-
+		if(data.tableId !=AC.TABLE_ID_BUSINESS_APPLICATION){
 		this.getComponent('fsCIOwner').setTitle(label);
+		}
 //		this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('labelgpsccontactCiOwner').setText(label);
 		
 		var fsContactsGPSC = this.getComponent('contactsGPSC');
@@ -1268,13 +1280,14 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	
 	updateAccessMode: function(data) {
-		if(data.tableId == AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION) {
+		if((data.tableId == AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION) ||(data.tableId == AC.TABLE_ID_BUSINESS_APPLICATION)) {
 			AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwner'), data);
 			AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), data);//fsApplicationOwner
 			AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwnerDelegate').getComponent('applicationOwnerDelegate'), data);
 		}
 		
 //
+		
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsible'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('fsCIOwner').getComponent('pCiSubResponsible').getComponent('ciSubResponsible'), data);
 		//added by vandana
@@ -1306,8 +1319,9 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var tfGpsccontactCiOwner = this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner');
 		var tfGpsccontactSupportGroup = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroup');
+		if(data.tableId != AC.TABLE_ID_BUSINESS_APPLICATION ) {
 		var tfCiOwner = this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsible');
-		
+		}
 		
 		// RFC 9459 set Mandatory/Necessity from the store /database not xml
 		var groupTypesStore = AIR.AirStoreManager.getStoreByName('groupTypesListStore');

@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.service;
 
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.BusinessApplicationDTO;
 import com.bayerbbs.applrepos.domain.FunctionDTO;
 import com.bayerbbs.applrepos.domain.ServiceDTO;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
@@ -101,6 +102,9 @@ public class CiEntityWSDelegate {
 	public ServiceDTO getService(CiDetailParameterInput input) {
 		return ciEntityWS.getService(input);
 	}
-
+	//Added by ENFZM
+	public BusinessApplicationDTO getBusinessApplication(ApplicationDetailParameterInput input) {
+		return ciEntityWS.getBusinessApplication(input);
+	}
 
 }

@@ -116,7 +116,8 @@ public class LifecycleStatusHbn {
 		append("JOIN lifecycle_status status ON status.lc_status_id = subStatus.lc_status_id ").
 //		append("WHERE subStatus.tabelle_id = 1 "). 
 //		append("ORDER BY status.SORT, subStatus.SORT ").
-		append("WHERE subStatus.tabelle_id IN(1,2,13,3,4,88,30,12,37,19) ").
+		//Updated by ENFZM for Business Application
+		append("WHERE subStatus.tabelle_id IN(1,2,13,3,4,88,30,12,37,19,183) ").
 		append("ORDER BY subStatus.tabelle_id, status.lc_status_en");
 
 		try {

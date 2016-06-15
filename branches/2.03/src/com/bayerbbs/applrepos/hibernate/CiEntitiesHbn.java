@@ -175,6 +175,8 @@ public class CiEntitiesHbn {
 			sql.append(AirKonstanten.CITypes_WAYS.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.CITypes_FUNCTION.toUpperCase());
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.CITypes_BUSINESS_APPLICATION.toUpperCase());
 			sql.append(")");
 		
 		} 
@@ -330,6 +332,8 @@ public class CiEntitiesHbn {
 			sql.append(AirKonstanten.CITypes_TERRAIN.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.CITypes_STANDORT.toUpperCase());
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.CITypes_BUSINESS_APPLICATION.toUpperCase());
 			sql.append(")");
 		}
 		

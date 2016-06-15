@@ -15,9 +15,11 @@ public enum CIType {
 	BUILDING ("Building", 1, 4, 10),
 	TERRAIN("Terrain", -10012, 30, 11),
 	SITE("Site", -10011, 12, 12),
+	BUSINESS_APPLICATION("Business Application", 0, 183, 15 ),
 	PATHWAY_INSIDE("Pathway Inside", -10014, AirKonstanten.TABLE_ID_WAYS, 13),
 	PATHWAY_OUTSIDE("Pathway Outside", -10017, AirKonstanten.TABLE_ID_WAYS, 14),
 	FUNCTION("Function", 6, 33, 16);
+	
 	
 	private final int type;
 	private final int tableID;

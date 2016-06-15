@@ -270,11 +270,17 @@ AIR.AirAclManager = function() {
 		},
 		
 		isEditable: function(item) {
+			var appDetail = AAM.getAppDetail();
+			if(item.id!='bEditConnections'){
+			var isBusinessApplication = appDetail.tableId === AC.TABLE_ID_BUSINESS_APPLICATION? true : false;
+			if(isBusinessApplication)
+				return false;
+			}
 			var isAdmin = AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
 			if(isAdmin)
 				return true;
 			
-			var appDetail = AAM.getAppDetail();
+			
 			var insertSource = (appDetail==undefined || appDetail.insertQuelle==undefined?'':appDetail.insertQuelle);
 			
 			var index = this.aclStore.findExact('id', item.id);
@@ -290,6 +296,16 @@ AIR.AirAclManager = function() {
 		},
 
 		isRelevance: function(item, appDetail) {
+			
+			//Added by ENFZM
+			if(item.id!='bEditConnections'){
+				var isBusinessApplication = appDetail.tableId === AC.TABLE_ID_BUSINESS_APPLICATION? true : false;
+				if(isBusinessApplication)
+					return false;
+				}
+			
+			
+			
 			var isAdmin = AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
 			if(isAdmin)
 				return true;
@@ -319,6 +335,7 @@ AIR.AirAclManager = function() {
 		},
 
 		setRelevance: function(item, appDetail) {
+			
 			// RFC 8225
 			var hasEditRights = this.isRelevance(item, appDetail);
 
@@ -332,11 +349,11 @@ AIR.AirAclManager = function() {
 				var rolesAllowed = this.aclStore.getAt(index).get('rolesAllowed');//restrictionLevel
 				
 				if(rolesAllowed) {
-					//falls Rollen für dieses Elemente definiert sind, die ohne Editrechte dieses CI Detailseitenfeld sehen dürfen,
-					//müss geprüft werden, ob der User diese Rolle(n) hat im rolePersonListStore. Nur wenn er diese nicht hat:
+					//falls Rollen fï¿½r dieses Elemente definiert sind, die ohne Editrechte dieses CI Detailseitenfeld sehen dï¿½rfen,
+					//mï¿½ss geprï¿½ft werden, ob der User diese Rolle(n) hat im rolePersonListStore. Nur wenn er diese nicht hat:
 					item.setVisible(false);
-					//In der ersten Ausbaustufe und für den RFC 8225 gibt es keine Rollen, mit denen User ohne Editrechte die Felder 
-					//costRunPa und costChangePa sehen drüfen. Daher werden diese von der Seite genommen.
+					//In der ersten Ausbaustufe und fï¿½r den RFC 8225 gibt es keine Rollen, mit denen User ohne Editrechte die Felder 
+					//costRunPa und costChangePa sehen drï¿½fen. Daher werden diese von der Seite genommen.
 				} else {
 					this.setFormElementEnable(item, false);//hasEditRights
 				}
@@ -397,7 +414,7 @@ AIR.AirAclManager = function() {
 			return valid;
 		},
 		
-		//wenn ein required Feld nicht ausgefüllt ist, dann ist das CI im Draft Modus
+		//wenn ein required Feld nicht ausgefï¿½llt ist, dann ist das CI im Draft Modus
 		isDraft: function(data) {
 			records = this.aclStore.getRange();
 			var commonRetValue = false;
@@ -488,9 +505,9 @@ AIR.AirAclManager = function() {
 							case 'textarea':
 							case 'combo':
 							case 'filterCombo':
-								//nur wenn tableId == AC.TABLE_ID_APPLICATION wird bei, aufgrund von Benutzerrechten deaktivierten, Pflichtfeldern nicht auf ein auszufüllendes Feld hingewiesen
+								//nur wenn tableId == AC.TABLE_ID_APPLICATION wird bei, aufgrund von Benutzerrechten deaktivierten, Pflichtfeldern nicht auf ein auszufï¿½llendes Feld hingewiesen
 								if((!uiElement.disabled || data.tableId != AC.TABLE_ID_APPLICATION) && (!uiElement.getValue() || uiElement.getValue().length === 0)) {
-									// RFC 9459: Ausnahmeregel für Application und CI-Owner (GPSC) und Support Group IM Resolver (GPSC)
+									// RFC 9459: Ausnahmeregel fï¿½r Application und CI-Owner (GPSC) und Support Group IM Resolver (GPSC)
 									if (data.applicationCat1Id != AC.CI_SUB_TYPE_APPLICATION) {
 										var label = this.getLabel(uiElement, labels, data);
 										if(label)											
@@ -523,7 +540,7 @@ AIR.AirAclManager = function() {
 			return incompleteFieldList;
 		},
 		
-		isCiTypeField: function(data, aclItem) {//mit allen CI Typen: tableId, ciSubType; , uiElement nicht mehr nötig
+		isCiTypeField: function(data, aclItem) {//mit allen CI Typen: tableId, ciSubType; , uiElement nicht mehr nï¿½tig
 			var aclCiType = aclItem.get('ciTypeId');
 			var aclCiSubType = aclItem.get('ciSubTypeId');
 			
@@ -544,7 +561,7 @@ AIR.AirAclManager = function() {
 		
 		
 		
-		
+		//updated by ENFZM
 		setAccessMode: function(uiElement, appDetail) {
 			var index = this.aclStore.findExact('id', uiElement.id);
 			var accessMode = this.aclStore.getAt(index);//.get('Mandatory');
