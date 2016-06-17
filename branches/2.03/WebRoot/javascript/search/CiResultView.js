@@ -254,6 +254,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			lIsMultipleSelect.setVisible(true);
 			bMassUpdate.setDisabled(true);
 			bSelectDeselectAll.setDisabled(true);
+			cbmassUpdateType.setVisible(true);
 			cbmassUpdateType.setDisabled(true);
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().singleSelect=true;
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().clearSelections();

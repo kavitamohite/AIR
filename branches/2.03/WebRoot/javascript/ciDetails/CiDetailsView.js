@@ -132,8 +132,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.getComponent('detailsInsertdata').reset();
 		this.getComponent('detailsUpdatedata').reset();
 		this.getComponent('detailsDeletedata').reset();
-		this.getComponent('detailsBarAppId').reset();
-		
+				
 	},
 	
 	update: function(ciDetail) {//data
