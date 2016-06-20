@@ -97,6 +97,17 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {
 		var ciTypesByRole = AAM.getCreationCiTypes();
 
 		AAM.filterCiTypes(combo, ciTypesByRole);
+	
+		var records = combo.getStore().getRange();
+			for(var i = 0; i < records.length; i++) {
+				var ciTypeId = records[i].get('ciTypeId');
+				
+				if(ciTypeId==AC.TABLE_ID_BUSINESS_APPLICATION) {
+					combo.getStore().remove(records[i]);
+					
+				}
+			}
+		combo.getStore().commitChanges();
 		combo.getStore().sort('text', 'ASC');
 		
 	},
@@ -178,8 +189,8 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {
 			};
 			this.update(data);
 			
-			//falls durch CI Auswahl mit Kat1 != Application eine für Application unpassende Kat2 Liste gefiltert wurde,
-			//für den Wizard wieder zurücksetzen:
+			//falls durch CI Auswahl mit Kat1 != Application eine fï¿½r Application unpassende Kat2 Liste gefiltert wurde,
+			//fï¿½r den Wizard wieder zurï¿½cksetzen:
 			this.getComponent('cbAppCat2W').getStore().filter('applicationCat1Id', r.get('ciSubTypeId'));//cbCiTypeW.getValue()
 			this.getComponent('cbAppCat2W').setValue(AC.APP_CAT2_DEFAULT_UNKOWN);
 			this.switchNameFields();
@@ -189,9 +200,9 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {
 	updateLabels: function(labels) {
 		this.setTitle(labels.ciCreateWizardPage1);
 		
-		//gehört hier eigentlich nicht hin. Da aber keine update Methode gibt und der IE diese cb zerschiesst 
+		//gehï¿½rt hier eigentlich nicht hin. Da aber keine update Methode gibt und der IE diese cb zerschiesst 
 		//oder gar nicht darstellt wenn cb mit den Attributen disabled: true, und hideTrigger: true konfiguriert wird:
-		//AIR.AirAclManager.setAccessMode(this.getComponent('cbCiTypeW'), null); appDetail müsste übergeben werden, gibt es hier aber nicht
+		//AIR.AirAclManager.setAccessMode(this.getComponent('cbCiTypeW'), null); appDetail mï¿½sste ï¿½bergeben werden, gibt es hier aber nicht
 		
 		//AIR 2.0 RFC 9022
 //		Util.disableCombo(this.getComponent('cbCiTypeW'));
