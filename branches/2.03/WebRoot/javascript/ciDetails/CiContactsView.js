@@ -1130,7 +1130,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				pApplicationSteward.getComponent('applicationStewardHidden').setValue('');
 				pApplicationSteward.getComponent('applicationSteward').setValue('');
 			}
-			if(data.tableId !=AC.TABLE_ID_BUSINESS_APPLICATION){
+			//if(data.tableId !=AC.TABLE_ID_BUSINESS_APPLICATION){
 			var pApplicationOwnerDelegate = fsApplicationOwner.getComponent('pApplicationOwnerDelegate');
 			if(data.applicationOwnerDelegateHidden && data.applicationOwnerDelegateHidden != 0) {
 				if(data.isCiCreate) {
@@ -1144,7 +1144,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegateHidden').setValue('');
 				pApplicationOwnerDelegate.getComponent('applicationOwnerDelegate').setValue('');
 			}
-			}
+			//}
 		} else {
 			fsApplicationOwner.setVisible(false);
 			fsApplicationSteward.setVisible(false);

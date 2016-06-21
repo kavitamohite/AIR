@@ -49,7 +49,8 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		        fieldLabel: 'Application Alias',
 		        		        
 		        enableKeyEvents: true //Stop IE to always set the cursor at the end when pushing left/right or setting the cursor with the mouse
-		    },{
+		    },
+		    /*  {
 	            xtype: 'radiogroup',
     			id: 'rgBARrelevance',
     			width: 250,
@@ -62,7 +63,8 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	                { id: 'rgBARrelevanceNo',		itemId: 'rgBARrelevanceNo',			boxLabel: 'No',	name: 'rgBARrelevance', inputValue: 'N', width: 80 },
 	                { id: 'rgBARrelevanceUndefined',itemId: 'rgBARrelevanceUndefined', 	boxLabel: 'Undefined',	name: 'rgBARrelevance', inputValue: 'U', width: 80, checked: true }//, checked: true
 	            ]
-		    },{
+		    },
+		    {
 		    	xtype: 'textfield',
 //		        width: 230,
 		        fieldLabel: 'BAR Application Id',
@@ -75,7 +77,8 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		        
 		        id: 'barApplicationId',
 		        enableKeyEvents: true
-	        },{
+	        },*/
+	        {
 		    	xtype: 'textfield',
 //		        anchor: '70%',
 		        width: 400,
@@ -317,8 +320,8 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		var tfApplicationName = this.getComponent('applicationName');
 		var tfApplicationAlias = this.getComponent('applicationAlias');
 		var tfApplicationVersion = this.getComponent('applicationVersion');
-		var rgBARrelevance = this.getComponent('rgBARrelevance');
-		var tfBarApplicationId = this.getComponent('barApplicationId');
+		//var rgBARrelevance = this.getComponent('rgBARrelevance');
+		//var tfBarApplicationId = this.getComponent('barApplicationId');
 		
 		var cbApplicationCat2 = this.getComponent('applicationCat2');
 		var cbLifecycleStatus = this.getComponent('lifecycleStatus');
@@ -336,17 +339,17 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		tfApplicationName.on('change', this.onApplicationAliasChange, this);//onApplicationNameChange
 		tfApplicationAlias.on('change', this.onApplicationAliasChange, this);
 		tfApplicationVersion.on('change', this.onApplicationVersionChange, this);
-		tfBarApplicationId.on('change', this.onBarApplicationChange, this);
+		//tfBarApplicationId.on('change', this.onBarApplicationChange, this);
 		tfComments.on('change', this.onCommentsChange, this);
 		
 		tfApplicationName.on('keyup', this.onFieldKeyUp, this);//onApplicationNameChange
 		tfApplicationAlias.on('keyup', this.onFieldKeyUp, this);
 		tfApplicationVersion.on('keyup', this.onFieldKeyUp, this);
-		tfBarApplicationId.on('keyup', this.onFieldKeyUp, this);
+		//tfBarApplicationId.on('keyup', this.onFieldKeyUp, this);
 		tfComments.on('keyup', this.onFieldKeyUp, this);
 
 		
-		rgBARrelevance.on('change', this.onBARrelevanceChange, this);
+		//rgBARrelevance.on('change', this.onBARrelevanceChange, this);
 		cbApplicationCat2.on('select', this.onApplicationCat2Select, this);
 		cbApplicationCat2.on('beforeselect', this.onApplicationCat2BeforeSelect, this);
 		cbApplicationCat2.on('change', this.onApplicationCat2Change, this);
@@ -620,8 +623,8 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 //		cbLifecycleStatus.getStore().filter('tableId', parseInt(data.tableId));
 		
 		
-		var rgBARrelevance = this.getComponent('rgBARrelevance');
-		var tfBarApplicationId = this.getComponent('barApplicationId');
+		//var rgBARrelevance = this.getComponent('rgBARrelevance');
+		//var tfBarApplicationId = this.getComponent('barApplicationId');
 		
 		var lvOrganisationalScope = this.getComponent('organisationalScope');//.getComponent('fsOrganisationalScope')
 		var taOrganisationalScope = this.getComponent('organisationalScopeHidden');//.getComponent('fsOrganisationalScope')
@@ -693,23 +696,23 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		taOrganisationalScope.reset();
 		
 		if(this.isApplicationCI(data.applicationCat1Id)) {
-			rgBARrelevance.setVisible(true);
+			/*rgBARrelevance.setVisible(true);
 
 			if(data.barRelevance.length === 0)
 				data.barRelevance = 'U';
 	
-			rgBARrelevance.setValue(data.barRelevance);
+			rgBARrelevance.setValue(data.barRelevance);*/
 			
 			
-			tfBarApplicationId.setVisible(true);
-			if(data.barRelevance == 'Y') {
+			//tfBarApplicationId.setVisible(true);
+			/*if(data.barRelevance == 'Y') {
 				tfBarApplicationId.setValue(data.barApplicationId);
 			} else {
 				if(data.barRelevance == 'N' && data.template == '1')//-1
 					rgBARrelevance.disable();
 				
 				tfBarApplicationId.setValue('');
-			}
+			}*/
 			
 			//durch AirAclManager erledigt 
 //			lvOrganisationalScope.setVisible(true);
@@ -736,11 +739,11 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 				}
 			}
 		} else {
-			rgBARrelevance.reset();
-			rgBARrelevance.setVisible(false);
+			//rgBARrelevance.reset();
+			//rgBARrelevance.setVisible(false);
 			
-			tfBarApplicationId.reset();
-			tfBarApplicationId.setVisible(false);
+			//tfBarApplicationId.reset();
+			//tfBarApplicationId.setVisible(false);
 			
 			lvOrganisationalScope.setVisible(false);
 			taOrganisationalScope.setVisible(false);
@@ -755,8 +758,8 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	updateAccessMode: function(data) {
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationName'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationAlias'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('barApplicationId'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('rgBARrelevance'), data);
+		//AIR.AirAclManager.setAccessMode(this.getComponent('barApplicationId'), data);
+		//AIR.AirAclManager.setAccessMode(this.getComponent('rgBARrelevance'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationVersion'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('applicationCat2'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('lifecycleStatus'), data);
@@ -836,9 +839,9 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 			data.version = field.getValue();
 		
 		if(this.isApplicationCI(AAM.getAppDetail().applicationCat1Id)) {//data.applicationCat1Id is undefined
-			field = this.getComponent('rgBARrelevance');
-			if(!field.disabled)//wenn tableId != 2 || ciType != 5
-				data.barRelevance = field.getValue().inputValue;
+		//	field = this.getComponent('rgBARrelevance');
+			//if(!field.disabled)//wenn tableId != 2 || ciType != 5
+				//data.barRelevance = field.getValue().inputValue;
 		}
 
 		field = this.getComponent('specificsCategory').getComponent('cbApplicationBusinessCat');
@@ -917,7 +920,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		switch(item.getId()) {
 			case 'cbIsTemplate':
 				var isChecked = item.getValue();
-				var rgBARrelevance = this.getComponent('rgBARrelevance');
+				/*var rgBARrelevance = this.getComponent('rgBARrelevance');
 				
 				if(AIR.AirAclManager.isRelevance(rgBARrelevance, AAM.getAppDetail())) {
 					var labels = AAM.getLabels();
@@ -941,7 +944,7 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 					
 					var infoWindow = AIR.AirWindowFactory.createDynamicMessageWindow('GENERIC_OK', null, infoText, infoTitle);
 					infoWindow.show();
-				}
+				}*/
 				break;
 			default: break;
 		}
@@ -951,11 +954,11 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 //		this.setTitle(labels.specificsPanelTitle);
 		this.setFieldLabel(this.getComponent('applicationName'), labels.name);
 		this.setFieldLabel(this.getComponent('applicationAlias'), labels.applicationAlias);
-		this.setFieldLabel(this.getComponent('barApplicationId'), labels.barApplicationId);
-		this.setFieldLabel(this.getComponent('rgBARrelevance'), labels.rgBARrelevance);
-		this.setBoxLabel(this.getComponent('rgBARrelevance').items.items[0], labels.general_yes);
-		this.setBoxLabel(this.getComponent('rgBARrelevance').items.items[1], labels.general_no);
-		this.setBoxLabel(this.getComponent('rgBARrelevance').items.items[2], labels.complianceUndefined);
+		//this.setFieldLabel(this.getComponent('barApplicationId'), labels.barApplicationId);
+		//this.setFieldLabel(this.getComponent('rgBARrelevance'), labels.rgBARrelevance);
+		//this.setBoxLabel(this.getComponent('rgBARrelevance').items.items[0], labels.general_yes);
+		//this.setBoxLabel(this.getComponent('rgBARrelevance').items.items[1], labels.general_no);
+		//this.setBoxLabel(this.getComponent('rgBARrelevance').items.items[2], labels.complianceUndefined);
 		
 		this.setFieldLabel(this.getComponent('applicationVersion'), labels.applicationVersion);
 		this.setFieldLabel(this.getComponent('applicationCat2'), labels.applicationCat2);
@@ -977,8 +980,8 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 	updateToolTips: function(toolTips) {
 		this.setTooltipData(this.getComponent('applicationName').label,  toolTips.applicationName,  toolTips.applicationNameText);
 		this.setTooltipData(this.getComponent('applicationAlias').label,  toolTips.applicationAlias, toolTips.applicationAliasText);
-		this.setTooltipData(this.getComponent('rgBARrelevance').label,  toolTips.barApplicationRelevant, toolTips.barApplicationRelevantText);
-		this.setTooltipData(this.getComponent('barApplicationId').label,  toolTips.barApplicationId, toolTips.barApplicationIdText);
+		//this.setTooltipData(this.getComponent('rgBARrelevance').label,  toolTips.barApplicationRelevant, toolTips.barApplicationRelevantText);
+		//this.setTooltipData(this.getComponent('barApplicationId').label,  toolTips.barApplicationId, toolTips.barApplicationIdText);
       	this.setTooltipData(this.getComponent('applicationVersion').label, toolTips.version, toolTips.versionText);
 		this.setTooltipData(this.getComponent('applicationCat2').label,  toolTips.applicationCat2, toolTips.applicationCat2Text);
 		this.setTooltipData(this.getComponent('lifecycleStatus').label, toolTips.lifecycleStatus, toolTips.lifecycleStatusText);

@@ -398,8 +398,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var bIsDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('bIsDirecLinkWithTemplate');
 
 		cbIsTemplate.setValue(isTemplate);
-		if(data.barRelevance === 'Y')
-			cbIsTemplate.disable();//BAR relevante CIs d�rfen keine templates sein
+		//if(data.barRelevance === 'Y')
+		//	cbIsTemplate.disable();//BAR relevante CIs d�rfen keine templates sein
 		if(data.templateLinkWithCIs === 'Y'){
 			cbIsTemplate.disable();
 		}else{
@@ -981,7 +981,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			case 'rgBARrelevance':
 				var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
 				
-				if(AIR.AirAclManager.isRelevance(cbIsTemplate, AAM.getAppDetail())) {
+				/*if(AIR.AirAclManager.isRelevance(cbIsTemplate, AAM.getAppDetail())) {
 					var barRelevance = item.getValue().inputValue;
 					
 					if(barRelevance === 'Y') {
@@ -989,7 +989,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 					} else {
 						cbIsTemplate.enable();
 					}
-				}
+				}*/
 				break;
 				
 			default: break;

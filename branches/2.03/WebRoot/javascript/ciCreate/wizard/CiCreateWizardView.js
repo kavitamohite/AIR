@@ -67,8 +67,8 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 			var options = {
 				isCiCreate: true,
 				tableId: record.get('ciTypeId')
-				//ciOwner(Hidden),ciOwnerDelegate(Hidden) hinzufügen,
-				//um in CiContactsView.clear(data) vorbelegen zu können?
+				//ciOwner(Hidden),ciOwnerDelegate(Hidden) hinzufï¿½gen,
+				//um in CiContactsView.clear(data) vorbelegen zu kï¿½nnen?
 			};
 			
 			if(options.tableId == AC.TABLE_ID_IT_SYSTEM)
@@ -165,8 +165,8 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 				if(!params.organisationalScope)
 					errorData.push(labels.organisationalScope);
 				
-				if(!params.barRelevance || params.barRelevance === 'U')
-					errorData.push(labels.rgBARrelevance);
+				/*if(!params.barRelevance || params.barRelevance === 'U')
+					errorData.push(labels.rgBARrelevance);*/
 				
 				if(params.applicationOwnerHidden.length === 0)
 					errorData.push(labels.applicationOwner);

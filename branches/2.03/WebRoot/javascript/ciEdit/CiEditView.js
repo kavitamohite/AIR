@@ -349,12 +349,12 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	validateCiChange: function(view, viewElement, changedViewItems) {
 		switch(view.getId()) {
 			case 'clCiSpecifics':
-				if(viewElement.getId() === 'rgBARrelevance') {
+				/*if(viewElement.getId() === 'rgBARrelevance') {
 					var ciComplianceView = this.getComponent('ciEditTabView').getComponent('clCiCompliance');
 					ciComplianceView.validate(viewElement);
 					
 					//show warning toolbar message or warningWindow
-				}
+				}*/
 				
 				break;
 			case 'clCiCompliance':
@@ -696,8 +696,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	mergeCiChanges: function(data) {
-		if(data.template == '-1' && data.barRelevance !== 'Y')//RFC 8727: nicht notwendig, da von 'No' nicht auf 'Undefined' gewechselt werden kann
-			data.barRelevance = 'N';
+		/*if(data.template == '-1' && data.barRelevance !== 'Y')//RFC 8727: nicht notwendig, da von 'No' nicht auf 'Undefined' gewechselt werden kann
+			data.barRelevance = 'N';*/
 	},
 	
 	cancelApplication: function() {

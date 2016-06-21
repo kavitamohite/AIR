@@ -103,7 +103,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 	        		  
 	    			width: 50
 	    		}]
-		    },{
+		    },
+		    /*{
 	            xtype: 'radiogroup',
     			id: 'rgBARrelevanceW',
     			width: 250,
@@ -115,7 +116,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
                     { id: 'rgBARrelevanceYesW',		itemId: 'rgBARrelevanceYesW', 			boxLabel: 'Yes',		name: 'rgBARrelevanceW', inputValue: 'Y', width: 80, checked: true },
 	                { id: 'rgBARrelevanceNoW',		itemId: 'rgBARrelevanceNoW',			boxLabel: 'No',			name: 'rgBARrelevanceW', inputValue: 'N', width: 80 }
 	            ]
-	        },{
+	        },*/
+	        {
 		    	xtype: 'textarea',
 		        width: 250,
 		        height: 75,
@@ -347,13 +349,13 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 	update: function(data) {
 		var isApplicationCi = data.applicationCat1Id == AC.APP_CAT1_APPLICATION;
 		
-		var rgBARrelevanceW = this.getComponent('rgBARrelevanceW');
+		//var rgBARrelevanceW = this.getComponent('rgBARrelevanceW');
 		var lvOrganisationalScope = this.getComponent('lvOrganisationalScopeW');
 		
 		var fsApplicationOwnerW = this.getComponent('fsApplicationOwnerW');
 		var fsApplicationStewardW = this.getComponent('fsApplicationStewardW');
 		
-		rgBARrelevanceW.setVisible(isApplicationCi);
+		//rgBARrelevanceW.setVisible(isApplicationCi);
 		lvOrganisationalScope.setVisible(isApplicationCi);
 		fsApplicationOwnerW.setVisible(isApplicationCi);
 		fsApplicationStewardW.setVisible(isApplicationCi);
@@ -434,8 +436,8 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 				params.name = field.getValue().trim();
 			}
 			
-			if(this.getComponent('rgBARrelevanceW').getValue())
-				params.barRelevance = this.getComponent('rgBARrelevanceW').getValue().inputValue;
+			//if(this.getComponent('rgBARrelevanceW').getValue())
+			//	params.barRelevance = this.getComponent('rgBARrelevanceW').getValue().inputValue;
 			
 			params.comments = this.getComponent('taCiDescriptionW').getValue();
 			params.lifecycleStatusId = this.getComponent('cbLifecycleStatusW').getValue();
@@ -472,7 +474,7 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		this.getComponent('pSapNameW').getComponent('tfSapName1W').reset();
 		this.getComponent('pSapNameW').getComponent('tfSapName2W').reset();
 		this.getComponent('pSapNameW').getComponent('tfSapName3W').reset();
-		this.getComponent('rgBARrelevanceW').setValue('Y');
+		//this.getComponent('rgBARrelevanceW').setValue('Y');
 		this.getComponent('taCiDescriptionW').reset();
 		this.getComponent('cbLifecycleStatusW').reset();
 		this.getComponent('lvOrganisationalScopeW').clearSelections();
@@ -505,10 +507,10 @@ AIR.CiCreateAppMandatoryView = Ext.extend(AIR.AirView, {
 		AIR.AirAclManager.setNecessity(this.getComponent('tfCiNameW'));
 		if(lSapName1W.getEl())
 			AIR.AirAclManager.setNecessity(this.getComponent('pSapNameW').getComponent('lSapName1W'));
-		this.setFieldLabel(this.getComponent('rgBARrelevanceW'), labels.rgBARrelevance);
-		this.setBoxLabel(this.getComponent('rgBARrelevanceW').items.items[0], labels.general_yes);
-		this.setBoxLabel(this.getComponent('rgBARrelevanceW').items.items[1], labels.general_no);
-		AIR.AirAclManager.setNecessity(this.getComponent('rgBARrelevanceW'));
+		//this.setFieldLabel(this.getComponent('rgBARrelevanceW'), labels.rgBARrelevance);
+		//this.setBoxLabel(this.getComponent('rgBARrelevanceW').items.items[0], labels.general_yes);
+		//this.setBoxLabel(this.getComponent('rgBARrelevanceW').items.items[1], labels.general_no);
+		//AIR.AirAclManager.setNecessity(this.getComponent('rgBARrelevanceW'));
 		AIR.AirAclManager.setNecessity(this.getComponent('taCiDescriptionW'));
 		
 		

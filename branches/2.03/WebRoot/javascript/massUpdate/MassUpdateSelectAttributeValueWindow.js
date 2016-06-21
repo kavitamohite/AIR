@@ -215,7 +215,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    labelWidth: 180,
 				    
 					items: [	
-							{
+							/*{
 							    xtype: 'radiogroup',
 								id: 'selectAttrrgBARrelevanceW',
 								width: 200,
@@ -226,7 +226,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 							        { id: 'rgBARrelevanceYesWsa',		itemId: 'rgBARrelevanceYesWsa', 			boxLabel: 'Yes',		name: 'rgBARrelevanceW', inputValue: 'Y', width: 50},
 							        { id: 'rgBARrelevanceNoWsa',		itemId: 'rgBARrelevanceNoWsa',			boxLabel: 'No',			name: 'rgBARrelevanceW', inputValue: 'N', width: 50 }
 							    ]
-							}	,	
+							}	,*/	
 							{
 						    	xtype: 'textfield',
 						        width: 230,
@@ -953,7 +953,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         var selectAttrcbVirtualSoftware = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbVirtualSoftware');
         var selectAttrlvOrganisationalScopeW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrlvOrganisationalScopeW');
         var selectAttrcbPrimaryFunction = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbPrimaryFunction');
-        var selectAttrrgBARrelevanceW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrrgBARrelevanceW');
+       // var selectAttrrgBARrelevanceW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrrgBARrelevanceW');
         var selectAttrapplicationVersion = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrapplicationVersion');
         var selectAttrtaCiDescriptionW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrtaCiDescriptionW');
         var selectAttrapplicationCat = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrapplicationCat');
@@ -982,7 +982,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				pSelectAttrDelegate.setVisible(true);
 				pSelectAttrSteward.setVisible(true);
 				selectAttrlvOrganisationalScopeW.setVisible(true);
-				selectAttrrgBARrelevanceW.setVisible(true);
+				//selectAttrrgBARrelevanceW.setVisible(true);
 			}
 			selectAttrapplicationVersion.setVisible(true);
 			selectAttrtaCiDescriptionW.setVisible(true);
@@ -1170,7 +1170,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			//var selectAttrcbDataClass = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbDataClass');
 			var selectAttroperationalStatus = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttroperationalStatus');
             var selectAttrapplicationVersion = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrapplicationVersion');
-            var selectAttrrgBARrelevanceW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrrgBARrelevanceW');
+           // var selectAttrrgBARrelevanceW = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrrgBARrelevanceW');
             var selectAttrcbgRegulationsW = this.getComponent('selectAttrCompliance').getComponent('selectAttrcbgRegulationsW');
             var selectAttrcbPrimaryFunction = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbPrimaryFunction');
             var selectAttrBusinessEssential = this.getComponent('selectAttrAgreement').getComponent('selectAttrBusinessEssential');
@@ -1229,7 +1229,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			        comments: selectAttrtaCiDescriptionW.getValue(),
 			        operationalStatusId: selectAttroperationalStatus.getValue(),
 			        version: selectAttrapplicationVersion.getValue(),
-			        barRelevance: selectAttrrgBARrelevanceW.getValue()!= null ? selectAttrrgBARrelevanceW.getValue().inputValue : '',
+			       // barRelevance: selectAttrrgBARrelevanceW.getValue()!= null ? selectAttrrgBARrelevanceW.getValue().inputValue : '',
 			        isVirtualHardwareClient: selectAttrRgVirtualHWClient.getValue()!= null ? selectAttrRgVirtualHWClient.getValue().inputValue : '',
 			        isVirtualHardwareHost:	selectAttrgVirtualHWHost.getValue()!= null ? selectAttrgVirtualHWHost.getValue().inputValue : '',
 			        virtualHardwareSoftware: selectAttrcbVirtualSoftware.getValue(),

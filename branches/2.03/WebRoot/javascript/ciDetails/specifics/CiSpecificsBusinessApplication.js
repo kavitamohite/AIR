@@ -68,14 +68,21 @@ AIR.CiSpecificsBusinessApplication = Ext.extend(AIR.AirView, {
 				        mode: 'local',
 				        disabled: true
 					},
-					 {
+					{
+				    	xtype: 'checkbox',
+				    	fieldLabel: 'Externally Hosted',
+					    id: 'baServiceExternallyHosted',
+					    disabled: true,
+			    	    margins: '5 0 10 0'
+			    	},
+					/* {
 				    	xtype: 'textfield',
 				        width: 230,
 				        fieldLabel: 'Externally Hosted',
 				        id: 'baServiceExternallyHosted',
 				        disabled: true,
 				       
-					},
+					},*/
 					 {
 				    	xtype: 'textfield',
 				        width: 230,
@@ -141,6 +148,9 @@ AIR.CiSpecificsBusinessApplication = Ext.extend(AIR.AirView, {
 		
 		baServiceDescription.reset();
 		baItSystemLifecycleStatus.reset();
+		baServiceBarAppId.reset();
+		baServiceLastModification.reset();
+		baServiceExternallyHosted.reset();
 		
 		// Updated by ENFZM===Need to update once data for BUSSINESS APPLICATION is available in lifecycle sub status table.
 		
@@ -156,7 +166,8 @@ AIR.CiSpecificsBusinessApplication = Ext.extend(AIR.AirView, {
 			baItSystemLifecycleStatus.setValue(data.lifecycleStatusId);
 			baServiceBarAppId.setValue(data.barAppId);
 			baServiceLastModification.setValue(data.lastModification);
-			baServiceExternallyHosted.setValue(data.externallyHosted);
+			var isExternallyHosted = data.externallyHosted == '-1';
+			baServiceExternallyHosted.setValue(isExternallyHosted);
 			
 		}
 		

@@ -135,7 +135,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			        	//wenn rgAdvSearchBARrelevance und advsearchdescription aufgrund der entspr. CI-Typen
 			        	//ausgeblendet werden
 			        	hideMode: 'visibility'
-			        },{
+			        },
+			       /* {
 			            xtype: 'radiogroup',
 		    			id: 'rgAdvSearchBARrelevance',
 		    			width: 240,
@@ -149,7 +150,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			                { id: 'rgAdvSearchBARrelevanceNo',		itemId: 'rgAdvSearchBARrelevanceNo',			boxLabel: 'No',			name: 'rgAdvSearchBARrelevance', inputValue: 'N', width: 80 },
 			                { id: 'rgAdvSearchBARrelevanceUndefined',itemId: 'rgAdvSearchBARrelevanceUndefined', 	boxLabel: 'Undefined',	name: 'rgAdvSearchBARrelevance', inputValue: 'U', width: 80 }//, checked: true
 			            ]
-			        },{
+			        },*/
+			        {
 			            xtype: 'checkboxgroup',
 		    			id: 'cbgAdvSearchShowDeleted',
 		    			 width: 20,
@@ -1098,7 +1100,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	var sAdvSearchCIOwnerOptions = this.getComponent('pAdvSearchCIOwnerFrame').getComponent('pAdvSearchCIOwnerOptions').getComponent('sAdvSearchCIOwnerOptions');
     	
     	var lAdvSearchSingleAttrs = this.getComponent('pAdvSearchAppOwnerFrame').getComponent('lAdvSearchSingleAttrs');
-    	var rgAdvSearchBARrelevance = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance');
+    	//var rgAdvSearchBARrelevance = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance');
     	var lvAdvSearchOrganisationalScope = this.getComponent('pAdditionalSearchAttributes').getComponent('fsCategoriesAndStatus').getComponent('lvAdvSearchOrganisationalScope');
     	var cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchCategoriesAndStatusOptions').getComponent('cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions');
     	var cbgAdvSearchCIOwnerOptions=this.getComponent('pAdvSearchCIOwnerFrame').getComponent('pAdvSearchCIOwnerOptions');
@@ -1155,7 +1157,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 
     			tfDescription.setVisible(true);
     			cbgAdvSearchDescriptionOptions.setVisible(true);
-    			rgAdvSearchBARrelevance.setVisible(true);
+    			//rgAdvSearchBARrelevance.setVisible(true);
 //    			cbAdvSearchITCategoryW.setVisible(true);
     			
     			fsCategoriesAndStatus.setVisible(true);
@@ -1173,7 +1175,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     		case 1://ANWENDUNG::non Application
     			tfDescription.setVisible(true);
     			cbgAdvSearchDescriptionOptions.setVisible(true);
-    			rgAdvSearchBARrelevance.setVisible(false);
+    			//rgAdvSearchBARrelevance.setVisible(false);
 //    			cbAdvSearchITCategoryW.setVisible(true);
     			
     			fsCategoriesAndStatus.setVisible(true);
@@ -1189,7 +1191,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     		case 0://non ANWENDUNG
     			tfDescription.setVisible(false);
     			cbgAdvSearchDescriptionOptions.setVisible(false);
-    			rgAdvSearchBARrelevance.setVisible(false);
+    			//rgAdvSearchBARrelevance.setVisible(false);
     			
 //    			cbAdvSearchITCategoryW.setVisible(false);
     			fsCategoriesAndStatus.setVisible(false);
@@ -1229,7 +1231,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     		case 3:
     			isBusinessAppActive=true
     			tfDescription.setVisible(true);
-    			rgAdvSearchBARrelevance.setVisible(false);
+    			//rgAdvSearchBARrelevance.setVisible(false);
     			cbgAdvSearchDescriptionOptions.setVisible(true);
     			fsCategoriesAndStatus.setVisible(true);
     			pAdvSearchCategoriesAndStatusOptions.setVisible(true);
@@ -1411,10 +1413,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbCiType'), labels.cbCiType);
 		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('advsearchdescription'), labels.advsearchdescription);
 		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbAdvSearchITset'), labels.itSet);
-		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance'), labels.rgBARrelevance);
-		this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[0], labels.general_yes);
-		this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[1], labels.general_no);
-		this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[2], labels.complianceUndefined);
+		//this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance'), labels.rgBARrelevance);
+		//this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[0], labels.general_yes);
+		//this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[1], labels.general_no);
+		//this.setBoxLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('rgAdvSearchBARrelevance').items.items[2], labels.complianceUndefined);
 		this.setFieldLabel(this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrs').getComponent('cbgAdvSearchShowDeleted'), labels.label_useroptions_showDeleted);
 		
 		this.getComponent('pAdvSearchAppOwnerFrame').getComponent('fs' + this.ownerId + 'ApplicationOwner').getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent('label' + this.ownerId + 'applicationOwner').setText(labels.applicationOwner);
@@ -1474,7 +1476,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	
     	if(data.ciTypeId == AC.TABLE_ID_APPLICATION && data.ciSubTypeId == AC.APP_CAT1_APPLICATION) {
 //	    if(data.advsearchObjectTypeId === AC.APP_CAT1_APPLICATION || data.advsearchObjectTypeId.length === 0) {
-	    	pAdvSearchSingleAttrs.getComponent('rgAdvSearchBARrelevance').setValue(data.barRelevance);
+	    //	pAdvSearchSingleAttrs.getComponent('rgAdvSearchBARrelevance').setValue(data.barRelevance);
 
 	    	var pAdvSearchAppOwnerFrame = this.getComponent('pAdvSearchAppOwnerFrame');
 	    	var pAdvSearchAppStewardFrame = this.getComponent('pAdvSearchAppStewardFrame');
@@ -1722,9 +1724,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 ////	    var cbCiType = pAdvSearchSingleAttrs.getComponent('cbCiType');
 //	    var cat1 = params.ciSubTypeId;//params.advsearchObjectTypeId;//cbCiType.getValue();
 	    if(params.ciTypeId == AC.TABLE_ID_APPLICATION && params.ciSubTypeId == AC.APP_CAT1_APPLICATION) {//params.tableId cat1 === AC.APP_CAT1_APPLICATION || cat1.length === 0
-	    	var barRelevance = pAdvSearchSingleAttrs.getComponent('rgAdvSearchBARrelevance').getValue();
-	    	if(barRelevance)
-	    		params.barRelevance = barRelevance.inputValue;
+	    	//var barRelevance = pAdvSearchSingleAttrs.getComponent('rgAdvSearchBARrelevance').getValue();
+	    	//if(barRelevance)
+	    	//	params.barRelevance = barRelevance.inputValue;
 	    	
 	    	//params.xHidden = ...getComponent('x'); und params.x = ...getComponent('xHidden'); sind vertauscht 
 	    	//weil es momtan in ApplicationWS.findApplications nur ein Feld x (ohne Hidden) gibt und die cwid im Feld x dort ausgelesen wird
@@ -1911,8 +1913,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    field.reset();
 		    field = pAdvSearchSingleAttrs.getComponent('cbAdvSearchITset');
 		    field.reset();
-		    field = pAdvSearchSingleAttrs.getComponent('rgAdvSearchBARrelevance');
-		    field.reset();
+		    //field = pAdvSearchSingleAttrs.getComponent('rgAdvSearchBARrelevance');
+		    //field.reset();
 
 		    // RFC 9122 show deleted
 		    field = pAdvSearchSingleAttrs.getComponent('cbgAdvSearchShowDeleted');
