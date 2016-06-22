@@ -1710,11 +1710,13 @@ body.x-body-masked .x-window-plain .x-window-mc {
 	cursor: default !important;
 }
 
-.x-form-text-required:after { 
+ .x-form-text-required:after { 
 	white-space: nowrap;
 	content:" *"; 
 	color: red;
-}
+}  
+
+
 
 .ext-mb-wizard-saved {
     background-image:url(../../../../images/ok_type1_32x32.png);
@@ -1732,3 +1734,10 @@ body.x-body-masked .x-window-plain .x-window-mc {
 .label-top-aligned {
 	vertical-align: top;
 }
+
+.textAvanti:after {
+	white-space: nowrap;
+	content:" *"; 
+	color: darkorange;
+}
+	

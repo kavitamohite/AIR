@@ -129,11 +129,11 @@ html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,bloc
     cursor: default !important;
 }
 
-.x-form-text-required:after {
+ .x-form-text-required:after {
 	white-space: nowrap;
 	content:" *"; 
 	color: red;
-}
+} 
 
 .x-form-radio-group .x-item-disabled {
     filter: none;
@@ -7004,4 +7004,10 @@ body.x-body-masked .x-window-plain .x-window-mc {
 
 .x-item-disabled-ie {
     color:gray;cursor:default;opacity:.6;-moz-opacity:.6; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+}
+
+.textAvanti:after {
+	white-space: nowrap;
+	content:" *"; 
+	color: darkorange;
 }
