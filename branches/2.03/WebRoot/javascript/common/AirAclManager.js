@@ -132,7 +132,7 @@ AIR.AirAclManager = function() {
 		setLabelNeeded: function(item) {
 			switch (item.getXType()) {
 				case 'checkbox':
-					Util.addClass(item.el.dom.nextSibling, 'x-form-text-required');
+					Util.addClass(item.el.dom.nextSibling, 'textAvanti');
 					break;
 				case 'textfield':
 				case 'textarea':
@@ -141,12 +141,12 @@ AIR.AirAclManager = function() {
 				case 'radiogroup':
 					if(item.label) {
 						item.label.dom.style.fontWeight = 'normal';
-						item.label.addClass('x-form-text-required');
+						item.label.addClass('textAvanti');
 					} else {
 						var labelItem = Ext.getCmp('label' + item.id);
 						if(labelItem) {
 							labelItem.el.dom.style.fontWeight = 'normal';
-							labelItem.el.addClass('x-form-text-required');
+							labelItem.el.addClass('textAvanti');
 						}
 					}
 					break;
@@ -154,8 +154,8 @@ AIR.AirAclManager = function() {
 					var fieldsetItem = item.findParentByType('fieldset');
 					if(fieldsetItem) {
 						fieldsetItem.el.dom.firstChild.firstChild.style.fontWeight = 'bold';
-						if(fieldsetItem.el.dom.firstChild.firstChild.className.indexOf('x-form-text-required') == -1)
-							fieldsetItem.el.dom.firstChild.firstChild.className += ' x-form-text-required';
+						if(fieldsetItem.el.dom.firstChild.firstChild.className.indexOf('textAvanti') == -1)
+							fieldsetItem.el.dom.firstChild.firstChild.className += ' textAvanti';
 					} else {
 						this.setNecessity(item);
 					}
@@ -168,7 +168,7 @@ AIR.AirAclManager = function() {
 		setLabelDefault: function(item) {
 			switch (item.getXType()) {
 				case 'checkbox':
-					Util.removeClass(item.el.dom.nextSibling, 'x-form-text-required');
+					Util.removeClass(item.el.dom.nextSibling, 'textAvanti');
 					break;
 				case 'textfield':
 				case 'textarea':
@@ -612,7 +612,7 @@ AIR.AirAclManager = function() {
 					break;
 				case 'required':
 					labelEl.dom.style.fontWeight = 'normal';
-					labelEl.addClass('x-form-text-required');
+					labelEl.addClass('textAvanti');
 					break;
 				default:
 					labelEl.dom.style.fontWeight = 'normal';
