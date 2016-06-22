@@ -829,10 +829,10 @@ AIR.CiSpecificsAnwendungView = Ext.extend(AIR.AirView, {
 		if(!field.disabled)
 			data.alias = field.getValue();//applicationAlias
 		
-		field = this.getComponent('barApplicationId');
+	/*	field = this.getComponent('barApplicationId');
 		if(!field.disabled)
 			data.barApplicationId = field.getValue();//applicationAlias
-		
+		*/
 
 		field = this.getComponent('applicationVersion');
 		if(!field.disabled)
