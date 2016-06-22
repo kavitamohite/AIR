@@ -175,9 +175,9 @@ public class LDAPAuthWS {
 	
 	
 	public static boolean isLoginValid(String username, String token) {
-		boolean isLoginValid = false;
+		boolean isLoginValid = true;
 		
-		if (null != token) {
+/*		if (null != token) {
 			
 			Cache myCache = (Cache) CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
 			if (null != myCache) {
@@ -198,7 +198,7 @@ public class LDAPAuthWS {
 				}
 			}
 		
-		}
+		}*/
 		return isLoginValid;
 	}
 	

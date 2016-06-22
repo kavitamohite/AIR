@@ -247,8 +247,8 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 				pCiTitleCenter.el.setStyle('background-image','url('+img_HeaderTop+')'); 
 				break;
 			default:
-				//pCiTitleCenter.el.setStyle('background-image','url('+img_HeaderTop_D+')');
-				throw new Error('Not supported environment: '+environment);
+				pCiTitleCenter.el.setStyle('background-image','url('+img_HeaderTop_D+')');
+				//throw new Error('Not supported environment: '+environment);
 				//break;
 		}
 		

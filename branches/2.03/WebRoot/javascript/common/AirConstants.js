@@ -34,7 +34,7 @@ AIR.AirConstants = {
 		'<div style="color: darkblue; font-family: Arial, Helvetica, sans-serif !important; font-size: 7pt !important; font-weight: bold !important;">'+
 			'AIR uses the Bayer AD password (Microsoft Active Directory)<br/>' +
 			'for user authentication.<br/> You can set up, proof, change or reset this password on<br/>' +
-			'<a href="http://by-password.bayer-ag.com/domino/httppw.nsf/Start?OpenForm=English" target="_blank">Intranet-Password-Management</a>.<br/>' +
+			'<a href="https://by-baysec.bayer-ag.com/baysecsetpwd/secure/checkUser.do" target="_blank">Intranet-Password-Management</a>.<br/>' +
 			'Additional information regarding the application login<br/>' +
 			'can be found in our <a href="http://sp-coll-bbs.bayer-ag.com/sites/000127/ConfigMgmt/Forum/Benutzerhandbuch%20AIR.docx" target="_blank">manual</a>.<br/>' +
 			'If you need access <a href="mailto:ITILcenter@bayer.com&subject=AIR:%20Request%20for%20access">contact the administrator</a>.' +
