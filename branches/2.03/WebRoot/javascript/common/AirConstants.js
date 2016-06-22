@@ -276,7 +276,7 @@ AC.CI_TYPE_CREATION_BY_ROLE = {
 	},
 	
 	AIRApplicationLayer: {
-		2: [ AC.CI_SUB_TYPE_APPLICATION ]
+		2: [ !AC.CI_SUB_TYPE_APPLICATION ]
 	},
 
 	AIRApplicationManager: {
