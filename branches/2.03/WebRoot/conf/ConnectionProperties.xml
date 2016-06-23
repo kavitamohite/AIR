@@ -148,8 +148,8 @@
 		<Source>Common Service</Source>
 		<Destination>Business Application</Destination>
 		<Relevance>operational and strategic</Relevance>
-		<Upstream>Y</Upstream>
-		<Downstream>N</Downstream>
+		<Upstream>N</Upstream>
+		<Downstream>Y</Downstream>
 	</Identifier>
 	
 	
