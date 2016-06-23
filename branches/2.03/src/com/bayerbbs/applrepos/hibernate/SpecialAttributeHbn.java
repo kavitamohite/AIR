@@ -33,7 +33,7 @@ public class SpecialAttributeHbn {
 			} else {
 				toBe = spAttribute;
 				oldToBevalue = toBe.getAttributeValue().getId();
-				toBeTemp.setDeleteTimestamp(toBe.getDeleteTimestamp());;
+				toBeTemp.setDeleteTimestamp(toBe.getDeleteTimestamp());
 			}
 		}
 
