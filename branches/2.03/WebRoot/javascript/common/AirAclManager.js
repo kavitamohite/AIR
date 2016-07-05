@@ -272,9 +272,11 @@ AIR.AirAclManager = function() {
 		isEditable: function(item) {
 			var appDetail = AAM.getAppDetail();
 			if(item.id!='bEditConnections'){
-			var isBusinessApplication = appDetail.tableId == AC.TABLE_ID_BUSINESS_APPLICATION? true : false;
+			
+			var isBusinessApplication =  AC.TABLE_ID_BUSINESS_APPLICATION == appDetail.tableId ? true : false;
 			if(isBusinessApplication)
 				return false;
+			
 			}
 			var isAdmin = AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
 			if(isAdmin)
@@ -299,7 +301,7 @@ AIR.AirAclManager = function() {
 			
 			//Added by ENFZM
 			if(item.id!='bEditConnections'){
-				var isBusinessApplication = appDetail.tableId == AC.TABLE_ID_BUSINESS_APPLICATION? true : false;
+				var isBusinessApplication = AC.TABLE_ID_BUSINESS_APPLICATION == appDetail.tableId  ? true : false;
 				if(isBusinessApplication)
 					return false;
 				}

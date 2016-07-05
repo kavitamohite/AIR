@@ -579,9 +579,13 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		this.getComponent('p1').setVisible(!isLocationCI);
 		if(isLocationCI)
 			bEditConnections.disable();
-		else
+		else{
+			if( AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_BAR_EDITOR) && AC.TABLE_ID_BUSINESS_APPLICATION==data.tableId ){
+				bEditConnections.enable();
+			}else{
 			AIR.AirAclManager.setAccessMode(bEditConnections, data);
-
+			}
+		}
 		
 		var lvUpStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvUpStreamConnections');
 		var lvDownStreamConnections = this.getComponent('pConnectionsUpDownStreamV').getComponent('lvDownStreamConnections');

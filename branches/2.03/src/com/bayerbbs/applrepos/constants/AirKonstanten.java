@@ -111,6 +111,7 @@ public final class AirKonstanten {
 	public static final String ROLE_AIR_INFRASTRUCTURE_MANAGER 		= "AIR Infrastructure Manager";	
 	public static final String ROLE_AIR_LOCATION_DATA_MAINTENANCE	= "AIR Location Data Maintenance";
 	public static final String ROLE_BUSINESS_ESSENTIAL_EDITOR		= "AIR BusinessEssential-Editor";
+	public static final String ROLE_AIR_BAR_EDITOR					= "AIR BAR-Editor";
 	// --
 	public static final String ROLE_BOV_ADMIN						= "BOV Admin";
 	public static final String ROLE_BOV_EDITOR						= "BOV Editor";
