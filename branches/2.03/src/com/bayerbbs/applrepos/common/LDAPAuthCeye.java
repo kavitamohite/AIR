@@ -1,7 +1,7 @@
 package com.bayerbbs.applrepos.common;
 
 import java.util.Hashtable;
-
+import java.text.MessageFormat;
 import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -16,17 +16,12 @@ import javax.naming.directory.InitialDirContext;
  *
  */
 public class LDAPAuthCeye {
-
+	
 	private static final String LDAP_FACTORY = "com.sun.jndi.ldap.LdapCtxFactory";
-
-	// private static final String ldapURL = "ldaps://ldaps.bayer-ag.com:636/";	// IBM LDAP Service
-	private static final String ldapURL = "ldaps://BYYMT9.DE.bayer.cnb:636/";			// Microsoft AD (über LDAP)
-
-
-	 private static final String LDAP_START = "cn=";
-     private static final String LDAP_END = ",OU=Users,OU=LEV,OU=1251,OU=DE,DC=DE,DC=bayer,DC=cnb"; 
-
-
+	
+	private static final String ldapURL = "ldaps://ldaps.bayer-ag.com:636/o=bayer";	// IBM LDAP Service
+	 
+	
 	/**
 	 * @param args
 	 */
@@ -46,6 +41,7 @@ public class LDAPAuthCeye {
 			String password = args[1];
 
 			rccode=auth.login(username, password);
+			
 
 			System.out.println("result code: " + rccode);
 		}
@@ -76,7 +72,7 @@ public class LDAPAuthCeye {
 			authEnv.put(Context.SECURITY_PROTOCOL, "ssl"); 
 
 			authEnv.put(Context.SECURITY_AUTHENTICATION, "simple");
-			authEnv.put(Context.SECURITY_PRINCIPAL, LDAP_START+username+LDAP_END);
+			authEnv.put(Context.SECURITY_PRINCIPAL, MessageFormat.format("uid={0},ou=people,O=bayer", username));
 			authEnv.put(Context.SECURITY_CREDENTIALS, password);
 
 			try {
@@ -86,6 +82,7 @@ public class LDAPAuthCeye {
 					returncode = 1;
 				}
 			} catch (AuthenticationException authEx) {
+			System.out.println("authEX"+authEx);
 				System.out.println("Authentication failed");
 				returncode = -1;
 
@@ -99,5 +96,6 @@ public class LDAPAuthCeye {
 
 		return returncode;
 	}
-
+	
+	
 }
