@@ -549,7 +549,6 @@ public class HardwareComponentHbn {
 		try {
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
 			criteria.add(Restrictions.eq("technicalMaster", technicalMaster));
-			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			values = (List<HardwareComponent>) criteria.list();
 			session.close();
 		} catch (RuntimeException e) {
@@ -569,7 +568,6 @@ public class HardwareComponentHbn {
 		try {
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
 			criteria.add(Restrictions.eq("serialNumber", serialNumber));
-			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			values = (List<HardwareComponent>) criteria.list();
 			session.close();
 		} catch (RuntimeException e) {
@@ -589,7 +587,6 @@ public class HardwareComponentHbn {
 		try {
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
 			criteria.add(Restrictions.eq("inventoryP69", inventoryP69));
-			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			values = (List<HardwareComponent>) criteria.list();
 			session.close();
 		} catch (RuntimeException e) {
@@ -607,7 +604,6 @@ public class HardwareComponentHbn {
 		try {
 			Criteria criteria = session.createCriteria(HardwareComponent.class);
 			criteria.add(Restrictions.eq("technicalNumber", technicalNumber));
-			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			values = (List<HardwareComponent>) criteria.list();
 			session.close();
 		} catch (RuntimeException e) {
