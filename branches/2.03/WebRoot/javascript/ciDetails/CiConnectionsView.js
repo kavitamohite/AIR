@@ -840,11 +840,11 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
     	var data = AIR.AirApplicationManager.getAppDetail();//applicationDetailStore.data.items[0].data;//AIR.AirApplicationManager.getAppDetail();
     	
     	var isAdmin = AAM.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);//AAM.hasRole(AC.USER_ROLE_AIR_APPLICATION_MANAGER) || 
-		var isEditable = (data.relevanceStrategic == 'Y' || data.relevanceOperational == 'Y' || isAdmin);
+		var isEditable = (isAdmin ||( data.relevanceOperational!=undefined && data.relevanceOperational == 'Y')||(data.relevanceStrategic != undefined && data.relevanceStrategic == 'Y') );
 		
 		//location CI - upstream: nicht l�schbar - downstream und name=unknown: nicht l�schbar
 		isEditable = isEditable && !record.get('isReferenced') &&
-					 ((direction === AC.UPSTREAM && (data.tableId == AC.TABLE_ID_IT_SYSTEM || data.tableId == AC.TABLE_ID_APPLICATION || data.tableId == AC.TABLE_ID_BUSINESS_APPLICATION)) || 
+					 ((direction === AC.UPSTREAM && (data.tableId == AC.TABLE_ID_IT_SYSTEM || data.tableId == AC.TABLE_ID_APPLICATION || data.tableId == AC.TABLE_ID_BUSINESS_APPLICATION || data.tableId == AC.TABLE_ID_SERVICE)) || 
 					  (direction === AC.DOWNSTREAM && record.get('ciName') !== AC.UNKNOWN));// AAM.isLocationCi(data.tableId) && 
 		
         raDeleteConnection.tpl.html = '<div class="ux-row-action">';

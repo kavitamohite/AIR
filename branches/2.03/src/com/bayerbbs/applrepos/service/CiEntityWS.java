@@ -491,7 +491,7 @@ public class CiEntityWS {
 
 				if ((cwid.equals(businessApplication.getApplicationOwner()))
 						|| (cwid.equals(businessApplication
-								.getApplicationSteward()))) {
+								.getApplicationSteward()))||(AccessRightChecker.hasRole(cwid, input.getToken(), AirKonstanten.ROLE_AIR_BAR_EDITOR))) {
 					isEditable = true;
 				}
 
@@ -533,6 +533,7 @@ public class CiEntityWS {
 
 	public ServiceDTO getService(CiDetailParameterInput input) {
 		ServiceDTO serviceDTO = new ServiceDTO();
+		String cwid=input.getCwid();
 		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken())) {
 			Service service = ServiceHbn.findById(Service.class,
 					input.getCiId());
@@ -544,13 +545,36 @@ public class CiEntityWS {
 			serviceDTO.setOrganisationalScope(service.getOrganisationalScope());
 			serviceDTO.setCompanyCode(service.getCompanyCode());
 			setCiBaseData(serviceDTO, service);
-			AccessRightChecker checker = new AccessRightChecker();
+			/*AccessRightChecker checker = new AccessRightChecker();
 			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(),
 					input.getToken(), service)) {
 				serviceDTO.setRelevanceOperational(AirKonstanten.YES_SHORT);
 			} else {
 				serviceDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
-			}
+			}*/
+			
+			
+			
+			
+			boolean isEditable = false;
+			if (null != service && null == service.getDeleteQuelle()) {
+
+				if (null == service.getCiOwner() && null == service.getCiOwnerDelegate()) {
+					//wenn kein owner oder delegate, dürfen alle editieren
+					isEditable = true;
+				}
+
+				if (!isEditable && (cwid.equals(service.getCiOwner()) || 
+						   cwid.equals(service.getCiOwnerDelegate()))) {
+					isEditable = true;
+				}
+				
+				if (!isEditable && null != service.getCiOwnerDelegate()) {
+					if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromGroupNameAndCwid(service.getCiOwnerDelegate(), cwid))) {
+						isEditable = true;
+					}
+				}
+		}
 		}
 		return serviceDTO;
 	}
