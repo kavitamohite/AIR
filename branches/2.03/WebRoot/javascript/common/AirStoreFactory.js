@@ -89,7 +89,7 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createMassUpdateTypeStore: function(){
-			var massupdateTypeData = [['3','Change Attributes'],['2','Copy Attributes from a Template'],['1','Link a Template']];
+			var massupdateTypeData = [['3','Change Attributes'],['2','Copy Attributes from another CI (e.g. a Template)'],['1','Link a Template']];
 			var massupdateTypeStore = new Ext.data.ArrayStore(
 					{
 						storeId: 'massupdateTypeStore',

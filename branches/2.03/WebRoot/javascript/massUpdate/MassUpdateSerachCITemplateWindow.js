@@ -23,7 +23,7 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
     		closable: false,
     		closeAction:'close',
     		border: false,
-    		title: 'Selection of Template Parameters',
+    		title: 'Selection of a CI (e.g. a Template)',
     		autoScroll: true,
     		width: 1000,
     		height: 700,
@@ -53,7 +53,7 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
     				items: [{
     					xtype: 'panel',
     					id: 'pTemplateCISearch',
-    					title: 'Select element as template',//languagestore.data.items[0].data['ciCopyFromViewTitle'],//
+    					title: 'Select CI for copying attributes',//languagestore.data.items[0].data['ciCopyFromViewTitle'],//
     					
     	//				anchor: '100%',
     					border: false,
