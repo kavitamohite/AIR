@@ -178,8 +178,8 @@
 		<Source>Middleware</Source>
 		<Destination>Middleware</Destination>
 		<Relevance>operational and strategic</Relevance>
-		<Upstream>N</Upstream>
-		<Downstream>N</Downstream>
+		<Upstream>Y</Upstream>
+		<Downstream>Y</Downstream>
 	</Identifier>
 	<Identifier>
 		<Source>Middleware</Source>
