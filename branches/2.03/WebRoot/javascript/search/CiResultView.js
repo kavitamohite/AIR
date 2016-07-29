@@ -90,7 +90,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	        	 {
 					xtype: 'filterCombo',
 			        id: 'cbmassUpdateType',
-			        width: 230,
+			        width: 320,
 			        hideLabel: false,
 			        fieldLabel: 'Mass Update Mode',
 					lastQuery: '',
