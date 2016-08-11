@@ -2070,7 +2070,7 @@ public class CiEntityWS {
 		} catch (Exception e) {
 			// handle exception
 			maParameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
-			maParameterOutPut.setMessages(new String[] { e.getMessage() });
+			maParameterOutPut.setMessages(new String[] { e.getCause().getMessage() });
 		}
 
 		return maParameterOutPut;
@@ -2348,7 +2348,7 @@ public class CiEntityWS {
 				}
 				if (massUpdateParameterInput.getItsecGroupId()) {
 					application.setRefId(null);
-					if (application.getItsecGroupId() == 10136) {
+					if (application.getItsecGroupId()!=null && application.getItsecGroupId() == 10136) {
 						application.setItsecGroupId(templateApplication
 								.getItsecGroupId());
 						ItsecMassnahmeStatusHbn.saveSaveguardAssignment(
@@ -2777,7 +2777,9 @@ public class CiEntityWS {
 			}
 
 		} catch (Exception e) {
-
+			outPut.setResult(AirKonstanten.RESULT_ERROR);
+			outPut.setMessages(new String[] { e.getMessage() });
+		
 		}
 
 		return outPut;

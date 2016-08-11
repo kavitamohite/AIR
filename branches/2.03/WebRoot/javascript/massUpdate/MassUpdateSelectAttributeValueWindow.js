@@ -812,12 +812,10 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         this.getComponent('selectAttrAgreement').getComponent('selectAttrBusinessEssential').getStore().sort('text','ASC');
         this.getComponent('selectAttrCompliance').getComponent('selectAttrCBrelevanceGxp').getStore().sort('text','ASC');
         
-        
+        this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrseverityLevel').getStore().sort('id','DESC');
+		this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrity').getStore().sort('id','ASC');
 
 
-
-
-    	    	
     },
 	onOsGroupSelect: function(combo, record, index) {
 		this.setOsGroup(combo, record);
