@@ -13,17 +13,18 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.AttributeValue;
 import com.bayerbbs.applrepos.domain.SpecialAttribute;
 import com.bayerbbs.applrepos.dto.SpecialAttributeViewDataDTO;
+import com.bayerbbs.applrepos.service.AccessRightChecker;
 
 public class SpecialAttributeHbn {
 
 	private static String asIsStatus = "AS_IS";
 	private static String toBeStatus = "TO_BE";
 
-	public static boolean saveSpecialAttributeFromDTO(String cwid, Long cIid, Long tableId, SpecialAttributeViewDataDTO specialAttributeViewDataDTO) {
+	public static boolean saveSpecialAttributeFromDTO(String cwid,String token, Long cIid, Long tableId, SpecialAttributeViewDataDTO specialAttributeViewDataDTO) {
 
 		SpecialAttribute asIs = null, toBe = null;
 		SpecialAttribute asIsTemp = new SpecialAttribute(), toBeTemp = new SpecialAttribute();
-		Long oldToBevalue = null;
+		Long oldToBevalue = 0L;
 		List<SpecialAttribute> specialAttribute = findByCiIdAndAttributeId(cIid, specialAttributeViewDataDTO.getAttributeId());
 
 		for (SpecialAttribute spAttribute : specialAttribute) {
@@ -32,7 +33,11 @@ public class SpecialAttributeHbn {
 				asIsTemp.setDeleteTimestamp(asIs.getDeleteTimestamp());
 			} else {
 				toBe = spAttribute;
+				
 				oldToBevalue = toBe.getAttributeValue().getId();
+				if((specialAttributeViewDataDTO.getToBeValueId() == null || specialAttributeViewDataDTO.getToBeValueId() == 0l || specialAttributeViewDataDTO.getToBeValueId()== Long.MAX_VALUE) && toBe.getDeleteTimestamp()!= null){
+					oldToBevalue = 0L;
+				}
 				toBeTemp.setDeleteTimestamp(toBe.getDeleteTimestamp());
 			}
 		}
@@ -64,7 +69,7 @@ public class SpecialAttributeHbn {
 			asIs.setUpdateUser(cwid);
 
 		}
-
+		if(AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_SPECIAL_ATTRIBUTE_EDITOR)){
 		if (toBe == null) {
 			toBe = new SpecialAttribute();
 			toBe.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
@@ -77,7 +82,7 @@ public class SpecialAttributeHbn {
 			toBe.setStatus(toBeStatus);
 		}
 
-		if (specialAttributeViewDataDTO.getToBeValueId() == null || specialAttributeViewDataDTO.getToBeValueId() == 0l || specialAttributeViewDataDTO.getAsIsValueId() == Long.MAX_VALUE) {
+		if (specialAttributeViewDataDTO.getToBeValueId() == null || specialAttributeViewDataDTO.getToBeValueId() == 0l || specialAttributeViewDataDTO.getToBeValueId()== Long.MAX_VALUE) {
 			toBe.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 			toBe.setDeleteTimestamp(ApplReposTS.getDeletionTimestamp());
 			toBe.setDeleteUser(cwid);
@@ -91,6 +96,7 @@ public class SpecialAttributeHbn {
 			toBe.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
 			toBe.setUpdateUser(cwid);
 		}
+		}
 
 		Session session = HibernateUtil.getSession();
 
@@ -102,12 +108,13 @@ public class SpecialAttributeHbn {
 			} else if (asIs.getId() != null) {
 				session.update(asIs);					
 			}
-
+			if(AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_SPECIAL_ATTRIBUTE_EDITOR)){
 			if (toBe.getId() == null && toBe.getAttributeValue() != null) {
 				session.createSQLQuery(createInsertQuery(toBe, cwid)).executeUpdate();
 
 			} else if (toBe.getId() != null) {
 				session.update(toBe);
+			}
 			}
 
 			session.flush();
@@ -124,21 +131,32 @@ public class SpecialAttributeHbn {
 				tx.commit();
 			}
 			session.close();
-		}		
+		}
+		
+			
+		if(!oldToBevalue.equals(specialAttributeViewDataDTO.getToBeValueId())){
+			
 		if (specialAttributeViewDataDTO.getToBeValueId() == null
 				&& toBe.getAttributeValue() != null) {
+			//Long tableId, Long ciId, Long attributeId, Long attributeValueId, Long prevAttributeValueId, String source,
+		
 			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
 					.getAttribute().getId(),
 					specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
 					AirKonstanten.APPLICATION_GUI_NAME, cwid);
-		} else if (specialAttributeViewDataDTO.getToBeValueId() != null) {
+			
+		
+			
+			} else if (specialAttributeViewDataDTO.getToBeValueId() != null) {
 
 			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
 					.getAttribute().getId(),
 					specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
 					AirKonstanten.APPLICATION_GUI_NAME, cwid);
 		}
-
+		}
+		//}
+		
 		return true;
 	}
 

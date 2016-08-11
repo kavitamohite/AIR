@@ -63,6 +63,6 @@ public class SpecialAttributeWS {
 	}
 	
 	public Boolean saveSpecialAttribute(SpecialAttributeParameterInput input){
-		return SpecialAttributeHbn.saveSpecialAttributeFromDTO(input.getCwid(), input.getCiId(), input.getTableId(), input.getSpecialAttributeViewDataDTO());
+		return SpecialAttributeHbn.saveSpecialAttributeFromDTO(input.getCwid(),input.getToken(), input.getCiId(), input.getTableId(), input.getSpecialAttributeViewDataDTO());
 	}
 }

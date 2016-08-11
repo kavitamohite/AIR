@@ -190,7 +190,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 				btn.show();
 				grid.getColumnModel().getColumnById('toBeValue').editor.disabled = false;
 				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
-				btn.disabled = false;
+				//btn.disabled = false;
 				return;
 			}
 		});
@@ -198,21 +198,23 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 			if(ci.get('ciOwner') === AAM.getCwid() || ci.get('ciOwnerDelegate') === AAM.getCwid() ||
 					ci.get('applicationSteward') === AAM.getCwid()){
 				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
-				btn.disabled = false;
+				btn.show();
 				return;
 			}
-		} else {
+		} 
+		else {
 			ci = AAM.getAppDetail();
 			if(ci.applicationOwnerHidden === AAM.getCwid() || ci.applicationOwnerDelegateHidden === AAM.getCwid() ||
 					ci.applicationStewardHidden === AAM.getCwid()){
 				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
-				btn.disabled = false;
+				btn.show();
 				return;
 			}
 		}
 	},
 	
-	update: function() {
+	update: function(data) {
+		//ENFZM : Need to add the delete timestamp check
 		var attributeValueListStore = this.getComponent('specialAttributesListView');
 		
 		attributeValueListStore.getColumnModel().getColumnById('toBeValue').getEditor().getStore().load();

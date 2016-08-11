@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
-	public final static String AIR_VERSION = "3.06.002";
+	public final static String AIR_VERSION = "3.06.003";
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
@@ -112,6 +112,7 @@ public final class AirKonstanten {
 	public static final String ROLE_AIR_LOCATION_DATA_MAINTENANCE	= "AIR Location Data Maintenance";
 	public static final String ROLE_BUSINESS_ESSENTIAL_EDITOR		= "AIR BusinessEssential-Editor";
 	public static final String ROLE_AIR_BAR_EDITOR					= "AIR BAR Editor";
+	public static final String ROLE_AIR_SPECIAL_ATTRIBUTE_EDITOR	= "AIR_SPECIAL_ATTRIBUTE_EDITOR";
 	// --
 	public static final String ROLE_BOV_ADMIN						= "BOV Admin";
 	public static final String ROLE_BOV_EDITOR						= "BOV Editor";
