@@ -139,13 +139,13 @@ public class SpecialAttributeHbn {
 		if (specialAttributeViewDataDTO.getToBeValueId() == null
 				&& toBe.getAttributeValue() != null) {
 			//Long tableId, Long ciId, Long attributeId, Long attributeValueId, Long prevAttributeValueId, String source,
-		
+			if(oldToBevalue!=0L){
 			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
 					.getAttribute().getId(),
 					specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
 					AirKonstanten.APPLICATION_GUI_NAME, cwid);
 			
-		
+			}
 			
 			} else if (specialAttributeViewDataDTO.getToBeValueId() != null) {
 

@@ -234,8 +234,10 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		specialAttributesListStore.load({
 			params: params
 		});
-		
-		this.updateBasedOnRole(attributeValueListStore);
+		var isDeleted = data.deleteTimestamp && data.deleteTimestamp.length > 0;
+		if(!isDeleted){
+		this.updateBasedOnRole(attributeValueListStore,data);
+		}
 	}
 	
 });
