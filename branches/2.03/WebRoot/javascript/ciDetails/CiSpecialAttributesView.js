@@ -177,7 +177,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
         } else return "";
     },
     
-    updateBasedOnRole : function(grid){
+    updateBasedOnRole : function(grid,data){
 		var rolePersonListStore = AIR.AirStoreManager.getStoreByName('rolePersonListStore');
 		var btn = this.buttons[0];
 		var ci = undefined;
@@ -186,6 +186,10 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		grid.getColumnModel().getColumnById('toBeValue').editor.disabled = true;
 		grid.getColumnModel().getColumnById('asIsValue').editor.disabled = true;
 		btn.hide();
+		var isDeleted = data.deleteTimestamp && data.deleteTimestamp.length > 0;
+		if(isDeleted){
+			return;
+		}
 		rolePersonListStore.each(function(item) {
 			var value = item.data.roleName;
 			if(value === 'AIR_SPECIAL_ATTRIBUTE_EDITOR'){
@@ -248,10 +252,9 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		specialAttributesListStore.load({
 			params: params
 		});
-		var isDeleted = data.deleteTimestamp && data.deleteTimestamp.length > 0;
-		if(!isDeleted){
-		this.updateBasedOnRole(attributeValueListStore);
-		}
+		
+		this.updateBasedOnRole(attributeValueListStore,data);
+		
 	}
 	
 });
