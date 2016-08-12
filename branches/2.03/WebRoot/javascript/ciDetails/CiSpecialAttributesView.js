@@ -183,7 +183,9 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		var ci = undefined;
 		if(Ext.getCmp('tpCiSearchResultTables').getActiveTab()!=null)
 		ci = Ext.getCmp('tpCiSearchResultTables').getActiveTab().store.data.items[ciResultGrid.store.find('id',AAM.getCiId())];
-		
+		grid.getColumnModel().getColumnById('toBeValue').editor.disabled = true;
+		grid.getColumnModel().getColumnById('asIsValue').editor.disabled = true;
+		btn.hide();
 		rolePersonListStore.each(function(item) {
 			var value = item.data.roleName;
 			if(value === 'AIR_SPECIAL_ATTRIBUTE_EDITOR'){
@@ -191,9 +193,11 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 				grid.getColumnModel().getColumnById('toBeValue').editor.disabled = false;
 				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
 				//btn.disabled = false;
+				specialAttributeRoleFlag=true;
 				return;
 			}
 		});
+		
 		if(ci != undefined){
 			if(ci.get('ciOwner') === AAM.getCwid() || ci.get('ciOwnerDelegate') === AAM.getCwid() ||
 					ci.get('applicationSteward') === AAM.getCwid()){
@@ -201,6 +205,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 				btn.show();
 				return;
 			}
+
 		} 
 		else {
 			ci = AAM.getAppDetail();
@@ -210,7 +215,9 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 				btn.show();
 				return;
 			}
+			
 		}
+	
 	},
 	
 	update: function(data) {
@@ -236,7 +243,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		});
 		var isDeleted = data.deleteTimestamp && data.deleteTimestamp.length > 0;
 		if(!isDeleted){
-		this.updateBasedOnRole(attributeValueListStore,data);
+		this.updateBasedOnRole(attributeValueListStore);
 		}
 	}
 	
