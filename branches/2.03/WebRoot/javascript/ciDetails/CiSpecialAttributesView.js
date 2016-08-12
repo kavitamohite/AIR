@@ -196,6 +196,13 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 				specialAttributeRoleFlag=true;
 				return;
 			}
+			if(value === AC.USER_ROLE_AIR_ADMINISTRATOR){
+				btn.show();
+				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
+				//btn.disabled = false;
+				
+				
+			}
 		});
 		
 		if(ci != undefined){
