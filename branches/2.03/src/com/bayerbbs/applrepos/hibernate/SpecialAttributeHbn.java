@@ -196,13 +196,13 @@ public class SpecialAttributeHbn {
 		String insertQuery = "insert into CI_ATTRIBUTE_VALUE_RELATION (INSERT_QUELLE, INSERT_TIMESTAMP, INSERT_USER, UPDATE_QUELLE, UPDATE_TIMESTAMP, UPDATE_USER, ATTRIBUTE_ID, ATTRIBUTE_VALUE_ID, CI_ID, STATUS, TABLE_ID) values "
 				+ "('"
 				+ AirKonstanten.APPLICATION_GUI_NAME
-				+ "', current_timestamp"
+				+ "', systimestamp"
 				+ ", '"
 				+ cwid
 				+ "', '"
 				+ AirKonstanten.APPLICATION_GUI_NAME
 				+ "', "
-				+ "current_timestamp, '"
+				+ "systimestamp, '"
 				+ cwid
 				+ "',"
 				+ specialAttribute.getAttribute().getId()
