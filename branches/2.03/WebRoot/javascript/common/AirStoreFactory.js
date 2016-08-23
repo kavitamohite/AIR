@@ -4923,6 +4923,7 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createSpecialAttributeSaveStore: function() {
+					
 			var specialAttributeSaveRecord = Ext.data.Record.create([
 	 	        'result'
 	 	    ]);
@@ -4934,17 +4935,15 @@ AIR.AirStoreFactory = function() {
 	 	    var specialAttributeSaveStore = new Ext.data.XmlStore({
 	 	    	autoDestroy: true,
 	 	    	autoLoad: false,
-	 	    	
-	 	      	fields: [ 'result' ],
 	 	      	
 	 	      	proxy: new Ext.ux.soap.SoapProxy({
 	 	      		url: webcontext + '/SpecialAttributeWSPort',
 	 	      		loadMethod: 'saveSpecialAttributes',
 	 	      		timeout: 120000,
 	 	      		reader: specialAttributeSaveReader
-	 	      	}),
+	 	      	})
 	 	    	
-	 	      	reader: specialAttributeSaveReader
+	 	      	//reader: specialAttributeSaveReader
 	 	    });
 	 	    
 	 	    return specialAttributeSaveStore;

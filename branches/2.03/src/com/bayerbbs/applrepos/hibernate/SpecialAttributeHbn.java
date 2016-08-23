@@ -119,6 +119,30 @@ public class SpecialAttributeHbn {
 
 			session.flush();
 			tx.commit();
+			
+			
+			if(!oldToBevalue.equals(specialAttributeViewDataDTO.getToBeValueId())){
+				
+				if (specialAttributeViewDataDTO.getToBeValueId() == null
+						&& toBe.getAttributeValue() != null) {
+					//Long tableId, Long ciId, Long attributeId, Long attributeValueId, Long prevAttributeValueId, String source,
+					if(oldToBevalue!=0L){
+					startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
+							.getAttribute().getId(),
+							specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
+							AirKonstanten.APPLICATION_GUI_NAME, cwid);
+					
+					}
+					
+					} else if (specialAttributeViewDataDTO.getToBeValueId() != null) {
+
+					startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
+							.getAttribute().getId(),
+							specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
+							AirKonstanten.APPLICATION_GUI_NAME, cwid);
+				}
+				}
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -133,29 +157,6 @@ public class SpecialAttributeHbn {
 			session.close();
 		}
 		
-			
-		if(!oldToBevalue.equals(specialAttributeViewDataDTO.getToBeValueId())){
-			
-		if (specialAttributeViewDataDTO.getToBeValueId() == null
-				&& toBe.getAttributeValue() != null) {
-			//Long tableId, Long ciId, Long attributeId, Long attributeValueId, Long prevAttributeValueId, String source,
-			if(oldToBevalue!=0L){
-			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
-					.getAttribute().getId(),
-					specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
-					AirKonstanten.APPLICATION_GUI_NAME, cwid);
-			
-			}
-			
-			} else if (specialAttributeViewDataDTO.getToBeValueId() != null) {
-
-			startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
-					.getAttribute().getId(),
-					specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
-					AirKonstanten.APPLICATION_GUI_NAME, cwid);
-		}
-		}
-		//}
 		
 		return true;
 	}
@@ -220,7 +221,7 @@ public class SpecialAttributeHbn {
 	}
 
 	public static void startInheritance(Long tableId, Long ciId, Long attributeId, Long attributeValueId, Long prevAttributeValueId, String source,
-			String user) {
+			String user) throws Exception {
 		String sql = "{? = call PCK_INHERITANCE.FV_Inheritance_Attr(?,?,?,?,?,?,?)}";
 
 		Transaction ta = null;
@@ -258,6 +259,7 @@ public class SpecialAttributeHbn {
 			commit = true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new Exception(e);
 		} finally {
 			HibernateUtil.close(ta, session, commit);
 		}
