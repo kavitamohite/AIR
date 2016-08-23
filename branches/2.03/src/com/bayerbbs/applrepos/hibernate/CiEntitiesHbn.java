@@ -42,7 +42,7 @@ public class CiEntitiesHbn {
 		
 		StringBuffer sql = new StringBuffer();
 
-		sql.append("select * from DWH_ENTITY  where");
+		sql.append("select * from V_DWH_ENTITY  where");
 		// sql.append(" upper(deleted) = 'NO'");
 		sql.append(" TABLE_ID in (");
 			sql.append(AirKonstanten.TABLE_ID_IT_SYSTEM);
@@ -144,7 +144,7 @@ public class CiEntitiesHbn {
 		
 		StringBuffer sql = new StringBuffer();
 
-		sql.append("select * from DWH_ENTITY  where");
+		sql.append("select * from V_DWH_ENTITY  where");
 		sql.append(" 1=1");
 		if (!showDeleted) {
 			sql.append(" and upper(deleted) = 'NO'");
@@ -304,7 +304,7 @@ public class CiEntitiesHbn {
 		
 		StringBuffer sql = new StringBuffer();
 
-		sql.append("select count(*) from DWH_ENTITY  where");
+		sql.append("select count(*) from V_DWH_ENTITY  where");
 		
 		sql.append(" 1=1");
 		
@@ -409,7 +409,7 @@ public class CiEntitiesHbn {
 
 		searchName = searchName.toUpperCase();
 		StringBuffer sql = new StringBuffer();
-		sql.append("select * from DWH_ENTITY  where");
+		sql.append("select * from V_DWH_ENTITY  where");
 
 		if (!withDeleted) {
 			sql.append(" upper(deleted) = 'NO' and ");
@@ -480,7 +480,7 @@ public class CiEntitiesHbn {
 		searchName = searchName.toUpperCase();
 		StringBuffer sql = new StringBuffer();
 
-		sql.append("select * from DWH_ENTITY  where");
+		sql.append("select * from V_DWH_ENTITY  where");
 		sql.append(" upper(deleted) = 'NO'");
 		sql.append(" and upper(type) = upper('").append(typename).append("')");
 		

@@ -165,7 +165,27 @@ public class AIRWS {
 					editInput.getShowDeleted());
 
 		}
-		CiEntitiesHbn.findCisByNameOrAlias("BYZREH", false, "CONTAINS", false, "applicationName", "ASC", 10, 100);
+		
+		// Occasionally the GUI in AIR gets messed up when AIR is booting too
+		// fast. Therefore we introduce a timeout here
+		// A like select on V_DWH_ENTITY is conducted which requires some time
+		// and has the advantage that later search
+		// queries are conducted faster. However, if the search takes less than
+		// three seconds, we send the system to sleep
+		// for another few seconds (in total round about three)
+		long startTime = System.nanoTime();
+		CiEntitiesHbn.findCisByNameOrAlias("BYZREH", false, "CONTAINS", false,
+				"applicationName", "ASC", 10, 100);
+		long endTime = System.nanoTime();
+		if ((endTime - startTime) / 1000000000.0 < 3.0) {
+			try {
+				java.util.concurrent.TimeUnit.SECONDS
+						.sleep((long) ((endTime - startTime) / 1000000000.0) + 1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		System.out.println("CiEntitiesHbn.findCisByNameOrAlias  calling");
 
 		return output;
