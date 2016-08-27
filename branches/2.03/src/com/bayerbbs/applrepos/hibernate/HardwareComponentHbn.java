@@ -393,6 +393,8 @@ public class HardwareComponentHbn {
 			AssetViewDataDTO dto) {
 		HardwareComponent hardwareComponent = new HardwareComponent();
 
+		try {
+		
 		if (dto.getId() == null) {
 			hardwareComponent
 					.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
@@ -418,6 +420,10 @@ public class HardwareComponentHbn {
 					itSystem.setCiOwner(dto.getCwid());
 					itSystem.setItSystemName(dto.getSystemPlatformName());
 					itSystem.setCiSubTypeId(AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING);
+				}
+				else if(itSystem != null && itSystem.getDeleteUser()!=null){
+					dto.setError("The System Platform does not exist in database");
+					return dto;
 				}
 				hardwareComponent.setItSystem(ItSystemHbn.saveItSystem(itSystem));
 			}else {
@@ -467,8 +473,13 @@ public class HardwareComponentHbn {
 			dto.setId(hardwareComponent.getId());
 			dto.setIdentNumber(hardwareComponent.getName());
 		}
+		} catch (Exception e) {
+			dto.setError("Saving Asset Failed");
+			return dto;
+		}
 		
 		return dto;
+		
 	}
 
 	private static String validateHardwareComponent(AssetViewDataDTO asetViewDataDTO,HardwareComponent hardwareComponent) {
