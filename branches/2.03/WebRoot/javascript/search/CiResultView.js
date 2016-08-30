@@ -142,6 +142,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			bMassUpdate.setDisabled(false);
 			bSelectDeselectAll.setDisabled(false);
 			cbmassUpdateType.setDisabled(false);
+			//cbIsMultipleSelect.setDisabled(true);
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().singleSelect=false;
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().clearSelections();
 		}
@@ -228,6 +229,8 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			cbIsMultipleSelect.setVisible(false);
 			lIsMultipleSelect.setVisible(false);
 			cbmassUpdateType.setVisible(false);
+			Ext.getCmp('cbIsMultipleSelect').setValue(false);
+			
 		}
 
 		ciResultGrid.getStore().load({
@@ -265,6 +268,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			cbIsMultipleSelect.setVisible(false);
 			lIsMultipleSelect.setVisible(false);
 			cbmassUpdateType.setVisible(false);
+			Ext.getCmp('cbIsMultipleSelect').setValue(false);
 		}
 	},
 	
