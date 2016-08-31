@@ -186,7 +186,7 @@
 		<Destination>Application Platform</Destination>
 		<Relevance>operational and strategic</Relevance>
 		<Upstream>N</Upstream>
-		<Downstream>N</Downstream>
+		<Downstream>y</Downstream>
 	</Identifier>
 	<Identifier>
 		<Source>Middleware</Source>
