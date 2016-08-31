@@ -83,7 +83,7 @@
 		<Source>Application Platform</Source>
 		<Destination>Middleware</Destination>
 		<Relevance>operational and strategic</Relevance>
-		<Upstream>N</Upstream>
+		<Upstream>Y</Upstream>
 		<Downstream>N</Downstream>
 	</Identifier>
 	<Identifier>
