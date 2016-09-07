@@ -63,8 +63,8 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                                    combo.reset();
 	                                }
 	                            }
-	                            /*var savebtn =  Ext.getCmp('clCiSpecialAttributes').buttons[0];
-	                            savebtn.setDisabled(false);*/
+	                            var savebtn =  Ext.getCmp('clCiSpecialAttributes').buttons[0];
+	                            savebtn.setDisabled(false);
 	                        }
 	                    }
 	               },
@@ -97,8 +97,8 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                                if (typeof newValue === 'string' && newValue.length === 0) {
 	                                    combo.reset();
 	                                }
-	                               /* var savebtn =  Ext.getCmp('clCiSpecialAttributes').buttons[0];
-		                            savebtn.setDisabled(false);*/
+	                                var savebtn =  Ext.getCmp('clCiSpecialAttributes').buttons[0];
+		                            savebtn.setDisabled(false);
 	                            }
 	                        }
 	                    }
@@ -230,12 +230,12 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 				grid.getColumnModel().getColumnById('toBeValue').editor.disabled = false;
 				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
 				btn.show();
-				//btn.setDisabled(true);
+				btn.setDisabled(true);
 				return;
 			}
 			if(value === AC.USER_ROLE_AIR_ADMINISTRATOR){
 				btn.show();
-				//btn.setDisabled(true);
+				btn.setDisabled(true);
 				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
 				//btn.disabled = false;
 				
@@ -248,7 +248,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 					ci.get('applicationSteward') === AAM.getCwid()){
 				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
 				btn.show();
-				//btn.setDisabled(true);
+				btn.setDisabled(true);
 				return;
 			}
 
@@ -259,7 +259,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 					ci.applicationStewardHidden === AAM.getCwid()){
 				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
 				btn.show();
-				//btn.setDisabled(true);
+				btn.setDisabled(true);
 				return;
 			}
 			
