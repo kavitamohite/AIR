@@ -63,8 +63,10 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                                    combo.reset();
 	                                }
 	                            }
+	                            if(newValue!=oldValue){
 	                            var savebtn =  Ext.getCmp('clCiSpecialAttributes').buttons[0];
 	                            savebtn.setDisabled(false);
+	                            }
 	                        }
 	                    }
 	               },
@@ -97,8 +99,10 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                                if (typeof newValue === 'string' && newValue.length === 0) {
 	                                    combo.reset();
 	                                }
+	                                if(newValue!=oldValue){
 	                                var savebtn =  Ext.getCmp('clCiSpecialAttributes').buttons[0];
 		                            savebtn.setDisabled(false);
+	                                }
 	                            }
 	                        }
 	                    }
