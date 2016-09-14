@@ -67,7 +67,14 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 	                            var savebtn =  Ext.getCmp('clCiSpecialAttributes').buttons[0];
 	                            savebtn.setDisabled(false);
 	                            }
-	                        }
+	                        },
+	                    	select : function(combo, record, index) {
+	                    		
+		                        if(record){
+		 	                            var savebtn =  Ext.getCmp('clCiSpecialAttributes').buttons[0];
+		 	                            savebtn.setDisabled(false);
+		                        }
+	                    	}
 	                    }
 	               },
 	               renderer: this.columnRenderer
@@ -104,7 +111,14 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		                            savebtn.setDisabled(false);
 	                                }
 	                            }
-	                        }
+	                        },
+	                    	select : function(combo, record, index) {
+	                    		
+		                        if(record){
+		 	                            var savebtn =  Ext.getCmp('clCiSpecialAttributes').buttons[0];
+		 	                            savebtn.setDisabled(false);
+		                        }
+	                    	}
 	                    }
 	               },
   	               renderer: this.columnRenderer
