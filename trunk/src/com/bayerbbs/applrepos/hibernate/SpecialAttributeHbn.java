@@ -20,7 +20,7 @@ public class SpecialAttributeHbn {
 	private static String asIsStatus = "AS_IS";
 	private static String toBeStatus = "TO_BE";
 
-	public static boolean saveSpecialAttributeFromDTO(String cwid,String token, Long cIid, Long tableId, SpecialAttributeViewDataDTO specialAttributeViewDataDTO) {
+	public synchronized static boolean saveSpecialAttributeFromDTO(String cwid,String token, Long cIid, Long tableId, SpecialAttributeViewDataDTO specialAttributeViewDataDTO) {
 
 		SpecialAttribute asIs = null, toBe = null;
 		SpecialAttribute asIsTemp = new SpecialAttribute(), toBeTemp = new SpecialAttribute();
