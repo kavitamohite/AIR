@@ -256,7 +256,7 @@ public class LDAPAuthRoles {
 	}
 
 	public String getEnvironment() {
-		String env = "Q";
+		String env = "";
 		InetAddress iAddress;
 		String hostName = "";
 		try {
