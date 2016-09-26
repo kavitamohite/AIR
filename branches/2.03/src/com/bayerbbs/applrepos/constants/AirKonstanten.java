@@ -11,7 +11,7 @@ public final class AirKonstanten {
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
 	public final static String SERVERNAME_PROD = "byzreg.bayer-ag.com";
 	public final static String SERVERNAME_QA = "byzreh.bayer-ag.com";
-	public final static String SERVERNAME_DEV = "by0nh9.bayer-ag.com";
+	public final static String SERVERNAME_DEV = "by0nh9.de.bayer.cnb";
 	public final static String SERVERNAME_BMS_PROD = "mdelevs0300.ad.glpoly.net";
 	public final static String SERVERNAME_BMS_QA = "mdelevs0475.ad.glpoly.net";
 	public final static String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
