@@ -880,7 +880,7 @@ public class ApplicationWS {
 				AccessRightChecker checker = new AccessRightChecker();
 
 				// hier wird geprüft, ob der aktive Anwender über Edit-Zugriffsrechte (über Person, seine Gruppenzugehörigkeit oder globale Adminrechte) verfügt  
-				if (checker.isEditable(application.getApplicationId(), new Long(2), detailInput.getCwid())) {
+				if (checker.isEditable(application.getApplicationId(), new Long(2), detailInput.getCwid(),detailInput.getToken())) {
 					dto.setIsEditable(AirKonstanten.YES_SHORT);
 				}
 
@@ -1068,7 +1068,7 @@ public class ApplicationWS {
 			// the attribute business essential is only editable for users
 			// with the role "BusinessEssential-Editor"
 			// so we have to check it here
-			String count = ApplReposHbn.getCountFromRoleNameAndCwid(AirKonstanten.ROLE_BUSINESS_ESSENTIAL_EDITOR, detailInput.getCwid());
+			String count = ApplReposHbn.getCountFromRoleNameAndCwid(AirKonstanten.ROLE_BUSINESS_ESSENTIAL_EDITOR, detailInput.getCwid(),detailInput.getToken());
 			if (null != count && !"0".equals(count)) {
 				accessDTO.setBusiness_Essential_Id(AirKonstanten.YES_SHORT);
 				// if we can edit the business essential, we can edit the ci

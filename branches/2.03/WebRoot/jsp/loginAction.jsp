@@ -17,6 +17,8 @@
 	
 	if (AirKonstanten.RESULT_OK.equals(paramOutput.getResult())) {
 		request.setAttribute("token", paramOutput.getToken());
+		//request.setAttribute("userRoles", paramOutput.getRoles());
+		
 		output = "{\"success\": true, \"token\": \"" + paramOutput.getToken() + "\", \"cwid\": \"" + paramOutput.getCwid() + "\", \"lastlogon\": \"" + paramOutput.getLastLogon()+ "\"}";
 	}
 	else {

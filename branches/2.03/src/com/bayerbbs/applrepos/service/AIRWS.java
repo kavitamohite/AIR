@@ -3,7 +3,14 @@ package com.bayerbbs.applrepos.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
+
+import com.bayerbbs.applrepos.common.LDAPAuthRoles;
 import com.bayerbbs.applrepos.common.StringUtils;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.AppRepAuthData;
 import com.bayerbbs.applrepos.dto.ItsecUserOptionDTO;
 import com.bayerbbs.applrepos.dto.PersonOptionDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
@@ -115,8 +122,20 @@ public class AIRWS {
 	}
 
 	public RolePersonDTO[] getRolePerson(ItsecUserOptionParameter parameter) {
-		List<RolePersonDTO> listRolePerson = ApplReposHbn.findRolePerson(parameter.getCwid());
-
+		
+		
+		List<RolePersonDTO> listRolePerson = new ArrayList<RolePersonDTO>();
+			Cache myCache = (Cache) CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
+			if (null != myCache) {
+				Element element = myCache.get(LDAPAuthWS.getKeyname(parameter.getCwid(), parameter.getToken()));
+				
+				if (null != element) {
+					AppRepAuthData authData = (AppRepAuthData) element.getObjectValue();
+					listRolePerson=authData.getRoles();
+					
+				}
+			}
+			
 		RolePersonDTO[] arrayRP = null;
 
 		if (!listRolePerson.isEmpty()) {
@@ -127,8 +146,9 @@ public class AIRWS {
 		}		
 		return arrayRP;
 	}
-
-	public RolePersonDTO[] getRolePersonBusinessEssentialEditor(ItsecUserOptionParameter parameter) {
+			
+			
+	/*public RolePersonDTO[] getRolePersonBusinessEssentialEditor(ItsecUserOptionParameter parameter) {
 		List<RolePersonDTO> listRolePerson = ApplReposHbn.findRolePersonBusinessEssentialEditor(parameter.getCwid());
 
 		RolePersonDTO[] arrayRP = null;
@@ -140,7 +160,7 @@ public class AIRWS {
 			}
 		}
 		return arrayRP;
-	}
+	}*/
 
 	public ApplicationEditParameterOutput saveUserOption(UserOptionParameterInput editInput) {
 

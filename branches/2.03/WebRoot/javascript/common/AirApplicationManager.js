@@ -124,7 +124,7 @@ AIR.AirApplicationManager = function() {
 				itsecMassnahmenGapClassListStore: null,
 //				signeeListStore: null,//vom itSet abh�ngig, daher hier nicht ODER lokal filtern mit itSet nach �ffnen des ComplianceControlsWindow
 				
-				rolePersonListStore: { params: { params: { cwid: this.getCwid() } } },
+				rolePersonListStore: { params: { params: { cwid: this.getCwid(),token:this.getToken() } } },
 				itsecUserOptionListStore: { params: { params: { cwid: this.getCwid() } } },
 //				rolePersonBusinessEssentialListStore: { params: { params: { cwid: this.getCwid() } } },//not used, wo zu verwenden?
 			

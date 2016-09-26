@@ -1,6 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
-import java.math.BigDecimal;
+
 import java.net.InetAddress;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
@@ -20,14 +24,17 @@ import org.hibernate.Transaction;
 
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.AppRepAuthData;
 import com.bayerbbs.applrepos.dto.BusinessEssentialDTO;
 import com.bayerbbs.applrepos.dto.ComplianceControlStatusDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
+import com.bayerbbs.applrepos.service.LDAPAuthWS;
+
 
 public class ApplReposHbn {
 
-	private static final String SELECT_ROLES = "SELECT DISTINCT ROL.Role_Id, " +
+	/*private static final String SELECT_ROLES = "SELECT DISTINCT ROL.Role_Id, " +
 					         "ROL.Role_Name " +
 					         "FROM     ROLE ROL  " +
 					         "INNER JOIN ROLE_PERSON R2P ON ROL.Role_Id=R2P.Role_Id AND SYSDATE BETWEEN R2P.Date_Start AND R2P.Date_End AND R2P.Del_Quelle IS NULL " + 
@@ -43,7 +50,7 @@ public class ApplReposHbn {
 															    "INNER JOIN INTERFACES INT ON R2I.Interface_Id=INT.Interfaces_Id AND INT.Del_Timestamp IS NULL AND INT.Token = 'AIR' " +
 																"WHERE    R2P.Cwid = :Cwid " +
 																"AND      ROL.Role_Name = :Role_Name "+
-																"AND      ROL.Del_Quelle IS NULL"; 
+																"AND      ROL.Del_Quelle IS NULL"; */
 
 	private static final String TRANSBASE_ORA_20000 = "ORA-20000: ";
 	private static final Log log = LogFactory.getLog(ApplReposHbn.class);
@@ -169,7 +176,7 @@ public class ApplReposHbn {
 	}
 
 	
-	public static String getCountFromRoleNameAndCwid(String rolename, String cwid) {
+	/*public static String getCountFromRoleNameAndCwid(String rolename, String cwid) {
 		String resultCount = null;
 
 		if (null != cwid && !"".equals(cwid)) {
@@ -229,6 +236,32 @@ public class ApplReposHbn {
 			resultCount = AirKonstanten.STRING_0;
 		}
 		return resultCount;
+	}*/
+	public static String getCountFromRoleNameAndCwid(String rolename, String cwid,String token) {
+		String resultCount = null;
+		List<RolePersonDTO> listRolePerson = new ArrayList<RolePersonDTO>();
+		Cache myCache = (Cache) CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
+		if (null != myCache) {
+			Element element = myCache.get(LDAPAuthWS.getKeyname(cwid, token));
+			
+			if (null != element) {
+				AppRepAuthData authData = (AppRepAuthData) element.getObjectValue();
+				
+				//System.out.println("roles=============="+authData.getRoles());
+				listRolePerson=authData.getRoles();
+				
+			}
+		}
+		if(listRolePerson.size()>0){
+			for(RolePersonDTO role:listRolePerson){
+				if(role.getRoleName().contentEquals(rolename)){
+					resultCount = AirKonstanten.STRING_1;
+				}
+			}
+		}else{
+			resultCount = AirKonstanten.STRING_0;
+		}
+	return resultCount;
 	}
 
 	
@@ -366,8 +399,8 @@ public class ApplReposHbn {
 		return listControl;
 	}
 
-	@SuppressWarnings("deprecation")
-	public static List<RolePersonDTO> findRolePerson(String cwid) {
+	//@SuppressWarnings("deprecation")
+	/*public static List<RolePersonDTO> findRolePerson(String cwid) {
 		
 		ArrayList<RolePersonDTO> listDTO = new ArrayList<RolePersonDTO>();
 		
@@ -383,13 +416,13 @@ public class ApplReposHbn {
 				ResultSet rs = stmt.executeQuery();
 				while(rs.next()) {
 					RolePersonDTO dto = new RolePersonDTO();
-					dto.setRoleId(rs.getLong(1));
+					//dto.setRoleId(rs.getLong(1));
 					dto.setCwid(cwid.toUpperCase());
 					dto.setRoleName(rs.getString(2));
 					listDTO.add(dto);
 				}
 				
-				/*
+				
 				@SuppressWarnings("unchecked")
 				List<Object[]> listTemp = session.createSQLQuery(SELECT_ROLES)
 					.setString("Cwid", cwid.toUpperCase())
@@ -411,7 +444,7 @@ public class ApplReposHbn {
 						System.out.println(e.toString());
 					}
 					
-				}*/
+				}
 			} 
 			catch (Exception e) 
 			{
@@ -427,10 +460,10 @@ public class ApplReposHbn {
 			}
 		}
 		return listDTO;
-	}
+	}*/
 	
 
-	public static List<RolePersonDTO> findRolePersonBusinessEssentialEditor(String cwid) {
+	/*public static List<RolePersonDTO> findRolePersonBusinessEssentialEditor(String cwid) {
 		
 		ArrayList<RolePersonDTO> listDTO = new ArrayList<RolePersonDTO>();
 		
@@ -452,7 +485,7 @@ public class ApplReposHbn {
 					try 
 					{
 						RolePersonDTO dto = new RolePersonDTO();
-						dto.setRoleId(((BigDecimal)obj[0]).longValue());
+						//dto.setRoleId(((BigDecimal)obj[0]).longValue());
 						dto.setCwid(cwid.toUpperCase());
 						dto.setRoleName((String) obj[1]);
 						listDTO.add(dto);
@@ -474,8 +507,8 @@ public class ApplReposHbn {
 			}
 		}
 		return listDTO;
-	}
-	public static List<RolePersonDTO> findRolePersonAirAdministrator(String cwid) {
+	}*/
+	/*public static List<RolePersonDTO> findRolePersonAirAdministrator(String cwid) {
 		
 		ArrayList<RolePersonDTO> listDTO = new ArrayList<RolePersonDTO>();
 		
@@ -497,7 +530,7 @@ public class ApplReposHbn {
 					try 
 					{
 						RolePersonDTO dto = new RolePersonDTO();
-						dto.setRoleId(((BigDecimal)obj[0]).longValue());
+						//dto.setRoleId(((BigDecimal)obj[0]).longValue());
 						dto.setCwid(cwid.toUpperCase());
 						dto.setRoleName((String) obj[1]);
 						listDTO.add(dto);
@@ -519,7 +552,29 @@ public class ApplReposHbn {
 			}
 		}
 		return listDTO;
-	}	
+	}*/	
+	
+	public static List<RolePersonDTO> findRolePersonAirAdministrator(String cwid,String token) {
+	
+		
+		List<RolePersonDTO> listRolePerson = new ArrayList<RolePersonDTO>();
+		Cache myCache = (Cache) CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
+		if (null != myCache) {
+			Element element = myCache.get(LDAPAuthWS.getKeyname(cwid, token));
+			
+			if (null != element) {
+				AppRepAuthData authData = (AppRepAuthData) element.getObjectValue();
+				
+				//System.out.println("roles=============="+authData.getRoles());
+				listRolePerson=authData.getRoles();
+				
+			}
+		}
+		
+	return listRolePerson;
+}
+	
+	
 
 	public static String getCountReferencingTemplates(Long applicationId) {
 		StringBuffer sql = new StringBuffer();
@@ -802,10 +857,10 @@ public class ApplReposHbn {
 			}
 		}
 	}
-	
+/*	
 	public boolean hasRole(String cwid) {
 		
 		return false;
-	}
+	}*/
 }
 

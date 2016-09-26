@@ -1,5 +1,10 @@
 package com.bayerbbs.applrepos.service;
 
+import java.util.ArrayList;
+
+import com.bayerbbs.applrepos.dto.RolePersonDTO;
+
+
 public class LDAPAuthParameterOutput {
 	
 	private Long rcCode;
@@ -11,7 +16,10 @@ public class LDAPAuthParameterOutput {
 	
 	private String result;
 	private String messages[];
+	
+	private ArrayList<RolePersonDTO> roles;
 
+	
 	public Long getRcCode() {
 		return rcCode;
 	}
@@ -55,4 +63,11 @@ public class LDAPAuthParameterOutput {
 	public void setLastLogon(String lastLogon) {
 		this.lastLogon = lastLogon;
 	}
+	public ArrayList<RolePersonDTO> getRoles() {
+		return roles;
+	}
+	public void setRoles(ArrayList<RolePersonDTO> roles) {
+		this.roles = roles;
+	}
+	
 }

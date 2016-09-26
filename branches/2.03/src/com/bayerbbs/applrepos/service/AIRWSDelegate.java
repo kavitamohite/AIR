@@ -20,9 +20,9 @@ public class AIRWSDelegate {
 		return airWS.getRolePerson(parameter);
 	}
 
-	public RolePersonDTO[] getRolePersonBusinessEssentialEditor(ItsecUserOptionParameter parameter) {
+	/*public RolePersonDTO[] getRolePersonBusinessEssentialEditor(ItsecUserOptionParameter parameter) {
 		return airWS.getRolePersonBusinessEssentialEditor(parameter);
-	}
+	}*/
 
 	public ApplicationEditParameterOutput saveUserOption(UserOptionParameterInput editInput) {
 		return airWS.saveUserOption(editInput);

@@ -26,7 +26,7 @@ public class AccessRightChecker {
 	 * @param cwidInput
 	 * @return
 	 */
-	public boolean isEditable(Long objectId, Long tableId, String cwidInput) {
+	public boolean isEditable(Long objectId, Long tableId, String cwidInput,String token) {
 		boolean isEditable = false;
 
 		String cwid = cwidInput.toUpperCase();
@@ -80,7 +80,7 @@ public class AccessRightChecker {
 					// Admin-Rolle nur für die Role AIR Administrator
 					
 					if (!AirKonstanten.STRING_0.equals(ApplReposHbn.getCountFromRoleNameAndCwid(
-							AirKonstanten.ROLE_AIR_ADMINISTRATOR, cwid))) {
+							AirKonstanten.ROLE_AIR_ADMINISTRATOR, cwid,token))) {
 						// allowed by group rights for admin
 						isEditable = true;
 					}
