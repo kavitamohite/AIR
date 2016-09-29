@@ -482,6 +482,10 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		bEditItSecGroup.setText(text);
 
+		//always enable view button if the button text is 'View' 
+		if(text == AIR.AirApplicationManager.getLabels().relevanceViewButton){
+			bEditItSecGroup.enable();
+		}
 		
 		//is itsecGroupId a real BYTsec ItSecGroup?
 		if(data.itsecGroupId !== AC.CI_GROUP_ID_NON_BYTSEC && data.itsecGroupId !== AC.CI_GROUP_ID_DEFAULT_ITSEC && data.itsecGroupId != 0 && data.itsecGroupId != -1) {//evtl. mit cbItSecGroup.setRawValue('Default_ItSecGroup'); setzen falls der Name dieser Default itsecGruppe angezeigt werden soll
