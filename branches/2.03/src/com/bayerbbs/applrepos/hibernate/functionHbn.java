@@ -319,7 +319,11 @@ public class functionHbn extends BaseHbn {
 			if (!isCwid)
 				sql.insert(sql.length() - 2, '%');
 		}
-
+	
+		
+		sql.append(" order by nlssort(").append(metaData.getNameField())
+		.append(", 'NLS_SORT = GENERIC_M')");
+		
 		return sql;
 	}
 
