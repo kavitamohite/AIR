@@ -119,7 +119,7 @@ public final class AirKonstanten {
 	public static final String ROLE_AIR_ADMINISTRATOR 				= "AIR_Administrator";
 	public static final String ROLE_AIR_APPLICATION_LAYER 			= "AIR_Application_Layer";
 	public static final String ROLE_AIR_APPLICATION_MANAGER 		= "AIR_Application_Manager";
-	public static final String ROLE_AIR_COMPLIANCE_EDITOR			= "AIR Compliance Editor";
+	public static final String ROLE_AIR_COMPLIANCE_EDITOR			= "AIR_Compliance_Editor";
 	public static final String ROLE_AIR_DEFAULT			 			= "AIR_Default";
 	public static final String ROLE_AIR_DEVELOPER			 		= "AIR_Developer";
 	public static final String ROLE_AIR_INFRASTRUCTURE_LAYER 		= "AIR_Infrastructure_Layer";
