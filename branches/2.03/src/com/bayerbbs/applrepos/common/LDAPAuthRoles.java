@@ -44,6 +44,7 @@ public class LDAPAuthRoles {
 	private static final String MX_SEARCH_CONTEXT = "";
 
 	// private static final String ldapURL = "ldaps://ldaps.bayer-ag.com:636/";
+	//ldaps://DE.bayer.cnb:3269/
 	// // IBM LDAP Service
 	private static final String ldapURL = "ldaps://DE.bayer.cnb:3269/"; // Microsoft
 																		// AD
@@ -334,6 +335,9 @@ public class LDAPAuthRoles {
 		}
 		if (airRole.equalsIgnoreCase(AirKonstanten.ROLE_AIR_ASSET_MANAGER)) {
 			rtRole = AirKonstanten.ROLE_AIR_ASSET_MANAGER;
+		}
+		if (airRole.equalsIgnoreCase(AirKonstanten.ROLE_BUSINESS_ESSENTIAL_EDITOR)) {
+			rtRole = AirKonstanten.ROLE_BUSINESS_ESSENTIAL_EDITOR;
 		}
 
 		return rtRole;
