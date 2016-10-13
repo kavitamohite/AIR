@@ -227,8 +227,8 @@ AC.SUPPORTED_COUNTRIES = [AC.IMG_COUNTRY_EN, AC.IMG_COUNTRY_DE];
 AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 	// The definiton which ci types can be selected in the advanced search by a defined role
 	// this changes for example the behavior of the select box "Type"
-
-	AIRDefault: {
+		
+		AIR_Default: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION, AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ],
 		13: [],
@@ -239,7 +239,7 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 		12: []
 	},
 		
-	AIRApplicationLayer: {
+	AIR_Application_Layer: {
 		2: [ AC.CI_SUB_TYPE_APPLICATION ],
 		13: [],
 		3: [],
@@ -249,7 +249,7 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 		12: []
 	},
 	
-	AIRApplicationManager: {
+	AIR_Application_Manager: {
 		2: [ AC.CI_SUB_TYPE_APPLICATION ],
 		13: [],
 		3: [],
@@ -259,7 +259,7 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 		12: []
 	},
 	
-	AIRInfrastructureLayer: {
+	AIR_Infrastructure_Layer: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ],
 		13: [],
@@ -270,7 +270,7 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 		12: []
 	},
 	
-	AIRInfrastructureManager: {
+	AIR_Infrastructure_Manager: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ],
 		13: [],
@@ -288,30 +288,30 @@ AC.CI_TYPE_CREATION_BY_ROLE = {
 	// this changes for example the behavior of the select box "Type"
 	// the tableId is not used, only the entries are urgent
 		
-	AIRDefault: {
+		AIR_Default: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION, AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ]
 	},
 	
-	AIRApplicationLayer: {
+	AIR_Application_Layer: {
 		2: [ !AC.CI_SUB_TYPE_APPLICATION ]
 	},
 
-	AIRApplicationManager: {
+	AIR_Application_Manager: {
 		2: [ AC.CI_SUB_TYPE_APPLICATION ]
 	},
 
-	AIRInfrastructureLayer: {
+	AIR_Infrastructure_Layer: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ]
 	},
 	
-	AIRInfrastructureManager: {
+	AIR_Infrastructure_Manager: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ]
 	},
 	
-	AIRLocationDataMaintenance: {
+	AIR_Location_Data_Maintenance: {
 		13: [],
 		3: [],
 		88: [],

@@ -851,7 +851,8 @@ AIR.AirApplicationManager = function() {
 			
 			var creationCiTypes = [];
 			for(var i = 0; i < records.length; i++) {
-				var roleName = records[i].get('roleName').replace(/ /g, '');
+				//var roleName = records[i].get('roleName').replace(/ /g, '');
+				var roleName = records[i].get('roleName');
 				var roleCiTypes = useCase === AC.USE_CASE_CI_CREATION ?
 												AC.CI_TYPE_CREATION_BY_ROLE[roleName] :
 												AC.CI_TYPE_ADV_SEARCH_BY_ROLE[roleName];
