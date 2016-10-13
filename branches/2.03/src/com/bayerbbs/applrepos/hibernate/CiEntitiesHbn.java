@@ -177,6 +177,8 @@ public class CiEntitiesHbn {
 			sql.append(AirKonstanten.CITypes_FUNCTION.toUpperCase());
 			sql.append(AirKonstanten.KOMMA);
 			sql.append(AirKonstanten.CITypes_BUSINESS_APPLICATION.toUpperCase());
+			sql.append(AirKonstanten.KOMMA);
+			sql.append(AirKonstanten.CITypes_SERVICE.toUpperCase());
 			sql.append(")");
 		
 		} 
