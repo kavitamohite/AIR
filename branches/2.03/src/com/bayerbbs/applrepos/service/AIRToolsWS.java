@@ -129,13 +129,13 @@ public class AIRToolsWS {
 	public OrganisationalScopeDTO[] getOrganisationalScopeList() {
 		OrganisationalScopeDTO[] orgScopes = {
 //				new OrganisationalScopeDTO(""),
-			new OrganisationalScopeDTO("BHC"),
-			new OrganisationalScopeDTO("BCS"),
-			new OrganisationalScopeDTO("BMS"),
-			new OrganisationalScopeDTO("BBS"),
-			new OrganisationalScopeDTO("BTS"),
+			new OrganisationalScopeDTO("CH"),
+			new OrganisationalScopeDTO("CS"),
+			new OrganisationalScopeDTO("COV"),
+			new OrganisationalScopeDTO("BS"),
+			new OrganisationalScopeDTO("TS"),
 			new OrganisationalScopeDTO("CUR"),
-			new OrganisationalScopeDTO("BAG"),
+			new OrganisationalScopeDTO("PH"),
 			new OrganisationalScopeDTO("Bayer Group")
 		};
 		
