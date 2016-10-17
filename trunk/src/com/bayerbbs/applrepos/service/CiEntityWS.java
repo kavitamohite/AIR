@@ -588,7 +588,7 @@ public class CiEntityWS {
 		if (input.getIsTemplate() != null
 				&& input.getIsTemplate().equals(AirKonstanten.YES_SHORT)) {
 			List<RolePersonDTO> listRolePerson = ApplReposHbn
-					.findRolePersonAirAdministrator(input.getCwid());
+					.findRolePersonAirAdministrator(input.getCwid(),input.getToken());
 			if (listRolePerson.isEmpty()) {
 				String strItSet = ApplReposHbn
 						.getItSetFromCwid(input.getCwid());

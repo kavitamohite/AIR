@@ -1,5 +1,6 @@
 package com.bayerbbs.applrepos.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -8,6 +9,7 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
 import com.bayerbbs.applrepos.common.LDAPAuthCeye;
+import com.bayerbbs.applrepos.common.LDAPAuthRoles;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.AppRepAuthData;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
@@ -25,7 +27,7 @@ public class LDAPAuthWS {
 		LDAPAuthParameterOutput output = new LDAPAuthParameterOutput();
 		
 		
-		List<RolePersonDTO> roles = ApplReposHbn.findRolePerson(cwid);
+		//List<RolePersonDTO> roles = ApplReposHbn.findRolePerson(cwid);
 		
 		/*
 		//ONLY TEST ONLY TEST ONLY TEST
@@ -40,17 +42,21 @@ public class LDAPAuthWS {
 		//ONLY TEST ONLY TEST ONLY TEST
 		*/
 		
-		if (roles.isEmpty()) {
+		/*if (roles.isEmpty()) {
 			output.setResult(AirKonstanten.RESULT_ERROR);
 			output.setMessages(new String[] { "AIR roles are needed to access the application" });
 		}
-		else {
-			LDAPAuthCeye ldapAuthCeye = new LDAPAuthCeye();
-			int rcCode = ldapAuthCeye.login(cwid, password);
-			output.setRcCode(new Long(rcCode));
+		else {*/
+			//LDAPAuthCeye ldapAuthCeye = new LDAPAuthCeye();
+			LDAPAuthRoles ldapAuthCeye = new LDAPAuthRoles();
+			output= ldapAuthCeye.login(cwid, password);
+			//int rcCode = ldapAuthCeye.login(cwid, password);
+			//output.setRcCode(new Long(rcCode));
 	
-			if (1 == rcCode) {
+			if (1 == output.getRcCode()) {
 				// login successful
+				
+				if(!output.getRoles().isEmpty()){
 				output.setResult(AirKonstanten.RESULT_OK);
 				output.setMessages(new String[] { "login successful" });
 				
@@ -73,7 +79,8 @@ public class LDAPAuthWS {
 					AppRepAuthData authData = new AppRepAuthData();
 					authData.setCwid(cwid.toUpperCase());
 					authData.setToken(token);
-					authData.setRoles(roles);//roles r
+					
+					authData.setRoles(output.getRoles());//roles r
 					
 					// PersonsDTO[] aPersonsDTO = personWS.findPersonsByCWID(cwid);
 					PersonsDTO[] aPersonsDTO = PersonsHbn.getArrayFromList(PersonsHbn.findPersonByCWID(cwid));
@@ -103,12 +110,16 @@ public class LDAPAuthWS {
 					output.setCwid(authData.getCwid());
 					output.setUsername(authData.getUsername());
 				}
+				}else{
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "AIR roles are needed to access the application" });
+				}
 			}
 			else {
 				output.setResult(AirKonstanten.RESULT_ERROR);
 				output.setMessages(new String[] { "Login failed. Please check username and password!" });
 			}
-		}
+		//}
 
 		return output;
 	}
@@ -220,7 +231,7 @@ public class LDAPAuthWS {
 		}
 	}
 
-	private static String getKeyname(String cwid, String token) {
+	public static String getKeyname(String cwid, String token) {
 		return cwid.toUpperCase() + ":" + token;
 	}
 }

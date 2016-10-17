@@ -5,12 +5,13 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
-	public final static String AIR_VERSION = "3.07.000";
+	public final static String AIR_VERSION = "3.08.000";
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
 	public final static String SERVERNAME_PROD = "byzreg.bayer-ag.com";
 	public final static String SERVERNAME_QA = "byzreh.bayer-ag.com";
+	public final static String SERVERNAME_DEV = "by0nh9.de.bayer.cnb";
 	public final static String SERVERNAME_BMS_PROD = "mdelevs0300.ad.glpoly.net";
 	public final static String SERVERNAME_BMS_QA = "mdelevs0475.ad.glpoly.net";
 	public final static String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
@@ -76,6 +77,7 @@ public final class AirKonstanten {
 	public static final String EQUAL = "=";
 	public static final String KOMMA = ",";
 	public static final String STRING_0 = "0";
+	public static final String STRING_1 = "1";
 	public static final String STRING_EMPTY = "";
 	public static final String STRING_ONE_BLANK = " ";
 	public static final String STRING_TRUE = "true";
@@ -101,7 +103,7 @@ public final class AirKonstanten {
 	
 	
 	// ROLEs
-	public static final String ROLE_AIR_ADMINISTRATOR 				= "AIR Administrator";
+	/*public static final String ROLE_AIR_ADMINISTRATOR 				= "AIR Administrator";
 	public static final String ROLE_AIR_APPLICATION_LAYER 			= "AIR Application Layer";
 	public static final String ROLE_AIR_APPLICATION_MANAGER 		= "AIR Application Manager";
 	public static final String ROLE_AIR_COMPLIANCE_EDITOR			= "AIR Compliance Editor";
@@ -112,7 +114,24 @@ public final class AirKonstanten {
 	public static final String ROLE_AIR_LOCATION_DATA_MAINTENANCE	= "AIR Location Data Maintenance";
 	public static final String ROLE_BUSINESS_ESSENTIAL_EDITOR		= "AIR BusinessEssential-Editor";
 	public static final String ROLE_AIR_BAR_EDITOR					= "AIR BAR Editor";
+	public static final String ROLE_AIR_SPECIAL_ATTRIBUTE_EDITOR	= "AIR_SPECIAL_ATTRIBUTE_EDITOR";*/
+	
+	public static final String ROLE_AIR_ADMINISTRATOR 				= "AIR_Administrator";
+	public static final String ROLE_AIR_APPLICATION_LAYER 			= "AIR_Application_Layer";
+	public static final String ROLE_AIR_APPLICATION_MANAGER 		= "AIR_Application_Manager";
+	public static final String ROLE_AIR_COMPLIANCE_EDITOR			= "AIR_Compliance_Editor";
+	public static final String ROLE_AIR_DEFAULT			 			= "AIR_Default";
+	public static final String ROLE_AIR_DEVELOPER			 		= "AIR_Developer";
+	public static final String ROLE_AIR_INFRASTRUCTURE_LAYER 		= "AIR_Infrastructure_Layer";
+	public static final String ROLE_AIR_INFRASTRUCTURE_MANAGER 		= "AIR_Infrastructure_Manager";	
+	public static final String ROLE_AIR_LOCATION_DATA_MAINTENANCE	= "AIR_Location_Data_Maintenance";
+	public static final String ROLE_BUSINESS_ESSENTIAL_EDITOR		= "AIR_BusinessEssential-Editor";
+	public static final String ROLE_AIR_BAR_EDITOR					= "AIR_BAR_Editor";
 	public static final String ROLE_AIR_SPECIAL_ATTRIBUTE_EDITOR	= "AIR_SPECIAL_ATTRIBUTE_EDITOR";
+	public static final String ROLE_AIR_ASSET_EDITOR				= "AIR_Asset_Editor";
+	public static final String ROLE_AIR_ASSET_MANAGER				= "AIR_Asset_Manager";
+	
+	
 	// --
 	public static final String ROLE_BOV_ADMIN						= "BOV Admin";
 	public static final String ROLE_BOV_EDITOR						= "BOV Editor";

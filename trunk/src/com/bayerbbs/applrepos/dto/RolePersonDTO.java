@@ -2,16 +2,16 @@ package com.bayerbbs.applrepos.dto;
 
 public class RolePersonDTO {
 
-	private Long roleId;
+	//private Long roleId;
 	private String cwid;
 	private String roleName;
 	
-	public Long getRoleId() {
+	/*public Long getRoleId() {
 		return roleId;
 	}
 	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
-	}
+	}*/
 	public String getCwid() {
 		return cwid;
 	}

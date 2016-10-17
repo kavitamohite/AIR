@@ -373,7 +373,7 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var anzeigetext = '';
 
 		rolePersonListStore.each(function(item, index, allItems) {
-			var key = item.data.id;
+			//var key = item.data.id;
 			var value = item.data.roleName;
 			
 			if(anzeigetext.length > 1)

@@ -409,14 +409,15 @@ AIR.AirStoreFactory = function() {
 		
 		createRolePersonListStore: function() {
 			var rolePersonListRecord = Ext.data.Record.create([
-	            {name: 'id', mapping: 'roleId'},
+	            //{name: 'id', mapping: 'roleId'},
 	            {name: 'cwid', mapping: 'cwid'},
 	            {name: 'roleName', mapping: 'roleName'}
 	        ]);
 	
 			var rolePersonListReader = new Ext.data.XmlReader({
 				record: 'return',
-				idProperty: 'id'
+				idProperty: 'id',
+				token: AIR.AirApplicationManager.getToken()
 			}, rolePersonListRecord); 
 	
 			var rolePersonListStore = new Ext.data.XmlStore({
@@ -432,10 +433,11 @@ AIR.AirStoreFactory = function() {
 		      	}),
 		      	
 		      	fields: [ 'id',	'roleId', 'cwid', 'roleName' ],
+		      	baseParams: {token: AIR.AirApplicationManager.getToken()},
 		
 		      	reader: rolePersonListReader
 			});
-			
+			console.log("rolePersonListStore",rolePersonListStore);
 			return rolePersonListStore;
 		},
 		

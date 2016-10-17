@@ -124,7 +124,7 @@ AIR.AirApplicationManager = function() {
 				itsecMassnahmenGapClassListStore: null,
 //				signeeListStore: null,//vom itSet abh�ngig, daher hier nicht ODER lokal filtern mit itSet nach �ffnen des ComplianceControlsWindow
 				
-				rolePersonListStore: { params: { params: { cwid: this.getCwid() } } },
+				rolePersonListStore: { params: { params: { cwid: this.getCwid(),token:this.getToken() } } },
 				itsecUserOptionListStore: { params: { params: { cwid: this.getCwid() } } },
 //				rolePersonBusinessEssentialListStore: { params: { params: { cwid: this.getCwid() } } },//not used, wo zu verwenden?
 			
@@ -851,7 +851,8 @@ AIR.AirApplicationManager = function() {
 			
 			var creationCiTypes = [];
 			for(var i = 0; i < records.length; i++) {
-				var roleName = records[i].get('roleName').replace(/ /g, '');
+				//var roleName = records[i].get('roleName').replace(/ /g, '');
+				var roleName = records[i].get('roleName');
 				var roleCiTypes = useCase === AC.USE_CASE_CI_CREATION ?
 												AC.CI_TYPE_CREATION_BY_ROLE[roleName] :
 												AC.CI_TYPE_ADV_SEARCH_BY_ROLE[roleName];

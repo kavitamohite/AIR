@@ -50,7 +50,7 @@ AIR.AirConstants = {
 	USER_OPTION_SKIP_WIZARD: 'AIR_SKIP_WIZARD',
 	USER_OPTION_TOOLTIP: 'AIR_TOOLTIP',
 	
-	USER_ROLE_AIR_DEFAULT: 'AIR Default',
+	/*USER_ROLE_AIR_DEFAULT: 'AIR Default',
 	USER_ROLE_AIR_APPLICATION_LAYER: 'AIR Application Layer',
 	USER_ROLE_AIR_INFRASTRUCTURE_LAYER: 'AIR Infrastructure Layer',
 	USER_ROLE_AIR_APPLICATION_MANAGER: 'AIR Application Manager',
@@ -62,7 +62,24 @@ AIR.AirConstants = {
 	USER_ROLE_AIR_COMPLIANCE_EDITOR: 'AIR Compliance Editor',
 	USER_ROLE_AIR_ASSET_MANAGER:'AIR Asset Manager',
 	USER_ROLE_AIR_ASSET_EDITOR:'AIR Asset Editor',
-	USER_ROLE_AIR_BAR_EDITOR:'AIR BAR Editor',
+	USER_ROLE_AIR_BAR_EDITOR:'AIR BAR Editor',*/
+	
+	USER_ROLE_AIR_DEFAULT: 'AIR_Default',
+	USER_ROLE_AIR_APPLICATION_LAYER: 'AIR_Application_Layer',
+	USER_ROLE_AIR_INFRASTRUCTURE_LAYER: 'AIR_Infrastructure_Layer',
+	USER_ROLE_AIR_APPLICATION_MANAGER: 'AIR_Application_Manager',
+	USER_ROLE_AIR_INFRASTRUCTURE_MANAGER: 'AIR_Infrastructure_Manager',
+	USER_ROLE_AIR_ADMINISTRATOR: 'AIR_Administrator',//AIR Administrator RFC 8231
+	USER_ROLE_AIR_LOCATION_DATA_MAINTENANCE: 'AIR_Location_Data_Maintenance',
+	USER_ROLE_DEVELOPER: 'AIR_Developer',
+	USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR: 'AIR_BusinessEssential-Editor',//AIR
+	USER_ROLE_AIR_COMPLIANCE_EDITOR: 'AIR_Compliance_Editor',
+	USER_ROLE_AIR_ASSET_MANAGER:'AIR_Asset_Manager',
+	USER_ROLE_AIR_ASSET_EDITOR:'AIR_Asset_Editor',
+	USER_ROLE_AIR_BAR_EDITOR:'AIR_BAR_Editor',
+	USER_ROLE_AIR_SPECIAL_ATTRIBUTE_EDITOR	: "AIR_SPECIAL_ATTRIBUTE_EDITOR",
+	
+	
 	//--
 	USER_ROLE_BOV_ADMIN: 'BOV Admin',
 	USER_ROLE_BOV_EDITOR: 'BOV Editor',
@@ -211,7 +228,7 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 	// The definiton which ci types can be selected in the advanced search by a defined role
 	// this changes for example the behavior of the select box "Type"
 
-	AIRDefault: {
+	AIR_Default: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION, AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ],
 		13: [],
@@ -222,7 +239,7 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 		12: []
 	},
 		
-	AIRApplicationLayer: {
+	AIR_Application_Layer: {
 		2: [ AC.CI_SUB_TYPE_APPLICATION ],
 		13: [],
 		3: [],
@@ -232,7 +249,7 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 		12: []
 	},
 	
-	AIRApplicationManager: {
+	AIR_Application_Manager: {
 		2: [ AC.CI_SUB_TYPE_APPLICATION ],
 		13: [],
 		3: [],
@@ -242,7 +259,7 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 		12: []
 	},
 	
-	AIRInfrastructureLayer: {
+	AIR_Infrastructure_Layer: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ],
 		13: [],
@@ -253,7 +270,7 @@ AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 		12: []
 	},
 	
-	AIRInfrastructureManager: {
+	AIR_Infrastructure_Manager: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ],
 		13: [],
@@ -271,30 +288,30 @@ AC.CI_TYPE_CREATION_BY_ROLE = {
 	// this changes for example the behavior of the select box "Type"
 	// the tableId is not used, only the entries are urgent
 		
-	AIRDefault: {
+	AIR_Default: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION, AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ]
 	},
 	
-	AIRApplicationLayer: {
+	AIR_Application_Layer: {
 		2: [ !AC.CI_SUB_TYPE_APPLICATION ]
 	},
 
-	AIRApplicationManager: {
+	AIR_Application_Manager: {
 		2: [ AC.CI_SUB_TYPE_APPLICATION ]
 	},
 
-	AIRInfrastructureLayer: {
+	AIR_Infrastructure_Layer: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ]
 	},
 	
-	AIRInfrastructureManager: {
+	AIR_Infrastructure_Manager: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ]
 	},
 	
-	AIRLocationDataMaintenance: {
+	AIR_Location_Data_Maintenance: {
 		13: [],
 		3: [],
 		88: [],
