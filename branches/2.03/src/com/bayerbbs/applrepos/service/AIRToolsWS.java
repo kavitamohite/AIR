@@ -136,6 +136,13 @@ public class AIRToolsWS {
 			new OrganisationalScopeDTO("TS"),
 			new OrganisationalScopeDTO("CUR"),
 			new OrganisationalScopeDTO("PH"),
+			new OrganisationalScopeDTO("BHC"),
+			new OrganisationalScopeDTO("BCS"),
+			new OrganisationalScopeDTO("BMS"),
+			new OrganisationalScopeDTO("BBS"),
+			new OrganisationalScopeDTO("BTS"),
+			new OrganisationalScopeDTO("CUR"),
+			new OrganisationalScopeDTO("BAG"),
 			new OrganisationalScopeDTO("Bayer Group")
 		};
 		
