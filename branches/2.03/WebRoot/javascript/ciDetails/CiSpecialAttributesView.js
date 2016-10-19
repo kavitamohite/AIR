@@ -243,7 +243,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		}
 		rolePersonListStore.each(function(item) {
 			var value = item.data.roleName;
-			if(value === 'AIR_SPECIAL_ATTRIBUTE_EDITOR'){
+			if(value === AC.USER_ROLE_AIR_SPECIAL_ATTRIBUTE_EDITOR){
 				
 				grid.getColumnModel().getColumnById('toBeValue').editor.disabled = false;
 				grid.getColumnModel().getColumnById('asIsValue').editor.disabled = false;
