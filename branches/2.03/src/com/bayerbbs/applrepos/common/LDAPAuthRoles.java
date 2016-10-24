@@ -234,13 +234,14 @@ public class LDAPAuthRoles {
 				String airUserRole = role.substring(beginIndex - 2,
 						role.indexOf(",OU="));
 				if ("P".equalsIgnoreCase(getEnvironment())) {
-					String airRole=userRole(airUserRole);
-						if(airRole!=null){
-							RolePersonDTO dto = new RolePersonDTO();
-							dto.setCwid(username.toUpperCase());
-							dto.setRoleName(userRole(airUserRole));
-							roles.add(dto);
-						}
+					if (!airUserRole.startsWith("Q_")&& !airUserRole.startsWith("D_")){
+						
+						RolePersonDTO dto = new RolePersonDTO();
+						dto.setCwid(username.toUpperCase());
+						dto.setRoleName(userRole(airUserRole.substring(2)));
+						roles.add(dto);
+					
+				}
 				} else {
 					if (airUserRole.startsWith(getEnvironment() + "_")) {
 						RolePersonDTO dto = new RolePersonDTO();
