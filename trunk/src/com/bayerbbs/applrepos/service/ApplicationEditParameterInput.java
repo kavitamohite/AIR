@@ -9,7 +9,9 @@ public class ApplicationEditParameterInput {
 	private String name;//applicationName
 	private String alias;//applicationAlias
 	
-	private String barRelevance;
+	//ENFZM: C0000145157
+	//private String barRelevance;
+	
 	private String version;
 	private Long applicationCat2Id;
 	private String clusterCode;
@@ -149,7 +151,7 @@ public class ApplicationEditParameterInput {
 	private Boolean forceOverride;
 	private Integer tableId;
 	
-	private String barApplicationId;
+	//private String barApplicationId;
 	
 	public ApplicationEditParameterInput() {
 	}
@@ -902,14 +904,14 @@ public class ApplicationEditParameterInput {
 	}
 
 
-	public String getBarRelevance() {
+	/*public String getBarRelevance() {
 		return barRelevance;
 	}
 
 
 	public void setBarRelevance(String barRelevance) {
 		this.barRelevance = barRelevance;
-	}
+	}*/
 
 
 	public void setTableId(Integer tableId) {
@@ -923,18 +925,18 @@ public class ApplicationEditParameterInput {
 	/**
 	 * @return the barApplicationId
 	 */
-	public String getBarApplicationId() {
+	/*public String getBarApplicationId() {
 		return barApplicationId;
-	}
+	}*/
 
 
 	/**
 	 * @param barApplicationId the barApplicationId to set
 	 */
-	public void setBarApplicationId(String barApplicationId) {
+	/*public void setBarApplicationId(String barApplicationId) {
 		this.barApplicationId = barApplicationId;
 	}
-
+*/
 
 	/**
 	 * @return the itSecSbIntegrityId

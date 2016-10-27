@@ -26,7 +26,7 @@ import javax.persistence.Transient;
 public class Application extends DeletableRevisionInfo {
 	// basics
 	private Long applicationId;
-	private String barApplicationId;	// Bayer application register id
+	//private String barApplicationId;	// Bayer application register id
 	private String applicationName;
 	private String applicationAlias;
 	private String version;
@@ -103,7 +103,7 @@ public class Application extends DeletableRevisionInfo {
 	
 	private String serviceModel;
 	private String organisationalScope;
-	private String barRelevance;
+	//private String barRelevance;
 	
 	private String serviceEnvironmentOwner;
 	
@@ -139,14 +139,14 @@ public class Application extends DeletableRevisionInfo {
 		this.applicationId = anwendungId;
 	}
 
-	@Column(name = "BAR_APPLICATION_ID")
+	/*@Column(name = "BAR_APPLICATION_ID")
 	public String getBarApplicationId() {
 		return barApplicationId;
 	}
 
 	public void setBarApplicationId(String barApplicationId) {
 		this.barApplicationId = barApplicationId;
-	}
+	}*/
 
 	@Column(name = "ANWENDUNG_NAME")
 	public String getApplicationName() {
@@ -571,14 +571,14 @@ public class Application extends DeletableRevisionInfo {
 		this.organisationalScope = organisationalScope;
 	}
 
-	@Column(name = "BAR_RELEVANCE_Y_N")
+	/*@Column(name = "BAR_RELEVANCE_Y_N")
 	public String getBarRelevance() {
 		return barRelevance;
 	}
 
 	public void setBarRelevance(String barRelevance) {
 		this.barRelevance = barRelevance;
-	}
+	}*/
 
 	@Column(name = "DISASTER_RECOVERY_LEVEL")
 	public String getDisasterRecoveryLevel() {

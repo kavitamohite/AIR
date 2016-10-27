@@ -1726,9 +1726,11 @@ public class CiEntityWS {
 		if (ciSubTypeId == "5") {
 			massUpdateAttriuteDTOs.add(maDto);
 			maDto = new MassUpdateAttributeDTO();
-			maDto.setAttributeName(AirKonstanten.BAR_RELEVANCE);
-			maDto.setAttributeValue(application.getBarRelevance());
-			maDto.setId("barRelevance");
+			//ENFZM: C0000145157
+			//maDto.setAttributeName(AirKonstanten.BAR_RELEVANCE);
+			//maDto.setAttributeValue(application.getBarRelevance());
+			//ENFZM: C0000145157
+			//maDto.setId("barRelevance");
 			massUpdateAttriuteDTOs.add(maDto);
 
 			maDto = new MassUpdateAttributeDTO();
@@ -2416,10 +2418,12 @@ public class CiEntityWS {
 				if (massUpdateParameterInput.isVersion()) {
 					application.setVersion(templateApplication.getVersion());
 				}
-				if (massUpdateParameterInput.isBarRelevance()) {
+				//ENFZM: C0000145157
+				/*if (massUpdateParameterInput.isBarRelevance()) {
 					application.setBarRelevance(templateApplication
 							.getBarRelevance());
-				}
+				}*/
+				//ENFZM: C0000145157
 				if (massUpdateParameterInput.isCategoryBusiness()) {
 					application.setCategoryBusiness(templateApplication
 							.getCategoryBusiness());
@@ -3416,7 +3420,8 @@ public class CiEntityWS {
 					application.setOrganisationalScope(mAttrParameterInput
 							.getOrganisationalScope());
 				}
-				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+				//ENFZM: C0000145157
+				/*if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getBarRelevance())) {
 					if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput
 							.getBarRelevance())
@@ -3431,7 +3436,8 @@ public class CiEntityWS {
 							.getBarRelevance())) {
 						application.setBarApplicationId(null);
 					}
-				}
+				}*/
+				//ENFZM: C0000145157
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getRelevanceGR1435())) {
 					if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput

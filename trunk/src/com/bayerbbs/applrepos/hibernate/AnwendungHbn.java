@@ -570,8 +570,8 @@ public class AnwendungHbn extends BaseHbn {
 								application.setOrganisationalScope(dto.getOrganisationalScope());
 							}
 						}
-						
-						if (null != dto.getBarRelevance()) {
+						//ENFZM: C0000145157
+						/*if (null != dto.getBarRelevance()) {
 							dto.setBarRelevance(dto.getBarRelevance().toUpperCase());
 								if (AirKonstanten.YES_SHORT.equals(dto.getBarRelevance()) || AirKonstanten.NO_SHORT.equals(dto.getBarRelevance())) {
 									application.setBarRelevance(dto.getBarRelevance());
@@ -583,7 +583,10 @@ public class AnwendungHbn extends BaseHbn {
 						}
 						if(null!= dto.getBarApplicationId()){
 							application.setBarApplicationId(dto.getBarApplicationId());
-						}
+						}*/
+						
+						//ENFZM: C0000145157
+						
 						// for BOV
 						if (null == application.getBovApplicationNeeded()) {
 							application.setBovApplicationNeeded(AirKonstanten.YES_SHORT);
@@ -861,15 +864,16 @@ public class AnwendungHbn extends BaseHbn {
 							application.setOrganisationalScope(dto.getOrganisationalScope());
 						}
 
-						if (null != dto.getBarRelevance()) {
+						//ENFZM: C0000145157
+						/*if (null != dto.getBarRelevance()) {
 							dto.setBarRelevance(dto.getBarRelevance().toUpperCase());
 							if (!AirKonstanten.YES_SHORT.equals(application.getBarRelevance())) {
 								if (AirKonstanten.YES_SHORT.equals(dto.getBarRelevance()) || AirKonstanten.NO_SHORT.equals(dto.getBarRelevance())) {
 									application.setBarRelevance(dto.getBarRelevance());
 								}
 							}
-						}
-						
+						}*/
+						//ENFZM: C0000145157
 						boolean toCommit = false;
 						try {
 							id =(Long) session.save(application);
@@ -958,7 +962,11 @@ public class AnwendungHbn extends BaseHbn {
 			// ============
 			
 			// applicationId bleibt natürlich
-			application.setBarApplicationId(null);	// Bayer application register id
+			
+			//ENFZM: C0000145157
+			//application.setBarApplicationId(null);	// Bayer application register id
+			//ENFZM: C0000145157
+			
 			application.setApplicationAlias(null);
 			application.setVersion(null);
 			application.setApplicationCat2Id(null);
@@ -1157,7 +1165,7 @@ public class AnwendungHbn extends BaseHbn {
 	 * @param dto
 	 * @return
 	 */
-	public static ApplicationEditParameterOutput cleanBARApplicationID(String cwid, ApplicationDTO dto) {
+	/*public static ApplicationEditParameterOutput cleanBARApplicationID(String cwid, ApplicationDTO dto) {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 
 		// TODO check validate token
@@ -1229,7 +1237,7 @@ public class AnwendungHbn extends BaseHbn {
 		return output;
 	}
 
-	
+*/	
 	public static ApplicationDTO getApplicationDetail(Long applicationId) {
 		ApplicationDTO applicationDTO = null;
 
@@ -1243,8 +1251,8 @@ public class AnwendungHbn extends BaseHbn {
 
 		sql.append("select ");
 		sql.append("  anw.anwendung_id");
-		sql.append(", anw.BAR_APPLICATION_ID");
-		sql.append(", anw.BAR_RELEVANCE_Y_N");
+		//sql.append(", anw.BAR_APPLICATION_ID");
+		//sql.append(", anw.BAR_RELEVANCE_Y_N");
 		sql.append(", anw.anwendung_name");
 		sql.append(", anw.anwendung_kat2_id");
 		sql.append(", kat2.anwendung_kat2_txt");
@@ -1374,8 +1382,8 @@ public class AnwendungHbn extends BaseHbn {
 				rsMessage.next();
 				applicationDTO = new ApplicationDTO();
 				applicationDTO.setId(rsMessage.getLong("ANWENDUNG_ID"));
-				applicationDTO.setBarApplicationId(rsMessage.getString("BAR_APPLICATION_ID"));
-				applicationDTO.setBarRelevance(rsMessage.getString("BAR_RELEVANCE_Y_N"));
+				//applicationDTO.setBarApplicationId(rsMessage.getString("BAR_APPLICATION_ID"));
+				//applicationDTO.setBarRelevance(rsMessage.getString("BAR_RELEVANCE_Y_N"));
 				applicationDTO.setName(rsMessage.getString("ANWENDUNG_NAME"));
 				applicationDTO.setApplicationCat2Id(rsMessage.getLong("ANWENDUNG_KAT2_ID"));
 				applicationDTO.setApplicationCat2Txt(rsMessage.getString("ANWENDUNG_KAT2_TXT"));
