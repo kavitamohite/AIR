@@ -184,9 +184,12 @@ public final class AirKonstanten {
 	public static final Integer IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING = new Integer(1);
 	public static final Integer IT_SYSTEM_TYPE_SYSTEM_PLATFORM_TRANSIENT = new Integer(2);
 	
+	public static final Long ITSEC_GROUP_ID = new Long(11322);
+	
 	public static final String IT_SYSTEM_TYPE_HARDWARE_SYSTEM = "Hardware System";
 	public static final String IT_SYSTEM_TYPE_SYSTEM_PLATFORM = "Transient System Platform";
 	public static final String IT_SYSTEM_TYPE_BUSINESS_APPLICATION = "Business Application";
+	
 	
 	public static final Map<String, Integer> CI_TYPE_ORDERING = new HashMap<String, Integer>();
 	
