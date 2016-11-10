@@ -408,7 +408,6 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		createRolePersonListStore: function() {
-			
 			var rolePersonListRecord = Ext.data.Record.create([
 	            //{name: 'id', mapping: 'roleId'},
 	            {name: 'cwid', mapping: 'cwid'},
@@ -639,8 +638,10 @@ AIR.AirStoreFactory = function() {
 //			        {name: 'applicationName'},
 			        'name',
 			        {name: 'applicationAlias'},
-			        {name: 'barApplicationId'},
-			        {name: 'rgBARrelevance'},
+			      //ENFZM: C0000145157
+			       /* {name: 'barApplicationId'},
+			        {name: 'rgBARrelevance'},*/
+			      //ENFZM: C0000145157
 			        {name: 'applicationVersion'},
 			        {name: 'applicationCat2'},
 			        {name: 'lifecycleStatus'},
@@ -2363,13 +2364,17 @@ AIR.AirStoreFactory = function() {
 			var applicationDetailRecord = Ext.data.Record.create([{
 				name : 'id',//applicationId
 				mapping : 'applicationDTO > id'
-			}, {
+			},
+			//ENFZM: C0000145157
+			/*{
 				name : 'barApplicationId',
 				mapping : 'applicationDTO > barApplicationId'
 			}, {
 				name : 'barRelevance',
 				mapping : 'applicationDTO > barRelevance'
-			}, {
+			}, */
+			//ENFZM: C0000145157
+			{
 				name : 'name',//applicationName
 				mapping : 'applicationDTO > name'
 			}, {

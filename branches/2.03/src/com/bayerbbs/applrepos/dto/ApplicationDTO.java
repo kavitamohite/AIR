@@ -7,7 +7,7 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 public class ApplicationDTO extends CiBaseDTO {
 	private static final long serialVersionUID = 6615538451865795610L;
 
-	private String barApplicationId;
+	//private String barApplicationId;
 	
 	private Long applicationCat2Id;
 	private String applicationCat2Txt;
@@ -117,7 +117,7 @@ public class ApplicationDTO extends CiBaseDTO {
 	private String businessProcess;
 	private String businessProcessHidden;
 	private String organisationalScope;
-	private String barRelevance;
+	//private String barRelevance;
 	private Long categoryBusinessId;
 	private String categoryBusiness;
 
@@ -138,13 +138,13 @@ public class ApplicationDTO extends CiBaseDTO {
 	public ApplicationDTO() {
 	}
 
-	public String getBarApplicationId() {
+	/*public String getBarApplicationId() {
 		return barApplicationId;
 	}
 
 	public void setBarApplicationId(String barApplicationId) {
 		this.barApplicationId = barApplicationId;
-	}
+	}*/
 
 	public Long getApplicationCat2Id() {
 		return applicationCat2Id;
@@ -907,13 +907,13 @@ public class ApplicationDTO extends CiBaseDTO {
 		this.relevance2008 = relevance2008;
 	}
 
-	public String getBarRelevance() {
+	/*public String getBarRelevance() {
 		return barRelevance;
 	}
 
 	public void setBarRelevance(String barRelevance) {
 		this.barRelevance = barRelevance;
-	}
+	}*/
 
 	public String getServiceEnvironmentOwner() {
 		return serviceEnvironmentOwner;

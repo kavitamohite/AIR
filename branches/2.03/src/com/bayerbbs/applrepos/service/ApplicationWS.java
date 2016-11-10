@@ -418,13 +418,17 @@ public class ApplicationWS {
 		dto.setName(editInput.getName());
 		dto.setAlias(editInput.getAlias());
 		dto.setVersion(editInput.getVersion());
-		dto.setBarApplicationId(editInput.getBarApplicationId());
+		//ENFZM: C0000145157
+		//dto.setBarApplicationId(editInput.getBarApplicationId());
+		//ENFZM: C0000145157
 		dto.setApplicationCat2Id(editInput.getApplicationCat2Id());
 		// view - primary function
 		dto.setLifecycleStatusId(editInput.getLifecycleStatusId());
 		dto.setOperationalStatusId(editInput.getOperationalStatusId());
 		dto.setComments(editInput.getComments());
-		dto.setBarRelevance(editInput.getBarRelevance());
+		//ENFZM: C0000145157
+		//dto.setBarRelevance(editInput.getBarRelevance());
+		//ENFZM: C0000145157
 		// TODO business category
 
 		// Agreements
@@ -1093,11 +1097,14 @@ public class ApplicationWS {
 
 		
 		// Sonderverarbeitung für Datenbereinigung BAR ID RFC 9397
-		if (null != dto && ((null == dto.getBarRelevance() || "N".equals(dto.getBarRelevance()) && null != dto.getBarApplicationId()))) {
+		
+		//ENFZM: C0000145157
+		/*if (null != dto && ((null == dto.getBarRelevance() || "N".equals(dto.getBarRelevance()) && null != dto.getBarApplicationId()))) {
 			// BAR ID ist gefüllt, aber muss leer sein.
 			AnwendungHbn.cleanBARApplicationID(detailInput.getCwid(), dto);
 			dto.setBarApplicationId(null);
-		}
+		}*/
+		//ENFZM: C0000145157
 		
 		output.setApplicationDTO(dto);
 		output.setApplicationAccessDTO(accessDTO);
