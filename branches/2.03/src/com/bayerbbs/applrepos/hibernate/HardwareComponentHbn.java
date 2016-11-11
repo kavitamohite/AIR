@@ -802,6 +802,7 @@ public class HardwareComponentHbn {
 			itSystem.setDeleteTimestamp(null);
 			itSystem.setDeleteUser(null);
 			itSystem.setDeleteQuelle(null);
+			itSystem.setItsecGroupId(AirKonstanten.ITSEC_GROUP_ID);
 			ItSystemHbn.saveItSystem(itSystem);
 			returnFlag = true;	
 		}
