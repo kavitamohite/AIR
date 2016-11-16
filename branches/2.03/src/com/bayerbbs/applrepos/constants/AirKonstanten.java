@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
-	public final static String AIR_VERSION = "4.01.000";
+	public final static String AIR_VERSION = "4.02";
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
@@ -19,7 +19,7 @@ public final class AirKonstanten {
 	public final static String TRANSBASE_BMS_PROD_HOST_SERVICENAME = "MTRANSBP";
 	public final static String TRANSBASE_BMS_QA_HOST_SERVICENAME = "MTRANSBQ";
 	
-
+	
 	public final static Long IT_SET_DEFAULT = new Long(11397);
 	public final static Long IT_SET_GERMANY = new Long(10002);
 	public final static Long BUSINESS_ESSENTIAL_DEFAULT = new Long(16);
@@ -156,6 +156,8 @@ public final class AirKonstanten {
 	public static final Long CONFIDENTIALITY_SECRET = new Long(4);
 	
 	
+	public static final Long ITSEC_GROUP_ID = new Long(11322);
+	
 	public static final String GPSCGROUP_DISABLED_MARKER = "DISABLED";
 	public static final String GPSCGROUP_HIDDEN_DESCRIPTOR = "Hidden";
 	public static final String[][] GPSCGROUP_MAPPING = new String [][] {
@@ -184,12 +186,9 @@ public final class AirKonstanten {
 	public static final Integer IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING = new Integer(1);
 	public static final Integer IT_SYSTEM_TYPE_SYSTEM_PLATFORM_TRANSIENT = new Integer(2);
 	
-	public static final Long ITSEC_GROUP_ID = new Long(11322);
-	
 	public static final String IT_SYSTEM_TYPE_HARDWARE_SYSTEM = "Hardware System";
 	public static final String IT_SYSTEM_TYPE_SYSTEM_PLATFORM = "Transient System Platform";
 	public static final String IT_SYSTEM_TYPE_BUSINESS_APPLICATION = "Business Application";
-	
 	
 	public static final Map<String, Integer> CI_TYPE_ORDERING = new HashMap<String, Integer>();
 	
