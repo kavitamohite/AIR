@@ -22,7 +22,6 @@ public class SpecialAttributeHbn {
 
 	public synchronized static boolean saveSpecialAttributeFromDTO(String cwid,String token, Long cIid, Long tableId, SpecialAttributeViewDataDTO specialAttributeViewDataDTO) {
 
-		System.out.println("========Start========="+token);
 		SpecialAttribute asIs = null, toBe = null;
 		SpecialAttribute asIsTemp = new SpecialAttribute(), toBeTemp = new SpecialAttribute();
 		Long oldToBevalue = 0L;
@@ -143,7 +142,7 @@ public class SpecialAttributeHbn {
 							AirKonstanten.APPLICATION_GUI_NAME, cwid);
 				}
 				}
-			System.out.println("=========end========"+token);	
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
