@@ -381,7 +381,7 @@ AIR.MyPlaceHomeView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			anzeigetext = anzeigetext + value;
 		});
-		
+				
 		this.getComponent('myplaceroleperson').setValue(anzeigetext);
 	},
 	

@@ -18,7 +18,7 @@ public class LDAPAuthParameterOutput {
 	private String messages[];
 	
 	private ArrayList<RolePersonDTO> roles;
-
+	
 	
 	public Long getRcCode() {
 		return rcCode;
@@ -69,5 +69,4 @@ public class LDAPAuthParameterOutput {
 	public void setRoles(ArrayList<RolePersonDTO> roles) {
 		this.roles = roles;
 	}
-	
 }

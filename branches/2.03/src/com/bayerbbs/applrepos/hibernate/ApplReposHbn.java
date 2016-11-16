@@ -1,6 +1,6 @@
 package com.bayerbbs.applrepos.hibernate;
 
-
+import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -30,7 +30,6 @@ import com.bayerbbs.applrepos.dto.ComplianceControlStatusDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.dto.RolePersonDTO;
 import com.bayerbbs.applrepos.service.LDAPAuthWS;
-
 
 public class ApplReposHbn {
 
@@ -237,6 +236,7 @@ public class ApplReposHbn {
 		}
 		return resultCount;
 	}*/
+	
 	public static String getCountFromRoleNameAndCwid(String rolename, String cwid,String token) {
 		String resultCount = null;
 		List<RolePersonDTO> listRolePerson = new ArrayList<RolePersonDTO>();
@@ -246,14 +246,13 @@ public class ApplReposHbn {
 			
 			if (null != element) {
 				AppRepAuthData authData = (AppRepAuthData) element.getObjectValue();
-				
-				//System.out.println("roles=============="+authData.getRoles());
 				listRolePerson=authData.getRoles();
 				
 			}
 		}
 		if(listRolePerson.size()>0){
 			for(RolePersonDTO role:listRolePerson){
+				System.out.println("role in App respos="+role.getRoleName());
 				if(role.getRoleName().contentEquals(rolename)){
 					resultCount = AirKonstanten.STRING_1;
 				}
@@ -263,7 +262,6 @@ public class ApplReposHbn {
 		}
 	return resultCount;
 	}
-
 	
 	public static String getCountFromGPSCGroupCIOwnder(Long objectId, Long tableId, String cwid) {
 
@@ -399,8 +397,8 @@ public class ApplReposHbn {
 		return listControl;
 	}
 
-	//@SuppressWarnings("deprecation")
-	/*public static List<RolePersonDTO> findRolePerson(String cwid) {
+	/*@SuppressWarnings("deprecation")
+	public static List<RolePersonDTO> findRolePerson(String cwid) {
 		
 		ArrayList<RolePersonDTO> listDTO = new ArrayList<RolePersonDTO>();
 		
@@ -416,7 +414,7 @@ public class ApplReposHbn {
 				ResultSet rs = stmt.executeQuery();
 				while(rs.next()) {
 					RolePersonDTO dto = new RolePersonDTO();
-					//dto.setRoleId(rs.getLong(1));
+					dto.setRoleId(rs.getLong(1));
 					dto.setCwid(cwid.toUpperCase());
 					dto.setRoleName(rs.getString(2));
 					listDTO.add(dto);
@@ -461,8 +459,8 @@ public class ApplReposHbn {
 		}
 		return listDTO;
 	}*/
-	
 
+	
 	/*public static List<RolePersonDTO> findRolePersonBusinessEssentialEditor(String cwid) {
 		
 		ArrayList<RolePersonDTO> listDTO = new ArrayList<RolePersonDTO>();
@@ -485,7 +483,7 @@ public class ApplReposHbn {
 					try 
 					{
 						RolePersonDTO dto = new RolePersonDTO();
-						//dto.setRoleId(((BigDecimal)obj[0]).longValue());
+						dto.setRoleId(((BigDecimal)obj[0]).longValue());
 						dto.setCwid(cwid.toUpperCase());
 						dto.setRoleName((String) obj[1]);
 						listDTO.add(dto);
@@ -530,7 +528,7 @@ public class ApplReposHbn {
 					try 
 					{
 						RolePersonDTO dto = new RolePersonDTO();
-						//dto.setRoleId(((BigDecimal)obj[0]).longValue());
+						dto.setRoleId(((BigDecimal)obj[0]).longValue());
 						dto.setCwid(cwid.toUpperCase());
 						dto.setRoleName((String) obj[1]);
 						listDTO.add(dto);
@@ -553,8 +551,9 @@ public class ApplReposHbn {
 		}
 		return listDTO;
 	}*/	
+
 	
-	public static List<RolePersonDTO> findRolePersonAirAdministrator(String cwid,String token) {
+public static List<RolePersonDTO> findRolePersonAirAdministrator(String cwid,String token) {
 	
 		
 		List<RolePersonDTO> listRolePerson = new ArrayList<RolePersonDTO>();
@@ -573,8 +572,8 @@ public class ApplReposHbn {
 		
 	return listRolePerson;
 }
-	
-	
+
+
 
 	public static String getCountReferencingTemplates(Long applicationId) {
 		StringBuffer sql = new StringBuffer();
@@ -857,8 +856,8 @@ public class ApplReposHbn {
 			}
 		}
 	}
-/*	
-	public boolean hasRole(String cwid) {
+	
+/*	public boolean hasRole(String cwid) {
 		
 		return false;
 	}*/

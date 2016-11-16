@@ -6,7 +6,7 @@ public class RolePersonDTO {
 	private String cwid;
 	private String roleName;
 	
-/*	public Long getRoleId() {
+	/*public Long getRoleId() {
 		return roleId;
 	}
 	public void setRoleId(Long roleId) {

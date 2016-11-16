@@ -78,7 +78,7 @@ AIR.AirConstants = {
 	USER_ROLE_AIR_ASSET_EDITOR:'AIR_Asset_Editor',
 	USER_ROLE_AIR_BAR_EDITOR:'AIR_BAR_Editor',
 	USER_ROLE_AIR_SPECIAL_ATTRIBUTE_EDITOR	: "AIR_SPECIAL_ATTRIBUTE_EDITOR",
-		
+	
 	
 	//--
 	USER_ROLE_BOV_ADMIN: 'BOV Admin',
@@ -227,8 +227,8 @@ AC.SUPPORTED_COUNTRIES = [AC.IMG_COUNTRY_EN, AC.IMG_COUNTRY_DE];
 AC.CI_TYPE_ADV_SEARCH_BY_ROLE = {
 	// The definiton which ci types can be selected in the advanced search by a defined role
 	// this changes for example the behavior of the select box "Type"
-		
-		AIR_Default: {
+
+	AIR_Default: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION, AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ],
 		13: [],
@@ -288,7 +288,7 @@ AC.CI_TYPE_CREATION_BY_ROLE = {
 	// this changes for example the behavior of the select box "Type"
 	// the tableId is not used, only the entries are urgent
 		
-		AIR_Default: {
+	AIR_Default: {
 		1: [],
 		2: [ AC.CI_SUB_TYPE_APPLICATION, AC.CI_SUB_TYPE_APPLICATION_PLATFORM, AC.CI_SUB_TYPE_MIDDLEWARE, AC.CI_SUB_TYPE_COMMON_SERVICE ]
 	},

@@ -4,7 +4,7 @@ public class ItsecUserOptionParameter {
 
 	private String cwid;
 	private String token;
-
+	
 	public String getCwid() {
 		return cwid;
 	}
@@ -20,5 +20,4 @@ public class ItsecUserOptionParameter {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
 }

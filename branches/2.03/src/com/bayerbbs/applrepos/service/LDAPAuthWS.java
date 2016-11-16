@@ -50,10 +50,10 @@ public class LDAPAuthWS {
 			//LDAPAuthCeye ldapAuthCeye = new LDAPAuthCeye();
 			LDAPAuthRoles ldapAuthCeye = new LDAPAuthRoles();
 			output= ldapAuthCeye.login(cwid, password);
+			//int rcCode = ldapAuthCeye.login(cwid, password);
 			//output.setRcCode(new Long(rcCode));
 	
-			//if (1 == rcCode) {
-			if(1==output.getRcCode()){
+			if (1 == output.getRcCode()) {
 				// login successful
 				
 				if(!output.getRoles().isEmpty()){

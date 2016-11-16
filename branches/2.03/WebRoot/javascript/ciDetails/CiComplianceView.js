@@ -481,7 +481,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 		}
 		bEditItSecGroup.setText(text);
-		
+
 		//always enable view button if the button text is 'View' 
 		if(text == AIR.AirApplicationManager.getLabels().relevanceViewButton){
 			bEditItSecGroup.enable();

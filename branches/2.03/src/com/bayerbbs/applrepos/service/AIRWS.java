@@ -122,9 +122,9 @@ public class AIRWS {
 	}
 
 	public RolePersonDTO[] getRolePerson(ItsecUserOptionParameter parameter) {
-		
-		
-		List<RolePersonDTO> listRolePerson = new ArrayList<RolePersonDTO>();
+		//List<RolePersonDTO> listRolePerson = ApplReposHbn.findRolePerson(parameter.getCwid());
+
+	List<RolePersonDTO> listRolePerson = new ArrayList<RolePersonDTO>();
 			Cache myCache = (Cache) CacheManager.getInstance().getCache(AirKonstanten.CACHENAME);
 			if (null != myCache) {
 				Element element = myCache.get(LDAPAuthWS.getKeyname(parameter.getCwid(), parameter.getToken()));
@@ -146,8 +146,7 @@ public class AIRWS {
 		}		
 		return arrayRP;
 	}
-			
-			
+
 	/*public RolePersonDTO[] getRolePersonBusinessEssentialEditor(ItsecUserOptionParameter parameter) {
 		List<RolePersonDTO> listRolePerson = ApplReposHbn.findRolePersonBusinessEssentialEditor(parameter.getCwid());
 

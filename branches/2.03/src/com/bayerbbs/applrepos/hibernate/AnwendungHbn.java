@@ -863,7 +863,7 @@ public class AnwendungHbn extends BaseHbn {
 						if (StringUtils.isNotNullOrEmpty(dto.getOrganisationalScope())) {
 							application.setOrganisationalScope(dto.getOrganisationalScope());
 						}
-						
+
 						//ENFZM: C0000145157
 						/*if (null != dto.getBarRelevance()) {
 							dto.setBarRelevance(dto.getBarRelevance().toUpperCase());
