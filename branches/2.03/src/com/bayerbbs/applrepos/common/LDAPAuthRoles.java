@@ -239,7 +239,9 @@ public class LDAPAuthRoles {
 						RolePersonDTO dto = new RolePersonDTO();
 						dto.setCwid(username.toUpperCase());
 						dto.setRoleName(userRole(airUserRole.substring(2)));
+						if(dto.getRoleName()!=null){
 						roles.add(dto);
+						}
 					
 				}
 				} else {
@@ -258,7 +260,7 @@ public class LDAPAuthRoles {
 	}
 
 	public String getEnvironment() {
-		String env = "";
+		String env = "D";
 		InetAddress iAddress;
 		String hostName = "";
 		try {
