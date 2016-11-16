@@ -391,7 +391,7 @@
 		<Source>Service</Source>
 		<Destination>Application Platform</Destination>
 		<Relevance>operational</Relevance>
-		<Upstream>y</Upstream>
+		<Upstream>Y</Upstream>
 		<Downstream>N</Downstream>
 	</Identifier>
 	<Identifier>
