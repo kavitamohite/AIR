@@ -416,12 +416,15 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 		exportForm.generateDCFlag.value = this.generateDCFlag;
 		if(tOwnerValue != '' && tOwnerValue.indexOf('-') > -1)
 		{
-			var strArr = tOwnerValue.split('-');
+			var i = tOwnerValue.lastIndexOf("-");
+			var strArr = tOwnerValue.substring(0,i);
+			var strArr1 = tOwnerValue.substring(i);
+			//var strArr = tOwnerValue.split('-');
 			if(strArr[0] != null) {
 				exportForm.companyName.value = strArr[0].trim();
 			}
 			if(strArr[1] != null) {
-				exportForm.companyCode.value = strArr[1].trim();
+				exportForm.companyCode.value = strArr1[1].trim();
 			}
 		}
 		this.generateDCFlag = false;
