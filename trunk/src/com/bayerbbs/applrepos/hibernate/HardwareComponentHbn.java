@@ -1063,6 +1063,8 @@ public class HardwareComponentHbn {
 					itSystem.setDeleteTimestamp(null);
 					itSystem.setDeleteUser(null);
 					itSystem.setDeleteQuelle(null);
+					itSystem.setItsecGroupId(AirKonstanten.ITSEC_GROUP_ID);
+					itSystem.setRefId(AirKonstanten.REF_ID);
 					ItSystemHbn.saveItSystem(itSystem);
 					
 					haComponent = findByIndenNumber(indentNumber);
