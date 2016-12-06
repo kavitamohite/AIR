@@ -19,7 +19,7 @@ public final class AirKonstanten {
 	public final static String TRANSBASE_BMS_PROD_HOST_SERVICENAME = "MTRANSBP";
 	public final static String TRANSBASE_BMS_QA_HOST_SERVICENAME = "MTRANSBQ";
 	
-
+	
 	public final static Long IT_SET_DEFAULT = new Long(11397);
 	public final static Long IT_SET_GERMANY = new Long(10002);
 	public final static Long BUSINESS_ESSENTIAL_DEFAULT = new Long(16);
@@ -157,6 +157,7 @@ public final class AirKonstanten {
 	
 	
 	public static final Long ITSEC_GROUP_ID = new Long(11322);
+	public static final Long REF_ID = new Long(81176);
 	
 	public static final String GPSCGROUP_DISABLED_MARKER = "DISABLED";
 	public static final String GPSCGROUP_HIDDEN_DESCRIPTOR = "Hidden";
