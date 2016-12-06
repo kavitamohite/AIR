@@ -420,8 +420,9 @@ public class HardwareComponentHbn {
 					itSystem.setCiOwner(dto.getCwid());
 					itSystem.setItSystemName(dto.getSystemPlatformName());
 					itSystem.setCiSubTypeId(AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING);
-					itSystem.setItsecGroupId(AirKonstanten.ITSEC_GROUP_ID);	
-				}
+					itSystem.setItsecGroupId(AirKonstanten.ITSEC_GROUP_ID);
+					itSystem.setRefId(AirKonstanten.REF_ID);
+					}
 				else if(itSystem != null && itSystem.getDeleteUser()!=null){
 					dto.setError("The System Platform does not exist in database");
 					return dto;
@@ -803,6 +804,7 @@ public class HardwareComponentHbn {
 			itSystem.setDeleteUser(null);
 			itSystem.setDeleteQuelle(null);
 			itSystem.setItsecGroupId(AirKonstanten.ITSEC_GROUP_ID);
+			itSystem.setRefId(AirKonstanten.REF_ID);
 			ItSystemHbn.saveItSystem(itSystem);
 			returnFlag = true;	
 		}
