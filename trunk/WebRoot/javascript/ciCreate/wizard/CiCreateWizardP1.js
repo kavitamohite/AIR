@@ -40,6 +40,7 @@ AIR.CiCreateWizardP1 = Ext.extend(AIR.AirView, {
 				xtype: 'filterCombo',
 				id: 'cbAppCat2W',
 			    fieldLabel: 'Category',
+			    editable: false,
 			    
 			    valueField: 'id',
 		        displayField: 'text',
