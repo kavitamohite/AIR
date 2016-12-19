@@ -14,7 +14,7 @@ public final class AirKonstanten {
 	public final static String SERVERNAME_DEV = "by0nh9.de.bayer.cnb";
 	public final static String SERVERNAME_BMS_PROD = "mdelevs0300.ad.glpoly.net";
 	public final static String SERVERNAME_BMS_QA = "mdelevs0475.ad.glpoly.net";
-	public final static String TRANSBASE_PROD_HOST = "byob01.bayer-ag.com";
+	public final static String TRANSBASE_PROD_HOST = "by0ok6.de.bayer.cnb";
 	public final static String TRANSBASE_QA_HOST = "by0ot4.de.bayer.cnb";
 	public final static String TRANSBASE_BMS_PROD_HOST_SERVICENAME = "MTRANSBP";
 	public final static String TRANSBASE_BMS_QA_HOST_SERVICENAME = "MTRANSBQ";
@@ -156,8 +156,8 @@ public final class AirKonstanten {
 	public static final Long CONFIDENTIALITY_SECRET = new Long(4);
 	
 	
-	public static final Long ITSEC_GROUP_ID = new Long(11322);
-	public static final Long REF_ID = new Long(81176);
+	/*public static final Long ITSEC_GROUP_ID = new Long(11322);
+	public static final Long REF_ID = new Long(81176);*/
 	
 	public static final String GPSCGROUP_DISABLED_MARKER = "DISABLED";
 	public static final String GPSCGROUP_HIDDEN_DESCRIPTOR = "Hidden";
