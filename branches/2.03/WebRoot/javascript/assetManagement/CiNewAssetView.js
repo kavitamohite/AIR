@@ -625,6 +625,10 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     		assetData.requesterId = AAM.cwid;
     		assetData.insertUser = AAM.cwid;
     		assetData.insertSource = 'AIR';
+       		assetData.owner = 'Bayer Business Services GmbH - 907820';
+    		assetData.ownerId = '161';
+    		assetData.workflowStatus = 'ORDER :: assigned for delivery';
+    		assetData.workflowStatusId = '1009';
     		this.update(assetData);
     	} else {
         	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
@@ -645,6 +649,10 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         		assetData.requesterId = AAM.cwid;
         		assetData.insertUser = AAM.cwid;
         		assetData.insertSource = 'AIR';
+           		assetData.owner = 'Bayer Business Services GmbH - 907820';
+        		assetData.ownerId = '161';
+        		assetData.workflowStatus = 'ORDER :: assigned for delivery';
+        		assetData.workflowStatusId = '1009';
         		this.update(assetData);
         	}
     	}
