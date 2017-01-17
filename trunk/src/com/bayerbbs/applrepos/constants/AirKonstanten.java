@@ -156,8 +156,8 @@ public final class AirKonstanten {
 	public static final Long CONFIDENTIALITY_SECRET = new Long(4);
 	
 	
-	/*public static final Long ITSEC_GROUP_ID = new Long(11322);
-	public static final Long REF_ID = new Long(81176);*/
+	public static final Long ITSEC_GROUP_ID = new Long(11322);
+	public static final Long REF_ID = new Long(81176);
 	
 	public static final String GPSCGROUP_DISABLED_MARKER = "DISABLED";
 	public static final String GPSCGROUP_HIDDEN_DESCRIPTOR = "Hidden";
