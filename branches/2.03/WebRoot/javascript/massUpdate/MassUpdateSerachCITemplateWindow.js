@@ -169,6 +169,7 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
     	
     },
 	onRowClick: function(grid, rowIndex, e) {
+		grid.getSelectionModel().selectRow(rowIndex);
 		var record = grid.getStore().getAt(rowIndex);
 		this.ciId = record.data.id;//applicationId
 		this.applicationName = record.data.name;
@@ -198,10 +199,11 @@ AIR.MassUpdateSerachCITemplateWindow = Ext.extend(Ext.Window,{
 	onGridBeforeLoaded: function(store, options) {
 		AAM.getMask(AC.MASK_TYPE_LOAD).show();
 		var grid = this.getComponent('pMassUpdateFromSearchCard').getComponent('pMassUpdateTemplateCISearchCard').getComponent('templateCISearchGrid');
-		grid.selModel = undefined;
+		//grid.selModel = undefined;
 		var col = grid.colModel.config[0];
 		if(col.dataIndex=='')
-		grid.colModel.config.remove(col);
+			grid.colModel.config.remove(col);
+		
 	},  
 	
 	onNext: function(button,event) {
