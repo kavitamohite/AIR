@@ -114,7 +114,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
                         margin: '8 10 0 0',
                         width: 80
                     }
-                }, {
+                },  {
 					xtype : 'button',
 					itemId : 'bHistory',
 					text : 'Asset History',
@@ -139,7 +139,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
 
 	    var bReset = this.getComponent('buttonPanel').getComponent('bReset');
 	    bReset.on('click', this.resetFormFields, this);
-	
+
 	    var cancelBtn = this.getComponent('buttonPanel').getComponent('cancelBtn');
         cancelBtn.on('click', this.goToAssetManagement, this);
         
@@ -261,7 +261,7 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     goToAssetManagement: function(button, event) {
 		this.fireEvent('externalNavigation', this, button, 'clAssetManagement');
 	},
-
+	
     resetFormFields: function(assetData) {
 
     	if(!assetData){
@@ -269,8 +269,9 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
     		assetData.requester = AAM.getFullName();
     		assetData.requesterId = AAM.cwid;
     		assetData.insertUser = AAM.cwid;
-    		assetData.insertSource = 'AIR';
-    		
+    		assetData.insertSource = 'AIR';	
+     		assetData.owner = 'Bayer Business Services GmbH - 907820';
+    		assetData.ownerId = '161';
     		
     		this.update(assetData);
     	} else {
@@ -292,6 +293,8 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
         		assetData.requesterId = AAM.cwid;
         		assetData.insertUser = AAM.cwid;
         		assetData.insertSource = 'AIR';
+         		assetData.owner = 'Bayer Business Services GmbH - 907820';
+        		assetData.ownerId = '161';
         		this.update(assetData);
         	}
 
