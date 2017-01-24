@@ -703,8 +703,8 @@ public class AirServlet extends HttpServlet {
 				append(compressJSFile("javascript/lib/extjs/ux/Soap1/SoapProxy.js", version)).
 				append(compressJSFile("javascript/lib/extjs/ux/Soap1/SoapReader.js", version)).
 				
-				append(compressJSFile("javascript/lib/jquery/1.7.1/jquery.min.js", version)).
-				append(compressJSFile("javascript/lib/jquery/jquery.corner.js", version)).
+	//			append(compressJSFile("javascript/lib/jquery/1.7.1/jquery.min.js", version)).
+	//			append(compressJSFile("javascript/lib/jquery/jquery.corner.js", version)).
 				append(compressJSFile("javascript/lib/mootools/mootools-core-1.4.5-full-compat.js", version)).
 					
 	//			===================================================================================================================
