@@ -595,7 +595,7 @@
 		
 		
 		<!-- asset management new screen-->
-		<assetIndentnumber>Spiegelstrich Nummer</assetIndentnumber>
+		<assetIndentnumber>Ident-Nummer</assetIndentnumber>
 		<assetInventoryNumber>Inventarnummer</assetInventoryNumber>
 		<assetDescription>Beschreibung</assetDescription>
 		
