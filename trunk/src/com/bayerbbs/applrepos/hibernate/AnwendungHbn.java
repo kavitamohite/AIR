@@ -428,8 +428,8 @@ public class AnwendungHbn extends BaseHbn {
 							application.setRelevance2008(dto.getRelevance2008());
 						}
 						
-						if (null == dto.getGxpFlagId()) {
-							//	we don't know, let the current value 
+						if ("null".equals( dto.getGxpFlagId())) {
+							application.setGxpFlag(null); 
 						}
 						else {
 							if (EMPTY.equals(dto.getGxpFlagId())) {
