@@ -629,6 +629,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     		assetData.ownerId = '161';
     		assetData.workflowStatus = 'ORDER :: assigned for delivery';
     		assetData.workflowStatusId = '1009';
+    		assetData.countryId = '1';
+    		assetData.country = 'Germany';
     		this.update(assetData);
     	} else {
         	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
@@ -653,6 +655,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         		assetData.ownerId = '161';
         		assetData.workflowStatus = 'ORDER :: assigned for delivery';
         		assetData.workflowStatusId = '1009';
+        		assetData.countryId = '1';
+        	//	assetData.country = 'Germany';
         		this.update(assetData);
         	}
     	}

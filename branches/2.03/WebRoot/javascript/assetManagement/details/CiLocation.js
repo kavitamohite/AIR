@@ -307,6 +307,7 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
 	update: function(assetData){
     	var cbCountry = this.getComponent('cbCountry');
         cbCountry.setValue(assetData.countryId);
+        //cbCountry.setRawValue(assetData.country);
         
         var cbSite = this.getComponent('cbSite');
         cbSite.setValue(assetData.siteId);
@@ -324,12 +325,10 @@ AIR.CiLocation = Ext.extend(Ext.form.FieldSet, {
         cbRack.setValue(assetData.rackId);
         cbRack.setRawValue(assetData.rack);
         
-        if(assetData.countryId){
-        	this.loadSiteStore(assetData.countryId);
-        	this.loadBuildingStore(assetData.siteId);
-        	this.loadRoomStore(assetData.buildingId);
-        	this.loadRackStore(assetData.roomId);
-        }
+        if(assetData.countryId){ this.loadSiteStore(assetData.countryId);}
+        if(assetData.siteId){this.loadBuildingStore(assetData.siteId);}
+        if(assetData.buildingId){this.loadRoomStore(assetData.buildingId);}
+        if(assetData.roomId){this.loadRackStore(assetData.roomId);}
 
         this.updateMailTemplateLocation();
 	},
