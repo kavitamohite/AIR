@@ -239,23 +239,29 @@ AIR.MassUpdateAttributeValueTransferWindow = Ext.extend(Ext.Window,{
 		}
 		var selModel = this.getComponent('pMassUpdateAttribueValueTransferCard').getComponent('pMassUpdateValueTransferGridCard').getComponent('massUpdateAttribueValueResultGrid').getSelectionModel();
 		var selectedRows = selModel.getSelections();
-		for( var i = 0; i < selectedRows.length; i++) {
-			var attribute = selectedRows[i].id;
-			massUpdateData[attribute]=true;
+		
+		if (selectedRows < 1) {
+			Ext.Msg.alert('Warning', 'Please select at least one attributes to update. Otherwise press cancel.');
 		}
-		
-		AAM.setMassUpdateData(massUpdateData);
-		
-		Ext.Msg.show({
-			title: 'Start Mass Update',
-			msg: 'You are  in mass update mode. Are you sure that you want to update all elements marked in the list with the data that you have just entered.',
-			buttons: Ext.Msg.YESNO,
-			fn: this.massUpdateValueTransfer,
-			scope: this,
-			   //animEl: 'elId',
-			icon: Ext.MessageBox.INFO			
-		});		
-		
+		else {
+			for( var i = 0; i < selectedRows.length; i++) {
+				var attribute = selectedRows[i].id;
+				massUpdateData[attribute]=true;
+			}
+			
+			AAM.setMassUpdateData(massUpdateData);
+			
+			Ext.Msg.show({
+				title: 'Start Mass Update',
+				msg: 'You are  in mass update mode. Are you sure that you want to update all elements marked in the list with the data that you have just entered.',
+				buttons: Ext.Msg.YESNO,
+				fn: this.massUpdateValueTransfer,
+				scope: this,
+				   //animEl: 'elId',
+				icon: Ext.MessageBox.INFO			
+			});
+		}
+			
 	},
     
     massUpdateValueTransfer :function(button){

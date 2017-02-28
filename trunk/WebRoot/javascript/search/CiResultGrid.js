@@ -16,41 +16,46 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 	    	   singleSelect: true,
 	    		listeners: {
 	    			beforerowselect : function(selModel, rowIndex, keepExisting, record ){
-	    				if(selModel.grid.ownerCt.ownerCt.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect') != undefined &&  selModel.grid.ownerCt.ownerCt.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect').getValue()){
-		    				if(record.data.isTemplate=='-1')
-			    				return false;
-			    				else {
-		    						if(record.data.deleteQuelle.length!=0){
-		    				    		Ext.Msg.show({
-		    				    			title: 'Mass Update Authorisation',
-		    				    			msg: 'Deleted CI not allowed to mass update',
-		    				    			buttons: Ext.MessageBox.OK,
-		    				    			icon: Ext.MessageBox.INFO			
-		    				    		});
-		    							return false;	
-		    						}
-			    					else{
-			    						var isAdmin = AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
-			    						if((isAdmin)){
-			    							return true;	
-			    						}else{
-				    						var cwid=AAM.getCwid();
-				    					    if(record.data.ciOwner===cwid || record.data.ciOwnerDelegate===cwid || record.data.applicationOwner===cwid  || record.data.applicationSteward==cwid || record.data.applicationOwnerDelegate===cwid )    						
-				    							return true;
-				    						else{
+	    				if(selModel.grid.ownerCt.ownerCt.getComponent('pSearchResultOptions') != undefined) {
+		    				
+		    				if(selModel.grid.ownerCt.ownerCt.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect') != undefined) {
+		    					if(selModel.grid.ownerCt.ownerCt.getComponent('pSearchResultOptions').getComponent('cbIsMultipleSelect').getValue()){
+				    				if(record.data.isTemplate=='-1')
+					    				return false;
+					    				else {
+				    						if(record.data.deleteQuelle.length!=0){
 				    				    		Ext.Msg.show({
 				    				    			title: 'Mass Update Authorisation',
-				    				    			msg: 'You are not authorised to update this CI',
+				    				    			msg: 'Deleted CI not allowed to mass update',
 				    				    			buttons: Ext.MessageBox.OK,
 				    				    			icon: Ext.MessageBox.INFO			
 				    				    		});
-				    							return false;	    					
-
+				    							return false;	
 				    						}
-			    						}
-			    					    
-			    					}
-			    				}	    					
+					    					else{
+					    						var isAdmin = AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_ADMINISTRATOR);
+					    						if((isAdmin)){
+					    							return true;	
+					    						}else{
+						    						var cwid=AAM.getCwid();
+						    					    if(record.data.ciOwner===cwid || record.data.ciOwnerDelegate===cwid || record.data.applicationOwner===cwid  || record.data.applicationSteward==cwid || record.data.applicationOwnerDelegate===cwid )    						
+						    							return true;
+						    						else{
+						    				    		Ext.Msg.show({
+						    				    			title: 'Mass Update Authorisation',
+						    				    			msg: 'You are not authorised to update this CI',
+						    				    			buttons: Ext.MessageBox.OK,
+						    				    			icon: Ext.MessageBox.INFO			
+						    				    		});
+						    							return false;	    					
+		
+						    						}
+					    						}
+					    					    
+					    					}
+					    				}	    					
+		    					}
+		    				}
 	    				}else
 	    					return true;
 
