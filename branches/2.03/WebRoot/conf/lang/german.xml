@@ -73,7 +73,7 @@
 		<label_myplace_roleperson>Rolle</label_myplace_roleperson>
 		
 		<label_myplace_useroption>Anwender Einstellungen</label_myplace_useroption>
-		<label_useroptions_language>Sprache: Deutsch</label_useroptions_language>
+		<label_useroptions_language>Sprache: Englisch</label_useroptions_language>
 		<label_useroptions_help>Hilfeleiste ausgeblendet</label_useroptions_help>
 		<label_useroptions_createwizard>Wizard Startseite ausblenden</label_useroptions_createwizard>
 		<label_useroptions_currency>W&amp;auml;hrung</label_useroptions_currency>
@@ -595,7 +595,7 @@
 		
 		
 		<!-- asset management new screen-->
-		<assetIndentnumber>Spiegelstrich Nummer</assetIndentnumber>
+		<assetIndentnumber>Ident-Nummer</assetIndentnumber>
 		<assetInventoryNumber>Inventarnummer</assetInventoryNumber>
 		<assetDescription>Beschreibung</assetDescription>
 		
