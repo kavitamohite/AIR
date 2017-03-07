@@ -591,6 +591,7 @@
 		<rSoftwarecomponent>Software Component</rSoftwarecomponent>bDeleteAssets
 		<bDeleteAssets>Delete</bDeleteAssets>
 		<bSaveColumnsPreference>Save Columns Preference</bSaveColumnsPreference>
+		<bImportAssetsUp>Import Update</bImportAssetsUp>
 		
 		<!-- asset management new screen-->
 		<assetIndentnumber>Ident number</assetIndentnumber>
