@@ -591,6 +591,7 @@
 		<rSoftwarecomponent>Software Komponente</rSoftwarecomponent>
 		<bDeleteAssets>Löschen</bDeleteAssets>
 		<bSaveColumnsPreference>Spaltenauswahl speichern</bSaveColumnsPreference>
+		<bImportAssetsUp>Import aktualisieren</bImportAssetsUp>
 		
 		
 		

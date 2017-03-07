@@ -278,6 +278,8 @@
 		<servlet-name>AirExcelImportServlet</servlet-name>
 		<url-pattern>/AirExcelImportServlet</url-pattern>
 	</servlet-mapping>
+	
+	
 
 	<servlet>
 		<description>AirNewExcelExportServlet</description>
@@ -286,9 +288,20 @@
 			com.bayerbbs.applrepos.servlet.AirNewExcelExportServlet
 		</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>AirExcelImportServletUpdate</display-name>
+		<servlet-name>AirExcelImportServletUpdate</servlet-name>
+		<servlet-class>com.bayerbbs.applrepos.servlet.AirExcelImportServletUpdate</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>AirNewExcelExportServlet</servlet-name>
 		<url-pattern>/newExcelExport</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AirExcelImportServletUpdate</servlet-name>
+		<url-pattern>/AirExcelImportServletUpdate</url-pattern>
 	</servlet-mapping>
 
   <!--

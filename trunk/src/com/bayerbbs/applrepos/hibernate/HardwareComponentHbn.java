@@ -3,6 +3,7 @@ package com.bayerbbs.applrepos.hibernate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -483,6 +484,109 @@ public class HardwareComponentHbn {
 		return dto;
 		
 	}
+	
+	
+	//emria funtion to save the assets by excel
+	public static String updateHardwareAssetExcel(List<AssetViewDataDTO> assests){
+		
+		String message = "File uploaded successfully.";
+		Session session=null;
+		Connection conn=null;;
+		PreparedStatement pstmt=null;;
+		try{
+			 session = HibernateUtil.getSession();
+			 conn = session.connection();
+			 pstmt = conn.prepareStatement("UPDATE HARDWAREKOMPONENTE SET Serien_Nr = ?, Inventar_P69 = ?,UPDATE_USER=?,UPDATE_QUELLE=?,UPDATE_TIMESTAMP=sysdate WHERE Technische_Nr = ?");
+			int batchSize = 20;
+			int hwCount = 0;
+		
+		
+		for (AssetViewDataDTO asset : assests) {
+			++hwCount;
+			
+			if(asset.getSerialNumber() != null)
+			{
+				 pstmt.setString(1,asset.getSerialNumber());
+			}
+			else
+			{
+				pstmt.setNull(1, java.sql.Types.NULL);
+			}
+			if(asset.getInventoryNumber() != null)
+			{
+				 pstmt.setString(2,asset.getInventoryNumber());
+			}
+			else
+			{
+				pstmt.setNull(2, java.sql.Types.NULL);
+			}
+			if(asset.getCwid() != null)
+			{
+				 pstmt.setString(3,asset.getCwid());
+			}
+			else
+			{
+				pstmt.setNull(3, java.sql.Types.NULL);
+			}
+	
+	   // pstmt.setString(2,asset.getInventoryNumber());
+	    //pstmt.setString(3,asset.getCwid());
+	    pstmt.setString(4,AirKonstanten.APPLICATION_GUI_NAME);
+	    pstmt.setString(5, asset.getTechnicalNumber());
+	    pstmt.addBatch();
+		if(hwCount % batchSize == 0)
+		{
+			int[] resultCount = pstmt.executeBatch();
+			System.out.println("Total records saved >>>>>>>> " + resultCount.length);
+			pstmt.clearBatch();
+		}   
+		
+	}
+		
+		
+		
+	if(hwCount % batchSize != 0) {
+		int[] resultCount = pstmt.executeBatch();
+		pstmt.clearBatch();
+		System.out.println("Remaining HW records saved >>>>>>>> " + resultCount.length);
+	}
+
+	
+	
+		}	
+		catch(Exception ex){
+
+			System.out.println("Error ------> "+ex.getMessage());
+			ex.printStackTrace();
+			if (ex.getMessage().contains("Only SAP may update"))
+				message="AIR user can't update  inventory number beginning with 1251, It should be update from SAP. So please remove row beginning with 1251  inventory number and try again.";
+				
+			else
+				message = "File is not imported. Please contact ITILCenter Help Desk.";
+			
+		}
+		finally{
+			
+			try {
+				pstmt.close();
+				conn.close();
+				session.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return message;
+		
+	
+		
+		
+		
+	}
+
+	
+	//method end emria
 
 	private static String validateHardwareComponent(AssetViewDataDTO asetViewDataDTO,HardwareComponent hardwareComponent) {
 		HardwareComponent existingInHwComp = null;
@@ -629,6 +733,30 @@ public class HardwareComponentHbn {
 		return null;
 	}
 	
+	//emria
+	public static int findByTechnicalNumberCount(String technicalNumber) {
+		List<HardwareComponent> values = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Criteria criteria = session.createCriteria(HardwareComponent.class);
+			criteria.add(Restrictions.eq("technicalNumber", technicalNumber));
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
+			
+			values = (List<HardwareComponent>) criteria.list();
+			
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		finally{
+			session.close();
+		}
+		if(values != null){
+			return values.size();
+		}
+		else
+			return 0;
+	}
+	
 	private static HardwareComponent findByIndenNumber(String indentNumber) {
 		HardwareComponent value = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -744,6 +872,86 @@ public class HardwareComponentHbn {
 		}
 		return returnFlag;
 	}
+	
+	//emria
+public static boolean isHardwareComponentByInventoryNumberExistsUpdate(String inventoryP69,String techNr) {
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		boolean returnFlag = false;
+		try {
+			
+
+			Criteria criteria = session.createCriteria(HardwareComponent.class);
+			criteria.add(Restrictions.eq("inventoryP69", inventoryP69));
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
+			List<HardwareComponent> values = (List<HardwareComponent>) criteria.list();
+		
+			
+			if(values == null || values.isEmpty())
+			{
+				returnFlag = true;
+			}
+			if(values != null )
+			{
+				
+				if(values.size()>1)
+				  returnFlag = false;
+				
+				if(values.size()==1 && values.get(0).getTechnicalNumber().equals(techNr)){
+					returnFlag= true;
+				}
+			}
+			
+		} catch (Exception e) {
+			returnFlag = true;
+			System.out.println("Error ------> "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return returnFlag;
+	}
+
+
+public static boolean isHardwareComponentBySerialNumberExistsUpdate(String serialNumber,String techNr) {
+	
+	Session session = HibernateUtil.getSessionFactory().openSession();
+	boolean returnFlag = false;
+	try {
+		
+
+		Criteria criteria = session.createCriteria(HardwareComponent.class);
+		criteria.add(Restrictions.eq("serialNumber", serialNumber));
+		criteria.add(Restrictions.isNull("deleteTimestamp"));
+		List<HardwareComponent> values = (List<HardwareComponent>) criteria.list();
+	
+		
+		if(values == null || values.isEmpty())
+		{
+			returnFlag = true;
+		}
+		if(values != null )
+		{
+			
+			if(values.size()>1)
+			  returnFlag = false;
+			
+			if(values.size()==1 && values.get(0).getTechnicalNumber().equals(techNr)){
+				returnFlag= true;
+			}
+		}
+		
+	} catch (Exception e) {
+		returnFlag = true;
+		System.out.println("Error ------> "+e.getMessage());
+		e.printStackTrace();
+	}finally{
+		session.close();
+	}
+	return returnFlag;
+}
+
+	
 	
 	@SuppressWarnings("unchecked")
 	public static HardwareComponent findHardwareComponentById(Long assetId) {

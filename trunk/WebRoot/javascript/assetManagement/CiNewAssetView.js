@@ -864,7 +864,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	
     	AAM.getMask(AC.MASK_TYPE_LOAD).hide();
     	if (success) {
-    		this.sendEmail();
+    		//this.sendEmail(); //emria
     		
     		var topPanel = this.getComponent('topPanel');
 	    	topPanel.update(records[0].data);

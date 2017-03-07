@@ -1164,7 +1164,8 @@ AIR.AirStoreFactory = function() {
 					{name : 'lAssetwithInventoryText'},
 					{name : 'lAssetwithoutInventoryText'},
 					{name : 'bDeleteAssets'},
-					{name : 'bSaveColumnsPreference'}
+					{name : 'bSaveColumnsPreference'},
+					{name: 'bImportAssetsUp'}
 					
 			    ]
 			});

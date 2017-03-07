@@ -11,7 +11,7 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
                 border: false,
                 layout: 'table',
                 layoutConfig: {
-                    columns: 7 
+                    columns: 8 //emria
                 },
                 items: [{
                     xtype: 'textfield',
@@ -57,6 +57,16 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
                     width: 80,
                     hidden: true,
                     text: 'Import',
+                    style: {
+                        marginLeft: 5
+                    }
+                },
+                {
+                    xtype: 'button',
+                    id: 'bImportAssetsUp',
+                    width: 100,
+                    hidden: true,
+                    text: 'Import Update',
                     style: {
                         marginLeft: 5
                     }
@@ -113,6 +123,7 @@ AIR.CiAssetManageSearchView = Ext.extend(AIR.AirView, {
         this.getComponent('pAssetSearch').getComponent('bUpdateCiAssetSearchResult').setText(labels.bUpdateCiSearchResult);
         this.getComponent('pAssetSearch').getComponent('bDeleteAssets').setText(labels.bDeleteAssets);
         this.getComponent('pAssetSearch').getComponent('bSaveColumnsPreference').setText(labels.bSaveColumnsPreference);
+        this.getComponent('pAssetSearch').getComponent('bImportAssetsUp').setText(labels.bImportAssetsUp);
 
         
         
