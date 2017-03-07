@@ -67,7 +67,33 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
     					width:80
     				}
     			} ]
-            }, {
+            },{   // Added by emria
+            	xtype: 'window',
+            	id: 'assetsFormWindowUp',
+            	closeAction: 'hide',
+            	modal: true,
+            	title: 'Upload File:',
+            	hidden: true,
+            	width: 300,
+            	items: [ {   
+            		xtype: 'panel',
+            		id: 'assetsImportPanel1',
+            		html: "<form id='importAssetsExcelFileUpdate' action='AirExcelImportServletUpdate' method='post' target='_blank' enctype='multipart/form-data'><input id='file' name='file' type='file' /><input type='hidden' id='importCwid' name='importCwid' /></form>"
+            			},					
+                {
+    				xtype : 'button',
+    				itemId : 'uploadAssetsBtn1',
+    				text : 'Upload',
+    				style : {
+    					fontSize : 12,
+    					margin : '8 10 0 0',
+    					width:80
+    				}
+    			} ]
+            
+            	
+            },
+            {
                 xtype: 'AIR.CiAssetResultView',
                 id: 'ciAssetSearchResultView',
                 border: false
@@ -91,7 +117,10 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
         this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bSaveColumnsPreference').on('click', this.updateUserProfileColumnsPreference, this);  // added by enqmu
         this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bExportAssets').on('click', this.exportAssetAlert, this);  // added by enqmu
         this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bImportAssets').on('click', this.importAssetAlert, this);  // added by enqmu
+        this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bImportAssetsUp').on('click', this.importAssetAlertUp, this); //added emria
         this.getComponent('assetsFormWindow').getComponent('uploadAssetsBtn').on('click', this.importAssetsExcel, this);  // added by enqmu
+        this.getComponent('assetsFormWindowUp').getComponent('uploadAssetsBtn1').on('click', this.importAssetsExcelUp, this);//added by emria
+        
         this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bDeleteAssets').on('click',this.deleteAssetAlert,this);
     },
 
@@ -212,18 +241,21 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
         }
         this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bSaveColumnsPreference').show();  // added by enqmu
         var bImportAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bImportAssets');
+        var bImportAssetsUp = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bImportAssetsUp');
         var bExportAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bExportAssets');
         var bDeleteAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bDeleteAssets');
         var searchMode = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('searchMode');
         
         if(searchMode.getValue().inputValue=='hardware'){
         	bImportAssets.show();
+        	bImportAssetsUp.show();
         	bExportAssets.show();
     		if(AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_ASSET_MANAGER)){
     			bDeleteAssets.show();
    		}    		
         }else{
         	bImportAssets.hide();
+        	bImportAssetsUp.hide();
         	bExportAssets.hide();
         	bDeleteAssets.hide();
         }     
@@ -231,6 +263,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
     },
     onTabChange: function(tabPanel, tab, options) {
         var bImportAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bImportAssets');
+        var bImportAssetsUp = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bImportAssetsUp');
         var bExportAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bExportAssets');
         var bDeleteAssets = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bDeleteAssets');
         var searchMode = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('searchMode');
@@ -238,12 +271,14 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
         
         if(params.queryMode=='hardware'){
         	bImportAssets.show();
+        	bImportAssetsUp.show();
         	bExportAssets.show();
     		if(AIR.AirApplicationManager.hasRole(AC.USER_ROLE_AIR_ASSET_MANAGER)){
     			bDeleteAssets.show();
    		}    		
         }else{
         	bImportAssets.hide();
+        	bImportAssetsUp.hide();
         	bExportAssets.hide();
         	bDeleteAssets.hide();
         }
@@ -410,7 +445,6 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 			   icon: Ext.MessageBox.INFO
 			});
     },
-    
     importAssetAlert :function(){
 		var message='Are you sure you want to perform the import for the updated Asset details?';
 		var windowTitle= 'Start Import of Assets';
@@ -423,6 +457,20 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 			   icon: Ext.MessageBox.INFO
 			});
     },
+    //emria
+    importAssetAlertUp :function(){
+		var message='Are you sure you want to perform the import for the updated Asset details update?';
+		var windowTitle= 'Start Import of Assets Update';
+		Ext.Msg.show({
+			   title: windowTitle,
+			   msg: message,
+			   buttons: Ext.Msg.YESNO,
+			   fn: this.importAssetsUp,
+			   scope: this,
+			   icon: Ext.MessageBox.INFO
+			});
+    },
+
     
     deleteAssetAlert: function(){
     	var message='Are you sure, you want to perform the deletion of assets?';
@@ -506,9 +554,28 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
        	importExcelFile.submit();
     	
     },
+    importAssetsExcelUp : function(button, event) {
+    	this.getComponent('assetsFormWindowUp').hide();
+   		document.getElementById('importCwid').value = AIR.AirApplicationManager.getCwid();
+       	var importExcelFileUp = document.getElementById('importAssetsExcelFileUpdate');
+       	importExcelFileUp.submit();
+
+     	var updateSearch = this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bUpdateCiAssetSearchResult');
+     	this.getComponent('ciAssetSearchViewPages').getComponent('ciAssetManageSearchView').getComponent('pAssetSearch').getComponent('bUpdateCiAssetSearchResult');
+     	
+     	setTimeout(function myFunction(){updateSearch.fireEvent('click', updateSearch);},
+     			5000);
+       
+    	
+    },
     importAssets : function(button, event) {
     	if(button == 'yes') {
     		this.getComponent('assetsFormWindow').show();
+    	}
+    },
+    importAssetsUp : function(button, event) {  //emria
+    	if(button == 'yes') {
+    		this.getComponent('assetsFormWindowUp').show();
     	}
     },
     exportSearchAssets : function(button, event) { // 
