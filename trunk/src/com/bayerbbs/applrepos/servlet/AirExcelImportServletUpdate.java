@@ -46,7 +46,7 @@ public class AirExcelImportServletUpdate extends HttpServlet {
 	public void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		System.out.println("In Service");
+		
 		
 		response.setContentType("text/html");
 		java.io.PrintWriter out = response.getWriter();
@@ -119,7 +119,7 @@ public class AirExcelImportServletUpdate extends HttpServlet {
 			{
 				FileItem fi = filesIterator.next();
 				// Form field obtained.
-System.out.println("Inside iterator");
+
 				if(fi.isFormField())
 			    {
 			        if(fi.getFieldName().equals("usercwid") || fi.getFieldName().equals("importCwid"))
@@ -132,7 +132,7 @@ System.out.println("Inside iterator");
 				else if(!fi.isFormField())
 				{
 					logger.info("Uploaded file is obtained.");
-					System.out.println("Inside iterator1" );
+					
 					if(fi.getName().endsWith(".xls") || fi.getName().endsWith(".xlsx") || fi.getName().endsWith(".csv"))
 					{
 						Workbook workbook = new XSSFWorkbook(fi.getInputStream());
@@ -157,7 +157,7 @@ System.out.println("Inside iterator");
 							rowIterator.next();
 						}
 						int rowNum = 0;
-						System.out.println("Inside iterator2");
+						
 						// Creating instances of AssetViewDataDTO class for each row of records in the uploaded file.
 						while (rowIterator.hasNext()) 
 						{
@@ -173,7 +173,7 @@ System.out.println("Inside iterator");
 								
 								
 								String techNr = getExcelDataByColumnNumber(row, 6);
-								System.out.println("TR is   "+techNr);
+								
 								if(techNr !=null && ! techNr.isEmpty())
 								{
 									if(!techNumbers.contains(techNr))	
@@ -182,9 +182,9 @@ System.out.println("Inside iterator");
 											techNumbers.add(techNr);
 									
 											obAssetViewDataDTO.setTechnicalNumber(techNr.trim());
-											System.out.println("Inside iterator3");
+											
 											int count= HardwareComponentHbn.findByTechnicalNumberCount(obAssetViewDataDTO.getTechnicalNumber());
-											System.out.println("Inside iterator4");
+											
 											if(count == 0)
 											{
 												errors.add("Technical Number ( "+obAssetViewDataDTO.getTechnicalNumber()+ ") at row number "+ rowNum + " does not exists for any Assets.  So please remove row number "+ rowNum + " and try again.");
@@ -207,9 +207,9 @@ System.out.println("Inside iterator");
 											{
 												if(!inventoryNumbers.contains(inventoryNumber)) {
 												inventoryNumbers.add(inventoryNumber);
-												System.out.println("Inside iterator5");
+												
 												boolean exists = HardwareComponentHbn.isHardwareComponentByInventoryNumberExistsUpdate(inventoryNumber.trim(),obAssetViewDataDTO.getTechnicalNumber());
-												System.out.println("Inside iterator7");
+												
 												if(! exists)
 												{
 													errors.add("Inventory number ("+ inventoryNumber +") at row number "+rowNum + " already exists. Please change it and try again later.");
@@ -234,9 +234,9 @@ System.out.println("Inside iterator");
 												
 												if(!serialNumbers.contains(serialNr)) {
 													serialNumbers.add(serialNr);
-													System.out.println("Inside iterator8");
+													
 												boolean exists = HardwareComponentHbn.isHardwareComponentBySerialNumberExistsUpdate(serialNr.trim(),obAssetViewDataDTO.getTechnicalNumber());
-												System.out.println("Inside iterator9");
+												
 												if(! exists)
 												{
 													errors.add("Serial number ("+ serialNr +") at row number "+rowNum + " already exists. Please change it and try again later.");
@@ -314,9 +314,9 @@ System.out.println("Inside iterator");
 						objAssetViewDataDTO.setCwid(cwid);
 					}
 				}
-				System.out.println("Inside iterator11");
+				
 				message =HardwareComponentHbn.updateHardwareAssetExcel(assests);
-				System.out.println("Inside iterator12");
+				
 			}
 			
 			
