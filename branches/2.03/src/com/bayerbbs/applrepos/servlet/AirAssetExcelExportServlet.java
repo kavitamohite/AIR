@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -33,9 +34,15 @@ public class AirAssetExcelExportServlet extends HttpServlet {
 	private static final String[] COLUMNS = { "SAP Description", "PSP Element",
 			"Cost center", "Site", "Serial Number", "Technical Master",
 			"Technical Number/Asset-Id", "Inventory Number", "Organizational Unit" };
+	/*private static final String[] EXPORTED_COLUMNS = { "Company Code", "Company Name", "Manufacturer", "Type", "Model", "Serial Number",
+		"Tech.Nr.", "Country", "Site", "Building", "Room", "Rack - Position", "Inventory Number", "Order-Nr.",
+		"PSP - Element", "Cost Center", "User", "DC-Name", "Anzeige ID", "IP-Adresse-RIB", "Sub-Net-Mask", "Default Gateway" };*/ //emria
+	
+	
+	
 	private static final String[] EXPORTED_COLUMNS = { "Company Code", "Company Name", "Manufacturer", "Type", "Model", "Serial Number",
 		"Tech.Nr.", "Country", "Site", "Building", "Room", "Rack - Position", "Inventory Number", "Order-Nr.",
-		"PSP - Element", "Cost Center", "User", "DC-Name", "Anzeige ID", "IP-Adresse-RIB", "Sub-Net-Mask", "Default Gateway" };
+		"PSP - Element", "Cost Center" };
 	
 	private static final String UNDERSCORE = "_";
 
@@ -80,7 +87,7 @@ public class AirAssetExcelExportServlet extends HttpServlet {
 		Cell headerCell = null;
 
 		CellStyle headerRowStyle = workbook.createCellStyle();
-		headerRowStyle.setWrapText(true);
+		headerRowStyle.setWrapText(true);		
 		headerRowStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		
 		for (int i = 0; i < EXPORTED_COLUMNS.length; i++) {
@@ -88,6 +95,10 @@ public class AirAssetExcelExportServlet extends HttpServlet {
 			headerCell.setCellValue(EXPORTED_COLUMNS[i]);
 			headerCell.setCellStyle(headerRowStyle);
 		}
+		
+		
+		
+		
 		try {
 			String[] hardwareIdArr = selectedHwAssets.split("~");
 			if(hardwareIdArr != null && hardwareIdArr.length > 0)
@@ -102,14 +113,23 @@ public class AirAssetExcelExportServlet extends HttpServlet {
 							if(objHardwareComponent != null) {
 								Row row = sheet.createRow(rowCount++);
 								
-								Cell cell = null;
+								Cell cell;
+								cell = row.createCell(0);
 								if(objHardwareComponent.getPartner() != null)
 								{
-									cell = row.createCell(0);
-									cell.setCellValue(objHardwareComponent.getPartner().getNumber());
+									System.out.println("cell" +cell);
+									System.out.println("objHardwareComponent.getPartner() " +objHardwareComponent.getPartner().getNumber());
+									if(objHardwareComponent.getPartner().getNumber()!= null)
+										cell.setCellValue(objHardwareComponent.getPartner().getNumber());
+									else
+										cell.setCellValue("");
 									
 									cell = row.createCell(1);
-									cell.setCellValue(objHardwareComponent.getPartner().getName());
+									if(objHardwareComponent.getPartner().getName()!= null)
+										cell.setCellValue(objHardwareComponent.getPartner().getName());
+									else
+										cell.setCellValue("");
+									
 								}
 								
 
