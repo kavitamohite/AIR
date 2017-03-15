@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
@@ -28,6 +29,7 @@ import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.HardwareComponent;
+import com.bayerbbs.applrepos.domain.HardwareComponentSelect;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.domain.Konto;
 import com.bayerbbs.applrepos.domain.Room;
@@ -37,8 +39,11 @@ import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.service.AssetManagementParameterInput;
 import com.bayerbbs.applrepos.service.AssetManagementParameterOutput;
+import com.bayerbbs.applrepos.servlet.AirExcelImportServletUpdate;
 
 public class HardwareComponentHbn {
+	
+	private final static Logger logger = Logger.getLogger(HardwareComponentHbn.class);
 
 	@SuppressWarnings("unchecked")
 	public static AssetManagementParameterOutput searchAsset(
@@ -735,14 +740,15 @@ public class HardwareComponentHbn {
 	
 	//emria
 	public static int findByTechnicalNumberCount(String technicalNumber) {
-		List<HardwareComponent> values = null;
+		List<HardwareComponentSelect> values = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			Criteria criteria = session.createCriteria(HardwareComponent.class);
+			Criteria criteria = session.createCriteria(HardwareComponentSelect.class);
 			criteria.add(Restrictions.eq("technicalNumber", technicalNumber));
 			criteria.add(Restrictions.isNull("deleteTimestamp"));
 			
-			values = (List<HardwareComponent>) criteria.list();
+			values = (List<HardwareComponentSelect>) criteria.list();
+			logger.info("Values : "+ values);
 			
 		} catch (RuntimeException e) {
 			e.printStackTrace();
@@ -881,10 +887,10 @@ public static boolean isHardwareComponentByInventoryNumberExistsUpdate(String in
 		try {
 			
 
-			Criteria criteria = session.createCriteria(HardwareComponent.class);
+			Criteria criteria = session.createCriteria(HardwareComponentSelect.class);
 			criteria.add(Restrictions.eq("inventoryP69", inventoryP69));
 			criteria.add(Restrictions.isNull("deleteTimestamp"));
-			List<HardwareComponent> values = (List<HardwareComponent>) criteria.list();
+			List<HardwareComponentSelect> values = (List<HardwareComponentSelect>) criteria.list();
 		
 			
 			if(values == null || values.isEmpty())
@@ -920,10 +926,10 @@ public static boolean isHardwareComponentBySerialNumberExistsUpdate(String seria
 	try {
 		
 
-		Criteria criteria = session.createCriteria(HardwareComponent.class);
+		Criteria criteria = session.createCriteria(HardwareComponentSelect.class);
 		criteria.add(Restrictions.eq("serialNumber", serialNumber));
 		criteria.add(Restrictions.isNull("deleteTimestamp"));
-		List<HardwareComponent> values = (List<HardwareComponent>) criteria.list();
+		List<HardwareComponentSelect> values = (List<HardwareComponentSelect>) criteria.list();
 	
 		
 		if(values == null || values.isEmpty())
