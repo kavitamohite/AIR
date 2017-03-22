@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -18,9 +19,10 @@ import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.CiTypeDTO;
 import com.bayerbbs.applrepos.dto.DirectLinkCIDTO;
 import com.bayerbbs.applrepos.dto.DwhEntityDTO;
-import com.bayerbbs.applrepos.dto.LinkCIDTO;
+
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
+
 import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.ComplianceControlDTO;
 import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
@@ -876,7 +878,7 @@ public class CiEntitiesHbn {
 			
 			DwhEntityDTO dwhEntity = null;
 			
-			while (rs.next()) {
+			while (rs.next() && i<limit) {
 				if(i < limit) {
 					dwhEntity = new DwhEntityDTO();
 					
@@ -932,12 +934,12 @@ public class CiEntitiesHbn {
 		return output;
 	}
 	
-	public static void saveCiRelations(Integer tableId, Long ciId, String ciRelationsAddList, String ciRelationsDeleteList, String direction, String cwid) {
+	public static void saveCiRelations(Integer tableId, Long ciId, String ciRelationsAddList, String ciRelationsDeleteList, String direction, String cwid)  {
 		String sql = "{call pck_air.p_save_relations(?,?,?,?,?,?)}";//"begin pck_air.p_save_relations(?,?,?,?,?,?);//"EXEC pck_air.p_save_relations ("+tableId+", "+ciId+", "+ciRelationsAddList+", "+ciRelationsDeleteList+", "+direction+", "+cwid+")";
-		
+		//ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
 		Transaction ta = null;
 		Session session = HibernateUtil.getSession();
-		
+		//String message = null;
 		boolean commit = false;
 		
 		try {
@@ -952,7 +954,7 @@ public class CiEntitiesHbn {
 			stmt.setString(4, ciRelationsDeleteList);
 			stmt.setString(5, direction);
 			stmt.setString(6, cwid);
-			stmt.executeUpdate();
+			stmt.execute();
 			ta.commit();
 			
 			stmt.close();
@@ -961,9 +963,12 @@ public class CiEntitiesHbn {
 			commit = true;
 		} catch (Exception e) {
 			System.out.println(e.toString());
-		} finally {
+			// message = e.getMessage();	
+		}
+	finally {
 			HibernateUtil.close(ta, session, commit);
 		}
+		//return message;
 	}
 
 
