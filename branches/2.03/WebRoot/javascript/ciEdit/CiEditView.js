@@ -755,10 +755,21 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	},
 	
 	afterCiSave: function(store, records, options) {
+//enlik
+		var success = (records[0].data.result == 'OK');
+		var yesCallback = function() {
+			this.wizardStarted = false;
+			this.fireEvent('externalNavigation', this, null, 'clCiSpecifics');
+		};
+    	
+    	var callbackMap = {
+			yes: yesCallback.createDelegate(this)
+		};
+		
 		this.ciModified = false;
 		AAM.getMask(AC.MASK_TYPE_SAVE).hide();
-		
-		if('OK' === records[0].data.result) {
+		//if('OK' === records[0].data.result) {
+		if(success){
 			this.disableButtons();
 			
 			var ciConnectionsView = this.getComponent('ciEditTabView').getComponent('clCiConnections');
@@ -768,8 +779,11 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 				this.loadCiDetails();//hier ein itsecGroupCallback �bergeben (das ComplianceControlWindow), wenn er nach dem Neuladen aufgerufen werden soll
 			
 			this.fireEvent('airAction', this, 'appSaveSuccess');//(bestimmte) ciData Daten mitgeben?
+			var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
+			afterSaveAppWindow.show();
 		} else {
-			var dataSavedErrorWindow = AIR.AirWindowFactory.createDynamicMessageWindow('AFTER_APP_SAVE_FAIL', null, records[0].data.messages);//callbackMap
+			
+			var dataSavedErrorWindow = AIR.AirWindowFactory.createDynamicMessageWindow('AFTER_APP_SAVE_FAIL', null, records[0].data.messages);
 			dataSavedErrorWindow.show();
 		}
 	},
