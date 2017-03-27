@@ -759,7 +759,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 		var success = (records[0].data.result == 'OK');
 		var yesCallback = function() {
 			this.wizardStarted = false;
-			this.fireEvent('externalNavigation', this, null, 'clCiSpecifics');
+			this.fireEvent('externalNavigation', this, null, 'ciEditTabView');
 		};
     	
     	var callbackMap = {
