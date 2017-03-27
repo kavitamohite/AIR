@@ -238,8 +238,16 @@ AIR.CiCopyFromView = Ext.extend(Ext.Panel, {
 //		var ciCopyFromDetailView = /*this.findParentByType*/ciCreatePagesView.getComponent('CiCopyFromDetailView');
 //		ciCreatePagesView.getLayout().setActiveItem('CiCopyFromDetailView');
 		
+		var applicationName = this.applicationName;
+		if (applicationName.contains( "<img src='/AIR/images/secured_10x10.png' border='0' title='Secure System'>&nbsp;")){
+			
+			var index = applicationName.indexOf(";");  
+			var template = applicationName.substr(index + 1);
+			var applicationName = template;
+		}		
+		
 		var ciCopyFromDetailView = this.getComponent('CiCopyFromDetailView');
-		ciCopyFromDetailView.update(this.applicationName, this.applicationCat1, this.applicationCat2, this.tableId);
+		ciCopyFromDetailView.update(applicationName, this.applicationCat1, this.applicationCat2, this.tableId);
 		
 		this.getLayout().setActiveItem(1);
 	},
