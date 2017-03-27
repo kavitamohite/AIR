@@ -133,7 +133,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 						width: 70,
 						hidden: true,
 						style: {
-							marginLeft: 5
+							marginLeft: 5,
+							left:136
 						}
 					}
 			    	]
