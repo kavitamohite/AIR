@@ -9,8 +9,10 @@ public final class AirKonstanten {
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
-	public final static String SERVERNAME_PROD = "byzreg.bayer-ag.com";
-	public final static String SERVERNAME_QA = "byzreh.bayer-ag.com";
+	//public final static String SERVERNAME_PROD = "byzreg.bayer-ag.com";
+	public final static String SERVERNAME_PROD = "by0p9p.de.bayer.cnb";
+	//public final static String SERVERNAME_QA = "byzreh.bayer-ag.com";
+	public final static String SERVERNAME_QA = "by0p9q.de.bayer.cnb";
 	public final static String SERVERNAME_DEV = "by0nh9.de.bayer.cnb";
 	public final static String SERVERNAME_BMS_PROD = "mdelevs0300.ad.glpoly.net";
 	public final static String SERVERNAME_BMS_QA = "mdelevs0475.ad.glpoly.net";
