@@ -313,6 +313,8 @@ public class AirExcelImportServletUpdate extends HttpServlet {
 					{
 						objAssetViewDataDTO.setCwid(cwid);
 					}
+					
+					objAssetViewDataDTO.setInventoryStockNumber(HardwareComponentHbn.findInveStockNumber(objAssetViewDataDTO.getTechnicalNumber()) );  
 				}
 				
 				message =HardwareComponentHbn.updateHardwareAssetExcel(assests);

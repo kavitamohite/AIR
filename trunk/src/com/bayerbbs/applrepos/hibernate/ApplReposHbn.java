@@ -731,7 +731,7 @@ public static List<RolePersonDTO> findRolePersonAirAdministrator(String cwid,Str
 		if (null != sendTo) {
 			String linkTo = "";
 			try  {
-				if (InetAddress.getLocalHost().getHostName() == AirKonstanten.PRODUCTIONSERVER) {
+				if (InetAddress.getLocalHost().getHostName() == AirKonstanten.SERVERNAME_PROD) {
 					linkTo = AirKonstanten.PRODUCTIONURL;
 				} else {
 					linkTo = AirKonstanten.QAURL;

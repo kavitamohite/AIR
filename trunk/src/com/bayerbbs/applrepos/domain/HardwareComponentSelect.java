@@ -44,6 +44,8 @@ public class HardwareComponentSelect extends DeletableRevisionInfo implements Se
 	
 
 	private String inventoryP69;
+	
+	private String inventoryStockNumber;
 
 	
 
@@ -126,6 +128,16 @@ public class HardwareComponentSelect extends DeletableRevisionInfo implements Se
 	public void setInventoryP69(String inventoryP69) {
 		this.inventoryP69 = inventoryP69;
 	}
+	
+	@Column(name = "INVENTARNUMMER_OHNE")
+	public String getInventoryStockNumber() {
+		return inventoryStockNumber;
+	}
+
+	public void setInventoryStockNumber(String inventoryStockNumber) {
+		this.inventoryStockNumber = inventoryStockNumber;
+	}
+
 
 	
 

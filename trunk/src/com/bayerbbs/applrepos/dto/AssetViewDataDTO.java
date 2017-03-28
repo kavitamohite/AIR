@@ -87,6 +87,16 @@ public class AssetViewDataDTO {
 	private String insertUser;
 	
 	private String insertSource;
+	
+	private String inventoryStockNumber;
+
+	public String getInventoryStockNumber() {
+		return inventoryStockNumber;
+	}
+
+	public void setInventoryStockNumber(String inventoryStockNumber) {
+		this.inventoryStockNumber = inventoryStockNumber;
+	}
 
 	public Boolean getIsSoftwareComponent() {
 		return isSoftwareComponent;

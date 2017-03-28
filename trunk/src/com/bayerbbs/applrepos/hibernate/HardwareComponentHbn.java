@@ -501,12 +501,13 @@ public class HardwareComponentHbn {
 		try{
 			 session = HibernateUtil.getSession();
 			 conn = session.connection();
-			 pstmt = conn.prepareStatement("UPDATE HARDWAREKOMPONENTE SET Serien_Nr = ?, Inventar_P69 = ?,UPDATE_USER=?,UPDATE_QUELLE=?,UPDATE_TIMESTAMP=sysdate WHERE Technische_Nr = ?");
+
+				 pstmt = conn.prepareStatement("UPDATE HARDWAREKOMPONENTE SET Serien_Nr = ?, Inventar_P69 = ?,UPDATE_USER=?,UPDATE_QUELLE=?,UPDATE_TIMESTAMP=sysdate,INVENTARNUMMER_OHNE=? WHERE Technische_Nr = ?");
 			int batchSize = 20;
 			int hwCount = 0;
 		
 		
-		for (AssetViewDataDTO asset : assests) {
+		for (AssetViewDataDTO asset : assests) {			
 			++hwCount;
 			
 			if(asset.getSerialNumber() != null)
@@ -517,12 +518,17 @@ public class HardwareComponentHbn {
 			{
 				pstmt.setNull(1, java.sql.Types.NULL);
 			}
-			if(asset.getInventoryNumber() != null)
+			if(asset.getInventoryNumber() != null && ! asset.getInventoryNumber().isEmpty())
 			{
 				 pstmt.setString(2,asset.getInventoryNumber());
+				pstmt.setNull(5, java.sql.Types.NULL);
 			}
 			else
 			{
+				if(asset.getInventoryStockNumber() == null)
+					pstmt.setString(5,"ExtInventory");
+				else
+					pstmt.setString(5,asset.getInventoryStockNumber());	
 				pstmt.setNull(2, java.sql.Types.NULL);
 			}
 			if(asset.getCwid() != null)
@@ -537,7 +543,7 @@ public class HardwareComponentHbn {
 	   // pstmt.setString(2,asset.getInventoryNumber());
 	    //pstmt.setString(3,asset.getCwid());
 	    pstmt.setString(4,AirKonstanten.APPLICATION_GUI_NAME);
-	    pstmt.setString(5, asset.getTechnicalNumber());
+	    pstmt.setString(6, asset.getTechnicalNumber());
 	    pstmt.addBatch();
 		if(hwCount % batchSize == 0)
 		{
@@ -762,6 +768,40 @@ public class HardwareComponentHbn {
 		else
 			return 0;
 	}
+	
+	
+	
+	public static String findInveStockNumber(String technicalNumber) {
+		List<HardwareComponentSelect> values = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		
+		try {
+			Criteria criteria = session.createCriteria(HardwareComponentSelect.class);
+			criteria.add(Restrictions.eq("technicalNumber", technicalNumber));
+			criteria.add(Restrictions.isNull("deleteTimestamp"));
+			
+			values = (List<HardwareComponentSelect>) criteria.list();
+			logger.info("Values : "+ values);
+			
+			
+			
+			
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		finally{
+			session.close();
+		}
+		if(values != null){
+			
+			return values.get(0).getInventoryStockNumber();
+		}
+		else 
+			return null;
+		
+	}
+	
+	//emria
 	
 	private static HardwareComponent findByIndenNumber(String indentNumber) {
 		HardwareComponent value = null;
