@@ -124,7 +124,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			    	},{
 				    	xtype: 'checkbox',
 				        id: 'cbIsTemplate',
-			    	    margins: '5 0 10 0'
+			    	    margins: '5 0 10 0',
+			    	    left: 136
 			    	},
 			    	{
 						xtype: 'button',
