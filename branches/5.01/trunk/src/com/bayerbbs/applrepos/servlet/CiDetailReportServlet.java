@@ -117,7 +117,7 @@ public class CiDetailReportServlet extends HttpServlet {
 	// FOr production and QA /app/sisnet/catalina/temp/Compliance_Statements_
 
 	private String fileName = "Compliance_Statements_";
-    private String filePath="/app/sisnet/catalina/temp/";
+    private String filePath="/app/AIR/temp";
 	//private String filePath = "m:\\temp\\";
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
