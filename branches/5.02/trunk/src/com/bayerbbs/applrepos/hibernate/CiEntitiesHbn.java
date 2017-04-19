@@ -932,15 +932,14 @@ public class CiEntitiesHbn {
 		return output;
 	}
 	
-	public static void saveCiRelations(Integer tableId, Long ciId, String ciRelationsAddList, String ciRelationsDeleteList, String direction, String cwid) {
+	public static String saveCiRelations(Integer tableId, Long ciId, String ciRelationsAddList, String ciRelationsDeleteList, String direction, String cwid) {
 		String sql = "{call pck_air.p_save_relations(?,?,?,?,?,?)}";//"begin pck_air.p_save_relations(?,?,?,?,?,?);//"EXEC pck_air.p_save_relations ("+tableId+", "+ciId+", "+ciRelationsAddList+", "+ciRelationsDeleteList+", "+direction+", "+cwid+")";
 		
 		Transaction ta = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
-		System.out.println("cwid inside save relation "+cwid);
-		
+		String message = null;
 		try {
 			ta = session.beginTransaction();
 			@SuppressWarnings("deprecation")
@@ -952,8 +951,7 @@ public class CiEntitiesHbn {
 			stmt.setString(3, ciRelationsAddList);
 			stmt.setString(4, ciRelationsDeleteList);
 			stmt.setString(5, direction);
-			stmt.setString(6, cwid); 
-			//stmt.setString(6, "mxtba");
+			stmt.setString(6, cwid);
 			stmt.executeUpdate();
 			ta.commit();
 			
@@ -963,9 +961,11 @@ public class CiEntitiesHbn {
 			commit = true;
 		} catch (Exception e) {
 			System.out.println(e.toString());
+			 message = e.getMessage();
 		} finally {
 			HibernateUtil.close(ta, session, commit);
 		}
+		return message;
 	}
 
 
