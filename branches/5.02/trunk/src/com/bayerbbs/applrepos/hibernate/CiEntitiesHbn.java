@@ -876,7 +876,7 @@ public class CiEntitiesHbn {
 			
 			DwhEntityDTO dwhEntity = null;
 			
-			while (rs.next()) {
+			while (rs.next() && i<limit) {
 				if(i < limit) {
 					dwhEntity = new DwhEntityDTO();
 					
@@ -939,6 +939,7 @@ public class CiEntitiesHbn {
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
+		System.out.println("cwid inside save relation "+cwid);
 		
 		try {
 			ta = session.beginTransaction();
@@ -951,7 +952,8 @@ public class CiEntitiesHbn {
 			stmt.setString(3, ciRelationsAddList);
 			stmt.setString(4, ciRelationsDeleteList);
 			stmt.setString(5, direction);
-			stmt.setString(6, cwid);
+			stmt.setString(6, cwid); 
+			//stmt.setString(6, "mxtba");
 			stmt.executeUpdate();
 			ta.commit();
 			
