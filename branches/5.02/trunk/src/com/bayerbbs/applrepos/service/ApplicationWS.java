@@ -265,7 +265,7 @@ public class ApplicationWS {
 					{
 
 						String message = CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
-						 CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
+						 //CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
 						 if(message == null){
 							 
 						 }else{
@@ -287,7 +287,7 @@ public class ApplicationWS {
 
 					{
 						String message = CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", editInput.getCwid());
-						 CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
+						 //CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
 						 if(message == null){
 							 
 						 }else{
