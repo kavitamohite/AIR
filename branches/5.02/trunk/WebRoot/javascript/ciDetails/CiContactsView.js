@@ -1280,6 +1280,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	
 	updateAccessMode: function(data) {
+		console.log('in update function');
 		if((data.tableId == AC.TABLE_ID_APPLICATION && data.applicationCat1Id === AC.APP_CAT1_APPLICATION) ||(data.tableId == AC.TABLE_ID_BUSINESS_APPLICATION)) {
 			AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationOwner').getComponent('pApplicationOwner').getComponent('applicationOwner'), data);
 			AIR.AirAclManager.setAccessMode(this.getComponent('fsApplicationSteward').getComponent('pApplicationSteward').getComponent('applicationSteward'), data);//fsApplicationOwner
@@ -1298,11 +1299,15 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		//Ended by vandana
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactResponsibleAtCustomerSide').getComponent('gpsccontactResponsibleAtCustomerSide'), data);
 //
+		console.log('applicationCat1Id '+data.applicationCat1Id +' '+AC.APP_CAT1_APPLICATION);
 		if(data.applicationCat1Id !== AC.APP_CAT1_APPLICATION) {
-			AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner'), data);
+			
+			//AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner'), data);//emria
 		}
+		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner'), data);//emria 
+		
 		AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactSystemResponsible').getComponent('gpsccontactSystemResponsible'), data);
-//
+//  
 		if(data.applicationCat1Id !== AC.APP_CAT1_APPLICATION) {
 			AIR.AirAclManager.setAccessMode(this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroup'), data);
 		}
@@ -1319,6 +1324,7 @@ AIR.CiContactsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var tfGpsccontactCiOwner = this.getComponent('contactsGPSC').getComponent('pGpsccontactCiOwner').getComponent('gpsccontactCiOwner');
 		var tfGpsccontactSupportGroup = this.getComponent('contactsGPSC').getComponent('pGpsccontactSupportGroup').getComponent('gpsccontactSupportGroup');
+		//
 		if(data.tableId != AC.TABLE_ID_BUSINESS_APPLICATION ) {
 		var tfCiOwner = this.getComponent('fsCIOwner').getComponent('pCIOwner').getComponent('ciResponsible');
 		}
