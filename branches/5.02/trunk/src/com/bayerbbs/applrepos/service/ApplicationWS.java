@@ -215,7 +215,7 @@ public class ApplicationWS {
 
 	public ApplicationEditParameterOutput saveApplication(ApplicationEditParameterInput editInput) {
 		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
-
+        String mes=null;
 		if (null != editInput) {
 			ApplicationDTO dto = getApplicationDTOFromEditInput(editInput);
 			output = AnwendungHbn.saveAnwendung(editInput.getCwid(), dto);
@@ -260,50 +260,23 @@ public class ApplicationWS {
 						}
 					}
 
+					System.out.println("cwid inside Application WS  "+ editInput.getCwid());
 					
 					if(dto.getUpStreamAdd() != null && dto.getUpStreamAdd().length() > 0 || dto.getUpStreamDelete() != null && dto.getUpStreamDelete().length() > 0)
-					{
-
-						String message = CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
-						 //CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
-						 if(message == null){
-							 
-						 }else{
-							 output.setResult(AirKonstanten.RESULT_ERROR);
-								/*if (null != message && message.startsWith("ORA-20006: ")) {
-									//message = message.substring("ORA-20001: ".length());
-									String errorId = "ORA-20001";
-									message = message.substring(message.indexOf(errorId) + errorId.length() + 2, message.indexOf('\n'));
-
-								}*/
-								
-							 output.setMessages(new String[] { message });
-						 }
+						 mes = CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
 					
+					if(mes!=null){
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] {mes});
 					}
-						//CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
 					
 					if(dto.getDownStreamAdd() != null && dto.getDownStreamAdd().length() > 0 || dto.getDownStreamDelete() != null && dto.getDownStreamDelete().length() > 0)
-
-					{
-						String message = CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", editInput.getCwid());
-						 //CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
-						 if(message == null){
-							 
-						 }else{
-							 output.setResult(AirKonstanten.RESULT_ERROR);
-								/*if (null != message && message.startsWith("ORA-20006: ")) {
-									//message = message.substring("ORA-20001: ".length());
-									String errorId = "ORA-20001";
-									message = message.substring(message.indexOf(errorId) + errorId.length() + 2, message.indexOf('\n'));
-
-								}*/
-								
-							 output.setMessages(new String[] { message });
-						 }
-					}
+						mes=CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", editInput.getCwid());
 					
-						/*CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", editInput.getCwid());*/
+					if(mes!=null){
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] {mes});
+					}
 					
 					
 					// Connection higher/lower
@@ -329,6 +302,9 @@ public class ApplicationWS {
 
 
 				} catch (Exception e) {
+					System.out.println("In Exception Application");
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] {e.getMessage()});
 					// TODO: handle exception
 					System.out.println(e.toString());
 				}
