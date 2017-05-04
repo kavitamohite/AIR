@@ -876,7 +876,7 @@ public class CiEntitiesHbn {
 			
 			DwhEntityDTO dwhEntity = null;
 			
-			while (rs.next() && i<limit) {
+			while (rs.next()) {
 				if(i < limit) {
 					dwhEntity = new DwhEntityDTO();
 					
@@ -932,14 +932,14 @@ public class CiEntitiesHbn {
 		return output;
 	}
 	
-	public static String saveCiRelations(Integer tableId, Long ciId, String ciRelationsAddList, String ciRelationsDeleteList, String direction, String cwid) {
+	public static void saveCiRelations(Integer tableId, Long ciId, String ciRelationsAddList, String ciRelationsDeleteList, String direction, String cwid) {
 		String sql = "{call pck_air.p_save_relations(?,?,?,?,?,?)}";//"begin pck_air.p_save_relations(?,?,?,?,?,?);//"EXEC pck_air.p_save_relations ("+tableId+", "+ciId+", "+ciRelationsAddList+", "+ciRelationsDeleteList+", "+direction+", "+cwid+")";
 		
 		Transaction ta = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
-		String message = null;
+		
 		try {
 			ta = session.beginTransaction();
 			@SuppressWarnings("deprecation")
@@ -961,11 +961,9 @@ public class CiEntitiesHbn {
 			commit = true;
 		} catch (Exception e) {
 			System.out.println(e.toString());
-			 message = e.getMessage();
 		} finally {
 			HibernateUtil.close(ta, session, commit);
 		}
-		return message;
 	}
 
 
