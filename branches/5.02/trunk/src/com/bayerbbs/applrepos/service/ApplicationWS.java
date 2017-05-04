@@ -214,10 +214,9 @@ public class ApplicationWS {
 	}
 
 	public ApplicationEditParameterOutput saveApplication(ApplicationEditParameterInput editInput) {
-		ApplicationEditParameterOutput output = null;//= new ApplicationEditParameterOutput();
-        String mes=null;
+		ApplicationEditParameterOutput output = new ApplicationEditParameterOutput();
+
 		if (null != editInput) {
-			output = new ApplicationEditParameterOutput();
 			ApplicationDTO dto = getApplicationDTOFromEditInput(editInput);
 			output = AnwendungHbn.saveAnwendung(editInput.getCwid(), dto);
 
@@ -261,31 +260,12 @@ public class ApplicationWS {
 						}
 					}
 
-					System.out.println("cwid inside Application WS  "+ editInput.getCwid());
 					
-					if(dto.getUpStreamAdd() != null && dto.getUpStreamAdd().length() > 0 || dto.getUpStreamDelete() != null && dto.getUpStreamDelete().length() > 0){
-						System.out.println("result in upstream is  "+editInput.getTableId()+" "+dto.getId()+" "+dto.getUpStreamAdd()+" "+dto.getUpStreamDelete());
-						 mes = CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
-					}
+					if(dto.getUpStreamAdd() != null && dto.getUpStreamAdd().length() > 0 || dto.getUpStreamDelete() != null && dto.getUpStreamDelete().length() > 0)
+						CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getUpStreamAdd(), dto.getUpStreamDelete(), "UPSTREAM", editInput.getCwid());
 					
-					if(mes!=null){
-						output.setResult(AirKonstanten.RESULT_ERROR);
-						//output.setMessages(new String[] {mes});
-						output.setMessages(splitError(mes));
-					}
-					
-					if(dto.getDownStreamAdd() != null && dto.getDownStreamAdd().length() > 0 || dto.getDownStreamDelete() != null && dto.getDownStreamDelete().length() > 0){
-						if (mes== null){
-							
-						mes=CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", editInput.getCwid());
-						
-						}
-					
-					if(mes!=null){
-						output.setResult(AirKonstanten.RESULT_ERROR);
-						output.setMessages(splitError(mes));
-					}
-					}
+					if(dto.getDownStreamAdd() != null && dto.getDownStreamAdd().length() > 0 || dto.getDownStreamDelete() != null && dto.getDownStreamDelete().length() > 0)
+						CiEntitiesHbn.saveCiRelations(editInput.getTableId(), dto.getId(), dto.getDownStreamAdd(), dto.getDownStreamDelete(), "DOWNSTREAM", editInput.getCwid());
 					
 					
 					// Connection higher/lower
@@ -311,9 +291,6 @@ public class ApplicationWS {
 
 
 				} catch (Exception e) {
-					System.out.println("In Exception Application");
-					output.setResult(AirKonstanten.RESULT_ERROR);
-					output.setMessages(splitError(e.getMessage()));
 					// TODO: handle exception
 					System.out.println(e.toString());
 				}
@@ -321,45 +298,6 @@ public class ApplicationWS {
 		}
 
 		return output;
-	}
-	
-	public String[] splitError(String mes){
-		System.out.println("mes "+mes);
-		
-		
-		
-		//ArrayList<String> n= new ArrayList<String>();
-		if(mes !=null && mes.contains("~")){
-			int i=mes.indexOf('~');
-			int l=mes.lastIndexOf('~');
-			mes=mes.substring(i+1, l) ;
-			/*String m[] = mes.split("~");
-		n.add(m[0]);
-		for(int j=1;j<m.length;j++){
-			if(m[j]!=null && !m[j].isEmpty() && ! m[0].equals(m[j])){
-				n.add(m[j]);
-			}
-			else{
-				if(("UPSTREAM".equals(n.get(n.size()-1))) || ("DOWNSTREAM".equals(n.get(n.size()-1))) )
-					n.remove(n.size()-1);
-			}
-				
-					
-				
-			}*/
-		
-		/*for(String s: n){
-			System.out.println(" SPlitted value"+s);
-		}*/
-		return new String[]{mes};
-		//return (String[]) n.toArray(new String[n.size()]);
-		}
-		else{
-			System.out.println("In Else");
-			return new String[] {mes};
-		}
-		
-	//return mes.split("~");
 	}
 
 	public ApplicationEditParameterOutput createApplication(ApplicationEditParameterInput editInput) {
