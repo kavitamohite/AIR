@@ -930,6 +930,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'dynamicWindowDataSavedText'},
 			        {name: 'dynamicWindowDataSavedOKButtonText'},
 			        {name: 'dynamicWindowDataSaveFailTitle'},
+			        {name: 'dynamicWindowDataSaveFailTitleAttribute'},
 	
 			        {name: 'dynamicWindowDataSavedErrorTitle'},
 			        {name: 'dynamicWindowDataSavedErrorOKButtonText'},

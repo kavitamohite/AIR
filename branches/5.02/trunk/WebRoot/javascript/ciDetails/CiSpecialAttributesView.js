@@ -144,6 +144,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		        	});
 		        			        	
 		        	editedRecords.forEach(function(record){
+		        		console.log("In Edited records saved"+record.data);
 			        	var specialAttributeSaveStore = AIR.AirStoreFactory.createSpecialAttributeSaveStore();
 
 		        		var params = {
@@ -158,6 +159,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 							params: params,
 							scope: this,
 						    callback: function(record, operation, result) {
+						    	console.log("In Edited records callback"+result +"- "+record.data);
 						    	var yesCallback = function() {
 									this.wizardStarted = false;
 									this.fireEvent('externalNavigation', this, null, 'clCiSpecialAttributes');
@@ -169,6 +171,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 					        	
 						    	if(record!=null && record!=""){
 								isSuccess = isSuccess && record[0].node.textContent;
+								console.log("In Attribute "+record[0].node.textContent);
 								
 					        	if(++counter==editedRecords.length){
 					        	
@@ -177,7 +180,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 						        	saveMask.hide();
 									afterSaveAppWindow.show();
 						        } else {
-						        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR', callbackMap);
+						        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR_ATTRIBUTE', callbackMap);
 						        	saveMask.hide();
 									afterSaveAppWindow.show();
 						        }
