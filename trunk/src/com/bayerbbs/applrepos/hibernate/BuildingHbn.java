@@ -252,7 +252,9 @@ public class BuildingHbn extends LokationItemHbn {
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
 			
-			if (null != dto.getId() || 0 < dto.getId().longValue()) {
+			System.out.println("DTO : "+dto.getId());
+			
+			if (null != dto.getId() && 0 < dto.getId().longValue()) {
 				Long id = new Long(dto.getId());
 
 				// check der InputWerte
