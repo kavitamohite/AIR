@@ -177,9 +177,10 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 						        	saveMask.hide();
 									afterSaveAppWindow.show();
 						        } else {
-						        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR', callbackMap);
+						        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR_ATTRIBUTE', callbackMap);
 						        	saveMask.hide();
 									afterSaveAppWindow.show();
+									//return false; //change for atribte
 						        }
 					        	
 					        	}

@@ -2,8 +2,11 @@ package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -104,15 +107,19 @@ public class SpecialAttributeHbn {
 		tx = session.beginTransaction();
 		try {
 			if (asIs.getId() == null && asIs.getAttributeValue() != null) {
+				System.out.println("Debug 11 ");
 				session.createSQLQuery(createInsertQuery(asIs, cwid)).executeUpdate();
 			} else if (asIs.getId() != null) {
+				System.out.println("Debug 12 ");
 				session.update(asIs);					
 			}
 			if(AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_SPECIAL_ATTRIBUTE_EDITOR)){
 			if (toBe.getId() == null && toBe.getAttributeValue() != null) {
+				System.out.println("Debug 13 ");
 				session.createSQLQuery(createInsertQuery(toBe, cwid)).executeUpdate();
 
 			} else if (toBe.getId() != null) {
+				System.out.println("Debug 14 ");
 				session.update(toBe);
 			}
 			}
@@ -120,31 +127,8 @@ public class SpecialAttributeHbn {
 			session.flush();
 			tx.commit();
 			
-			
-			if(!oldToBevalue.equals(specialAttributeViewDataDTO.getToBeValueId())){
-				
-				if (specialAttributeViewDataDTO.getToBeValueId() == null
-						&& toBe.getAttributeValue() != null) {
-					//Long tableId, Long ciId, Long attributeId, Long attributeValueId, Long prevAttributeValueId, String source,
-					if(oldToBevalue!=0L){
-					startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
-							.getAttribute().getId(),
-							specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
-							AirKonstanten.APPLICATION_GUI_NAME, cwid);
-					
-					}
-					
-					} else if (specialAttributeViewDataDTO.getToBeValueId() != null) {
-
-					startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
-							.getAttribute().getId(),
-							specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
-							AirKonstanten.APPLICATION_GUI_NAME, cwid);
-				}
-				}
-			
 		} catch (Exception e) {
-
+			
 			e.printStackTrace();
 			if (tx.isActive()) {
 				tx.rollback();
@@ -156,6 +140,80 @@ public class SpecialAttributeHbn {
 			}
 			session.close();
 		}
+		
+		final Long  a=toBe.getTableId();
+		final Long  b=toBe.getCiId();
+		final Long  c=toBe.getAttribute().getId();
+		final Long  d=specialAttributeViewDataDTO.getToBeValueId();
+		final Long  e=oldToBevalue;
+		final String f=cwid;
+			
+		try{
+			System.out.println("outside If oldToBevalue ="+oldToBevalue +" specialAttributeViewDataDTO.getToBeValueId="+specialAttributeViewDataDTO.getToBeValueId());
+			if(!oldToBevalue.equals(specialAttributeViewDataDTO.getToBeValueId())){
+				
+				System.out.println("In If 1 "+a+" cid "+b+" &  "+c);
+				if (specialAttributeViewDataDTO.getToBeValueId() == null
+						&& toBe.getAttributeValue() != null) {
+					System.out.println("In If 2 "+a+" cid "+b+" &  "+c);
+					
+					//Long tableId, Long ciId, Long attributeId, Long attributeValueId, Long prevAttributeValueId, String source,
+					if(oldToBevalue!=0L){
+						
+						System.out.println("In If 3 dam chalna h "+a+" cid "+b+" &  "+c);
+						ExecutorService executor = Executors.newSingleThreadExecutor();
+						
+						executor.submit(new Runnable() {
+							
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								startInheritance(a, b, c,d, e,AirKonstanten.APPLICATION_GUI_NAME, f);
+								
+							}
+						});
+						
+						System.out.println("In If 3 dam chala diay  "+a+" cid "+b+" &  "+c);
+					/*startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
+							.getAttribute().getId(),
+							specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
+							AirKonstanten.APPLICATION_GUI_NAME, cwid);*/
+					
+					}
+					
+					} else if (specialAttributeViewDataDTO.getToBeValueId() != null) {
+						System.out.println("In else 4 "+a+" cid "+b+" &  "+c);
+						ExecutorService executor1 = Executors.newSingleThreadExecutor();
+						
+						executor1.submit(new Runnable() {
+							
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								startInheritance(a, b, c,d, e,AirKonstanten.APPLICATION_GUI_NAME, f);
+								
+							}
+						});
+						
+						System.out.println("In else 4 chal gya "+a+" cid "+b+" &  "+c);
+
+				/*	startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
+							.getAttribute().getId(),
+							specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
+							AirKonstanten.APPLICATION_GUI_NAME, cwid);*/
+				}
+				}
+			
+		}
+		catch(Exception w ){
+			w.printStackTrace();
+			//return false;
+		}
+		/*catch (Exception z) {
+			z.printStackTrace();
+			return false;
+			// TODO: handle exception
+		}*/
 		
 		
 		return true;
@@ -221,14 +279,16 @@ public class SpecialAttributeHbn {
 	}
 
 	public static void startInheritance(Long tableId, Long ciId, Long attributeId, Long attributeValueId, Long prevAttributeValueId, String source,
-			String user) throws Exception {
+			String user)  {
 		String sql = "{? = call PCK_INHERITANCE.FV_Inheritance_Attr(?,?,?,?,?,?,?)}";
 
 		Transaction ta = null;
 		Session session = HibernateUtil.getSession();
-
+		 
 		boolean commit = false;
-		System.out.println("Table :" + tableId);
+		 //System.out.println("Inherited started for ");
+		System.out.println("Inherited started for "+System.nanoTime());
+		System.out.println("Table inheritence :" + tableId);
 		System.out.println("ciId :" + ciId);
 		System.out.println("attributeId :" + attributeId);
 		System.out.println("attributeValueId :" + attributeValueId);
@@ -251,16 +311,30 @@ public class SpecialAttributeHbn {
 			stmt.setString(7, source);
 			stmt.setString(8, user);
 			stmt.execute();
+			//throw new Exception("Check Attribute ");
 			ta.commit();
 
 			stmt.close();
 			conn.close();
 
 			commit = true;
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new Exception(e);
-		} finally {
+			//throw new SQLException(e);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+			//throw new Exception(e);
+		}finally {
+			System.out.println("Inherited ended  for "+System.nanoTime());
+			System.out.println("Table inheritence :" + tableId);
+			System.out.println("ciId :" + ciId);
+			System.out.println("attributeId :" + attributeId);
+			System.out.println("attributeValueId :" + attributeValueId);
+			System.out.println("prevAttributeValueId :" + prevAttributeValueId);
+			System.out.println("source :" + source);
+			System.out.println("user :" + user);
+			
 			HibernateUtil.close(ta, session, commit);
 		}
 	}

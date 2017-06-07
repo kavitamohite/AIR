@@ -420,7 +420,7 @@
 		<dynamicWindowDataSavedText>Die ge&amp;auml;nderten Daten wurden erfolgreich gespeichert</dynamicWindowDataSavedText>
 		<dynamicWindowDataSavedOKButtonText>OK</dynamicWindowDataSavedOKButtonText>
 		<dynamicWindowDataSaveFailTitle>Der neue Datensatz konnte nicht gespeichert werden</dynamicWindowDataSaveFailTitle>
-		
+		<dynamicWindowDataSaveFailTitleAttribute>Datenbankfehler beim Speichern von Vererbung</dynamicWindowDataSaveFailTitleAttribute>
 		<dynamicWindowDataSavedErrorTitle>Daten nicht gespeichert</dynamicWindowDataSavedErrorTitle>
 		<dynamicWindowDataSavedErrorOKButtonText>OK</dynamicWindowDataSavedErrorOKButtonText>
 
