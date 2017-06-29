@@ -17,6 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.WhereJoinTable;
+
 @Entity
 @Table(name = "HARDWAREKOMPONENTE")
 @org.hibernate.annotations.Entity(dynamicInsert = true)
@@ -1009,6 +1011,7 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 
 	@OneToOne
 	@JoinTable(name = "it_system_hw", joinColumns = { @JoinColumn(name = "hw_id", referencedColumnName = "hw_id") }, inverseJoinColumns = { @JoinColumn(name = "it_system_id", referencedColumnName = "it_system_id") })
+	@WhereJoinTable(clause = "del_quelle is null") //fixed in incident IM0004805219 by emria
 	public ItSystem getItSystem() {
 		return itSystem;
 	}
