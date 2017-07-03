@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -123,6 +126,42 @@ public class HardwareComponentHbn {
 					Projections.rowCount()).uniqueResult();
 			out.setCountResultSet(total.longValue());
 			list = getDTOList(values);
+			
+			//EMRIA CR#C0000190968 
+			// The following code allows to sort the columns Building, Room, Rack. 
+			// Sorting is not possible in hibernate file for Hardware Component because these columns are joint from a different table.
+			if (input.getSort() != null) {
+				if(("building").equals(input.getSort())){
+					
+					if("DESC".equalsIgnoreCase(input.getDir()))
+						Collections.sort(list, AssetViewDataDTO.buildingComparatorDSC);
+					else
+						Collections.sort(list, AssetViewDataDTO.buildingComparatorASC);
+				}
+				
+				if(("room").equals(input.getSort())){
+					
+					if("DESC".equalsIgnoreCase(input.getDir()))
+						Collections.sort(list, AssetViewDataDTO.roomComparatorDSC);
+					else
+						Collections.sort(list, AssetViewDataDTO.roomComparatorASC);
+				}
+
+				if(("rack").equals(input.getSort())){
+	
+					if("DESC".equalsIgnoreCase(input.getDir()))
+						Collections.sort(list, AssetViewDataDTO.rackComparatorDSC);
+					else
+						Collections.sort(list, AssetViewDataDTO.rackComparatorASC);
+				}
+				
+				
+				
+			}
+			
+			//EMRIA
+			
+			//System.out.println("In HWCOMPONENT "+list.get(0).getBuilding() );
 			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list
 					.size()]));
 			tx.commit();

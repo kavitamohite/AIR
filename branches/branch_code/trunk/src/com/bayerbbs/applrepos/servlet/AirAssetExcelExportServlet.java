@@ -31,8 +31,8 @@ import com.bayerbbs.applrepos.service.AssetManagementParameterOutput;
 public class AirAssetExcelExportServlet extends HttpServlet {
 	private static final long serialVersionUID = 3569239290421829949L;
 
-	private static final String[] COLUMNS = { "SAP Description", "PSP Element",
-			"Cost center", "Site", "Serial Number", "Technical Master",
+	private static final String[] COLUMNS = { "Serial Number", "PSP-Element",
+			"Cost center", "Site","Building","Room","Rack-Position","SAP Description","Technical Master",
 			"Technical Number/Asset-Id", "Inventory Number", "Organizational Unit" };
 	/*private static final String[] EXPORTED_COLUMNS = { "Company Code", "Company Name", "Manufacturer", "Type", "Model", "Serial Number",
 		"Tech.Nr.", "Country", "Site", "Building", "Room", "Rack - Position", "Inventory Number", "Order-Nr.",
@@ -42,7 +42,7 @@ public class AirAssetExcelExportServlet extends HttpServlet {
 	
 	private static final String[] EXPORTED_COLUMNS = { "Company Code", "Company Name", "Manufacturer", "Type", "Model", "Serial Number",
 		"Tech.Nr.", "Country", "Site", "Building", "Room", "Rack - Position", "Inventory Number", "Order-Nr.",
-		"PSP - Element", "Cost Center" };
+		"PSP - Element", "Cost Center" };// added by emris for CR#C0000190968 
 	
 	private static final String UNDERSCORE = "_";
 
@@ -290,7 +290,7 @@ public class AirAssetExcelExportServlet extends HttpServlet {
 		for (AssetViewDataDTO hwComp : output.getAssetViewDataDTO()) {
 			row = sheet.createRow(i++);
 			cell = row.createCell(0);
-			cell.setCellValue(hwComp.getSapDescription());
+			cell.setCellValue(hwComp.getSerialNumber());
 
 			cell = row.createCell(1);
 			cell.setCellValue(hwComp.getPspElement());
@@ -300,20 +300,29 @@ public class AirAssetExcelExportServlet extends HttpServlet {
 
 			cell = row.createCell(3);
 			cell.setCellValue(hwComp.getSite());
-
+			
+			// CR#C0000190968  by EMRIA adding three columns in excel export
 			cell = row.createCell(4);
-			cell.setCellValue(hwComp.getSerialNumber());
-
+			cell.setCellValue(hwComp.getBuilding());
 			cell = row.createCell(5);
-			cell.setCellValue(hwComp.getTechnicalMaster());
-
+			cell.setCellValue(hwComp.getRoom());
 			cell = row.createCell(6);
-			cell.setCellValue(hwComp.getTechnicalNumber());
-
+			cell.setCellValue(hwComp.getRack());
+			//CR#C0000190968  by EMRIA end
+			
 			cell = row.createCell(7);
-			cell.setCellValue(hwComp.getInventoryNumber());
+			cell.setCellValue(hwComp.getSapDescription());
 
 			cell = row.createCell(8);
+			cell.setCellValue(hwComp.getTechnicalMaster());
+
+			cell = row.createCell(9);
+			cell.setCellValue(hwComp.getTechnicalNumber());
+
+			cell = row.createCell(10);
+			cell.setCellValue(hwComp.getInventoryNumber());
+
+			cell = row.createCell(11);
 			cell.setCellValue(hwComp.getOrganizationalunit());
 
 		}
