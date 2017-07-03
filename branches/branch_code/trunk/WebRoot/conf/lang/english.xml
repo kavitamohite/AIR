@@ -613,6 +613,10 @@
 		<assetBuilding>Building *</assetBuilding>
 		<assetRoom>Room *</assetRoom>
 		<assetPosition>Rack - Position *</assetPosition>
+		<!-- Changes for C#C0000190968  by EMRIA -->
+		<assetBuildingN>Building</assetBuildingN>
+		<assetRoomN>Room</assetRoomN>
+		<assetPositionN>Rack - Position</assetPositionN>
 		
 		<!-- asset management Business Information-->
 		<assetOrdernumber>Order Number</assetOrdernumber>

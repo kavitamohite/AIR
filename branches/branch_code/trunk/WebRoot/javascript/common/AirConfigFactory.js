@@ -351,11 +351,38 @@ AIR.AirConfigFactory = function() {
 					columnConfig.push({
 						id : 'organizationalunit',
 						header : 'Org Unit',
-						dataIndex : label.assetOrganisation,
+						dataIndex : 'organizationalunit',
+						width : 150,
+						sortable : true
+					});
+					break;//added for CR#C0000190968 by EMRIA
+				case 'building':
+					columnConfig.push({
+						id : 'building',
+						header : label.assetBuildingN,
+						dataIndex :'building' ,
 						width : 150,
 						sortable : true
 					});
 					break;
+				case 'room':
+					columnConfig.push({
+						id : 'room',
+						header : label.assetRoomN,
+						dataIndex : 'room',
+						width : 150,
+						sortable : true
+					});
+					break;
+				case 'rack':
+					columnConfig.push({
+						id : 'rack',
+						header : label.assetPositionN,
+						dataIndex : 'rack',
+						width : 150,
+						sortable : true
+					});
+					break;//end CR#C0000190968 by EMRIA
 				}
 			}
 
