@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<LanguageItems>
+	<Items>
+	
+		<help_infotext>
+			This &lt;b&gt;Help Pane&lt;/b&gt; provides useful information for each topic.&lt;br&gt;
+			By pressing the &gt;&gt;-button you can minimize the help pane; &lt;&lt;-button will show the help pane again.
+		</help_infotext>
+		
+		<help_myplace>
+			&lt;b&gt;My Place&lt;/b&gt; provides individual-related information.&lt;br&gt;&lt;br&gt;
+			[User Options]&lt;p&gt;Change default settings:&lt;br&gt;
+			- &lt;i&gt;Language: German&lt;/i&gt;:German instead of english&lt;br&gt;
+			- &lt;i&gt;Help panne hidden&lt;/i&gt;:Hide help pane&lt;br&gt;&lt;br&gt;
+			- &lt;i&gt;Skip wizard intro:&lt;/i&gt;:No info page when creating a new record&lt;br&gt;&lt;br&gt;
+			[I'm Owner]&lt;p&gt;Shows all records where you are the owner of.&lt;br&gt;&lt;br&gt;
+			[I'm Delegate]&lt;p&gt;Shows all records where you are defined as delegate.
+		</help_myplace>
+		
+		<help_search>
+			Enter the name or alias of a record you are looking for and press the search button.&lt;br&gt;
+			The result will include all records which contain the entered name or alias. For a more detailed search please use the &lt;b&gt;advanced search&lt;/b&gt;.&lt;br&gt;&lt;br&gt;
+
+			&lt;b&gt;General applicable information:&lt;/b&gt; Clicking a menu item will change the content in the content area. Attributes for a record appear with three different characteristics:&lt;br&gt;
+			-	Mandatory: Saving a data set is not allowed if an attribute of this type is empty. This kind of attributes are bold and followed by a '*'.&lt;br&gt;
+			-	Needed: Unlike Mandatory the record can be saved if an attribute of this type is empty. The record remains in the status draft until all needed attributes are stated. This kind of attributes are followed by a '*'.&lt;br&gt;
+			-	Optional: This attribute is not mandatory and can be saved empty.&lt;br&gt;&lt;br&gt;
+			All dropdown boxes support typeahead.
+		</help_search>
+		
+		<help_search_advanced>
+			&lt;b&gt;Advanced Search&lt;/b&gt; is in an early stage of development. More stable functions will be available soon.
+		</help_search_advanced>
+		
+		<help_create_ci>
+			Creating a new record is supported by a &lt;b&gt;wizard&lt;/b&gt;.The first page is for information purpose only and can be skipped next time by checking the &lt;i&gt;'Skip this page next time'&lt;/i&gt; box.&lt;br&gt;
+			Note: This can be change within [My Place] &lt;i&gt;User Options&lt;/i&gt;.&lt;br&gt;&lt;br&gt;
+			With [Start] the first of three steps has to be accomplished. In accordance with the permissions given the &lt;i&gt;Type&lt;i&gt; must either be chosen or it is set. The next step requires all mandatory attributes to be set.&lt;br&gt;
+			&lt;b&gt;Important:&lt;/b&gt; &lt;i&gt;Name&lt;/i&gt; and &lt;i&gt;Alias&lt;/i&gt; must be unique values through all existing records regardless of the type. The &lt;i&gt;Name&lt;/i&gt; and &lt;i&gt;Alias&lt;/i&gt; will be cross-checked!&lt;br&gt;&lt;br&gt;
+			In step 2 general information regarding usage and contracts must be specified. Regarding the chosen &lt;i&gt;Type&lt;/i&gt; the attributes to be specified can be different. Using [back] will not delete given answers made in step 2 unless the &lt;i&gt;Type&lt;/i&gt; is changed. Using [cancel] open the &lt;i&gt;Search&lt;/i&gt; page after a security question.&lt;br&gt;&lt;br&gt;
+			In step 3 contacts must be specified. Use the  person- and  group-picker to add a person or group to an owner or delegate. It is not possible to add a person/group by entering the CWID/group name directly.&lt;br&gt;&lt;br&gt;
+			If at least one &lt;i&gt;Owner Primary Person&lt;/i&gt; is specified, the new record can be saved using [Finish].&lt;br&gt;
+			When record was successfully saved you can continue editing the record or add a new one.
+		</help_create_ci>
+		
+		<help_details_details>
+			The &lt;b&gt;Details menu&lt;/b&gt; includes several sub-menu items depending on the record type and user rights. When switching between the sub-menu items changes made are retained. When exiting the menu you will be prompted to save if something has changed.&lt;br&gt;&lt;br&gt;
+			The &lt;i&gt;Name&lt;/i&gt; and &lt;i&gt;Type&lt;/i&gt; is displayed within the header of the content pane. Below this content re-garding the selected sub-menu is shown. The &lt;i&gt;Details page&lt;/i&gt; itself shows all relevant information of a record at a glance. The save and cancel-buttons are displayed if values have been change in another sub-menu. 
+		</help_details_details>
+		
+		<help_details_specific>
+			&lt;b&gt;Specifics&lt;/b&gt;&lt;br&gt;
+			At least a &lt;i&gt;Name&lt;/i&gt; and a &lt;i&gt;Lifecycle Status&lt;/i&gt; have to be defined. If no Alias is entered, the &lt;i&gt;Name&lt;/i&gt; is used for &lt;i&gt;Alias&lt;/i&gt; after saving.&lt;br&gt;
+			Depending on the chosen &lt;i&gt;Category&lt;/i&gt; &lt;i&gt;the Primary Function&lt;/i&gt; is displayed!&lt;br&gt;&lt;br&gt;
+			&lt;b&gt;Important:&lt;/b&gt; &lt;i&gt;Name&lt;/i&gt; and &lt;i&gt;Alias&lt;/i&gt; must be unique values through all existing records regardless of the type. The &lt;i&gt;Name&lt;/i&gt; and &lt;i&gt;Alias&lt;/i&gt; will be cross-checked!&lt;br&gt;&lt;br&gt; 
+		</help_details_specific>
+		
+		<help_details_contacts>
+			&lt;b&gt;Contacts&lt;/b&gt; is in an early stage of development. Only a view contact types are editable using the &lt;i&gt;Person-&lt;/i&gt; or &lt;i&gt;Group-Picker&lt;/i&gt;.&lt;br&gt;
+			More stable functions will be available soon.&lt;br&gt;&lt;br&gt;
+			
+			Within the &lt;i&gt;Person-Picker&lt;/i&gt; you can search either by CWID or last name. Results are displayed soon as the first two characters have been entered.&lt;br&gt;&lt;br&gt;
+			Within the &lt;i&gt;Group-Picker&lt;/i&gt; you can search either (according to the selection: Group name or Man-ager (CWID)) by a group name or the manager of a group using the managers CWID.&lt;br&gt;
+			For group name results containing the entered characters are displayed soon as the first three have been entered. For manager (CWID) results are displayed soon as the CWID is entered completely.&lt;br&gt;&lt;br&gt;
+			Clicking into a row will add the entry to the appropriate field.
+		</help_details_contacts>
+		
+		<help_details_agreements>
+			&lt;b&gt;Agreements&lt;/b&gt;&lt;br&gt;
+			The &lt;i&gt;Service Contract&lt;/i&gt; depends on the chosen &lt;i&gt;SLA/OLA&lt;/i&gt;. Deleting the &lt;i&gt;SLA/OLA&lt;/i&gt; will delete the entered &lt;i&gt;Service Contract&lt;/i&gt;.&lt;br&gt;&lt;br&gt;
+			&lt;i&gt;Business Essential&lt;/i&gt; can only be edited by users with role 'business essential editor'.
+		</help_details_agreements>
+		
+		<help_details_protection>
+			For &lt;b&gt;Protection&lt;/b&gt; the requirements were changed. New functions will be available soon.&lt;br&gt;&lt;br&gt;
+			&lt;i&gt;Application Protection&lt;/i&gt; is calculated by &lt;i&gt;Integrity&lt;/i&gt; and &lt;i&gt;Confidentiality&lt;/i&gt;.
+		</help_details_protection>
+		
+		<help_details_compliance>
+			&lt;b&gt;Compliance&lt;/b&gt; is in a very early stage of development.&lt;br&gt;&lt;br&gt;
+			Use &lt;i&gt;Controls&lt;/i&gt; only if you know what you are doing!
+		</help_details_compliance>
+		
+		<help_details_licensecosts>
+			&lt;b&gt;Licence and Costs&lt;/b&gt;&lt;br&gt;
+			At &lt;i&gt;Using Regions&lt;/i&gt; click once on a item to select and a second time to unselect. Multiple choice is possible.
+		</help_details_licensecosts>
+		
+		<help_details_specialattributes>
+			&lt;b&gt;Special Attributes&lt;/b&gt;&lt;br&gt;
+			To Add, Modify,Delete an Attribute Values (that match into CI-type of the current CI) on TO_BE and AS_IS basis.&lt;br&gt;
+			&lt;i&gt;Note :- Saving the Attribute value will initiate the inheritance rule.&lt;/i&gt;
+		</help_details_specialattributes>
+		
+		<help_details_connections>
+			&lt;b&gt;Connections&lt;/b&gt;&lt;br&gt;
+			Shows all connections to directly attached business processes and/or other IT components.&lt;br&gt;&lt;br&gt;
+			Streamlines:&lt;br&gt;
+			- Up: At the upper top lies the location.
+			- Down: Going down from a location, a room is followed by a server and a server might be followed by an application. A business process should be the lowermost entry.
+			&lt;br&gt;&lt;br&gt;
+			A structure chart will be available soon.
+		</help_details_connections>
+		
+		<help_details_supportstuff>
+			&lt;b&gt;Documentation&lt;/b&gt;&lt;br&gt;
+			If a URL is entered, a link for test purpose will appear.
+		</help_details_supportstuff>
+
+		<help_details_history>
+			&lt;b&gt;History&lt;/b&gt; is not implemented yet. It will provide details of changes made to the record.
+		</help_details_history>
+	
+        <gpsccontactOwningBusinessGroup>Owning Business Group</gpsccontactOwningBusinessGroup>
+        <gpsccontactOwningBusinessGroupText>
+        	Owning Business Group Info
+        </gpsccontactOwningBusinessGroupText>
+        
+        
+       	<help_details_assetManagement>Asset management</help_details_assetManagement>
+		<help_details_intangible>Software Asset</help_details_intangible>
+		<help_details_tangible>Hardware asset</help_details_tangible>
+		<help_details_assetWithInventory>asset with inventory</help_details_assetWithInventory>
+		<help_details_assetWoInventory>asset without inventory</help_details_assetWoInventory>
+        
+	</Items>
+</LanguageItems>
