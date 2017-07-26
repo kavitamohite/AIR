@@ -111,6 +111,20 @@ AIR.AirWindowFactory = function() {
 						}
 					}];
 					
+				case 'DATA_SAVED_ERROR_ATTRIBUTE':
+					var windowTitle = labels.dynamicWindowDataSavedErrorTitle;
+					var windowText = labels.dynamicWindowDataSaveFailTitleAttribute;
+					var windowIcon = img_Failed;
+
+					var buttonConfigs = [{
+						text: labels.dynamicWindowDataSavedErrorOKButtonText,
+						handler: function() {		
+//							var callback = callbackMap['ok'];
+//							callback();
+							dynamicWindow.close();
+						}
+					}];
+					
 					break;
 				case 'CI_TYPE_NOT_SUPPORTED_WARNING':
 					var windowTitle = labels.dynamicWindowCiTypeNotSupportedWarningTitle;

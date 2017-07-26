@@ -218,7 +218,8 @@ AIR.AirConstants = {
 	
 	USE_CASE_CI_ADV_SEARCH: 10,
 	USE_CASE_CI_CREATION: 11,
-	AIR_USER_PROFILE_COLUMNS_PREFERENCE: 'serialNumber;pspElement;costCenter;sapDescription;site;technicalMaster;technicalNumber;inventoryNumber;organizationalunit' // Added by enqmu
+	//AIR_USER_PROFILE_COLUMNS_PREFERENCE: 'serialNumber;pspElement;costCenter;sapDescription;site;technicalMaster;technicalNumber;inventoryNumber' // Added by enqmu
+	AIR_USER_PROFILE_COLUMNS_PREFERENCE: 'serialNumber;pspElement;costCenter;sapDescription;site;building;room;rack;technicalMaster;technicalNumber;inventoryNumber;organizationalunit' // Added by emria  for CR#C0000190968 
 };
 AC = AIR.AirConstants;
 

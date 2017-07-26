@@ -1,5 +1,7 @@
 package com.bayerbbs.applrepos.dto;
 
+import java.util.Comparator;
+
 public class AssetViewDataDTO {
 
 	private Boolean isSoftwareComponent;
@@ -627,7 +629,102 @@ public class AssetViewDataDTO {
 				+ ", insertUser=" + insertUser + ", insertSource="
 				+ insertSource + "]";
 	}
+	
+	
+	
+	public static Comparator <AssetViewDataDTO> buildingComparatorASC
+    = new Comparator<AssetViewDataDTO>() {
 
+public int compare(AssetViewDataDTO asset1, AssetViewDataDTO asset2) {
+
+String buildingName1 = asset1.getBuilding();
+String buildingName2 = asset2.getBuilding();
+
+//ascending order
+return buildingName1.compareTo(buildingName2);
+
+//descending order
+//return fruitName2.compareTo(fruitName1);
+}
+
+};
+
+
+public static Comparator <AssetViewDataDTO> buildingComparatorDSC
+= new Comparator<AssetViewDataDTO>() {
+
+public int compare(AssetViewDataDTO asset1, AssetViewDataDTO asset2) {
+
+String buildingName1 = asset1.getBuilding();
+String buildingName2 = asset2.getBuilding();
+
+
+return buildingName2.compareTo(buildingName1);
+
+
+}
+};
+
+public static Comparator <AssetViewDataDTO> roomComparatorDSC
+= new Comparator<AssetViewDataDTO>() {
+
+public int compare(AssetViewDataDTO asset1, AssetViewDataDTO asset2) {
+
+String roomName1 = asset1.getRoom();
+String roomName2 = asset2.getRoom();
+
+
+return roomName2.compareTo(roomName1);
+
+
+}
+};
+
+public static Comparator <AssetViewDataDTO> roomComparatorASC
+= new Comparator<AssetViewDataDTO>() {
+
+public int compare(AssetViewDataDTO asset1, AssetViewDataDTO asset2) {
+
+String roomName1 = asset1.getRoom();
+String roomName2 = asset2.getRoom();
+
+
+return roomName1.compareTo(roomName2);
+
+
+}
+};
+
+
+public static Comparator <AssetViewDataDTO> rackComparatorASC
+= new Comparator<AssetViewDataDTO>() {
+
+public int compare(AssetViewDataDTO asset1, AssetViewDataDTO asset2) {
+
+String rackName1 = asset1.getRack();
+String rackName2 = asset2.getRack();
+
+
+return rackName1.compareTo(rackName2);
+
+
+}
+};
+
+public static Comparator <AssetViewDataDTO> rackComparatorDSC
+= new Comparator<AssetViewDataDTO>() {
+
+public int compare(AssetViewDataDTO asset1, AssetViewDataDTO asset2) {
+
+String rackName1 = asset1.getRack();
+String rackName2 = asset2.getRack();
+
+
+return rackName2.compareTo(rackName1);
+
+
+}
+};
 
 
 }

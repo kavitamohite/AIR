@@ -930,6 +930,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'dynamicWindowDataSavedText'},
 			        {name: 'dynamicWindowDataSavedOKButtonText'},
 			        {name: 'dynamicWindowDataSaveFailTitle'},
+			        {name: 'dynamicWindowDataSaveFailTitleAttribute'},
 	
 			        {name: 'dynamicWindowDataSavedErrorTitle'},
 			        {name: 'dynamicWindowDataSavedErrorOKButtonText'},
@@ -1165,7 +1166,10 @@ AIR.AirStoreFactory = function() {
 					{name : 'lAssetwithoutInventoryText'},
 					{name : 'bDeleteAssets'},
 					{name : 'bSaveColumnsPreference'},
-					{name: 'bImportAssetsUp'}
+					{name: 'bImportAssetsUp'},
+					{name : 'assetBuildingN'},//added for CR#C0000190968 EMRIA
+					{name : 'assetRoomN'},//added for CR#C0000190968 EMRIA
+					{name : 'assetPositionN'}//added for CR#C0000190968 EMRIA
 					
 			    ]
 			});

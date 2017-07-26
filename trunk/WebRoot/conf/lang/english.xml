@@ -425,6 +425,7 @@
 		<dynamicWindowDataSavedText>The changed data was saved successfully.</dynamicWindowDataSavedText>
 		<dynamicWindowDataSavedOKButtonText>OK</dynamicWindowDataSavedOKButtonText>
 		<dynamicWindowDataSaveFailTitle>The new record could not be saved</dynamicWindowDataSaveFailTitle>
+		<dynamicWindowDataSaveFailTitleAttribute>Attribute Inheritence failed ! </dynamicWindowDataSaveFailTitleAttribute>
 		
 		<dynamicWindowDataSavedErrorTitle>Data Not Saved</dynamicWindowDataSavedErrorTitle>
 		<dynamicWindowDataSavedErrorOKButtonText>OK</dynamicWindowDataSavedErrorOKButtonText>
@@ -612,6 +613,10 @@
 		<assetBuilding>Building *</assetBuilding>
 		<assetRoom>Room *</assetRoom>
 		<assetPosition>Rack - Position *</assetPosition>
+		<!-- Changes for C#C0000190968  by EMRIA -->
+		<assetBuildingN>Building</assetBuildingN>
+		<assetRoomN>Room</assetRoomN>
+		<assetPositionN>Rack - Position</assetPositionN>
 		
 		<!-- asset management Business Information-->
 		<assetOrdernumber>Order Number</assetOrdernumber>
