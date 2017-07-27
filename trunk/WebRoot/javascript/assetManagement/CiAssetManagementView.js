@@ -614,7 +614,7 @@ AIR.CiAssetManagementView = Ext.extend(AIR.AirView, {
 				'ciAssetSearchResultView').getComponent(
 				'tpCiAssetSearchResultTables');
 		var columns = "";
-		for (var i = 1; i < 10; i++) {
+		for (var i = 1; i < 13; i++) {
 			columns += tpCiSearchResultTables.getActiveTab().getColumnModel()
 					.getColumnId(i)
 					+ ";";
