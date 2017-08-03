@@ -241,11 +241,11 @@ Util = {
 			combo.setValue(oldValue);
 		},
 		
-		updateFieldLabel: function(field, label){
+		updateFieldLabel: function(field, label){//changes done by emria
 			if (!field.rendered){
 				field.fieldLabel = label;
 			} else{
-				field.label.update(label);
+				field.update(label);
 			}
 		},
 		
