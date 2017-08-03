@@ -572,8 +572,8 @@
 		
 		
 		<!-- asset management -->
-		<assetSerialNo>Serial Number</assetSerialNo>
-		<assetCostCenter>Cost Center</assetCostCenter>		
+		<assetSerialNo>Seriennummer</assetSerialNo>
+		<assetCostCenter>Kostenstelle</assetCostCenter>		
 				
 		<!-- asset management menu items-->
 		<lMenuAssetManagement>Asset Management</lMenuAssetManagement>
@@ -584,12 +584,12 @@
 		<createhardwarepanelheader>Asset Management - Hardware Komponente</createhardwarepanelheader>
 		<lAssetwithInventoryText>&lt;b&gt;Mit Asset Inventory&lt;/b&gt;&lt;br&gt;Mit dem Assistenten kann ein neuer Datensatz mit allen Pflichtattributen angelegt werden.</lAssetwithInventoryText>
 		<lAssetwithoutInventoryText>&lt;b&gt;Ohne Asset Inventory&lt;/b&gt;&lt;br&gt;Mit dem Assistenten kann ein neuer Datensatz mit allen Pflichtattributen angelegt werden.</lAssetwithoutInventoryText>
-		<assetReset>Zurücksetzen aller Einträge</assetReset>
+		<assetReset>ZurÃ¼cksetzen aller EintrÃ¤ge</assetReset>
 		
 		<!-- asset management search-->
-		<rHardwarecomponent>Hardware Komponente</rHardwarecomponent>
-		<rSoftwarecomponent>Software Komponente</rSoftwarecomponent>
-		<bDeleteAssets>Löschen</bDeleteAssets>
+		<rHardwarecomponent>Hardwarekomponente </rHardwarecomponent>
+		<rSoftwarecomponent>Softwarekomponente</rSoftwarecomponent>
+		<bDeleteAssets>LÃ¶schen</bDeleteAssets>
 		<bSaveColumnsPreference>Spaltenauswahl speichern</bSaveColumnsPreference>
 		<bImportAssetsUp>Import aktualisieren</bImportAssetsUp>
 		
@@ -611,13 +611,13 @@
 		<!-- asset management Location-->
 		<assetCountry>Land *</assetCountry>
 		<assetSite>Standort *</assetSite>
-		<assetBuilding>Gebäude *</assetBuilding>
+		<assetBuilding>GebÃ¤ude *</assetBuilding>
 		<assetRoom>Raum *</assetRoom>
 		<assetPosition>Rack - Position *</assetPosition>
 		<!-- Changes for C#C0000190968  by EMRIA -->
-		<assetBuildingN>Building</assetBuildingN>
-		<assetRoomN>Room</assetRoomN>
-		<assetPositionN>Rack - Position</assetPositionN>
+		<assetBuildingN>GebÃ¤ude</assetBuildingN>
+		<assetRoomN>Raum</assetRoomN>
+		<assetPositionN>Schrank â€“ Stellplatz</assetPositionN>
 		
 		
 		<!-- asset management Technics-->
@@ -634,7 +634,7 @@
 		<!-- asset management Business Information-->
 		<assetOrdernumber>Bestellnummer</assetOrdernumber>
 		<assetInventory>Inventarnummer</assetInventory>
-		<assetPSP>PSP-Elemente</assetPSP>
+		<assetPSP>PSP-Element</assetPSP>
 		<assetPsptext>PSP-Text</assetPsptext>
 		<assetCost>Kostenstelle *</assetCost>
 		<assetRequester>Anforderer *</assetRequester>
