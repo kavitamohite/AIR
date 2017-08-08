@@ -589,7 +589,7 @@
 		
 		<!-- asset management search-->
 		<rHardwarecomponent>Hardware Component</rHardwarecomponent>
-		<rSoftwarecomponent>Software Component</rSoftwarecomponent>bDeleteAssets
+		<rSoftwarecomponent>Software Component</rSoftwarecomponent>
 		<bDeleteAssets>Delete</bDeleteAssets>
 		<bSaveColumnsPreference>Save Columns Preference</bSaveColumnsPreference>
 		<bImportAssetsUp>Import Update</bImportAssetsUp>
