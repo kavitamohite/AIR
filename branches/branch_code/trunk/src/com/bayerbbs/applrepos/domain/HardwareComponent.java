@@ -182,6 +182,20 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 	private Long lanCount;
 
 	private Long cpuCoreCount;
+	
+	
+	//emria C0000202453
+	
+	private String iloAdvancedKey;
+	private String oneViewOrderNumber;
+	private String typeOfContract;
+	private String serviceAgreementId;
+	private String serviceContractGroup;
+	private Date endOfContract;
+	
+	//emria end C0000202453
+	
+	
 
 	private ItSystem itSystem;
 
@@ -1018,6 +1032,64 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 
 	public void setItSystem(ItSystem itSystem) {
 		this.itSystem = itSystem;
+	}
+	
+	@Column(name = "ILO_ADVANCED_KEY")
+
+	public String getIloAdvancedKey() {
+		return iloAdvancedKey;
+	}
+
+	public void setIloAdvancedKey(String iloAdvancedKey) {
+		this.iloAdvancedKey = iloAdvancedKey;
+	}
+	
+	@Column(name="ONE_VIEW_ORDER_NO")
+
+	public String getOneViewOrderNumber() {
+		return oneViewOrderNumber;
+	}
+
+	public void setOneViewOrderNumber(String oneViewOrderNumber) {
+		this.oneViewOrderNumber = oneViewOrderNumber;
+	}
+
+	@Column(name="TYPE_OF_CONTRACT")
+	public String getTypeOfContract() {
+		return typeOfContract;
+	}
+
+	public void setTypeOfContract(String typeOfContract) {
+		this.typeOfContract = typeOfContract;
+	}
+	
+	@Column(name="SERVICE_AGREEMENT_ID")
+
+	public String getServiceAgreementId() {
+		return serviceAgreementId;
+	}
+
+	public void setServiceAgreementId(String serviceAgreementId) {
+		this.serviceAgreementId = serviceAgreementId;
+	}
+	
+	@Column(name="SERVICE_CONTRACT_GROUP")
+
+	public String getServiceContractGroup() {
+		return serviceContractGroup;
+	}
+
+	public void setServiceContractGroup(String serviceContractGroup) {
+		this.serviceContractGroup = serviceContractGroup;
+	}
+
+	@Column(name="END_OF_CONTRACT")
+	public Date getEndOfContract() {
+		return endOfContract;
+	}
+
+	public void setEndOfContract(Date endOfContract) {
+		this.endOfContract = endOfContract;
 	}
 
 }
