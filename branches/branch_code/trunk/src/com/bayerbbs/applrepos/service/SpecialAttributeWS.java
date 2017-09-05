@@ -15,7 +15,9 @@ public class SpecialAttributeWS {
 	public SpecialAttributeViewDataDTO[] getSpecialAttributes(
 			SpecialAttributeParameterInput input) {
 		List<Attribute> attributes = null;
-		if(input.getCiTypeId() != null){
+		
+		if(input.getCiTypeId() != null && ! (input.getCiTypeId().isEmpty())){ //emria specialAttribute Fix
+			
 			attributes = AttributeHbn.listAttributeForCiType(input.getCiTypeId());
 		} else {
 			attributes = AttributeHbn.listAttributeForTableId(input.getTableId());
