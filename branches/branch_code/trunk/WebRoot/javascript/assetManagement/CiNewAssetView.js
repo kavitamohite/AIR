@@ -67,17 +67,31 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                 xtype: 'panel',
                 id: 'bottomPanel',
                 border: false,
+                //autoHeight: true,
                 height: 700,
+               // height: 850,  //emria
                 //autoScroll: true,
+              
                 layout: {
                     type: 'table',
-                    columns: 2
-                },
+                    columns: 2,
+                    tableAttrs : {
+                        style : {
+                            width : '100%',
+                            height : '100%'                                 
+                        }
+                    },
+                    tdAttrs : {
+                        align : 'top',
+                        valign : 'top',
+                    }
+                   },
                 items: [{
                     xtype: 'panel',
                     id: 'leftPanel',
                     border: false,
                     width: 590,
+                   
                     items: [{
                         xtype: 'AIR.CiProduct',
                         id: 'product'
@@ -93,6 +107,7 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
                     id: 'rightPanel',
                     border: false,
                     width: 590,
+              
                     items: [{
                         xtype: 'AIR.CiBusiness',
                         id: 'businessInformation'
@@ -760,6 +775,45 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     	} else {
     		bHistory.hide();
     	}
+		
+		//emria
+		 if (cbManufacturerValue ==8){
+			 
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tILOAdKey').show();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrdNum').show();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tTypeContract').show();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceAgrmntId').show();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceContGrp').show();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cEndContrctDate').show();
+		 
+		 } else {
+			 
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tILOAdKey').reset();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrdNum').reset();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tTypeContract').reset();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceAgrmntId').reset();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceContGrp').reset();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cEndContrctDate').reset();
+
+		 
+			 
+			 
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tILOAdKey').hide();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrdNum').hide();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tTypeContract').hide();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceAgrmntId').hide();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceContGrp').hide();
+			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cEndContrctDate').hide();
+
+		}
+		
+		
+		console.log('In Enable key event feild  ');
+		
+		//emria
+		
+		
+		
 	},
 
     update: function(assetData) {

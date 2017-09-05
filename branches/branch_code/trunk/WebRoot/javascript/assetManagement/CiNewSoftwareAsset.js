@@ -157,6 +157,15 @@ AIR.CiNewSoftwareAsset = Ext.extend(AIR.AirView, {
         
         var tfRequester = this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('pRequester').getComponent('tfRequester');
         tfRequester.on('change', this.enableAssetButtons, this);
+        //emria  C0000202453
+      //this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tInventorynumber1').hide();
+        this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tILOAdKey').hide();
+		 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrdNum').hide();
+		 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tTypeContract').hide();
+		 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceAgrmntId').hide();
+		 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceContGrp').hide();
+		 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cEndContrctDate').hide();
+// end emria C0000202453
         
     },
     
