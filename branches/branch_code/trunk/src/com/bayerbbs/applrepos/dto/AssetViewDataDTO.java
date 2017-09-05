@@ -1,6 +1,7 @@
 package com.bayerbbs.applrepos.dto;
 
 import java.util.Comparator;
+import java.util.Date;
 
 public class AssetViewDataDTO {
 
@@ -78,6 +79,15 @@ public class AssetViewDataDTO {
 	private Long ownerId;
 	private String sapAssetClass;
 	private Long sapAssetClassId;
+	//emria  change#C0000202453
+	private String iloAdvancedKey;
+	private String oneViewOrderNumber;
+	private String typeOfContract;
+	private String serviceAgreementId;
+	private String serviceContractGroup;
+	private Date endOfContract;
+	
+	//emria end   change#C0000202453 
 
 	// Contacts
 	private Long editorsGroupId;
@@ -725,6 +735,54 @@ return rackName2.compareTo(rackName1);
 
 }
 };
+
+public String getIloAdvancedKey() {
+	return iloAdvancedKey;
+}
+
+public void setIloAdvancedKey(String iloAdvancedKey) {
+	this.iloAdvancedKey = iloAdvancedKey;
+}
+
+public String getOneViewOrderNumber() {
+	return oneViewOrderNumber;
+}
+
+public void setOneViewOrderNumber(String oneViewOrderNumber) {
+	this.oneViewOrderNumber = oneViewOrderNumber;
+}
+
+public String getTypeOfContract() {
+	return typeOfContract;
+}
+
+public void setTypeOfContract(String typeOfContract) {
+	this.typeOfContract = typeOfContract;
+}
+
+public String getServiceAgreementId() {
+	return serviceAgreementId;
+}
+
+public void setServiceAgreementId(String serviceAgreementId) {
+	this.serviceAgreementId = serviceAgreementId;
+}
+
+public String getServiceContractGroup() {
+	return serviceContractGroup;
+}
+
+public void setServiceContractGroup(String serviceContractGroup) {
+	this.serviceContractGroup = serviceContractGroup;
+}
+
+public Date getEndOfContract() {
+	return endOfContract;
+}
+
+public void setEndOfContract(Date endOfContract) {
+	this.endOfContract = endOfContract;
+}
 
 
 }
