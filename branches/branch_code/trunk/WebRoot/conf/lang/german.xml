@@ -644,6 +644,13 @@
 	    <assetSapClass>SAP Asset Klasse</assetSapClass>
 	    <assetInsertUser>inset Benutzer</assetInsertUser>
 	    <assetInsertSource>Einsatz Quelle</assetInsertSource>
+	    
+	     <assetILOAdKey>ILO SchLussel</assetILOAdKey> 
+		<assetOrdNum>One View Bestellnummer</assetOrdNum>
+	    <assetTypeContract>Vertragsart</assetTypeContract>
+	    <assetServiceAgrmntId>Servicevertrags-ID</assetServiceAgrmntId>
+	    <assetServiceContGrp>Dienstleistungs vertragsgruppe</assetServiceContGrp>
+	    <assecEndContrctDate>Vertragsende</assecEndContrctDate>
 	  
 	    <!-- asset management Contacts-->
 	    <assetEditor>Editoren Gruppe *</assetEditor>

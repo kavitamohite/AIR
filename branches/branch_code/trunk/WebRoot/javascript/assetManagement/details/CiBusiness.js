@@ -238,7 +238,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
             {
                 xtype: 'textfield',
                 itemId: 'tServiceAgrmntId',
-                fieldLabel: 'Service Agreement Id',
+                fieldLabel: 'Service Agreement Id  ',
                 width: 370,
                 style: {
                     marginBottom: 5,
@@ -248,7 +248,7 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
             {
                 xtype: 'textfield',
                 itemId: 'tServiceContGrp',
-                fieldLabel: 'Service Contract Group ',
+                fieldLabel: 'Service Contract     Group  ',
                 width: 370,
                 style: {
                     marginBottom: 5,
@@ -530,6 +530,16 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         Util.updateLabel(this.getComponent('pRequester').getComponent('labeltfRequester'), labels.assetRequester);
         Util.updateFieldLabel(this.getComponent('tInsertUser'), labels.assetInsertUser);
         Util.updateFieldLabel(this.getComponent('tInsertSource'),labels.assetInsertSource);
+        
+        //emria
+        Util.updateFieldLabel(this.getComponent('tILOAdKey'),labels.assetILOAdKey);
+        Util.updateFieldLabel(this.getComponent('tOrdNum'),labels.assetOrdNum);
+        Util.updateFieldLabel(this.getComponent('tTypeContract'),labels.assetTypeContract);
+        Util.updateFieldLabel(this.getComponent('tServiceAgrmntId'),labels.assetServiceAgrmntId);
+        Util.updateFieldLabel(this.getComponent('tServiceContGrp'),labels.assetServiceContGrp);
+        Util.updateFieldLabel(this.getComponent('cEndContrctDate'),labels.assecEndContrctDate);
+          
+        //end emria
     }
 
 });
