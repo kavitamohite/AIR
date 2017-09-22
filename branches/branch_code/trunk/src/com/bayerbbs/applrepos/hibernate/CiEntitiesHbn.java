@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -812,7 +813,7 @@ public class CiEntitiesHbn {
 	
 	private static List<CiItemDTO> findCis(String sql) {//ApplicationDTO
 		ArrayList<CiItemDTO> listeAnwendungen = new ArrayList<CiItemDTO>();//ApplicationDTO
-
+		//System.out.println("findCis "+sql);
 		boolean commit = false;
 		Transaction ta = null;
 		Statement selectStmt = null;
@@ -932,19 +933,21 @@ public class CiEntitiesHbn {
 		return output;
 	}
 	
-	public static void saveCiRelations(Integer tableId, Long ciId, String ciRelationsAddList, String ciRelationsDeleteList, String direction, String cwid) {
+	public static String saveCiRelations(Integer tableId, Long ciId, String ciRelationsAddList, String ciRelationsDeleteList, String direction, String cwid)   {
 		String sql = "{call pck_air.p_save_relations(?,?,?,?,?,?)}";//"begin pck_air.p_save_relations(?,?,?,?,?,?);//"EXEC pck_air.p_save_relations ("+tableId+", "+ciId+", "+ciRelationsAddList+", "+ciRelationsDeleteList+", "+direction+", "+cwid+")";
 		
 		Transaction ta = null;
 		Session session = HibernateUtil.getSession();
-		
+		String message=null;
 		boolean commit = false;
+		System.out.println("cwid inside save relation "+cwid);
 		
 		try {
 			ta = session.beginTransaction();
 			@SuppressWarnings("deprecation")
 			Connection conn = session.connection();
-			
+			System.out.println("In save relationship tableId: "+tableId +" ciId:  "+ciId+" ciRelationsAddList :"+ciRelationsAddList+" ciRelationsDeleteList: "+ciRelationsDeleteList+" direction: "+direction);
+			System.out.println("Started at "+new Date());
 			CallableStatement stmt = conn.prepareCall(sql);
 			stmt.setLong(1, tableId);
 			stmt.setLong(2, ciId);
@@ -953,17 +956,30 @@ public class CiEntitiesHbn {
 			stmt.setString(5, direction);
 			stmt.setString(6, cwid);
 			stmt.executeUpdate();
-			ta.commit();
 			
+			System.out.println("saved successfull relationship tableId: "+tableId +" ciId:  "+ciId+" ciRelationsAddList :"+ciRelationsAddList+" ciRelationsDeleteList: "+ciRelationsDeleteList+" direction: "+direction);
+			System.out.println("Ended at "+new Date());
+			ta.commit();
 			stmt.close();
 			conn.close();
 			
 			commit = true;
 		} catch (Exception e) {
+			System.out.println("In exception for relationship");
+			System.out.println("In exception relationship tableId: "+tableId +" ciId:  "+ciId+" ciRelationsAddList :"+ciRelationsAddList+" ciRelationsDeleteList: "+ciRelationsDeleteList+" direction: "+direction);
+			
+			System.out.println("Exception at "+new Date());
+			e.printStackTrace();
+			
+			message= e.getMessage();
+			// TODO: handle exception
+			
 			System.out.println(e.toString());
-		} finally {
+		}finally {
+			System.out.println("In Finally");
 			HibernateUtil.close(ta, session, commit);
 		}
+		return message;
 	}
 
 
