@@ -245,7 +245,7 @@ Util = {
 			if (!field.rendered){
 				field.fieldLabel = label;
 			} else{
-				field.update(label);
+				field.label.update(label);
 			}
 		},
 		

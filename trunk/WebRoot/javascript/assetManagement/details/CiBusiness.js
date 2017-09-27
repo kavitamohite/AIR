@@ -6,7 +6,8 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         Ext.apply(this, {
             title: 'Business Information',
             hidden: true,
-            autoHeight: true,
+            height:450,
+            autoScroll: true,
             style: {
                 margin: '5 5 0 0'
             },
@@ -26,7 +27,8 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
                 style: {
                     marginBottom: 10
                 }
-            }, {
+            },
+            {
                 xtype: 'panel',
                 itemId: 'pPSPElement',
                 border: false,
@@ -202,7 +204,68 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
                     marginBottom: 5,
                     fontSize: 12
                 }
-            }            
+            } ,
+            {
+                xtype: 'textfield',
+                itemId: 'tILOAdKey',
+                fieldLabel: 'ILO Advanced Key',
+                width: 370,
+                style: {
+                    marginBottom: 5,
+                    fontSize: 12
+                }
+            },
+            {
+                xtype: 'textfield',
+                itemId: 'tOrdNum',
+                fieldLabel: 'One View Order Number',
+                width: 370,
+                style: {
+                    marginBottom: 5,
+                    fontSize: 12
+                }
+            },
+            {
+                xtype: 'textfield',
+                itemId: 'tTypeContract',
+                fieldLabel: 'Type Of Contract',
+                width: 370,
+                style: {
+                    marginBottom: 5,
+                    fontSize: 12
+                }
+            },
+            {
+                xtype: 'textfield',
+                itemId: 'tServiceAgrmntId',
+                fieldLabel: 'Service Agreement Id  ',
+                width: 370,
+                style: {
+                    marginBottom: 5,
+                    fontSize: 12
+                }
+            },
+            {
+                xtype: 'textfield',
+                itemId: 'tServiceContGrp',
+                fieldLabel: 'Service Contract     Group  ',
+                width: 370,
+                style: {
+                    marginBottom: 5,
+                    fontSize: 12
+                }
+            },
+            {
+                xtype: 'datefield',
+                itemId: 'cEndContrctDate',
+                fieldLabel: 'End Of Contract',
+                format: 'm/d/Y',
+                width: 370,
+                style: {
+                    marginBottom: 5,
+                    fontSize: 12
+                }
+            }
             ]
         });
 
@@ -427,6 +490,29 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
 
         var cbSapAsset = this.getComponent('cbSapAsset');
         assetData.sapAssetClassId = cbSapAsset.getValue();
+        
+        //emria   change#C0000202453
+        
+    	
+        var tILOAdKey = this.getComponent('tILOAdKey');
+        assetData.iloAdvancedKey = tILOAdKey.getValue();
+        
+        var tOrdNum = this.getComponent('tOrdNum');
+        assetData.oneViewOrderNumber = tOrdNum.getValue();
+        
+        var tTypeContract = this.getComponent('tTypeContract');
+        assetData.typeOfContract = tTypeContract.getValue();
+        
+        var tServiceAgrmntId = this.getComponent('tServiceAgrmntId');
+        assetData.serviceAgreementId = tServiceAgrmntId.getValue();
+        
+        var tServiceContGrp = this.getComponent('tServiceContGrp');
+        assetData.serviceContractGroup = tServiceContGrp.getValue();
+        
+        var cEndContrctDate = this.getComponent('cEndContrctDate');
+        assetData.endOfContract = cEndContrctDate.getValue();
+        
+        //emria end  change#C0000202453
 
         return assetData;
     },
@@ -444,6 +530,16 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         Util.updateLabel(this.getComponent('pRequester').getComponent('labeltfRequester'), labels.assetRequester);
         Util.updateFieldLabel(this.getComponent('tInsertUser'), labels.assetInsertUser);
         Util.updateFieldLabel(this.getComponent('tInsertSource'),labels.assetInsertSource);
+        
+        //emria
+        Util.updateFieldLabel(this.getComponent('tILOAdKey'),labels.assetILOAdKey);
+        Util.updateFieldLabel(this.getComponent('tOrdNum'),labels.assetOrdNum);
+        Util.updateFieldLabel(this.getComponent('tTypeContract'),labels.assetTypeContract);
+        Util.updateFieldLabel(this.getComponent('tServiceAgrmntId'),labels.assetServiceAgrmntId);
+        Util.updateFieldLabel(this.getComponent('tServiceContGrp'),labels.assetServiceContGrp);
+        Util.updateFieldLabel(this.getComponent('cEndContrctDate'),labels.assecEndContrctDate);
+          
+        //end emria
     }
 
 });

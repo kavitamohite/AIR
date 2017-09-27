@@ -521,6 +521,7 @@ public class HardwareComponentHbn {
 			dto.setIdentNumber(hardwareComponent.getName());
 		}
 		} catch (Exception e) {
+			e.printStackTrace();
 			dto.setError("Saving Asset Failed");
 			return dto;
 		}
@@ -908,6 +909,22 @@ public class HardwareComponentHbn {
 		hardwareComponent.setHardwareCategory1Id(dto.getSapAssetClassId());
 		hardwareComponent.setSubResponsible(dto.getOrganizationalunit());
 		hardwareComponent.setPartnerId(dto.getOwnerId());
+		//emria C0000202453
+		
+		hardwareComponent.setIloAdvancedKey(dto.getIloAdvancedKey());
+		hardwareComponent.setOneViewOrderNumber(dto.getOneViewOrderNumber());
+		hardwareComponent.setTypeOfContract(dto.getTypeOfContract());
+		hardwareComponent.setServiceAgreementId(dto.getServiceAgreementId());
+		hardwareComponent.setServiceContractGroup(dto.getServiceContractGroup());
+		if(null == dto.getEndOfContract()){
+			hardwareComponent.setEndOfContract(null);
+		}else{
+		hardwareComponent.setEndOfContract(new java.sql.Date(dto.getEndOfContract().getTime()));
+		}
+		
+		
+		
+		//emria end C0000202453
 		
 		Long itSet = null;
 		if(hardwareComponent.getItset() == null){

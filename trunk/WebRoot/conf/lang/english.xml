@@ -631,6 +631,14 @@
 	    <assetSapClass>SAP Asset Class</assetSapClass>
 	    <assetInsertUser>Insert User</assetInsertUser>
 	    <assetInsertSource>Insert Source</assetInsertSource>
+	  
+	    <assetILOAdKey>ILO Advanced Key</assetILOAdKey>
+	    <assetOrdNum>One View Order Number</assetOrdNum>
+	    <assetTypeContract>Type Of Contract</assetTypeContract>
+	    <assetServiceAgrmntId>Service Agreement    Id</assetServiceAgrmntId>
+	    <assetServiceContGrp>Service Contract    Group</assetServiceContGrp>
+	    <assecEndContrctDate>End Of Contract</assecEndContrctDate>
+	         
 	    
 		
 		<!-- asset management Technics-->

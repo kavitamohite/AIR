@@ -1151,7 +1151,15 @@ AIR.AirStoreFactory = function() {
 					{name : 'assetSapClass'},
 					{name : 'assetEditor'},
 					{name : 'assetInsertUser'},
-					{name : 'assetInsertSource'},					
+					{name : 'assetInsertSource'},	
+					
+					{name : 'assetILOAdKey'},
+					{name : 'assetOrdNum'},
+					{name : 'assetTypeContract'},
+					{name : 'assetServiceAgrmntId'},
+					{name : 'assetServiceContGrp'},
+					{name : 'assecEndContrctDate'},
+					
 					
 					//AssetManagement Links
 					{name : 'lMenuAssetManagement'},
@@ -1170,6 +1178,7 @@ AIR.AirStoreFactory = function() {
 					{name : 'assetBuildingN'},//added for CR#C0000190968 EMRIA
 					{name : 'assetRoomN'},//added for CR#C0000190968 EMRIA
 					{name : 'assetPositionN'}//added for CR#C0000190968 EMRIA
+					
 					
 			    ]
 			});
@@ -1504,6 +1513,7 @@ AIR.AirStoreFactory = function() {
 				reader: historyListReader,
 				groupField: 'infoType'
 			});
+			
 			
 			return historyListStore;
 		},
