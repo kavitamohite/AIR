@@ -597,6 +597,31 @@ public class AnwendungHbn extends BaseHbn {
 					try {
 						if (null == validationMessage) {
 							if (null != application && null == application.getDeleteTimestamp()) {
+								
+								
+								//emria test for Air saving iussue
+								//String message = "File uploaded successfully.";
+								//Session session=null;
+								Connection conn=null;;
+								PreparedStatement pstmt=null;;
+								
+									 //session = HibernateUtil.getSession();
+									 conn = session.connection();
+									 int i=',';
+										System.out.println("I value is "+i);
+										i='_';
+										System.out.println("I value is "+i);
+System.out.println("Air Saving issue>>>>>>>>>>");
+										 pstmt = conn.prepareStatement("alter session set nls_comp=binary");
+										System.out.println("pstmt.executeUpdate()  "+pstmt.executeUpdate()); 
+										
+										 i=',';
+										System.out.println("I value is "+i);
+										i='_';
+										System.out.println("I value is "+i);
+									
+									//
+									
 								session.saveOrUpdate(application);
 								session.flush();
 								
@@ -2668,6 +2693,9 @@ public class AnwendungHbn extends BaseHbn {
 			if (null != conn) {
 				conn.close();
 			}
+			//System.out.println("In History 2");
+			//Thread.sleep(30000);//emria
+			//System.out.println("In History 3");
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			//
@@ -2676,6 +2704,7 @@ public class AnwendungHbn extends BaseHbn {
 			HibernateUtil.close(tx, session, commit);
 		}
 
+		 
 		return listResult;
 	}
 
