@@ -48,7 +48,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		});
 		
 		//AIR.AirStoreFactory.createCurrencyListStore() weil wenn AIR.AirStoreManager.getStoreByName('currencyListStore') sind die store data=null
-		//wenn das Fenster ein weiteres Mal geöffnet wird. Grund?
+		//wenn das Fenster ein weiteres Mal geï¿½ffnet wird. Grund?
 		//currencyStore.load();
 		
 		
@@ -215,7 +215,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						labelWidth: 100,
 						anchor: '95%',
 						
-						// Muss leider auf Elementebene gemacht werden, da auf fieldset/panel Ebene diese unerwünscht grau hinterlegt werden
+						// Muss leider auf Elementebene gemacht werden, da auf fieldset/panel Ebene diese unerwï¿½nscht grau hinterlegt werden
 //						disabled: true,//this.hasNoUserRights
 	
 						items: [{
@@ -302,7 +302,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						layout: 'form',
 						labelWidth: 100,
 						hidden: true,//this.hasNoGapAnalysis,
-						anchor: '95%',//100 95% bei allen pMassnahmeDetails fieldsets falls dieses Fenster höher werden muss
+						anchor: '95%',//100 95% bei allen pMassnahmeDetails fieldsets falls dieses Fenster hï¿½her werden muss
 						
 						items: [{
 							xtype: 'panel',
@@ -379,7 +379,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 
 									readOnly: true
 								},{
-									xtype: 'hidden',//nur für/wegen personPicker
+									xtype: 'hidden',//nur fï¿½r/wegen personPicker
 							        id: 'tfGapResponsibleHidden'
 							    },{
 					                xtype: 'button',//commandlink
@@ -514,7 +514,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									allowBlank: false,
 									enableKeyEvents: true,
 									msgTarget: 'under',
-//									readOnly: true,//sonst kein Datem auswählbar
+//									readOnly: true,//sonst kein Datem auswï¿½hlbar
 									
 //									flex: 7,
 //									margins: '5 0 0 0'
@@ -605,7 +605,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									layout: 'form',
 									border: false,
 									height: 140,
-									//warum wird die Höhe nicht automatisch berechnet wie bei pRiskAnalysisAndMgmtFreeText ohne height: 220
+									//warum wird die Hï¿½he nicht automatisch berechnet wie bei pRiskAnalysisAndMgmtFreeText ohne height: 220
 									
 									items: [{
 										xtype: 'panel',
@@ -1077,7 +1077,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 									
 									format: AIR.AirApplicationManager.getDateFormat(),//this.config.language
 									altFormats: AIR.AirApplicationManager.getDateFormat(),//only accept this format
-//									readOnly: true,//sonst kein Datem auswählbar
+//									readOnly: true,//sonst kein Datem auswï¿½hlbar
 									
 //									margins: '5 0 0 0',
 //									flex: 6
@@ -1282,7 +1282,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var result = this.isTargetDateValid(field.getValue());
 		
 		if(result.message) {
-			if(result.isValid) {//Massnahmen Validierungsfenster für Warnungen sollen nur einmal kommen
+			if(result.isValid) {//Massnahmen Validierungsfenster fï¿½r Warnungen sollen nur einmal kommen
 				if(this.warningMassnahmen.length > 0 && !this.skipFocusLost) {
 					this.warningMassnahmen.splice(0, this.warningMassnahmen.length);
 					this.openMassnahmeValidationWindow(result.gapClass, result.title, result.iconType, result.message, result.isValid);
@@ -1294,7 +1294,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	isTargetDateValid: function(date) {//, skip
 		//wenn es keine editierten Massnahmen gibt, sprich die Massnahme nach einer Speicherung neu geladen wurde,
-		//kann das target nicht falsch sein. Daher keine Prüfung, damit beim Zugriff auf die nicht existierende
+		//kann das target nicht falsch sein. Daher keine Prï¿½fung, damit beim Zugriff auf die nicht existierende
 		//Massnahme kein Fehler kommt: var gapClass = this.editedMassnahmen[this.previousSelection].gapPriority
 		if(!this.editedMassnahmen[this.previousSelection])
 			return true;
@@ -1514,14 +1514,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 //		grid.getStore().skipDataChanged = true;
 //		grid.getStore().clearGrouping();
-		grid.getStore().groupBy(this.statusWertDisplayField, true);//'statusWert'  multisort in Z. 24730 löst mit this.fireEvent('datachanged', this); selectionModel's beforeselect event aus 
+		grid.getStore().groupBy(this.statusWertDisplayField, true);//'statusWert'  multisort in Z. 24730 lï¿½st mit this.fireEvent('datachanged', this); selectionModel's beforeselect event aus 
 //		grid.getView().refresh();
 //		grid.getStore().skipDataChanged = false;
 		
 		
 		if(this.isLinkCiSelect) {
-			//wenn updateMassnahmenTable NICHT durch user mit cbCompliantStatus Selektion ausgelöst wurde, z.B. durch Klick auf cbLinkCiList
-			//muss der neue grid index der ausgewählten massnahme gesichert werden, damit die neuen template massnahmen
+			//wenn updateMassnahmenTable NICHT durch user mit cbCompliantStatus Selektion ausgelï¿½st wurde, z.B. durch Klick auf cbLinkCiList
+			//muss der neue grid index der ausgewï¿½hlten massnahme gesichert werden, damit die neuen template massnahmen
 			//Daten nicht unter der falschen Massnahme=rowIndex abgelegt werden!
 			this.previousSelection = this.getSelectedGridIndex();
 		} else {
@@ -1547,12 +1547,12 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		//siehe auch links-AIR.txt
 		var grid = this.getComponent('pLayout').getComponent('fsComplianceControls').getComponent('lvComplianceControls');
 		grid.getView().focusRow(this.getSelectedGridIndex());
-		//auskommentiert wegen: grid.getSelectionModel().getSelected() is undefined und nicht mehr nötig da beforeselect aktiv (?)
+		//auskommentiert wegen: grid.getSelectionModel().getSelected() is undefined und nicht mehr nï¿½tig da beforeselect aktiv (?)
 	},
 	
 	onSigneeSelect: function(combo, record, index) {
 		var value = record.data.lastname + ', ' + record.data.firstname;
-		combo.setValue(value);//setValue setRawValue anstatt setValue damit beim auslesen die cwid mit getValue verfügbar ist
+		combo.setValue(value);//setValue setRawValue anstatt setValue damit beim auslesen die cwid mit getValue verfï¿½gbar ist
 		combo.cwid = record.data.cwid;//.value
 		
 		this.onMassnahmeChange();
@@ -1632,7 +1632,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		var month = now.getMonth();
 		var year = now.getFullYear();
-		var newDate = new Date(year + 1, month + 1, 0);//month + 1 weil datefield bei 1 anfängt
+		var newDate = new Date(year + 1, month + 1, 0);//month + 1 weil datefield bei 1 anfï¿½ngt
 		
 		dfTargetDate.setValue(newDate);
 		this.onMassnahmeChange();
@@ -1752,14 +1752,14 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			return;
 		
 		//save previously edited massnahmenDetails (clientseitig, noch nicht serverseitig),
-		//wenn rechts bei fsComplianceStatement etwas geändert wurde
+		//wenn rechts bei fsComplianceStatement etwas geï¿½ndert wurde
 		if(this.massnahmeChanged && this.previousSelection > -1 && this.existsInvalidMassnahme === 0) {//!this.existsInvalidMassnahme > 0
 			this.massnahmeChanged = false;
 			this.saveMassnahme(this.previousSelection);
 		}
 		
 		//nur dann neu laden, wenn die Massnahme noch nicht bearbeitet wurde. Wird eine Massnahme bearbeitet, dann eine andere und dann
-		//wieder die vorherige soll NICHT neu geladen werden, damit die gemachten Änderungen nicht durch das Laden verloren gehen 
+		//wieder die vorherige soll NICHT neu geladen werden, damit die gemachten ï¿½nderungen nicht durch das Laden verloren gehen 
 		var massnahme = this.editedMassnahmen[rowIndex];
 		var isMassnahmeAlreadyEdited = massnahme ? true : false;
 		
@@ -1831,7 +1831,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			
 
 		
-		//nur das Array zum (Server) Speichern übergeben
+		//nur das Array zum (Server) Speichern ï¿½bergeben
 		var massnahmen = [];
 		for(var key in this.editedMassnahmen) {
 			massnahmen[massnahmen.length] = this.editedMassnahmen[key];
@@ -1937,13 +1937,19 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.updateComplianceDetails(records[0].data);
 	},
 	
-	
+	/**
+	 * @author EMNUV
+	 * Incident  - IM0005485941 
+	 */
 	onMassnahmeChange: function(options) {//source, event
-		this.massnahmeChanged = true;
-		this.activateButtons();
+		if(!options.readOnly){
+			this.massnahmeChanged = true;
+		
+			this.activateButtons();
 		
 		if(!options || !options.skipLinkCiValidation)
 			this.validateMassnahmen(options);
+		}
 	},
 	
 	
@@ -1951,7 +1957,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	//Hier this.editedMassnahmen[i].mitigationPotential und Datumsfelder/-werte this.editedMassnahmen[i].dateOfApproval,targetDate
 	//Zusatz: eine Statusbar mit Meldung welche editierten Massnahmen fehlerhafte Werte enthalten, z.B. Ident: Masnhamen 06.004, 11.651 enthalten Fehler
 	validateMassnahmen: function(options) {
-		//gerade gmachte Änderungen der aktuell ausgewählten Massnahme nach der letzen und vor der nächsten Massnahmenauswahl sichern
+		//gerade gmachte ï¿½nderungen der aktuell ausgewï¿½hlten Massnahme nach der letzen und vor der nï¿½chsten Massnahmenauswahl sichern
 		this.saveMassnahme(this.getSelectedGridIndex());
 		
 //		this.existsInvalidMassnahme = true;
@@ -1961,7 +1967,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		for(var key in this.editedMassnahmen) {
 			var massnahme = this.editedMassnahmen[key];
 			
-			//wenn massnahme verlinkt ist keine Validierungsprüfungen, damit gespeichert werden kann
+			//wenn massnahme verlinkt ist keine Validierungsprï¿½fungen, damit gespeichert werden kann
 			if(massnahme.refTableID > -1 || massnahme.refTableID.length > 0)
 				continue;
 			
@@ -1983,16 +1989,16 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				}
 				
 
-				//wenn massnahme.gapEndDate > -1 (d.h. gapEndDate nicht zurückgesetzt und immer wenn gapClass NICHT 4 oder 5, muss das targetDate geprüft werden)
+				//wenn massnahme.gapEndDate > -1 (d.h. gapEndDate nicht zurï¿½ckgesetzt und immer wenn gapClass NICHT 4 oder 5, muss das targetDate geprï¿½ft werden)
 				var toBeChecked = (!options || !options.skipTargetDate) && massnahme.gapEndDate > -1;
-				//oder umgekehrt: option für die targetDate gecheckt werden muss: wenn manuell dfTargetDate geändert
+				//oder umgekehrt: option fï¿½r die targetDate gecheckt werden muss: wenn manuell dfTargetDate geï¿½ndert
 				
 				if(toBeChecked) {
 //					var isValid = this.isTargetDateValid(new Date(parseInt(massnahme.gapEndDate)), true);
 					var result = this.isTargetDateValid(new Date(parseInt(massnahme.gapEndDate)));
 					
 					if(result.isValid) {//isValid
-						if(result.isWarning && !this.isWarningMassnahmenDone) {//damit keine Warnung kommt, wenn etwas anderes als das targetDate geändert wurde
+						if(result.isWarning && !this.isWarningMassnahmenDone) {//damit keine Warnung kommt, wenn etwas anderes als das targetDate geï¿½ndert wurde
 							massnahme.warningId = AC.ITSEC_MASSN_INVALIDITY_TYPE_TARGET_DATE1;
 							this.addWarningMassnahme(warningMassnahmen, massnahme);
 						}
@@ -2087,22 +2093,22 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	/**
-	 * Anders als ursprünglich implementiert, soll nicht jede ungültige=unvollständige Massnahme ZWISCHENgespeichert 
-	 * werden um beliebig weiterarbeiten und später korrigieren zu können, sondern der User sofort gewarnt werden 
-	 * die Massnahme entweder zu vervollständigen oder alle Änderungen zu verwerfen!
+	 * Anders als ursprï¿½nglich implementiert, soll nicht jede ungï¿½ltige=unvollstï¿½ndige Massnahme ZWISCHENgespeichert 
+	 * werden um beliebig weiterarbeiten und spï¿½ter korrigieren zu kï¿½nnen, sondern der User sofort gewarnt werden 
+	 * die Massnahme entweder zu vervollstï¿½ndigen oder alle ï¿½nderungen zu verwerfen!
 	 * 
-	 * Hier sind zwei vom Ansatz her zwei Möglichkeiten vorhanden dieses Ergebnis zu erreichen.
-	 * 1. V O R  der Auswahl der neuen Massnahme (Klick auf eine Zeile in der Massnahmentabelle) die Prüfung 
-	 * und das Warnungsfenster öffnen 
+	 * Hier sind zwei vom Ansatz her zwei Mï¿½glichkeiten vorhanden dieses Ergebnis zu erreichen.
+	 * 1. V O R  der Auswahl der neuen Massnahme (Klick auf eine Zeile in der Massnahmentabelle) die Prï¿½fung 
+	 * und das Warnungsfenster ï¿½ffnen 
 	 * (mit grid.getSelectionModel().on('beforerowselect', this.onBeforeMassnahmeSelect, this))
-	 * Vorteil: der saubere, gewünschte Weg
-	 * Nachteil: das Fenster wird aus unbekanntem Grund hinter/unter dem Compliance Details Hauptfenster geöffnet
+	 * Vorteil: der saubere, gewï¿½nschte Weg
+	 * Nachteil: das Fenster wird aus unbekanntem Grund hinter/unter dem Compliance Details Hauptfenster geï¿½ffnet
 	 * 			 und ist somit unsichtbar/unbedienbar
 	 * 
 	 * 2. N A C H  der Auswahl der neuen Massnahme. onBeforeMassnahmeSelect() wird direkt von onMassnahmeSelected()
-	 * und nicht durch das event aus Möglichkeit 1 aufgerufen, wenn ungültige Massnahmen existieren, d.h.
+	 * und nicht durch das event aus Mï¿½glichkeit 1 aufgerufen, wenn ungï¿½ltige Massnahmen existieren, d.h.
 	 * existsInvalidMassnahme=true.
-	 * Vorteil: umgeht den Nachteil aus Möglichkeit 1
+	 * Vorteil: umgeht den Nachteil aus Mï¿½glichkeit 1
 	 * Nachteil: weniger konsequente Implementierung
 	 */
 	onBeforeMassnahmeSelect: function(selModel, rowIndex, keepExisting, record) {
@@ -2139,20 +2145,20 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			delete this.editedMassnahmen[this.previousSelection];
 			
 			//vorherige falsche Massnahme mit Hilfe der itsecMassnahmenStatusId neu laden
-			this.selectMassnahme(grid, this.previousSelection, previousMassnahmeId);//den alten falschen/unvollständigen neu laden
-//			this.selectMassnahme(grid, this.previousSelection, this.previousLoadedMassnahme.itsecMassnahmenStatusId);//den alten falschen/unvollständigen neu laden
+			this.selectMassnahme(grid, this.previousSelection, previousMassnahmeId);//den alten falschen/unvollstï¿½ndigen neu laden
+//			this.selectMassnahme(grid, this.previousSelection, this.previousLoadedMassnahme.itsecMassnahmenStatusId);//den alten falschen/unvollstï¿½ndigen neu laden
 			
 			//es muss wohl sichergestellt werden, dass dieser this.selectMassnahme Aufruf per event/callback sicher NACH
 			//dem ersten erst statffindet, da es komplett absurden Situationen kommt, wenn sich updateComplianceDetails
-			//Aufrufe die nach den Ladeergebnissen kommen, überlappen.
-//			this.selectMassnahme(grid, rowIndex);//dann den neu ausgewählten neu laden
+			//Aufrufe die nach den Ladeergebnissen kommen, ï¿½berlappen.
+//			this.selectMassnahme(grid, rowIndex);//dann den neu ausgewï¿½hlten neu laden
 		};*/
 		
 		var okCallback = function() {
 //			this.existsInvalidMassnahme = 0;//0 -1
 			
 //			if(this.editedMassnahmen[this.previousSelection].invalidityId === AC.ITSEC_MASSN_INVALIDITY_TYPE_INCOMPLETE)
-//				grid.getSelectionModel().selectRow(this.previousSelection);//wenn beforeselect von selModel NICHT verwendet wird, muss zurückgesetzt werden
+//				grid.getSelectionModel().selectRow(this.previousSelection);//wenn beforeselect von selModel NICHT verwendet wird, muss zurï¿½ckgesetzt werden
 		};
 		
 		var callbackMap/* = {
@@ -2242,7 +2248,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		var r = grid.getStore().getById(massnahme.itsecMassnahmenStatusId);
 		
-		//wenn Massnahme verlinkt ist, ist die itsecMassnahmenStatusId natürlich nicht im gridStore vorhanden, daher:
+		//wenn Massnahme verlinkt ist, ist die itsecMassnahmenStatusId natï¿½rlich nicht im gridStore vorhanden, daher:
 		if(!r)
 			r = this.getSelectedGridRecord();
 		
@@ -2269,7 +2275,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			var r = cbLinkCiType.getStore().getAt(cbLinkCiType.getStore().findExact('id', cbLinkCiType.getValue()));
 			
 			var tableId = r.get('tableId');
-			if(tableId == AC.TABLE_ID_APPLICATION)//oder generische Hilfsfunktion für theoretisch andere CI Typen mit Subtypen
+			if(tableId == AC.TABLE_ID_APPLICATION)//oder generische Hilfsfunktion fï¿½r theoretisch andere CI Typen mit Subtypen
 				linkCiSubType = r.get('id');
 				
 			linkCiType = tableId;// cbLinkCiType.getValue();//getValue getRawValue
@@ -2322,7 +2328,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			this.editedMassnahmen[rowIndex].gapResponsibleHidden = tfGapResponsibleHidden.getValue();
 			this.editedMassnahmen[rowIndex].gapMeasure = taPlanOfAction.getValue();
 			this.editedMassnahmen[rowIndex].gapPriority = cbGapClass.getValue();
-			this.editedMassnahmen[rowIndex].gapEndDate = dfTargetDate.getValue() && dfTargetDate.getValue() instanceof Date ? dfTargetDate.getValue().getTime() : -1;//dfTargetDate.getValue().length > 0  -1 für SoapProxy, bei null statt -1 kommt JS Fehler
+			this.editedMassnahmen[rowIndex].gapEndDate = dfTargetDate.getValue() && dfTargetDate.getValue() instanceof Date ? dfTargetDate.getValue().getTime() : -1;//dfTargetDate.getValue().length > 0  -1 fï¿½r SoapProxy, bei null statt -1 kommt JS Fehler
 			
 			if(gapClassId == '4' || gapClassId == '5') {
 				var pRiskAnalysisAndMgmtCard = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsRiskAnalysisAndMgmt').getComponent('pRiskAnalysisAndMgmtDetail').getComponent('pRiskAnalysisAndMgmtCard');
@@ -2346,7 +2352,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				var currency = cbMaxDamagePerEventCurrency.getValue();
 				var currencySymbol = currency.length == 0 ? currency : cbMaxDamagePerEventCurrency.getStore().getById(currency).data.symbol;//symbol currencySymbol '';// findExact('currencySymbol', currency).data.currencySymbol;
 //				Util.log('saving '+cbMaxDamagePerEventCurrency.getValue()+'='+cbMaxDamagePerEventCurrency.getStore().getById(currency).data.currencySymbol);
-				this.editedMassnahmen[rowIndex].currency = currencySymbol;//'';//currency;//weder currencyId/currencyName können gesichert werden. cbMaxDamagePerEventCurrency.getValue(); --> 1,2,3: ORA-20000: Invalid currency,ORA-06512: at "TBADM.TRG_045_BIU", line 109,ORA-04088: error during execution of trigger 'TBADM.TRG_045_BIU'
+				this.editedMassnahmen[rowIndex].currency = currencySymbol;//'';//currency;//weder currencyId/currencyName kï¿½nnen gesichert werden. cbMaxDamagePerEventCurrency.getValue(); --> 1,2,3: ORA-20000: Invalid currency,ORA-06512: at "TBADM.TRG_045_BIU", line 109,ORA-04088: error during execution of trigger 'TBADM.TRG_045_BIU'
 
 
 				var m = tfMitigationPotential.getValue();
@@ -2389,15 +2395,15 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				
 //				this.editedMassnahmen[rowIndex].signee = tfSignee.getValue();
 				this.editedMassnahmen[rowIndex].signee = cbSignee.getValue().length == 0 ? cbSignee.getValue() : this.getSigneeCwid(cbSignee);//cbSignee.cwid;//cbSignee.getValue();
-				this.editedMassnahmen[rowIndex].gapClassApproved = dfDateOfApproval.getValue() ? dfDateOfApproval.getValue().getTime() : -1;//-1 für SoapProxy, bei null statt -1 kommt JS Fehler
+				this.editedMassnahmen[rowIndex].gapClassApproved = dfDateOfApproval.getValue() ? dfDateOfApproval.getValue().getTime() : -1;//-1 fï¿½r SoapProxy, bei null statt -1 kommt JS Fehler
 				
 			}
 		}
 	},
 	
-	//massnahme kann entweder die gerade aus der Tabelle ausgewählte sein oder die durch die combobox Link - CI ausgewählte.
-	//Im letzteren Fall dürfen die cbLinkCiType und cbLinkCiList nicht aktualisiert werden, da diese ja neu gesetzt wurden
-	//und sonst der alte Wert fälschlicherweise wieder zurückgesetzt wird! Dies ist dann der Fall wenn this.isLinkCiSelect=true.
+	//massnahme kann entweder die gerade aus der Tabelle ausgewï¿½hlte sein oder die durch die combobox Link - CI ausgewï¿½hlte.
+	//Im letzteren Fall dï¿½rfen die cbLinkCiType und cbLinkCiList nicht aktualisiert werden, da diese ja neu gesetzt wurden
+	//und sonst der alte Wert fï¿½lschlicherweise wieder zurï¿½ckgesetzt wird! Dies ist dann der Fall wenn this.isLinkCiSelect=true.
 	updateComplianceDetails: function(massnahme) {
 		if(!this.isLinkCiSelect)
 			this.loadedMassnahme = massnahme;
@@ -2463,7 +2469,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		
 		if(this.isLinkCiSelect || this.existsInvalidMassnahme > 0) {// || this.getSelectedGridRecord().get('itsecMassnahmenStatusId') != massnahme.statusId wenn massnahme.statusId !=  der compliant statusId aus der Tabelle
-			//zur Unterscheidung ob der Status der vorherigen falschen/unvollständigen Massnahme erst dieses flag
+			//zur Unterscheidung ob der Status der vorherigen falschen/unvollstï¿½ndigen Massnahme erst dieses flag
 			//false setzen, wenn der letzte Schritt erledigt ist und nicht schon in der Ursprungs callback 
 			//cancelCallback von openInvalidMassnahmeWindow
 //			this.existsInvalidMassnahme = false;
@@ -2654,9 +2660,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.updateGapRelevance(massnahme.statusId, gapClassId);
 		
 		if(this.isLinkCiSelect) {
-			//hier muss gespeichert werden, wenn durch skipLinkCiValidation: true direkt nach der Änderung der Einzelverlinkung
+			//hier muss gespeichert werden, wenn durch skipLinkCiValidation: true direkt nach der ï¿½nderung der Einzelverlinkung
 			//nicht sofort gespeichert werden soll! Siehe onLinkCiSelect()
-			this.onMassnahmeChange();//wird durch klick auf andere massnahme in massnahmen grid/tabelle ausgelöst
+			this.onMassnahmeChange();//wird durch klick auf andere massnahme in massnahmen grid/tabelle ausgelï¿½st
 			
 			this.isLinkCiSelect = false;
 		}
@@ -2681,7 +2687,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	onRiskAnalysisTypeCheck: function(checkbox, isChecked) {
 		//nach einem reload muss keine Userinteraktion durch riskAnalysisAndMgmtTypeSelectWindow erfolgen.
 		//wenn die checkbox resetet wird, wird das check event aber gefeuert, wenn sich der alte und neue Wert
-		//unterscheiden. Daher prüfen ob ein reload stattgefunden hat. Entweder durch eine zuvor nicht gewählt
+		//unterscheiden. Daher prï¿½fen ob ein reload stattgefunden hat. Entweder durch eine zuvor nicht gewï¿½hlt
 		//Massnahme aus der Tabelle oder durch Auswahl einer verlinkten Massnahme.
 		if(this.linkCiSelected) {
 			this.linkCiSelected = false;
@@ -2762,9 +2768,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		this.setTargetDate(gapClass);
 		
 		//Achtung bei Aufruf von isTargetDateValid(): diese Funktion ist momentan spezialisiert auf (manuelle in Zusammenhang
-		//mit onFocusLost) Änderungen des targetDate und die Anpassung der gapClass. 
-		//Aber nicht umgekehrt wenn die gapClass geändert wird! Sie würde aber ohne den skipTargetDate option Parameter
-		//in beiden Fällen durch/nach onMassnahmeChange() aufgerufen. Daher der options Parameter skipTargetDate für 
+		//mit onFocusLost) ï¿½nderungen des targetDate und die Anpassung der gapClass. 
+		//Aber nicht umgekehrt wenn die gapClass geï¿½ndert wird! Sie wï¿½rde aber ohne den skipTargetDate option Parameter
+		//in beiden Fï¿½llen durch/nach onMassnahmeChange() aufgerufen. Daher der options Parameter skipTargetDate fï¿½r 
 		//validateMassnahmen, um den Aufruf von isTargetDateValid() zu unterbinden.
 		//Da hier das Hinweisfenster immer kommen soll, muss das targetDate nicht validiert werden.
 		var options = { skipTargetDate: true };
@@ -2855,7 +2861,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			default: break;
 		}
 		
-		//Massnahmen Validierungsfenster für Warnungen sollen nur einmal kommen
+		//Massnahmen Validierungsfenster fï¿½r Warnungen sollen nur einmal kommen
 		this.isWarningMassnahmenDone = true;//mit warningMassnahmen.splice vereinheitlichen? Siehe isDamagePerYearFalse()
 		this.warningMassnahmen.splice(0, this.warningMassnahmen.length);//entspricht auch this.isWarningMassnahmenDone = true;
 	},
@@ -3013,9 +3019,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 						Util.enableCombo(dfTargetDate);
 					
 //					this.existsInvalidMassnahme = 0;
-					//wenn von compliantStatus 4,5 auf 1,2,3 gewechselt wird, können die Fehler unausgefüllten
+					//wenn von compliantStatus 4,5 auf 1,2,3 gewechselt wird, kï¿½nnen die Fehler unausgefï¿½llten
 					//Felder ignoriert werden. Dies erzeugt jedoch einen Widerspruch, wenn andere Massnahmen mit
-					//compliantStatus=1,2,3 ausgewählt werden. Dann sollte this.existsInvalidMassnahme nicht 0
+					//compliantStatus=1,2,3 ausgewï¿½hlt werden. Dann sollte this.existsInvalidMassnahme nicht 0
 					//gesetzt werden.
 					
 					break;
@@ -3062,7 +3068,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		items = panel.findByType('checkbox');
 		for(var i = 0; i < items.length; i++) {
-//			items[i].reset();//(*checkbox1) oder manuell zurücksetzen, damit kein check event gefeuert wird
+//			items[i].reset();//(*checkbox1) oder manuell zurï¿½cksetzen, damit kein check event gefeuert wird
 			items[i].checked = false;
 			items[i].el.dom.checked = false;
 		}
@@ -3110,8 +3116,8 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 			case '1'://long-term
 				year++;
 				month++;
-				//sonst wird vom datefield ein Monat zu früh gesetzt wenn nur das jahr erhöht wird.
-				//für das datefield ist im Gegensatz zum Date() der erste Monat die 1
+				//sonst wird vom datefield ein Monat zu frï¿½h gesetzt wenn nur das jahr erhï¿½ht wird.
+				//fï¿½r das datefield ist im Gegensatz zum Date() der erste Monat die 1
 				
 				var oldDate = dfTargetDate.getValue();
 				var newDate = new Date(year, month, 0);
@@ -3140,7 +3146,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				}
 				
 				var oldDate = dfTargetDate.getValue();
-				var newDate = new Date(year, month, 0);//0 für den letzten Tag des Monats
+				var newDate = new Date(year, month, 0);//0 fï¿½r den letzten Tag des Monats
 				
 				dfTargetDate.setValue(newDate);
 				Util.enableCombo(dfTargetDate);
@@ -3163,7 +3169,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 				}
 				
 				var oldDate = dfTargetDate.getValue();
-				var newDate = new Date(year, month, 0);//0 für den letzten Tag des Monats
+				var newDate = new Date(year, month, 0);//0 fï¿½r den letzten Tag des Monats
 				
 				dfTargetDate.setValue(newDate);
 				Util.enableCombo(dfTargetDate);
@@ -3419,7 +3425,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	
 	getSigneeValueByCwid: function(combo, cwid) {
 		var r = combo.getStore().getById(cwid);
-		//falls r undefined Warnmeldung auf Statusbar, dass signee cwid zu dieser Massnahme nicht mehr gültig ist, da nicht
+		//falls r undefined Warnmeldung auf Statusbar, dass signee cwid zu dieser Massnahme nicht mehr gï¿½ltig ist, da nicht
 		//(mehr) von PersonsWSPort.findPersonByFunctionSignee geliefert wird?
 		var userName = r ? r.data.lastname + ', '+r.data.firstname : cwid;
 		
@@ -3479,9 +3485,9 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		
 		//sonst wird die Massnahme durch onMassnahmeChange()->validateMassnahmen()->saveMassnahme() gespeichert und nochmal durch
 		//die Auswahl einer anderen Massnahme. In diesem Fall soll erst nach Auswahl einer anderen Massnahme gespeichert
-		//werden! Deshalb soll die Validierung durch Veränderung der Einzelverlinkung der Massnahme nicht durchgeführt
-		//werden, weil dies fachlich auch nicht notwendig ist. Die Massnahme auf die die ausgewählte Massnahme verweisen soll
-		//ist zwangsläufig valide, sonst hätte sie nicht irgendwann gesichert werden können.
+		//werden! Deshalb soll die Validierung durch Verï¿½nderung der Einzelverlinkung der Massnahme nicht durchgefï¿½hrt
+		//werden, weil dies fachlich auch nicht notwendig ist. Die Massnahme auf die die ausgewï¿½hlte Massnahme verweisen soll
+		//ist zwangslï¿½ufig valide, sonst hï¿½tte sie nicht irgendwann gesichert werden kï¿½nnen.
 //		var options = {
 //			skipLinkCiValidation: true
 //		};
@@ -3568,7 +3574,15 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		if(Ext.isIE)
 //			taJustification.setReadOnly(true);
 //		else
-			taJustification.disable();
+			//taJustification.disable();
+		
+		/**
+		 * @author EMNUV
+		 * Incident  - IM0005485941 
+		 */
+		//start of incident - IM0005485941
+		taJustification.setReadOnly(true);
+		//end of incident - IM0005485941
 		
 		taGapDescription.disable();
 		Util.disableCombo(cbGapClass);
@@ -3664,7 +3678,15 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 //		if(Ext.isIE)
 //			taJustification.setReadOnly(false);
 //		else
-			taJustification.enable();
+			//taJustification.enable();
+		
+		/**
+		 * @author EMNUV
+		 * Incident  - IM0005485941 
+		 */
+		//start of incident - IM0005485941
+		taJustification.setReadOnly(false);
+		//end of incident - IM0005485941
 		
 		taGapDescription.enable();
 		Util.enableCombo(cbGapClass);
