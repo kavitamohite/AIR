@@ -134,6 +134,14 @@ public final class AirKonstanten {
 	public static final String ROLE_AIR_ASSET_MANAGER				= "AIR_Asset_Manager";
 	
 	
+	//ISMS Roles 
+	public static final String ROLE_ISM_MANAGER	= "ISM_MANAGER";
+	public static final String ROLE_ISM_EDITOR  = "ISM_EDITOR";
+	public static final String ROLE_ISM_READER = "ISM_READER";
+	
+	
+	
+	
 	// --
 	public static final String ROLE_BOV_ADMIN						= "BOV Admin";
 	public static final String ROLE_BOV_EDITOR						= "BOV Editor";
