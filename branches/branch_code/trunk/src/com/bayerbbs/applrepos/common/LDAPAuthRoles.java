@@ -229,7 +229,15 @@ public class LDAPAuthRoles {
 		for (String role : values) {
 			System.out.println("hasRole method==" + role);
 			role = role.toUpperCase();
-			int beginIndex = role.indexOf("AIR");
+			int beginIndex=-1;
+			if(role.indexOf("AIR")!=-1){
+				
+				beginIndex=role.indexOf("AIR");
+			} 
+			if(role.indexOf("ISM")!=-1){
+				beginIndex=role.indexOf("ISM");
+			}
+			//beginIndex = role.indexOf("AIR");
 			if (beginIndex != -1) {
 				String airUserRole = role.substring(beginIndex - 2,
 						role.indexOf(",OU="));
@@ -256,6 +264,7 @@ public class LDAPAuthRoles {
 			}
 
 		}
+		
 		return roles;
 	}
 
@@ -292,6 +301,7 @@ public class LDAPAuthRoles {
 		return values;
 	}
 
+	
 	public String userRole(String airRole) {
 		
 		String rtRole = null;
@@ -341,6 +351,18 @@ public class LDAPAuthRoles {
 		}
 		if (airRole.equalsIgnoreCase(AirKonstanten.ROLE_BUSINESS_ESSENTIAL_EDITOR)) {
 			rtRole = AirKonstanten.ROLE_BUSINESS_ESSENTIAL_EDITOR;
+		}
+		
+		//ISM Role addition
+		
+		if (airRole.equalsIgnoreCase(AirKonstanten.ROLE_ISM_EDITOR)) {
+			rtRole = AirKonstanten.ROLE_ISM_EDITOR;
+		}
+		if (airRole.equalsIgnoreCase(AirKonstanten.ROLE_ISM_MANAGER)) {
+			rtRole = AirKonstanten.ROLE_ISM_MANAGER;
+		}
+		if (airRole.equalsIgnoreCase(AirKonstanten.ROLE_ISM_READER)) {
+			rtRole = AirKonstanten.ROLE_ISM_READER;
 		}
 
 		return rtRole;
