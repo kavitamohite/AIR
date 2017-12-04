@@ -37,7 +37,7 @@ public class LDAPAuthRoles {
 
 	private static final String LDAP_FACTORY = "com.sun.jndi.ldap.LdapCtxFactory";
 
-	private static final String MASCHINE_USER = "CN=MXSNT,OU=Non-PersonalMailboxAccounts,OU=Resources,OU=_DomainOperations,DC=DE,DC=bayer,DC=cnb";
+	private static final String MASCHINE_USER = "CN=MXSNT,OU=Non-PersonalMailboxAccounts,OU=DE,OU=Resources,OU=_DomainOperations,DC=bayer,DC=cnb";
 
 	private static final String MASCHINE_USER_PWD = "isbb2007";
 
@@ -46,7 +46,7 @@ public class LDAPAuthRoles {
 	// private static final String ldapURL = "ldaps://ldaps.bayer-ag.com:636/";
 	//ldaps://DE.bayer.cnb:3269/
 	// // IBM LDAP Service
-	private static final String ldapURL = "ldaps://DE.bayer.cnb:3269/"; // Microsoft
+	private static final String ldapURL = "ldaps://bayer.cnb:3269/"; // Microsoft
 																		// AD
 																		// (über
 																		// LDAP)//389
