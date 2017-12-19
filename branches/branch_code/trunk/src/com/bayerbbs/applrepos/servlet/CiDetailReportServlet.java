@@ -146,7 +146,11 @@ public class CiDetailReportServlet extends HttpServlet {
 		List<String[]> CIData = getCiData(ciId, tableId);
 		this.ciName = ciName.replaceAll(" {1,10}", "");
 		this.fileName = this.fileName + ciName + ".pdf";
-
+		if(this.fileName.contains("/"))
+			this.fileName = this.fileName.replace("/", "");
+			//System.out.println(fileName);
+		else
+			System.out.println("no proper file name");
 		totalPageNo = 2 + complianceDetails.size();
 
 		Document document = new Document(PageSize.LETTER);
@@ -201,6 +205,7 @@ public class CiDetailReportServlet extends HttpServlet {
 
 	private void printPdfOutputstream(HttpServletResponse res)
 			throws ServletException, IOException {
+		System.out.println("inside print pdf");
 		ServletOutputStream stream = null;
 		BufferedInputStream buf = null;
 		File pdf = new File(filePath + fileName);
@@ -313,6 +318,7 @@ public class CiDetailReportServlet extends HttpServlet {
 			List<ComplianceDetail> complianceDetails, Document document,
 			String Language) throws SQLException, IOException,
 			DocumentException {
+		System.out.println("inside write com");
 		Session session = HibernateUtil
 				.getSession(HibernateUtil.DATASOURCE_ID_GSTOOL);
 		ResultSet rs = null;
