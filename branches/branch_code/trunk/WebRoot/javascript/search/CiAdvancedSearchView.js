@@ -794,7 +794,46 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						lazyRender: true,
 						lazyInit: false,
 						mode: 'local'
-					}/*,{
+					},
+					// Start Adding for C0000241362 
+					{
+			            xtype: 'checkboxgroup',
+						id: 'complianceRelatedGR1435',
+						
+						columns: 1,
+						
+						hideLabel: false,
+						style: {
+							marginTop: Ext.isIE ? 15 : 15
+						},
+						
+						items: [
+							{ boxLabel: 'GR1453', name: 'complianceRelatedGR1435', width: 30 }
+			            ]
+					},
+					
+					{
+			            xtype: 'checkboxgroup',
+						id: 'complianceRelatedICS',
+						
+						columns: 2,
+						
+						hideLabel: false,
+						style: {
+							marginRight: Ext.isIE ? 15 : 15
+						},
+						
+						items: [
+							{ boxLabel: 'GR1920/ICS', name: 'complianceRelatedICS', width: 30 }
+			            ]
+					}
+					
+					
+					// End Adding for C0000241362 
+					
+					
+					
+					/*,{
 						xtype: 'filterCombo',
 						id: 'cbAdvSearchGapResponsibleW',
 						store: AIR.AirStoreManager.getStoreByName('sisoogleGapResponsibleListStore'),//new Ext.data.Store(),//
@@ -899,7 +938,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions', width: 30 }
 	                    ]
-					}]
+					}
+					
+					]
 				}]
 	        }]
 		});
@@ -1591,7 +1632,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			var cbgAdvSearchSpecialSearchAttributesProcessOptions = pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesProcessOptions');
 			var cbgAdvSearchSpecialSearchAttributesSourceOptions = pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesSourceOptions');
 			var cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions = pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions');
-
+			
 	    	
 	    	
 			field = fsCategoriesAndStatus.getComponent('cbAdvSearchGeneralUsageW');
@@ -1673,6 +1714,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			Util.setChbGroup(cbgAdvSearchSpecialSearchAttributesProcessOptions, data.processOptions);
 			Util.setChbGroup(cbgAdvSearchSpecialSearchAttributesSourceOptions, data.sourceOptions);
 			Util.setChbGroup(cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions, data.businessEssentialOptions);
+			
 	    }
 	},
 	
@@ -1715,7 +1757,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		params.ciTypeOptions = Util.getChbYesNoValues(cbgAdvSearchCiTypeOptions);
 		params.itSetOptions = Util.getChbYesNoValues(cbgAdvSearchItSetOptions);
 		params.descriptionOptions = Util.getChbYesNoValues(cbgAdvSearchDescriptionOptions);
-	    
+		
 		// RFC 9122 show deleted
 		var cbgAdvSearchShowDeleted = pAdvSearchSingleAttrs.getComponent('cbgAdvSearchShowDeleted');
 		params.showDeleted = Util.getChbYesNoValues(cbgAdvSearchShowDeleted);
@@ -1877,6 +1919,15 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			params.processOptions = Util.getChbYesNoValues(cbgAdvSearchSpecialSearchAttributesProcessOptions);
 			params.sourceOptions = Util.getChbYesNoValues(cbgAdvSearchSpecialSearchAttributesSourceOptions);
 			params.businessEssentialOptions = Util.getChbYesNoValues(cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions);
+			// Start Adding for C0000241362 
+			var comGR1435 = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('complianceRelatedGR1435');//emria
+			console.log("comGR1435 value "+Util.getChbYesNoValues(comGR1435));
+			params.complainceGR1435= Util.getChbYesNoValues(comGR1435);
+			
+			var comIcs = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('complianceRelatedICS');//emria
+			console.log("comIcs value "+Util.getChbYesNoValues(comIcs));
+			params.complainceICS= Util.getChbYesNoValues(comIcs);
+			// End Adding for C0000241362 
 	    }
 	},
 	
@@ -2032,7 +2083,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			chbGroups.push(pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesProcessOptions'));
 			chbGroups.push(pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesSourceOptions'));
 			chbGroups.push(pAdvSearchSpecialSearchAttributesOptions.getComponent('cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions'));
-
+		
 			for(var i = 0; i < chbGroups.length; i++)
 				chbGroups[i].reset();
 //		}

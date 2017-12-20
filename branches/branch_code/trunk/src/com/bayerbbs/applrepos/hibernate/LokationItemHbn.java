@@ -48,6 +48,23 @@ public class LokationItemHbn extends BaseHbn {
 		
 		final String CI = "ci.";
 		final String LK = "lk.";
+		// Start Adding for C0000241362 
+				String complainceGR1435=input.getComplainceGR1435();
+				String complainceICS=input.getComplainceICS();
+						long complainceGR1435Long;
+						long complainceICSLong;
+						System.out.println("complainceGR1435"+complainceGR1435);
+						System.out.println("complainceICS"+complainceICS);
+						if(complainceGR1435.equals("Y"))
+							
+							complainceGR1435Long = -1;
+						else
+							complainceGR1435Long=0;
+						if(complainceICS.equals("Y"))
+							complainceICSLong = -1;
+						else
+							complainceICSLong=0;
+						// End Adding for C0000241362
 		String locationFields = new StringBuilder(LK).append(metaData.getLocationFields()).toString().replace(AirKonstanten.KOMMA, AirKonstanten.KOMMA.concat(LK));
 		
 		sql.
@@ -67,10 +84,16 @@ public class LokationItemHbn extends BaseHbn {
 			sql.append(AirKonstanten.IT_HEAD);
 			sql.append(",");
 		}
+		
+
+		
 		sql.append(locationFields).append(" FROM ").append(metaData.getTableName()).append(" ci").
 		append(" JOIN search_loc lk on ").append(LK).append(metaData.getIdField()).append(" = ").append(CI).append(metaData.getIdField()).
 		append(" WHERE (").//del_timestamp IS NULL AND 
+		
 		append("UPPER(").append(CI).append(metaData.getNameField()).append(") LIKE '");
+	 
+		
 		
 		
 		if(CiEntitiesHbn.isLikeStart(input.getQueryMode()))
@@ -82,7 +105,16 @@ public class LokationItemHbn extends BaseHbn {
 			sql.append("%");
 		
 		sql.append("'");
+		// start Adding for C0000241362
+		// RELEVANCE_ICS
+		sql.append(" AND UPPER (ci.RELEVANCE_ICS) = '"+complainceICSLong+"'");
 		
+		System.out.println("complainceGR1435Long appened"+complainceICSLong);
+		// RELEVANZ_ITSEC
+		sql.append("AND  UPPER (ci.RELEVANZ_ITSEC) = '"+complainceGR1435Long+"'");
+		
+System.out.println("complainceGR1435Long appened"+complainceGR1435Long);
+		// End Adding for C0000241362 
 		if(metaData.getAliasField() != null) {
 			sql.append(" OR UPPER(").append(CI).append(metaData.getAliasField()).append(") LIKE '");
 			
@@ -101,7 +133,7 @@ public class LokationItemHbn extends BaseHbn {
 		
 		boolean isNot = false;
 		
-		
+		System.out.println("building sql"+sql.toString());
 		if(StringUtils.isNotNullOrEmpty(input.getItSetId())) {
 			isNot = isNot(input.getItSetOptions());
 			sql.append(" AND NVL(itset, 0) "+ getEqualNotEqualOperator(isNot) +" ").append(Long.parseLong(input.getItSetId()));
@@ -189,6 +221,7 @@ public class LokationItemHbn extends BaseHbn {
 		StringBuilder sql = getAdvSearchCiBaseSql(input, metaData);
 		String sort=input.getSort();
 		String dir =input.getDir();
+		
 		sql.append( " order by nlssort(");
 		if(sort == null){
 			sql.append(metaData.getNameField());

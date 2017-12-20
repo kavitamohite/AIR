@@ -44,7 +44,31 @@ public class CiSearchParamsDTO { //implements Serializable
 	
 	
 
-	
+	// Start Adding for C0000241362
+    private String complainceGR1435;
+    private String complainceICS;
+    
+    public String getComplainceGR1435() {
+		return complainceGR1435;
+	}
+
+
+	public void setComplainceGR1435(String complainceGR1435) {
+		this.complainceGR1435 = complainceGR1435;
+	}
+
+
+	public String getComplainceICS() {
+		return complainceICS;
+	}
+
+
+	public void setComplainceICS(String complainceICS) {
+		this.complainceICS = complainceICS;
+	}
+    
+    
+ // End Adding for C0000241362
 	
 	public CiSearchParamsDTO() {
 	}

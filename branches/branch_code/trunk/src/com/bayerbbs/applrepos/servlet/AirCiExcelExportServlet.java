@@ -191,9 +191,10 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					req.getParameter("hitSecGroupId"),
 					req.getParameter("hsource"),
 					req.getParameter("hbusinessEssentialId"),
-					null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
+					// Added two for C0000241362 C0000241362
+					null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,"Y","Y"
 				) :
-        		AnwendungHbn.findApplications(ciNameAliasQuery, isShowDeleted, null, null, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        		AnwendungHbn.findApplications(ciNameAliasQuery, isShowDeleted, null, null, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,"Y","Y");
         } else if(searchAction.equals(SEARCH_POINT_MY_DELEGATE_CIS) || searchAction.equals(SEARCH_POINT_MY_CIS)) {
 //        	ApplicationParameterInput input = new ApplicationParameterInput();
         	ApplicationSearchParamsDTO input = new ApplicationSearchParamsDTO();
