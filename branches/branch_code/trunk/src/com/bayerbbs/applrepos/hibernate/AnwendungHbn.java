@@ -2210,12 +2210,12 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 		long complainceICSLong;
 		System.out.println("complainceGR1435"+complainceGR1435);
 		System.out.println("complainceICS"+complainceICS);
-		if(complainceGR1435.equals("Y"))
+		if(complainceGR1435!=null&&complainceGR1435.equals("Y"))
 			
 			complainceGR1435Long = -1;
 		else
 			complainceGR1435Long=0;
-		if(complainceICS.equals("Y"))
+		if(complainceICS!=null&&complainceICS.equals("Y"))
 			complainceICSLong = -1;
 		else
 			complainceICSLong=0;
