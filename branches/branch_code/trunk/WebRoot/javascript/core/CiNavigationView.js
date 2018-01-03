@@ -397,9 +397,10 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			console.log("role has "+role);
 			
 			//var link ="http://localhost:9090/ISMS/js/doLogin?";
-			var link = "https://air-d1.de.bayer.cnb/ISMS/js/doLogin?";
+			var link ;//= "https://air-d1.de.bayer.cnb/ISMS/js/doLogin?";
 			 var res = encodeURI(link);
 			 console.log("Log URI "+res);
+			
 			 
 			link+="cwid="+AIR.AirApplicationManager.getCwid().toUpperCase();
 			link+="&userName="+AIR.AirApplicationManager.getUserName();
@@ -408,7 +409,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 			
 			var res = encodeURI(link);
 			 console.log("Log URI "+res); 
-			 
+			 link = 'jsp/redirectISMS.jsp';
 			window.open(link,"_blank");
 
 			/*Ext.Ajax.request({
@@ -425,7 +426,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 					var myWindow = window.open("http://localhost:9090/ISMS/js/index.html", "_blank");
 					$(win.document.body).html(response.data) ;
 					
-					myWindow.document.body.parentNode.innerHTML = resp.responseText;
+					myWindow.document.body.parentNode.innerHTMLÂ =Â resp.responseText;
 					
 					//myWindow.document.write(resp.responseText);
 					//myWindow.location.reload(esp.responseText); 
