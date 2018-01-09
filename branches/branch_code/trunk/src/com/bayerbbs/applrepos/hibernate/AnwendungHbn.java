@@ -2272,18 +2272,7 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 		}
 		sql.append("'");
 		
-		// start Adding for C0000241362 
 		
-				// RELEVANCE_ICS
-		if(complainceICS!=null)
-						sql.append(" and UPPER (anw.RELEVANCE_ICS) = '"+complainceICSLong+"'");
-						System.out.println("complainceGR1435Long appened"+complainceICSLong);
-						// RELEVANZ_ITSEC
-						if(complainceGR1435!=null)
-						sql.append(" and UPPER (anw.RELEVANZ_ITSEC) = '"+complainceGR1435Long+"'");
-						
-		System.out.println("complainceGR1435Long appened"+complainceGR1435Long);
-						// End Adding for C0000241362 
 		// ALIAS
 		sql.append(" or UPPER (anw.ALIAS) like '");
 		
@@ -2300,7 +2289,18 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 		}
 		sql.append("' )");
 		
+		// start Adding for C0000241362 
 		
+		// RELEVANCE_ICS
+if(complainceICS!=null)
+				sql.append(" and UPPER (anw.RELEVANCE_ICS) = '"+complainceICSLong+"'");
+				System.out.println("complainceGR1435Long appened"+complainceICSLong);
+				// RELEVANZ_ITSEC
+				if(complainceGR1435!=null)
+				sql.append(" and UPPER (anw.RELEVANZ_ITSEC) = '"+complainceGR1435Long+"'");
+				
+System.out.println("complainceGR1435Long appened"+complainceGR1435Long);
+				// End Adding for C0000241362 
 		boolean isNot = false;
 
 		

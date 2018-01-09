@@ -105,16 +105,7 @@ public class LokationItemHbn extends BaseHbn {
 			sql.append("%");
 		
 		sql.append("'");
-		// start Adding for C0000241362
-		// RELEVANCE_ICS
-		sql.append(" AND UPPER (ci.RELEVANCE_ICS) = '"+complainceICSLong+"'");
 		
-		System.out.println("complainceGR1435Long appened"+complainceICSLong);
-		// RELEVANZ_ITSEC
-		sql.append("AND  UPPER (ci.RELEVANZ_ITSEC) = '"+complainceGR1435Long+"'");
-		
-System.out.println("complainceGR1435Long appened"+complainceGR1435Long);
-		// End Adding for C0000241362 
 		if(metaData.getAliasField() != null) {
 			sql.append(" OR UPPER(").append(CI).append(metaData.getAliasField()).append(") LIKE '");
 			
@@ -127,10 +118,20 @@ System.out.println("complainceGR1435Long appened"+complainceGR1435Long);
 				sql.append("%");
 			
 			sql.append("'");
+			
 		}
 		
 		sql.append(")");
-		
+		// start Adding for C0000241362
+					// RELEVANCE_ICS
+					sql.append(" AND UPPER (ci.RELEVANCE_ICS) = '"+complainceICSLong+"'");
+					
+					System.out.println("complainceGR1435Long appened"+complainceICSLong);
+					// RELEVANZ_ITSEC
+					sql.append("AND  UPPER (ci.RELEVANZ_ITSEC) = '"+complainceGR1435Long+"'");
+					
+			System.out.println("complainceGR1435Long appened"+complainceGR1435Long);
+					// End Adding for C0000241362 
 		boolean isNot = false;
 		
 		System.out.println("building sql"+sql.toString());
