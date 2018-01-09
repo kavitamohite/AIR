@@ -1938,11 +1938,12 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 	},
 	
 	/**
-	 * @author EMNUV
-	 * Incident  - IM0005485941 
+	 * @author EMNUV corrected by EMRIA
+	 * Incident  - IM0005485941 /IM0005851505
 	 */
-	onMassnahmeChange: function(options) {//source, event
-		if(!options.readOnly){
+	onMassnahmeChange: function(options) {
+		//source, event
+		if(!options || !options.readOnly){
 			this.massnahmeChanged = true;
 		
 			this.activateButtons();
