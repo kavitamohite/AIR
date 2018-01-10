@@ -47,7 +47,7 @@ public class LDAPAuthRoles {
 	//ldaps://DE.bayer.cnb:3269/
 	// // IBM LDAP Service
 	private static final String ldapURL = "ldaps://bayer.cnb:3269/"; // Microsoft
-																		// AD
+	//private static final String ldapURL = "ldaps://DE.bayer.cnb:3269/"; // Microsoft																	// AD
 																		// (über
 																		// LDAP)//389
 
@@ -264,7 +264,6 @@ public class LDAPAuthRoles {
 			}
 
 		}
-		
 		return roles;
 	}
 
@@ -301,7 +300,6 @@ public class LDAPAuthRoles {
 		return values;
 	}
 
-	
 	public String userRole(String airRole) {
 		
 		String rtRole = null;
