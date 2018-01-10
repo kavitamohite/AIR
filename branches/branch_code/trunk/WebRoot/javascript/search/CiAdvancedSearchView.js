@@ -808,7 +808,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						},
 						
 						items: [
-							{ boxLabel: 'GR1453', name: 'complianceRelatedGR1435', width: 30 }
+							{ boxLabel: 'GR1435', name: 'complianceRelatedGR1435', width: 30 }
 			            ]
 					},
 					
