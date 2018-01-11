@@ -159,6 +159,8 @@ public class AirCiExcelExportServlet extends HttpServlet {
         		isShowDeleted = true;
         	}
         	
+        	System.out.println("isAdvancedSearch ----- "+req.getParameter("hcomplainceGR1435"));
+        	System.out.println("isAdvancedSearch ----- "+req.getParameter("hcomplainceICS"));
         	applications = isAdvancedSearch ?
     			AnwendungHbn.findApplications(
     				ciNameAliasQuery,
@@ -194,8 +196,8 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					
 					
 					// Added two for C0000241362 C0000241362
-					null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null,
-					null
+					null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,req.getParameter("hcomplainceGR1435"),
+					req.getParameter("hcomplainceICS")
 				) :
         		AnwendungHbn.findApplications(ciNameAliasQuery, isShowDeleted, null, null, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null,
     					null);
