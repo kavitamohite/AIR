@@ -51,18 +51,18 @@ public class LokationItemHbn extends BaseHbn {
 		// Start Adding for C0000241362 
 				String complainceGR1435=input.getComplainceGR1435();
 				String complainceICS=input.getComplainceICS();
-						long complainceGR1435Long;
-						long complainceICSLong;
+						long complainceGR1435Long=0;
+						long complainceICSLong = 0;
 						System.out.println("complainceGR1435"+complainceGR1435);
 						System.out.println("complainceICS"+complainceICS);
-						if(complainceGR1435.equals("Y"))
+						if(complainceGR1435.equalsIgnoreCase("Yes"))
 							
 							complainceGR1435Long = -1;
-						else
+						if(complainceGR1435.equalsIgnoreCase("No"))
 							complainceGR1435Long=0;
-						if(complainceICS.equals("Y"))
+						if(complainceICS.equalsIgnoreCase("Yes"))
 							complainceICSLong = -1;
-						else
+						if(complainceICS.equalsIgnoreCase("No"))
 							complainceICSLong=0;
 						// End Adding for C0000241362
 		String locationFields = new StringBuilder(LK).append(metaData.getLocationFields()).toString().replace(AirKonstanten.KOMMA, AirKonstanten.KOMMA.concat(LK));
@@ -124,13 +124,19 @@ public class LokationItemHbn extends BaseHbn {
 		sql.append(")");
 		// start Adding for C0000241362
 					// RELEVANCE_ICS
+		if(complainceICS!=null&&complainceICS.length()>0)
+		{
 					sql.append(" AND UPPER (ci.RELEVANCE_ICS) = '"+complainceICSLong+"'");
 					
 					System.out.println("complainceGR1435Long appened"+complainceICSLong);
+		}
 					// RELEVANZ_ITSEC
+		if(complainceGR1435!=null&&complainceGR1435.length()>0)
+		{
 					sql.append("AND  UPPER (ci.RELEVANZ_ITSEC) = '"+complainceGR1435Long+"'");
 					
 			System.out.println("complainceGR1435Long appened"+complainceGR1435Long);
+		}
 					// End Adding for C0000241362 
 		boolean isNot = false;
 		
