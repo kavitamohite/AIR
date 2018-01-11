@@ -797,12 +797,78 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					},
 					// Start Adding for C0000241362 
 					{
-			            xtype: 'checkboxgroup',
+
+						xtype: 'combo',
 						id: 'complianceRelatedGR1435',
+						store: new Ext.data.ArrayStore({
+					        id: 0,
+					        fields: [
+					            'id',
+					            'text'
+					        ],
+					        data: [[2, 'Yes'],[3,'No']]
+					    }),
+						width: 300,
+
+						fieldLabel: 'GR1453',
+						valueField: 'id',
+						displayField: 'text',
 						
-						columns: 1,
+	//			        typeAhead: true,
+	//			        forceSelection: true,
+	//			        autoSelect: false,
 						
-						hideLabel: false,
+				        style: {
+							marginLeft: Ext.isIE ? 5 : 0
+						},
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					
+					},
+					{
+						width: 300,
+						xtype: 'combo',
+						id: 'complianceRelatedICS',
+						store: new Ext.data.ArrayStore({
+					        id: 0,
+					        fields: [
+					            'id',
+					            'text'
+					        ],
+					        data: [[2, 'Yes'],[3,'No']]
+					    }),
+						
+						fieldLabel: 'GR1920/ICS',
+						valueField: 'id',
+						displayField: 'text',
+						
+	//			        typeAhead: true,
+	//			        forceSelection: true,
+	//			        autoSelect: false,
+						
+				        style: {
+							marginLeft: Ext.isIE ? 5 : 0
+						},
+						
+						triggerAction: 'all',
+						lazyRender: true,
+						lazyInit: false,
+						mode: 'local'
+					
+					},
+					/*{
+			            xtype: 'filterCombo',
+						id: 'complianceRelatedGR1435',
+						valueField: 'id',
+						displayField: 'text',
+						mode: 'local'
+						//columns: 1,
+						width: 300,
+						fieldLabel: 'GR1453',
+						//hideLabel: false,
 						style: {
 							marginTop: Ext.isIE ? 15 : 15
 						},
@@ -810,15 +876,17 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						items: [
 							{ boxLabel: 'GR1435', name: 'complianceRelatedGR1435', width: 30 }
 			            ]
-					},
+					},*/
 					
-					{
-			            xtype: 'checkboxgroup',
+					/*{
+			            xtype: 'filterCombo',
 						id: 'complianceRelatedICS',
+						valueField: 'id',
+						displayField: 'text',
+						fieldLabel: 'GR1920/ICS',
+						//columns: 2,
 						
-						columns: 2,
-						
-						hideLabel: false,
+						//hideLabel: false,
 						style: {
 							marginRight: Ext.isIE ? 15 : 15
 						},
@@ -826,7 +894,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						items: [
 							{ boxLabel: 'GR1920/ICS', name: 'complianceRelatedICS', width: 30 }
 			            ]
-					}
+					}*/
 					
 					
 					// End Adding for C0000241362 
@@ -1033,6 +1101,9 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		clAdvSearchCiOwnerDelegateAddPerson.on('click', this.onAdvSearchCiOwnerDelegateAddPerson, this);
 		clAdvSearchCiOwnerDelegateAddGroup.on('click', this.onAdvSearchCiOwnerDelegateAddGroup, this);
 		clAdvSearchCiOwnerDelegateRemove.on('click', this.onAdvSearchCiOwnerDelegateRemove, this);
+		
+		
+	
 	},
 	
 	filterCiTypes: function(combo) {
@@ -1921,12 +1992,12 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			params.businessEssentialOptions = Util.getChbYesNoValues(cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions);
 			// Start Adding for C0000241362 
 			var comGR1435 = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('complianceRelatedGR1435');//emria
-			console.log("comGR1435 value "+Util.getChbYesNoValues(comGR1435));
-			params.complainceGR1435= Util.getChbYesNoValues(comGR1435);
+			console.log("comGR1435 value "+comGR1435.getRawValue());
+			params.complainceGR1435= comGR1435.getRawValue();
 			
 			var comIcs = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('complianceRelatedICS');//emria
-			console.log("comIcs value "+Util.getChbYesNoValues(comIcs));
-			params.complainceICS= Util.getChbYesNoValues(comIcs);
+			console.log("comIcs value "+comIcs.getRawValue());
+			params.complainceICS= comIcs.getRawValue();
 			// End Adding for C0000241362 
 	    }
 	},
