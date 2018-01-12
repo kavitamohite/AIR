@@ -810,7 +810,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 					    }),
 						width: 300,
 
-						fieldLabel: 'GR1453',
+						fieldLabel: 'GR1435',
 						valueField: 'id',
 						displayField: 'text',
 						
