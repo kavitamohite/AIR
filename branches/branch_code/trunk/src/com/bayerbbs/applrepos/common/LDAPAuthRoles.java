@@ -234,9 +234,9 @@ public class LDAPAuthRoles {
 				
 				beginIndex=role.indexOf("AIR");
 			} 
-			if(role.indexOf("ISM")!=-1){
+			/*if(role.indexOf("ISM")!=-1){
 				beginIndex=role.indexOf("ISM");
-			}
+			}*/
 			//beginIndex = role.indexOf("AIR");
 			if (beginIndex != -1) {
 				String airUserRole = role.substring(beginIndex - 2,
