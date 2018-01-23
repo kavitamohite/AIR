@@ -142,6 +142,9 @@ public class ApplicationWS {
 						input.getGeneralUsageOptions(), input.getItCategoryOptions(), input.getLifecycleStatusOptions(),
 						input.getOrganisationalScopeOptions(), input.getItSecGroupOptions(),
 						input.getProcessOptions(), input.getSourceOptions(), input.getBusinessEssentialOptions()
+						,input.getComplainceGR1435(),input.getComplainceICS()
+						
+						//  Added two variables for C0000241362
 					);
 				} else {
 //					boolean showDeleted = true;

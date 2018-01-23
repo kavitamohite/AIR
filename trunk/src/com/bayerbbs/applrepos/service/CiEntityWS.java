@@ -639,7 +639,7 @@ public class CiEntityWS {
 				// Ended by vandana
 				//Added by ENFZM
 			case AirKonstanten.TABLE_ID_BUSINESS_APPLICATION:
-				result = BusinessApplicationHbn.findBusinessApplicationBy(input);
+				result = BusinessApplicationHbn.findBusinessApplicationBy(input);//ApplicationSearchParamsDTO
 				
 				break;
 			

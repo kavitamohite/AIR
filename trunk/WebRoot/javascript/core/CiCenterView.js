@@ -39,7 +39,18 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 				border: false,
 				
 				//Important: h prefix for all hidden fields where the id corresponds the fields of CiAdvancedSearchView to avoid duplicate ExtJS Component field IDs
-				items: [{
+				items: [
+					{
+						xtype: 'hidden',
+						id: 'hcomplainceGR1435'
+					},
+					{
+						xtype: 'hidden',
+						id: 'hcomplainceICS'
+						
+					},
+					
+					{
 					xtype: 'hidden',
 					id: 'hciNameAliasQuery'//query
 				},{
@@ -256,6 +267,7 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 					id: 'companyName'
 				}
 				// C0000049066 - End by anit   
+				
 				]
 			}]
 		});

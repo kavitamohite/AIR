@@ -527,7 +527,23 @@ public class ItSystemHbn extends BaseHbn {
 	protected static StringBuilder getAdvSearchCiBaseSql(
 			CiSearchParamsDTO input, CiMetaData metaData) {
 		StringBuilder sql = new StringBuilder();
-
+		// Start Adding for C0000241362 
+		String complainceGR1435=input.getComplainceGR1435();
+		String complainceICS=input.getComplainceICS();
+				long complainceGR1435Long=0;
+				long complainceICSLong=0;
+				System.out.println("complainceGR1435"+complainceGR1435);
+				System.out.println("complainceICS"+complainceICS);
+				if(complainceGR1435.equalsIgnoreCase("Yes"))
+					
+					complainceGR1435Long = -1;
+				if(complainceGR1435.equalsIgnoreCase("No"))
+					complainceGR1435Long=0;
+				if(complainceICS.equalsIgnoreCase("Yes"))
+					complainceICSLong = -1;
+				if(complainceICS.equalsIgnoreCase("No"))
+					complainceICSLong=0;
+				// End Adding for C0000241362
 		sql.append("SELECT ").append(metaData.getIdField()).append(", ")
 				.append(metaData.getNameField());
 
@@ -542,6 +558,22 @@ public class ItSystemHbn extends BaseHbn {
 				.append(metaData.getTableName()).append(" WHERE 1=1 ");
 
 		// append(" hw_ident_or_trans = ").append(input.getCiSubTypeId()).
+		// start Adding for C0000241362
+				// RELEVANCE_ICS
+		if(complainceICS!=null&&complainceICS.length()>0)
+		{
+				sql.append(" AND UPPER (RELEVANCE_ICS) = '"+complainceICSLong+"'");
+				
+				System.out.println("complainceGR1435Long appened"+complainceICSLong);
+		}
+				// RELEVANZ_ITSEC
+		if(complainceGR1435!=null&&complainceGR1435.length()>0)
+		{
+				sql.append("AND  UPPER (RELEVANZ_ITSEC) = '"+complainceGR1435Long+"'");
+				
+		System.out.println("complainceGR1435Long appened"+complainceGR1435Long);
+		}
+				// End Adding for C0000241362 
 		if (input.getShowDeleted() == null
 				|| !input.getShowDeleted().equals(AirKonstanten.YES_SHORT))
 			sql.append(" AND del_quelle IS NULL");
@@ -659,12 +691,13 @@ public class ItSystemHbn extends BaseHbn {
 				sql.append(" and NVL(template, 0) = ").append(searchTemplate);
 			}
 		}
-
+System.out.println("HARDWARE System SQL"+sql);
 		return sql;
 	}
 
 	public static CiItemsResultDTO findItSystemsBy(
 			ApplicationSearchParamsDTO input) {
+		
 		String typeName = input.getCiSubTypeId().equals(
 				AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM_IDENTIFIYING) ? AirKonstanten.IT_SYSTEM_TYPE_HARDWARE_SYSTEM
 				: AirKonstanten.IT_SYSTEM_TYPE_SYSTEM_PLATFORM;

@@ -1399,7 +1399,7 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 			tx = session.beginTransaction();
 			@SuppressWarnings("deprecation")
 			Connection conn = session.connection();
-			System.out.println(sql.toString());
+			System.out.println("Application SQL"+sql.toString());
 			selectStmt = conn.createStatement();
 			ResultSet rsMessage = selectStmt.executeQuery(sql.toString());
 
@@ -2203,9 +2203,23 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 			String ciTypeOptions, String itSetOptions, String descriptionOptions,
 			String appOwnerOptions, String appOwnerDelegateOptions, String appStewardOptions, String ciOwnerOptions, String ciOwnerDelegateOptions,
 			String generalUsageOptions, String itCategoryOptions, String lifecycleStatusOptions, String organisationalScopeOptions,
-			String itSecGroupOptions, String processOptions, String sourceOptions, String businessEssentialOptions) {
+			String itSecGroupOptions, String processOptions, String sourceOptions, String businessEssentialOptions,String complainceGR1435,String complainceICS) {
 		
-		
+		// Start Adding for C0000241362 
+		long complainceGR1435Long=0;
+		long complainceICSLong=0;
+		System.out.println("complainceGR1435"+complainceGR1435);
+		System.out.println("complainceICS"+complainceICS);
+		if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("Yes"))
+			
+			complainceGR1435Long = -1;
+		if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("No"))
+			complainceGR1435Long=0;
+		if(complainceICS!=null&&complainceICS.equalsIgnoreCase("Yes"))
+			complainceICSLong = -1;
+		if(complainceICS!=null&&complainceICS.equalsIgnoreCase("No"))
+			complainceICSLong=0;
+		// End Adding for C0000241362
 		if (null != advsearchappownerHidden) {//advsearchappowner
 			advsearchappownerHidden = advsearchappownerHidden.replace("*", "%");//advsearchappowner
 		}
@@ -2258,8 +2272,11 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 		}
 		sql.append("'");
 		
+		
 		// ALIAS
 		sql.append(" or UPPER (anw.ALIAS) like '");
+		
+
 		
 		if (CiEntitiesHbn.isLikeStart(queryMode)) {
 			sql.append("%");
@@ -2272,7 +2289,18 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 		}
 		sql.append("' )");
 		
+		// start Adding for C0000241362 
 		
+		// RELEVANCE_ICS
+if(complainceICS!=null&&complainceICS.length()>0)
+				sql.append(" and UPPER (anw.RELEVANCE_ICS) = '"+complainceICSLong+"'");
+				System.out.println("complainceGR1435Long appened"+complainceICSLong);
+				// RELEVANZ_ITSEC
+				if(complainceGR1435!=null&&complainceGR1435.length()>0)
+				sql.append(" and UPPER (anw.RELEVANZ_ITSEC) = '"+complainceGR1435Long+"'");
+				
+//System.out.println("complainceGR1435Long appened"+complainceGR1435Long);
+				// End Adding for C0000241362 
 		boolean isNot = false;
 
 		
