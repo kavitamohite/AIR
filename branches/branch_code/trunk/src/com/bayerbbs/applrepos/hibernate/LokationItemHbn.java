@@ -55,14 +55,18 @@ public class LokationItemHbn extends BaseHbn {
 						long complainceICSLong = 0;
 						System.out.println("complainceGR1435"+complainceGR1435);
 						System.out.println("complainceICS"+complainceICS);
-						if(complainceGR1435.equalsIgnoreCase("Yes"))
+						//IM0005978424 
+						if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("Yes"))
 							
 							complainceGR1435Long = -1;
-						if(complainceGR1435.equalsIgnoreCase("No"))
+						//IM0005978424 
+						if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("No"))
 							complainceGR1435Long=0;
-						if(complainceICS.equalsIgnoreCase("Yes"))
+						//IM0005978424 
+						if(complainceICS!=null&&complainceICS.equalsIgnoreCase("Yes"))
 							complainceICSLong = -1;
-						if(complainceICS.equalsIgnoreCase("No"))
+						//IM0005978424 
+						if(complainceICS!=null&&complainceICS.equalsIgnoreCase("No"))
 							complainceICSLong=0;
 						// End Adding for C0000241362
 		String locationFields = new StringBuilder(LK).append(metaData.getLocationFields()).toString().replace(AirKonstanten.KOMMA, AirKonstanten.KOMMA.concat(LK));
