@@ -24,7 +24,7 @@ var lng_ENHelp 		= lngcontext + 'english_help.xml';
 var manual_en = doccontext + 'Manual.pdf';
 var manual_de = doccontext + 'Manual.pdf';
 
-
+var training_mannual=doccontext +'TrainingManual.pptx';
 // Images
 var img_AppLogo = imgcontext + 'AIR_Logo_48x50.png';
 
