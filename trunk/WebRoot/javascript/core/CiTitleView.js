@@ -71,7 +71,49 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 				},{
                     xtype: 'spacer',
                     flex: 1
-                },{
+                },
+               //start - IM0006018772 
+                {
+//					html: '<a href="' + manual_en + '" target="_blank"><img id="helpImage" align="top" src="' + img_Help + '" alt="Help"></a>',
+//					baseCls: 'x-plain',
+					
+			        id: 'clHelp',
+			        xtype: 'button',
+			        //img: img_Help,
+			        text: 'User Manual',
+			        cls: 'menuSubLink',
+			        style: {
+						//marginLeft: 3,
+						color: AC.AIR_FONT_COLOR,
+						fontFamily: AC.AIR_FONT_TYPE,
+						fontWeight: 'normal',
+						fontSize: '7pt',
+						
+//						marginTop: 5
+					}
+				},
+				
+				{
+//					html: '<a href="' + manual_en + '" target="_blank"><img id="helpImage" align="top" src="' + img_Help + '" alt="Help"></a>',
+//					baseCls: 'x-plain',
+					
+			        id: 'clHelp1',
+			        xtype: 'button',
+			        //img: img_Help,
+			        text: 'Training Manual',
+			        cls: 'menuSubLink',
+			        style: {
+						//marginLeft: 3,
+						color: AC.AIR_FONT_COLOR,
+						fontFamily: AC.AIR_FONT_TYPE,
+						fontWeight: 'normal',
+						fontSize: '7pt',
+						
+//						marginTop: 5
+					}
+				},
+               //end - IM0006018772 
+                {
 					id: 'clLanguage',
 			        xtype: 'commandlink',
 			        img: img_LangDE //urlFlagLanguage (#8)
@@ -85,22 +127,13 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 			        img: img_Info,
 			        
 			        style: {
-						marginLeft: 2
-//						marginTop: 5
-					}
-				},{
-//					html: '<a href="' + manual_en + '" target="_blank"><img id="helpImage" align="top" src="' + img_Help + '" alt="Help"></a>',
-//					baseCls: 'x-plain',
-					
-			        id: 'clHelp',
-			        xtype: 'commandlink',
-			        img: img_Help,
-					
-			        style: {
 						marginLeft: 3
 //						marginTop: 5
 					}
-				},{
+				},
+				
+				
+				{
 			        id: 'clLogOut',
 			        xtype: 'commandlink',
 			        img: img_Logoff,
@@ -191,7 +224,8 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
         
         var clHelp = this.getComponent('pCiTitleViewNorth').getComponent('clHelp');
         clHelp.on('click', this.onHelpClick, this);
-        
+        var clHelp1 = this.getComponent('pCiTitleViewNorth').getComponent('clHelp1');
+        clHelp1.on('click', this.onHelp1Click, this);
 //        var clLogOut = this.getComponent('pCiTitleViewNorth').getComponent('clLogOut');
 //        clLogOut.on('click', this.onLogOutClick, this);
 	},
@@ -202,6 +236,10 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 	
 	onHelpClick: function(button, event) {
 		window.open(manual_en);
+	},
+	
+	onHelp1Click: function(button, event) {
+		window.open(training_mannual);
 	},
 	
 	onInfoClick: function(button, event) {
