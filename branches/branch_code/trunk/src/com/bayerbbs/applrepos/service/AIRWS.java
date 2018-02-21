@@ -192,11 +192,12 @@ public class AIRWS {
 		// queries are conducted faster. However, if the search takes less than
 		// three seconds, we send the system to sleep
 		// for another few seconds (in total round about three)
-		long startTime = System.nanoTime();
-		CiEntitiesHbn.findCisByNameOrAlias("BYZREH", false, "CONTAINS", false,
-				"applicationName", "ASC", 10, 100);
-		long endTime = System.nanoTime();
-		if ((endTime - startTime) / 1000000000.0 < 3.0) {
+		//long startTime = System.nanoTime();
+		/*CiEntitiesHbn.findCisByNameOrAlias("BYZREH", false, "CONTAINS", false,
+				"applicationName", "ASC", 10, 100);*/
+		
+		//long endTime = System.nanoTime();
+		/*if ((endTime - startTime) / 1000000000.0 < 3.0) {
 			try {
 				java.util.concurrent.TimeUnit.SECONDS
 						.sleep((long) ((endTime - startTime) / 1000000000.0) + 1);
@@ -204,6 +205,16 @@ public class AIRWS {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}*/
+		
+		
+		try{
+			
+			Thread.sleep(2000);
+			
+		}
+		catch(Exception e){
+			
 		}
 		System.out.println("CiEntitiesHbn.findCisByNameOrAlias  calling");
 
