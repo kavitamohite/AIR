@@ -530,6 +530,14 @@ public class ItSystemHbn extends BaseHbn {
 		// Start Adding for C0000241362 
 		String complainceGR1435=input.getComplainceGR1435();
 		String complainceICS=input.getComplainceICS();
+		//ETNTX - IM0006132933 - missing Search functionality Start
+		Long operationalStatusId=input.getOperationalStatusId();//advsearchoperationalstatusid
+		
+		 Long lifecycleStatusId=input.getLifecycleStatusId();//advsearchlifecyclestatusid
+		 
+		//ETNTX - IM0006132933 - missing Search functionality End
+		
+		System.out.println("operationalStatusId in hardwaresystem"+operationalStatusId+"lifecycleStatusId :="+lifecycleStatusId);
 				long complainceGR1435Long=0;
 				long complainceICSLong=0;
 				System.out.println("complainceGR1435"+complainceGR1435);
@@ -577,6 +585,25 @@ public class ItSystemHbn extends BaseHbn {
 				
 		System.out.println("complainceGR1435Long appened"+complainceGR1435Long);
 		}
+		
+		//ETNTX - IM0006132933 - missing Search functionality Start
+		if(operationalStatusId!=null)
+		{
+				sql.append("AND  UPPER (EINSATZ_STATUS_ID) = '"+operationalStatusId+"'");
+				
+		System.out.println("operationalStatusId appened"+operationalStatusId);
+		}
+		
+		
+		if(lifecycleStatusId!=null)
+		{
+				sql.append("AND  UPPER (LC_SUB_STATUS_ID ) = '"+lifecycleStatusId+"'");
+				
+		System.out.println("lifecycleStatusId appened"+lifecycleStatusId);
+		}
+		
+		//ETNTX - IM0006132933 - missing Search functionality End
+			
 				// End Adding for C0000241362 
 		if (input.getShowDeleted() == null
 				|| !input.getShowDeleted().equals(AirKonstanten.YES_SHORT))
@@ -695,7 +722,7 @@ public class ItSystemHbn extends BaseHbn {
 				sql.append(" and NVL(template, 0) = ").append(searchTemplate);
 			}
 		}
-System.out.println("HARDWARE System SQL"+sql);
+System.out.println("HARDWARE System SQL in ITSYSTEMHBN.java"+sql);
 		return sql;
 	}
 
