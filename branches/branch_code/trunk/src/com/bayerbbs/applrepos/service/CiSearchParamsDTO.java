@@ -48,7 +48,35 @@ public class CiSearchParamsDTO { //implements Serializable
     private String complainceGR1435;
     private String complainceICS;
     
-    public String getComplainceGR1435() {
+   // IM0006132933 - Missing search param SR Start
+    private Long operationalStatusId;//advsearchoperationalstatusid
+	
+	private Long lifecycleStatusId;//advsearchlifecyclestatusid
+	
+	  // IM0006132933 - Missing search param SR End
+	
+	
+    public Long getOperationalStatusId() {
+		return operationalStatusId;
+	}
+
+
+	public void setOperationalStatusId(Long operationalStatusId) {
+		this.operationalStatusId = operationalStatusId;
+	}
+
+
+	public Long getLifecycleStatusId() {
+		return lifecycleStatusId;
+	}
+
+
+	public void setLifecycleStatusId(Long lifecycleStatusId) {
+		this.lifecycleStatusId = lifecycleStatusId;
+	}
+
+
+	public String getComplainceGR1435() {
 		return complainceGR1435;
 	}
 
