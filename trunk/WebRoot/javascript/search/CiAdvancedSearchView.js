@@ -1321,14 +1321,18 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     				cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions.setVisible(false);
     			}
     			
-    			if(tableId == AC.TABLE_ID_IT_SYSTEM) {
+    			if(tableId == AC.TABLE_ID_IT_SYSTEM) { //ETNTX - IM0006132933 - missing Search functionality start
+    				
     				var filterData = { tableId: record.get('ciTypeId') };
     				cbAdvSearchLifecycleStatusW.filterByData(filterData);
     				cbAdvSearchLifecycleStatusW.setVisible(true);
     				cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions.setVisible(true);
     				
-//    				fsCategoriesAndStatus.setVisible(true);
-//    				pAdvSearchCategoriesAndStatusOptions.setVisible(true);
+   				fsCategoriesAndStatus.setVisible(true);
+   				pAdvSearchCategoriesAndStatusOptions.setVisible(true);
+   				cbAdvSearchITCategoryW.setVisible(false);
+   				
+   			//ETNTX - IM0006132933 - missing Search functionality End
     			} else {
     				cbAdvSearchLifecycleStatusW.setVisible(false);
     				cbAdvSearchLifecycleStatusW.reset();
