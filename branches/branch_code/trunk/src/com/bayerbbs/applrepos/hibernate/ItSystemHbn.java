@@ -1359,9 +1359,13 @@ System.out.println("HARDWARE System SQL in ITSYSTEMHBN.java"+sql);
 		dto.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
 		BaseHbn.getCi((CiBaseDTO) dto, (CiBase) itSystem);
 		Session session = HibernateUtil.getSession();
+		//System.out.println("itSystem.getId()"+itSystem.getId()+"dto.getTableId()"+dto.getTableId());
 		dto.setUpStreamAdd((String) session
-				.createSQLQuery(
+				/*.createSQLQuery(
 						"SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Id), 4000, 1) FROM TABLE(Pck_Air.FT_RelatedCIs(:Table_Id, :Id, :Direction)) WHERE Table_Id = 1")
+				*/// ETNTX - IM0006168023 - Copy was not working for Location CI for Function CR will be created seperatly
+				.createSQLQuery(
+						"SELECT DBMS_LOB.SUBSTR(listagg(Id) within group(order by Id), 4000, 1) FROM TABLE(Pck_Air.FT_RelatedCIs(:Table_Id, :Id, :Direction)) WHERE Table_Id = 1")
 				.setLong("Table_Id", dto.getTableId())
 				.setLong("Id", itSystem.getId())
 				.setString("Direction", AirKonstanten.UP).uniqueResult());
