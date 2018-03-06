@@ -444,7 +444,9 @@ public class BaseHbn {
     	Pattern replace = Pattern.compile("[\\(\\)]");								// replace parentheses
 		Hashtable<String,String> tableContacts = new Hashtable<String,String>();
 		Session session = HibernateUtil.getSession();
-		ciDTO.setDownStreamAdd((String) session.createSQLQuery("SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Id), 4000, 1) FROM TABLE(Pck_Air.FT_RelatedCIs(:Table_Id, :Id, :Direction)) WHERE Table_Id IN (1, 2)").setLong("Table_Id", ciDTO.getTableId()).setLong("Id", ci.getId()).setString("Direction",AirKonstanten.DN).uniqueResult());
+		//ciDTO.setDownStreamAdd((String) session.createSQLQuery("SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Id), 4000, 1) FROM TABLE(Pck_Air.FT_RelatedCIs(:Table_Id, :Id, :Direction)) WHERE Table_Id IN (1, 2)").setLong("Table_Id", ciDTO.getTableId()).setLong("Id", ci.getId()).setString("Direction",AirKonstanten.DN).uniqueResult());
+		// ETNTX - IM0006168023 - Copy was not working for Location CI for Function CR will be created seperatly
+		ciDTO.setDownStreamAdd((String) session.createSQLQuery("SELECT DBMS_LOB.SUBSTR(listagg(Id) within group(order by Id), 4000, 1) FROM TABLE(Pck_Air.FT_RelatedCIs(:Table_Id, :Id, :Direction)) WHERE Table_Id IN (1, 2)").setLong("Table_Id", ciDTO.getTableId()).setLong("Id", ci.getId()).setString("Direction",AirKonstanten.DN).uniqueResult());
 		session.close();
 		for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) 
 		{
