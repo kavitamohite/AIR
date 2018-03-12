@@ -43,7 +43,7 @@ public class BaseHbn {
 
 		@SuppressWarnings("unchecked")
 		T t = (T)session.get(ci, id);
-
+System.out.println("findById"+t);
 		return t;
 	}
 	
@@ -51,13 +51,15 @@ public class BaseHbn {
 		List<String> messages = new ArrayList<String>();
 		
 		ErrorCodeManager errorCodeManager = new ErrorCodeManager();
-
+System.out.println("validateCi");
 
 		if (!StringUtils.isNullOrEmpty(dto.getCiOwnerDelegateHidden())) {//getSubResponsibleHidden
 			List<PersonsDTO> listPersons = PersonsHbn.findPersonByCWID(dto.getCiOwnerDelegateHidden());
+			System.out.println("validateCi 1");
 			if (null == listPersons || listPersons.isEmpty()) {
 				// not a valid person, maybe a group?
 				GroupsDTO group = GroupHbn.findGroupByName(dto.getCiOwnerDelegate());//getSubResponsible
+				System.out.println("validateCi 2");
 				if (null == group) {
 					messages.add(errorCodeManager.getErrorMessage("1107")); // "subresponsible is not valid");
 				}
@@ -110,7 +112,7 @@ public class BaseHbn {
 			ci.setItset(itSet);
 		}
 		
-		
+		System.out.println("base ci setUpCi isCiCreate"+isCiCreate);
 		CiBase ci0 = (CiBase)ci;
 		setUpCi(ci0, ciDTO, cwid, isCiCreate);
 	}
@@ -171,6 +173,7 @@ public class BaseHbn {
 		
 		
 		if (null != ciDTO.getSlaId()) {
+			System.out.println(" ciDTO.getSlaId()"+ ciDTO.getSlaId());
 			if (-1 == ciDTO.getSlaId()) {
 				ci.setSlaId(null);
 			}
@@ -178,16 +181,19 @@ public class BaseHbn {
 				ci.setSlaId(ciDTO.getSlaId());
 			}
 		}
-		if (null != ciDTO.getServiceContractId() || null != ciDTO.getSlaId()) {
+		//AIR Copy function not working for Location CIs .. for Function CI we need to create seperate CR IM0006168023 
 
+		/*if (null != ciDTO.getServiceContractId() || null != ciDTO.getSlaId()) {
+System.out.println(" ciDTO.getServiceContractId()"+ ciDTO.getServiceContractId());
 			if (-1 == ciDTO.getServiceContractId()) {
 				ci.setServiceContractId(null);
 			}
 			else {
 				ci.setServiceContractId(ciDTO.getServiceContractId());
 			}
-		}
-		
+		}*/
+		//End - AIR Copy function not working for Location CIs .. for Function CI we need to create seperate CR IM0006168023 
+
 		
 		if (null != ciDTO.getItSecSbAvailabilityId()) {
 			if (-1 == ciDTO.getItSecSbAvailabilityId()) {
