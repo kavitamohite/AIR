@@ -156,7 +156,9 @@
 
 	<Identifier>
 		<id>businessProcess</id>
-		<Mandatory>required</Mandatory>
+		<!--  IM0006233692 Start -->
+		<Mandatory>optional</Mandatory>
+		<!--  IM0006233692 End -->
 		<ciTypeId>2</ciTypeId>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -1704,7 +1706,10 @@
 	</Identifier>
 	<Identifier>
 		<id>labeltaBusinessProcessW</id>
-		<Mandatory>required</Mandatory>
+		<!--<Mandatory>required</Mandatory>  -->
+		<!--  IM0006233692 Start -->
+		<Mandatory>optional</Mandatory>
+		<!--  IM0006233692 End -->
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
 		<EditableIfSource>SISecGUI,AIR,RFC,ANT</EditableIfSource>
