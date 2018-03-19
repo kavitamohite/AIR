@@ -1,0 +1,102 @@
+.icon-add-user {
+	background-image:url("../../../../../images/add_user_16x16.png");
+}
+.icon-delete-user {
+	background-image:url("../../../../../images/failed_type1_16x16.png");
+}
+
+.icon-ok {
+	background-image:url("../../../../../images/ok_type1_16x16.png");
+}
+.icon-delete {
+	background-image:url("../../../../../images/failed_type2_16x16.png");
+}
+.icon-info {
+	background-image:url("../../../../../images/Info_16x16.png");
+	height: 14px;
+}
+
+a:link {text-decoration: none; color:#085E8B;}
+a:visited {text-decoration: none; color:#085E8B;}
+a:hover {text-decoration: none; color:#085E8B;}
+a:active {text-decoration: none; color:#085E8B;}
+
+.menuMainLink {
+	color: #085E8B;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 12pt;
+	cursor: pointer;
+   	background: transparent;
+   	background-color: transparent;
+}
+
+.menuSubLink {
+	color: #085E8B;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 8pt;
+	cursor: pointer;
+	background: transparent;
+	background-color: transparent;
+}
+
+.AppLabelTag-name {
+    color: #ededed;
+	font-weight: bold;
+}
+.AppLabelTag-name-Q {
+    color: #085e8b;
+	font-weight: bold;
+}
+
+.AppLabelTag-container {
+	line-height: 0px;
+	margin-top: 7pt;
+}
+.AppLabelTag-version {
+	font-size: 7pt;
+	color: #ededed;
+	font-weight: bold;
+	//margin-top: 5pt;
+	text-align: left;
+}
+.AppLabelTag-version-Q {
+	font-size: 7pt;
+	color: #085e8b;
+	font-weight: bold;
+	//margin-top: 5pt;
+	text-align: left;
+}
+.AppLabelTag-browserOptimization {
+	font-size: 8pt;
+	color: red;
+	font-weight: bold;
+	//margin-top: 5pt;
+	text-align: right;
+	//visibility: hidden;
+}
+
+.roundCorners {
+//	border-top-left-radius: 1em 5em;  
+//	border-top-right-radius: 1em 5em;
+	border-radius:         40px;
+}
+
+.ie8Opacity {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+	opacity: .5; 
+}
+
+
+.gridCellMarkedAsDeleted {
+	color: #778899;
+}
+
+.choco-actioncolumn {
+	background-image: url("../../../../../images/itSecMassnahmeLinkType.png");
+	height: 14px;
+	width: 18px;
+}
+//x-action-col-cell img.choco-actioncolumn. Es muss height und width angegeben werden sonst kein img!
