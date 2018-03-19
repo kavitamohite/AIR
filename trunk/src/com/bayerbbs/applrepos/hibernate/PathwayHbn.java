@@ -49,19 +49,24 @@ public class PathwayHbn extends BaseHbn{
 		Long id = null;
 
 		if (null != cwid) {
-
+System.out.println("pathway"+pathwayDTO.getId());
 			cwid = cwid.toUpperCase();
 
-			if (null != pathwayDTO.getId() && pathwayDTO.getId() == 0) {
+			//if (null != pathwayDTO.getId() && pathwayDTO.getId() == 0) {
+		//	AIR Copy function not working for Location CIs .. for Function CI we need to create seperate CR IM0006168023 
+	
+			if (null != pathwayDTO.getId() ) {
+				System.out.println("pathway 2");
 				List<String> messages = validatePathway(pathwayDTO, false);
-
+				System.out.println("pathway 3");
 				if (messages.isEmpty()) {
+					System.out.println("pathway 4");
 					Ways way = new Ways();
 					Session session = HibernateUtil.getSession();
 					Transaction tx = null;
 					tx = session.beginTransaction();
 					setUpCi(way, pathwayDTO, cwid, true);
-
+					System.out.println("pathway 5");
 					boolean autoCommit = false;
 					try {
 						id =(Long) session.save(way);
@@ -69,6 +74,7 @@ public class PathwayHbn extends BaseHbn{
 						autoCommit = true;
 
 					} catch (Exception e) {
+						e.printStackTrace();
 						output.setResult(AirKonstanten.RESULT_ERROR);
 						output.setMessages(new String[] { e.getMessage() });
 					} finally {
@@ -180,6 +186,7 @@ public class PathwayHbn extends BaseHbn{
 	private static List<String> validatePathway(PathwayDTO pathwayDTO,
 			boolean isUpdate) {
 		Ways way = findByName(pathwayDTO.getName());
+		System.out.println("way found");
 		List<String> messages = validateCi(pathwayDTO);
 		boolean alreadyExist = isUpdate ? way != null
 				&& way.getId().longValue() != pathwayDTO.getId().longValue()
@@ -362,9 +369,11 @@ public class PathwayHbn extends BaseHbn{
 
 	private static void setUpCi(Ways ci, PathwayDTO ciDTO, String cwid,
 			boolean isCiCreate) {
+		
 		// protected <T extends CiBase> void setUpCi(T ci, CiBaseDTO ciDTO,
 		// String cwid) {
 		ci.setName(ciDTO.getName());
+		System.out.println("ciDTO.getName()"+ciDTO.getName()+"isCiCreate"+isCiCreate+"ci"+ci.getId());
 		BaseHbn.setUpCi(ci, ciDTO, cwid, isCiCreate);
 
 	}
