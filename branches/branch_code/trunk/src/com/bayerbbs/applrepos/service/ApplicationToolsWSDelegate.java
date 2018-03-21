@@ -8,8 +8,9 @@ public class ApplicationToolsWSDelegate {
 
 	com.bayerbbs.applrepos.service.ApplicationToolsWS applicationToolsWS = new com.bayerbbs.applrepos.service.ApplicationToolsWS();
 
-	public ServiceContractDTO[] getServiceContractList() {//ApplicationEditParameterInput editInput
-		return applicationToolsWS.getServiceContractList();//editInput
+	public ServiceContractDTO[] getServiceContractList(ApplicationEditParameterInput editInput) {//ApplicationEditParameterInput editInput //emria
+		//return applicationToolsWS.getServiceContractList();//editInput
+		return applicationToolsWS.getServiceContractList(editInput.getId());//editInput  emria  IM0006263625 : Issue saving Contract in AIR
 	}
 
 	public ClassDataDTO[] getClassDataList(

@@ -64,7 +64,9 @@ public class ServiceContractHbn {
 		return listResult;
 	}
 	
-	public static List<ServiceContractDTO> findAllServiceContracts() {
+	public static List<ServiceContractDTO> findAllServiceContracts(Long slaID) {
+		
+		
 		List<ServiceContractDTO> serviceContracts = new ArrayList<ServiceContractDTO>();
 		
 		StringBuilder sql = new StringBuilder();
@@ -73,8 +75,11 @@ public class ServiceContractHbn {
 		append("FROM service_contract sc ").
 		append("JOIN sla_service_contract ssc ON sc.service_contract_id = ssc.service_contract_id ").
 		append("WHERE sc.del_timestamp is null ").
-		append("AND ssc.del_timestamp is null ").
-		append("ORDER BY sc.service_contract");
+		append("AND ssc.del_timestamp is null ");
+		if(slaID != null){ // IM0006263625 : Issue saving Contract in AIR
+			 sql.append("AND ssc.sla_id = ?");
+		} // IM0006263625 : Issue saving Contract in AIR
+		sql.append("ORDER BY sc.service_contract");
 		
 		Session session = HibernateUtil.getSession();
 		Transaction ta = null;
@@ -87,7 +92,10 @@ public class ServiceContractHbn {
 			ta = session.beginTransaction();
 			@SuppressWarnings("deprecation")
 			Connection conn = session.connection();
-			stmt = conn.prepareStatement(sql.toString());// createStatement();
+			stmt = conn.prepareStatement(sql.toString());
+			if(slaID != null) // IM0006263625 : Issue saving Contract in AIR
+				stmt.setLong(1, slaID);// createStatement();
+			
 			rs = stmt.executeQuery();//sql.toString()
 			
 			while(rs.next())
