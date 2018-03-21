@@ -92,13 +92,19 @@ public class CiDetailReportServlet extends HttpServlet {
 			+ "WHERE    MTX.Langu = ?"
 			+ " ORDER BY MAS.Katalog_Id, MAS.Massnahme_Nr";
 
-	private static final String STMT_SELECT_MASSN_BESCHREIBUNG = "SELECT   TXT.Beschreibung FROM BBS_Prod.DBO.MB_MASSN_TXT TXT"
+	/*private static final String STMT_SELECT_MASSN_BESCHREIBUNG = "SELECT   TXT.Beschreibung FROM BBS_Prod.DBO.MB_MASSN_TXT TXT"
 			+ " INNER JOIN BBS_Prod.DBO.MB_MASSN MAS ON TXT.Mas_Id=MAS.Mas_Id AND TXT.Mas_Imp_Id=MAS.Mas_Imp_Id"
 			+ " WHERE    MAS.Mas_Imp_Id IN (-1, 1)"
 			+ " AND      MAS.Loesch_Datum IS NULL"
 			+ " AND      MAS.Cm_Sta_Id IN (1, 5)"
 			+ " AND      MAS.Mas_Id = ?"
-			+ " AND      TXT.Spr_Id = ?";
+			+ " AND      TXT.Spr_Id = ?";*/ //  changes for gstool EMRIA
+	
+	private static final String STMT_SELECT_MASSN_BESCHREIBUNG = "SELECT '<html><body><h1> S'||IDENT||'  '||NAME||'</h1> '||REFERENCES||'<hr>'|| NVL(SUBSTR(SUBSTR (HTMLTEXT,INSTR(HTMLTEXT,'<hr>',1,1)+4),1,INStr(SUBSTR (HTMLTEXT,INSTR(HTMLTEXT,'<hr>',1,1)+4),'<hr>', 1,1)-1),HTMLTEXT)||'<hr> </body></html>'"
+			+ " FROM tbadm.v_ism_ctl"
+			+ " WHERE ctl_id= ?"
+			+ " AND  UPPER(langu) = ?"
+			+ " AND STATUS='operative'";//  changes for gstool EMRIA
 
 	private static final String PARAM_VALUE_DE = "de";
 	private static final String PARAM_VALUE_EN = "en";
@@ -319,14 +325,15 @@ public class CiDetailReportServlet extends HttpServlet {
 			String Language) throws SQLException, IOException,
 			DocumentException {
 		System.out.println("inside write com");
-		Session session = HibernateUtil
-				.getSession(HibernateUtil.DATASOURCE_ID_GSTOOL);
+		//Session session = HibernateUtil.getSession(HibernateUtil.DATASOURCE_ID_GSTOOL);
+		Session session = HibernateUtil.getSession();
 		ResultSet rs = null;
 
 		@SuppressWarnings("deprecation")
 		PreparedStatement statement = session.connection().prepareStatement(
 				STMT_SELECT_MASSN_BESCHREIBUNG);
-		statement.setInt(2, getLanguageId(Language));
+		//statement.setInt(2, getLanguageId(Language));
+		statement.setString(2, Language);
 		for (ComplianceDetail detail : complianceDetails) {
 			// document.newPage();
 			String description = getDescription(statement,
@@ -360,7 +367,8 @@ public class CiDetailReportServlet extends HttpServlet {
 			rs = statement.executeQuery();
 
 			if (rs.next()) {
-				description = rs.getString(SQL_RESULT_BESCHREIBUNG);
+				//description = rs.getString(SQL_RESULT_BESCHREIBUNG);
+				description = rs.getString(1);// changes for gstool EMRIA
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -22,23 +22,39 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6275379151948444485L;
 
-	private static final String STMT_SELECT_MASSN_BESCHREIBUNG = "SELECT   TXT.Beschreibung FROM BBS_Prod.DBO.MB_MASSN_TXT TXT"
+	/*private static final String STMT_SELECT_MASSN_BESCHREIBUNG = "SELECT   TXT.Beschreibung FROM BBS_Prod.DBO.MB_MASSN_TXT TXT"
 		+ " INNER JOIN BBS_Prod.DBO.MB_MASSN MAS ON TXT.Mas_Id=MAS.Mas_Id AND TXT.Mas_Imp_Id=MAS.Mas_Imp_Id"
 		+ " WHERE    MAS.Mas_Imp_Id IN (-1, 1)"
 		+ " AND      MAS.Loesch_Datum IS NULL"
 		+ " AND      MAS.Cm_Sta_Id IN (1, 5)"
 		+ " AND      MAS.Mas_Id = ?"
-		+ " AND      TXT.Spr_Id = ?";
+		+ " AND      TXT.Spr_Id = ?";*///  changes for gstool EMRIA
+	
+	
+	private static final String STMT_SELECT_MASSN_BESCHREIBUNG = "SELECT '<html><body><h1> S'||IDENT||'  '||NAME||'</h1> '||REFERENCES||'<hr>'|| NVL(SUBSTR(SUBSTR (HTMLTEXT,INSTR(HTMLTEXT,'<hr>',1,1)+4),1,INStr(SUBSTR (HTMLTEXT,INSTR(HTMLTEXT,'<hr>',1,1)+4),'<hr>', 1,1)-1),HTMLTEXT)||'<hr> </body></html>'"
+			+ " FROM tbadm.v_ism_ctl"
+			+ " WHERE ctl_id= ?"
+			+ " AND  UPPER(langu) = ?"
+			+ " AND STATUS='operative'";//  changes for gstool EMRIA
+			
 
 
-	private static final String STMT_SELECT_BAUSTEIN_BESCHREIBUNG = "SELECT BTX.Beschreibung FROM [BBS_Prod].[dbo].MB_BAUST BST" +
+	/*private static final String STMT_SELECT_BAUSTEIN_BESCHREIBUNG = "SELECT BTX.Beschreibung FROM [BBS_Prod].[dbo].MB_BAUST BST" +
 		" INNER JOIN [BBS_Prod].[dbo].MB_BAUST_TXT BTX ON BST.Bau_Id=BTX.Bau_Id AND BST.Bau_Imp_Id=BTX.Bau_Imp_Id" +
 		" WHERE BST.Loesch_Datum IS NULL" +
 		" AND BST.Bau_Imp_Id IN (-1, 1)" +
 		" AND SUBSTRING(BTX.Beschreibung, 1, 6) = '<html>'" +
 		" AND BTX.Spr_Id = ?" +
-		" AND REPLACE(BST.Nr, '.', '') = ?";
+		" AND REPLACE(BST.Nr, '.', '') = ?";*/ //  changes for gstool EMRIA
 	
+	
+	
+	private static final String STMT_SELECT_BAUSTEIN_BESCHREIBUNG = "SELECT '<html><body><h3> '||NR||'  '||NAME||'</h3> <br>'||  NVL (SUBSTR(SUBSTR (HTMLTEXT,INSTR(HTMLTEXT,'</h',1,1)+5),1,INStr(SUBSTR (HTMLTEXT,INSTR(HTMLTEXT,'</h',1,1)+5),'</body>', 1,1)-1),HTMLTEXT) ||' </body></html>' " +
+			" from TBADM.V_ISM_CHP" +
+			" WHERE UPPER(LANGU)= ?" +
+			" AND REPLACE(Nr, '.', '') = ?"+
+			" AND STATUS='operative'";  //  changes for gstool EMRIA
+	 
 	private static String STMT_SELECT_MAS_ID = "SELECT Mas_Id FROM [BBS_Prod].[dbo].V_TRANSBASE_SAFEGUARD "
 			+ "WHERE  Msk_Id = ? " + "AND Mas_Nr = ?";
 
@@ -86,7 +102,9 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 		String massnahmeGstoolId = req.getParameter(REQ_MASSNAHME_GSTOOL_ID);
 		String lang = req.getParameter(REQ_LANG);
 		
-		Session session = HibernateUtil.getSession(HibernateUtil.DATASOURCE_ID_GSTOOL);
+		//Session session = HibernateUtil.getSession(HibernateUtil.DATASOURCE_ID_GSTOOL); //  changes for gstool EMRIA
+		Session session = HibernateUtil.getSession(); //  changes for gstool EMRIA
+		
 		ResultSet rs = null;
 		
 		String massnBeschreibung = null;
@@ -99,12 +117,15 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 			@SuppressWarnings("deprecation")
 			PreparedStatement statement = session.connection().prepareStatement(STMT_SELECT_MASSN_BESCHREIBUNG);
 			statement.setString(1, massnahmeGstoolId);
-			statement.setInt(2, getLanguageId(lang));
+			//statement.setInt(2, getLanguageId(lang));
+			statement.setString(2, lang);
 			rs = statement.executeQuery();
 	
 			if(rs.next()) {//Achtung es gibt mehrere Treffer für die massnahmeGstoolId. Weiteres Kriterium welche die richtige Massnahmenversion ist.
 //				massnTitel = rs.getString("NAME");
-				massnBeschreibung = rs.getString(SQL_RESULT_BESCHREIBUNG);
+				//massnBeschreibung = rs.getString(SQL_RESULT_BESCHREIBUNG);  //  changes for gstool EMRIA
+				massnBeschreibung = rs.getString(1); //  changes for gstool EMRIA
+				System.out.println("massnBeschreibung  "+massnBeschreibung);
 				massnBeschreibung = massnBeschreibung.replaceAll("/baust/", "/AIR/massnbeschreibung?lang=" + lang + "&bausteinId=");
 				String pattern = "/[m|s]/[m|s]\\d\\d\\d\\d\\d";
 				Pattern r = Pattern.compile(pattern);
@@ -130,6 +151,7 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new ServletException("Description of control id=" + massnahmeGstoolId + " cannot be retrieved from GsTool Database", e);
 		} finally {
 			try {
@@ -145,7 +167,8 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 	
 	
 	private void doBaustein(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		Session session = HibernateUtil.getSession(HibernateUtil.DATASOURCE_ID_GSTOOL);
+		//Session session = HibernateUtil.getSession(HibernateUtil.DATASOURCE_ID_GSTOOL); //  changes for gstool EMRIA
+		Session session = HibernateUtil.getSession(); //  changes for gstool EMRIA
 		ResultSet rs = null;
 		
 		String bausteinId = req.getParameter(REQ_BAUSTEIN_ID);
@@ -164,13 +187,15 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 		try {
 			@SuppressWarnings("deprecation")
 			PreparedStatement statement = session.connection().prepareStatement(STMT_SELECT_BAUSTEIN_BESCHREIBUNG);
-			statement.setInt(1, getLanguageId(lang));
+			//statement.setInt(1, getLanguageId(lang)); //  changes for gstool EMRIA
+			statement.setString(1, lang); //  changes for gstool EMRIA
 			statement.setString(2, bausteinId);
 			
 			rs = statement.executeQuery();
 	
 			if(rs.next()) {
-				bausteinBeschreibung = rs.getString(SQL_RESULT_BESCHREIBUNG);
+				//bausteinBeschreibung = rs.getString(SQL_RESULT_BESCHREIBUNG); //  changes for gstool EMRIA
+				bausteinBeschreibung = rs.getString(1); //  changes for gstool EMRIA
 				
 				writer.write(bausteinBeschreibung);
 			} else {
@@ -178,6 +203,7 @@ public class GsToolMassnahmenBeschreibungServlet extends HttpServlet {
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new ServletException("Description of control id=" + bausteinId + " cannot be retrieved from GsTool Database", e);
 		} finally {
 			try {

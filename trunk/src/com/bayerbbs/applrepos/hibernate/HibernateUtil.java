@@ -62,14 +62,28 @@ public class HibernateUtil {
 				    	else{
 				    		if(hostName.equals(AirKonstanten.SERVERNAME_BMS_QA)){
 						    	config = new AnnotationConfiguration().configure("hibernate.qa.bms.cfg.xml");
-				    		}else
-						    	config = new AnnotationConfiguration().configure("hibernate.dev.cfg.xml");
+				    		}else{
+
+				    			if(hostName.equals(AirKonstanten.SERVERNAME_QA)){
+				    				config = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+
+				    			}else {
+				    				//config = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+
+				    				config = new AnnotationConfiguration().configure("hibernate.dev.cfg.xml");
+								}
+				    				
+				    		
+				    			
+				    		}
+						    	//config = new AnnotationConfiguration().configure("hibernate.dev.cfg.xml");
 				    	}				    		
 				    }
 //					transbaseConf = config;
 					break;
 				default: break;
 			}
+			
 			
 			sf = config.buildSessionFactory();
 			sessionFactories.put(dataSourceId, sf);
@@ -115,6 +129,8 @@ public class HibernateUtil {
 						    	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
 
 			    			}else {
+			    				//conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
+
 						    	conf = new AnnotationConfiguration().configure("hibernate.dev.cfg.xml");
 							}
 			    				
