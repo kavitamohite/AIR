@@ -234,7 +234,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		// var cbServiceContract1 = this.getComponent('serviceContract1');//emria
 		cbServiceContract.enable();
 		cbServiceContract.reset(); 
-		cbServiceContract1.enable();//emria
+		
 		
 
 		var filterData = { slaId: record.data.id };

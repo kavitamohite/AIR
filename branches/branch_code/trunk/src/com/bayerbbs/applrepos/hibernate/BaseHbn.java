@@ -183,7 +183,7 @@ System.out.println("validateCi");
 		}
 		//AIR Copy function not working for Location CIs .. for Function CI we need to create seperate CR IM0006168023 
 
-		/*if (null != ciDTO.getServiceContractId() || null != ciDTO.getSlaId()) {
+		if (null != ciDTO.getServiceContractId() || null != ciDTO.getSlaId()) {  // uncommented the change 
 System.out.println(" ciDTO.getServiceContractId()"+ ciDTO.getServiceContractId());
 			if (-1 == ciDTO.getServiceContractId()) {
 				ci.setServiceContractId(null);
@@ -191,7 +191,7 @@ System.out.println(" ciDTO.getServiceContractId()"+ ciDTO.getServiceContractId()
 			else {
 				ci.setServiceContractId(ciDTO.getServiceContractId());
 			}
-		}*/
+		}
 		//End - AIR Copy function not working for Location CIs .. for Function CI we need to create seperate CR IM0006168023 
 
 		
