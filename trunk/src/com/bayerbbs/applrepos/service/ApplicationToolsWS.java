@@ -121,8 +121,9 @@ public class ApplicationToolsWS {
 		return aRefs;
 	}
 */	
-	public ServiceContractDTO[] getServiceContractList() {
-		return ServiceContractHbn.findAllServiceContracts().toArray(new ServiceContractDTO[0]);	
+	public ServiceContractDTO[] getServiceContractList(Long id) { //emria
+		//return ServiceContractHbn.findAllServiceContracts().toArray(new ServiceContractDTO[0]);
+		return ServiceContractHbn.findAllServiceContracts(id).toArray(new ServiceContractDTO[0]);	//emria  IM0006263625 : Issue saving Contract in AIR
 	}
 	
 //	public ServiceContractDTO[] getServiceContractList(ApplicationEditParameterInput editInput) {

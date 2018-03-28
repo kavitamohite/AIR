@@ -31,12 +31,13 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //		        lazyRender: true,
 //		        lazyInit: false,
 		        mode: 'local'
-		    }, {
+		    }, /* emria{  IM0006263625 : Issue saving Contract in AIR
 		        xtype: 'filterCombo',//combo
 		        width: 230,
-		        fieldLabel: 'Service Contract',
-		        id: 'serviceContract',
-		        store: new Ext.data.Store(),//serviceContractListStore,
+		        fieldLabel: 'Service Contract1',
+		        id: 'serviceContract1',
+		        //store: new Ext.data.Store(),//serviceContractListStore,
+		        store: AIR.AirStoreManager.getStoreByName('serviceContractListStore'),
 		        valueField: 'id',
 		        displayField: 'text',
 		        disabled: true,
@@ -53,6 +54,23 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        mode: 'local',
 		        
 		        listEmptyText: 'No matching items found'
+		    },*/{
+
+		        id: 'serviceContract',
+		    	xtype: 'filterCombo',
+		        fieldLabel: 'Service Contract',
+		        width: 230,
+		        enableKeyEvents: true,
+		        forceSelection: true,
+		        //store: AIR.AirStoreFactory.createServiceContractListStore(),
+		        store: AIR.AirStoreManager.getStoreByName('serviceContractListStore'),
+		        valueField: 'id',
+		        displayField: 'text',
+		        triggerAction: 'all',
+		        mode: 'local',
+		        //queryParam: 'id',
+		        listEmptyText: 'No matching items found'
+			
 		    },{
 		        xtype: 'combo',
 		        width: 230,
@@ -186,7 +204,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		this.fireEvent('ciChange', this, combo);
 	},
-	onServiceContractChange: function (combo, newValue, oldValue) {
+	onServiceContractChange: function (combo, newValue, oldValue) {/* emria  IM0006263625 : Issue saving Contract in AIR
 		var cbSla = this.getComponent('sla');
 		
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
@@ -195,35 +213,49 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			var r = Util.getComboRecord(combo, 'id', parseInt(newValue));//cbServiceContract.getStore().getById(parseInt(data.serviceContractId));
 			if(r)
 				cbSla.setValue(r.get('slaId'));
-		}/* else {
+		} else {
 			var v = cbSla.getValue();
 			if(!v) {
 				combo.reset();
 				delete combo.filterData;
 			}
-		}*/
-	},
+		}
+	*/},
 	
 	onServiceContractKeyUp: function(combo, event) {
 		if(combo.getRawValue().length === 0) {
-			combo.reset();
+			combo.reset(); 
 			delete combo.filterData;
 		}
 	},
 	
 	onSlaSelect: function(combo, record, index) {
 		var cbServiceContract = this.getComponent('serviceContract');
+		// var cbServiceContract1 = this.getComponent('serviceContract1');//emria
 		cbServiceContract.enable();
-		cbServiceContract.reset();
+		cbServiceContract.reset(); 
+		
+		
 
 		var filterData = { slaId: record.data.id };
-		cbServiceContract.filterByData(filterData);
+		cbServiceContract.filterByData(filterData); 
 		
+		this.loadServiceContractStore(record.data.id);//emria
 		if(cbServiceContract.getStore().getCount() === 1)
 			cbServiceContract.setValue(cbServiceContract.getStore().getAt(0).get('id'));
-    	
+    	console.log('SLA id '+record.data.id);
     	this.fireEvent('ciChange', this, combo);
 	},
+	loadServiceContractStore: function(value){  //emria  IM0006263625 : Issue saving Contract in AIR
+		var cbServiceContract1 = this.getComponent('serviceContract');
+		
+		cbServiceContract1.getStore().load({
+            params: {
+                id: value
+            }
+		});
+	},
+	
 	
 	onSlaChange: function(combo, newValue, oldValue) {
 		if(this.isComboValueValid(combo, newValue, oldValue))
@@ -234,9 +266,9 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 
 		if(typeof newValue === 'string' && newValue.length === 0) {
 			combo.reset();
-			cbServiceContract.reset();
+			cbServiceContract.reset(); 
 		} else {
-			cbServiceContract.reset();
+			 cbServiceContract.reset(); 
 
 			newValue = typeof newValue === 'string' ? newValue : oldValue;
 			
@@ -273,15 +305,16 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				cbServiceContract.filterByData(filterData);
 			}else{
 				cbSla.reset();//setValue('');
-				cbServiceContract.reset();//.setValue('');
+				cbServiceContract.reset();//.setValue('');  
 			}
 		} else {
 			cbSla.reset();//setValue('');
-			cbServiceContract.reset();//.setValue('');
+			cbServiceContract.reset();//.setValue(''); 
 		}
 		
 		if (data.serviceContractId && data.serviceContractId != 0 && !data.isCiCreate) {
 			if(!AIR.AirApplicationManager.isSlaInvalid()){
+				console.log("Debug 1"+data.serviceContractId);
 				cbServiceContract.setValue(data.serviceContractId);
 				
 				var sla = cbSla.getValue();
@@ -293,7 +326,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 
 		} else {
-			cbServiceContract.setValue('');
+			 cbServiceContract.setValue(''); 
 		}
 		
 		

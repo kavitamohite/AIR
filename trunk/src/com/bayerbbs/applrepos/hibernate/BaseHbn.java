@@ -144,6 +144,9 @@ System.out.println("validateCi");
 	}
 	
 	private static void setUpCi(CiBase ci, CiBaseDTO ciDTO, String cwid, boolean isCiCreate) {
+		
+
+
 		ci.setName(ciDTO.getName());
 		
 		
@@ -183,15 +186,17 @@ System.out.println("validateCi");
 		}
 		//AIR Copy function not working for Location CIs .. for Function CI we need to create seperate CR IM0006168023 
 
-		/*if (null != ciDTO.getServiceContractId() || null != ciDTO.getSlaId()) {
+		if (null != ciDTO.getServiceContractId() || null != ciDTO.getSlaId()) {  // uncommented the change 
 System.out.println(" ciDTO.getServiceContractId()"+ ciDTO.getServiceContractId());
-			if (-1 == ciDTO.getServiceContractId()) {
-				ci.setServiceContractId(null);
+			if (null != ciDTO.getServiceContractId()) {  //changes made for copy CI common issue 
+				if (ciDTO.getServiceContractId() == -1) {
+					ci.setServiceContractId(null);
+				}
+				else {
+					ci.setServiceContractId(ciDTO.getServiceContractId());
+				}
 			}
-			else {
-				ci.setServiceContractId(ciDTO.getServiceContractId());
-			}
-		}*/
+		}
 		//End - AIR Copy function not working for Location CIs .. for Function CI we need to create seperate CR IM0006168023 
 
 		
@@ -292,6 +297,8 @@ System.out.println(" ciDTO.getServiceContractId()"+ ciDTO.getServiceContractId()
 				ci.setGxpFlag(ciDTO.getGxpFlag());
 			}
 		}		
+	
+	
 	}
 	
 	public static <T> CiEntityEditParameterOutput deleteCi(String cwid, Long id, Class<T> clazz) {//, CiBaseDTO dto
