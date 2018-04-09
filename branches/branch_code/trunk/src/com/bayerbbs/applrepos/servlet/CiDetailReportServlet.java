@@ -393,9 +393,15 @@ public class CiDetailReportServlet extends HttpServlet {
 			complianceDatas.add(new String[] { "Relevance ICS Security Management",
 			"No" });			
 		}
-
+		//IM0006355126 - Start
+		complianceDatas.add(new String[] { "Complaint",
+				complianceDetail.getComplianceStatus() }); 
+		
+		//System.out.println("complaint details"+complianceDetail.getComplianceStatus() );
 		complianceDatas.add(new String[] { "Justification/Evidence",
 				complianceDetail.getJustification() });
+		//IM0006355126- End
+		
 		return complianceDatas;
 	}
 
