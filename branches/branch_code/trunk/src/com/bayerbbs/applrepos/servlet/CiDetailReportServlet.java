@@ -303,6 +303,15 @@ public class CiDetailReportServlet extends HttpServlet {
 			complianceDetail.setJustification(rset
 					.getString("Status_Kommentar"));
 			complianceDetail.setReICSSecurity(rset.getString("Relevance_Ics"));
+			
+			//IM0006372483 partly implemented controls not in AIR Report  GAP
+			complianceDetail.setGap(rset.getString("Gap"));
+			complianceDetail.setGapResponsible(rset.getString("Gap_Responsible"));
+			complianceDetail.setPlanOfAction(rset.getString("Gap_Measure"));
+			complianceDetail.setGapEndDate(rset.getString("Gap_End_Date"));
+			complianceDetail.setGapPriority(rset.getString("Gap_Priority"));
+			//IM0006372483 END
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -400,13 +409,30 @@ public class CiDetailReportServlet extends HttpServlet {
 			"No" });			
 		}
 		//IM0006355126 - Start
-				complianceDatas.add(new String[] { "Complaint",
+				complianceDatas.add(new String[] { "Compliant",
 						complianceDetail.getComplianceStatus() }); 
-				
+				//IM0006355126- End
 				//System.out.println("complaint details"+complianceDetail.getComplianceStatus() );
 				complianceDatas.add(new String[] { "Justification/Evidence",
 						complianceDetail.getJustification() });
-				//IM0006355126- End
+				
+				//IM0006372483 partly implemented controls not in AIR Report  GAP
+				if(complianceDetail.getGap() != null && ! complianceDetail.getGap().isEmpty()){
+					
+					complianceDatas.add(new String[] { "Gap Description",
+							complianceDetail.getGap() });
+					complianceDatas.add(new String[] { "Gap Responsible",
+							complianceDetail.getGapResponsible() });
+					complianceDatas.add(new String[] { "Plan of Action",
+							complianceDetail.getPlanOfAction() });
+					complianceDatas.add(new String[] { "Gap Class",
+							complianceDetail.getGapPriority() });
+					complianceDatas.add(new String[] { "Target Date",
+							complianceDetail.getGapEndDate() });
+					
+				}
+				//IM0006372483  end
+				
 				
 		return complianceDatas;
 	}
