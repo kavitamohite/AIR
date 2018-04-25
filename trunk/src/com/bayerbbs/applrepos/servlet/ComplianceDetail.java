@@ -15,6 +15,15 @@ public class ComplianceDetail {
 	private String justification;
 	private String ReICSSecurity;
 	private String GStoolId;
+	
+	//IM0006372483 partly implemented controls not in AIR Report  GAP
+	private String gap;
+	private String gapResponsible;
+	private String planOfAction;
+	private String gapEndDate;
+	private String gapPriority;
+	//end IM0006372483
+	
 	/**
 	 * @return the indent
 	 */
@@ -86,6 +95,36 @@ public class ComplianceDetail {
 	 */
 	public void setGStoolId(String gStoolId) {
 		GStoolId = gStoolId;
+	}
+	public String getGap() {
+		return gap;
+	}
+	public void setGap(String gap) {
+		this.gap = gap;
+	}
+	public String getGapResponsible() {
+		return gapResponsible;
+	}
+	public void setGapResponsible(String gapResponsible) {
+		this.gapResponsible = gapResponsible;
+	}
+	public String getPlanOfAction() {
+		return planOfAction;
+	}
+	public void setPlanOfAction(String planOfAction) {
+		this.planOfAction = planOfAction;
+	}
+	public String getGapEndDate() {
+		return gapEndDate;
+	}
+	public void setGapEndDate(String gapEndDate) {
+		this.gapEndDate = gapEndDate;
+	}
+	public String getGapPriority() {
+		return gapPriority;
+	}
+	public void setGapPriority(String gapPriority) {
+		this.gapPriority = gapPriority;
 	}
 	
 	

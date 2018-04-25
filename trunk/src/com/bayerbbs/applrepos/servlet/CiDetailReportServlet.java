@@ -29,6 +29,7 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
+import com.bayerbbs.applrepos.domain.Function;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
@@ -49,6 +50,7 @@ import com.bayerbbs.applrepos.hibernate.ServiceContractHbn;
 import com.bayerbbs.applrepos.hibernate.SlaHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
 import com.bayerbbs.applrepos.hibernate.TerrainHbn;
+import com.bayerbbs.applrepos.hibernate.functionHbn;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
@@ -275,7 +277,7 @@ public class CiDetailReportServlet extends HttpServlet {
 		} catch (HibernateException e) {
 
 			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
 		} finally {
@@ -301,7 +303,19 @@ public class CiDetailReportServlet extends HttpServlet {
 			complianceDetail.setJustification(rset
 					.getString("Status_Kommentar"));
 			complianceDetail.setReICSSecurity(rset.getString("Relevance_Ics"));
+			
+			//IM0006372483 partly implemented controls not in AIR Report  GAP
+			complianceDetail.setGap(rset.getString("Gap"));
+			complianceDetail.setGapResponsible(rset.getString("Gap_Responsible"));
+			complianceDetail.setPlanOfAction(rset.getString("Gap_Measure"));
+			complianceDetail.setGapEndDate(rset.getString("Gap_End_Date"));
+			complianceDetail.setGapPriority(rset.getString("Gap_Priority"));
+			//IM0006372483 END
+			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -371,6 +385,7 @@ public class CiDetailReportServlet extends HttpServlet {
 				description = rs.getString(1);// changes for gstool EMRIA
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO: handle exception
 		}
 		return description;
@@ -393,9 +408,32 @@ public class CiDetailReportServlet extends HttpServlet {
 			complianceDatas.add(new String[] { "Relevance ICS Security Management",
 			"No" });			
 		}
-
-		complianceDatas.add(new String[] { "Justification/Evidence",
-				complianceDetail.getJustification() });
+		//IM0006355126 - Start
+				complianceDatas.add(new String[] { "Compliant",
+						complianceDetail.getComplianceStatus() }); 
+				//IM0006355126- End
+				//System.out.println("complaint details"+complianceDetail.getComplianceStatus() );
+				complianceDatas.add(new String[] { "Justification/Evidence",
+						complianceDetail.getJustification() });
+				
+				//IM0006372483 partly implemented controls not in AIR Report  GAP
+				if(complianceDetail.getGap() != null && ! complianceDetail.getGap().isEmpty()){
+					
+					complianceDatas.add(new String[] { "Gap Description",
+							complianceDetail.getGap() });
+					complianceDatas.add(new String[] { "Gap Responsible",
+							complianceDetail.getGapResponsible() });
+					complianceDatas.add(new String[] { "Plan of Action",
+							complianceDetail.getPlanOfAction() });
+					complianceDatas.add(new String[] { "Gap Class",
+							complianceDetail.getGapPriority() });
+					complianceDatas.add(new String[] { "Target Date",
+							complianceDetail.getGapEndDate() });
+					
+				}
+				//IM0006372483  end
+				
+				
 		return complianceDatas;
 	}
 
@@ -521,7 +559,15 @@ public class CiDetailReportServlet extends HttpServlet {
 						+ itSystem.getName();
 				CIData = createitSystemData(itSystem);
 				this.ciName = itSystem.getItSystemName();
-			}
+			} else if(Integer.parseInt(tableId) == AirKonstanten.TABLE_ID_FUNCTION){ //emria C0000285047 Report (PDF) for Function CI (IM0006174969) 
+				Function function = functionHbn.findById(Function.class,
+						Long.valueOf(ciId));
+				this.HeaderCIName = "Compliance Statements "
+						+ function.getName();
+				CIData = createFunctionData(function);
+				this.ciName = function.getName();
+				
+			} //emria C0000285047 Report (PDF) for Function CI (IM0006174969) 
 
 		} catch (Exception e) {
 
@@ -1078,6 +1124,42 @@ public class CiDetailReportServlet extends HttpServlet {
 				itSystem.getClassInformationTxt() });
 		return CIData;
 	}
+	
+	//C0000285047 Report (PDF) for Function CI (IM0006174969)  emria
+	
+	private List<String[]> createFunctionData(Function function) {
+		List<String[]> CIData = new ArrayList<String[]>();
+		CIData.add(new String[] { "IT Set", getItsetName(function.getItset()) });
+		CIData.add(new String[] { "Function", function.getName() });
+		if (function.getTemplate() == 1)
+			CIData.add(new String[] { "Template Object", "Yes" });
+		else {
+			CIData.add(new String[] { "Template Object", "No" });
+		}
+		CIData.add(new String[] { "Primary Person", function.getCiOwner() });
+		CIData.add(new String[] { "Delegate Person/Group",
+				function.getCiOwnerDelegate() });
+		if (-1 == function.getRelevanceITSEC()) {
+			CIData.add(new String[] { "GR1435", "Yes" });
+		} else if (0 == function.getRelevanceITSEC()) {
+			CIData.add(new String[] { "GR1435", "No" });
+		}
+		if (-1 == function.getRelevanceICS()) {
+			CIData.add(new String[] { "ICS", "Yes" });
+		} else if (0 == function.getRelevanceICS()) {
+			CIData.add(new String[] { "ICS", "No" });
+		}
+		CIData.add(new String[] { "GxP", function.getGxpFlag() });
+		CIData.add(new String[] { "ITSec Group",
+				ItSecGroupHbn.getItSecGroup(function.getItsecGroupId()) });
+		
+		
+		return CIData;
+	}
+	
+	
+	
+	// C0000285047 Report (PDF) for Function CI (IM0006174969)  emria
 
 	private String getItsetName(Long ItSet) {
 		if (ItSet == 10002)
