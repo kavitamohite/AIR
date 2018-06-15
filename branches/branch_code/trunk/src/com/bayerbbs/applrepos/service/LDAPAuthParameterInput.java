@@ -6,6 +6,8 @@ public class LDAPAuthParameterInput {
 	
 	private String password;
 	
+	private String hiddenCwid;//changes for CR Kerboros Implementation C0000275214
+	
 	private String token;
 
 	public String getCwid() {
@@ -30,6 +32,14 @@ public class LDAPAuthParameterInput {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getHiddenCwid() {
+		return hiddenCwid;
+	}
+
+	public void setHiddenCwid(String hiddenCwid) {
+		this.hiddenCwid = hiddenCwid;
 	}
 
 }
