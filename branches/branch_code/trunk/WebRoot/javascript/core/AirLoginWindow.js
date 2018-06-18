@@ -31,6 +31,9 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 	        	},
 			    
 			    items: [{
+		            xtype: 'hidden', //changes for CR Kerboros Implementation C0000275214
+		            id: 'tfHiddenCwid'
+		        },{
 		            xtype: 'textfield',
 		            id: 'tfCwid',
 		            fieldLabel: 'CWID',
@@ -120,10 +123,14 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		this.disableInputFields();
 		
 		var cwid = this.getComponent('pAirLoginWindow').getComponent('tfCwid').getValue().toUpperCase();
+		var hiddenCwid=this.getComponent('pAirLoginWindow').getComponent('tfHiddenCwid').getValue().toUpperCase(); //changes for CR Kerboros Implementation C0000275214
+		console.log("hiddenCwid "+hiddenCwid);
 		var password = this.getComponent('pAirLoginWindow').getComponent('tfPassword').getValue();
-
 		
-		this.fireEvent('login', cwid, password);
+		
+		
+		this.fireEvent('login', cwid, password,hiddenCwid);//changes for CR Kerboros Implementation C0000275214
+	
 	},
 	
 	onLoginFailure: function(response, options) {
@@ -152,6 +159,11 @@ AIR.AirLoginWindow = Ext.extend(Ext.Window, {
 		
 		this.getComponent('pAirLoginWindow').getComponent('tfCwid').reset();
 		this.getComponent('pAirLoginWindow').getComponent('tfPassword').reset();
+		//changes for CR Kerboros Implementation C0000275214
+		this.getComponent('pAirLoginWindow').getComponent('tfHiddenCwid').setValue('-1');
+		var hiddenCWID = this.getComponent('pAirLoginWindow').getComponent('tfHiddenCwid').getValue();
+		console.log("CWID is hidden "+hiddenCWID)
+		//changes end for CR Kerboros Implementation C0000275214
 	},
 	
 	setStoreCount: function(storeCount) {
