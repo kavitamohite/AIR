@@ -31,7 +31,24 @@ AIR.AirBootstrap = Ext.extend(Object, {
 	initLogin: function() {
 		this.airLoginWindow = new AIR.AirLoginWindow();
 		this.airLoginWindow.on('login', this.onLogin, this);
-		this.airLoginWindow.show();	
+		//changes for CR Kerboros Implementation C0000275214
+	
+		   // bLogin.on('click', this.onLogin, this);
+		   // bLogin.fireEvent('click');
+		 var cwid =Ext.get("serverCWID");
+		 console.log("CWID server "+cwid)
+		// console.log("CWID server "+cwid.get('value'));
+		 console.log("CWID server getValue "+cwid.getValue());
+		 
+		 this.airLoginWindow.show();	
+		 
+		if(cwid.getValue() != '-1'){
+			 var bLogin = this.airLoginWindow.getComponent('pAirLoginWindow').getComponent('bLogin');
+			 this.airLoginWindow.getComponent('pAirLoginWindow').getComponent('tfCwid').setValue(cwid.getValue().toUpperCase());
+			 this.airLoginWindow.getComponent('pAirLoginWindow').getComponent('tfHiddenCwid').setValue(cwid.getValue().toUpperCase());
+			 bLogin.fireEvent('click');
+		}
+		//changes end for CR Kerboros Implementation C0000275214
 	},
 	
 	init: function() {
@@ -64,10 +81,11 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		}
 	},
 	
-	onLogin: function(cwid, password) {
+	onLogin: function(cwid, password,hiddenCwid) { //changes for CR Kerboros Implementation C0000275214
         var params = {
     		cwid: cwid,
-            password: password
+            password: password,
+            hiddenCwid:hiddenCwid //changes for CR Kerboros Implementation C0000275214
         };
     	
         Ext.Ajax.request({
@@ -244,11 +262,11 @@ AIR.AirBootstrap = Ext.extend(Object, {
 	},
 	
 	onAirRendered: function(lastRenderedView) {//airMainPanel
-		AAM.restoreUiState(this.airMainPanel);//schon hier, da nötig für CiEditView.updateLabels() wegen tableId
+		AAM.restoreUiState(this.airMainPanel);//schon hier, da nï¿½tig fï¿½r CiEditView.updateLabels() wegen tableId
 		
 		this.airMainPanel.update();
 		this.airMainPanel.updateLabels(AAM.getLabels());
-		//performance Verbesserung: erst rendern wenn user zum ersten Mal über einem Label anhält, anstatt alles nach App Start.
+		//performance Verbesserung: erst rendern wenn user zum ersten Mal ï¿½ber einem Label anhï¿½lt, anstatt alles nach App Start.
 		this.airMainPanel.updateToolTips(AAM.getToolTips());
 		
 		var delayedTask = new Ext.util.DelayedTask(function() {
