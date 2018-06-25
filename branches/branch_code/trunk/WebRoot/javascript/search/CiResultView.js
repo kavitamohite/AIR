@@ -210,7 +210,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			var clExcelExport = pagingBar.getComponent(ciResultGridId + '_clExcelExport');
 			clExcelExport.on('click', callback);
 		}
-		if((this.getTabTitle(ciResultGridId) === AC.SEARCH_TYPE_ADV_SEARCH)&& (this.ciTypeId!=AC.TABLE_ID_BUSINESS_APPLICATION)) {
+		if((this.getTabTitle(ciResultGridId) === AC.SEARCH_TYPE_ADV_SEARCH || this.getTabTitle(ciResultGridId) === AC.SEARCH_TYPE_ADV_SEARCH_GER)&& (this.ciTypeId!=AC.TABLE_ID_BUSINESS_APPLICATION)) {  //IM0006769857
 			
 			bMassUpdate.setVisible(true);
 			bSelectDeselectAll.setVisible(true);
