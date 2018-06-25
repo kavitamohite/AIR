@@ -11,6 +11,8 @@ public class CiCopyParameterInput {
 	
 	private String ciNameTarget;
 	private String ciAliasTarget;
+	////C0000181270 - Added for Appliance Flag
+	private long isApplianceFlag;
 	
 	public String getCiAliasTarget() {
 		return ciAliasTarget;
@@ -47,6 +49,12 @@ public class CiCopyParameterInput {
 	}
 	public void setToken(String token) {
 		this.token = token;
+	}
+	public long getIsApplianceFlag() {
+		return isApplianceFlag;
+	}
+	public void setIsApplianceFlag(long isApplianceFlag) {
+		this.isApplianceFlag = isApplianceFlag;
 	}
 
 }
