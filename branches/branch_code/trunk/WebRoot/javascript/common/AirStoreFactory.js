@@ -1078,6 +1078,8 @@ AIR.AirStoreFactory = function() {
 					{name: 'clusterCode'},
 					{name: 'clusterType'},
 					{name: 'virtualHardwareClient'},
+					//C0000181270 - Added for Appliance Flag
+					{name: 'applianceFlag'},
 					{name: 'virtualHardwareHost'},
 					{name: 'backupType'},
 					{name: 'virtualHardwareSoftware'},
