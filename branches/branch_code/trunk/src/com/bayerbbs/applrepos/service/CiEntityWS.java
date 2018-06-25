@@ -169,6 +169,8 @@ public class CiEntityWS {
 			itSystemDTO.setSeverityLevelId(itSystem.getSeverityLevelId());
 			itSystemDTO.setBusinessEssentialId(itSystem
 					.getBusinessEssentialId());
+			////C0000181270 - Added for Appliance Flag
+			itSystemDTO.setIsApplianceFlag(itSystem.getIsApplianceFlag());
 
 			AccessRightChecker checker = new AccessRightChecker();
 			if (checker.isRelevanceOperational(input.getCwid().toUpperCase(),
