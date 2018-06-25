@@ -44,6 +44,10 @@ public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisi
 	private String clusterType;
 	
 	private String isVirtualHardwareClient;
+	//C0000181270 - Added for Appliance Flag
+	private long isApplianceFlag;
+	
+	
 	private String isVirtualHardwareHost;
 	private String virtualHardwareSoftware;
 	
@@ -235,7 +239,15 @@ public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisi
 	public void setServicePack(String servicePack) {
 		this.servicePack = servicePack;
 	}
-	
+	//C0000181270 - Added for Appliance Flag - Start
+	@Column(name = "APPLIANCE_Y_N")
+	public long getIsApplianceFlag() {
+		return isApplianceFlag;
+	}
+	public void setIsApplianceFlag(long isApplianceFlag) {
+		this.isApplianceFlag = isApplianceFlag;
+	}
+	//C0000181270 - Added for Appliance Flag- End
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "it_system_hw", joinColumns = { @JoinColumn(name = "it_system_id", referencedColumnName = "it_system_id") }, inverseJoinColumns = { @JoinColumn(name = "hw_id", referencedColumnName = "hw_id") })
 	public List<HardwareComponent> getHardwareComponents() {
