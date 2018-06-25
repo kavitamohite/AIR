@@ -174,6 +174,7 @@ AIR.AirConstants = {
 	
 	SEARCH_TYPE_SEARCH: 'Search',
 	SEARCH_TYPE_ADV_SEARCH: 'Advanced Search',//Adv. Search
+	SEARCH_TYPE_ADV_SEARCH_GER: 'Erweiterte Suche',
 	SEARCH_TYPE_OU_SEARCH: 'Ou Search',//OU Search
 	
 	
