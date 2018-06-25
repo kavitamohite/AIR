@@ -96,6 +96,18 @@ public class ItSystemWS {
 
 	
 	protected ItSystemDTO getItSystemDTOFromEditInput(ItSystemEditParameterInput input) {
+		//C0000181270 - Added for Appliance Flag
+		System.out.println("input.getIsApplianceFlag()"+input.getIsApplianceFlag());
+		
+		long appliangeFlag=input.getIsApplianceFlag();
+		System.out.println("input.getIsApplianceFlag()"+input.getIsApplianceFlag());
+		
+		//if (input.getIsApplianceFlag()!=null && input.getIsApplianceFlag().equalsIgnoreCase("-1"))
+			//appliangeFlag=-1;
+		
+		//if (input.getIsApplianceFlag()!=null && input.getIsApplianceFlag().equalsIgnoreCase("0"))
+			//appliangeFlag=0;
+		
 		ItSystemDTO itSystemDTO = new ItSystemDTO();
 		itSystemDTO.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
 		itSystemDTO.setCiSubTypeId(input.getCiSubTypeId());
@@ -109,6 +121,8 @@ public class ItSystemWS {
 		itSystemDTO.setClusterCode(input.getClusterCode());
 		itSystemDTO.setClusterType(input.getClusterType());
 		itSystemDTO.setIsVirtualHardwareClient(input.getIsVirtualHardwareClient());
+		//C0000181270 - Added for Appliance Flag
+		itSystemDTO.setIsApplianceFlag(appliangeFlag);
 		itSystemDTO.setIsVirtualHardwareHost(input.getIsVirtualHardwareHost());
 		itSystemDTO.setVirtualHardwareSoftware(input.getVirtualHardwareSoftware());
 		itSystemDTO.setBackupType(input.getBackupType());
@@ -202,22 +216,29 @@ public class ItSystemWS {
 	//Vandana
 	public static void createItsystemByCopyInternal(CiCopyParameterInput copyInput,
 			CiEntityEditParameterOutput output) {
-		
+		System.out.println("1st line createItsystemByCopyInternal");
 		if (LDAPAuthWS.isLoginValid(copyInput.getCwid(), copyInput.getToken())) {
 			ItSystemDTO dto = new ItSystemDTO();
+			System.out.println("1st line createItsystemByCopyInternal");
 			ItSystem itSystemSource = ItSystemHbn.findItSystemById(copyInput.getCiIdSource());
+			System.out.println("2nd line createItsystemByCopyInternal");
 			if (null != itSystemSource) {
 				ItSystemHbn.getItSystem(dto, itSystemSource);
 				dto.setId(new Long(0));
 				dto.setName(copyInput.getCiNameTarget());
 				dto.setAlias(copyInput.getCiAliasTarget());
-				
+				System.out.println("3rd line createItsystemByCopyInternal");
 				// set the actual cwid as responsible
 				dto.setCiOwner(copyInput.getCwid().toUpperCase());
 				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
 				dto.setCiOwnerDelegateHidden(dto.getCiOwnerDelegate());	
+				dto.setIsApplianceFlag(itSystemSource.getIsApplianceFlag());
+				
+				System.out.println("dto.setIsApplianceFlag set while copy"+itSystemSource.getIsApplianceFlag());
 				// save / create itSystem
 				CiEntityEditParameterOutput createOutput = ItSystemHbn.createItSystem(copyInput.getCwid(), dto, null);
+				
+				System.out.println("4th line createItsystemByCopyInternal");
 				if (AirKonstanten.RESULT_OK.equals(createOutput.getResult())) {
 					ItSystem itSystem = ItSystemHbn.findItSystemByName(copyInput.getCiNameTarget());
 					if (null != itSystem) {
