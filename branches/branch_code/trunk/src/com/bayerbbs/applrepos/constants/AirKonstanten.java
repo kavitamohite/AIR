@@ -250,6 +250,8 @@ public final class AirKonstanten {
 	public static final String BUSINESS_ESSENTIAL = "Business Essential";
 	public static final String OS_NAME = "OS Name";
 	public static final String VIRTUAL_HARDWARE_CLIENT = "Virtual Hardware Client";
+	//C0000181270-Appliance Flag
+	public static final String Appliance_Flag = "Appliance Flag";
 	public static final String VIRTUAL_HARDWARE_HOST = "Virtual Hardware Host";
 	public static final String VIRTUAL_SOFTWARE = "Virtual Software";
 	public static final String PRIMARY_FUNCTION = "Primary Function";
