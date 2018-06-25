@@ -61,7 +61,9 @@ AIR.CiTechnics = Ext.extend(Ext.form.FieldSet, {
                 },
                 items: [{
                     xtype: 'label',
-                    text: 'System platform name:',
+                   // text: 'System platform name:',
+                  // IM0006774604
+                    text: 'HW-System Name:',
                     width: 105,
                     style: {
                         fontSize: 12
