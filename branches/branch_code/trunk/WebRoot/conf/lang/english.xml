@@ -153,8 +153,8 @@
 		
 		<!-- Messages: applicationEditor -->
 		<header_applicationIsDraft>Draft ##</header_applicationIsDraft>
+		<!--<header_applicationIsIncomplete>Missed mandatory or required information: ##</header_applicationIsIncomplete>-->
 		<header_applicationIsIncomplete>Missed mandatory information: ##</header_applicationIsIncomplete>
-		
 		<!-- Label: Details items -->
 		<detailsPanelTitle>Details</detailsPanelTitle>
 			<label_details_alias>Alias</label_details_alias>
@@ -563,6 +563,8 @@
 		<clusterCode>Cluster Code</clusterCode>
 		<clusterType>Cluster Type</clusterType>
 		<virtualHardwareClient>Virtual Hardware Client</virtualHardwareClient>
+		<!-- Added for C0000181270 -->
+		<applianceFlag>Appliance Flag</applianceFlag>
 		<virtualHardwareHost>Virtual Hardware Host</virtualHardwareHost>
 		<virtualHardwareSoftware>Virtual Software</virtualHardwareSoftware>
 		<backupType>Backup Type</backupType>
@@ -644,9 +646,12 @@
 		<!-- asset management Technics-->
 		<assetTechnicalNumber>Technical Number / Asset-ID</assetTechnicalNumber>
 		<assetTechnicalMaster>Technical Master</assetTechnicalMaster>
-		<assetSystemPlatformName>System platform name</assetSystemPlatformName>
+		<!-- Added for IM0006774604 -->
+		<!--  <assetSystemPlatformName>System platform name</assetSystemPlatformName>-->
+		<assetSystemPlatformName>HW-System Name</assetSystemPlatformName>
 		<assetOsname>OS-Name</assetOsname>
-		<assettransient>HW-transient systems</assettransient>
+		<!--  <assettransient>HW-transient systems</assettransient>-->
+		 <assettransient>Transient System Platform</assettransient>
 		<assetWorflowstatustechnical>Lifecycle status</assetWorflowstatustechnical>
 		<assetGeneral>General Usage</assetGeneral>
 		<assetITSecurity>IT-Security-Relevance</assetITSecurity>
