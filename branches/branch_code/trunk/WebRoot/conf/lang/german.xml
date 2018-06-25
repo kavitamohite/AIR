@@ -559,6 +559,8 @@
 		<clusterCode>Cluster Code</clusterCode>
 		<clusterType>Cluster Typ</clusterType>
 		<virtualHardwareClient>Hardware Virtualisierung Client</virtualHardwareClient>
+		<!-- Added for C0000181270 -->
+		<applianceFlag>Appliance Flag</applianceFlag>
 		<virtualHardwareHost>Hardware Virtualisierung Host</virtualHardwareHost>
 		<virtualHardwareSoftware>Hardware Virtualisierung Software</virtualHardwareSoftware>
 		<backupType>Backup Type</backupType>
