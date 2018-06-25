@@ -55,6 +55,8 @@ AIR.AirConfigFactory = function() {
 			itSystemCiFields.push('clusterCode');
 			itSystemCiFields.push('clusterType');
 			itSystemCiFields.push('isVirtualHardwareClient');
+			//C0000181270 - Added for Appliance Flag
+			itSystemCiFields.push('isApplianceFlag');
 			itSystemCiFields.push('isVirtualHardwareHost');
 			itSystemCiFields.push('virtualHardwareSoftware');
 			itSystemCiFields.push('lifecycleStatusId');
