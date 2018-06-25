@@ -11,6 +11,9 @@ public class ItSystemDTO extends CiBaseDTO {
 	
 	private String isVirtualHardwareClient;
 	private String isVirtualHardwareHost;
+	//C0000181270 - Added for Appliance Flag
+	private long isApplianceFlag;
+	
 	private String virtualHardwareSoftware;
 	
 	private Integer lifecycleStatusId;
@@ -157,6 +160,14 @@ public class ItSystemDTO extends CiBaseDTO {
 		this.servicePack = servicePack;
 	}
 	
-
+	//Started for - C0000181270 - Appliance Flag
+	public long getIsApplianceFlag() {
+		return isApplianceFlag;
+	}
+	public void setIsApplianceFlag(long isApplianceFlag) {
+		this.isApplianceFlag = isApplianceFlag;
+	}
+	
+	//Ended for - C0000181270 - Appliance Flag
 	
 }
