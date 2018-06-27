@@ -509,6 +509,12 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onIsTemplateCheck: function(checkbox, isChecked) {
+		//emria
+		var bIsDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('bIsDirecLinkWithTemplate');
+		console.log("bIsDirecLinkWithTemplate "+bIsDirecLinkWithTemplate.hidden);//hidden
+		
+		
+		//emria
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 
@@ -524,7 +530,22 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			Util.disableCombo(cbReferencedTemplate);
 			Util.enableCombo(cbItSecGroup);
 		} else {
-			
+			//emria
+			if(! bIsDirecLinkWithTemplate.hidden){
+				console.log(" Inside uncheck "+checkbox +"  "+this);
+				
+				var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
+				
+
+				cbIsTemplate.setValue(true);
+				Ext.Msg.show({
+	    			title: 'Info',
+	    			msg: 'This Template is already linked to other CIs, Uchecking is not allowed.',
+	    			buttons: Ext.MessageBox.OK,
+	    			icon: Ext.MessageBox.INFO			
+	    		});
+			}
+			//emria
 			var r = cbReferencedTemplate.getStore().getById(AAM.getAppDetail().id);
 			cbReferencedTemplate.getStore().remove(r);
 			AAM.getAppDetail().templateChanged = true;
