@@ -14,8 +14,8 @@
 		<New>Neu</New>
 		<code>Code</code>
 		<nameEn>Englisch</nameEn>
-		<deleted>GEL\&amp;Ouml;SCHT</deleted>
-		
+		<!-- IM0006794780 <deleted>GEL\&amp;Ouml;SCHT</deleted>-->
+	    <deleted>GELOSCHT</deleted>
 		<general_button_save>Speichern</general_button_save>
 		<general_button_back>Zur&amp;uuml;ck</general_button_back>
 
