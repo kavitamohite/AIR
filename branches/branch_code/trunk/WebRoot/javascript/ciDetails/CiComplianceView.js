@@ -310,6 +310,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		bEditNonBytSec.on('click', this.onEditNonBytSec, this);
 
 		cbIsTemplate.on('check', this.onIsTemplateCheck, this);
+		cbIsTemplate.on('click', this.onIsTemplateChange, this);//emria
 		
 		cbReferencedTemplate.on('beforeselect', this.onReferencedTemplateBeforeSelect, this);
 		cbReferencedTemplate.on('select', this.onReferencedTemplateSelect, this);
@@ -403,10 +404,17 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		//if(data.barRelevance === 'Y')
 		//	cbIsTemplate.disable();//BAR relevante CIs d�rfen keine templates sein
 		if(data.templateLinkWithCIs === 'Y'){
-			cbIsTemplate.disable();
+			//cbIsTemplate.disable();
 		}else{
-			cbIsTemplate.enable();
+			//cbIsTemplate.enable();
 		}
+		//emria
+		/*var ciCenterView = airViewport.getCenterView();
+		var ciEditView = ciCenterView.getComponent('ciEditView');
+		var ciEditTabView = ciEditView.getComponent('ciEditTabView');*/
+		//bIsDirecLinkWithTemplate.hidden = true;
+		//emria
+		console.log("In Update details "+bIsDirecLinkWithTemplate.isVisible());
 		 if(isTemplate){
 			 bIsDirecLinkWithTemplate.setVisible(true);
 		 }	 
@@ -414,6 +422,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			 bIsDirecLinkWithTemplate.setVisible(false);
 		 }
 			 
+		 console.log("In Update details 1 "+bIsDirecLinkWithTemplate.isVisible());
 		
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
@@ -511,7 +520,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	onIsTemplateCheck: function(checkbox, isChecked) {
 		//emria
 		var bIsDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('bIsDirecLinkWithTemplate');
-		console.log("bIsDirecLinkWithTemplate "+bIsDirecLinkWithTemplate.hidden);//hidden
+		console.log("bIsDirecLinkWithTemplate "+bIsDirecLinkWithTemplate.isVisible());//hidden
 		
 		
 		//emria
@@ -531,7 +540,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			Util.enableCombo(cbItSecGroup);
 		} else {
 			//emria
-			if(! bIsDirecLinkWithTemplate.hidden){
+		/*	if(bIsDirecLinkWithTemplate.isVisible()){
 				console.log(" Inside uncheck "+checkbox +"  "+this);
 				
 				var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
@@ -540,11 +549,11 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				cbIsTemplate.setValue(true);
 				Ext.Msg.show({
 	    			title: 'Info',
-	    			msg: 'This Template is already linked to other CIs, Uchecking is not allowed.',
+	    			msg: 'This Template is already linked to other CIs, Unchecking is not allowed.',
 	    			buttons: Ext.MessageBox.OK,
 	    			icon: Ext.MessageBox.INFO			
 	    		});
-			}
+			}*/
 			//emria
 			var r = cbReferencedTemplate.getStore().getById(AAM.getAppDetail().id);
 			cbReferencedTemplate.getStore().remove(r);
@@ -557,7 +566,9 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		this.fireEvent('ciChange', this, checkbox, isChecked);
 	},
-	
+	onIsTemplateChange: function(checkbox, isChecked) {
+		console.log("Hi....");
+	},
 	onDisplayDirectLinkCI: function(button, event){
 		var directLinkCIStore = AIR.AirStoreFactory.createDirectLinkCIStore();
 		

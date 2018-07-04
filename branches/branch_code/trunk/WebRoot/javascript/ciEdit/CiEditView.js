@@ -616,6 +616,31 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	//move to CiCenterView ?
 	saveApplication: function(options) {//button, event
+		
+		//emria
+		var ciEditTabView = this.getComponent('ciEditTabView');
+		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
+		var bIsDirecLinkWithTemplate = ciComplianceView.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('bIsDirecLinkWithTemplate');
+		var cbIsTemplate = ciComplianceView.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
+		console.log("cbIsTemplate "+cbIsTemplate.getValue());
+		if(bIsDirecLinkWithTemplate.isVisible() && ! cbIsTemplate.getValue()){
+			console.log(" Inside uncheck 23 ");
+			
+			var cbIsTemplate = ciComplianceView.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
+			
+
+			//cbIsTemplate.setValue(true);
+			Ext.Msg.show({
+    			title: 'Info',
+    			msg: 'This Template is already linked to other CIs, Unchecking of Is Template Flag is not allowed.',
+    			buttons: Ext.MessageBox.OK,
+    			icon: Ext.MessageBox.INFO			
+    		});
+			
+			return;
+		}
+		
+		//emria
 		if(!options)//damit nach compl. status Wechsel von Undefined auf External nicht der save button deaktiviert bleibt
 			this.isUserChange = false;
 		
