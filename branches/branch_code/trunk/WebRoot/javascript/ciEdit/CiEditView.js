@@ -617,7 +617,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	//move to CiCenterView ?
 	saveApplication: function(options) {//button, event
 		
-		//emria
+		//emria- IM0006852855
 		var ciEditTabView = this.getComponent('ciEditTabView');
 		var ciComplianceView = ciEditTabView.getComponent('clCiCompliance');
 		var bIsDirecLinkWithTemplate = ciComplianceView.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('bIsDirecLinkWithTemplate');
@@ -640,7 +640,7 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			return;
 		}
 		
-		//emria
+		//emria- IM0006852855
 		if(!options)//damit nach compl. status Wechsel von Undefined auf External nicht der save button deaktiviert bleibt
 			this.isUserChange = false;
 		

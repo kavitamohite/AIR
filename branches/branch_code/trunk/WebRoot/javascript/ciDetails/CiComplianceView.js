@@ -310,7 +310,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		bEditNonBytSec.on('click', this.onEditNonBytSec, this);
 
 		cbIsTemplate.on('check', this.onIsTemplateCheck, this);
-		cbIsTemplate.on('click', this.onIsTemplateChange, this);//emria
+		cbIsTemplate.on('click', this.onIsTemplateChange, this);//emria-  IM0006852855
 		
 		cbReferencedTemplate.on('beforeselect', this.onReferencedTemplateBeforeSelect, this);
 		cbReferencedTemplate.on('select', this.onReferencedTemplateSelect, this);
@@ -408,7 +408,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}else{
 			//cbIsTemplate.enable();
 		}
-		//emria
+		//emria -  IM0006852855
 		/*var ciCenterView = airViewport.getCenterView();
 		var ciEditView = ciCenterView.getComponent('ciEditView');
 		var ciEditTabView = ciEditView.getComponent('ciEditTabView');*/
@@ -518,12 +518,12 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onIsTemplateCheck: function(checkbox, isChecked) {
-		//emria
+		//emria IM0006852855
 		var bIsDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('bIsDirecLinkWithTemplate');
 		console.log("bIsDirecLinkWithTemplate "+bIsDirecLinkWithTemplate.isVisible());//hidden
 		
 		
-		//emria
+		//emria IM0006852855
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 
@@ -539,7 +539,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			Util.disableCombo(cbReferencedTemplate);
 			Util.enableCombo(cbItSecGroup);
 		} else {
-			//emria
+			//emria IM0006852855
 		/*	if(bIsDirecLinkWithTemplate.isVisible()){
 				console.log(" Inside uncheck "+checkbox +"  "+this);
 				
@@ -554,7 +554,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	    			icon: Ext.MessageBox.INFO			
 	    		});
 			}*/
-			//emria
+			//emria IM0006852855
 			var r = cbReferencedTemplate.getStore().getById(AAM.getAppDetail().id);
 			cbReferencedTemplate.getStore().remove(r);
 			AAM.getAppDetail().templateChanged = true;
