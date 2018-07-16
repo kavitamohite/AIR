@@ -39,6 +39,11 @@ AIR.AirConstants = {
 			'can be found in our <a href="http://sp-coll-bbs.bayer-ag.com/sites/000127/ConfigMgmt/Forum/Benutzerhandbuch%20AIR.docx" target="_blank">manual</a>.<br/>' +
 			'If you need access <a href="mailto:ITILcenter@bayer.com&subject=AIR:%20Request%20for%20access">contact the administrator</a>.' +
 		'</div>',
+		
+		LOGIN_WINDOW_LOAD_TEXT: 
+			'<div style="color: darkblue; font-family: Arial, Helvetica, sans-serif !important; font-size: 10pt !important; font-weight: bold !important;text-align:center!important;">'+
+			'AIR LOGIN IN PROCESS. PLEASE WAIT.....<br/>' +
+			'</div>',
 
 	IMG_COUNTRY_EN: 'country_EN.png',
 	IMG_COUNTRY_DE: 'country_DE.png',
