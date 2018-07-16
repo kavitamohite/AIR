@@ -43,10 +43,21 @@ AIR.AirBootstrap = Ext.extend(Object, {
 		 this.airLoginWindow.show();	
 		 
 		if(cwid.getValue() != '-1'){
+			
+			var pAirLoginWindow1=this.airLoginWindow.getComponent('pAirLoginWindow1');
+			pAirLoginWindow1.setVisible(true);
+			
+			var toolbar=this.airLoginWindow.getBottomToolbar();
+			toolbar.setVisible(false);
+			//pAirLoginWindow.setVisible(false);
 			 var bLogin = this.airLoginWindow.getComponent('pAirLoginWindow').getComponent('bLogin');
+			 
 			 this.airLoginWindow.getComponent('pAirLoginWindow').getComponent('tfCwid').setValue(cwid.getValue().toUpperCase());
 			 this.airLoginWindow.getComponent('pAirLoginWindow').getComponent('tfHiddenCwid').setValue(cwid.getValue().toUpperCase());
 			 bLogin.fireEvent('click');
+		}else{
+			var pAirLoginWindow=this.airLoginWindow.getComponent('pAirLoginWindow');
+			pAirLoginWindow.setVisible(true);
 		}
 		//changes end for CR Kerboros Implementation C0000275214
 	},
