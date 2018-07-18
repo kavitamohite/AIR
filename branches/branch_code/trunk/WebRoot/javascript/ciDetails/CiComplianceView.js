@@ -310,7 +310,6 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		bEditNonBytSec.on('click', this.onEditNonBytSec, this);
 
 		cbIsTemplate.on('check', this.onIsTemplateCheck, this);
-		cbIsTemplate.on('click', this.onIsTemplateChange, this);//emria-  IM0006852855
 		
 		cbReferencedTemplate.on('beforeselect', this.onReferencedTemplateBeforeSelect, this);
 		cbReferencedTemplate.on('select', this.onReferencedTemplateSelect, this);
@@ -403,26 +402,21 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbIsTemplate.setValue(isTemplate);
 		//if(data.barRelevance === 'Y')
 		//	cbIsTemplate.disable();//BAR relevante CIs d�rfen keine templates sein
+		
 		if(data.templateLinkWithCIs === 'Y'){
 			//cbIsTemplate.disable();
+			cbIsTemplate.enable();	
 		}else{
-			//cbIsTemplate.enable();
+			cbIsTemplate.enable();
 		}
-		//emria -  IM0006852855
-		/*var ciCenterView = airViewport.getCenterView();
-		var ciEditView = ciCenterView.getComponent('ciEditView');
-		var ciEditTabView = ciEditView.getComponent('ciEditTabView');*/
-		//bIsDirecLinkWithTemplate.hidden = true;
-		//emria
-		console.log("In Update details "+bIsDirecLinkWithTemplate.isVisible());
-		 if(isTemplate){
+		 if(isTemplate&&data.templateLinkWithCIs === 'Y'){
 			 bIsDirecLinkWithTemplate.setVisible(true);
 		 }	 
 		 else{
 			 bIsDirecLinkWithTemplate.setVisible(false);
 		 }
-			 
-		 console.log("In Update details 1 "+bIsDirecLinkWithTemplate.isVisible());
+		
+		 
 		
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
@@ -518,12 +512,12 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onIsTemplateCheck: function(checkbox, isChecked) {
-		//emria IM0006852855
+		//ETNTX IM0006852855
 		var bIsDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('bIsDirecLinkWithTemplate');
-		console.log("bIsDirecLinkWithTemplate "+bIsDirecLinkWithTemplate.isVisible());//hidden
+		console.log("bIsDirecLinkWithTemplate "+bIsDirecLinkWithTemplate.hidden);//hidden
 		
 		
-		//emria IM0006852855
+		//ETNTX IM0006852855
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 
@@ -539,8 +533,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			Util.disableCombo(cbReferencedTemplate);
 			Util.enableCombo(cbItSecGroup);
 		} else {
-			//emria IM0006852855
-		/*	if(bIsDirecLinkWithTemplate.isVisible()){
+			/*//emria
+			if(! bIsDirecLinkWithTemplate.hidden){
 				console.log(" Inside uncheck "+checkbox +"  "+this);
 				
 				var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
@@ -549,13 +543,13 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				cbIsTemplate.setValue(true);
 				Ext.Msg.show({
 	    			title: 'Info',
-	    			msg: 'This Template is already linked to other CIs, Unchecking is not allowed.',
+	    			msg: 'This Template is already linked to other CIs, Uchecking is not allowed.',
 	    			buttons: Ext.MessageBox.OK,
 	    			icon: Ext.MessageBox.INFO			
 	    		});
-			}*/
-			//emria IM0006852855
-			var r = cbReferencedTemplate.getStore().getById(AAM.getAppDetail().id);
+			}
+			//emria
+*/			var r = cbReferencedTemplate.getStore().getById(AAM.getAppDetail().id);
 			cbReferencedTemplate.getStore().remove(r);
 			AAM.getAppDetail().templateChanged = true;
 
@@ -566,9 +560,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		this.fireEvent('ciChange', this, checkbox, isChecked);
 	},
-	onIsTemplateChange: function(checkbox, isChecked) {
-		console.log("Hi....");
-	},
+	
 	onDisplayDirectLinkCI: function(button, event){
 		var directLinkCIStore = AIR.AirStoreFactory.createDirectLinkCIStore();
 		
