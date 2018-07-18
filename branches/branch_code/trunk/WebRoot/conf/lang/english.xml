@@ -570,7 +570,8 @@
 		<backupType>Backup Type</backupType>
 		<primaryFunction>Primary Function</primaryFunction>
 		<licenseScanning>License Scanning</licenseScanning>
-		<directLinkCIPanelTitle>Direct Link CIS</directLinkCIPanelTitle>
+		<!-- ETNTX- IM0006852855 -->
+		<directLinkCIPanelTitle>Direct and indirect Link CIS</directLinkCIPanelTitle>
 		<directLinkagesCIPanelTitle>Linkages</directLinkagesCIPanelTitle>
 		<servicePack>Service Pack</servicePack>
 		
