@@ -4203,7 +4203,11 @@ AIR.AirStoreFactory = function() {
 		createDirectLinkCIStore :function(){
 			var directLinkCIRecord = Ext.data.Record.create([
 			    { name: 'id' },
-			    { name: 'name' }
+			    { name: 'name' },
+			    
+               //ETNTX- IM0006852855
+			    { name: 'type' },
+			    { name: 'completeLink' },
 			     ]
 			);
 			var directLinkCIReader = new Ext.data.XmlReader({
@@ -4222,7 +4226,7 @@ AIR.AirStoreFactory = function() {
 					timeout: 120000,
 					reader: directLinkCIReader
 				}), 
-				fields: [ 'id','name'],
+				fields: [ 'id','name','type','completeLink'],
 				reader: directLinkCIReader
 			});
 			return directLinkCIStore;
