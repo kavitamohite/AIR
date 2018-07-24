@@ -12,6 +12,30 @@ public class DirectLinkCIDTO {
 	private long id;
 	private String name;
 
+	//ETNTX- IM0006852855
+	private String type;
+	private String completeLink;
+	
+
+	
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getCompleteLink() {
+		return completeLink;
+	}
+
+	public void setCompleteLink(String completeLink) {
+		this.completeLink = completeLink;
+	}
+
+	//ETNTX- IM0006852855
 	/**
 	 * @return the name
 	 */

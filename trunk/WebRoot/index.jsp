@@ -1,10 +1,10 @@
-<%@ page language="java" import="java.util.*,org.hibernate.cfg.*,java.net.InetAddress,com.bayerbbs.applrepos.constants.AirKonstanten" pageEncoding="ISO-8859-1" %>
+<%@ page language="java" import="java.util.*,org.hibernate.cfg.*,java.net.InetAddress,javax.servlet.*,com.bayerbbs.applrepos.constants.AirKonstanten" pageEncoding="ISO-8859-1" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path;
-
+	//String logout=(String)request.getParameter("logout");
 	//Configuration conf = new AnnotationConfiguration().configure();
 	AnnotationConfiguration conf;
 	InetAddress iAddress;
@@ -41,7 +41,8 @@
 			.getProperty("hibernate.connection.url");
 	String redirectPath = "";
 	if (dbConnectionUrl.contains(AirKonstanten.TRANSBASE_PROD_HOST)) {
-		redirectPath = "/AIR/P";
+		//redirectPath = "/AIR/P";
+		redirectPath = "/P";
 	} else {
 		if (dbConnectionUrl
 				.contains(AirKonstanten.TRANSBASE_BMS_PROD_HOST_SERVICENAME)) {
@@ -53,13 +54,23 @@
 			} else {
 				if (dbConnectionUrl
 						.contains(AirKonstanten.TRANSBASE_QA_HOST)) {
-					redirectPath = "/AIR/Q";
+					//redirectPath = "/AIR/Q";
+					redirectPath = "/Q";
 				} else
-					redirectPath = "/AIR/D";
+					redirectPath = "/D";
+					//redirectPath = "/AIR/D";
 			}
 		}
 
 	}
+  RequestDispatcher rd=request.getRequestDispatcher(redirectPath);  
+     rd.forward(request, response);  
+	
+	/* if(logout!=null){
+		redirectPath="/AIR/P";
+	} */
+	
+	
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -72,7 +83,7 @@
 	<meta name="author" content="BBS-IAO-SBO-IPS">
 	
   	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <meta http-equiv="refresh" content="0;URL=<%=redirectPath%>">
+    <%-- <meta http-equiv="refresh" content="0;URL=<%=redirectPath%>"> --%>
 	<meta http-equiv="expires" content="86400"/>
 	<meta http-equiv="cache-control" content="no-cache"/>
 	<meta http-equiv="pragma" content="no-cache"/>

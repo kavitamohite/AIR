@@ -642,8 +642,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
     		assetData.insertSource = 'AIR';
        		assetData.owner = 'Bayer Business Services GmbH - 907820';
     		assetData.ownerId = '161';
-    		assetData.workflowStatus = 'ORDER :: assigned for delivery';
-    		assetData.workflowStatusId = '1009';
+    		////IM0006771542 - Deletion of Old Lifecycle vaules from Lifecycle sub status table
+    		assetData.workflowStatus = 'operative :: operative';
+    		assetData.workflowStatusId = '1199';
     		assetData.countryId = '1';
     		assetData.country = 'Germany';
     		this.update(assetData);
@@ -668,8 +669,9 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
         		assetData.insertSource = 'AIR';
            		assetData.owner = 'Bayer Business Services GmbH - 907820';
         		assetData.ownerId = '161';
-        		assetData.workflowStatus = 'ORDER :: assigned for delivery';
-        		assetData.workflowStatusId = '1009';
+        		//IM0006771542 - Deletion of Old Lifecycle vaules from Lifecycle sub status table
+        		assetData.workflowStatus = 'operative :: operative';
+        		assetData.workflowStatusId = '1199';
         		assetData.countryId = '1';
         	//	assetData.country = 'Germany';
         		this.update(assetData);

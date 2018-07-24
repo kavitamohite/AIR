@@ -57,6 +57,8 @@ public class LifecycleStatusHbn {
 			output[i] = data;
 			i++;
 		}
+		
+		
 		return output;
 	}
 
@@ -118,6 +120,10 @@ public class LifecycleStatusHbn {
 //		append("ORDER BY status.SORT, subStatus.SORT ").
 		//Updated by ENFZM for Business Application
 		append("WHERE subStatus.tabelle_id IN(1,2,13,3,4,88,30,12,37,19,183) ").
+	//	append("and subStatus.LC_SUB_STAT_STATEN IN('operative','planned','retired','stocked') ").
+		//IM0006771542 - Deletion of Old Lifecycle vaules from Lifecycle sub status table
+		append("and subStatus.DEL_QUELLE IS null ").
+		append("and status.DEL_QUELLE IS null ").
 		append("ORDER BY subStatus.tabelle_id, status.lc_status_en");
 
 		try {
@@ -155,6 +161,70 @@ public class LifecycleStatusHbn {
 			}
 			tx.commit();
 		} catch (Exception e) {
+			if (tx != null && tx.isActive()) {
+				try {
+					// Second try catch as the rollback could fail as well
+					tx.rollback();
+				} catch (HibernateException e1) {
+					log.error(e1.getMessage());
+				}
+				// throw again the first exception
+				// throw e;
+			}
+		}
+		return listResult;
+	}
+	
+	public static List<LifecycleStatusDTO> listLifecycleStatusNEW(Integer tableId) {
+		ArrayList<LifecycleStatusDTO> listResult = new ArrayList<LifecycleStatusDTO>();
+
+		Transaction tx = null;
+		Statement stmt = null;
+		Session session = HibernateUtil.getSession();
+//		Connection conn = null;
+
+		StringBuffer sql = new StringBuffer();
+
+		sql.
+		append("SELECT  Table_Id, Lc_Sub_Stat_Id,LC_Status_ID,Lifecycle_Status FROM TBADM.V_MD_LIFECYCLE WHERE LC_Status_En = LC_Sub_Stat_Staten ");
+		//sql.append("SELECT   LC_Sub_Stat_ID,Lifecycle_Status,Table_Id,LC_Status_ID,Sort FROM TBADM.V_MD_LIFECYCLE INNER JOIN TRANSBASE_OBJECT ON Table_ID = Tabelle_ID WHERE    Type = 'CI TABLE (class 1)' ORDER BY Table_ID, Sort");
+System.out.println("Lifecycle SQL new := "+sql);
+		try {
+			tx = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql.toString());
+
+			if (null != rs) {
+				while (rs.next()) {
+					LifecycleStatusDTO dto = new LifecycleStatusDTO();
+					dto.setLcStatusId(rs.getLong("Lc_Sub_Stat_Id"));
+					String lcStatusEn = rs.getString("Lifecycle_Status");
+					String lcSubStatusEn = rs.getString("Lifecycle_Status");
+					System.out.println("lcStatusEn"+lcStatusEn+"....lcSubStatusEn"+lcSubStatusEn);
+					dto.setLcStatus(lcStatusEn );
+					dto.setLcStatusTxt(lcStatusEn);
+					
+					dto.setTableId(rs.getLong("Table_Id"));
+					dto.setLcSubStatusId(rs.getLong("Lc_Sub_Stat_Id"));
+					
+					listResult.add(dto);
+				}
+			}
+
+			if (null != rs) {
+				rs.close();
+			}
+			if (null != stmt) {
+				stmt.close();
+			}
+			if (null != conn) {
+				conn.close();
+			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
 			if (tx != null && tx.isActive()) {
 				try {
 					// Second try catch as the rollback could fail as well

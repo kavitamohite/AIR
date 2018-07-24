@@ -42,6 +42,8 @@
 		<mapping class="com.bayerbbs.applrepos.domain.ItsecCompliance" />
 		<mapping class="com.bayerbbs.applrepos.domain.ItsecUserOption" />
 		<mapping class="com.bayerbbs.applrepos.domain.ItSystem" />
+		<!-- Added for IM0006774604 -->
+		<mapping class="com.bayerbbs.applrepos.domain.IT_SYS_IT_SYS" />
 		<mapping class="com.bayerbbs.applrepos.domain.ItsecPL" />
 		<mapping class="com.bayerbbs.applrepos.domain.LicenseType" />
 		<mapping class="com.bayerbbs.applrepos.domain.Lifecycle" />

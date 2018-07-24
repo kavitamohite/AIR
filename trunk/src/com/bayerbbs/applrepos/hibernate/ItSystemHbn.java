@@ -125,9 +125,12 @@ public class ItSystemHbn extends BaseHbn {
 
 			if (null != dto.getId() || 0 < dto.getId().longValue()) {
 				Long id = new Long(dto.getId());
-
-				List<String> messages = validateItSystem(dto, true);
-
+				//C0000181270 - Added for Appliance Flag-Start
+				boolean applianceValue=false;
+				if(dto.getIsApplianceFlag()==0&&dto.getOsNameId()==12783230)
+					applianceValue=true;
+				List<String> messages = validateItSystem(dto, true,applianceValue);
+				//C0000181270 - Added for Appliance Flag-End
 				if (messages.isEmpty()) {
 					Session session = HibernateUtil.getSession();
 					Transaction tx = session.beginTransaction();
@@ -189,6 +192,7 @@ public class ItSystemHbn extends BaseHbn {
 						if (null == validationMessage) {
 							if (null != itSystem
 									&& null == itSystem.getDeleteTimestamp()) {
+								System.out.println("OS_NAME_ID"+itSystem.getOsNameId()+"HW_IDENT_OR_TRANS"+itSystem.getCiSubTypeId());
 								session.saveOrUpdate(itSystem);
 								session.flush();
 
@@ -248,7 +252,7 @@ public class ItSystemHbn extends BaseHbn {
 		}
 
 		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
-			// errorcodes / Texte
+		// errorcodes / Texte
 			if (null != output.getMessages() && output.getMessages().length > 0) {
 				output.setDisplayMessage(output.getMessages()[0]);
 			}
@@ -288,6 +292,9 @@ public class ItSystemHbn extends BaseHbn {
 			itSystem.setVirtualHardwareSoftware(null);
 		else
 			itSystem.setVirtualHardwareSoftware(dto.getVirtualHardwareSoftware());
+		
+		//C0000181270 - Added for Appliance Flag
+			itSystem.setIsApplianceFlag(Long.valueOf(dto.getIsApplianceFlag()));
 		
 		if(DELETE.equals(dto.getServicePack()))
 			itSystem.setServicePack(null);
@@ -358,6 +365,8 @@ public class ItSystemHbn extends BaseHbn {
 
 		itSystem.setBusinessEssentialId(dto.getBusinessEssentialId());
 		itSystem.setCiSubTypeId(dto.getCiSubTypeId());
+		
+		System.out.println("dto.getCiSubTypeId()"+dto.getCiSubTypeId());
 	}
 
 	public static CiEntityEditParameterOutput reactivateItSystem(String cwid,
@@ -440,8 +449,17 @@ public class ItSystemHbn extends BaseHbn {
 			cwid = cwid.toUpperCase();
 
 			if (null != dto.getId() && 0 == dto.getId()) {
-
-				List<String> messages = validateItSystem(dto, false);// validateCi
+				System.out.println("dto.getOsNameId()"+dto.getOsNameId());
+				//C0000181270 - Added for Appliance Flag
+				boolean applianceValue=false;
+				if(dto.getIsApplianceFlag()==0&&dto.getOsNameId()==12783230)
+				{
+					
+					
+					applianceValue=true;
+					
+				}
+				List<String> messages = validateItSystem(dto, false,applianceValue);// validateCi
 																		// ,
 																		// listCi
 
@@ -1251,6 +1269,9 @@ System.out.println("HARDWARE System SQL in ITSYSTEMHBN.java"+sql);
 		Session session = HibernateUtil.getSession();
 
 		Query q = session.getNamedQuery("findItSystemsByNameOrAlias");
+		
+		System.out.println("Query q"+q);
+		
 		q.setParameter("name", name.toUpperCase());
 		q.setParameter("alias", alias.toUpperCase());
 
@@ -1274,10 +1295,10 @@ System.out.println("HARDWARE System SQL in ITSYSTEMHBN.java"+sql);
 		return applications;
 	}
 
-	static List<String> validateItSystem(CiBaseDTO dto, boolean isUpdate) {
+	static List<String> validateItSystem(CiBaseDTO dto, boolean isUpdate,boolean applianceValue) {
 
 		List<String> messages = validateCi(dto);// new ArrayList<String>();
-
+		System.out.println("applianceValue1"+applianceValue);
 		if (isUpdate) {
 			if (StringUtils.isNotNullOrEmpty(dto.getName())
 					&& StringUtils.isNotNullOrEmpty(dto.getAlias())) {
@@ -1304,8 +1325,22 @@ System.out.println("HARDWARE System SQL in ITSYSTEMHBN.java"+sql);
 								null));
 					}
 				}
+				
+				
+				
 			}
-		} else {
+			//C0000181270 - Added for Appliance Flag
+			 if (applianceValue)
+			{
+				
+				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+				messages.add(errorCodeManager.getErrorMessage("8002",
+						null));	
+			}
+		} 
+		
+		else {
+			System.out.println("applianceValue2"+applianceValue);
 			List<Application> applications = findApplicationsByNameOrAlias(
 					dto.getName(), dto.getAlias());
 			List<ItSystem> itSystems = findItSystemsByNameOrAlias(
@@ -1321,6 +1356,14 @@ System.out.println("HARDWARE System SQL in ITSYSTEMHBN.java"+sql);
 				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
 
 				messages.add(errorCodeManager.getErrorMessage("9000", null));
+			}
+			
+			if (applianceValue)
+			{
+				
+				ErrorCodeManager errorCodeManager = new ErrorCodeManager();
+				messages.add(errorCodeManager.getErrorMessage("8002",
+						null));	
 			}
 		}
 

@@ -96,6 +96,7 @@ public class LDAPAuthRoles {
 	 */
 	private String findDnByUID(String cwid) throws NamingException {
 		String dn = null;
+		ArrayList<RolePersonDTO> roles;
 
 		try {
 
@@ -110,18 +111,31 @@ public class LDAPAuthRoles {
 
 			// Create the initial context
 			ctx = new InitialDirContext(env);
-
+			
+			String[] attrIDs = { "memberOf" };////changes for CR Kerboros Implementation C0000275214
+			
+			
 			SearchControls controls = new SearchControls(
 					SearchControls.SUBTREE_SCOPE, 0, 0, null, false, false);
 
 			String searchString = "(cn=" + cwid + ")";
+			controls.setReturningAttributes(attrIDs); //changes for CR Kerboros Implementation C0000275214
+			
+			NamingEnumeration<SearchResult> answer1 = ctx.search("",
+					searchString, controls); //changes for CR Kerboros Implementation C0000275214
 
 			NamingEnumeration<SearchResult> answer = ctx.search("",
 					searchString, controls);
 			if (answer.hasMore()) {
 				SearchResult sr = answer.next();
+				SearchResult sr1 = answer1.next();//changes for CR Kerboros Implementation C0000275214
+				
 				dn = sr.getName();
-
+				//changes for CR Kerboros Implementation C0000275214
+				Attribute test = sr1.getAttributes().get("memberOf");
+				Collection<String> values = getAllAttributeValues(test);
+				roles = hasRole(values, cwid);  
+				//changes end for CR Kerboros Implementation C0000275214
 			}
 
 		} finally {
@@ -226,6 +240,95 @@ public class LDAPAuthRoles {
 
 		return authDataParameter;
 	}
+	
+	
+	
+	
+	
+	//changes for CR Kerboros Implementation C0000275214
+	
+	public LDAPAuthParameterOutput login(String username) {
+		Hashtable<String, String> authEnv = new Hashtable<String, String>(11);
+		LDAPAuthParameterOutput authDataParameter = new LDAPAuthParameterOutput();
+		ArrayList<RolePersonDTO> roles = new ArrayList<RolePersonDTO>();
+
+		
+		// user search
+		String userDN = null;
+		
+
+		try {
+
+			env.put(Context.INITIAL_CONTEXT_FACTORY, LDAP_FACTORY);
+			env.put(Context.PROVIDER_URL, ldapURL);
+
+			env.put(Context.SECURITY_PRINCIPAL, MASCHINE_USER);
+			env.put(Context.SECURITY_CREDENTIALS, MASCHINE_USER_PWD);
+			env.put(Context.SECURITY_PROTOCOL, "ssl");
+
+			env.put(Context.SECURITY_AUTHENTICATION, "simple");
+
+			// Create the initial context
+			ctx = new InitialDirContext(env);
+			
+			String[] attrIDs = { "memberOf" };//emria
+			
+			
+			SearchControls controls = new SearchControls(
+					SearchControls.SUBTREE_SCOPE, 0, 0, null, false, false);
+
+			String searchString = "(cn=" + username + ")";
+			controls.setReturningAttributes(attrIDs);
+			
+			//NamingEnumeration<SearchResult> answer1 = ctx.search("",searchString, controls);
+
+			NamingEnumeration<SearchResult> answer = ctx.search("",
+					searchString, controls);
+			if (answer.hasMore()) {
+				SearchResult sr = answer.next();
+				userDN = sr.getName();
+				//SearchResult sr1 = answer1.next();
+				Attribute test = sr.getAttributes().get("memberOf");
+				Collection<String> values = getAllAttributeValues(test);
+				roles = hasRole(values, username);
+				System.out.println(" in end");
+				
+
+			}
+			if (null == userDN) {
+				System.out.println("Authentication cwid unknown 1");
+				authDataParameter.setRcCode(-9L);
+				return authDataParameter;
+			}
+			
+			if (null != ctx) {
+				System.out.println("Authentication ok1");
+				authDataParameter.setRoles(roles);
+
+				authDataParameter.setRcCode(1L);
+			}
+
+		}catch (AuthenticationException authEx) {
+			System.out.println("Authentication failed");
+			authDataParameter.setRcCode(-9L);
+		}catch (NamingException namEx) {
+			System.out.println("ldap error - check connection, parameters...");
+			namEx.printStackTrace();
+			authDataParameter.setRcCode(-2L);
+
+	}finally {
+			try {
+				if (ctx != null)
+					ctx.close();
+			} catch (Exception e) {
+				System.out.println("Unable to close connection!" + e);
+			}
+		}
+
+	return authDataParameter;
+	}
+	
+	//changes end for CR Kerboros Implementation C0000275214
 
 	public ArrayList<RolePersonDTO> hasRole(Collection<String> values, String username) {
 		
@@ -272,7 +375,7 @@ public class LDAPAuthRoles {
 	}
 
 	public String getEnvironment() {
-		String env = "";
+		String env = "D";
 		InetAddress iAddress;
 		String hostName = "";
 		try {

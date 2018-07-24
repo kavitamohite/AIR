@@ -23,7 +23,6 @@ public class LDAPAuthWS {
 		
 		String cwid = paramInput.getCwid();
 		String password = paramInput.getPassword();
-		
 		LDAPAuthParameterOutput output = new LDAPAuthParameterOutput();
 		
 		
@@ -49,7 +48,15 @@ public class LDAPAuthWS {
 		else {*/
 			//LDAPAuthCeye ldapAuthCeye = new LDAPAuthCeye();
 			LDAPAuthRoles ldapAuthCeye = new LDAPAuthRoles();
-			output= ldapAuthCeye.login(cwid, password);
+			//changes for CR Kerboros Implementation C0000275214
+			if("-1".equals(paramInput.getHiddenCwid())){
+				output= ldapAuthCeye.login(cwid, password);
+			}else {
+				output=ldapAuthCeye.login(cwid);
+			}
+			
+			//end changes for CR Kerboros Implementation C0000275214
+			
 			//int rcCode = ldapAuthCeye.login(cwid, password);
 			//output.setRcCode(new Long(rcCode));
 	

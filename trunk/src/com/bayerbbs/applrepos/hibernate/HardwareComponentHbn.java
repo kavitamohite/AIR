@@ -33,12 +33,15 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.HardwareComponent;
 import com.bayerbbs.applrepos.domain.HardwareComponentSelect;
+//IM0006774604
+import com.bayerbbs.applrepos.domain.IT_SYS_IT_SYS;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.domain.Konto;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.domain.Schrank;
 import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.dto.AssetViewDataDTO;
+import com.bayerbbs.applrepos.dto.LinkCITypeDTO;
 import com.bayerbbs.applrepos.dto.PersonsDTO;
 import com.bayerbbs.applrepos.service.AssetManagementParameterInput;
 import com.bayerbbs.applrepos.service.AssetManagementParameterOutput;
@@ -125,7 +128,8 @@ public class HardwareComponentHbn {
 			Integer total = (Integer) criteria.setProjection(
 					Projections.rowCount()).uniqueResult();
 			out.setCountResultSet(total.longValue());
-			list = getDTOList(values);
+			//IM0006774604
+			list = getDTOList(values,true);
 			
 			//EMRIA CR#C0000190968 
 			// The following code allows to sort the columns Building, Room, Rack. 
@@ -234,17 +238,17 @@ public class HardwareComponentHbn {
 	}
 
 	private static List<AssetViewDataDTO> getDTOList(
-			List<HardwareComponent> values) {
+			List<HardwareComponent> values, boolean search) {
 
 		List<AssetViewDataDTO> list = new ArrayList<AssetViewDataDTO>();
 		for (HardwareComponent hwComp : values) {
-			AssetViewDataDTO dto = getDTO(hwComp);
+			AssetViewDataDTO dto = getDTO(hwComp,search);
 			list.add(dto);
 		}
 		return list;
 	}
-
-	private static AssetViewDataDTO getDTO(HardwareComponent hwComp) {
+//IM0006774604
+	private static AssetViewDataDTO getDTO(HardwareComponent hwComp,boolean search) {
 
 		AssetViewDataDTO dto = new AssetViewDataDTO();
 
@@ -278,16 +282,29 @@ public class HardwareComponentHbn {
 			dto.setModel(hwComp.getHardwareCategory4().getHwKategory4());
 		}
 		dto.setSapDescription(hwComp.getSapDescription());
-
+		 String transientSystemName = null;
 		// Technics
 		dto.setTechnicalNumber(hwComp.getTechnicalNumber());
 		dto.setTechnicalMaster(hwComp.getTechnicalMaster());
 		if(hwComp.getItSystem()!= null){
-			 dto.setSystemPlatformName(hwComp.getItSystem().getName());
+			 dto.setSystemPlatformName(hwComp.getItSystem().getItSystemName());
 			 dto.setSystemPlatformNameId(hwComp.getItSystem().getId());
+			 long transientSysteId=hwComp.getItSystem().getItSystemId();
+			 System.out.println("IT system id from IT_SYSTEM table : "+hwComp.getItSystem().getItSystemId());
+			
+			if (! search)
+					transientSystemName = transientSystemName(transientSysteId);
+			
+			 System.out.println("transientSystemName : "+transientSystemName);
 			 dto.setOsNameId(hwComp.getItSystem().getOsNameId());
 		}
-		dto.setHardwareTransientSystem(hwComp.getAssetId());
+		
+		if (transientSystemName!=null)
+		{
+			dto.setHardwareTransientSystem(transientSystemName);
+		}
+		/*else
+		dto.setHardwareTransientSystem(hwComp.getAssetId());*/
 
 		if (hwComp.getLifecycleSubStat() != null) {
 			dto.setWorkflowStatusId(hwComp.getLifecycleSubStat().getId());
@@ -389,7 +406,8 @@ public class HardwareComponentHbn {
 			criteria.add(Restrictions.eq("id", assetId));
 			List<HardwareComponent> values = (List<HardwareComponent>) criteria
 					.list();
-			list = getDTOList(values);
+			//IM0006774604
+			list = getDTOList(values,false);
 			out.setAssetViewDataDTO(list.toArray(new AssetViewDataDTO[list
 					.size()]));
 			tx.commit();
@@ -674,8 +692,12 @@ public class HardwareComponentHbn {
 	private static String validateHardwareComponentForITSystem(HardwareComponent hardwareComponent) {
 		String error = null;
 		if(hardwareComponent.getItSystem()!=null){
-			HardwareComponent existingInHwComp = findByItSystemName(hardwareComponent.getItSystem().getItSystemName());			
+			System.out.println("hardwareComponent.getItSystem()"+hardwareComponent.getItSystem().getItSystemName()+hardwareComponent.getItSystem().getItSystemId()+hardwareComponent.getItSystem().getName()+hardwareComponent.getItSystem().getItSystemName());
+			HardwareComponent existingInHwComp = findByItSystemName(hardwareComponent.getItSystem().getItSystemName());	
+			System.out.println("existingInHwComp"+existingInHwComp.getItSystem().getItSystemName()+existingInHwComp.getItSystem().getItSystemId()+hardwareComponent.getId());
 			if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
+				System.out.println("existingInHwComp.getId().longValue()"+existingInHwComp.getId().longValue()+"hardwareComponent.getId().longValue()"+hardwareComponent.getId().longValue());
+				
 				error = "Asset with same  System Platform Name already exist.";
 			}
 		}
@@ -690,8 +712,10 @@ public class HardwareComponentHbn {
 		
 		try {
 			tx = session.beginTransaction();
-			hardwareComponents = session.createQuery("select h from HardwareComponent as h where h.itSystem.itSystemName= '"	+ itSystemName + "'").list();
-			tx.commit();
+			//IM0006774604
+			String query="select h from HardwareComponent as h where h.itSystem.itSystemName= '"	+ itSystemName + "'";
+			hardwareComponents = session.createQuery(query).list();
+			System.out.println("asset query =: "+query);
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
 				try {
@@ -1508,7 +1532,75 @@ public static boolean isHardwareComponentBySerialNumberExistsUpdate(String seria
 		}
 		return itSysHwId;
 	}
-	
+	//IM0006774604
+	public static String transientSystemName(long itSystem_ID) {
+		List<IT_SYS_IT_SYS> iT_SYS_IT_SYS = null;
+		List itSystemName = null;
+		Transaction tx = null;
+		Statement selectStmt = null;
+		ResultSet rset=null;
+		Session session = HibernateUtil.getSession();
+		Connection conn = session.connection();
+		long lowerID=0;
+		String transientSystemName=null;
+		try {
+			tx = session.beginTransaction();
+			String query="select h from IT_SYS_IT_SYS as h where h.IT_SYS_H_ID= '"	+ itSystem_ID + "'" +"and del_quelle is null";
+			iT_SYS_IT_SYS = session.createQuery(query).list();
+			System.out.println("transientSystemName query =: "+query);
+			if(iT_SYS_IT_SYS!=null && iT_SYS_IT_SYS.size() > 0){
+				lowerID= iT_SYS_IT_SYS.get(0).getIT_SYS_L_ID();
+			}
+			System.out.println("lowerID =: "+lowerID);
+			String query1="select IT_SYSTEM_NAME  from IT_SYSTEM  where IT_SYSTEM_ID = '"	+ lowerID + "'"+"and del_quelle is null";
+			
+			selectStmt = conn.createStatement();
+			 rset = selectStmt.executeQuery(query1);
+			
+			if (null != rset) {
+				while (rset.next()) {
+					transientSystemName = rset.getString("IT_SYSTEM_NAME");
+					
+				}
+				
+			}
+			
+			System.out.println("transientSystemName query1 =: "+query1+"transientSystemName"+transientSystemName);
+			
+			
+		} 
+		catch(SQLException e)
+		{
+			System.out.print(e.getMessage());
+		}
+		catch (RuntimeException e) {
+			if (tx != null && tx.isActive()) {
+				try {
+					// Second try catch as the rollback could fail as well
+					tx.rollback();
+				} catch (HibernateException e1) {
+					System.out.print(e1.getMessage());
+				}
+				// throw again the first exception
+				throw e;
+			}
+
+		}
+		
+		finally
+		{
+			try {
+				selectStmt.close();
+				rset.close();
+				conn.close();
+				session.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+		}
+		return transientSystemName;
+	}
 	public static boolean isPSPElementExists(String pspElement)
 	{
 		boolean returnFlag = false;

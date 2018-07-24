@@ -402,18 +402,21 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		cbIsTemplate.setValue(isTemplate);
 		//if(data.barRelevance === 'Y')
 		//	cbIsTemplate.disable();//BAR relevante CIs d�rfen keine templates sein
+		
 		if(data.templateLinkWithCIs === 'Y'){
-			cbIsTemplate.disable();
+			//cbIsTemplate.disable();
+			cbIsTemplate.enable();	
 		}else{
 			cbIsTemplate.enable();
 		}
-		 if(isTemplate){
+		 if(isTemplate&&data.templateLinkWithCIs === 'Y'){
 			 bIsDirecLinkWithTemplate.setVisible(true);
 		 }	 
 		 else{
 			 bIsDirecLinkWithTemplate.setVisible(false);
 		 }
-			 
+		
+		 
 		
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
@@ -509,6 +512,12 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	onIsTemplateCheck: function(checkbox, isChecked) {
+		//ETNTX IM0006852855
+		var bIsDirecLinkWithTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('bIsDirecLinkWithTemplate');
+		console.log("bIsDirecLinkWithTemplate "+bIsDirecLinkWithTemplate.hidden);//hidden
+		
+		
+		//ETNTX IM0006852855
 		var cbReferencedTemplate = this.getComponent('fsComplianceDetails').getComponent('pReferencedTemplate').getComponent('cbReferencedTemplate');
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 
@@ -524,8 +533,23 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			Util.disableCombo(cbReferencedTemplate);
 			Util.enableCombo(cbItSecGroup);
 		} else {
-			
-			var r = cbReferencedTemplate.getStore().getById(AAM.getAppDetail().id);
+			/*//emria
+			if(! bIsDirecLinkWithTemplate.hidden){
+				console.log(" Inside uncheck "+checkbox +"  "+this);
+				
+				var cbIsTemplate = this.getComponent('fsComplianceDetails').getComponent('pAsTemplate').getComponent('cbIsTemplate');
+				
+
+				cbIsTemplate.setValue(true);
+				Ext.Msg.show({
+	    			title: 'Info',
+	    			msg: 'This Template is already linked to other CIs, Uchecking is not allowed.',
+	    			buttons: Ext.MessageBox.OK,
+	    			icon: Ext.MessageBox.INFO			
+	    		});
+			}
+			//emria
+*/			var r = cbReferencedTemplate.getStore().getById(AAM.getAppDetail().id);
 			cbReferencedTemplate.getStore().remove(r);
 			AAM.getAppDetail().templateChanged = true;
 

@@ -526,6 +526,7 @@ public class ItsecHbn {
 		sql.append(" AND CPL.Ref_Pk_Id =").append(ciId);
 		sql.append(" AND MTX.Langu ='").append(language.toLowerCase());
 		sql.append("' AND pck_SISec.Is_Deleted(CPL.Tabelle_Id, CPL.Tabelle_PK_ID) = 0");
+		sql.append("AND CPL.Del_Quelle IS NULL");//ETNTX- IM0006852855
 		sql.append(" ORDER BY Ident, pck_SISec.Get_Sort(CPL.Tabelle_Id, CPL.Tabelle_PK_ID),GRP.Itsec_Gruppe");
 
 		try {

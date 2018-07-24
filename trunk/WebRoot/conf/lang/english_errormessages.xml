@@ -128,7 +128,11 @@
 		<code>8001</code>
 		<message>An IT system marked as deleted with this name or alias already exists. Reactivate?</message>
 	</Error>
-	
+	<!-- Added for C0000181270 -->
+	<Error>
+		<code>8002</code>
+		<message>If OS  is updated as Appliance Unknown then appliance flag should be set as yes.</message>
+	</Error>
 	<Error>
 		<code>9000</code>
 		<message>An application with this name or alias already exists</message>

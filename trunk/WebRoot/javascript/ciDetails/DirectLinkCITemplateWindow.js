@@ -13,7 +13,8 @@ AIR.DirectLinkCITemplateWindow = Ext.extend(Ext.Window,{
     	Ext.apply(this,{
     		plain: true,
 			modal: true,
-    		flex: 1,
+			autoScroll: true,
+    		//flex: 1,
     		closeAction:'hide',
     		border: false,
     		title: labels.directLinkCIPanelTitle,
@@ -37,11 +38,15 @@ AIR.DirectLinkCITemplateWindow = Ext.extend(Ext.Window,{
         			viewConfig: {
         				emptyText: 'No CI (s) found.....'
         			},
+        			
+//ETNTX- IM0006852855
         	        columns: [
-        	            {header: "NAME", width: 500, dataIndex: 'name', sortable: true,renderer: columnWrap}
+        	            {header: "NAME",width: 400, dataIndex: 'name', sortable: true,renderer: columnWrap},
+        	            {header: "TYPE",width: 250,  dataIndex: 'type', sortable: true,renderer: columnWrap},
+        	            {header: "Complete_Link",width: 100,dataIndex: 'completeLink', sortable: true,renderer: columnWrap}
 
         	        ],
-        	        width: 500,
+        	        width: 800,
         	        height: 500
         	    })
         			  

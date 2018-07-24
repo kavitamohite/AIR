@@ -631,7 +631,19 @@ public class AirServlet extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String version = "?" + AirKonstanten.AIR_VERSION;
-		
+		////changes for CR Kerboros Implementation C0000275214
+		String cwid="-1";
+		String logout=(String)req.getSession().getAttribute("logout");
+		System.out.println("request.getSession().getAttribute(logout)"+logout);
+		if(logout != null && ("1").equals(logout)){
+			cwid="-1";
+			req.getSession().setAttribute("logout","0");
+		}else{
+			//cwid="EMRIA";
+			//cwid=req.getUserPrincipal().getName();
+			cwid=req.getRemoteUser();
+		}
+		////changes end for CR Kerboros Implementation C0000275214
 		StringBuffer html = new StringBuffer();
 		
 		String userAgent = req.getHeader("user-agent");
@@ -837,10 +849,11 @@ public class AirServlet extends HttpServlet {
 	//			===================================================================================================================
 				
 				append(compressJSFile("conf/config.js", version)).
+				append("<input type='hidden' id='serverCWID' name='serverCWID' value="+cwid+">").
 				
 			append("</body>\n").
 		append("</html>");
-		
+		//ETSZF
 		configureResponse(req, res);
 		PrintWriter out = res.getWriter();
 		out.print(html.toString());

@@ -10,7 +10,8 @@ public class ItSystemEditParameterInput extends BaseEditParameterInput {
 	private String isVirtualHardwareClient;
 	private String isVirtualHardwareHost;
 	private String virtualHardwareSoftware;
-	
+	//C0000181270 - Added for Appliance Flag
+	private long isApplianceFlag;
 	private Integer lifecycleStatusId;
 	private Integer einsatzStatusId;
 	
@@ -158,8 +159,13 @@ public class ItSystemEditParameterInput extends BaseEditParameterInput {
 	public void setServicePackFor(String servicePackFor) {
 		this.servicePackFor = servicePackFor;
 	}
-	
+	//C0000181270 - Added for Appliance Flag
 
-	
-	
+	public long getIsApplianceFlag() {
+		return isApplianceFlag;
+	}
+	public void setIsApplianceFlag(long isApplianceFlag) {
+		this.isApplianceFlag = isApplianceFlag;
+	}
+	//C0000181270 - Added for Appliance Flag
 }

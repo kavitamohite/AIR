@@ -14,8 +14,8 @@
 		<New>Neu</New>
 		<code>Code</code>
 		<nameEn>Englisch</nameEn>
-		<deleted>GEL\&amp;Ouml;SCHT</deleted>
-		
+		<!-- IM0006794780 <deleted>GEL\&amp;Ouml;SCHT</deleted>-->
+	    <deleted>GELOESCHT</deleted>
 		<general_button_save>Speichern</general_button_save>
 		<general_button_back>Zur&amp;uuml;ck</general_button_back>
 
@@ -461,14 +461,17 @@
 		<RelevanceICSAccessManagement>Relevanz ICS Access Management</RelevanceICSAccessManagement>
 		<RelevanceICSITOperations>Relevanz ICS IT Operations</RelevanceICSITOperations>
 		<RelevanceICSChangeManagement>Relevanz ICS Change Management</RelevanceICSChangeManagement>
-		<LinkCiType>Verkn&amp;uuml;pfung - CI Typ</LinkCiType>
-		<LinkCi>Verkn&amp;uuml;pfung - CI</LinkCi>
+		<!--  <LinkCiType>Verkn&amp;uuml;pfung - CI Typ</LinkCiType>-->
+		<!-- IM0006888958 ETNTX -->
+		<LinkCiType>Verknuepfung - CI Type</LinkCiType>
+		<LinkCi>Verknuepfung - CI</LinkCi>
 		
 		<complianceWindowStatement>Aussage</complianceWindowStatement>
 		<complianceWindowStatementUntreated>Unbehandelt</complianceWindowStatementUntreated>
 		<complianceWindowStatementDispensable>&amp;Uuml;berfl&amp;uuml;ssig</complianceWindowStatementDispensable>
 		<complianceWindowCompliant>Konform</complianceWindowCompliant>
-		<complianceWindowJustification>Begr&amp;uuml;ndung</complianceWindowJustification>
+		<!--  <complianceWindowJustification>Begr&amp;uuml;ndung</complianceWindowJustification>-->
+		<complianceWindowJustification>Rechtfertigung</complianceWindowJustification>
 		<complianceStatementInfo> </complianceStatementInfo>
 		
 		<complianceWindowGap>Gap</complianceWindowGap>
@@ -559,6 +562,8 @@
 		<clusterCode>Cluster Code</clusterCode>
 		<clusterType>Cluster Typ</clusterType>
 		<virtualHardwareClient>Hardware Virtualisierung Client</virtualHardwareClient>
+		<!-- Added for C0000181270 -->
+		<applianceFlag>Appliance Flag</applianceFlag>
 		<virtualHardwareHost>Hardware Virtualisierung Host</virtualHardwareHost>
 		<virtualHardwareSoftware>Hardware Virtualisierung Software</virtualHardwareSoftware>
 		<backupType>Backup Type</backupType>
@@ -566,7 +571,8 @@
 <!--		<operationalStatus></operationalStatus>-->
 		<primaryFunction>Primary Function</primaryFunction>
 		<licenseScanning>License Scanning</licenseScanning>
-		<directLinkCIPanelTitle>Direct Link CIS</directLinkCIPanelTitle>
+		<!--ETNTX- IM0006852855 -->
+		<directLinkCIPanelTitle>Direct and indirect Link CIS</directLinkCIPanelTitle>
 		<directLinkagesCIPanelTitle>Linkages</directLinkagesCIPanelTitle>
 		<servicePack>Service Pack</servicePack>
 		

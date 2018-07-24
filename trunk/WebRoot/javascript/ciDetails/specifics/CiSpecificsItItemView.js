@@ -139,7 +139,24 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 	                { id: 'rgVirtualHWClientYes',	itemId: 'rgVirtualHWClientYes', 	boxLabel: 'Yes',	name: 'rgVirtualHWClient', inputValue: 'Y', width: 50 },
 	                { id: 'rgVirtualHWClientNo',	itemId: 'rgVirtualHWClientNo',		boxLabel: 'No',		name: 'rgVirtualHWClient', inputValue: 'N', width: 50 }
 	            ]
-			},{
+			},
+			//C0000181270 - Added for Appliance Flag- Start
+			{
+	            xtype: 'radiogroup',
+    			id: 'rgApplianceFlag',
+    			width: 200,
+    			
+    			columns: 2,
+    			fieldLabel: 'Appliance Flag',
+
+	            items: [
+	                { id: 'rgApplianceFlagYes',	itemId: 'rgApplianceFlagYes', 	boxLabel: 'Yes',	name: 'rgApplianceFlag', inputValue: -1, width: 50 },
+	                { id: 'rgApplianceFlagNo',	itemId: 'rgApplianceFlagNo',	boxLabel: 'No',		name: 'rgApplianceFlag', inputValue: 0, width: 50 }
+	            ]
+			},
+			//C0000181270 - Added for Appliance Flag - End
+			
+			{
 	            xtype: 'radiogroup',
     			id: 'rgVirtualHWHost',
     			width: 200,
@@ -256,9 +273,10 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
         
 		var rgVirtualHWClient = this.getComponent('rgVirtualHWClient');
 		var rgVirtualHWHost = this.getComponent('rgVirtualHWHost');
-		
+		var rgApplianceFlag = this.getComponent('rgApplianceFlag');
 		rgVirtualHWClient.on('change', this.onRadioGroupChange, this);
 		rgVirtualHWHost.on('change', this.onRadioGroupChange, this);
+		rgApplianceFlag.on('change', this.onRadioGroupChange, this);
 	},
 	
 	clear: function(data) {
@@ -499,7 +517,9 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		
 		var rgVirtualHWClient = this.getComponent('rgVirtualHWClient');
 		var rgVirtualHWHost = this.getComponent('rgVirtualHWHost');
-		
+		//C0000181270 - Added for Appliance Flag
+		var rgApplianceFlag = this.getComponent('rgApplianceFlag');
+	//	console.log("rgApplianceFlag"+rgApplianceFlag);
 		cbServicePack.reset();
 		cbOsName.reset();
 		cbOsType.reset();
@@ -532,7 +552,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			
 			rgVirtualHWClient.reset();
 			rgVirtualHWHost.reset();
-			
+			rgApplianceFlag.reset();
 			Util.enableCombo(cbOsGroup);
 			Util.enableCombo(cbOsType);
 			Util.enableCombo(cbOsName);
@@ -548,7 +568,8 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			
 			rgVirtualHWClient.enable();
 			rgVirtualHWHost.enable();
-			
+			//C0000181270 - Added for Appliance Flag
+			rgApplianceFlag.enable();
 			cbClusterCode.setValue(4);// Default: N / no Cluster
 			cbClusterType.reset();
 			Util.disableCombo(cbClusterType);
@@ -603,10 +624,27 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 			
 			if(data.isVirtualHardwareClient) {
 				rgVirtualHWClient.setValue(data.isVirtualHardwareClient);
+				
 			} else {
 				rgVirtualHWClient.reset();
 			}
+			//console.log("isApplianceFlag in update"+data.isApplianceFlag);
 			
+			
+			if(data.isApplianceFlag==-1) {
+				//rgApplianceFlag.setValue(data.isApplianceFlag);
+				rgApplianceFlag.setValue(-1);
+				//console.log("isApplianceFlag value"+data.isApplianceFlag);
+			}
+			 if (data.isApplianceFlag==0)
+				
+				{
+				
+				rgApplianceFlag.setValue(0);
+				//console.log("isApplianceFlag value"+data.isApplianceFlag);
+				
+				}
+		
 			if(data.isVirtualHardwareHost) {
 				rgVirtualHWHost.setValue(data.isVirtualHardwareHost);
 			} else {
@@ -722,7 +760,20 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		if(!field.disabled)
 			if(field.getValue() && field.getValue().inputValue)//.length > 0
 				data.isVirtualHardwareClient = field.getValue().inputValue;
-		
+		//C0000181270 - Added for Appliance Flag
+		field = this.getComponent('rgApplianceFlag');
+		if(!field.disabled)
+			{
+		//	console.log("field.getValue().inputValue"+field.getValue().inputValue);
+			//if(field.getValue() && field.getValue().inputValue)//.length > 0
+				//data.isApplianceFlag = field.getValue().inputValue;
+			if(field.getValue() && field.getValue().inputValue==-1)//.length > 0
+				data.isApplianceFlag = -1;
+			else
+				data.isApplianceFlag = 0;
+			
+			//console.log("data.isApplianceFlag value set"+data.isApplianceFlag );
+			}
 		field = this.getComponent('rgVirtualHWHost');
 		if(!field.disabled)
 			if(field.getValue() && field.getValue().inputValue)//.length > 0
@@ -738,6 +789,7 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbClusterCode'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbClusterType'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('rgVirtualHWClient'), data);
+		AIR.AirAclManager.setAccessMode(this.getComponent('rgApplianceFlag'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('rgVirtualHWHost'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbVirtualSoftware'), data);
 		AIR.AirAclManager.setAccessMode(this.getComponent('cbBackupType'), data);
@@ -762,9 +814,12 @@ AIR.CiSpecificsItItemView = Ext.extend(AIR.AirView, {
 		this.setFieldLabel(this.getComponent('cbClusterCode'), labels.clusterCode);
 		this.setFieldLabel(this.getComponent('cbClusterType'), labels.clusterType);
 		this.setFieldLabel(this.getComponent('rgVirtualHWClient'), labels.virtualHardwareClient);
+		this.setFieldLabel(this.getComponent('rgApplianceFlag'), labels.applianceFlag);
 		this.setFieldLabel(this.getComponent('rgVirtualHWHost'), labels.virtualHardwareHost);
 		this.setBoxLabel(this.getComponent('rgVirtualHWClient').items.items[0], labels.general_yes);
 		this.setBoxLabel(this.getComponent('rgVirtualHWClient').items.items[1], labels.general_no);
+		this.setBoxLabel(this.getComponent('rgApplianceFlag').items.items[0], labels.general_yes);
+		this.setBoxLabel(this.getComponent('rgApplianceFlag').items.items[1], labels.general_no);
 		this.setBoxLabel(this.getComponent('rgVirtualHWHost').items.items[0], labels.general_yes);
 		this.setBoxLabel(this.getComponent('rgVirtualHWHost').items.items[1], labels.general_no);
 		this.setFieldLabel(this.getComponent('cbVirtualSoftware'), labels.virtualHardwareSoftware);

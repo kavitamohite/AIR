@@ -31,5 +31,8 @@ if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
 	}				    		
 }
 
+//redirect+="?logout=true";
+request.getSession().setAttribute("logout", "1");//changes for CR Kerboros Implementation C0000275214
+  
 response.sendRedirect(redirect);//htdocs/index.html authenticate.html
 %>

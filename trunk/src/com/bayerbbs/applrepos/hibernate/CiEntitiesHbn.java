@@ -1165,8 +1165,12 @@ public class CiEntitiesHbn {
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
 //		Connection conn = null;
-		String sql="SELECT COUNT(*) AS Link# FROM ITSEC_MASSN_STATUS WHERE Ref_Table_Id ="+tableID +" AND Ref_Pk_Id ="+ciId+
-		           " AND pck_SISec.Is_Deleted(Tabelle_Id, Tabelle_PK_ID) = 0";
+		//String sql="SELECT COUNT(*) AS Link# FROM ITSEC_MASSN_STATUS WHERE Ref_Table_Id ="+tableID +" AND Ref_Pk_Id ="+ciId+
+		         //  " AND pck_SISec.Is_Deleted(Tabelle_Id, Tabelle_PK_ID) = 0";
+
+		//ETNTX- IM0006852855
+		String sql="SELECT COUNT(*) AS Link# FROM TABLE(pck_SISec.FT_Linkages("+tableID+","+ciId+"))"; 
+		System.out.println("SQL Is template new :="+sql);
 		try {
 			tx = session.beginTransaction();
 			@SuppressWarnings("deprecation")
@@ -1179,6 +1183,7 @@ public class CiEntitiesHbn {
 			if (null != rset) {
 				rset.next();
 				Long count = rset.getLong(1);
+				System.out.println("count Is template new count :="+count);
 				if(count >0)
 					 isLink="Y";
 				
@@ -1212,8 +1217,12 @@ public class CiEntitiesHbn {
 		Transaction tx = null;
 		Statement selectStmt = null;
 		Session session = HibernateUtil.getSession();
-		String sql="SELECT   pck_SISec.Get_Ident(Table_Id, Id) AS Name " + 
-		" FROM ALL_CI WHERE Del_Quelle is NULL AND Table_Id ="+ tableId+" AND Ref_Id ="+refId+" ORDER BY Name";
+		//String sql="SELECT   pck_SISec.Get_Ident(Table_Id, Id) AS Name " + 
+		//" FROM ALL_CI WHERE Del_Quelle is NULL AND Table_Id ="+ tableId+" AND Ref_Id ="+refId+" ORDER BY Name";
+
+		//ETNTX- IM0006852855
+		String sql="SELECT Name,Type,Complete_Link FROM TABLE(pck_SISec.FT_Linkages("+tableId+","+refId+")) ORDER BY Name";
+
 		try{
 			tx=session.beginTransaction();
 			Connection con=session.connection();
@@ -1225,6 +1234,11 @@ public class CiEntitiesHbn {
 					DirectLinkCIDTO  directLinkCIDTO = new DirectLinkCIDTO();
 					directLinkCIDTO.setId(++index);
 					directLinkCIDTO.setName(resultSet.getString(1));
+
+					//ETNTX- IM0006852855
+					directLinkCIDTO.setType(resultSet.getString(2));
+					directLinkCIDTO.setCompleteLink(resultSet.getString(3));
+					
 					linkCIDTOs.add(directLinkCIDTO);
 				}
 			}
