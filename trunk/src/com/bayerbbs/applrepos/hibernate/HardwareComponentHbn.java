@@ -290,7 +290,7 @@ public class HardwareComponentHbn {
 			 dto.setSystemPlatformName(hwComp.getItSystem().getItSystemName());
 			 dto.setSystemPlatformNameId(hwComp.getItSystem().getId());
 			 long transientSysteId=hwComp.getItSystem().getItSystemId();
-			 System.out.println("IT system id from IT_SYSTEM table : "+hwComp.getItSystem().getItSystemId());
+			 //System.out.println("IT system id from IT_SYSTEM table : "+hwComp.getItSystem().getItSystemId());
 			
 			if (! search)
 					transientSystemName = transientSystemName(transientSysteId);
@@ -692,11 +692,13 @@ public class HardwareComponentHbn {
 	private static String validateHardwareComponentForITSystem(HardwareComponent hardwareComponent) {
 		String error = null;
 		if(hardwareComponent.getItSystem()!=null){
-			System.out.println("hardwareComponent.getItSystem()"+hardwareComponent.getItSystem().getItSystemName()+hardwareComponent.getItSystem().getItSystemId()+hardwareComponent.getItSystem().getName()+hardwareComponent.getItSystem().getItSystemName());
+			//System.out.println("hardwareComponent.getItSystem()"+hardwareComponent.getItSystem().getItSystemName()+hardwareComponent.getItSystem().getItSystemId()+hardwareComponent.getItSystem().getName()+hardwareComponent.getItSystem().getItSystemName());
 			HardwareComponent existingInHwComp = findByItSystemName(hardwareComponent.getItSystem().getItSystemName());	
-			System.out.println("existingInHwComp"+existingInHwComp.getItSystem().getItSystemName()+existingInHwComp.getItSystem().getItSystemId()+hardwareComponent.getId());
+			//IM0006974814
+			//System.out.println("existingInHwComp"+existingInHwComp.getItSystem().getItSystemName()+existingInHwComp.getItSystem().getItSystemId()+hardwareComponent.getId());
+			System.out.println("existingInHwComp"+existingInHwComp);
 			if(existingInHwComp != null && (hardwareComponent.getId() == null || existingInHwComp.getId().longValue() != hardwareComponent.getId().longValue())){
-				System.out.println("existingInHwComp.getId().longValue()"+existingInHwComp.getId().longValue()+"hardwareComponent.getId().longValue()"+hardwareComponent.getId().longValue());
+				//System.out.println("existingInHwComp.getId().longValue()"+existingInHwComp.getId().longValue()+"hardwareComponent.getId().longValue()"+hardwareComponent.getId().longValue());
 				
 				error = "Asset with same  System Platform Name already exist.";
 			}
@@ -714,8 +716,9 @@ public class HardwareComponentHbn {
 			tx = session.beginTransaction();
 			//IM0006774604
 			String query="select h from HardwareComponent as h where h.itSystem.itSystemName= '"	+ itSystemName + "'";
-			hardwareComponents = session.createQuery(query).list();
 			System.out.println("asset query =: "+query);
+			hardwareComponents = session.createQuery(query).list();
+			System.out.println("asset query executed=: "+query);
 		} catch (RuntimeException e) {
 			if (tx != null && tx.isActive()) {
 				try {
@@ -727,6 +730,13 @@ public class HardwareComponentHbn {
 				// throw again the first exception
 				throw e;
 			}
+
+		}
+		catch (Exception e) {
+			
+			System.out.print(e.getMessage());
+			e.printStackTrace();
+			
 
 		}
 		if(hardwareComponents!=null && hardwareComponents.size() > 0){
