@@ -50,10 +50,6 @@ public class LDAPAuthRoles {
 	//private static final String ldapURL = "ldaps://DE.bayer.cnb:3269/"; // Microsoft																	// AD
 																		// (über
 																		// LDAP)//389
-	
-	//IM0005672385 - AIR Login Issue
-	
-	private static final String ldapURL = "ldaps://bayer.cnb:3269/";
 
 	private Hashtable<String, String> env = new Hashtable<String, String>();
 	
