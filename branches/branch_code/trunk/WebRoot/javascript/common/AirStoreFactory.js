@@ -3516,8 +3516,8 @@ AIR.AirStoreFactory = function() {
 		    ]);
 		
 		    var linkCiTypeListReader = new Ext.data.XmlReader({
-				record: 'return',
-				idProperty: 'id'
+				record: 'return'/*,IM0007041058 - Compliance part AIR not properly working
+				idProperty: 'id'*/
 		    }, linkCiTypeListRecord);
 		
 		    var linkCiTypeListStore = new Ext.data.XmlStore({
