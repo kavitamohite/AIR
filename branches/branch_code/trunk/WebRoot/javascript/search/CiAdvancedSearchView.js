@@ -219,7 +219,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 50
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating ItSet checkbox </b>will include all the ITSet from the dropdowon in the search filter apart from the selected one'
+					          });
+					        }
+					    },   
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchItSetOptions', width: 30 }
 	                    ]
@@ -233,7 +240,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 10
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Description checkbox </b>will include all the Description in the search filter apart from the given one'
+					          });
+					        }
+					    },  
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchDescriptionOptions', width: 30 }
 	                    ]
@@ -298,7 +312,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 25
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Primary Person checkbox </b>will include all the APPLICATION OWNER in the search filter apart from the selected one'
+					          });
+					        }
+					    },  
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchAppOwnerOptions', width: 30 }
 	                    ]
@@ -312,7 +333,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 10
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Delegate checkbox </b>will include all the APPLICATION OWNER DELEGATE in the search filter apart from the selected one'
+					          });
+					        }
+					    }, 
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchAppOwnerDelegateOptions', width: 30 }
 	                    ]
@@ -363,7 +391,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 10 : 20
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating STEWARD checkbox </b>will include all the APPLICATION STEWARD in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchAppStewardOptions', width: 30 }
 	                    ]
@@ -420,7 +455,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 33
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Primary Person checkbox </b>will include all the Primary Application Manager in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCIOwnerOptions', width: 30 }
 	                    ]
@@ -434,7 +476,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 10
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Delegate checkbox </b>will include all the SUB RESPONSIBLE in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCIOwnerDelegateOptions', width: 30 }
 	                    ]
@@ -593,7 +642,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 40
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Genaral Usage checkbox </b>will include all the Genaral Usage from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusGeneralUsageOptions', width: 30 }
 	                    ]
@@ -607,7 +663,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating ITCategorye checkbox </b>will include all the ITCategorye from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusITCategoryOptions', width: 30 }
 	                    ]
@@ -621,7 +684,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating LifeCycle checkbox </b>will include all the LifeCycle from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions', width: 30 }
 	                    ]
@@ -635,7 +705,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating OrganisationalScope checkbox </b>will include all the OrganisationalScope from the list in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions', width: 30 }
 	                    ]
@@ -961,7 +1038,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 40
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating ITSecGroup checkbox </b>will include all the ITSecGroup from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesITSecGroupOptions', width: 30 }
 	                    ]
@@ -975,7 +1059,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Process checkbox </b>will include all the Process from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesProcessOptions', width: 30 }
 	                    ]
@@ -989,7 +1080,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
 		    				},
-						
+		    				listeners: {
+						        render: function(c) {
+						          new Ext.ToolTip({
+						            target: c.getEl(),
+						            html: '<b>Activating Source checkbox </b>will include all the Source from the dropdown in the search filter apart from the selected one'
+						          });
+						        }
+						    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesSourceOptions', width: 30 }
 	                    ]
@@ -1003,7 +1101,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating BusinessEssential checkbox </b>will include all the BusinessEssential from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions', width: 30 }
 	                    ]
@@ -2170,6 +2275,19 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			for(var i = 0; i < chbGroups.length; i++)
 				chbGroups[i].reset();
 //		}
-	}
+	},
+	
+	/*updateToolTips: function(toolTips) {
+		//var label = Ext.isIE ? cbgRegulations.items.items[0].label.dom.nextSibling.children[0] : cbgRegulations.items.items[0].label.dom.nextElementSibling.children[0];
+		
+		//this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrsOptions')
+		
+		var pAdvSearchSingleAttrsOptions = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrsOptions');
+		//var cbgAdvSearchCiTypeOptions = pAdvSearchSingleAttrsOptions.getComponent('cbgAdvSearchCiTypeOptions');
+		var cbgAdvSearchItSetOptions = pAdvSearchSingleAttrsOptions.getComponent('cbgAdvSearchItSetOptions');
+		//this.setTooltipData(this.get('pAdvSearchSingleAttrsFrame').get('pAdvSearchSingleAttrsOptions').get('cbgAdvSearchCiTypeOptions'), toolTips.cbgAdvSearchCiTypeOptions, toolTips.itsecGroupText);
+		//this.setTooltipData(cbgAdvSearchItSetOptions, toolTips.cbgAdvSearchItSetOptions, toolTips.relevanceGR1435Text);
+		this.setTooltipData(cbgAdvSearchItSetOptions, toolTips.cbgAdvSearchItSetOptions, toolTips.organisationalScopeText);
+	}*/
 });
 Ext.reg('AIR.CiAdvancedSearchView', AIR.CiAdvancedSearchView);
