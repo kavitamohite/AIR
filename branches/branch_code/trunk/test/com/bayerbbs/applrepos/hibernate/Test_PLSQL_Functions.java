@@ -1,4 +1,4 @@
-package com.bayerbbs.applrepos.hibernate;
+/*package com.bayerbbs.applrepos.hibernate;
 
 
 import java.sql.CallableStatement;
@@ -219,11 +219,11 @@ public class Test_PLSQL_Functions {
 	
 	@Test
 	public void testDefault() { 
-		/*List<ApplicationCat2> values = session.createQuery("select h from ApplicationCat2 as h where h.delTimestamp is null").list();
+		List<ApplicationCat2> values = session.createQuery("select h from ApplicationCat2 as h where h.delTimestamp is null").list();
 		for(ApplicationCat2 value : values)
 			System.out.println(value.getAnwendungKat2Text() + " :: " + value.getDelTimestamp());
 		
-		System.out.println(values.size());*/
+		System.out.println(values.size());
 		
 //		Float f1 = new Float(0.0001);
 		float f1 = 0.0001f;
@@ -231,7 +231,7 @@ public class Test_PLSQL_Functions {
 		System.out.println(new Float(String.format(Locale.ENGLISH, "%.2f", f1)));//Locale.getDefault()
 		
 		
-		/*
+		
 //		Float f2 = new Float(0.0155);
 		float f2 = 0.0155f;
 		
@@ -239,7 +239,7 @@ public class Test_PLSQL_Functions {
 		System.out.println(String.format(Locale.ENGLISH, "%.2f", f2));
 		
 		System.out.println(String.format("%.5g%n", 0.912385));
-		System.out.println(new Float(String.format("%.1g%n", 0.0015)));*/
+		System.out.println(new Float(String.format("%.1g%n", 0.0015)));
 	}
 
 	@After
@@ -248,3 +248,4 @@ public class Test_PLSQL_Functions {
 	}
 
 }
+*/
