@@ -217,9 +217,16 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 30
+							marginTop: 50
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating ItSet checkbox </b>will include all the ITSet from the dropdowon in the search filter apart from the selected one'
+					          });
+					        }
+					    },   
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchItSetOptions', width: 30 }
 	                    ]
@@ -233,7 +240,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 10
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Description checkbox </b>will include all the Description in the search filter apart from the given one'
+					          });
+					        }
+					    },  
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchDescriptionOptions', width: 30 }
 	                    ]
@@ -285,7 +299,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						
 		    			style: {
 							fontSize: 10,
-							marginTop: 15
+							//marginTop: 100
+							marginLeft: 10
 						}
 					},{
 			            xtype: 'checkboxgroup',
@@ -295,9 +310,16 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 20
+							marginTop: 25
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Primary Person checkbox </b>will include all the APPLICATION OWNER in the search filter apart from the selected one'
+					          });
+					        }
+					    },  
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchAppOwnerOptions', width: 30 }
 	                    ]
@@ -311,7 +333,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 10
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Delegate checkbox </b>will include all the APPLICATION OWNER DELEGATE in the search filter apart from the selected one'
+					          });
+					        }
+					    }, 
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchAppOwnerDelegateOptions', width: 30 }
 	                    ]
@@ -362,7 +391,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 10 : 20
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating STEWARD checkbox </b>will include all the APPLICATION STEWARD in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchAppStewardOptions', width: 30 }
 	                    ]
@@ -417,9 +453,16 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 25
+							marginTop: 33
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Primary Person checkbox </b>will include all the Primary Application Manager in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCIOwnerOptions', width: 30 }
 	                    ]
@@ -433,7 +476,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: 10
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Delegate checkbox </b>will include all the SUB RESPONSIBLE in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCIOwnerDelegateOptions', width: 30 }
 	                    ]
@@ -580,7 +630,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						
 		    			style: {
 							fontSize: 10,
-							marginTop: 15
+							//marginTop: 15 IM0007086232
 						}
 					},{
 			            xtype: 'checkboxgroup',
@@ -590,9 +640,16 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 25
+							marginTop: 40
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Genaral Usage checkbox </b>will include all the Genaral Usage from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusGeneralUsageOptions', width: 30 }
 	                    ]
@@ -606,7 +663,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating ITCategorye checkbox </b>will include all the ITCategorye from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusITCategoryOptions', width: 30 }
 	                    ]
@@ -620,7 +684,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating LifeCycle checkbox </b>will include all the LifeCycle from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions', width: 30 }
 	                    ]
@@ -634,7 +705,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating OrganisationalScope checkbox </b>will include all the OrganisationalScope from the list in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions', width: 30 }
 	                    ]
@@ -958,9 +1036,16 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 25
+							marginTop: 40
 						},
-						
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating ITSecGroup checkbox </b>will include all the ITSecGroup from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesITSecGroupOptions', width: 30 }
 	                    ]
@@ -974,7 +1059,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating Process checkbox </b>will include all the Process from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesProcessOptions', width: 30 }
 	                    ]
@@ -987,8 +1079,15 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			hideLabel: true,
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
-						},
-						
+		    				},
+		    				listeners: {
+						        render: function(c) {
+						          new Ext.ToolTip({
+						            target: c.getEl(),
+						            html: '<b>Activating Source checkbox </b>will include all the Source from the dropdown in the search filter apart from the selected one'
+						          });
+						        }
+						    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesSourceOptions', width: 30 }
 	                    ]
@@ -1002,7 +1101,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
 						},
-	        			
+						listeners: {
+					        render: function(c) {
+					          new Ext.ToolTip({
+					            target: c.getEl(),
+					            html: '<b>Activating BusinessEssential checkbox </b>will include all the BusinessEssential from the dropdown in the search filter apart from the selected one'
+					          });
+					        }
+					    },
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesBusinessEssentialOptions', width: 30 }
 	                    ]
@@ -1220,8 +1326,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	var cbgAdvSearchCategoriesAndStatusGeneralUsageOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchCategoriesAndStatusOptions').getComponent('cbgAdvSearchCategoriesAndStatusGeneralUsageOptions');
     	var cbgAdvSearchCategoriesAndStatusITCategoryOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchCategoriesAndStatusOptions').getComponent('cbgAdvSearchCategoriesAndStatusITCategoryOptions');
     	var cbgAdvSearchSpecialSearchAttributesITSecGroupOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchSpecialSearchAttributesOptions').getComponent('cbgAdvSearchSpecialSearchAttributesITSecGroupOptions');
-    	
-    	
+    	var cbgAdvSearchSpecialSearchAttributesSourceOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchSpecialSearchAttributesOptions').getComponent('cbgAdvSearchSpecialSearchAttributesSourceOptions');
+    	//IM0007086232
     	var labels = AIR.AirApplicationManager.getLabels();
     	var label = labels.label_details_ciOwner;
     	
@@ -1261,7 +1367,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
 		var isActive = false;
 		var isBusinessAppActive=false;
-    	
+    	var isITSystem=false;//IM0007086232
     	switch(searchMode) {
     		case 2://ANWENDUNG::Application
     			label = labels.applicationManager;
@@ -1282,7 +1388,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 				pAdvSearchSpecialSearchAttributesOptions.setVisible(true);
 				cbAdvSearchLifecycleStatusW.setVisible(true);
 				cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions.setVisible(true);
-				
+				cbgAdvSearchAppOwnerDelegateOptions.setVisible(true);
     			break;
     		case 1://ANWENDUNG::non Application
     			tfDescription.setVisible(true);
@@ -1292,7 +1398,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     			
     			fsCategoriesAndStatus.setVisible(true);
     			pAdvSearchCategoriesAndStatusOptions.setVisible(true);
-    			
+    			cbgAdvSearchAppOwnerDelegateOptions.setVisible(true);
     			cbAdvSearchProcessW.setVisible(false);
     			cbgAdvSearchSpecialSearchAttributesProcessOptions.setVisible(false);
 				cbAdvSearchBusinessEssentialW.setVisible(true);
@@ -1322,7 +1428,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     			}
     			
     			if(tableId == AC.TABLE_ID_IT_SYSTEM) { //ETNTX - IM0006132933 - missing Search functionality start
-    				
+    				isITSystem=true;
     				var filterData = { tableId: record.get('ciTypeId') };
     				cbAdvSearchLifecycleStatusW.filterByData(filterData);
     				cbAdvSearchLifecycleStatusW.setVisible(true);
@@ -1331,7 +1437,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
    				fsCategoriesAndStatus.setVisible(true);
    				pAdvSearchCategoriesAndStatusOptions.setVisible(true);
    				cbAdvSearchITCategoryW.setVisible(false);
-   				
+   				cbAdvSearchITCategoryW.reset();
+   				cbgAdvSearchCategoriesAndStatusITCategoryOptions.setVisible(false);
    			//ETNTX - IM0006132933 - missing Search functionality End
     			} else {
     				cbAdvSearchLifecycleStatusW.setVisible(false);
@@ -1342,13 +1449,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //    				pAdvSearchCategoriesAndStatusOptions.setVisible(false);
     			}
     			
+    			
     			break;
     		//Added by ENFZM	
     		case 3:
     			isBusinessAppActive=true
     			tfDescription.setVisible(true);
     			//rgAdvSearchBARrelevance.setVisible(false);
-    			cbgAdvSearchDescriptionOptions.setVisible(true);
+    			cbgAdvSearchDescriptionOptions.setVisible(false);
     			fsCategoriesAndStatus.setVisible(true);
     			pAdvSearchCategoriesAndStatusOptions.setVisible(true);
     			
@@ -1366,7 +1474,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						
 				cbAdvSearchITCategoryW.setVisible(false);
 				cbgAdvSearchAppOwnerDelegateOptions.setVisible(false);
-				cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions.setVisible(true);
+				cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions.setVisible(false);
 				
 				break;
     	}
@@ -1396,8 +1504,11 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		lvAdvSearchOrganisationalScope.setVisible(isActive);
 		cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions.setVisible(isActive);
 		cbgAdvSearchCategoriesAndStatusGeneralUsageOptions.setVisible(!isBusinessAppActive);
-		cbgAdvSearchCategoriesAndStatusITCategoryOptions.setVisible(!isBusinessAppActive);
+		cbgAdvSearchCategoriesAndStatusITCategoryOptions.setVisible(!isBusinessAppActive&&!isITSystem);
 		cbgAdvSearchSpecialSearchAttributesITSecGroupOptions.setVisible(!isBusinessAppActive);
+
+		cbgAdvSearchSpecialSearchAttributesSourceOptions.setVisible(!isBusinessAppActive);
+		
 		
 		// End By ENFZM
 		if(record)
@@ -1587,6 +1698,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
     	Util.setChbGroup(cbgAdvSearchCiTypeOptions, data.ciTypeOptions);
     	Util.setChbGroup(cbgAdvSearchItSetOptions, data.itSetOptions);
+    	//console.log("data.itSetOptions"+data.itSetOptions);
     	Util.setChbGroup(cbgAdvSearchDescriptionOptions, data.descriptionOptions);
     	
     	
@@ -1831,12 +1943,13 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
 		params.ciTypeOptions = Util.getChbYesNoValues(cbgAdvSearchCiTypeOptions);
 		params.itSetOptions = Util.getChbYesNoValues(cbgAdvSearchItSetOptions);
+		//console.log("params.itSetOptions"+params.itSetOptions);
 		params.descriptionOptions = Util.getChbYesNoValues(cbgAdvSearchDescriptionOptions);
 		
 		// RFC 9122 show deleted
 		var cbgAdvSearchShowDeleted = pAdvSearchSingleAttrs.getComponent('cbgAdvSearchShowDeleted');
 		params.showDeleted = Util.getChbYesNoValues(cbgAdvSearchShowDeleted);
-
+		//console.log("params.showDeleted"+params.showDeleted);
 		
 ////	    var cbCiType = pAdvSearchSingleAttrs.getComponent('cbCiType');
 //	    var cat1 = params.ciSubTypeId;//params.advsearchObjectTypeId;//cbCiType.getValue();
@@ -1872,7 +1985,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    //Added By ENFZM
 	    if(params.ciTypeId == AC.TABLE_ID_BUSINESS_APPLICATION) {
 	    	
-	    
+	    	
 	    	params.appOwner = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner').getValue();//params.advsearchappowner applicationOwner
 		    params.appOwnerHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden').getValue();//params.advsearchappownerHidden
 		   
@@ -2162,6 +2275,19 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			for(var i = 0; i < chbGroups.length; i++)
 				chbGroups[i].reset();
 //		}
-	}
+	},
+	
+	/*updateToolTips: function(toolTips) {
+		//var label = Ext.isIE ? cbgRegulations.items.items[0].label.dom.nextSibling.children[0] : cbgRegulations.items.items[0].label.dom.nextElementSibling.children[0];
+		
+		//this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrsOptions')
+		
+		var pAdvSearchSingleAttrsOptions = this.getComponent('pAdvSearchSingleAttrsFrame').getComponent('pAdvSearchSingleAttrsOptions');
+		//var cbgAdvSearchCiTypeOptions = pAdvSearchSingleAttrsOptions.getComponent('cbgAdvSearchCiTypeOptions');
+		var cbgAdvSearchItSetOptions = pAdvSearchSingleAttrsOptions.getComponent('cbgAdvSearchItSetOptions');
+		//this.setTooltipData(this.get('pAdvSearchSingleAttrsFrame').get('pAdvSearchSingleAttrsOptions').get('cbgAdvSearchCiTypeOptions'), toolTips.cbgAdvSearchCiTypeOptions, toolTips.itsecGroupText);
+		//this.setTooltipData(cbgAdvSearchItSetOptions, toolTips.cbgAdvSearchItSetOptions, toolTips.relevanceGR1435Text);
+		this.setTooltipData(cbgAdvSearchItSetOptions, toolTips.cbgAdvSearchItSetOptions, toolTips.organisationalScopeText);
+	}*/
 });
 Ext.reg('AIR.CiAdvancedSearchView', AIR.CiAdvancedSearchView);
