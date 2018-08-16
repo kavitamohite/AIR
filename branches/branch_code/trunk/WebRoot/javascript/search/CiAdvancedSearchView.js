@@ -217,7 +217,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 30
+							marginTop: 50
 						},
 						
 	        			items: [
@@ -285,7 +285,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						
 		    			style: {
 							fontSize: 10,
-							marginTop: 15
+							//marginTop: 100
+							marginLeft: 10
 						}
 					},{
 			            xtype: 'checkboxgroup',
@@ -295,7 +296,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 20
+							marginTop: 25
 						},
 						
 	        			items: [
@@ -417,7 +418,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 25
+							marginTop: 33
 						},
 						
 	        			items: [
@@ -580,7 +581,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						
 		    			style: {
 							fontSize: 10,
-							marginTop: 15
+							//marginTop: 15 IM0007086232
 						}
 					},{
 			            xtype: 'checkboxgroup',
@@ -590,7 +591,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 25
+							marginTop: 40
 						},
 						
 	        			items: [
@@ -958,7 +959,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			
 		    			hideLabel: true,
 		    			style: {
-							marginTop: 25
+							marginTop: 40
 						},
 						
 	        			items: [
@@ -987,7 +988,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		    			hideLabel: true,
 		    			style: {
 							marginTop: Ext.isIE ? 5 : 8
-						},
+		    				},
 						
 	        			items: [
 							{ boxLabel: '', name: 'cbgAdvSearchSpecialSearchAttributesSourceOptions', width: 30 }
@@ -1220,8 +1221,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     	var cbgAdvSearchCategoriesAndStatusGeneralUsageOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchCategoriesAndStatusOptions').getComponent('cbgAdvSearchCategoriesAndStatusGeneralUsageOptions');
     	var cbgAdvSearchCategoriesAndStatusITCategoryOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchCategoriesAndStatusOptions').getComponent('cbgAdvSearchCategoriesAndStatusITCategoryOptions');
     	var cbgAdvSearchSpecialSearchAttributesITSecGroupOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchSpecialSearchAttributesOptions').getComponent('cbgAdvSearchSpecialSearchAttributesITSecGroupOptions');
-    	
-    	
+    	var cbgAdvSearchSpecialSearchAttributesSourceOptions = this.getComponent('pAdditionalSearchAttributes').getComponent('pAdvSearchSpecialSearchAttributesOptions').getComponent('cbgAdvSearchSpecialSearchAttributesSourceOptions');
+    	//IM0007086232
     	var labels = AIR.AirApplicationManager.getLabels();
     	var label = labels.label_details_ciOwner;
     	
@@ -1261,7 +1262,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
 		var isActive = false;
 		var isBusinessAppActive=false;
-    	
+    	var isITSystem=false;//IM0007086232
     	switch(searchMode) {
     		case 2://ANWENDUNG::Application
     			label = labels.applicationManager;
@@ -1282,7 +1283,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 				pAdvSearchSpecialSearchAttributesOptions.setVisible(true);
 				cbAdvSearchLifecycleStatusW.setVisible(true);
 				cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions.setVisible(true);
-				
+				cbgAdvSearchAppOwnerDelegateOptions.setVisible(true);
     			break;
     		case 1://ANWENDUNG::non Application
     			tfDescription.setVisible(true);
@@ -1292,7 +1293,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     			
     			fsCategoriesAndStatus.setVisible(true);
     			pAdvSearchCategoriesAndStatusOptions.setVisible(true);
-    			
+    			cbgAdvSearchAppOwnerDelegateOptions.setVisible(true);
     			cbAdvSearchProcessW.setVisible(false);
     			cbgAdvSearchSpecialSearchAttributesProcessOptions.setVisible(false);
 				cbAdvSearchBusinessEssentialW.setVisible(true);
@@ -1322,7 +1323,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
     			}
     			
     			if(tableId == AC.TABLE_ID_IT_SYSTEM) { //ETNTX - IM0006132933 - missing Search functionality start
-    				
+    				isITSystem=true;
     				var filterData = { tableId: record.get('ciTypeId') };
     				cbAdvSearchLifecycleStatusW.filterByData(filterData);
     				cbAdvSearchLifecycleStatusW.setVisible(true);
@@ -1331,7 +1332,8 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
    				fsCategoriesAndStatus.setVisible(true);
    				pAdvSearchCategoriesAndStatusOptions.setVisible(true);
    				cbAdvSearchITCategoryW.setVisible(false);
-   				
+   				cbAdvSearchITCategoryW.reset();
+   				cbgAdvSearchCategoriesAndStatusITCategoryOptions.setVisible(false);
    			//ETNTX - IM0006132933 - missing Search functionality End
     			} else {
     				cbAdvSearchLifecycleStatusW.setVisible(false);
@@ -1342,13 +1344,14 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 //    				pAdvSearchCategoriesAndStatusOptions.setVisible(false);
     			}
     			
+    			
     			break;
     		//Added by ENFZM	
     		case 3:
     			isBusinessAppActive=true
     			tfDescription.setVisible(true);
     			//rgAdvSearchBARrelevance.setVisible(false);
-    			cbgAdvSearchDescriptionOptions.setVisible(true);
+    			cbgAdvSearchDescriptionOptions.setVisible(false);
     			fsCategoriesAndStatus.setVisible(true);
     			pAdvSearchCategoriesAndStatusOptions.setVisible(true);
     			
@@ -1366,7 +1369,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						
 				cbAdvSearchITCategoryW.setVisible(false);
 				cbgAdvSearchAppOwnerDelegateOptions.setVisible(false);
-				cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions.setVisible(true);
+				cbgAdvSearchCategoriesAndStatusLifecycleStatusOptions.setVisible(false);
 				
 				break;
     	}
@@ -1396,8 +1399,11 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		lvAdvSearchOrganisationalScope.setVisible(isActive);
 		cbgAdvSearchCategoriesAndStatusOrganisationalScopeOptions.setVisible(isActive);
 		cbgAdvSearchCategoriesAndStatusGeneralUsageOptions.setVisible(!isBusinessAppActive);
-		cbgAdvSearchCategoriesAndStatusITCategoryOptions.setVisible(!isBusinessAppActive);
+		cbgAdvSearchCategoriesAndStatusITCategoryOptions.setVisible(!isBusinessAppActive&&!isITSystem);
 		cbgAdvSearchSpecialSearchAttributesITSecGroupOptions.setVisible(!isBusinessAppActive);
+
+		cbgAdvSearchSpecialSearchAttributesSourceOptions.setVisible(!isBusinessAppActive);
+		
 		
 		// End By ENFZM
 		if(record)
@@ -1587,6 +1593,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
     	Util.setChbGroup(cbgAdvSearchCiTypeOptions, data.ciTypeOptions);
     	Util.setChbGroup(cbgAdvSearchItSetOptions, data.itSetOptions);
+    	//console.log("data.itSetOptions"+data.itSetOptions);
     	Util.setChbGroup(cbgAdvSearchDescriptionOptions, data.descriptionOptions);
     	
     	
@@ -1831,12 +1838,13 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 		
 		params.ciTypeOptions = Util.getChbYesNoValues(cbgAdvSearchCiTypeOptions);
 		params.itSetOptions = Util.getChbYesNoValues(cbgAdvSearchItSetOptions);
+		//console.log("params.itSetOptions"+params.itSetOptions);
 		params.descriptionOptions = Util.getChbYesNoValues(cbgAdvSearchDescriptionOptions);
 		
 		// RFC 9122 show deleted
 		var cbgAdvSearchShowDeleted = pAdvSearchSingleAttrs.getComponent('cbgAdvSearchShowDeleted');
 		params.showDeleted = Util.getChbYesNoValues(cbgAdvSearchShowDeleted);
-
+		//console.log("params.showDeleted"+params.showDeleted);
 		
 ////	    var cbCiType = pAdvSearchSingleAttrs.getComponent('cbCiType');
 //	    var cat1 = params.ciSubTypeId;//params.advsearchObjectTypeId;//cbCiType.getValue();
@@ -1872,7 +1880,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 	    //Added By ENFZM
 	    if(params.ciTypeId == AC.TABLE_ID_BUSINESS_APPLICATION) {
 	    	
-	    
+	    	
 	    	params.appOwner = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwner').getValue();//params.advsearchappowner applicationOwner
 		    params.appOwnerHidden = fsApplicationOwner.getComponent('p' + this.ownerId + 'ApplicationOwner').getComponent(this.ownerId + 'applicationOwnerHidden').getValue();//params.advsearchappownerHidden
 		   
