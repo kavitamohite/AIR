@@ -116,7 +116,7 @@ public class ItSystemHbn extends BaseHbn {
 	public static CiEntityEditParameterOutput saveItSystem(String cwid, ItSystemDTO dto) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
 		String validationMessage = null;
-		String sqlMessage=null;
+
 		if (null != cwid) {
 			cwid = cwid.toUpperCase();
 
@@ -171,7 +171,7 @@ public class ItSystemHbn extends BaseHbn {
 								&& dto.getUpStreamAdd().length() > 0
 								|| dto.getUpStreamDelete() != null
 								&& dto.getUpStreamDelete().length() > 0)
-							sqlMessage=CiEntitiesHbn.saveCiRelations(dto.getTableId(),
+							CiEntitiesHbn.saveCiRelations(dto.getTableId(),
 									dto.getId(), dto.getUpStreamAdd(),
 									dto.getUpStreamDelete(), AirKonstanten.UP,
 									cwid);
@@ -180,7 +180,7 @@ public class ItSystemHbn extends BaseHbn {
 								&& dto.getDownStreamAdd().length() > 0
 								|| dto.getDownStreamDelete() != null
 								&& dto.getDownStreamDelete().length() > 0)
-							sqlMessage=CiEntitiesHbn.saveCiRelations(dto.getTableId(),
+							CiEntitiesHbn.saveCiRelations(dto.getTableId(),
 									dto.getId(), dto.getDownStreamAdd(),
 									dto.getDownStreamDelete(),
 									AirKonstanten.DN, cwid);
@@ -218,14 +218,7 @@ public class ItSystemHbn extends BaseHbn {
 							if (null == hbnMessage) {
 								output.setResult(AirKonstanten.RESULT_OK);
 								output.setMessages(new String[] { EMPTY });
-							} 
-							else if (sqlMessage!=null)
-								
-							{
-								output.setResult(AirKonstanten.RESULT_ERROR);
-								output.setMessages(new String[] { "Relationship Saving Failed Due to DBError" });
-							}
-							else {
+							} else {
 								output.setResult(AirKonstanten.RESULT_ERROR);
 								output.setMessages(new String[] { hbnMessage });
 							}
