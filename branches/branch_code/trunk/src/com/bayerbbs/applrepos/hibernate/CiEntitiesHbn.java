@@ -964,7 +964,23 @@ public class CiEntitiesHbn {
 			conn.close();
 			
 			commit = true;
-		} catch (Exception e) {
+		}
+		//IM0007113591 - Start
+		 catch (SQLException e) {
+				System.out.println("In SQLException for relationship");
+				System.out.println("In SQLException relationship tableId: "+tableId +" ciId:  "+ciId+" ciRelationsAddList :"+ciRelationsAddList+" ciRelationsDeleteList: "+ciRelationsDeleteList+" direction: "+direction);
+				
+				System.out.println("Exception at "+new Date());
+				e.printStackTrace();
+				
+				message= e.getMessage();
+				// TODO: handle exception
+				
+				System.out.println(e.toString());
+			}
+		
+		// IM0007113591 - End
+		catch (Exception e) {
 			System.out.println("In exception for relationship");
 			System.out.println("In exception relationship tableId: "+tableId +" ciId:  "+ciId+" ciRelationsAddList :"+ciRelationsAddList+" ciRelationsDeleteList: "+ciRelationsDeleteList+" direction: "+direction);
 			
