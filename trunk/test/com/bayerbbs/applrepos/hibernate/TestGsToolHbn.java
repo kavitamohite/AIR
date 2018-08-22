@@ -1,4 +1,4 @@
-package com.bayerbbs.applrepos.hibernate;
+/*package com.bayerbbs.applrepos.hibernate;
 
 
 import java.sql.PreparedStatement;
@@ -80,4 +80,4 @@ public class TestGsToolHbn {
 	public void tearDown() throws Exception {
 		session.close();
 	}
-}
+}*/
