@@ -47,7 +47,7 @@ public class BusinessApplicationHbn extends BaseHbn {
 	public static CiEntityEditParameterOutput saveBusinessApplication(
 			BusinessApplicationDTO businessApplicationDTO, String cwid) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
-
+String messageSQL=null;//IM0007113591
 		try {
 			if (StringUtils.isNotNullOrEmpty(cwid)) {
 				if (null != businessApplicationDTO.getId()
@@ -57,7 +57,7 @@ public class BusinessApplicationHbn extends BaseHbn {
 							|| businessApplicationDTO.getUpStreamDelete() != null
 							&& businessApplicationDTO.getUpStreamDelete()
 									.length() > 0)
-						CiEntitiesHbn.saveCiRelations(
+						messageSQL=	CiEntitiesHbn.saveCiRelations(
 								businessApplicationDTO.getTableId(),
 								businessApplicationDTO.getId(),
 								businessApplicationDTO.getUpStreamAdd(),
@@ -70,7 +70,7 @@ public class BusinessApplicationHbn extends BaseHbn {
 							|| businessApplicationDTO.getDownStreamDelete() != null
 							&& businessApplicationDTO.getDownStreamDelete()
 									.length() > 0)
-						CiEntitiesHbn.saveCiRelations(
+						messageSQL=CiEntitiesHbn.saveCiRelations(
 								businessApplicationDTO.getTableId(),
 								businessApplicationDTO.getId(),
 								businessApplicationDTO.getDownStreamAdd(),
@@ -86,10 +86,20 @@ public class BusinessApplicationHbn extends BaseHbn {
 			message = ApplReposHbn.getOracleTransbaseErrorMessage(message);
 			output.setMessages(new String[] { message });
 		} finally {
-
+			//IM0007113591 - start
+			System.out.println("messageSQL"+messageSQL);
+if(messageSQL==null)
+{
 			output.setResult(AirKonstanten.RESULT_OK);
 			output.setMessages(new String[] { EMPTY });
+}
 
+else
+{
+	output.setResult(AirKonstanten.RESULT_ERROR);
+	output.setMessages(new String[] { "Relationship Saving Failed Due to DBError" });
+}
+//IM0007113591- End
 		}
 
 		return output;
