@@ -57,6 +57,8 @@ public class ServiceWS {
 
 	public CiEntityEditParameterOutput saveService(ServiceEditParameterInput input) {
 		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+		String messageSQL=null;//IM0007113591
+		
 		if(input != null
 				&& (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))){			
 			if (null != input.getId()
@@ -64,9 +66,15 @@ public class ServiceWS {
 				ServiceHbn.saveService(input, output);
 			}
 			if(input.getUpStreamAdd() != null && input.getUpStreamAdd().length() > 0 || input.getUpStreamDelete() != null && input.getUpStreamDelete().length() > 0)
-				CiEntitiesHbn.saveCiRelations(AirKonstanten.TABLE_ID_SERVICE, input.getId(), input.getUpStreamAdd(), input.getUpStreamDelete(), "UPSTREAM", input.getCwid());
+				messageSQL=	CiEntitiesHbn.saveCiRelations(AirKonstanten.TABLE_ID_SERVICE, input.getId(), input.getUpStreamAdd(), input.getUpStreamDelete(), "UPSTREAM", input.getCwid());
 			
-			
+			//IM0007113591
+			if (messageSQL!=null)
+			{
+				
+				output.setResult(AirKonstanten.RESULT_ERROR);
+				output.setMessages(new String[] { "Relationship Saving Failed Due to DBError" });
+			}
 		}
 		return output;
 	}
