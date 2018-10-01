@@ -101,7 +101,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbLinkCiType = this.getComponent('cbLinkCiType');
 		cbLinkCiType.on('select', this.onLinkCiTypeSelect, this);
-		cbLinkCiType.on('change', this.onLinkCiTypeChange, this);
+		//cbLinkCiType.on('change', this.onLinkCiTypeChange, this);
 		cbLinkCiType.on('keyUp', this.onLinkCiTypeKeyUp, this);
 		
 		var filterData = {
@@ -111,7 +111,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbLinkCiList = this.getComponent('cbLinkCiList');
 		cbLinkCiList.on('select', this.onLinkCiListSelect, this);
-		cbLinkCiList.on('change', this.onLinkCiListChange, this);
+		//cbLinkCiList.on('change', this.onLinkCiListChange, this);
 		cbLinkCiList.on('keyUp', this.onLinkCiListKeyUp, this);
 	},
 	
@@ -138,8 +138,8 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	loadLinkCiList: function(ciTypeId, callback) {
-		//hier schon zur Vermeidung von Fehlerfällen wenn Link CI-Typ ausgewählt, Massnahme auf unbearbeitet
-		//zurücksetzen 
+		//hier schon zur Vermeidung von Fehlerfï¿½llen wenn Link CI-Typ ausgewï¿½hlt, Massnahme auf unbearbeitet
+		//zurï¿½cksetzen 
 		this.fireEvent('linkCiTypeSelect');
 
 		var params = {
@@ -177,10 +177,10 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 				this.linkCiListSelected(newValue);
 			}
 		}
-		Problem wenn this.linkCiListSelected(newValue); zweimal ausgeführt wird durch select und change wenn combo mittels
+		Problem wenn this.linkCiListSelected(newValue); zweimal ausgefï¿½hrt wird durch select und change wenn combo mittels
 		select bedient wird. Durch das geworfene linkCiSelect event wird updateComplianceDetails und updateMassnahmenTable
-		zweimal ausgeführt, was zu falschen/irritierenden compliant Status Änderungen in der Massnahmentabelle. 
-		Daher das change erstmal deaktiviert. Evtl. ein flag nutzen um beides zu unterstützen. Siehe if(this.isLinkCiSelect)
+		zweimal ausgefï¿½hrt, was zu falschen/irritierenden compliant Status ï¿½nderungen in der Massnahmentabelle. 
+		Daher das change erstmal deaktiviert. Evtl. ein flag nutzen um beides zu unterstï¿½tzen. Siehe if(this.isLinkCiSelect)
 		in updateComplianceDetails()
 		*/
 		
