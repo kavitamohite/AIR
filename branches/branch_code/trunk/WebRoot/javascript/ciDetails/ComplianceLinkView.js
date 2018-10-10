@@ -101,7 +101,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbLinkCiType = this.getComponent('cbLinkCiType');
 		cbLinkCiType.on('select', this.onLinkCiTypeSelect, this);
-		//cbLinkCiType.on('change', this.onLinkCiTypeChange, this);
+		//cbLinkCiType.on('change', this.onLinkCiTypeChange, this);////IM0007290513
 		cbLinkCiType.on('keyUp', this.onLinkCiTypeKeyUp, this);
 		
 		var filterData = {
@@ -111,7 +111,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		var cbLinkCiList = this.getComponent('cbLinkCiList');
 		cbLinkCiList.on('select', this.onLinkCiListSelect, this);
-		//cbLinkCiList.on('change', this.onLinkCiListChange, this);
+		//cbLinkCiList.on('change', this.onLinkCiListChange, this);////IM0007290513
 		cbLinkCiList.on('keyUp', this.onLinkCiListKeyUp, this);
 	},
 	
