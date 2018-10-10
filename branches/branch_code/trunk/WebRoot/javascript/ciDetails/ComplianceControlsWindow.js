@@ -1161,7 +1161,7 @@ AIR.ComplianceControlsWindow = Ext.extend(Ext.Window, {
 		var cbCompliantStatus = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement').getComponent('pCompliantStatus').getComponent('cbCompliantStatus');
 		var taJustification = this.getComponent('pLayout').getComponent('pMassnahmeDetails').getComponent('fsComplianceStatement').getComponent('pJustification').getComponent('taJustification');
 		
-//		cbCompliantStatus.on('beforeselect', this.onCompliantStatusBeforeChange, this);//IM0007290513
+//		cbCompliantStatus.on('beforeselect', this.onCompliantStatusBeforeChange, this);
 		cbCompliantStatus.on('select', this.onCompliantStatusChange, this);//onMassnahmeChange
 		taJustification.on('keyup', this.onMassnahmeChange, this);
 		
