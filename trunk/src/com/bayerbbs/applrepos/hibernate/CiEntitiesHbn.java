@@ -850,8 +850,12 @@ public class CiEntitiesHbn {
 	}
 	
 	public static DwhEntityParameterOutput findByTypeAndName(String ciType, String ciName, int start, int limit) {
-		String sql = "SELECT * FROM TABLE (pck_air.ft_findcis('" + ciName + "', '" + ciType + "'))";
-		
+		String sql =null;
+		if(ciName!=null)
+		sql = "SELECT * FROM TABLE (pck_air.ft_findcis('" + ciName.trim() + "', '" + ciType + "'))";//IM0007439349
+		else
+			sql = "SELECT * FROM TABLE (pck_air.ft_findcis('" + ciName + "', '" + ciType + "'))";//IM0007439349
+		System.out.println("sql query for relation search"+sql);
 		Transaction ta = null;
 		Statement stmt = null;
 //		Connection conn = null;
