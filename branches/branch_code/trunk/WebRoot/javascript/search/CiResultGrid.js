@@ -126,6 +126,12 @@ AIR.CiResultGrid = Ext.extend(Ext.grid.GridPanel, {
 					params[key] = this.pagingParams[key];
 
 			params.limit = this.pageSize;
+			//EUGXS 
+		//IM0008125159 - Cleanup function CI BS-ITO-ITPI-APM-CPS Group head => 18-2,19-2
+			
+			if (this.pagingParams.searchAction == 'myCisForDelete'){
+				params.ciNameAliasQuery = Ext.getCmp('tfDeleteSearch').getValue();
+			}
 			
 			this.getStore().load({
 				params: params,
