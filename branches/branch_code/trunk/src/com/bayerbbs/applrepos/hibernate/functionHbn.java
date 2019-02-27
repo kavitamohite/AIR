@@ -21,11 +21,14 @@ import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiBase1;
 import com.bayerbbs.applrepos.domain.Function;
 import com.bayerbbs.applrepos.domain.FunctionDTO;
+import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemDTO;
@@ -113,6 +116,87 @@ public class functionHbn extends BaseHbn {
 		return output;
 
 	}
+			//EUGXS 
+			//IM0008125159 - Cleanup function CI BS-ITO-ITPI-APM-CPS Group head => 18-2,19-2
+
+	public static CiEntityEditParameterOutput deleteFunction(String cwid, Long id) {
+		
+		
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		// TODO check validate token
+
+		if (null != cwid) {
+			cwid = cwid.toUpperCase();
+//			if (null != dto.getId()	&& 0 < dto.getId().longValue()) {
+//				Long id = new Long(dto.getId());
+			if(id != null) {
+
+				// TODO check der InputWerte
+				Session session = HibernateUtil.getSession();
+				Transaction tx = null;
+				tx = session.beginTransaction();
+				Function function = (Function) session.get(Function.class, id);
+				if (null == function) {
+					// Function was not found in database
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the Function id "	+ id + " was not found in database" });
+				}
+
+				// if it is not already marked as deleted, we can do it
+				else if (null == function.getDeleteTimestamp()) {
+					function.setDeleteUser(cwid);
+					function.setDeleteQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+					function.setDeleteTimestamp(ApplReposTS.getDeletionTimestamp());
+
+					boolean toCommit = false;
+					try {
+						session.saveOrUpdate(function);
+						session.flush();
+						toCommit = true;
+					} catch (Exception e) {
+						log.error(e.getMessage());
+						// handle exception
+						output.setResult(AirKonstanten.RESULT_ERROR);
+						output.setMessages(new String[] { e.getMessage() });
+					} finally {
+						String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+						if (toCommit) {
+							if (null == hbnMessage) {
+								output.setResult(AirKonstanten.RESULT_OK);
+								output.setMessages(new String[] { EMPTY });
+							} else {
+								output.setResult(AirKonstanten.RESULT_ERROR);
+								output.setMessages(new String[] { hbnMessage });
+							}
+						}
+					}
+
+				} else {
+					// function is already deleted
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the Function is already deleted" });
+				}
+
+			} else {
+				// application id is missing
+				output.setResult(AirKonstanten.RESULT_ERROR);
+				output.setMessages(new String[] { "the Function id is missing or invalid" });
+			}
+
+		} else {
+			// cwid missing
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { "cwid missing" });
+		}
+
+		return output;
+		
+
+	}
+	
+	
+	
 
 	private static List<String> validateFunction(FunctionDTO functionDTO,
 			boolean isUpdate) {

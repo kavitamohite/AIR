@@ -7,6 +7,7 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Function;
 import com.bayerbbs.applrepos.domain.FunctionDTO;
 import com.bayerbbs.applrepos.dto.PathwayDTO;
+import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.PathwayHbn;
 import com.bayerbbs.applrepos.hibernate.functionHbn;
 
@@ -71,5 +72,23 @@ public class FunctionWS {
 		
 		return functionDTO;
 		
+	}
+			//EUGXS 
+			//IM0008125159 - Cleanup function CI BS-ITO-ITPI-APM-CPS Group head => 18-2,19-2
+
+	public CiEntityEditParameterOutput deleteFunction(CiEntityParameterInput editInput) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		if (null != editInput) {
+			if (LDAPAuthWS.isLoginValid(editInput.getCwid(), editInput.getToken())) {
+
+				
+				output = functionHbn.deleteFunction(editInput.getCwid(), editInput.getCiId());
+			} else {
+				// TODO MESSAGE LOGGED OUT
+			}
+		}
+
+		return output;
 	}
 }
