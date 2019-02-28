@@ -695,6 +695,16 @@ public class CiEntityWS {
 				output = StandortHbn.deleteCi(input.getCwid(), input.getCiId(),
 						Standort.class);
 				break;
+				//EUGXS 
+				//IM0008125159 - Cleanup function CI BS-ITO-ITPI-APM-CPS Group head => 18-2,19-2
+
+			case AirKonstanten.TABLE_ID_FUNCTION:
+				output = new FunctionWS().deleteFunction(input);
+				break;
+			case AirKonstanten.TABLE_ID_WAYS:
+				output = StandortHbn.deleteCi(input.getCwid(), input.getCiId(),
+						Ways.class);
+				break;
 			}
 		}
 

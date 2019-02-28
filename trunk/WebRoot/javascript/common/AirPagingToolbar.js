@@ -52,7 +52,12 @@ AIR.AirPagingToolbar = Ext.extend(Ext.PagingToolbar, {
         var o = {}, pn = this.getParams();
         o[pn.start] = start;
         o[pn.limit] = this.pageSize;
-        
+        //EUGXS 
+		//IM0008125159 - Cleanup function CI BS-ITO-ITPI-APM-CPS Group head => 18-2,19-2
+
+        if(this.pagingParams.searchAction == "myCisForDelete"){
+        	o['ciNameAliasQuery'] = Ext.getCmp('tfDeleteSearch').getValue();
+        }
         // CUSTOM siehe original ext-all-debug.js 3.4.0 Z. 32715
         if(this.pagingParams)
         	for(var key in this.pagingParams)
