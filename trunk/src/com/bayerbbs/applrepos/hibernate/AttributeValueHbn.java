@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import com.bayerbbs.applrepos.domain.AttributeValue;
 import com.bayerbbs.applrepos.dto.AttributeValueDTO;
@@ -21,7 +22,9 @@ public class AttributeValueHbn {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			tx = session.beginTransaction();
-			Criteria criteria = session.createCriteria(AttributeValue.class);
+			//eugxs
+			//IM0008339679 - Bug in AIR
+			Criteria criteria = session.createCriteria(AttributeValue.class).add(Restrictions.isNull("deleteQuelle") );
 			List<AttributeValue> listResult = criteria.list();
 
 			resultDTO = convertToDTO(listResult);
