@@ -10,6 +10,7 @@ import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.ApplicationCat1;
 import com.bayerbbs.applrepos.domain.ApplicationCat2;
 import com.bayerbbs.applrepos.domain.ApplicationRegion;
+import com.bayerbbs.applrepos.domain.CiComplianceRequest;
 import com.bayerbbs.applrepos.dto.ApplicationAccessDTO;
 import com.bayerbbs.applrepos.dto.ApplicationContact;
 import com.bayerbbs.applrepos.dto.ApplicationContactEntryDTO;
@@ -34,6 +35,7 @@ import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
 import com.bayerbbs.applrepos.hibernate.CiPersonsHbn;
 import com.bayerbbs.applrepos.hibernate.CiSupportStuffHbn;
+import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
 import com.bayerbbs.applrepos.hibernate.InterfacesHbn;
 import com.bayerbbs.applrepos.hibernate.PersonsHbn;
 
@@ -289,6 +291,9 @@ public class ApplicationWS {
 						output.setMessages(splitError(mes));
 					}
 					}
+					//EUGXS
+					//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+					ComplianceHbn.setComplienceRequest(dto.getId(),dto,editInput.getCwid());
 					
 					// Connection higher/lower
 //					String cwid = editInput.getCwid();
@@ -408,6 +413,9 @@ public class ApplicationWS {
 					}
 
 					ApplicationProcessHbn.saveApplicationProcessAll(editInput.getCwid(), applicationId, dto.getBusinessProcessHidden());
+					//EUGXS
+					//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+					ComplianceHbn.setComplienceRequest(output.getApplicationId(),dto,editInput.getCwid());
 
 				} else {
 					// unknown?
@@ -419,6 +427,7 @@ public class ApplicationWS {
 					output.setDisplayMessage(output.getMessages()[0]);
 				}
 			}
+			
 		}
 
 		return output;
@@ -599,6 +608,10 @@ public class ApplicationWS {
 		dto.setRelevanceGR1920(editInput.getRelevanceGR1920());
 		dto.setRelevanceGR2059(editInput.getRelevanceGR2059());
 		dto.setRelevanceGR2008(editInput.getRelevanceGR2008());
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		dto.setRelevanceCD3010(editInput.getRelevanceCD3010());
+		dto.setRelevanceCD3011(editInput.getRelevanceCD3011());
 		
 		// connections
 		dto.setUpStreamAdd(editInput.getUpStreamAdd());
@@ -760,8 +773,31 @@ public class ApplicationWS {
 						
 						dto.setRelevanzItsec(applicationSource.getRelevanzITSEC());
 						dto.setRelevanceICS(applicationSource.getRelevanceICS());
+						//EUGXS
+						//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+						List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_APPLICATION,applicationSource.getId());
+						
+						for(int i =0; i<ComplianceIDS.size(); i++ ){
+							
+						
+						if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+							dto.setRelevanceCD3010("Y");
+						}
+						
+						if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+							dto.setRelevanceCD3011("Y");
+						}
+						if(ComplianceIDS.get(i).getComplianceRequestId() == 1){
+							dto.setRelevanceGR1435("Y");
+						}
+						
+						if(ComplianceIDS.get(i).getComplianceRequestId() == 3){
+							dto.setRelevanceGR1920("Y");
+						}
+						}
 		
 						dto.setRelevance2059(applicationSource.getRelevance2059());
+						
 						dto.setRelevance2008(applicationSource.getRelevance2008());
 
 						// save / create application
@@ -777,10 +813,15 @@ public class ApplicationWS {
 								Long ciId = listAnwendung.get(0).getApplicationId();
 								Application applicationTarget = AnwendungHbn.findApplicationById(ciId);
 								
+								
 								if (null != applicationTarget) {
 									ApplicationEditParameterOutput temp = AnwendungHbn.copyApplication(copyInput.getCwid(), applicationSource.getId(), applicationTarget.getId(), copyInput.getCiNameTarget(), copyInput.getCiAliasTarget());
 									
 									output.setApplicationId(temp.getApplicationId());
+									//EUGXS
+									//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+									dto.setTableId(AirKonstanten.TABLE_ID_APPLICATION);
+									ComplianceHbn.setComplienceRequest(applicationTarget.getId(),dto,copyInput.getCwid());
 									output.setResult(temp.getResult());
 									output.setMessages(temp.getMessages());
 									output.setDisplayMessage(temp.getDisplayMessage());
@@ -828,6 +869,9 @@ public class ApplicationWS {
 					break;
 				case AirKonstanten.TABLE_ID_WAYS:
 					WaysWS.createWayByCopyInternal(ciCopyInput, outputCI);
+					break;
+				case AirKonstanten.TABLE_ID_FUNCTION:
+					FunctionWS.createFunctionByCopyInternal(ciCopyInput, outputCI);
 					break;
 			}
 			
@@ -1086,6 +1130,20 @@ public class ApplicationWS {
 				Long releICS = dto.getRelevanceICS();
 				Long rele2059 = dto.getRelevance2059();
 				Long rele2008 = dto.getRelevance2008();
+				//EUGXS
+				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_APPLICATION,application.getApplicationId());
+				for(int i =0; i<ComplianceIDS.size(); i++ ){
+					
+				
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+					dto.setRelevanceCD3010(AirKonstanten.YES_SHORT);
+				}
+				
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+					dto.setRelevanceCD3011(AirKonstanten.YES_SHORT);
+				}
+				}
 				
 				if (-1 == releItsec) {
 					dto.setRelevanceGR1435(AirKonstanten.YES_SHORT);

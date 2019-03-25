@@ -22,6 +22,7 @@ import com.bayerbbs.applrepos.domain.BuildingArea;
 import com.bayerbbs.applrepos.domain.BusinessApplication;
 import com.bayerbbs.applrepos.domain.BusinessApplicationDTO;
 import com.bayerbbs.applrepos.domain.CiBase1;
+import com.bayerbbs.applrepos.domain.CiComplianceRequest;
 import com.bayerbbs.applrepos.domain.CiLokationsKette;
 import com.bayerbbs.applrepos.domain.Function;
 import com.bayerbbs.applrepos.domain.FunctionDTO;
@@ -64,6 +65,7 @@ import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.hibernate.CiGroupsHbn;
 import com.bayerbbs.applrepos.hibernate.CiPersonsHbn;
 import com.bayerbbs.applrepos.hibernate.ClassInformationHbn;
+import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
 import com.bayerbbs.applrepos.hibernate.ConfidentialityHbn;
 import com.bayerbbs.applrepos.hibernate.HibernateUtil;
 import com.bayerbbs.applrepos.hibernate.ItSecGroupHbn;
@@ -361,6 +363,8 @@ public class CiEntityWS {
 				buildingAreaDTO.setRelevanceOperational(AirKonstanten.NO_SHORT);
 			}
 		}
+		
+		
 
 		return buildingAreaDTO;
 	}
@@ -813,6 +817,22 @@ public class CiEntityWS {
 
 		businessApplicationDTO.setLifecycleStatusId(businessApplication
 				.getLifecycleStatusId());
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(businessApplicationDTO.getTableId(),businessApplication.getId());
+		
+		for(int i =0; i<ComplianceIDS.size(); i++ ){
+			
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+			businessApplicationDTO.setRelevanceCD3010(AirKonstanten.YES_SHORT);
+		}
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+			businessApplicationDTO.setRelevanceCD3011(AirKonstanten.YES_SHORT);
+		}
+		}
+		
 		Long relevanceItsec = businessApplication.getRelevanceITSEC();
 		Long relevanceICS = businessApplication.getRelevanceICS();
 
@@ -851,6 +871,7 @@ public class CiEntityWS {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void setFunctionDTO(Function function, FunctionDTO functionDTO) {
 		functionDTO.setId(function.getId());
 		functionDTO.setName(function.getName());
@@ -933,7 +954,27 @@ public class CiEntityWS {
 		} else {// (0 == relevanceICS) {
 			functionDTO.setRelevanceGR1920(NO);
 		}
-
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+				
+		List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(functionDTO.getTableId(),function.getFunctionId());
+		
+		for(int i =0; i<ComplianceIDS.size(); i++ ){
+			
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+			functionDTO.setRelevanceCD3010(YES);
+		}
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+			functionDTO.setRelevanceCD3011(YES);
+		}
+		}
+		
+		
+		
+		
+System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 		functionDTO.setGxpFlagId(function.getGxpFlag());
 		functionDTO.setGxpFlag(function.getGxpFlag());
 
@@ -1136,6 +1177,22 @@ public class CiEntityWS {
 			refID = 0L;
 		}
 		ciBaseDTO.setRefId(refID);
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		
+		List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(ciBaseDTO.getTableId(),ciBase.getId());
+		for(int i =0; i<ComplianceIDS.size(); i++ ){
+			
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+			ciBaseDTO.setRelevanceCD3010(AirKonstanten.YES_SHORT);
+		}
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+			ciBaseDTO.setRelevanceCD3011(AirKonstanten.YES_SHORT);
+		}
+		}
+		
 		Long relevanceItsec = ciBase.getRelevanceITSEC();
 		Long relevanceICS = ciBase.getRelevanceICS();
 
@@ -1149,6 +1206,8 @@ public class CiEntityWS {
 		} else {// (0 == relevanceICS) {
 			ciBaseDTO.setRelevanceGR1920(NO);
 		}
+		
+		
 
 		ciBaseDTO.setGxpFlagId(ciBase.getGxpFlag());
 		ciBaseDTO.setGxpFlag(ciBase.getGxpFlag());
@@ -1274,6 +1333,23 @@ public class CiEntityWS {
 				ciBaseDTO.setCiOwnerDelegate(person.getDisplayNameFull());
 			}
 		}
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		
+		List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(ciBaseDTO.getTableId(),ciBase.getId());
+		for(int i =0; i<ComplianceIDS.size(); i++ ){
+			
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+			ciBaseDTO.setRelevanceCD3010(AirKonstanten.YES_SHORT);
+		}
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+			ciBaseDTO.setRelevanceCD3011(AirKonstanten.YES_SHORT);
+		}
+		}
+		
+		
 
 		Long relevanceItsec = ciBase.getRelevanceITSEC();
 		Long relevanceICS = ciBase.getRelevanceICS();
@@ -1374,7 +1450,30 @@ public class CiEntityWS {
 					Schrank schrank = SchrankHbn.findById(input.getCiId());
 					massUpdateAttriubteDTOs = getAttributeDTOList(schrank,
 							AirKonstanten.TABLE_ID_POSITION);
+	    			//EUGXS
+	    			//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+				}else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_WAYS) {
+					Ways ways = StandortHbn.findById(Ways.class,
+							input.getCiId());
+					massUpdateAttriubteDTOs = getAttributeDTOList(ways,
+							AirKonstanten.TABLE_ID_WAYS);
+				}else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_FUNCTION) {
+					Function function = functionHbn.findById(Function.class,
+							input.getCiId());
+					massUpdateAttriubteDTOs = getAttributeFunctionDTOList(function,
+							AirKonstanten.TABLE_ID_FUNCTION);
+				}else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_SERVICE) {
+					Service service = functionHbn.findById(Service.class,
+							input.getCiId());
+					massUpdateAttriubteDTOs = getAttributeDTOList(service,
+							AirKonstanten.TABLE_ID_SERVICE);
+				}else if (input.getCiTypeId() == AirKonstanten.TABLE_ID_SITE) {
+					Standort site = StandortHbn.findById(Standort.class,
+							input.getCiId());
+					massUpdateAttriubteDTOs = getAttributeDTOList(site,
+							AirKonstanten.TABLE_ID_SITE);
 				}
+				
 			}
 
 		}
@@ -1538,6 +1637,57 @@ public class CiEntityWS {
 		}
 		maDto.setId("relevanceICS");
 		massUpdateAttriuteDTOs.add(maDto);
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		
+		
+		
+		Long Relevance3010 = (long) 0;
+		Long Relevance3011 = (long) 0;
+		
+List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_IT_SYSTEM,itSystem.getId());
+		
+		for(int i =0; i<ComplianceIDS.size(); i++ ){
+			
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+			Relevance3010 = (long) -1;
+		}
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+			Relevance3011 = (long) -1;
+		}
+		}
+		
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.CD3010);
+		if (null != Relevance3010) {
+			if (-1 == Relevance3010) {
+				maDto.setAttributeValue("Yes");
+			} else {
+				maDto.setAttributeValue("No");
+			}
+		}
+		maDto.setId("relevance3010");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.CD3011);
+		if (null != Relevance3011) {
+			if (-1 == Relevance3011) {
+				maDto.setAttributeValue("Yes");
+			} else {
+				maDto.setAttributeValue("No");
+			}
+		}
+		maDto.setId("relevance3011");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		
+		
+		
+		
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.ITSEC_GROUP);
@@ -1651,6 +1801,52 @@ public class CiEntityWS {
 		}
 		maDto.setId("relevanceICS");
 		massUpdateAttriuteDTOs.add(maDto);
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		
+		
+		Long Relevance3010 = (long) 0;
+		Long Relevance3011 = (long) 0;
+		
+List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(tableId,ciBase1.getId());
+		
+		for(int i =0; i<ComplianceIDS.size(); i++ ){
+			
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+			Relevance3010 = (long) -1;
+		}
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+			Relevance3011 = (long) -1;
+		}
+		}
+		
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.CD3010);
+		if (null != Relevance3010) {
+			if (-1 == Relevance3010) {
+				maDto.setAttributeValue("Yes");
+			} else {
+				maDto.setAttributeValue("No");
+			}
+		}
+		maDto.setId("relevance3010");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.CD3011);
+		if (null != Relevance3011) {
+			if (-1 == Relevance3011) {
+				maDto.setAttributeValue("Yes");
+			} else {
+				maDto.setAttributeValue("No");
+			}
+		}
+		maDto.setId("relevance3011");
+		massUpdateAttriuteDTOs.add(maDto);
+		
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.GXP);
 		maDto.setAttributeValue(ciBase1.getGxpFlag());
@@ -1711,6 +1907,113 @@ public class CiEntityWS {
 		maDto.setAttributeValue(ciBase1.getItSecSbAvailabilityTxt());
 		maDto.setId("itSecSbAvailabilityTxt");
 		massUpdateAttriuteDTOs.add(maDto);
+
+		return massUpdateAttriuteDTOs;
+	}
+	//EUGXS
+	//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+	
+	private List<MassUpdateAttributeDTO> getAttributeFunctionDTOList(Function ciBase1,
+			int tableId) {
+		List<MassUpdateAttributeDTO> massUpdateAttriuteDTOs = new ArrayList<MassUpdateAttributeDTO>();
+		MassUpdateAttributeDTO maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.PRIMARY_PERSON);
+		maDto.setAttributeValue(ciBase1.getCiOwner());
+		maDto.setId("responsible");
+		massUpdateAttriuteDTOs.add(maDto);
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.DELEGATE_PERSON_GROUP);
+		maDto.setAttributeValue(ciBase1.getCiOwnerDelegate());
+		maDto.setId("subResponsible");
+		massUpdateAttriuteDTOs.add(maDto);
+		/*
+		 * maDto = new MassUpdateAttributeDTO();
+		 * maDto.setAttributeName(AirKonstanten.LINK);
+		 * maDto.setAttributeValue(CiEntitiesHbn
+		 * .getCIName(tableId,ciBase1.getRefId())); maDto.setId("refId");
+		 * massUpdateAttriuteDTOs.add(maDto);
+		 */
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.GR1435);
+		if (null != ciBase1.getRelevanceITSEC()) {
+			if (-1 == ciBase1.getRelevanceITSEC()) {
+				maDto.setAttributeValue("Yes");
+			} else {
+				maDto.setAttributeValue("No");
+			}
+		}
+		maDto.setId("relevanzITSEC");
+		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.GR1920);
+		if (null != ciBase1.getRelevanceICS()) {
+			if (-1 == ciBase1.getRelevanceICS()) {
+				maDto.setAttributeValue("Yes");
+			} else {
+				maDto.setAttributeValue("No");
+			}
+		}
+		maDto.setId("relevanceICS");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		
+		Long Relevance3010 = (long) 0;
+		Long Relevance3011 = (long) 0;
+		
+List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(tableId,ciBase1.getId());
+		
+		for(int i =0; i<ComplianceIDS.size(); i++ ){
+			
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+			Relevance3010 = (long) -1;
+		}
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+			Relevance3011 = (long) -1;
+		}
+		}
+		
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.CD3010);
+		if (null != Relevance3010) {
+			if (-1 == Relevance3010) {
+				maDto.setAttributeValue("Yes");
+			} else {
+				maDto.setAttributeValue("No");
+			}
+		}
+		maDto.setId("relevance3010");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.CD3011);
+		if (null != Relevance3011) {
+			if (-1 == Relevance3011) {
+				maDto.setAttributeValue("Yes");
+			} else {
+				maDto.setAttributeValue("No");
+			}
+		}
+		maDto.setId("relevance3011");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.GXP);
+		maDto.setAttributeValue(ciBase1.getGxpFlag());
+		maDto.setId("gxpFlag");
+		massUpdateAttriuteDTOs.add(maDto);
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.ITSEC_GROUP);
+		if (ciBase1.getItsecGroupId() != null && ciBase1.getItsecGroupId() != 0)
+			maDto.setAttributeValue(ItSecGroupHbn.getItSecGroup(ciBase1
+					.getItsecGroupId()));
+		maDto.setId("itsecGroupId");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		
 
 		return massUpdateAttriuteDTOs;
 	}
@@ -1889,7 +2192,7 @@ public class CiEntityWS {
 		maDto.setId("relevanceICS");
 		massUpdateAttriuteDTOs.add(maDto);
 
-		maDto = new MassUpdateAttributeDTO();
+		/*maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.GR2059);
 		if (null != application.getRelevance2059()) {
 			if (-1 == application.getRelevance2059()) {
@@ -1911,7 +2214,50 @@ public class CiEntityWS {
 			}
 		}
 		maDto.setId("relevance2008");
+		massUpdateAttriuteDTOs.add(maDto);*/
+		
+		application.setRelevance2059((long) 0);
+		application.setRelevance2008((long) 0);
+List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_APPLICATION,application.getApplicationId());
+		
+		for(int i =0; i<ComplianceIDS.size(); i++ ){
+			
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+			application.setRelevance2059((long) -1);
+		}
+		
+		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+			application.setRelevance2008((long) -1);
+		}
+		}
+		
+		
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.CD3010);
+		if (null != application.getRelevance2059()) {
+			if (-1 == application.getRelevance2059()) {
+				maDto.setAttributeValue("Yes");
+			} else {
+				maDto.setAttributeValue("No");
+			}
+		}
+		maDto.setId("relevance3010");
 		massUpdateAttriuteDTOs.add(maDto);
+
+		maDto = new MassUpdateAttributeDTO();
+		maDto.setAttributeName(AirKonstanten.CD3011);
+		if (null != application.getRelevance2008()) {
+			if (-1 == application.getRelevance2008()) {
+				maDto.setAttributeValue("Yes");
+			} else {
+				maDto.setAttributeValue("No");
+			}
+		}
+		maDto.setId("relevance3011");
+		massUpdateAttriuteDTOs.add(maDto);
+		
+		
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.GXP);
@@ -2066,12 +2412,59 @@ public class CiEntityWS {
 													+ massUpdateParameterInput
 															.getSelectedCIs()
 													+ ")";
+							    			//EUGXS
+							    			//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+										}else {
+											if (ciTypeId == AirKonstanten.TABLE_ID_SERVICE) {
+												templaeLocationCI = ServiceHbn
+														.findById(
+																Service.class,
+																massUpdateParameterInput
+																		.getTemplateCiId());
+												sql = "select h from Service as h where h.id in("
+														+ massUpdateParameterInput
+																.getSelectedCIs()
+														+ ")";
+											}else {
+											if (ciTypeId == AirKonstanten.TABLE_ID_WAYS) {
+												templaeLocationCI = StandortHbn
+														.findById(
+																Ways.class,
+																massUpdateParameterInput
+																		.getTemplateCiId());
+												sql = "select h from Ways as h where h.id in("
+														+ massUpdateParameterInput
+																.getSelectedCIs()
+														+ ")";
+											}else {
+												if (ciTypeId == AirKonstanten.TABLE_ID_FUNCTION) {
+													Function templaeLocationCIfun = null;
+															templaeLocationCIfun = functionHbn
+															.findById(
+																	Function.class,
+																	massUpdateParameterInput
+																			.getTemplateCiId());
+													sql = "select h from Function as h where h.id in("
+															+ massUpdateParameterInput
+																	.getSelectedCIs()
+															+ ")";
+													
+													
+													maParameterOutPut = locationCIMassUpdateFunction(
+															massUpdateParameterInput, sql,
+															templaeLocationCIfun);
+												}
+											}
 										}
-									}
+									} 
+									
+									
 								}
-
+								}
 							}
 						}
+					}
+					if (ciTypeId != AirKonstanten.TABLE_ID_FUNCTION) {
 						maParameterOutPut = locationCIMassUpdate(
 								massUpdateParameterInput, sql,
 								templaeLocationCI);
@@ -2144,6 +2537,158 @@ public class CiEntityWS {
 	 * @param sql
 	 * @param templaeLocationCI
 	 */
+	//EUGXS
+	//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+	private MassUpdateValueTransferParameterOutPut locationCIMassUpdateFunction(
+			MassUpdateParameterInput massUpdateParameterInput, String sql,
+			Function templaeLocationCI) {
+
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		MassUpdateValueTransferParameterOutPut maParameterOutPut = new MassUpdateValueTransferParameterOutPut();
+		boolean toCommit = false;
+		try {
+			ScrollableResults locationCIS = session.createQuery(sql)
+					.setCacheMode(CacheMode.IGNORE)
+					.scroll(ScrollMode.FORWARD_ONLY);
+			int count = 0;
+			while (locationCIS.next()) {
+				Function locationCi = (Function) locationCIS.get(0);
+
+				if (massUpdateParameterInput.getResponsible()) {
+					locationCi.setCiOwner(templaeLocationCI.getCiOwner());
+					Long itSet = null;
+					String strItSet = ApplReposHbn.getItSetFromCwid(templaeLocationCI.getCiOwner());
+					if (null != strItSet) {
+						itSet = Long.parseLong(strItSet);
+						locationCi.setItset(itSet);
+					}
+				}
+				if (massUpdateParameterInput.getSubResponsible()) {
+					locationCi.setCiOwnerDelegate(templaeLocationCI
+							.getCiOwnerDelegate());
+				}
+				FunctionDTO dto = new FunctionDTO();
+				if (massUpdateParameterInput.getRelevanzITSEC()) {
+					locationCi.setRelevanceITSEC(templaeLocationCI
+							.getRelevanceITSEC());
+					if(templaeLocationCI.getRelevanceITSEC() == -1){
+						dto.setRelevanceGR1435(YES);
+					}else{
+						dto.setRelevanceGR1435(NO);
+					}
+				}
+				if (massUpdateParameterInput.isRelevanceICS()) {
+					locationCi.setRelevanceICS(templaeLocationCI
+							.getRelevanceICS());
+					if(templaeLocationCI.getRelevanceICS() == -1){
+						dto.setRelevanceGR1920(YES);
+					}else{
+						dto.setRelevanceGR1920(NO);
+					}
+				}
+				
+				
+				
+				
+				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request((int) (long)massUpdateParameterInput.getCiTypeId(),templaeLocationCI.getId());
+				String tempCD3010 = AirKonstanten.NO_SHORT;
+				String tempCD3011 = AirKonstanten.NO_SHORT;
+				for(int i =0; i<ComplianceIDS.size(); i++ ){
+					
+				
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+					tempCD3010 = AirKonstanten.YES_SHORT;
+				}
+				
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+					tempCD3011 = AirKonstanten.YES_SHORT;
+				}
+				}
+				
+				
+				dto.setTableId((int) (long)massUpdateParameterInput.getCiTypeId());
+				
+				
+				
+				
+				
+				if (massUpdateParameterInput.isRelevance3010()) {
+					dto.setRelevanceCD3010(tempCD3010);
+				}
+				
+				if (massUpdateParameterInput.isRelevance3011()) {
+					dto.setRelevanceCD3011(tempCD3011);
+				}
+				ComplianceHbn.setComplienceRequest(locationCi.getId(),dto,"EUGXS");
+				
+				
+				if (massUpdateParameterInput.getGxpFlag()) {
+					locationCi.setGxpFlag(templaeLocationCI.getGxpFlag());
+				}
+			
+				
+			
+				
+				
+				locationCi.setUpdateUser(massUpdateParameterInput.getCwid());
+				locationCi.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+				locationCi
+						.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+
+				if (++count % 20 == 0) {
+					session.flush();
+					session.clear();
+				}
+			}
+			session.flush();
+			session.clear();
+			tx.commit();
+			if (massUpdateParameterInput.getItsecGroupId()) {
+				tx = session.beginTransaction();
+				String sqlItsec = "{call pck_Logical_Integrity.P_CI_Safeguard_Assignment (?,?,?)}";
+
+				Connection conn = session.connection();
+
+				CallableStatement stmt = conn.prepareCall(sqlItsec);
+				String selectedCIsArray[] = massUpdateParameterInput
+						.getSelectedCIs().split(",");
+				int size = selectedCIsArray.length;
+				for (int i = 0; i < size; i++) {
+					stmt.setLong(1, massUpdateParameterInput.getCiTypeId());
+					stmt.setLong(2, Long.valueOf(selectedCIsArray[i]));
+					stmt.setLong(3,
+							Long.valueOf(templaeLocationCI.getItsecGroupId()));
+					stmt.addBatch();
+				}
+				int[] updateCounts = stmt.executeBatch();
+				tx.commit();
+				System.out.println(updateCounts);
+			}
+
+			toCommit = true;
+		} catch (Exception e) {
+			maParameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+			maParameterOutPut.setMessages(new String[] { e.getMessage() });
+		} finally {
+			String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+			if (toCommit) {
+				if (null == hbnMessage) {
+					maParameterOutPut.setResult(AirKonstanten.RESULT_OK);
+					maParameterOutPut.setMessages(new String[] { "" });
+				} else {
+					maParameterOutPut.setResult(AirKonstanten.RESULT_ERROR);
+					maParameterOutPut.setMessages(new String[] { hbnMessage });
+				}
+			}
+		}
+
+		return maParameterOutPut;
+
+	
+		
+	}
+	
 	private MassUpdateValueTransferParameterOutPut locationCIMassUpdate(
 			MassUpdateParameterInput massUpdateParameterInput, String sql,
 			CiBase1 templaeLocationCI) {
@@ -2172,14 +2717,61 @@ public class CiEntityWS {
 					locationCi.setCiOwnerDelegate(templaeLocationCI
 							.getCiOwnerDelegate());
 				}
+				CiBaseDTO dto = new CiBaseDTO();
 				if (massUpdateParameterInput.getRelevanzITSEC()) {
 					locationCi.setRelevanceITSEC(templaeLocationCI
 							.getRelevanceITSEC());
+					if(templaeLocationCI.getRelevanceITSEC() == -1){
+						dto.setRelevanceGR1435(YES);
+					}else{
+						dto.setRelevanceGR1435(NO);
+					}
 				}
 				if (massUpdateParameterInput.isRelevanceICS()) {
 					locationCi.setRelevanceICS(templaeLocationCI
 							.getRelevanceICS());
+					if(templaeLocationCI.getRelevanceICS() == -1){
+						dto.setRelevanceGR1920(YES);
+					}else{
+						dto.setRelevanceGR1920(NO);
+					}
 				}
+				
+				
+				
+				
+				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request((int) (long)massUpdateParameterInput.getCiTypeId(),templaeLocationCI.getId());
+				String tempCD3010 = AirKonstanten.NO_SHORT;
+				String tempCD3011 = AirKonstanten.NO_SHORT;
+				for(int i =0; i<ComplianceIDS.size(); i++ ){
+					
+				
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+					tempCD3010 = AirKonstanten.YES_SHORT;
+				}
+				
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+					tempCD3011 = AirKonstanten.YES_SHORT;
+				}
+				}
+				
+				
+				dto.setTableId((int) (long)massUpdateParameterInput.getCiTypeId());
+				
+				
+				
+				
+				
+				if (massUpdateParameterInput.isRelevance3010()) {
+					dto.setRelevanceCD3010(tempCD3010);
+				}
+				
+				if (massUpdateParameterInput.isRelevance3011()) {
+					dto.setRelevanceCD3011(tempCD3011);
+				}
+				ComplianceHbn.setComplienceRequest(locationCi.getId(),dto,"EUGXS");
+				
+				
 				if (massUpdateParameterInput.getGxpFlag()) {
 					locationCi.setGxpFlag(templaeLocationCI.getGxpFlag());
 				}
@@ -2341,13 +2933,26 @@ public class CiEntityWS {
 				if (massUpdateParameterInput.getRefId()) {
 					application.setRefId(templateApplication.getRefId());
 				}
+				CiBaseDTO dto = new CiBaseDTO();
 				if (massUpdateParameterInput.getRelevanzITSEC()) {
 					application.setRelevanzITSEC(templateApplication
 							.getRelevanzITSEC());
+					if(templateApplication.getRelevanzITSEC() == -1){
+						dto.setRelevanceGR1435(YES);
+					}else{
+						dto.setRelevanceGR1435(NO);
+					}
 				}
 				if (massUpdateParameterInput.isRelevanceICS()) {
 					application.setRelevanceICS(templateApplication
 							.getRelevanceICS());
+					if(templateApplication.getRelevanceICS() == -1){
+						dto.setRelevanceGR1920(YES);
+					}else{
+						dto.setRelevanceGR1920(NO);
+					}
+					
+					
 				}
 				if (massUpdateParameterInput.isRelevance2059()) {
 					application.setRelevance2059(templateApplication
@@ -2357,6 +2962,38 @@ public class CiEntityWS {
 					application.setRelevance2008(templateApplication
 							.getRelevance2008());
 				}
+				
+				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_APPLICATION,templateApplication.getApplicationId());
+				String tempCD3010 = AirKonstanten.NO_SHORT;
+				String tempCD3011 = AirKonstanten.NO_SHORT;
+				for(int i =0; i<ComplianceIDS.size(); i++ ){
+					
+				
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+					tempCD3010 = AirKonstanten.YES_SHORT;
+				}
+				
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+					tempCD3011 = AirKonstanten.YES_SHORT;
+				}
+				}
+				
+				
+				dto.setTableId(AirKonstanten.TABLE_ID_APPLICATION);
+				
+				
+				
+				
+				
+				if (massUpdateParameterInput.isRelevance3010()) {
+					dto.setRelevanceCD3010(tempCD3010);
+				}
+				
+				if (massUpdateParameterInput.isRelevance3011()) {
+					dto.setRelevanceCD3011(tempCD3011);
+				}
+				ComplianceHbn.setComplienceRequest(application.getId(),dto,"EUGXS");
+				
 				if (massUpdateParameterInput.getGxpFlag()) {
 					application.setGxpFlag(templateApplication.getGxpFlag());
 				}
@@ -2580,13 +3217,57 @@ public class CiEntityWS {
 					itSystem.setCiOwnerDelegate(templateItSystem
 							.getCiOwnerDelegate());
 				}
+				CiBaseDTO dto = new CiBaseDTO();
 				if (massUpdateParameterInput.getRelevanzITSEC()) {
 					itSystem.setRelevanceITSEC(templateItSystem
 							.getRelevanceITSEC());
+					if(templateItSystem.getRelevanceITSEC() == -1){
+						dto.setRelevanceGR1435(YES);
+					}else{
+						dto.setRelevanceGR1435(NO);
+					}
+					
 				}
 				if (massUpdateParameterInput.isRelevanceICS()) {
 					itSystem.setRelevanceICS(templateItSystem.getRelevanceICS());
+					if(templateItSystem.getRelevanceICS() == -1){
+						dto.setRelevanceGR1920(YES);
+					}else{
+						dto.setRelevanceGR1920(NO);
+					}
 				}
+				
+				
+				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_IT_SYSTEM,templateItSystem.getId());
+				String tempCD3010 = AirKonstanten.NO_SHORT;
+				String tempCD3011 = AirKonstanten.NO_SHORT;
+				for(int i =0; i<ComplianceIDS.size(); i++ ){
+					
+				
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+					tempCD3010 = AirKonstanten.YES_SHORT;
+				}
+				
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+					tempCD3011 = AirKonstanten.YES_SHORT;
+				}
+				}
+				
+				
+				dto.setTableId(AirKonstanten.TABLE_ID_IT_SYSTEM);
+					
+				
+				if (massUpdateParameterInput.isRelevance3010()) {
+					dto.setRelevanceCD3010(tempCD3010);
+				}
+				
+				if (massUpdateParameterInput.isRelevance3011()) {
+					dto.setRelevanceCD3011(tempCD3011);
+				}
+				ComplianceHbn.setComplienceRequest(itSystem.getId(),dto,"EUGXS");
+				
+				
+				
 				if (massUpdateParameterInput.getGxpFlag()) {
 					itSystem.setGxpFlag(templateItSystem.getGxpFlag());
 				}
@@ -3049,6 +3730,13 @@ public class CiEntityWS {
 														+ mAttrParameterInput
 																.getSelectedCIs()
 														+ ")";
+												}else{
+													if (ciTypeId == AirKonstanten.TABLE_ID_SERVICE) {
+														sql = "select h from Service as h where h.id in("
+															+ mAttrParameterInput
+																	.getSelectedCIs()
+															+ ")";
+													}
 												}
 												
 											}
@@ -3213,6 +3901,23 @@ public class CiEntityWS {
 				locationCi.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				locationCi
 						.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+				CiBaseDTO dto = new CiBaseDTO();
+				setUpDTO(mAttrParameterInput,dto,((int) (long)mAttrParameterInput.getCiTypeId()));
+				
+				if(locationCi.getRelevanceICS() == 0){
+					
+					dto.setRelevanceGR1920("N");
+				}else{
+					dto.setRelevanceGR1920("Y");
+				}
+				if(locationCi.getRelevanceITSEC() == 0){
+					
+					dto.setRelevanceGR1435("N");
+				}else{
+					dto.setRelevanceGR1435("Y");
+				}
+				
+				ComplianceHbn.setComplienceRequest(locationCi.getId(),dto,mAttrParameterInput.getCwid());
 				if (++count % 20 == 0) {
 					session.flush();
 					session.clear();
@@ -3491,6 +4196,25 @@ public class CiEntityWS {
 				application.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				application.setUpdateTimestamp(ApplReposTS
 						.getCurrentTimestamp());
+				CiBaseDTO dto = new CiBaseDTO();
+				setUpDTO(mAttrParameterInput,dto,AirKonstanten.TABLE_ID_APPLICATION);
+				
+				if(application.getRelevanceICS() == 0){
+					
+					dto.setRelevanceGR1920("N");
+				}else{
+					dto.setRelevanceGR1920("Y");
+				}
+				if(application.getRelevanzITSEC() == 0){
+					
+					dto.setRelevanceGR1435("N");
+				}else{
+					dto.setRelevanceGR1435("Y");
+				}
+				
+				
+				ComplianceHbn.setComplienceRequest(application.getId(),dto,mAttrParameterInput.getCwid());
+				
 
 				if (++count % 20 == 0) {
 					session.flush();
@@ -3542,6 +4266,17 @@ public class CiEntityWS {
 		return parameterOutPut;
 	}
 	
+	private void setUpDTO(MassUpdateChangeAttrParameterInput mAttrParameterInput, CiBaseDTO dto, int tableId) {
+		
+		// TODO Auto-generated method stub
+		dto.setTableId(tableId);
+		dto.setRelevanceCD3010(mAttrParameterInput.getRelevanceCD3010());
+		dto.setRelevanceCD3011(mAttrParameterInput.getRelevanceCD3011());
+		dto.setRelevanceGR1920(mAttrParameterInput.getRelevanceGR1920());
+		dto.setRelevanceGR1435(mAttrParameterInput.getRelevanceGR1435());
+		
+	}
+
 	private MassUpdateValueTransferParameterOutPut functionSelectAttrMassUpdate(
 			MassUpdateChangeAttrParameterInput mAttrParameterInput) {
 		MassUpdateValueTransferParameterOutPut parameterOutPut = new MassUpdateValueTransferParameterOutPut();
@@ -3622,6 +4357,24 @@ public class CiEntityWS {
 					session.flush();
 					session.clear();
 				}
+				CiBaseDTO dto = new CiBaseDTO();
+				setUpDTO(mAttrParameterInput,dto,AirKonstanten.TABLE_ID_FUNCTION);
+				if(function.getRelevanceICS() == 0){
+					
+					dto.setRelevanceGR1920("N");
+				}else{
+					dto.setRelevanceGR1920("Y");
+				}
+				if(function.getRelevanceITSEC() == 0){
+					
+					dto.setRelevanceGR1435("N");
+				}else{
+					dto.setRelevanceGR1435("Y");
+				}
+				
+				
+				ComplianceHbn.setComplienceRequest(function.getId(),dto,mAttrParameterInput.getCwid());
+				
 			}
 			session.flush();
 			session.clear();
@@ -3845,6 +4598,24 @@ public class CiEntityWS {
 					session.flush();
 					session.clear();
 				}
+				CiBaseDTO dto = new CiBaseDTO();
+				setUpDTO(mAttrParameterInput,dto,AirKonstanten.TABLE_ID_IT_SYSTEM);
+				if(itSystem.getRelevanceICS() == 0){
+					
+					dto.setRelevanceGR1920("N");
+				}else{
+					dto.setRelevanceGR1920("Y");
+				}
+				if(itSystem.getRelevanceITSEC() == 0){
+					
+					dto.setRelevanceGR1435("N");
+				}else{
+					dto.setRelevanceGR1435("Y");
+				}
+				
+				
+				ComplianceHbn.setComplienceRequest(itSystem.getId(),dto,mAttrParameterInput.getCwid());
+				
 			}
 			session.flush();
 			session.clear();
