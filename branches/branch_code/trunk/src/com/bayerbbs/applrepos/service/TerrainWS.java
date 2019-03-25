@@ -1,10 +1,14 @@
 package com.bayerbbs.applrepos.service;
 
+import java.util.List;
+
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.CiComplianceRequest;
 import com.bayerbbs.applrepos.domain.Terrain;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.hibernate.BaseHbn;
+import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
 import com.bayerbbs.applrepos.hibernate.TerrainHbn;
 
 public class TerrainWS {
@@ -47,6 +51,10 @@ public class TerrainWS {
 		
 		terrainDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		terrainDTO.setRelevanceGR1920(input.getRelevanceGR1920());
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		terrainDTO.setRelevanceCD3010(input.getRelevanceCD3010());
+		terrainDTO.setRelevanceCD3011(input.getRelevanceCD3011());
 
 		terrainDTO.setGxpFlag(input.getGxpFlag());
 		terrainDTO.setGxpFlagId(input.getGxpFlag());
@@ -178,9 +186,36 @@ public class TerrainWS {
 				dto.setCiOwnerDelegate(terrainSource.getCiOwnerDelegate());
 				dto.setCiOwnerDelegateHidden(terrainSource.getCiOwnerDelegate());
 				dto.setTemplate(terrainSource.getTemplate());
-				
+				//EUGXS
+				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 				dto.setRelevanzItsec(terrainSource.getRelevanceITSEC());
 				dto.setRelevanceICS(terrainSource.getRelevanceICS());
+				
+				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_TERRAIN,terrainSource.getId());
+				
+				for(int i =0; i<ComplianceIDS.size(); i++ ){
+				
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+						dto.setRelevanceCD3010(AirKonstanten.YES_SHORT);
+					}
+					
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+						dto.setRelevanceCD3011(AirKonstanten.YES_SHORT);
+					}
+				}
+				
+				
+				if(terrainSource.getRelevanceITSEC() == -1)
+					dto.setRelevanceGR1435(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
+				}
+				
+				if(terrainSource.getRelevanceICS() == -1)
+					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
+				}
 				
 				// save / create itSystem
 				dto.setStandortId(terrainSource.getStandortId());

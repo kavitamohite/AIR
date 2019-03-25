@@ -52,6 +52,22 @@ public class MassUpdateParameterInput {
 	private boolean relevanceICS;
 	private boolean relevance2059;
 	private boolean relevance2008;
+	//EUGXS
+	//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+	private boolean relevance3010;
+	private boolean relevance3011;
+	public boolean isRelevance3010() {
+		return relevance3010;
+	}
+	public void setRelevance3010(boolean relevance3010) {
+		this.relevance3010 = relevance3010;
+	}
+	public boolean isRelevance3011() {
+		return relevance3011;
+	}
+	public void setRelevance3011(boolean relevance3011) {
+		this.relevance3011 = relevance3011;
+	}
 	private boolean osNameId;
 	private boolean primaryFunctionId;
 	private boolean virtualHardwareSoftware;
