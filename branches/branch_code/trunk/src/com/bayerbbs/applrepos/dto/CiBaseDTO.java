@@ -38,7 +38,36 @@ public class CiBaseDTO {// implements Serializable
 	
 	private String relevanceGR1435;//ITSEC
 	private String relevanceGR1920;//ICS
+	//EUGXS
+	//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+	private String relevanceGR2008;
+	private String relevanceCD3010;
+	public String getRelevanceCD3010() {
+		return relevanceCD3010;
+	}
+
+	public void setRelevanceCD3010(String relevanceCD3010) {
+		this.relevanceCD3010 = relevanceCD3010;
+	}
+
+	public String getRelevanceCD3011() {
+		return relevanceCD3011;
+	}
+
+	public void setRelevanceCD3011(String relevanceCD3011) {
+		this.relevanceCD3011 = relevanceCD3011;
+	}
+
+	private String relevanceCD3011;
 	
+	public String getRelevanceGR2008() {
+		return relevanceGR2008;
+	}
+
+	public void setRelevanceGR2008(String relevanceGR2008) {
+		this.relevanceGR2008 = relevanceGR2008;
+	}
+
 	private Long relevanceICS;
 	private Long relevanzItsec;
 	
