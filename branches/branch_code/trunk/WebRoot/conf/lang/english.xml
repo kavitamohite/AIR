@@ -226,7 +226,7 @@
 			<applicationLoadClass>Load Class</applicationLoadClass>
 			<applicationDedicatedShared>Dedicated</applicationDedicatedShared>
 		  
-		<protectionPanelTitle>Protection</protectionPanelTitle>
+			<protectionPanelTitle>Protection</protectionPanelTitle>
 			<applicationProtection>Application Protection</applicationProtection>
 			<itSecSbAvailabilityId>Availability</itSecSbAvailabilityId>
 			<itSecSbAvailabilityDescription>Explanation</itSecSbAvailabilityDescription>
@@ -249,11 +249,13 @@
 		
 				<itsetName>IT Set</itsetName>
 				<isTemplate>Is BYTsec-Template</isTemplate>
-			<compliancerelevance>Relevant Regulations</compliancerelevance>	
-				<relevanceGR1435>GR1435</relevanceGR1435>
+				<compliancerelevance>Relevant Regulations</compliancerelevance>	
+				<relevanceGR1435>CP1435</relevanceGR1435>
 				<relevanceGR2059>GR2059</relevanceGR2059><!-- RFC 9016 1775 zu 2059 -->
-				<relevanceGR1920>GR1920 (ICS)</relevanceGR1920>
+				<relevanceGR1920>ICS</relevanceGR1920>
 				<relevanceGR2008>GR2008</relevanceGR2008>
+				<relevanceCD3010>CD3010</relevanceCD3010>
+				<relevanceCD3011>CD3011</relevanceCD3011>
 				<relevanceEditButton>Edit</relevanceEditButton>
 				<relevanceViewButton>View</relevanceViewButton>
 				<relevance1435EditButton>Show</relevance1435EditButton>

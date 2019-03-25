@@ -241,10 +241,12 @@
 		<itsetName>IT Verbund</itsetName>
 		<isTemplate>BYTsec-Template?</isTemplate>
 		<compliancerelevance>Relevante Regelungen</compliancerelevance>	
-		<relevanceGR1435>KR1435</relevanceGR1435>
+		<relevanceGR1435>CP1435</relevanceGR1435>
 		<relevanceGR2059>KR2059</relevanceGR2059><!-- RFC 9016 1775 zu 2059 -->
-		<relevanceGR1920>KR1920 (ICS)</relevanceGR1920>
+		<relevanceGR1920>ICS</relevanceGR1920>
 		<relevanceGR2008>KR2008</relevanceGR2008>
+		<relevanceCD3010>CD3010</relevanceCD3010>
+		<relevanceCD3011>CD3011</relevanceCD3011>
 		<relevanceEditButton>Bearbeiten</relevanceEditButton>
 		<relevanceViewButton>Anzeigen</relevanceViewButton>
 		<relevance1435EditButton>Anzeigen</relevance1435EditButton>

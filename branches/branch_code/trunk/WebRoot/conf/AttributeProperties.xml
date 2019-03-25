@@ -1076,6 +1076,29 @@
 		<attributeLength>0</attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
+	
+	<Identifier>
+		<id>relevanceCD3010</id>
+		<Mandatory>optional</Mandatory>
+		<Relevance>operational and strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>AKZ,SNS,BVS,NAAC,VCenter,SHAREPOINT,APAC,BARDO,BBSam,BKV,BSHARP,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,HPED,OLA,QIP,SAP,SDB,SIEBEL,Software,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
+		<id>relevanceCD3011</id>
+		<Mandatory>optional</Mandatory>
+		<Relevance>operational and strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>AKZ,SNS,BVS,NAAC,VCenter,SHAREPOINT,APAC,BARDO,BBSam,BKV,BSHARP,CISTO_MAC,CNB,CWIDDB,GIS,GSDB,HPED,OLA,QIP,SAP,SDB,SIEBEL,Software,VPCC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType></attributeType>
+		<attributeLength></attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
 
 	<Identifier>
 		<id>relevanceGR1435</id>
@@ -1254,6 +1277,29 @@
 	</Identifier>
 	<Identifier>
 		<id>chbGR2008</id>
+		<Mandatory>optional</Mandatory>
+		<Relevance>strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>APAC,HPED,SHAREPOINT,VPCC,APERTURE,DBVS,MSSQL,SNS,ERA,FW,BVS,COMMAND,VCenter,NAAC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType>Text</attributeType>
+		<attributeLength>10</attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	
+	<Identifier>
+		<id>chbCD3010</id>
+		<Mandatory>optional</Mandatory>
+		<Relevance>strategic</Relevance>
+		<DependencyID></DependencyID>
+		<EditableIfSource>APAC,HPED,SHAREPOINT,VPCC,APERTURE,DBVS,MSSQL,SNS,ERA,FW,BVS,COMMAND,VCenter,NAAC,SISecGUI,AIR,RFC,ANT</EditableIfSource>
+		<UseInWizard>Y</UseInWizard>
+		<attributeType>Text</attributeType>
+		<attributeLength>10</attributeLength>
+		<attributeMask></attributeMask>
+	</Identifier>
+	<Identifier>
+		<id>chbCD3011</id>
 		<Mandatory>optional</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
