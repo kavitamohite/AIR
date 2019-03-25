@@ -205,10 +205,15 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 				},
     			
     			items: [
+    			//EUGXS
+    			//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 			        { boxLabel: 'GR1435', name: 'cbgWizardRegulationsW', width: 100 },
 			        { boxLabel: 'GR1920', name: 'cbgWizardRegulationsW', width: 100 },
-			        { boxLabel: 'GR2059', name: 'cbgWizardRegulationsW', width: 100 },
-			        { boxLabel: 'GR2008', name: 'cbgWizardRegulationsW', width: 100 }
+			        //{ boxLabel: 'GR2059', name: 'cbgWizardRegulationsW', width: 100 },
+			        //{ boxLabel: 'GR2008', name: 'cbgWizardRegulationsW', width: 100 },
+			        { boxLabel: 'CD3010', name: 'cbgWizardRegulationsW', width: 100 },
+			        { boxLabel: 'CD3011', name: 'cbgWizardRegulationsW', width: 100 }
+			        
 		        ]
 	        },{
 		        xtype: 'combo',
@@ -537,9 +542,11 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		
 		var cbgRegulations = this.getComponent('cbgRegulationsW');
 		this.setBoxLabel(cbgRegulations.items.items[0], labels.relevanceGR1435);
-		this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceGR2059);
 		this.setBoxLabel(cbgRegulations.items.items[2], labels.relevanceGR1920);
-		this.setBoxLabel(cbgRegulations.items.items[3], labels.relevanceGR2008);
+		//this.setBoxLabel(cbgRegulations.items.items[2], labels.relevanceGR1920);
+		//this.setBoxLabel(cbgRegulations.items.items[3], labels.relevanceGR2008);
+		this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceCD3010);
+		this.setBoxLabel(cbgRegulations.items.items[3], labels.relevanceCD3011);
 		this.setFieldLabel(cbgRegulations, labels.compliancerelevance);
 		AIR.AirAclManager.setNecessity(cbgRegulations);
 		
