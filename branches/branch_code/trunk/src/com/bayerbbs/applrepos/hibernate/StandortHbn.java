@@ -78,6 +78,9 @@ public class StandortHbn extends LokationItemHbn {
 						// standort found - change values
 						
 						setUpCi(standort, dto, cwid, false);
+						//EUGXS
+						//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+						ComplianceHbn.setComplienceRequest(dto.getId(),dto,cwid);
 						
 						if (null != dto.getNameEn()) {
 							if (EMPTY.equals(dto.getNameEn())) {
@@ -279,7 +282,10 @@ public class StandortHbn extends LokationItemHbn {
 						
 						boolean toCommit = false;
 						try {
-							session.save(standort);
+							//EUGXS
+							//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+						Long id = (Long) session.save(standort);
+							ComplianceHbn.setComplienceRequest(id,dto,cwid);
 							session.flush();
 							toCommit = true;
 						} catch (Exception e) {

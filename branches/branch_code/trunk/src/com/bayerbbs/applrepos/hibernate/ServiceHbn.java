@@ -23,6 +23,7 @@ import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Service;
 import com.bayerbbs.applrepos.domain.ServiceEditParameterInput;
+import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemDTO;
@@ -340,7 +341,12 @@ System.out.println("Service SQL"+sql);
 		try {
 			Service service = new Service();
 			setUpServiceCi(input, service, true);
+			//EUGXS
+			//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+			CiBaseDTO dto = new CiBaseDTO();
+			setUpDTO(input,dto);			
 			id = (Long) session.save(service);
+			ComplianceHbn.setComplienceRequest(id,dto,input.getCwid());
 			session.flush();
 			autoCommit = true;
 		} catch (Exception e) {
@@ -361,6 +367,18 @@ System.out.println("Service SQL"+sql);
 				}
 			}
 		}
+	}
+	//EUGXS
+	//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+	private static  void setUpDTO(ServiceEditParameterInput input,
+			CiBaseDTO dto) {
+		dto.setTableId(AirKonstanten.TABLE_ID_SERVICE);
+		dto.setRelevanceCD3010(input.getRelevanceCD3010());
+		dto.setRelevanceCD3011(input.getRelevanceCD3011());
+		dto.setRelevanceGR1920(input.getRelevanceGR1920());
+		dto.setRelevanceGR1435(input.getRelevanceGR1435());
+		
+		
 	}
 
 	private static  void setUpServiceCi(ServiceEditParameterInput input,
@@ -414,6 +432,11 @@ System.out.println("Service SQL"+sql);
 			output.setErrorMessage("1001", EMPTY + id);
 		} else {
 			setUpServiceCi(input, service, false);
+			//EUGXS
+			//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+			CiBaseDTO dto = new CiBaseDTO();
+			setUpDTO(input,dto);
+			ComplianceHbn.setComplienceRequest(service.getId(),dto,input.getCwid());
 		}
 		boolean toCommit = false;
 		try {

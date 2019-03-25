@@ -70,6 +70,9 @@ System.out.println("pathway"+pathwayDTO.getId());
 					boolean autoCommit = false;
 					try {
 						id =(Long) session.save(way);
+						//EUGXS
+						//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+						ComplianceHbn.setComplienceRequest(id,pathwayDTO,cwid);
 						session.flush();
 						autoCommit = true;
 
@@ -138,6 +141,9 @@ System.out.println("pathway"+pathwayDTO.getId());
 						output.setErrorMessage("1001", EMPTY + id);
 					} else {
 						BaseHbn.setUpCi(ways, pathwayDTO, cwid, false);
+						//EUGXS
+						//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+						ComplianceHbn.setComplienceRequest(ways.getId(),pathwayDTO,cwid);
 					}
 					boolean toCommit = false;
 					try {

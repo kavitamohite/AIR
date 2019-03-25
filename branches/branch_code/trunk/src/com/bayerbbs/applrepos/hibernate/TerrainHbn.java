@@ -80,6 +80,9 @@ public class TerrainHbn extends LokationItemHbn {
 
 						
 						setUpCi(terrain, dto, cwid, false);
+						//EUGXS
+						//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+						ComplianceHbn.setComplienceRequest(dto.getId(),dto,cwid);
 
 					}
 					
@@ -257,6 +260,7 @@ public class TerrainHbn extends LokationItemHbn {
 						
 						setUpCi(terrain, dto, cwid, true);
 						
+						
 						terrain.setStandortId(dto.getStandortId());
 						Standort standort = StandortHbn.findById(dto.getStandortId());
 						terrain.setStandort(standort);
@@ -264,7 +268,10 @@ public class TerrainHbn extends LokationItemHbn {
 						
 						boolean toCommit = false;
 						try {
-							session.save(terrain);
+							//EUGXS
+							//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+							Long id = (Long) session.save(terrain);
+							ComplianceHbn.setComplienceRequest(id,dto,cwid);
 							session.flush();
 							toCommit = true;
 						} catch (Exception e) {

@@ -94,6 +94,9 @@ public class SchrankHbn extends LokationItemHbn {
 
 						
 						setUpCi(schrank, dto, cwid, false);
+						//EUGXS
+						//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+						ComplianceHbn.setComplienceRequest(dto.getId(),dto,cwid);
 						
 						/*
 						if(dto.getRoomId() != null && schrank.getRoomId() != null && !schrank.getRoomId().equals(dto.getRoomId())) {
@@ -485,7 +488,10 @@ public class SchrankHbn extends LokationItemHbn {
 						
 						boolean toCommit = false;
 						try {
-							session.save(schrank);
+							//EUGXS
+							//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+							Long id = (Long) session.save(schrank);
+							ComplianceHbn.setComplienceRequest(id,dto,cwid);
 							session.flush();
 							toCommit = true;
 						} catch (Exception e) {

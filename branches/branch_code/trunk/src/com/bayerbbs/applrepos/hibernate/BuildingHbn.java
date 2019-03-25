@@ -116,6 +116,7 @@ public class BuildingHbn extends LokationItemHbn {
 						boolean toCommit = false;
 						try {
 							buildingId = (Long) session.save(building);
+							ComplianceHbn.setComplienceRequest(buildingId,dto,cwid);
 							session.flush();
 							toCommit = true;
 						} catch (Exception e) {
@@ -199,6 +200,9 @@ public class BuildingHbn extends LokationItemHbn {
 						boolean toCommit = false;
 						try {
 							buildingAreaId =(Long) session.save(buildingArea);
+							//EUGXS
+							//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+							ComplianceHbn.setComplienceRequest(buildingAreaId,dto,cwid);
 							session.flush();
 							toCommit = true;
 						} catch (Exception e) {
@@ -276,6 +280,9 @@ public class BuildingHbn extends LokationItemHbn {
 
 						
 						setUpCi(building, dto, cwid, false);
+						//EUGXS
+						//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+						ComplianceHbn.setComplienceRequest(dto.getId(),dto,cwid);
 						
 						if (null != dto.getAlias())
 							building.setAlias(dto.getAlias());
@@ -384,6 +391,10 @@ public class BuildingHbn extends LokationItemHbn {
 					} else {
 						
 						setUpCi(buildingArea, dto, cwid, false);
+						//EUGXS
+						//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+						ComplianceHbn.setComplienceRequest(dto.getId(),dto,cwid);
+
 						//vandana
 						
 						buildingArea.setProvider_Name(dto.getProviderName());

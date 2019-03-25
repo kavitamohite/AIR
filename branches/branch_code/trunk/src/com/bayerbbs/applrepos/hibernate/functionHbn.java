@@ -3,12 +3,16 @@
  */
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,10 +28,15 @@ import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Application;
 import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.CiBase1;
+import com.bayerbbs.applrepos.domain.CiComplianceRequest;
 import com.bayerbbs.applrepos.domain.Function;
 import com.bayerbbs.applrepos.domain.FunctionDTO;
+import com.bayerbbs.applrepos.domain.Standort;
 import com.bayerbbs.applrepos.domain.Terrain;
+import com.bayerbbs.applrepos.domain.Ways;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.PathwayDTO;
+import com.bayerbbs.applrepos.dto.StandortDTO;
 import com.bayerbbs.applrepos.dto.TerrainDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
@@ -70,6 +79,9 @@ public class functionHbn extends BaseHbn {
 					boolean autoCommit = false;
 					try {
 						id = (Long) session.save(function);
+						//EUGXS
+						//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+						ComplianceHbn.setComplienceRequest(id,functionDTO,cwid);
 						session.flush();
 						autoCommit = true;
 
@@ -116,6 +128,238 @@ public class functionHbn extends BaseHbn {
 		return output;
 
 	}
+	//EUGXS
+	//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+	
+	public static CiEntityEditParameterOutput copyFunction(String cwid, Long pathwayIdSource, Long pathwayIdTarget, String ciNameTarget, String ciAliasTarget) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		String validationMessage = null;
+		
+		if (null != cwid) {
+			cwid = cwid.toUpperCase();
+			
+				// check der InputWerte
+				List<String> messages = new ArrayList<String>();
+
+				if (messages.isEmpty()) {	
+				Session session = HibernateUtil.getSession();
+				Transaction tx = null;
+				tx = session.beginTransaction();
+				Function pathwaySource = (Function) session.get(Function.class, pathwayIdSource);
+				Function pathwayTarget = null;
+				if (null == pathwayIdSource) {
+					// Komplette Neuanlage des Datensatzes mit Insert/Update-Feldern
+					
+					pathwayTarget = new Function();
+					// schrank - insert values
+					pathwayTarget.setInsertUser(cwid);
+					pathwayTarget.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+					pathwayTarget.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+
+					// schrank - update values
+					pathwayTarget.setUpdateUser(pathwayTarget.getInsertUser());
+					pathwayTarget.setUpdateQuelle(pathwayTarget.getInsertQuelle());
+					pathwayTarget.setUpdateTimestamp(pathwayTarget.getInsertTimestamp());
+					
+					
+					pathwayTarget.setFunctionName(ciNameTarget); 
+					 
+					pathwayTarget.setCiOwner(cwid.toUpperCase());
+					pathwayTarget.setCiOwnerDelegate(pathwaySource.getCiOwnerDelegate());
+					pathwayTarget.setTemplate(pathwaySource.getTemplate());
+					
+					pathwayTarget.setRelevanceITSEC(pathwaySource.getRelevanceITSEC());
+					pathwayTarget.setRelevanceICS(pathwaySource.getRelevanceICS());
+
+				}
+				else {
+					// Reaktivierung / Übernahme des bestehenden Datensatzes
+					pathwayTarget = (Function) session.get(Function.class, pathwayIdTarget);
+					// room found - change values
+					output.setCiId(pathwayIdTarget);
+					
+					pathwayTarget.setUpdateUser(cwid);
+					pathwayTarget.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+					pathwayTarget.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+				}
+				if (null == pathwaySource) {
+					// itsystem was not found in database
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the function id "	+ pathwayIdSource + " was not found in database" });
+				}
+				else if (null != pathwayTarget.getDeleteTimestamp()) {
+					// room is deleted
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the function id "	+ pathwayIdTarget + " is deleted" });
+				}else {
+
+					//pathwayTarget.setSeverityLevelId(pathwaySource.getSeverityLevelId());
+					//pathwayTarget.setBusinessEssentialId(pathwaySource.getBusinessEssentialId());
+
+					// ==============================
+					
+					
+					// der kopierende User wird Responsible
+					pathwayTarget.setCiOwner(cwid);
+					pathwayTarget.setCiOwnerDelegate(pathwaySource.getCiOwnerDelegate());
+					
+					// ==========
+					// compliance
+					// ==========
+					
+					// IT SET only view!
+					pathwayTarget.setItset(pathwaySource.getItset());
+					pathwayTarget.setTemplate(pathwaySource.getTemplate());
+					pathwayTarget.setItsecGroupId(null);
+					pathwayTarget.setRefId(null);
+					
+				}
+				boolean toCommit = false;
+				try {
+					if (null == validationMessage) {
+						if (null != pathwayTarget && null == pathwayTarget.getDeleteTimestamp()) {
+							session.saveOrUpdate(pathwayTarget);
+							session.flush();
+							
+							output.setCiId(pathwayTarget.getId());
+						}
+						toCommit = true;
+					}
+				} catch (Exception e) {
+					String message = e.getMessage();
+					log.error(message);
+					// handle exception
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					
+					if (null != message && message.startsWith("ORA-20000: ")) {
+						message = message.substring("ORA-20000: ".length());
+					}
+					
+					output.setMessages(new String[] { message });
+				}finally {
+					String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+					if (toCommit && null != pathwayTarget) {
+						if (null == hbnMessage) {
+							output.setResult(AirKonstanten.RESULT_OK);
+							output.setMessages(new String[] { EMPTY });
+						} else {
+							output.setResult(AirKonstanten.RESULT_ERROR);
+							output.setMessages(new String[] { hbnMessage });
+						}
+					}
+				}
+				} else {
+					// messages
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					String astrMessages[] = new String[messages.size()];
+					for (int i = 0; i < messages.size(); i++) {
+						astrMessages[i] = messages.get(i);
+					}
+					output.setMessages(astrMessages);
+				}
+
+		} else {
+			// cwid missing
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { "cwid missing" });
+		}
+
+		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
+			// TODO errorcodes / Texte
+			if (null != output.getMessages() && output.getMessages().length > 0) {
+				output.setDisplayMessage(output.getMessages()[0]);
+			}
+		}
+		
+		return output;
+	
+	}
+	
+	
+	
+	
+	public static void getFunction(FunctionDTO dto, Function function) {
+		dto.setTableId(AirKonstanten.TABLE_ID_FUNCTION);
+		getCiFunction((CiBaseDTO) dto,  function);
+
+		//dto.setLandId(site.getLandId());
+	}
+	
+	public static void getCiFunction(CiBaseDTO ciDTO, Function ci)  
+	{
+
+		ciDTO.setCiOwnerDelegate(ci.getCiOwnerDelegate());
+		ciDTO.setGxpFlag(ci.getGxpFlag()); 
+		ciDTO.setItsecGroupId(ci.getItsecGroupId());
+		
+		ciDTO.setItset(ci.getItset());
+		ciDTO.setRefId(ci.getRefId());
+		ciDTO.setRelevanceICS(ci.getRelevanceICS());
+		ciDTO.setRelevanzItsec(ci.getRelevanceITSEC());
+		
+		ciDTO.setTemplate(ci.getTemplate());
+		
+
+		String strSQL = "SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Group_Type_Name),4000,1) FROM V_MD_GROUP_TYPE";
+		switch (ciDTO.getTableId())
+		{
+		case AirKonstanten.TABLE_ID_APPLICATION:
+			strSQL +=  " WHERE Visible_Application = 1";
+			break;
+		case AirKonstanten.TABLE_ID_IT_SYSTEM:
+			strSQL +=  " WHERE Visible_Itsystem = 1";
+			break;
+		case AirKonstanten.TABLE_ID_POSITION:
+		case AirKonstanten.TABLE_ID_ROOM:
+		case AirKonstanten.TABLE_ID_BUILDING_AREA: 
+		case AirKonstanten.TABLE_ID_BUILDING: 
+		case AirKonstanten.TABLE_ID_TERRAIN: 
+		case AirKonstanten.TABLE_ID_SITE:
+		case AirKonstanten.TABLE_ID_FUNCTION:
+			strSQL +=  " WHERE Visible_Location = 1";
+			break;			
+		}
+		Pattern pattern = Pattern.compile("\\([A-Z]{2,8}\\)$");						// look for CWID 
+    	Pattern replace = Pattern.compile("[\\(\\)]");								// replace parentheses
+		Hashtable<String,String> tableContacts = new Hashtable<String,String>();
+		Session session = HibernateUtil.getSession();
+		//ciDTO.setDownStreamAdd((String) session.createSQLQuery("SELECT DBMS_LOB.SUBSTR(WM_CONCAT(Id), 4000, 1) FROM TABLE(Pck_Air.FT_RelatedCIs(:Table_Id, :Id, :Direction)) WHERE Table_Id IN (1, 2)").setLong("Table_Id", ciDTO.getTableId()).setLong("Id", ci.getId()).setString("Direction",AirKonstanten.DN).uniqueResult());
+		// ETNTX - IM0006168023 - Copy was not working for Location CI for Function CR will be created seperatly
+		ciDTO.setDownStreamAdd((String) session.createSQLQuery("SELECT DBMS_LOB.SUBSTR(listagg(Id) within group(order by Id), 4000, 1) FROM TABLE(Pck_Air.FT_RelatedCIs(:Table_Id, :Id, :Direction)) WHERE Table_Id IN (1, 2)").setLong("Table_Id", ciDTO.getTableId()).setLong("Id", ci.getId()).setString("Direction",AirKonstanten.DN).uniqueResult());
+		session.close();
+		for (String[] grouptype : AirKonstanten.GPSCGROUP_MAPPING) 
+		{
+			if (tableContacts.containsKey(grouptype[3]))
+			{
+				String contact = tableContacts.get(grouptype[3]);
+				char d[] = grouptype[1].toCharArray();
+				d[0] = String.valueOf(d[0]).toUpperCase().charAt(0);
+				String method = "set" + new String(d);
+				String methodHidden = "set" + new String(d) + AirKonstanten.GPSCGROUP_HIDDEN_DESCRIPTOR;
+				try
+				{
+					CiBaseDTO.class.getMethod(method, new Class[]{ String.class }).invoke( ciDTO, new Object[]{ contact} );
+				}
+				catch (Exception e)
+				{
+					System.out.println(e.toString());					
+				}
+				try
+				{
+					CiBaseDTO.class.getMethod(methodHidden, new Class[]{ String.class }).invoke( ciDTO, new Object[]{ contact} );
+				}
+				catch (Exception e)
+				{
+					System.out.println(e.toString());					
+				}
+			}
+		}
+	
+		
+	}
+
+
 			//EUGXS 
 			//IM0008125159 - Cleanup function CI BS-ITO-ITPI-APM-CPS Group head => 18-2,19-2
 
@@ -467,6 +711,7 @@ public class functionHbn extends BaseHbn {
 						// Ways is deleted
 						output.setErrorMessage("1001", EMPTY + id);
 					} else {
+						
 						setUpCi(function, functionDTO, cwid, false);
 					}
 					try {
@@ -474,6 +719,9 @@ public class functionHbn extends BaseHbn {
 								&& null == function.getDeleteTimestamp()) {
 							session.saveOrUpdate(function);
 							session.flush();
+							//EUGXS
+							//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+							ComplianceHbn.setComplienceRequest(function.getFunctionId(),functionDTO,cwid);
 							toCommit = true;
 						}
 					} catch (Exception e) {
@@ -511,7 +759,9 @@ public class functionHbn extends BaseHbn {
 		return output;
 
 	}
-
+	
+	
+		
 	protected static void setUpCi(Function ci, CiBaseDTO ciDTO, String cwid,
 			boolean isCiCreate) {
 		if (null != ciDTO.getCiOwnerHidden()) {
