@@ -824,11 +824,11 @@ public class CiEntityWS {
 		for(int i =0; i<ComplianceIDS.size(); i++ ){
 			
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 			businessApplicationDTO.setRelevanceCD3010(AirKonstanten.YES_SHORT);
 		}
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 			businessApplicationDTO.setRelevanceCD3011(AirKonstanten.YES_SHORT);
 		}
 		}
@@ -962,11 +962,11 @@ public class CiEntityWS {
 		for(int i =0; i<ComplianceIDS.size(); i++ ){
 			
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 			functionDTO.setRelevanceCD3010(YES);
 		}
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 			functionDTO.setRelevanceCD3011(YES);
 		}
 		}
@@ -1184,11 +1184,11 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 		for(int i =0; i<ComplianceIDS.size(); i++ ){
 			
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 			ciBaseDTO.setRelevanceCD3010(AirKonstanten.YES_SHORT);
 		}
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 			ciBaseDTO.setRelevanceCD3011(AirKonstanten.YES_SHORT);
 		}
 		}
@@ -1340,11 +1340,11 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 		for(int i =0; i<ComplianceIDS.size(); i++ ){
 			
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 			ciBaseDTO.setRelevanceCD3010(AirKonstanten.YES_SHORT);
 		}
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 			ciBaseDTO.setRelevanceCD3011(AirKonstanten.YES_SHORT);
 		}
 		}
@@ -1650,11 +1650,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		for(int i =0; i<ComplianceIDS.size(); i++ ){
 			
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 			Relevance3010 = (long) -1;
 		}
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 			Relevance3011 = (long) -1;
 		}
 		}
@@ -1813,11 +1813,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		for(int i =0; i<ComplianceIDS.size(); i++ ){
 			
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 			Relevance3010 = (long) -1;
 		}
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 			Relevance3011 = (long) -1;
 		}
 		}
@@ -1966,11 +1966,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		for(int i =0; i<ComplianceIDS.size(); i++ ){
 			
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 			Relevance3010 = (long) -1;
 		}
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 			Relevance3011 = (long) -1;
 		}
 		}
@@ -2223,11 +2223,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		for(int i =0; i<ComplianceIDS.size(); i++ ){
 			
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 			application.setRelevance2059((long) -1);
 		}
 		
-		if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+		if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 			application.setRelevance2008((long) -1);
 		}
 		}
@@ -2597,11 +2597,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				for(int i =0; i<ComplianceIDS.size(); i++ ){
 					
 				
-				if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+				if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 					tempCD3010 = AirKonstanten.YES_SHORT;
 				}
 				
-				if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+				if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 					tempCD3011 = AirKonstanten.YES_SHORT;
 				}
 				}
@@ -2746,11 +2746,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				for(int i =0; i<ComplianceIDS.size(); i++ ){
 					
 				
-				if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+				if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 					tempCD3010 = AirKonstanten.YES_SHORT;
 				}
 				
-				if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+				if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 					tempCD3011 = AirKonstanten.YES_SHORT;
 				}
 				}
@@ -2969,11 +2969,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				for(int i =0; i<ComplianceIDS.size(); i++ ){
 					
 				
-				if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+				if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 					tempCD3010 = AirKonstanten.YES_SHORT;
 				}
 				
-				if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+				if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 					tempCD3011 = AirKonstanten.YES_SHORT;
 				}
 				}
@@ -3244,11 +3244,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				for(int i =0; i<ComplianceIDS.size(); i++ ){
 					
 				
-				if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+				if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 					tempCD3010 = AirKonstanten.YES_SHORT;
 				}
 				
-				if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+				if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 					tempCD3011 = AirKonstanten.YES_SHORT;
 				}
 				}

@@ -247,11 +247,11 @@ public class ItSystemWS {
 				
 				for(int i =0; i<ComplianceIDS.size(); i++ ){					
 				
-					if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+					if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
 						dto.setRelevanceCD3010(AirKonstanten.YES_SHORT);
 					}
 					
-					if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+					if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
 						dto.setRelevanceCD3011(AirKonstanten.YES_SHORT);
 					}
 				}
