@@ -722,7 +722,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 								},
 				    			
 				    			items: [
-										{ id: 'selectAttrchbGR15435', boxLabel: 'CD1435', name: 'selectAttrcbgRegulationsW', width: 100 },
+										{ id: 'selectAttrchbGR15435', boxLabel: 'CP1435', name: 'selectAttrcbgRegulationsW', width: 100 },
 				    			        { id: 'selectAttrchbGR1920', boxLabel: 'ICS', name: 'selectAttrcbgRegulationsW', width: 100 },
 				    			        //EUGXS
 				    			        //C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit				    
