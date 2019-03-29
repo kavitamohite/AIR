@@ -780,18 +780,18 @@ public class ApplicationWS {
 						for(int i =0; i<ComplianceIDS.size(); i++ ){
 							
 						
-						if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
+						if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
 							dto.setRelevanceCD3010("Y");
 						}
 						
-						if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
+						if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
 							dto.setRelevanceCD3011("Y");
 						}
-						if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CP1435){
+						if(ComplianceIDS.get(i).getComplianceRequestId() == 1){
 							dto.setRelevanceGR1435("Y");
 						}
 						
-						if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_ICS){
+						if(ComplianceIDS.get(i).getComplianceRequestId() == 3){
 							dto.setRelevanceGR1920("Y");
 						}
 						}
@@ -872,6 +872,9 @@ public class ApplicationWS {
 					break;
 				case AirKonstanten.TABLE_ID_FUNCTION:
 					FunctionWS.createFunctionByCopyInternal(ciCopyInput, outputCI);
+					break;
+				case AirKonstanten.TABLE_ID_SERVICE:
+					ServiceWS.createServiceByCopyInternal(ciCopyInput, outputCI);
 					break;
 			}
 			
@@ -1136,11 +1139,11 @@ public class ApplicationWS {
 				for(int i =0; i<ComplianceIDS.size(); i++ ){
 					
 				
-				if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3010){
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
 					dto.setRelevanceCD3010(AirKonstanten.YES_SHORT);
 				}
 				
-				if(ComplianceIDS.get(i).getComplianceRequestId() == AirKonstanten.COMPLIANCE_ID_CD3011){
+				if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
 					dto.setRelevanceCD3011(AirKonstanten.YES_SHORT);
 				}
 				}
