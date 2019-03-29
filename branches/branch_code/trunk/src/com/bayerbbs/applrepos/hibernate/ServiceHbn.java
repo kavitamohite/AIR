@@ -21,9 +21,13 @@ import com.bayerbbs.applrepos.common.ApplReposTS;
 import com.bayerbbs.applrepos.common.CiMetaData;
 import com.bayerbbs.applrepos.common.StringUtils;
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.CiBase;
 import com.bayerbbs.applrepos.domain.Service;
+import com.bayerbbs.applrepos.domain.ServiceDTO;
 import com.bayerbbs.applrepos.domain.ServiceEditParameterInput;
+import com.bayerbbs.applrepos.domain.Ways;
 import com.bayerbbs.applrepos.dto.CiBaseDTO;
+import com.bayerbbs.applrepos.dto.PathwayDTO;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
 import com.bayerbbs.applrepos.service.CiEntityEditParameterOutput;
 import com.bayerbbs.applrepos.service.CiItemDTO;
@@ -39,6 +43,20 @@ import com.sun.xml.bind.marshaller.Messages;
 public class ServiceHbn extends BaseHbn {
 
 	private static final Log log = LogFactory.getLog(ServiceHbn.class);
+	//eugxs
+	//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+
+	public static Service findById(Long Id) {
+		return findById(Service.class,Id);
+	}
+	
+	public static void getService(ServiceDTO dto, Service service) {
+		dto.setTableId(AirKonstanten.TABLE_ID_SERVICE);
+		BaseHbn.getCi((CiBaseDTO) dto, (CiBase) service);
+		dto.setId(service.getServiceId());
+		dto.setName(service.getServiceName());
+
+	}
 
 	public static CiItemsResultDTO findServiceBy(
 			ApplicationSearchParamsDTO input) {
@@ -331,6 +349,204 @@ System.out.println("Service SQL"+sql);
 		return services;
 
 	}
+	//eugxs
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+
+	public static CiEntityEditParameterOutput createServiceCopy(String cwid,ServiceDTO input,
+			CiEntityEditParameterOutput output) {
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+		Long id = null;
+		boolean autoCommit = false;
+		try {
+			Service service = new Service();
+			setUpServiceCiCopy(cwid,input, service, true);
+			//EUGXS
+			//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+			CiBaseDTO dto = new CiBaseDTO();
+			setUpDTOCopy(input,dto);			
+			id = (Long) session.save(service);
+			ComplianceHbn.setComplienceRequest(id,dto,cwid);
+			session.flush();
+			autoCommit = true;
+		} catch (Exception e) {
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { e.getMessage() });
+
+		} finally {
+			String hbnMessage = HibernateUtil.close(tx, session, autoCommit);
+			if (autoCommit) {
+				if (null == hbnMessage) {
+					output.setResult(AirKonstanten.RESULT_OK);
+					output.setMessages(new String[] { EMPTY });
+					output.setTableId(AirKonstanten.TABLE_ID_SERVICE);
+					output.setCiId(id);
+				} else {
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { hbnMessage });
+				}
+			}
+		}
+		return output;
+	}
+	
+	public static Service findByName(String name) {
+		Session session = HibernateUtil.getSession();
+		Query q = session.getNamedQuery("findServicesByNameORAlias");
+		q.setParameter("name", name);
+		q.setParameter("alias", name);
+
+		Service service = (Service) q.uniqueResult();
+		return service;
+
+	}
+	
+	public static CiEntityEditParameterOutput copyService(String cwid, Long pathwayIdSource, Long pathwayIdTarget, String ciNameTarget, String ciAliasTarget) {
+		CiEntityEditParameterOutput output = new CiEntityEditParameterOutput();
+
+		String validationMessage = null;
+		
+		if (null != cwid) {
+			cwid = cwid.toUpperCase();
+			
+				// check der InputWerte
+				List<String> messages = new ArrayList<String>();
+
+				if (messages.isEmpty()) {	
+				Session session = HibernateUtil.getSession();
+				Transaction tx = null;
+				tx = session.beginTransaction();
+				Service pathwaySource = (Service) session.get(Service.class, pathwayIdSource);
+				Service pathwayTarget = null;
+				if (null == pathwayIdSource) {
+					// Komplette Neuanlage des Datensatzes mit Insert/Update-Feldern
+					
+					pathwayTarget = new Service();
+					// schrank - insert values
+					pathwayTarget.setInsertUser(cwid);
+					pathwayTarget.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+					pathwayTarget.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+
+					// schrank - update values
+					pathwayTarget.setUpdateUser(pathwayTarget.getInsertUser());
+					pathwayTarget.setUpdateQuelle(pathwayTarget.getInsertQuelle());
+					pathwayTarget.setUpdateTimestamp(pathwayTarget.getInsertTimestamp());
+					
+					
+					pathwayTarget.setServiceName(ciNameTarget); 
+					 
+					pathwayTarget.setCiOwner(cwid.toUpperCase());
+					pathwayTarget.setCiOwnerDelegate(pathwaySource.getCiOwnerDelegate());
+					pathwayTarget.setTemplate(pathwaySource.getTemplate());
+					
+					pathwayTarget.setRelevanceITSEC(pathwaySource.getRelevanceITSEC());
+					pathwayTarget.setRelevanceICS(pathwaySource.getRelevanceICS());
+
+				}
+				else {
+					// Reaktivierung / Übernahme des bestehenden Datensatzes
+					pathwayTarget = (Service) session.get(Service.class, pathwayIdTarget);
+					// room found - change values
+					output.setCiId(pathwayIdTarget);
+					
+					pathwayTarget.setUpdateUser(cwid);
+					pathwayTarget.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+					pathwayTarget.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+				}
+				if (null == pathwaySource) {
+					// itsystem was not found in database
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the itsystem id "	+ pathwayIdSource + " was not found in database" });
+				}
+				else if (null != pathwayTarget.getDeleteTimestamp()) {
+					// room is deleted
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					output.setMessages(new String[] { "the itsystem id "	+ pathwayIdTarget + " is deleted" });
+				}else {
+
+					//pathwayTarget.setSeverityLevelId(pathwaySource.getSeverityLevelId());
+					//pathwayTarget.setBusinessEssentialId(pathwaySource.getBusinessEssentialId());
+
+					// ==============================
+					pathwayTarget.setItSecSbAvailability(pathwaySource.getItSecSbAvailability());
+					pathwayTarget.setItSecSbAvailabilityTxt(pathwaySource.getItSecSbAvailabilityTxt());
+					
+					// der kopierende User wird Responsible
+					pathwayTarget.setCiOwner(cwid);
+					pathwayTarget.setCiOwnerDelegate(pathwaySource.getCiOwnerDelegate());
+					
+					// ==========
+					// compliance
+					// ==========
+					
+					// IT SET only view!
+					pathwayTarget.setItset(pathwaySource.getItset());
+					pathwayTarget.setTemplate(pathwaySource.getTemplate());
+					pathwayTarget.setItsecGroupId(null);
+					pathwayTarget.setRefId(null);
+					
+				}
+				boolean toCommit = false;
+				try {
+					if (null == validationMessage) {
+						if (null != pathwayTarget && null == pathwayTarget.getDeleteTimestamp()) {
+							session.saveOrUpdate(pathwayTarget);
+							session.flush();
+							
+							output.setCiId(pathwayTarget.getId());
+						}
+						toCommit = true;
+					}
+				} catch (Exception e) {
+					String message = e.getMessage();
+					log.error(message);
+					// handle exception
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					
+					if (null != message && message.startsWith("ORA-20000: ")) {
+						message = message.substring("ORA-20000: ".length());
+					}
+					
+					output.setMessages(new String[] { message });
+				}finally {
+					String hbnMessage = HibernateUtil.close(tx, session, toCommit);
+					if (toCommit && null != pathwayTarget) {
+						if (null == hbnMessage) {
+							output.setResult(AirKonstanten.RESULT_OK);
+							output.setMessages(new String[] { EMPTY });
+						} else {
+							output.setResult(AirKonstanten.RESULT_ERROR);
+							output.setMessages(new String[] { hbnMessage });
+						}
+					}
+				}
+				} else {
+					// messages
+					output.setResult(AirKonstanten.RESULT_ERROR);
+					String astrMessages[] = new String[messages.size()];
+					for (int i = 0; i < messages.size(); i++) {
+						astrMessages[i] = messages.get(i);
+					}
+					output.setMessages(astrMessages);
+				}
+
+		} else {
+			// cwid missing
+			output.setResult(AirKonstanten.RESULT_ERROR);
+			output.setMessages(new String[] { "cwid missing" });
+		}
+
+		if (AirKonstanten.RESULT_ERROR.equals(output.getResult())) {
+			// TODO errorcodes / Texte
+			if (null != output.getMessages() && output.getMessages().length > 0) {
+				output.setDisplayMessage(output.getMessages()[0]);
+			}
+		}
+		
+		return output;
+	
+	}
+	
 
 	public static void createService(ServiceEditParameterInput input,
 			CiEntityEditParameterOutput output) {
@@ -380,6 +596,56 @@ System.out.println("Service SQL"+sql);
 		
 		
 	}
+	//eugxs
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+
+	private static  void setUpDTOCopy(ServiceDTO input,
+			CiBaseDTO dto) {
+		dto.setTableId(AirKonstanten.TABLE_ID_SERVICE);
+		dto.setRelevanceCD3010(input.getRelevanceCD3010());
+		dto.setRelevanceCD3011(input.getRelevanceCD3011());
+		dto.setRelevanceGR1920(input.getRelevanceGR1920());
+		dto.setRelevanceGR1435(input.getRelevanceGR1435());
+		
+		
+	}
+	private static  void setUpServiceCiCopy(String cwid, ServiceDTO input,
+			Service service, boolean isCiCreate) {
+		if (isCiCreate) {
+			service.setInsertUser(cwid);
+			service.setInsertQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			service.setInsertTimestamp(ApplReposTS.getCurrentTimestamp());
+
+			service.setUpdateUser(cwid);
+			service.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			service.setUpdateTimestamp(service.getInsertTimestamp());
+		} else {
+			service.setUpdateUser(cwid);
+			service.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
+			service.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
+		}
+		service.setServiceName(input.getName());
+		service.setProjectName(input.getProjectName());
+		service.setOrderNumber(input.getOrderNumber());
+		service.setOrganisationalScope(input.getOrganisationalScope());
+		service.setServiceDescription(input.getServiceDescription());
+		service.setServiceAias(input.getServiceAias());
+
+		if (null != input.getSlaId()) {
+			if (-1 != input.getSlaId())
+				service.setSlaId(input.getSlaId());
+		}
+		if (null != input.getServiceContractId()) {
+			if (-1 != input.getServiceContractId())
+				service.setServiceContractId(input.getServiceContractId());
+		}
+
+		service.setCiOwner(input.getCiOwnerHidden());
+		service.setCiOwnerDelegate(input.getCiOwnerDelegateHidden());
+
+
+	}
+	
 
 	private static  void setUpServiceCi(ServiceEditParameterInput input,
 			Service service, boolean isCiCreate) {
