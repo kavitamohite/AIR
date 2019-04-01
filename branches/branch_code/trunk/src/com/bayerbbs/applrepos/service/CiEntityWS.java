@@ -3904,16 +3904,12 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				CiBaseDTO dto = new CiBaseDTO();
 				setUpDTO(mAttrParameterInput,dto,((int) (long)mAttrParameterInput.getCiTypeId()));
 				
-				if(locationCi.getRelevanceICS() == 0){
+				if(locationCi.getRelevanceICS() == -1){
 					
-					dto.setRelevanceGR1920("N");
-				}else{
 					dto.setRelevanceGR1920("Y");
 				}
-				if(locationCi.getRelevanceITSEC() == 0){
+				if(locationCi.getRelevanceITSEC() == -1){
 					
-					dto.setRelevanceGR1435("N");
-				}else{
 					dto.setRelevanceGR1435("Y");
 				}
 				
@@ -4199,16 +4195,12 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				CiBaseDTO dto = new CiBaseDTO();
 				setUpDTO(mAttrParameterInput,dto,AirKonstanten.TABLE_ID_APPLICATION);
 				
-				if(application.getRelevanceICS() == 0){
+				if(application.getRelevanceICS() == -1){
 					
-					dto.setRelevanceGR1920("N");
-				}else{
 					dto.setRelevanceGR1920("Y");
 				}
-				if(application.getRelevanzITSEC() == 0){
+				if(application.getRelevanzITSEC() == -1){
 					
-					dto.setRelevanceGR1435("N");
-				}else{
 					dto.setRelevanceGR1435("Y");
 				}
 				
@@ -4270,10 +4262,24 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		
 		// TODO Auto-generated method stub
 		dto.setTableId(tableId);
-		dto.setRelevanceCD3010(mAttrParameterInput.getRelevanceCD3010());
-		dto.setRelevanceCD3011(mAttrParameterInput.getRelevanceCD3011());
-		dto.setRelevanceGR1920(mAttrParameterInput.getRelevanceGR1920());
-		dto.setRelevanceGR1435(mAttrParameterInput.getRelevanceGR1435());
+		if("Y".equals(mAttrParameterInput.getRelevanceCD3010())){
+			dto.setRelevanceCD3010(mAttrParameterInput.getRelevanceCD3010());
+		}
+		if("Y".equals(mAttrParameterInput.getRelevanceCD3011()))
+		{
+			dto.setRelevanceCD3011(mAttrParameterInput.getRelevanceCD3011());
+		}
+		
+		if("Y".equals(mAttrParameterInput.getRelevanceGR1920()))
+		{
+			dto.setRelevanceGR1920(mAttrParameterInput.getRelevanceGR1920());
+		}
+		
+		if("Y".equals(mAttrParameterInput.getRelevanceGR1435()))
+		{
+			dto.setRelevanceGR1435(mAttrParameterInput.getRelevanceGR1435());
+		}
+		
 		
 	}
 
@@ -4359,16 +4365,12 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				}
 				CiBaseDTO dto = new CiBaseDTO();
 				setUpDTO(mAttrParameterInput,dto,AirKonstanten.TABLE_ID_FUNCTION);
-				if(function.getRelevanceICS() == 0){
+				if(function.getRelevanceICS() == -1){
 					
-					dto.setRelevanceGR1920("N");
-				}else{
 					dto.setRelevanceGR1920("Y");
 				}
-				if(function.getRelevanceITSEC() == 0){
+				if(function.getRelevanceITSEC() == -1){
 					
-					dto.setRelevanceGR1435("N");
-				}else{
 					dto.setRelevanceGR1435("Y");
 				}
 				
@@ -4600,16 +4602,12 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				}
 				CiBaseDTO dto = new CiBaseDTO();
 				setUpDTO(mAttrParameterInput,dto,AirKonstanten.TABLE_ID_IT_SYSTEM);
-				if(itSystem.getRelevanceICS() == 0){
+				if(itSystem.getRelevanceICS() == -1){
 					
-					dto.setRelevanceGR1920("N");
-				}else{
 					dto.setRelevanceGR1920("Y");
 				}
-				if(itSystem.getRelevanceITSEC() == 0){
+				if(itSystem.getRelevanceITSEC() == -1){
 					
-					dto.setRelevanceGR1435("N");
-				}else{
 					dto.setRelevanceGR1435("Y");
 				}
 				
