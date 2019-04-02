@@ -1,0 +1,78 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = mdelevs0038.ad.glpoly.net)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = MTRANSBP)))</property>
+		<property name="hibernate.connection.username">MYVZR</property>
+		<property name="hibernate.connection.password">ItilBM!41#2015</property>
+		<property name="hibernate.connection.pool_size">10</property>
+  		<property name="hibernate.connection.autoReconnect">true</property>
+  		<property name="hibernate.connection.validationQuery">SELECT 1</property>
+		<property name="show_sql">false</property>
+		<property name="dialect">org.hibernate.dialect.OracleDialect</property>
+		<property name="hibernate.jdbc.batch_size ">20</property>
+
+		<mapping package="com.bayerbbs.applrepos.domain" />
+		<mapping class="com.bayerbbs.applrepos.domain.Account" />
+		<mapping class="com.bayerbbs.applrepos.domain.Application" />
+		<mapping class="com.bayerbbs.applrepos.domain.ApplicationApplication" />
+		<mapping class="com.bayerbbs.applrepos.domain.ApplicationCat1" />
+		<mapping class="com.bayerbbs.applrepos.domain.ApplicationCat2" />
+		<mapping class="com.bayerbbs.applrepos.domain.ApplicationItSystem" />
+		<mapping class="com.bayerbbs.applrepos.domain.ApplicationProcess" />
+		<mapping class="com.bayerbbs.applrepos.domain.ApplicationRegion" />
+		<mapping class="com.bayerbbs.applrepos.domain.BusinessEssential" />
+		<mapping class="com.bayerbbs.applrepos.domain.CategoryBusiness" />
+		<mapping class="com.bayerbbs.applrepos.domain.ClassData" />
+		<mapping class="com.bayerbbs.applrepos.domain.ClassInformation" />
+		<mapping class="com.bayerbbs.applrepos.domain.CiComplianceRequest" />
+		<mapping class="com.bayerbbs.applrepos.domain.CiComplianceStatement" />
+		<mapping class="com.bayerbbs.applrepos.domain.CiGroups" />
+		<mapping class="com.bayerbbs.applrepos.domain.CiPersons" />
+		<mapping class="com.bayerbbs.applrepos.domain.CiSupportStuff" />
+		<mapping class="com.bayerbbs.applrepos.domain.CiSupportStuffType" />
+		<mapping class="com.bayerbbs.applrepos.domain.Confidentiality" />
+		<mapping class="com.bayerbbs.applrepos.domain.Currency" />
+		<mapping class="com.bayerbbs.applrepos.domain.GapClass" />
+		<mapping class="com.bayerbbs.applrepos.domain.Group" />
+		<mapping class="com.bayerbbs.applrepos.domain.GroupType" />
+		<mapping class="com.bayerbbs.applrepos.domain.Interfaces" />
+		<mapping class="com.bayerbbs.applrepos.domain.ItSet" />
+		<mapping class="com.bayerbbs.applrepos.domain.ItSecGroup" />
+		<mapping class="com.bayerbbs.applrepos.domain.ItsecCompliance" />
+		<mapping class="com.bayerbbs.applrepos.domain.ItsecUserOption" />
+		<mapping class="com.bayerbbs.applrepos.domain.ItSystem" />
+		<!-- Added for IM0006774604 -->
+		<mapping class="com.bayerbbs.applrepos.domain.IT_SYS_IT_SYS" />
+		<mapping class="com.bayerbbs.applrepos.domain.ItsecPL" />
+		<mapping class="com.bayerbbs.applrepos.domain.LicenseType" />
+		<mapping class="com.bayerbbs.applrepos.domain.Lifecycle" />
+		<mapping class="com.bayerbbs.applrepos.domain.LifecycleStatus" />
+		<mapping class="com.bayerbbs.applrepos.domain.OperationalStatus" />
+		<mapping class="com.bayerbbs.applrepos.domain.OperatingSystem" />
+		<mapping class="com.bayerbbs.applrepos.domain.Person" />
+		<mapping class="com.bayerbbs.applrepos.domain.PersonOption" />
+		<mapping class="com.bayerbbs.applrepos.domain.PrimaryFunction" />
+		<mapping class="com.bayerbbs.applrepos.domain.PriorityLevel" />
+		<mapping class="com.bayerbbs.applrepos.domain.Process" />
+		<mapping class="com.bayerbbs.applrepos.domain.ServiceContract" />
+		<mapping class="com.bayerbbs.applrepos.domain.Sla" />
+<!--		<mapping class="com.bayerbbs.applrepos.domain.SystemPlatform" />-->
+		<mapping class="com.bayerbbs.applrepos.domain.SeverityLevel" />
+		
+		<mapping class="com.bayerbbs.applrepos.domain.CiLokationsKette" />
+		<mapping class="com.bayerbbs.applrepos.domain.Room" />
+		<mapping class="com.bayerbbs.applrepos.domain.Building" />
+		<mapping class="com.bayerbbs.applrepos.domain.BuildingArea" />
+		<mapping class="com.bayerbbs.applrepos.domain.Schrank" />
+		<mapping class="com.bayerbbs.applrepos.domain.Terrain" />
+		<mapping class="com.bayerbbs.applrepos.domain.Standort" />
+		<mapping class="com.bayerbbs.applrepos.domain.Land" />
+		<mapping class="com.bayerbbs.applrepos.domain.Function" />
+		<mapping class="com.bayerbbs.applrepos.domain.Ways" />
+	    <mapping class="com.bayerbbs.applrepos.domain.Service" />		
+		
+		
+		
+	</session-factory>
+</hibernate-configuration>
