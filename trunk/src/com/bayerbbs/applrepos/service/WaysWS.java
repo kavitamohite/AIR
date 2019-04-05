@@ -3,10 +3,14 @@
  */
 package com.bayerbbs.applrepos.service;
 
+import java.util.List;
+
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.CiComplianceRequest;
 import com.bayerbbs.applrepos.domain.Ways;
 import com.bayerbbs.applrepos.dto.PathwayDTO;
 import com.bayerbbs.applrepos.hibernate.ApplReposHbn;
+import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
 import com.bayerbbs.applrepos.hibernate.PathwayHbn;
 
 /**
@@ -82,6 +86,10 @@ public class WaysWS {
 		
 		pathwayDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		pathwayDTO.setRelevanceGR1920(input.getRelevanceGR1920());
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		pathwayDTO.setRelevanceCD3010(input.getRelevanceCD3010());
+		pathwayDTO.setRelevanceCD3011(input.getRelevanceCD3011());
 
 		pathwayDTO.setGxpFlag(input.getGxpFlag());
 		pathwayDTO.setGxpFlagId(input.getGxpFlag());
@@ -135,6 +143,33 @@ public class WaysWS {
 				
 				dto.setRelevanzItsec(waySource.getRelevanceITSEC());
 				dto.setRelevanceICS(waySource.getRelevanceICS());
+				//EUGXS
+				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_WAYS,waySource.getId());
+
+				for(int i =0; i<ComplianceIDS.size(); i++ ){
+
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+						dto.setRelevanceCD3010(AirKonstanten.YES_SHORT);
+					}
+
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+						dto.setRelevanceCD3011(AirKonstanten.YES_SHORT);
+					}
+				}
+
+
+				if(waySource.getRelevanceITSEC() == -1)
+					dto.setRelevanceGR1435(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
+				}
+
+				if(waySource.getRelevanceICS() == -1)
+					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
+				}
 				
 				// save / create itSystem
 				dto.setId(waySource.getWaysId());

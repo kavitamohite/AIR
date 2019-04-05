@@ -166,6 +166,9 @@ public class ItSystemHbn extends BaseHbn {
 
 						setUpCi(itSystem, dto, cwid, false);
 						setUpItSystem(itSystem, dto, cwid);
+						//EUGXS
+						//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+						ComplianceHbn.setComplienceRequest(dto.getId(),dto,cwid);
 
 						if (dto.getUpStreamAdd() != null
 								&& dto.getUpStreamAdd().length() > 0
@@ -481,6 +484,9 @@ public class ItSystemHbn extends BaseHbn {
 						try {
 							session.save(itSystem);
 							dto.setId(itSystem.getId());
+							//EUGXS
+							//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+							ComplianceHbn.setComplienceRequest(itSystem.getId(),dto,cwid);
 							session.flush();
 							if (dto.getUpStreamAdd() != null
 									&& dto.getUpStreamAdd().length() > 0

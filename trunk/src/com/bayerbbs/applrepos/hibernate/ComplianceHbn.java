@@ -1,7 +1,9 @@
 package com.bayerbbs.applrepos.hibernate;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +11,17 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.CiComplianceRequest;
+import com.bayerbbs.applrepos.domain.ServiceEditParameterInput;
+import com.bayerbbs.applrepos.dto.CiBaseDTO;
 import com.bayerbbs.applrepos.dto.LinkCIDTO;
 import com.bayerbbs.applrepos.dto.LinkCITypeDTO;
+import com.bayerbbs.applrepos.service.CiItemDTO;
 
-public class ComplianceHbn {
+import oracle.jdbc.internal.OracleTypes;
+
+public class ComplianceHbn extends BaseHbn{
 
 	public static LinkCITypeDTO[] getArrayFromList(List<LinkCITypeDTO> input) {
 		LinkCITypeDTO output[] = new LinkCITypeDTO[input.size()];
@@ -347,5 +356,153 @@ public class ComplianceHbn {
 	private static boolean isAnwendungCi(long zielotypGSToolId) {
 		return 5 == zielotypGSToolId || -10006 == zielotypGSToolId || -10013 == zielotypGSToolId || -10007 == zielotypGSToolId;
 	}
+
+	//EUGXS
+	//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+	@SuppressWarnings({ "rawtypes", "unchecked", "null" })
+	public static List<CiComplianceRequest> getCiCompliance_request(Integer tableId, Long id) {
+		// TODO Auto-generated method stub
+		
+		boolean commit = false;
+		Transaction tx = null;
+		Statement selectStmt = null;
+		List<CiComplianceRequest> cicr = new ArrayList<CiComplianceRequest>();
+		ArrayList result = null;
+		Session session = HibernateUtil.getSession();
+		
+//		Connection conn = null;
+		
+
+		long regulation = 0;
+		StringBuffer sql = new StringBuffer();
+		sql.append("Select COMPLIANCE_REQUEST_ID as REGULATION  from CI_COMPLIANCE_REQUEST where TABLE_ID = "+tableId+" and CI_ID = "+id+" and del_quelle is  null ");
+		
+
+		try {
+			tx = session.beginTransaction();
+
+			@SuppressWarnings("deprecation")
+			Connection conn = session.connection();
+
+			selectStmt = conn.createStatement();
+			
+			ResultSet rset = selectStmt.executeQuery(sql.toString());
+			
+			CiComplianceRequest ci= null;
+			if (null != rset) {
+				while (rset.next()) {
+					ci = new CiComplianceRequest();
+					ci.setComplianceRequestId(rset.getLong("REGULATION"));
+					cicr.add(ci);
+					
+				}
+				commit = true;
+			}
+			
+			if (null != rset) {
+				rset.close();
+			}
+			if (null != selectStmt) {
+				selectStmt.close();
+			}
+			if (null != conn) {
+				conn.close();
+			}
+		} catch (Exception e) {
+			//
+			System.out.println(e.toString());
+		}
+		finally {
+			HibernateUtil.close(tx, session, commit);
+		}
+		
+		
+		
+		return cicr;
+	}
+	
+	
+	
+	
+public static void setComplienceRequest( Long ciId, CiBaseDTO ciDTO,String cwid) {
+		
+		boolean commit = false;
+		Transaction tx = null;
+		Statement selectStmt = null;
+		Session session = HibernateUtil.getSession();
+		@SuppressWarnings("deprecation")
+		Connection conn = session.connection();
+		tx = session.beginTransaction();
+		boolean flag = false;		
+
+		try {
+			//selectStmt = conn.createStatement();		
+			if(ciDTO.getRelevanceCD3010()!= null ){	
+				if(Y.equals(ciDTO.getRelevanceCD3010())){
+					flag = true;
+					
+				}else{
+					flag = false;
+				}											
+				CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+5+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
+						myCall.executeUpdate();		
+			}
+			if(ciDTO.getRelevanceCD3011()!= null ){	
+				if(Y.equals(ciDTO.getRelevanceCD3011())){
+					flag = true;
+					
+				}else{
+					flag = false;
+				}		
+				CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+6+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
+						myCall.executeUpdate();			
+			}
+			if(ciDTO.getRelevanceGR1435() != null ){	
+				if(Y.equals(ciDTO.getRelevanceGR1435())){
+					flag = true;
+					
+				}else{
+					flag = false;
+				}		
+				CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+1+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
+						myCall.executeUpdate();			
+								
+			}
+			if(ciDTO.getRelevanceGR1920() != null ){	
+				if(Y.equals(ciDTO.getRelevanceGR1920())){
+					flag = true;
+					
+				}else{
+					flag = false;
+				}	
+						
+				CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+3+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
+						myCall.executeUpdate();					
+							
+			}	
+			
+			if (null != conn) {
+				conn.close();
+			}
+			
+		} catch (Exception e) {
+			//
+			System.out.println(e.toString());
+		}
+		finally {
+			if (null != conn) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+				
+			HibernateUtil.close(tx, session, commit);
+		}
+	}
+	
 
 }

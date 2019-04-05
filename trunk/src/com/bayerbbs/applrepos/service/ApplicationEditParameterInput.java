@@ -141,6 +141,30 @@ public class ApplicationEditParameterInput {
 	private String relevanceGR1920;
 	private String relevanceGR2059;
 	private String relevanceGR2008;
+	//EUGXS
+	//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+	private String relevanceCD3011;
+	public String getRelevanceCD3011() {
+		return relevanceCD3011;
+	}
+
+
+	public void setRelevanceCD3011(String relevanceCD3011) {
+		this.relevanceCD3011 = relevanceCD3011;
+	}
+
+
+	public String getRelevanceCD3010() {
+		return relevanceCD3010;
+	}
+
+
+	public void setRelevanceCD3010(String relevanceCD3010) {
+		this.relevanceCD3010 = relevanceCD3010;
+	}
+
+
+	private String relevanceCD3010;
 
 	// connections
 	private String upStreamAdd;

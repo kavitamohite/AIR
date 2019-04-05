@@ -1,10 +1,14 @@
 package com.bayerbbs.applrepos.service;
 
+import java.util.List;
+
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.CiComplianceRequest;
 import com.bayerbbs.applrepos.domain.Room;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.dto.RoomDTO;
 import com.bayerbbs.applrepos.hibernate.BaseHbn;
+import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
 
 public class RoomWS {
@@ -58,6 +62,10 @@ public class RoomWS {
 		
 		roomDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		roomDTO.setRelevanceGR1920(input.getRelevanceGR1920());
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		roomDTO.setRelevanceCD3010(input.getRelevanceCD3010());
+		roomDTO.setRelevanceCD3011(input.getRelevanceCD3011());
 
 		roomDTO.setGxpFlag(input.getGxpFlag());
 		roomDTO.setGxpFlagId(input.getGxpFlag());
@@ -172,6 +180,33 @@ public class RoomWS {
 				
 				dto.setRelevanzItsec(roomSource.getRelevanceITSEC());
 				dto.setRelevanceICS(roomSource.getRelevanceICS());
+				//EUGXS
+				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_ROOM,roomSource.getId());
+
+				for(int i =0; i<ComplianceIDS.size(); i++ ){
+
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+						dto.setRelevanceCD3010(AirKonstanten.YES_SHORT);
+					}
+
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+						dto.setRelevanceCD3011(AirKonstanten.YES_SHORT);
+					}
+				}
+
+
+				if(roomSource.getRelevanceITSEC() == -1)
+					dto.setRelevanceGR1435(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
+				}
+
+				if(roomSource.getRelevanceICS() == -1)
+					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
+				}
 				
 				// save / create itSystem
 				dto.setAreaId(roomSource.getBuildingAreaId());

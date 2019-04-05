@@ -1,9 +1,13 @@
 package com.bayerbbs.applrepos.service;
 
+import java.util.List;
+
 import com.bayerbbs.applrepos.constants.AirKonstanten;
+import com.bayerbbs.applrepos.domain.CiComplianceRequest;
 import com.bayerbbs.applrepos.domain.ItSystem;
 import com.bayerbbs.applrepos.dto.ItSystemDTO;
 import com.bayerbbs.applrepos.hibernate.BaseHbn;
+import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
 import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 
 public class ItSystemWS {
@@ -164,6 +168,10 @@ public class ItSystemWS {
 		
 		itSystemDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		itSystemDTO.setRelevanceGR1920(input.getRelevanceGR1920());
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		itSystemDTO.setRelevanceCD3010(input.getRelevanceCD3010());
+		itSystemDTO.setRelevanceCD3011(input.getRelevanceCD3011());
 		itSystemDTO.setGxpFlag(input.getGxpFlag());
 		itSystemDTO.setGxpFlagId(input.getGxpFlag());
 		
@@ -233,6 +241,33 @@ public class ItSystemWS {
 				dto.setCiOwnerHidden(copyInput.getCwid().toUpperCase());
 				dto.setCiOwnerDelegateHidden(dto.getCiOwnerDelegate());	
 				dto.setIsApplianceFlag(itSystemSource.getIsApplianceFlag());
+				//EUGXS
+				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_IT_SYSTEM,itSystemSource.getId());
+				
+				for(int i =0; i<ComplianceIDS.size(); i++ ){					
+				
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+						dto.setRelevanceCD3010(AirKonstanten.YES_SHORT);
+					}
+					
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+						dto.setRelevanceCD3011(AirKonstanten.YES_SHORT);
+					}
+				}
+				
+				
+				if(itSystemSource.getRelevanceITSEC() == -1)
+					dto.setRelevanceGR1435(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
+				}
+				
+				if(itSystemSource.getRelevanceICS() == -1)
+					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
+				}
 				
 				System.out.println("dto.setIsApplianceFlag set while copy"+itSystemSource.getIsApplianceFlag());
 				// save / create itSystem

@@ -1,13 +1,17 @@
 package com.bayerbbs.applrepos.service;
 
+import java.util.List;
+
 import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.domain.Building;
 import com.bayerbbs.applrepos.domain.BuildingArea;
+import com.bayerbbs.applrepos.domain.CiComplianceRequest;
 import com.bayerbbs.applrepos.dto.BuildingAreaDTO;
 import com.bayerbbs.applrepos.dto.BuildingDTO;
 import com.bayerbbs.applrepos.dto.KeyValueDTO;
 import com.bayerbbs.applrepos.hibernate.BaseHbn;
 import com.bayerbbs.applrepos.hibernate.BuildingHbn;
+import com.bayerbbs.applrepos.hibernate.ComplianceHbn;
 
 public class BuildingWS {
 	
@@ -62,6 +66,10 @@ public class BuildingWS {
 		
 		buildingDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		buildingDTO.setRelevanceGR1920(input.getRelevanceGR1920());
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		buildingDTO.setRelevanceCD3010(input.getRelevanceCD3010());
+		buildingDTO.setRelevanceCD3011(input.getRelevanceCD3011());
 //		buildingDTO.setRelevanceICS(input.getRelevanceICS());
 //		buildingDTO.setRelevanzItsec(input.getRelevanzITSEC());
 		buildingDTO.setGxpFlag(input.getGxpFlag());
@@ -148,6 +156,10 @@ public class BuildingWS {
 		
 		buildingAreaDTO.setRelevanceGR1435(input.getRelevanceGR1435());
 		buildingAreaDTO.setRelevanceGR1920(input.getRelevanceGR1920());
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		buildingAreaDTO.setRelevanceCD3010(input.getRelevanceCD3010());
+		buildingAreaDTO.setRelevanceCD3011(input.getRelevanceCD3011());
 
 		buildingAreaDTO.setGxpFlag(input.getGxpFlag());
 		buildingAreaDTO.setGxpFlagId(input.getGxpFlag());
@@ -318,6 +330,33 @@ public class BuildingWS {
 				
 				dto.setRelevanzItsec(buildingSource.getRelevanceITSEC());
 				dto.setRelevanceICS(buildingSource.getRelevanceICS());
+				//EUGXS
+				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_BUILDING,buildingSource.getId());
+				
+				for(int i =0; i<ComplianceIDS.size(); i++ ){
+				
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+						dto.setRelevanceCD3010(AirKonstanten.YES_SHORT);
+					}
+					
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+						dto.setRelevanceCD3011(AirKonstanten.YES_SHORT);
+					}
+				}
+				
+				
+				if(buildingSource.getRelevanceITSEC() == -1)
+					dto.setRelevanceGR1435(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
+				}
+				
+				if(buildingSource.getRelevanceICS() == -1)
+					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
+				}
 				
 				// save / create itSystem
 				CiEntityEditParameterOutput createOutput = BuildingHbn.createBuilding(copyInput.getCwid(), dto, null);
@@ -373,6 +412,33 @@ public class BuildingWS {
 				
 				dto.setRelevanzItsec(buildingAreaSource.getRelevanceITSEC());
 				dto.setRelevanceICS(buildingAreaSource.getRelevanceICS());
+				//EUGXS
+				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_BUILDING_AREA,buildingAreaSource.getId());
+
+				for(int i =0; i<ComplianceIDS.size(); i++ ){
+
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 5){
+						dto.setRelevanceCD3010(AirKonstanten.YES_SHORT);
+					}
+
+					if(ComplianceIDS.get(i).getComplianceRequestId() == 6){
+						dto.setRelevanceCD3011(AirKonstanten.YES_SHORT);
+					}
+				}
+
+
+				if(buildingAreaSource.getRelevanceITSEC() == -1)
+					dto.setRelevanceGR1435(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
+				}
+
+				if(buildingAreaSource.getRelevanceICS() == -1)
+					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
+				else{
+					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
+				}
 				
 				// save / create itSystem
 				dto.setBuildingId(buildingAreaSource.getBuildingId());

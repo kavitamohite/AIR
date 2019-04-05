@@ -626,6 +626,11 @@ public class CiDetailReportServlet extends HttpServlet {
 		} else if (0 == releICS) {
 			CIData.add(new String[] { "ICS", "No" });
 		}
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		
+		CIData.add(new String[] { "GR2008", "Yes" });
+		System.out.println("GR2008"+CIData);
 		CIData.add(new String[] { "GxP", dto.getGxpFlagTxt() });
 		CIData.add(new String[] { "ITSec Group", dto.getItsecGroup() });
 		if (application.getSampleTestDate() != null) {
@@ -1149,6 +1154,12 @@ public class CiDetailReportServlet extends HttpServlet {
 		} else if (0 == function.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "No" });
 		}
+		//EUGXS
+		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+		
+		CIData.add(new String[] { "GR2008", "YES" });
+		
+		System.out.print("suparna Set GR2008");
 		CIData.add(new String[] { "GxP", function.getGxpFlag() });
 		CIData.add(new String[] { "ITSec Group",
 				ItSecGroupHbn.getItSecGroup(function.getItsecGroupId()) });
