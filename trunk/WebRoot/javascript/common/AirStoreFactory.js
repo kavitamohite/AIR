@@ -718,8 +718,12 @@ AIR.AirStoreFactory = function() {
 					{name: 'itsetName'},
 			        {name: 'relevanceGR1920'},
 			        {name: 'relevanceGR1435'},
-			        {name: 'relevanceGR2059'},
-			        {name: 'relevanceGR2008'},
+			        //EUGXS
+			        //C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+			        //{name: 'relevanceGR2059'},
+			        //{name: 'relevanceGR2008'},
+			        {name: 'relevanceCD3010'},
+			        {name: 'relevanceCD3011'},
 			        {name: 'relevanceEditButton'},
 					{name: 'relevanceViewButton'},
 			        {name: 'relevance1435EditButton'},
@@ -1335,6 +1339,12 @@ AIR.AirStoreFactory = function() {
 			        {name: 'relevanceGR1920Text'},
 			        {name: 'relevanceGR2008'},
 			        {name: 'relevanceGR2008Text'},
+			        //EUGXS
+			        //C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit			        
+			        {name: 'relevanceCD3010'},
+			        {name: 'relevanceCD3010Text'},
+			        {name: 'relevanceCD3011'},
+			        {name: 'relevanceCD3011Text'},
 			        {name: 'gxpFlag'},
 			        {name: 'gxpFlagText'},
 			        {name: 'riskAnalysisYN'},
@@ -2493,6 +2503,15 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'relevanceGR2008',
 				mapping : 'applicationDTO > relevanceGR2008'
+			}, {
+			//EUGXS
+			//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+			
+				name : 'relevanceCD3010',
+				mapping : 'applicationDTO > relevanceCD3010'
+			}, {
+				name : 'relevanceCD3011',
+				mapping : 'applicationDTO > relevanceCD3011'
 			}, {
 				name : 'ciComplianceRequestId1435',
 				mapping : 'applicationDTO > ciComplianceRequestId1435'

@@ -246,8 +246,13 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
         			items: [
 						{ id: 'chbGR1435', boxLabel: 'GR1435', name: 'cbgRegulations', width: 110 },
     			        { id: 'chbGR1920', boxLabel: 'GR1920', name: 'cbgRegulations', width: 110 },
-    			        { id: 'chbGR2059', boxLabel: 'GR2059', name: 'cbgRegulations', width: 110 },
-    			        { id: 'chbGR2008', boxLabel: 'GR2008', name: 'cbgRegulations', width: 110 }
+    			        //EUGXS
+    			        //C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
+    			        
+    			        //{ id: 'chbGR2059', boxLabel: 'GR2059', name: 'cbgRegulations', width: 110 },
+    			        //{ id: 'chbGR2008', boxLabel: 'GR2008', name: 'cbgRegulations', width: 110 },
+    			        { id: 'chbCD3010', boxLabel: 'CD3010', name: 'cbgRegulations', width: 110 },
+    			        { id: 'chbCD3011', boxLabel: 'CD3011', name: 'cbgRegulations', width: 110 }
 			        ]
 		        }, {
 		        	xtype: 'panel',
@@ -825,7 +830,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		
 		if(data.isCiCreate) {
 			cbgRegulations.reset();
-			cbgRegulations.setValue([true, false, false, false]);
+			cbgRegulations.setValue([true, false, false,false,false,false]);
 			cbRelevanceGxp.reset();
 			
 
@@ -842,6 +847,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 			
 			cbgRegulations.setValue(values);
+			
 			cbRelevanceGxp.setValue(data.gxpFlagId);
 		}
 		
@@ -1057,9 +1063,11 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.get('fsRelevantRegulations').setTitle(labels.compliancerelevance);
 		var cbgRegulations = this.get('fsRelevantRegulations').get('cbgRegulations');
 		this.setBoxLabel(cbgRegulations.items.items[0], labels.relevanceGR1435);
-		this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceGR2059);
+		//this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceGR2059);
 		this.setBoxLabel(cbgRegulations.items.items[2], labels.relevanceGR1920);
-		this.setBoxLabel(cbgRegulations.items.items[3], labels.relevanceGR2008);
+		//this.setBoxLabel(cbgRegulations.items.items[3], labels.relevanceGR2008);
+		this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceCD3010);
+		this.setBoxLabel(cbgRegulations.items.items[3], labels.relevanceCD3011);
 	},
 	
 	isItsetGroupComboValueValid: function(combo, newValue, oldValue){
@@ -1115,14 +1123,21 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var label = Ext.isIE ? cbgRegulations.items.items[0].label.dom.nextSibling.children[0] : cbgRegulations.items.items[0].label.dom.nextElementSibling.children[0];
 		this.setTooltipData(label, toolTips.relevanceGR1435, toolTips.relevanceGR1435Text);//oder nur f�r checkbox el.dom
 		
-		label = Ext.isIE ? cbgRegulations.items.items[1].label.dom.nextSibling.children[0] : cbgRegulations.items.items[1].label.dom.nextElementSibling.children[0];
-		this.setTooltipData(label, toolTips.relevanceGR2059, toolTips.relevanceGR2059Text);
+		//label = Ext.isIE ? cbgRegulations.items.items[1].label.dom.nextSibling.children[0] : cbgRegulations.items.items[1].label.dom.nextElementSibling.children[0];
+		//this.setTooltipData(label, toolTips.relevanceGR2059, toolTips.relevanceGR2059Text);
 		
 		label = Ext.isIE ? cbgRegulations.items.items[2].label.dom.nextSibling.children[0] : cbgRegulations.items.items[2].label.dom.nextElementSibling.children[0];
 		this.setTooltipData(label, toolTips.relevanceGR1920, toolTips.relevanceGR1920Text);
 		
+		//label = Ext.isIE ? cbgRegulations.items.items[3].label.dom.nextSibling.children[0] : cbgRegulations.items.items[3].label.dom.nextElementSibling.children[0];
+		//this.setTooltipData(label, toolTips.relevanceGR2008, toolTips.relevanceText);
+		
+		label = Ext.isIE ? cbgRegulations.items.items[1].label.dom.nextSibling.children[0] : cbgRegulations.items.items[1].label.dom.nextElementSibling.children[0];
+		this.setTooltipData(label, toolTips.relevanceCD3010, toolTips.relevanceCD3010Text);
+		
 		label = Ext.isIE ? cbgRegulations.items.items[3].label.dom.nextSibling.children[0] : cbgRegulations.items.items[3].label.dom.nextElementSibling.children[0];
-		this.setTooltipData(label, toolTips.relevanceGR2008, toolTips.relevanceGR2008Text);
+		this.setTooltipData(label, toolTips.relevanceCD3011, toolTips.relevanceCD3011Text);
+		
 	}
 });
 Ext.reg('AIR.CiComplianceView', AIR.CiComplianceView);
