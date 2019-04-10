@@ -1,0 +1,496 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>bbs.bayer</groupId>
+  <artifactId>AIR</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>AIR</name>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>test</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <warSourceDirectory>WebRoot</warSourceDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <dependencies>
+  	<dependency>
+    	<groupId>sample.activation</groupId>
+    	<artifactId>sample.activation</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/activation.jar</systemPath>
+   	</dependency>
+   	<dependency>
+    	<groupId>sample.ant-antlr</groupId>
+    	<artifactId>sample.ant-antlr</artifactId>
+    	<version>1.6.5</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/ant-antlr-1.6.5.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.ant-antlr</groupId>
+    	<artifactId>sample.antlr</artifactId>
+    	<version>2.7.6</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/antlr-2.7.6.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.asm</groupId>
+    	<artifactId>sample.asm</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/asm.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.axis</groupId>
+    	<artifactId>sample.axis</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/axis.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.cglib</groupId>
+    	<artifactId>sample.cglib</artifactId>
+    	<version>2.1.3</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/cglib-2.1.3.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.commons-codec</groupId>
+    	<artifactId>sample.commons-codec</artifactId>
+    	<version>1.10</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/commons-codec-1.10.jar</systemPath>
+   	</dependency>
+   	
+   	
+   	<dependency>
+  		<groupId>commons-collections</groupId>
+  		<artifactId>commons-collections</artifactId>
+  		<version>3.1</version>
+  	</dependency>
+  	
+  		<dependency>
+    	<groupId>sample.commons-collections4</groupId>
+    	<artifactId>sample.commons-collections4</artifactId>
+    	<version>4.1</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/commons-collections4-4.1.jar</systemPath>
+   	</dependency>
+  	
+  	
+  	<dependency>
+    	<groupId>sample.commons-fileupload</groupId>
+    	<artifactId>sample.commons-fileupload</artifactId>
+    	<version>1.3.1</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/commons-fileupload-1.3.1.jar</systemPath>
+   	</dependency>
+  	
+  	<dependency>
+    	<groupId>sample.commons-discovery</groupId>
+    	<artifactId>sample.commons-discovery</artifactId>
+    	<version>0.2</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/commons-discovery-0.2.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.commons-io</groupId>
+    	<artifactId>sample.commons-io</artifactId>
+    	<version>2.4</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/commons-io-2.4.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.commons-lang</groupId>
+    	<artifactId>sample.commons-lang</artifactId>
+    	<version>2.1</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/commons-lang-2.1.jar</systemPath>
+   	</dependency>
+   	
+   	
+   	
+   	<dependency>
+    	<groupId>sample.commons-logging</groupId>
+    	<artifactId>sample.commons-logging</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/commons-logging.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.dom4j</groupId>
+    	<artifactId>sample.dom4j</artifactId>
+    	<version>1.6.1</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/dom4j-1.6.1.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.ehcache</groupId>
+    	<artifactId>sample.ehcache</artifactId>
+    	<version>1.2.3</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/ehcache-1.2.3.jar</systemPath>
+   	</dependency>
+   	<dependency>
+    	<groupId>sample.ejb3-persistence</groupId>
+    	<artifactId>sample.ejb3-persistence</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/ejb3-persistence.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.FastInfoset</groupId>
+    	<artifactId>sample.FastInfoset</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/FastInfoset.jar</systemPath>
+   	</dependency>
+   	
+   		<dependency>
+    	<groupId>sample.fontbox</groupId>
+    	<artifactId>sample.fontbox</artifactId>
+    	<version>1.8.5</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/fontbox-1.8.5.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.gmbal-api-only</groupId>
+    	<artifactId>sample.gmbal-api-only</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/gmbal-api-only.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.hibernate</groupId>
+    	<artifactId>sample.hibernate</artifactId>
+    	<version>3.2.6</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/hibernate-3.2.6.jar</systemPath>
+   	</dependency>
+   	
+   		<dependency>
+    	<groupId>sample.hibernate-commons-annotations</groupId>
+    	<artifactId>hibernate-commons-annotations</artifactId>
+    	<version>3.3.1</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/hibernate-annotations-3.3.1.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.hibernate-annotations</groupId>
+    	<artifactId>sample.hibernate-annotations</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/hibernate-commons-annotations.jar</systemPath>
+   	</dependency>
+   	
+   		<dependency>
+    	<groupId>sample.hibernate-itext</groupId>
+    	<artifactId>sample.itext</artifactId>
+    	<version>2.1.7</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/itext-2.1.7.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.jaxb-api</groupId>
+    	<artifactId>sample.jaxb-api</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jaxb-api.jar</systemPath>
+   	</dependency>
+   	  	<dependency>
+    	<groupId>sample.jaxb-impl</groupId>
+    	<artifactId>sample.jaxb-impl</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jaxb-impl.jar</systemPath>
+   	</dependency>
+   	
+   	
+   	  	<dependency>
+    	<groupId>sample.jaxb-xjc</groupId>
+    	<artifactId>sample.jaxb-xjc</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jaxb-xjc.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.jaxrpc</groupId>
+    	<artifactId>sample.jaxrpc</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jaxrpc.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.jaxws-api</groupId>
+    	<artifactId>sample.jaxws-api</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jaxws-api.jar</systemPath>
+   	</dependency>
+   	
+   	 	<dependency>
+    	<groupId>sample.jaxws-rt</groupId>
+    	<artifactId>sample.jaxws-rt</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jaxws-rt.jar</systemPath>
+   	</dependency>
+   	
+   		<dependency>
+    	<groupId>sample.jaxws-tools</groupId>
+    	<artifactId>sample.jaxws-tools</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jaxws-tools.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.jsr173_api</groupId>
+    	<artifactId>sample.jsr173_api</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jsr173_api.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.jsr181-api</groupId>
+    	<artifactId>sample.jsr181-api</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jsr181-api.jar</systemPath>
+   	</dependency>
+   	
+   		<dependency>
+    	<groupId>sample.jsr250-api</groupId>
+    	<artifactId>sample.jsr250-api</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jsr250-api.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.jta</groupId>
+    	<artifactId>sample.jta</artifactId>
+    	<version>1.0.1</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jta-1.0.1.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.log4j</groupId>
+    	<artifactId>sample.log4j</artifactId>
+    	<version>1.2.16</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/log4j-1.2.16.jar</systemPath>
+   	</dependency>
+   	
+   		<dependency>
+    	<groupId>sample.management-api</groupId>
+    	<artifactId>sample.management-api</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/management-api.jar</systemPath>
+   	</dependency>
+   	
+   		<dependency>
+    	<groupId>sample.mimepull</groupId>
+    	<artifactId>sample.mimepull</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/mimepull.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.ojdbc14</groupId>
+    	<artifactId>sample.ojdbc14</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/ojdbc14.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.pdfbox</groupId>
+    	<artifactId>sample.pdfbox</artifactId>
+    	<version>1.8.5</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/pdfbox-1.8.5.jar</systemPath>
+   	</dependency>
+   	
+   	  	<dependency>
+    	<groupId>sample.poi</groupId>
+    	<artifactId>sample.poi</artifactId>
+    	<version>3.15</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/poi-3.15.jar</systemPath>
+   	</dependency>
+   	
+   	  	<dependency>
+    	<groupId>sample.poi-ooxml</groupId>
+    	<artifactId>sample.poi-ooxml</artifactId>
+    	<version>3.15</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/poi-ooxml-3.15.jar</systemPath>
+   	</dependency>
+   	
+   	  	<dependency>
+    	<groupId>sample.poi-ooxml-schemas</groupId>
+    	<artifactId>sample.poi-ooxml-schemas</artifactId>
+    	<version>3.15</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/poi-ooxml-schemas-3.15.jar</systemPath>
+   	</dependency>
+   	
+   	 	<dependency>
+    	<groupId>sample.policy</groupId>
+    	<artifactId>sample.policy</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/policy.jar</systemPath>
+   	</dependency>
+   	
+   	 	<dependency>
+    	<groupId>sample.resolver</groupId>
+    	<artifactId>sample.resolver</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/resolver.jar</systemPath>
+   	</dependency>
+   	
+   	 	<dependency>
+    	<groupId>sample.saaj</groupId>
+    	<artifactId>sample.saaj</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/saaj.jar</systemPath>
+   	</dependency>
+   	
+   	 	<dependency>
+    	<groupId>sample.saaj-api</groupId>
+    	<artifactId>sample.saaj-api</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/saaj-api.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.saaj-impl</groupId>
+    	<artifactId>sample.saaj-impl</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/saaj-impl.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.sqljdbc4</groupId>
+    	<artifactId>sample.sqljdbc4</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/sqljdbc4.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.stax-ex</groupId>
+    	<artifactId>sample.stax-ex</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/stax-ex.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.streambuffer</groupId>
+    	<artifactId>sample.streambuffer</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/streambuffer.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.woodstox</groupId>
+    	<artifactId>sample.woodstox</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/woodstox.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.wsdl4j</groupId>
+    	<artifactId>sample.wsdl4j</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/wsdl4j.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.xmlbeans</groupId>
+    	<artifactId>sample.xmlbeans</artifactId>
+    	<version>2.3.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/xmlbeans-2.3.0.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.yuicompressor</groupId>
+    	<artifactId>sample.yuicompressor</artifactId>
+    	<version>2.4.8</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/yuicompressor-2.4.8.jar</systemPath>
+   	</dependency>
+   	
+   	
+   	<dependency>
+    	<groupId>sample.jsp-api</groupId>
+    	<artifactId>sample.jsp-api</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/jsp-api.jar</systemPath>
+   	</dependency>
+   	
+   	<dependency>
+    	<groupId>sample.servlet-api</groupId>
+    	<artifactId>sample.servlet-api</artifactId>
+    	<version>1.0</version>
+    	<scope>system</scope>
+		<systemPath>${basedir}/lib/servlet-api.jar</systemPath>
+   	</dependency>
+  </dependencies>
+</project>
