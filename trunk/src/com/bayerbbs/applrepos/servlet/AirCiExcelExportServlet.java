@@ -20,6 +20,8 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.bayerbbs.applrepos.common.StringUtils;
+import com.bayerbbs.applrepos.constants.AirKonstanten;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
 import com.bayerbbs.applrepos.hibernate.CiEntitiesHbn;
 import com.bayerbbs.applrepos.service.ApplicationSearchParamsDTO;
@@ -210,7 +212,16 @@ public class AirCiExcelExportServlet extends HttpServlet {
         	input.setLimit(10000);
         	
         	applications = Arrays.asList(new ApplicationWS().findApplications(input).getCiItemDTO());//getApplicationDTO
-        } else if(searchAction.equals(SEARCH_POINT_OUSEARCH)) {
+        	
+        	//EUGXS
+        	//IM0008472651 - Excel export button on delete CI list is not working for AIR
+
+        }else if (AirKonstanten.MY_CIS_FOR_DELETE.equals(searchAction)) {
+			if (StringUtils.isNotNullOrEmpty(cwid)) {
+				applications = CiEntitiesHbn.findMyCisForDelete(cwid,req.getParameter("sort?"),req.getParameter("dir?"), false,ciNameAliasQuery);
+			}
+		}
+        else if(searchAction.equals(SEARCH_POINT_OUSEARCH)) {
         	applications = CiEntitiesHbn.findCisByOUunit(
     			req.getParameter("houCiType"),
     			req.getParameter("houUnit"),
