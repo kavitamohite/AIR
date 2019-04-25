@@ -457,7 +457,12 @@ public static void setComplienceRequest( Long ciId, CiBaseDTO ciDTO,String cwid)
 				CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+6+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
 						myCall.executeUpdate();			
 			}
-			if(ciDTO.getRelevanceGR1435() != null ){	
+			
+			//EUGXS
+			//IM0008593844 - Bugfix for C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure
+
+			
+		/*	if(ciDTO.getRelevanceGR1435() != null ){	
 				if(Y.equals(ciDTO.getRelevanceGR1435())){
 					flag = true;
 					
@@ -479,7 +484,7 @@ public static void setComplienceRequest( Long ciId, CiBaseDTO ciDTO,String cwid)
 				CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+3+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
 						myCall.executeUpdate();					
 							
-			}	
+			}	*/
 			
 			if (null != conn) {
 				conn.close();
