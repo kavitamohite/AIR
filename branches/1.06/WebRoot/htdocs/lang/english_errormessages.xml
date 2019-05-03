@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<ErrorCodeItems>
+	<!-- General -->
+	<Error>
+		<code>100</code>
+		<message>the cwid missing</message>
+	</Error>
+
+
+	<!-- Application -->
+	<Error>
+		<code>1000</code>
+		<message>The application id ### was not found in database</message>
+	</Error>
+	<Error>
+		<code>1001</code>
+		<message>The application id ### is deleted</message>
+	</Error>
+	<Error>
+		<code>1002</code>
+		<message>The template is referenced by other entries</message>
+	</Error>
+	<Error>
+		<code>1003</code>
+		<message>The application id is missing or invalid</message>
+	</Error>
+
+	<Error>
+		<code>1100</code>
+		<message>Application Name ### already exists."</message>
+	</Error>
+	<Error>
+		<code>1101</code>
+		<message>Application Alias ### already exists.</message>
+	</Error>
+	<Error>
+		<code>1102</code>
+		<message>Primary person is empty</message>
+	</Error>
+	<Error>
+		<code>1103</code>
+		<message>Primary person is not valid</message>
+	</Error>
+	<Error>
+		<code>1104</code>
+		<message>Primary person is not unique</message>
+	</Error>
+	<Error>
+		<code>1105</code>
+		<message>Application owner delegate is not valid</message>
+	</Error>
+	<Error>
+		<code>1106</code>
+		<message>Application owner is not unique</message>
+	</Error>
+	<Error>
+		<code>1107</code>
+		<message>Delegate Person/Group is not valid</message>
+	</Error>
+	<Error>
+		<code>1108</code>
+		<message>Delegate Person/Group is not unique</message>
+	</Error>
+
+</ErrorCodeItems>
+		
