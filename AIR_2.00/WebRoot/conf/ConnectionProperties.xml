@@ -69,9 +69,12 @@
 		<Source>Application Platform</Source>
 		<Destination>Application Platform</Destination>
 		<Relevance>operational and strategic</Relevance>
-		<Upstream>N</Upstream>
-		<Downstream>N</Downstream>
-	</Identifier>
+		<!--  IM0008810274 Start -->
+		<!--  IM0008810274 EPCHI -->
+		<Upstream>Y</Upstream>
+		<Downstream>Y</Downstream>
+			<!--  IM0008810274 End -->
+	</Identifier> 
 	<Identifier>
 		<Source>Application Platform</Source>
 		<Destination>Common Service</Destination>

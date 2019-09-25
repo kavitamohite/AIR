@@ -3223,13 +3223,15 @@ AIR.AirStoreFactory = function() {
 		        {name: 'source'},
 		        {name: 'dwhEntityId'},
 		        {name: 'isReferenced', type: 'boolean'}
+		        
 		    ]);
+		
 		
 		    var ciConnectionsReader = new Ext.data.XmlReader({
 		    	record: 'dwhEntityDTO',//viewdataDTO
 		        idProperty: 'dwhEntityId',//id
 		        	
-		        fields: ['id', 'ciName', 'ciType', 'source', 'dwhEntityId', 'isReferenced']//name type
+		        fields: ['id', 'ciName',  'ciType', 'source', 'dwhEntityId', 'isReferenced']//name type
 		    }, ciConnectionsRecord);
 			
 		    var ciConnectionsStore = new Ext.data.XmlStore({
@@ -3242,9 +3244,14 @@ AIR.AirStoreFactory = function() {
 		      		timeout: 120000,
 		      		reader: ciConnectionsReader
 		      	}),
-		    	
+		      	//EPCHI
+		      	// IM0008871051 -field details to sort upstream/downstream
+		      	 fields: ['id', 'ciName',  'ciType', 'source', 'dwhEntityId', 'isReferenced'],
 		      	reader: ciConnectionsReader
+		        
+
 		    });
+		    
 		    
 		    return ciConnectionsStore;
 		},

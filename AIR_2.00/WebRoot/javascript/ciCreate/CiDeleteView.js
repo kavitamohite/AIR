@@ -68,12 +68,55 @@ AIR.CiDeleteView = Ext.extend(Ext.Panel, {
 		bDeleteSearchButton.on('click', this.onSearch, this);
 		bDelete.on('click', this.onDelete, this);
 		
-		
 		var grid = this.getComponent('CiDeleteResultGrid');
 		grid.on('rowclick', this.onRowClick, this);
 		grid.on('rowdblclick', Ext.emptyFn);
 		grid.getStore().on('beforeload', this.onGridBeforeLoaded , this);
 		grid.getStore().on('load', this.onGridLoaded, this);
+		//EUGXS
+        //IM0008472651 - Excel export button on delete CI list is not working for AIR
+		var pagingBar = grid.getBottomToolbar();
+		var clExcelExport = pagingBar.getComponent('undefined_clExcelExport');
+		clExcelExport.on('click', this.onExcelExport, this);
+		
+	},
+	
+	onExcelExport: function(link, event) {
+		var form = AIR.AirApplicationManager.getExportForm();
+		
+		form.action = '/AIR/excelexport';
+		form.method = 'POST';
+		form.target = '_blank';
+		
+	    if(this.isOuSearch) {
+	    	var params = this.getOuSearchParams();
+	    	
+	    	form.searchAction.value = params.searchAction;
+	    	
+	    	for(var key in params)
+	    		if(form['h'+key])
+	    			form['h'+key].value = params[key];
+	    } else {
+	    	
+			var params = this.getSearchParams();
+			params.limit = 100000;
+			form.hciNameAliasQuery.value = params.ciNameAliasQuery;
+			
+	    	for(var key in params)
+	    		if(form[key])
+	    			form[key].value = params[key];
+    	
+		    if(this.isAdvSearch) {
+		    	form.isAdvancedSearch.value = "true";
+		    	var params = this.getAdvancedSearchParams(params);
+		    	for(var key in params)
+		    		if(form['h'+key])
+		    			form['h'+key].value = params[key];
+		    }
+	    }
+
+	    form.submit();
+	    
 	},
 	
 	onSearch: function() {

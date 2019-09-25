@@ -77,22 +77,27 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					
 					height: 180,//200 230 165
 //			        hideHeaders: true,
+				// EPCHI
+				// IM0008871051-Changes for upstream/downstream sorting added sortable is true and menu disabled is false
 			        					
 					columns: [{
 				        header: 'CI Name',
 				        dataIndex: 'ciName',//name
+				        sortable : true,
 				        width: 180,
-				        menuDisabled: true
+				        menuDisabled: false
 				    },{
 				        header: 'CI Type',
 				        dataIndex: 'ciType',//type
+				        sortable : true,
 				        width: 180,
-				        menuDisabled: true
+				       menuDisabled: false
 				    },{
 				        header: 'Source',
 				        dataIndex: 'source',
 				        width: 100,
-				        menuDisabled: true
+				        sortable : true,
+				        menuDisabled: false
 				    }, raDeleteUpStreamConnection],
 				    
 				    bbar: {
@@ -128,24 +133,34 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 					border: true,
 					autoScroll: true,
 					
+
+				
+					
 					height: 180,//200 230 165
 //			        hideHeaders: true,
 								        
 					columns: [{
 				        header: 'CI Name',
 				        dataIndex: 'ciName',//name
+				       // direction: 'ASC' ,
+				    sortable : true,
 				        width: 180,//150
-				        menuDisabled: true
+				        menuDisabled: false
 				    },{
 				        header: 'CI Type',
 				        dataIndex: 'ciType',//type
+				        sortable : true,
 				        width: 180,
-				        menuDisabled: true
+				     //   direction: 'ASC',
+				       menuDisabled: false
+				       
+				       
 				    },{
 				        header: 'Source',
 				        dataIndex: 'source',
+				       sortable : true,
 				        width: 100,
-				        menuDisabled: true
+				       menuDisabled: false
 				    }, raDeleteDownStreamConnection],
 				    
 				    bbar: {
@@ -258,7 +273,8 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 						enableDragDrop: true,
 						ddGroup: 'ddCiConnectionsGroup',
 						hidden: true,
-						complete: false
+						complete: false,
+						sortable: true
 			    	}]
 		    	}]
 		    }]
@@ -331,10 +347,13 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var connectionsObjectType = cbConnectionsObjectType.getRawValue();//getValue
 		var connectionsQuickSearch = tfConnectionsQuickSearch.getValue();
 		
-				
+		//EPCHI
+		// IM0008810274 Problem in linking application platforms to other application platforms.		
 		var params = {
 		 	cwid: AIR.AirApplicationManager.getCwid(),
 		 	token: AIR.AirApplicationManager.getToken(),
+		 	ciId: AIR.AirApplicationManager.getCiId(),
+		 	tableId: AIR.AirApplicationManager.getTableId(),
 			start: 0,
 			limit: 20,
 			type: connectionsObjectType,
@@ -429,7 +448,8 @@ AIR.CiConnectionsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			ciType: record.ciType,
 			id: record.ciId,
 			source: record.source,
-			dwhEntityId: record.dwhEntityId
+			dwhEntityId: record.dwhEntityId,
+			tableId: record.tableId
 		};
 		
 		var newCiRecord = new this.CiUpDownStreamConnectionsRecord(newCiData);

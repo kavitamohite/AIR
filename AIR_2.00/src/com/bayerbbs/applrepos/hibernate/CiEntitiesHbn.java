@@ -22,6 +22,7 @@ import com.bayerbbs.applrepos.dto.DwhEntityDTO;
 import com.bayerbbs.applrepos.dto.LinkCIDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
+import com.bayerbbs.applrepos.service.CiEntityParameterInput;
 import com.bayerbbs.applrepos.service.CiItemDTO;
 import com.bayerbbs.applrepos.service.ComplianceControlDTO;
 import com.bayerbbs.applrepos.service.DwhEntityParameterOutput;
@@ -849,21 +850,20 @@ public class CiEntitiesHbn {
 		return listeAnwendungen;
 	}
 	
-	public static DwhEntityParameterOutput findByTypeAndName(String ciType, String ciName, int start, int limit) {
-<<<<<<< .mine		String sql =null;
-		if(ciName!=null)
-		sql = "SELECT * FROM TABLE (pck_air.ft_findcis('" + ciName.trim() + "', '" + ciType + "'))";//IM0007439349
-		else
-			sql = "SELECT * FROM TABLE (pck_air.ft_findcis('" + ciName + "', '" + ciType + "'))";//IM0007439349
+			//EPCHI
+			// IM0008810274 Problem in linking application platforms to other application platforms.		
+	
+	public static DwhEntityParameterOutput findByTypeAndName(String ciType, String ciName, int start, int limit, long ciId, long tableId) {
+		
+		String sql = "SELECT * FROM TABLE (pck_air.ft_findcis('" + ciName.trim() + "', '" + ciType + "'  ,  "+ tableId + " ,  "+ ciId + "))";//IM0007439349
 		System.out.println("sql query for relation search"+sql);
-=======		String sql = "SELECT * FROM TABLE (pck_air.ft_findcis('" + ciName.trim() + "', '" + ciType + "'))";//IM0007439349
-		System.out.println("sql query for relation search"+sql);
->>>>>>> .theirs		Transaction ta = null;
+		Transaction ta = null;																	
 		Statement stmt = null;
 //		Connection conn = null;
 		Session session = HibernateUtil.getSession();
 		
 		boolean commit = false;
+
 
 		List<DwhEntityDTO> dwhEntities = new ArrayList<DwhEntityDTO>();
 		DwhEntityParameterOutput output = new DwhEntityParameterOutput();
@@ -884,39 +884,44 @@ public class CiEntitiesHbn {
 			DwhEntityDTO dwhEntity = null;
 			
 			while (rs.next()) {
-				if(i < limit) {
-					dwhEntity = new DwhEntityDTO();
+				//EUGXS
+				//IM0008472651 - Intolerable Business Application Relationships
+
+				if(Long.parseLong(rs.getString("CI_ID")) != ciId ){
+					if(i < limit) {
+						dwhEntity = new DwhEntityDTO();
+						
+						dwhEntity.setCiId(rs.getString("CI_ID"));
+						dwhEntity.setCiType(rs.getString("TYPE"));
+						dwhEntity.setCiName(rs.getString("NAME"));
+						dwhEntity.setCiAlias(rs.getString("ASSET_ID_OR_ALIAS"));
+						dwhEntity.setDwhEntityId(rs.getString("ID"));
+						dwhEntity.setTableId(rs.getString("TABLE_ID"));
+						dwhEntity.setCiOwner(rs.getString("RESPONSIBLE"));
+						dwhEntity.setCiOwnerDelegate(rs.getString("SUB_RESPONSIBLE"));
+						dwhEntity.setAppOwner(rs.getString("APP_OWNER"));
+						dwhEntity.setAppOwnerDelegate(rs.getString("APP_OWNER_DELEGATE"));
+						dwhEntity.setAppSteward(rs.getString("APP_STEWARD"));
+						dwhEntity.setCategoryIt(rs.getString("CATEGORY"));
+						dwhEntity.setLifecycleStatus(rs.getString("LIFECYCLE"));
+						dwhEntity.setSource(rs.getString("SOURCE"));
+						dwhEntity.setTemplate(rs.getString("TEMPLATE"));
+		
+		//				dwhEntity.setOperationalStatus(rs.getString("OPERATIONAL_STATUS"));
+		//				dwhEntity.setGxpRelevance(rs.getString("GXP_RELEVANCE"));
+		//				dwhEntity.setItSet(rs.getString("ITSET"));
+		//				dwhEntity.setServiceContract(rs.getString("SERVICE_CONTRACT"));
+		//				dwhEntity.setSeverityLevel(rs.getString("SEVERITY_LEVEL"));
+		//				dwhEntity.setPriorityLevel(rs.getString("PRIORITY_LEVEL"));
+		//				dwhEntity.setSla(rs.getString("SLA"));
+		//				dwhEntity.setBusinessEssential(rs.getString("BUSINESS_ESSENTIAL"));
+						//evtl. mehr
+						
+						dwhEntities.add(dwhEntity);
+					}
 					
-					dwhEntity.setCiId(rs.getString("CI_ID"));
-					dwhEntity.setCiType(rs.getString("TYPE"));
-					dwhEntity.setCiName(rs.getString("NAME"));
-					dwhEntity.setCiAlias(rs.getString("ASSET_ID_OR_ALIAS"));
-					dwhEntity.setDwhEntityId(rs.getString("ID"));
-					dwhEntity.setTableId(rs.getString("TABLE_ID"));
-					dwhEntity.setCiOwner(rs.getString("RESPONSIBLE"));
-					dwhEntity.setCiOwnerDelegate(rs.getString("SUB_RESPONSIBLE"));
-					dwhEntity.setAppOwner(rs.getString("APP_OWNER"));
-					dwhEntity.setAppOwnerDelegate(rs.getString("APP_OWNER_DELEGATE"));
-					dwhEntity.setAppSteward(rs.getString("APP_STEWARD"));
-					dwhEntity.setCategoryIt(rs.getString("CATEGORY"));
-					dwhEntity.setLifecycleStatus(rs.getString("LIFECYCLE"));
-					dwhEntity.setSource(rs.getString("SOURCE"));
-					dwhEntity.setTemplate(rs.getString("TEMPLATE"));
-	
-	//				dwhEntity.setOperationalStatus(rs.getString("OPERATIONAL_STATUS"));
-	//				dwhEntity.setGxpRelevance(rs.getString("GXP_RELEVANCE"));
-	//				dwhEntity.setItSet(rs.getString("ITSET"));
-	//				dwhEntity.setServiceContract(rs.getString("SERVICE_CONTRACT"));
-	//				dwhEntity.setSeverityLevel(rs.getString("SEVERITY_LEVEL"));
-	//				dwhEntity.setPriorityLevel(rs.getString("PRIORITY_LEVEL"));
-	//				dwhEntity.setSla(rs.getString("SLA"));
-	//				dwhEntity.setBusinessEssential(rs.getString("BUSINESS_ESSENTIAL"));
-					//evtl. mehr
-					
-					dwhEntities.add(dwhEntity);
+					i++;
 				}
-				
-				i++;
 			}
 			
 			ta.commit();

@@ -113,6 +113,28 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 					}
 				},
                //end - IM0006018772 
+				
+				{
+//					html: '<a href="' + manual_en + '" target="_blank"><img id="helpImage" align="top" src="' + img_Help + '" alt="Help"></a>',
+//					baseCls: 'x-plain',
+					
+			        id: 'clHelp2',
+			        xtype: 'button',
+			        //img: img_Help,
+			        text: 'Data Privacy',
+			        cls: 'menuSubLink',
+			        style: {
+						//marginLeft: 3,
+						color: AC.AIR_FONT_COLOR,
+						fontFamily: AC.AIR_FONT_TYPE,
+						fontWeight: 'normal',
+						fontSize: '7pt',
+						
+//						marginTop: 5
+					}
+				},
+				
+				
                 {
 					id: 'clLanguage',
 			        xtype: 'commandlink',
@@ -226,6 +248,8 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
         clHelp.on('click', this.onHelpClick, this);
         var clHelp1 = this.getComponent('pCiTitleViewNorth').getComponent('clHelp1');
         clHelp1.on('click', this.onHelp1Click, this);
+        var clHelp2 = this.getComponent('pCiTitleViewNorth').getComponent('clHelp2');
+        clHelp2.on('click', this.onHelp2Click, this);
 //        var clLogOut = this.getComponent('pCiTitleViewNorth').getComponent('clLogOut');
 //        clLogOut.on('click', this.onLogOutClick, this);
 	},
@@ -241,6 +265,11 @@ AIR.CiTitleView = Ext.extend(Ext.Panel, {
 	onHelp1Click: function(button, event) {
 		window.open(training_mannual);
 	},
+	
+	onHelp2Click: function(button, event) {
+		window.open(data_privacy);
+	},
+	
 	
 	onInfoClick: function(button, event) {
 		window.open('conf/versioninfo.html?' + app_version, 'version', 'width=580,height=360,scrollbars=no, toolbar=no,status=no, resizable=yes,menubar=no,location=no,directories=no,top=10,left=10');

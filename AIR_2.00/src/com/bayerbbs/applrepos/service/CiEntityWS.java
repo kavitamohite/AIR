@@ -113,14 +113,16 @@ public class CiEntityWS {
 		}
 		return aViewDataDTO;
 	}
-
+			//EPCHI
+			// IM0008810274 Problem in linking application platforms to other application platforms.		
+	
 	public DwhEntityParameterOutput findByTypeAndName(
 			CiEntityParameterInput input) {// String ciType, String ciName
 		DwhEntityParameterOutput output = new DwhEntityParameterOutput();
 
 		if (LDAPAuthWS.isLoginValid(input.getCwid(), input.getToken()))
 			output = CiEntitiesHbn.findByTypeAndName(input.getType(),
-					input.getQuery(), input.getStart(), input.getLimit());
+					input.getQuery(), input.getStart(), input.getLimit(),input.getCiId(),input.getTableId());
 
 		return output;
 	}

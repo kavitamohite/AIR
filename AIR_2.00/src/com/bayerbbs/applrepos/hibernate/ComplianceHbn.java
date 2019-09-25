@@ -436,28 +436,67 @@ public static void setComplienceRequest( Long ciId, CiBaseDTO ciDTO,String cwid)
 		boolean flag = false;		
 
 		try {
-			//selectStmt = conn.createStatement();		
+			//EUGXS
+			//IM0009200920 - Performance improvement of compliance management through AIR Started
+			//selectStmt = conn.createStatement();
+			String regulation_string = null;
 			if(ciDTO.getRelevanceCD3010()!= null ){	
 				if(Y.equals(ciDTO.getRelevanceCD3010())){
 					flag = true;
 					
+					regulation_string = "5|true";
 				}else{
 					flag = false;
-				}											
-				CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+5+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
-						myCall.executeUpdate();		
+					regulation_string = "5|false";
+				}
+				
+				//CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+5+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
+					//	myCall.executeUpdate();		
 			}
 			if(ciDTO.getRelevanceCD3011()!= null ){	
-				if(Y.equals(ciDTO.getRelevanceCD3011())){
-					flag = true;
+				if(regulation_string!=null){
+					regulation_string = regulation_string+"#";
+					if(Y.equals(ciDTO.getRelevanceCD3011())){
+						flag = true;
+						regulation_string = regulation_string+"6|true";
+						
+					}else{
+						flag = false;
+						regulation_string = regulation_string+"6|false";
+					}
+					
 					
 				}else{
-					flag = false;
-				}		
-				CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+6+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
-						myCall.executeUpdate();			
+					if(Y.equals(ciDTO.getRelevanceCD3011())){
+						flag = true;
+						regulation_string = "6|true";
+						
+					}else{
+						flag = false;
+						regulation_string = "6|false";
+					}
+				}
+				//CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+6+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
+					//	myCall.executeUpdate();			
 			}
-			if(ciDTO.getRelevanceGR1435() != null ){	
+			
+			if(regulation_string !=null){
+				System.out.println(regulation_string);
+				String roc = "{call P_INS_UPD_AIR_COMP_REQ("+ciId+","+ciDTO.getTableId()+",'"+regulation_string+"','"+cwid+"','AIR')}";
+				CallableStatement myCall = conn.prepareCall("{call P_INS_UPD_AIR_COMP_REQ("+ciId+","+ciDTO.getTableId()+",'"+regulation_string+"','"+cwid+"','AIR')}");
+				myCall.executeUpdate();
+				
+			}
+			//EUGXS
+			//IM0009200920 - Performance improvement of compliance management through AIR Ended
+			//CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+5+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
+			//myCall.executeUpdate();	
+			
+			//EUGXS
+			//IM0008593844 - Bugfix for C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure
+
+			
+		/*	if(ciDTO.getRelevanceGR1435() != null ){	
 				if(Y.equals(ciDTO.getRelevanceGR1435())){
 					flag = true;
 					
@@ -479,7 +518,7 @@ public static void setComplienceRequest( Long ciId, CiBaseDTO ciDTO,String cwid)
 				CallableStatement myCall = conn.prepareCall("{call P_INS_CI_COMPLIANCE_REQUEST("+ciId+","+3+","+ciDTO.getTableId()+","+flag+",'"+cwid+"','AIR')}");
 						myCall.executeUpdate();					
 							
-			}	
+			}	*/
 			
 			if (null != conn) {
 				conn.close();
