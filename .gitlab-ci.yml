@@ -1,5 +1,6 @@
 variables: 
   outputfolder: $CI_PROJECT_DIR/AIR_2.00/target/
+  buildfolder: AIR_2.00
 
 #######################################
 # WEBA Infos 
@@ -27,7 +28,7 @@ variables:
     - $outputfolder/*.war
     expire_in: 1 week
   script:
-    - cd AIR_2.00
+    - cd ${buildfolder}
     - mvn package 
 
 .push_webapp_to_weba: &push_webapp_to_weba_template
