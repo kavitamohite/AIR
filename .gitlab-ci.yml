@@ -16,7 +16,7 @@ include:
     
 stages:
   - build
-  - deploy
+  - push
 
 build:
   extents: .maven_build
@@ -28,4 +28,4 @@ push:
   extents: .push_to_weba
   only:
     - Docker_Test  
-  stage: deploy    
+  stage: push    
