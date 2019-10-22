@@ -13,3 +13,19 @@ variables:
 include:
   - project: 'shared/templates'
     file: '/gitlab-ci.yml.templates/.shared-dind-buildsync.yml'
+    
+stages:
+  - build
+  - deploy
+
+build:
+  extents: .maven_build
+  only:
+    - Docker_Test  
+  stage: build  
+  
+push:
+  extents: .push_to_weba
+  only:
+    - Docker_Test  
+  stage: deploy    
