@@ -27,6 +27,7 @@ variables:
     - $outputfolder/*.war
     expire_in: 1 week
   script:
+    - cd AIR_2.00
     - mvn package 
 
 .push_webapp_to_weba: &push_webapp_to_weba_template
