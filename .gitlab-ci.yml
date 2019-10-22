@@ -1,5 +1,5 @@
 variables: 
-  outputfolder: $CI_PROJECT_DIR/target/
+  outputfolder: $CI_PROJECT_DIR/AIR_2.00/target/
 
 #######################################
 # WEBA Infos 
