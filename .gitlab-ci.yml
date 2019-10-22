@@ -1,14 +1,12 @@
 variables: 
-  outputfolder: $CI_PROJECT_DIR/AIR_2.00/target/
+  outputfolder: $CI_PROJECT_DIR/AIR_2.00/target
   buildfolder: AIR_2.00
-
-#######################################
-# WEBA Infos 
+  mavenversion: 3.6.1-jdk-8  
   REMOTE_REPO: by-gitlab.de.bayer.cnb/lamp/air.git
   PROJECT_TOKEN_NAME: air
   TOKEN: 6jyTZLFVw3oPPPs8wwSM 
   REPO_BRANCH: master
-#######################################
+
 
 include:
   - project: 'shared/templates'
