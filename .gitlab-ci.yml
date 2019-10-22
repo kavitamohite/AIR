@@ -5,8 +5,8 @@ variables:
 #######################################
 # WEBA Infos 
   REMOTE_REPO: by-gitlab.de.bayer.cnb/lamp/air.git
-  PROJECT_TOKEN_NAME: DRM4SDI
-  TOKEN: heXtbVMAa4wfHFTnoExC 
+  PROJECT_TOKEN_NAME: air
+  TOKEN: 6jyTZLFVw3oPPPs8wwSM 
   REPO_BRANCH: master
   GIT_USER_EMAIL: air@gitlab.bayer.com
   GIT_USER_NAME: air@gitlab.bayer.com
