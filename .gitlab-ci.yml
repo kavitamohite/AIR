@@ -1,0 +1,80 @@
+variables: 
+  outputfolder: $CI_PROJECT_DIR/target/
+
+#######################################
+# WEBA Infos 
+  REMOTE_REPO: by-gitlab.de.bayer.cnb/lamp/air.git
+  PROJECT_TOKEN_NAME: DRM4SDI
+  TOKEN: heXtbVMAa4wfHFTnoExC 
+  REPO_BRANCH: master
+  GIT_USER_EMAIL: air@gitlab.bayer.com
+  GIT_USER_NAME: air@gitlab.bayer.com
+#######################################
+ 
+#######################################
+# Setup Ant / Maven build environment #
+#######################################
+ 
+.maven_build: &maven_template
+  image: lamp/ant-maven-build:latest
+  tags:
+    - dind
+    - ddc
+  only:
+    - Docker_Test  
+  artifacts:
+    paths:
+    - $outputfolder/*.war
+    expire_in: 1 week
+  script:
+    - mvn package 
+
+.push_webapp_to_weba: &push_webapp_to_weba_template
+  image: lamp/ant-maven-build:latest
+  tags:
+    - dind
+    - ddc
+  only:
+    - Docker_Test 
+  stage: push_webapp_to_weba
+  variables:
+     GIT_STRATEGY: none
+  script:
+  - mkdir $CI_PROJECT_DIR/WEB
+  - git config --global http.sslverify false
+  - git clone https://${PROJECT_TOKEN_NAME}:${TOKEN}@${REMOTE_REPO} -b ${REPO_BRANCH} WEBA
+  - ls $CI_PROJECT_DIR/WEBA
+  - rm -r  $CI_PROJECT_DIR/WEBA/app/* || true
+  - mkdir -p $CI_PROJECT_DIR/WEBA/app
+  - unzip $outputfolder/\*.war -d $CI_PROJECT_DIR/WEBA/app
+  - cd $CI_PROJECT_DIR/WEBA
+  - git config user.email $GIT_USER_EMAIL
+  - git config user.name $GIT_USER_NAME
+  - git status
+  - git add .
+  - git commit -m "SRC-REPO ${CI_COMMIT_MESSAGE}" || true
+  - (if [ "$CI_COMMIT_TAG" ]; then 
+            git tag $CI_COMMIT_TAG; 
+            git push origin $CI_COMMIT_TAG;
+      else
+           git push origin;         
+    fi)
+  
+stages:
+  - build
+  - deploy
+
+build:
+  <<: *maven_template
+  stage: build  
+  
+push_webapp_to_weba:
+  <<: *push_webapp_to_weba_template
+  stage: deploy
+
+
+
+  
+
+
+  
