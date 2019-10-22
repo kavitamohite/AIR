@@ -19,13 +19,13 @@ stages:
   - push
 
 build:
-  extents: .maven_build
+  extends: .maven_build
   only:
     - Docker_Test  
   stage: build  
   
 push:
-  extents: .push_to_weba
+  extends: .push_to_weba
   only:
     - Docker_Test  
   stage: push    
