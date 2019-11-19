@@ -318,5 +318,24 @@
 		<session-timeout>2400</session-timeout>
 	</session-config>
   
+  <login-config>
+     <auth-method>SPNEGO</auth-method>
+  </login-config>
+  
+<security-constraint>
+  <web-resource-collection>
+    <web-resource-name>Air</web-resource-name>
+    <url-pattern>/jsp/loginAction.jsp</url-pattern>
+  </web-resource-collection>
+  <auth-constraint>
+     <role-name>*</role-name>
+  </auth-constraint>
+  <user-data-constraint>
+    <transport-guarantee>NONE</transport-guarantee>
+  </user-data-constraint>
+</security-constraint>  
+<security-role>
+    <role-name>*</role-name>
+</security-role> 
   
   </web-app>

@@ -6,7 +6,7 @@ var app_contact  		= 'ITILcenter@bayer.com';
 var app_interfacename 	= 'AIR';
 	
 // Directories
-var webcontext = '/AIR';
+var webcontext = '';
 var imgcontext = 'images/';
 var lngcontext = 'conf/lang/';
 var doccontext = 'doc/';
