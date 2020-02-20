@@ -10,8 +10,7 @@ AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 		    	xtype: 'grid',
 		        id: 'historyListView',
 		        layout: 'fit',
-		        
-		        height: 400,
+		        height: 600,
 		    	store: AIR.AirStoreFactory.createHistoryListStore(),
 		        emptyText: 'No data',
 		        border: false,
@@ -84,7 +83,13 @@ AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 	update: function() {
 		var loadMask = Util.createMask('Loading', Ext.get('historyListView'));
 		loadMask.show();
+	//	AIR.CiHistoryView.superclass.initComponent.call(this);
+	//	var assetId = this.getComponent('topPanel').getComponent('assetId').getValue();
 		var historyListStore = this.getComponent('historyListView').getStore();
+		//var historyListStore = AIR.AirStoreManager.getStoreByName('historyListView');
+		
+	//var historyListStore =AAM.AirStoreFactory.createHistoryListStore();
+		 
 
 		var params = {
 			cwid: AAM.getCwid(),
@@ -95,6 +100,7 @@ AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 		
 		historyListStore.addListener('load', function() {loadMask.hide();});
 		
+		
 		historyListStore.load({
 			params: params
 		});
@@ -102,15 +108,15 @@ AIR.CiHistoryView = Ext.extend(Ext.Panel, {
 	
 	updateLabels: function(labels) {
 		this.setTitle(labels.historyPanelTitle);
-		
-		this.getComponent('historyListView').getColumnModel().setColumnHeader(0, labels.historyDatetime);
-		this.getComponent('historyListView').getColumnModel().setColumnHeader(1, labels.historyChangeSource);
-		this.getComponent('historyListView').getColumnModel().setColumnHeader(2, labels.historyChangeDBUser);
-		this.getComponent('historyListView').getColumnModel().setColumnHeader(3, labels.historyChangeUserCWID);
-		this.getComponent('historyListView').getColumnModel().setColumnHeader(4, labels.historyChangeAttributeName);
-		this.getComponent('historyListView').getColumnModel().setColumnHeader(5, labels.ciId);
-		this.getComponent('historyListView').getColumnModel().setColumnHeader(6, labels.historyChangeAttributeOldValue);//5
-		this.getComponent('historyListView').getColumnModel().setColumnHeader(7, labels.historyChangeAttributeNewValue);//6
+		Ext.getCmp("historyListView").getColumnModel().setColumnHeader(0,labels.historyDatetime);
+		Ext.getCmp("historyListView").getColumnModel().setColumnHeader(1,labels.historyChangeSource);
+		Ext.getCmp("historyListView").getColumnModel().setColumnHeader(2,labels.historyChangeDBUser);
+		Ext.getCmp("historyListView").getColumnModel().setColumnHeader(3,labels.historyChangeUserCWID);
+		Ext.getCmp("historyListView").getColumnModel().setColumnHeader(4,labels.historyChangeAttributeName);
+		Ext.getCmp("historyListView").getColumnModel().setColumnHeader(5,labels.historyChangeAttributeNewValue);
+		Ext.getCmp("historyListView").getColumnModel().setColumnHeader(6,labels.historyChangeAttributeOldValue);
+		Ext.getCmp("historyListView").getColumnModel().setColumnHeader(7,labels.infoType);
+		Ext.getCmp("historyListView").getColumnModel().setColumnHeader(8,labels.ciId);
 	}
 });
 Ext.reg('AIR.CiHistoryView', AIR.CiHistoryView);
