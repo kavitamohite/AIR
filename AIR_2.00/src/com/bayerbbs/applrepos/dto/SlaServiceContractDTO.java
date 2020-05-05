@@ -1,4 +1,4 @@
-package com.bayerbbs.applrepos.dto;
+/*package com.bayerbbs.applrepos.dto;
 
 public class SlaServiceContractDTO {
 
@@ -26,3 +26,4 @@ public class SlaServiceContractDTO {
 	}
 
 }
+*/

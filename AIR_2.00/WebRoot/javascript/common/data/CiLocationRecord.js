@@ -6,7 +6,7 @@ AIR.CiLocationRecord = Ext.data.Record.create([{
 		name: 'tableId', type: 'int'
 	},{
 		name: 'areaId', type: 'int'
-	}, 'name', 'alias', 'ciOwner', 'ciOwnerDelegate', 'insertQuelle', 'insertTimestamp', 'insertUser', 'updateQuelle', 'updateTimestamp', 'updateUser', 'slaId', 'businessEssentialId',
+	}, 'name', 'alias', 'ciOwner', 'ciOwnerDelegate', 'insertQuelle', 'insertTimestamp', 'insertUser', 'updateQuelle', 'updateTimestamp', 'updateUser', 'businessEssentialId',
 		'hasMarkedDeletedItems',{
 		name: 'standordLoeschung', type: 'int'
 	},{

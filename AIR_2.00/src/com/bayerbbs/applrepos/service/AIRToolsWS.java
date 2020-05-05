@@ -41,8 +41,8 @@ import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.SISoogleAttribute;
 import com.bayerbbs.applrepos.dto.ServiceModelDTO;
 import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
-import com.bayerbbs.applrepos.dto.SlaDTO;
-import com.bayerbbs.applrepos.dto.SlaServiceContractDTO;
+//import com.bayerbbs.applrepos.dto.SlaDTO;
+//import com.bayerbbs.applrepos.dto.SlaServiceContractDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 import com.bayerbbs.applrepos.hibernate.AccountHbn;
 import com.bayerbbs.applrepos.hibernate.AnwendungHbn;
@@ -68,8 +68,8 @@ import com.bayerbbs.applrepos.hibernate.PriorityLevelHbn;
 import com.bayerbbs.applrepos.hibernate.ProcessHbn;
 import com.bayerbbs.applrepos.hibernate.SeverityLevelHbn;
 import com.bayerbbs.applrepos.hibernate.SisoogleValuesHbn;
-import com.bayerbbs.applrepos.hibernate.SlaHbn;
-import com.bayerbbs.applrepos.hibernate.SlaServiceContractHbn;
+//import com.bayerbbs.applrepos.hibernate.SlaHbn;
+//import com.bayerbbs.applrepos.hibernate.SlaServiceContractHbn;
 
 public class AIRToolsWS {
 	private final static String CACHENAME = "com.bayerbbs.applrepos.airCache";
@@ -235,7 +235,7 @@ public class AIRToolsWS {
 		return templateList.toArray(new ReferenzDTO[0]);
 	}
 	
-	public SeverityLevelDTO[] getSeverityLevelList() {
+	/*public SeverityLevelDTO[] getSeverityLevelList() {
 		return SeverityLevelHbn.getSLArrayFromList(SeverityLevelHbn.listSeverityLevelHbn());
 	}
 
@@ -263,7 +263,7 @@ public class AIRToolsWS {
 		}
 		
 		return aSlaServiceContracts; 
-	}
+	}*/
 
 	public CategoryBusinessDTO[] getCategoryBusinessList() {
 		return CategoryBusinessHbn.getArrayFromList(CategoryBusinessHbn.listCategoryBusiness());

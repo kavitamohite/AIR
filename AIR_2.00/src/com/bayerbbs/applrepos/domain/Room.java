@@ -116,13 +116,13 @@ public class Room extends CiBase1 implements Serializable {
 		this.floor = floor;
 	}
 	
-	@Column(name = "SEVERITY_LEVEL_ID")
+	/*@Column(name = "SEVERITY_LEVEL_ID")
 	public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
+	}*/
 	
 	@Column(name = "BUSINESS_ESSENTIAL_ID")
 	public Long getBusinessEssentialId() {

@@ -83,7 +83,7 @@ public class AssetViewDataDTO {
 	private String iloAdvancedKey;
 	private String oneViewOrderNumber;
 	private String typeOfContract;
-	private String serviceAgreementId;
+	//private String serviceAgreementId;
 	private String serviceContractGroup;
 	private Date endOfContract;
 	
@@ -760,14 +760,14 @@ public void setTypeOfContract(String typeOfContract) {
 	this.typeOfContract = typeOfContract;
 }
 
-public String getServiceAgreementId() {
+/*public String getServiceAgreementId() {
 	return serviceAgreementId;
 }
 
 public void setServiceAgreementId(String serviceAgreementId) {
 	this.serviceAgreementId = serviceAgreementId;
 }
-
+*/
 public String getServiceContractGroup() {
 	return serviceContractGroup;
 }

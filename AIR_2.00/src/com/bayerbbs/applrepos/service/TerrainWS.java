@@ -29,8 +29,8 @@ public class TerrainWS {
 		terrainDTO.setCiOwnerDelegateHidden(input.getCiOwnerDelegateHidden());
 
 		//Agreements
-		terrainDTO.setSlaId(input.getSlaId());
-		terrainDTO.setServiceContractId(input.getServiceContractId());
+		//terrainDTO.setSlaId(input.getSlaId());
+		//terrainDTO.setServiceContractId(input.getServiceContractId());
 
 		
 		//Protection

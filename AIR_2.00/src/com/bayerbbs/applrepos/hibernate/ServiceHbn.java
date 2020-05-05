@@ -631,14 +631,14 @@ System.out.println("Service SQL"+sql);
 		service.setServiceDescription(input.getServiceDescription());
 		service.setServiceAias(input.getServiceAias());
 
-		if (null != input.getSlaId()) {
+		/*if (null != input.getSlaId()) {
 			if (-1 != input.getSlaId())
 				service.setSlaId(input.getSlaId());
 		}
 		if (null != input.getServiceContractId()) {
 			if (-1 != input.getServiceContractId())
 				service.setServiceContractId(input.getServiceContractId());
-		}
+		}*/
 
 		service.setCiOwner(input.getCiOwnerHidden());
 		service.setCiOwnerDelegate(input.getCiOwnerDelegateHidden());
@@ -668,7 +668,7 @@ System.out.println("Service SQL"+sql);
 		service.setOrganisationalScope(input.getOrganisationalScope());
 		service.setServiceDescription(input.getServiceDescription());
 		service.setServiceAias(input.getServiceAias());
-
+/*
 		if (null != input.getSlaId()) {
 			if (-1 != input.getSlaId())
 				service.setSlaId(input.getSlaId());
@@ -676,7 +676,7 @@ System.out.println("Service SQL"+sql);
 		if (null != input.getServiceContractId()) {
 			if (-1 != input.getServiceContractId())
 				service.setServiceContractId(input.getServiceContractId());
-		}
+		}*/
 
 		service.setCiOwner(input.getCiOwnerHidden());
 		service.setCiOwnerDelegate(input.getCiOwnerDelegateHidden());

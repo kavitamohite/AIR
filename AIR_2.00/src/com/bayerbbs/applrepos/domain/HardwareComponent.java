@@ -189,7 +189,7 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 	private String iloAdvancedKey;
 	private String oneViewOrderNumber;
 	private String typeOfContract;
-	private String serviceAgreementId;
+//	private String serviceAgreementId;
 	private String serviceContractGroup;
 	private Date endOfContract;
 	
@@ -931,14 +931,7 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 		this.commercialStatus = commercialStatus;
 	}
 
-	@Column(name = "CONTRACT_FOR_SERVICE")
-	public String getContactForService() {
-		return contactForService;
-	}
-
-	public void setContactForService(String contactForService) {
-		this.contactForService = contactForService;
-	}
+	
 
 	@Column(name = "GXP_FLAG")
 	public String getAcRequest() {
@@ -976,17 +969,9 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 		this.specifics = specifics;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SERVICE_CONTRACT_ID")
-	public ServiceContract getServiceContract() {
-		return serviceContract;
-	}
+	
 
-	public void setServiceContract(ServiceContract serviceContract) {
-		this.serviceContract = serviceContract;
-	}
-
-	@OneToOne(fetch = FetchType.LAZY)
+	/*@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SEVERITY_LEVEL_ID")
 	public SeverityLevel getSeverityLevel() {
 		return severityLevel;
@@ -994,7 +979,7 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 
 	public void setSeverityLevel(SeverityLevel severityLevel) {
 		this.severityLevel = severityLevel;
-	}
+	}*/
 
 	@Column(name = "HBA_COUNT")
 	public Long getHbaCount() {
@@ -1063,7 +1048,7 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 		this.typeOfContract = typeOfContract;
 	}
 	
-	@Column(name="SERVICE_AGREEMENT_ID")
+	/*@Column(name="SERVICE_AGREEMENT_ID")
 
 	public String getServiceAgreementId() {
 		return serviceAgreementId;
@@ -1071,17 +1056,9 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 
 	public void setServiceAgreementId(String serviceAgreementId) {
 		this.serviceAgreementId = serviceAgreementId;
-	}
+	}*/
 	
-	@Column(name="SERVICE_CONTRACT_GROUP")
-
-	public String getServiceContractGroup() {
-		return serviceContractGroup;
-	}
-
-	public void setServiceContractGroup(String serviceContractGroup) {
-		this.serviceContractGroup = serviceContractGroup;
-	}
+	
 
 	@Column(name="END_OF_CONTRACT")
 	public Date getEndOfContract() {

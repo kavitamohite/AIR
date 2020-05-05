@@ -261,13 +261,13 @@ public class SchrankHbn extends LokationItemHbn {
 						
 						*/
 						
-						if (null != dto.getSeverityLevelId()) {
+						/*if (null != dto.getSeverityLevelId()) {
 							if (-1 == dto.getSeverityLevelId()) {
 								schrank.setSeverityLevelId(null);
 							} else {
 								schrank.setSeverityLevelId(dto.getSeverityLevelId());
 							}
-						}
+						}*/
 						
 						if (null == dto.getBusinessEssentialId()) {
 							if (null == schrank.getBusinessEssentialId()) {
@@ -475,14 +475,14 @@ public class SchrankHbn extends LokationItemHbn {
 						schrank.setRoom(room);
 						
 						
-						if (null != dto.getSeverityLevelId()) {
+						/*if (null != dto.getSeverityLevelId()) {
 							if (-1 == dto.getSeverityLevelId()) {
 								schrank.setSeverityLevelId(null);
 							}
 							else {
 								schrank.setSeverityLevelId(dto.getSeverityLevelId());
 							}
-						}
+						}*/
 						schrank.setBusinessEssentialId(dto.getBusinessEssentialId());
 
 						
@@ -583,7 +583,7 @@ public class SchrankHbn extends LokationItemHbn {
 
 		dto.setRaumId(schrank.getRoomId());
 		
-		dto.setSeverityLevelId(schrank.getSeverityLevelId());
+		//dto.setSeverityLevelId(schrank.getSeverityLevelId());
 		dto.setBusinessEssentialId(schrank.getBusinessEssentialId());
 	}
 
@@ -656,7 +656,7 @@ public class SchrankHbn extends LokationItemHbn {
 						positionTarget.setRoomId(positionSource.getRoomId());
 						
 						// ==========
-						positionTarget.setSeverityLevelId(positionSource.getSeverityLevelId());
+					//	positionTarget.setSeverityLevelId(positionSource.getSeverityLevelId());
 						positionTarget.setBusinessEssentialId(positionSource.getBusinessEssentialId());
 
 						// ==============================

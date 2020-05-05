@@ -69,8 +69,8 @@ public class ApplicationEditParameterInput {
 	
 	
 	// agreements
-	private Long slaId;
-	private Long serviceContractId;
+	//private Long slaId;
+	//private Long serviceContractId;
 	private Long priorityLevelId;
 	private Long severityLevelId;
 	private Long businessEssentialId;
@@ -518,30 +518,30 @@ public class ApplicationEditParameterInput {
 	}
 	
 	
-	public Long getSlaId() {
+/*	public Long getSlaId() {
 		return slaId;
 	}
 	public void setSlaId(Long slaId) {
 		this.slaId = slaId;
-	}
+	}*/
 	public Long getPriorityLevelId() {
 		return priorityLevelId;
 	}
 	public void setPriorityLevelId(Long priorityLevelId) {
 		this.priorityLevelId = priorityLevelId;
 	}
-	public Long getServiceContractId() {
+	/*public Long getServiceContractId() {
 		return serviceContractId;
 	}
 	public void setServiceContractId(Long serviceContractId) {
 		this.serviceContractId = serviceContractId;
-	}
-	public Long getSeverityLevelId() {
+	}*/
+	/*public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
+	}*/
 
 
 	public String getGpsccontactResponsibleAtCustomerSideHidden() {

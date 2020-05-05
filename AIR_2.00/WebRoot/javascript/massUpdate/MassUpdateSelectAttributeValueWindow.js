@@ -140,56 +140,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		    		},
 				    
 					items: [
-			 {
-		        xtype: 'filterCombo',//combo
-		        width: 230,
-		        fieldLabel: 'SLA',
-		        id: 'selectAttrsla',
-		        store: AIR.AirStoreManager.getStoreByName('slaListStore'),//slaListStore,
-		        valueField: 'id',
-		        displayField: 'text',
-		        	        
-		        triggerAction: 'all',
-		        mode: 'local'
-		    }, {
-		        xtype: 'filterCombo',//combo
-		        width: 230,
-		        fieldLabel: 'Service Contract',
-		        id: 'selectAttrserviceContract',
-		        store: new Ext.data.Store(),//serviceContractListStore,
-		        valueField: 'id',
-		        displayField: 'text',
-		        triggerAction: 'all',
-		        disabled: true,
-		        editable: false,
-
-		        mode: 'local',
-		        
-		        listEmptyText: 'No matching items found'
-		    },{
-		        xtype: 'combo',
-		        width: 230,
-		        fieldLabel: 'Priority Level',		        
-		        id: 'selectAttrselectAttrpriorityLevel',
-		        store: AIR.AirStoreManager.getStoreByName('priorityLevelListStore'),//priorityLevelListStore,
-		        hidden: true,
-		        valueField: 'id',
-		        displayField: 'text',		        
-		        triggerAction: 'all',
-		        mode: 'local'
-		    },{
-		        xtype: 'filterCombo',//combo
-		        width: 230,
-		        fieldLabel: 'Severity Level',
-		        
-		        id: 'selectAttrselectAttrseverityLevel',
-		        store: AIR.AirStoreManager.getStoreByName('severityLevelListStore'),//severityLevelListStore,
-		        valueField: 'id',
-		        hidden: true,
-		        displayField: 'text',		        
-		        triggerAction: 'all',
-		        mode: 'local'
-		    },
+			
 		    {
 		        xtype: 'filterCombo',//combo
 		        width: 230,
@@ -779,8 +730,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
     	var selectcAttCbOsGroup = this.getComponent('selectAttrfsSpecifics').getComponent('selectcAttCbOsGroup');
     	var selectAttrCbOsType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsType');
 		var selectAttrCbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsName');
-		var selectAttrsla = this.getComponent('selectAttrAgreement').getComponent('selectAttrsla');
-		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
+		//var selectAttrsla = this.getComponent('selectAttrAgreement').getComponent('selectAttrsla');
+		//var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
 
     	
 
@@ -806,17 +757,17 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         selectAttrCbOsType.on('change', this.onOsTypeChange, this);
         selectAttrCbOsName.on('change', this.onOsNameChange, this);//onChange
         
-        selectAttrsla.on('select', this.onSlaSelect, this);
-        selectAttrsla.on('change', this.onSlaChange, this);
+       // selectAttrsla.on('select', this.onSlaSelect, this);
+       // selectAttrsla.on('change', this.onSlaChange, this);
 		
-        selectAttrserviceContract.on('select', this.onServiceContractSelect, this);
-        selectAttrserviceContract.on('change', this.onServiceContractChange, this);
-        selectAttrserviceContract.on('keyup', this.onServiceContractKeyUp, this);
-        this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrpriorityLevel').getStore().sort('text','ASC');
+       // selectAttrserviceContract.on('select', this.onServiceContractSelect, this);
+        //selectAttrserviceContract.on('change', this.onServiceContractChange, this);
+      //  selectAttrserviceContract.on('keyup', this.onServiceContractKeyUp, this);
+      //  this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrpriorityLevel').getStore().sort('text','ASC');
         this.getComponent('selectAttrAgreement').getComponent('selectAttrBusinessEssential').getStore().sort('text','ASC');
         this.getComponent('selectAttrCompliance').getComponent('selectAttrCBrelevanceGxp').getStore().sort('text','ASC');
         
-        this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrseverityLevel').getStore().sort('id','DESC');
+     //   this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrseverityLevel').getStore().sort('id','DESC');
 		this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrity').getStore().sort('id','ASC');
 
 
@@ -965,8 +916,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         var selectAttrprotectionIntegrityDescription = this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrityDescription');
         var selectAttrcbgRegulationsW = this.getComponent('selectAttrCompliance').getComponent('selectAttrcbgRegulationsW');
         var cbselectAttrItSecGroup = this.getComponent('selectAttrCompliance').getComponent('cbselectAttrItSecGroup');
-        var selectAttrselectAttrpriorityLevel = this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrpriorityLevel');
-        var selectAttrselectAttrseverityLevel = this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrseverityLevel');
+       // var selectAttrselectAttrpriorityLevel = this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrpriorityLevel');
+      //  var selectAttrselectAttrseverityLevel = this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrseverityLevel');
         var selectAttrlifecycleStatus = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrlifecycleStatus');
         var selectAttroperationalStatus = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttroperationalStatus');
         var selectAttrcbApplicationBusinessCat = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbApplicationBusinessCat');
@@ -989,8 +940,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			selectAttrapplicationVersion.setVisible(true);
 			selectAttrtaCiDescriptionW.setVisible(true);
 			selectAttrapplicationCat.setVisible(true);
-			selectAttrselectAttrseverityLevel.setVisible(true);
-			selectAttrselectAttrpriorityLevel.setVisible(true);
+		//	selectAttrselectAttrseverityLevel.setVisible(true);
+		//	selectAttrselectAttrpriorityLevel.setVisible(true);
 			selectAttrlifecycleStatus.setVisible(true);
 			selectAttroperationalStatus.setVisible(true);
 			selectAttrcbApplicationBusinessCat.setVisible(true);
@@ -1009,13 +960,13 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			selectAttrgVirtualHWHost.setVisible(true);
 			selectAttrcbVirtualSoftware.setVisible(true);
 			selectAttrcbPrimaryFunction.setVisible(true);
-			selectAttrselectAttrseverityLevel.setVisible(true);
-			selectAttrselectAttrpriorityLevel.setVisible(true);
+		//	selectAttrselectAttrseverityLevel.setVisible(true);
+			//selectAttrselectAttrpriorityLevel.setVisible(true);
 			selectAttrlifecycleStatus.setVisible(true);
 			selectAttroperationalStatus.setVisible(true);			
 		}
 		if(this.ciTypeId==AC.TABLE_ID_ROOM || this.ciTypeId==AC.TABLE_ID_POSITION ){
-			selectAttrselectAttrseverityLevel.setVisible(true);
+		//	selectAttrselectAttrseverityLevel.setVisible(true);
 		}
 		if(this.ciTypeId==AC.TABLE_ID_FUNCTION){
 			this.getComponent('selectAttrProtection').setVisible(false);
@@ -1032,8 +983,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				clusterCodesListStore: null,
 				clusterTypesListStore: null,
 				virtualSoftwareListStore: null,
-				itSystemPrimaryFunctionsListStore: null,
-				serviceContractListStore: null
+				itSystemPrimaryFunctionsListStore: null
+				
 		};
 		
 		var storeCount = 0;
@@ -1056,7 +1007,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         var selectAttrCbOsName = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrCbOsName');
         var selectAttrcbClusterCode = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterCode');
         var selectAttrcbClusterType = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbClusterType');
-		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
+	//	var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
 		selectcAttCbOsGroup.bindStore(AIR.AirStoreManager.getStoreByName('osGroupsListStore'));
 		selectAttrCbOsType.bindStore(AIR.AirStoreManager.getStoreByName('osTypesListStore'));
 		selectAttrCbOsName.bindStore(AIR.AirStoreManager.getStoreByName('osNamesListStore'));
@@ -1064,7 +1015,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         selectAttrcbClusterType.bindStore(AIR.AirStoreManager.getStoreByName('clusterTypesListStore'));
         selectAttrcbVirtualSoftware.bindStore(AIR.AirStoreManager.getStoreByName('virtualSoftwareListStore'));
         selectAttrcbPrimaryFunction.bindStore(AIR.AirStoreManager.getStoreByName('itSystemPrimaryFunctionsListStore'));
-        selectAttrserviceContract.bindStore(AIR.AirStoreManager.getStoreByName('serviceContractListStore'));
+    //    selectAttrserviceContract.bindStore(AIR.AirStoreManager.getStoreByName('serviceContractListStore'));
         
 		storeLoader.destroy();
 		if(this.ciTypeId==AC.TABLE_ID_IT_SYSTEM){
@@ -1140,10 +1091,10 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			var selectAttrlifecycleStatus = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrlifecycleStatus');
             var selectAttroperationalStatus = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttroperationalStatus');
             
-			var selectAttrsla =this.getComponent('selectAttrAgreement').getComponent('selectAttrsla');
-			var  selectAttrserviceContract=this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
-			var selectAttrselectAttrpriorityLevel=this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrpriorityLevel');
-			var selectAttrselectAttrseverityLevel = this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrseverityLevel');
+		//	var selectAttrsla =this.getComponent('selectAttrAgreement').getComponent('selectAttrsla');
+		//	var  selectAttrserviceContract=this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
+		//	var selectAttrselectAttrpriorityLevel=this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrpriorityLevel');
+		//	var selectAttrselectAttrseverityLevel = this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrseverityLevel');
 			
 			var selectAttrprotectionAvailability =this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionAvailability');
 			var  selectAttrprotectionAvailabilityDescription=this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionAvailabilityDescription');
@@ -1206,10 +1157,10 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				 	operationalStatusId: selectAttroperationalStatus.getValue(),
 				 	clusterCode: clusterCode,
 				 	clusterType: clusterType,	
-				 	slaId: selectAttrsla.getValue(),
-				 	priorityLevelId: selectAttrselectAttrpriorityLevel.getValue(),
-				 	serviceContractId: selectAttrserviceContract.getValue(),
-				 	severityLevelId: selectAttrselectAttrseverityLevel.getValue(),
+				 //	slaId: selectAttrsla.getValue(),
+				 //	priorityLevelId: selectAttrselectAttrpriorityLevel.getValue(),
+				// 	serviceContractId: selectAttrserviceContract.getValue(),
+				 //	severityLevelId: selectAttrselectAttrseverityLevel.getValue(),
 				 	itSecSbAvailability: selectAttrprotectionAvailability.getValue(),
 				 	itSecSbAvailabilityTxt: selectAttrprotectionAvailabilityDescription.getValue(),
 				 	itSecSbIntegrityId: selectAttrprotectionIntegrity.getValue(),
@@ -1316,7 +1267,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		
 		combo.filterByData(filterData);
 	},
-	onSlaSelect: function(combo, record, index) {
+	/*onSlaSelect: function(combo, record, index) {
 		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
 		selectAttrserviceContract.enable();
 
@@ -1328,26 +1279,26 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 		if(selectAttrserviceContract.getStore().getCount() === 1)
 			selectAttrserviceContract.setValue(selectAttrserviceContract.getStore().getAt(0).get('id'));
     	
-	},
+	},*/
 	
-	onSlaChange: function(combo, newValue, oldValue) {
+	/*onSlaChange: function(combo, newValue, oldValue) {
 		
-		var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
-		selectAttrserviceContract.enable();
+	//	var selectAttrserviceContract = this.getComponent('selectAttrAgreement').getComponent('selectAttrserviceContract');
+	//	selectAttrserviceContract.enable();
 
 		if(typeof newValue === 'string' && newValue.length === 0) {
 			combo.reset();
-			selectAttrserviceContract.reset();
+			//selectAttrserviceContract.reset();
 		} else {
-			selectAttrserviceContract.reset();
+			//selectAttrserviceContract.reset();
 
 			newValue = typeof newValue === 'string' ? newValue : oldValue;
 			
 			var filterData = { slaId: newValue };
-			selectAttrserviceContract.filterByData(filterData);
+		//	selectAttrserviceContract.filterByData(filterData);
 			
 			if(selectAttrserviceContract.getStore().getCount() === 1)
-				selectAttrserviceContract.setValue(selectAttrserviceContract.getStore().getAt(0).get('id'));
+			//	selectAttrserviceContract.setValue(selectAttrserviceContract.getStore().getAt(0).get('id'));
 		}
 	},
 	onServiceContractSelect: function(combo, record, index) {
@@ -1361,13 +1312,13 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			var r = Util.getComboRecord(combo, 'id', parseInt(newValue));//cbServiceContract.getStore().getById(parseInt(data.serviceContractId));
 			if(r)
 				selectAttrsla.setValue(r.get('slaId'));
-	},
+	},*/
 	
-	onServiceContractKeyUp: function(combo, event) {
+	/*onServiceContractKeyUp: function(combo, event) {
 		if(combo.getRawValue().length === 0) {
 			combo.reset();
 			delete combo.filterData;
 		}
-	}
+	}*/
 
 });

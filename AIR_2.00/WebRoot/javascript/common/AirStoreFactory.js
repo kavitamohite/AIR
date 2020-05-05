@@ -157,51 +157,9 @@ AIR.AirStoreFactory = function() {
 	        return classInformationListStore;
 		},
 		
-		createSlaListStore: function() {
-			var slaListStore = new Ext.data.ArrayStore(
-			{
-				storeId: 'slaListStore',
-				fields : ['id', 'text'],
-				idIndex: 0,
-				data : slaData
-			});
-	        return slaListStore;
-		},
 		
-		createServiceContractListStore: function() {
-			var serviceContractListRecord = Ext.data.Record.create([ {
-				name : 'id',
-				mapping : 'serviceContractId'
-			},{
-				name : 'text',
-				mapping : 'serviceContractName'
-			},{
-				name : 'slaId'
-			} ]);
-			var serviceContractListReader = new Ext.data.XmlReader({
-	            record: 'return',
-	            idProperty: 'id'
-			}, serviceContractListRecord); 
-			var serviceContractListStore = new Ext.data.XmlStore(
-			{
-				autoDestroy: true,
-				storeId: 'serviceContractListStore',
-				autoLoad: false,
-				
-	     		proxy: new Ext.ux.soap.SoapProxy({
-	         		url: webcontext +'/ApplicationToolsWSPort',
-	         		loadMethod: 'getServiceContractList',
-	         		timeout: 120000,
-	         		reader: serviceContractListReader
-	         	}),
-	         	
-	         	fields: [ 'id', 'text', 'slaId' ],
-	
-	         	reader: serviceContractListReader
-				
-			});
-	        return serviceContractListStore;
-		},
+		
+		
 		
 		createPriorityLevelListStore: function() {
 			var priorityLevelListStore = new Ext.data.ArrayStore(
@@ -214,17 +172,7 @@ AIR.AirStoreFactory = function() {
 	        return priorityLevelListStore;
 		},
 		
-		createSeverityLevelListStore: function() {
-			var severityLevelListStore = new Ext.data.ArrayStore(
-			{
-				storeId: 'severityLevelListStore',
-				fields : ['text', 'id'],
-				idIndex: 1,
-				data : severityLevelData
-			});
-			
-			return severityLevelListStore;
-		},
+		
 	
 		createBusinessEssentialListStore: function() {
 			var businessEssentialListStore = new Ext.data.ArrayStore(
@@ -627,7 +575,7 @@ AIR.AirStoreFactory = function() {
 			        {name: 'label_details_category'},
 			        {name: 'label_details_ciOwner'},
 			        {name: 'label_details_applicationOwner'},
-			        {name: 'label_details_sla'},
+			      
 			        {name: 'label_details_businessessential'},
 			        {name: 'label_details_insertdata'},
 			        {name: 'label_details_updatedata'},
@@ -685,10 +633,10 @@ AIR.AirStoreFactory = function() {
 	
 			        // agreements
 			        {name: 'agreementsPanelTitle'},
-			        {name: 'sla'},
+			        
 			        {name: 'priorityLevel'},
-			        {name: 'serviceContract'},
-			        {name: 'severityLevel'},
+			      
+			       
 			        {name: 'businessEssential'},
 			        
 			        // protection
@@ -897,9 +845,8 @@ AIR.AirStoreFactory = function() {
 			        {name: 'wizardapplicationBusinessCat'},
 			        {name: 'wizardapplicationCat2'},
 			        {name: 'wizardAgreements'},
-			        {name: 'wizardsla'},
-			        {name: 'wizardserviceContract'},
-			        {name: 'wizardseverityLevel'},
+			      
+			      
 			        {name: 'wizardbusinessEssential'},
 			        {name: 'lvApplicationUsingRegionsW'},
 
@@ -1162,8 +1109,8 @@ AIR.AirStoreFactory = function() {
 					{name : 'assetILOAdKey'},
 					{name : 'assetOrdNum'},
 					{name : 'assetTypeContract'},
-					{name : 'assetServiceAgrmntId'},
-					{name : 'assetServiceContGrp'},
+					
+					
 					{name : 'assecEndContrctDate'},
 					
 					
@@ -1296,14 +1243,14 @@ AIR.AirStoreFactory = function() {
 			        
 	
 			        // agreements
-			        {name: 'slaName'},
-			        {name: 'slaNameText'},
+			       
+			      
 			        {name: 'priorityLevel'},
 			        {name: 'priorityLevelText'},
-			        {name: 'serviceContract'},
-			        {name: 'serviceContractText'},
-			        {name: 'severityLevel'},
-			        {name: 'severityLevelText'},
+			      
+			      
+			       
+			      
 			        {name: 'businessEssential'},
 			        {name: 'businessEssentialText'},
 			        
@@ -1560,10 +1507,9 @@ AIR.AirStoreFactory = function() {
 		        {name: 'categoryIt'},
 		        {name: 'gxpRelevance'},
 		        {name: 'itSet'},
-		        {name: 'serviceContract'},
-		        {name: 'severityLevel'},
+		        
 		        {name: 'priorityLevel'},
-		        {name: 'sla'},
+		       
 		        {name: 'lifecycleStatus'},
 		        {name: 'source'},
 		        {name: 'businessEssential'},
@@ -1575,14 +1521,14 @@ AIR.AirStoreFactory = function() {
 		    	totalProperty: 'total',
 		        idProperty: 'ciId',
 		        	
-		        fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel', 'sla', 'lifecycleStatus', 'source', 'businessEssential', 'template']
+		        fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'priorityLevel', 'lifecycleStatus', 'source', 'businessEssential', 'template']
 		    }, dwhEntityListRecord); 
 			
 		    var dwhEntityListStore = new Ext.data.XmlStore({
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel', 'sla', 'lifecycleStatus', 'source', 'businessEssential', 'template'],
+		      	fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'priorityLevel', 'lifecycleStatus', 'source', 'businessEssential', 'template'],
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
 		      		url: webcontext + '/CiEntityWSPort',
@@ -2543,18 +2489,6 @@ AIR.AirStoreFactory = function() {
 				name : 'refTxt',
 				mapping : 'applicationDTO > refTxt'
 			}, {
-				name : 'slaId',
-				mapping : 'applicationDTO > slaId'
-			}, {
-				name : 'sla',
-				mapping : 'applicationDTO > slaName'
-			}, {
-				name : 'serviceContractId',
-				mapping : 'applicationDTO > serviceContractId'
-			}, {
-				name : 'serviceContract',
-				mapping : 'applicationDTO > serviceContract'
-			}, {
 				name : 'comments',
 				mapping : 'applicationDTO > comments'
 			}, {
@@ -2566,12 +2500,6 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'priorityLevel',
 				mapping : 'applicationDTO > priorityLevel'
-			}, {
-				name : 'severityLevelId',
-				mapping : 'applicationDTO > severityLevelId'
-			}, {
-				name : 'severityLevel',
-				mapping : 'applicationDTO > severityLevel'
 			}, {
 				name : 'locationPath',
 				mapping : 'applicationDTO > locationPath'
@@ -2808,9 +2736,6 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'aclSeverity_Level_Id',
 				mapping : 'applicationAccessDTO > severity_Level_Id'
-			}, {
-				name : 'aclSla_Id',
-				mapping : 'applicationAccessDTO > sla_Id'
 			}, {
 				name : 'aclSub_Responsible',
 				mapping : 'applicationAccessDTO > sub_Responsible'

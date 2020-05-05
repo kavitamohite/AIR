@@ -143,10 +143,10 @@ public class ItSystemWS {
 		itSystemDTO.setCiOwnerDelegateHidden(input.getCiOwnerDelegateHidden());
 
 		//Agreements
-		itSystemDTO.setSlaId(input.getSlaId());
-		itSystemDTO.setServiceContractId(input.getServiceContractId());
+		/*itSystemDTO.setSlaId(input.getSlaId());
+		itSystemDTO.setServiceContractId(input.getServiceContractId());*/
 		itSystemDTO.setPriorityLevelId(input.getPriorityLevelId());
-		itSystemDTO.setSeverityLevelId(input.getSeverityLevelId());
+		//itSystemDTO.setSeverityLevelId(input.getSeverityLevelId());
 		itSystemDTO.setBusinessEssentialId(input.getBusinessEssentialId());
 		
 		//Protection

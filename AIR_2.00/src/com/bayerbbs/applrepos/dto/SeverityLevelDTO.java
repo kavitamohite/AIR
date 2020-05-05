@@ -6,24 +6,24 @@ public class SeverityLevelDTO implements Serializable {
 
 	private static final long serialVersionUID = 5831311168235831288L;
 
-	private Long severityLevelId;
-	private String severityLevel;
+//	private Long severityLevelId;
+	//private String severityLevel;
 	private Long severityGPSC;
 	private String usage;
 	private Long beCode;
 	
-	public Long getSeverityLevelId() {
+	/*public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
-	public String getSeverityLevel() {
+	}*/
+	/*public String getSeverityLevel() {
 		return severityLevel;
 	}
 	public void setSeverityLevel(String severityLevel) {
 		this.severityLevel = severityLevel;
-	}
+	}*/
 	public Long getSeverityGPSC() {
 		return severityGPSC;
 	}

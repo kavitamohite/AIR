@@ -32,8 +32,8 @@ public class StandortWS {
 		standortDTO.setCiOwnerDelegateHidden(input.getCiOwnerDelegateHidden());
 
 		//Agreements
-		standortDTO.setSlaId(input.getSlaId());
-		standortDTO.setServiceContractId(input.getServiceContractId());
+		//standortDTO.setSlaId(input.getSlaId());
+		//standortDTO.setServiceContractId(input.getServiceContractId());
 
 		
 		//Protection

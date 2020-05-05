@@ -104,12 +104,12 @@ public class ItSystemEditParameterInput extends BaseEditParameterInput {
 	public void setPriorityLevelId(Long priorityLevelId) {
 		this.priorityLevelId = priorityLevelId;
 	}
-	public Long getSeverityLevelId() {
+	/*public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
+	}*/
 	public Long getBusinessEssentialId() {
 		return businessEssentialId;
 	}

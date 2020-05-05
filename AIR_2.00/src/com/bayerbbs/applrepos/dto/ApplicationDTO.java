@@ -299,13 +299,13 @@ public class ApplicationDTO extends CiBaseDTO {
 		this.priorityLevel = priorityLevel;
 	}
 
-	public Long getSeverityLevelId() {
+	/*public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
 
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
+	}*/
 
 	public String getSeverityLevel() {
 		return severityLevel;

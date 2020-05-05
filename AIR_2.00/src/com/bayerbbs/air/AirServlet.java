@@ -53,7 +53,7 @@ import com.bayerbbs.applrepos.dto.ProcessDTO;
 import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.ServiceModelDTO;
 import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
-import com.bayerbbs.applrepos.dto.SlaDTO;
+//import com.bayerbbs.applrepos.dto.SlaDTO;
 import com.bayerbbs.applrepos.service.AIRToolsWS;
 import com.bayerbbs.applrepos.service.ApplicationCat1WS;
 import com.bayerbbs.applrepos.service.ApplicationCat2WS;
@@ -325,15 +325,15 @@ public class AirServlet extends HttpServlet {
 		output += confidentialityLine + "\n";
 
 		// SLA
-		SlaDTO[] slas = dataInput.getSlaList();
+		/*SlaDTO[] slas = dataInput.getSlaList();
 		String slaLine = "";
 		for(SlaDTO slaItem : slas) {
 			slaLine += "['" + slaItem.getSlaId() + "','" + slaItem.getSlaName() + "'],"; 
 		}
-		slaLine = "var slaData = [" + slaLine.substring(0, slaLine.length()-1) + "];";
-		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
-		ts = System.currentTimeMillis();
-		output += slaLine + "\n";
+		slaLine = "var slaData = [" + slaLine.substring(0, slaLine.length()-1) + "];";*/
+	//	output += "/*" + (System.currentTimeMillis() - ts) + "*/";
+	//	ts = System.currentTimeMillis();
+	//	output += slaLine + "\n";
 		
 		
 		
@@ -357,20 +357,20 @@ public class AirServlet extends HttpServlet {
 		ts = System.currentTimeMillis();
 		output += priorityLevelLine + "\n";
 		
-		SeverityLevelDTO[] severityLevels = dataInput.getSeverityLevelList();
+		/*SeverityLevelDTO[] severityLevels = dataInput.getSeverityLevelList();
 		String severityLevelLine = "";
 		for(SeverityLevelDTO severityLevelItem : severityLevels) {
 			severityLevelLine += "['" + severityLevelItem.getSeverityLevel() + "','" + severityLevelItem.getSeverityLevelId().toString() + "'],"; 
 		}
-		severityLevelLine = "var severityLevelData = [" + severityLevelLine.substring(0, severityLevelLine.length()-1) + "];";
-		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
-		ts = System.currentTimeMillis();
-		output += severityLevelLine + "\n";
+		severityLevelLine = "var severityLevelData = [" + severityLevelLine.substring(0, severityLevelLine.length()-1) + "];"; */
+	//	output += "/*" + (System.currentTimeMillis() - ts) + "*/";
+		//ts = System.currentTimeMillis();
+		//output += severityLevelLine + "\n";
 		
 		BusinessEssentialDTO[] businessEssentials = dataInput.getBusinessEssentialList();
 		String beLine = "";
 		for(BusinessEssentialDTO beItem : businessEssentials) {
-			beLine += "['" + beItem.getSeverityLevel() + "','" + beItem.getSeverityLevelId().toString()  + "','" + beItem.getUsage()+ "'],"; 
+			beLine += "['" + beItem.getSeverityLevel() + "','"  + "','" + beItem.getUsage()+ "'],"; 
 		}
 		beLine = "var beData = [" + beLine.substring(0, beLine.length()-1) + "];";
 		output += "/*" + (System.currentTimeMillis() - ts) + "*/";

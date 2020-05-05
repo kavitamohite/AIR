@@ -49,16 +49,16 @@ public class BovApplicationHbn {
 		drLevelId = dto.getDrLevel();
 		
 		// Severity Level
-		if (null != dto.getSeverityLevel()) {
+	/*	if (null != dto.getSeverityLevel()) {
 			List<SeverityLevelDTO> listSeverity = SeverityLevelHbn.listSeverityLevelHbn();
 			Iterator<SeverityLevelDTO> itSeverity = listSeverity.iterator();
 			while (null == severityLevelId && itSeverity.hasNext()) {
 				SeverityLevelDTO dtoSeverity = itSeverity.next();
 				if (dtoSeverity.getSeverityGPSC().longValue() == dto.getSeverityLevel().longValue()) {
-					severityLevelId = dtoSeverity.getSeverityLevelId();
+				//	severityLevelId = dtoSeverity.getSeverityLevelId();
 				}
 			}
-		}
+		}*/
 		
 		// GxP Relevant
 		if (null != dto.getGxpRelevant())			gxpRelevant = dto.getGxpRelevant();
@@ -136,9 +136,9 @@ public class BovApplicationHbn {
 			}
 			
 			// Severity Level
-			if (null != severityLevelId) {
+			/*if (null != severityLevelId) {
 				application.setSeverityLevelId(severityLevelId);
-			}
+			}*/
 				
 			// GxP relevant			
 			if (null != gxpRelevant) {

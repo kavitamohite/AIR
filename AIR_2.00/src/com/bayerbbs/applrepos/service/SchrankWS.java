@@ -25,9 +25,9 @@ public class SchrankWS {
 		schrankDTO.setCiOwnerDelegate(input.getCiOwnerDelegate());
 		schrankDTO.setCiOwnerDelegateHidden(input.getCiOwnerDelegateHidden());
 
-		schrankDTO.setSlaId(input.getSlaId());
-		schrankDTO.setServiceContractId(input.getServiceContractId());
-		schrankDTO.setSeverityLevelId(input.getSeverityLevelId());
+		//schrankDTO.setSlaId(input.getSlaId());
+		//schrankDTO.setServiceContractId(input.getServiceContractId());
+		//schrankDTO.setSeverityLevelId(input.getSeverityLevelId());
 		schrankDTO.setBusinessEssentialId(input.getBusinessEssentialId());
 		
 		schrankDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());

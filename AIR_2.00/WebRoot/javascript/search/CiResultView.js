@@ -377,6 +377,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 		}
 		
 		this.fireEvent('ciSelect', this, ciId, null, record);//grid this
+		this.fireEvent('externalNavigation', this, grid, 'clCiDetails');
 	},
 	
 	onRowDoubleClick: function (grid, rowIndex, e) {

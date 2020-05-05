@@ -63,8 +63,8 @@ public class WaysWS {
 		pathwayDTO.setCiOwnerDelegateHidden(input.getCiOwnerDelegateHidden());
 
 		//Agreements
-		pathwayDTO.setSlaId(input.getSlaId());
-		pathwayDTO.setServiceContractId(input.getServiceContractId());
+	//	pathwayDTO.setSlaId(input.getSlaId());
+		//pathwayDTO.setServiceContractId(input.getServiceContractId());
 
 		
 		//Protection

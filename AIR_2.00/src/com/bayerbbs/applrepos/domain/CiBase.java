@@ -24,7 +24,7 @@ public abstract class CiBase extends DeletableRevisionInfo {
 	private Long relevanceITSEC;
 	private String gxpFlag;
 	
-	private Long slaId;
+	//private Long slaId;
 	private Long serviceContractId;
 	
 	private Long itSecSbAvailability;
@@ -142,14 +142,14 @@ public abstract class CiBase extends DeletableRevisionInfo {
 
 
 	
-	@Column(name = "SLA_ID")
+	/*@Column(name = "SLA_ID")
 	public Long getSlaId() {
 		return slaId;
 	}
 
 	public void setSlaId(Long slaId) {
 		this.slaId = slaId;
-	}
+	}*/
 	
 	
 	@Column(name = "ITSEC_SB_VERFG_ID")

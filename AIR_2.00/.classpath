@@ -10,8 +10,8 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="M:/apache-tomcat-5.5.23/common/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="M:/apache-tomcat-5.5.23/common/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="M:/workspace28April/AIR2.3(10082014)/WebRoot/WEB-INF/lib/itext-2.1.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/EPCHI/OneDrive - Bayer/SISNet_Jar/jsp-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/EPCHI/OneDrive - Bayer/SISNet_Jar/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/EPCHI/OneDrive - Bayer/Personal Data/My Received Files/iText-2.1.7.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -44,8 +44,8 @@ public class BuildingWS {
 		//vandana
 
 		//Agreements
-		buildingDTO.setSlaId(input.getSlaId());
-		buildingDTO.setServiceContractId(input.getServiceContractId());
+		//buildingDTO.setSlaId(input.getSlaId());
+		//buildingDTO.setServiceContractId(input.getServiceContractId());
 
 		//Protection
 		buildingDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());
@@ -133,8 +133,8 @@ public class BuildingWS {
 
 
 		//Agreements
-		buildingAreaDTO.setSlaId(input.getSlaId());
-		buildingAreaDTO.setServiceContractId(input.getServiceContractId());
+	//	buildingAreaDTO.setSlaId(input.getSlaId());
+		//buildingAreaDTO.setServiceContractId(input.getServiceContractId());
 
 		//Protection
 		buildingAreaDTO.setItSecSbAvailabilityId(input.getItSecSbAvailabilityId());

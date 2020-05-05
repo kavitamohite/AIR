@@ -710,12 +710,12 @@ public static List<RolePersonDTO> findRolePersonAirAdministrator(String cwid,Str
 		Iterator<BusinessEssentialDTO> itBE = listBE.iterator();
 		while (itBE.hasNext()) {
 			BusinessEssentialDTO be = itBE.next();
-			if (be.getSeverityLevelId().longValue() == businessEssentialId.longValue()) {
+			/*if (be.getSeverityLevelId().longValue() == businessEssentialId.longValue()) {
 				businessEssentialNew = be.getSeverityLevel();
 			}
 			if (be.getSeverityLevelId().longValue() == businessEssentialIdOld.longValue()) {
 				businessEssentialOld = be.getSeverityLevel();
-			}
+			}*/
 		}
 		if (null == businessEssentialNew) {
 			businessEssentialNew = "---";

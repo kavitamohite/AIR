@@ -81,7 +81,7 @@ import com.bayerbbs.applrepos.hibernate.SchrankHbn;
 import com.bayerbbs.applrepos.hibernate.ServiceContractHbn;
 import com.bayerbbs.applrepos.hibernate.ServiceHbn;
 import com.bayerbbs.applrepos.hibernate.SeverityLevelHbn;
-import com.bayerbbs.applrepos.hibernate.SlaHbn;
+//import com.bayerbbs.applrepos.hibernate.SlaHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
 import com.bayerbbs.applrepos.hibernate.TerrainHbn;
 import com.bayerbbs.applrepos.hibernate.functionHbn;
@@ -170,7 +170,7 @@ public class CiEntityWS {
 			itSystemDTO.setLicenseScanningId(itSystem.getLicenseScanningId());
 
 			itSystemDTO.setPriorityLevelId(itSystem.getPriorityLevelId());
-			itSystemDTO.setSeverityLevelId(itSystem.getSeverityLevelId());
+		//	itSystemDTO.setSeverityLevelId(itSystem.getSeverityLevelId());
 			itSystemDTO.setBusinessEssentialId(itSystem
 					.getBusinessEssentialId());
 			////C0000181270 - Added for Appliance Flag
@@ -266,7 +266,7 @@ public class CiEntityWS {
 
 			// wenn noch alle Räume irgendwie auf die GUI sollen
 			// Set<Room> rooms = buildingArea.getRooms();
-			schrankDTO.setSeverityLevelId(schrank.getSeverityLevelId());
+		//	schrankDTO.setSeverityLevelId(schrank.getSeverityLevelId());
 			schrankDTO.setBusinessEssentialId(schrank.getBusinessEssentialId());
 			schrankDTO.setTableId(AirKonstanten.TABLE_ID_POSITION);
 			setCiBaseData(schrankDTO, schrank);
@@ -384,7 +384,7 @@ public class CiEntityWS {
 			roomDTO.setTableId(AirKonstanten.TABLE_ID_ROOM);
 			setCiBaseData(roomDTO, room);
 			roomDTO.setAlias(room.getAlias());
-			roomDTO.setSeverityLevelId(room.getSeverityLevelId());
+		//	roomDTO.setSeverityLevelId(room.getSeverityLevelId());
 			roomDTO.setBusinessEssentialId(room.getBusinessEssentialId());
 			roomDTO.setRoomType(room.getRoomType());
 			roomDTO.setFloor(room.getFloor());
@@ -866,7 +866,7 @@ public class CiEntityWS {
 			businessApplicationDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
 			businessApplicationDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
 			businessApplicationDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
-			businessApplicationDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
+		//	businessApplicationDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
 			businessApplicationDTO
 					.setServiceContractIdAcl(AirKonstanten.NO_SHORT);
 
@@ -991,7 +991,7 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 			functionDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
 			functionDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
 			functionDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
-			functionDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
+		//	functionDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
 			functionDTO.setServiceContractIdAcl(AirKonstanten.NO_SHORT);
 
 		}
@@ -1143,7 +1143,7 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 						.getCiOwnerDelegateHidden());// Delegate is Group
 		}
 
-		ciBaseDTO.setSlaId(ciBase.getSlaId());
+		//ciBaseDTO.setSlaId(ciBase.getSlaId());
 		ciBaseDTO.setServiceContractId(ciBase.getServiceContractId());
 
 		ciBaseDTO.setItSecSbAvailabilityId(ciBase.getItSecSbAvailability());
@@ -1225,7 +1225,7 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 			ciBaseDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
-			ciBaseDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
+			//ciBaseDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setServiceContractIdAcl(AirKonstanten.NO_SHORT);
 
 			// fehlt, nötig?
@@ -1287,7 +1287,7 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 						.getCiOwnerDelegateHidden());// Delegate is Group
 		}
 
-		ciBaseDTO.setSlaId(ciBase.getSlaId());
+	//	ciBaseDTO.setSlaId(ciBase.getSlaId());
 		ciBaseDTO.setServiceContractId(ciBase.getServiceContractId());
 
 		ciBaseDTO.setItSecSbAvailabilityId(ciBase.getItSecSbAvailability());
@@ -1381,7 +1381,7 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 			ciBaseDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
-			ciBaseDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
+		//	ciBaseDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setServiceContractIdAcl(AirKonstanten.NO_SHORT);
 
 			// fehlt, nötig?
@@ -1565,11 +1565,11 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.SEVERITY_LEVEL);
-		if (itSystem.getSeverityLevelId() != null
+		/*if (itSystem.getSeverityLevelId() != null
 				&& itSystem.getSeverityLevelId() != 0)
 			maDto.setAttributeValue(SeverityLevelHbn.findById(
 					itSystem.getSeverityLevelId()).getSeverityLevelName());
-		maDto.setId("severityLevelId");
+		maDto.setId("severityLevelId");*/
 		massUpdateAttriuteDTOs.add(maDto);
 
 		maDto = new MassUpdateAttributeDTO();
@@ -1700,9 +1700,9 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		maDto.setId("itsecGroupId");
 		massUpdateAttriuteDTOs.add(maDto);
 
-		maDto = new MassUpdateAttributeDTO();
-		maDto.setAttributeName(AirKonstanten.SLA);
-		if (itSystem.getSlaId() != null && itSystem.getSlaId() != 0)
+	//	maDto = new MassUpdateAttributeDTO();
+	//	maDto.setAttributeName(AirKonstanten.SLA);
+		/*if (itSystem.getSlaId() != null && itSystem.getSlaId() != 0)
 			maDto.setAttributeValue(SlaHbn.getSlaName(itSystem.getSlaId()));
 		maDto.setId("slaId");
 		massUpdateAttriuteDTOs.add(maDto);
@@ -1714,7 +1714,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 			maDto.setAttributeValue(ServiceContractHbn
 					.getServiceContract(itSystem.getServiceContractId()));
 		maDto.setId("serviceContractId");
-		massUpdateAttriuteDTOs.add(maDto);
+		massUpdateAttriuteDTOs.add(maDto);*/
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_INTEGRITY);
@@ -1861,20 +1861,20 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					.getItsecGroupId()));
 		maDto.setId("itsecGroupId");
 		massUpdateAttriuteDTOs.add(maDto);
-		maDto = new MassUpdateAttributeDTO();
+		/*maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.SLA);
 		if (ciBase1.getSlaId() != null && ciBase1.getSlaId() != 0)
 			maDto.setAttributeValue(SlaHbn.getSlaName(ciBase1.getSlaId()));
 		maDto.setId("slaId");
 		massUpdateAttriuteDTOs.add(maDto);
 		maDto = new MassUpdateAttributeDTO();
-		maDto.setAttributeName(AirKonstanten.SERVICE_CONTRACT);
-		if (ciBase1.getServiceContractId() != null
+		maDto.setAttributeName(AirKonstanten.SERVICE_CONTRACT);*/
+		/*if (ciBase1.getServiceContractId() != null
 				&& ciBase1.getServiceContractId() != 0)
 			maDto.setAttributeValue(ServiceContractHbn
 					.getServiceContract(ciBase1.getServiceContractId()));
 		maDto.setId("serviceContractId");
-		massUpdateAttriuteDTOs.add(maDto);
+		massUpdateAttriuteDTOs.add(maDto);*/
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_INTEGRITY);
 		maDto.setAttributeValue(getValue(ciBase1.getItSecSbIntegrityId()));
@@ -2104,11 +2104,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.SEVERITY_LEVEL);
-		if (application.getSeverityLevelId() != null
+	/*	if (application.getSeverityLevelId() != null
 				&& application.getSeverityLevelId() != 0)
 			maDto.setAttributeValue(SeverityLevelHbn.findById(
 					application.getSeverityLevelId()).getSeverityLevelName());
-		maDto.setId("severityLevelId");
+		maDto.setId("severityLevelId");*/
 		massUpdateAttriuteDTOs.add(maDto);
 
 		maDto = new MassUpdateAttributeDTO();
@@ -2277,7 +2277,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		maDto.setId("itsecGroupId");
 		massUpdateAttriuteDTOs.add(maDto);
 
-		maDto = new MassUpdateAttributeDTO();
+		/*maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.SLA);
 		if (application.getSlaId() != null && application.getSlaId() != 0)
 			maDto.setAttributeValue(SlaHbn.getSlaName(application.getSlaId()));
@@ -2291,7 +2291,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 			maDto.setAttributeValue(ServiceContractHbn
 					.getServiceContract(application.getServiceContractId()));
 		maDto.setId("serviceContractId");
-		massUpdateAttriuteDTOs.add(maDto);
+		massUpdateAttriuteDTOs.add(maDto);*/
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.PROTECTION_LEVEL_AVAILABILITY);
@@ -2785,21 +2785,21 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						ItsecMassnahmeStatusHbn.saveSaveguardAssignment(
 								massUpdateParameterInput.getCiTypeId()
 										.intValue(), locationCi.getId(),
-								templaeLocationCI.getServiceContractId());
+								null);
 					} else {
 						locationCi.setItsecGroupId(templaeLocationCI
 								.getItsecGroupId());
 					}
 
 				}
-				if (massUpdateParameterInput.getSlaId()) {
+				/*if (massUpdateParameterInput.getSlaId()) {
 					locationCi.setSlaId(templaeLocationCI.getSlaId());
 				}
 				if (massUpdateParameterInput.getServiceContractId()) {
 					locationCi.setServiceContractId(templaeLocationCI
 							.getServiceContractId());
 
-				}
+				}*/
 				if (massUpdateParameterInput.getItSecSbAvailability()) {
 					locationCi.setItSecSbAvailability(templaeLocationCI
 							.getItSecSbAvailability());
@@ -2920,10 +2920,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					application.setPriorityLevelId(templateApplication
 							.getPriorityLevelId());
 				}
-				if (massUpdateParameterInput.getSeverityLevelId()) {
+				/*if (massUpdateParameterInput.getSeverityLevelId()) {
 					application.setSeverityLevelId(templateApplication
 							.getSeverityLevelId());
-				}
+				}*/
 				if (massUpdateParameterInput.getResponsible()) {
 					application.setResponsible(templateApplication
 							.getResponsible());
@@ -3015,13 +3015,13 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					}
 
 				}
-				if (massUpdateParameterInput.getSlaId()) {
+				/*if (massUpdateParameterInput.getSlaId()) {
 					application.setSlaId(templateApplication.getSlaId());
 				}
 				if (massUpdateParameterInput.getServiceContractId()) {
 					application.setServiceContractId(templateApplication
 							.getServiceContractId());
-				}
+				}*/
 				if (massUpdateParameterInput.getItSecSbAvailability()) {
 					application.setItSecSbAvailability(templateApplication
 							.getItSecSbAvailability());
@@ -3173,10 +3173,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					itSystem.setPriorityLevelId(templateItSystem
 							.getPriorityLevelId());
 				}
-				if (massUpdateParameterInput.getSeverityLevelId()) {
+				/*if (massUpdateParameterInput.getSeverityLevelId()) {
 					itSystem.setSeverityLevelId(templateItSystem
 							.getSeverityLevelId());
-				}
+				}*/
 				if (massUpdateParameterInput.isOsNameId()) {
 					itSystem.setOsNameId(templateItSystem.getOsNameId());
 				}
@@ -3293,13 +3293,13 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				if (massUpdateParameterInput.getGxpFlag()) {
 					itSystem.setGxpFlag(templateItSystem.getGxpFlag());
 				}
-				if (massUpdateParameterInput.getSlaId()) {
+				/*if (massUpdateParameterInput.getSlaId()) {
 					itSystem.setSlaId(templateItSystem.getSlaId());
 				}
 				if (massUpdateParameterInput.getServiceContractId()) {
 					itSystem.setServiceContractId(templateItSystem
 							.getServiceContractId());
-				}
+				}*/
 				if (massUpdateParameterInput.getItSecSbAvailability()) {
 					itSystem.setItSecSbAvailability(templateItSystem
 							.getItSecSbAvailability());
@@ -3781,11 +3781,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				CiBase1 locationCi = null;
 				if (mAttrParameterInput.getCiTypeId() == AirKonstanten.TABLE_ID_ROOM) {
 					Room room = (Room) locationCIS.get(0);
-					if (mAttrParameterInput.getSeverityLevelId() != null
+					/*if (mAttrParameterInput.getSeverityLevelId() != null
 							&& mAttrParameterInput.getSeverityLevelId() != 0) {
 						room.setSeverityLevelId(mAttrParameterInput
 								.getSeverityLevelId());
-					}
+					}*/
 					if (mAttrParameterInput.getBusinessEssentialId() != null
 							&& mAttrParameterInput.getBusinessEssentialId() != 0) {
 						room.setBusinessEssentialId(mAttrParameterInput
@@ -3795,11 +3795,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				} else {
 					if (mAttrParameterInput.getCiTypeId() == AirKonstanten.TABLE_ID_POSITION) {
 						Schrank schrank = (Schrank) locationCIS.get(0);
-						if (mAttrParameterInput.getSeverityLevelId() != null
+						/*if (mAttrParameterInput.getSeverityLevelId() != null
 								&& mAttrParameterInput.getSeverityLevelId() != 0) {
 							schrank.setSeverityLevelId(mAttrParameterInput
 									.getSeverityLevelId());
-						}
+						}*/
 						if (mAttrParameterInput.getBusinessEssentialId() != null
 								&& mAttrParameterInput.getBusinessEssentialId() != 0) {
 							schrank.setBusinessEssentialId(mAttrParameterInput
@@ -3810,14 +3810,14 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						locationCi = (CiBase1) locationCIS.get(0);
 				}
 
-				if (mAttrParameterInput.getSlaId() != null) {
+				/*if (mAttrParameterInput.getSlaId() != null) {
 					locationCi.setSlaId(mAttrParameterInput.getSlaId());
 				}
 				if (mAttrParameterInput.getServiceContractId() != null
 						&& mAttrParameterInput.getServiceContractId() != 0) {
 					locationCi.setServiceContractId(mAttrParameterInput
 							.getServiceContractId());
-				}
+				}*/
 				if (mAttrParameterInput.getItSecSbAvailability() != null
 						&& mAttrParameterInput.getItSecSbAvailability() != 0) {
 					locationCi.setItSecSbAvailability(mAttrParameterInput
@@ -4005,18 +4005,18 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					application.setPriorityLevelId(mAttrParameterInput
 							.getPriorityLevelId());
 				}
-				if (mAttrParameterInput.getSeverityLevelId() != null
+				/*if (mAttrParameterInput.getSeverityLevelId() != null
 						&& mAttrParameterInput.getSeverityLevelId() != 0) {
 					application.setSeverityLevelId(mAttrParameterInput
 							.getSeverityLevelId());
-				}
+				}*/
 				if (mAttrParameterInput.getItsecGroupId() != null
 						&& mAttrParameterInput.getItsecGroupId() != 0) {
 					application.setRefId(null);
 					application.setItsecGroupId(mAttrParameterInput
 							.getItsecGroupId());
 				}
-				if (mAttrParameterInput.getSlaId() != null
+				/*if (mAttrParameterInput.getSlaId() != null
 						&& mAttrParameterInput.getSlaId() != 0) {
 					application.setSlaId(mAttrParameterInput.getSlaId());
 				}
@@ -4024,7 +4024,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						&& mAttrParameterInput.getServiceContractId() != 0) {
 					application.setServiceContractId(mAttrParameterInput
 							.getServiceContractId());
-				}
+				}*/
 				if (mAttrParameterInput.getItSecSbAvailability() != null
 						&& mAttrParameterInput.getItSecSbAvailability() != 0) {
 					application.setItSecSbAvailability(mAttrParameterInput
@@ -4456,11 +4456,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					itSystem.setPriorityLevelId(mAttrParameterInput
 							.getPriorityLevelId());
 				}
-				if (mAttrParameterInput.getSeverityLevelId() != null
+				/*if (mAttrParameterInput.getSeverityLevelId() != null
 						&& mAttrParameterInput.getSeverityLevelId() != 0) {
 					itSystem.setSeverityLevelId(mAttrParameterInput
 							.getSeverityLevelId());
-				}
+				}*/
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getClusterCode())) {
 					itSystem.setClusterCode(mAttrParameterInput
@@ -4477,7 +4477,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					itSystem.setItsecGroupId(mAttrParameterInput
 							.getItsecGroupId());
 				}
-				if (mAttrParameterInput.getSlaId() != null
+				/*if (mAttrParameterInput.getSlaId() != null
 						&& mAttrParameterInput.getSlaId() != 0) {
 					itSystem.setSlaId(mAttrParameterInput.getSlaId());
 				}
@@ -4485,7 +4485,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						&& mAttrParameterInput.getServiceContractId() != 0) {
 					itSystem.setServiceContractId(mAttrParameterInput
 							.getServiceContractId());
-				}
+				}*/
 				if (mAttrParameterInput.getItSecSbAvailability() != null
 						&& mAttrParameterInput.getItSecSbAvailability() != 0) {
 					itSystem.setItSecSbAvailability(mAttrParameterInput

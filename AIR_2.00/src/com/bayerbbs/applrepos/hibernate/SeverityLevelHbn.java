@@ -28,7 +28,7 @@ public class SeverityLevelHbn {
 	 * @return
 	 */
 	
-	public static SeverityLevelDTO[] getSLArrayFromList(
+	/*public static SeverityLevelDTO[] getSLArrayFromList(
 			List<SeverityLevelDTO> input) {
 		SeverityLevelDTO output[] = new SeverityLevelDTO[input.size()];
 		int i = 0;
@@ -38,7 +38,7 @@ public class SeverityLevelHbn {
 		}
 		return output;
 	}
-
+*/
 	/**
 	 * converts the list entry database table to dto
 	 * 
@@ -53,8 +53,8 @@ public class SeverityLevelHbn {
 			SeverityLevel data = iter.next();
 			BusinessEssentialDTO dto = new BusinessEssentialDTO();
 
-			dto.setSeverityLevelId(data.getSeverityLevelId());
-			dto.setSeverityLevel(data.getSeverityLevelName());
+			//dto.setSeverityLevelId(data.getSeverityLevelId());
+		//	dto.setSeverityLevel(data.getSeverityLevelName());
 			dto.setSeverityGPSC(data.getSeverityGPSC());
 			dto.setBeCode(data.getBeCode());
 			listDTO.add(dto);
@@ -67,15 +67,15 @@ public class SeverityLevelHbn {
 	 * list all severity level (Severity_Level with usage = "non-ITSCM"
 	 * @return
 	 */
-	public static List<SeverityLevelDTO> listSeverityLevelHbn() {
+	/*public static List<SeverityLevelDTO> listSeverityLevelHbn() {
 
 		List<BusinessEssentialDTO> listBusinessEssential =  listSeverity();
 		
 		ArrayList<SeverityLevelDTO> listSeverityLevel = new ArrayList<SeverityLevelDTO>();
 		for (final BusinessEssentialDTO data : listBusinessEssential) {
 			SeverityLevelDTO dto = new SeverityLevelDTO();
-			dto.setSeverityLevelId(data.getSeverityLevelId());
-			dto.setSeverityLevel(data.getSeverityLevel());
+		//	dto.setSeverityLevelId(data.getSeverityLevelId());
+		//	dto.setSeverityLevel(data.getSeverityLevel());
 			dto.setSeverityGPSC(data.getSeverityGPSC());
 			dto.setUsage(data.getUsage());
 			if (null != data.getBeCode()) {
@@ -85,7 +85,7 @@ public class SeverityLevelHbn {
 		}
 		
 		return listSeverityLevel;
-	}
+	} */
 
 
 	private static List<BusinessEssentialDTO> listSeverity() {

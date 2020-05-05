@@ -16,8 +16,8 @@ public class SeverityLevel implements Serializable {
 
 	private static final long serialVersionUID = -1121903985201502247L;
 
-	private Long severityLevelId;
-	private String severityLevelName;
+//	private Long severityLevelId;
+	//private String severityLevelName;
 	private Long severityGPSC;
 	private String gpscCode;
 	private String usage;
@@ -35,12 +35,12 @@ public class SeverityLevel implements Serializable {
 	public SeverityLevel() {
 	}
 
-	@Transient
+	/*@Transient
 	public Long getId() {
 		return getSeverityLevelId();
-	}
+	}*/
 	
-	@Id
+	/*@Id
 	@Column(name = "SEVERITY_LEVEL_ID")
 //	@Column(name = "SEVERITY_LEVEL_ID", insertable = false, updatable = false)
 	public Long getSeverityLevelId() {
@@ -49,15 +49,15 @@ public class SeverityLevel implements Serializable {
 
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
+	}*/
 
-	@Column(name = "SEVERITY_LEVEL")
+	/*@Column(name = "SEVERITY_LEVEL")
 	public String getSeverityLevelName() {
 		return severityLevelName;
 	}
 	public void setSeverityLevelName(String severityLevelName) {
 		this.severityLevelName = severityLevelName;
-	}
+	}*/
 	
 	@Column(name = "SEVERITY_GPSC")
 	public Long getSeverityGPSC() {

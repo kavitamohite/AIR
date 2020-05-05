@@ -240,7 +240,7 @@ public class BovApplication {
 		return result;
 	}
 
-	private String getSeverityLevel(Long severityLevelId) {
+	/*private String getSeverityLevel(Long severityLevelId) {
 		String result = null;
 		if (null != severityLevelId) {
 			List<SeverityLevelDTO> listSeverity = SeverityLevelHbn.listSeverityLevelHbn();
@@ -256,7 +256,7 @@ public class BovApplication {
 			result = "";
 		}
 		return result;
-	}
+	}*/
 
 	private String getValueYesNo(Long input) {
 		String result = null;
@@ -328,7 +328,7 @@ public class BovApplication {
 			if (null != application.getDisasterRecoveryLevel()) {
 				dispDrLevel = "Level " + application.getDisasterRecoveryLevel();
 			}
-						dispSeverityLevel = getSeverityLevel(application.getSeverityLevelId());
+					//	dispSeverityLevel = getSeverityLevel(application.getSeverityLevelId());
 			if (null != application.getGxpFlag())
 				dispGxpRelevant = "Yes";
 			else

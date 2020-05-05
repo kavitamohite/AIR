@@ -25,7 +25,7 @@ public class CiBaseDTO {// implements Serializable
 	private String deleteTimestamp;
 	private String deleteUser;
 
-	private Long slaId;
+	//private Long slaId;
 	private String slaName;
 	private Long serviceContractId;
 	
@@ -104,7 +104,7 @@ public class CiBaseDTO {// implements Serializable
 	private String refIdAcl;
 	private String itsecGroupIdAcl;
 	
-	private String slaIdAcl;
+//	private String slaIdAcl;
 	private String serviceContractIdAcl;
 	
 	
@@ -271,7 +271,7 @@ public class CiBaseDTO {// implements Serializable
 		this.deleteUser = deleteUser;
 	}
 
-	public Long getSlaId() {
+	/*public Long getSlaId() {
 		return slaId;
 	}
 	public void setSlaId(Long slaId) {
@@ -283,7 +283,7 @@ public class CiBaseDTO {// implements Serializable
 	}
 	public void setSlaName(String slaName) {
 		this.slaName = slaName;
-	}
+	}*/
 
 	public Long getServiceContractId() {
 		return serviceContractId;
@@ -422,13 +422,13 @@ public class CiBaseDTO {// implements Serializable
 		this.itsecGroupIdAcl = itsecGroupIdAcl;
 	}
 
-	public String getSlaIdAcl() {
+	/*public String getSlaIdAcl() {
 		return slaIdAcl;
 	}
 	public void setSlaIdAcl(String slaIdAcl) {
 		this.slaIdAcl = slaIdAcl;
 	}
-
+*/
 	public String getServiceContractIdAcl() {
 		return serviceContractIdAcl;
 	}
