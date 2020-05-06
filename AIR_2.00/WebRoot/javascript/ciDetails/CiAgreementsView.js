@@ -12,26 +12,8 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		    layout: 'form',
 		    height: 150,
 		    
-		    items: [{
-		        xtype: 'filterCombo',//combo
-		        width: 230,
-		        fieldLabel: 'SLA',
-		        id: 'sla',
-		        store: AIR.AirStoreManager.getStoreByName('slaListStore'),//slaListStore,
-		        valueField: 'id',
-		        displayField: 'text',
-		        
-		        enableKeyEvents: true,
-		        
-//		        typeAhead: true,
-//		        forceSelection: true,
-//		        autoSelect: false,
-		        
-		        triggerAction: 'all',
-//		        lazyRender: true,
-//		        lazyInit: false,
-		        mode: 'local'
-		    }, /* emria{  IM0006263625 : Issue saving Contract in AIR
+		    items: [
+		     /* emria{  IM0006263625 : Issue saving Contract in AIR
 		        xtype: 'filterCombo',//combo
 		        width: 230,
 		        fieldLabel: 'Service Contract1',
@@ -55,23 +37,6 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        
 		        listEmptyText: 'No matching items found'
 		    },*/{
-
-		        id: 'serviceContract',
-		    	xtype: 'filterCombo',
-		        fieldLabel: 'Service Contract',
-		        width: 230,
-		        enableKeyEvents: true,
-		        forceSelection: true,
-		        //store: AIR.AirStoreFactory.createServiceContractListStore(),
-		        store: AIR.AirStoreManager.getStoreByName('serviceContractListStore'),
-		        valueField: 'id',
-		        displayField: 'text',
-		        triggerAction: 'all',
-		        mode: 'local',
-		        //queryParam: 'id',
-		        listEmptyText: 'No matching items found'
-			
-		    },{
 		        xtype: 'combo',
 		        width: 230,
 		        fieldLabel: 'Priority Level',
@@ -79,24 +44,6 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		        
 		        id: 'priorityLevel',
 		        store: AIR.AirStoreManager.getStoreByName('priorityLevelListStore'),//priorityLevelListStore,
-		        valueField: 'id',
-		        displayField: 'text',
-		        
-//		        typeAhead: true,
-//		        forceSelection: true,
-//		        autoSelect: false,
-		        
-		        triggerAction: 'all',
-//		        lazyRender: true,
-//		        lazyInit: false,
-		        mode: 'local'
-		    },{
-		        xtype: 'filterCombo',//combo
-		        width: 230,
-		        fieldLabel: 'Severity Level',
-		        
-		        id: 'severityLevel',
-		        store: AIR.AirStoreManager.getStoreByName('severityLevelListStore'),//severityLevelListStore,
 		        valueField: 'id',
 		        displayField: 'text',
 		        
@@ -136,32 +83,32 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		//in eine AirDetailView f�r alle CI Detail Seiten?
 		this.addEvents('ciBeforeChange', 'ciChange');
 		
-		var cbSla = this.getComponent('sla');
-		var cbServiceContract = this.getComponent('serviceContract');
+	//	var cbSla = this.getComponent('sla');
+	//	var cbServiceContract = this.getComponent('serviceContract');
 		var cbPriorityLevel = this.getComponent('priorityLevel');
-		var cbSeverityLevel = this.getComponent('severityLevel');
+	//	var cbSeverityLevel = this.getComponent('severityLevel');
 		var cbBusinessEssential = this.getComponent('businessEssential');
 		
 		
-		cbSla.on('select', this.onSlaSelect, this);
-		cbSla.on('change', this.onSlaChange, this);
+		//cbSla.on('select', this.onSlaSelect, this);
+		//cbSla.on('change', this.onSlaChange, this);
 		
-		cbServiceContract.on('select', this.onServiceContractSelect, this);
-		cbServiceContract.on('change', this.onServiceContractChange, this);
-		cbServiceContract.on('keyup', this.onServiceContractKeyUp, this);
+	//	cbServiceContract.on('select', this.onServiceContractSelect, this);
+		//cbServiceContract.on('change', this.onServiceContractChange, this);
+		//cbServiceContract.on('keyup', this.onServiceContractKeyUp, this);
 
-		cbPriorityLevel.on('select', this.onPriorityLevelSelect, this);
-		cbPriorityLevel.on('change', this.onPriorityLevelChange, this);
+		//cbPriorityLevel.on('select', this.onPriorityLevelSelect, this);
+		//cbPriorityLevel.on('change', this.onPriorityLevelChange, this);
 		
-		cbSeverityLevel.on('select', this.onSeverityLevelSelect, this);
-		cbSeverityLevel.on('change', this.onSeverityLevelChange, this);
+	//	cbSeverityLevel.on('select', this.onSeverityLevelSelect, this);
+		//cbSeverityLevel.on('change', this.onSeverityLevelChange, this);
 		
 		cbBusinessEssential.on('select', this.onBusinessEssentialSelect, this);
 		cbBusinessEssential.on('change', this.onBusinessEssentialChange, this);
-		var storeIds = {
+		/*var storeIds = {
 				serviceContractListStore: null
 
-		};		
+		};	
 		var storeCount = 0;
 		for(var key in storeIds)
 			storeCount++;
@@ -169,7 +116,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var storeLoader = new AIR.AirStoreLoader();
         storeLoader.init(storeIds, storeCount);
         storeLoader.on('storesLoaded', this.onStoresLoaded, this);
-        storeLoader.load();
+        storeLoader.load();*/
 	},
 	
 	onBusinessEssentialSelect: function(combo, record, index) {
@@ -198,13 +145,13 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
     },
 	
 	
-	onServiceContractSelect: function(combo, record, index) {
+	/*onServiceContractSelect: function(combo, record, index) {
 		var cbSla = this.getComponent('sla');
 		cbSla.setValue(record.get('slaId'));
 		
 		this.fireEvent('ciChange', this, combo);
 	},
-	onServiceContractChange: function (combo, newValue, oldValue) {/* emria  IM0006263625 : Issue saving Contract in AIR
+	onServiceContractChange: function (combo, newValue, oldValue) { emria  IM0006263625 : Issue saving Contract in AIR
 		var cbSla = this.getComponent('sla');
 		
 		if(this.isComboValueValid(combo, newValue, oldValue)) {
@@ -220,9 +167,9 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 				delete combo.filterData;
 			}
 		}
-	*/},
+	*},*/
 	
-	onServiceContractKeyUp: function(combo, event) {
+/*	onServiceContractKeyUp: function(combo, event) {
 		if(combo.getRawValue().length === 0) {
 			combo.reset(); 
 			delete combo.filterData;
@@ -278,7 +225,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			if(cbServiceContract.getStore().getCount() === 1)
 				cbServiceContract.setValue(cbServiceContract.getStore().getAt(0).get('id'));
 		}
-	},
+	}, */
 
 	
 	clear: function(data) {
@@ -294,125 +241,10 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
     },
 	
 	
-	update: function(data) {
-		var cbSla = this.getComponent('sla');
-		var cbServiceContract = this.getComponent('serviceContract');
-		var filterData = { slaId: data.slaId };
-
-		if (data.slaId != 0 && !data.isCiCreate) {//selectedSlaId !== undefined && selectedSlaId != 0
-			if(!AIR.AirApplicationManager.isSlaInvalid()){
-				this.getComponent('sla').setValue(data.slaId);
-				cbServiceContract.filterByData(filterData);
-			}else{
-				cbSla.reset();//setValue('');
-				cbServiceContract.reset();//.setValue('');  
-			}
-		} else {
-			cbSla.reset();//setValue('');
-			cbServiceContract.reset();//.setValue(''); 
-		}
-		
-		if (data.serviceContractId && data.serviceContractId != 0 && !data.isCiCreate) {
-			if(!AIR.AirApplicationManager.isSlaInvalid()){
-				console.log("Debug 1"+data.serviceContractId);
-				cbServiceContract.setValue(data.serviceContractId);
-				
-				var sla = cbSla.getValue();
-				if(!sla || sla.length === 0) {
-					var r = Util.getComboRecord(cbServiceContract, 'id', parseInt(data.serviceContractId));//cbServiceContract.getStore().getById(parseInt(data.serviceContractId));
-					if(r)
-						cbSla.setValue(r.get('slaId'));
-				}
-			}
-
-		} else {
-			 cbServiceContract.setValue(''); 
-		}
-		
-		
-		var cbPriorityLevel = this.getComponent('priorityLevel');
-		if(data.tableId == AC.TABLE_ID_APPLICATION ||
-		   data.tableId == AC.TABLE_ID_IT_SYSTEM ) {
-			cbPriorityLevel.setVisible(true);
-			
-			if (data.priorityLevelId && data.priorityLevelId != 0 && !data.isCiCreate) {
-				cbPriorityLevel.setValue(data.priorityLevelId);
-			} else {
-				cbPriorityLevel.setValue('');
-			}
-		} else {
-			cbPriorityLevel.reset();
-			cbPriorityLevel.setVisible(false);
-		}
-		
-		
-
-		var cbSeverityLevel = this.getComponent('severityLevel');
-		var cbBusinessEssential = this.getComponent('businessEssential');
-		
-		if(data.tableId == AC.TABLE_ID_APPLICATION ||
-		   data.tableId == AC.TABLE_ID_ROOM ||
-		   data.tableId == AC.TABLE_ID_POSITION ||
-		   data.tableId == AC.TABLE_ID_IT_SYSTEM) {
-			
-			cbSeverityLevel.setVisible(true);
-			cbBusinessEssential.setVisible(true);
-			
-			if (data.severityLevelId && data.severityLevelId != 0 && !data.isCiCreate) {
-				cbSeverityLevel.setValue(data.severityLevelId);
-			} else {
-				cbSeverityLevel.setValue('');
-			}
-			this.updateAccessMode(data);
-			if(data.isCiCreate)
-				cbBusinessEssential.setValue('');
-			else{
-				if(data.businessEssentialId==='3'){
-					cbBusinessEssential.setValue('inherited: Business Essential');
-					Util.disableCombo(cbBusinessEssential);
-				}else{
-					if(data.businessEssentialId==='4'){
-						cbBusinessEssential.setValue('inherited: Pandemic Business Essential');
-						Util.disableCombo(cbBusinessEssential);
-					}else
-						cbBusinessEssential.setValue(data.businessEssentialId);
-
-				}
-
-			}
-			
-		} else {
-			cbSeverityLevel.reset();
-			cbBusinessEssential.reset();
-			cbSeverityLevel.setVisible(false);
-			cbBusinessEssential.setVisible(false);
-			this.updateAccessMode(data);
-		}
-		
-		if((data.tableId ==AC.TABLE_ID_FUNCTION)|| (data.tableId == AC.TABLE_ID_BUSINESS_APPLICATION)){
-			cbSla.setVisible(false);
-			cbServiceContract.setVisible(false);
-			cbPriorityLevel.setVisible(false);
-			cbSeverityLevel.setVisible(false);
-			cbBusinessEssential.setVisible(false);
-		}	
-		
-		//Added by vandana
-		if(data.tableId == AC.TABLE_ID_PATHWAY){
-/*			cbSla.setVisible(false);
-			cbServiceContract.setVisible(false);*/
-			cbPriorityLevel.setVisible(false);
-			cbSeverityLevel.setVisible(false);
-			cbBusinessEssential.setVisible(false);
-		}	
-		//Ended by vandana
-		
-		this.doLayout();
-	},
+	
 	
 	updateAccessMode: function(data) {
-		AIR.AirAclManager.setAccessMode(this.getComponent('sla'), data);
-		AIR.AirAclManager.setAccessMode(this.getComponent('serviceContract'), data);
+		
 		
 		if(data.tableId == AC.TABLE_ID_APPLICATION ||
 		   data.tableId == AC.TABLE_ID_IT_SYSTEM )
@@ -422,7 +254,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		   data.tableId == AC.TABLE_ID_ROOM ||
 		   data.tableId == AC.TABLE_ID_POSITION ||
 		   data.tableId == AC.TABLE_ID_IT_SYSTEM) {
-			AIR.AirAclManager.setAccessMode(this.getComponent('severityLevel'), data);
+			
 			
 			var cbBusinessEssential = this.getComponent('businessEssential');
 			if(AAM.hasRole(AC.USER_ROLE_AIR_BUSINESS_ESSENTIAL_EDITOR)) {
@@ -463,29 +295,9 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	setData: function(data) {
-		var field = this.getComponent('sla');
-//		if (!field.disabled)
-//			if(field.getValue().length > 0)
-//				data.slaId = field.getValue();
-		if (!field.disabled) {
-			if(field.getValue()) {//.length > 0
-				data.slaId = field.getValue();
-			} else {
-				data.slaId = -1;
-			}
-		}
 		
-		field = this.getComponent('serviceContract');
-//		if (!field.disabled)
-//			if(field.getValue().length > 0)
-//				data.serviceContractId = field.getValue();
-		if (!field.disabled) {
-			if(field.getValue()) {//.length > 0
-				data.serviceContractId = field.getValue();
-			} else {
-				data.serviceContractId = -1;
-			}
-		}
+		
+		
 		
 		if(data.tableId == AC.TABLE_ID_APPLICATION ||
 		   data.tableId == AC.TABLE_ID_IT_SYSTEM ) {
@@ -504,14 +316,7 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		   data.tableId == AC.TABLE_ID_POSITION ||
 		   data.tableId == AC.TABLE_ID_IT_SYSTEM ) {
 		
-			field = this.getComponent('severityLevel');
-			if (!field.disabled) {
-				if(field.getValue().length > 0) {
-					data.severityLevelId = field.getValue();
-				} else {
-					data.severityLevelId = -1;
-				}
-			}
+			
 			
 			field = this.getComponent('businessEssential');
 			if (!field.disabled)
@@ -534,18 +339,18 @@ AIR.CiAgreementsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	
 	updateLabels: function(labels) {
 		this.setTitle(labels.agreementsPanelTitle);
-		this.setFieldLabel(this.getComponent('sla'), labels.sla);
+	//	this.setFieldLabel(this.getComponent('sla'), labels.sla);
 		this.setFieldLabel(this.getComponent('priorityLevel'), labels.priorityLevel);
-		this.setFieldLabel(this.getComponent('serviceContract'), labels.serviceContract);
-		this.setFieldLabel(this.getComponent('severityLevel'), labels.severityLevel);
+	//	this.setFieldLabel(this.getComponent('serviceContract'), labels.serviceContract);
+		//this.setFieldLabel(this.getComponent('severityLevel'), labels.severityLevel);
 		this.setFieldLabel(this.getComponent('businessEssential'), labels.businessEssential);
 	},
 	
 	updateToolTips: function(toolTips) {
-		this.setTooltipData(this.getComponent('sla').label, toolTips.slaName, toolTips.slaNameText);
+	//	this.setTooltipData(this.getComponent('sla').label, toolTips.slaName, toolTips.slaNameText);
 		this.setTooltipData(this.getComponent('priorityLevel').label, toolTips.priorityLevel, toolTips.priorityLevelText);
-		this.setTooltipData(this.getComponent('serviceContract').label, toolTips.serviceContract, toolTips.serviceContractText);
-		this.setTooltipData(this.getComponent('severityLevel').label, toolTips.severityLevel, toolTips.severityLevelText);
+		//this.setTooltipData(this.getComponent('serviceContract').label, toolTips.serviceContract, toolTips.serviceContractText);
+	//	this.setTooltipData(this.getComponent('severityLevel').label, toolTips.severityLevel, toolTips.severityLevelText);
 		this.setTooltipData(this.getComponent('businessEssential').label, toolTips.businessEssential, toolTips.businessEssentialText);
 	}
 });

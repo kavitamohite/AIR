@@ -26,7 +26,7 @@ public class DwhEntityDTO {
 //	private String severityLevel;
 //	private String priorityLevel;
 //	private String sla;
-//	private String businessEssential;
+private String businessEssential;
 	
 	
 	public String getCiId() {
@@ -161,12 +161,11 @@ public class DwhEntityDTO {
 //	public void setSla(String sla) {
 //		this.sla = sla;
 //	}
-//	public String getBusinessEssential() {
-//		return businessEssential;
-//	}
-//	public void setBusinessEssential(String businessEssential) {
-//		this.businessEssential = businessEssential;
-//	}
+	public String getBusinessEssential() {
+		return businessEssential;	}
+	public void setBusinessEssential(String businessEssential) {
+		this.businessEssential = businessEssential;
+	}
 	public void setIsReferenced(boolean isReferenced) {
 		this.isReferenced = isReferenced;
 	}

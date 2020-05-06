@@ -140,14 +140,14 @@ public class RoomHbn extends LokationItemHbn {
 						}
 						
 						
-						if (null != dto.getSeverityLevelId()) {
+						/*if (null != dto.getSeverityLevelId()) {
 							if (-1 == dto.getSeverityLevelId()) {
 								room.setSeverityLevelId(null);
 							}
 							else {
 								room.setSeverityLevelId(dto.getSeverityLevelId());
 							}
-						}
+						}*/
 
 					}
 					
@@ -499,7 +499,7 @@ public class RoomHbn extends LokationItemHbn {
 		dto.setFloor(room.getFloor());
 		dto.setRoomType(room.getRoomType());	
 		dto.setBuildingAreaData(room.getBuildingArea().getBuildingAreaName());
-		dto.setSeverityLevelId(room.getSeverityLevelId());
+		//dto.setSeverityLevelId(room.getSeverityLevelId());
 		dto.setBusinessEssentialId(room.getBusinessEssentialId());
 		//vandana
 		dto.setProviderName(room.getProvider_Name());
@@ -576,7 +576,7 @@ public class RoomHbn extends LokationItemHbn {
 						roomTarget.setBuildingAreaId(roomSource.getBuildingAreaId());
 						
 						// ==========
-						roomTarget.setSeverityLevelId(roomSource.getSeverityLevelId());
+					//	roomTarget.setSeverityLevelId(roomSource.getSeverityLevelId());
 						roomTarget.setBusinessEssentialId(roomSource.getBusinessEssentialId());
 
 						// ==============================

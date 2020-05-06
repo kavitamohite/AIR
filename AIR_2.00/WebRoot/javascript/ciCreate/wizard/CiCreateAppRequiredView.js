@@ -2,7 +2,7 @@ Ext.namespace('AIR');
 
 AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 	initComponent: function() {
-		Ext.apply(this, {
+		Ext.apply(this, { 
 		    layout: 'form',
 		    border: false,
 		    
@@ -219,41 +219,6 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 	        },{
 		        xtype: 'combo',
 		        width: 250,
-		        fieldLabel: 'SLA',
-		        id: 'cbSlaW',
-		        store: AIR.AirStoreManager.getStoreByName('slaListStore'),//slaListStore,
-		        valueField: 'id',
-		        displayField: 'text',
-		        
-//		        typeAhead: true,
-		        forceSelection: true,     // Added by enqmu
-//		        autoSelect: false,
-		        
-		        triggerAction: 'all',
-		        lazyRender: true,
-		        lazyInit: false,
-		        mode: 'local'
-			},{
-		        xtype: 'combo',
-		        width: 250,
-		        fieldLabel: 'Severity Level',
-		        
-		        id: 'cbSeverityLevelW',
-		        store: AIR.AirStoreManager.getStoreByName('severityLevelListStore'),//severityLevelListStore,
-		        valueField: 'id',
-		        displayField: 'text',
-		        
-//		        typeAhead: true,
-		        forceSelection: true,        // Added by enqmu
-//		        autoSelect: false,
-		        
-		        triggerAction: 'all',
-		        lazyRender: true,
-		        lazyInit: false,
-		        mode: 'local'
-			},{
-		        xtype: 'combo',
-		        width: 250,
 		        fieldLabel: 'Business Essential',
 //		        name: 'businessEssential',
 		        
@@ -379,11 +344,11 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		this.getComponent('cbProtectionAvailabilityW').on('select', this.onComboInformationChange, this);
 		this.getComponent('cbProtectionAvailabilityW').on('change', this.onComboInformationChange, this);
 		
-		this.getComponent('cbSeverityLevelW').on('select', this.onComboInformationChange, this);
-		this.getComponent('cbSeverityLevelW').on('change', this.onComboInformationChange, this);
+	//	this.getComponent('cbSeverityLevelW').on('select', this.onComboInformationChange, this);
+		//this.getComponent('cbSeverityLevelW').on('change', this.onComboInformationChange, this);
 		
-		this.getComponent('cbSlaW').on('select', this.onComboInformationChange, this);
-		this.getComponent('cbSlaW').on('change', this.onComboInformationChange, this);
+	//	this.getComponent('cbSlaW').on('select', this.onComboInformationChange, this);
+	//	this.getComponent('cbSlaW').on('change', this.onComboInformationChange, this);
 		
 		this.getComponent('cbProtectionClassInformationW').on('select', this.onComboInformationChange, this);
 		this.getComponent('cbProtectionClassInformationW').on('change', this.onComboInformationChange, this);
@@ -393,7 +358,7 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		this.getComponent('cbBusinessEssentialW').getStore().sort('text','ASC');
 		this.getComponent('cbProtectionAvailabilityW').getStore().sort('text','ASC');
 		this.getComponent('cbProtectionClassInformationW').getStore().sort('text','ASC');
-		this.getComponent('cbSeverityLevelW').getStore().sort('text','ASC');
+	//	this.getComponent('cbSeverityLevelW').getStore().sort('text','ASC');
 		// end by enqmu
 		
 		
@@ -458,8 +423,8 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		}
 		
 		
-		params.slaName = this.getComponent('cbSlaW').getValue();
-		params.severityLevelId = this.getComponent('cbSeverityLevelW').getValue();
+	//	params.slaName = this.getComponent('cbSlaW').getValue();
+		//params.severityLevelId = this.getComponent('cbSeverityLevelW').getValue();
 		params.businessEssentialId = this.getComponent('cbBusinessEssentialW').getValue();
 		
 		
@@ -494,8 +459,8 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 //		cbgRegulationsW.reset();
 		cbgRegulationsW.setValue([true, false, false, false]);
 		
-		this.getComponent('cbSlaW').reset();
-		this.getComponent('cbSeverityLevelW').reset();
+	//	this.getComponent('cbSlaW').reset();
+		//this.getComponent('cbSeverityLevelW').reset();
 		this.getComponent('cbBusinessEssentialW').reset();
 		
 		var cbBusinessEssentialW = this.getComponent('cbBusinessEssentialW');
@@ -553,11 +518,11 @@ AIR.CiCreateAppRequiredView = Ext.extend(AIR.AirView, {
 		AIR.AirAclManager.setNecessity(cbgRegulations);
 		
 		
-		this.setFieldLabel(this.getComponent('cbSlaW'), labels.sla);
-		AIR.AirAclManager.setNecessity(this.getComponent('cbSlaW'));
+		//this.setFieldLabel(this.getComponent('cbSlaW'), labels.sla);
+		//AIR.AirAclManager.setNecessity(this.getComponent('cbSlaW'));
 		
-		this.setFieldLabel(this.getComponent('cbSeverityLevelW'), labels.severityLevel);
-		AIR.AirAclManager.setNecessity(this.getComponent('cbSeverityLevelW'));
+		//this.setFieldLabel(this.getComponent('cbSeverityLevelW'), labels.severityLevel);
+	//	AIR.AirAclManager.setNecessity(this.getComponent('cbSeverityLevelW'));
 		
 		this.setFieldLabel(this.getComponent('cbBusinessEssentialW'), labels.businessEssential);
 		AIR.AirAclManager.setNecessity(this.getComponent('cbBusinessEssentialW'));

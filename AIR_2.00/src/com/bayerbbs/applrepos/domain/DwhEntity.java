@@ -49,7 +49,7 @@ public class DwhEntity {
 //	private String severityLevel;
 //	private String priorityLevel;
 //	private String sla;
-//	private String businessEssential;
+	private String businessEssential;
 	
 	@Column(name = "CI_ID")
 	public Long getCiId() {
@@ -216,12 +216,12 @@ public class DwhEntity {
 //	public void setSla(String sla) {
 //		this.sla = sla;
 //	}
-//	public String getBusinessEssential() {
-//		return businessEssential;
-//	}
-//	public void setBusinessEssential(String businessEssential) {
-//		this.businessEssential = businessEssential;
-//	}
+	public String getBusinessEssential() {
+		return businessEssential;
+	}
+	public void setBusinessEssential(String businessEssential) {
+		this.businessEssential = businessEssential;
+	}
 	
 	
 	@Column(name = "DELETED")

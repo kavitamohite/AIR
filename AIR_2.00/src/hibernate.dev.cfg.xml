@@ -55,10 +55,7 @@
 		<mapping class="com.bayerbbs.applrepos.domain.PrimaryFunction" />
 		<mapping class="com.bayerbbs.applrepos.domain.PriorityLevel" />
 		<mapping class="com.bayerbbs.applrepos.domain.Process" />
-		<mapping class="com.bayerbbs.applrepos.domain.ServiceContract" />
-		<mapping class="com.bayerbbs.applrepos.domain.Sla" />
-<!--		<mapping class="com.bayerbbs.applrepos.domain.SystemPlatform" />-->
-		<mapping class="com.bayerbbs.applrepos.domain.SeverityLevel" />
+		
 		
 		<mapping class="com.bayerbbs.applrepos.domain.CiLokationsKette" />
 		<mapping class="com.bayerbbs.applrepos.domain.Room" />
@@ -87,9 +84,7 @@
 		<mapping class="com.bayerbbs.applrepos.domain.Partner" />
 		<mapping class="com.bayerbbs.applrepos.domain.Konto" />
 		
-		<mapping class="com.bayerbbs.applrepos.domain.Sla" />
-		<mapping class="com.bayerbbs.applrepos.domain.ServiceContract" />
-		<mapping class="com.bayerbbs.applrepos.domain.SeverityLevel" />
+		
 		<mapping class="com.bayerbbs.applrepos.domain.SoftwareComponent" />
 		<mapping class="com.bayerbbs.applrepos.domain.SoftwareCategory1" />
 		<mapping class="com.bayerbbs.applrepos.domain.SoftwareCategory2" />

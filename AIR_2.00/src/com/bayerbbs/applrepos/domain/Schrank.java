@@ -50,13 +50,13 @@ public class Schrank extends CiBase1 implements Serializable {
 		setName(schrankName);
 	}
 
-	@Column(name = "SEVERITY_LEVEL_ID")
+	/*@Column(name = "SEVERITY_LEVEL_ID")
 	public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
+	}*/
 	
 	@Column(name = "BUSINESS_ESSENTIAL_ID")
 	public Long getBusinessEssentialId() {

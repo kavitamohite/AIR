@@ -1,4 +1,4 @@
-package com.bayerbbs.applrepos.dto;
+/*package com.bayerbbs.applrepos.dto;
 
 public class SlaDTO {
 
@@ -27,3 +27,4 @@ public class SlaDTO {
 	}
 	
 }
+*/

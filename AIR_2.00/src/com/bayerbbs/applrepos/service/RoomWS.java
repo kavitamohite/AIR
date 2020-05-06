@@ -40,9 +40,9 @@ public class RoomWS {
 		//vandana
 
 		//Agreements
-		roomDTO.setSlaId(input.getSlaId());
-		roomDTO.setServiceContractId(input.getServiceContractId());
-		roomDTO.setSeverityLevelId(input.getSeverityLevelId());
+		//roomDTO.setSlaId(input.getSlaId());
+		//roomDTO.setServiceContractId(input.getServiceContractId());
+		//roomDTO.setSeverityLevelId(input.getSeverityLevelId());
 		roomDTO.setBusinessEssentialId(input.getBusinessEssentialId());
 		
 		//Protection

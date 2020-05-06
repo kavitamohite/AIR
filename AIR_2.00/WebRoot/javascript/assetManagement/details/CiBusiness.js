@@ -235,26 +235,8 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
                     fontSize: 12
                 }
             },
-            {
-                xtype: 'textfield',
-                itemId: 'tServiceAgrmntId',
-                fieldLabel: 'Service Agreement Id  ',
-                width: 370,
-                style: {
-                    marginBottom: 5,
-                    fontSize: 12
-                }
-            },
-            {
-                xtype: 'textfield',
-                itemId: 'tServiceContGrp',
-                fieldLabel: 'Service Contract     Group  ',
-                width: 370,
-                style: {
-                    marginBottom: 5,
-                    fontSize: 12
-                }
-            },
+            
+            
             {
                 xtype: 'datefield',
                 itemId: 'cEndContrctDate',
@@ -503,11 +485,11 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         var tTypeContract = this.getComponent('tTypeContract');
         assetData.typeOfContract = tTypeContract.getValue();
         
-        var tServiceAgrmntId = this.getComponent('tServiceAgrmntId');
-        assetData.serviceAgreementId = tServiceAgrmntId.getValue();
+        /*var tServiceAgrmntId = this.getComponent('tServiceAgrmntId');
+        assetData.serviceAgreementId = tServiceAgrmntId.getValue();*/
         
-        var tServiceContGrp = this.getComponent('tServiceContGrp');
-        assetData.serviceContractGroup = tServiceContGrp.getValue();
+    /*    var tServiceContGrp = this.getComponent('tServiceContGrp');
+        assetData.serviceContractGroup = tServiceContGrp.getValue();*/
         
         var cEndContrctDate = this.getComponent('cEndContrctDate');
         assetData.endOfContract = cEndContrctDate.getValue();
@@ -535,8 +517,8 @@ AIR.CiBusiness = Ext.extend(Ext.form.FieldSet, {
         Util.updateFieldLabel(this.getComponent('tILOAdKey'),labels.assetILOAdKey);
         Util.updateFieldLabel(this.getComponent('tOrdNum'),labels.assetOrdNum);
         Util.updateFieldLabel(this.getComponent('tTypeContract'),labels.assetTypeContract);
-        Util.updateFieldLabel(this.getComponent('tServiceAgrmntId'),labels.assetServiceAgrmntId);
-        Util.updateFieldLabel(this.getComponent('tServiceContGrp'),labels.assetServiceContGrp);
+      //  Util.updateFieldLabel(this.getComponent('tServiceAgrmntId'),labels.assetServiceAgrmntId);
+     //   Util.updateFieldLabel(this.getComponent('tServiceContGrp'),labels.assetServiceContGrp);
         Util.updateFieldLabel(this.getComponent('cEndContrctDate'),labels.assecEndContrctDate);
           
         //end emria

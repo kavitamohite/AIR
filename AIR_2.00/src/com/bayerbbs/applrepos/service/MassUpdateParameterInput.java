@@ -29,7 +29,7 @@ public class MassUpdateParameterInput {
 //	ELERJ GXP
 //	private boolean gxpFlag;
 	private boolean itsecGroupId;
-	private boolean slaId;
+	//private boolean slaId;
 	private boolean serviceContractId;
 	private boolean itSecSbAvailability;
 	private boolean itSecSbAvailabilityTxt;
@@ -199,9 +199,9 @@ public class MassUpdateParameterInput {
 	/**
 	 * @return the severityLevelId
 	 */
-	public boolean getSeverityLevelId() {
+	/*public boolean getSeverityLevelId() {
 		return severityLevelId;
-	}
+	}*/
 	/**
 	 * @param severityLevelId the severityLevelId to set
 	 */
@@ -308,15 +308,15 @@ public class MassUpdateParameterInput {
 	/**
 	 * @return the slaId
 	 */
-	public boolean getSlaId() {
+	/*public boolean getSlaId() {
 		return slaId;
 	}
-	/**
+	*//**
 	 * @param slaId the slaId to set
-	 */
+	 *//*
 	public void setSlaId(boolean slaId) {
 		this.slaId = slaId;
-	}
+	}*/
 	/**
 	 * @return the serviceContractId
 	 */

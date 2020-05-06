@@ -5,7 +5,9 @@ import java.util.Map;
 
 
 public final class AirKonstanten {
-	public final static String AIR_VERSION = "v6.07.00";
+
+	public final static String AIR_VERSION = "v6.08.00";
+
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	
 	public final static String CACHENAME = "com.bayerbbs.applrepos.LogonData";
@@ -277,8 +279,8 @@ public final class AirKonstanten {
 //	ELERJ GXP
 //	public static final String GXP = "GxP";
 	public static final String ITSEC_GROUP = "ITSec Group";
-	public static final String SLA = "SLA";
-	public static final String SERVICE_CONTRACT = "Service Contract";
+	//public static final String SLA = "SLA";
+//	public static final String SERVICE_CONTRACT = "Service Contract";
 	public static final String PROTECTION_LEVEL_INTEGRITY = "Protection Level Integrity";
 	public static final String EXPLANATION_FOR_PROTECTION_LEVEL = "Explanation for Protection Level";
 	public static final String PROTECTION_LEVEL_CONFIDENTIALITY = "Protection Level Information Class";//RFC 11441

@@ -19,7 +19,7 @@ public class ApplicationAccessDTO {
 	private String Itsec_Gruppe_Id = AirKonstanten.NO_SHORT;
 	private String Sample_Test_Date = AirKonstanten.NO_SHORT;
 	private String Sample_Test_Result = AirKonstanten.NO_SHORT;
-	private String Sla_Id = AirKonstanten.NO_SHORT;
+	//private String Sla_Id = AirKonstanten.NO_SHORT;
 	private String Service_Contract_Id = AirKonstanten.NO_SHORT;
 	private String Priority_Level_Id = AirKonstanten.NO_SHORT;
 	private String Severity_Level_Id = AirKonstanten.NO_SHORT;
@@ -44,7 +44,7 @@ public class ApplicationAccessDTO {
 		Itsec_Gruppe_Id = AirKonstanten.YES_SHORT;
 		Sample_Test_Date = AirKonstanten.YES_SHORT;
 		Sample_Test_Result = AirKonstanten.YES_SHORT;
-		Sla_Id = AirKonstanten.YES_SHORT;
+		//Sla_Id = AirKonstanten.YES_SHORT;
 		Service_Contract_Id = AirKonstanten.YES_SHORT;
 		Priority_Level_Id = AirKonstanten.YES_SHORT;
 		Severity_Level_Id = AirKonstanten.YES_SHORT;
@@ -119,12 +119,12 @@ public class ApplicationAccessDTO {
 	public void setSample_Test_Result(String sampleTestResult) {
 		Sample_Test_Result = sampleTestResult;
 	}
-	public String getSla_Id() {
+	/*public String getSla_Id() {
 		return Sla_Id;
 	}
 	public void setSla_Id(String slaId) {
 		Sla_Id = slaId;
-	}
+	}*/
 	public String getService_Contract_Id() {
 		return Service_Contract_Id;
 	}

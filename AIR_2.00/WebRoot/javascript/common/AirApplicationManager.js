@@ -107,10 +107,10 @@ AIR.AirApplicationManager = function() {
 				itSecSBAvailabilityListStore: null,
 				itSecSBConfidentialityListStore: null,
 				classInformationListStore: null,
-				slaListStore: null,
-				serviceContractListStore: null,
+				//slaListStore: null,
+				//serviceContractListStore: null,
 				priorityLevelListStore: null,
-				severityLevelListStore: null,
+				//severityLevelListStore: null,
 				businessEssentialListStore: null,
 				applicationCat2ListStore: null,
 				lifecycleStatusListStore: null,
@@ -900,22 +900,22 @@ AIR.AirApplicationManager = function() {
 			return this.massUpdateData;
 		},
 		
-		setSlaInValid: function(salInValid){
+		/*setSlaInValid: function(salInValid){
 			this.salInValid = salInValid;
-		},
+		},*/
 		setCiTypeId: function(ciTypeId){
 			this.ciTypeId = ciTypeId;
 		},
 		getCiTypeId: function () {
 			return this.ciTypeId;
 		},
-		isSlaInvalid: function(){
+		/*isSlaInvalid: function(){
 			if(this.salInValid == undefined){
 				return false;
 			}else{
 				return this.salInValid;
 			}
-		},
+		},*/
 		setAssetColumns : function(columns) {
 			this.columns = columns;
 		},

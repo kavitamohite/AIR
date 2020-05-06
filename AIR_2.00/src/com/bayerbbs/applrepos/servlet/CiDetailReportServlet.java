@@ -47,7 +47,7 @@ import com.bayerbbs.applrepos.hibernate.ItSystemHbn;
 import com.bayerbbs.applrepos.hibernate.RoomHbn;
 import com.bayerbbs.applrepos.hibernate.SchrankHbn;
 import com.bayerbbs.applrepos.hibernate.ServiceContractHbn;
-import com.bayerbbs.applrepos.hibernate.SlaHbn;
+// import com.bayerbbs.applrepos.hibernate.SlaHbn;
 import com.bayerbbs.applrepos.hibernate.StandortHbn;
 import com.bayerbbs.applrepos.hibernate.TerrainHbn;
 import com.bayerbbs.applrepos.hibernate.functionHbn;
@@ -650,8 +650,8 @@ public class CiDetailReportServlet extends HttpServlet {
 		CIData.add(new String[] { "Result Testing",
 				application.getSampleTestResult() });
 
-		CIData.add(new String[] { "SLA", dto.getSlaName() });
-		CIData.add(new String[] { "Service Contract", dto.getServiceContract() });
+		/*CIData.add(new String[] { "SLA", dto.getSlaName() });
+		CIData.add(new String[] { "Service Contract", dto.getServiceContract() });*/
 		CIData.add(new String[] { "Protection Level Integrity",
 				getValue(dto.getItSecSbIntegrityId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
@@ -683,8 +683,8 @@ public class CiDetailReportServlet extends HttpServlet {
 				.append(building.getBuildingName()).append(":")
 				.append(buildingArea.getBuildingAreaName()).append(")");
 		CIData.add(new String[] { "Room", roomDeatil.toString() });
-		CIData.add(new String[] { "Severity Level",
-				getSeverityLevel(schrank.getSeverityLevelId()) });
+		/*CIData.add(new String[] { "Severity Level",
+				getSeverityLevel(schrank.getSeverityLevelId()) });*/
 		CIData.add(new String[] { "Business Essential",
 				getSeverityLevel(schrank.getBusinessEssentialId()) });
 		if (schrank.getTemplate() == 1)
@@ -723,11 +723,11 @@ public class CiDetailReportServlet extends HttpServlet {
 		}
 		CIData.add(new String[] { "Result Testing",
 				schrank.getSampleTestResult() });
-		CIData.add(new String[] { "SLA", SlaHbn.getSlaName(schrank.getSlaId()) });
+		/*CIData.add(new String[] { "SLA", SlaHbn.getSlaName(schrank.getSlaId()) });
 		CIData.add(new String[] {
 				"Service Contract",
 				ServiceContractHbn.getServiceContract(schrank
-						.getServiceContractId()) });
+						.getServiceContractId()) });*/
 		CIData.add(new String[] { "Protection Level Integrity",
 				getValue(schrank.getItSecSbIntegrityId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
@@ -762,8 +762,8 @@ public class CiDetailReportServlet extends HttpServlet {
 				.append(building.getBuildingName()).append(")");
 		CIData.add(new String[] { "Building Area",
 				BuildingAreaDeatil.toString() });
-		CIData.add(new String[] { "Severity Level",
-				getSeverityLevel(room.getSeverityLevelId()) });
+		/*CIData.add(new String[] { "Severity Level",
+				getSeverityLevel(room.getSeverityLevelId()) });*/
 		CIData.add(new String[] { "Business Essential",
 				getSeverityLevel(room.getBusinessEssentialId()) });
 		if (room.getTemplate() == 1)
@@ -800,11 +800,11 @@ public class CiDetailReportServlet extends HttpServlet {
 			CIData.add(new String[] { "Time Testing", " " });
 		}
 		CIData.add(new String[] { "Result Testing", room.getSampleTestResult() });
-		CIData.add(new String[] { "SLA", SlaHbn.getSlaName(room.getSlaId()) });
+		/*CIData.add(new String[] { "SLA", SlaHbn.getSlaName(room.getSlaId()) });
 		CIData.add(new String[] {
 				"Service Contract",
 				ServiceContractHbn.getServiceContract(room
-						.getServiceContractId()) });
+						.getServiceContractId()) });*/
 		CIData.add(new String[] { "Protection Level Integrity",
 				getValue(room.getItSecSbIntegrityId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
@@ -872,12 +872,12 @@ public class CiDetailReportServlet extends HttpServlet {
 		}
 		CIData.add(new String[] { "Result Testing",
 				buildingArea.getSampleTestResult() });
-		CIData.add(new String[] { "SLA",
+		/*CIData.add(new String[] { "SLA",
 				SlaHbn.getSlaName(buildingArea.getSlaId()) });
 		CIData.add(new String[] {
 				"Service Contract",
 				ServiceContractHbn.getServiceContract(buildingArea
-						.getServiceContractId()) });
+						.getServiceContractId()) });*/
 		CIData.add(new String[] { "Protection Level Integrity",
 				getValue(buildingArea.getItSecSbIntegrityId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
@@ -937,11 +937,11 @@ public class CiDetailReportServlet extends HttpServlet {
 		}
 		CIData.add(new String[] { "Result Testing",
 				building.getSampleTestResult() });
-		CIData.add(new String[] { "SLA", SlaHbn.getSlaName(building.getSlaId()) });
+		/*CIData.add(new String[] { "SLA", SlaHbn.getSlaName(building.getSlaId()) });
 		CIData.add(new String[] {
 				"Service Contract",
 				ServiceContractHbn.getServiceContract(building
-						.getServiceContractId()) });
+						.getServiceContractId()) });*/
 		CIData.add(new String[] { "Protection Level Integrity",
 				getValue(building.getItSecSbIntegrityId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
@@ -1002,11 +1002,11 @@ public class CiDetailReportServlet extends HttpServlet {
 		}
 		CIData.add(new String[] { "Result Testing",
 				terrain.getSampleTestResult() });
-		CIData.add(new String[] { "SLA", SlaHbn.getSlaName(terrain.getSlaId()) });
+		/*CIData.add(new String[] { "SLA", SlaHbn.getSlaName(terrain.getSlaId()) });
 		CIData.add(new String[] {
 				"Service Contract",
 				ServiceContractHbn.getServiceContract(terrain
-						.getServiceContractId()) });
+						.getServiceContractId()) });*/
 		CIData.add(new String[] { "Protection Level Integrity",
 				getValue(terrain.getItSecSbIntegrityId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
@@ -1060,11 +1060,11 @@ public class CiDetailReportServlet extends HttpServlet {
 		}
 		CIData.add(new String[] { "Result Testing",
 				standort.getSampleTestResult() });
-		CIData.add(new String[] { "SLA", SlaHbn.getSlaName(standort.getSlaId()) });
+		/*CIData.add(new String[] { "SLA", SlaHbn.getSlaName(standort.getSlaId()) });
 		CIData.add(new String[] {
 				"Service Contract",
 				ServiceContractHbn.getServiceContract(standort
-						.getServiceContractId()) });
+						.getServiceContractId()) });*/
 		CIData.add(new String[] { "Protection Level Integrity",
 				getValue(standort.getItSecSbIntegrityId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",
@@ -1129,11 +1129,11 @@ public class CiDetailReportServlet extends HttpServlet {
 		}
 		CIData.add(new String[] { "Result Testing",
 				itSystem.getSampleTestResult() });
-		CIData.add(new String[] { "SLA", SlaHbn.getSlaName(itSystem.getSlaId()) });
+		/*CIData.add(new String[] { "SLA", SlaHbn.getSlaName(itSystem.getSlaId()) });
 		CIData.add(new String[] {
 				"Service Contract",
 				ServiceContractHbn.getServiceContract(itSystem
-						.getServiceContractId()) });
+						.getServiceContractId()) });*/
 		CIData.add(new String[] { "Protection Level Integrity",
 				getValue(itSystem.getItSecSbIntegrityId()) });
 		CIData.add(new String[] { "Explanation for Protection Level",

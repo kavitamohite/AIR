@@ -1,4 +1,4 @@
-package com.bayerbbs.applrepos.hibernate;
+/*package com.bayerbbs.applrepos.hibernate;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,13 +16,13 @@ import com.bayerbbs.applrepos.dto.SlaServiceContractDTO;
 
 public class SlaServiceContractHbn {
 
-	/** The logger. */
+	*//** The logger. *//*
 	private static final Log log = LogFactory.getLog(SlaServiceContractHbn.class);
 	
-	/**
+	*//**
 	 * find the sla service contracts
 	 * @return
-	 */
+	 *//*
 	public static List<SlaServiceContractDTO> listSlaServiceContracts() {
 		
 		ArrayList<SlaServiceContractDTO> listResult = new ArrayList<SlaServiceContractDTO>();
@@ -88,3 +88,4 @@ public class SlaServiceContractHbn {
 
 	
 }
+*/

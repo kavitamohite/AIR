@@ -43,12 +43,6 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			},{
 		    	xtype: 'textfield',
 		        width: 230,
-		        fieldLabel: 'SLA',
-		        id: 'detailsSlaName',
-		        disabled: true
-			},{
-		    	xtype: 'textfield',
-		        width: 230,
 		        fieldLabel: 'Business Essential',
 		        id: 'detailsBusinessEssential',
 		        disabled: true
@@ -126,7 +120,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.getComponent('detailsApplicationCat2').reset();
 		this.getComponent('detailsApplicationOwner').reset();
 		this.getComponent('detailsCiOwner').reset();
-		this.getComponent('detailsSlaName').reset();
+	//	this.getComponent('detailsSlaName').reset();
 		this.getComponent('detailsBusinessEssential').reset();
 		
 		this.getComponent('detailsInsertdata').reset();
@@ -136,25 +130,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 	},
 	
 	update: function(ciDetail) {//data
-		var store = AIR.AirStoreManager.getStoreByName('slaListStore');
-		var slaId= ciDetail.slaId;
-		var slaName = '';
-		if(slaId != 0){
-			var slaStoreData = store.getById(slaId);
-			if(slaStoreData==undefined){
-				AIR.AirApplicationManager.setSlaInValid(true);
-		        Ext.Msg.show({
-		            title: 'Data Validation',
-		            msg: 'The SLA is invalid [id='+slaId+']',
-		            modal: false,
-		            icon: Ext.Msg.INFO,
-		            buttons: Ext.Msg.OK
-		        });
-			}else{
-				AIR.AirApplicationManager.setSlaInValid(false);
-				slaName = slaStoreData.data.text;
-			}
-		}
+	
 		
 		store = AIR.AirStoreManager.getStoreByName('businessEssentialListStore');
 		var businessEssential = ciDetail.businessEssentialId && ciDetail.businessEssentialId != 0 && store.getById(ciDetail.businessEssentialId) ? store.getById(ciDetail.businessEssentialId).data.text : '';
@@ -168,7 +144,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 //			categoryBusiness: categoryBusiness,
 			ciOwner: ciDetail.ciOwner,//ciResponsible
 			applicationOwner: ciDetail.applicationOwner,
-			slaName: slaName,//AIR.AirStoreManager.getStoreByName('slaListStore').getById(ciDetail.slaId).data.text,
+			//slaName: slaName,//AIR.AirStoreManager.getStoreByName('slaListStore').getById(ciDetail.slaId).data.text,
 			businessEssential: businessEssential,//AIR.AirStoreManager.getStoreByName('businessEssentialListStore').getById(ciDetail.businessEssentialId).data.text,
 			
 			insertQuelle: ciDetail.insertQuelle,
@@ -190,7 +166,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var tfAppCat2 = this.getComponent('detailsApplicationCat2');
 		var tfCiOwner = this.getComponent('detailsCiOwner');
 		var tfAppOwner = this.getComponent('detailsApplicationOwner');
-		var tfSla = this.getComponent('detailsSlaName');
+	//	var tfSla = this.getComponent('detailsSlaName');
 		var cbBusinessEssential = this.getComponent('detailsBusinessEssential');
 		var tfInsertData = this.getComponent('detailsInsertdata');
 		var tfUpdateData = this.getComponent('detailsUpdatedata');
@@ -291,11 +267,11 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		if(ciDetail.tableId == AC.TABLE_ID_BUSINESS_APPLICATION){
 		
-			tfSla.setVisible(false);
+			//tfSla.setVisible(false);
 			
 		}else{
 			
-			tfSla.setVisible(true);
+			//tfSla.setVisible(true);
 		}
 		
 		if(!ciDetail.isCiCreate) {
@@ -310,7 +286,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 			var label = data.applicationCat1Id == AC.APP_CAT1_APPLICATION? labels.applicationManager : labels.label_details_ciOwner;
 			this.setFieldLabel(tfCiOwner, label);
 			if(ciDetail.tableId != AC.TABLE_ID_BUSINESS_APPLICATION){
-			tfSla.setValue(data.slaName);
+		//	tfSla.setValue(data.slaName);
 			}
 	
 			var value = ciDetail.insertQuelle + ' ' + ciDetail.insertUser + ' ' + ciDetail.insertTimestamp;
@@ -374,7 +350,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		}
 		
 		this.setFieldLabel(this.getComponent('detailsApplicationOwner'), labels.label_details_applicationOwner);
-		this.setFieldLabel(this.getComponent('detailsSlaName'), labels.label_details_sla);
+		//this.setFieldLabel(this.getComponent('detailsSlaName'), labels.label_details_sla);
 		this.setFieldLabel(this.getComponent('detailsBusinessEssential'), labels.label_details_businessessential);
 		this.setFieldLabel(this.getComponent('detailsInsertdata'), labels.label_details_insertdata);
 		this.setFieldLabel(this.getComponent('detailsUpdatedata'), labels.label_details_updatedata);
@@ -388,7 +364,7 @@ AIR.CiDetailsView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setTooltipData(this.getComponent('detailsApplicationOwner').label, toolTips.applicationOwner, toolTips.applicationOwnerText);
 		this.setTooltipData(this.getComponent('detailsBusinessEssential').label, toolTips.businessEssential, toolTips.businessEssentialText);
 		this.setTooltipData(this.getComponent('detailsCiOwner').label, toolTips.ciResponsible, toolTips.ciResponsibleText);
-		this.setTooltipData(this.getComponent('detailsSlaName').label, toolTips.slaName, toolTips.slaNameText);
+		//this.setTooltipData(this.getComponent('detailsSlaName').label, toolTips.slaName, toolTips.slaNameText);
 		
 		this.setTooltipData(this.getComponent('detailsInsertdata').label, toolTips.insertData, toolTips.insertDataText);
 		this.setTooltipData(this.getComponent('detailsUpdatedata').label, toolTips.updateData, toolTips.updateDataText);

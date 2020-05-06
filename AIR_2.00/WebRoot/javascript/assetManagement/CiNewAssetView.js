@@ -784,8 +784,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tILOAdKey').show();
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrdNum').show();
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tTypeContract').show();
-			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceAgrmntId').show();
-			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceContGrp').show();
+			// this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceAgrmntId').show();
+			 //this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceContGrp').show();
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cEndContrctDate').show();
 		 
 		 } else {
@@ -793,8 +793,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tILOAdKey').reset();
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrdNum').reset();
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tTypeContract').reset();
-			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceAgrmntId').reset();
-			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceContGrp').reset();
+			// this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceAgrmntId').reset();
+			 //this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceContGrp').reset();
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cEndContrctDate').reset();
 
 		 
@@ -803,8 +803,8 @@ AIR.CiNewAssetView = Ext.extend(AIR.AirView, {
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tILOAdKey').hide();
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tOrdNum').hide();
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tTypeContract').hide();
-			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceAgrmntId').hide();
-			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceContGrp').hide();
+			// this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceAgrmntId').hide();
+			 //this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('tServiceContGrp').hide();
 			 this.getComponent('bottomPanel').getComponent('rightPanel').getComponent('businessInformation').getComponent('cEndContrctDate').hide();
 
 		}

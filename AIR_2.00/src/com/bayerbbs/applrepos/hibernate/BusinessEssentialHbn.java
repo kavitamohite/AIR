@@ -28,7 +28,7 @@ public class BusinessEssentialHbn {
 			BusinessEssential data = iter.next();
 			if (!data.getInherited()) {
 				BusinessEssentialDTO dto = new BusinessEssentialDTO();
-				dto.setSeverityLevelId(data.getBusinessEssentialId());
+				//dto.setSeverityLevelId(data.getBusinessEssentialId());
 				dto.setSeverityLevel(data.getBusinessEssentialName());
 				dto.setSeverityGPSC(data.getBusinessEssentialCode());
 				dto.setBeCode(data.getBusinessEssentialCode());

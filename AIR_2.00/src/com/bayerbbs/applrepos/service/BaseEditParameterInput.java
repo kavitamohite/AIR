@@ -14,8 +14,8 @@ public class BaseEditParameterInput {
 	private String ciOwnerDelegateHidden;
 
 	
-	private Long slaId;
-	private Long serviceContractId;
+	//private Long slaId;
+//	private Long serviceContractId;
 	
 	private Long itset;
 	private Long template;
@@ -144,7 +144,7 @@ public class BaseEditParameterInput {
 	}
 	
 
-	public Long getSlaId() {
+/*	public Long getSlaId() {
 		return slaId;
 	}
 	public void setSlaId(Long slaId) {
@@ -155,7 +155,7 @@ public class BaseEditParameterInput {
 	}
 	public void setServiceContractId(Long serviceContractId) {
 		this.serviceContractId = serviceContractId;
-	}
+	}*/
 	
 
 	public Long getItset() {

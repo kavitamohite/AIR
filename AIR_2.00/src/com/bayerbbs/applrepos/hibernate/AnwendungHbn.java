@@ -264,7 +264,7 @@ public class AnwendungHbn extends BaseHbn {
 						// ==========
 						// Agreements
 						// ==========
-						if (null != dto.getSlaId()) {
+						/*if (null != dto.getSlaId()) {
 							if (-1 == dto.getSlaId()) {
 								application.setSlaId(null);
 							}
@@ -280,7 +280,7 @@ public class AnwendungHbn extends BaseHbn {
 							else {
 								application.setServiceContractId(dto.getServiceContractId());
 							}
-						}
+						}*/
 
 						if (null != dto.getPriorityLevelId()) {
 							if (-1 == dto.getPriorityLevelId()) {
@@ -290,14 +290,14 @@ public class AnwendungHbn extends BaseHbn {
 								application.setPriorityLevelId(dto.getPriorityLevelId());
 							}
 						}
-						if (null != dto.getSeverityLevelId()) {
+						/*if (null != dto.getSeverityLevelId()) {
 							if (-1 == dto.getSeverityLevelId()) {
 								application.setSeverityLevelId(null);
 							}
 							else {
 								application.setSeverityLevelId(dto.getSeverityLevelId());
 							}
-						}
+						}*/
 
 						hasBusinessEssentialChanged = false;
 						businessEssentialIdOld = application.getBusinessEssentialId();
@@ -612,7 +612,7 @@ public class AnwendungHbn extends BaseHbn {
 										System.out.println("I value is "+i);
 										i='_';
 										System.out.println("I value is "+i);
-System.out.println("Air Saving issue>>>>>>>>>>");
+
 										 pstmt = conn.prepareStatement("alter session set nls_comp=binary");
 										System.out.println("pstmt.executeUpdate()  "+pstmt.executeUpdate()); 
 										
@@ -872,11 +872,14 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 //						application.setRelevanceICS(dto.getRelevanceICS());
 						application.setRelevance2059(dto.getRelevance2059());
 						application.setRelevance2008(dto.getRelevance2008());
+
 //						ELERJ GXP
 //						application.setGxpFlag(dto.getGxpFlagId());
-						application.setSlaId(dto.getSlaId());
+//						application.setSlaId(dto.getSlaId());
+
+
 						application.setServiceContractId(dto.getServiceContractId());
-						application.setSeverityLevelId(dto.getSeverityLevelId());
+					//	application.setSeverityLevelId(dto.getSeverityLevelId());
 						
 						//--- neu seit Wizard RFC 8271 - required Attributes (Attribute aus Sub-Tabellen werden im Anschluss gespeichert.
 						if (null != dto.getClassInformationId()) {
@@ -1011,10 +1014,10 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 			application.setSubResponsible(null);
 			
 			// agreements
-			application.setSlaId(null);
+			//application.setSlaId(null);
 			application.setPriorityLevelId(null);
 			application.setServiceContractId(null);
-			application.setSeverityLevelId(null);
+			//application.setSeverityLevelId(null);
 			
 //			ORA-01407: cannot update ("TBADM"."ANWENDUNG"."BUSINESS_ESSENTIAL_ID") to NULL
 //			application.setBusinessEssentialId(null);
@@ -1326,10 +1329,16 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 //		sql.append("		  , anw.relevance_ics");
 		sql.append("		  , anw.relevance_2059");
 		sql.append("		  , anw.relevance_2008");
+
 //		ELERJ GXP
 //		sql.append("		  , anw.gxp_flag");
 		sql.append("		  , anw.sla_id");
 		sql.append("		  , sla.sla_name");
+
+		sql.append("		  , anw.gxp_flag");
+		//sql.append("		  , anw.sla_id");
+		//sql.append("		  , sla.sla_name");
+
 		sql.append("		  , anw.service_contract_id");
 		sql.append("		  , servcontr.service_contract");
 		sql.append("		  , anw.root_dir");
@@ -1385,7 +1394,7 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 		sql.append("		left join lifecycle_sub_stat lcsubstat on anw.lc_status_id = lcsubstat.lc_sub_stat_id and lcsubstat.tabelle_id = 2");
 		sql.append("		left join lifecycle_status lcstat on lcsubstat.lc_status_id = lcstat.lc_status_id and lcstat.tabelle_id = 2");
 		sql.append("		left join itsec_it_verbund itsverb on anw.itset = itsverb.gstool_zob_id");
-		sql.append("		left join sla sla on anw.sla_id = sla.sla_id");
+		//sql.append("		left join sla sla on anw.sla_id = sla.sla_id");
 		sql.append("		left join service_contract servcontr on anw.service_contract_id = servcontr.service_contract_id");
 		sql.append("		left join priority_level priolev on anw.priority_level_id = priolev.priority_level_id");
 		sql.append("		left join severity_level sevlev on anw.severity_level_id = sevlev.severity_level_id");
@@ -1481,15 +1490,15 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 				}
 
 				applicationDTO.setTemplate(template);
-				applicationDTO.setSlaId(rsMessage.getLong("SLA_ID"));
-				applicationDTO.setSlaName(rsMessage.getString("SLA_NAME"));
+			//	applicationDTO.setSlaId(rsMessage.getLong("SLA_ID"));
+			//	applicationDTO.setSlaName(rsMessage.getString("SLA_NAME"));
 				applicationDTO.setServiceContractId(rsMessage.getLong("SERVICE_CONTRACT_ID"));
 				applicationDTO.setServiceContract(rsMessage.getString("SERVICE_CONTRACT"));
 				applicationDTO.setComments(rsMessage.getString("COMMENTS"));
 				applicationDTO.setAlias(rsMessage.getString("ALIAS"));
 				applicationDTO.setPriorityLevelId(rsMessage.getLong("PRIORITY_LEVEL_ID"));
 				applicationDTO.setPriorityLevel(rsMessage.getString("PRIORITY_LEVEL"));
-				applicationDTO.setSeverityLevelId(rsMessage.getLong("SEVERITY_LEVEL_ID"));
+				//applicationDTO.setSeverityLevelId(rsMessage.getLong("SEVERITY_LEVEL_ID"));
 				applicationDTO.setSeverityLevel(rsMessage.getString("SEVERITY_LEVEL"));
 				applicationDTO.setLocationPath(rsMessage.getString("LOCATION_PATH"));
 				applicationDTO.setBusinessEssentialId(rsMessage.getLong("BUSINESS_ESSENTIAL_ID"));
@@ -2843,10 +2852,10 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 						// ==========
 						// Agreements
 						// ==========
-						applicationTarget.setSlaId(applicationSource.getSlaId());
-						applicationTarget.setServiceContractId(applicationSource.getServiceContractId());
+					//	applicationTarget.setSlaId(applicationSource.getSlaId());
+					//	applicationTarget.setServiceContractId(applicationSource.getServiceContractId());
 						applicationTarget.setPriorityLevelId(applicationSource.getPriorityLevelId());
-						applicationTarget.setSeverityLevelId(applicationSource.getSeverityLevelId());
+					//	applicationTarget.setSeverityLevelId(applicationSource.getSeverityLevelId());
 						applicationTarget.setBusinessEssentialId(applicationSource.getBusinessEssentialId());
 						// ----------
 						

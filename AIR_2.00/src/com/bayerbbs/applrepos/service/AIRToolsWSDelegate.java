@@ -35,8 +35,8 @@ import com.bayerbbs.applrepos.dto.ReferenzDTO;
 import com.bayerbbs.applrepos.dto.SISoogleAttribute;
 import com.bayerbbs.applrepos.dto.ServiceModelDTO;
 import com.bayerbbs.applrepos.dto.SeverityLevelDTO;
-import com.bayerbbs.applrepos.dto.SlaDTO;
-import com.bayerbbs.applrepos.dto.SlaServiceContractDTO;
+//import com.bayerbbs.applrepos.dto.SlaDTO;
+//import com.bayerbbs.applrepos.dto.SlaServiceContractDTO;
 import com.bayerbbs.applrepos.dto.ViewDataDTO;
 
 @javax.jws.WebService(targetNamespace = "http://service.applrepos.bayerbbs.com/", serviceName = "AIRToolsWSService", portName = "AIRToolsWSPort")
@@ -121,7 +121,7 @@ public class AIRToolsWSDelegate {
 		return airToolsWS.getReferenzList();
 	}
 
-	public SeverityLevelDTO[] getSeverityLevelList() {
+	/*public SeverityLevelDTO[] getSeverityLevelList() {
 		return airToolsWS.getSeverityLevelList();
 	}
 
@@ -131,7 +131,7 @@ public class AIRToolsWSDelegate {
 
 	public SlaServiceContractDTO[] getSlaServiceContractList() {
 		return airToolsWS.getSlaServiceContractList();
-	}
+	}*/
 
 	public CategoryBusinessDTO[] getCategoryBusinessList() {
 		return airToolsWS.getCategoryBusinessList();

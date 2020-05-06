@@ -146,7 +146,7 @@ public class ControlItem extends DeletableRevisionInfo
 	}
 	private ServiceContract serviceContract;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	/*@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SLA_ID")
 	public Sla getSla() {
 		return sla;
@@ -154,7 +154,7 @@ public class ControlItem extends DeletableRevisionInfo
 	public void setSla(Sla sla) {
 		this.sla = sla;
 	}
-	private Sla sla;
+	private Sla sla;*/
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PRIORITY_LEVEL_ID")

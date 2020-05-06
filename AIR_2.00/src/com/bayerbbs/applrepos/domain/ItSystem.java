@@ -118,13 +118,13 @@ public class ItSystem extends CiBase2 implements Serializable {//DeletableRevisi
 		this.priorityLevelId = priorityLevelId;
 	}
 	
-	@Column(name = "SEVERITY_LEVEL_ID")
+	/*@Column(name = "SEVERITY_LEVEL_ID")
 	public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
+	}*/
 	
 	@Column(name = "BUSINESS_ESSENTIAL_ID")
 	public Long getBusinessEssentialId() {

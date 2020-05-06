@@ -31,7 +31,7 @@ public class SystemPlatformDTO {
 	private Timestamp sampleTestDate;
 	private String sampleTestResult;
 	private Long serviceContractID;
-	private Long slaID;
+	//private Long slaID;
 	private Long priorityLevelID;
 	private Long severityLevelID;
 	private Long businessEssentialID;
@@ -236,13 +236,13 @@ public class SystemPlatformDTO {
 		this.serviceContractID = serviceContractID;
 	}
 
-	public Long getSlaID() {
+	/*public Long getSlaID() {
 		return slaID;
 	}
 
 	public void setSlaID(Long slaID) {
 		this.slaID = slaID;
-	}
+	}*/
 
 	public Long getPriorityLevelID() {
 		return priorityLevelID;
@@ -252,13 +252,13 @@ public class SystemPlatformDTO {
 		this.priorityLevelID = priorityLevelID;
 	}
 
-	public Long getSeverityLevelID() {
+	/*public Long getSeverityLevelID() {
 		return severityLevelID;
 	}
 
 	public void setSeverityLevelID(Long severityLevelID) {
 		this.severityLevelID = severityLevelID;
-	}
+	}*/
 
 	public Long getBusinessEssentialID() {
 		return businessEssentialID;

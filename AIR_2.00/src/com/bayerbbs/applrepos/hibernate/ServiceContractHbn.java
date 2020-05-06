@@ -64,7 +64,7 @@ public class ServiceContractHbn {
 		return listResult;
 	}
 	
-	public static List<ServiceContractDTO> findAllServiceContracts(Long slaID) {
+	/*public static List<ServiceContractDTO> findAllServiceContracts(Long slaID) {
 		
 		
 		List<ServiceContractDTO> serviceContracts = new ArrayList<ServiceContractDTO>();
@@ -120,7 +120,7 @@ public class ServiceContractHbn {
 		return serviceContracts;
 	}
 
-	@SuppressWarnings("unchecked")
+*/	/*@SuppressWarnings("unchecked")
 	public static List<ServiceContractDTO> findServiceContractsBySlaId(Long slaId) {
 
 		List<ServiceContractDTO> listResult = new ArrayList<ServiceContractDTO>();
@@ -172,4 +172,4 @@ public class ServiceContractHbn {
 		return serviceContract;
 	}
 
-}
+*/}

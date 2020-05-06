@@ -948,8 +948,8 @@ public class HardwareComponentHbn {
 		hardwareComponent.setIloAdvancedKey(dto.getIloAdvancedKey());
 		hardwareComponent.setOneViewOrderNumber(dto.getOneViewOrderNumber());
 		hardwareComponent.setTypeOfContract(dto.getTypeOfContract());
-		hardwareComponent.setServiceAgreementId(dto.getServiceAgreementId());
-		hardwareComponent.setServiceContractGroup(dto.getServiceContractGroup());
+		//hardwareComponent.setServiceAgreementId(dto.getServiceAgreementId());
+		//hardwareComponent.setServiceContractGroup(dto.getServiceContractGroup());
 		if(null == dto.getEndOfContract()){
 			hardwareComponent.setEndOfContract(null);
 		}else{

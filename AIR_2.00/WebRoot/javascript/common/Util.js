@@ -242,6 +242,7 @@ Util = {
 		},
 		
 		updateFieldLabel: function(field, label){//changes done by emria
+			console.log("hello"+field)
 			if (!field.rendered){
 				field.fieldLabel = label;
 			} else{

@@ -13,12 +13,12 @@ public class SchrankEditParameterInput extends BaseEditParameterInput {
 	public void setRoomId(Long roomId) {
 		this.roomId = roomId;
 	}
-	public Long getSeverityLevelId() {
+	/*public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
+	}*/
 	public Long getBusinessEssentialId() {
 		return businessEssentialId;
 	}

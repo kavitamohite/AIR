@@ -502,10 +502,10 @@ public class ApplicationWS {
 		// TODO business category
 
 		// Agreements
-		dto.setSlaId(editInput.getSlaId());
+		//dto.setSlaId(editInput.getSlaId());
 		dto.setPriorityLevelId(editInput.getPriorityLevelId());
-		dto.setServiceContractId(editInput.getServiceContractId());
-		dto.setSeverityLevelId(editInput.getSeverityLevelId());
+	//	dto.setServiceContractId(editInput.getServiceContractId());
+	//	dto.setSeverityLevelId(editInput.getSeverityLevelId());
 		dto.setBusinessEssentialId(editInput.getBusinessEssentialId());
 
 		// contacts
@@ -1090,12 +1090,12 @@ public class ApplicationWS {
 								if (-1 != allRights.indexOf("Sample_Test_Result")) {
 									accessDTO.setSample_Test_Result(AirKonstanten.YES_SHORT);
 								}
-								if (-1 != allRights.indexOf("Sla_Id")) {
+								/*if (-1 != allRights.indexOf("Sla_Id")) {
 									accessDTO.setSla_Id(AirKonstanten.YES_SHORT);
 								}
 								if (-1 != allRights.indexOf("Service_Contract_Id")) {
 									accessDTO.setService_Contract_Id(AirKonstanten.YES_SHORT);
-								}
+								}*/
 								if (-1 != allRights.indexOf("Priority_Level_Id")) {
 									accessDTO.setPriority_Level_Id(AirKonstanten.YES_SHORT);
 								}

@@ -12,12 +12,12 @@ public class BusinessEssentialDTO implements Serializable {
 	private String usage;
 	private Long beCode;
 	
-	public Long getSeverityLevelId() {
+	/*public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
+	}*/
 	public String getSeverityLevel() {
 		return severityLevel;
 	}

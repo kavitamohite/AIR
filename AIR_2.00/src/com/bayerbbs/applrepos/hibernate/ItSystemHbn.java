@@ -352,13 +352,13 @@ public class ItSystemHbn extends BaseHbn {
 			}
 		}
 
-		if (null != dto.getSeverityLevelId()) {
+		/*if (null != dto.getSeverityLevelId()) {
 			if (-1 == dto.getSeverityLevelId()) {
 				itSystem.setSeverityLevelId(null);
 			} else {
 				itSystem.setSeverityLevelId(dto.getSeverityLevelId());
 			}
-		}
+		}*/
 
 		if (null == dto.getBusinessEssentialId()) {
 			// messages.add("business essential is empty");
@@ -1430,7 +1430,7 @@ System.out.println("HARDWARE System SQL in ITSYSTEMHBN.java"+sql);
 		dto.setLicenseScanningId(itSystem.getLicenseScanningId());
 		dto.setBackupType(itSystem.getBackupType());
 		dto.setServicePack(itSystem.getServicePack());
-		dto.setSeverityLevelId(itSystem.getSeverityLevelId());
+	//	dto.setSeverityLevelId(itSystem.getSeverityLevelId());
 		dto.setBusinessEssentialId(itSystem.getBusinessEssentialId());
 		dto.setCiSubTypeId(itSystem.getCiSubTypeId());
 	}
@@ -1514,8 +1514,8 @@ System.out.println("HARDWARE System SQL in ITSYSTEMHBN.java"+sql);
 				} else {
 
 					// ==========
-					itsystemTarget.setSeverityLevelId(itsystemSource
-							.getSeverityLevelId());
+					/*itsystemTarget.setSeverityLevelId(itsystemSource
+							.getSeverityLevelId());*/
 					itsystemTarget.setBusinessEssentialId(itsystemSource
 							.getBusinessEssentialId());
 

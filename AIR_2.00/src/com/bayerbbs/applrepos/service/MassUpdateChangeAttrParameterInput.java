@@ -20,9 +20,9 @@ public class MassUpdateChangeAttrParameterInput {
 	private String clusterCode;
 	private String clusterType;
 	// agreements
-	private Long slaId;
+	//private Long slaId;
 	private Long priorityLevelId;
-	private Long serviceContractId;
+	//private Long serviceContractId;
 	private Long severityLevelId;
 	
 	//Protections
@@ -198,15 +198,15 @@ public class MassUpdateChangeAttrParameterInput {
 	/**
 	 * @return the slaId
 	 */
-	public Long getSlaId() {
+/*	public Long getSlaId() {
 		return slaId;
 	}
-	/**
+	*//**
 	 * @param slaId the slaId to set
-	 */
+	 *//*
 	public void setSlaId(Long slaId) {
 		this.slaId = slaId;
-	}
+	}*/
 	/**
 	 * @return the priorityLevelId
 	 */
@@ -222,21 +222,21 @@ public class MassUpdateChangeAttrParameterInput {
 	/**
 	 * @return the serviceContractId
 	 */
-	public Long getServiceContractId() {
+	/*public Long getServiceContractId() {
 		return serviceContractId;
-	}
+	}*/
 	/**
 	 * @param serviceContractId the serviceContractId to set
 	 */
-	public void setServiceContractId(Long serviceContractId) {
+	/*public void setServiceContractId(Long serviceContractId) {
 		this.serviceContractId = serviceContractId;
-	}
+	}*/
 	/**
 	 * @return the severityLevelId
 	 */
-	public Long getSeverityLevelId() {
+	/*public Long getSeverityLevelId() {
 		return severityLevelId;
-	}
+	}*/
 	/**
 	 * @param severityLevelId the severityLevelId to set
 	 */

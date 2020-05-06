@@ -1,4 +1,4 @@
-package com.bayerbbs.applrepos.hibernate;
+/*package com.bayerbbs.applrepos.hibernate;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,12 +13,12 @@ import com.bayerbbs.applrepos.dto.SlaDTO;
 
 public class SlaHbn {
 	
-	/**
+	*//**
 	 * converts the list entry database table to dto
 	 * 
 	 * @param input
 	 * @return
-	 */
+	 *//*
 	private static List<SlaDTO> getDTOList(
 			List<Sla> input) {
 		ArrayList<SlaDTO> listDTO = new ArrayList<SlaDTO>();
@@ -36,12 +36,12 @@ public class SlaHbn {
 		return listDTO;
 	}
 
-	/**
+	*//**
 	 * returns the array from list
 	 * 
 	 * @param input
 	 * @return
-	 */
+	 *//*
 	public static SlaDTO[] getArrayFromList(
 			List<SlaDTO> input) {
 		SlaDTO output[] = new SlaDTO[input.size()];
@@ -121,3 +121,4 @@ public class SlaHbn {
 	}
 
 }
+*/

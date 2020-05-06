@@ -55,13 +55,13 @@ public class RoomDTO extends LocationDTO implements Serializable {
 		this.roomType = roomType;
 	}
 	
-	public Long getSeverityLevelId() {
+	/*public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
 
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
+	}*/
 
 	public Long getBusinessEssentialId() {
 		return businessEssentialId;

@@ -43,7 +43,7 @@ public class Application extends DeletableRevisionInfo {
 	
 	
 	// agreements
-	private Long slaId;
+	//private Long slaId;
 	private Long priorityLevelId;
 	private Long serviceContractId;
 	private Long severityLevelId;
@@ -471,14 +471,14 @@ public class Application extends DeletableRevisionInfo {
 	
 
 	//in Basisklasse
-	@Column(name = "SLA_ID")
+	/*@Column(name = "SLA_ID")
 	public Long getSlaId() {
 		return slaId;
 	}
 
 	public void setSlaId(Long slaId) {
 		this.slaId = slaId;
-	}
+	}*/
 
 	@Column(name = "PRIORITY_LEVEL_ID")
 	public Long getPriorityLevelId() {
@@ -500,14 +500,14 @@ public class Application extends DeletableRevisionInfo {
 	}
 
 	//in Basisklasse
-	@Column(name = "SEVERITY_LEVEL_ID")
+	/*@Column(name = "SEVERITY_LEVEL_ID")
 	public Long getSeverityLevelId() {
 		return severityLevelId;
 	}
 
 	public void setSeverityLevelId(Long severityLevelId) {
 		this.severityLevelId = severityLevelId;
-	}
+	}*/
 
 	@Column(name = "APPLICATION_OWNER")
 	public String getApplicationOwner() {
