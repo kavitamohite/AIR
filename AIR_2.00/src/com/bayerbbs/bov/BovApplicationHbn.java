@@ -60,8 +60,11 @@ public class BovApplicationHbn {
 				}
 			}
 
+
 		}
 //		ELERJ GXP
+
+
 
 		}*/
 		
@@ -145,8 +148,11 @@ public class BovApplicationHbn {
 			/*if (null != severityLevelId) {
 				application.setSeverityLevelId(severityLevelId);
 
+
 			}
 //			ELERJ GXP
+
+
 
 			}*/
 				

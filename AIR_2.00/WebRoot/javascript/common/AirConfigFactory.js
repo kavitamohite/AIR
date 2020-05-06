@@ -242,15 +242,13 @@ AIR.AirConfigFactory = function() {
 			   'updateQuelle', 'updateTimestamp', 'updateUser', 'deleteQuelle', 'deleteTimestamp', 'deleteUser', 'itSecSbAvailabilityId', 'itSecSbAvailabilityTxt',
 			   'itSecSbIntegrityId', 'itSecSbIntegrityTxt', 'classInformationId', 'classInformationTxt', 'messageTextSecureSystem',
 
-			   'slaId', 'serviceContractId', 'itset', 'template', 'itsecGroupId', 'refId', 'relevanceGR1435', /*'relevanceGR1920'*/,'relevanceCD3010','relevanceCD3011',
+
+			    'itset', 'template', 'itsecGroupId', 'refId', 'relevanceGR1435', /*'relevanceGR1920'*/,'relevanceCD3010','relevanceCD3011',
 			   
 			   'ciOwnerAcl', 'ciOwnerDelegateAcl', 'relevanceGR1435Acl', /*'relevanceGR1920Acl'*/, /*'gxpFlag', 'gxpFlagId', 'gxpFlagIdAcl',*/
-			   'refIdAcl', 'itsecGroupIdAcl', 'slaIdAcl', 'serviceContractIdAcl', 'templateLinkWithCIs', {
-
-			    'itset', 'template', 'itsecGroupId', 'refId', 'relevanceGR1435', 'relevanceGR1920','relevanceCD3010','relevanceCD3011',
-			   
-			   'ciOwnerAcl', 'ciOwnerDelegateAcl', 'relevanceGR1435Acl', 'relevanceGR1920Acl', 'gxpFlag', 'gxpFlagId', 'gxpFlagIdAcl',
 			   'refIdAcl', 'itsecGroupIdAcl', 'templateLinkWithCIs', {
+
+			   
 
 				name: 'tableId', type: 'int'
 			}, 'downStreamAdd', 'downStreamDelete'];

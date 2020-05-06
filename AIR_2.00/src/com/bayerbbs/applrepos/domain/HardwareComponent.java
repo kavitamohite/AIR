@@ -932,6 +932,7 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 	}
 
 
+
 	@Column(name = "CONTRACT_FOR_SERVICE")
 	public String getContactForService() {
 		return contactForService;
@@ -942,6 +943,8 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 	}
 //	ELERJ GXP
 	/*@Column(name = "GXP_FLAG")
+
+
 
 	
 

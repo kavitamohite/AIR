@@ -3308,7 +3308,11 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				/*if (massUpdateParameterInput.getSlaId()) {
 
 				}
+
 */				/*if (massUpdateParameterInput.getSlaId()) {
+
+
+				/*if (massUpdateParameterInput.getSlaId()) {
 
 					itSystem.setSlaId(templateItSystem.getSlaId());
 				}

@@ -873,9 +873,11 @@ public class AnwendungHbn extends BaseHbn {
 						application.setRelevance2059(dto.getRelevance2059());
 						application.setRelevance2008(dto.getRelevance2008());
 
+
 //						ELERJ GXP
 //						application.setGxpFlag(dto.getGxpFlagId());
 //						application.setSlaId(dto.getSlaId());
+
 
 
 						application.setServiceContractId(dto.getServiceContractId());
@@ -1330,12 +1332,11 @@ public class AnwendungHbn extends BaseHbn {
 		sql.append("		  , anw.relevance_2059");
 		sql.append("		  , anw.relevance_2008");
 
+
 //		ELERJ GXP
 //		sql.append("		  , anw.gxp_flag");
-		sql.append("		  , anw.sla_id");
-		sql.append("		  , sla.sla_name");
-
-		sql.append("		  , anw.gxp_flag");
+		
+		
 		//sql.append("		  , anw.sla_id");
 		//sql.append("		  , sla.sla_name");
 

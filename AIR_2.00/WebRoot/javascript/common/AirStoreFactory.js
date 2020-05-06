@@ -1523,9 +1523,8 @@ AIR.AirStoreFactory = function() {
 		        idProperty: 'ciId',
 		        	
 
-		        fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', /*'gxpRelevance',*/ 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel', 'sla', 'lifecycleStatus', 'source', 'businessEssential', 'template']
+		        fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', /*'gxpRelevance',*/ 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel',  'lifecycleStatus', 'source', 'businessEssential', 'template']
 
-		        fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'priorityLevel', 'lifecycleStatus', 'source', 'businessEssential', 'template']
 
 		    }, dwhEntityListRecord); 
 			
@@ -1534,9 +1533,8 @@ AIR.AirStoreFactory = function() {
 		    	autoLoad: false,
 		    	
 
-		      	fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', /*'gxpRelevance',*/ 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel', 'sla', 'lifecycleStatus', 'source', 'businessEssential', 'template'],
+		      	fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', /*'gxpRelevance',*/ 'itSet', 'serviceContract', 'severityLevel', 'priorityLevel',  'lifecycleStatus', 'source', 'businessEssential', 'template'],
 
-		      	fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'priorityLevel', 'lifecycleStatus', 'source', 'businessEssential', 'template'],
 
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({

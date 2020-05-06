@@ -330,17 +330,13 @@ public class BovApplication {
 				dispDrLevel = "Level " + application.getDisasterRecoveryLevel();
 			}
 
-//						dispSeverityLevel = getSeverityLevel(application.getSeverityLevelId());
-//						ELERJ GXP
-		/*	if (null != application.getGxpFlag())
-
 					//	dispSeverityLevel = getSeverityLevel(application.getSeverityLevelId());
-			if (null != application.getGxpFlag())
+			/*if (null != application.getGxpFlag())
 
 				dispGxpRelevant = "Yes";
 			else
-				dispGxpRelevant = "No";*/
-						/*ELERJ ICS*/
+				dispGxpRelevant = "No";
+*/						/*ELERJ ICS*/
 //			dispGiscRelevant = getValueYesNo(application.getRelevanceICS());
 			dispGR1435Relevant = getValueYesNo(application.getRelevanzITSEC());
 			dispInformationClassification = getInformationClassification(application.getClassInformationId());
