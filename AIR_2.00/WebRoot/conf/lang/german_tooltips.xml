@@ -347,12 +347,12 @@
 			not.&lt;br&gt;
 			If "yes" an ITSec group must be assigned to the CI.
 		</relevanceGR2059Text>
-
-		<relevanceGR1920>Relevance ICS</relevanceGR1920>
+<!-- ELERJ ICS -->
+		<!-- <relevanceGR1920>Relevance ICS</relevanceGR1920>
 		<relevanceGR1920Text>
 			Specifies whether a CI is ICS relevant or not.&lt;br&gt;
 			If "yes" an ITSec group must be assigned to the CI.
-		</relevanceGR1920Text>
+		</relevanceGR1920Text> -->
 
 		<relevanceGR2008>GR2008</relevanceGR2008>
 		<relevanceGR2008Text>
@@ -373,11 +373,11 @@
 			not.&lt;br&gt;
 			If "yes" an ITSec group must be assigned to the CI.
 		</relevanceCD3011Text>
-
-		<gxpFlag>GxP</gxpFlag>
+<!-- ELERJ GXP -->
+		<!-- <gxpFlag>GxP</gxpFlag>
 		<gxpFlagText>
 			Specifies whether a CI is GxP relevant or not.
-		</gxpFlagText>
+		</gxpFlagText> -->
 
 		<riskAnalysisYN>Risk analysis</riskAnalysisYN>
 		<riskAnalysisYNText>

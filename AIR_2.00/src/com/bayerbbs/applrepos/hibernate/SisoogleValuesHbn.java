@@ -82,9 +82,10 @@ public class SisoogleValuesHbn {
 		if (StringUtils.isNotNullOrEmpty(parameter.getSubResponsibleOE())) {
 			sb.append(" and SUB_RESPONSIBLE_OE='").append(parameter.getSubResponsibleOE()).append("'");
 		}
-		if (StringUtils.isNotNullOrEmpty(parameter.getRelevanceICS())) {
+		/*ELERJ ICS*/
+		/*if (StringUtils.isNotNullOrEmpty(parameter.getRelevanceICS())) {
 			sb.append(" and RELEVANCE_ICS='").append(parameter.getRelevanceICS()).append("'");
-		}
+		}*/
 		if (StringUtils.isNotNullOrEmpty(parameter.getRelevanceItsec())) {
 			sb.append(" and RELEVANZ_ITSEC='").append(parameter.getRelevanceItsec()).append("'");
 		}
@@ -146,7 +147,8 @@ public class SisoogleValuesHbn {
 		append("AND (UPPER(LIFECYCLE) LIKE '%' OR LIFECYCLE IS NULL) ").
 		append("AND (UPPER(OPERATIONAL_STATUS) LIKE '%' OR OPERATIONAL_STATUS IS NULL) ").
 		append("AND (UPPER(OS_TYP) LIKE '%' OR OS_TYP IS NULL) ").
-		append("AND (UPPER(RELEVANCE_ICS) LIKE '%' OR RELEVANCE_ICS IS NULL) ").
+		/*ELERJ ICS*/
+//		append("AND (UPPER(RELEVANCE_ICS) LIKE '%' OR RELEVANCE_ICS IS NULL) ").
 		append("AND (UPPER(RELEVANZ_ITSEC) LIKE '%' OR RELEVANZ_ITSEC IS NULL) ").
 		append("AND (UPPER(RESPONSIBLE) LIKE '%' OR RESPONSIBLE IS NULL) ").
 		append("AND (UPPER(RESPONSIBLE_OE) LIKE '%' OR RESPONSIBLE_OE IS NULL) ").

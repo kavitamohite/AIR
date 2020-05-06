@@ -277,19 +277,22 @@ System.out.println(" ciDTO.getServiceContractId()"+ ciDTO.getServiceContractId()
 				ciDTO.setRelevanzItsec(new Long(0));
 			}
 		}
-		if (null == ciDTO.getRelevanceICS()) {
+//		ELERJ ICS
+		/*if (null == ciDTO.getRelevanceICS()) {
 			if (Y.equals(ciDTO.getRelevanceGR1920())) {
 				ciDTO.setRelevanceICS(new Long(-1));
 			}
 			else if (N.equals(ciDTO.getRelevanceGR1920())) {
 				ciDTO.setRelevanceICS(new Long(0));
 			}
-		}
+		}*/
 		
 		ci.setRelevanceITSEC(ciDTO.getRelevanzItsec());
-		ci.setRelevanceICS(ciDTO.getRelevanceICS());
+//		ELERJ ICS
+//		ci.setRelevanceICS(ciDTO.getRelevanceICS());
 		
-		if(StringUtils.isNotNullOrEmpty(ciDTO.getGxpFlag())){
+//		ELERJ GXP
+	/*	if(StringUtils.isNotNullOrEmpty(ciDTO.getGxpFlag())){
 			if ("null".equals(ciDTO.getGxpFlag())) {
 				ci.setGxpFlag(null);
 			}
@@ -297,7 +300,7 @@ System.out.println(" ciDTO.getServiceContractId()"+ ciDTO.getServiceContractId()
 				ci.setGxpFlag(ciDTO.getGxpFlag());
 			}
 		}		
-	
+*/	
 	
 	}
 	
@@ -418,7 +421,8 @@ System.out.println(" ciDTO.getServiceContractId()"+ ciDTO.getServiceContractId()
 	public static void getCi(CiBaseDTO ciDTO, CiBase ci)  
 	{
 		ciDTO.setCiOwnerDelegate(ci.getCiOwnerDelegate());
-		ciDTO.setGxpFlag(ci.getGxpFlag()); 
+//		ELERJ GXP
+//		ciDTO.setGxpFlag(ci.getGxpFlag()); 
 		ciDTO.setItsecGroupId(ci.getItsecGroupId());
 		ciDTO.setItSecSbAvailabilityId(ci.getItSecSbAvailability());
 		ciDTO.setItSecSbAvailabilityTxt(ci.getItSecSbAvailabilityTxt());
@@ -428,7 +432,8 @@ System.out.println(" ciDTO.getServiceContractId()"+ ciDTO.getServiceContractId()
 		ciDTO.setClassInformationTxt(ci.getClassInformationTxt());
 		ciDTO.setItset(ci.getItset());
 		ciDTO.setRefId(ci.getRefId());
-		ciDTO.setRelevanceICS(ci.getRelevanceICS());
+//		ELERJ ICS
+//		ciDTO.setRelevanceICS(ci.getRelevanceICS());
 		ciDTO.setRelevanzItsec(ci.getRelevanceITSEC());
 		ciDTO.setServiceContractId(ci.getServiceContractId());
 		ciDTO.setSlaId(ci.getSlaId());

@@ -6,8 +6,10 @@ public class BovApplicationInputDTO {
 	private String ownershipStatus;
 	private Long drLevel;
 	private Long severityLevel;
-	private String gxpRelevant;
-	private String icsRelevant;
+//	ELERJ GXP
+//	private String gxpRelevant;
+	/*ELERJ ICS*/
+//	private String icsRelevant;
 	private String itsecRelevant;
 	
 	private String informationClassification;
@@ -27,12 +29,13 @@ public class BovApplicationInputDTO {
 	public void setSeverityLevel(Long severityLevel) {
 		this.severityLevel = severityLevel;
 	}
-	public String getGxpRelevant() {
+//	ELERJ GXP
+	/*public String getGxpRelevant() {
 		return gxpRelevant;
 	}
 	public void setGxpRelevant(String gxpRelevant) {
 		this.gxpRelevant = gxpRelevant;
-	}
+	}*/
 	public String getInformationClassification() {
 		return informationClassification;
 	}
@@ -57,13 +60,14 @@ public class BovApplicationInputDTO {
 	public void setItsecRelevant(String itsecRelevant) {
 		this.itsecRelevant = itsecRelevant;
 	}
-	public String getIcsRelevant() {
+	/*ELERJ ICS*/
+/*	public String getIcsRelevant() {
 		return icsRelevant;
 	}
 	public void setIcsRelevant(String icsRelevant) {
 		this.icsRelevant = icsRelevant;
 	}
-	public String getApplicationDescription() {
+*/	public String getApplicationDescription() {
 		return applicationDescription;
 	}
 	public void setApplicationDescription(String applicationDescription) {

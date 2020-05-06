@@ -72,8 +72,9 @@ public class BuildingWS {
 		buildingDTO.setRelevanceCD3011(input.getRelevanceCD3011());
 //		buildingDTO.setRelevanceICS(input.getRelevanceICS());
 //		buildingDTO.setRelevanzItsec(input.getRelevanzITSEC());
-		buildingDTO.setGxpFlag(input.getGxpFlag());
-		buildingDTO.setGxpFlagId(input.getGxpFlag());
+//		ELERJ GXP
+		/*buildingDTO.setGxpFlag(input.getGxpFlag());
+		buildingDTO.setGxpFlagId(input.getGxpFlag());*/
 		
 		buildingDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
 		buildingDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
@@ -161,8 +162,9 @@ public class BuildingWS {
 		buildingAreaDTO.setRelevanceCD3010(input.getRelevanceCD3010());
 		buildingAreaDTO.setRelevanceCD3011(input.getRelevanceCD3011());
 
-		buildingAreaDTO.setGxpFlag(input.getGxpFlag());
-		buildingAreaDTO.setGxpFlagId(input.getGxpFlag());
+//		ELERJ GXP
+		/*buildingAreaDTO.setGxpFlag(input.getGxpFlag());
+		buildingAreaDTO.setGxpFlagId(input.getGxpFlag());*/
 		
 		buildingAreaDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
 		buildingAreaDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
@@ -329,7 +331,8 @@ public class BuildingWS {
 				dto.setTemplate(buildingSource.getTemplate());
 				
 				dto.setRelevanzItsec(buildingSource.getRelevanceITSEC());
-				dto.setRelevanceICS(buildingSource.getRelevanceICS());
+				/*ELERJ ICS*/
+//				dto.setRelevanceICS(buildingSource.getRelevanceICS());
 				//EUGXS
 				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_BUILDING,buildingSource.getId());
@@ -352,12 +355,12 @@ public class BuildingWS {
 					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
 				}
 				
-				if(buildingSource.getRelevanceICS() == -1)
+				/*if(buildingSource.getRelevanceICS() == -1)
 					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
 				else{
 					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
 				}
-				
+				*/
 				// save / create itSystem
 				CiEntityEditParameterOutput createOutput = BuildingHbn.createBuilding(copyInput.getCwid(), dto, null);
 
@@ -411,7 +414,7 @@ public class BuildingWS {
 				dto.setTemplate(buildingAreaSource.getTemplate());
 				
 				dto.setRelevanzItsec(buildingAreaSource.getRelevanceITSEC());
-				dto.setRelevanceICS(buildingAreaSource.getRelevanceICS());
+//				dto.setRelevanceICS(buildingAreaSource.getRelevanceICS());
 				//EUGXS
 				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_BUILDING_AREA,buildingAreaSource.getId());
@@ -434,11 +437,11 @@ public class BuildingWS {
 					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
 				}
 
-				if(buildingAreaSource.getRelevanceICS() == -1)
+				/*if(buildingAreaSource.getRelevanceICS() == -1)
 					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
 				else{
 					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
-				}
+				}*/
 				
 				// save / create itSystem
 				dto.setBuildingId(buildingAreaSource.getBuildingId());

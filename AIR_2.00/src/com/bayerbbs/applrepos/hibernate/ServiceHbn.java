@@ -174,11 +174,12 @@ public class ServiceHbn extends BaseHbn {
 		StringBuilder sql = new StringBuilder();
 		// Start Adding for C0000241362 
 		String complainceGR1435=input.getComplainceGR1435();
-		String complainceICS=input.getComplainceICS();
+		/*ELERJ ICS*/
+//		String complainceICS=input.getComplainceICS();
 				long complainceGR1435Long=0;
 				long complainceICSLong=0;
 				System.out.println("complainceGR1435"+complainceGR1435);
-				System.out.println("complainceICS"+complainceICS);
+//				System.out.println("complainceICS"+complainceICS);
 				//IM0005978424 
 				if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("Yes"))
 					
@@ -187,11 +188,11 @@ public class ServiceHbn extends BaseHbn {
 				if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("No"))
 					complainceGR1435Long=0;
 				//IM0005978424 
-				if(complainceICS!=null&&complainceICS.equalsIgnoreCase("Yes"))
+			/*	if(complainceICS!=null&&complainceICS.equalsIgnoreCase("Yes"))
 					complainceICSLong = -1;
 				//IM0005978424 
 				if(complainceICS!=null&&complainceICS.equalsIgnoreCase("No"))
-					complainceICSLong=0;
+					complainceICSLong=0;*/
 				// End Adding for C0000241362
 		sql.append("SELECT ").append(metaData.getIdField()).append(", ")
 				.append(metaData.getNameField());
@@ -206,12 +207,12 @@ public class ServiceHbn extends BaseHbn {
 		
 		// start Adding for C0000241362
 				// RELEVANCE_ICS
-		if(complainceICS!=null&&complainceICS.length()>0)
+		/*if(complainceICS!=null&&complainceICS.length()>0)
 		{
 				sql.append(" AND UPPER (RELEVANCE_ICS) = '"+complainceICSLong+"'");
 				
 				System.out.println("complainceGR1435Long appened"+complainceICSLong);
-		}
+		}*/
 		if(complainceGR1435!=null&&complainceGR1435.length()>0)
 				// RELEVANZ_ITSEC
 		{
@@ -440,7 +441,7 @@ System.out.println("Service SQL"+sql);
 					pathwayTarget.setTemplate(pathwaySource.getTemplate());
 					
 					pathwayTarget.setRelevanceITSEC(pathwaySource.getRelevanceITSEC());
-					pathwayTarget.setRelevanceICS(pathwaySource.getRelevanceICS());
+//					pathwayTarget.setRelevanceICS(pathwaySource.getRelevanceICS());
 
 				}
 				else {

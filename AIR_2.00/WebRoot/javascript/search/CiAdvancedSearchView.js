@@ -906,7 +906,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						mode: 'local'
 					
 					},
-					{
+					/*{
 						width: 300,
 						xtype: 'combo',
 						id: 'complianceRelatedICS',
@@ -936,7 +936,7 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 						lazyInit: false,
 						mode: 'local'
 					
-					},
+					},*/
 					/*{
 			            xtype: 'filterCombo',
 						id: 'complianceRelatedGR1435',
@@ -2112,9 +2112,10 @@ AIR.CiAdvancedSearchView = Ext.extend(AIR.AirView, {
 			console.log("comGR1435 value "+comGR1435.getRawValue());
 			params.complainceGR1435= comGR1435.getRawValue();
 			
-			var comIcs = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('complianceRelatedICS');//emria
+			/*ELERJ ICS*/
+			/*var comIcs = this.getComponent('pAdditionalSearchAttributes').getComponent('fsSpecialSearchAttributes').getComponent('complianceRelatedICS');//emria
 			console.log("comIcs value "+comIcs.getRawValue());
-			params.complainceICS= comIcs.getRawValue();
+			params.complainceICS= comIcs.getRawValue();*/
 			// End Adding for C0000241362 
 	    }
 	},

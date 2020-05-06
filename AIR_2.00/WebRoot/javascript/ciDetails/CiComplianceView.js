@@ -245,7 +245,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
         			
         			items: [
 						{ id: 'chbGR1435', boxLabel: 'GR1435', name: 'cbgRegulations', width: 110 },
-    			        { id: 'chbGR1920', boxLabel: 'GR1920', name: 'cbgRegulations', width: 110 },
+    			      /*ELERJ ICS*/
+//						{ id: 'chbGR1920', boxLabel: 'GR1920', name: 'cbgRegulations', width: 110 },
     			        //EUGXS
     			        //C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
     			        
@@ -254,7 +255,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
     			        { id: 'chbCD3010', boxLabel: 'CD3010', name: 'cbgRegulations', width: 110 },
     			        { id: 'chbCD3011', boxLabel: 'CD3011', name: 'cbgRegulations', width: 110 }
 			        ]
-		        }, {
+		        }, /*{
 		        	xtype: 'panel',
 		        	id: 'pGxp',
 		        	border: false,
@@ -290,7 +291,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 				        	
 				        editable: false
 		        	}]
-		        }]
+		        }*/]
 		    }]
 		});
 		
@@ -309,7 +310,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var bDirectCIAnswerlinkages = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('bDirectCIAnswerlinkages');
 
 		var cbgRegulations = this.getComponent('fsRelevantRegulations').getComponent('cbgRegulations');
-		var cbRelevanceGxp = this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('CBrelevanceGxp');
+//		ELERJ GXP
+//		var cbRelevanceGxp = this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('CBrelevanceGxp');
 
 		rgRelevanceBYTSEC.on('change', this.onRadioGroupRelevanceBYTSEC, this);
 		bEditNonBytSec.on('click', this.onEditNonBytSec, this);
@@ -329,7 +331,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		bDirectCIAnswerlinkages.on('click',this.onDisplayDirectCIAnswerLinkages,this);
 
 		cbgRegulations.on('change', this.onRegulationsChange, this);
-		cbRelevanceGxp.on('select', this.onRelevanceGxpSelect, this);
+//		ELERJ GXP
+//		cbRelevanceGxp.on('select', this.onRelevanceGxpSelect, this);
 	},
 	
 	//============================================================================================================================
@@ -674,10 +677,10 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 	onRegulationsChange: function(checkboxGroup, checkedBoxes) {
 		this.fireEvent('ciChange', this, checkboxGroup, checkedBoxes);
 	},
-	
-	onRelevanceGxpSelect: function(combo, record, index) {
+//	ELERJ GXP
+	/*onRelevanceGxpSelect: function(combo, record, index) {
 		this.fireEvent('ciChange', this, combo, record);
-	},
+	},*/
 	
 	onReferencedTemplateBeforeSelect: function(combo, record, index) {
 		//wenn app template verhindern, dass app template ci auf sich selbst referenziert
@@ -798,8 +801,9 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbItSecGroup = this.getComponent('fsComplianceDetails').getComponent('pItSecGroup').getComponent('cbItSecGroup');
 		
 		var cbgRegulations = this.getComponent('fsRelevantRegulations').getComponent('cbgRegulations');
-		var pGxp = this.getComponent('fsRelevantRegulations').getComponent('pGxp');
-		var cbRelevanceGxp = pGxp.getComponent('CBrelevanceGxp');
+//		ELERJ GXP
+		/*var pGxp = this.getComponent('fsRelevantRegulations').getComponent('pGxp');
+		var cbRelevanceGxp = pGxp.getComponent('CBrelevanceGxp');*/
 
 		this.updateAccessMode(data);
 	
@@ -831,7 +835,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		if(data.isCiCreate) {
 			cbgRegulations.reset();
 			cbgRegulations.setValue([true, false, false,false,false,false]);
-			cbRelevanceGxp.reset();
+//			cbRelevanceGxp.reset();
 			
 
 			tfItsetName.reset();
@@ -848,7 +852,7 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			
 			cbgRegulations.setValue(values);
 			
-			cbRelevanceGxp.setValue(data.gxpFlagId);
+//			cbRelevanceGxp.setValue(data.gxpFlagId);
 		}
 		
 		for(var i = 0; i < cbgRegulations.items.items.length; i++) {
@@ -874,9 +878,10 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[0], data);//1435
 		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[2], data);//1920
 		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[1], data);
-		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[3], data);
+/*		ELERJ ICS*/
+//		AIR.AirAclManager.setAccessMode(cbgRegulations.items.items[3], data);
 		
-		AIR.AirAclManager.setAccessMode(this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('CBrelevanceGxp'), data);
+//		AIR.AirAclManager.setAccessMode(this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('CBrelevanceGxp'), data);
 	},
 	
 	setData: function(data) {
@@ -946,8 +951,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 			}
 		}
 		
-		var cbRelevanceGxp = this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('CBrelevanceGxp');
-		data.gxpFlag = cbRelevanceGxp.getValue();
+		/*var cbRelevanceGxp = this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('CBrelevanceGxp');
+		data.gxpFlag = cbRelevanceGxp.getValue();*/
 	},
 	
 	onMassnahmeSaved: function(complianceControlsWindow, massnahmen) {//complianceControls, ciComplianceRequestId		
@@ -1064,7 +1069,8 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		var cbgRegulations = this.get('fsRelevantRegulations').get('cbgRegulations');
 		this.setBoxLabel(cbgRegulations.items.items[0], labels.relevanceGR1435);
 		//this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceGR2059);
-		this.setBoxLabel(cbgRegulations.items.items[2], labels.relevanceGR1920);
+/*	ELERJ ICS*/
+//		this.setBoxLabel(cbgRegulations.items.items[2], labels.relevanceGR1920);
 		//this.setBoxLabel(cbgRegulations.items.items[3], labels.relevanceGR2008);
 		this.setBoxLabel(cbgRegulations.items.items[1], labels.relevanceCD3010);
 		this.setBoxLabel(cbgRegulations.items.items[3], labels.relevanceCD3011);
@@ -1115,10 +1121,10 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		this.setTooltipData(this.get('fsComplianceDetails').get('pItSecGroup').get('lItSecGroup'), toolTips.itsecGroup, toolTips.itsecGroupText);
 		
 		
-		var lGXP = this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('lGXP');
+//		var lGXP = this.getComponent('fsRelevantRegulations').getComponent('pGxp').getComponent('lGXP');
 		var cbgRegulations = this.get('fsRelevantRegulations').get('cbgRegulations');
 		
-		this.setTooltipData(lGXP, toolTips.gxpFlag, toolTips.gxpFlagText);
+//		this.setTooltipData(lGXP, toolTips.gxpFlag, toolTips.gxpFlagText);
 		
 		var label = Ext.isIE ? cbgRegulations.items.items[0].label.dom.nextSibling.children[0] : cbgRegulations.items.items[0].label.dom.nextElementSibling.children[0];
 		this.setTooltipData(label, toolTips.relevanceGR1435, toolTips.relevanceGR1435Text);//oder nur f�r checkbox el.dom
@@ -1126,17 +1132,18 @@ AIR.CiComplianceView = Ext.extend(AIR.AirView, {//Ext.Panel
 		//label = Ext.isIE ? cbgRegulations.items.items[1].label.dom.nextSibling.children[0] : cbgRegulations.items.items[1].label.dom.nextElementSibling.children[0];
 		//this.setTooltipData(label, toolTips.relevanceGR2059, toolTips.relevanceGR2059Text);
 		
-		label = Ext.isIE ? cbgRegulations.items.items[2].label.dom.nextSibling.children[0] : cbgRegulations.items.items[2].label.dom.nextElementSibling.children[0];
-		this.setTooltipData(label, toolTips.relevanceGR1920, toolTips.relevanceGR1920Text);
+		/*	ELERJ ICS*/
+//		label = Ext.isIE ? cbgRegulations.items.items[2].label.dom.nextSibling.children[0] : cbgRegulations.items.items[2].label.dom.nextElementSibling.children[0];
+//		this.setTooltipData(label, toolTips.relevanceGR1920, toolTips.relevanceGR1920Text);
 		
 		//label = Ext.isIE ? cbgRegulations.items.items[3].label.dom.nextSibling.children[0] : cbgRegulations.items.items[3].label.dom.nextElementSibling.children[0];
 		//this.setTooltipData(label, toolTips.relevanceGR2008, toolTips.relevanceText);
 		
 		label = Ext.isIE ? cbgRegulations.items.items[1].label.dom.nextSibling.children[0] : cbgRegulations.items.items[1].label.dom.nextElementSibling.children[0];
 		this.setTooltipData(label, toolTips.relevanceCD3010, toolTips.relevanceCD3010Text);
-		
-		label = Ext.isIE ? cbgRegulations.items.items[3].label.dom.nextSibling.children[0] : cbgRegulations.items.items[3].label.dom.nextElementSibling.children[0];
-		this.setTooltipData(label, toolTips.relevanceCD3011, toolTips.relevanceCD3011Text);
+//ELERJ ICS		
+		/*label = Ext.isIE ? cbgRegulations.items.items[3].label.dom.nextSibling.children[0] : cbgRegulations.items.items[3].label.dom.nextElementSibling.children[0];
+		this.setTooltipData(label, toolTips.relevanceCD3011, toolTips.relevanceCD3011Text);*/
 		
 	}
 });

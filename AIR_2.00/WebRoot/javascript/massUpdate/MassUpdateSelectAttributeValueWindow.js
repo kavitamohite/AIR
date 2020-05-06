@@ -723,7 +723,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    			
 				    			items: [
 										{ id: 'selectAttrchbGR15435', boxLabel: 'CP1435', name: 'selectAttrcbgRegulationsW', width: 100 },
-				    			        { id: 'selectAttrchbGR1920', boxLabel: 'ICS', name: 'selectAttrcbgRegulationsW', width: 100 },
+				    			        /*{ id: 'selectAttrchbGR1920', boxLabel: 'ICS', name: 'selectAttrcbgRegulationsW', width: 100 },*/
 				    			        //EUGXS
 				    			        //C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit				    
 				    			        //{ id: 'selectattrchbGR2059', boxLabel: 'GR2059', name: 'selectAttrcbgRegulationsW', width: 100,hidden: this.ciTypeId==AC.TABLE_ID_APPLICATION || this.ciTypeId==AC.TABLE_ID_IT_SYSTEM ? true : true },
@@ -731,7 +731,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				    			        { id: 'selectAttrchbCD3010', boxLabel: 'CD3010', name: 'selectAttrcbgRegulationsW', width: 100 },
 				    			        { id: 'selectAttrchbCD3011', boxLabel: 'CD3011', name: 'selectAttrcbgRegulationsW', width: 100 },
 						        ]
-					        },
+					        }/*,
 					        {
 								xtype: 'combo',
 								id: 'selectAttrCBrelevanceGxp',
@@ -751,7 +751,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 						        lazyInit: false,
 						        mode: 'local',
 						        editable: false
-				        	}
+				        	}*/
                             ]
 				}
 				
@@ -814,7 +814,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
         selectAttrserviceContract.on('keyup', this.onServiceContractKeyUp, this);
         this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrpriorityLevel').getStore().sort('text','ASC');
         this.getComponent('selectAttrAgreement').getComponent('selectAttrBusinessEssential').getStore().sort('text','ASC');
-        this.getComponent('selectAttrCompliance').getComponent('selectAttrCBrelevanceGxp').getStore().sort('text','ASC');
+//        this.getComponent('selectAttrCompliance').getComponent('selectAttrCBrelevanceGxp').getStore().sort('text','ASC');
         
         this.getComponent('selectAttrAgreement').getComponent('selectAttrselectAttrseverityLevel').getStore().sort('id','DESC');
 		this.getComponent('selectAttrProtection').getComponent('selectAttrprotectionIntegrity').getStore().sort('id','ASC');
@@ -1161,7 +1161,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			var tfselectCiOwnerPrimaryPersonWHidden = this.getComponent('selectAttrCompliance').getComponent('pSelectciOwnerPrimaryPerson').getComponent('tfselectCiOwnerPrimaryPersonWHidden');
 			var tfselectCiOwnerDelegateW = this.getComponent('selectAttrCompliance').getComponent('pSelectCiOwnerDelegate').getComponent('tfselectCiOwnerDelegateW');
 			var tfselectCiOwnerDelegateWHidden = this.getComponent('selectAttrCompliance').getComponent('pSelectCiOwnerDelegate').getComponent('tfselectCiOwnerDelegateWHidden');
-			var selectAttrCBrelevanceGxp = this.getComponent('selectAttrCompliance').getComponent('selectAttrCBrelevanceGxp');
+			
+//			var selectAttrCBrelevanceGxp = this.getComponent('selectAttrCompliance').getComponent('selectAttrCBrelevanceGxp');
 			var selectAttrcbApplicationBusinessCat = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbApplicationBusinessCat');
 			var selectAttrcbVirtualSoftware = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrcbVirtualSoftware');
 			var selectAttrgVirtualHWHost = this.getComponent('selectAttrfsSpecifics').getComponent('selectAttrgVirtualHWHost');
@@ -1224,7 +1225,8 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 				 	ciOwnerPrimaryPerson: tfselectCiOwnerPrimaryPersonWHidden.getValue(),
 				 	ciOwnerDelegateHidden: tfselectCiOwnerDelegateWHidden.getValue(),
 				 	ciOwnerDelegate: tfselectCiOwnerDelegateW.getValue(),
-				 	gxpFlag: selectAttrCBrelevanceGxp.getValue(),
+//				 ELERJ gcx
+//				 	gxpFlag: selectAttrCBrelevanceGxp.getValue(),
 				 	osNameId: selectAttrCbOsName.getValue(),
 			        categoryBusinessId: selectAttrcbApplicationBusinessCat.getValue(),
 			        //classDataId: selectAttrcbDataClass.getValue(),
@@ -1236,7 +1238,7 @@ AIR.MassUpdateSelectAttributeValueWindow = Ext.extend(Ext.Window,{
 			        isVirtualHardwareHost:	selectAttrgVirtualHWHost.getValue()!= null ? selectAttrgVirtualHWHost.getValue().inputValue : '',
 			        virtualHardwareSoftware: selectAttrcbVirtualSoftware.getValue(),
 			        relevanceGR1435: selectAttrcbgRegulationsW.items.items[0].getValue() ? 'Y' : 'N',
-			        relevanceGR1920: selectAttrcbgRegulationsW.items.items[2].getValue() ? 'Y' : 'N',
+//			        relevanceGR1920: selectAttrcbgRegulationsW.items.items[2].getValue() ? 'Y' : 'N',
 			        //relevanceGR2059: selectAttrcbgRegulationsW.items.items[1].getValue() ? 'Y' : 'N',
 			        //relevanceGR2008: selectAttrcbgRegulationsW.items.items[3].getValue() ? 'Y' : 'N',
 			        relevanceCD3010: selectAttrcbgRegulationsW.items.items[1].getValue() ? 'Y' : 'N',

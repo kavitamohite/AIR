@@ -1,6 +1,6 @@
 package com.bayerbbs.applrepos.domain;
 
-public enum GxpFlag {
+/*public enum GxpFlag {
 	GXP("GXP"),
 	GCP("GCP"),
 	GLP("GLP"),
@@ -13,4 +13,4 @@ public enum GxpFlag {
 	public String getFlag() {
 		return flag;
 	}
-}
+}*/

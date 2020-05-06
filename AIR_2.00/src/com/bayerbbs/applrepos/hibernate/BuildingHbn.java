@@ -521,10 +521,11 @@ public class BuildingHbn extends LokationItemHbn {
 			building.setTemplate(null);
 			building.setItsecGroupId(null);
 			building.setRefId(null);
-			
-			building.setRelevanceICS(null);
+//			ELERJ ICS
+//			building.setRelevanceICS(null);
 			building.setRelevanceITSEC(null);
-			building.setGxpFlag(null);
+//			ELERJ GXP
+//			building.setGxpFlag(null);
 		}
 
 		boolean toCommit = false;
@@ -602,10 +603,11 @@ public class BuildingHbn extends LokationItemHbn {
 			buildingArea.setTemplate(null);
 			buildingArea.setItsecGroupId(null);
 			buildingArea.setRefId(null);
-			
-			buildingArea.setRelevanceICS(null);
+//			ELERJ ICS
+//			buildingArea.setRelevanceICS(null);
 			buildingArea.setRelevanceITSEC(null);
-			buildingArea.setGxpFlag(null);
+//			ELERJ GXP
+//			buildingArea.setGxpFlag(null);
 			//Added vandana
 
 			//buildingArea.setProvider_Name(null);
@@ -990,7 +992,7 @@ public class BuildingHbn extends LokationItemHbn {
 						buildingTarget.setTemplate(buildingSource.getTemplate());
 						
 						buildingTarget.setRelevanceITSEC(buildingSource.getRelevanceITSEC());
-						buildingTarget.setRelevanceICS(buildingSource.getRelevanceICS());
+//						buildingTarget.setRelevanceICS(buildingSource.getRelevanceICS());
 
 					}
 					else {
@@ -1161,7 +1163,7 @@ public class BuildingHbn extends LokationItemHbn {
 						buildingAreaTarget.setTemplate(buildingAreaSource.getTemplate());
 						
 						buildingAreaTarget.setRelevanceITSEC(buildingAreaSource.getRelevanceITSEC());
-						buildingAreaTarget.setRelevanceICS(buildingAreaSource.getRelevanceICS());
+//						buildingAreaTarget.setRelevanceICS(buildingAreaSource.getRelevanceICS());
 
 					}
 					else {

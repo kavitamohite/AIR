@@ -162,7 +162,7 @@ public class AirCiExcelExportServlet extends HttpServlet {
         	}
         	
         	System.out.println("isAdvancedSearch ----- "+req.getParameter("hcomplainceGR1435"));
-        	System.out.println("isAdvancedSearch ----- "+req.getParameter("hcomplainceICS"));
+//        	System.out.println("isAdvancedSearch ----- "+req.getParameter("hcomplainceICS"));
         	applications = isAdvancedSearch ?
     			AnwendungHbn.findApplications(
     				ciNameAliasQuery,
@@ -198,11 +198,10 @@ public class AirCiExcelExportServlet extends HttpServlet {
 					
 					
 					// Added two for C0000241362 C0000241362
-					null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,req.getParameter("hcomplainceGR1435"),
-					req.getParameter("hcomplainceICS")
+					null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,req.getParameter("hcomplainceGR1435")
+//					req.getParameter("hcomplainceICS")
 				) :
-        		AnwendungHbn.findApplications(ciNameAliasQuery, isShowDeleted, null, null, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null,
-    					null);
+        		AnwendungHbn.findApplications(ciNameAliasQuery, isShowDeleted, null, null, null, null, null, null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null);
         } else if(searchAction.equals(SEARCH_POINT_MY_DELEGATE_CIS) || searchAction.equals(SEARCH_POINT_MY_CIS)) {
 //        	ApplicationParameterInput input = new ApplicationParameterInput();
         	ApplicationSearchParamsDTO input = new ApplicationSearchParamsDTO();

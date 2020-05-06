@@ -144,7 +144,7 @@ public class ApplicationWS {
 						input.getGeneralUsageOptions(), input.getItCategoryOptions(), input.getLifecycleStatusOptions(),
 						input.getOrganisationalScopeOptions(), input.getItSecGroupOptions(),
 						input.getProcessOptions(), input.getSourceOptions(), input.getBusinessEssentialOptions()
-						,input.getComplainceGR1435(),input.getComplainceICS()
+						,input.getComplainceGR1435()/*,input.getComplainceICS()*/
 						
 						//  Added two variables for C0000241362
 					);
@@ -556,10 +556,12 @@ public class ApplicationWS {
 		dto.setTemplate(editInput.getTemplate());
 		dto.setItsecGroupId(editInput.getItSecGroupId());
 		dto.setRefId(editInput.getRefId());
-		dto.setRelevanceICS(editInput.getRelevanceICS());
+		/*ELERJ ICS*/
+//		dto.setRelevanceICS(editInput.getRelevanceICS());
 		dto.setRelevanzItsec(editInput.getRelevanzItsec());
-		dto.setGxpFlagId(editInput.getGxpFlag());
-		dto.setGxpFlagTxt(editInput.getGxpFlag());
+//		ELERJ GXP
+		/*dto.setGxpFlagId(editInput.getGxpFlag());
+		dto.setGxpFlagTxt(editInput.getGxpFlag());*/
 //		dto.setRiskAnalysisYN(editInput.getRiskAnalysisYN());
 		// TODO ITSEC Group
 		// ---
@@ -772,7 +774,8 @@ public class ApplicationWS {
 						dto.setTemplate(applicationSource.getTemplate());
 						
 						dto.setRelevanzItsec(applicationSource.getRelevanzITSEC());
-						dto.setRelevanceICS(applicationSource.getRelevanceICS());
+						/*ELERJ ICS*/
+//						dto.setRelevanceICS(applicationSource.getRelevanceICS());
 						//EUGXS
 						//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 						List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_APPLICATION,applicationSource.getId());
@@ -1068,15 +1071,16 @@ public class ApplicationWS {
 								if (-1 != allRights.indexOf("Sub_Responsible")) {
 									accessDTO.setSub_Responsible(AirKonstanten.YES_SHORT);
 								}
-								if (-1 != allRights.indexOf("Relevance_Ics")) {
+								/*if (-1 != allRights.indexOf("Relevance_Ics")) {
 									accessDTO.setRelevance_Ics(AirKonstanten.YES_SHORT);
-								}
+								}*/
 								if (-1 != allRights.indexOf("Relevanz_Itsec")) {
 									accessDTO.setRelevanz_Itsec(AirKonstanten.YES_SHORT);
 								}
-								if (-1 != allRights.indexOf("Gxp_Flag")) {
+//								ELERJ GXP
+								/*if (-1 != allRights.indexOf("Gxp_Flag")) {
 									accessDTO.setGxp_Flag(AirKonstanten.YES_SHORT);
-								}
+								}*/
 								if (-1 != allRights.indexOf("Itsec_Gruppe_Id")) {
 									accessDTO.setItsec_Gruppe_Id(AirKonstanten.YES_SHORT);
 								}
@@ -1130,7 +1134,7 @@ public class ApplicationWS {
 				
 				// compliance
 				Long releItsec = dto.getRelevanzItsec();
-				Long releICS = dto.getRelevanceICS();
+//				Long releICS = dto.getRelevanceICS();
 				Long rele2059 = dto.getRelevance2059();
 				Long rele2008 = dto.getRelevance2008();
 				//EUGXS
@@ -1154,12 +1158,12 @@ public class ApplicationWS {
 				else if (0 == releItsec) {
 					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
 				}
-				if (-1 == releICS) {
+				/*if (-1 == releICS) {
 					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
 				}
 				else if (0 == releICS) {
 					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
-				}
+				}*/
 				if (-1 == rele2059) {
 					dto.setRelevanceGR2059(AirKonstanten.YES_SHORT);
 				}

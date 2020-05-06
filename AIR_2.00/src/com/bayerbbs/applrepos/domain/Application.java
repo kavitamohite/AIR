@@ -66,12 +66,13 @@ public class Application extends DeletableRevisionInfo {
 	private Long template;
 	private Long itsecGroupId;
 	private Long refId;
-	
-	private Long relevanceICS;
+//	ELERJ ICS
+//	private Long relevanceICS;
 	private Long relevanzITSEC;
 	private Long relevance2059;
 	private Long relevance2008;
-	private String gxpFlag;
+//	ELERJ GXP
+//	private String gxpFlag;
 	// private String riskAnalysisYN;
 	
 	
@@ -231,13 +232,14 @@ public class Application extends DeletableRevisionInfo {
 	}
 
 	//in Basisklasse
-	@Column(name = "GXP_FLAG")
+//	ELERJ GXP
+	/*@Column(name = "GXP_FLAG")
 	public String getGxpFlag() {
 		return gxpFlag;
 	}
 	public void setGxpFlag(String gxpFlag) {
 		this.gxpFlag = gxpFlag;
-	}
+	}*/
 
 	@Column(name = "EINSATZ_STATUS_ID")
 	public Long getOperationalStatusId() {
@@ -282,16 +284,16 @@ public class Application extends DeletableRevisionInfo {
 	public void setRefId(Long refId) {
 		this.refId = refId;
 	}
-
+//	ELERJ ICS
 	//in Basisklasse
-	@Column(name = "RELEVANCE_ICS")
+	/*@Column(name = "RELEVANCE_ICS")
 	public Long getRelevanceICS() {
 		return relevanceICS;
 	}
 	public void setRelevanceICS(Long relevanceICS) {
 		this.relevanceICS = relevanceICS;
 	}
-
+*/
 	//in Basisklasse
 	@Column(name = "RELEVANZ_ITSEC")
 	public Long getRelevanzITSEC() {

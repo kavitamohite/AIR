@@ -263,16 +263,19 @@ public final class AirKonstanten {
 	
 	public static final String LINK = "Link";
 	public static final String GR1435 = "CP1435";
-	public static final String GR1920 = "ICS";
+//	ELERJ ICS
+//	public static final String GR1920 = "ICS";
 	public static final String GR2059 = "GR2059";
 	public static final String GR2008 = "GR2008";
 	public static final String CD3010 = "CD3010";
 	public static final String CD3011 = "CD3011";
 	public static final Long  COMPLIANCE_ID_CP1435 = new Long(1);
-	public static final Long  COMPLIANCE_ID_ICS = new Long(3);
+//	ELERJ ICS
+//	public static final Long  COMPLIANCE_ID_ICS = new Long(3);
 	public static final Long  COMPLIANCE_ID_CD3010 = new Long(5);
 	public static final Long  COMPLIANCE_ID_CD3011 = new Long(6);
-	public static final String GXP = "GxP";
+//	ELERJ GXP
+//	public static final String GXP = "GxP";
 	public static final String ITSEC_GROUP = "ITSec Group";
 	public static final String SLA = "SLA";
 	public static final String SERVICE_CONTRACT = "Service Contract";

@@ -12,7 +12,8 @@ import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.DedicatedDTO;
 import com.bayerbbs.applrepos.dto.GroupTypesDTO;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
-import com.bayerbbs.applrepos.dto.GxpFlagDTO;
+//ELERJ GXP
+//import com.bayerbbs.applrepos.dto.GxpFlagDTO;
 import com.bayerbbs.applrepos.dto.ItSecGroupDTO;
 import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
 import com.bayerbbs.applrepos.dto.ItSetDTO;
@@ -59,9 +60,10 @@ public class AIRToolsWSDelegate {
 		return airToolsWS.getGroupByGroupUsage(groupUsageName);
 	}
 
-	public GxpFlagDTO[] getGxpFlagList() {
+//	ELERJ GXP
+	/*public GxpFlagDTO[] getGxpFlagList() {
 		return airToolsWS.getGxpFlagList();
-	}
+	}*/
 	
 	public OrganisationalScopeDTO[] getOrganisationalScopeList() {
 		return airToolsWS.getOrganisationalScopeList();

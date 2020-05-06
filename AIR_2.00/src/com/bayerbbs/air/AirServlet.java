@@ -33,7 +33,7 @@ import com.bayerbbs.applrepos.dto.ConfidentialityDTO;
 import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.DedicatedDTO;
 import com.bayerbbs.applrepos.dto.GapClassDTO;
-import com.bayerbbs.applrepos.dto.GxpFlagDTO;
+//import com.bayerbbs.applrepos.dto.GxpFlagDTO;
 import com.bayerbbs.applrepos.dto.InterfacesDTO;
 import com.bayerbbs.applrepos.dto.ItSecGroupDTO;
 import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
@@ -501,16 +501,16 @@ public class AirServlet extends HttpServlet {
 		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
 		ts = System.currentTimeMillis();
 		output += serviceModelLine + "\n";
-		
-		GxpFlagDTO[] gxpFlags = dataInput.getGxpFlagList();
+//		ELERJ GXP
+		/*GxpFlagDTO[] gxpFlags = dataInput.getGxpFlagList();
 		String gxpFlagLine = "";
 		for (GxpFlagDTO gxpFlagItem : gxpFlags) {
 			gxpFlagLine += "['" + gxpFlagItem.getGxpFlagId() + "','" + gxpFlagItem.getGxpFlagTxt() + "'],"; 
-		}
-		gxpFlagLine = "var gxpFlagData = [" + gxpFlagLine.substring(0, gxpFlagLine.length()-1) + "];";
-		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
-		ts = System.currentTimeMillis();
-		output += gxpFlagLine + "\n";
+		}*/
+//		gxpFlagLine = "var gxpFlagData = [" + gxpFlagLine.substring(0, gxpFlagLine.length()-1) + "];";
+//		output += "/*" + (System.currentTimeMillis() - ts) + "*/";
+//		ts = System.currentTimeMillis();
+//		output += gxpFlagLine + "\n";
 		
 		ItSecGroupDTO[] itsecGroups = dataInput.getItSecGroupList();
 		String itsecGroupLine = "";

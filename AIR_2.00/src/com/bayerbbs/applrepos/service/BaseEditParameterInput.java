@@ -21,8 +21,8 @@ public class BaseEditParameterInput {
 	private Long template;
 	private Long itSecGroupId;
 	private Long refId;
-	
-	private Long relevanceICS;
+	/*ELERJ ICS*/
+//	private Long relevanceICS;
 	private Long relevanzITSEC;
 	private String relevanceGR1435;
 	private String relevanceGR1920;
@@ -50,9 +50,10 @@ public class BaseEditParameterInput {
 	public void setRelevanceGR2008(String relevanceGR2008) {
 		this.relevanceGR2008 = relevanceGR2008;
 	}
-	private String gxpFlag;
+//	ELERJ GXP
+	/*private String gxpFlag;
 	private String gxpFlagId;	// falls später über id referenziert wird
-	
+	*/
 	private Long itSecSbAvailabilityId;
 	private String itSecSbAvailabilityTxt;
 //	private String itSecSbAvailabilityDescription;
@@ -181,12 +182,12 @@ public class BaseEditParameterInput {
 	public void setRefId(Long refId) {
 		this.refId = refId;
 	}
-	public Long getRelevanceICS() {
+	/*public Long getRelevanceICS() {
 		return relevanceICS;
 	}
 	public void setRelevanceICS(Long relevanceICS) {
 		this.relevanceICS = relevanceICS;
-	}
+	}*/
 	public Long getRelevanzITSEC() {
 		return relevanzITSEC;
 	}
@@ -205,7 +206,8 @@ public class BaseEditParameterInput {
 	public void setRelevanceGR1920(String relevanceGR1920) {
 		this.relevanceGR1920 = relevanceGR1920;
 	}
-	public String getGxpFlag() {
+//	ELERJ GXP
+	/*public String getGxpFlag() {
 		return gxpFlag;
 	}
 	public void setGxpFlag(String gxpFlag) {
@@ -216,7 +218,7 @@ public class BaseEditParameterInput {
 	}
 	public void setGxpFlagId(String gxpFlagId) {
 		this.gxpFlagId = gxpFlagId;
-	}
+	}*/
 	
 	
 	public Long getItSecSbAvailabilityId() {

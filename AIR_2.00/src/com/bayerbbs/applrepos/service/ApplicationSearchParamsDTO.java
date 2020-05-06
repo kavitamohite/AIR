@@ -63,7 +63,8 @@ public class ApplicationSearchParamsDTO extends CiSearchParamsDTO {
 	private String businessEssentialOptions;
 	// Start Adding for C0000241362
     private String complainceGR1435;
-    private String complainceICS;
+    /*ELERJ ICS*/
+//    private String complainceICS;
     
     public String getComplainceGR1435() {
 		return complainceGR1435;
@@ -75,7 +76,7 @@ public class ApplicationSearchParamsDTO extends CiSearchParamsDTO {
 	}
 
 
-	public String getComplainceICS() {
+/*	public String getComplainceICS() {
 		return complainceICS;
 	}
 
@@ -83,7 +84,7 @@ public class ApplicationSearchParamsDTO extends CiSearchParamsDTO {
 	public void setComplainceICS(String complainceICS) {
 		this.complainceICS = complainceICS;
 	}
-    
+*/    
     
  // End Adding for C0000241362 
 

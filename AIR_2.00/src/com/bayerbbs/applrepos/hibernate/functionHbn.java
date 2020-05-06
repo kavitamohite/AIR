@@ -170,7 +170,8 @@ public class functionHbn extends BaseHbn {
 					pathwayTarget.setTemplate(pathwaySource.getTemplate());
 					
 					pathwayTarget.setRelevanceITSEC(pathwaySource.getRelevanceITSEC());
-					pathwayTarget.setRelevanceICS(pathwaySource.getRelevanceICS());
+//					ELERJ ICS
+//					pathwayTarget.setRelevanceICS(pathwaySource.getRelevanceICS());
 
 				}
 				else {
@@ -290,12 +291,14 @@ public class functionHbn extends BaseHbn {
 	{
 
 		ciDTO.setCiOwnerDelegate(ci.getCiOwnerDelegate());
-		ciDTO.setGxpFlag(ci.getGxpFlag()); 
+//		ELERJ GXP
+//		ciDTO.setGxpFlag(ci.getGxpFlag()); 
 		ciDTO.setItsecGroupId(ci.getItsecGroupId());
 		
 		ciDTO.setItset(ci.getItset());
 		ciDTO.setRefId(ci.getRefId());
-		ciDTO.setRelevanceICS(ci.getRelevanceICS());
+		/*ELERJ ICS*/		
+//		ciDTO.setRelevanceICS(ci.getRelevanceICS());
 		ciDTO.setRelevanzItsec(ci.getRelevanceITSEC());
 		
 		ciDTO.setTemplate(ci.getTemplate());
@@ -558,11 +561,13 @@ public class functionHbn extends BaseHbn {
 		StringBuilder sql = new StringBuilder();
 		// Start Adding for C0000241362 
 		String complainceGR1435=input.getComplainceGR1435();
-		String complainceICS=input.getComplainceICS();
+		
+		/*ELERJ ICS*/
+//		String complainceICS=input.getComplainceICS();
 				long complainceGR1435Long=0;
-				long complainceICSLong=0;
+//				long complainceICSLong=0;
 				System.out.println("complainceGR1435"+complainceGR1435);
-				System.out.println("complainceICS"+complainceICS);
+//				System.out.println("complainceICS"+complainceICS);
 				//IM0005978424 
 				if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("Yes"))
 					
@@ -571,11 +576,11 @@ public class functionHbn extends BaseHbn {
 				if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("No"))
 					complainceGR1435Long=0;
 				//IM0005978424 
-				if(complainceICS!=null&&complainceICS.equalsIgnoreCase("Yes"))
+				/*if(complainceICS!=null&&complainceICS.equalsIgnoreCase("Yes"))
 					complainceICSLong = -1;
 				//IM0005978424 
 				if(complainceICS!=null&&complainceICS.equalsIgnoreCase("No"))
-					complainceICSLong=0;
+					complainceICSLong=0;*/
 				// End Adding for C0000241362
 		sql.append("SELECT ").append(metaData.getIdField()).append(", ")
 				.append(metaData.getNameField());
@@ -590,12 +595,12 @@ public class functionHbn extends BaseHbn {
 			sql.append(" AND del_quelle IS NULL");
 		// start Adding for C0000241362
 				// RELEVANCE_ICS
-		if(complainceICS!=null&&complainceICS.length()>0)
+	/*	if(complainceICS!=null&&complainceICS.length()>0)
 		{
 				sql.append(" AND UPPER (RELEVANCE_ICS) = '"+complainceICSLong+"'");
 				
 				System.out.println("complainceGR1435Long appened"+complainceICSLong);
-		}
+		}*/
 				// RELEVANZ_ITSEC
 		if(complainceGR1435!=null&&complainceGR1435.length()>0)
 		{
@@ -835,24 +840,26 @@ public class functionHbn extends BaseHbn {
 				ciDTO.setRelevanzItsec(new Long(0));
 			}
 		}
-		if (null == ciDTO.getRelevanceICS()) {
+		/*ELERJ ICS*/
+	/*	if (null == ciDTO.getRelevanceICS()) {
 			if (Y.equals(ciDTO.getRelevanceGR1920())) {
 				ciDTO.setRelevanceICS(new Long(-1));
 			} else if (N.equals(ciDTO.getRelevanceGR1920())) {
 				ciDTO.setRelevanceICS(new Long(0));
 			}
 		}
-
+*/
 		ci.setRelevanceITSEC(ciDTO.getRelevanzItsec());
-		ci.setRelevanceICS(ciDTO.getRelevanceICS());
+//		ci.setRelevanceICS(ciDTO.getRelevanceICS());
 
-		if (StringUtils.isNotNullOrEmpty(ciDTO.getGxpFlag())) {
+//		ELERJ GXP
+		/*if (StringUtils.isNotNullOrEmpty(ciDTO.getGxpFlag())) {
 			if ("null".equals(ciDTO.getGxpFlag())) {
 				ci.setGxpFlag(null);
 			} else {
 				ci.setGxpFlag(ciDTO.getGxpFlag());
 			}
-		}
+		}*/
 	}
 
 }

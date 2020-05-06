@@ -172,8 +172,10 @@ public class ItSystemWS {
 		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 		itSystemDTO.setRelevanceCD3010(input.getRelevanceCD3010());
 		itSystemDTO.setRelevanceCD3011(input.getRelevanceCD3011());
-		itSystemDTO.setGxpFlag(input.getGxpFlag());
-		itSystemDTO.setGxpFlagId(input.getGxpFlag());
+		
+//		ELERJ GXP
+		/*itSystemDTO.setGxpFlag(input.getGxpFlag());
+		itSystemDTO.setGxpFlagId(input.getGxpFlag());*/
 		
 		
 		itSystemDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
@@ -263,11 +265,11 @@ public class ItSystemWS {
 					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
 				}
 				
-				if(itSystemSource.getRelevanceICS() == -1)
+				/*if(itSystemSource.getRelevanceICS() == -1)
 					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
 				else{
 					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
-				}
+				}*/
 				
 				System.out.println("dto.setIsApplianceFlag set while copy"+itSystemSource.getIsApplianceFlag());
 				// save / create itSystem

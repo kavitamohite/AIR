@@ -413,9 +413,9 @@ public class AnwendungHbn extends BaseHbn {
 							}
 						}
 						
-						if (null != dto.getRelevanceICS()) {
+						/*if (null != dto.getRelevanceICS()) {
 							application.setRelevanceICS(dto.getRelevanceICS());
-						}
+						}*/
 
 						if (null != dto.getRelevanzItsec()) {
 							application.setRelevanzITSEC(dto.getRelevanzItsec());
@@ -428,7 +428,8 @@ public class AnwendungHbn extends BaseHbn {
 							application.setRelevance2008(dto.getRelevance2008());
 						}
 						
-						if ("null".equals( dto.getGxpFlagId())) {
+//						ELERJ GXP
+						/*if ("null".equals( dto.getGxpFlagId())) {
 							application.setGxpFlag(null); 
 						}
 						else {
@@ -438,7 +439,7 @@ public class AnwendungHbn extends BaseHbn {
 							else {
 								application.setGxpFlag(dto.getGxpFlagId());
 							}
-						}
+						}*/
 						
 //						if (null != dto.getRiskAnalysisYN()) {
 //							application
@@ -836,15 +837,15 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 								dto.setRelevanzItsec(new Long(0));
 							}
 						}
-						
-						if (null == dto.getRelevanceICS()) {
+//						ELERJ ICS
+						/*if (null == dto.getRelevanceICS()) {
 							if (AirKonstanten.YES_SHORT.equals(dto.getRelevanceGR1920())) {
 								dto.setRelevanceICS(new Long(-1));
 							}
 							else if (AirKonstanten.NO.equals(dto.getRelevanceGR1920())) {
 								dto.setRelevanceICS(new Long(0));
 							}
-						}
+						}*/
 						
 						if (null == dto.getRelevance2059()) {
 							if (AirKonstanten.YES_SHORT.equals(dto.getRelevanceGR2059())) {
@@ -867,10 +868,12 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 						// TODO
 						application.setTemplate(dto.getTemplate());
 						application.setRelevanzITSEC(dto.getRelevanzItsec());
-						application.setRelevanceICS(dto.getRelevanceICS());
+//						ELERJ ICS
+//						application.setRelevanceICS(dto.getRelevanceICS());
 						application.setRelevance2059(dto.getRelevance2059());
 						application.setRelevance2008(dto.getRelevance2008());
-						application.setGxpFlag(dto.getGxpFlagId());
+//						ELERJ GXP
+//						application.setGxpFlag(dto.getGxpFlagId());
 						application.setSlaId(dto.getSlaId());
 						application.setServiceContractId(dto.getServiceContractId());
 						application.setSeverityLevelId(dto.getSeverityLevelId());
@@ -1037,7 +1040,8 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 //			ORA-02290: check constraint (TBADM.CHK_002_RELEVANZ_ITSEC) violated
 //			application.setRelevanzITSEC(null);
 
-			application.setGxpFlag(null);
+//			ELERJ GXP
+//			application.setGxpFlag(null);
 			
 			// license & costs
 			application.setLicenseTypeId(null);
@@ -1318,10 +1322,12 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 		sql.append("		  , anw.application_owner_delegate");
 		sql.append("		  , anw.itset");
 		sql.append("		  , itsverb.it_verbund_name");
-		sql.append("		  , anw.relevance_ics");
+	
+//		sql.append("		  , anw.relevance_ics");
 		sql.append("		  , anw.relevance_2059");
 		sql.append("		  , anw.relevance_2008");
-		sql.append("		  , anw.gxp_flag");
+//		ELERJ GXP
+//		sql.append("		  , anw.gxp_flag");
 		sql.append("		  , anw.sla_id");
 		sql.append("		  , sla.sla_name");
 		sql.append("		  , anw.service_contract_id");
@@ -1458,8 +1464,9 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 				applicationDTO.setItset(rsMessage.getLong("ITSET"));
 				applicationDTO.setItsetName(rsMessage.getString("IT_VERBUND_NAME"));
 
-				Long relevanceICS = rsMessage.getLong("RELEVANCE_ICS");
-				applicationDTO.setRelevanceICS(relevanceICS);
+//				ELERJ ICS
+				/*Long relevanceICS = rsMessage.getLong("RELEVANCE_ICS");
+				applicationDTO.setRelevanceICS(relevanceICS);*/
 				
 				Long relevance2059 = rsMessage.getLong("RELEVANCE_2059");
 				applicationDTO.setRelevance2059(relevance2059);
@@ -1487,9 +1494,11 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 				applicationDTO.setLocationPath(rsMessage.getString("LOCATION_PATH"));
 				applicationDTO.setBusinessEssentialId(rsMessage.getLong("BUSINESS_ESSENTIAL_ID"));
 				applicationDTO.setBusinessEssential(rsMessage.getString("BUSINESS_ESSENTIAL"));
+				
+//				ELERJ GXP
 				// set both values!
-				applicationDTO.setGxpFlagId(rsMessage.getString("GXP_FLAG"));
-				applicationDTO.setGxpFlagTxt(rsMessage.getString("GXP_FLAG"));
+				/*applicationDTO.setGxpFlagId(rsMessage.getString("GXP_FLAG"));
+				applicationDTO.setGxpFlagTxt(rsMessage.getString("GXP_FLAG"));*/
 
 				// TODO neue Attribute
 				applicationDTO.setLicenseTypeId(rsMessage.getLong("LICENSE_TYPE_ID"));
@@ -2203,22 +2212,24 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 			String ciTypeOptions, String itSetOptions, String descriptionOptions,
 			String appOwnerOptions, String appOwnerDelegateOptions, String appStewardOptions, String ciOwnerOptions, String ciOwnerDelegateOptions,
 			String generalUsageOptions, String itCategoryOptions, String lifecycleStatusOptions, String organisationalScopeOptions,
-			String itSecGroupOptions, String processOptions, String sourceOptions, String businessEssentialOptions,String complainceGR1435,String complainceICS) {
+			String itSecGroupOptions, String processOptions, String sourceOptions, String businessEssentialOptions,String complainceGR1435/*,String complainceICS*/) {
 		
 		// Start Adding for C0000241362 
 		long complainceGR1435Long=0;
-		long complainceICSLong=0;
+//		ELERJ ICS
+//		long complainceICSLong=0;
 		System.out.println("complainceGR1435"+complainceGR1435);
-		System.out.println("complainceICS"+complainceICS);
+//		System.out.println("complainceICS"+complainceICS);
 		if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("Yes"))
 			
 			complainceGR1435Long = -1;
 		if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("No"))
 			complainceGR1435Long=0;
-		if(complainceICS!=null&&complainceICS.equalsIgnoreCase("Yes"))
+//		ELERJ ICS
+		/*if(complainceICS!=null&&complainceICS.equalsIgnoreCase("Yes"))
 			complainceICSLong = -1;
 		if(complainceICS!=null&&complainceICS.equalsIgnoreCase("No"))
-			complainceICSLong=0;
+			complainceICSLong=0;*/
 		// End Adding for C0000241362
 		if (null != advsearchappownerHidden) {//advsearchappowner
 			advsearchappownerHidden = advsearchappownerHidden.replace("*", "%");//advsearchappowner
@@ -2292,9 +2303,10 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 		// start Adding for C0000241362 
 		
 		// RELEVANCE_ICS
-if(complainceICS!=null&&complainceICS.length()>0)
+//		ELERJ ICS
+/*if(complainceICS!=null&&complainceICS.length()>0)
 				sql.append(" and UPPER (anw.RELEVANCE_ICS) = '"+complainceICSLong+"'");
-				System.out.println("complainceGR1435Long appened"+complainceICSLong);
+				System.out.println("complainceGR1435Long appened"+complainceICSLong);*/
 				// RELEVANZ_ITSEC
 				if(complainceGR1435!=null&&complainceGR1435.length()>0)
 				sql.append(" and UPPER (anw.RELEVANZ_ITSEC) = '"+complainceGR1435Long+"'");
@@ -2786,7 +2798,7 @@ if(complainceICS!=null&&complainceICS.length()>0)
 						applicationTarget.setTemplate(applicationSource.getTemplate());
 						
 						applicationTarget.setRelevanzITSEC(applicationSource.getRelevanzITSEC());
-						applicationTarget.setRelevanceICS(applicationSource.getRelevanceICS());
+//						applicationTarget.setRelevanceICS(applicationSource.getRelevanceICS());
 
 						applicationTarget.setRelevance2059(applicationSource.getRelevance2059());
 						applicationTarget.setRelevance2008(applicationSource.getRelevance2008());
@@ -2875,7 +2887,8 @@ if(complainceICS!=null&&complainceICS.length()>0)
 // TODO anderes Feld?
 //						applicationTarget.setRelevanceICS(applicationSource.getRelevanceICS());
 //						applicationTarget.setRelevanzITSEC(applicationSource.getRelevanzITSEC());
-						applicationTarget.setGxpFlag(applicationSource.getGxpFlag());
+//						ELERJ GXP
+//						applicationTarget.setGxpFlag(applicationSource.getGxpFlag());
 						
 						
 						// ===============

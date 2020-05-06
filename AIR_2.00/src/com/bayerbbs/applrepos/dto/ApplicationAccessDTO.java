@@ -10,9 +10,11 @@ public class ApplicationAccessDTO {
 	private String License_Scanning = AirKonstanten.NO_SHORT;
 	private String Responsible = AirKonstanten.NO_SHORT;
 	private String Sub_Responsible = AirKonstanten.NO_SHORT;
-	private String Relevance_Ics = AirKonstanten.NO_SHORT;
+//	ELERJ ICS
+//	private String Relevance_Ics = AirKonstanten.NO_SHORT;
 	private String Relevanz_Itsec = AirKonstanten.NO_SHORT;
-	private String Gxp_Flag = AirKonstanten.NO_SHORT;
+//	ELERJ GXP
+//	private String Gxp_Flag = AirKonstanten.NO_SHORT;
 	private String Ref_Id = AirKonstanten.NO_SHORT;
 	private String Itsec_Gruppe_Id = AirKonstanten.NO_SHORT;
 	private String Sample_Test_Date = AirKonstanten.NO_SHORT;
@@ -33,9 +35,11 @@ public class ApplicationAccessDTO {
 		License_Scanning = AirKonstanten.YES_SHORT;
 		Responsible = AirKonstanten.YES_SHORT;
 		Sub_Responsible = AirKonstanten.YES_SHORT;
-		Relevance_Ics = AirKonstanten.YES_SHORT;
+//		ELERJ ICS
+//		Relevance_Ics = AirKonstanten.YES_SHORT;
 		Relevanz_Itsec = AirKonstanten.YES_SHORT;
-		Gxp_Flag = AirKonstanten.YES_SHORT;
+//		ELERJ GXP
+//		Gxp_Flag = AirKonstanten.YES_SHORT;
 		Ref_Id = AirKonstanten.YES_SHORT;
 		Itsec_Gruppe_Id = AirKonstanten.YES_SHORT;
 		Sample_Test_Date = AirKonstanten.YES_SHORT;
@@ -71,24 +75,26 @@ public class ApplicationAccessDTO {
 	public void setSub_Responsible(String subResponsible) {
 		Sub_Responsible = subResponsible;
 	}
-	public String getRelevance_Ics() {
+//	ELERJ ICS
+/*	public String getRelevance_Ics() {
 		return Relevance_Ics;
 	}
 	public void setRelevance_Ics(String relevanceIcs) {
 		Relevance_Ics = relevanceIcs;
 	}
-	public String getRelevanz_Itsec() {
+*/	public String getRelevanz_Itsec() {
 		return Relevanz_Itsec;
 	}
 	public void setRelevanz_Itsec(String relevanzItsec) {
 		Relevanz_Itsec = relevanzItsec;
 	}
-	public String getGxp_Flag() {
+//	ELERJ GXP
+	/*public String getGxp_Flag() {
 		return Gxp_Flag;
 	}
 	public void setGxp_Flag(String gxpFlag) {
 		Gxp_Flag = gxpFlag;
-	}
+	}*/
 	public String getRef_Id() {
 		return Ref_Id;
 	}

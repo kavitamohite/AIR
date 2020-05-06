@@ -36,10 +36,11 @@ public class BusinessApplication  extends DeletableRevisionInfo implements Seria
 	
 	private String applicationSteward;
 	private Long lifecycleStatusId;
-	
-	private Long relevanceICS;
+//	ELERJ ICS	
+//	private Long relevanceICS;
 	private Long relevanceITSEC;
-	private String gxpFlag;
+//	ELERJ GXP
+//	private String gxpFlag;
 	private Long externallyHosted;
 	private String lastModification;
 	
@@ -123,15 +124,15 @@ public class BusinessApplication  extends DeletableRevisionInfo implements Seria
 	public void setLifecycleStatusId(Long lifecycleStatusId) {
 		this.lifecycleStatusId = lifecycleStatusId;
 	}
-	
-	@Column(name = "RELEVANCE_ICS")
+//	ELERJ ICS
+	/*@Column(name = "RELEVANCE_ICS")
 	public Long getRelevanceICS() {
 		return relevanceICS;
 	}
 	
 	public void setRelevanceICS(Long relevanceICS) {
 		this.relevanceICS = relevanceICS;
-	}
+	}*/
 	
 	@Column(name = "RELEVANZ_ITSEC")
 	public Long getRelevanceITSEC() {
@@ -142,7 +143,8 @@ public class BusinessApplication  extends DeletableRevisionInfo implements Seria
 		this.relevanceITSEC = relevanceITSEC;
 	}
 	
-	@Column(name = "GXP_FLAG")
+//	ELERJ GXP
+	/*@Column(name = "GXP_FLAG")
 	public String getGxpFlag() {
 		return gxpFlag;
 	}
@@ -150,7 +152,7 @@ public class BusinessApplication  extends DeletableRevisionInfo implements Seria
 	public void setGxpFlag(String gxpFlag) {
 		this.gxpFlag = gxpFlag;
 	}
-	
+	*/
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

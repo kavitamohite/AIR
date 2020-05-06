@@ -26,7 +26,8 @@ public class MassUpdateParameterInput {
 	private boolean subResponsible;
 	private boolean refId;
 	private boolean relevanzITSEC;
-	private boolean gxpFlag;
+//	ELERJ GXP
+//	private boolean gxpFlag;
 	private boolean itsecGroupId;
 	private boolean slaId;
 	private boolean serviceContractId;
@@ -49,7 +50,8 @@ public class MassUpdateParameterInput {
 	private boolean barRelevance;
 	private boolean categoryBusiness;
 	private boolean classDataId;
-	private boolean relevanceICS;
+	/*ELERJ ICS*/
+//	private boolean relevanceICS;
 	private boolean relevance2059;
 	private boolean relevance2008;
 	//EUGXS
@@ -281,15 +283,16 @@ public class MassUpdateParameterInput {
 	/**
 	 * @return the gxpFlag
 	 */
-	public boolean getGxpFlag() {
+//	ELERJ GXP
+	/*public boolean getGxpFlag() {
 		return gxpFlag;
 	}
-	/**
+	*//**
 	 * @param gxpFlag the gxpFlag to set
-	 */
+	 *//*
 	public void setGxpFlag(boolean gxpFlag) {
 		this.gxpFlag = gxpFlag;
-	}
+	}*/
 	/**
 	 * @return the itsecGroupId
 	 */
@@ -533,15 +536,15 @@ public class MassUpdateParameterInput {
 	/**
 	 * @return the relevanceICS
 	 */
-	public boolean isRelevanceICS() {
+	/*public boolean isRelevanceICS() {
 		return relevanceICS;
 	}
-	/**
+	*//**
 	 * @param relevanceICS the relevanceICS to set
-	 */
+	 *//*
 	public void setRelevanceICS(boolean relevanceICS) {
 		this.relevanceICS = relevanceICS;
-	}
+	}*/
 	/**
 	 * @return the relevance2059
 	 */

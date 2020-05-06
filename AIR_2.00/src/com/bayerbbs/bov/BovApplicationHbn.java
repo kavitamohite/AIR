@@ -32,8 +32,9 @@ public class BovApplicationHbn {
 		String ownershipStatus = null;
 		Long drLevelId = null;
 		Long severityLevelId = null;
-		String gxpRelevant = null;
-		Long icsRelevant = null;
+//		String gxpRelevant = null;
+		/*ELERJ ICS*/
+//		Long icsRelevant = null;
 		Boolean itsecRelevant = null;
 
 		Long classInformationId = null;
@@ -59,12 +60,12 @@ public class BovApplicationHbn {
 				}
 			}
 		}
-		
+//		ELERJ GXP
 		// GxP Relevant
-		if (null != dto.getGxpRelevant())			gxpRelevant = dto.getGxpRelevant();
-		
+//		if (null != dto.getGxpRelevant())			gxpRelevant = dto.getGxpRelevant();
+		/*ELERJ ICS*/
 		// ICS Relevant
-		if (null != dto.getIcsRelevant()) {
+		/*if (null != dto.getIcsRelevant()) {
 			// relevance ICS
 			if (STR_YES.equals(dto.getIcsRelevant().toUpperCase())) {
 				icsRelevant = DB_VALUE_YES;
@@ -72,7 +73,7 @@ public class BovApplicationHbn {
 			else if (STR_NO.equals(dto.getIcsRelevant().toUpperCase())) {
 				icsRelevant = DB_VALUE_NO;
 			}
-		}
+		}*/
 
 		// GR1435 relevant
 		if (null != dto.getItsecRelevant()) 
@@ -111,13 +112,13 @@ public class BovApplicationHbn {
 			applicationDescription = dto.getApplicationDescription();
 			if (applicationDescription.length() == 0) applicationDescription = null;
 		}
-		
-		return saveBovApplication(cwid, applicationId, processed, ownershipStatus, drLevelId, severityLevelId, gxpRelevant, icsRelevant, itsecRelevant, classInformationId, dataPrivacyPersonalData, dataPrivacyBetweenCountries, applicationDescription);
+//		ELERJ GXP
+		return saveBovApplication(cwid, applicationId, processed, ownershipStatus, drLevelId, severityLevelId, /*gxpRelevant,*//* icsRelevant,*/ itsecRelevant, classInformationId, dataPrivacyPersonalData, dataPrivacyBetweenCountries, applicationDescription);
 	}
 	
 
 	
-	public static boolean saveBovApplication(String cwid, Long applicationId, String processed, String ownershipStatus, Long drLevelId, Long severityLevelId, String gxpRelevant, Long icsRelevant, Boolean itsecRelevant, Long classInformationId, String dataPrivacyPersonalData, String dataPrivacyBetweenCountries, String applicationDescription) {
+	public static boolean saveBovApplication(String cwid, Long applicationId, String processed, String ownershipStatus, Long drLevelId, Long severityLevelId, /*String gxpRelevant,*/ /*Long icsRelevant,*/ Boolean itsecRelevant, Long classInformationId, String dataPrivacyPersonalData, String dataPrivacyBetweenCountries, String applicationDescription) {
 		boolean result = false;
 		
 		Session session = HibernateUtil.getSession();
@@ -139,16 +140,16 @@ public class BovApplicationHbn {
 			if (null != severityLevelId) {
 				application.setSeverityLevelId(severityLevelId);
 			}
-				
+//			ELERJ GXP
 			// GxP relevant			
-			if (null != gxpRelevant) {
+			/*if (null != gxpRelevant) {
 				application.setGxpFlag(gxpRelevant);
-			}
+			}*/
 			
 			// ics relevant
-			if (null != icsRelevant) {
+			/*if (null != icsRelevant) {
 				application.setRelevanceICS(icsRelevant);
-			}		
+			}*/		
 			// GR1435 relevant
 			if (null != itsecRelevant) application.setRelevanzITSEC(itsecRelevant ? DB_VALUE_YES : DB_VALUE_NO);
 			

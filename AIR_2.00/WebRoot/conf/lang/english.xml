@@ -252,7 +252,8 @@
 				<compliancerelevance>Relevant Regulations</compliancerelevance>	
 				<relevanceGR1435>CP1435</relevanceGR1435>
 				<relevanceGR2059>GR2059</relevanceGR2059><!-- RFC 9016 1775 zu 2059 -->
-				<relevanceGR1920>ICS</relevanceGR1920>
+				
+				<!-- <relevanceGR1920>ICS</relevanceGR1920> -->
 				<relevanceGR2008>GR2008</relevanceGR2008>
 				<relevanceCD3010>CD3010</relevanceCD3010>
 				<relevanceCD3011>CD3011</relevanceCD3011>
@@ -260,7 +261,8 @@
 				<relevanceViewButton>View</relevanceViewButton>
 				<relevance1435EditButton>Show</relevance1435EditButton>
 				<relevanceEditMsg>Applied changes will be stored with [Save].</relevanceEditMsg>
-				<gxpFlag>GxP</gxpFlag>
+				<!-- ELERJ GXP -->
+				<!-- <gxpFlag>GxP</gxpFlag> -->
 				<itsecGroup>ITSec Group</itsecGroup>
 				<referencedTemplate>Link</referencedTemplate>
 				<referencedTemplateInvalid>Template invalid</referencedTemplateInvalid><!-- for IT set and object type-->
@@ -465,10 +467,11 @@
 		<complianceWindowTitle>Compliance Details </complianceWindowTitle>
 		<complianceWindowControls>Controls</complianceWindowControls>
 		
-		<RelevanceICSSecurityManagement>Relevance ICS Security Management</RelevanceICSSecurityManagement>
+		<!-- ELERJ ICS -->
+		<!-- <RelevanceICSSecurityManagement>Relevance ICS Security Management</RelevanceICSSecurityManagement>
 		<RelevanceICSAccessManagement>Relevance ICS Access Management</RelevanceICSAccessManagement>
 		<RelevanceICSITOperations>Relevance ICS IT Operations</RelevanceICSITOperations>
-		<RelevanceICSChangeManagement>Relevance ICS Change Management</RelevanceICSChangeManagement>
+		<RelevanceICSChangeManagement>Relevance ICS Change Management</RelevanceICSChangeManagement> -->
 		<LinkCiType>Link - CI Type</LinkCiType>
 		<LinkCi>Link - CI</LinkCi>
 		

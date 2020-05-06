@@ -1137,7 +1137,7 @@
 	</Identifier>
 
 	<Identifier>
-		<id>relevanceICS</id>
+	<!-- 	<id>relevanceICS</id> -->
 		<Mandatory>required</Mandatory>
 		<ciTypeId>2</ciTypeId>
 		<Relevance>operational and strategic</Relevance>
@@ -1195,7 +1195,8 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 	<Identifier>
-		<id>CBrelevanceGxp</id>
+	<!-- ELERJ GXP -->
+		<!-- <id>CBrelevanceGxp</id> -->
 		<Mandatory>optional</Mandatory>
 		<Relevance>strategic</Relevance>
 		<DependencyID></DependencyID>
@@ -1263,7 +1264,8 @@
 		<attributeLength>10</attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
-	<Identifier>
+	<!-- <Identifier>
+	ELERJ ICS
 		<id>chbGR1920</id>
 		<ciTypeId>13,3,88,1</ciTypeId>
 		<Mandatory>required</Mandatory>
@@ -1274,7 +1276,7 @@
 		<attributeType>Text</attributeType>
 		<attributeLength>10</attributeLength>
 		<attributeMask></attributeMask>
-	</Identifier>
+	</Identifier> -->
 	<Identifier>
 		<id>chbGR2008</id>
 		<Mandatory>optional</Mandatory>

@@ -836,21 +836,22 @@ public class CiEntityWS {
 		}
 		
 		Long relevanceItsec = businessApplication.getRelevanceITSEC();
-		Long relevanceICS = businessApplication.getRelevanceICS();
+		/*ELERJ ICS*/
+//		Long relevanceICS = businessApplication.getRelevanceICS();
 
 		if (-1 == relevanceItsec) {
 			businessApplicationDTO.setRelevanceGR1435(YES);
 		} else {// if (0 == relevanceItsec) {
 			businessApplicationDTO.setRelevanceGR1435(NO);
 		}
-		if (-1 == relevanceICS) {
+		/*if (-1 == relevanceICS) {
 			businessApplicationDTO.setRelevanceGR1920(YES);
 		} else {// (0 == relevanceICS) {
 			businessApplicationDTO.setRelevanceGR1920(NO);
-		}
-
-		businessApplicationDTO.setGxpFlagId(businessApplication.getGxpFlag());
-		businessApplicationDTO.setGxpFlag(businessApplication.getGxpFlag());
+		}*/
+//		ELERJ GXP
+		/*businessApplicationDTO.setGxpFlagId(businessApplication.getGxpFlag());
+		businessApplicationDTO.setGxpFlag(businessApplication.getGxpFlag());*/
 
 		String source = businessApplicationDTO.getInsertQuelle();
 		if (!source.equals(AirKonstanten.INSERT_QUELLE_SISEC)
@@ -863,7 +864,8 @@ public class CiEntityWS {
 					.setRelevanceGR1435Acl(AirKonstanten.NO_SHORT);
 			businessApplicationDTO
 					.setRelevanceGR1920Acl(AirKonstanten.NO_SHORT);
-			businessApplicationDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
+//			ELERJ GXP
+//			businessApplicationDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
 			businessApplicationDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
 			businessApplicationDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
 			businessApplicationDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
@@ -944,18 +946,18 @@ public class CiEntityWS {
 		functionDTO.setRefId(refID);
 
 		Long relevanceItsec = function.getRelevanceITSEC();
-		Long relevanceICS = function.getRelevanceICS();
+//		Long relevanceICS = function.getRelevanceICS();
 
 		if (-1 == relevanceItsec) {
 			functionDTO.setRelevanceGR1435(YES);
 		} else {// if (0 == relevanceItsec) {
 			functionDTO.setRelevanceGR1435(NO);
 		}
-		if (-1 == relevanceICS) {
+		/*if (-1 == relevanceICS) {
 			functionDTO.setRelevanceGR1920(YES);
 		} else {// (0 == relevanceICS) {
 			functionDTO.setRelevanceGR1920(NO);
-		}
+		}*/
 		//EUGXS
 		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 				
@@ -977,8 +979,9 @@ public class CiEntityWS {
 		
 		
 System.out.println("suparna "+functionDTO.getRelevanceGR2008());
-		functionDTO.setGxpFlagId(function.getGxpFlag());
-		functionDTO.setGxpFlag(function.getGxpFlag());
+//ELERJ GXP
+		/*functionDTO.setGxpFlagId(function.getGxpFlag());
+		functionDTO.setGxpFlag(function.getGxpFlag());*/
 
 		String source = functionDTO.getInsertQuelle();
 		if (!source.equals(AirKonstanten.INSERT_QUELLE_SISEC)
@@ -988,7 +991,8 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 			functionDTO.setCiOwnerDelegateAcl(AirKonstanten.NO_SHORT);
 			functionDTO.setRelevanceGR1435Acl(AirKonstanten.NO_SHORT);
 			functionDTO.setRelevanceGR1920Acl(AirKonstanten.NO_SHORT);
-			functionDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
+//			ELERJ GXP
+//			functionDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
 			functionDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
 			functionDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
 			functionDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
@@ -1196,23 +1200,23 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 		}
 		
 		Long relevanceItsec = ciBase.getRelevanceITSEC();
-		Long relevanceICS = ciBase.getRelevanceICS();
+//		Long relevanceICS = ciBase.getRelevanceICS();
 
 		if (-1 == relevanceItsec) {
 			ciBaseDTO.setRelevanceGR1435(YES);
 		} else {// if (0 == relevanceItsec) {
 			ciBaseDTO.setRelevanceGR1435(NO);
 		}
-		if (-1 == relevanceICS) {
+	/*	if (-1 == relevanceICS) {
 			ciBaseDTO.setRelevanceGR1920(YES);
 		} else {// (0 == relevanceICS) {
 			ciBaseDTO.setRelevanceGR1920(NO);
 		}
+	*/	
 		
-		
-
-		ciBaseDTO.setGxpFlagId(ciBase.getGxpFlag());
-		ciBaseDTO.setGxpFlag(ciBase.getGxpFlag());
+//		ELERJ GXP
+		/*ciBaseDTO.setGxpFlagId(ciBase.getGxpFlag());
+		ciBaseDTO.setGxpFlag(ciBase.getGxpFlag());*/
 
 		String source = ciBaseDTO.getInsertQuelle();
 		if (!source.equals(AirKonstanten.INSERT_QUELLE_SISEC)
@@ -1222,7 +1226,8 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 			ciBaseDTO.setCiOwnerDelegateAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setRelevanceGR1435Acl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setRelevanceGR1920Acl(AirKonstanten.NO_SHORT);
-			ciBaseDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
+//			ELERJ GXP
+//			ciBaseDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
@@ -1354,21 +1359,21 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 		
 
 		Long relevanceItsec = ciBase.getRelevanceITSEC();
-		Long relevanceICS = ciBase.getRelevanceICS();
+//		Long relevanceICS = ciBase.getRelevanceICS();
 
 		if (-1 == relevanceItsec) {
 			ciBaseDTO.setRelevanceGR1435(YES);
 		} else {// if (0 == relevanceItsec) {
 			ciBaseDTO.setRelevanceGR1435(NO);
 		}
-		if (-1 == relevanceICS) {
+		/*if (-1 == relevanceICS) {
 			ciBaseDTO.setRelevanceGR1920(YES);
 		} else {// (0 == relevanceICS) {
 			ciBaseDTO.setRelevanceGR1920(NO);
-		}
-
-		ciBaseDTO.setGxpFlagId(ciBase.getGxpFlag());
-		ciBaseDTO.setGxpFlag(ciBase.getGxpFlag());
+		}*/
+//		ELERJ GXP
+		/*ciBaseDTO.setGxpFlagId(ciBase.getGxpFlag());
+		ciBaseDTO.setGxpFlag(ciBase.getGxpFlag());*/
 
 		String source = ciBaseDTO.getInsertQuelle();
 		if (!source.equals(AirKonstanten.INSERT_QUELLE_SISEC)
@@ -1378,7 +1383,8 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 			ciBaseDTO.setCiOwnerDelegateAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setRelevanceGR1435Acl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setRelevanceGR1920Acl(AirKonstanten.NO_SHORT);
-			ciBaseDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
+//			ELERJ GXP
+//			ciBaseDTO.setGxpFlagIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setRefIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setItsecGroupIdAcl(AirKonstanten.NO_SHORT);
 			ciBaseDTO.setSlaIdAcl(AirKonstanten.NO_SHORT);
@@ -1630,7 +1636,7 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 		maDto.setId("relevanzITSEC");
 		massUpdateAttriuteDTOs.add(maDto);
 
-		maDto = new MassUpdateAttributeDTO();
+	/*	maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.GR1920);
 		if (-1 == itSystem.getRelevanceICS()) {
 			maDto.setAttributeValue("Yes");
@@ -1638,7 +1644,7 @@ System.out.println("suparna "+functionDTO.getRelevanceGR2008());
 			maDto.setAttributeValue("No");
 		}
 		maDto.setId("relevanceICS");
-		massUpdateAttriuteDTOs.add(maDto);
+		massUpdateAttriuteDTOs.add(maDto);*/
 		//EUGXS
 		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 		
@@ -1792,7 +1798,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		maDto.setId("relevanzITSEC");
 		massUpdateAttriuteDTOs.add(maDto);
 
-		maDto = new MassUpdateAttributeDTO();
+		/*maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.GR1920);
 		if (null != ciBase1.getRelevanceICS()) {
 			if (-1 == ciBase1.getRelevanceICS()) {
@@ -1802,7 +1808,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 			}
 		}
 		maDto.setId("relevanceICS");
-		massUpdateAttriuteDTOs.add(maDto);
+		massUpdateAttriuteDTOs.add(maDto);*/
 		//EUGXS
 		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 		
@@ -1850,9 +1856,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		massUpdateAttriuteDTOs.add(maDto);
 		
 		maDto = new MassUpdateAttributeDTO();
-		maDto.setAttributeName(AirKonstanten.GXP);
+//		ELERJ GXP
+		/*maDto.setAttributeName(AirKonstanten.GXP);
 		maDto.setAttributeValue(ciBase1.getGxpFlag());
-		maDto.setId("gxpFlag");
+		maDto.setId("gxpFlag");*/
 		massUpdateAttriuteDTOs.add(maDto);
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.ITSEC_GROUP);
@@ -1947,7 +1954,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		maDto.setId("relevanzITSEC");
 		massUpdateAttriuteDTOs.add(maDto);
 
-		maDto = new MassUpdateAttributeDTO();
+		/*maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.GR1920);
 		if (null != ciBase1.getRelevanceICS()) {
 			if (-1 == ciBase1.getRelevanceICS()) {
@@ -1957,7 +1964,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 			}
 		}
 		maDto.setId("relevanceICS");
-		massUpdateAttriuteDTOs.add(maDto);
+		massUpdateAttriuteDTOs.add(maDto);*/
 		
 		
 		Long Relevance3010 = (long) 0;
@@ -2003,9 +2010,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		massUpdateAttriuteDTOs.add(maDto);
 		
 		maDto = new MassUpdateAttributeDTO();
-		maDto.setAttributeName(AirKonstanten.GXP);
+//		ELERJ GXP
+		/*maDto.setAttributeName(AirKonstanten.GXP);
 		maDto.setAttributeValue(ciBase1.getGxpFlag());
-		maDto.setId("gxpFlag");
+		maDto.setId("gxpFlag");*/
 		massUpdateAttriuteDTOs.add(maDto);
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.ITSEC_GROUP);
@@ -2182,7 +2190,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		maDto.setId("relevanzITSEC");
 		massUpdateAttriuteDTOs.add(maDto);
 
-		maDto = new MassUpdateAttributeDTO();
+		/*maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.GR1920);
 		if (null != application.getRelevanceICS()) {
 			if (-1 == application.getRelevanceICS()) {
@@ -2192,7 +2200,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 			}
 		}
 		maDto.setId("relevanceICS");
-		massUpdateAttriuteDTOs.add(maDto);
+		massUpdateAttriuteDTOs.add(maDto);*/
 
 		/*maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.GR2059);
@@ -2261,11 +2269,12 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 		
 		
 
-		maDto = new MassUpdateAttributeDTO();
+		/*maDto = new MassUpdateAttributeDTO();
+//		ELERJ GXP
 		maDto.setAttributeName(AirKonstanten.GXP);
 		maDto.setAttributeValue(application.getGxpFlag());
 		maDto.setId("gxpFlag");
-		massUpdateAttriuteDTOs.add(maDto);
+		massUpdateAttriuteDTOs.add(maDto);*/
 
 		maDto = new MassUpdateAttributeDTO();
 		maDto.setAttributeName(AirKonstanten.ITSEC_GROUP);
@@ -2580,7 +2589,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						dto.setRelevanceGR1435(NO);
 					}
 				}
-				if (massUpdateParameterInput.isRelevanceICS()) {
+				/*if (massUpdateParameterInput.isRelevanceICS()) {
 					locationCi.setRelevanceICS(templaeLocationCI
 							.getRelevanceICS());
 					if(templaeLocationCI.getRelevanceICS() == -1){
@@ -2588,7 +2597,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					}else{
 						dto.setRelevanceGR1920(NO);
 					}
-				}
+				}*/
 				
 				
 				
@@ -2624,10 +2633,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				}
 				ComplianceHbn.setComplienceRequest(locationCi.getId(),dto,"EUGXS");
 				
-				
-				if (massUpdateParameterInput.getGxpFlag()) {
+//				ELERJ GXP
+				/*if (massUpdateParameterInput.getGxpFlag()) {
 					locationCi.setGxpFlag(templaeLocationCI.getGxpFlag());
-				}
+				}*/
 			
 				
 			
@@ -2729,7 +2738,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						dto.setRelevanceGR1435(NO);
 					}
 				}
-				if (massUpdateParameterInput.isRelevanceICS()) {
+				/*if (massUpdateParameterInput.isRelevanceICS()) {
 					locationCi.setRelevanceICS(templaeLocationCI
 							.getRelevanceICS());
 					if(templaeLocationCI.getRelevanceICS() == -1){
@@ -2737,7 +2746,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					}else{
 						dto.setRelevanceGR1920(NO);
 					}
-				}
+				}*/
 				
 				
 				
@@ -2773,10 +2782,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				}
 				ComplianceHbn.setComplienceRequest(locationCi.getId(),dto,"EUGXS");
 				
-				
-				if (massUpdateParameterInput.getGxpFlag()) {
+//				ELERJ GXP
+				/*if (massUpdateParameterInput.getGxpFlag()) {
 					locationCi.setGxpFlag(templaeLocationCI.getGxpFlag());
-				}
+				}*/
 				if (massUpdateParameterInput.getItsecGroupId()) {
 					locationCi.setRefId(null);
 					if (locationCi.getItsecGroupId() == 10136) {
@@ -2945,7 +2954,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						dto.setRelevanceGR1435(NO);
 					}
 				}
-				if (massUpdateParameterInput.isRelevanceICS()) {
+				/*if (massUpdateParameterInput.isRelevanceICS()) {
 					application.setRelevanceICS(templateApplication
 							.getRelevanceICS());
 					if(templateApplication.getRelevanceICS() == -1){
@@ -2955,7 +2964,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					}
 					
 					
-				}
+				}*/
 				if (massUpdateParameterInput.isRelevance2059()) {
 					application.setRelevance2059(templateApplication
 							.getRelevance2059());
@@ -2996,9 +3005,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				}
 				ComplianceHbn.setComplienceRequest(application.getId(),dto,"EUGXS");
 				
-				if (massUpdateParameterInput.getGxpFlag()) {
+//				ELERJ GXP
+				/*if (massUpdateParameterInput.getGxpFlag()) {
 					application.setGxpFlag(templateApplication.getGxpFlag());
-				}
+				}*/
 				if (massUpdateParameterInput.getItsecGroupId()) {
 					application.setRefId(null);
 					if (application.getItsecGroupId()!=null && application.getItsecGroupId() == 10136) {
@@ -3230,14 +3240,14 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					}
 					
 				}
-				if (massUpdateParameterInput.isRelevanceICS()) {
+				/*if (massUpdateParameterInput.isRelevanceICS()) {
 					itSystem.setRelevanceICS(templateItSystem.getRelevanceICS());
 					if(templateItSystem.getRelevanceICS() == -1){
 						dto.setRelevanceGR1920(YES);
 					}else{
 						dto.setRelevanceGR1920(NO);
 					}
-				}
+				}*/
 				
 				
 				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_IT_SYSTEM,templateItSystem.getId());
@@ -3269,10 +3279,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				ComplianceHbn.setComplienceRequest(itSystem.getId(),dto,"EUGXS");
 				
 				
-				
-				if (massUpdateParameterInput.getGxpFlag()) {
+//				ELERJ GXP
+				/*if (massUpdateParameterInput.getGxpFlag()) {
 					itSystem.setGxpFlag(templateItSystem.getGxpFlag());
-				}
+				}*/
 				if (massUpdateParameterInput.getItsecGroupId()) {
 					itSystem.setRefId(null);
 					if (itSystem.getItsecGroupId() == 10136) {
@@ -3290,9 +3300,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 					}
 
 				}
-				if (massUpdateParameterInput.getGxpFlag()) {
+//				ELERJ GXP
+				/*if (massUpdateParameterInput.getGxpFlag()) {
 					itSystem.setGxpFlag(templateItSystem.getGxpFlag());
-				}
+				}*/
 				if (massUpdateParameterInput.getSlaId()) {
 					itSystem.setSlaId(templateItSystem.getSlaId());
 				}
@@ -3884,21 +3895,22 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						locationCi.setRelevanceITSEC(-1l);
 					}
 				}
-				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+				/*if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getRelevanceGR1920())) {
 					if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput
 							.getRelevanceGR1920())) {
 						locationCi.setRelevanceICS(-1l);
 					}
-				}
-				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+				}*/
+//				ELERJ GXP
+				/*if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getGxpFlag())) {
 					if ("null".equals(mAttrParameterInput.getGxpFlag())) {
 						locationCi.setGxpFlag(null);
 					} else {
 						locationCi.setGxpFlag(mAttrParameterInput.getGxpFlag());
 					}
-				}
+				}*/
 				locationCi.setUpdateUser(mAttrParameterInput.getCwid());
 				locationCi.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				locationCi
@@ -3906,10 +3918,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				CiBaseDTO dto = new CiBaseDTO();
 				setUpDTO(mAttrParameterInput,dto,((int) (long)mAttrParameterInput.getCiTypeId()));
 				
-				if(locationCi.getRelevanceICS() == -1){
+				/*if(locationCi.getRelevanceICS() == -1){
 					
 					dto.setRelevanceGR1920("Y");
-				}
+				}*/
 				if(locationCi.getRelevanceITSEC() == -1){
 					
 					dto.setRelevanceGR1435("Y");
@@ -4160,13 +4172,13 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						application.setRelevanzITSEC(-1l);
 					}
 				}
-				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+				/*if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getRelevanceGR1920())) {
 					if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput
 							.getRelevanceGR1920())) {
 						application.setRelevanceICS(-1l);
 					}
-				}
+				}*/
 				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getRelevanceGR2008())) {
 					if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput
@@ -4181,7 +4193,8 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						application.setRelevance2059(-1l);
 					}
 				}
-				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+//				ELERJ GXP
+				/*if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getGxpFlag())) {
 					if ("null".equals(mAttrParameterInput.getGxpFlag())) {
 						application.setGxpFlag(null);
@@ -4189,7 +4202,7 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						application
 								.setGxpFlag(mAttrParameterInput.getGxpFlag());
 					}
-				}
+				}*/
 				application.setUpdateUser(mAttrParameterInput.getCwid());
 				application.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				application.setUpdateTimestamp(ApplReposTS
@@ -4197,10 +4210,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				CiBaseDTO dto = new CiBaseDTO();
 				setUpDTO(mAttrParameterInput,dto,AirKonstanten.TABLE_ID_APPLICATION);
 				
-				if(application.getRelevanceICS() == -1){
+				/*if(application.getRelevanceICS() == -1){
 					
 					dto.setRelevanceGR1920("Y");
-				}
+				}*/
 				if(application.getRelevanzITSEC() == -1){
 					
 					dto.setRelevanceGR1435("Y");
@@ -4343,21 +4356,21 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						function.setRelevanceITSEC(-1l);
 					}
 				}
-				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+				/*if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getRelevanceGR1920())) {
 					if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput
 							.getRelevanceGR1920())) {
 						function.setRelevanceICS(-1l);
 					}
-				}
-				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+				}*/
+				/*if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getGxpFlag())) {
 					if ("null".equals(mAttrParameterInput.getGxpFlag())) {
 						function.setGxpFlag(null);
 					} else {
 						function.setGxpFlag(mAttrParameterInput.getGxpFlag());
 					}
-				}
+				}*/
 				function.setUpdateUser(mAttrParameterInput.getCwid());
 				function.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				function.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
@@ -4367,10 +4380,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				}
 				CiBaseDTO dto = new CiBaseDTO();
 				setUpDTO(mAttrParameterInput,dto,AirKonstanten.TABLE_ID_FUNCTION);
-				if(function.getRelevanceICS() == -1){
+			/*	if(function.getRelevanceICS() == -1){
 					
 					dto.setRelevanceGR1920("Y");
-				}
+				}*/
 				if(function.getRelevanceITSEC() == -1){
 					
 					dto.setRelevanceGR1435("Y");
@@ -4580,21 +4593,22 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 						itSystem.setRelevanceITSEC(-1l);
 					}
 				}
-				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+			/*	if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getRelevanceGR1920())) {
 					if (AirKonstanten.YES_SHORT.equals(mAttrParameterInput
 							.getRelevanceGR1920())) {
 						itSystem.setRelevanceICS(-1l);
 					}
-				}
-				if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
+				}*/
+//				ELERJ GXP
+				/*if (StringUtils.isNotNullOrEmpty(mAttrParameterInput
 						.getGxpFlag())) {
 					if ("null".equals(mAttrParameterInput.getGxpFlag())) {
 						itSystem.setGxpFlag(null);
 					} else {
 						itSystem.setGxpFlag(mAttrParameterInput.getGxpFlag());
 					}
-				}
+				}*/
 				itSystem.setUpdateUser(mAttrParameterInput.getCwid());
 				itSystem.setUpdateQuelle(AirKonstanten.APPLICATION_GUI_NAME);
 				itSystem.setUpdateTimestamp(ApplReposTS.getCurrentTimestamp());
@@ -4604,10 +4618,10 @@ List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(
 				}
 				CiBaseDTO dto = new CiBaseDTO();
 				setUpDTO(mAttrParameterInput,dto,AirKonstanten.TABLE_ID_IT_SYSTEM);
-				if(itSystem.getRelevanceICS() == -1){
+				/*if(itSystem.getRelevanceICS() == -1){
 					
 					dto.setRelevanceGR1920("Y");
-				}
+				}*/
 				if(itSystem.getRelevanceITSEC() == -1){
 					
 					dto.setRelevanceGR1435("Y");

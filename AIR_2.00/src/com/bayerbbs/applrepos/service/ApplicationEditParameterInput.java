@@ -82,9 +82,11 @@ public class ApplicationEditParameterInput {
 	private Long template;
 	private Long itSecGroupId;
 	private Long refId;
-	private Long relevanceICS;
+	/*ELERJ ICS*/
+//	private Long relevanceICS;
 	private Long relevanzItsec;
-	private String gxpFlag;
+//	ELERJ GXP
+//	private String gxpFlag;
 	//private String riskAnalysisYN;
 	// ---
 	
@@ -295,13 +297,13 @@ public class ApplicationEditParameterInput {
 	public void setRefId(Long refId) {
 		this.refId = refId;
 	}
-	public Long getRelevanceICS() {
+/*	public Long getRelevanceICS() {
 		return relevanceICS;
 	}
 	public void setRelevanceICS(Long relevanceICS) {
 		this.relevanceICS = relevanceICS;
 	}
-	public Long getRelevanzItsec() {
+*/	public Long getRelevanzItsec() {
 		return relevanzItsec;
 	}
 	public void setRelevanzItsec(Long relevanzItsec) {
@@ -325,13 +327,14 @@ public class ApplicationEditParameterInput {
 //		this.riskAnalysisYN = riskAnalysisYN;
 //	}
 
-	public String getGxpFlag() {
+//	ELERJ GXP
+/*	public String getGxpFlag() {
 		return gxpFlag;
 	}
 	public void setGxpFlag(String gxpFlag) {
 		this.gxpFlag = gxpFlag;
 	}
-	public Long getLicenseTypeId() {
+*/	public Long getLicenseTypeId() {
 		return licenseTypeId;
 	}
 	public void setLicenseTypeId(Long licenseTypeId) {

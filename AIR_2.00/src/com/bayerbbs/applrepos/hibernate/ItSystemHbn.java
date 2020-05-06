@@ -410,10 +410,11 @@ public class ItSystemHbn extends BaseHbn {
 			itSystem.setTemplate(null);
 			itSystem.setItsecGroupId(null);
 			itSystem.setRefId(null);
-
-			itSystem.setRelevanceICS(null);
+			/*ELERJ ICS*/
+//			itSystem.setRelevanceICS(null);
 			itSystem.setRelevanceITSEC(null);
-			itSystem.setGxpFlag(null);
+//			ELERJ GXP
+//			itSystem.setGxpFlag(null);
 		}
 
 		boolean toCommit = false;
@@ -553,7 +554,7 @@ public class ItSystemHbn extends BaseHbn {
 		StringBuilder sql = new StringBuilder();
 		// Start Adding for C0000241362 
 		String complainceGR1435=input.getComplainceGR1435();
-		String complainceICS=input.getComplainceICS();
+//		String complainceICS=input.getComplainceICS();
 		//ETNTX - IM0006132933 - missing Search functionality Start
 		Long operationalStatusId=input.getOperationalStatusId();//advsearchoperationalstatusid
 		
@@ -563,9 +564,10 @@ public class ItSystemHbn extends BaseHbn {
 		
 		System.out.println("operationalStatusId in hardwaresystem"+operationalStatusId+"lifecycleStatusId :="+lifecycleStatusId);
 				long complainceGR1435Long=0;
-				long complainceICSLong=0;
+				/*ELERJ ICS*/
+//				long complainceICSLong=0;
 				System.out.println("complainceGR1435"+complainceGR1435);
-				System.out.println("complainceICS"+complainceICS);
+//				System.out.println("complainceICS"+complainceICS);
 //IM0005978424 
 				if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("Yes"))
 					
@@ -574,11 +576,11 @@ public class ItSystemHbn extends BaseHbn {
 				if(complainceGR1435!=null&&complainceGR1435.equalsIgnoreCase("No"))
 					complainceGR1435Long=0;
 				//IM0005978424 
-				if(complainceICS!=null&&complainceICS.equalsIgnoreCase("Yes"))
+			/*	if(complainceICS!=null&&complainceICS.equalsIgnoreCase("Yes"))
 					complainceICSLong = -1;
 				//IM0005978424 
 				if(complainceICS!=null&&complainceICS.equalsIgnoreCase("No"))
-					complainceICSLong=0;
+					complainceICSLong=0;*/
 				// End Adding for C0000241362
 		sql.append("SELECT ").append(metaData.getIdField()).append(", ")
 				.append(metaData.getNameField());
@@ -596,13 +598,13 @@ public class ItSystemHbn extends BaseHbn {
 		// append(" hw_ident_or_trans = ").append(input.getCiSubTypeId()).
 		// start Adding for C0000241362
 				// RELEVANCE_ICS
-		if(complainceICS!=null&&complainceICS.length()>0)
+	/*	if(complainceICS!=null&&complainceICS.length()>0)
 		{
 				sql.append(" AND UPPER (RELEVANCE_ICS) = '"+complainceICSLong+"'");
 				
 				System.out.println("complainceGR1435Long appened"+complainceICSLong);
 		}
-				// RELEVANZ_ITSEC
+	*/			// RELEVANZ_ITSEC
 		if(complainceGR1435!=null&&complainceGR1435.length()>0)
 		{
 				sql.append("AND  UPPER (RELEVANZ_ITSEC) = '"+complainceGR1435Long+"'");
@@ -1483,8 +1485,8 @@ System.out.println("HARDWARE System SQL in ITSYSTEMHBN.java"+sql);
 
 					itsystemTarget.setRelevanceITSEC(itsystemSource
 							.getRelevanceITSEC());
-					itsystemTarget.setRelevanceICS(itsystemSource
-							.getRelevanceICS());
+					/*itsystemTarget.setRelevanceICS(itsystemSource
+							.getRelevanceICS());*/
 
 				} else {
 					// Reaktivierung / Übernahme des bestehenden Datensatzes

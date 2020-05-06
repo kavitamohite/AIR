@@ -138,7 +138,7 @@ AIR.AirApplicationManager = function() {
 				languageHelpStore: null,//muss sp�ter auch zu languageHelpStoreEN, languageHelpStoreDE werden
 				languageStoreEN: null,
 				languageStoreDE: null,
-				gxpFlagListStore: null,
+//				gxpFlagListStore: null,
 				loadClassListStore: null,
 				serviceModelListStore: null,
 				dedicatedListStore: null,

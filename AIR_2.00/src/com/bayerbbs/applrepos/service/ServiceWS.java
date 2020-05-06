@@ -84,7 +84,8 @@ public class ServiceWS {
 				dto.setTemplate(serviceSource.getTemplate());
 				
 				dto.setRelevanzItsec(serviceSource.getRelevanceITSEC());
-				dto.setRelevanceICS(serviceSource.getRelevanceICS());
+				
+//				dto.setRelevanceICS(serviceSource.getRelevanceICS());
 				//EUGXS
 				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_SERVICE,serviceSource.getId());
@@ -107,11 +108,11 @@ public class ServiceWS {
 					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
 				}
 
-				if(serviceSource.getRelevanceICS() == -1)
+			/*	if(serviceSource.getRelevanceICS() == -1)
 					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
 				else{
 					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
-				}
+				}*/
 				
 				// save / create itSystem
 				dto.setId(serviceSource.getServiceId());

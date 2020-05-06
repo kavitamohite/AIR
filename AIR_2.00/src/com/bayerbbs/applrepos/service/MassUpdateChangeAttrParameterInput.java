@@ -50,8 +50,8 @@ public class MassUpdateChangeAttrParameterInput {
 	private Long categoryBusinessId;
 	private Long classDataId;
 	private String organisationalScope;
-	
-	private Long relevanceICS;
+	/*ELERJ ICS*/
+//	private Long relevanceICS;
 	private Long relevanzITSEC;
 	// compliance request
 	private String relevanceGR1435;
@@ -74,9 +74,10 @@ public class MassUpdateChangeAttrParameterInput {
 	public void setRelevanceCD3011(String relevanceCD3011) {
 		this.relevanceCD3011 = relevanceCD3011;
 	}
-	private String gxpFlag;
+//	ELERJ GXP
+	/*private String gxpFlag;
 	private String gxpFlagId;	// falls später über id referenziert wird
-	
+	*/
 	private Integer osNameId;
 	private String isVirtualHardwareClient;
 	private String isVirtualHardwareHost;
@@ -461,15 +462,15 @@ public class MassUpdateChangeAttrParameterInput {
 	/**
 	 * @return the relevanceICS
 	 */
-	public Long getRelevanceICS() {
+	/*public Long getRelevanceICS() {
 		return relevanceICS;
 	}
-	/**
+	*//**
 	 * @param relevanceICS the relevanceICS to set
-	 */
+	 *//*
 	public void setRelevanceICS(Long relevanceICS) {
 		this.relevanceICS = relevanceICS;
-	}
+	}*/
 	/**
 	 * @return the relevanzITSEC
 	 */
@@ -533,27 +534,29 @@ public class MassUpdateChangeAttrParameterInput {
 	/**
 	 * @return the gxpFlag
 	 */
-	public String getGxpFlag() {
+//	ELERJ GXP
+	/*public String getGxpFlag() {
 		return gxpFlag;
 	}
-	/**
+	*//**
 	 * @param gxpFlag the gxpFlag to set
-	 */
+	 *//*
 	public void setGxpFlag(String gxpFlag) {
 		this.gxpFlag = gxpFlag;
 	}
-	/**
+	*//**
 	 * @return the gxpFlagId
-	 */
+	 *//*
 	public String getGxpFlagId() {
 		return gxpFlagId;
-	}
+	}*/
 	/**
 	 * @param gxpFlagId the gxpFlagId to set
 	 */
-	public void setGxpFlagId(String gxpFlagId) {
+//	ELERJ GXP
+	/*public void setGxpFlagId(String gxpFlagId) {
 		this.gxpFlagId = gxpFlagId;
-	}
+	}*/
 	/**
 	 * @return the osNameId
 	 */

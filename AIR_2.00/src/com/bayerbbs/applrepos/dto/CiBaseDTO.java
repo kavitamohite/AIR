@@ -67,12 +67,13 @@ public class CiBaseDTO {// implements Serializable
 	public void setRelevanceGR2008(String relevanceGR2008) {
 		this.relevanceGR2008 = relevanceGR2008;
 	}
-
-	private Long relevanceICS;
+//	ELERJ ICS
+//	private Long relevanceICS;
 	private Long relevanzItsec;
 	
-	private String gxpFlag;
-	private String gxpFlagId;// falls später über id referenziert wird
+//	ELERJ GXP
+//	private String gxpFlag;
+//	private String gxpFlagId;// falls später über id referenziert wird
 	
 	// Protection
 	private Long itSecSbAvailabilityId;
@@ -338,12 +339,12 @@ public class CiBaseDTO {// implements Serializable
 	}
 	public void setRelevanceGR1920(String relevanceGR1920) {
 		this.relevanceGR1920 = relevanceGR1920;
-		if ("Y".equals(relevanceGR1920)) {
+		/*if ("Y".equals(relevanceGR1920)) {
 			setRelevanceICS(new Long(-1));
 		}
 		else if ("N".equals(relevanceGR1920)) {
 			setRelevanceICS(new Long(0));
-		}
+		}*/
 	}
 	
 	public Long getRelevanzItsec() {
@@ -352,14 +353,16 @@ public class CiBaseDTO {// implements Serializable
 	public void setRelevanzItsec(Long relevanzItsec) {
 		this.relevanzItsec = relevanzItsec;
 	}
-	public Long getRelevanceICS() {
+//	ELERJ ICS
+	/*public Long getRelevanceICS() {
 		return relevanceICS;
 	}
 	public void setRelevanceICS(Long relevanceICS) {
 		this.relevanceICS = relevanceICS;
-	}
+	}*/
 
-	public String getGxpFlag() {
+//	ELERJ GXP
+	/*public String getGxpFlag() {
 		return gxpFlag;
 	}
 	public void setGxpFlag(String gxpFlag) {
@@ -372,7 +375,7 @@ public class CiBaseDTO {// implements Serializable
 	public void setGxpFlagId(String gxpFlagId) {
 		this.gxpFlagId = gxpFlagId;
 	}
-
+*/
 	public String getCiOwnerAcl() {
 		return ciOwnerAcl;
 	}
@@ -401,12 +404,13 @@ public class CiBaseDTO {// implements Serializable
 		this.relevanceGR1920Acl = relevanceGR1920Acl;
 	}
 
-	public String getGxpFlagIdAcl() {
+//	ELERJ GXP
+	/*public String getGxpFlagIdAcl() {
 		return gxpFlagIdAcl;
 	}
 	public void setGxpFlagIdAcl(String gxpFlagIdAcl) {
 		this.gxpFlagIdAcl = gxpFlagIdAcl;
-	}
+	}*/
 
 	public String getRefIdAcl() {
 		return refIdAcl;

@@ -24,7 +24,8 @@ public class SystemPlatformDTO {
 	private Boolean template;
 	private Boolean relevanceGR1920;
 	private Boolean relevanceGR1435;
-	private String gxpFlag;
+//	ELERJ GXP
+//	private String gxpFlag;
 	private Long refID;
 	private Long itsecGroupID;
 	private Timestamp sampleTestDate;
@@ -186,14 +187,15 @@ public class SystemPlatformDTO {
 		this.relevanceGR1435 = relevanceGR1435;
 	}
 
-	public String getGxpFlag() {
+//	ELERJ GXP
+	/*public String getGxpFlag() {
 		return gxpFlag;
 	}
 
 	public void setGxpFlag(String gxpFlag) {
 		this.gxpFlag = gxpFlag;
 	}
-
+*/
 	public Long getRefID() {
 		return refID;
 	}
