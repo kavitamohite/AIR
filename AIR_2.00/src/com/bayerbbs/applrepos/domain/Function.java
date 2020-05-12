@@ -47,10 +47,11 @@ public class Function extends DeletableRevisionInfo implements Serializable{
 	private Long template;
 	private Long itsecGroupId;
 	private Long refId;
-	
-	private Long relevanceICS;
+	/*--ELERJ ICS--*/
+//	private Long relevanceICS;
 	private Long relevanceITSEC;
-	private String gxpFlag;
+	/*--ELERJ GXP---*/
+//	private String gxpFlag;
 	
 
 	
@@ -144,7 +145,7 @@ public class Function extends DeletableRevisionInfo implements Serializable{
 	}
 	
 	
-	@Column(name = "RELEVANCE_ICS")
+	/*@Column(name = "RELEVANCE_ICS")
 	public Long getRelevanceICS() {
 		return relevanceICS;
 	}
@@ -152,7 +153,7 @@ public class Function extends DeletableRevisionInfo implements Serializable{
 	public void setRelevanceICS(Long relevanceICS) {
 		this.relevanceICS = relevanceICS;
 	}
-
+*/
 	@Column(name = "RELEVANZ_ITSEC")
 	public Long getRelevanceITSEC() {
 		return relevanceITSEC;
@@ -162,7 +163,7 @@ public class Function extends DeletableRevisionInfo implements Serializable{
 		this.relevanceITSEC = relevanceITSEC;
 	}
 
-	@Column(name = "GXP_FLAG")
+	/*@Column(name = "GXP_FLAG")
 	public String getGxpFlag() {
 		return gxpFlag;
 	}
@@ -170,7 +171,7 @@ public class Function extends DeletableRevisionInfo implements Serializable{
 	public void setGxpFlag(String gxpFlag) {
 		this.gxpFlag = gxpFlag;
 	}
-		
+*/		
 	
 	
 

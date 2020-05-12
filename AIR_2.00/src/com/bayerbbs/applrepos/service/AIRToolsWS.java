@@ -19,7 +19,7 @@ import com.bayerbbs.applrepos.dto.CurrencyDTO;
 import com.bayerbbs.applrepos.dto.DedicatedDTO;
 import com.bayerbbs.applrepos.dto.GroupTypesDTO;
 import com.bayerbbs.applrepos.dto.GroupsDTO;
-import com.bayerbbs.applrepos.dto.GxpFlagDTO;
+//import com.bayerbbs.applrepos.dto.GxpFlagDTO;
 import com.bayerbbs.applrepos.dto.ItSecGroupDTO;
 import com.bayerbbs.applrepos.dto.ItSecSBWerteDTO;
 import com.bayerbbs.applrepos.dto.ItSetDTO;
@@ -111,8 +111,8 @@ public class AIRToolsWS {
 	public GroupsDTO[] getGroupByGroupUsage(String groupUsageName) {
 		return GroupHbn.getArrayFromList(GroupHbn.findGroupByGroupUsage(groupUsageName));
 	}
-	
-	public GxpFlagDTO[] getGxpFlagList() {
+	/*--ELERJ GXP---*/
+	/*public GxpFlagDTO[] getGxpFlagList() {
 		//&nbsp; <br/> als Leertextoption --> Problem: keines der beiden Textwerte wird als HTML gerendert NACHDEM es ausgewählt wurde.
 		//Gelöst durch ExtJS Combobox Override Anpassung
 		GxpFlagDTO[] gxpFlags = {
@@ -124,7 +124,7 @@ public class AIRToolsWS {
 		};
 		
 		return gxpFlags; 
-	}
+	}*/
 	
 	public OrganisationalScopeDTO[] getOrganisationalScopeList() {
 		OrganisationalScopeDTO[] orgScopes = {

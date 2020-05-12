@@ -309,7 +309,7 @@ AIR.AirUiFactory = function() {
 					marginTop: 5
 				},
 				
-				items: [{
+				items: [/*{
 		        	xtype: 'checkboxgroup',
 		        	id: 'cbgComplianceLinkTypeRelevance',
 		        	
@@ -326,7 +326,7 @@ AIR.AirUiFactory = function() {
     			        { boxLabel: labels.RelevanceICSITOperations, name: 'cbgComplianceLinkTypeRelevance'},//, width: 100
     			        { boxLabel: labels.RelevanceICSChangeManagement, name: 'cbgComplianceLinkTypeRelevance'}
 			        ]
-				},{
+				},*/{
 					xtype: 'filterCombo',
 					id: 'cbLinkCiType',
 					store: linkCiTypeListStore,//AIR.AirStoreManager.getStoreByName('linkCiTypeListStore'),//new Ext.data.Store(),//

@@ -50,14 +50,14 @@ public class TerrainWS {
 		terrainDTO.setRefId(input.getRefId());
 		
 		terrainDTO.setRelevanceGR1435(input.getRelevanceGR1435());
-		terrainDTO.setRelevanceGR1920(input.getRelevanceGR1920());
+//		terrainDTO.setRelevanceGR1920(input.getRelevanceGR1920());
 		//EUGXS
 		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 		terrainDTO.setRelevanceCD3010(input.getRelevanceCD3010());
 		terrainDTO.setRelevanceCD3011(input.getRelevanceCD3011());
-
-		terrainDTO.setGxpFlag(input.getGxpFlag());
-		terrainDTO.setGxpFlagId(input.getGxpFlag());
+		/*--ELERJ GXP---*/
+//		terrainDTO.setGxpFlag(input.getGxpFlag());
+//		terrainDTO.setGxpFlagId(input.getGxpFlag());
 		
 		terrainDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
 		terrainDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
@@ -189,7 +189,7 @@ public class TerrainWS {
 				//EUGXS
 				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 				dto.setRelevanzItsec(terrainSource.getRelevanceITSEC());
-				dto.setRelevanceICS(terrainSource.getRelevanceICS());
+//				dto.setRelevanceICS(terrainSource.getRelevanceICS());
 				
 				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_TERRAIN,terrainSource.getId());
 				
@@ -210,12 +210,13 @@ public class TerrainWS {
 				else{
 					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
 				}
+				/*--ELERJ ICS--*/
 				
-				if(terrainSource.getRelevanceICS() == -1)
+			/*	if(terrainSource.getRelevanceICS() == -1)
 					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
 				else{
 					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
-				}
+				}*/
 				
 				// save / create itSystem
 				dto.setStandortId(terrainSource.getStandortId());

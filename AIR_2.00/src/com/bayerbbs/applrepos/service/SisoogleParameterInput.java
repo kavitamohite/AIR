@@ -15,7 +15,8 @@ public class SisoogleParameterInput implements Serializable {
 	String responsibleOE;
 	String subResponsible;
 	String subResponsibleOE;
-	String relevanceICS;
+	/*--ELERJ ICS--*/
+//	String relevanceICS;
 	String relevanceItsec;
 	String itsecGroup;
 	String itSet;
@@ -66,13 +67,13 @@ public class SisoogleParameterInput implements Serializable {
 	public void setSubResponsibleOE(String subResponsibleOE) {
 		this.subResponsibleOE = subResponsibleOE;
 	}
-	public String getRelevanceICS() {
+/*	public String getRelevanceICS() {
 		return relevanceICS;
 	}
 	public void setRelevanceICS(String relevanceICS) {
 		this.relevanceICS = relevanceICS;
 	}
-	public String getRelevanceItsec() {
+*/	public String getRelevanceItsec() {
 		return relevanceItsec;
 	}
 	public void setRelevanceItsec(String relevanceItsec) {

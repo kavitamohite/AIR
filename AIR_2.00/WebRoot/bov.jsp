@@ -358,7 +358,7 @@ Could not find the application.
 	<span class="tablered">Original Severity: <%=bovApp.getDispSeverityLevel()%></span>
 	</td>
 </tr>
-<tr title="Relevant applications are those applications that must adhere to certain FDA compliance regulations in the Clinical, Laboratory or Manufacturing areas.  GXP stands for Good x Practices where the x stands for Clinical, Laboratory, or Manufacturing.">
+<%-- <tr title="Relevant applications are those applications that must adhere to certain FDA compliance regulations in the Clinical, Laboratory or Manufacturing areas.  GXP stands for Good x Practices where the x stands for Clinical, Laboratory, or Manufacturing.">
 <td class="tablename">GxP Relevant:</td>
 <td class="tablevalue">
 	<input type="radio" name="gxprelevant" value="GXP"/> Yes<br/>
@@ -366,8 +366,8 @@ Could not find the application.
 	<br/>
 	<span class="tablered">Original GxP Relevancy: <%=bovApp.getDispGxpRelevant()%></span>
 </td>
-</tr>
-<tr title="GISC compliance relevant applications are those applications that are listed by our clients on their 'General IS Control Landscape' as being financially significant and require the appropriate General IS Controls (GISC).">
+</tr> --%><!-- --ELERJ ICS-- -->
+<%-- <tr title="GISC compliance relevant applications are those applications that are listed by our clients on their 'General IS Control Landscape' as being financially significant and require the appropriate General IS Controls (GISC).">
 <td class="tablename">GISC Relevant:</td>
 	<td class="tablevalue">
 	<input type="radio" name="icsrelevant" value="Y"/> Yes<br/>
@@ -376,7 +376,7 @@ Could not find the application.
 	<span class="tablered">Original GISC Relevancy: <%=bovApp.getDispGiscRelevant()%></span>
 	</td>
 </tr>
-<tr>
+ --%><tr>
 <td class="tablename">GR1435 Relevant:</td>
 	<td class="tablevalue">
 	<input type="radio" name="itsecrelevant" value="Y"/> Yes<br/>

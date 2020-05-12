@@ -411,10 +411,11 @@ public class SchrankHbn extends LokationItemHbn {
 			schrank.setTemplate(null);
 			schrank.setItsecGroupId(null);
 			schrank.setRefId(null);
-			
-			schrank.setRelevanceICS(null);
+			/*--ELERJ ICS--*/
+//			schrank.setRelevanceICS(null);
 			schrank.setRelevanceITSEC(null);
-			schrank.setGxpFlag(null);
+			/*--ELERJ GXP---*/
+//			schrank.setGxpFlag(null);
 		}
 
 		boolean toCommit = false;
@@ -629,7 +630,8 @@ public class SchrankHbn extends LokationItemHbn {
 						positionTarget.setTemplate(positionSource.getTemplate());
 						
 						positionTarget.setRelevanceITSEC(positionSource.getRelevanceITSEC());
-						positionTarget.setRelevanceICS(positionSource.getRelevanceICS());
+						/*--ELERJ ICS--*/
+//						positionTarget.setRelevanceICS(positionSource.getRelevanceICS());
 
 					}
 					else {

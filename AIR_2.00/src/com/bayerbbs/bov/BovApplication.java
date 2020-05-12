@@ -40,8 +40,8 @@ public class BovApplication {
 	private String dispDrLevel;
 	private String dispGiscRelevant;
 	private String dispGR1435Relevant;
-	
-	private String dispGxpRelevant;
+	/*--ELERJ GXP---*/	
+//	private String dispGxpRelevant;
 	private String dispInformationClassification;
 	private String dispNotificationDate;
 	private String dispOwnershipStatus;
@@ -165,9 +165,9 @@ public class BovApplication {
 		return dispGR1435Relevant;
 	}
 
-	public String getDispGxpRelevant() {
+	/*public String getDispGxpRelevant() {
 		return dispGxpRelevant;
-	}
+	}*/
 
 	public String getDispInformationClassification() {
 		return dispInformationClassification;
@@ -303,7 +303,7 @@ public class BovApplication {
 		dispOwnershipStatus = "";
 		dispDrLevel = "";
 		dispSeverityLevel = "";
-		dispGxpRelevant = "";
+//		dispGxpRelevant = "";
 		dispGiscRelevant = "";
 		dispGR1435Relevant = "";
 		dispInformationClassification = "";
@@ -329,12 +329,13 @@ public class BovApplication {
 				dispDrLevel = "Level " + application.getDisasterRecoveryLevel();
 			}
 					//	dispSeverityLevel = getSeverityLevel(application.getSeverityLevelId());
-			if (null != application.getGxpFlag())
+			/*--ELERJ GXP---*/
+		/*	if (null != application.getGxpFlag())
 				dispGxpRelevant = "Yes";
 			else
-				dispGxpRelevant = "No";
-
-			dispGiscRelevant = getValueYesNo(application.getRelevanceICS());
+				dispGxpRelevant = "No";*/
+			/*--ELERJ ICS--*/
+//			dispGiscRelevant = getValueYesNo(application.getRelevanceICS());
 			dispGR1435Relevant = getValueYesNo(application.getRelevanzITSEC());
 			dispInformationClassification = getInformationClassification(application.getClassInformationId());
 			dispDataPrivacy = getValueYesNo(application.getDataPrivacyPersonalData());

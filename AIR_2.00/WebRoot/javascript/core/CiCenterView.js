@@ -44,11 +44,11 @@ AIR.CiCenterView = Ext.extend(Ext.Panel, {
 						xtype: 'hidden',
 						id: 'hcomplainceGR1435'
 					},
-					{
+					/*{
 						xtype: 'hidden',
 						id: 'hcomplainceICS'
 						
-					},
+					},*/
 					
 					{
 					xtype: 'hidden',

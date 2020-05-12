@@ -199,10 +199,11 @@ public class TerrainHbn extends LokationItemHbn {
 			terrain.setTemplate(null);
 			terrain.setItsecGroupId(null);
 			terrain.setRefId(null);
-			
-			terrain.setRelevanceICS(null);
+			/*--ELERJ ICS--*/
+//			terrain.setRelevanceICS(null);
 			terrain.setRelevanceITSEC(null);
-			terrain.setGxpFlag(null);
+			/*--ELERJ GXP---*/
+//			terrain.setGxpFlag(null);
 		}
 
 		boolean toCommit = false;
@@ -418,7 +419,8 @@ public class TerrainHbn extends LokationItemHbn {
 						terrainTarget.setTemplate(terrainSource.getTemplate());
 						
 						terrainTarget.setRelevanceITSEC(terrainSource.getRelevanceITSEC());
-						terrainTarget.setRelevanceICS(terrainSource.getRelevanceICS());
+						/*--ELERJ ICS--*/
+//						terrainTarget.setRelevanceICS(terrainSource.getRelevanceICS());
 
 					}
 					else {

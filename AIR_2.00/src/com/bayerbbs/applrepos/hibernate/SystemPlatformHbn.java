@@ -172,7 +172,8 @@ public class SystemPlatformHbn {
 						//theSystemPlatform.setResponsible(dto.getResponsible());
 						//theSystemPlatform.setSubResponsible(dto.getSubResponsible());
 						theSystemPlatform.setRefID(dto.getRefID());
-						theSystemPlatform.setRelevanceGR1920(dto.getRelevanceGR1920());
+						/*--ELERJ ICS--*/
+//						theSystemPlatform.setRelevanceGR1920(dto.getRelevanceGR1920());
 						theSystemPlatform.setRelevanceGR1435(dto.getRelevanceGR1435());
 						//theSystemPlatform.getGxpFlag().(dto.getGxpFlag());
 						//theSystemPlatform.setItsecGroupID(dto.getItsecGroupID());

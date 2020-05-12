@@ -37,7 +37,8 @@ public class CiBaseDTO {// implements Serializable
 	private String templateLinkWithCIs;
 	
 	private String relevanceGR1435;//ITSEC
-	private String relevanceGR1920;//ICS
+	/*--ELERJ ICS--*/
+//	private String relevanceGR1920;//ICS
 	//EUGXS
 	//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 	private String relevanceGR2008;
@@ -70,9 +71,9 @@ public class CiBaseDTO {// implements Serializable
 
 	private Long relevanceICS;
 	private Long relevanzItsec;
-	
-	private String gxpFlag;
-	private String gxpFlagId;// falls später über id referenziert wird
+	/*--ELERJ GXP---*/
+//	private String gxpFlag;
+//	private String gxpFlagId;// falls später über id referenziert wird
 	
 	// Protection
 	private Long itSecSbAvailabilityId;
@@ -100,7 +101,7 @@ public class CiBaseDTO {// implements Serializable
 	private String relevanceGR1435Acl;
 	private String relevanceGR1920Acl;
 	
-	private String gxpFlagIdAcl;
+//	private String gxpFlagIdAcl;
 	private String refIdAcl;
 	private String itsecGroupIdAcl;
 	
@@ -332,8 +333,8 @@ public class CiBaseDTO {// implements Serializable
 			setRelevanzItsec(new Long(0));
 		}
 	}
-
-	public String getRelevanceGR1920() {
+	/*--ELERJ ICS--*/
+	/*public String getRelevanceGR1920() {
 		return relevanceGR1920;
 	}
 	public void setRelevanceGR1920(String relevanceGR1920) {
@@ -344,7 +345,7 @@ public class CiBaseDTO {// implements Serializable
 		else if ("N".equals(relevanceGR1920)) {
 			setRelevanceICS(new Long(0));
 		}
-	}
+	}*/
 	
 	public Long getRelevanzItsec() {
 		return relevanzItsec;
@@ -352,14 +353,14 @@ public class CiBaseDTO {// implements Serializable
 	public void setRelevanzItsec(Long relevanzItsec) {
 		this.relevanzItsec = relevanzItsec;
 	}
-	public Long getRelevanceICS() {
+/*	public Long getRelevanceICS() {
 		return relevanceICS;
 	}
 	public void setRelevanceICS(Long relevanceICS) {
 		this.relevanceICS = relevanceICS;
 	}
-
-	public String getGxpFlag() {
+*/
+/*	public String getGxpFlag() {
 		return gxpFlag;
 	}
 	public void setGxpFlag(String gxpFlag) {
@@ -371,7 +372,7 @@ public class CiBaseDTO {// implements Serializable
 	}
 	public void setGxpFlagId(String gxpFlagId) {
 		this.gxpFlagId = gxpFlagId;
-	}
+	}*/
 
 	public String getCiOwnerAcl() {
 		return ciOwnerAcl;
@@ -401,12 +402,12 @@ public class CiBaseDTO {// implements Serializable
 		this.relevanceGR1920Acl = relevanceGR1920Acl;
 	}
 
-	public String getGxpFlagIdAcl() {
+	/*public String getGxpFlagIdAcl() {
 		return gxpFlagIdAcl;
 	}
 	public void setGxpFlagIdAcl(String gxpFlagIdAcl) {
 		this.gxpFlagIdAcl = gxpFlagIdAcl;
-	}
+	}*/
 
 	public String getRefIdAcl() {
 		return refIdAcl;

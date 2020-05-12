@@ -46,7 +46,8 @@ public class CiSearchParamsDTO { //implements Serializable
 
 	// Start Adding for C0000241362
     private String complainceGR1435;
-    private String complainceICS;
+    /*--ELERJ ICS--*/
+//    private String complainceICS;
     
    // IM0006132933 - Missing search param SR Start
     private Long operationalStatusId;//advsearchoperationalstatusid
@@ -86,7 +87,7 @@ public class CiSearchParamsDTO { //implements Serializable
 	}
 
 
-	public String getComplainceICS() {
+/*	public String getComplainceICS() {
 		return complainceICS;
 	}
 
@@ -94,7 +95,7 @@ public class CiSearchParamsDTO { //implements Serializable
 	public void setComplainceICS(String complainceICS) {
 		this.complainceICS = complainceICS;
 	}
-    
+*/    
     
  // End Adding for C0000241362
 	

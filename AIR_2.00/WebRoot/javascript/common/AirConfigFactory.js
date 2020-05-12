@@ -243,7 +243,7 @@ AIR.AirConfigFactory = function() {
 			   'itSecSbIntegrityId', 'itSecSbIntegrityTxt', 'classInformationId', 'classInformationTxt', 'messageTextSecureSystem',
 			    'itset', 'template', 'itsecGroupId', 'refId', 'relevanceGR1435', 'relevanceGR1920','relevanceCD3010','relevanceCD3011',
 			   
-			   'ciOwnerAcl', 'ciOwnerDelegateAcl', 'relevanceGR1435Acl', 'relevanceGR1920Acl', 'gxpFlag', 'gxpFlagId', 'gxpFlagIdAcl',
+			   'ciOwnerAcl', 'ciOwnerDelegateAcl', 'relevanceGR1435Acl', 'relevanceGR1920Acl', /*'gxpFlag', 'gxpFlagId', 'gxpFlagIdAcl',*/
 			   'refIdAcl', 'itsecGroupIdAcl', 'templateLinkWithCIs', {
 				name: 'tableId', type: 'int'
 			}, 'downStreamAdd', 'downStreamDelete'];

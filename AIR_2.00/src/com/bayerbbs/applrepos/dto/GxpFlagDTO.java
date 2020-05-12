@@ -1,4 +1,4 @@
-package com.bayerbbs.applrepos.dto;
+/*package com.bayerbbs.applrepos.dto;
 
 import java.io.Serializable;
 
@@ -39,3 +39,4 @@ public class GxpFlagDTO implements Serializable {
 	}
 	
 }
+*/

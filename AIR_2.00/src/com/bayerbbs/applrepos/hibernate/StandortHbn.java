@@ -208,10 +208,11 @@ public class StandortHbn extends LokationItemHbn {
 			standort.setTemplate(null);
 			standort.setItsecGroupId(null);
 			standort.setRefId(null);
-			
-			standort.setRelevanceICS(null);
+			/*--ELERJ ICS--*/
+//			standort.setRelevanceICS(null);
 			standort.setRelevanceITSEC(null);
-			standort.setGxpFlag(null);
+			/*--ELERJ GXP---*/
+//			standort.setGxpFlag(null);
 		}
 
 		boolean toCommit = false;
@@ -428,7 +429,7 @@ public class StandortHbn extends LokationItemHbn {
 						siteTarget.setTemplate(siteSource.getTemplate());
 						
 						siteTarget.setRelevanceITSEC(siteSource.getRelevanceITSEC());
-						siteTarget.setRelevanceICS(siteSource.getRelevanceICS());
+//						siteTarget.setRelevanceICS(siteSource.getRelevanceICS());
 
 					}
 					else {

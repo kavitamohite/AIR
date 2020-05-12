@@ -61,8 +61,8 @@ public class ApplicationDTO extends CiBaseDTO {
 	private String locationPath;
 	private Long businessEssentialId;
 	private String businessEssential;
-	
-	private String gxpFlagTxt;	// kann ausgelagert werden in gxpFlag - Methoden anpassen !!!
+	/*--ELERJ GXP---*/
+//	private String gxpFlagTxt;	// kann ausgelagert werden in gxpFlag - Methoden anpassen !!!
 
 	private Long licenseTypeId;
 	private String licenseTypeTxt;
@@ -338,15 +338,15 @@ public class ApplicationDTO extends CiBaseDTO {
 	public void setTemplateReferencedByItem(String templateReferencedByItem) {
 		this.templateReferencedByItem = templateReferencedByItem;
 	}
-
-	public String getGxpFlagTxt() {
+	/*--ELERJ GXP---*/
+	/*public String getGxpFlagTxt() {
 		return gxpFlagTxt;
 	}
 
 	public void setGxpFlagTxt(String gxpFlagTxt) {
 		this.gxpFlagTxt = gxpFlagTxt;
 	}
-
+*/
 	public Long getLicenseTypeId() {
 		return licenseTypeId;
 	}

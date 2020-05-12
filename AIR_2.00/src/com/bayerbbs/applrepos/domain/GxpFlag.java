@@ -1,4 +1,4 @@
-package com.bayerbbs.applrepos.domain;
+/*package com.bayerbbs.applrepos.domain;
 
 public enum GxpFlag {
 	GXP("GXP"),
@@ -14,3 +14,4 @@ public enum GxpFlag {
 		return flag;
 	}
 }
+*/

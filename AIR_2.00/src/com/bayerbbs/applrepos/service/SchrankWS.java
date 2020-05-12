@@ -43,14 +43,15 @@ public class SchrankWS {
 		schrankDTO.setRefId(input.getRefId());
 		
 		schrankDTO.setRelevanceGR1435(input.getRelevanceGR1435());
-		schrankDTO.setRelevanceGR1920(input.getRelevanceGR1920());
+		/*--ELERJ ICS--*/
+//		schrankDTO.setRelevanceGR1920(input.getRelevanceGR1920());
 		//EUGXS
 		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 		schrankDTO.setRelevanceCD3010(input.getRelevanceCD3010());
 		schrankDTO.setRelevanceCD3011(input.getRelevanceCD3011());
-
-		schrankDTO.setGxpFlag(input.getGxpFlag());
-		schrankDTO.setGxpFlagId(input.getGxpFlag());
+		/*--ELERJ GXP---*/
+//		schrankDTO.setGxpFlag(input.getGxpFlag());
+//		schrankDTO.setGxpFlagId(input.getGxpFlag());
 		
 		schrankDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
 		schrankDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
@@ -161,7 +162,8 @@ public class SchrankWS {
 				dto.setTemplate(positionSource.getTemplate());
 				
 				dto.setRelevanzItsec(positionSource.getRelevanceITSEC());
-				dto.setRelevanceICS(positionSource.getRelevanceICS());
+				/*--ELERJ ICS--*/
+//				dto.setRelevanceICS(positionSource.getRelevanceICS());
 				//EUGXS
 				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_POSITION,positionSource.getId());
@@ -183,11 +185,11 @@ public class SchrankWS {
 					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
 				}
 				
-				if(positionSource.getRelevanceICS() == -1)
+				/*if(positionSource.getRelevanceICS() == -1)
 					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
 				else{
 					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
-				}
+				}*/
 				
 				// save / create itSystem
 				dto.setRoomId(positionSource.getRoomId());

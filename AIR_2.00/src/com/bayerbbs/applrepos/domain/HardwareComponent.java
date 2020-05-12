@@ -158,8 +158,8 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 	private String lastSyncSource;
 
 	private String syncing;
-
-	private String gxpFlag;
+	/*--ELERJ GXP---*/
+//	private String gxpFlag;
 
 	private LifecycleSubStat commercialStatus;
 
@@ -911,8 +911,8 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 	public void setSyncing(String syncing) {
 		this.syncing = syncing;
 	}
-
-	@Column(name = "GXP_FLAG", insertable = false, updatable = false)
+	/*--ELERJ GXP---*/
+	/*@Column(name = "GXP_FLAG", insertable = false, updatable = false)
 	public String getGxpFlag() {
 		return gxpFlag;
 	}
@@ -920,7 +920,7 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 	public void setGxpFlag(String gxpFlag) {
 		this.gxpFlag = gxpFlag;
 	}
-
+*/
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "COMMERCIAL_STATUS_ID")
 	public LifecycleSubStat getCommercialStatus() {
@@ -933,10 +933,10 @@ public class HardwareComponent extends DeletableRevisionInfo implements Serializ
 
 	
 
-	@Column(name = "GXP_FLAG")
+	/*@Column(name = "GXP_FLAG")
 	public String getAcRequest() {
 		return acRequest;
-	}
+	}*/
 
 	public void setAcRequest(String acRequest) {
 		this.acRequest = acRequest;

@@ -53,13 +53,15 @@ public class StandortWS {
 		standortDTO.setRefId(input.getRefId());
 		
 		standortDTO.setRelevanceGR1435(input.getRelevanceGR1435());
-		standortDTO.setRelevanceGR1920(input.getRelevanceGR1920());
+		/*--ELERJ ICS--*/
+//		standortDTO.setRelevanceGR1920(input.getRelevanceGR1920());
 		//EUGXS
 		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 		standortDTO.setRelevanceCD3010(input.getRelevanceCD3010());
 		standortDTO.setRelevanceCD3011(input.getRelevanceCD3011());
-		standortDTO.setGxpFlag(input.getGxpFlag());
-		standortDTO.setGxpFlagId(input.getGxpFlag());
+		/*--ELERJ GXP---*/
+//		standortDTO.setGxpFlag(input.getGxpFlag());
+//		standortDTO.setGxpFlagId(input.getGxpFlag());
 		
 		standortDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
 		standortDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
@@ -178,7 +180,7 @@ public class StandortWS {
 				dto.setTemplate(siteSource.getTemplate());
 				
 				dto.setRelevanzItsec(siteSource.getRelevanceITSEC());
-				dto.setRelevanceICS(siteSource.getRelevanceICS());
+//				dto.setRelevanceICS(siteSource.getRelevanceICS());
 				//EUGXS
 				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_SITE,siteSource.getId());
@@ -200,12 +202,13 @@ public class StandortWS {
 				else{
 					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
 				}
+				/*--ELERJ ICS--*/
 
-				if(siteSource.getRelevanceICS() == -1)
+				/*if(siteSource.getRelevanceICS() == -1)
 					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
 				else{
 					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
-				}
+				}*/
 				
 				// save / create itSystem
 				dto.setLandId(siteSource.getLandId());

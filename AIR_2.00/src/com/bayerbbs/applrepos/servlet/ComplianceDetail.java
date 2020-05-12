@@ -13,7 +13,8 @@ public class ComplianceDetail {
 	private String control;
 	private String complianceStatus;
 	private String justification;
-	private String ReICSSecurity;
+	/*--ELERJ ICS--*/
+//	private String ReICSSecurity;
 	private String GStoolId;
 	
 	//IM0006372483 partly implemented controls not in AIR Report  GAP
@@ -75,16 +76,16 @@ public class ComplianceDetail {
 	/**
 	 * @return the reICSSecurity
 	 */
-	public String getReICSSecurity() {
+/*	public String getReICSSecurity() {
 		return ReICSSecurity;
 	}
-	/**
+	*//**
 	 * @param reICSSecurity the reICSSecurity to set
-	 */
+	 *//*
 	public void setReICSSecurity(String reICSSecurity) {
 		ReICSSecurity = reICSSecurity;
 	}
-	/**
+*/	/**
 	 * @return the gStoolId
 	 */
 	public String getGStoolId() {

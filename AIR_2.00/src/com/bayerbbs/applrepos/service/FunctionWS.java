@@ -71,14 +71,16 @@ public class FunctionWS {
 		functionDTO.setRefId(input.getRefId());
 		
 		functionDTO.setRelevanceGR1435(input.getRelevanceGR1435());
-		functionDTO.setRelevanceGR1920(input.getRelevanceGR1920());
+		/*--ELERJ ICS--*/
+//		functionDTO.setRelevanceGR1920(input.getRelevanceGR1920());
 		//EUGXS
 		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 		
 		functionDTO.setRelevanceCD3010(input.getRelevanceCD3010());
 		functionDTO.setRelevanceCD3011(input.getRelevanceCD3011());
-		functionDTO.setGxpFlag(input.getGxpFlag());
-		functionDTO.setGxpFlagId(input.getGxpFlag());
+	
+//		/*--ELERJ GXP---*/functionDTO.setGxpFlag(input.getGxpFlag());
+//		functionDTO.setGxpFlagId(input.getGxpFlag());
 		
 		return functionDTO;
 		
@@ -124,7 +126,7 @@ public class FunctionWS {
 				dto.setTemplate(functionSource.getTemplate());
 				
 				dto.setRelevanzItsec(functionSource.getRelevanceITSEC());
-				dto.setRelevanceICS(functionSource.getRelevanceICS());
+//				dto.setRelevanceICS(functionSource.getRelevanceICS());
 				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_FUNCTION,functionSource.getId());
 
 				for(int i =0; i<ComplianceIDS.size(); i++ ){
@@ -145,11 +147,11 @@ public class FunctionWS {
 					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
 				}
 
-				if(functionSource.getRelevanceICS() == -1)
+				/*if(functionSource.getRelevanceICS() == -1)
 					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
 				else{
 					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
-				}
+				}*/
 				
 				// save / create itSystem
 				//dto.setId(functionSource.getId());

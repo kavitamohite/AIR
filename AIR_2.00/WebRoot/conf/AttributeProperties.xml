@@ -1136,7 +1136,7 @@
 		<attributeMask></attributeMask>
 	</Identifier>
 
-	<Identifier>
+<!-- 	<Identifier>
 		<id>relevanceICS</id>
 		<Mandatory>required</Mandatory>
 		<ciTypeId>2</ciTypeId>
@@ -1148,7 +1148,7 @@
 		<attributeLength>0</attributeLength>
 		<attributeMask></attributeMask>
 	</Identifier>
-
+ -->
 	<Identifier>
 		<id>relevanceGR2008</id>
 		<Mandatory>optional</Mandatory>

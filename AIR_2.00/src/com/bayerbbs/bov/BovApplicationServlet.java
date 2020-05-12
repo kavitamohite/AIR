@@ -83,9 +83,9 @@ public class BovApplicationServlet extends HttpServlet {
 				dto.setProcessed(true);
 				String strDrlevel = (String) req.getParameter("drlevel");
 				String strSeveritylevel = (String) req.getParameter("severitylevel");
-				
-				String strGxpRelevant = (String) req.getParameter("gxprelevant");
-				String strIcsRelevant = (String) req.getParameter("icsrelevant");
+				/*--ELERJ GXP---*/ /*--ELERJ ICS--*/
+//				String strGxpRelevant = (String) req.getParameter("gxprelevant");
+//				String strIcsRelevant = (String) req.getParameter("icsrelevant");
 				String strItsecRelevant = (String) req.getParameter("itsecrelevant");
 				
 				String strInformationClassification = (String) req.getParameter("informationclassification");
@@ -100,12 +100,12 @@ public class BovApplicationServlet extends HttpServlet {
 				if (null != strSeveritylevel) {
 					dto.setSeverityLevel(Long.parseLong(strSeveritylevel));	
 				}
-				if (null != strGxpRelevant) {
+				/*if (null != strGxpRelevant) {
 					dto.setGxpRelevant(strGxpRelevant);
-				}
-				if (null != strIcsRelevant) {
+				}*/
+				/*if (null != strIcsRelevant) {
 					dto.setIcsRelevant(strIcsRelevant);
-				}
+				}*/
 				
 				if (null != strItsecRelevant) dto.setItsecRelevant(strItsecRelevant);
 				

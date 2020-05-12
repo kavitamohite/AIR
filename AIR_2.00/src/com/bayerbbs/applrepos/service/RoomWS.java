@@ -61,14 +61,15 @@ public class RoomWS {
 		roomDTO.setRefId(input.getRefId());
 		
 		roomDTO.setRelevanceGR1435(input.getRelevanceGR1435());
-		roomDTO.setRelevanceGR1920(input.getRelevanceGR1920());
+		
+//		roomDTO.setRelevanceGR1920(input.getRelevanceGR1920());
 		//EUGXS
 		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 		roomDTO.setRelevanceCD3010(input.getRelevanceCD3010());
 		roomDTO.setRelevanceCD3011(input.getRelevanceCD3011());
-
-		roomDTO.setGxpFlag(input.getGxpFlag());
-		roomDTO.setGxpFlagId(input.getGxpFlag());
+		/*--ELERJ GXP---*/
+//		roomDTO.setGxpFlag(input.getGxpFlag());
+//		roomDTO.setGxpFlagId(input.getGxpFlag());
 		
 		roomDTO.setGpsccontactSupportGroupHidden(input.getGpsccontactSupportGroupHidden());
 		roomDTO.setGpsccontactChangeTeamHidden(input.getGpsccontactChangeTeamHidden());
@@ -179,7 +180,8 @@ public class RoomWS {
 				dto.setTemplate(roomSource.getTemplate());
 				
 				dto.setRelevanzItsec(roomSource.getRelevanceITSEC());
-				dto.setRelevanceICS(roomSource.getRelevanceICS());
+				/*--ELERJ ICS--*/
+//				dto.setRelevanceICS(roomSource.getRelevanceICS());
 				//EUGXS
 				//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 				List<CiComplianceRequest> ComplianceIDS = ComplianceHbn.getCiCompliance_request(AirKonstanten.TABLE_ID_ROOM,roomSource.getId());
@@ -202,11 +204,12 @@ public class RoomWS {
 					dto.setRelevanceGR1435(AirKonstanten.NO_SHORT);
 				}
 
-				if(roomSource.getRelevanceICS() == -1)
+				/*--ELERJ ICS--*/
+			/*	if(roomSource.getRelevanceICS() == -1)
 					dto.setRelevanceGR1920(AirKonstanten.YES_SHORT);
 				else{
 					dto.setRelevanceGR1920(AirKonstanten.NO_SHORT);
-				}
+				}*/
 				
 				// save / create itSystem
 				dto.setAreaId(roomSource.getBuildingAreaId());

@@ -676,7 +676,8 @@ AIR.AirStoreFactory = function() {
 					{name: 'relevanceViewButton'},
 			        {name: 'relevance1435EditButton'},
 			        {name: 'relevanceEditMsg'},
-			        {name: 'gxpFlag'},
+			        /*--ELERJ GXP--*/
+//			        {name: 'gxpFlag'},
 			        {name: 'riskAnalysisYN'},
 			        {name: 'itsecGroup'},
 			        {name: 'referencedTemplate'},
@@ -1292,8 +1293,8 @@ AIR.AirStoreFactory = function() {
 			        {name: 'relevanceCD3010Text'},
 			        {name: 'relevanceCD3011'},
 			        {name: 'relevanceCD3011Text'},
-			        {name: 'gxpFlag'},
-			        {name: 'gxpFlagText'},
+//			        {name: 'gxpFlag'},
+//			        {name: 'gxpFlagText'},
 			        {name: 'riskAnalysisYN'},
 			        {name: 'riskAnalysisYNText'},
 			        {name: 'itsecGroup'},
@@ -1505,7 +1506,7 @@ AIR.AirStoreFactory = function() {
 		        {name: 'appSteward'},
 		        {name: 'operationalStatus'},
 		        {name: 'categoryIt'},
-		        {name: 'gxpRelevance'},
+//		        {name: 'gxpRelevance'},
 		        {name: 'itSet'},
 		        
 		        {name: 'priorityLevel'},
@@ -1521,14 +1522,14 @@ AIR.AirStoreFactory = function() {
 		    	totalProperty: 'total',
 		        idProperty: 'ciId',
 		        	
-		        fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'priorityLevel', 'lifecycleStatus', 'source', 'businessEssential', 'template']
+		        fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', /*'gxpRelevance',*/ 'itSet', 'priorityLevel', 'lifecycleStatus', 'source', 'businessEssential', 'template']
 		    }, dwhEntityListRecord); 
 			
 		    var dwhEntityListStore = new Ext.data.XmlStore({
 		    	autoDestroy: true,
 		    	autoLoad: false,
 		    	
-		      	fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', 'gxpRelevance', 'itSet', 'priorityLevel', 'lifecycleStatus', 'source', 'businessEssential', 'template'],
+		      	fields: ['ciId', 'ciType', 'ciName', 'ciAlias', 'dwhEntityId', 'tableId', 'ciOwner', 'ciOwnerDelegate', 'appOwner', 'appOwnerDelegate', 'appSteward', 'operationalStatus', 'categoryIt', /*'gxpRelevance',*/ 'itSet', 'priorityLevel', 'lifecycleStatus', 'source', 'businessEssential', 'template'],
 		      	
 		      	proxy: new Ext.ux.soap.SoapProxy({
 		      		url: webcontext + '/CiEntityWSPort',
@@ -1657,7 +1658,7 @@ AIR.AirStoreFactory = function() {
 		},
 		
 		//====================== store refacs ======================
-		createGxpFlagListStore: function() {
+		/*createGxpFlagListStore: function() {
 			var gxpFlagListStore = new Ext.data.ArrayStore(
 			{
 				storeId: 'gxpFlagListStore',
@@ -1667,7 +1668,7 @@ AIR.AirStoreFactory = function() {
 			});
 		
 			return gxpFlagListStore;
-		},
+		},*/
 		//====================== store refacs ======================
 			
 		
@@ -2470,13 +2471,13 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'ciComplianceRequestId2008',
 				mapping : 'applicationDTO > ciComplianceRequestId2008'
-			}, {
+			},/* {
 				name : 'gxpFlagId',
 				mapping : 'applicationDTO > gxpFlagId'
 			}, {
 				name : 'gxpFlagTxt',
 				mapping : 'applicationDTO > gxpFlagTxt'
-			}, {
+			},*/ {
 				name : 'itsecGroupId',
 				mapping : 'applicationDTO > itsecGroupId'
 			}, {
@@ -2682,10 +2683,10 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'aclBusiness_Essential_Id',
 				mapping : 'applicationAccessDTO > business_Essential_Id'
-			}, {
+			},/* {
 				name : 'aclGxp_Flag',
 				mapping : 'applicationAccessDTO > gxp_Flag'
-			}, {
+			},*/ {
 				name : 'aclItsec_Gruppe_Id',
 				mapping : 'applicationAccessDTO > itsec_Gruppe_Id'
 			}, {
@@ -2715,10 +2716,10 @@ AIR.AirStoreFactory = function() {
 			}, {
 				name : 'aclRef_Id',
 				mapping : 'applicationAccessDTO > ref_Id'
-			}, {
+			},/* {
 				name : 'aclRelevance_Ics',
 				mapping : 'applicationAccessDTO > relevance_Ics'
-			}, {
+			},*/ {
 				name : 'aclRelevanz_Itsec',
 				mapping : 'applicationAccessDTO > relevanz_Itsec'
 			}, {

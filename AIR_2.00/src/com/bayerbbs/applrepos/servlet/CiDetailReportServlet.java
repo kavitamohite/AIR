@@ -71,8 +71,9 @@ public class CiDetailReportServlet extends HttpServlet {
 	private static final long serialVersionUID = -2354728653868583491L;
 
 	private static final String COMPLIANCE_DETAIL = "SELECT   TO_CHAR(MAS.Katalog_Id, 'fm00') || '.' || TO_CHAR(MAS.Massnahme_Nr,'fm000') AS Ident,"
-			+ "MTX.Massnahme_Titel,STA.Massnahme_Gstoolid,NVL(MAS.Relevance_Ics, 0) AS Relevance_Ics,"
-			+ "NVL(MAS.Relevance_Ics, 0) AS Relevance_Ics,"
+			+ "MTX.Massnahme_Titel,STA.Massnahme_Gstoolid,"
+//			+ "NVL(MAS.Relevance_Ics, 0) AS Relevance_Ics,"
+//			+ "NVL(MAS.Relevance_Ics, 0) AS Relevance_Ics,"
 			+ "DECODE(MTX.Langu, 'de', STW.Status_Wert, STW.Status_Wert_En) AS Status_Wert,"
 			+ "REF.Status_Kommentar,REF.Gap,"
 			+ "NVL(pck_SISec.Get_UName(REF.Gap_Responsible), REF.Gap_Responsible) AS Gap_Responsible,"
@@ -181,7 +182,7 @@ public class CiDetailReportServlet extends HttpServlet {
 					BaseFont.createFont(FontFactory.HELVETICA_BOLD, "", true),
 					25)));
 			document.add(new Phrase(60,
-					"\n relevant for GR 1435 / ISO 27001 / ICS", new Font(
+					"\n relevant for GR 1435 / ISO 27001", new Font(
 							BaseFont.createFont(FontFactory.HELVETICA_BOLD, "",
 									true), 25)));
 
@@ -302,7 +303,8 @@ public class CiDetailReportServlet extends HttpServlet {
 			complianceDetail.setControl(rset.getString("Massnahme_Titel"));
 			complianceDetail.setJustification(rset
 					.getString("Status_Kommentar"));
-			complianceDetail.setReICSSecurity(rset.getString("Relevance_Ics"));
+			/*--ELERJ ICS--*/
+//			complianceDetail.setReICSSecurity(rset.getString("Relevance_Ics"));
 			
 			//IM0006372483 partly implemented controls not in AIR Report  GAP
 			complianceDetail.setGap(rset.getString("Gap"));
@@ -400,14 +402,14 @@ public class CiDetailReportServlet extends HttpServlet {
 				complianceDetail.getIndent() });
 		complianceDatas.add(new String[] { "Control",
 				complianceDetail.getControl() });
-		if(complianceDetail.getReICSSecurity().equals("-1")){
+	/*	if(complianceDetail.getReICSSecurity().equals("-1")){
 			complianceDatas.add(new String[] { "Relevance ICS Security Management",
 					"Yes" });
 		}
 		else{
 			complianceDatas.add(new String[] { "Relevance ICS Security Management",
 			"No" });			
-		}
+		}*/
 		//IM0006355126 - Start
 				complianceDatas.add(new String[] { "Compliant",
 						complianceDetail.getComplianceStatus() }); 
@@ -615,23 +617,25 @@ public class CiDetailReportServlet extends HttpServlet {
 		}
 		CIData.add(new String[] { "Link", dto.getRefTxt() });
 		Long releItsec = dto.getRelevanzItsec();
-		Long releICS = dto.getRelevanceICS();
+//		Long releICS = dto.getRelevanceICS();
 		if (-1 == releItsec) {
 			CIData.add(new String[] { "GR1435", "Yes" });
 		} else if (0 == releItsec) {
 			CIData.add(new String[] { "GR1435", "No" });
 		}
-		if (-1 == releICS) {
+		/*--ELERJ ICS--*/
+		/*if (-1 == releICS) {
 			CIData.add(new String[] { "ICS", "Yes" });
 		} else if (0 == releICS) {
 			CIData.add(new String[] { "ICS", "No" });
-		}
+		}*/
 		//EUGXS
 		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 		
 		CIData.add(new String[] { "GR2008", "Yes" });
 		System.out.println("GR2008"+CIData);
-		CIData.add(new String[] { "GxP", dto.getGxpFlagTxt() });
+		/*--ELERJ GXP---*/
+//		CIData.add(new String[] { "GxP", dto.getGxpFlagTxt() });
 		CIData.add(new String[] { "ITSec Group", dto.getItsecGroup() });
 		if (application.getSampleTestDate() != null) {
 			CIData.add(new String[] { "Time Testing",
@@ -696,12 +700,12 @@ public class CiDetailReportServlet extends HttpServlet {
 		} else if (0 == schrank.getRelevanceITSEC()) {
 			CIData.add(new String[] { "GR1435", "No" });
 		}
-		if (-1 == schrank.getRelevanceICS()) {
+	/*	if (-1 == schrank.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "Yes" });
 		} else if (0 == schrank.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "No" });
-		}
-		CIData.add(new String[] { "GxP", schrank.getGxpFlag() });
+		}*/
+//		CIData.add(new String[] { "GxP", schrank.getGxpFlag() });
 		CIData.add(new String[] { "ITSec Group",
 				ItSecGroupHbn.getItSecGroup(schrank.getItsecGroupId()) });
 		if (schrank.getSampleTestDate() != null) {
@@ -772,12 +776,12 @@ public class CiDetailReportServlet extends HttpServlet {
 		} else if (0 == room.getRelevanceITSEC()) {
 			CIData.add(new String[] { "GR1435", "No" });
 		}
-		if (-1 == room.getRelevanceICS()) {
+		/*if (-1 == room.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "Yes" });
 		} else if (0 == room.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "No" });
-		}
-		CIData.add(new String[] { "GxP", room.getGxpFlag() });
+		}*/
+//		CIData.add(new String[] { "GxP", room.getGxpFlag() });
 		CIData.add(new String[] { "ITSec Group",
 				ItSecGroupHbn.getItSecGroup(room.getItsecGroupId()) });
 		if (room.getSampleTestDate() != null) {
@@ -842,12 +846,12 @@ public class CiDetailReportServlet extends HttpServlet {
 		} else if (0 == buildingArea.getRelevanceITSEC()) {
 			CIData.add(new String[] { "GR1435", "No" });
 		}
-		if (-1 == buildingArea.getRelevanceICS()) {
+	/*	if (-1 == buildingArea.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "Yes" });
 		} else if (0 == buildingArea.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "No" });
-		}
-		CIData.add(new String[] { "GxP", buildingArea.getGxpFlag() });
+		}*/
+//		CIData.add(new String[] { "GxP", buildingArea.getGxpFlag() });
 		CIData.add(new String[] { "ITSec Group",
 				ItSecGroupHbn.getItSecGroup(buildingArea.getItsecGroupId()) });
 		if (buildingArea.getSampleTestDate() != null) {
@@ -906,12 +910,12 @@ public class CiDetailReportServlet extends HttpServlet {
 		} else if (0 == building.getRelevanceITSEC()) {
 			CIData.add(new String[] { "GR1435", "No" });
 		}
-		if (-1 == building.getRelevanceICS()) {
+	/*	if (-1 == building.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "Yes" });
 		} else if (0 == building.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "No" });
-		}
-		CIData.add(new String[] { "GxP", building.getGxpFlag() });
+		}*/
+//		CIData.add(new String[] { "GxP", building.getGxpFlag() });
 		CIData.add(new String[] { "ITSec Group",
 				ItSecGroupHbn.getItSecGroup(building.getItsecGroupId()) });
 		if (building.getSampleTestDate() != null) {
@@ -969,12 +973,12 @@ public class CiDetailReportServlet extends HttpServlet {
 		} else if (0 == terrain.getRelevanceITSEC()) {
 			CIData.add(new String[] { "GR1435", "No" });
 		}
-		if (-1 == terrain.getRelevanceICS()) {
+	/*	if (-1 == terrain.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "Yes" });
 		} else if (0 == terrain.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "No" });
-		}
-		CIData.add(new String[] { "GxP", terrain.getGxpFlag() });
+		}*/
+//		CIData.add(new String[] { "GxP", terrain.getGxpFlag() });
 		CIData.add(new String[] { "ITSec Group",
 				ItSecGroupHbn.getItSecGroup(terrain.getItsecGroupId()) });
 		if (terrain.getSampleTestDate() != null) {
@@ -1026,12 +1030,12 @@ public class CiDetailReportServlet extends HttpServlet {
 		} else if (0 == standort.getRelevanceITSEC()) {
 			CIData.add(new String[] { "GR1435", "No" });
 		}
-		if (-1 == standort.getRelevanceICS()) {
+		/*if (-1 == standort.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "Yes" });
 		} else if (0 == standort.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "No" });
-		}
-		CIData.add(new String[] { "GxP", standort.getGxpFlag() });
+		}*/
+//		CIData.add(new String[] { "GxP", standort.getGxpFlag() });
 		CIData.add(new String[] { "ITSec Group",
 				ItSecGroupHbn.getItSecGroup(standort.getItsecGroupId()) });
 		if (standort.getSampleTestDate() != null) {
@@ -1094,12 +1098,12 @@ public class CiDetailReportServlet extends HttpServlet {
 		} else if (0 == itSystem.getRelevanceITSEC()) {
 			CIData.add(new String[] { "GR1435", "No" });
 		}
-		if (-1 == itSystem.getRelevanceICS()) {
+	/*	if (-1 == itSystem.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "Yes" });
 		} else if (0 == itSystem.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "No" });
-		}
-		CIData.add(new String[] { "GxP", itSystem.getGxpFlag() });
+		}*/
+//		CIData.add(new String[] { "GxP", itSystem.getGxpFlag() });
 		CIData.add(new String[] { "ITSec Group",
 				ItSecGroupHbn.getItSecGroup(itSystem.getItsecGroupId()) });
 		if (itSystem.getSampleTestDate() != null) {
@@ -1149,18 +1153,18 @@ public class CiDetailReportServlet extends HttpServlet {
 		} else if (0 == function.getRelevanceITSEC()) {
 			CIData.add(new String[] { "GR1435", "No" });
 		}
-		if (-1 == function.getRelevanceICS()) {
+	/*	if (-1 == function.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "Yes" });
 		} else if (0 == function.getRelevanceICS()) {
 			CIData.add(new String[] { "ICS", "No" });
 		}
-		//EUGXS
+	*/	//EUGXS
 		//C0000431412-Adapt AIR compliance part to the new IT security and ICS frameworks to ensure a successful PSR KRITIS audit
 		
 		CIData.add(new String[] { "GR2008", "YES" });
 		
 		System.out.print("suparna Set GR2008");
-		CIData.add(new String[] { "GxP", function.getGxpFlag() });
+//		CIData.add(new String[] { "GxP", function.getGxpFlag() });
 		CIData.add(new String[] { "ITSec Group",
 				ItSecGroupHbn.getItSecGroup(function.getItsecGroupId()) });
 		

@@ -273,10 +273,11 @@ public class RoomHbn extends LokationItemHbn {
 			room.setTemplate(null);
 			room.setItsecGroupId(null);
 			room.setRefId(null);
-			
-			room.setRelevanceICS(null);
+			/*--ELERJ ICS--*/
+//			room.setRelevanceICS(null);
 			room.setRelevanceITSEC(null);
-			room.setGxpFlag(null);
+			/*--ELERJ GXP---*/
+//			room.setGxpFlag(null);
 		}
 
 		boolean toCommit = false;
@@ -548,7 +549,8 @@ public class RoomHbn extends LokationItemHbn {
 						roomTarget.setTemplate(roomSource.getTemplate());
 						
 						roomTarget.setRelevanceITSEC(roomSource.getRelevanceITSEC());
-						roomTarget.setRelevanceICS(roomSource.getRelevanceICS());
+						/*--ELERJ ICS--*/
+//						roomTarget.setRelevanceICS(roomSource.getRelevanceICS());
 
 					}
 					else {

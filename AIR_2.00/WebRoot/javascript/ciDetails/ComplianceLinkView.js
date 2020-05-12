@@ -20,7 +20,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 				marginTop: 5
 			},
 		    
-		    items: [{
+		    items: [/*{
 	        	xtype: 'checkboxgroup',
 	        	id: 'cbgComplianceLinkTypeRelevance',
 	        	
@@ -38,7 +38,7 @@ AIR.ComplianceLinkView = Ext.extend(AIR.AirView, {//Ext.Panel
 			        { boxLabel: labels.RelevanceICSITOperations, name: 'cbgComplianceLinkTypeRelevance'},//, width: 100 
 			        { boxLabel: labels.RelevanceICSChangeManagement, name: 'cbgComplianceLinkTypeRelevance'}
 		        ]
-			},{
+			},*/{
 				xtype: 'filterCombo',//filterCombo combo
 				id: 'cbLinkCiType',
 				store: AIR.AirStoreManager.getStoreByName('linkCiTypeListStore'),//linkCiTypeListStore,//new Ext.data.Store(),//

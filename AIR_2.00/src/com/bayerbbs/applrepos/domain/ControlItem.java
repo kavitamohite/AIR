@@ -69,15 +69,15 @@ public class ControlItem extends DeletableRevisionInfo
 	}
 	private Boolean template;
 
-	@Type(type="onezero-boolean")
+	/*@Type(type="onezero-boolean")
 	@Column(name = "RELEVANCE_ICS")
 	public Boolean getRelevanceGR1920() {
 		return relevanceGR1920;
 	}
 	public void setRelevanceGR1920(Boolean relevanceGR1920) {
 		this.relevanceGR1920 = relevanceGR1920;
-	}
-	private Boolean relevanceGR1920;
+	}*/
+//	private Boolean relevanceGR1920;
 	
 	@Type(type="onezero-boolean")
 	@Column(name = "RELEVANZ_ITSEC")
@@ -88,8 +88,8 @@ public class ControlItem extends DeletableRevisionInfo
 		this.relevanceGR1435 = relevanceGR1435;
 	}
 	private Boolean relevanceGR1435;
-
-	@Enumerated(EnumType.STRING)
+	/*--ELERJ GXP---*/
+	/*@Enumerated(EnumType.STRING)
 	@Column(name = "GXP_FLAG")
 	public GxpFlag getGxpFlag() {
 		return gxpFlag;
@@ -97,7 +97,7 @@ public class ControlItem extends DeletableRevisionInfo
 	public void setGxpFlag(GxpFlag gxpFlag) {
 		this.gxpFlag = gxpFlag;
 	}
-	private GxpFlag gxpFlag;
+	private GxpFlag gxpFlag;*/
 	
 	@Column(name = "REF_ID")
 	public Long getRefID() {
