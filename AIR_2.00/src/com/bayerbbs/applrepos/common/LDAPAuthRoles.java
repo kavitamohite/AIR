@@ -330,7 +330,7 @@ public class LDAPAuthRoles {
 		
 		ArrayList<RolePersonDTO> roles = new ArrayList<RolePersonDTO>();		
 		for (String role : values) {
-			System.out.println("hasRole method==" + role);
+//			System.out.println("hasRole method==" + role);
 			role = role.toUpperCase();
 			int beginIndex=-1;
 			if(role.indexOf("AIR")!=-1){

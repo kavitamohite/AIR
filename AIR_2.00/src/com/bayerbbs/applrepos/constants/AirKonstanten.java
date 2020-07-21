@@ -6,7 +6,7 @@ import java.util.Map;
 
 public final class AirKonstanten {
 
-	public final static String AIR_VERSION = "v6.09.00";
+	public final static String AIR_VERSION = "v6.10.00";
 
 	public final static String COMPRESSEDCODEDIR = "compressed";
 	

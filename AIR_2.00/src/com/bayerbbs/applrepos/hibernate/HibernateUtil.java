@@ -70,9 +70,9 @@ public class HibernateUtil {
 				    			}else {
 				    				config = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
 
-				    				//config = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
+//				    				config = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
 
-				    			//	config = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
+//				    				config = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
 
 				    				//config = new AnnotationConfiguration().configure("hibernate.dev.cfg.xml");
 								}
@@ -135,7 +135,7 @@ public class HibernateUtil {
 			    			}else {
 
 			    				conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
-			    				//conf = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
+//			    				conf = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
 
 			    				
 			    			//	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");

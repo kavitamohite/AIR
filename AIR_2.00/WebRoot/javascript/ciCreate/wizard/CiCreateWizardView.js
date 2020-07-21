@@ -261,6 +261,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 		applicationCreateStore.load({
 			params: params
 		});
+		
 	},
 	
 	
@@ -288,6 +289,7 @@ AIR.CiCreateWizardView = Ext.extend(AIR.AirView, {
 					applicationCat1: this.getComponent('ciCreateWizardP1').getComponent('cbCiTypeW').getRawValue()
 				};
 				this.fireEvent('airAction', this, 'appCreateSuccess', data);
+//				history.go(0);
 	
 				var continueEditingCallback = function() {
 					this.wizardStarted = false;

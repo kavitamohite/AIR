@@ -166,18 +166,22 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 					        	var callbackMap = {
 									yes: yesCallback.createDelegate(this)
 								};
-					        	
+//					        	console.log("records::"+record[0].node.textContent);
 						    	if(record!=null && record!=""){
 								isSuccess = isSuccess && record[0].node.textContent;
-								
+								console.log("records::"+record[0].node.textContent);
+								console.log("isSuccess"+isSuccess);
 					        	if(++counter==editedRecords.length){
 					        	
 					        	if (isSuccess == 'true') {
 					        		var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
 						        	saveMask.hide();
 									afterSaveAppWindow.show();
+//									Added by EPCHI
+									history.go(0);
 						        } else {
-						        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR_ATTRIBUTE', callbackMap);
+//						        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR_ATTRIBUTE', callbackMap);
+						        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
 						        	saveMask.hide();
 									afterSaveAppWindow.show();
 									//return false; //change for atribte
@@ -186,11 +190,15 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 					        	}
 						    	}else{
 						    		
-						    		var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR', callbackMap);
+//						    		var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR', callbackMap);
+						    		var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
 						    		saveMask.hide();
 									afterSaveAppWindow.show();
 						        
 						    	}
+//						    	elerj removedall
+//						    	specialAttributeSaveStore.removeAll();
+//						    	records.data.removeAll();
 						    }
 						});
 			        	
@@ -203,10 +211,13 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		
 		AIR.CiSpecialAttributesView.superclass.initComponent.call(this);
 		var saveBtnFlag=false;
-		
+//		specialAttributeSaveStore.removeAll();
+//		this.on('render', this.loadStore, this);
 	},
-	
-	onChangeSave:function(){
+	/* loadStore: function() {
+	        this.getStore().load();
+	    }
+*/	onChangeSave:function(){
 		
 	},
 	
@@ -309,6 +320,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 		});
 		
 		this.updateBasedOnRole(attributeValueListStore,data);
+//		Ext.getCmp('attributeValueListStore').store.load();
 		
 	}
 	

@@ -212,6 +212,8 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 			ciLicenseView.on('ciChange', this.onCiChange, this);
 		
 		var clCiSpecialAttributesView = ciEditTabView.getComponent('clCiSpecialAttributes');
+//		console.log("clCiSpecialAttributes b4");
+//		Ext.Msg.alert('Message', 'Please select any hardware component.');
 		clCiSpecialAttributesView.on('ciChange', this.onCiChange, this);
 		
 		var ciNetworkView = ciEditTabView.getComponent('clCiNetwork');
@@ -295,9 +297,13 @@ AIR.CiEditView = Ext.extend(Ext.Panel, {
 	
 	onCiChange: function(view, viewElement, changedViewItems) {
 		if(this.isUserChange) {
+//			ELERJ Testing reload 
+/*			window.location.reload();
+			history.go(0);
+			window.location.href=window.location.href;*/
 			this.enableButtons();
 			this.ciModified = true;
-			
+//			console.log("on chnage");
 			if (viewElement && viewElement.getId && 
 			   (viewElement.getId() == 'cbReferencedTemplate' || viewElement.getId() == 'cbItSecGroup') && 
 			   AAM.getAppDetail().refId.length > 0 && 

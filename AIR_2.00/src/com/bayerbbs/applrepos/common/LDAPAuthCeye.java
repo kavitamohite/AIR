@@ -341,7 +341,7 @@ public class LDAPAuthCeye {
 		
 		ArrayList<RolePersonDTO> roles = new ArrayList<RolePersonDTO>();		
 		for (String role : values) {
-			System.out.println("hasRole method==" + role);
+//			System.out.println("hasRole method==" + role);
 			role = role.toUpperCase();
 			int beginIndex = role.indexOf("C-Eye");
 			if (beginIndex != -1) {

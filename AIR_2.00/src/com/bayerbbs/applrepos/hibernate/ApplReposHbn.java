@@ -252,7 +252,7 @@ public class ApplReposHbn {
 		}
 		if(listRolePerson.size()>0){
 			for(RolePersonDTO role:listRolePerson){
-				System.out.println("role in App respos="+role.getRoleName());
+//				System.out.println("role in App respos="+role.getRoleName());
 				if(role.getRoleName().contentEquals(rolename)){
 					resultCount = AirKonstanten.STRING_1;
 				}

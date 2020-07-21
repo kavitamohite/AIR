@@ -136,6 +136,8 @@ AIR.CiCreateView = Ext.extend(Ext.Panel, {
 	
 	
 	startWizard: function(button, event) {
+//		Ext.Msg.alert('Message', 'testing');
+//		history.go(0);
 		this.fireEvent('externalNavigation', this, button, 'clCiCreateWizard');
 	},
 	
