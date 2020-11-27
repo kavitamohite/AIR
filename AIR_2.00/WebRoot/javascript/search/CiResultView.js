@@ -380,13 +380,10 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			var ciTypeWarningWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CI_TYPE_NOT_SUPPORTED_WARNING');
 			ciTypeWarningWindow.show();
 		}
-//		Ext.Msg.alert('Message', 'Please se'+record);
-//		this.fireEvent('externalNavigation', this, grid, 'clCiDetails');
 		this.fireEvent('ciSelect', this, ciId, null, record);//grid this
-//		this.fireEvent('ciSelect', this, ciId, grid ,null, record);//new test
-//		this.fireEvent('externalNavigation', this, grid, 'clCiDetails');
-//		this.fireEvent('externalNavigation', this, grid, null);
+//		
 //history air issue
+		this.fireEvent('externalNavigation', this, grid, 'clCiDetails');
 
 	},
 	

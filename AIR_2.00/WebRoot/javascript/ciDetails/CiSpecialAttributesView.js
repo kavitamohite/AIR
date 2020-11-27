@@ -178,7 +178,7 @@ AIR.CiSpecialAttributesView = Ext.extend(Ext.Panel, {
 						        	saveMask.hide();
 									afterSaveAppWindow.show();
 //									Added by EPCHI
-									history.go(0);
+//									history.go(0);
 						        } else {
 //						        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED_ERROR_ATTRIBUTE', callbackMap);
 						        	var afterSaveAppWindow = AIR.AirWindowFactory.createDynamicMessageWindow('DATA_SAVED', callbackMap);
