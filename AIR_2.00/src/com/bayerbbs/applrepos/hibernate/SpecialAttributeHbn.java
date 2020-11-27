@@ -107,10 +107,11 @@ public class SpecialAttributeHbn {
 		tx = session.beginTransaction();
 		try {
 			if (asIs.getId() == null && asIs.getAttributeValue() != null) {
-				System.out.println("Debug 11 ");
+//				System.out.println("Debug 11 ");
 				session.createSQLQuery(createInsertQuery(asIs, cwid)).executeUpdate();
 			} else if (asIs.getId() != null) {
-				System.out.println("Debug 12 ");
+//				System.out.println("Debug 12 ");
+//				System.out.println("asis::"+asIs);
 				session.update(asIs);					
 			}
 			if(AccessRightChecker.hasRole(cwid, token, AirKonstanten.ROLE_AIR_SPECIAL_ATTRIBUTE_EDITOR)){
@@ -142,25 +143,31 @@ public class SpecialAttributeHbn {
 		}
 		
 		final Long  a=toBe.getTableId();
+//		System.out.println("a::"+a);
 		final Long  b=toBe.getCiId();
+//		System.out.println("b::"+b);
 		final Long  c=toBe.getAttribute().getId();
+//		System.out.println("c::"+c);
 		final Long  d=specialAttributeViewDataDTO.getToBeValueId();
+//		System.out.println("d::"+d);
 		final Long  e=oldToBevalue;
+//		System.out.println("e"+e);
 		final String f=cwid;
+//		System.out.println("f"+f);
 			
 		try{
-			System.out.println("outside If oldToBevalue ="+oldToBevalue +" specialAttributeViewDataDTO.getToBeValueId="+specialAttributeViewDataDTO.getToBeValueId());
+//			System.out.println("outside If oldToBevalue ="+oldToBevalue +" specialAttributeViewDataDTO.getToBeValueId="+specialAttributeViewDataDTO.getToBeValueId());
 			if(!oldToBevalue.equals(specialAttributeViewDataDTO.getToBeValueId())){
 				
-				System.out.println("In If 1 "+a+" cid "+b+" &  "+c);
+//				System.out.println("In If 1 "+a+" cid "+b+" &  "+c);
 				if (specialAttributeViewDataDTO.getToBeValueId() == null
 						&& toBe.getAttributeValue() != null) {
-					System.out.println("In If 2 "+a+" cid "+b+" &  "+c);
+//					System.out.println("In If 2 "+a+" cid "+b+" &  "+c);
 					
 					//Long tableId, Long ciId, Long attributeId, Long attributeValueId, Long prevAttributeValueId, String source,
 					if(oldToBevalue!=0L){
 						
-						System.out.println("In If 3 dam chalna h "+a+" cid "+b+" &  "+c);
+//						System.out.println("In If 3 dam chalna h "+a+" cid "+b+" &  "+c);
 						ExecutorService executor = Executors.newSingleThreadExecutor();
 						
 						executor.submit(new Runnable() {
@@ -173,7 +180,7 @@ public class SpecialAttributeHbn {
 							}
 						});
 						
-						System.out.println("In If 3 dam chala diay  "+a+" cid "+b+" &  "+c);
+//						System.out.println("In If 3 dam chala diay  "+a+" cid "+b+" &  "+c);
 					/*startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
 							.getAttribute().getId(),
 							specialAttributeViewDataDTO.getToBeValueId(), oldToBevalue,
@@ -182,7 +189,7 @@ public class SpecialAttributeHbn {
 					}
 					
 					} else if (specialAttributeViewDataDTO.getToBeValueId() != null) {
-						System.out.println("In else 4 "+a+" cid "+b+" &  "+c);
+//						System.out.println("In else 4 "+a+" cid "+b+" &  "+c);
 						ExecutorService executor1 = Executors.newSingleThreadExecutor();
 						
 						executor1.submit(new Runnable() {
@@ -195,7 +202,7 @@ public class SpecialAttributeHbn {
 							}
 						});
 						
-						System.out.println("In else 4 chal gya "+a+" cid "+b+" &  "+c);
+//						System.out.println("In else 4 chal gya "+a+" cid "+b+" &  "+c);
 
 				/*	startInheritance(toBe.getTableId(), toBe.getCiId(), toBe
 							.getAttribute().getId(),
@@ -287,14 +294,14 @@ public class SpecialAttributeHbn {
 		 
 		boolean commit = false;
 		 //System.out.println("Inherited started for ");
-		System.out.println("Inherited started for "+System.nanoTime());
-		System.out.println("Table inheritence :" + tableId);
-		System.out.println("ciId :" + ciId);
-		System.out.println("attributeId :" + attributeId);
-		System.out.println("attributeValueId :" + attributeValueId);
-		System.out.println("prevAttributeValueId :" + prevAttributeValueId);
-		System.out.println("source :" + source);
-		System.out.println("user :" + user);
+//		System.out.println("Inherited started for "+System.nanoTime());
+//		System.out.println("Table inheritence :" + tableId);
+//		System.out.println("ciId :" + ciId);
+//		System.out.println("attributeId :" + attributeId);
+//		System.out.println("attributeValueId :" + attributeValueId);
+//		System.out.println("prevAttributeValueId :" + prevAttributeValueId);
+//		System.out.println("source :" + source);
+//		System.out.println("user :" + user);
 
 		try {
 			ta = session.beginTransaction();

@@ -53,7 +53,7 @@ public class HibernateUtil {
 					} catch (Exception ex) {
 						System.out.println(ex.getMessage());
 					} 
-					System.out.println("Running on Host: " + hostName);
+//					System.out.println("Running on Host: " + hostName);
 				    if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
 				    	config = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
 				    } else {
@@ -74,7 +74,7 @@ public class HibernateUtil {
 
 //				    				config = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
 
-				    				//config = new AnnotationConfiguration().configure("hibernate.dev.cfg.xml");
+//				    				config = new AnnotationConfiguration().configure("hibernate.dev.cfg.xml");
 								}
 				    				
 				    		
@@ -118,8 +118,8 @@ public class HibernateUtil {
 				} catch (Exception ex) {
 					System.out.println(ex.getMessage());
 				} 
-				System.out.println("Running on Host: " + hostName);
-				System.out.println("Running on Host: " + hostName);
+//				System.out.println("Running on Host: " + hostName);
+//				System.out.println("Running on Host: " + hostName);
 			    if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
 			    	conf = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
 			    } else {
@@ -141,7 +141,7 @@ public class HibernateUtil {
 			    			//	conf = new AnnotationConfiguration().configure("hibernate.qa.cfg.xml");
 			    		//	conf = new AnnotationConfiguration().configure("hibernate.prod.cfg.xml");
 
-						    	//conf = new AnnotationConfiguration().configure("hibernate.dev.cfg.xml");
+//						    	conf = new AnnotationConfiguration().configure("hibernate.dev.cfg.xml");
 							}
 			    				
 			    		}

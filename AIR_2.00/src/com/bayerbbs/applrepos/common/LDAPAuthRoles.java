@@ -380,7 +380,7 @@ public class LDAPAuthRoles {
 			} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
-		System.out.println("Running on Host: " + hostName);
+//		System.out.println("Running on Host: " + hostName);
 		if (hostName.equals(AirKonstanten.SERVERNAME_PROD)) {
 			env = "P";
 		}

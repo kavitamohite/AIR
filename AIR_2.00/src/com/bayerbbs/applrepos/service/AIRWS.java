@@ -216,7 +216,7 @@ public class AIRWS {
 		catch(Exception e){
 			
 		}
-		System.out.println("CiEntitiesHbn.findCisByNameOrAlias  calling");
+//		System.out.println("CiEntitiesHbn.findCisByNameOrAlias  calling");
 
 		return output;
 	}

@@ -582,6 +582,7 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		case 'clCiConnections':
 		case 'clCiSupportStuff':
 		case 'clCiHistory':
+//		case null:
 			var pCiDetailsMenuItems = this.getComponent('pCiDetailsMenuItems');
 			pCiDetailsMenuItems.setVisible(true);
 
@@ -656,6 +657,21 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 				pCiDetailsMenuItems.setVisible(true);
 
 				this.updateMenu(AAM.getTableId(), AAM.getCiSubTypeId());
+				
+//				-----------------start history issue----------------------
+				/*var link = this.getComponent('pCiDetailsMenuItems').getComponent(target);//clCiDetails
+
+				if(options) {
+//					options.reset = true;
+					//auskommentiert damit kein reload bei klick auf ci detail menupunkt. Siehe AirHistoryManager.onBackForwardClick
+				} else {
+					var options = {
+							reset: true
+					};
+				}
+				link.fireEvent('click', link, null, options);
+*/				
+										/*------------end histrory issue-----------------------*/
 			}
 		break;
 		}
@@ -718,14 +734,14 @@ AIR.CiNavigationView = Ext.extend(Ext.Panel, {
 		var clCiNetwork = pCiDetailsMenuItems.getComponent('clCiNetwork');
 
 		switch(tableId) {
-		case AC.TABLE_ID_APPLICATION:
+		case AC.TABLE_ID_APPLICATION: //tabid 2
 			if(ciSubType == AC.APP_CAT1_APPLICATION) {
 				clCiLicense.setVisible(true);
 				clCiSupportStuff.setVisible(true);
 				clCiNetwork.setVisible(false);
 				break;
 			}
-		case AC.TABLE_ID_IT_SYSTEM:
+		case AC.TABLE_ID_IT_SYSTEM: //tab id 1
 			if(ciSubType == AC.CI_SUB_TYPE_TRANSIENT_SYSTEM) {
 				clCiNetwork.setVisible(true);
 				break;

@@ -324,7 +324,7 @@ public class LDAPAuthCeye {
 			} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
-		System.out.println("Running on Host: " + hostName);
+//		System.out.println("Running on Host: " + hostName);
 		if (hostName.equals(SERVERNAME_PROD)) {
 			env = "P";
 		}

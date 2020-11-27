@@ -80,6 +80,7 @@ Ext.grid.CheckboxSelectionModel = Ext.extend(Ext.grid.RowSelectionModel, {
         if(e.button === 0 && t.className == 'x-grid3-row-checker'){ // Only fire if left-click
             e.stopEvent();
             var row = e.getTarget('.x-grid3-row');
+           
             if(row){
                 var index = row.rowIndex;
                 if(this.isSelected(index)){

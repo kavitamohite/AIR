@@ -2631,6 +2631,7 @@ System.out.println("Air Saving issue>>>>>>>>>>");
 //		String sql = "SELECT * FROM TABLE(PCK_AIR.ft_history("+applicationId+"))";
 		
 		String sql = "SELECT * FROM TABLE (pck_History.Read (" + tableId +", " + ciId + ", " + lang + ", 'N', 'Y')) ORDER BY 1 DESC";
+//		System.out.println("SQLHistory:"+sql);
 		
 		try {
 			tx = session.beginTransaction();

@@ -1102,6 +1102,7 @@ public class CiEntitiesHbn {
 		append("WHERE an.template = -1 ").// and an.del_timestamp IS NULL
 		append("ORDER BY table_id, ci_sub_type");
 
+//		System.out.println("SQL::"+sql.toString());
 		try {
 			ta = session.beginTransaction();
 			@SuppressWarnings("deprecation")

@@ -132,7 +132,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 	},
 	
 	enableButtonAndMultipleSelect: function(checkbox, isChecked){
-		
+//		Ext.Msg.alert('Message', 'Please select any hardware component.');
 		var bMassUpdate = this.getComponent('pSearchResultOptions').getComponent('bMassUpdate');
 		var bSelectDeselectAll = this.getComponent('pSearchResultOptions').getComponent('bSelectDeselectAll');
 		var tpCiSearchResultTables = this.getComponent('tpCiSearchResultTables');
@@ -145,6 +145,10 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			//cbIsMultipleSelect.setDisabled(true);
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().singleSelect=false;
 			tpCiSearchResultTables.getActiveTab().getSelectionModel().clearSelections();
+//			this.fireEvent('ciSelect', this, ciId, null, record);//grid this
+//			this.fireEvent('externalNavigation', this, grid, 'clCiDetails'); 
+			
+			
 		}
 		else{
 			bMassUpdate.setDisabled(true);
@@ -251,6 +255,7 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 
 		
 		if((searchAction === AC.SEARCH_TYPE_ADV_SEARCH) && (this.ciResultGridParamSets[ciResultGridId].ciTypeId!=AC.TABLE_ID_BUSINESS_APPLICATION)) {
+		
 			bMassUpdate.setVisible(true);
 			bSelectDeselectAll.setVisible(true);
 			cbIsMultipleSelect.setVisible(true);
@@ -375,9 +380,14 @@ AIR.CiResultView = Ext.extend(Ext.Panel, {
 			var ciTypeWarningWindow = AIR.AirWindowFactory.createDynamicMessageWindow('CI_TYPE_NOT_SUPPORTED_WARNING');
 			ciTypeWarningWindow.show();
 		}
-		
+//		Ext.Msg.alert('Message', 'Please se'+record);
+//		this.fireEvent('externalNavigation', this, grid, 'clCiDetails');
 		this.fireEvent('ciSelect', this, ciId, null, record);//grid this
-		this.fireEvent('externalNavigation', this, grid, 'clCiDetails');
+//		this.fireEvent('ciSelect', this, ciId, grid ,null, record);//new test
+//		this.fireEvent('externalNavigation', this, grid, 'clCiDetails');
+//		this.fireEvent('externalNavigation', this, grid, null);
+//history air issue
+
 	},
 	
 	onRowDoubleClick: function (grid, rowIndex, e) {
