@@ -310,6 +310,8 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
     },
     
     updateMailTemplateProduct: function() {
+    	 
+    	
         var html = '<a id="mailtoproduct" href="{href}"><img src="' + img_Email + '"></a>';
 
         var cbManufacturer = this.getComponent('cbManufacturer');
@@ -323,10 +325,12 @@ AIR.CiProduct = Ext.extend(Ext.form.FieldSet, {
         mailText = mailText.replace('<Username>', AAM.getUserName());
 
         var mailtemplate = 'mailto:ITILcenter@bayer.com';
-        mailtemplate += '&subject=' + mail_Subject_product + '';
+//        -------- email issue resolved ELERJ chnage the wildcard character------
+        mailtemplate += '?subject=' + mail_Subject_product + '';
         mailtemplate += ('&body=' + mailText);
         html = html.replace('{href}', mailtemplate);
-        this.getComponent('pmodel').getComponent('mailproduct').update(html);
+        this.getComponent('pmodel').getComponent('mailproduct').update(html); 
+        
     },
     
     update: function(assetData){

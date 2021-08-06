@@ -160,8 +160,9 @@ AIR.CiSoftwareProduct = Ext.extend(Ext.form.FieldSet, {
         mailText = mailText.replace('<productName>', cbProductName.getRawValue());
         mailText = mailText.replace('<Username>', AAM.getUserName());
 
+//       -------- email issue resolved ELERJ chnage the wildcard character------
         var mailtemplate = 'mailto:ITILcenter@bayer.com';
-        mailtemplate += '&subject=' + mail_Subject_softwareproduct + '';
+        mailtemplate += '?subject=' + mail_Subject_softwareproduct + '';
         mailtemplate += ('&body=' + mailText);
         html = html.replace('{href}', mailtemplate);
         this.getComponent('pProductName').getComponent('mailproduct').update(html);
