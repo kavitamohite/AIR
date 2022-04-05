@@ -34,6 +34,7 @@ public class CiEntityWSDelegate {
 	public RoomDTO getRoom(CiDetailParameterInput input) {//CiDetailParameterOutput
 		return ciEntityWS.getRoom(input);
 	}
+	//for kt purpose 
 	
 	public BuildingDTO getBuilding(CiDetailParameterInput input) {//CiDetailParameterOutput
 		return ciEntityWS.getBuilding(input);
